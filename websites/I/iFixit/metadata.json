@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schemas.premid.app/metadata/1.12",
+	"apiVersion": 1,
+	"author": {
+		"id": "290528827715747841",
+		"name": "iuriineves"
+	},
+	"service": "iFixit",
+	"description": {
+		"en": "iFixit is an American e-commerce and how-to website that publishes free wiki-like online repair guides and tear-downs of consumer electronics and gadgets. It also sells repair parts, tools, and accessories."
+	},
+	"url": "www.ifixit.com",
+	"version": "1.0.0",
+	"logo": "https://imgur.com/JIjO52r.png",
+	"thumbnail": "https://valkyrie.cdn.ifixit.com/media/2022/06/03114104/Blog-Header-original-manta-BBF19-stacked-.jpg",
+	"color": "#0071ba",
+	"category": "other",
+	"tags": [
+		"ifixit",
+		"tech",
+		"repair",
+		"educational",
+		"guides"
+	],
+	"settings": [
+		{
+			"id": "showThumbnails",
+			"title": "Show Thumbnails",
+			"icon": "fad fa-images",
+			"value": true
+		},
+		{
+			"id": "showStepTitle",
+			"title": "Show Step Titles",
+			"icon": "fad fa-heading",
+			"value": true
+		}
+	]
+}
