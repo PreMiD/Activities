@@ -6,21 +6,23 @@ const presence = new Presence({
 });
 
 const enum LargImages {
-	Logo = "https://imgur.com/JIjO52r.png",
+	Logo = "https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/ifixit.png",
 }
 
-enum DifficultyIcons {
+enum Icons {
 	veryeasy = "https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/diff/very_easy.png",
 	easy = "https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/diff/easy.png",
 	moderate = "https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/diff/intermediate.png",
 	difficult = "https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/diff/difficult.png",
+	time = "https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/time.png",
 }
 
 presence.on("UpdateData", async () => {
-	const [showThumbnails, showStepTitle] = await Promise.all([
-			presence.getSetting<boolean>("showThumbnails"),
+	const [thumbnailType, iconType, showStepTitle] = [
+			presence.getSetting<number>("thumbnailType"),
+			presence.getSetting<number>("iconType"),
 			presence.getSetting<boolean>("showStepTitle"),
-		]),
+		],
 		{ pathname, search, href } = document.location,
 		path = pathname.split("/");
 	path.shift();
@@ -35,7 +37,7 @@ presence.on("UpdateData", async () => {
 			});
 		case "Search":
 			return await presence.setActivity({
-				details: "Searching for",
+				details: "Searching:",
 				state: decodeURIComponent(search.match(/query=([A-z0-9%]+)/)[1]),
 				smallImageKey: Assets.Search,
 				smallImageText: "Searching",
@@ -46,31 +48,45 @@ presence.on("UpdateData", async () => {
 
 				if (guideMetadata?.data) {
 					const { data } = guideMetadata,
-						{ title, category: device, image, steps, url } = data,
-						{ stepLink, stepNumber, stepTitle } = await getClosestStep();
+						{ title, category: device, steps, image, url } = data,
+						{ stepLink, stepImage, stepNumber, stepTitle } =
+							await getClosestStep();
 
 					return await presence.setActivity({
-						name: `${title.replaceAll(device, "")} — iFixit`,
-						details: device,
-						state: showStepTitle
+						name: "iFixit",
+						details: title.replaceAll(device, ""),
+						state: (await showStepTitle)
 							? `${stepTitle} (${stepNumber.replaceAll("Step ", "")}/${
 									steps.length
 							  }) `
 							: `${stepNumber} out of ${steps.length}`,
-						largeImageKey: showThumbnails ? image.standard : LargImages.Logo,
-						smallImageKey:
-							DifficultyIcons[
-								`${document
-									.querySelector(".guide-difficulty")
-									?.textContent.replaceAll(" ", "")
-									.toLowerCase()}` as keyof typeof DifficultyIcons
-							],
-						smallImageText:
-							document.querySelector(".guide-difficulty")?.textContent,
+						...((await thumbnailType) && {
+							largeImageKey:
+								(await thumbnailType) === 1
+									? image.standard
+									: (stepImage as HTMLImageElement),
+						}),
+
+						...((await iconType) && {
+							smallImageKey:
+								(await iconType) === 1
+									? Icons.time
+									: Icons[
+											`${document
+												.querySelector(".guide-difficulty")
+												?.textContent.replaceAll(" ", "")
+												.toLowerCase()}` as keyof typeof Icons
+									  ],
+							smallImageText:
+								(await iconType) === 1
+									? document.querySelector(".guide-time-required")?.textContent
+									: document.querySelector(".guide-difficulty")?.textContent,
+						}),
+
 						buttons: [
 							{
 								label: "View guide",
-								url: url + stepLink,
+								url: url.split("#")[0] + stepLink,
 							},
 							{
 								label: "View device",
@@ -89,11 +105,10 @@ presence.on("UpdateData", async () => {
 			});
 		case "Device":
 			return await presence.setActivity({
-				details: "Browsing device",
-				state: decodeURIComponent(
+				details: `Browsing: ${decodeURIComponent(
 					pathname.replace("/Device/", "").replaceAll("_", " ")
-				),
-				largeImageKey: showThumbnails
+				)}`,
+				largeImageKey: thumbnailType
 					? document
 							.querySelector(".banner-small-photo img")
 							?.getAttribute("src")
@@ -102,12 +117,31 @@ presence.on("UpdateData", async () => {
 		case "Troubleshooting":
 			return await presence.setActivity({
 				name: path[2].replaceAll("+", " "),
-				details: `Troubleshooting ${path[1]}`,
-				state: document.querySelector("a.css-1fppiwp").textContent,
+				details: `Troubleshooting ${path[1].replaceAll("_", " ")}`,
+				state: (await showStepTitle)
+					? `${document.querySelector("a.css-1fppiwp .css-0")?.textContent} (${
+							document.querySelector("a.css-1fppiwp div")?.textContent
+					  }/${
+							Array.from(document.querySelectorAll("div.css-19tnq1g")).pop()
+								?.textContent
+					  }) `
+					: `Step ${
+							document.querySelector("a.css-1fppiwp div")?.textContent
+					  } out of ${
+							Array.from(document.querySelectorAll("div.css-19tnq1g")).pop()
+								?.textContent
+					  }`,
+				...(thumbnailType && {
+					largeImageKey: document
+						.querySelector("[data-testid*='troubleshooting-header'] img")
+						?.getAttribute("src"),
+				}),
 				buttons: [
 					{
 						label: "View troubleshooting",
-						url: href,
+						url:
+							href.split("#")[0] +
+							document.querySelector("a.css-1fppiwp")?.getAttribute("href"),
 					},
 				],
 			});
@@ -122,7 +156,7 @@ presence.on("UpdateData", async () => {
 		case "Parts":
 		case "Tools":
 			return await presence.setActivity({
-				details: "Shopping for",
+				details: "Shopping:",
 				state: `${path[1]?.replaceAll("_", " ") ?? ""} ${path[0]}`,
 			});
 		case "products": {
@@ -131,9 +165,8 @@ presence.on("UpdateData", async () => {
 			);
 
 			return await presence.setActivity({
-				details: "Buying item",
-				state: image?.getAttribute("alt"),
-				largeImageKey: showThumbnails
+				details: `Buying: ${image?.getAttribute("alt")}`,
+				largeImageKey: thumbnailType
 					? image?.getAttribute("src")
 					: LargImages.Logo,
 				buttons: [

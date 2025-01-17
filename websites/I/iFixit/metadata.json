@@ -24,15 +24,24 @@
 	],
 	"settings": [
 		{
-			"id": "showThumbnails",
-			"title": "Show Thumbnails",
-			"icon": "fad fa-images",
-			"value": true
+			"id": "thumbnailType",
+			"title": "Guide Big Image",
+			"icon": "fad fa-image",
+			"value": 0,
+			"values": ["Logo", "Guide Thumbnail", "Step Thumbnail"]
+		},
+		{
+			"id": "iconType",
+			"title": "Guide Small Image",
+			"icon": "fad fa-info-circle",
+			"value": 0,
+			"values": ["Nothing", "Estimated Time", "Difficulty Rating"]
+
 		},
 		{
 			"id": "showStepTitle",
 			"title": "Show Step Titles",
-			"icon": "fad fa-heading",
+			"icon": "fad fa-subtitles",
 			"value": true
 		}
 	]
