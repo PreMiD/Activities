@@ -53,10 +53,10 @@ presence.on("UpdateData", async () => {
 							await getClosestStep();
 
 					return await presence.setActivity({
-						name: "iFixit",
-						details: title.replaceAll(device, ""),
+						name: title.replaceAll(device, ""),
+						details: device,
 						state: (await showStepTitle)
-							? `${stepTitle} (${stepNumber.replaceAll("Step ", "")}/${
+							? `${stepTitle} (${stepNumber.replace(/[^\d]/g, "")}/${
 									steps.length
 							  }) `
 							: `${stepNumber} out of ${steps.length}`,
@@ -113,24 +113,34 @@ presence.on("UpdateData", async () => {
 							.querySelector(".banner-small-photo img")
 							?.getAttribute("src")
 					: LargImages.Logo,
+				buttons: [
+					{
+						label: "View device",
+						url: href,
+					},
+				],
 			});
 		case "Troubleshooting":
 			return await presence.setActivity({
 				name: path[2].replaceAll("+", " "),
-				details: `Troubleshooting ${path[1].replaceAll("_", " ")}`,
-				state: (await showStepTitle)
-					? `${document.querySelector("a.css-1fppiwp .css-0")?.textContent} (${
-							document.querySelector("a.css-1fppiwp div")?.textContent
-					  }/${
-							Array.from(document.querySelectorAll("div.css-19tnq1g")).pop()
-								?.textContent
-					  }) `
-					: `Step ${
-							document.querySelector("a.css-1fppiwp div")?.textContent
-					  } out of ${
-							Array.from(document.querySelectorAll("div.css-19tnq1g")).pop()
-								?.textContent
-					  }`,
+				details: `Troubleshooting: ${path[1].replaceAll("_", " ")}`,
+				state:
+					(await showStepTitle) &&
+					document.querySelector("a.css-1fppiwp div")?.textContent !== ""
+						? `${
+								document.querySelector("a.css-1fppiwp .css-0")?.textContent
+						  } (${
+								document.querySelector("a.css-1fppiwp div")?.textContent ?? 1
+						  }/${
+								Array.from(document.querySelectorAll("div .css-ptse8o")).pop()
+									?.textContent ?? 1
+						  }) `
+						: `Step ${
+								document.querySelector("a.css-1fppiwp div")?.textContent ?? 1
+						  } out of ${
+								Array.from(document.querySelectorAll("div .css-ptse8o")).pop()
+									?.textContent ?? 1
+						  }`,
 				...(thumbnailType && {
 					largeImageKey: document
 						.querySelector("[data-testid*='troubleshooting-header'] img")
