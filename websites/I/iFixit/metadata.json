@@ -24,25 +24,40 @@
 	],
 	"settings": [
 		{
+			"id": "privacy",
+			"title": "Privacy",
+			"icon": "fad fa-user-shield",
+			"value": false
+		},
+		{
 			"id": "thumbnailType",
 			"title": "Guide Big Image",
 			"icon": "fad fa-image",
 			"value": 0,
-			"values": ["Logo", "Guide Thumbnail", "Step Thumbnail"]
+			"values": ["Logo", "Guide Thumbnail", "Step Thumbnail"],
+			"if": {
+				"privacy": false
+			}
 		},
 		{
 			"id": "iconType",
 			"title": "Guide Small Image",
 			"icon": "fad fa-info-circle",
 			"value": 0,
-			"values": ["Nothing", "Estimated Time", "Difficulty Rating"]
+			"values": ["Nothing", "Estimated Time", "Difficulty Rating"],
+			"if": {
+				"privacy": false
+			}
 
 		},
 		{
 			"id": "showStepTitle",
 			"title": "Show Step Titles",
 			"icon": "fad fa-subtitles",
-			"value": true
+			"value": true,
+			"if": {
+				"privacy": false
+			}
 		}
 	]
 }
