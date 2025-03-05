@@ -67,7 +67,6 @@ presence.on('UpdateData', async () => {
 					break;
 				}
 				case pathname === '/news.html': {
-					presenceData.details = 'Nexon logistics';
 					presenceData.state = `Viewing all news`;
 					presenceData.buttons = [
 						{ label: 'View All News Articles', url: href },
