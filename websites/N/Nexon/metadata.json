@@ -15,7 +15,8 @@
     "map.nexonlogistics.com",
     "map.nexonairlines.com",
     "shop.nexonlogistics.com",
-    "hub.nexonlogistics.com"
+    "hub.nexonlogistics.com",
+    "hub.nexonairlines.com"
   ],
   "version": "1.0.0",
   "logo": "https://i.imgur.com/7NyrKJP.png",
@@ -32,14 +33,32 @@
   ],
   "settings": [
     {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": 0,
+      "values": [
+        "Displays most details",
+        "Display some details",
+        "Display minimal details",
+        "Only displays browsing"
+      ]
+    },
+    {
       "id": "cover",
       "title": "Show Cover",
+      "if": {
+        "privacy": false
+      },
       "icon": "fas fa-images",
       "value": true
     },
     {
       "id": "buttons",
       "title": "Show Buttons",
+      "if": {
+        "privacy": false
+      },
       "icon": "fas fa-compress-arrows-alt",
       "value": true
     }
