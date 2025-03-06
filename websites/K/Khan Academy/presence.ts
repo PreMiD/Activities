@@ -1,96 +1,58 @@
-const presence = new Presence({
-  clientId: '900882829154598952',
-})
-const strings = presence.getStrings({
-  homepage: 'general.viewHome',
-  settings: 'google classroom.settings',
-  watching: 'general.watching',
-  reading: 'general.readingAbout',
-  writing: 'general.writing',
-  profile: 'general.viewProfile',
-})
+const presence = new Presence({ clientId: '900882829154598952' })
+const strings = presence.getStrings({ homepage: 'Homepage', settings: 'Settings' })
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/K/Khan%20Academy/assets/logo.png',
   Video = 'https://cdn.rcd.gg/PreMiD/websites/K/Khan%20Academy/assets/0.png',
   Article = 'https://cdn.rcd.gg/PreMiD/websites/K/Khan%20Academy/assets/1.png',
-  Exercise = 'https://cdn.rcd.gg/PreMiD/websites/K/Khan%20Academy/assets/2.png',
+  Exercise = 'https://cdn.rcd.gg/PreMiD/websites/K/Khan%20Academy/assets/2.png'
 }
 
 presence.on('UpdateData', async () => {
-  const presenceData: PresenceData = {
-    largeImageKey: ActivityAssets.Logo,
-    details: (await strings).watching,
-  }
+  const presenceData: PresenceData = { largeImageKey: ActivityAssets.Logo, details: 'Viewing' }
+  const path = document.location.pathname
+  const searchParams = new URLSearchParams(document.location.search)
 
-  if (document.location.pathname === '/') {
-    presenceData.state = `🏠 ${(await strings).homepage}`
+  if (path === '/') presenceData.state = `🏠 ${(await strings).homepage}`
+  else if (path.includes('/courses')) presenceData.state = '📚 Courses'
+  else if (path.includes('/progress')) presenceData.state = '📊 Progress'
+  else if (path === '/profile/me/teachers') presenceData.state = '🎓 Teachers'
+  else if (path.includes('/profile')) presenceData.state = '👤 Profile'
+  else if (path.includes('/settings')) presenceData.state = `⚙️ ${(await strings).settings}`
+  else if (path.includes('/search')) {
+    presenceData.details = '🔍 Searching'
+    presenceData.state = `"${searchParams.get('page_search_query') || 'Unknown Search'}"`
   }
-  else if (document.location.pathname.includes('/courses')) {
-    presenceData.state = '📚 Courses'
-  }
-  else if (document.location.pathname.includes('/progress')) {
-    presenceData.state = '📊 Progress'
-  }
-  else if (document.location.pathname.includes('/teachers')) {
-    presenceData.state = '🎓 Teachers'
-  }
-  else if (document.location.pathname.includes('/profile')) {
-    presenceData.details = (await strings).profile
-    presenceData.state = `👀 ${
-      document.querySelector('._o77ufew')?.textContent
-    }`
-  }
-  else if (document.location.pathname.includes('/settings')) {
-    presenceData.state = `⚙️ ${(await strings).settings}`
-  }
-  else if (document.location.pathname.includes('/search')) {
-    presenceData.state = `🔍 Searching for '${
-      document.location.pathname.split('page_search_query=')[1]
-    }'`
-  }
-  else if (document.location.pathname.includes('/topics')) {
-    presenceData.state = '🔍 Community'
-  }
-  else if (document.location.pathname.includes('/posts')) {
-    presenceData.state = '🔍 Community Post'
-  }
-  else if (document.location.pathname.includes('/requests/new')) {
-    presenceData.state = '⚠️ Submitting a Request'
-  }
-  else if (document.location.hostname.includes('support')) {
-    presenceData.state = '💡 Support'
-  }
-  else if (document.location.pathname.split('/').length < 3) {
-    presenceData.state = `📖 ${
-      document.querySelector('._aemo2b3')?.textContent
-    }`
-  }
-  else {
-    presenceData.details = document.querySelector(
-      '._io410w6, span._cmfzobe:nth-child(2) > a:nth-child(2)',
-    )?.textContent
-    presenceData.state = `📋 ${document
-      .querySelector(
-        '._1eqoe4n8, span._cmfzobe:nth-child(3) > a:nth-child(2), #uid-dialog-0-title > span:nth-child(1)',
-      )
-      ?.textContent
-      ?.replace(/.*?:\s+/, '')}`
+  else if (path.includes('/topics')) presenceData.state = '🔍 Community'
+  else if (path.includes('/posts')) presenceData.state = '🔍 Community Post'
+  else if (path.includes('/requests/new')) presenceData.state = '⚠️ Submitting a Request'
+  else if (document.location.hostname.includes('support')) presenceData.state = '💡 Support'
+  else if (path.split('/').length < 3) presenceData.state = `📖 ${document.querySelector('._aemo2b3')?.textContent}`
+  else if (path.match(/\/([vae]|quiz)\//)) {
+    const breadcrumbLinks = document.querySelectorAll('a[class="_j9iwqrr"]')
+    const courseName = breadcrumbLinks[1]?.textContent || 'Unknown Course'
+    const contentTitle = document.querySelector('h1[data-testid="content-library-content-title"]')?.textContent || 'Unknown Content'
 
-    if (document.location.pathname.match(/\/([vae]|quiz)\//)) {
-      presenceData.smallImageText = document.querySelector(
-        '._1l44zfj, [role="dialog"] [data-test-id="modal-title"]',
-      )?.textContent
-
-      if (document.location.pathname.includes('/v/'))
-        presenceData.smallImageKey = ActivityAssets.Video
-      else if (document.location.pathname.includes('/a/'))
-        presenceData.smallImageKey = ActivityAssets.Article
-      else presenceData.smallImageKey = ActivityAssets.Exercise
+    if (path.includes('/v/')) {
+      presenceData.smallImageKey = ActivityAssets.Video
+      presenceData.smallImageText = 'Watching a Video'
+      presenceData.details = courseName
+      presenceData.state = `📺 ${contentTitle}`
+    }
+    else if (path.includes('/a/')) {
+      presenceData.smallImageKey = ActivityAssets.Article
+      presenceData.smallImageText = 'Reading an Article'
+      presenceData.details = courseName
+      presenceData.state = `📖 ${contentTitle}`
+    }
+    else {
+      presenceData.smallImageKey = ActivityAssets.Exercise
+      presenceData.smallImageText = 'Taking a Quiz'
+      presenceData.details = courseName
+      presenceData.state = `📝 ${contentTitle}`
     }
   }
+  else presenceData.state = `📋 ${document.querySelector('.nav-breadcrumb a:last-child')?.textContent || 'Learning'}`
 
-  if (!presenceData.details)
-    presence.setActivity()
-  else presence.setActivity(presenceData)
+  presence.setActivity(presenceData.details ? presenceData : {})
 })
