@@ -75,14 +75,14 @@ presence.on('UpdateData', async () => {
       presenceData.details = courseName
       presenceData.state = `📖 ${contentTitle}`
     }
-    else{
+    else {
       presenceData.smallImageKey = ActivityAssets.Exercise
       presenceData.smallImageText = 'Taking a Quiz'
       presenceData.details = courseName
       presenceData.state = `📝 ${contentTitle}`
     }
   }
-  else{
+  else {
     presenceData.state = `📋 ${document.querySelector('.nav-breadcrumb a:last-child')?.textContent || 'Learning'}`
   }
 
