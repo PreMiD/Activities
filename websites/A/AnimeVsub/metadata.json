@@ -18,5 +18,11 @@
   "category": "anime",
   "tags": [
     "anime"
+  ],
+    "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
   ]
 }
