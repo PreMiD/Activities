@@ -90,7 +90,7 @@ async function updatePresence() {
           presenceData.smallImageText = video.paused ? strings.pause : strings.play
 
           if (!Number.isNaN(video.currentTime) && !Number.isNaN(video.duration) && video.duration > 0) {
-            const [startTimestamp, endTimestamp] = getTimestamps(
+            if (!video.paused) { [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
               video.currentTime,
               video.duration,
             )
