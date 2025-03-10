@@ -93,7 +93,7 @@ async function updatePresence() {
             if (!video.paused) { [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
               video.currentTime,
               video.duration,
-            )
+            )}
 
 
             if (!video.paused) {
