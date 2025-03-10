@@ -22,6 +22,7 @@ const strings = presence.getStrings({
   viewMyDVR: 'Hulu.viewMyDVR',
   onHulu: 'Hulu.onHulu',
   viewWatchHistory: 'Hulu.viewWatchHistory',
+  buttonViewEpisode: 'general.buttonViewEpisode',
 })
 
 function capitalize(text: string): string {
@@ -29,217 +30,239 @@ function capitalize(text: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
-let elapsed: number, oldUrl: string, header, title, item
+let oldUrl: string, header, title, item
+
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/H/Hulu/assets/logo.png',
+}
 
 presence.on('UpdateData', async () => {
+  const presenceData: PresenceData = {
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: Math.floor(Date.now() / 1000),
+    type: ActivityType.Watching,
+  }
   let video: HTMLVideoElement | null = null
-  let details
-  let state
-  let name: string | undefined
-  let smallImageKey
-  let smallImageText
-  let startTimestamp
-  let endTimestamp
 
   const { href, pathname: path } = window.location
-  if (href !== oldUrl) {
+  if (href !== oldUrl)
     oldUrl = href
-    elapsed = Math.floor(Date.now() / 1000)
-  }
 
-  details = (await strings).browsing
-  startTimestamp = elapsed
+  presenceData.details = (await strings).browsing
 
-  if (path.includes('/hub')) {
-    header = document.querySelector('.Hub__title')
-    title = document.querySelector('.SimpleModalNav__title')
-    details = (await strings).viewCategory
-    if (header) {
-      state = header.textContent
-      if (title)
-        state = `${state} (${title.textContent})`
-    }
-  }
-  else if (path.includes('/genre')) {
-    header = document.querySelector('.Hub__title')
-    title = document.querySelector('.SimpleModalNav__title')
-    details = (await strings).viewGenre
-    if (header) {
-      state = header.textContent
-      if (title)
-        state = `${state} (${title.textContent})`
-    }
-  }
-  else if (path.includes('/series')) {
-    title = document.querySelector('.Masthead__title')
-    item = document.querySelector('.Subnav__item.active')
-    details = (await strings).viewSeries
-    if (title) {
-      state = title.textContent
-      if (item)
-        state = `${state}'s ${item.textContent}`
-    }
-  }
-  else if (path.includes('/movie')) {
-    title = document.querySelector('.Masthead__title')
-    item = document.querySelector('.Subnav__item.active')
-    details = (await strings).viewMovie
-    if (title) {
-      state = title.textContent
-      if (item)
-        state = `${state}'s ${item.textContent}`
-    }
-  }
-  else if (path.includes('/network')) {
-    const brand = document.querySelector<HTMLImageElement>(
-      '.SimpleModalNav__brandImage',
-    )
-    item = document.querySelector('.Subnav__item.active')
-    details = (await strings).viewNetwork
-    if (brand) {
-      state = brand.alt
-      if (item)
-        state = `${state}'s ${item.textContent}`
-    }
-  }
-  else if (path.includes('/sports_episode')) {
-    title = document.querySelector('.Masthead__title')
-    item = document.querySelector('.Subnav__item.active')
-    details = (await strings).viewSportEpisode
-    if (title) {
-      state = title.textContent
-      if (item)
-        state = `${state}'s ${item.textContent}`
-    }
-  }
-  else if (path.includes('/sports_team')) {
-    title = document.querySelector('.Masthead__title')
-    item = document.querySelector('.Subnav__item.active')
-    details = (await strings).viewSportTeam
-    if (title) {
-      state = title.textContent
-      if (item)
-        state = `${state}'s ${item.textContent}`
-    }
-  }
-  else if (path.includes('/search')) {
-    const input = document.querySelector<HTMLInputElement>('.cu-search-input')
-    details = (await strings).search
-    smallImageKey = Assets.Search
-    smallImageText = (await strings).search
-    if (input && input.value.length > 0)
-      state = input.value
-  }
-  else if (path.includes('/live')) {
-    const category = document.querySelector(
-      '.LiveGuide__filter-item--selected',
-    )
-    title = document.querySelector('.ModalHeader__showname')
-    details = (await strings).watchingLive
-    if (category) {
-      state = capitalize(category.textContent!)
-      if (title)
-        state = `${state} (${title.textContent})`
-    }
-  }
-  else if (path.includes('/my-stuff')) {
-    details = (await strings).viewMyStuff
-  }
-  else if (path.includes('/manage-dvr')) {
-    item = document.querySelector('.Subnav__item.active')
-    details = (await strings).viewMyDVR
-    if (item)
-      state = capitalize(item.textContent!)
-  }
-  else if (path.includes('/watch')) {
-    video = document.querySelector('.content-video-player')
-    if (video) {
-      title = document.querySelector('.metadata-area__second-line')
-      const content = document.querySelector('.metadata-area__third-line')
-      const timestamps = getTimestamps(
-        Math.floor(video.currentTime),
-        Math.floor(video.duration),
-      )
-      const live = timestamps[1] === Infinity
-      details = (await strings).watching
+  switch (true) {
+    case path.includes('/hub'):
+      header = document.querySelector('.Hub__title')
+      title = document.querySelector('.SimpleModalNav__title')
+      presenceData.details = (await strings).viewCategory
+      if (header) {
+        presenceData.state = header.textContent
+        if (title)
+          presenceData.state = `${presenceData.state} (${title.textContent})`
+      }
+      break
+    case path.includes('/genre'):
+      header = document.querySelector('.Hub__title')
+      title = document.querySelector('.SimpleModalNav__title')
+      presenceData.details = (await strings).viewGenre
+      if (header) {
+        presenceData.state = header.textContent
+        if (title)
+          presenceData.state = `${presenceData.state} (${title.textContent})`
+      }
+      break
+    case path.includes('/series'):
+      title = document.querySelector('.Masthead__title')
+      item = document.querySelector('.Subnav__item.active')
+      presenceData.details = (await strings).viewSeries
       if (title) {
-        details = (await strings).onHulu
-        name = title?.textContent as string | undefined
+        presenceData.state = title.textContent
+        if (item)
+          presenceData.state = `${presenceData.state}'s ${item.textContent}`
       }
-
-      if (content?.textContent && content.textContent.length > 0)
-        state = content.textContent
-
-      smallImageKey = live
-        ? Assets.Live
-        : video.paused
-          ? Assets.Pause
-          : Assets.Play
-      smallImageText = live
-        ? (await strings).live
-        : video.paused
-          ? (await strings).pause
-          : (await strings).play
-      if (!video.paused) {
-        if (!live)
-          [startTimestamp, endTimestamp] = timestamps
-        else startTimestamp = elapsed
+      break
+    case path.includes('/movie'):
+      title = document.querySelector('.Masthead__title')
+      item = document.querySelector('.Subnav__item.active')
+      presenceData.details = (await strings).viewMovie
+      if (title) {
+        presenceData.state = title.textContent
+        if (item)
+          presenceData.state = `${presenceData.state}'s ${item.textContent}`
       }
+      break
+    case path.includes('/network'): {
+      const brand = document.querySelector<HTMLImageElement>(
+        '.SimpleModalNav__brandImage',
+      )
+      item = document.querySelector('.Subnav__item.active')
+      presenceData.details = (await strings).viewNetwork
+      if (brand) {
+        presenceData.state = brand.alt
+        if (item)
+          presenceData.state = `${presenceData.state}'s ${item.textContent}`
+      }
+      break
     }
-    else {
-      video = document.querySelector('video#content-video-player')
-      details = (await strings).viewWatchHistory
+    case path.includes('/sports_episode'):
+      title = document.querySelector('.Masthead__title')
+      item = document.querySelector('.Subnav__item.active')
+      presenceData.details = (await strings).viewSportEpisode
+      if (title) {
+        presenceData.state = title.textContent
+        if (item)
+          presenceData.state = `${presenceData.state}'s ${item.textContent}`
+      }
+      break
+    case path.includes('/sports_team'):
+      title = document.querySelector('.Masthead__title')
+      item = document.querySelector('.Subnav__item.active')
+      presenceData.details = (await strings).viewSportTeam
+      if (title) {
+        presenceData.state = title.textContent
+        if (item)
+          presenceData.state = `${presenceData.state}'s ${item.textContent}`
+      }
+      break
+    case path.includes('/search'): {
+      const input = document.querySelector<HTMLInputElement>('.cu-search-input')
+      presenceData.details = (await strings).search
+      presenceData.smallImageKey = Assets.Search
+      presenceData.smallImageText = (await strings).search
+      if (input && input.value.length > 0)
+        presenceData.state = input.value
+      break
+    }
+    case path.includes('/live'): {
+      const category = document.querySelector(
+        '.LiveGuide__filter-item--selected',
+      )
+      title = document.querySelector('.ModalHeader__showname')
+      presenceData.details = (await strings).watchingLive
+      if (category) {
+        presenceData.state = capitalize(category.textContent!)
+        if (title)
+          presenceData.state = `${presenceData.state} (${title.textContent})`
+      }
+      break
+    }
+    case path.includes('/my-stuff'):
+      presenceData.details = (await strings).viewMyStuff
+      break
+    case path.includes('/manage-dvr'):
+      item = document.querySelector('.Subnav__item.active')
+      presenceData.details = (await strings).viewMyDVR
+      if (item)
+        presenceData.state = capitalize(item.textContent!)
+      break
+    case path.includes('/watch'):
+      video = document.querySelector('.content-video-player')
       if (video) {
-        title = document.querySelector(
-          '#web-player-app div.PlayerMetadata__titleText',
-        )
-        const content = document.querySelector(
-          '#web-player-app div.PlayerMetadata__subTitle',
-        )
+        title = document.querySelector('.metadata-area__second-line')
+        const content = document.querySelector('.metadata-area__third-line')
         const timestamps = getTimestamps(
           Math.floor(video.currentTime),
           Math.floor(video.duration),
         )
         const live = timestamps[1] === Infinity
-        details = (await strings).watching
+        presenceData.details = (await strings).watching
         if (title) {
-          details = (await strings).onHulu
-          name = title?.textContent as string | undefined
+          presenceData.details = (await strings).onHulu
+          presenceData.name = title?.textContent as string | undefined
         }
 
         if (content?.textContent && content.textContent.length > 0)
-          state = content.textContent
+          presenceData.state = content.textContent
 
-        smallImageKey = live
+        presenceData.smallImageKey = live
           ? Assets.Live
           : video.paused
             ? Assets.Pause
             : Assets.Play
-        smallImageText = live
+        presenceData.smallImageText = live
           ? (await strings).live
           : video.paused
             ? (await strings).pause
             : (await strings).play
         if (!video.paused) {
-          if (!live)
-            [startTimestamp, endTimestamp] = timestamps
-          else startTimestamp = elapsed
+          presenceData.startTimestamp = timestamps[0]
+          presenceData.endTimestamp = timestamps[1]
+        }
+        else {
+          presenceData.startTimestamp = null
+          presenceData.endTimestamp = null
+        }
+        const seasonAndEpisode = content?.textContent?.match(/S(\d+) E(\d+)-/)
+        if (seasonAndEpisode && seasonAndEpisode?.length > 2) {
+          presenceData.largeImageText = `Season ${seasonAndEpisode[1]}, Episode ${seasonAndEpisode[2]}`
+          presenceData.state = content?.textContent?.replace(/S\d+ E\d+-/, '') as string
+          presenceData.buttons = [
+            {
+              label: (await strings).buttonViewEpisode,
+              url: href,
+            },
+          ]
         }
       }
-    }
+      else {
+        video = document.querySelector('video#content-video-player')
+        presenceData.details = (await strings).viewWatchHistory
+        if (video) {
+          title = document.querySelector(
+            '#web-player-app div.PlayerMetadata__titleText',
+          )
+          const content = document.querySelector(
+            '#web-player-app div.PlayerMetadata__subTitle',
+          )
+          const timestamps = getTimestamps(
+            Math.floor(video.currentTime),
+            Math.floor(video.duration),
+          )
+          const live = timestamps[1] === Infinity
+          presenceData.details = (await strings).watching
+          if (title) {
+            presenceData.details = (await strings).onHulu
+            presenceData.name = title?.textContent as string | undefined
+          }
+
+          if (content?.textContent && content.textContent.length > 0)
+            presenceData.state = content.textContent
+
+          presenceData.smallImageKey = live
+            ? Assets.Live
+            : video.paused
+              ? Assets.Pause
+              : Assets.Play
+          presenceData.smallImageText = live
+            ? (await strings).live
+            : video.paused
+              ? (await strings).pause
+              : (await strings).play
+          if (!video.paused) {
+            presenceData.startTimestamp = timestamps[0]
+            presenceData.endTimestamp = timestamps[1]
+          }
+          else {
+            presenceData.startTimestamp = null
+            presenceData.endTimestamp = null
+          }
+          const seasonAndEpisode = content?.textContent?.match(/S(\d+) E(\d+)-/)
+          if (seasonAndEpisode && seasonAndEpisode?.length > 2) {
+            presenceData.largeImageText = `Season ${seasonAndEpisode[1]}, Episode ${seasonAndEpisode[2]}`
+            presenceData.state = content?.textContent?.replace(/S\d+ E\d+-/, '') as string
+            presenceData.buttons = [
+              {
+                label: (await strings).buttonViewEpisode,
+                url: href,
+              },
+            ]
+          }
+        }
+      }
+      break
   }
 
   presence.setActivity(
-    {
-      type: ActivityType.Watching,
-      details,
-      name,
-      state,
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/H/Hulu/assets/logo.png',
-      smallImageKey,
-      smallImageText,
-      startTimestamp,
-      endTimestamp,
-    },
+    presenceData,
   )
 })
