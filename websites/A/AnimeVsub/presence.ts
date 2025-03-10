@@ -90,14 +90,15 @@ async function updatePresence() {
           presenceData.smallImageText = video.paused ? strings.pause : strings.play
 
           if (!Number.isNaN(video.currentTime) && !Number.isNaN(video.duration) && video.duration > 0) {
-            if (!video.paused) { [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
-              video.currentTime,
-              video.duration,
-            )}
-
+            if (!video.paused) {
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+                video.currentTime,
+                video.duration,
+              )
+            }
 
             if (!video.paused) {
-              presenceData.endTimestamp = endTimestamp
+              // presenceData.endTimestamp = endTimestamp
             }
             else {
               delete presenceData.endTimestamp
@@ -108,6 +109,12 @@ async function updatePresence() {
         presenceData.details = titleElement?.textContent || 'Đang xem...'
         presenceData.state = `Tập: ${animeEpisode ?? 1}`
         presenceData.largeImageKey = video?.poster || ActivityAssets.Logo
+        presenceData.buttons = [
+          {
+            label: '📺Xem Phim',
+            url: window.location.href,
+          },
+        ]
       }
       catch (error) {
         console.error('Lỗi khi cập nhật trạng thái:', error)
