@@ -23,7 +23,7 @@ enum ActivityAssets {
 async function updatePresence() {
   const playback = !!document.querySelector('#title')
     || (document.querySelectorAll('video').length
-      && document.querySelectorAll('video')[0]?.className !== 'previewVideo')
+      && document.querySelector('video')?.className !== 'previewVideo')
 
   const { pathname } = document.location
   const [newLang] = await Promise.all([
