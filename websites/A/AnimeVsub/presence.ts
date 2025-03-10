@@ -64,7 +64,7 @@ async function updatePresence() {
         const titleElement = document.querySelector<HTMLHeadingElement>(
           'h1.line-clamp-2.text-weight-medium',
         )
-        const currentURL = window.location.pathname
+        const currentURL = pathname
         const episodeElements = document.querySelectorAll('.q-btn-item')
 
         const episodes = Array.from(episodeElements)
