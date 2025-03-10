@@ -61,9 +61,9 @@ async function updatePresence() {
   else {
     if (splitPath[1] === 'phim') {
       try {
-        const titleElement = document.querySelector(
+        const titleElement = document.querySelector<HTMLHeadingElement>(
           'h1.line-clamp-2.text-weight-medium',
-        ) as HTMLHeadingElement
+        )
         const currentURL = window.location.pathname
         const episodeElements = document.querySelectorAll('.q-btn-item')
 
