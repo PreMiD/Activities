@@ -55,41 +55,37 @@ presence.on('UpdateData', async () => {
       header = document.querySelector('.Hub__title')
       title = document.querySelector('.SimpleModalNav__title')
       presenceData.details = (await strings).viewCategory
-      if (header) {
+      if (header && title)
+        presenceData.state = `${presenceData.state} (${title.textContent})`
+      else if (header && !title)
         presenceData.state = header.textContent
-        if (title)
-          presenceData.state = `${presenceData.state} (${title.textContent})`
-      }
       break
     case path.includes('/genre'):
       header = document.querySelector('.Hub__title')
       title = document.querySelector('.SimpleModalNav__title')
       presenceData.details = (await strings).viewGenre
-      if (header) {
+      if (header && title)
+        presenceData.state = `${presenceData.state} (${title.textContent})`
+      else if (header && !title)
         presenceData.state = header.textContent
-        if (title)
-          presenceData.state = `${presenceData.state} (${title.textContent})`
-      }
       break
     case path.includes('/series'):
       title = document.querySelector('.Masthead__title')
       item = document.querySelector('.Subnav__item.active')
       presenceData.details = (await strings).viewSeries
-      if (title) {
+      if (title && item)
+        presenceData.state = `${presenceData.state}'s ${item.textContent}`
+      else if (title && !item)
         presenceData.state = title.textContent
-        if (item)
-          presenceData.state = `${presenceData.state}'s ${item.textContent}`
-      }
       break
     case path.includes('/movie'):
       title = document.querySelector('.Masthead__title')
       item = document.querySelector('.Subnav__item.active')
       presenceData.details = (await strings).viewMovie
-      if (title) {
+      if (title && item)
+        presenceData.state = `${presenceData.state}'s ${item.textContent}`
+      else if (title && !item)
         presenceData.state = title.textContent
-        if (item)
-          presenceData.state = `${presenceData.state}'s ${item.textContent}`
-      }
       break
     case path.includes('/network'): {
       const brand = document.querySelector<HTMLImageElement>(
@@ -97,32 +93,29 @@ presence.on('UpdateData', async () => {
       )
       item = document.querySelector('.Subnav__item.active')
       presenceData.details = (await strings).viewNetwork
-      if (brand) {
+      if (brand && item)
+        presenceData.state = `${brand.alt}'s ${item.textContent}`
+      else if (brand && !item)
         presenceData.state = brand.alt
-        if (item)
-          presenceData.state = `${presenceData.state}'s ${item.textContent}`
-      }
       break
     }
     case path.includes('/sports_episode'):
       title = document.querySelector('.Masthead__title')
       item = document.querySelector('.Subnav__item.active')
       presenceData.details = (await strings).viewSportEpisode
-      if (title) {
+      if (title && item)
+        presenceData.state = `${presenceData.state}'s ${item.textContent}`
+      else if (title && !item)
         presenceData.state = title.textContent
-        if (item)
-          presenceData.state = `${presenceData.state}'s ${item.textContent}`
-      }
       break
     case path.includes('/sports_team'):
       title = document.querySelector('.Masthead__title')
       item = document.querySelector('.Subnav__item.active')
       presenceData.details = (await strings).viewSportTeam
-      if (title) {
+      if (title && item)
+        presenceData.state = `${presenceData.state}'s ${item.textContent}`
+      else if (title && !item)
         presenceData.state = title.textContent
-        if (item)
-          presenceData.state = `${presenceData.state}'s ${item.textContent}`
-      }
       break
     case path.includes('/search'): {
       const input = document.querySelector<HTMLInputElement>('.cu-search-input')
@@ -139,11 +132,10 @@ presence.on('UpdateData', async () => {
       )
       title = document.querySelector('.ModalHeader__showname')
       presenceData.details = (await strings).watchingLive
-      if (category) {
+      if (category && title)
+        presenceData.state = `${presenceData.state} (${title.textContent})`
+      else if (category && !title)
         presenceData.state = capitalize(category.textContent!)
-        if (title)
-          presenceData.state = `${presenceData.state} (${title.textContent})`
-      }
       break
     }
     case path.includes('/my-stuff'):
