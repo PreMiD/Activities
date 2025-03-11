@@ -25,7 +25,7 @@ const strings = presence.getStrings({
 })
 
 enum ActivityAssets {
-	Logo = 'https://i.imgur.com/AXw7EYu.png',
+	Logo = 'https://i.imgur.com/MCJ61nd.png',
 }
 
 let video = {
