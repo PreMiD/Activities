@@ -154,7 +154,7 @@ A list of fields and their rules are listed below:
 
 ### **`description`**
 
-- **All** activities are **required** to have an English description regardless of the website's prefered language.
+- **All** activities are **required** to have an English description regardless of the website's preferred language.
 - Do **not** try and translate the description yourself unless you know that language, translators will modify your `metadata.json` and change the descriptions if necessary.
 
 ### **`url`**
@@ -225,7 +225,7 @@ Here is a list of rules you must follow when writing your `presence.ts` file:
 - **Always** use `document.location` to get current location information rather than `window.location` or `location`.
 - All assets **must** have a resolution of `512x512` pixels. You can upsize it using a tool like [waifu2x](http://waifu2x.udp.jp/).
 - **Never** use custom functions when [native variants are available](https://docs.premid.app/dev/presence#files-explained); this makes sure fixes on the extension level also apply to your activities. You're free to use whatever you need if you do not find them listed in the docs.
-- It is **forbidden** to code activities for a site without adding support to its primary language (for e.g., a YouTube activity coded with support only for Portueguese and Japanese, but not English itself.)
+- It is **forbidden** to code activities for a site without adding support to its primary language (for e.g., a YouTube activity coded with support only for Portuguese and Japanese, but not English itself.)
 - The `smallImageKey` and `smallImageText` fields are intended to provide additional/secondary context (such as `playing/paused` for video sites, `browsing` for regular sites, and other cases) not to promote Discord profiles or anything unrelated to PreMiD.
 - When accessing cookies for stored data, please prefix the key with `PMD_`.
 - You may only make HTTP/HTTPS requests to `premid.app` or the activity website API. If you are using external domains, you will be required to explain why it is necessary. The only allowed API to make requests is the [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
