@@ -1,0 +1,70 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "1348276520342257797",
+    "name": "Seth_CrazyGames"
+  },
+  "service": "CrazyGames",
+  "altnames": [
+    "1001juegos",
+    "1001 juegos"
+  ],
+  "description": {
+    "ar": "العب ألعاب إنترنت مجانية على كريزي جيمز، المكان الأفضل للعب ألعاب متصفح عالية الجودة. نقوم بإضافة ألعاب جديدة يوميًا. استمتع!",
+    "cs": "Zahrajte si zdarma online hry na CrazyGames, cože je to nejlepší místo pro hraní vysoce kvalitních her v prohlížeči. Každý den přidáváme nové hry. Bavte se!",
+    "da": "Spil gratis online spil på CrazyGames, det bedste sted at spille browserspil af høj kvalitet på! Vi tilføjer nye spil hver dag. Hav det sjovt!",
+    "de": "Spiele kostenlose online Spiele auf CrazyGames, der beste Ort um hochqualitative Browserspiele zu spielen. Wir fügen täglich neue Spiele hinzu. Viel Spaß!",
+    "el": "Παίξε δωρεάν online παιχνίδια στο CrazyGames, το καλύτερο μέρος για να παίξεις παιχνίδια υψηλής ποιότητας στον περιηγητή σας. Προσθέτουμε νέα παιχνίδια κάθε μέρα. Καλά να περάσεις!",
+    "en": "Play free online games at CrazyGames, the best place to play high-quality browser games. We add new games every day. Have fun!",
+    "es": "Juega a juegos gratis en línea en 1001 Juegos, el mejor sitio para jugar a juegos de navegador de calidad. Añadimos juegos nuevos cada día. ¡Que te diviertas!",
+    "fi": "Pelaa ilmaisia online-pelejä CrazyGamesillä, paras paikka pelata korkealaatuisia selainpelejä. Lisäämme uusia pelejä joka päivä. Pidä hauskaa!",
+    "fr": "Joue gratuitement en ligne sur CrazyGames, le meilleur endroit pour trouver des jeux sur navigateur de haute qualité. Nous ajoutons de nouveaux jeux tous les jours. Amuse-toi bien !",
+    "hu": "Játsz ingyenes online játékokat CrazyGames-en, a legkirályabb böngészős játékok tárházában. Minden nap új játékok kerülnek fel az oldalra! Jó szórakozást!",
+    "id": "Mainkan game online gratis di CrazyGames, tempat terbaik untuk bermain game peramban berkualitas tinggi. Ada game baru setiap harinya. Selamat bermain!",
+    "it": "Gioca giochi gratis su CrazyGames.com, il posto migliore per giocare i migliori giochi nel browser! Aggiungiamo tutti i giorni nuovi giochi!",
+    "ko": "고품질 브라우저 게임을 플레이하기에 최고의 플랫폼인 CrazyGames에서 무료 온라인 게임을 플레이하세요. 매일 새로운 게임이 추가됩니다. 즐겨보세요!",
+    "nl": "Speel de beste gratis online spelletjes op CrazyGames. Hier vind je duizenden games voor je computer, smartphone, of tablet! Speel je favoriete spellen gewoon meteen, zonder download of installatie.",
+    "pl": "Graj w darmowe gry online na CrazyGames, najlepszym miejscu do grania w wysokiej jakości gry przeglądarkowe. Codziennie dodajemy nowe gry. Baw się dobrze!",
+    "pt": "Com 5000+ Jogos Online Gratuitos, a CrazyGames é o Melhor Lugar Para Jogar Instantaneamente Sozinho ou com Seus Amigos, Sem Downloads e com Todos os Seus Dispositivos",
+    "ro": "Joacă jocuri online gratuite pe CrazyGames, cel mai bun loc pentru a juca jocuri browser de înaltă calitate. Adăugăm jocuri noi în fiecare zi. Distracție plăcută!",
+    "ru": "Играйте в бесплатные онлайн-игры на CrazyGames, лучшее место с качественными браузерными играми. Мы добавляем новые игры каждый день. Развлекайтесь!",
+    "sv": "Spela gratis onlinespel hos CrazyGames, sidan som har dom bästa webbläsarspelen. Vi lägger till nya spel varje dag. Ha så kul!",
+    "th": "เล่นเกมส์ออนไลน์ฟรีได้ที่ CrazyGames เว็บไซต์สำหรับเกมส์บนบราวเซอร์ที่ดีที่สุด เรามีเกมส์ใหม่ทุกวัน ขอให้ทุกคนสนุกกับการเล่นเกมส์!",
+    "tr": "Yüksek kaliteli tarayıcı oyunları oynamak için en iyi yer olan CrazyGames'te ücretsiz çevrimiçi oyunlar oynayın. Her gün yeni oyunlar ekliyoruz. İyi eğlenceler!",
+    "uk": "Грайте у безкоштовні онлайн ігри на CrazyGames, найкраще місце для гри у якісні браузерні ігри. Ми додаємо нові ігри щодня. Насолоджуйся!",
+    "vi": "Chơi các trò chơi trực tuyến miễn phí tại CrazyGames, nơi tốt nhất để chơi các trò chơi trên trình duyệt chất lượng cao. Chúng tôi thêm các trò chơi mới mỗi ngày. Chúc bạn chơi vui vẻ!"
+  },
+  "url": [
+    "www.crazygames.com",
+    "www.crazygames.nl",
+    "it.crazygames.com",
+    "www.1001juegos.com",
+    "www.crazygames.co.id",
+    "www.crazygames.fr",
+    "www.crazygames.com.br",
+    "www.crazygames.ru",
+    "www.crazygames.com.ua",
+    "www.crazygames.no",
+    "www.crazygames.ro",
+    "www.crazygames.fi",
+    "www.crazygames.se",
+    "de.crazygames.com",
+    "www.crazygames.pl",
+    "gr.crazygames.com",
+    "www.crazygames.cz",
+    "www.crazygames.hu",
+    "ar.crazygames.com",
+    "vn.crazygames.com",
+    "th.crazygames.com",
+    "www.crazygames.co.kr"
+  ],
+  "version": "1.0.0",
+  "logo": "https://cloud.falco.fun/s/G9ojdWxsnSRWyeZ/download/logo-v2.png",
+  "thumbnail": "https://cloud.falco.fun/s/a5DTpssyT7swyCi/download/thumbnail-v2.png",
+  "color": "#6842ff",
+  "category": "games",
+  "tags": [
+    "game"
+  ]
+}
