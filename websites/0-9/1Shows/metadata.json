@@ -10,7 +10,7 @@
     "en": "Enjoy unlimited streaming of movies, TV shows, and anime in HD & 4K, completely free! 1Shows offers a seamless experience with multi-language support and auto-next playback, ensuring you never miss a moment. Watch your favorite content anytime, anywhere!"
   },
   "url": "www.1shows.com",
-  "version": "1.0.5",
+  "version": "1.0.0",
   "logo": "https://i.imgur.com/AXw7EYu.png",
   "thumbnail": "https://i.imgur.com/1lg3DmE.png",
   "color": "#121212",
@@ -20,8 +20,6 @@
     "anime",
     "tv"
   ],
-  "iframe": true,
-  "iFrameRegExp": "vidlink[.]pro|vidsrc[.]wtf",
   "settings": [
     {
       "id": "lang",
