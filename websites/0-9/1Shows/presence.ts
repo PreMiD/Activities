@@ -33,33 +33,31 @@ presence.on("UpdateData", async () => {
 
   const { href, pathname } = document.location;
 
-  const [showTimestamp, showButtons, privacy] = await Promise.all([
-    presence.getSetting<boolean>("timestamp"),
-    presence.getSetting<boolean>("buttons"),
-    presence.getSetting<boolean>("privacy"),
+  const [privacy] = await Promise.all([
+    presence.getSetting<boolean>('privacy'),
   ]);
 
   if (privacy) {
-    presenceData.details = "Watching 1Shows";
+    presenceData.details = 'Watching 1Shows'
     presence.setActivity(presenceData);
-    return;
+    return
   }
 
   const pages: Record<string, PresenceData> = {
-    "/": {
-      details: `Viewing HomePage 🏠`,
+    '/': {
+      details: 'Viewing HomePage 🏠',
       smallImageKey: Assets.Viewing,
     },
-    "/profile": {
-      details: `Viewing Profile 👤`,
+    '/profile': {
+      details: 'Viewing Profile 👤',
       smallImageKey: Assets.Viewing,
     },
-    "/tv": {
-      details: `${(await strings).browse} TV Shows 📺`,
+    '/tv': {
+      details: '${(await strings).browse} TV Shows 📺',
       smallImageKey: Assets.Viewing,
     },
-    "/search": {
-      details: `${(await strings).browse} Search 🔎`,
+    '/search': {
+      details: '${(await strings).browse} Search 🔎',
       smallImageKey: Assets.Viewing,
     },
   };
