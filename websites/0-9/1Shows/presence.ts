@@ -162,6 +162,7 @@ presence.on('UpdateData', async () => {
           const isStreaming = urlParams.get('streaming') === 'true'
           presenceData.smallImageKey = isStreaming ? Assets.Play : Assets.Pause
         }
+		
         break
       }
 
