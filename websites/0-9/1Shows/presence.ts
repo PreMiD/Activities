@@ -143,7 +143,7 @@ presenceData.largeImageKey = document.querySelector<HTMLImageElement>('figure im
           presenceData.largeImageKey = document.querySelector<HTMLImageElement>('section.md\\:col-\\[1\\/4\\] img')?.src || ActivityAssets.Logo
 
           // Check URL parameter for streaming
-          const urlParams = new URLSearchParams(window.location.search)
+          const urlParams = new URLSearchParams(document.location.search)
           const isStreaming = urlParams.get('streaming') === 'true'
           presenceData.smallImageKey = isStreaming ? Assets.Play : Assets.Pause
         }
