@@ -81,8 +81,7 @@ presence.on('UpdateData', async () => {
             '#Movie\\ Runtime time p',
           )
 
-          const runtime =
-            runtimeElement?.textContent?.match(/\d+/)?.[0] || 'N/A'
+          const runtime = runtimeElement?.textContent?.match(/\d+/)?.[0] || 'N/A'
 
           const releaseDateElement = document.querySelector(
             '#Movie\\ Release\\ Date time p',
@@ -123,7 +122,7 @@ presence.on('UpdateData', async () => {
 
   if (pathname.includes('/tv/')) {
     switch (pathname.replace(/^\/+/, '').split('/')[0]) {
-      case 'tv':
+      case 'tv': {
         const match = pathname.match(/\/tv\/(\d+)(?:-([^/]+))?/)
 
         if (match && match[1]) {
@@ -181,12 +180,13 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageKey = isStreaming ? Assets.Play : Assets.Pause
         }
         break
+    } 
 
-      default:
-        presenceData.details = 'Browsing a TV Show'
-        break
-    }
-  }
+    default:
+      presenceData.details = 'Browsing a TV Show'
+      break
+  } 
+} 
 
   if (presenceData.details) {
     presence.setActivity(presenceData)
