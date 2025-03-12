@@ -57,13 +57,13 @@ presence.on("UpdateData", async () => {
       }
   }
 
-  if (pathname.includes("/movies/")) {
-    switch (pathname.replace(/^\/+/, "").split("/")[0]) {
-      case "movies":
-        const match = pathname.match(/\/movies\/(\d+)(?:-([^/]+))?/);
+  if (pathname.includes('/movies/')) {
+    switch (pathname.replace(/^\/+/, '').split('/')[0]) {
+      case 'movies':
+        const match = pathname.match(/\/movies\/(\d+)(?:-([^/]+))?/)
 
         if (match && match[1]) {
-          const movieName = match[2]?.replace(/-/g, " ") || 'Unknown Movie'
+          const movieName = match[2]?.replace(/-/g, ' ') || 'Unknown Movie'
 
           const formattedMovieName = movieName
             .split(' ')
@@ -76,7 +76,6 @@ presence.on("UpdateData", async () => {
           const ratingElement = document.querySelector(
             '.radial-progress span.text-white'
           )
-		  
           const rating = ratingElement?.textContent?.trim() || 'N/A'
 
           const runtimeElement = document.querySelector(
@@ -92,9 +91,9 @@ presence.on("UpdateData", async () => {
           let releaseDate = releaseDateElement?.textContent?.trim() || 'N/A'
 
           if (releaseDate !== 'N/A') {
-            const dateParts = releaseDate.split(', ');
+            const dateParts = releaseDate.split(', ')
             if (dateParts.length === 3) {
-              releaseDate = '${dateParts[1]} ${dateParts[2]}';
+              releaseDate = '${dateParts[1]} ${dateParts[2]}'
             }
           }
 
@@ -105,7 +104,7 @@ presence.on("UpdateData", async () => {
           )
 		  
           const posterSrc =
-            posterElement?.getAttribute('src') || 'default_image_key'
+            posterElement?.getAttribute('src')
 
           presenceData.largeImageKey = posterSrc
 
