@@ -62,13 +62,24 @@ presence.on('UpdateData', async () => {
         const match = pathname.match(/\/movies\/(\d+)(?:-([^/]+))?/)
 
         if (match && match[1]) {
-          const formattedMovieName = match[2]?.replace(/-/g, ' ') || 'Unknown Movie'
+          const movieName = match[2]?.replace(/-/g, ' ') || 'Unknown Movie'
+
+          const formattedMovieName = movieName
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ')
 
           presenceData.name = `Watching ${formattedMovieName}`
-          presenceData.details = '1Shows.com'
+          presenceData.details = '1Shows'
 
-          const rating = document.querySelector('.radial-progress span.text-white')?.textContent?.trim() || 'N/A',
-           runtime = runtimeElement?.textContent?.match(/\d+/)?.[0] || 'N/A';
+          const ratingElement = document.querySelector('.radial-progress span.text-white')
+          const rating = ratingElement?.textContent?.trim() || 'N/A'
+
+          const runtimeElement = document.querySelector('#Movie\\ Runtime time p')
+
+          const runtime = runtimeElement?.textContent?.match(/\d+/)?.[0] || 'N/A'
+
+          const releaseDateElement = document.querySelector('#Movie\\ Release\\ Date time p')
 
           let releaseDate = releaseDateElement?.textContent?.trim() || 'N/A'
 
@@ -81,7 +92,11 @@ presence.on('UpdateData', async () => {
 
           presenceData.state = `⭐ ${rating} 🕒 ${runtime} mins 🗓️ ${releaseDate}`
 
-presenceData.largeImageKey = document.querySelector<HTMLImageElement>('figure img.object-cover')?.src || ActivityAssets.Logo
+          const posterElement = document.querySelector('figure img.object-cover')
+
+          const posterSrc = posterElement?.getAttribute('src')
+
+          presenceData.largeImageKey = posterSrc
 
           // Check URL parameter for streaming
           const urlParams = new URLSearchParams(document.location.search)
@@ -120,11 +135,13 @@ presenceData.largeImageKey = document.querySelector<HTMLImageElement>('figure im
           const episodeNo = showData.last_episode_watched
 
           presenceData.name = `Watching ${formattedShowName} S${seasonNo}E${episodeNo}`
-          presenceData.details = '1Shows.com'
+          presenceData.details = '1Shows'
 
-          const rating = document.querySelector('.radial-progress span.text-white')?.textContent?.trim() || 'N/A'
-          
-          let releaseDate = document.querySelector('#TV\\ Shows\\ Air\\ Date time')?.textContent?.trim() || 'N/A'
+          const ratingElement = document.querySelector('.radial-progress span.text-white')
+          const rating = ratingElement?.textContent?.trim() || 'N/A'
+
+          const releaseDateElement = document.querySelector('#TV\\ Shows\\ Air\\ Date time')
+          let releaseDate = releaseDateElement?.textContent?.trim() || 'N/A'
 
           if (releaseDate !== 'N/A') {
             const dateParts = releaseDate.split(', ')
@@ -135,7 +152,10 @@ presenceData.largeImageKey = document.querySelector<HTMLImageElement>('figure im
 
           presenceData.state = `⭐ ${rating} 🗓️ ${releaseDate}`
 
-          presenceData.largeImageKey = document.querySelector<HTMLImageElement>('section.md\\:col-\\[1\\/4\\] img')?.src || ActivityAssets.Logo
+          const posterElement = document.querySelector('section.md\\:col-\\[1\\/4\\] img')
+          const posterSrc = posterElement?.getAttribute('src') || 'default_image_key'
+
+          presenceData.largeImageKey = posterSrc
 
           // Check URL parameter for streaming
           const urlParams = new URLSearchParams(document.location.search)
@@ -166,7 +186,9 @@ presenceData.largeImageKey = document.querySelector<HTMLImageElement>('figure im
     presenceData.smallImageKey = Assets.Search
   }
 
-  if (presenceData.details) presence.setActivity(presenceData)
-  else presence.setActivity() 
+  if (presenceData.details) {
+    presence.setActivity(presenceData)
+  } else {
+    presence.setActivity() // Clear activity if no details
   }
 })
