@@ -148,10 +148,7 @@ presenceData.largeImageKey = document.querySelector<HTMLImageElement>('figure im
 
           presenceData.state = `⭐ ${rating} 🗓️ ${releaseDate}`
 
-          const posterElement = document.querySelector('section.md\\:col-\\[1\\/4\\] img')
-          const posterSrc = posterElement?.getAttribute('src') || 'default_image_key'
-
-          presenceData.largeImageKey = posterSrc
+          presenceData.largeImageKey = document.querySelector<HTMLImageElement>('section.md\\:col-\\[1\\/4\\] img')?.src || ActivityAssets.Logo
 
           // Check URL parameter for streaming
           const urlParams = new URLSearchParams(window.location.search)
