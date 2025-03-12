@@ -179,11 +179,7 @@ presence.on('UpdateData', async () => {
           const urlParams = new URLSearchParams(window.location.search)
           const isStreaming = urlParams.get('streaming') === 'true'
           presenceData.smallImageKey = isStreaming ? Assets.Play : Assets.Pause
-
-          console.log('Presence data before setting activity:', presenceData) // Debugging log
-        } else {
-          console.log('TV show match failed for pathname:', pathname)
-        }
+        } 
         break
 
       default:
