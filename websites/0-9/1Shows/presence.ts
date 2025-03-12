@@ -54,12 +54,8 @@ presence.on("UpdateData", async () => {
         ...presenceData,
         ...data,
         type: ActivityType.Watching,
-      };
+      }
   }
-
-  const steamTitle = document.querySelector("div#right-header > div")
-    ? document.querySelector("div#right-header > div")?.textContent
-    : document.querySelector("div.flex > span.flex-grow")?.textContent;
 
   if (pathname.includes("/movies/")) {
     switch (pathname.replace(/^\/+/, "").split("/")[0]) {
@@ -67,60 +63,61 @@ presence.on("UpdateData", async () => {
         const match = pathname.match(/\/movies\/(\d+)(?:-([^/]+))?/);
 
         if (match && match[1]) {
-          const tmdbId = match[1]
-          let movieName = match[2]?.replace(/-/g, " ") || 'Unknown Movie';
+          const movieName = match[2]?.replace(/-/g, " ") || 'Unknown Movie'
 
-          let formattedMovieName = movieName
-            .split(" ")
+          const formattedMovieName = movieName
+            .split(' ')
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ");
+            .join(' ')
 
           presenceData.name = `Watching ${formattedMovieName}`
-          presenceData.details = '1Shows.com';
+          presenceData.details = '1Shows.com'
 
           const ratingElement = document.querySelector(
             '.radial-progress span.text-white'
-          );
-          const rating = ratingElement?.textContent?.trim() || 'N/A';
+          )
+		  
+          const rating = ratingElement?.textContent?.trim() || 'N/A'
 
           const runtimeElement = document.querySelector(
             '#Movie\\ Runtime time p'
-          );
-          let runtime = runtimeElement?.textContent?.match(/\d+/)?.[0] || 'N/A';
+          )
+		  
+          const runtime = runtimeElement?.textContent?.match(/\d+/)?.[0] || 'N/A'
 
           const releaseDateElement = document.querySelector(
             '#Movie\\ Release\\ Date time p'
-          );
-          let releaseDate = releaseDateElement?.textContent?.trim() || 'N/A';
+          )
+		  
+          let releaseDate = releaseDateElement?.textContent?.trim() || 'N/A'
 
           if (releaseDate !== 'N/A') {
-            const dateParts = releaseDate.split(", ");
+            const dateParts = releaseDate.split(', ');
             if (dateParts.length === 3) {
-              releaseDate = `${dateParts[1]} ${dateParts[2]}`;
+              releaseDate = '${dateParts[1]} ${dateParts[2]}';
             }
           }
 
-          presenceData.state = `⭐ ${rating} 🕒 ${runtime} mins 🗓️ ${releaseDate}`;
+          presenceData.state = '⭐ ${rating} 🕒 ${runtime} mins 🗓️ ${releaseDate}'
 
           const posterElement = document.querySelector(
             'figure img.object-cover'
-          );
+          )
+		  
           const posterSrc =
-            posterElement?.getAttribute("src") || 'default_image_key';
+            posterElement?.getAttribute('src') || 'default_image_key'
 
-          presenceData.largeImageKey = posterSrc;
+          presenceData.largeImageKey = posterSrc
 
           // Check URL parameter for streaming
           const urlParams = new URLSearchParams(window.location.search);
           const isStreaming = urlParams.get("streaming") === "true";
           presenceData.smallImageKey = isStreaming ? Assets.Play : Assets.Pause;
-        } else {
-          console.log('Movie match failed for pathname:', pathname);
-        }
-        break;
-
+        } 
+        break
+		
       default:
-        presenceData.details = 'Browsing a Movie';
+        presenceData.details = 'Browsing a Movie'
         break;
     }
   }
