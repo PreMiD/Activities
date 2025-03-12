@@ -150,20 +150,22 @@ async function uploadImage(urlToUpload: string): Promise<string> {
     return uploadedImages[urlToUpload]
   isUploading = true
 
-  const file = await fetch(urlToUpload).then(x => x.blob())
-  const formData = new FormData()
+  return new Promise((resolve) => {
+    fetch(urlToUpload)
+      .then(res => res.blob())
+      .then((blob) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(blob)
+        reader.onloadend = () => {
+          isUploading = false
 
-  formData.append('file', file, 'file')
+          const result = reader.result as string
+          uploadedImages[urlToUpload] = result
 
-  const response = await fetch('https://pd.premid.app/create/image', {
-    method: 'POST',
-    body: formData,
+          resolve(result)
+        }
+      })
   })
-  const responseUrl = await response.text()
-
-  isUploading = false
-  uploadedImages[urlToUpload] = responseUrl
-  return responseUrl
 }
 function isPrivateIp(ip = location.hostname) {
   return /^(?:(?:10|127|192(?:\.|-)168|172(?:\.|-)(?:1[6-9]|2\d|3[01]))(?:\.|-)|localhost)/.test(
@@ -203,7 +205,7 @@ presence.on('UpdateData', async () => {
   if (document.querySelector('#plex')) {
     if (document.querySelector('#plex > div:nth-child(4) > div')) {
       const media = document.querySelector<HTMLVideoElement | HTMLAudioElement>(
-        '#plex > div:nth-child(4) > div > div:nth-child(1) > :is(video, audio)',
+        '#plex :is(video, audio)',
       )
       const [cover, titlePresenceName] = await Promise.all([
         presence.getSetting<boolean>('cover'),
