@@ -37,7 +37,7 @@ async function getStrings() {
       viewingAllEmails: 'gmail.viewingAllEmails',
       composingEmail: 'gmail.composingEmail',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

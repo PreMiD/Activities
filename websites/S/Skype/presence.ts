@@ -17,7 +17,7 @@ async function getStrings() {
       readDm: 'general.readingDM',
       typeDm: 'general.typeDM',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 let strings: Awaited<ReturnType<typeof getStrings>>

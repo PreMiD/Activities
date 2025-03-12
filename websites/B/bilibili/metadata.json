@@ -16,6 +16,9 @@
     }
   ],
   "service": "bilibili",
+  "altnames": [
+    "哔哩哔哩"
+  ],
   "description": {
     "en": "bilibili is a well-known video barrage website in China. Here is the most timely animation new fan, the best ACG atmosphere, the most creative Up master. Everyone can find a lot of joy here.",
     "nl": "bilibili is een bekende videowerversite in China. Hier is de meest actuele animatie nieuwe fan, de beste ACG-sfeer, de meest creatieve Up-meester. Iedereen kan hier veel plezier beleven.",
@@ -28,7 +31,7 @@
     "biligame.com"
   ],
   "regExp": "([a-z0-9-]+[.])*(bilibili|biligame)[.]com[/]",
-  "version": "2.5.7",
+  "version": "2.5.8",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/bilibili/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/bilibili/assets/thumbnail.jpg",
   "color": "#05acff",

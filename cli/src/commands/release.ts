@@ -6,17 +6,14 @@ import process from 'node:process'
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import isCI from 'is-ci'
-import { MongoClient } from 'mongodb'
 import { getChangedActivities } from '../util/getActivities.js'
 import { getFolderLetter } from '../util/getFolderLetter.js'
 import { exit, MESSAGES, success } from '../util/log.js'
 import { sanitazeFolderName } from '../util/sanitazeFolderName.js'
 import { buildActivity } from './build/buildActivity.js'
 
-const NAME = 'pmd/release'
-
-interface DbData {
-  name: string
+interface ActivityData {
+  service: string
   apiVersion?: number
   githubUrl: string
   folderName: string
@@ -42,10 +39,12 @@ export async function release() {
     return exit(MESSAGES.noToken)
   }
 
-  const mongoUrl = process.env.MONGO_URL
-  if (!mongoUrl) {
-    return exit(MESSAGES.noMongoUrl)
+  const apiKey = process.env.ADMIN_API_KEY
+  if (!apiKey) {
+    return exit('No Admin API key provided')
   }
+
+  const apiUrl = process.env.API_URL || 'https://api.premid.app/v6'
 
   const { changed, deleted } = await getChangedActivities()
 
@@ -56,34 +55,33 @@ export async function release() {
     return success(MESSAGES.noActivities)
   }
 
-  const client = new MongoClient(mongoUrl, { appName: NAME })
-
-  try {
-    await client.connect()
-
-    core.info('Connected to MongoDB')
-  }
-  catch (error) {
-    core.debug(error as string)
-    exit(MESSAGES.noMongoConnection)
-  }
-
-  const connectToDev = process.env.CONNECT_TO_DEV === 'true'
-  const database = client.db(connectToDev ? 'PreMiD-DEV' : 'PreMiD')
-  const collection = database.collection<DbData>('presences')
-
   if (deleted.length) {
-    await collection.deleteMany({
-      $or: deleted.map(activity => ({
-        folderName: sanitazeFolderName(activity.metadata.service),
-        apiVersion: activity.versionized ? activity.metadata.apiVersion : undefined,
-      })),
-    })
+    for (const activity of deleted) {
+      const folderName = sanitazeFolderName(activity.metadata.service)
+      const apiVersion = activity.versionized ? `/v${activity.metadata.apiVersion}` : ''
+
+      try {
+        const response = await fetch(`${apiUrl}/activities${apiVersion}/${encodeURIComponent(folderName)}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `${apiKey}`,
+            'Content-Type': 'application/json',
+          },
+        })
+
+        if (!response.ok) {
+          core.warning(`Failed to delete activity ${activity.metadata.service}: ${response.statusText}`)
+        }
+      }
+      catch (error) {
+        core.warning(`Error deleting activity ${activity.metadata.service}: ${error}`)
+      }
+    }
 
     core.info(`Deleted ${deleted.length} activities`)
   }
 
-  const dbData: DbData[] = []
+  let successCount = 0
 
   for (const activity of changed) {
     await buildActivity({
@@ -101,35 +99,40 @@ export async function release() {
     const folderNameEncoded = encodeURIComponent(folderName)
     const apiVersion = activity.versionized ? `/v${activity.metadata.apiVersion}` : ''
 
-    dbData.push({
-      name: activity.metadata.service,
+    const activityData: ActivityData = {
+      service: activity.metadata.service,
       apiVersion: activity.versionized ? activity.metadata.apiVersion : undefined,
       metadata: activity.metadata,
       folderName,
       githubUrl: `https://github.com/PreMiD/Activities/tree/main/websites/${folderLetter}/${folderNameEncoded}${apiVersion}`,
-      url: `https://api.premid.app/v6/activities${apiVersion}/${folderNameEncoded}`,
+      url: `${apiUrl}/activities${apiVersion}/${folderNameEncoded}`,
       presenceJs: await readFile(resolve(activity.folder, 'dist', 'presence.js'), 'utf8'),
       ...(existsSync(resolve(activity.folder, 'dist', 'iframe.js')) && {
         iframeJs: await readFile(resolve(activity.folder, 'dist', 'iframe.js'), 'utf8'),
       }),
-    })
-  }
+    }
 
-  if (dbData.length) {
-    await collection.bulkWrite(
-      dbData.map(data => ({
-        updateOne: {
-          filter: { name: data.name, apiVersion: data.apiVersion },
-          update: {
-            $set: data,
-          },
-          upsert: true,
+    try {
+      const response = await fetch(`${apiUrl}/activities`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `${apiKey}`,
+          'Content-Type': 'application/json',
         },
-      })),
-    )
+        body: JSON.stringify(activityData),
+      })
 
-    core.info(`Updated ${dbData.length} activities`)
+      if (response.ok) {
+        successCount++
+      }
+      else {
+        core.warning(`Failed to update activity ${activity.metadata.service}: ${response.statusText}`)
+      }
+    }
+    catch (error) {
+      core.warning(`Error updating activity ${activity.metadata.service}: ${error}`)
+    }
   }
 
-  await client.close()
+  core.info(`Successfully updated ${successCount} activities`)
 }

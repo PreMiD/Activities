@@ -28,7 +28,7 @@ async function getStrings() {
       manga: 'general.manga',
       page: 'general.page',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

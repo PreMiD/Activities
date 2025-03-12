@@ -76,7 +76,7 @@ async function getStrings() {
       view: 'general.view',
       profile: 'general.viewProfile',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 
