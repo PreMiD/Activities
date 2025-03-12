@@ -1,39 +1,28 @@
-import { ActivityType, Assets } from "premid";
+import { ActivityType, Assets } from 'premid'
 
-const tmdbBaseUrl = "https://image.tmdb.org/t/p/w500";
 const presence = new Presence({
-  clientId: "1349021198943649884",
-});
+  clientId: '1349021198943649884',
+})
 
-const browsingTimestamp = Math.floor(Date.now() / 1000);
+const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 const strings = presence.getStrings({
-  playing: "general.playing",
-  pause: "general.paused",
-  home: "general.viewHome",
-  search: "general.searchFor",
-  browse: "general.browsing",
-  reading: "general.reading",
-  buttonViewPage: "general.buttonViewPage",
-  buttonViewEpisode: "general.buttonViewEpisode",
-  buttonWatchAnime: "general.buttonWatchAnime",
-  buttonWatchMovie: "general.buttonWatchMovie",
-  buttonViewSeries: "general.buttonViewSeries",
-});
+  playing: 'general.playing',
+  pause: 'general.paused',
+  home: 'general.viewHome',
+  search: 'general.searchFor',
+  browse: 'general.browsing',
+  reading: 'general.reading',
+  buttonViewPage: 'general.buttonViewPage',
+  buttonViewEpisode: 'general.buttonViewEpisode',
+  buttonWatchAnime: 'general.buttonWatchAnime',
+  buttonWatchMovie: 'general.buttonWatchMovie',
+  buttonViewSeries: 'general.buttonViewSeries',
+})
 
 enum ActivityAssets {
-  Logo = "https://i.imgur.com/MCJ61nd.png",
+  Logo = 'https://i.imgur.com/MCJ61nd.png',
 }
-
-let video = {
-  duration: 0,
-  currentTime: 0,
-  paused: true,
-};
-
-presence.on("iFrameData", (data: unknown) => {
-  video = data as typeof video;
-});
 
 presence.on("UpdateData", async () => {
   let presenceData: PresenceData = {
