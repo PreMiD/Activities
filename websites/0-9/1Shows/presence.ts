@@ -127,11 +127,9 @@ presenceData.largeImageKey = document.querySelector<HTMLImageElement>('figure im
           presenceData.name = `Watching ${formattedShowName} S${seasonNo}E${episodeNo}`
           presenceData.details = '1Shows.com'
 
-          const ratingElement = document.querySelector('.radial-progress span.text-white')
-          const rating = ratingElement?.textContent?.trim() || 'N/A'
-
-          const releaseDateElement = document.querySelector('#TV\\ Shows\\ Air\\ Date time')
-          let releaseDate = releaseDateElement?.textContent?.trim() || 'N/A'
+          const rating = document.querySelector('.radial-progress span.text-white')?.textContent?.trim() || 'N/A'
+          
+          let releaseDate = document.querySelector('#TV\\ Shows\\ Air\\ Date time')?.textContent?.trim() || 'N/A'
 
           if (releaseDate !== 'N/A') {
             const dateParts = releaseDate.split(', ')
