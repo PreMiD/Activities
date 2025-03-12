@@ -128,9 +128,9 @@ presence.on('UpdateData', async () => {
 
         if (match && match[1]) {
           const tmdbId = match[1]
-          let showName = match[2]?.replace(/-/g, ' ') || 'Unknown Show'
+          const showName = match[2]?.replace(/-/g, ' ') || 'Unknown Show'
 
-          let formattedShowName = showName
+          const formattedShowName = showName
             .split(' ')
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ')
@@ -194,10 +194,8 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details) {
     presence.setActivity(presenceData)
-    console.log('Activity set with presence data:', presenceData) // Debugging log
   } else {
     presence.setActivity() // Clear activity if no details
-    console.log('Activity cleared') // Debugging log
   }
 
   if (pathname.includes('/search')) {
