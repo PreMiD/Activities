@@ -166,9 +166,7 @@ presenceData.largeImageKey = document.querySelector<HTMLImageElement>('figure im
     presenceData.smallImageKey = Assets.Search
   }
 
-  if (presenceData.details) {
-    presence.setActivity(presenceData)
-  } else {
-    presence.setActivity() // Clear activity if no details
+  if (presenceData.details) presence.setActivity(presenceData)
+  else presence.setActivity() 
   }
 })
