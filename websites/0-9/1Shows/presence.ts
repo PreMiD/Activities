@@ -66,26 +66,26 @@ presence.on('UpdateData', async () => {
 
           const formattedMovieName = movieName
             .split(' ')
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ')
 
           presenceData.name = `Watching ${formattedMovieName}`
           presenceData.details = '1Shows.com'
 
           const ratingElement = document.querySelector(
-            '.radial-progress span.text-white'
+            '.radial-progress span.text-white',
           )
           const rating = ratingElement?.textContent?.trim() || 'N/A'
 
           const runtimeElement = document.querySelector(
-            '#Movie\\ Runtime time p'
+            '#Movie\\ Runtime time p',
           )
 
           const runtime =
             runtimeElement?.textContent?.match(/\d+/)?.[0] || 'N/A'
 
           const releaseDateElement = document.querySelector(
-            '#Movie\\ Release\\ Date time p'
+            '#Movie\\ Release\\ Date time p',
           )
 
           let releaseDate = releaseDateElement?.textContent?.trim() || 'N/A'
@@ -100,7 +100,7 @@ presence.on('UpdateData', async () => {
           presenceData.state = `⭐ ${rating} 🕒 ${runtime} mins 🗓️ ${releaseDate}`
 
           const posterElement = document.querySelector(
-            'figure img.object-cover'
+            'figure img.object-cover',
           )
 
           const posterSrc = posterElement?.getAttribute('src')
@@ -132,11 +132,11 @@ presence.on('UpdateData', async () => {
 
           let formattedShowName = showName
             .split(' ')
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ')
 
           const watchHistory = JSON.parse(
-            localStorage.getItem('watch-history') || '{}'
+            localStorage.getItem('watch-history') || '{}',
           )
           const showData = watchHistory[tmdbId] || {
             last_season_watched: '1',
@@ -149,12 +149,12 @@ presence.on('UpdateData', async () => {
           presenceData.details = '1Shows.com'
 
           const ratingElement = document.querySelector(
-            '.radial-progress span.text-white'
+            '.radial-progress span.text-white',
           )
           const rating = ratingElement?.textContent?.trim() || 'N/A'
 
           const releaseDateElement = document.querySelector(
-            '#TV\\ Shows\\ Air\\ Date time'
+            '#TV\\ Shows\\ Air\\ Date time',
           )
           let releaseDate = releaseDateElement?.textContent?.trim() || 'N/A'
 
@@ -168,7 +168,7 @@ presence.on('UpdateData', async () => {
           presenceData.state = `⭐ ${rating} 🗓️ ${releaseDate}`
 
           const posterElement = document.querySelector(
-            'section.md\\:col-\\[1\\/4\\] img'
+            'section.md\\:col-\\[1\\/4\\] img',
           )
           const posterSrc =
             posterElement?.getAttribute('src') || 'default_image_key'
