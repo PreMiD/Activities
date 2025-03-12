@@ -92,11 +92,7 @@ presence.on('UpdateData', async () => {
 
           presenceData.state = `⭐ ${rating} 🕒 ${runtime} mins 🗓️ ${releaseDate}`
 
-          const posterElement = document.querySelector('figure img.object-cover')
-
-          const posterSrc = posterElement?.getAttribute('src')
-
-          presenceData.largeImageKey = posterSrc
+presenceData.largeImageKey = document.querySelector<HTMLImageElement>('figure img.object-cover')?.src || ActivityAssets.Logo
 
           // Check URL parameter for streaming
           const urlParams = new URLSearchParams(window.location.search)
