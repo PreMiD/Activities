@@ -49,43 +49,45 @@ presence.on("UpdateData", async () => {
   };
 
   for (const [path, data] of Object.entries(pages)) {
-    if (pathname === path)
-      presenceData = {
-        ...presenceData,
-        ...data,
-        type: ActivityType.Watching,
-      }
+  if (pathname === path) {
+    presenceData = {
+      ...presenceData,
+      ...data,
+      type: ActivityType.Watching,
+    };
   }
+}
+
 
   if (pathname.includes('/movies/')) {
-    switch (pathname.replace(/^\/+/, '').split('/')[0]) {
-      case 'movies':
-        const match = pathname.match(/\/movies\/(\d+)(?:-([^/]+))?/)
+  switch (pathname.replace(/^\/+/, '').split('/')[0]) {
+    case 'movies': {
+      const match = pathname.match(/\/movies\/(\d+)(?:-([^/]+))?/);
 
         if (match && match[1]) {
           const movieName = match[2]?.replace(/-/g, ' ') || 'Unknown Movie'
 
           const formattedMovieName = movieName
             .split(' ')
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ')
 
           presenceData.name = `Watching ${formattedMovieName}`
           presenceData.details = '1Shows.com'
 
           const ratingElement = document.querySelector(
-            '.radial-progress span.text-white'
+            '.radial-progress span.text-white',
           )
           const rating = ratingElement?.textContent?.trim() || 'N/A'
 
           const runtimeElement = document.querySelector(
-            '#Movie\\ Runtime time p'
+            '#Movie\\ Runtime time p',
           )
 		  
           const runtime = runtimeElement?.textContent?.match(/\d+/)?.[0] || 'N/A'
 
           const releaseDateElement = document.querySelector(
-            '#Movie\\ Release\\ Date time p'
+            '#Movie\\ Release\\ Date time p',
           )
 		  
           let releaseDate = releaseDateElement?.textContent?.trim() || 'N/A'
@@ -100,26 +102,26 @@ presence.on("UpdateData", async () => {
           presenceData.state = `⭐ ${rating} 🕒 ${runtime} mins 🗓️ ${releaseDate}`
 
           const posterElement = document.querySelector(
-            'figure img.object-cover'
+            'figure img.object-cover',
           )
 		  
-          const posterSrc =
-            posterElement?.getAttribute('src')
+          const posterSrc = posterElement?.getAttribute('src');
 
           presenceData.largeImageKey = posterSrc
 
           // Check URL parameter for streaming
           const urlParams = new URLSearchParams(window.location.search);
-          const isStreaming = urlParams.get("streaming") === "true";
-          presenceData.smallImageKey = isStreaming ? Assets.Play : Assets.Pause;
+		  const isStreaming = urlParams.get("streaming") === "true"
+		  presenceData.smallImageKey = isStreaming ? Assets.Play : Assets.Pause
         } 
-        break
-		
-      default:
-        presenceData.details = 'Browsing a Movie'
-        break;
+      break;
     }
+
+    default:
+      presenceData.details = 'Browsing a Movie';
+      break;
   }
+}
 
   if (pathname.includes("/tv/")) {
     switch (pathname.replace(/^\/+/, "").split("/")[0]) {
