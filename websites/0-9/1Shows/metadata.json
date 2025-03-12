@@ -15,11 +15,7 @@
   "thumbnail": "https://i.imgur.com/1lg3DmE.png",
   "color": "#121212",
   "category": "videos",
-  "tags": [
-    "movies",
-    "anime",
-    "tv"
-  ],
+  "tags": ["movies", "anime", "tv"],
   "settings": [
     {
       "id": "lang",
