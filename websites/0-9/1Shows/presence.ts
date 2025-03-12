@@ -6,20 +6,6 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-const strings = presence.getStrings({
-  playing: 'general.playing',
-  pause: 'general.paused',
-  home: 'general.viewHome',
-  search: 'general.searchFor',
-  browse: 'general.browsing',
-  reading: 'general.reading',
-  buttonViewPage: 'general.buttonViewPage',
-  buttonViewEpisode: 'general.buttonViewEpisode',
-  buttonWatchAnime: 'general.buttonWatchAnime',
-  buttonWatchMovie: 'general.buttonWatchMovie',
-  buttonViewSeries: 'general.buttonViewSeries',
-})
-
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/MCJ61nd.png',
 }
@@ -28,18 +14,18 @@ presence.on("UpdateData", async () => {
   let presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    details: "Unsupported Page",
-  };
+    details: 'Unsupported Page',
+  }
 
-  const { href, pathname } = document.location;
+  const { pathname } = document.location
 
   const [privacy] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
-  ]);
+  ])
 
   if (privacy) {
     presenceData.details = 'Watching 1Shows'
-    presence.setActivity(presenceData);
+    presence.setActivity(presenceData)
     return
   }
 
@@ -53,11 +39,11 @@ presence.on("UpdateData", async () => {
       smallImageKey: Assets.Viewing,
     },
     '/tv': {
-      details: '${(await strings).browse} TV Shows 📺',
+      details: 'Browsing TV Shows 📺',
       smallImageKey: Assets.Viewing,
     },
     '/search': {
-      details: '${(await strings).browse} Search 🔎',
+      details: 'Browsing Search 🔎',
       smallImageKey: Assets.Viewing,
     },
   };
@@ -73,7 +59,7 @@ presence.on("UpdateData", async () => {
 
   const searchInput = document.querySelector("input")
     ? document.querySelector("input")?.getAttribute("value")
-    : null;
+    : null
   const searchResults = document.querySelector(
     "div.flex.items-center.justify-between > span.flex.items-center.gap-1"
   )?.textContent;
