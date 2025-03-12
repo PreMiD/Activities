@@ -72,14 +72,8 @@ presence.on('UpdateData', async () => {
           presenceData.name = `Watching ${formattedMovieName}`
           presenceData.details = '1Shows.com'
 
-          const ratingElement = document.querySelector('.radial-progress span.text-white')
-          const rating = ratingElement?.textContent?.trim() || 'N/A'
-
-          const runtimeElement = document.querySelector('#Movie\\ Runtime time p')
-
-          const runtime = runtimeElement?.textContent?.match(/\d+/)?.[0] || 'N/A'
-
-          const releaseDateElement = document.querySelector('#Movie\\ Release\\ Date time p')
+          const rating = document.querySelector('.radial-progress span.text-white')?.textContent?.trim() || 'N/A',
+           runtime = runtimeElement?.textContent?.match(/\d+/)?.[0] || 'N/A';
 
           let releaseDate = releaseDateElement?.textContent?.trim() || 'N/A'
 
