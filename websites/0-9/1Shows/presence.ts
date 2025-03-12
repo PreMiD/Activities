@@ -72,16 +72,11 @@ presence.on('UpdateData', async () => {
           presenceData.name = `Watching ${formattedMovieName}`
           presenceData.details = '1Shows'
 
-          const ratingElement = document.querySelector('.radial-progress span.text-white')
-          const rating = ratingElement?.textContent?.trim() || 'N/A'
+          const rating = document.querySelector('.radial-progress span.text-white')?.textContent?.trim() || 'N/A'
 
-          const runtimeElement = document.querySelector('#Movie\\ Runtime time p')
+          const runtime = document.querySelector('#Movie\\ Runtime time p')?.textContent?.match(/\d+/)?.[0] || 'N/A'
 
-          const runtime = runtimeElement?.textContent?.match(/\d+/)?.[0] || 'N/A'
-
-          const releaseDateElement = document.querySelector('#Movie\\ Release\\ Date time p')
-
-          let releaseDate = releaseDateElement?.textContent?.trim() || 'N/A'
+          let releaseDate = document.querySelector('#Movie\\ Release\\ Date time p')?.textContent?.trim() || 'N/A'
 
           if (releaseDate !== 'N/A') {
             const dateParts = releaseDate.split(', ')
@@ -137,11 +132,9 @@ presence.on('UpdateData', async () => {
           presenceData.name = `Watching ${formattedShowName} S${seasonNo}E${episodeNo}`
           presenceData.details = '1Shows'
 
-          const ratingElement = document.querySelector('.radial-progress span.text-white')
-          const rating = ratingElement?.textContent?.trim() || 'N/A'
+          const rating = document.querySelector('.radial-progress span.text-white')?.textContent?.trim() || 'N/A'
 
-          const releaseDateElement = document.querySelector('#TV\\ Shows\\ Air\\ Date time')
-          let releaseDate = releaseDateElement?.textContent?.trim() || 'N/A'
+          let releaseDate = document.querySelector('#TV\\ Shows\\ Air\\ Date time')?.textContent?.trim() || 'N/A'
 
           if (releaseDate !== 'N/A') {
             const dateParts = releaseDate.split(', ')
