@@ -62,12 +62,7 @@ presence.on('UpdateData', async () => {
         const match = pathname.match(/\/movies\/(\d+)(?:-([^/]+))?/)
 
         if (match && match[1]) {
-          const movieName = match[2]?.replace(/-/g, ' ') || 'Unknown Movie'
-
-          const formattedMovieName = movieName
-            .split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ')
+          const formattedMovieName = match[2]?.replace(/-/g, ' ') || 'Unknown Movie'
 
           presenceData.name = `Watching ${formattedMovieName}`
           presenceData.details = '1Shows.com'
