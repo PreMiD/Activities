@@ -179,7 +179,7 @@ presence.on('UpdateData', async () => {
           const urlParams = new URLSearchParams(window.location.search)
           const isStreaming = urlParams.get('streaming') === 'true'
           presenceData.smallImageKey = isStreaming ? Assets.Play : Assets.Pause
-        } 
+        }
         break
 
       default:
