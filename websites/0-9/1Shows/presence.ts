@@ -93,11 +93,11 @@ presence.on("UpdateData", async () => {
           if (releaseDate !== 'N/A') {
             const dateParts = releaseDate.split(', ')
             if (dateParts.length === 3) {
-              releaseDate = '${dateParts[1]} ${dateParts[2]}'
+              releaseDate = `${dateParts[1]} ${dateParts[2]}`
             }
           }
 
-          presenceData.state = '⭐ ${rating} 🕒 ${runtime} mins 🗓️ ${releaseDate}'
+          presenceData.state = `⭐ ${rating} 🕒 ${runtime} mins 🗓️ ${releaseDate}`
 
           const posterElement = document.querySelector(
             'figure img.object-cover'
