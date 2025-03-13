@@ -58,19 +58,19 @@ async function updatePresence() {
 
     if (splitPath[1] === 'tai-khoan') {
       const accountPaths: Record<string, string> = {
-        'follow': 'Đang xem Tủ phim',
-        'history': 'Đang xem Lịch sử phim',
-        'setting': 'Đang xem Cài đặt Tài Khoản',
+        follow: 'Đang xem Tủ phim',
+        history: 'Đang xem Lịch sử phim',
+        setting: 'Đang xem Cài đặt Tài Khoản',
       }
       presenceData.details = accountPaths[splitPath[2] ?? ''] ?? 'Đang ở trang cá nhân'
     }
 
     if (splitPath[1] === 'playlist') {
-      const playlistName = document.querySelector('div[class*="text-[28px]"]')?.childNodes[0]?.textContent?.trim() ?? 'Không rõ';
-      const description = document.querySelector('p.flex-1')?.textContent?.trim() ?? 'Không có mô tả';
+      const playlistName = document.querySelector('div[class*="text-[28px]"]')?.childNodes[0]?.textContent?.trim() ?? 'Không rõ'
+      const description = document.querySelector('p.flex-1')?.textContent?.trim() ?? 'Không có mô tả'
 
-      presenceData.details = 'Đang ở Playlist';
-      presenceData.state = `"${playlistName}" - "${description}"`;
+      presenceData.details = 'Đang ở Playlist'
+      presenceData.state = `"${playlistName}" - "${description}"`
     }
   }
   else {
