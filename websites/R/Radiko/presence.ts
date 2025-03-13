@@ -10,7 +10,7 @@ async function getStrings() {
       pause: 'general.paused',
       browsing: 'general.browsing',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 let strings: Awaited<ReturnType<typeof getStrings>>

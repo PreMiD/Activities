@@ -11,7 +11,7 @@ async function getStrings() {
       browse: 'general.browsing',
       live: 'general.live',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

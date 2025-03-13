@@ -15,7 +15,7 @@ async function getStrings() {
       viewProfileButton: 'general.buttonViewProfile',
       readArticleButton: 'general.buttonReadArticle',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

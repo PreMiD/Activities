@@ -21,7 +21,7 @@ async function getStrings() {
       viewAccount: 'general.viewAccount',
       viewPage: 'general.viewPage',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)

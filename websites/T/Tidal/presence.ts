@@ -10,7 +10,7 @@ async function getStrings() {
       pause: 'general.paused',
       viewSong: 'general.buttonViewSong',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

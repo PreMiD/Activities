@@ -16,7 +16,7 @@ async function getStrings() {
       viewHome: 'general.viewHome',
       viewShow: 'general.viewShow',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 async function capitalizeFirstLetter(string: string) {
