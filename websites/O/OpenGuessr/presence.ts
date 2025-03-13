@@ -11,12 +11,7 @@ presence.on('UpdateData', async () => {
     const presenceData: PresenceData = {
       largeImageKey: 'https://i.ibb.co/rfxNBp1d/openguessr-icon.png',
       startTimestamp: browsingTimestamp,
-      buttons: [
-        {
-          label: 'Play OpenGuessr',
-          url: 'https://openguessr.com',
-        },
-      ],
+      buttons: [],
     }
 
     // Get current URL
@@ -173,12 +168,6 @@ presence.on('UpdateData', async () => {
       largeImageKey: 'https://i.ibb.co/rfxNBp1d/openguessr-icon.png',
       details: 'Browsing OpenGuessr',
       startTimestamp: browsingTimestamp,
-      buttons: [
-        {
-          label: 'Play OpenGuessr',
-          url: 'https://openguessr.com',
-        },
-      ],
     })
   }
 })
