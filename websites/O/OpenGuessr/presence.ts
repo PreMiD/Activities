@@ -70,10 +70,13 @@ presence.on('UpdateData', async () => {
           presenceData.state += ` (${capitalizedCategory})`
         }
 
-        // Ajouter le temps restant si mapTimer est disponible et différent de "0:00"
-        if (mapTimer && mapTimer !== '0:00') {
+        // Add remaining time if mapTimer is available and different from "00:00"
+        if (mapTimer && mapTimer !== '00:00') {
           presenceData.state += ` (${mapTimer} remaining)`
           console.warn('[OpenGuessr] Map timer found:', mapTimer)
+        }
+        else {
+          console.warn('[OpenGuessr] Map timer not found or is 00:00, not displaying remaining time')
         }
       }
       catch (e) {
