@@ -23,8 +23,8 @@ enum ActivityAssets {
 async function updatePresence() {
   try {
     const video = document.querySelector('video')
-    const playback = !!document.querySelector('#title') ||
-      (video && video.className !== 'previewVideo')
+    const playback = !!document.querySelector('#title')
+      || (video && video.className !== 'previewVideo')
 
     const { pathname } = document.location
     const [newLang, _button] = await Promise.all([
@@ -75,7 +75,8 @@ async function updatePresence() {
         presenceData.details = 'Đang ở Playlist'
         presenceData.state = `"${playlistName}" - "${description}"`
       }
-    } else {
+    }
+    else {
       if (splitPath[1] === 'phim') {
         const titleElement = document.querySelector<HTMLHeadingElement>('h1.line-clamp-2.text-weight-medium')
 
@@ -108,7 +109,8 @@ async function updatePresence() {
                 video.currentTime,
                 video.duration,
               )
-            } else {
+            }
+            else {
               delete presenceData.endTimestamp
             }
           }
@@ -127,7 +129,8 @@ async function updatePresence() {
     }
 
     presence.setActivity(presenceData)
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Lỗi khi cập nhật trạng thái:', error)
   }
 }
