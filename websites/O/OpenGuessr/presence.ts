@@ -9,7 +9,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 presence.on('UpdateData', async () => {
   try {
     const presenceData: PresenceData = {
-      largeImageKey: "https://i.ibb.co/pB2gKLGp/openguessr-icon-1.png",
+      largeImageKey: "https://i.ibb.co/rfxNBp1d/openguessr-icon.png",
       startTimestamp: browsingTimestamp,
       buttons: [
         {
@@ -149,7 +149,7 @@ presence.on('UpdateData', async () => {
     
     // In case of error, display a basic presence
     presence.setActivity({
-      largeImageKey: "https://i.ibb.co/pB2gKLGp/openguessr-icon-1.png",
+      largeImageKey: "https://i.ibb.co/rfxNBp1d/openguessr-icon.png",
       details: "Browsing OpenGuessr",
       startTimestamp: browsingTimestamp,
       buttons: [
