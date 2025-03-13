@@ -31,7 +31,7 @@ presence.on('UpdateData', async () => {
     if (fullUrl === 'https://openguessr.com/') {
       presenceData.details = 'Playing OpenGuessr'
 
-      // Récupérer le pseudo et le niveau du joueur
+      // Fetch player info
       try {
         const accountNameElement = document.getElementById('accountName')
         const progressRingLevelElement = document.getElementById('progressRingLevel')
@@ -41,7 +41,7 @@ presence.on('UpdateData', async () => {
           const progressRingLevel = progressRingLevelElement.textContent?.trim()
 
           if (accountName && progressRingLevel) {
-            // Si c'est un compte invité (Guest) avec niveau 1, afficher "Guest mode"
+            // If it's a guest account (Guest) with level 1, display "Guest mode"
             if (accountName === 'Guest' && progressRingLevel === '1') {
               presenceData.details = 'Playing OpenGuessr (Guest mode)'
             }
@@ -100,13 +100,13 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Hosting a multiplayer game'
       presenceData.smallImageKey = Assets.Search
 
-      // Vérifier si un code de salle est disponible
+      // Check if a room code is available
       try {
         const roomCodeElement = document.getElementById('roomCodeDisplay')
         if (roomCodeElement && roomCodeElement.textContent) {
           const roomCode = roomCodeElement.textContent.trim()
           if (roomCode) {
-            // Ajouter un deuxième bouton pour rejoindre la salle
+            // Add a second button to join the room
             presenceData.buttons = [
               {
                 label: 'Play OpenGuessr',
