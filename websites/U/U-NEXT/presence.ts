@@ -32,7 +32,7 @@ async function getStrings() {
       movieDisplay: 'u-next.movieDisplay',
       liveDisplay: 'u-next.liveDisplay',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 let oldLang: string | null = null

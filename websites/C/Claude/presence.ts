@@ -12,7 +12,7 @@ async function getStrings() {
       startNewConversation: 'claude.startNewConversation',
       thinkingOfPrompt: 'claude.thinkingOfPrompt',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)

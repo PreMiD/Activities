@@ -12,7 +12,7 @@ async function getStrings() {
       viewUser: 'general.viewUser',
       watchingVid: 'general.watchingVid',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

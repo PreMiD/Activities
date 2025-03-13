@@ -13,7 +13,7 @@ async function getStrings() {
       buttonJoinGame: 'skribbl.io.buttonJoinGame',
       viewHome: 'general.viewHome',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

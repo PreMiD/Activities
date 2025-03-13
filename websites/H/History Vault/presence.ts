@@ -20,7 +20,7 @@ async function getStrings() {
       search: 'general.searchFor',
       viewShow: 'general.viewShow',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 async function imgPath(path: string) {

@@ -20,7 +20,7 @@ async function getStrings() {
       episode: 'general.episode',
       browse: 'general.browsing',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

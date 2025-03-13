@@ -70,7 +70,7 @@ async function getStrings() {
       viewPage: 'general.viewPage',
       shopCart: 'general.shopCart',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 
