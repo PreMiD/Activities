@@ -21,65 +21,64 @@ enum ActivityAssets {
 }
 
 async function updatePresence() {
-  const playback = !!document.querySelector('#title')
-    || (document.querySelectorAll('video').length
-      && document.querySelector('video')?.className !== 'previewVideo')
+  try {
+    const video = document.querySelector('video')
+    const playback = !!document.querySelector('#title') ||
+      (video && video.className !== 'previewVideo')
 
-  const { pathname } = document.location
-  const [newLang, _button] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
-    presence.getSetting<boolean>('buttons'),
-  ])
-  const splitPath = pathname.split('/')
-  const presenceData: PresenceData = {
-    type: ActivityType.Watching,
-    largeImageKey: ActivityAssets.Logo,
-    startTimestamp: browsingTimestamp,
-  }
+    const { pathname } = document.location
+    const [newLang, _button] = await Promise.all([
+      presence.getSetting<string>('lang').catch(() => 'en'),
+      presence.getSetting<boolean>('buttons'),
+    ])
 
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
-
-  if (!playback) {
-    const pathMap: Record<string, string> = {
-      'danh-sach': 'Đang xem Danh sách phim',
-      'lich-chieu-phim': 'Đang xem Lịch chiếu phim',
-      'bang-xep-hang': 'Đang xem Bảng xếp hạng',
+    if (oldLang !== newLang || !strings) {
+      oldLang = newLang
+      strings = await getStrings()
     }
 
-    presenceData.details = pathMap[splitPath[1] ?? ''] ?? 'Đang ở Trang chủ'
-
-    if (splitPath[1] === 'tim-kiem') {
-      const content = document.querySelector<HTMLSpanElement>('span.font-bold.truncate')?.textContent?.trim() ?? ''
-      presenceData.details = `Đang tìm kiếm phim`
-      presenceData.state = `Từ khóa: ${content}`
+    const presenceData: PresenceData = {
+      type: ActivityType.Watching,
+      largeImageKey: ActivityAssets.Logo,
+      startTimestamp: browsingTimestamp,
     }
 
-    if (splitPath[1] === 'tai-khoan') {
-      const accountPaths: Record<string, string> = {
-        follow: 'Đang xem Tủ phim',
-        history: 'Đang xem Lịch sử phim',
-        setting: 'Đang xem Cài đặt Tài Khoản',
+    const splitPath = pathname.split('/')
+
+    if (!playback) {
+      const pathMap: Record<string, string> = {
+        'danh-sach': 'Đang xem Danh sách phim',
+        'lich-chieu-phim': 'Đang xem Lịch chiếu phim',
+        'bang-xep-hang': 'Đang xem Bảng xếp hạng',
       }
-      presenceData.details = accountPaths[splitPath[2] ?? ''] ?? 'Đang ở trang cá nhân'
-    }
 
-    if (splitPath[1] === 'playlist') {
-      const playlistName = document.querySelector('div[class*="text-[28px]"]')?.childNodes[0]?.textContent?.trim() ?? 'Không rõ'
-      const description = document.querySelector('p.flex-1')?.textContent?.trim() ?? 'Không có mô tả'
+      presenceData.details = pathMap[splitPath[1] ?? ''] ?? 'Đang ở Trang chủ'
 
-      presenceData.details = 'Đang ở Playlist'
-      presenceData.state = `"${playlistName}" - "${description}"`
-    }
-  }
-  else {
-    if (splitPath[1] === 'phim') {
-      try {
-        const titleElement = document.querySelector<HTMLHeadingElement>(
-          'h1.line-clamp-2.text-weight-medium',
-        )
+      if (splitPath[1] === 'tim-kiem') {
+        const content = document.querySelector<HTMLSpanElement>('span.font-bold.truncate')?.textContent?.trim() ?? ''
+        presenceData.details = `Đang tìm kiếm phim: ${content}`
+      }
+
+      if (splitPath[1] === 'tai-khoan') {
+        const accountPaths: Record<string, string> = {
+          follow: 'Đang xem Tủ phim',
+          history: 'Đang xem Lịch sử phim',
+          setting: 'Đang xem Cài đặt Tài Khoản',
+        }
+        presenceData.details = accountPaths[splitPath[2] ?? ''] ?? 'Đang ở trang cá nhân'
+      }
+
+      if (splitPath[1] === 'playlist') {
+        const playlistName = document.querySelector('div[class*="text-[28px]"]')?.childNodes[0]?.textContent?.trim() ?? 'Không rõ'
+        const description = document.querySelector('p.flex-1')?.textContent?.trim() ?? 'Không có mô tả'
+
+        presenceData.details = 'Đang ở Playlist'
+        presenceData.state = `"${playlistName}" - "${description}"`
+      }
+    } else {
+      if (splitPath[1] === 'phim') {
+        const titleElement = document.querySelector<HTMLHeadingElement>('h1.line-clamp-2.text-weight-medium')
+
         const currentURL = pathname
         const episodeElements = document.querySelectorAll('.q-btn-item')
 
@@ -99,8 +98,6 @@ async function updatePresence() {
           animeEpisode = currentEpisode.num
         }
 
-        const video = document.querySelector('video')
-
         if (video) {
           presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
           presenceData.smallImageText = video.paused ? strings.pause : strings.play
@@ -111,29 +108,28 @@ async function updatePresence() {
                 video.currentTime,
                 video.duration,
               )
-            }
-            else {
+            } else {
               delete presenceData.endTimestamp
             }
           }
         }
 
         presenceData.details = titleElement?.textContent || 'Đang xem...'
-        presenceData.state = `Tập: ${animeEpisode ?? 1}`
+        presenceData.state = `Tập: ${animeEpisode ?? 'N/A'}`
         presenceData.largeImageKey = video?.poster || ActivityAssets.Logo
         presenceData.buttons = [
           {
-            label: '📺Xem Phim',
+            label: '📺 Xem Phim',
             url: document.location.href,
           },
         ]
       }
-      catch (error) {
-        console.error('Lỗi khi cập nhật trạng thái:', error)
-      }
     }
+
+    presence.setActivity(presenceData)
+  } catch (error) {
+    console.error('Lỗi khi cập nhật trạng thái:', error)
   }
-  presence.setActivity(presenceData)
 }
 
 presence.on('UpdateData', updatePresence)
