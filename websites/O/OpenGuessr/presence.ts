@@ -11,7 +11,6 @@ presence.on('UpdateData', async () => {
     const presenceData: PresenceData = {
       largeImageKey: 'https://i.ibb.co/rfxNBp1d/openguessr-icon.png',
       startTimestamp: browsingTimestamp,
-      buttons: [],
     }
 
     // Get current URL
