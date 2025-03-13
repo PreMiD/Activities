@@ -53,7 +53,8 @@ async function updatePresence() {
 
     if (splitPath[1] === 'tim-kiem') {
       const content = document.querySelector<HTMLSpanElement>('span.font-bold.truncate')?.textContent?.trim() ?? ''
-      presenceData.details = `Đang tìm kiếm phim: ${content}`
+      presenceData.details = `Đang tìm kiếm phim`
+      presenceData.state = `Từ khóa: ${content}`
     }
 
     if (splitPath[1] === 'tai-khoan') {
