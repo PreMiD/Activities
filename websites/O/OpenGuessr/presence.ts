@@ -60,8 +60,8 @@ presence.on('UpdateData', async () => {
       // Try to get the selected category and timer from localStorage
       try {
         const selectedCategory = localStorage.getItem('selectedCategory')
-        // eslint-disable-next-line unused-imports/no-unused-vars
-        const singleplayerTimer = localStorage.getItem('singleplayerTimer')
+        const _singleplayerTimer = localStorage.getItem('singleplayerTimer')
+        const mapTimer = document.getElementById('mapTimer')?.textContent?.trim()
 
         // Add category if available
         if (selectedCategory) {
@@ -69,9 +69,15 @@ presence.on('UpdateData', async () => {
           const capitalizedCategory = selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)
           presenceData.state += ` (${capitalizedCategory})`
         }
+
+        // Ajouter le temps restant si mapTimer est disponible et différent de "0:00"
+        if (mapTimer && mapTimer !== '0:00') {
+          presenceData.state += ` (${mapTimer} remaining)`
+          console.warn('[OpenGuessr] Map timer found:', mapTimer)
+        }
       }
       catch (e) {
-        console.error('[OpenGuessr] Error getting data from localStorage:', e)
+        console.error('[OpenGuessr] Error getting data from localStorage or timer:', e)
       }
 
       presenceData.smallImageKey = Assets.Play
