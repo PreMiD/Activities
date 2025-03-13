@@ -65,8 +65,14 @@ presence.on('UpdateData', async () => {
 
         // Add category if available
         if (selectedCategory) {
+          // Truncate "community_" if present
+          let processedCategory = selectedCategory
+          if (selectedCategory.startsWith('community_')) {
+            processedCategory = selectedCategory.substring('community_'.length)
+          }
+
           // Capitalize the first letter of the category
-          const capitalizedCategory = selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)
+          const capitalizedCategory = processedCategory.charAt(0).toUpperCase() + processedCategory.slice(1)
           presenceData.state += ` (${capitalizedCategory})`
         }
 
