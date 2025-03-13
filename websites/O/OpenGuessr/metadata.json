@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "286179374204583938",
+    "name": "Inkflow"
+  },
+  "service": "OpenGuessr",
+  "description": {
+    "en": "OpenGuessr is a free GeoGuessr alternative with unlimited play and Multiplayer",
+    "fr": "OpenGuessr est une alternative gratuite à GeoGuessr avec un nombre de parties illimité et un mode Multijoueur",
+    "es": "OpenGuessr es una alternativa gratuita a GeoGuessr con un número ilimitado de partidas y Multijugador",
+    "de": "OpenGuessr ist eine kostenlose GeoGuessr-Alternative mit unbegrenzten Partien und Multiplayer",
+    "pt": "OpenGuessr é uma alternativa gratuita a GeoGuessr com um número ilimitado de partidas e Multiplayer"
+  },
+  "url": [
+    "openguessr.com",
+    "www.openguessr.com",
+    "play.openguessr.com"
+  ],
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/pB2gKLGp/openguessr-icon-1.png",
+  "thumbnail": "https://i.imgur.com/Ttplphu.png",
+  "color": "#f23913",
+  "category": "games",
+  "tags": [
+    "geography",
+    "maps",
+    "guessing",
+    "geolocation",
+    "streetview"
+  ],
+  "regExp": "([a-z0-9-]+[.])*openguessr[.]com[/]",
+  "iFrameRegExp": "([a-z0-9-]+[.])*openguessr[.]com[/]",
+  "readLogs": true
+}
