@@ -26,7 +26,7 @@ async function updatePresence() {
       && document.querySelector('video')?.className !== 'previewVideo')
 
   const { pathname } = document.location
-  const [newLang] = await Promise.all([
+  const [newLang, _button] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('buttons'),
   ])
@@ -43,19 +43,34 @@ async function updatePresence() {
   }
 
   if (!playback) {
-    switch (splitPath[1]) {
-      case 'danh-sach':
-        presenceData.details = 'Đang xem danh sách phim'
-        break
-      case 'lich-chieu-phim':
-        presenceData.details = 'Đang xem lịch chiếu phim'
-        break
-      case 'bang-xep-hang':
-        presenceData.details = 'Đang xem bảng xếp hạng'
-        break
-      default:
-        presenceData.details = 'Đang ở trang chủ'
-        break
+    const pathMap: Record<string, string> = {
+      'danh-sach': 'Đang xem Danh sách phim',
+      'lich-chieu-phim': 'Đang xem Lịch chiếu phim',
+      'bang-xep-hang': 'Đang xem Bảng xếp hạng',
+    }
+
+    presenceData.details = pathMap[splitPath[1] ?? ''] ?? 'Đang ở Trang chủ'
+
+    if (splitPath[1] === 'tim-kiem') {
+      const content = document.querySelector<HTMLSpanElement>('span.font-bold.truncate')?.textContent?.trim() ?? ''
+      presenceData.details = `Đang tìm kiếm phim: ${content}`
+    }
+
+    if (splitPath[1] === 'tai-khoan') {
+      const accountPaths: Record<string, string> = {
+        'follow': 'Đang xem Tủ phim',
+        'history': 'Đang xem Lịch sử phim',
+        'setting': 'Đang xem Cài đặt Tài Khoản',
+      }
+      presenceData.details = accountPaths[splitPath[2] ?? ''] ?? 'Đang ở trang cá nhân'
+    }
+
+    if (splitPath[1] === 'playlist') {
+      const playlistName = document.querySelector('div[class*="text-[28px]"]')?.childNodes[0]?.textContent?.trim() ?? 'Không rõ';
+      const description = document.querySelector('p.flex-1')?.textContent?.trim() ?? 'Không có mô tả';
+
+      presenceData.details = 'Đang ở Playlist';
+      presenceData.state = `"${playlistName}" - "${description}"`;
     }
   }
   else {
@@ -96,10 +111,6 @@ async function updatePresence() {
                 video.duration,
               )
             }
-
-            if (!video.paused) {
-              // presenceData.endTimestamp = endTimestamp
-            }
             else {
               delete presenceData.endTimestamp
             }
@@ -112,7 +123,7 @@ async function updatePresence() {
         presenceData.buttons = [
           {
             label: '📺Xem Phim',
-            url: window.location.href,
+            url: document.location.href,
           },
         ]
       }

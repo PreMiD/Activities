@@ -11,7 +11,7 @@
     "vi": "Xem anime yêu thích của bạn trực tuyến với phụ đề tiếng Việt!"
   },
   "url": "animevsub.eu.org",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://i.imgur.com/GXPcBZj.png",
   "thumbnail": "https://i.imgur.com/h1MzZ4j.png",
   "color": "#006095",
@@ -23,6 +23,12 @@
     {
       "id": "lang",
       "multiLanguage": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
     }
   ]
 }
