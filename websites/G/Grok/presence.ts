@@ -6,7 +6,7 @@ import {
 } from './functions/fetchResponsesMetadata.js'
 
 const presence = new Presence({
-  clientId: '1326893434073776181',
+  clientId: '1350152994993209536',
 })
 async function getStrings() {
   return presence.getStrings({
