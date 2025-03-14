@@ -70,11 +70,11 @@ export async function release() {
         })
 
         if (!response.ok) {
-          core.warning(`Failed to delete activity ${activity.metadata.service}: ${response.statusText}`)
+          core.setFailed(`Failed to delete activity ${activity.metadata.service}: ${response.statusText}, ${await response.text()}`)
         }
       }
       catch (error) {
-        core.warning(`Error deleting activity ${activity.metadata.service}: ${error}`)
+        core.setFailed(`Error deleting activity ${activity.metadata.service}: ${error}`)
       }
     }
 
@@ -126,11 +126,11 @@ export async function release() {
         successCount++
       }
       else {
-        core.warning(`Failed to update activity ${activity.metadata.service}: ${response.statusText}`)
+        core.setFailed(`Failed to update activity ${activity.metadata.service}: ${response.statusText}, ${await response.text()}`)
       }
     }
     catch (error) {
-      core.warning(`Error updating activity ${activity.metadata.service}: ${error}`)
+      core.setFailed(`Error updating activity ${activity.metadata.service}: ${error}`)
     }
   }
 
