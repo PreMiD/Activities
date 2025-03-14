@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 
+import process from 'node:process'
 import { cac } from 'cac'
 import { build } from './commands/build.js'
 import { bump } from './commands/bump.js'
@@ -62,3 +63,12 @@ cli.parse()
 if (!cli.matchedCommand && !cli.options.help && !cli.options.version) {
   cli.outputHelp()
 }
+
+process.on('uncaughtException', (error) => {
+  if (error instanceof Error && error.name === 'ExitPromptError') {
+    // Exit gracefully
+  }
+  else {
+    exit(error.message)
+  }
+})
