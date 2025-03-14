@@ -22,7 +22,7 @@ let oldLang: string | null = null;
 let strings: Awaited<ReturnType<typeof getStrings>>;
 
 enum ActivityAssets {
-  Logo = "https://i.imgur.com/Lz9DSJf.png",
+  Logo = "https://i.imgur.com/bfxEiFr.png",
   Talking = "https://i.imgur.com/ocYd337.png",
 }
 
