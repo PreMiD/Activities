@@ -103,10 +103,6 @@ presence.on('UpdateData', async () => {
             // Add a second button to join the room
             presenceData.buttons = [
               {
-                label: 'Play OpenGuessr',
-                url: 'https://openguessr.com',
-              },
-              {
                 label: 'Join the room',
                 url: `https://openguessr.com/?join=${roomCode}`,
               },
