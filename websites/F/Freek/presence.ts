@@ -1,39 +1,14 @@
 import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1321328844497752124',
+  clientId: '1349021198943649884',
 })
+
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-const strings = presence.getStrings({
-  playing: 'general.playing',
-  pause: 'general.paused',
-  home: 'general.viewHome',
-  search: 'general.searchFor',
-  browse: 'general.browsing',
-  reading: 'general.reading',
-  buttonViewPage: 'general.buttonViewPage',
-  buttonViewEpisode: 'general.buttonViewEpisode',
-  buttonWatchAnime: 'general.buttonWatchAnime',
-  buttonWatchMovie: 'general.buttonWatchMovie',
-  buttonViewSeries: 'general.buttonViewSeries',
-})
 
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/F/Freek/assets/logo.png',
+  Logo = 'https://i.imgur.com/MCJ61nd.png',
 }
-
-let video = {
-  duration: 0,
-  currentTime: 0,
-  paused: true,
-}
-
-presence.on(
-  'iFrameData',
-  (data: unknown) => {
-    video = data as typeof video
-  },
-)
 
 presence.on('UpdateData', async () => {
   let presenceData: PresenceData = {
@@ -42,210 +17,158 @@ presence.on('UpdateData', async () => {
     details: 'Unsupported Page',
   }
 
-  const { href, pathname } = document.location
-  const [showTimestamp, showButtons, privacy] = await Promise.all([
-    presence.getSetting<boolean>('timestamp'),
-    presence.getSetting<boolean>('buttons'),
-    presence.getSetting<boolean>('privacy'),
-  ])
+  const { pathname } = document.location
+
+  const privacy = await presence.getSetting<boolean>('privacy')
 
   if (privacy) {
-    presenceData.details = 'Watching Freek'
+    presenceData.details = 'Watching 1Shows'
     presence.setActivity(presenceData)
     return
   }
 
   const pages: Record<string, PresenceData> = {
     '/': {
-      details: (await strings).home,
+      details: 'Viewing HomePage 🏠',
       smallImageKey: Assets.Viewing,
     },
-    '/watchlist': {
-      details: `${(await strings).browse} Watchlist`,
+    '/profile': {
+      details: 'Viewing Profile 👤',
       smallImageKey: Assets.Viewing,
     },
-    '/history': {
-      details: `${(await strings).browse} History`,
+    '/tv': {
+      details: 'Browsing TV Shows 📺',
       smallImageKey: Assets.Viewing,
     },
-    '/settings': {
-      details: `${(await strings).browse} Settings`,
+    '/search': {
+      details: 'Browsing Search 🔎',
       smallImageKey: Assets.Viewing,
     },
   }
 
   for (const [path, data] of Object.entries(pages)) {
-    if (pathname.includes(path))
-      presenceData = { ...presenceData, ...data, type: ActivityType.Watching }
+    if (pathname === path) {
+      presenceData = {
+        ...presenceData,
+        ...data,
+        type: ActivityType.Watching,
+      }
+    }
   }
 
-  const pageNumber = href.includes('?page=') ? href.split('?page=')[1] : 1
-  const searchInput = document.querySelector('input')
-    ? document.querySelector('input')?.getAttribute('value')
-    : null
-  const searchResults = document.querySelector(
-    'div.flex.items-center.justify-between > span.flex.items-center.gap-1',
-  )?.textContent
-  const steamTitle = document.querySelector('div#right-header > div')
-    ? document.querySelector('div#right-header > div')?.textContent
-    : document.querySelector('div.flex > span.flex-grow')?.textContent
+  if (pathname.includes('/movies/')) {
+    switch (pathname.replace(/^\/+/, '').split('/')[0]) {
+      case 'movies': {
+        const match = pathname.match(/\/movies\/(\d+)(?:-([^/]+))?/)
 
-  if (pathname.includes('/watch/')) {
-    const [startTimestamp, endTimestamp] = presence.getTimestamps(
-      Math.floor(video.currentTime),
-      Math.floor(video.duration),
-    )
-    const episodeName = document.querySelector(
-      'div.pointer-events-none > button > div > span.font-light',
-    )
-    const episodeNumber = href.includes('?ep=') ? href.split('?ep=')[1] : 1
+        if (match && match[1]) {
+          const movieName = match[2]?.replace(/-/g, ' ') || 'Unknown Movie'
 
-    switch (pathname.split('/watch')[1]?.split('/')[1]) {
-      case 'movie':
-        presenceData.details = steamTitle
-        presenceData.state = `⭐ ${
-          document.querySelector('div.flex > div.false > span.rounded-md')
-            ?.textContent
-        } 🗓️ ${
-          document.querySelectorAll('div.flex.flex-col > span')[3]?.textContent
-        }`
-        presenceData.largeImageKey = document
-          .querySelector(
-            'div.flex > div.false > span.lazy-load-image-background > img',
-          )
-          ?.getAttribute('src')
-        presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-        presenceData.smallImageText = video.paused
-          ? (await strings).pause
-          : (await strings).playing
-        presenceData.buttons = [
-          {
-            label: (await strings).buttonWatchMovie,
-            url: href,
-          },
-        ]
+          const formattedMovieName = movieName
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ')
+
+          presenceData.name = `Watching ${formattedMovieName}`
+          presenceData.details = '1Shows'
+
+          const rating = document.querySelector('.radial-progress span.text-white')?.textContent?.trim() || 'N/A'
+
+          const runtime = document.querySelector('#Movie\\ Runtime time p')?.textContent?.match(/\d+/)?.[0] || 'N/A'
+
+          let releaseDate = document.querySelector('#Movie\\ Release\\ Date time p')?.textContent?.trim() || 'N/A'
+
+          if (releaseDate !== 'N/A') {
+            const dateParts = releaseDate.split(', ')
+            if (dateParts.length === 3) {
+              releaseDate = `${dateParts[1]} ${dateParts[2]}`
+            }
+          }
+
+          presenceData.state = `⭐ ${rating} 🕒 ${runtime} mins 🗓️ ${releaseDate}`
+
+          const posterElement = document.querySelector('figure img.object-cover')
+
+          const posterSrc = posterElement?.getAttribute('src')
+
+          presenceData.largeImageKey = posterSrc
+
+          // Check URL parameter for streaming
+          const urlParams = new URLSearchParams(document.location.search)
+          const isStreaming = urlParams.get('streaming') === 'true'
+          presenceData.smallImageKey = isStreaming ? Assets.Play : Assets.Pause
+        }
         break
-      case 'tv':
-      case 'anime':
-        presenceData.details = steamTitle
-        presenceData.state = `📺 ${
-          episodeName
-            ? `${episodeName?.textContent}`
-            : `Episode ${episodeNumber}`
-        }`
-        presenceData.largeImageText = `Season ${
-          href.includes('?season=') ? href.split('?season=')[1] : 1
-        }, Episode ${episodeNumber}`
-        presenceData.largeImageKey = document
-          .querySelector(
-            'div.flex > div.false > span.lazy-load-image-background > img',
-          )
-          ?.getAttribute('src')
-        presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-        presenceData.smallImageText = video.paused
-          ? (await strings).pause
-          : (await strings).playing
-        presenceData.buttons = [
-          {
-            label: (await strings).buttonViewEpisode,
-            url: href,
-          },
-        ]
-        break
+      }
+
       default:
-        presenceData.details = 'Watching a Video'
+        presenceData.details = 'Browsing a Movie'
         break
     }
-
-    if (showTimestamp) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = [
-        startTimestamp,
-        endTimestamp,
-      ]
-    }
-
-    if (video.paused)
-      delete presenceData.endTimestamp
   }
-  else if (pathname.includes('/read/')) {
-    const mangaName = document.querySelector(
-      'div.pointer-events-none > button > div > span.font-light',
-    )
 
-    presenceData.details = steamTitle
-    presenceData.state = `📺 ${
-      mangaName
-        ? `${mangaName?.textContent}`
-        : `Chapter ${href.includes('?ep=') ? href.split('?ep=')[1] : 1}`
-    }`
-    presenceData.largeImageKey = document
-      .querySelector(
-        'div.flex > div.false > span.lazy-load-image-background > img',
-      )
-      ?.getAttribute('src')
-    presenceData.smallImageKey = Assets.Reading
-    presenceData.smallImageText = (await strings).reading
-    presenceData.buttons = [
-      {
-        label: (await strings).buttonViewSeries,
-        url: href,
-      },
-    ]
-  }
-  else if (pathname.includes('/explore')) {
-    presenceData.state = `Page ${pageNumber} - ${searchResults}`
-    presenceData.smallImageKey = Assets.Viewing
+  if (pathname.includes('/tv/')) {
+    switch (pathname.replace(/^\/+/, '').split('/')[0]) {
+      case 'tv': {
+        const match = pathname.match(/\/tv\/(\d+)(?:-([^/]+))?/)
 
-    if (searchInput) {
-      presenceData.state = `Query: ${searchInput}`
-      presenceData.smallImageKey = Assets.Search
-      presenceData.smallImageText = `Page ${pageNumber} - ${searchResults}`
-    }
+        if (match && match[1]) {
+          const tmdbId = match[1]
+          const showName = match[2]?.replace(/-/g, ' ') || 'Unknown Show'
 
-    switch (pathname.split('/explore/')[1]) {
-      case 'movie':
-        presenceData.details = 'Exploring Movies'
+          const formattedShowName = showName
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ')
 
-        if (searchInput)
-          presenceData.details = `${(await strings).search} Movies`
+          const watchHistory = JSON.parse(localStorage.getItem('watch-history') || '{}')
+          const showData = watchHistory[tmdbId] || {
+            last_season_watched: '1',
+            last_episode_watched: '1',
+          }
+          const seasonNo = showData.last_season_watched
+          const episodeNo = showData.last_episode_watched
 
+          presenceData.name = `Watching ${formattedShowName} S${seasonNo}E${episodeNo}`
+          presenceData.details = '1Shows'
+
+          const rating = document.querySelector('.radial-progress span.text-white')?.textContent?.trim() || 'N/A'
+
+          let releaseDate = document.querySelector('#TV\\ Shows\\ Air\\ Date time')?.textContent?.trim() || 'N/A'
+
+          if (releaseDate !== 'N/A') {
+            const dateParts = releaseDate.split(', ')
+            if (dateParts.length === 3) {
+              releaseDate = `${dateParts[1]} ${dateParts[2]}`
+            }
+          }
+
+          presenceData.state = `⭐ ${rating} 🗓️ ${releaseDate}`
+
+          presenceData.largeImageKey = document.querySelector<HTMLImageElement>('section.md\\:col-\\[1\\/4\\] img')?.src || ActivityAssets.Logo
+
+          // Check URL parameter for streaming
+          const urlParams = new URLSearchParams(document.location.search)
+          const isStreaming = urlParams.get('streaming') === 'true'
+          presenceData.smallImageKey = isStreaming ? Assets.Play : Assets.Pause
+        }
         break
-      case 'tv':
-        presenceData.details = 'Exploring TV Shows'
+      }
 
-        if (searchInput)
-          presenceData.details = `${(await strings).search} TV Shows`
-        break
-      case 'anime':
-        presenceData.details = 'Exploring Anime'
-        if (searchInput)
-          presenceData.details = `${(await strings).search} Anime`
-        break
-      case 'manga':
-        presenceData.details = 'Exploring Manga'
-        if (searchInput)
-          presenceData.details = `${(await strings).search} Manga`
-        break
       default:
-        presenceData.details = 'Exploring'
+        presenceData.details = 'Browsing a TV Show'
         break
     }
   }
-  else if (pathname.includes('/search')) {
-    presenceData.details = `Searching for ${
-      href.includes('type=') ? href.split('type=')[1] : 'movie'
-    }`
-    presenceData.state = `Query: ${document
-      .querySelector('input')
-      ?.getAttribute('value')}`
+
+  if (pathname.includes('/search')) {
+    presenceData.details = `Searching for Movies/TvShows 🔎`
+    const query = document.querySelector('input')?.getAttribute('value')
+    if (query) {
+      presenceData.state = `Query: ${query}`
+    }
     presenceData.smallImageKey = Assets.Search
-    presenceData.smallImageText = `Page ${
-      href.includes('page=') ? href.split('page=')[1]?.split('&type')[0] : 1
-    } - ${searchResults}`
   }
-
-  if (!showButtons && presenceData.buttons)
-    delete presenceData.buttons
 
   if (presenceData.details)
     presence.setActivity(presenceData)
