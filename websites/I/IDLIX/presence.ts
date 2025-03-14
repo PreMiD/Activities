@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1052119362015866882',
@@ -18,49 +18,30 @@ async function getStrings() {
       viewHome: 'general.viewHome',
       viewShow: 'general.viewShow',
     },
-
   )
 }
 enum ActivityAssets {
   Ad = 'https://cdn.rcd.gg/PreMiD/websites/I/IDLIX/assets/0.png',
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/I/IDLIX/assets/logo.png',
 }
-let strings: Awaited<ReturnType<typeof getStrings>>
 let oldLang: string | null = null
 let current: number
 let duration: number
 let paused: boolean
 let isVideo: boolean
 
-presence.on(
-  'iFrameData',
-  (data: unknown) => {
-    ({ current, duration, paused, isVideo } = data as {
-      current: number
-      duration: number
-      paused: boolean
-      isVideo: boolean
-    })
-  },
-)
+presence.on('iFrameData', (data: unknown) => {
+  ({ current, duration, paused, isVideo } = data as {
+    current: number
+    duration: number
+    paused: boolean
+    isVideo: boolean
+  })
+})
 
 function videoDetails(presenceData: PresenceData, href: string) {
   delete presenceData.startTimestamp
-  const title = document
-    .querySelector('[class="pag_episodes"]')
-    ?.querySelectorAll('a')[1]
-    ?.getAttribute('title')
-    ?? document.querySelector('[class="epih1"]')?.textContent
-    ?? document.querySelector('[class="data"]')?.firstElementChild?.textContent
-    ?? document
-      .querySelector('[property="og:title"]')
-      ?.getAttribute('content')
-      ?.replace(' - Subtitle Indonesia - IDLIX', '')
-      ?? document
-        .querySelector('title')
-        ?.textContent
-        ?.split('- Subtitle Indonesia - IDLIX')?.[0]
-        ?? 'Unknown'
+  const title = document.querySelector('[class="pag_episodes"]')?.querySelectorAll('a')?.[1]?.getAttribute('title') ?? document.querySelector('[class="epih1"]')?.textContent ?? document.querySelector('[class="data"]')?.firstElementChild?.textContent ?? document.querySelector('[property="og:title"]')?.getAttribute('content')?.replace(' - Subtitle Indonesia - IDLIX', '') ?? document.querySelector('title')?.textContent?.split('- Subtitle Indonesia - IDLIX')?.[0] ?? 'Unknown'
 
   presenceData.largeImageKey = document
     .querySelector('[class="poster"]')
@@ -83,7 +64,7 @@ function videoDetails(presenceData: PresenceData, href: string) {
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? strings.paused : strings.play
     if (!paused) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(current, duration)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(current, duration)
     }
   }
   else {
@@ -130,16 +111,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('covers'),
   ])
-  const category = document
-    .querySelector('[class="content right full"]')
-    ?.querySelector('h2')
-    ?.textContent
-    ?.toLowerCase()
-    ?? document
-      .querySelector('[class="content right full"]')
-      ?.querySelector('h1')
-      ?.textContent
-      ?.toLowerCase()
+  const category = document.querySelector('[class="content right full"]')?.querySelector('h2')?.textContent?.toLowerCase() ?? document.querySelector('[class="content right full"]')?.querySelector('h1')?.textContent?.toLowerCase()
   const heading = document
     .querySelector('[class="heading-archive"]')
     ?.textContent
@@ -157,14 +129,7 @@ presence.on('UpdateData', async () => {
   }
   if (search?.value || pathname.includes('search')) {
     presenceData.details = strings.search
-    presenceData.state = search?.value
-      || document
-        .querySelector(
-          'body > div.container.main-container.min-vh-100.px-3 > h3',
-        )
-        ?.textContent
-        ?.split('"')[1]
-        || 'Nothing'
+    presenceData.state = search?.value || document.querySelector('body > div.container.main-container.min-vh-100.px-3 > h3')?.textContent?.split('"')[1] || 'Nothing'
     presenceData.smallImageKey = Assets.Search
     presence.setActivity(presenceData)
     return
