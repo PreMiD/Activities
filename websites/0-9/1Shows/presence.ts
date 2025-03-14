@@ -19,7 +19,7 @@ presence.on('UpdateData', async () => {
 
   const { pathname } = document.location
 
-  const [privacy] = await Promise.all([presence.getSetting<boolean>('privacy')])
+  const privacy = await presence.getSetting<boolean>('privacy')
 
   if (privacy) {
     presenceData.details = 'Watching 1Shows'
@@ -163,7 +163,8 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details) {
     presence.setActivity(presenceData)
-  } else {
+  } 
+  else {
     presence.setActivity() // Clear activity if no details
   }
 
@@ -178,7 +179,8 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details) {
     presence.setActivity(presenceData)
-  } else {
+  } 
+  else {
     presence.setActivity() // Clear activity if no details
   }
 })
