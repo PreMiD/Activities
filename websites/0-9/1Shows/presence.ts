@@ -161,13 +161,6 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  if (presenceData.details) {
-    presence.setActivity(presenceData)
-  } 
-  else {
-    presence.setActivity() // Clear activity if no details
-  }
-
   if (pathname.includes('/search')) {
     presenceData.details = `Searching for Movies/TvShows 🔎`
     const query = document.querySelector('input')?.getAttribute('value')
@@ -177,10 +170,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Search
   }
 
-  if (presenceData.details) {
+  if (presenceData.details)
     presence.setActivity(presenceData)
-  } 
-  else {
-    presence.setActivity() // Clear activity if no details
-  }
+  else presence.setActivity()
 })
