@@ -3,7 +3,7 @@
 
 ## Acknowledgements
 - [ ] I read the [Activity Guidelines](https://github.com/PreMiD/Activities/blob/main/.github/CONTRIBUTING.md)
-- [ ] I linted the code by running `yarn format`
+- [ ] I linted the code by running `npm run lint`
 - [ ] The PR title follows the repo's [commit conventions](https://github.com/PreMiD/Activities/blob/main/.github/COMMIT_CONVENTION.md)
 
 ## Screenshots
