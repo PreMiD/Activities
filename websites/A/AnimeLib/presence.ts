@@ -9,7 +9,7 @@ import type {
   TeamData,
   UserData,
 } from './lib.js'
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
 import { AnimeLib } from './lib.js'
 
 const presence = new Presence({
@@ -109,19 +109,6 @@ presence.on('UpdateData', async () => {
       }
 
       if (path.endsWith('/watch')) {
-        if (animeData.toast) {
-          presenceData.details = 'Смотрит лицензированное аниме'
-          presenceData.state = 'Информация пока что не доступна'
-          presenceData.buttons = [
-            {
-              label: 'Открыть аниме',
-              url: cleanUrl(document.location),
-            },
-          ]
-
-          break
-        }
-
         const video = document.querySelector('video')
         const dub = document
           .querySelector('.menu-item.is-active')
@@ -151,16 +138,36 @@ presence.on('UpdateData', async () => {
           if (dub)
             currentDub = dub
 
-          const title = animeData.rus_name !== '' ? animeData.rus_name : animeData.name
+          /**
+           * Slighty different behaviour when anime is licensed
+           */
+          if (animeData.toast) {
+            const title = document.querySelector('h1')?.textContent
+            const cover = document.querySelector<HTMLImageElement>('.cover__img')?.src
 
-          titleSetting
-            ? (presenceData.name = title)
-            : (presenceData.details = title)
-          presenceData.state = `${
-            episode ? (episode.includes('эпизод') ? episode : 'Фильм') : 'Фильм'
-          } | ${currentDub}`
-          presenceData.largeImageKey = animeData.cover.default
-          presenceData.largeImageText = title
+            if (title && cover) {
+              titleSetting
+                ? (presenceData.name = title)
+                : (presenceData.details = title)
+              presenceData.state = `${episode ? (episode.includes('эпизод') ? episode : 'Фильм') : 'Фильм'
+              } | ${currentDub}`
+              presenceData.largeImageKey = cover
+              presenceData.largeImageText = title
+            }
+          }
+          else {
+            const title = animeData.rus_name !== '' ? animeData.rus_name : animeData.name
+
+            titleSetting
+              ? (presenceData.name = title)
+              : (presenceData.details = title)
+            presenceData.state = `${
+              episode ? (episode.includes('эпизод') ? episode : 'Фильм') : 'Фильм'
+            } | ${currentDub}`
+            presenceData.largeImageKey = animeData.cover.default
+            presenceData.largeImageText = title
+          }
+
           presenceData.buttons = [
             {
               label: 'Открыть аниме',
@@ -174,7 +181,7 @@ presence.on('UpdateData', async () => {
 
         if (video || iFrameVideo) {
           if (video) {
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
             presenceData.smallImageKey = video.paused
               ? Assets.Pause
               : Assets.Play
@@ -185,7 +192,7 @@ presence.on('UpdateData', async () => {
             iFrameVideo = null
           }
           else if (iFrameVideo) {
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
               iFrameVideo.currentTime,
               iFrameVideo.duration,
             )
@@ -204,13 +211,16 @@ presence.on('UpdateData', async () => {
         }
       }
       else {
+        /**
+         * Slighty different behaviour when anime is licensed
+         */
         if (animeData.toast) {
           const cover = document.querySelector<HTMLImageElement>('.cover__img')?.src
           const title = document.querySelector('h1')?.textContent
           const altTitle = document.querySelector('h2')?.textContent
 
           if (cover && title && altTitle) {
-            presenceData.details = 'Страница лицензированного аниме'
+            presenceData.details = 'Страница аниме'
             presenceData.state = `${title} (${altTitle})`
             presenceData.largeImageKey = cover
             presenceData.largeImageText = title
@@ -221,16 +231,15 @@ presence.on('UpdateData', async () => {
               },
             ]
           }
-
-          break
+        }
+        else {
+          presenceData.details = 'Страница аниме'
+          presenceData.state = `${animeData.rus_name !== '' ? animeData.rus_name : animeData.name
+          } (${animeData.eng_name ?? animeData.name})`
+          presenceData.largeImageKey = animeData.cover.default
+          presenceData.largeImageText = animeData.rus_name !== '' ? animeData.rus_name : animeData.name
         }
 
-        presenceData.details = 'Страница аниме'
-        presenceData.state = `${
-          animeData.rus_name !== '' ? animeData.rus_name : animeData.name
-        } (${animeData.eng_name ?? animeData.name})`
-        presenceData.largeImageKey = animeData.cover.default
-        presenceData.largeImageText = animeData.rus_name !== '' ? animeData.rus_name : animeData.name
         presenceData.buttons = [
           {
             label: 'Открыть аниме',
