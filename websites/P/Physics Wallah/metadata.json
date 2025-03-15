@@ -2,8 +2,8 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "id": "847084634294059018",
-    "name": ".infinite_."
+    "id": "742612257275641876",
+    "name": "infinite_."
   },
   "service": "Physics Wallah",
   "description": {
@@ -25,6 +25,15 @@
       "title": "Privacy Mode",
       "icon": "fad fa-user-secret",
       "value": false
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fad fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
     }
   ]
 }
