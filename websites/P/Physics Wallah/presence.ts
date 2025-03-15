@@ -19,6 +19,7 @@ presence.on('UpdateData', async () => {
   }
   const { pathname, href } = document.location
   const privacyMode = await presence.getSetting<boolean>('privacy')
+  const ShowButton = await presence.getSetting<boolean>('buttons')
   const jsonobj = JSON.parse(sessionStorage.getItem('batches_urls')!)
 
   if (pathname === '/') {
@@ -46,7 +47,9 @@ presence.on('UpdateData', async () => {
       }`
       presenceData.smallImageKey = Assets.Reading
       presenceData.smallImageText = 'Studying'
-      presenceData.buttons = [{ label: 'View Batch', url: href }]
+      if (ShowButton) {
+        presenceData.buttons = [{ label: 'View Batch', url: href }]
+      }
     }
     else if (href.includes('subject-topics')) {
       if (href.includes('chapterId')) {
@@ -90,8 +93,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = `Watching Lecture${detal}`
 
       presenceData.state = `${deta.topic}`
-
-      presenceData.buttons = [{ label: 'Watch Lecture', url: href }]
+      if (ShowButton) {
+        presenceData.buttons = [{ label: 'Watch Lecture', url: href }]
+      }
     }
     else {
       presenceData.details = 'Watching a lecture'
