@@ -92,13 +92,15 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Reading
     }
     else if (document.location.pathname.includes('/Account.Profile')) {
-      if(window.location.search.includes("?user=")) {
+      if (window.location.search.includes('?user=')) {
         presenceData.details = 'Viewing profile of:'
         presenceData.state = document.querySelector(
           '.profileName > span',
         )?.textContent
         presenceData.smallImageKey = Assets.Reading
-      } else {
+      } 
+      else
+      {
         presenceData.details = 'Viewing their profile...'
         presenceData.smallImageKey = Assets.Reading
       }
@@ -144,7 +146,7 @@ presence.on('UpdateData', async () => {
         type = 'Veterans'
       if (type === 'vip\'s')
         type = 'VIP'
-      presenceData.details = `Viewing the ${type === "Veterans" ? type : `${type} members`}`
+      presenceData.details = `Viewing the ${type === 'Veterans' ? type : `${type} members`}`
       presenceData.state = ``
       presenceData.smallImageKey = Assets.Viewing
     }
@@ -155,11 +157,11 @@ presence.on('UpdateData', async () => {
         type = 'FAQ\'s'
       if (type?.toLowerCase() === 'all content ')
         type = 'Articles List'
-      if(type?.toLowerCase() === 'shop')
-        imageKey = "view"
+      if (type?.toLowerCase() === 'shop')
+        imageKey = 'view'
       presenceData.details = `Viewing the ${type}`
       presenceData.state = ''
-      presenceData.smallImageKey = imageKey === "view" ? Assets.Viewing : Assets.Reading
+      presenceData.smallImageKey = imageKey === 'view' ? Assets.Viewing : Assets.Reading
     }
 
     if (document.querySelector('#modalrequestFormModal')) {
@@ -202,7 +204,6 @@ presence.on('UpdateData', async () => {
       presenceData.state = ''
       presenceData.smallImageKey = Assets.Writing
     }
-    //Staff Pages without leaking what they are:
     else if (document.location.pathname.includes('/content.new')) {
       presenceData.details = 'Writing an article...'
       presenceData.state = ''
