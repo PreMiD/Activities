@@ -92,7 +92,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Reading
     }
     else if (document.location.pathname.includes('/Account.Profile')) {
-      if (window.location.search.includes('?user=')) {
+      if (document.location.search.includes('?user=')) {
         presenceData.details = 'Viewing profile of:'
         presenceData.state = document.querySelector(
           '.profileName > span',
@@ -139,7 +139,7 @@ presence.on('UpdateData', async () => {
       let type = document
         .querySelector('#mainContent > div.m-b-md.m-t-sm > ul > .active > a')
         ?.textContent
-        ?.toLowerCase() || window.location.search.split('=')[1]
+        ?.toLowerCase() || document.location.search.split('=')[1]
       if (type === 'staff')
         type = 'Staff'
       if (type === 'veterans') 
