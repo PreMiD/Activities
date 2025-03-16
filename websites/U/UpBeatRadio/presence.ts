@@ -141,7 +141,7 @@ presence.on('UpdateData', async () => {
         ?.toLowerCase() || document.location.search.split('=')[1]
       if (type === 'staff')
         type = 'Staff'
-      if (type === 'veterans') 
+      if (type === 'veterans')
         type = 'Veterans'
       if (type === 'vip\'s')
         type = 'VIP'
