@@ -225,13 +225,11 @@ presence.on('UpdateData', async () => {
               : privacy === 2
                 ? 'Viewing a page'
                 : 'Browsing'
-          presenceData.state
-= document.querySelector('.user-info')?.textContent
-          presenceData.largeImageKey
-= document
-              .querySelector<HTMLImageElement>('.user-avatar-section')
-              ?.querySelector('img')
-              ?.src ?? ActivityAssets.Logo
+          presenceData.state = document.querySelector('.user-info')?.textContent
+          presenceData.largeImageKey = document
+            .querySelector<HTMLImageElement>('.user-avatar-section')
+            ?.querySelector('img')
+            ?.src ?? ActivityAssets.Logo
           break
         }
         case pathname.includes('/jobs/'): {
