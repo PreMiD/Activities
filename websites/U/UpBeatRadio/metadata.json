@@ -5,6 +5,12 @@
     "name": "Bas950",
     "id": "241278257335500811"
   },
+  "contributors": [
+    {
+      "name": "Ollie",
+      "id": "1337437594228883569"
+    }
+  ],
   "service": "UpBeatRadio",
   "description": {
     "en": "UpBeat is an ad-free, community powered online radio.",

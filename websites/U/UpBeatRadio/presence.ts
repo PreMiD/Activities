@@ -8,6 +8,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/logo.png',
+    state: ''
   }
   const [format1, format2, elapsed, format, info, dj] = await Promise.all([
     presence.getSetting<string>('sFormatNoDj1'),
@@ -159,18 +160,15 @@ presence.on('UpdateData', async () => {
       if (type?.toLowerCase() === 'shop')
         imageKey = 'view'
       presenceData.details = `Viewing the ${type}`
-      presenceData.state = ''
       presenceData.smallImageKey = imageKey === 'view' ? Assets.Viewing : Assets.Reading
     }
 
     if (document.querySelector('#modalrequestFormModal')) {
       presenceData.details = 'Sending in a request...'
-      presenceData.state = ''
       presenceData.smallImageKey = Assets.Writing
     }
     else if (document.querySelector('#modalundefined')) {
       presenceData.details = 'Sending in feedback...'
-      presenceData.state = ''
       presenceData.smallImageKey = Assets.Writing
     }
     else if (document.querySelector('#modaldjAppButton')) {
@@ -190,27 +188,22 @@ presence.on('UpdateData', async () => {
     }
     else if (document.querySelector('#accountBio')) {
       presenceData.details = 'Editing their bio'
-      presenceData.state = ''
       presenceData.smallImageKey = Assets.Writing
     }
     else if (document.querySelector('#modalcontactUsButton')) {
       presenceData.details = 'Sending in a general enquiry'
-      presenceData.state = ''
       presenceData.smallImageKey = Assets.Writing
     }
     else if (document.querySelector('#modalpartnerEnquiryButton')) {
       presenceData.details = 'Sending in a partner enquiry'
-      presenceData.state = ''
       presenceData.smallImageKey = Assets.Writing
     }
     else if (document.location.pathname.includes('/content.new')) {
       presenceData.details = 'Writing an article...'
-      presenceData.state = ''
       presenceData.smallImageKey = Assets.Writing
     }
     else if (document.location.pathname.includes('/station.dashboard')) {
       presenceData.details = 'Presenting a show...'
-      presenceData.state = ''
       presenceData.smallImageKey = Assets.PremiereLive
     }
   }
