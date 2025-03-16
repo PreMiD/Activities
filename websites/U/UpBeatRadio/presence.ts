@@ -98,9 +98,8 @@ presence.on('UpdateData', async () => {
           '.profileName > span',
         )?.textContent
         presenceData.smallImageKey = Assets.Reading
-      } 
-      else
-      {
+      }
+      else {
         presenceData.details = 'Viewing their profile...'
         presenceData.smallImageKey = Assets.Reading
       }
