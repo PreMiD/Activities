@@ -7,7 +7,7 @@ const presence = new Presence({
 let prevURL: string
 let browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets { // Other default assets can be found at index.d.ts
+enum ActivityAssets {
   AirlinesLogo = 'https://i.imgur.com/qzVtg9J.png',
   Logo = 'https://i.imgur.com/wlrkuSA.jpeg',
 }
