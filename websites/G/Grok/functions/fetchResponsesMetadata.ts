@@ -4,8 +4,7 @@ import pLimit from 'p-limit'
 
 const limit = pLimit(1)
 
-// eslint-disable-next-line import/no-mutable-exports
-export let responsesMetadata: {
+export const responsesMetadata: {
   url: string
   data: {
     responseNode?: ResponseNode
@@ -142,9 +141,7 @@ export async function fetchResponsesMetadata(id: string): Promise<void> {
 }
 
 export function clearResponsesMetadata(): void {
-  responsesMetadata = {
-    url: document.location.href,
-    data: {},
-    request: {},
-  }
+  responsesMetadata.url = document.location.href
+  responsesMetadata.data = {}
+  responsesMetadata.request = {}
 }
