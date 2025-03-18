@@ -8,7 +8,6 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/logo.png',
-    state: '',
   }
   const [format1, format2, elapsed, format, info, dj] = await Promise.all([
     presence.getSetting<string>('sFormatNoDj1'),
