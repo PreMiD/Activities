@@ -126,12 +126,10 @@ presence.on('UpdateData', async () => {
     }
     else if (document.location.pathname.includes('/UpBeat.AboutUs')) {
       presenceData.details = 'Reading about UpBeat'
-      presenceData.state = ''
       presenceData.smallImageKey = Assets.Reading
     }
     else if (document.location.pathname.includes('/UpBeat.OurAffiliates')) {
       presenceData.details = 'Viewing the UpBeat affiliates'
-      presenceData.state = ''
       presenceData.smallImageKey = Assets.Reading
     }
     else if (document.location.pathname.includes('/Community.Members')) {
@@ -146,7 +144,6 @@ presence.on('UpdateData', async () => {
       if (type === 'vip\'s')
         type = 'VIP'
       presenceData.details = `Viewing the ${type === 'Veterans' ? type : `${type} members`}`
-      presenceData.state = ``
       presenceData.smallImageKey = Assets.Viewing
     }
     else if (document.querySelector('.bigTitle')) {
