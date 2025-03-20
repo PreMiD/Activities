@@ -428,8 +428,8 @@ presence.on('UpdateData', async () => {
               '[style=\'background-color: var(--accent);\']',
             )?.parentElement?.textContent
             const profileUsername = document.querySelector(
-              '[class="xy1j3rs xurb0ha x1n2onr6"]',
-            )?.parentElement?.textContent
+              'h1',
+            )?.textContent
             if (profileUsername) {
               if (privacyMode)
                 presenceData.details = strings.viewAProfile
@@ -559,11 +559,8 @@ presence.on('UpdateData', async () => {
         case pathname.includes('/friends/suggestions/'): {
           presenceData.details = 'Suggestions'
           presenceData.state = `${strings.viewProfileOf} ${document
-            .querySelector('head > title')
-            ?.innerHTML
-            .replace(/\(.*\)/g, '')
-            .replace('| Facebook', '')
-            .trim()}`
+            .querySelector('h1')
+            ?.textContent}`
           break
         }
         case pathname.includes('/friends/list'): {
@@ -687,11 +684,8 @@ presence.on('UpdateData', async () => {
         '[style=\'background-color: var(--accent);\']',
       )?.parentElement?.textContent
       const profileUsername = document
-        .querySelector('head > title')
-        ?.innerHTML
-        .replace(/\(.*\)/g, '')
-        .replace('| Facebook', '')
-        .trim()
+        .querySelector('h1')
+        ?.textContent
 
       presenceData.largeImageKey = privacyMode || !showCover
         ? ActivityAssets.Logo
@@ -934,7 +928,7 @@ presence.on('UpdateData', async () => {
     delete presenceData.state
   if (presenceData.endTimestamp && presenceData.type !== ActivityType.Watching)
     presenceData.type = ActivityType.Watching
-  if (presenceData.details)
+  if (presenceData.details || presenceData.name)
     presence.setActivity(presenceData)
   else presence.setActivity()
 })

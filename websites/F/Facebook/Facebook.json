@@ -12,7 +12,7 @@
     "message": "In a call with:"
   },
   "facebook.onProfileOf": {
-    "description": "In combination with general.watchingVid (Watching a video on darkvillager's profile)",
+    "description": "In combination with general.watchingVid (Watching a video on the profile of DarkVillager)",
     "message": "On the profile of"
   },
   "facebook.savedVids": {
