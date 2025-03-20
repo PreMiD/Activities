@@ -1,27 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "theusaf",
-		"id": "193714715631812608"
-	},
-	"service": "MusicBrainz Picard",
-	"description": {
-		"en": "Picard is a cross-platform music tagger written in Python."
-	},
-	"url": [
-		"picard.musicbrainz.org",
-		"picard-docs.musicbrainz.org"
-	],
-	"version": "1.0.10",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/M/MusicBrainz%20Picard/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MusicBrainz%20Picard/assets/thumbnail.png",
-	"color": "#771b85",
-	"category": "music",
-	"tags": [
-		"tagger",
-		"application",
-		"lookup",
-		"cd"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "theusaf",
+    "id": "193714715631812608"
+  },
+  "service": "MusicBrainz Picard",
+  "description": {
+    "en": "Picard is a cross-platform music tagger written in Python."
+  },
+  "url": [
+    "picard.musicbrainz.org",
+    "picard-docs.musicbrainz.org"
+  ],
+  "version": "1.0.11",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MusicBrainz%20Picard/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MusicBrainz%20Picard/assets/thumbnail.png",
+  "color": "#771b85",
+  "category": "music",
+  "tags": [
+    "tagger",
+    "application",
+    "lookup",
+    "cd"
+  ]
 }

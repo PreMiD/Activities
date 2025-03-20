@@ -1,37 +1,36 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "LemonCaramel",
-		"id": "406748032055377920"
-	},
-	"service": "namu.wiki",
-	"description": {
-		"en": "\"namuwiki, The tree of knowledge that you nurtures.\" namuwiki(나무위키) is a Korean language wiki based on \"the seed\" engine.",
-		"ko": "\"나무위키, 여러분이 가꾸어 나가는 지식의 나무.\" 나무위키(namuwiki)는 \"the seed\" 엔진 기반의 한국어 위키이다."
-	},
-	"url": "namu.wiki",
-	"version": "1.0.25",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/N/namu.wiki/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/namu.wiki/assets/thumbnail.png",
-	"color": "#00a495",
-	"category": "other",
-	"tags": [
-		"namuwiki",
-		"나무위키"
-	],
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Login Privacy Mode",
-			"icon": "fad fa-user-secret",
-			"value": false
-		},
-		{
-			"id": "showTimestamp",
-			"title": "Show Timestamp",
-			"icon": "fad fa-clock",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "LemonCaramel",
+    "id": "406748032055377920"
+  },
+  "service": "namu.wiki",
+  "description": {
+    "en": "\"namuwiki, The tree of knowledge that you nurtures.\" namuwiki(나무위키) is a Korean language wiki based on \"the seed\" engine.",
+    "ko": "\"나무위키, 여러분이 가꾸어 나가는 지식의 나무.\" 나무위키(namuwiki)는 \"the seed\" 엔진 기반의 한국어 위키이다."
+  },
+  "url": "namu.wiki",
+  "version": "1.0.27",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/namu.wiki/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/namu.wiki/assets/thumbnail.png",
+  "color": "#00a495",
+  "category": "other",
+  "tags": [
+    "나무위키"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Login Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fad fa-clock",
+      "value": true
+    }
+  ]
 }

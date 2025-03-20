@@ -1,45 +1,44 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "fantomitechno 🦊",
-		"id": "563749920683720709"
-	},
-	"service": "Gunivers",
-	"description": {
-		"fr": "Gunivers est une communauté autour de minecraft d'origine française, mais à destination d'un public français ou international selon les projets.",
-		"en": "Gunivers is a minecraft community of French origin, but intended for a french or international audience depending of the project.",
-		"nl": "Gunivers is een communautair autour de minecraft d'origine française, met een bestemming van een openbare français of internationale selon les projets."
-	},
-	"url": [
-		"gunivers.net",
-		"project.gunivers.net"
-	],
-	"version": "1.2.23",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gunivers/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gunivers/assets/thumbnail.png",
-	"color": "#FF8C39",
-	"category": "games",
-	"tags": [
-		"community",
-		"gunivers",
-		"minecraft"
-	],
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fad fa-user-secret",
-			"value": false
-		},
-		{
-			"id": "button",
-			"if": {
-				"privacy": false
-			},
-			"title": "Add Button",
-			"icon": "fas fa-compress-arrows-alt",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "fantomitechno 🦊",
+    "id": "563749920683720709"
+  },
+  "service": "Gunivers",
+  "description": {
+    "en": "Gunivers is a minecraft community of French origin, but intended for a french or international audience depending of the project.",
+    "fr": "Gunivers est une communauté autour de minecraft d'origine française, mais à destination d'un public français ou international selon les projets.",
+    "nl": "Gunivers is een communautair autour de minecraft d'origine française, met een bestemming van een openbare français of internationale selon les projets."
+  },
+  "url": [
+    "gunivers.net",
+    "project.gunivers.net"
+  ],
+  "version": "1.2.25",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gunivers/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gunivers/assets/thumbnail.png",
+  "color": "#FF8C39",
+  "category": "games",
+  "tags": [
+    "community",
+    "minecraft"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "button",
+      "if": {
+        "privacy": false
+      },
+      "title": "Add Button",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
 }

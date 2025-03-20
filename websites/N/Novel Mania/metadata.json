@@ -1,25 +1,25 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Shuichi",
-		"id": "179440483796385792"
-	},
-	"service": "Novel Mania",
-	"description": {
-		"en": "Read webnovels in Portuguese anywhere and anytime.",
-		"pt-br": "Leia webnovels em português a qualquer momento e a qualquer hora.",
-		"nl": "Lees overal en altijd webnovels in het Portugees."
-	},
-	"url": "novelmania.com.br",
-	"version": "1.0.21",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/N/Novel%20Mania/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Novel%20Mania/assets/thumbnail.jpg",
-	"color": "#008cff",
-	"category": "other",
-	"tags": [
-		"novel",
-		"mania",
-		"translator"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Shuichi",
+    "id": "179440483796385792"
+  },
+  "service": "Novel Mania",
+  "description": {
+    "en": "Read webnovels in Portuguese anywhere and anytime.",
+    "nl": "Lees overal en altijd webnovels in het Portugees.",
+    "pt-br": "Leia webnovels em português a qualquer momento e a qualquer hora."
+  },
+  "url": "novelmania.com.br",
+  "version": "1.0.22",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Novel%20Mania/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Novel%20Mania/assets/thumbnail.jpg",
+  "color": "#008cff",
+  "category": "other",
+  "tags": [
+    "novel",
+    "mania",
+    "translator"
+  ]
 }

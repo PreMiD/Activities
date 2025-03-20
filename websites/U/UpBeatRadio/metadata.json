@@ -1,75 +1,74 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Bas950",
-		"id": "241278257335500811"
-	},
-	"service": "UpBeatRadio",
-	"description": {
-		"en": "UpBeat is an ad-free, community powered online radio.",
-		"nl": "UpBeat is een advertentievrije, community aangedreven online radio.",
-		"ga": "Is raidió ar líne saor in aisce, faoi thiomáint ag an bpobal é UpBeat."
-	},
-	"url": "upbeatradio.net",
-	"version": "3.2.30",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/thumbnail.png",
-	"color": "#212121",
-	"category": "music",
-	"tags": [
-		"upbeat",
-		"radio",
-		"upbeatradio"
-	],
-	"settings": [
-		{
-			"id": "sInfo",
-			"title": "Show site infomation",
-			"icon": "fas fa-info",
-			"value": true
-		},
-		{
-			"id": "sDJ",
-			"title": "Show current DJ",
-			"icon": "fas fa-user",
-			"value": true
-		},
-		{
-			"id": "tElapsed",
-			"title": "Show time elapsed",
-			"icon": "fas fa-clock",
-			"value": true
-		},
-		{
-			"id": "sFormat",
-			"if": {
-				"sDJ": true
-			},
-			"title": "Song format",
-			"icon": "fas fa-paragraph",
-			"value": "\"%song%\" by %artist%",
-			"placeholder": "use %song% or %artist%"
-		},
-		{
-			"id": "sFormatNoDj1",
-			"if": {
-				"sDJ": false
-			},
-			"title": "Song format line 1",
-			"icon": "fas fa-paragraph",
-			"value": "\"%song%\"",
-			"placeholder": "use %song% or %artist%"
-		},
-		{
-			"id": "sFormatNoDj2",
-			"if": {
-				"sDJ": false
-			},
-			"title": "Song format line 2",
-			"icon": "fas fa-paragraph",
-			"value": "by %artist%",
-			"placeholder": "use %song% or %artist%"
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Bas950",
+    "id": "241278257335500811"
+  },
+  "service": "UpBeatRadio",
+  "description": {
+    "en": "UpBeat is an ad-free, community powered online radio.",
+    "ga": "Is raidió ar líne saor in aisce, faoi thiomáint ag an bpobal é UpBeat.",
+    "nl": "UpBeat is een advertentievrije, community aangedreven online radio."
+  },
+  "url": "upbeatradio.net",
+  "version": "3.2.32",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/thumbnail.png",
+  "color": "#212121",
+  "category": "music",
+  "tags": [
+    "upbeat",
+    "radio"
+  ],
+  "settings": [
+    {
+      "id": "sInfo",
+      "title": "Show site infomation",
+      "icon": "fas fa-info",
+      "value": true
+    },
+    {
+      "id": "sDJ",
+      "title": "Show current DJ",
+      "icon": "fas fa-user",
+      "value": true
+    },
+    {
+      "id": "tElapsed",
+      "title": "Show time elapsed",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "sFormat",
+      "if": {
+        "sDJ": true
+      },
+      "title": "Song format",
+      "icon": "fas fa-paragraph",
+      "value": "\"%song%\" by %artist%",
+      "placeholder": "use %song% or %artist%"
+    },
+    {
+      "id": "sFormatNoDj1",
+      "if": {
+        "sDJ": false
+      },
+      "title": "Song format line 1",
+      "icon": "fas fa-paragraph",
+      "value": "\"%song%\"",
+      "placeholder": "use %song% or %artist%"
+    },
+    {
+      "id": "sFormatNoDj2",
+      "if": {
+        "sDJ": false
+      },
+      "title": "Song format line 2",
+      "icon": "fas fa-paragraph",
+      "value": "by %artist%",
+      "placeholder": "use %song% or %artist%"
+    }
+  ]
 }

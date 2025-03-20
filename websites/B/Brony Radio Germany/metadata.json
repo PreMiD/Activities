@@ -1,24 +1,24 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "TheSlowly",
-		"id": "505071508851523599"
-	},
-	"service": "Brony Radio Germany",
-	"description": {
-		"en": "Brony Radio Germany is the web radio for German-speaking Bronies. We stream 24/7 music for everyone and it's all about ponies.",
-		"nl": "Brony Radio Duitsland is de webradio voor Duitstalige Bronies. We streamen 24/7 muziek voor iedereen en het draait allemaal om pony's.",
-		"vi": "Brony Radio Germany là radio trực tuyến cho các Brony nói tiếng Đức. Chúng tôi phát nhạc 24/7 và tất cả đều về kỳ lân."
-	},
-	"url": "www.bronyradiogermany.com",
-	"version": "1.2.25",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/B/Brony%20Radio%20Germany/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Brony%20Radio%20Germany/assets/thumbnail.png",
-	"color": "#FF0000",
-	"category": "music",
-	"tags": [
-		"music",
-		"radio"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "TheSlowly",
+    "id": "505071508851523599"
+  },
+  "service": "Brony Radio Germany",
+  "description": {
+    "en": "Brony Radio Germany is the web radio for German-speaking Bronies. We stream 24/7 music for everyone and it's all about ponies.",
+    "nl": "Brony Radio Duitsland is de webradio voor Duitstalige Bronies. We streamen 24/7 muziek voor iedereen en het draait allemaal om pony's.",
+    "vi": "Brony Radio Germany là radio trực tuyến cho các Brony nói tiếng Đức. Chúng tôi phát nhạc 24/7 và tất cả đều về kỳ lân."
+  },
+  "url": "www.bronyradiogermany.com",
+  "version": "1.2.26",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Brony%20Radio%20Germany/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Brony%20Radio%20Germany/assets/thumbnail.png",
+  "color": "#FF0000",
+  "category": "music",
+  "tags": [
+    "music",
+    "radio"
+  ]
 }

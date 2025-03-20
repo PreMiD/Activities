@@ -1,36 +1,36 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "205984221859151873",
-		"name": "joerkig"
-	},
-	"service": "Secret Hitler",
-	"description": {
-		"en": "A web adaptation of the social deduction board game Secret Hitler.  Always free and no ads."
-	},
-	"url": "secrethitler.io",
-	"version": "1.0.5",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/Secret%20Hitler/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Secret%20Hitler/assets/thumbnail.png",
-	"color": "#c36563",
-	"category": "games",
-	"tags": [
-		"deduction",
-		"social"
-	],
-	"settings": [
-		{
-			"id": "time",
-			"title": "Show timestamps",
-			"icon": "fad fa-stopwatch",
-			"value": true
-		},
-		{
-			"id": "buttons",
-			"title": "Show Buttons",
-			"icon": "fas fa-compress-arrows-alt",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "205984221859151873",
+    "name": "joerkig"
+  },
+  "service": "Secret Hitler",
+  "description": {
+    "en": "A web adaptation of the social deduction board game Secret Hitler.  Always free and no ads."
+  },
+  "url": "secrethitler.io",
+  "version": "1.0.6",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Secret%20Hitler/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Secret%20Hitler/assets/thumbnail.png",
+  "color": "#c36563",
+  "category": "games",
+  "tags": [
+    "deduction",
+    "social"
+  ],
+  "settings": [
+    {
+      "id": "time",
+      "title": "Show timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
 }

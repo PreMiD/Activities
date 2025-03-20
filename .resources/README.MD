@@ -1,4 +1,4 @@
-# Resouces for Presences
+# Resources for Activities
 
 In this folder you can find resource images which you can use to display the status of what the user is doing.
 
@@ -25,7 +25,7 @@ In this folder you can find resource images which you can use to display the sta
 | <img src="viewing.png" style="background-color: rgba(0,0,0,25);" height="50px">       | [viewing.png](viewing.png)             |
 
 ```ts
-const enum Assets {
+enum Assets {
 	Play = "https://cdn.rcd.gg/PreMiD/resources/play.png",
 	Pause = "https://cdn.rcd.gg/PreMiD/resources/pause.png",
 	Stop = "https://cdn.rcd.gg/PreMiD/resources/stop.png",

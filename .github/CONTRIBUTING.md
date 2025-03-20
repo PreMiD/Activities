@@ -64,12 +64,12 @@ Each activity has a descriptor file called `metadata.json`, the metadata has a s
   "apiVersion": 1,
   "author": {
     "name": "USER",
-    "id": "ID"
+    "id": "000000000000000000"
   },
   "contributors": [
     {
       "name": "USER",
-      "id": "ID"
+      "id": "000000000000000000"
     }
   ],
   "service": "SERVICE",
@@ -77,26 +77,26 @@ Each activity has a descriptor file called `metadata.json`, the metadata has a s
   "description": {
     "en": "DESCRIPTION"
   },
-  "url": "URL",
-  "version": "VERSION",
-  "logo": "URL",
-  "thumbnail": "URL",
-  "color": "#HEX000",
-  "tags": ["TAG1", "TAG2"],
-  "category": "CATEGORY",
+  "url": "example.com",
   "regExp": "REGEXP",
-  "iFrameRegExp": "REGEXP",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/000000.png",
+  "thumbnail": "https://i.imgur.com/000000.png",
+  "color": "#000000",
+  "category": "other",
+  "tags": ["tag1", "tag2"],
   "iframe": false,
+  "iFrameRegExp": "REGEXP",
   "readLogs": false,
   "settings": [
     {
       "id": "multiLanguage",
       "multiLanguage": true
-    }
+    },
     {
       "id": "ID",
       "title": "DISPLAY TITLE",
-      "icon": "FONTAWESOME ICON",
+      "icon": "fa-solid fa-check",
       "value": true
     },
     {
@@ -105,14 +105,14 @@ Each activity has a descriptor file called `metadata.json`, the metadata has a s
         "ID": true
       },
       "title": "DISPLAY TITLE",
-      "icon": "FONTAWESOME ICON",
+      "icon": "fa-solid fa-check",
       "value": "\"%song%\" by %artist%",
       "placeholder": "use %song% or %artist%"
     },
     {
       "id": "ID",
       "title": "DISPLAY TITLE",
-      "icon": "FONTAWESOME ICON",
+      "icon": "fa-solid fa-check",
       "value": 0,
       "values": ["1", "2", "etc."]
     }

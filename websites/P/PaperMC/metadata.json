@@ -1,37 +1,37 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "387062216030945281",
-		"name": "Romvnly"
-	},
-	"service": "PaperMC",
-	"description": {
-		"en": "PaperMC improves Minecraft's ecosystem with fast, secure software and an expanding plugin API, providing quick releases and helpful support as the most widely used, performant, and stable software available."
-	},
-	"url": [
-		"papermc.io",
-		"docs.papermc.io",
-		"jd.papermc.io",
-		"hangar.papermc.io",
-		"hangar.papermc.dev",
-		"forums.papermc.io"
-	],
-	"version": "1.0.9",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/P/PaperMC/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PaperMC/assets/thumbnail.png",
-	"color": "#FFC0CB",
-	"category": "games",
-	"tags": [
-		"minecraft",
-		"minecraft-server",
-		"hangar",
-		"velocity",
-		"plugins",
-		"waterfall",
-		"spigot",
-		"paper",
-		"paperspigot",
-		"bukkit"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "387062216030945281",
+    "name": "Romvnly"
+  },
+  "service": "PaperMC",
+  "description": {
+    "en": "PaperMC improves Minecraft's ecosystem with fast, secure software and an expanding plugin API, providing quick releases and helpful support as the most widely used, performant, and stable software available."
+  },
+  "url": [
+    "papermc.io",
+    "docs.papermc.io",
+    "jd.papermc.io",
+    "hangar.papermc.io",
+    "hangar.papermc.dev",
+    "forums.papermc.io"
+  ],
+  "version": "1.0.10",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PaperMC/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PaperMC/assets/thumbnail.png",
+  "color": "#FFC0CB",
+  "category": "games",
+  "tags": [
+    "minecraft",
+    "minecraft-server",
+    "hangar",
+    "velocity",
+    "plugins",
+    "waterfall",
+    "spigot",
+    "paper",
+    "paperspigot",
+    "bukkit"
+  ]
 }

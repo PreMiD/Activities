@@ -1,37 +1,36 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "dAn",
-		"id": "169516316124905473"
-	},
-	"service": "ITVX",
-	"description": {
-		"en": "Watch live and past ITV TV shows",
-		"nl": "Bekijk live en eerdere ITV-tv-shows"
-	},
-	"url": [
-		"www.itv.com",
-		"itv.com"
-	],
-	"version": "1.0.14",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/I/ITVX/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/ITVX/assets/thumbnail.jpg",
-	"color": "#102C3D",
-	"category": "videos",
-	"tags": [
-		"itv",
-		"itv-hub",
-		"itv-player",
-		"itvx",
-		"itv-x"
-	],
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fad fa-user-secret",
-			"value": false
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "dAn",
+    "id": "169516316124905473"
+  },
+  "service": "ITVX",
+  "description": {
+    "en": "Watch live and past ITV TV shows",
+    "nl": "Bekijk live en eerdere ITV-tv-shows"
+  },
+  "url": [
+    "www.itv.com",
+    "itv.com"
+  ],
+  "version": "1.0.16",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/I/ITVX/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/ITVX/assets/thumbnail.jpg",
+  "color": "#102C3D",
+  "category": "videos",
+  "tags": [
+    "itv",
+    "itv-hub",
+    "itv-player",
+    "itv-x"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
+  ]
 }

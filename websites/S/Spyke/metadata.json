@@ -1,24 +1,24 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "726466786916171796",
-		"name": "iamhv"
-	},
-	"service": "Spyke",
-	"description": {
-		"en": "Spyke - Community Discussion"
-	},
-	"url": [
-		"spyke.social",
-		"www.spyke.social"
-	],
-	"version": "1.0.5",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/Spyke/assets/logo.jpg",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Spyke/assets/thumbnail.png",
-	"color": "#000000",
-	"category": "socials",
-	"tags": [
-		"social"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "726466786916171796",
+    "name": "iamhv"
+  },
+  "service": "Spyke",
+  "description": {
+    "en": "Spyke - Community Discussion"
+  },
+  "url": [
+    "spyke.social",
+    "www.spyke.social"
+  ],
+  "version": "1.0.6",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Spyke/assets/logo.jpg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Spyke/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "socials",
+  "tags": [
+    "social"
+  ]
 }

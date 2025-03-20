@@ -1,58 +1,59 @@
-import { Resolver } from "../util";
+import type { Resolver } from '../util/index.js'
 
 function isActive(): boolean {
-	return (
-		document.location.pathname.includes("/shorts/") &&
-		document.location.hostname === "m.youtube.com" &&
-		!!getTitle() &&
-		!!getUploader() &&
-		!!getChannelURL() &&
-		!!getVideoID()
-	);
+  return (
+    document.location.pathname.includes('/shorts/')
+    && document.location.hostname === 'm.youtube.com'
+    && !!getTitle()
+    && !!getUploader()
+    && !!getChannelURL()
+    && !!getVideoID()
+  )
 }
 
-function getTitle(): string {
-	return getShortsElement()?.querySelector(
-		".ytShortsVideoTitleViewModelShortsVideoTitle"
-	)?.textContent;
+function getTitle(): string | undefined {
+  return getShortsElement()?.querySelector(
+    '.ytShortsVideoTitleViewModelShortsVideoTitle',
+  )?.textContent ?? undefined
 }
 
-function getUploader(): string {
-	return getShortsElement()
-		?.querySelector<HTMLAnchorElement>(
-			".ytReelChannelBarViewModelChannelName a"
-		)
-		?.textContent.replace(/^@/, "");
+function getUploader(): string | undefined {
+  return getShortsElement()
+    ?.querySelector<HTMLAnchorElement>(
+      '.ytReelChannelBarViewModelChannelName a',
+    )
+    ?.textContent
+    ?.replace(/^@/, '')
 }
 
-function getChannelURL(): string {
-	const shortsLink = getShortsElement()?.querySelector<HTMLAnchorElement>(
-		".ytReelChannelBarViewModelChannelName a"
-	);
-	if (shortsLink) {
-		const split = shortsLink.href.split("/");
-		split.pop(); // remove last item
-		return split.join("/").replace(/^@/, "");
-	}
-	return "";
+function getChannelURL(): string | undefined {
+  const shortsLink = getShortsElement()?.querySelector<HTMLAnchorElement>(
+    '.ytReelChannelBarViewModelChannelName a',
+  )
+  if (shortsLink) {
+    const split = shortsLink.href.split('/')
+    split.pop() // remove last item
+    return split.join('/').replace(/^@/, '')
+  }
+  return undefined
 }
 
 export function getVideoID(): string {
-	return document.location.pathname.split("/shorts/")[1];
+  return document.location.pathname.split('/shorts/')[1]!
 }
 
-function getShortsElement(): HTMLElement {
-	return document.querySelector(
-		".ytShortsCarouselCarouselItem[aria-hidden=false] shorts-video"
-	);
+function getShortsElement(): HTMLElement | null {
+  return document.querySelector(
+    '.ytShortsCarouselCarouselItem[aria-hidden=false] shorts-video',
+  )
 }
 
 const resolver: Resolver = {
-	isActive,
-	getTitle,
-	getUploader,
-	getChannelURL,
-	getVideoID,
-};
+  isActive,
+  getTitle,
+  getUploader,
+  getChannelURL,
+  getVideoID,
+}
 
-export default resolver;
+export default resolver

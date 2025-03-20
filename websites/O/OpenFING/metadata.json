@@ -1,28 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Extra",
-		"id": "351816851380109332"
-	},
-	"service": "OpenFING",
-	"description": {
-		"en": "OpenFING is a student project dedicated to digitizing courses by the UdelaR's Engineering Faculty (Uruguay)",
-		"es": "OpenFING es un proyecto estudiantil dedicado a digitalizar los cursos impartidos en la Facultad de Ingeniería de la UdelaR (Uruguay)."
-	},
-	"url": "open.fing.edu.uy",
-	"version": "1.0.7",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/O/OpenFING/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OpenFING/assets/thumbnail.png",
-	"color": "#4384fa",
-	"category": "videos",
-	"tags": [
-		"education",
-		"math",
-		"uruguay",
-		"openfing",
-		"engineering"
-	],
-	"iframe": true,
-	"iFrameRegExp": "https:[/][/]open[.]fing[.]edu[.]uy[/]courses.*"
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Extra",
+    "id": "351816851380109332"
+  },
+  "service": "OpenFING",
+  "description": {
+    "en": "OpenFING is a student project dedicated to digitizing courses by the UdelaR's Engineering Faculty (Uruguay)",
+    "es": "OpenFING es un proyecto estudiantil dedicado a digitalizar los cursos impartidos en la Facultad de Ingeniería de la UdelaR (Uruguay)."
+  },
+  "url": "open.fing.edu.uy",
+  "version": "1.0.9",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OpenFING/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OpenFING/assets/thumbnail.png",
+  "color": "#4384fa",
+  "category": "videos",
+  "tags": [
+    "education",
+    "math",
+    "uruguay",
+    "engineering"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "https:[/][/]open[.]fing[.]edu[.]uy[/]courses.*"
 }

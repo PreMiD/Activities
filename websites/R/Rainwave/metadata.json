@@ -1,24 +1,24 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "sks316",
-		"id": "226098403304538122"
-	},
-	"service": "Rainwave",
-	"description": {
-		"en": "Video game music online radio, including remixes and original soundtracks! Vote for the songs you want to hear!",
-		"zh": "电子游戏音乐在线广播，包括混音和原声带！ 为您想听的歌曲投票！",
-		"nl": "Videogamemuziek online radio, inclusief remixen en originele soundtracks! Stem op de liedjes die je wilt horen!"
-	},
-	"url": "rainwave.cc",
-	"version": "1.1.25",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rainwave/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rainwave/assets/thumbnail.png",
-	"color": "#D17C2B",
-	"category": "music",
-	"tags": [
-		"music",
-		"radio"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "sks316",
+    "id": "226098403304538122"
+  },
+  "service": "Rainwave",
+  "description": {
+    "en": "Video game music online radio, including remixes and original soundtracks! Vote for the songs you want to hear!",
+    "nl": "Videogamemuziek online radio, inclusief remixen en originele soundtracks! Stem op de liedjes die je wilt horen!",
+    "zh": "电子游戏音乐在线广播，包括混音和原声带！ 为您想听的歌曲投票！"
+  },
+  "url": "rainwave.cc",
+  "version": "1.1.26",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rainwave/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rainwave/assets/thumbnail.png",
+  "color": "#D17C2B",
+  "category": "music",
+  "tags": [
+    "music",
+    "radio"
+  ]
 }

@@ -1,24 +1,24 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Echology",
-		"id": "272875632088842240"
-	},
-	"service": "Minehut",
-	"description": {
-		"en": "Minehut provides unlimited free server hosting for the Minecraft Community."
-	},
-	"url": [
-		"minehut.com",
-		"shop.minehut.com"
-	],
-	"version": "1.0.15",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/M/Minehut/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Minehut/assets/thumbnail.png",
-	"color": "#488aff",
-	"category": "games",
-	"tags": [
-		"minecraft"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Echology",
+    "id": "272875632088842240"
+  },
+  "service": "Minehut",
+  "description": {
+    "en": "Minehut provides unlimited free server hosting for the Minecraft Community."
+  },
+  "url": [
+    "minehut.com",
+    "shop.minehut.com"
+  ],
+  "version": "1.0.16",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Minehut/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Minehut/assets/thumbnail.png",
+  "color": "#488aff",
+  "category": "games",
+  "tags": [
+    "minecraft"
+  ]
 }

@@ -1,36 +1,36 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "N0chteil ^^",
-		"id": "495901098926669825"
-	},
-	"service": "Snapchat",
-	"description": {
-		"en": "Snapchat is an American multimedia instant messaging app and service developed by Snap Inc., originally Snapchat Inc. One of the principal features of Snapchat is that pictures and messages are usually only available for a short time before they become inaccessible to their recipients."
-	},
-	"url": "web.snapchat.com",
-	"version": "1.0.12",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/Snapchat/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Snapchat/assets/thumbnail.jpg",
-	"color": "#FFFC00",
-	"category": "other",
-	"tags": [
-		"chat",
-		"messaging"
-	],
-	"settings": [
-		{
-			"id": "privacyMode",
-			"title": "Privacy Mode",
-			"icon": "fad fa-user-secret",
-			"value": true
-		},
-		{
-			"id": "showActiveChatAvatar",
-			"title": "Show active chat avatar",
-			"icon": "fad fa-user-astronaut",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "N0chteil ^^",
+    "id": "495901098926669825"
+  },
+  "service": "Snapchat",
+  "description": {
+    "en": "Snapchat is an American multimedia instant messaging app and service developed by Snap Inc., originally Snapchat Inc. One of the principal features of Snapchat is that pictures and messages are usually only available for a short time before they become inaccessible to their recipients."
+  },
+  "url": "web.snapchat.com",
+  "version": "1.0.13",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Snapchat/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Snapchat/assets/thumbnail.jpg",
+  "color": "#FFFC00",
+  "category": "other",
+  "tags": [
+    "chat",
+    "messaging"
+  ],
+  "settings": [
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": true
+    },
+    {
+      "id": "showActiveChatAvatar",
+      "title": "Show active chat avatar",
+      "icon": "fad fa-user-astronaut",
+      "value": true
+    }
+  ]
 }

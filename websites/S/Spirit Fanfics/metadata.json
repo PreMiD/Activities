@@ -1,24 +1,24 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Viruz",
-		"id": "158973226465230848"
-	},
-	"service": "Spirit Fanfics",
-	"description": {
-		"en": "Spirit Fanfics is a self-publishing book platform, wheter they are in Fanfic or Original Story format.",
-		"pt-br": "Spirit Fanfics é uma plataforma de autopublicação de livros, sejam eles no formato de Fanfics ou de Histórias Originais.",
-		"nl": "Spirit Fanfics is een platform voor zelfpublicatie van boeken, of ze nu in Fanfic- of Original Story-formaat zijn."
-	},
-	"url": "www.spiritfanfiction.com",
-	"version": "1.2.24",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/Spirit%20Fanfics/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Spirit%20Fanfics/assets/thumbnail.png",
-	"color": "#008080",
-	"category": "other",
-	"tags": [
-		"fanfic",
-		"stories"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Viruz",
+    "id": "158973226465230848"
+  },
+  "service": "Spirit Fanfics",
+  "description": {
+    "en": "Spirit Fanfics is a self-publishing book platform, wheter they are in Fanfic or Original Story format.",
+    "nl": "Spirit Fanfics is een platform voor zelfpublicatie van boeken, of ze nu in Fanfic- of Original Story-formaat zijn.",
+    "pt-br": "Spirit Fanfics é uma plataforma de autopublicação de livros, sejam eles no formato de Fanfics ou de Histórias Originais."
+  },
+  "url": "www.spiritfanfiction.com",
+  "version": "1.2.25",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Spirit%20Fanfics/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Spirit%20Fanfics/assets/thumbnail.png",
+  "color": "#008080",
+  "category": "other",
+  "tags": [
+    "fanfic",
+    "stories"
+  ]
 }

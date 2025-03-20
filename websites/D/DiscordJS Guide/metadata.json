@@ -1,25 +1,25 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "OGMatrix",
-		"id": "657290880947978241"
-	},
-	"service": "DiscordJS Guide",
-	"description": {
-		"en": "A guide made by the community of discord.js for its users.",
-		"de": "Ein Leitfaden der Community von discord.js für ihre Benutzer.",
-		"nl": "Een gids gemaakt door de gemeenschap van discord.js voor haar gebruikers."
-	},
-	"url": "discordjs.guide",
-	"version": "1.0.20",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/D/DiscordJS%20Guide/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DiscordJS%20Guide/assets/thumbnail.png",
-	"color": "#20f856",
-	"category": "other",
-	"tags": [
-		"discordjs",
-		"discord",
-		"guide"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "OGMatrix",
+    "id": "657290880947978241"
+  },
+  "service": "DiscordJS Guide",
+  "description": {
+    "de": "Ein Leitfaden der Community von discord.js für ihre Benutzer.",
+    "en": "A guide made by the community of discord.js for its users.",
+    "nl": "Een gids gemaakt door de gemeenschap van discord.js voor haar gebruikers."
+  },
+  "url": "discordjs.guide",
+  "version": "1.0.21",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DiscordJS%20Guide/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DiscordJS%20Guide/assets/thumbnail.png",
+  "color": "#20f856",
+  "category": "other",
+  "tags": [
+    "discordjs",
+    "discord",
+    "guide"
+  ]
 }

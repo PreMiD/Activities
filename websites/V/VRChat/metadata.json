@@ -1,39 +1,38 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "KnuffelBeestje",
-		"id": "219155156569161731"
-	},
-	"service": "VRChat",
-	"description": {
-		"en": "VRChat is a free-to-play massively multiplayer online virtual reality social platform. It allows players to interact with others as 3D character models.",
-		"nl": "VRChat is een gratis te spelen massaal multiplayer online virtual reality sociaal platform. Hiermee kunnen spelers met anderen communiceren als 3D-personagemodellen.",
-		"ga": "Is éard atá i VRChat ardán sóisialta réaltachta fíorúil il-imreora ar líne saor in aisce. Ligeann sé d’imreoirí idirghníomhú le daoine eile mar mhúnlaí carachtar 3D."
-	},
-	"url": [
-		"vrchat.com",
-		"hello.vrchat.com",
-		"feedback.vrchat.com"
-	],
-	"version": "1.0.27",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/V/VRChat/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VRChat/assets/thumbnail.png",
-	"color": "#0B5286",
-	"category": "games",
-	"tags": [
-		"vrchat",
-		"vr",
-		"social",
-		"games",
-		"hangout"
-	],
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fas fa-user-secret",
-			"value": false
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "KnuffelBeestje",
+    "id": "219155156569161731"
+  },
+  "service": "VRChat",
+  "description": {
+    "en": "VRChat is a free-to-play massively multiplayer online virtual reality social platform. It allows players to interact with others as 3D character models.",
+    "ga": "Is éard atá i VRChat ardán sóisialta réaltachta fíorúil il-imreora ar líne saor in aisce. Ligeann sé d’imreoirí idirghníomhú le daoine eile mar mhúnlaí carachtar 3D.",
+    "nl": "VRChat is een gratis te spelen massaal multiplayer online virtual reality sociaal platform. Hiermee kunnen spelers met anderen communiceren als 3D-personagemodellen."
+  },
+  "url": [
+    "vrchat.com",
+    "hello.vrchat.com",
+    "feedback.vrchat.com"
+  ],
+  "version": "1.0.29",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VRChat/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VRChat/assets/thumbnail.png",
+  "color": "#0B5286",
+  "category": "games",
+  "tags": [
+    "vr",
+    "social",
+    "games",
+    "hangout"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
 }

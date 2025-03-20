@@ -1,27 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "CRUGG",
-		"id": "228965621478588416"
-	},
-	"service": "Gitea",
-	"description": {
-		"en": "Gitea is an Open-Source Git Platform heavily inspired by GitHub",
-		"de": "Gitea ist eine Open-Source Git Plattform, welche sehr stark an GitHub angelehnt ist",
-		"nl": "Gitea is een Open-Source Git Platform, sterk geïnspireerd door GitHub"
-	},
-	"url": "gitea.com",
-	"version": "1.2.26",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gitea/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gitea/assets/thumbnail.png",
-	"color": "#5aa509",
-	"category": "other",
-	"tags": [
-		"git",
-		"programming",
-		"development",
-		"sharing",
-		"coding"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "CRUGG",
+    "id": "228965621478588416"
+  },
+  "service": "Gitea",
+  "description": {
+    "de": "Gitea ist eine Open-Source Git Plattform, welche sehr stark an GitHub angelehnt ist",
+    "en": "Gitea is an Open-Source Git Platform heavily inspired by GitHub",
+    "nl": "Gitea is een Open-Source Git Platform, sterk geïnspireerd door GitHub"
+  },
+  "url": "gitea.com",
+  "version": "1.2.27",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gitea/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gitea/assets/thumbnail.png",
+  "color": "#5aa509",
+  "category": "other",
+  "tags": [
+    "git",
+    "programming",
+    "development",
+    "sharing",
+    "coding"
+  ]
 }

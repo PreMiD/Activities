@@ -1,56 +1,50 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "a6d",
-		"id": "523890815291097129"
-	},
-	"contributors": [
-		{
-			"name": "Bas950",
-			"id": "241278257335500811"
-		}
-	],
-	"service": "OnlyHit",
-	"description": {
-		"en": "OnlyHit is your online music radio station made to play your best hits 24/7 and to make you discover your future hits first.",
-		"nl": "OnlyHit is jouw online muziek radiostation, gemaakt om je de beste hits 24/7 af te spelen en om je als eerste de toekomstige hits te laten ontdekken."
-	},
-	"url": [
-		"onlyhit.us",
-		"onlyhit.merchforall.com"
-	],
-	"version": "1.1.24",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/O/OnlyHit/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OnlyHit/assets/thumbnail.png",
-	"color": "#C1272D",
-	"category": "music",
-	"tags": [
-		"onlyhit",
-		"radio",
-		"music",
-		"station"
-	],
-	"settings": [
-		{
-			"id": "tElapsed",
-			"title": "Show time elapsed",
-			"icon": "fas fa-clock",
-			"value": true
-		},
-		{
-			"id": "sFormat1",
-			"title": "Song format line 1",
-			"icon": "fas fa-paragraph",
-			"value": "\"%song%\"",
-			"placeholder": "use %song% or %artist%"
-		},
-		{
-			"id": "sFormat2",
-			"title": "Song format line 2",
-			"icon": "fas fa-paragraph",
-			"value": "by %artist%",
-			"placeholder": "use %song% or %artist%"
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "a6d",
+    "id": "523890815291097129"
+  },
+  "contributors": [
+    {
+      "name": "Bas950",
+      "id": "241278257335500811"
+    }
+  ],
+  "service": "OnlyHit",
+  "description": {
+    "en": "OnlyHit is your online music radio station made to play your best hits 24/7 and to make you discover your future hits first.",
+    "nl": "OnlyHit is jouw online muziek radiostation, gemaakt om je de beste hits 24/7 af te spelen en om je als eerste de toekomstige hits te laten ontdekken."
+  },
+  "url": "onlyhit.us",
+  "version": "1.2.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OnlyHit/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OnlyHit/assets/thumbnail.png",
+  "color": "#C1272D",
+  "category": "music",
+  "tags": [
+    "radio",
+    "music",
+    "station"
+  ],
+  "settings": [
+    {
+      "multiLanguage": true,
+      "id": "lang"
+    },
+    {
+      "id": "sFormat1",
+      "title": "Song format line 1",
+      "icon": "fas fa-paragraph",
+      "value": "%song%",
+      "placeholder": "use %song% or %artist%"
+    },
+    {
+      "id": "sFormat2",
+      "title": "Song format line 2",
+      "icon": "fas fa-paragraph",
+      "value": "%artist%",
+      "placeholder": "use %song% or %artist%"
+    }
+  ]
 }

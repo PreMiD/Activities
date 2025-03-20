@@ -1,27 +1,26 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Deleted 7.12i",
-		"id": "591702135310385157"
-	},
-	"service": "Yarn",
-	"description": {
-		"en": "Yarn is a package manager that doubles down as project manager.",
-		"fr": "Yarn est un gestionnaire de paquets.",
-		"ga": "Is bainisteoir pacáiste é snáth a dhúblaíonn síos mar bhainisteoir tionscadail.",
-		"nl": "Garen is een pakketbeheerder die ook dienst doet als projectmanager."
-	},
-	"url": "yarnpkg.com",
-	"version": "1.2.27",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Yarn/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Yarn/assets/thumbnail.png",
-	"color": "#2188b6",
-	"category": "other",
-	"tags": [
-		"yarn",
-		"yarnpkg",
-		"manager",
-		"package"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Deleted 7.12i",
+    "id": "591702135310385157"
+  },
+  "service": "Yarn",
+  "description": {
+    "en": "Yarn is a package manager that doubles down as project manager.",
+    "fr": "Yarn est un gestionnaire de paquets.",
+    "ga": "Is bainisteoir pacáiste é snáth a dhúblaíonn síos mar bhainisteoir tionscadail.",
+    "nl": "Garen is een pakketbeheerder die ook dienst doet als projectmanager."
+  },
+  "url": "yarnpkg.com",
+  "version": "1.2.29",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Yarn/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Yarn/assets/thumbnail.png",
+  "color": "#2188b6",
+  "category": "other",
+  "tags": [
+    "yarnpkg",
+    "manager",
+    "package"
+  ]
 }

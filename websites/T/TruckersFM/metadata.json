@@ -1,33 +1,33 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Ninja",
-		"id": "150987570715688960"
-	},
-	"contributors": [
-		{
-			"name": "Pascal",
-			"id": "156560379089125376"
-		}
-	],
-	"service": "TruckersFM",
-	"description": {
-		"en": "Truckers.FM is the No.1 Hit Music Station as voted by the TruckersMP Community 5 years, providing round the clock entertainment broadcasting a variety of shows, ranging from the Top 40 to the biggest throwbacks.",
-		"nl": "Truckers.FM is de nummer 1 Hit Music Station zoals gestemd door de TruckersMP Community 5 jaar, en biedt 24 uur per dag entertainment met een verscheidenheid aan shows, variërend van de Top 40 tot de grootste erfenis."
-	},
-	"url": "truckers.fm",
-	"version": "1.4.20",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/thumbnail.png",
-	"color": "#C82372",
-	"category": "music",
-	"tags": [
-		"tfm",
-		"truckersmp",
-		"radio",
-		"music",
-		"ets2",
-		"ats"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Ninja",
+    "id": "150987570715688960"
+  },
+  "contributors": [
+    {
+      "name": "Pascal",
+      "id": "156560379089125376"
+    }
+  ],
+  "service": "TruckersFM",
+  "description": {
+    "en": "Truckers.FM is the No.1 Hit Music Station as voted by the TruckersMP Community 5 years, providing round the clock entertainment broadcasting a variety of shows, ranging from the Top 40 to the biggest throwbacks.",
+    "nl": "Truckers.FM is de nummer 1 Hit Music Station zoals gestemd door de TruckersMP Community 5 jaar, en biedt 24 uur per dag entertainment met een verscheidenheid aan shows, variërend van de Top 40 tot de grootste erfenis."
+  },
+  "url": "truckers.fm",
+  "version": "1.4.21",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/thumbnail.png",
+  "color": "#C82372",
+  "category": "music",
+  "tags": [
+    "tfm",
+    "truckersmp",
+    "radio",
+    "music",
+    "ets2",
+    "ats"
+  ]
 }

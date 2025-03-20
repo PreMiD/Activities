@@ -1,24 +1,23 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "484343723426054150",
-		"name": "atlaswuff"
-	},
-	"service": "LTTStore",
-	"description": {
-		"en": "The official merch store of Linus Tech Tips"
-	},
-	"url": "lttstore.com",
-	"version": "1.0.4",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/L/LTTStore/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LTTStore/assets/thumbnail.jpg",
-	"color": "#f94d0a",
-	"category": "other",
-	"tags": [
-		"lttstore",
-		"linustechtips",
-		"merch",
-		"youtube"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "484343723426054150",
+    "name": "atlaswuff"
+  },
+  "service": "LTTStore",
+  "description": {
+    "en": "The official merch store of Linus Tech Tips"
+  },
+  "url": "lttstore.com",
+  "version": "1.0.6",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LTTStore/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LTTStore/assets/thumbnail.jpg",
+  "color": "#f94d0a",
+  "category": "other",
+  "tags": [
+    "linustechtips",
+    "merch",
+    "youtube"
+  ]
 }

@@ -1,25 +1,25 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Tepiloxtl",
-		"id": "085733181730332672"
-	},
-	"service": "Radio Garden",
-	"description": {
-		"en": "By bringing distant voices close, radio connects people and places. Radio Garden allows listeners to tune into live radio across entire globe.",
-		"nl": "Door verre stemmen dichtbij te brengen, verbindt radio mensen en plaatsen. Met Radio Garden kunnen luisteraars afstemmen op live-radio over de hele wereld."
-	},
-	"url": "radio.garden",
-	"version": "3.1.6",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/R/Radio%20Garden/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Radio%20Garden/assets/thumbnail.png",
-	"color": "#0DF675",
-	"category": "music",
-	"tags": [
-		"radio",
-		"worldwide",
-		"global",
-		"media"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Tepiloxtl",
+    "id": "085733181730332672"
+  },
+  "service": "Radio Garden",
+  "description": {
+    "en": "By bringing distant voices close, radio connects people and places. Radio Garden allows listeners to tune into live radio across entire globe.",
+    "nl": "Door verre stemmen dichtbij te brengen, verbindt radio mensen en plaatsen. Met Radio Garden kunnen luisteraars afstemmen op live-radio over de hele wereld."
+  },
+  "url": "radio.garden",
+  "version": "3.1.7",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Radio%20Garden/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Radio%20Garden/assets/thumbnail.png",
+  "color": "#0DF675",
+  "category": "music",
+  "tags": [
+    "radio",
+    "worldwide",
+    "global",
+    "media"
+  ]
 }

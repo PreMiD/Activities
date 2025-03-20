@@ -1,27 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Nick",
-		"id": "193909360219389952"
-	},
-	"service": "SuperiorServers.co",
-	"description": {
-		"en": "SuperiorServers.co! The #1 DarkRP Garry's Mod Server!",
-		"nl": "SuperiorServers.co! De #1 DarkRP Garry's Mod Server!"
-	},
-	"url": [
-		"forum.superiorservers.co",
-		"superiorservers.co"
-	],
-	"version": "1.0.19",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/SuperiorServers.co/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SuperiorServers.co/assets/thumbnail.png",
-	"color": "#273341",
-	"category": "other",
-	"tags": [
-		"forums",
-		"gmod",
-		"superiorservers"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Nick",
+    "id": "193909360219389952"
+  },
+  "service": "SuperiorServers.co",
+  "description": {
+    "en": "SuperiorServers.co! The #1 DarkRP Garry's Mod Server!",
+    "nl": "SuperiorServers.co! De #1 DarkRP Garry's Mod Server!"
+  },
+  "url": [
+    "forum.superiorservers.co",
+    "superiorservers.co"
+  ],
+  "version": "1.0.20",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SuperiorServers.co/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SuperiorServers.co/assets/thumbnail.png",
+  "color": "#273341",
+  "category": "other",
+  "tags": [
+    "forums",
+    "gmod",
+    "superiorservers"
+  ]
 }

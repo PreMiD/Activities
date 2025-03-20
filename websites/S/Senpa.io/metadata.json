@@ -1,27 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Deleted 7.12i",
-		"id": "591702135310385157"
-	},
-	"service": "Senpa.io",
-	"description": {
-		"en": "The Best Dual Agario Unblocked io Private Server.",
-		"fr": "Le meilleur serveur privé io Dual Agario Unblocked.",
-		"nl": "De beste Dual Agario Unblocked io Private Server."
-	},
-	"url": [
-		"senpa.io",
-		"forum.senpa.io"
-	],
-	"version": "1.4.21",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/Senpa.io/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Senpa.io/assets/thumbnail.png",
-	"color": "#e67bbe",
-	"category": "games",
-	"tags": [
-		"game",
-		"multiplayer"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Deleted 7.12i",
+    "id": "591702135310385157"
+  },
+  "service": "Senpa.io",
+  "description": {
+    "en": "The Best Dual Agario Unblocked io Private Server.",
+    "fr": "Le meilleur serveur privé io Dual Agario Unblocked.",
+    "nl": "De beste Dual Agario Unblocked io Private Server."
+  },
+  "url": [
+    "senpa.io",
+    "forum.senpa.io"
+  ],
+  "version": "1.4.22",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Senpa.io/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Senpa.io/assets/thumbnail.png",
+  "color": "#e67bbe",
+  "category": "games",
+  "tags": [
+    "game",
+    "multiplayer"
+  ]
 }

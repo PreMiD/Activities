@@ -1,22 +1,22 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "193714715631812608",
-		"name": "theusaf"
-	},
-	"service": "BoardGameGeek",
-	"description": {
-		"en": "The definitive source for board game and card game content. Find millions of ratings, reviews, videos, photos, and more from our community of experts."
-	},
-	"url": "boardgamegeek.com",
-	"version": "1.0.5",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/B/BoardGameGeek/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BoardGameGeek/assets/thumbnail.jpg",
-	"color": "#ff5100",
-	"category": "games",
-	"tags": [
-		"boardgame",
-		"forum"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "theusaf"
+  },
+  "service": "BoardGameGeek",
+  "description": {
+    "en": "The definitive source for board game and card game content. Find millions of ratings, reviews, videos, photos, and more from our community of experts."
+  },
+  "url": "boardgamegeek.com",
+  "version": "1.0.6",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BoardGameGeek/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BoardGameGeek/assets/thumbnail.jpg",
+  "color": "#ff5100",
+  "category": "games",
+  "tags": [
+    "boardgame",
+    "forum"
+  ]
 }

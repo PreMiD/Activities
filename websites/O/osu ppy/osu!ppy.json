@@ -1,50 +1,110 @@
 {
-	"osu!ppy.beatmapListing": {
-		"description": "Displayed when viewing all beatmaps.",
-		"message": "Viewing beatmap listings"
-	},
-	"osu!ppy.beatmapLooking": {
-		"description": "Displayed when looking at a beatmap.",
-		"message": "Looking at beatmap"
-	},
-	"osu!ppy.beatmapPacks": {
-		"description": "Displayed when viewing all beatmap packs.",
-		"message": "Viewing beatmap packs"
-	},
-	"osu!ppy.beatmapRankings": {
-		"description": "Displayed when viewing Kudosu Rankings.",
-		"message": "Viewing kudosu rankings"
-	},
-	"osu!ppy.buttonViewBeatmap": {
-		"description": "Displayed for a button to redirect to the beatmap page.",
-		"message": "View Beatmap"
-	},
-	"osu!ppy.countryRankings": {
-		"description": "Country rankings {0} = gamemode. E.g. Country Rankings [osu!]",
-		"message": "Country rankings [{0}]"
-	},
-	"osu!ppy.for": {
-		"description": "{0} = country/for All, {1} = gamemode. E.g. Performance Rankings (for All) [osu!]",
-		"message": "(for {0}) [{1}]"
-	},
-	"osu!ppy.performanceRankings": {
-		"description": "Displayed when viewing the performance rankings.",
-		"message": "Performance rankings"
-	},
-	"osu!ppy.scoreRankings": {
-		"description": "{0} = gamemode. E.g. Score Rankings [osu!]",
-		"message": "Score rankings [{0}]"
-	},
-	"osu!ppy.spotlights": {
-		"description": "{0} = gamemode, {1} = All/Friends. E.g. The osu! Spotlights (All)",
-		"message": "The {0} spotlights ({1})"
-	},
-	"osu!ppy.support": {
-		"description": "Displayed when viewing the support page.",
-		"message": "Ways to support osu!ppy"
-	},
-	"osu!ppy.wikiMainPage": {
-		"description": "Displayed when viewing the wiki main page.",
-		"message": "Wiki main page"
-	}
+  "osu!ppy.accountSettings": {
+    "description": "Displayed when editing their account settings",
+    "message": "Changing account settings..."
+  },
+  "osu!ppy.beatMapListing": {
+    "description": "Displayed when viewing all beatmaps.",
+    "message": "Beatmap Listings"
+  },
+  "osu!ppy.beatMapLooking": {
+    "description": "Displayed when looking at a beatmap.",
+    "message": "Looking at the beatmap"
+  },
+  "osu!ppy.beatMapPacks": {
+    "description": "Displayed when viewing all beatmap packs.",
+    "message": "Beatmap Packs"
+  },
+  "osu!ppy.buttonViewBeatmap": {
+    "description": "Displayed for a button to redirect to the beatmap page.",
+    "message": "View Beatmap"
+  },
+  "osu!ppy.changelog": {
+    "description": "Displayed when viewing changelog",
+    "message": "Changelog"
+  },
+  "osu!ppy.chatting": {
+    "description": "Displayed when chatting",
+    "message": "Chatting..."
+  },
+  "osu!ppy.contests": {
+    "description": "Displayed when browsing contests",
+    "message": "Contests"
+  },
+  "osu!ppy.countryRankings": {
+    "description": "Country rankings {0} = gamemode. E.g. Country Rankings [osu!]",
+    "message": "Country rankings [{0}]"
+  },
+  "osu!ppy.featuredArtists": {
+    "description": "Displayed when browsing featured Artists",
+    "message": "Featured Artists"
+  },
+  "osu!ppy.for": {
+    "description": "{0} = country/for All, {1} = gamemode. E.g. Performance Rankings (for All) [osu!]",
+    "message": "(for {0}) [{1}]"
+  },
+  "osu!ppy.forums": {
+    "description": "{0} = Forum Name. E.g. Forums Gameplay & Ranking",
+    "message": "Forums {0}"
+  },
+  "osu!ppy.friendList": {
+    "description": "Displayed when viewing their friend list",
+    "message": "Their Friend List"
+  },
+  "osu!ppy.kudosuRankings": {
+    "description": "Displayed when viewing Kudosu Rankings.",
+    "message": "The Kudosu Rankings"
+  },
+  "osu!ppy.livestreams": {
+    "description": "Displayed when browsing livestreams",
+    "message": "Livestreams"
+  },
+  "osu!ppy.osuStore": {
+    "description": "Displayed when browsing the Osu! Store",
+    "message": "The osu! Store"
+  },
+  "osu!ppy.otherProfile": {
+    "description": "{0} = Profile Name. E.g. Looking at OsuPlayer1's Profile",
+    "message": "Looking at {0}'s Profile"
+  },
+  "osu!ppy.performanceRankings": {
+    "description": "Displayed when viewing the performance rankings.",
+    "message": "Performance rankings"
+  },
+  "osu!ppy.rank": {
+    "description": "{0} = User Rank. E.g. Rank #1",
+    "message": "Rank {0}"
+  },
+  "osu!ppy.readingForum": {
+    "description": "Displayed when reading Forum",
+    "message": "Reading a Forum Post"
+  },
+  "osu!ppy.scoreRankings": {
+    "description": "{0} = gamemode. E.g. Score Rankings [osu!]",
+    "message": "Score rankings [{0}]"
+  },
+  "osu!ppy.spotlights": {
+    "description": "{0} = gamemode, {1} = All/Friends. E.g. The osu! Spotlights (All)",
+    "message": "The {0} spotlights ({1})"
+  },
+  "osu!ppy.support": {
+    "description": "Displayed when viewing the support page.",
+    "message": "Ways to support osu!ppy"
+  },
+  "osu!ppy.theirProfile": {
+    "description": "{0} = User Name E.g. Looking at OsuPlayer1's Profile (Their Own)",
+    "message": "Looking at {0}'s Profile (Their Own)"
+  },
+  "osu!ppy.tournaments": {
+    "description": "Displayed when browsing tournaments",
+    "message": "Tournaments"
+  },
+  "osu!ppy.unsupportedPage": {
+    "description": "Displayed when viewing an unsupported page",
+    "message": "An Unsupported Page"
+  },
+  "osu!ppy.watchLists": {
+    "description": "Displayed when viewing their watchlists",
+    "message": "Their Watchlists"
+  }
 }

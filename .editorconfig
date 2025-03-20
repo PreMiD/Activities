@@ -1,5 +1,0 @@
-root = true
-
-[*.ts]
-end_of_line = lf
-indent_style = tab

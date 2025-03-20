@@ -1,60 +1,60 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "TheDrop.",
-		"id": "293828021134295040"
-	},
-	"contributors": [
-		{
-			"name": "RisingSunLight",
-			"id": "240521747852558347"
-		},
-		{
-			"name": "ScarVite",
-			"id": "141218912934166528"
-		},
-		{
-			"name": "theusaf",
-			"id": "193714715631812608"
-		}
-	],
-	"service": "Crunchyroll",
-	"description": {
-		"en": "Crunchyroll is the world’s largest destination for anime and manga, boasting a global community of more than 45 million registered users and over 2 million subscribers.",
-		"de": "Crunchyroll ist die weltweit größte Anlaufstelle für Anime und Manga und verfügt über eine weltweite Community von mehr als 45 Millionen registrierten Benutzern und über 2 Millionen Abonnenten.",
-		"ro": "Crunchyroll este cel mai mare site din lume pentru anime și manga, având o comunitate de peste 45 milioane de oameni înregistrați și peste 2 miloande de abonați.",
-		"pt-br": "Crunchyroll é o maior destino para animes e mangás, com uma comunidade global com mais de 45 milhões de contas registradas e mais de 2 milhões de inscritos.",
-		"fr": "Crunchyroll est la plus grande destination pour des animés et mangas, avec une communauté globale de plus de 45 millions de comptes enregistrés et plus de 2 millions de souscrivants.",
-		"uk": "Crunchyroll — найбільше у світі місце аніме та манги, яке може похвалитися світовою спільнотою з понад 45 мільйонів зареєстрованих користувачів та понад 2 мільйони підписників.",
-		"nl": "Crunchyroll is 's werelds grootste bestemming voor anime en mange, met een wereldwijde gemeenschap met meer dan 45 miljoen geregistreerde gebruikers en meer dan 2 miljoen abonnees.",
-		"zh": "Crunchyroll是美国的一家提供东亚相关流媒体影视服务和国际交流社区的网站。",
-		"zh-tw": "Crunchyroll是美國的一家提供東亞相關串流媒體影視服務和國際交流社區的網站。",
-		"vi": "Crunchyroll là điểm đến lớn nhất thế giới dành cho anime và manga, với một cộng đồng trực tuyến với hơn 45 triệu người dùng đã đăng ký và 2 triệu người dùng đang theo dõi."
-	},
-	"url": "www.crunchyroll.com",
-	"version": "3.1.4",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/thumbnail.png",
-	"color": "#f47521",
-	"category": "anime",
-	"tags": [
-		"video",
-		"anime",
-		"manga"
-	],
-	"iframe": true,
-	"iFrameRegExp": ".*",
-	"settings": [
-		{
-			"id": "lang",
-			"multiLanguage": true
-		},
-		{
-			"id": "cover",
-			"title": "Show Cover",
-			"icon": "fad fa-images",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "TheDrop.",
+    "id": "293828021134295040"
+  },
+  "contributors": [
+    {
+      "name": "RisingSunLight",
+      "id": "240521747852558347"
+    },
+    {
+      "name": "ScarVite",
+      "id": "141218912934166528"
+    },
+    {
+      "name": "theusaf",
+      "id": "193714715631812608"
+    }
+  ],
+  "service": "Crunchyroll",
+  "description": {
+    "de": "Crunchyroll ist die weltweit größte Anlaufstelle für Anime und Manga und verfügt über eine weltweite Community von mehr als 45 Millionen registrierten Benutzern und über 2 Millionen Abonnenten.",
+    "en": "Crunchyroll is the world’s largest destination for anime and manga, boasting a global community of more than 45 million registered users and over 2 million subscribers.",
+    "fr": "Crunchyroll est la plus grande destination pour des animés et mangas, avec une communauté globale de plus de 45 millions de comptes enregistrés et plus de 2 millions de souscrivants.",
+    "nl": "Crunchyroll is 's werelds grootste bestemming voor anime en mange, met een wereldwijde gemeenschap met meer dan 45 miljoen geregistreerde gebruikers en meer dan 2 miljoen abonnees.",
+    "pt-br": "Crunchyroll é o maior destino para animes e mangás, com uma comunidade global com mais de 45 milhões de contas registradas e mais de 2 milhões de inscritos.",
+    "ro": "Crunchyroll este cel mai mare site din lume pentru anime și manga, având o comunitate de peste 45 milioane de oameni înregistrați și peste 2 miloande de abonați.",
+    "uk": "Crunchyroll — найбільше у світі місце аніме та манги, яке може похвалитися світовою спільнотою з понад 45 мільйонів зареєстрованих користувачів та понад 2 мільйони підписників.",
+    "vi": "Crunchyroll là điểm đến lớn nhất thế giới dành cho anime và manga, với một cộng đồng trực tuyến với hơn 45 triệu người dùng đã đăng ký và 2 triệu người dùng đang theo dõi.",
+    "zh": "Crunchyroll是美国的一家提供东亚相关流媒体影视服务和国际交流社区的网站。",
+    "zh-tw": "Crunchyroll是美國的一家提供東亞相關串流媒體影視服務和國際交流社區的網站。"
+  },
+  "url": "www.crunchyroll.com",
+  "version": "3.1.6",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/thumbnail.png",
+  "color": "#f47521",
+  "category": "anime",
+  "tags": [
+    "video",
+    "anime",
+    "manga"
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*",
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    }
+  ]
 }

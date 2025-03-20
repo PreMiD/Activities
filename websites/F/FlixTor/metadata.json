@@ -1,40 +1,40 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "TheDrop.",
-		"id": "293828021134295040"
-	},
-	"contributors": [
-		{
-			"name": "youka",
-			"id": "239381559482777600"
-		}
-	],
-	"service": "FlixTor",
-	"description": {
-		"en": "FlixTor is a fully automated video search engine.",
-		"ro": "FlixTor este un motor de căutare automat pentru videoclipuri.",
-		"nl": "FlixTor is een volledig geautomatiseerde video zoekmachine."
-	},
-	"url": [
-		"flixtor.to",
-		"flixtor.ch",
-		"flixtor.se",
-		"flixtor.vc",
-		"flixtor.nu",
-		"flixtor.sx",
-		"flixtor.tk",
-		"flixtor.cz"
-	],
-	"regExp": "flixtor[.](to|ch|se|vc|nu|sx|tk|cz)",
-	"version": "2.3.14",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/F/FlixTor/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FlixTor/assets/thumbnail.png",
-	"color": "#1d3343",
-	"category": "videos",
-	"tags": [
-		"video",
-		"media"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "TheDrop.",
+    "id": "293828021134295040"
+  },
+  "contributors": [
+    {
+      "name": "youka",
+      "id": "239381559482777600"
+    }
+  ],
+  "service": "FlixTor",
+  "description": {
+    "en": "FlixTor is a fully automated video search engine.",
+    "nl": "FlixTor is een volledig geautomatiseerde video zoekmachine.",
+    "ro": "FlixTor este un motor de căutare automat pentru videoclipuri."
+  },
+  "url": [
+    "flixtor.to",
+    "flixtor.ch",
+    "flixtor.se",
+    "flixtor.vc",
+    "flixtor.nu",
+    "flixtor.sx",
+    "flixtor.tk",
+    "flixtor.cz"
+  ],
+  "regExp": "flixtor[.](to|ch|se|vc|nu|sx|tk|cz)",
+  "version": "2.3.15",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FlixTor/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FlixTor/assets/thumbnail.png",
+  "color": "#1d3343",
+  "category": "videos",
+  "tags": [
+    "video",
+    "media"
+  ]
 }

@@ -1,16 +1,17 @@
-import { Assets } from "../presence";
-import { getWorkspaceName } from "../lib/workspace";
-import { getRealtimeEndpoint } from "../lib/realtime";
+import { getRealtimeEndpoint } from '../lib/realtime.js'
+import { getWorkspaceName } from '../lib/workspace.js'
+import { ActivityAssets } from '../presence.js'
 
 export function MQTT(): PresenceData | null {
-	const endpoint = getRealtimeEndpoint();
+  const endpoint = getRealtimeEndpoint()
 
-	if (!endpoint) return null;
+  if (!endpoint)
+    return null
 
-	return {
-		smallImageKey: Assets.MQTT,
-		smallImageText: "MQTT",
-		details: getWorkspaceName(),
-		state: `🧑‍💻 | ${endpoint}`,
-	};
+  return {
+    smallImageKey: ActivityAssets.MQTT,
+    smallImageText: 'MQTT',
+    details: getWorkspaceName(),
+    state: `🧑‍💻 | ${endpoint}`,
+  }
 }

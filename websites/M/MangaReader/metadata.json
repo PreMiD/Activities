@@ -1,27 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "lolilover",
-		"id": "616761152331841550"
-	},
-	"service": "MangaReader",
-	"description": {
-		"en": "MangaReader.to is a free tool for everyone, where users from different regions can read Manga completely free. There is an extensive collection of Manga for every age group, which allows users from other areas to find their favorite stories. The most crucial part of MangaReader.to is that you won’t get ads on the page to have a peaceful reading."
-	},
-	"url": [
-		"mangareader.to",
-		"www.mangareader.to"
-	],
-	"version": "1.0.16",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaReader/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaReader/assets/thumbnail.png",
-	"color": "#6241B0",
-	"category": "anime",
-	"tags": [
-		"manga",
-		"books",
-		"book",
-		"reading"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "lolilover",
+    "id": "616761152331841550"
+  },
+  "service": "MangaReader",
+  "description": {
+    "en": "MangaReader.to is a free tool for everyone, where users from different regions can read Manga completely free. There is an extensive collection of Manga for every age group, which allows users from other areas to find their favorite stories. The most crucial part of MangaReader.to is that you won’t get ads on the page to have a peaceful reading."
+  },
+  "url": [
+    "mangareader.to",
+    "www.mangareader.to"
+  ],
+  "version": "1.0.17",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaReader/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaReader/assets/thumbnail.png",
+  "color": "#6241B0",
+  "category": "anime",
+  "tags": [
+    "manga",
+    "books",
+    "book",
+    "reading"
+  ]
 }

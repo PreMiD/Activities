@@ -1,47 +1,49 @@
-const iframe = new iFrame(),
-	coverCache: Record<string, string | null> = {};
+const iframe = new iFrame()
+const coverCache: Record<string, string | undefined> = {}
 
 async function getCover(songId: string): Promise<string> {
-	const coverImage = coverCache[songId];
+  const coverImage = coverCache[songId]
 
-	if (typeof coverImage !== "undefined") return coverImage;
+  if (typeof coverImage !== 'undefined')
+    return coverImage
 
-	coverCache[songId] = null;
+  coverCache[songId] = undefined
 
-	const response = await fetch(
-		`https://api.beatleader.xyz/leaderboard/${songId}?count=0`
-	);
-	if (!response.ok) throw new Error(`Response status: ${response.status}`);
+  const response = await fetch(
+    `https://api.beatleader.xyz/leaderboard/${songId}?count=0`,
+  )
+  if (!response.ok)
+    throw new Error(`Response status: ${response.status}`)
 
-	const json = await response.json();
+  const json = await response.json()
 
-	coverCache[songId] = json.song.coverImage;
+  coverCache[songId] = json.song.coverImage
 
-	return json.song.coverImage;
+  return json.song.coverImage
 }
 
-if (document.location.href.includes("https://replay.beatleader.")) {
-	iframe.on("UpdateData", async () => {
-		let coverURL = document.querySelector<HTMLImageElement>("#songImage").src;
+if (document.location.href.includes('https://replay.beatleader.')) {
+  iframe.on('UpdateData', async () => {
+    let coverURL = document.querySelector<HTMLImageElement>('#songImage')?.src
 
-		if (coverURL.startsWith("blob:")) {
-			coverURL = await getCover(
-				document
-					.querySelector<HTMLAnchorElement>("#songLink")
-					.href.split("/")[5]
-			);
+    if (coverURL?.startsWith('blob:')) {
+      coverURL = await getCover(
+        document
+          .querySelector<HTMLAnchorElement>('#songLink')!.href.split('/')[5]!,
+      )
 
-			if (coverURL === null) return;
-		}
+      if (coverURL === null)
+        return
+    }
 
-		iframe.send({
-			name: document.querySelector("#songName")?.textContent,
-			subName: document.querySelector("#songSubName")?.textContent,
-			currentTime: document.querySelector("#songProgress")?.textContent,
-			playing: Boolean(document.querySelector(".btn.pause")),
-			duration: document.querySelector("#songDuration")?.textContent,
-			playerName: document.querySelector("#playerName")?.textContent,
-			cover: coverURL,
-		});
-	});
+    iframe.send({
+      name: document.querySelector('#songName')?.textContent,
+      subName: document.querySelector('#songSubName')?.textContent,
+      currentTime: document.querySelector('#songProgress')?.textContent,
+      playing: Boolean(document.querySelector('.btn.pause')),
+      duration: document.querySelector('#songDuration')?.textContent,
+      playerName: document.querySelector('#playerName')?.textContent,
+      cover: coverURL,
+    })
+  })
 }

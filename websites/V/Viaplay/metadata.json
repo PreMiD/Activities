@@ -1,32 +1,32 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "manish",
-		"id": "332177981214818315"
-	},
-	"service": "Viaplay",
-	"description": {
-		"en": "Stream TV, comics, movies and sports online!",
-		"ga": "Sruthán teilifíse, greannáin, scannáin agus spóirt ar líne!",
-		"nl": "Stream tv, strips, films en sport online!"
-	},
-	"url": [
-		"viaplay.se",
-		"viaplay.dk",
-		"viaplay.no",
-		"viaplay.fi"
-	],
-	"version": "1.3.26",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/V/Viaplay/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Viaplay/assets/thumbnail.png",
-	"color": "#ec5a7f",
-	"category": "videos",
-	"tags": [
-		"movies",
-		"shows",
-		"sports",
-		"tv",
-		"comics"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "manish",
+    "id": "332177981214818315"
+  },
+  "service": "Viaplay",
+  "description": {
+    "en": "Stream TV, comics, movies and sports online!",
+    "ga": "Sruthán teilifíse, greannáin, scannáin agus spóirt ar líne!",
+    "nl": "Stream tv, strips, films en sport online!"
+  },
+  "url": [
+    "viaplay.se",
+    "viaplay.dk",
+    "viaplay.no",
+    "viaplay.fi"
+  ],
+  "version": "1.3.27",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Viaplay/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Viaplay/assets/thumbnail.png",
+  "color": "#ec5a7f",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "shows",
+    "sports",
+    "tv",
+    "comics"
+  ]
 }

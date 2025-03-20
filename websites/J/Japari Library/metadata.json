@@ -1,23 +1,23 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Flashlight",
-		"id": "158418656861093888"
-	},
-	"service": "Japari Library",
-	"description": {
-		"en": "Japari Library is a wiki based around the Kemono Friends multimedia franchise.",
-		"nl": "Japari Library is een wiki die is gebaseerd op de multimediafranchise Kemono Friends."
-	},
-	"url": "japari-library.com",
-	"version": "1.1.26",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/J/Japari%20Library/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Japari%20Library/assets/thumbnail.png",
-	"color": "#4CC5FF",
-	"category": "anime",
-	"tags": [
-		"anime",
-		"wiki"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Flashlight",
+    "id": "158418656861093888"
+  },
+  "service": "Japari Library",
+  "description": {
+    "en": "Japari Library is a wiki based around the Kemono Friends multimedia franchise.",
+    "nl": "Japari Library is een wiki die is gebaseerd op de multimediafranchise Kemono Friends."
+  },
+  "url": "japari-library.com",
+  "version": "1.1.27",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Japari%20Library/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Japari%20Library/assets/thumbnail.png",
+  "color": "#4CC5FF",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "wiki"
+  ]
 }

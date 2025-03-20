@@ -1,21 +1,18 @@
-const iframe = new iFrame();
+const iframe = new iFrame()
 
-setInterval(function () {
-	if (document.location.hostname === "static.crunchyroll.com") {
-		const video: HTMLVideoElement =
-			document.querySelector("#player0") !== null
-				? document.querySelector("#player0")
-				: document.querySelector("#player_html5_api");
+setInterval(() => {
+  if (document.location.hostname === 'static.crunchyroll.com') {
+    const video = document.querySelector<HTMLVideoElement>('#player0') ?? document.querySelector<HTMLVideoElement>('#player_html5_api')
 
-		if (video && !isNaN(video.duration)) {
-			iframe.send({
-				iFrameVideoData: {
-					iFrameVideo: true,
-					currTime: video.currentTime,
-					dur: video.duration,
-					paused: video.paused,
-				},
-			});
-		}
-	}
-}, 100);
+    if (video && !Number.isNaN(video.duration)) {
+      iframe.send({
+        iFrameVideoData: {
+          iFrameVideo: true,
+          currTime: video.currentTime,
+          dur: video.duration,
+          paused: video.paused,
+        },
+      })
+    }
+  }
+}, 100)

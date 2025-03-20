@@ -1,29 +1,29 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Arda",
-		"id": "403225819222245377"
-	},
-	"service": "Teknobuk",
-	"description": {
-		"tr": "Teknobuk, tıpkı Webtekno ve ShiftDelete.Net gibi bir teknolojik haber sitesi.",
-		"en": "Teknobuk is a technology blog, just like Webtekno ve ShiftDelete.Net.",
-		"nl": "Teknobuk is een technologieblog, net als Webtekno ve ShiftDelete.Net."
-	},
-	"url": [
-		"www.teknobuk.com",
-		"teknobuk.com"
-	],
-	"version": "1.2.26",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/T/Teknobuk/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Teknobuk/assets/thumbnail.png",
-	"color": "#FABD1B",
-	"category": "other",
-	"tags": [
-		"log",
-		"blog",
-		"technology",
-		"turkish"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Arda",
+    "id": "403225819222245377"
+  },
+  "service": "Teknobuk",
+  "description": {
+    "en": "Teknobuk is a technology blog, just like Webtekno ve ShiftDelete.Net.",
+    "nl": "Teknobuk is een technologieblog, net als Webtekno ve ShiftDelete.Net.",
+    "tr": "Teknobuk, tıpkı Webtekno ve ShiftDelete.Net gibi bir teknolojik haber sitesi."
+  },
+  "url": [
+    "www.teknobuk.com",
+    "teknobuk.com"
+  ],
+  "version": "1.2.27",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Teknobuk/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Teknobuk/assets/thumbnail.png",
+  "color": "#FABD1B",
+  "category": "other",
+  "tags": [
+    "log",
+    "blog",
+    "technology",
+    "turkish"
+  ]
 }

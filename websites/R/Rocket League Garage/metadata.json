@@ -1,24 +1,24 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Bas950",
-		"id": "241278257335500811"
-	},
-	"service": "Rocket League Garage",
-	"description": {
-		"en": "Worlds first fansite for Rocket League",
-		"nl": "'S Werelds eerste fansite voor Rocket League",
-		"zh": "'世界第一火箭联盟狂热爱好者。"
-	},
-	"url": "rocket-league.com",
-	"version": "1.2.22",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rocket%20League%20Garage/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rocket%20League%20Garage/assets/thumbnail.png",
-	"color": "#6963b7",
-	"category": "games",
-	"tags": [
-		"rocket-league",
-		"trading"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Bas950",
+    "id": "241278257335500811"
+  },
+  "service": "Rocket League Garage",
+  "description": {
+    "en": "Worlds first fansite for Rocket League",
+    "nl": "'S Werelds eerste fansite voor Rocket League",
+    "zh": "'世界第一火箭联盟狂热爱好者。"
+  },
+  "url": "rocket-league.com",
+  "version": "1.2.23",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rocket%20League%20Garage/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rocket%20League%20Garage/assets/thumbnail.png",
+  "color": "#6963b7",
+  "category": "games",
+  "tags": [
+    "rocket-league",
+    "trading"
+  ]
 }

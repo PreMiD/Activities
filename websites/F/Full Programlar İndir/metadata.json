@@ -1,28 +1,28 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "SinecKers",
-		"id": "380411952666640385"
-	},
-	"service": "Full Programlar İndir",
-	"description": {
-		"tr": "Full Programlar İndir Türkçe bir program indirme sitesidir",
-		"en": "Full Programlar İndir is a website that allows you to download many programs and games",
-		"nl": "Full Programlar İndir is een website waar u vele programma's en spelletjes kunt downloaden"
-	},
-	"url": [
-		"www.fullprogramlarindir.net",
-		"fullprogramlarindir.net"
-	],
-	"version": "1.0.28",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/F/Full%20Programlar%20%C4%B0ndir/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Full%20Programlar%20%C4%B0ndir/assets/thumbnail.png",
-	"color": "#3F9EDD",
-	"category": "other",
-	"tags": [
-		"full-programlar-indir",
-		"turkish",
-		"program"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "SinecKers",
+    "id": "380411952666640385"
+  },
+  "service": "Full Programlar İndir",
+  "description": {
+    "en": "Full Programlar İndir is a website that allows you to download many programs and games",
+    "nl": "Full Programlar İndir is een website waar u vele programma's en spelletjes kunt downloaden",
+    "tr": "Full Programlar İndir Türkçe bir program indirme sitesidir"
+  },
+  "url": [
+    "www.fullprogramlarindir.net",
+    "fullprogramlarindir.net"
+  ],
+  "version": "1.0.29",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Full%20Programlar%20%C4%B0ndir/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Full%20Programlar%20%C4%B0ndir/assets/thumbnail.png",
+  "color": "#3F9EDD",
+  "category": "other",
+  "tags": [
+    "full-programlar-indir",
+    "turkish",
+    "program"
+  ]
 }

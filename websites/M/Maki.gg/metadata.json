@@ -1,23 +1,23 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Quintenvw",
-		"id": "123468845749895170"
-	},
-	"service": "Maki.gg",
-	"description": {
-		"en": "A multi-purpose bot featuring server management, leveling, economy, administration tools, fun commands, and more with an intuitive dashboard!",
-		"nl": "Een multifunctionele bot met serverbeheer, nivellering, economie, beheertools, leuke opdrachten en meer met een intuïtief dashboard!"
-	},
-	"url": "maki.gg",
-	"version": "1.3.24",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/M/Maki.gg/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Maki.gg/assets/thumbnail.jpg",
-	"color": "#F24443",
-	"category": "other",
-	"tags": [
-		"bot",
-		"discord"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Quintenvw",
+    "id": "123468845749895170"
+  },
+  "service": "Maki.gg",
+  "description": {
+    "en": "A multi-purpose bot featuring server management, leveling, economy, administration tools, fun commands, and more with an intuitive dashboard!",
+    "nl": "Een multifunctionele bot met serverbeheer, nivellering, economie, beheertools, leuke opdrachten en meer met een intuïtief dashboard!"
+  },
+  "url": "maki.gg",
+  "version": "1.3.25",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Maki.gg/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Maki.gg/assets/thumbnail.jpg",
+  "color": "#F24443",
+  "category": "other",
+  "tags": [
+    "bot",
+    "discord"
+  ]
 }

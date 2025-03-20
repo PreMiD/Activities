@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.7",
+  "author": {
+    "name": "Toshi",
+    "id": "548698164874575875"
+  },
+  "service": "YTyping",
+  "description": {
+    "en": "A website where you can practice typing with YouTube music."
+  },
+  "url": "ytyping.net",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YTyping/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YTyping/assets/thumbnail.png",
+  "color": "#3b5a7d",
+  "category": "games",
+  "tags": [
+    "game",
+    "music",
+    "typing"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "www[.]youtube[.]com[/]",
+  "settings": [
+    {
+      "id": "showCurrentSong",
+      "title": "Show Current Song",
+      "icon": "fas fa-music",
+      "value": true
+    },
+    {
+      "id": "showTypingState",
+      "title": "Show Typing State",
+      "icon": "fas fa-keyboard",
+      "value": true
+    },
+    {
+      "id": "showMediaState",
+      "title": "Show Media State",
+      "icon": "fas fa-play-circle",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}

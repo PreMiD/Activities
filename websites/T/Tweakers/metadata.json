@@ -1,29 +1,28 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "bakzkndd",
-		"id": "343103632453009408"
-	},
-	"service": "Tweakers",
-	"description": {
-		"nl": "Tweakers is de grootste elektronica- en technologiewebsite van Nederland en België.",
-		"en": "Tweakers is the biggest electronics and technology website in the Netherlands and Belgium."
-	},
-	"url": "tweakers.net",
-	"regExp": "([a-z0-9-]+[.])*tweakers[.]net[/]",
-	"version": "1.0.19",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tweakers/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tweakers/assets/thumbnail.png",
-	"color": "#a11a3a",
-	"category": "other",
-	"tags": [
-		"tweakers",
-		"technology",
-		"electronics",
-		"reviews",
-		"hardware",
-		"software",
-		"dutch"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "bakzkndd",
+    "id": "343103632453009408"
+  },
+  "service": "Tweakers",
+  "description": {
+    "en": "Tweakers is the biggest electronics and technology website in the Netherlands and Belgium.",
+    "nl": "Tweakers is de grootste elektronica- en technologiewebsite van Nederland en België."
+  },
+  "url": "tweakers.net",
+  "regExp": "([a-z0-9-]+[.])*tweakers[.]net[/]",
+  "version": "1.0.21",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tweakers/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tweakers/assets/thumbnail.png",
+  "color": "#a11a3a",
+  "category": "other",
+  "tags": [
+    "technology",
+    "electronics",
+    "reviews",
+    "hardware",
+    "software",
+    "dutch"
+  ]
 }

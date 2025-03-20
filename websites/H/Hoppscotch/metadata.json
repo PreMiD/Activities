@@ -1,24 +1,23 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "353760389747441665",
-		"name": "eudrino"
-	},
-	"service": "Hoppscotch",
-	"description": {
-		"en": "Hoppscotch is an open source API development ecosystem"
-	},
-	"url": "hoppscotch.io",
-	"version": "1.0.6",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hoppscotch/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hoppscotch/assets/thumbnail.png",
-	"color": "#181818",
-	"category": "other",
-	"tags": [
-		"hoppscotch",
-		"api",
-		"development",
-		"software"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "353760389747441665",
+    "name": "eudrino"
+  },
+  "service": "Hoppscotch",
+  "description": {
+    "en": "Hoppscotch is an open source API development ecosystem"
+  },
+  "url": "hoppscotch.io",
+  "version": "1.0.8",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hoppscotch/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hoppscotch/assets/thumbnail.png",
+  "color": "#181818",
+  "category": "other",
+  "tags": [
+    "api",
+    "development",
+    "software"
+  ]
 }

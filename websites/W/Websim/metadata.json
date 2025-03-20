@@ -1,39 +1,38 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "1255528657058009088",
-		"name": "gwashark"
-	},
-	"service": "Websim",
-	"description": {
-		"en": "Websim.ai is an AI-powered platform that allows users to generate and explore a simulated version of the internet."
-	},
-	"url": "websim.ai",
-	"version": "1.0.3",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/W/Websim/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Websim/assets/thumbnail.png",
-	"color": "#38bdf8",
-	"category": "other",
-	"tags": [
-		"websim",
-		"ai"
-	],
-	"settings": [
-		{
-			"id": "showButtons",
-			"title": "Show Buttons",
-			"icon": "fas fa-toggle-on",
-			"value": true
-		},
-		{
-			"id": "btnPrivacy",
-			"title": "Buttons Privacy",
-			"icon": "fas fa-user-secret",
-			"value": true,
-			"if": {
-				"showButtons": true
-			}
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "1255528657058009088",
+    "name": "gwashark"
+  },
+  "service": "Websim",
+  "description": {
+    "en": "Websim.ai is an AI-powered platform that allows users to generate and explore a simulated version of the internet."
+  },
+  "url": "websim.ai",
+  "version": "1.0.5",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Websim/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Websim/assets/thumbnail.png",
+  "color": "#38bdf8",
+  "category": "other",
+  "tags": [
+    "ai"
+  ],
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-toggle-on",
+      "value": true
+    },
+    {
+      "id": "btnPrivacy",
+      "title": "Buttons Privacy",
+      "icon": "fas fa-user-secret",
+      "value": true,
+      "if": {
+        "showButtons": true
+      }
+    }
+  ]
 }

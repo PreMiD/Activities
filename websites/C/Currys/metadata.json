@@ -1,25 +1,24 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "xFutuxe",
-		"id": "299406904344576000"
-	},
-	"service": "Currys",
-	"description": {
-		"en": "Currys is a British electrical retailer and repairer operating in the United Kingdom and Republic of Ireland, selling all kind of electrical goods"
-	},
-	"url": [
-		"currys.co.uk",
-		"www.currys.co.uk"
-	],
-	"version": "1.0.10",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/C/Currys/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Currys/assets/thumbnail.png",
-	"color": "#4b0ba3",
-	"category": "other",
-	"tags": [
-		"currys",
-		"curryspcworld"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "xFutuxe",
+    "id": "299406904344576000"
+  },
+  "service": "Currys",
+  "description": {
+    "en": "Currys is a British electrical retailer and repairer operating in the United Kingdom and Republic of Ireland, selling all kind of electrical goods"
+  },
+  "url": [
+    "currys.co.uk",
+    "www.currys.co.uk"
+  ],
+  "version": "1.0.12",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Currys/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Currys/assets/thumbnail.png",
+  "color": "#4b0ba3",
+  "category": "other",
+  "tags": [
+    "curryspcworld"
+  ]
 }

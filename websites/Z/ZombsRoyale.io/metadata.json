@@ -1,23 +1,23 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "MrBartusek",
-		"id": "212988300137463809"
-	},
-	"service": "ZombsRoyale.io",
-	"description": {
-		"en": "100 Player 2D Real-Time Battle Royale game inspired by PUBG and Fortnite"
-	},
-	"url": "zombsroyale.io",
-	"version": "1.0.19",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZombsRoyale.io/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZombsRoyale.io/assets/thumbnail.png",
-	"color": "#45bd4c",
-	"category": "games",
-	"tags": [
-		"battle-royale",
-		"games",
-		"action"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "MrBartusek",
+    "id": "212988300137463809"
+  },
+  "service": "ZombsRoyale.io",
+  "description": {
+    "en": "100 Player 2D Real-Time Battle Royale game inspired by PUBG and Fortnite"
+  },
+  "url": "zombsroyale.io",
+  "version": "1.0.20",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZombsRoyale.io/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZombsRoyale.io/assets/thumbnail.png",
+  "color": "#45bd4c",
+  "category": "games",
+  "tags": [
+    "battle-royale",
+    "games",
+    "action"
+  ]
 }

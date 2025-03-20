@@ -1,62 +1,61 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "257151906038677504",
-		"name": "SHISEN"
-	},
-	"service": "Kinopub",
-	"description": {
-		"en": "Website for online watching movies, series, sports broadcasts and concerts",
-		"ru": "Сайт для онлайн просмотра фильмов, сериалов, спортивных трансляций и концертов"
-	},
-	"url": "kino.pub",
-	"version": "1.0.15",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kinopub/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kinopub/assets/thumbnail.png",
-	"color": "#1c202b",
-	"category": "videos",
-	"tags": [
-		"kinopub",
-		"movie",
-		"video",
-		"media"
-	],
-	"iframe": true,
-	"iFrameRegExp": ".*",
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Приватный режим",
-			"icon": "fad fa-user-secret",
-			"value": false
-		},
-		{
-			"id": "time",
-			"title": "Оставшееся время прослушивания/просмотра",
-			"if": {
-				"privacy": false
-			},
-			"icon": "fad fa-stopwatch",
-			"value": true
-		},
-		{
-			"id": "cover",
-			"if": {
-				"privacy": false
-			},
-			"title": "Обложки к фильмам",
-			"icon": "fad fa-images",
-			"value": true
-		},
-		{
-			"id": "buttons",
-			"if": {
-				"privacy": false
-			},
-			"title": "Показывать кнопки",
-			"icon": "fas fa-compress-arrows-alt",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "257151906038677504",
+    "name": "SHISEN"
+  },
+  "service": "Kinopub",
+  "description": {
+    "en": "Website for online watching movies, series, sports broadcasts and concerts",
+    "ru": "Сайт для онлайн просмотра фильмов, сериалов, спортивных трансляций и концертов"
+  },
+  "url": "kino.pub",
+  "version": "1.0.17",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kinopub/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kinopub/assets/thumbnail.png",
+  "color": "#1c202b",
+  "category": "videos",
+  "tags": [
+    "movie",
+    "video",
+    "media"
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*",
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Приватный режим",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "time",
+      "title": "Оставшееся время прослушивания/просмотра",
+      "if": {
+        "privacy": false
+      },
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "if": {
+        "privacy": false
+      },
+      "title": "Обложки к фильмам",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "if": {
+        "privacy": false
+      },
+      "title": "Показывать кнопки",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
 }

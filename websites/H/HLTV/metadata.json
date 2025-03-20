@@ -1,24 +1,24 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Bas950",
-		"id": "241278257335500811"
-	},
-	"service": "HLTV",
-	"description": {
-		"en": "The leading CS:GO site in the world, featuring news, demos, pictures, statistics, on-site coverage and much much more!",
-		"nl": "De beste CS:GO website ter wereld, met nieuws, demo's, foto's, statistieken, on-site dekking en nog veel meer!"
-	},
-	"url": "www.hltv.org",
-	"version": "1.2.23",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/H/HLTV/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HLTV/assets/thumbnail.png",
-	"color": "#3e6ea0",
-	"category": "games",
-	"tags": [
-		"csgo",
-		"demo",
-		"stats"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Bas950",
+    "id": "241278257335500811"
+  },
+  "service": "HLTV",
+  "description": {
+    "en": "The leading CS:GO site in the world, featuring news, demos, pictures, statistics, on-site coverage and much much more!",
+    "nl": "De beste CS:GO website ter wereld, met nieuws, demo's, foto's, statistieken, on-site dekking en nog veel meer!"
+  },
+  "url": "www.hltv.org",
+  "version": "1.2.24",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HLTV/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HLTV/assets/thumbnail.png",
+  "color": "#3e6ea0",
+  "category": "games",
+  "tags": [
+    "csgo",
+    "demo",
+    "stats"
+  ]
 }

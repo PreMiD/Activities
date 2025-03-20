@@ -1,44 +1,44 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Angelo II",
-		"id": "698966790356729907"
-	},
-	"service": "Animes Portal",
-	"description": {
-		"en": "Anime, manga and Asian culture",
-		"bg": "Аниме, манга и азиатска култура"
-	},
-	"url": "animes-portal.info",
-	"version": "1.0.23",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/A/Animes%20Portal/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Animes%20Portal/assets/thumbnail.jpg",
-	"color": "#365AA8",
-	"category": "anime",
-	"tags": [
-		"anime",
-		"online",
-		"otaku",
-		"animes-portal",
-		"manga",
-		"asia",
-		"japan"
-	],
-	"iframe": true,
-	"iFrameRegExp": ".*",
-	"settings": [
-		{
-			"id": "showthumb",
-			"title": "Show thumbnails",
-			"icon": "fas fa-image",
-			"value": true
-		},
-		{
-			"id": "showmessaging",
-			"title": "Show chats",
-			"icon": "fas fa-comments",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Angelo II",
+    "id": "698966790356729907"
+  },
+  "service": "Animes Portal",
+  "description": {
+    "bg": "Аниме, манга и азиатска култура",
+    "en": "Anime, manga and Asian culture"
+  },
+  "url": "animes-portal.info",
+  "version": "1.0.24",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Animes%20Portal/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Animes%20Portal/assets/thumbnail.jpg",
+  "color": "#365AA8",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "online",
+    "otaku",
+    "animes-portal",
+    "manga",
+    "asia",
+    "japan"
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*",
+  "settings": [
+    {
+      "id": "showthumb",
+      "title": "Show thumbnails",
+      "icon": "fas fa-image",
+      "value": true
+    },
+    {
+      "id": "showmessaging",
+      "title": "Show chats",
+      "icon": "fas fa-comments",
+      "value": true
+    }
+  ]
 }

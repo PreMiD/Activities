@@ -1,27 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Kedi",
-		"id": "238668511222693888"
-	},
-	"service": "Sling TV",
-	"description": {
-		"en": "Get more of the live TV you love for less.",
-		"nl": "Ontvang meer live tv voor minder geld."
-	},
-	"url": [
-		"sling.com",
-		"watch.sling.com"
-	],
-	"version": "1.0.24",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sling%20TV/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sling%20TV/assets/thumbnail.png",
-	"color": "#008FCE",
-	"category": "videos",
-	"tags": [
-		"video",
-		"tv",
-		"movies"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Kedi",
+    "id": "238668511222693888"
+  },
+  "service": "Sling TV",
+  "description": {
+    "en": "Get more of the live TV you love for less.",
+    "nl": "Ontvang meer live tv voor minder geld."
+  },
+  "url": [
+    "sling.com",
+    "watch.sling.com"
+  ],
+  "version": "1.0.25",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sling%20TV/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sling%20TV/assets/thumbnail.png",
+  "color": "#008FCE",
+  "category": "videos",
+  "tags": [
+    "video",
+    "tv",
+    "movies"
+  ]
 }

@@ -1,25 +1,24 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "GURRMAN375D",
-		"id": "446528923535278082"
-	},
-	"service": "Otaku-Streamers",
-	"description": {
-		"en": "Otaku-Streamers is a site where you can find the latest anime, discussions and hang with some cool people.",
-		"nl": "Otaku-Streamers is een site waar je de nieuwste anime, discussies en leuke mensen kunt vinden."
-	},
-	"url": "otaku-streamers.com",
-	"regExp": "([a-z0-9-]+[.])*otaku-streamers[.]com[/]",
-	"version": "1.0.23",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/O/Otaku-Streamers/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Otaku-Streamers/assets/thumbnail.png",
-	"color": "#920121",
-	"category": "anime",
-	"tags": [
-		"anime",
-		"shows",
-		"otaku-streamers"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "GURRMAN375D",
+    "id": "446528923535278082"
+  },
+  "service": "Otaku-Streamers",
+  "description": {
+    "en": "Otaku-Streamers is a site where you can find the latest anime, discussions and hang with some cool people.",
+    "nl": "Otaku-Streamers is een site waar je de nieuwste anime, discussies en leuke mensen kunt vinden."
+  },
+  "url": "otaku-streamers.com",
+  "regExp": "([a-z0-9-]+[.])*otaku-streamers[.]com[/]",
+  "version": "1.0.25",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Otaku-Streamers/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Otaku-Streamers/assets/thumbnail.png",
+  "color": "#920121",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "shows"
+  ]
 }

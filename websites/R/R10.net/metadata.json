@@ -1,28 +1,28 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "AlbaySIMSEK",
-		"id": "432476132609228800"
-	},
-	"service": "R10.net",
-	"description": {
-		"en": "R10.net Turkey is one of the popular webmaster forum.",
-		"tr": "R10.net, Türkiye'de popüler webmaster forumlarından birisidir.",
-		"nl": "R10.net Turkije is een van de populaire webmasterforums."
-	},
-	"url": [
-		"analiz.r10.net",
-		"www.r10.net",
-		"r10.net"
-	],
-	"version": "1.3.23",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/R/R10.net/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/R10.net/assets/thumbnail.png",
-	"color": "#1EFF12",
-	"category": "other",
-	"tags": [
-		"forum",
-		"turkish"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "AlbaySIMSEK",
+    "id": "432476132609228800"
+  },
+  "service": "R10.net",
+  "description": {
+    "en": "R10.net Turkey is one of the popular webmaster forum.",
+    "nl": "R10.net Turkije is een van de populaire webmasterforums.",
+    "tr": "R10.net, Türkiye'de popüler webmaster forumlarından birisidir."
+  },
+  "url": [
+    "analiz.r10.net",
+    "www.r10.net",
+    "r10.net"
+  ],
+  "version": "1.3.24",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/R10.net/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/R10.net/assets/thumbnail.png",
+  "color": "#1EFF12",
+  "category": "other",
+  "tags": [
+    "forum",
+    "turkish"
+  ]
 }

@@ -1,30 +1,30 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Nekolen",
-		"id": "270125856679002113"
-	},
-	"contributors": [
-		{
-			"name": "Bas950",
-			"id": "241278257335500811"
-		}
-	],
-	"service": "Just Light Novels",
-	"description": {
-		"en": "Just Light Novels! Home of All Light Novels",
-		"nl": "Gewoon lichte romans! Huis van alle lichte romans"
-	},
-	"url": "justlightnovels.com",
-	"version": "1.2.23",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/J/Just%20Light%20Novels/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Just%20Light%20Novels/assets/thumbnail.png",
-	"color": "#0000ff",
-	"category": "other",
-	"tags": [
-		"light-novels",
-		"reading",
-		"free"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Nekolen",
+    "id": "270125856679002113"
+  },
+  "contributors": [
+    {
+      "name": "Bas950",
+      "id": "241278257335500811"
+    }
+  ],
+  "service": "Just Light Novels",
+  "description": {
+    "en": "Just Light Novels! Home of All Light Novels",
+    "nl": "Gewoon lichte romans! Huis van alle lichte romans"
+  },
+  "url": "justlightnovels.com",
+  "version": "1.2.24",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Just%20Light%20Novels/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Just%20Light%20Novels/assets/thumbnail.png",
+  "color": "#0000ff",
+  "category": "other",
+  "tags": [
+    "light-novels",
+    "reading",
+    "free"
+  ]
 }

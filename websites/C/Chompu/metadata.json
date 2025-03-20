@@ -1,25 +1,25 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "919878532228841532",
-		"name": "somboytiger"
-	},
-	"service": "Chompu",
-	"description": {
-		"en": "Chompu is Discord app equipped with a music streaming system that supports multiple platforms, including Joox, TikTok, BiliBili, BiliBiliTV, VKMusic, Facebook Watch, TIDALMusic, AmazonMusic, Deezer, Nico, AppleMusic, Spotify, Soundcloud, Clyp, PornHub, and many more!",
-		"th": "Chompu คือ แอปดิสคอร์ดที่มาพร้อมด้วยระบบสตรีมเล่นเพลงที่รองรับสตรีมเล่นเพลงหลายแพลตฟอร์ม Joox, TikTok, BiliBili, BiliBiliTV, VKMusic, Facebook Watch, TIDALMusic, AmazonMusic, Deezer, Nico, AppleMusic, Spotify, Soundcloud, Clyp, PornHub และอื่นๆอีกมากมาย!"
-	},
-	"url": "chompubot.work",
-	"version": "1.0.6",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/C/Chompu/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Chompu/assets/thumbnail.png",
-	"color": "#ffbcff",
-	"category": "music",
-	"tags": [
-		"music",
-		"music-room",
-		"discord",
-		"dashboard"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "919878532228841532",
+    "name": "somboytiger"
+  },
+  "service": "Chompu",
+  "description": {
+    "en": "Chompu is Discord app equipped with a music streaming system that supports multiple platforms, including Joox, TikTok, BiliBili, BiliBiliTV, VKMusic, Facebook Watch, TIDALMusic, AmazonMusic, Deezer, Nico, AppleMusic, Spotify, Soundcloud, Clyp, PornHub, and many more!",
+    "th": "Chompu คือ แอปดิสคอร์ดที่มาพร้อมด้วยระบบสตรีมเล่นเพลงที่รองรับสตรีมเล่นเพลงหลายแพลตฟอร์ม Joox, TikTok, BiliBili, BiliBiliTV, VKMusic, Facebook Watch, TIDALMusic, AmazonMusic, Deezer, Nico, AppleMusic, Spotify, Soundcloud, Clyp, PornHub และอื่นๆอีกมากมาย!"
+  },
+  "url": "chompubot.work",
+  "version": "1.0.7",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Chompu/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Chompu/assets/thumbnail.png",
+  "color": "#ffbcff",
+  "category": "music",
+  "tags": [
+    "music",
+    "music-room",
+    "discord",
+    "dashboard"
+  ]
 }

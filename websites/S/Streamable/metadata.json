@@ -1,26 +1,25 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Lacking",
-		"id": "132693143173857281"
-	},
-	"service": "Streamable",
-	"description": {
-		"en": "Fast and easy video streaming for bloggers and publishers.",
-		"nl": "Snelle en eenvoudige videostreaming voor bloggers en uitgevers."
-	},
-	"url": "streamable.com",
-	"version": "1.2.24",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/Streamable/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Streamable/assets/thumbnail.png",
-	"color": "#0f90fa",
-	"category": "videos",
-	"tags": [
-		"streamable",
-		"video",
-		"upload",
-		"host",
-		"streaming"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Lacking",
+    "id": "132693143173857281"
+  },
+  "service": "Streamable",
+  "description": {
+    "en": "Fast and easy video streaming for bloggers and publishers.",
+    "nl": "Snelle en eenvoudige videostreaming voor bloggers en uitgevers."
+  },
+  "url": "streamable.com",
+  "version": "1.2.26",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Streamable/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Streamable/assets/thumbnail.png",
+  "color": "#0f90fa",
+  "category": "videos",
+  "tags": [
+    "video",
+    "upload",
+    "host",
+    "streaming"
+  ]
 }

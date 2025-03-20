@@ -1,49 +1,49 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "437154602626973697",
-		"name": "Kitosight"
-	},
-	"service": "AnimeLib",
-	"altnames": [
-		"AniLib"
-	],
-	"description": {
-		"en": "Watch anime online in Russian",
-		"ru": "Смотрите аниме онлайн на русском"
-	},
-	"url": "anilib.me",
-	"version": "1.0.8",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeLib/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeLib/assets/thumbnail.png",
-	"color": "#A020F0",
-	"category": "anime",
-	"tags": [
-		"anime",
-		"community",
-		"lib"
-	],
-	"iframe": true,
-	"iFrameRegExp": "kodik[.]info",
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fad fa-shield-alt",
-			"value": false
-		},
-		{
-			"id": "buttons",
-			"title": "Show Buttons",
-			"icon": "fas fa-compress-arrows-alt",
-			"value": true
-		},
-		{
-			"id": "titleAsPresence",
-			"title": "Show Anime Title As Presence",
-			"icon": "fad fa-user-edit",
-			"value": false
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "437154602626973697",
+    "name": "Kitosight"
+  },
+  "service": "AnimeLib",
+  "altnames": [
+    "AniLib"
+  ],
+  "description": {
+    "en": "Watch anime online in Russian",
+    "ru": "Смотрите аниме онлайн на русском"
+  },
+  "url": "anilib.me",
+  "version": "1.0.10",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeLib/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeLib/assets/thumbnail.png",
+  "color": "#A020F0",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "community",
+    "lib"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "kodik[.]info",
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Приватный режим",
+      "icon": "fad fa-shield-alt",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "title": "Показывать кнопки",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "titleAsPresence",
+      "title": "Отображать название аниме как название Презенса",
+      "icon": "fad fa-user-edit",
+      "value": false
+    }
+  ]
 }

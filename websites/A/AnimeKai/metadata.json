@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "357878026429792258",
+    "name": ".waterboii"
+  },
+  "service": "AnimeKai",
+  "description": {
+    "en": "AnimeKai is the best website to watch anime online for free, watch anime with DUB, SUB in HD."
+  },
+  "url": "animekai.to",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/W8xdGr1.png",
+  "thumbnail": "https://i.imgur.com/UH163D5.png",
+  "color": "#40b15d",
+  "category": "anime",
+  "tags": [
+    "anime"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "megaup[.]cc",
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}

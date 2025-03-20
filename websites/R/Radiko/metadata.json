@@ -1,39 +1,39 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Munn",
-		"id": "379616881272946688"
-	},
-	"contributors": [
-		{
-			"name": "Krauchelli",
-			"id": "229334514084741120"
-		}
-	],
-	"service": "Radiko",
-	"description": {
-		"en": "Radiko is Japanese website that provides radio livestreaming in real time.",
-		"ja": "ラジコは、あなたが今いるエリアで放送しているラジオ局をパソコンやスマートフォンで聴くことのできるサービスです。",
-		"nl": "Radiko is een Japanse website die livestreaming via de radio in realtime biedt."
-	},
-	"url": "radiko.jp",
-	"version": "1.1.6",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/thumbnail.png",
-	"color": "#0064FF",
-	"category": "music",
-	"tags": [
-		"radio",
-		"podcast",
-		"japan",
-		"stream"
-	],
-	"settings": [
-		{
-			"id": "isTimeVisible",
-			"title": "Time visible",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Munn",
+    "id": "379616881272946688"
+  },
+  "contributors": [
+    {
+      "name": "Krauchelli",
+      "id": "229334514084741120"
+    }
+  ],
+  "service": "Radiko",
+  "description": {
+    "en": "Radiko is Japanese website that provides radio livestreaming in real time.",
+    "ja": "ラジコは、あなたが今いるエリアで放送しているラジオ局をパソコンやスマートフォンで聴くことのできるサービスです。",
+    "nl": "Radiko is een Japanse website die livestreaming via de radio in realtime biedt."
+  },
+  "url": "radiko.jp",
+  "version": "1.1.8",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/thumbnail.png",
+  "color": "#0064FF",
+  "category": "music",
+  "tags": [
+    "radio",
+    "podcast",
+    "japan",
+    "stream"
+  ],
+  "settings": [
+    {
+      "id": "isTimeVisible",
+      "title": "Time visible",
+      "value": true
+    }
+  ]
 }

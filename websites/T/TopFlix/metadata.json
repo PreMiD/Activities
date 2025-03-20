@@ -1,27 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Bas950",
-		"id": "241278257335500811"
-	},
-	"service": "TopFlix",
-	"description": {
-		"en": "TopFlix - Watch Free HD Movies Online",
-		"nl": "TopFlix - Bekijk gratis online HD-films",
-		"pt-br": "TopFlix - Assistir filmes online grátis HD"
-	},
-	"url": "topflix.tv",
-	"version": "1.0.28",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/T/TopFlix/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TopFlix/assets/thumbnail.png",
-	"color": "#df003f",
-	"category": "videos",
-	"tags": [
-		"series",
-		"anime",
-		"movies"
-	],
-	"iframe": true,
-	"iFrameRegExp": ".*"
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Bas950",
+    "id": "241278257335500811"
+  },
+  "service": "TopFlix",
+  "description": {
+    "en": "TopFlix - Watch Free HD Movies Online",
+    "nl": "TopFlix - Bekijk gratis online HD-films",
+    "pt-br": "TopFlix - Assistir filmes online grátis HD"
+  },
+  "url": "topflixlive.vc",
+  "version": "1.0.30",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TopFlix/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TopFlix/assets/thumbnail.png",
+  "color": "#df003f",
+  "category": "videos",
+  "tags": [
+    "series",
+    "anime",
+    "movies"
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*"
 }

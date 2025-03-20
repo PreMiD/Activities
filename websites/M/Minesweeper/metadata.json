@@ -1,24 +1,23 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "unicornbetrayal",
-		"id": "377284540420587541"
-	},
-	"service": "Minesweeper",
-	"description": {
-		"en": "Play Minesweeper online with over 5 million players from around the world!"
-	},
-	"url": "minesweeper.online",
-	"version": "1.0.11",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/M/Minesweeper/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Minesweeper/assets/thumbnail.png",
-	"color": "#666666",
-	"category": "games",
-	"tags": [
-		"minesweeper",
-		"game",
-		"puzzle",
-		"logic"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "unicornbetrayal",
+    "id": "377284540420587541"
+  },
+  "service": "Minesweeper",
+  "description": {
+    "en": "Play Minesweeper online with over 5 million players from around the world!"
+  },
+  "url": "minesweeper.online",
+  "version": "1.0.13",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Minesweeper/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Minesweeper/assets/thumbnail.png",
+  "color": "#666666",
+  "category": "games",
+  "tags": [
+    "game",
+    "puzzle",
+    "logic"
+  ]
 }

@@ -1,30 +1,30 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "The Gamerzs",
-		"id": "730142125181894657"
-	},
-	"service": "TeamSeas",
-	"description": {
-		"en": "Help us remove 30 million pounds of trash by January 1st, 2022."
-	},
-	"url": "teamseas.org",
-	"version": "1.0.17",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/T/TeamSeas/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TeamSeas/assets/thumbnail.png",
-	"color": "#0095c3",
-	"category": "other",
-	"tags": [
-		"seas",
-		"mrbeast"
-	],
-	"settings": [
-		{
-			"id": "count",
-			"title": "Show donated amount",
-			"icon": "fas fa-dollar-sign",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "The Gamerzs",
+    "id": "730142125181894657"
+  },
+  "service": "TeamSeas",
+  "description": {
+    "en": "Help us remove 30 million pounds of trash by January 1st, 2022."
+  },
+  "url": "teamseas.org",
+  "version": "1.0.18",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TeamSeas/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TeamSeas/assets/thumbnail.png",
+  "color": "#0095c3",
+  "category": "other",
+  "tags": [
+    "seas",
+    "mrbeast"
+  ],
+  "settings": [
+    {
+      "id": "count",
+      "title": "Show donated amount",
+      "icon": "fas fa-dollar-sign",
+      "value": true
+    }
+  ]
 }

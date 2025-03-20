@@ -1,26 +1,26 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "xKubson_",
-		"id": "404217213873029120"
-	},
-	"service": "cda.pl",
-	"description": {
-		"en": "The largest independent VOD service in Poland. Offering high quality films and series.",
-		"pl": "Największy niezależny serwis VOD w Polsce. Oferuje wysokiej jakości filmy i seriale.",
-		"nl": "De grootste onafhankelijke VOD-service in Polen. Het aanbieden van films en series van hoge kwaliteit.",
-		"vi": "Dịch vụ cung cấp VOD độc lập lớn nhất Phần Lan. Cung cấp phim và sê-ri chất lượng cao."
-	},
-	"url": "www.cda.pl",
-	"version": "2.0.10",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/C/cda.pl/assets/logo.jpg",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/cda.pl/assets/thumbnail.png",
-	"color": "#B22907",
-	"category": "videos",
-	"tags": [
-		"video",
-		"movies",
-		"vod"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Kubuś!",
+    "id": "404217213873029120"
+  },
+  "service": "cda.pl",
+  "description": {
+    "en": "The largest independent VOD service in Poland. Offering high quality films and series.",
+    "nl": "De grootste onafhankelijke VOD-service in Polen. Het aanbieden van films en series van hoge kwaliteit.",
+    "pl": "Największy niezależny serwis VOD w Polsce. Oferuje wysokiej jakości filmy i seriale.",
+    "vi": "Dịch vụ cung cấp VOD độc lập lớn nhất Phần Lan. Cung cấp phim và sê-ri chất lượng cao."
+  },
+  "url": "www.cda.pl",
+  "version": "2.0.12",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/cda.pl/assets/logo.jpg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/cda.pl/assets/thumbnail.png",
+  "color": "#B22907",
+  "category": "videos",
+  "tags": [
+    "video",
+    "movies",
+    "vod"
+  ]
 }

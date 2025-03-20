@@ -1,50 +1,49 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "fun",
-		"id": "217348698294714370"
-	},
-	"contributors": [
-		{
-			"name": "RisingSunLight",
-			"id": "240521747852558347"
-		}
-	],
-	"service": "SOAP2DAY",
-	"description": {
-		"en": "You can watch all videos without logging in or registration. Soap2day is free all the time, but there are few ads on videoplayer page.",
-		"fr": "Vous pouvez regarder toutes les vidéos sans vous connecter ni vous enregistrer. Soap2day est gratuit tout le temps, mais il y a quelques pubs sur la page du lecteur vidéo."
-	},
-	"url": [
-		"soap2day.to",
-		"soap2day.ac",
-		"soap2day.sh",
-		"soap2day.mx",
-		"s2dfree.to",
-		"s2dfree.cc",
-		"s2dfree.de",
-		"s2dfree.is",
-		"soap2day.pe"
-	],
-	"version": "3.0.14",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/SOAP2DAY/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SOAP2DAY/assets/thumbnail.png",
-	"color": "#9eeae7",
-	"category": "videos",
-	"tags": [
-		"stream",
-		"soap2day",
-		"movies",
-		"tv",
-		"friends"
-	],
-	"settings": [
-		{
-			"id": "title",
-			"title": "Show Title",
-			"icon": "fas fa-comment-alt-edit",
-			"value": false
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "fun",
+    "id": "217348698294714370"
+  },
+  "contributors": [
+    {
+      "name": "RisingSunLight",
+      "id": "240521747852558347"
+    }
+  ],
+  "service": "SOAP2DAY",
+  "description": {
+    "en": "You can watch all videos without logging in or registration. Soap2day is free all the time, but there are few ads on videoplayer page.",
+    "fr": "Vous pouvez regarder toutes les vidéos sans vous connecter ni vous enregistrer. Soap2day est gratuit tout le temps, mais il y a quelques pubs sur la page du lecteur vidéo."
+  },
+  "url": [
+    "soap2day.to",
+    "soap2day.ac",
+    "soap2day.sh",
+    "soap2day.mx",
+    "s2dfree.to",
+    "s2dfree.cc",
+    "s2dfree.de",
+    "s2dfree.is",
+    "soap2day.pe"
+  ],
+  "version": "3.0.16",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SOAP2DAY/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SOAP2DAY/assets/thumbnail.png",
+  "color": "#9eeae7",
+  "category": "videos",
+  "tags": [
+    "stream",
+    "movies",
+    "tv",
+    "friends"
+  ],
+  "settings": [
+    {
+      "id": "title",
+      "title": "Show Title",
+      "icon": "fas fa-comment-alt-edit",
+      "value": false
+    }
+  ]
 }

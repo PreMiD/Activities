@@ -1,44 +1,44 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "181381194070491136",
-		"name": "3Tau"
-	},
-	"service": "MultiTwitch",
-	"description": {
-		"en": "Watch and enjoy an unlimited number of your favorite Twitch streams simultaneously."
-	},
-	"url": [
-		"multitwitch.tv",
-		"www.multitwitch.tv"
-	],
-	"version": "1.0.9",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/M/MultiTwitch/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MultiTwitch/assets/thumbnail.png",
-	"color": "#6441a5",
-	"category": "videos",
-	"tags": [
-		"twitch",
-		"video",
-		"streaming",
-		"entertainment"
-	],
-	"settings": [
-		{
-			"id": "showStreamers",
-			"title": "Show streams",
-			"icon": "fa-duotone fa-screen-users",
-			"value": true
-		},
-		{
-			"id": "showButton",
-			"if": {
-				"showStreamers": true
-			},
-			"title": "Show 'Open' button",
-			"value": false,
-			"icon": "fa-duotone fa-eye"
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "181381194070491136",
+    "name": "3Tau"
+  },
+  "service": "MultiTwitch",
+  "description": {
+    "en": "Watch and enjoy an unlimited number of your favorite Twitch streams simultaneously."
+  },
+  "url": [
+    "multitwitch.tv",
+    "www.multitwitch.tv"
+  ],
+  "version": "1.0.10",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MultiTwitch/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MultiTwitch/assets/thumbnail.png",
+  "color": "#6441a5",
+  "category": "videos",
+  "tags": [
+    "twitch",
+    "video",
+    "streaming",
+    "entertainment"
+  ],
+  "settings": [
+    {
+      "id": "showStreamers",
+      "title": "Show streams",
+      "icon": "fa-duotone fa-screen-users",
+      "value": true
+    },
+    {
+      "id": "showButton",
+      "if": {
+        "showStreamers": true
+      },
+      "title": "Show 'Open' button",
+      "value": false,
+      "icon": "fa-duotone fa-eye"
+    }
+  ]
 }

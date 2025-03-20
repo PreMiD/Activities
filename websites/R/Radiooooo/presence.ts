@@ -1,69 +1,70 @@
+import { Assets } from 'premid'
+
 const presence = new Presence({
-		clientId: "812656134120931330",
-	}),
-	getStrings = async () =>
-		presence.getStrings(
-			{
-				play: "general.playing",
-				pause: "general.paused",
-			},
-			await presence.getSetting<string>("lang").catch(() => "en")
-		),
-	browsingTimestamp = Math.floor(Date.now() / 1000);
+  clientId: '812656134120931330',
+})
+async function getStrings() {
+  return presence.getStrings(
+    {
+      play: 'general.playing',
+      pause: 'general.paused',
+    },
 
-let oldLang: string = null,
-	strings: Awaited<ReturnType<typeof getStrings>>;
+  )
+}
+const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-presence.on("UpdateData", async () => {
-	const presenceData: PresenceData = {
-			largeImageKey:
-				"https://cdn.rcd.gg/PreMiD/websites/R/Radiooooo/assets/logo.png",
-			details: "Idling",
-			startTimestamp: browsingTimestamp,
-		},
-		audio = document.querySelector("audio");
+let oldLang: string | null = null
+let strings: Awaited<ReturnType<typeof getStrings>>
 
-	if (audio) {
-		const { paused } = audio,
-			title = document.querySelector("div.info > div.title").textContent,
-			artist = document.querySelector(
-				"div.field.artist > span:nth-child(2)"
-			).textContent,
-			place = document.querySelector("div.head > div.place").textContent,
-			year = document.querySelector("div.head > div.year").textContent,
-			[songDetails, songState, newLang] = await Promise.all([
-				presence.getSetting<string>("song1"),
-				presence.getSetting<string>("song2"),
-				presence.getSetting<string>("lang").catch(() => "en"),
-			]);
+presence.on('UpdateData', async () => {
+  const presenceData: PresenceData = {
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/R/Radiooooo/assets/logo.png',
+    details: 'Idling',
+    startTimestamp: browsingTimestamp,
+  }
+  const audio = document.querySelector('audio')
 
-		if (oldLang !== newLang || !strings) {
-			oldLang = newLang;
-			strings = await getStrings();
-		}
+  if (audio) {
+    const { paused } = audio
+    const title = document.querySelector('div.info > div.title')?.textContent
+    const artist = document.querySelector(
+      'div.field.artist > span:nth-child(2)',
+    )?.textContent
+    const place = document.querySelector('div.head > div.place')?.textContent
+    const year = document.querySelector('div.head > div.year')?.textContent
+    const [songDetails, songState, newLang] = await Promise.all([
+      presence.getSetting<string>('song1'),
+      presence.getSetting<string>('song2'),
+      presence.getSetting<string>('lang').catch(() => 'en'),
+    ])
 
-		presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play;
-		presenceData.smallImageText = paused ? strings.pause : strings.play;
+    if (oldLang !== newLang || !strings) {
+      oldLang = newLang
+      strings = await getStrings()
+    }
 
-		presenceData.details = songDetails
-			.replace("%title%", title)
-			.replace("%artist%", artist)
-			.replace("%place%", place)
-			.replace("%year%", year);
-		presenceData.state = songState
-			.replace("%title%", title)
-			.replace("%artist%", artist)
-			.replace("%place%", place)
-			.replace("%year%", year);
+    presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
+    presenceData.smallImageText = paused ? strings.pause : strings.play
 
-		[presenceData.startTimestamp, presenceData.endTimestamp] =
-			presence.getTimestampsfromMedia(audio);
+    presenceData.details = songDetails
+      .replace('%title%', title ?? '')
+      .replace('%artist%', artist ?? '')
+      .replace('%place%', place ?? '')
+      .replace('%year%', year ?? '')
+    presenceData.state = songState
+      .replace('%title%', title ?? '')
+      .replace('%artist%', artist ?? '')
+      .replace('%place%', place ?? '')
+      .replace('%year%', year ?? '');
 
-		if (paused) {
-			delete presenceData.startTimestamp;
-			delete presenceData.endTimestamp;
-		}
-	}
+    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(audio)
 
-	presence.setActivity(presenceData);
-});
+    if (paused) {
+      delete presenceData.startTimestamp
+      delete presenceData.endTimestamp
+    }
+  }
+
+  presence.setActivity(presenceData)
+})

@@ -1,44 +1,44 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "joerkig",
-		"id": "205984221859151873"
-	},
-	"service": "Cytoid",
-	"description": {
-		"en": "Cytoid is a music game where you can create, share and play your own levels! Powered by community, with many dedicated creators, Cytoid provides a huge variety of musical genres to enjoy and a diverse range of gameplay design."
-	},
-	"url": "cytoid.io",
-	"version": "2.0.5",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/C/Cytoid/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Cytoid/assets/thumbnail.png",
-	"color": "#476ADC",
-	"category": "games",
-	"tags": [
-		"rhythm",
-		"music",
-		"gaming",
-		"touch"
-	],
-	"settings": [
-		{
-			"id": "timestamps",
-			"title": "Show Timestamps",
-			"icon": "fad fa-stopwatch",
-			"value": true
-		},
-		{
-			"id": "buttons",
-			"title": "Show Buttons",
-			"icon": "fas fa-compress-arrows-alt",
-			"value": true
-		},
-		{
-			"id": "cover",
-			"title": "Show Cover",
-			"icon": "fad fa-images",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "joerkig",
+    "id": "205984221859151873"
+  },
+  "service": "Cytoid",
+  "description": {
+    "en": "Cytoid is a music game where you can create, share and play your own levels! Powered by community, with many dedicated creators, Cytoid provides a huge variety of musical genres to enjoy and a diverse range of gameplay design."
+  },
+  "url": "cytoid.io",
+  "version": "2.0.6",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Cytoid/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Cytoid/assets/thumbnail.png",
+  "color": "#476ADC",
+  "category": "games",
+  "tags": [
+    "rhythm",
+    "music",
+    "gaming",
+    "touch"
+  ],
+  "settings": [
+    {
+      "id": "timestamps",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    }
+  ]
 }

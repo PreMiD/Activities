@@ -1,43 +1,42 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "RisingSunLight",
-		"id": "240521747852558347"
-	},
-	"service": "Maliki",
-	"description": {
-		"en": "I hate rambling about myself... Apart from in my comics, my novels and on my blog that is!",
-		"fr": "J'ai horreur de parler de moi... Ailleurs que dans mes BD, mes romans et sur mon blog !",
-		"es": "Odio hablar de mi... Aparte de mis cómics, mis novelas y en mi blog!"
-	},
-	"url": [
-		"maliki.com",
-		"malimode.maliki.com"
-	],
-	"version": "1.0.16",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/M/Maliki/assets/logo.jpg",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Maliki/assets/thumbnail.jpg",
-	"color": "#f576ab",
-	"category": "other",
-	"tags": [
-		"maliki",
-		"dessin"
-	],
-	"iframe": true,
-	"iFrameRegExp": ".*",
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fad fa-user-secret",
-			"value": false
-		},
-		{
-			"id": "time",
-			"title": "Montrer le timestamp",
-			"icon": "fad fa-stopwatch",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "RisingSunLight",
+    "id": "240521747852558347"
+  },
+  "service": "Maliki",
+  "description": {
+    "en": "I hate rambling about myself... Apart from in my comics, my novels and on my blog that is!",
+    "es": "Odio hablar de mi... Aparte de mis cómics, mis novelas y en mi blog!",
+    "fr": "J'ai horreur de parler de moi... Ailleurs que dans mes BD, mes romans et sur mon blog !"
+  },
+  "url": [
+    "maliki.com",
+    "malimode.maliki.com"
+  ],
+  "version": "1.0.18",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Maliki/assets/logo.jpg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Maliki/assets/thumbnail.jpg",
+  "color": "#f576ab",
+  "category": "other",
+  "tags": [
+    "dessin"
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*",
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "time",
+      "title": "Montrer le timestamp",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    }
+  ]
 }

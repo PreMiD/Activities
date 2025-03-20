@@ -1,26 +1,26 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "193714715631812608",
-		"name": "theusaf"
-	},
-	"service": "PlayScrabble",
-	"description": {
-		"en": "Play your favorite game of Scrabble with friends and family or practice against the computer in real-time. Play Scrabble online for free now!"
-	},
-	"url": [
-		"www.playscrabble.com",
-		"playscrabble.com"
-	],
-	"version": "1.0.5",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/P/PlayScrabble/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PlayScrabble/assets/thumbnail.png",
-	"color": "#F04930",
-	"category": "games",
-	"tags": [
-		"real-time",
-		"computer",
-		"scrabble"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "theusaf"
+  },
+  "service": "PlayScrabble",
+  "description": {
+    "en": "Play your favorite game of Scrabble with friends and family or practice against the computer in real-time. Play Scrabble online for free now!"
+  },
+  "url": [
+    "www.playscrabble.com",
+    "playscrabble.com"
+  ],
+  "version": "1.0.6",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PlayScrabble/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PlayScrabble/assets/thumbnail.png",
+  "color": "#F04930",
+  "category": "games",
+  "tags": [
+    "real-time",
+    "computer",
+    "scrabble"
+  ]
 }

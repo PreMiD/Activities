@@ -1,25 +1,27 @@
-import { Assets } from "../presence";
-import { getWorkspaceName } from "../lib/workspace";
+import { getWorkspaceName } from '../lib/workspace.js'
+import { ActivityAssets } from '../presence.js'
 
 function getEndpoint() {
-	const input = document.querySelector<HTMLInputElement>("input#url");
+  const input = document.querySelector<HTMLInputElement>('input#url')
 
-	if (!input) return null;
+  if (!input)
+    return null
 
-	const url = new URL(input.value);
+  const url = new URL(input.value)
 
-	return `${url.hostname}${url.pathname}`;
+  return `${url.hostname}${url.pathname}`
 }
 
 export function GraphQL(): PresenceData | null {
-	const endpoint = getEndpoint();
+  const endpoint = getEndpoint()
 
-	if (!endpoint) return null;
+  if (!endpoint)
+    return null
 
-	return {
-		smallImageKey: Assets.GraphQL,
-		smallImageText: "GraphQL",
-		details: getWorkspaceName(),
-		state: `🧑‍💻 | ${endpoint}`,
-	};
+  return {
+    smallImageKey: ActivityAssets.GraphQL,
+    smallImageText: 'GraphQL',
+    details: getWorkspaceName(),
+    state: `🧑‍💻 | ${endpoint}`,
+  }
 }

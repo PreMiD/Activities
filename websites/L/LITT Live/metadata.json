@@ -1,23 +1,26 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "apprehends",
-		"id": "202236922217758721"
-	},
-	"service": "LITT Live",
-	"description": {
-		"en": "100% Free Music. More Variety. Zero Commercials. The Best DJ's & Stations. No BS",
-		"nl": "100% gratis muziek. Meer afwisseling. Geen reclames. De beste dj's en stations. Geen BS"
-	},
-	"url": "littlive.com",
-	"version": "1.0.8",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/L/LITT%20Live/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LITT%20Live/assets/thumbnail.png",
-	"color": "#55effa",
-	"category": "music",
-	"tags": [
-		"radio",
-		"music"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "apprehends",
+    "id": "202236922217758721"
+  },
+  "service": "LITT Live",
+  "description": {
+    "en": "100% Free Music. More Variety. Zero Commercials. The Best DJ's & Stations. No BS",
+    "nl": "100% gratis muziek. Meer afwisseling. Geen reclames. De beste dj's en stations. Geen BS"
+  },
+  "url": [
+    "littlive.com",
+    "www.littlive.com"
+  ],
+  "version": "1.0.10",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LITT%20Live/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LITT%20Live/assets/thumbnail.png",
+  "color": "#55effa",
+  "category": "music",
+  "tags": [
+    "radio",
+    "music"
+  ]
 }

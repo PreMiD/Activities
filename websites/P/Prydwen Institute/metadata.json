@@ -1,27 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Kyrie",
-		"id": "368399721494216706"
-	},
-	"service": "Prydwen Institute",
-	"description": {
-		"en": "Prydwen Institute is a Counter Side tier list and database that contains information about employees, ships, operators, and skins available in both SEA and KR versions of the game.",
-		"vi": "Prydwen Insutitute là bảng xếp hạng và cơ sở dữ liệu dành cho Counter Side chứa các thông tin của nhân viên, đặc vụ, tàu chiến, và skin có mặt ở trong cả hai phiên bản SEA và KR của trò chơi."
-	},
-	"url": "www.prydwen.co",
-	"version": "1.1.19",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/thumbnail.png",
-	"color": "#161833",
-	"category": "games",
-	"tags": [
-		"counter",
-		"side",
-		"prydwen",
-		"institute",
-		"wiki",
-		"database"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Kyrie",
+    "id": "368399721494216706"
+  },
+  "service": "Prydwen Institute",
+  "description": {
+    "en": "Prydwen Institute is a Counter Side tier list and database that contains information about employees, ships, operators, and skins available in both SEA and KR versions of the game.",
+    "vi": "Prydwen Insutitute là bảng xếp hạng và cơ sở dữ liệu dành cho Counter Side chứa các thông tin của nhân viên, đặc vụ, tàu chiến, và skin có mặt ở trong cả hai phiên bản SEA và KR của trò chơi."
+  },
+  "url": "www.prydwen.co",
+  "version": "1.1.20",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/thumbnail.png",
+  "color": "#161833",
+  "category": "games",
+  "tags": [
+    "counter",
+    "side",
+    "prydwen",
+    "institute",
+    "wiki",
+    "database"
+  ]
 }

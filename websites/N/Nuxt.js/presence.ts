@@ -1,12 +1,12 @@
+import { Assets } from 'premid'
+
 const presence = new Presence({
 		clientId: "691080074006495303",
 	}),
 	browsingTimestamp = Math.floor(Date.now() / 1000);
 
-const enum Assets {
+enum ActivityAssets {
 	Logo = "https://cdn.rcd.gg/PreMiD/websites/N/Nuxt.js/assets/0.png",
-
-
 }
 
 async function getStrings() {
@@ -28,19 +28,19 @@ function capitalizeFirstLetter(string: string) {
 		string.trim().charAt(0).toUpperCase() + string.trim().slice(1).toLowerCase()
 	);
 }
-function imgPath(path: string, hostname: string) {
-	if (!path) return Assets.Logo;
+function imgPath(path: string | undefined | null, hostname: string) {
+	if (!path) return ActivityAssets.Logo;
 	if (path.includes(hostname)) return `https://${path.replace("//", "")}`;
 	else return `https://${hostname}${path}`;
 }
 
 let strings: Awaited<ReturnType<typeof getStrings>>,
-	oldLang: string = null;
+	oldLang: string | null = null;
 
 presence.on("UpdateData", async () => {
 	let presenceData: PresenceData = {
 		startTimestamp: browsingTimestamp,
-		largeImageKey: Assets.Logo,
+		largeImageKey: ActivityAssets.Logo,
 	};
 	const [newLang, privacy, buttons, covers] = await Promise.all([
 			presence.getSetting<string>("lang").catch(() => "en"),
@@ -77,7 +77,7 @@ presence.on("UpdateData", async () => {
 		presence.setActivity(presenceData);
 		return;
 	}
-	switch (pathname.split("/")[1].replace(/-/gm, "")) {
+	switch (pathname.split("/")[1]?.replace(/-/gm, "")) {
 		case "casestudies": {
 			if (!docusContent) {
 				presenceData.smallImageKey = Assets.Reading;
@@ -161,7 +161,7 @@ presence.on("UpdateData", async () => {
 		case "tutorials": {
 			if (!docusContent) {
 				presenceData.details = "Reading a tutorial about";
-				presenceData.state = capitalizeFirstLetter(ogTitle);
+				presenceData.state = capitalizeFirstLetter(ogTitle ?? '');
 				presenceData.buttons = [
 					{
 						label: "View Tutorial",
@@ -235,8 +235,8 @@ presence.on("UpdateData", async () => {
 	}
 
 	if (!buttons && presenceData.buttons) delete presenceData.buttons;
-	if (!covers && presenceData.largeImageKey !== Assets.Logo)
-		presenceData.largeImageKey = Assets.Logo;
+	if (!covers && presenceData.largeImageKey !== ActivityAssets.Logo)
+		presenceData.largeImageKey = ActivityAssets.Logo;
 	if (presenceData.details) presence.setActivity(presenceData);
 	else presence.setActivity();
 });

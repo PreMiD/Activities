@@ -1,35 +1,35 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "astrid",
-		"id": "852656702037164053"
-	},
-	"service": "Doordash",
-	"description": {
-		"en": "Delivery & takeout from the best local restaurants. Breakfast, lunch, dinner and more, delivered safely to your door."
-	},
-	"url": "www.doordash.com",
-	"version": "1.0.11",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/D/Doordash/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Doordash/assets/thumbnail.jpg",
-	"color": "#ff3008",
-	"category": "other",
-	"tags": [
-		"food",
-		"delivery",
-		"restaurant"
-	],
-	"settings": [
-		{
-			"id": "hideFood",
-			"title": "Hide Food Selection",
-			"value": false
-		},
-		{
-			"id": "hideSearch",
-			"title": "Hide Search Results",
-			"value": false
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "astrid",
+    "id": "852656702037164053"
+  },
+  "service": "Doordash",
+  "description": {
+    "en": "Delivery & takeout from the best local restaurants. Breakfast, lunch, dinner and more, delivered safely to your door."
+  },
+  "url": "www.doordash.com",
+  "version": "1.0.12",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Doordash/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Doordash/assets/thumbnail.jpg",
+  "color": "#ff3008",
+  "category": "other",
+  "tags": [
+    "food",
+    "delivery",
+    "restaurant"
+  ],
+  "settings": [
+    {
+      "id": "hideFood",
+      "title": "Hide Food Selection",
+      "value": false
+    },
+    {
+      "id": "hideSearch",
+      "title": "Hide Search Results",
+      "value": false
+    }
+  ]
 }

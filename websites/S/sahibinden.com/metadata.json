@@ -1,29 +1,29 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "EGGSY",
-		"id": "162969778699501569"
-	},
-	"service": "sahibinden.com",
-	"description": {
-		"en": "sahibinden.com is a website that you can buy any kind of used/not used props, cars, electronic stuff and much more.",
-		"tr": "sahibinden.com, her türlü ürünün sıfır veya ikinci elini bulup satın alabileceğiniz internet sitesidir.",
-		"nl": "sahibinden.com is een website waar u alle soorten gebruikte/niet gebruikte rekwisieten, auto's, elektronische spullen en nog veel meer kunt kopen."
-	},
-	"url": [
-		"www.sahibinden.com",
-		"secure.sahibinden.com",
-		"banaozel.sahibinden.com"
-	],
-	"version": "1.1.23",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/sahibinden.com/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/sahibinden.com/assets/thumbnail.png",
-	"color": "#ffe800",
-	"category": "other",
-	"tags": [
-		"sahibinden",
-		"shopping",
-		"turkish"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "EGGSY",
+    "id": "162969778699501569"
+  },
+  "service": "sahibinden.com",
+  "description": {
+    "en": "sahibinden.com is a website that you can buy any kind of used/not used props, cars, electronic stuff and much more.",
+    "nl": "sahibinden.com is een website waar u alle soorten gebruikte/niet gebruikte rekwisieten, auto's, elektronische spullen en nog veel meer kunt kopen.",
+    "tr": "sahibinden.com, her türlü ürünün sıfır veya ikinci elini bulup satın alabileceğiniz internet sitesidir."
+  },
+  "url": [
+    "www.sahibinden.com",
+    "secure.sahibinden.com",
+    "banaozel.sahibinden.com"
+  ],
+  "version": "1.1.24",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/sahibinden.com/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/sahibinden.com/assets/thumbnail.png",
+  "color": "#ffe800",
+  "category": "other",
+  "tags": [
+    "sahibinden",
+    "shopping",
+    "turkish"
+  ]
 }

@@ -1,26 +1,26 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "1105810827224809532",
-		"name": "for"
-	},
-	"service": "feds",
-	"description": {
-		"en": "feds.lol is a freemium biolink service."
-	},
-	"url": "feds.lol",
-	"version": "1.0.7",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/F/feds/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/feds/assets/thumbnail.jpg",
-	"color": "#000000",
-	"category": "socials",
-	"tags": [
-		"biolink",
-		"bio",
-		"link",
-		"linktree",
-		"socials",
-		"social"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "1105810827224809532",
+    "name": "for"
+  },
+  "service": "feds",
+  "description": {
+    "en": "feds.lol is a freemium biolink service."
+  },
+  "url": "feds.lol",
+  "version": "1.0.8",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/feds/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/feds/assets/thumbnail.jpg",
+  "color": "#000000",
+  "category": "socials",
+  "tags": [
+    "biolink",
+    "bio",
+    "link",
+    "linktree",
+    "socials",
+    "social"
+  ]
 }

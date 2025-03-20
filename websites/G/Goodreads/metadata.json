@@ -1,21 +1,21 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Vaz",
-		"id": "258926263132094464"
-	},
-	"service": "Goodreads",
-	"description": {
-		"en": "Goodreads is an American social cataloging website that allows individuals to search its database of books, annotations, quotes, and reviews."
-	},
-	"url": "www.goodreads.com",
-	"version": "1.1.7",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/G/Goodreads/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Goodreads/assets/thumbnail.png",
-	"color": "#b5ae84",
-	"category": "other",
-	"tags": [
-		"books"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Vaz",
+    "id": "258926263132094464"
+  },
+  "service": "Goodreads",
+  "description": {
+    "en": "Goodreads is an American social cataloging website that allows individuals to search its database of books, annotations, quotes, and reviews."
+  },
+  "url": "www.goodreads.com",
+  "version": "1.1.8",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Goodreads/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Goodreads/assets/thumbnail.png",
+  "color": "#b5ae84",
+  "category": "other",
+  "tags": [
+    "books"
+  ]
 }

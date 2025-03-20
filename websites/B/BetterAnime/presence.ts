@@ -1,438 +1,317 @@
+import { ActivityType, Assets, getTimestamps } from 'premid'
+
 const presence = new Presence({
-		clientId: "839409255979155516",
-	}),
-	getStrings = async () => {
-		return presence.getStrings(
-			{
-				play: "general.playing",
-				pause: "general.paused",
-				browse: "general.browsing",
-				searchFor: "general.searchFor",
-				searchSomething: "general.searchSomething",
-				viewEpisode: "general.buttonViewEpisode",
-				viewAnime: "general.viewAnime",
-				viewSeries: "general.buttonViewSeries",
-				viewAccount: "general.viewAccount",
-				viewMovie: "general.viewMovie",
-				buttonViewMovie: "general.buttonViewMovie",
-				watchMovie: "general.watchingMovie",
-				watchSeries: "general.watchingSeries",
-			},
-			await presence.getSetting<string>("lang").catch(() => "en")
-		);
-	},
-	data: {
-		oldLang?: string;
-		startedSince?: number;
-		meta?: {
-			[key: string]: string;
-		};
-		settings?: {
-			id?: string;
-			delete?: boolean;
-			value?: boolean;
-			uses?: (keyof PresenceData)[];
-			presence?: {
-				page: string;
-				uses?: keyof PresenceData;
-				setTo?: string;
-				if?:
-					| {
-							k: boolean;
-							v?: string;
-							delete?: boolean;
-					  }
-					| {
-							k: boolean;
-							v?: string;
-							delete?: boolean;
-					  }[];
-				replace?: {
-					input: string;
-					output: string;
-				}[];
-			}[];
-		}[];
-		presence: {
-			[key: string]: {
-				disabled?: boolean;
-				setPresenceData?: () => void;
-			};
-		};
-		presenceData: PresenceData;
-	} = {
-		presence: {},
-		meta: {},
-		oldLang: "",
-		startedSince: ~~(Date.now() / 1000),
-		presenceData: {
-			type: ActivityType.Watching,
-			largeImageKey:
-				"https://cdn.rcd.gg/PreMiD/websites/B/BetterAnime/assets/logo.png",
-			smallImageKey: Assets.Search,
-		},
-	};
+  clientId: '839409255979155516',
+})
+async function getStrings() {
+  return presence.getStrings(
+    {
+      play: 'general.playing',
+      pause: 'general.paused',
+      browse: 'general.browsing',
+      searchFor: 'general.searchFor',
+      searchSomething: 'general.searchSomething',
+      viewEpisode: 'general.buttonViewEpisode',
+      viewAnime: 'general.viewAnime',
+      viewSeries: 'general.buttonViewSeries',
+      viewAccount: 'general.viewAccount',
+      viewMovie: 'general.viewMovie',
+      buttonViewMovie: 'general.buttonViewMovie',
+      watchMovie: 'general.watchingMovie',
+      watchSeries: 'general.watchingSeries',
+    },
+  )
+}
+const data: {
+  oldLang?: string
+  startedSince?: number
+  meta?: {
+    [key: string]: string | undefined
+  }
+  presence: {
+    [key: string]: {
+      disabled?: boolean
+      setPresenceData?: () => void
+    }
+  }
+  presenceData: PresenceData
+} = {
+  presence: {},
+  meta: {},
+  oldLang: '',
+  startedSince: ~~(Date.now() / 1000),
+  presenceData: {
+    type: ActivityType.Watching,
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/B/BetterAnime/assets/logo.png',
+    smallImageKey: Assets.Search,
+  },
+}
 
-let strings: Awaited<ReturnType<typeof getStrings>>,
-	video: {
-		duration: number;
-		currentTime: number;
-		paused: boolean;
-	};
+let strings: Awaited<ReturnType<typeof getStrings>>
+let video: {
+  duration: number
+  currentTime: number
+  paused: boolean
+}
+const coverCache = new Map<string, string>()
 
-presence.on("iFrameData", (data: typeof video) => {
-	if (data) video = data;
-});
+async function fetchCover(downloadUrl: string): Promise<string | null> {
+  let cachedCover = coverCache.get(downloadUrl)
+  if (cachedCover)
+    return cachedCover
 
-presence.on("UpdateData", async () => {
-	const [
-			newLang,
-			privacy,
-			anime,
-			movie,
-			browse,
-			timestamp,
-			AnimeState,
-			MovieState,
-		] = await Promise.all([
-			presence.getSetting<string>("lang").catch(() => "en"),
-			presence.getSetting<boolean>("privacy"),
-			presence.getSetting<boolean>("anime"),
-			presence.getSetting<boolean>("movie"),
-			presence.getSetting<boolean>("browse"),
-			presence.getSetting<boolean>("timestamp"),
-			presence.getSetting<string>("AnimeState"),
-			presence.getSetting<string>("MovieState"),
-		]),
-		{ pathname, search, href } = document.location;
+  try {
+    const response = await fetch(downloadUrl)
+    if (response.ok) {
+      const html = await response.text()
+      const doc = new DOMParser().parseFromString(html, 'text/html')
+      const coverImgElem = doc.querySelector<HTMLImageElement>('.infos-img > img')
+      if (coverImgElem?.src) {
+        cachedCover = coverImgElem.src
+        coverCache.set(downloadUrl, cachedCover)
+        return cachedCover
+      }
+    }
+  }
+  catch (err) {
+    presence.error(`Error fetching cover image: ${err}`)
+  }
 
-	if (data.oldLang !== newLang || !strings) {
-		data.oldLang = newLang;
-		strings = await getStrings();
-	}
+  const fallback = 'https://cdn.rcd.gg/PreMiD/websites/B/BetterAnime/assets/logo.png'
+  coverCache.set(downloadUrl, fallback)
+  return fallback
+}
 
-	if (browse) data.presenceData.details = strings.browse;
-	if (
-		timestamp &&
-		!data.presenceData.startTimestamp &&
-		!data.presenceData.endTimestamp
-	)
-		data.presenceData.startTimestamp = data.startedSince;
+presence.on('iFrameData', (data: unknown) => {
+  if (data)
+    video = data as typeof video
+})
 
-	data.presence = {
-		"/anime/(dublado|legendado)/([a-zA-Z0-9-]+)/([a-z-0-9]+)": {
-			disabled: !anime,
-			async setPresenceData() {
-				data.meta.episode = document.querySelector(
-					"div.anime-title > h3"
-				)?.textContent;
-				data.meta.title = document
-					.querySelector("div.anime-title")
-					?.textContent?.replace(data.meta.episode, "");
+presence.on('UpdateData', async () => {
+  const [
+    newLang,
+    privacy,
+    browse,
+    timestamp,
+  ] = await Promise.all([
+    presence.getSetting<string>('lang'),
+    presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('browse'),
+    presence.getSetting<boolean>('timestamp'),
+  ])
+  const { pathname, search, href } = document.location
 
-				data.presenceData.smallImageKey = video.paused
-					? Assets.Pause
-					: Assets.Play;
-				data.presenceData.smallImageText = video.paused
-					? (await strings).pause
-					: (await strings).play;
+  if (data.oldLang !== newLang || !strings) {
+    data.oldLang = newLang
+    strings = await getStrings()
+  }
 
-				[data.presenceData.startTimestamp, data.presenceData.endTimestamp] =
-					presence.getTimestamps(video.currentTime, video.duration);
-				const seriesURL = document.querySelector<HTMLAnchorElement>(
-					"div.anime-title > h2 > a"
-				)?.href;
-				if (!seriesURL) {
-					data.presenceData.buttons = [
-						{
-							label: (await strings).viewEpisode,
-							url: href,
-						},
-					];
-				} else {
-					data.presenceData.buttons = [
-						{
-							label: (await strings).viewEpisode,
-							url: href,
-						},
-						{
-							label: (await strings).viewSeries,
-							url: seriesURL,
-						},
-					];
-				}
+  if (browse)
+    data.presenceData.details = strings.browse
+  if (
+    timestamp
+    && !data.presenceData.startTimestamp
+    && !data.presenceData.endTimestamp
+  ) {
+    data.presenceData.startTimestamp = data.startedSince
+  }
 
-				if (video.paused) {
-					delete data.presenceData.endTimestamp;
-					delete data.presenceData.startTimestamp;
-				}
-			},
-		},
-		"/anime/(dublado|legendado)/([a-zA-Z0-9-]+)": {
-			disabled: privacy || !anime,
-			async setPresenceData() {
-				data.presenceData.details = (await strings).viewAnime;
-				data.presenceData.state = document.querySelector(
-					"div.infos_left > div > h2"
-				)?.textContent;
+  data.presence = {
+    '/anime/(dublado|legendado)/([a-zA-Z0-9-]+)/([a-z-0-9]+)': {
+      async setPresenceData() {
+        if (video) {
+          const downloadUrl = `${document.location.href}/download`
+          data.presenceData.largeImageKey = await fetchCover(downloadUrl)
 
-				data.presenceData.buttons = [
-					{
-						label: (await strings).viewSeries,
-						url: href,
-					},
-				];
-			},
-		},
-		"/filme/(dublado|legendado)/([a-zA-Z0-9-]+)/([a-z-]+)": {
-			disabled: !movie,
-			async setPresenceData() {
-				data.meta.title =
-					document
-						.querySelector("div.anime-title")
-						?.textContent?.replace(
-							document.querySelector("div.anime-title > h3")?.textContent ?? "",
-							""
-						) ?? "";
+          data.meta!.episode = document.querySelector(
+            'div.anime-title > h3',
+          )?.textContent ?? undefined
+          data.meta!.title = document
+            .querySelector('div.anime-title')
+            ?.textContent
+            ?.replace(data.meta?.episode ?? '', '')
 
-				data.presenceData.smallImageKey = video.paused
-					? Assets.Pause
-					: Assets.Play;
-				data.presenceData.smallImageText = video.paused
-					? (await strings).pause
-					: (await strings).play;
+          data.presenceData.smallImageKey = video.paused
+            ? Assets.Pause
+            : Assets.Play
+          data.presenceData.smallImageText = video.paused
+            ? strings.pause
+            : strings.play;
 
-				[data.presenceData.startTimestamp, data.presenceData.endTimestamp] =
-					presence.getTimestamps(video.currentTime, video.duration);
+          [data.presenceData.startTimestamp, data.presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
+          const seriesURL = document.querySelector<HTMLAnchorElement>(
+            'div.anime-title > h2 > a',
+          )?.href
+          if (!seriesURL) {
+            data.presenceData.buttons = [
+              {
+                label: strings.viewEpisode,
+                url: href,
+              },
+            ]
+          }
+          else {
+            data.presenceData.buttons = [
+              {
+                label: strings.viewEpisode,
+                url: href,
+              },
+              {
+                label: strings.viewSeries,
+                url: seriesURL,
+              },
+            ]
+          }
 
-				data.presenceData.buttons = [
-					{
-						label: (await strings).buttonViewMovie,
-						url: href,
-					},
-				];
+          if (video.paused) {
+            delete data.presenceData.endTimestamp
+          }
+        }
+      },
+    },
+    '/anime/(dublado|legendado)/([a-zA-Z0-9-]+)': {
+      disabled: privacy,
+      async setPresenceData() {
+        data.presenceData.details = strings.viewAnime
+        data.presenceData.state = document.querySelector(
+          'div.infos_left > div > h2',
+        )?.textContent
 
-				if (video.paused) {
-					delete data.presenceData.endTimestamp;
-					delete data.presenceData.startTimestamp;
-				}
-			},
-		},
-		"/filme/(dublado|legendado)/([a-zA-Z0-9-]+)": {
-			disabled: privacy || !movie,
-			async setPresenceData() {
-				data.presenceData.details = (await strings).viewMovie;
-				data.presenceData.state = document.querySelector(
-					"div.infos_left > div > h2"
-				)?.textContent;
+        data.presenceData.buttons = [
+          {
+            label: strings.viewSeries,
+            url: href,
+          },
+        ]
+      },
+    },
+    '/filme/(dublado|legendado)/([a-zA-Z0-9-]+)/([a-z-]+)': {
+      async setPresenceData() {
+        if (video) {
+          const downloadUrl = `${document.location.href}/download`
+          data.presenceData.largeImageKey = await fetchCover(downloadUrl)
 
-				data.presenceData.buttons = [
-					{
-						label: (await strings).buttonViewMovie,
-						url: href,
-					},
-				];
-			},
-		},
-		"/minha-conta": {
-			disabled: privacy,
-			async setPresenceData() {
-				data.presenceData.details = (await strings).viewAccount;
-			},
-		},
-		"/pesquisa": {
-			async setPresenceData() {
-				data.presenceData.details = (await strings).searchFor;
-				data.presenceData.state = new URLSearchParams(search).get("titulo");
-			},
-		},
-	};
+          data.meta!.title = document
+            .querySelector('div.anime-title')
+            ?.textContent
+            ?.replace(
+              document.querySelector('div.anime-title > h3')?.textContent ?? '',
+              '',
+            ) ?? ''
 
-	data.settings = [
-		{
-			id: "timestamp",
-			delete: true,
-			uses: ["startTimestamp", "endTimestamp"],
-		},
-		{
-			id: "buttons",
-			delete: true,
-			uses: ["buttons"],
-		},
-		{
-			id: "privacy",
-			delete: true,
-			value: true,
-			uses: ["buttons"],
-		},
-		{
-			presence: [
-				{
-					page: "/pesquisa",
-					uses: "state",
-					if: {
-						k: privacy,
-						delete: true,
-					},
-				},
-				{
-					page: "/pesquisa",
-					uses: "details",
-					if: {
-						k: privacy,
-						v: (await strings).searchSomething,
-					},
-				},
-				{
-					page: "/anime/(dublado|legendado)/([a-zA-Z0-9-]+)/([a-z-0-9]+)",
-					uses: "details",
-					setTo: await presence.getSetting<string>("AnimeDetails"),
-					if: [
-						{
-							k: privacy && anime,
-							v: (await strings).watchSeries,
-						},
-						{
-							k: !anime,
-							delete: true,
-						},
-					],
-					replace: [
-						{
-							input: "%title%",
-							output: data.meta.title,
-						},
-						{
-							input: "%episode%",
-							output: data.meta.episode,
-						},
-					],
-				},
-				{
-					page: "/anime/(dublado|legendado)/([a-zA-Z0-9-]+)/([a-z-0-9]+)",
-					uses: "state",
-					setTo: AnimeState,
-					if: {
-						k: !anime || privacy || AnimeState.includes("{0}"),
-						delete: true,
-					},
-					replace: [
-						{
-							input: "%title%",
-							output: data.meta.title,
-						},
-						{
-							input: "%episode%",
-							output: data.meta.episode,
-						},
-					],
-				},
-				{
-					page: "/filme/(dublado|legendado)/([a-zA-Z0-9-]+)/([a-z-0-9]+)",
-					uses: "details",
-					setTo: await presence.getSetting<string>("MovieDetails"),
-					if: [
-						{
-							k: privacy && movie,
-							v: (await strings).watchMovie,
-						},
-						{
-							k: !movie,
-							delete: true,
-						},
-					],
-					replace: [
-						{
-							input: "%title%",
-							output: data.meta.title,
-						},
-					],
-				},
-				{
-					page: "/filme/(dublado|legendado)/([a-zA-Z0-9-]+)/([a-z-0-9]+)",
-					uses: "state",
-					setTo: MovieState,
-					if: {
-						k: !movie || privacy || MovieState.includes("{0}"),
-						delete: true,
-					},
-					replace: [
-						{
-							input: "%title%",
-							output: data.meta.title,
-						},
-					],
-				},
-			],
-		},
-	];
+          data.presenceData.smallImageKey = video.paused
+            ? Assets.Pause
+            : Assets.Play
+          data.presenceData.smallImageText = video.paused
+            ? strings.pause
+            : strings.play;
 
-	for (const [k, v] of Object.entries(data.presence)) {
-		if (pathname.match(k) && !v.disabled) {
-			v.setPresenceData();
-			break;
-		}
-	}
+          [data.presenceData.startTimestamp, data.presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
 
-	for (const setting of data.settings) {
-		const settingValue = await presence
-			.getSetting<boolean>(setting.id)
-			.catch(() => null);
+          data.presenceData.buttons = [
+            {
+              label: strings.buttonViewMovie,
+              url: href,
+            },
+          ]
 
-		if (
-			((!settingValue && !setting.value) || settingValue === setting.value) &&
-			setting.delete &&
-			!setting.presence
-		) {
-			for (const PData of setting.uses)
-				delete data.presenceData[PData as keyof PresenceData];
-		} else if (setting.presence) {
-			for (const presenceSetting of setting.presence) {
-				if (pathname.match(presenceSetting.page)) {
-					if (presenceSetting.setTo && !presenceSetting.replace) {
-						data.presenceData[presenceSetting.uses as "details"] =
-							presenceSetting.setTo;
-					} else if (presenceSetting.setTo && presenceSetting.replace) {
-						let replaced = presenceSetting.setTo;
+          if (video.paused) {
+            delete data.presenceData.endTimestamp
+          }
+        }
+      },
+    },
+    '/filme/(dublado|legendado)/([a-zA-Z0-9-]+)': {
+      disabled: privacy,
+      async setPresenceData() {
+        data.presenceData.details = strings.viewMovie
+        data.presenceData.state = document.querySelector(
+          'div.infos_left > div > h2',
+        )?.textContent
 
-						for (const toReplace of presenceSetting.replace)
-							replaced = replaced.replace(toReplace.input, toReplace.output);
+        data.presenceData.buttons = [
+          {
+            label: strings.buttonViewMovie,
+            url: href,
+          },
+        ]
+      },
+    },
+    '/minha-conta': {
+      disabled: privacy,
+      async setPresenceData() {
+        data.presenceData.details = strings.viewAccount
+      },
+    },
+    '/pesquisa': {
+      async setPresenceData() {
+        data.presenceData.details = strings.searchFor
+        data.presenceData.state = new URLSearchParams(search).get('titulo')
+      },
+    },
+  }
 
-						if (replaced)
-							data.presenceData[presenceSetting.uses as "details"] = replaced;
-					}
+  const settings = [
+    { id: 'timestamp', uses: ['startTimestamp', 'endTimestamp'] },
+    { id: 'buttons', uses: ['buttons'] },
+    { id: 'privacy', uses: ['buttons'] },
+  ].filter(async setting => await presence.getSetting<boolean>(setting.id).catch(() => false))
 
-					if (presenceSetting.if) {
-						if (Array.isArray(presenceSetting.if)) {
-							for (const setting of presenceSetting.if) {
-								if (setting.k) {
-									if (setting.delete && !setting.v)
-										delete data.presenceData[presenceSetting.uses];
-									else if (setting.v) {
-										data.presenceData[presenceSetting.uses as "details"] =
-											setting.v;
-									}
-								}
-							}
-						} else if (presenceSetting.if.k) {
-							if (presenceSetting.if.delete && !presenceSetting.if.v)
-								delete data.presenceData[presenceSetting.uses];
-							else if (presenceSetting.if.v) {
-								data.presenceData[presenceSetting.uses as "details"] =
-									presenceSetting.if.v;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+  for (const setting of settings) {
+    for (const field of setting.uses) {
+      delete data.presenceData[field as keyof PresenceData]
+    }
+  }
 
-	for (const x of ["state", "details"]) {
-		if (data.presenceData[x as "details"] === "undefined")
-			delete data.presenceData[x as "details"];
-	}
+  const currentPath = pathname
+  for (const [pattern, pageData] of Object.entries(data.presence)) {
+    if (currentPath.match(pattern) && !pageData.disabled) {
+      pageData.setPresenceData?.()
+      break
+    }
+  }
 
-	if (!data.presenceData.details) presence.setActivity();
-	else presence.setActivity(data.presenceData);
-});
+  if (privacy) {
+    if (currentPath.match('/pesquisa')) {
+      delete data.presenceData.state
+      data.presenceData.details = strings.searchSomething
+    }
+    if (currentPath.match('/anime/.+/.+')) {
+      data.presenceData.details = strings.watchSeries
+    }
+    if (currentPath.match('/filme/.+/.+')) {
+      data.presenceData.details = strings.watchMovie
+    }
+  }
+  else if (data.meta) {
+    const useActivtyName = await presence.getSetting<boolean>('useActivtyName')
+
+    if (currentPath.match('/anime/.+/.+')) {
+      if (useActivtyName) {
+        data.presenceData.name = data.meta.title
+        data.presenceData.details = data.meta.episode
+        data.presenceData.state = 'Anime'
+      }
+      else {
+        data.presenceData.details = data.meta.title
+        data.presenceData.state = data.meta.episode
+      }
+    }
+
+    if (currentPath.match('/filme/.+/.+')) {
+      if (useActivtyName)
+        data.presenceData.name = data.meta.title
+      data.presenceData.details = data.meta.title
+      data.presenceData.state = 'Film'
+    }
+  }
+
+  for (const x of ['state', 'details']) {
+    if (data.presenceData[x as 'details'] === 'undefined')
+      delete data.presenceData[x as 'details']
+  }
+
+  if (!data.presenceData.details)
+    presence.setActivity()
+  else presence.setActivity(data.presenceData)
+})

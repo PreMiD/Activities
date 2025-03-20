@@ -1,60 +1,60 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Striker",
-		"id": "215509157837537280"
-	},
-	"contributors": [
-		{
-			"name": "Encrypted",
-			"id": "564434085708038144"
-		}
-	],
-	"service": "Deezer",
-	"description": {
-		"en": "Listen to all the songs you love anytime, anywhere.",
-		"de": "Höre dir all die Songs an, die du liebst. Jederzeit und überall.",
-		"ro": "Ascultă toate melodiile iubite, oricând, oriunde.",
-		"pt-br": "Escute todas as músicas que você ama a qualquer hora, em qualquer lugar.",
-		"fr": "Écoutez toutes les musiques que vous aimez quand vous voulez, où vous voulez.",
-		"uk": "Слухайте улюблену музику у будь-який час будь-де.",
-		"nl": "Luister altijd en overal naar alle nummers waar je van houdt.",
-		"vi": "Nghe tất cả những bài hát bạn yêu thích mọi lúc, mọi nơi.",
-		"ga": "Éifeall na ceimhniú a thágthóg, uair éirinn."
-	},
-	"url": "www.deezer.com",
-	"version": "2.3.8",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/thumbnail.png",
-	"color": "#a238ff",
-	"category": "music",
-	"tags": [
-		"radio",
-		"music"
-	],
-	"settings": [
-		{
-			"id": "lang",
-			"multiLanguage": true
-		},
-		{
-			"id": "buttons",
-			"title": "Show Buttons",
-			"icon": "fas fa-compress-arrows-alt",
-			"value": true
-		},
-		{
-			"id": "cover",
-			"title": "Show Cover",
-			"icon": "fad fa-images",
-			"value": true
-		},
-		{
-			"id": "browseInfo",
-			"title": "Only show browsing info",
-			"icon": "fad fa-magnifying-glass",
-			"value": false
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Striker",
+    "id": "215509157837537280"
+  },
+  "contributors": [
+    {
+      "name": "Encrypted",
+      "id": "564434085708038144"
+    }
+  ],
+  "service": "Deezer",
+  "description": {
+    "de": "Höre dir all die Songs an, die du liebst. Jederzeit und überall.",
+    "en": "Listen to all the songs you love anytime, anywhere.",
+    "fr": "Écoutez toutes les musiques que vous aimez quand vous voulez, où vous voulez.",
+    "ga": "Éifeall na ceimhniú a thágthóg, uair éirinn.",
+    "nl": "Luister altijd en overal naar alle nummers waar je van houdt.",
+    "pt-br": "Escute todas as músicas que você ama a qualquer hora, em qualquer lugar.",
+    "ro": "Ascultă toate melodiile iubite, oricând, oriunde.",
+    "uk": "Слухайте улюблену музику у будь-який час будь-де.",
+    "vi": "Nghe tất cả những bài hát bạn yêu thích mọi lúc, mọi nơi."
+  },
+  "url": "www.deezer.com",
+  "version": "2.3.11",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/thumbnail.png",
+  "color": "#a238ff",
+  "category": "music",
+  "tags": [
+    "radio",
+    "music"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "browseInfo",
+      "title": "Only show browsing info",
+      "icon": "fad fa-magnifying-glass",
+      "value": false
+    }
+  ]
 }

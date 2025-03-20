@@ -1,38 +1,38 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "ry",
-		"id": "421371986824921109"
-	},
-	"service": "Invidious",
-	"description": {
-		"en": "Invidious is an alternative front-end to YouTube.",
-		"de": "Invidious ist eine alternative Oberfläche für YouTube.",
-		"nl": "Invidious is een alternatieve front-end voor YouTube."
-	},
-	"url": [
-		"iteroni.com",
-		"invidious.fdn.fr",
-		"invidious.snopyta.org",
-		"vid.mint.lgbt",
-		"yewtu.be"
-	],
-	"version": "1.0.27",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/I/Invidious/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Invidious/assets/thumbnail.jpg",
-	"color": "#00B6F0",
-	"category": "videos",
-	"tags": [
-		"video",
-		"media"
-	],
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fad fa-user-secret",
-			"value": false
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "ry",
+    "id": "421371986824921109"
+  },
+  "service": "Invidious",
+  "description": {
+    "de": "Invidious ist eine alternative Oberfläche für YouTube.",
+    "en": "Invidious is an alternative front-end to YouTube.",
+    "nl": "Invidious is een alternatieve front-end voor YouTube."
+  },
+  "url": [
+    "iteroni.com",
+    "invidious.fdn.fr",
+    "invidious.snopyta.org",
+    "vid.mint.lgbt",
+    "yewtu.be"
+  ],
+  "version": "1.0.28",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Invidious/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Invidious/assets/thumbnail.jpg",
+  "color": "#00B6F0",
+  "category": "videos",
+  "tags": [
+    "video",
+    "media"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
+  ]
 }

@@ -1,31 +1,30 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Kinue",
-		"id": "634246091293851649"
-	},
-	"service": "Hako",
-	"description": {
-		"en": "Read vietnamese translated light/web novels online.",
-		"vi": "Đọc light/web novels đã đươc dịch online",
-		"nl": "Lees online Vietnamees vertaalde licht- / webromans."
-	},
-	"url": [
-		"docln.net",
-		"ln.hako.re"
-	],
-	"version": "1.0.19",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hako/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hako/assets/thumbnail.png",
-	"color": "#1e5069",
-	"category": "anime",
-	"tags": [
-		"anime",
-		"hako",
-		"docln",
-		"webnovel",
-		"lightnovel",
-		"novel"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Kinue",
+    "id": "634246091293851649"
+  },
+  "service": "Hako",
+  "description": {
+    "en": "Read vietnamese translated light/web novels online.",
+    "nl": "Lees online Vietnamees vertaalde licht- / webromans.",
+    "vi": "Đọc light/web novels đã đươc dịch online"
+  },
+  "url": [
+    "docln.net",
+    "ln.hako.re"
+  ],
+  "version": "1.0.21",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hako/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hako/assets/thumbnail.png",
+  "color": "#1e5069",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "docln",
+    "webnovel",
+    "lightnovel",
+    "novel"
+  ]
 }

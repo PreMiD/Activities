@@ -1,27 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "534614025271771158",
-		"name": "eli_yya"
-	},
-	"service": "Rust Lang Book",
-	"description": {
-		"en": "Welcome to The Rust Programming Language, an introductory book about Rust"
-	},
-	"url": "doc.rust-lang.org",
-	"version": "1.0.10",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rust%20Lang%20Book/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rust%20Lang%20Book/assets/thumbnail.png",
-	"color": "#A72145",
-	"category": "other",
-	"tags": [
-		"rust",
-		"rustlang",
-		"rustbook",
-		"book",
-		"rust-lang",
-		"rust-lang-book",
-		"rust-book"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "534614025271771158",
+    "name": "eli_yya"
+  },
+  "service": "Rust Lang Book",
+  "description": {
+    "en": "Welcome to The Rust Programming Language, an introductory book about Rust"
+  },
+  "url": "doc.rust-lang.org",
+  "version": "1.0.11",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rust%20Lang%20Book/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rust%20Lang%20Book/assets/thumbnail.png",
+  "color": "#A72145",
+  "category": "other",
+  "tags": [
+    "rust",
+    "rustlang",
+    "rustbook",
+    "book",
+    "rust-lang",
+    "rust-lang-book",
+    "rust-book"
+  ]
 }

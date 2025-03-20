@@ -1,28 +1,28 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Bas950",
-		"id": "241278257335500811"
-	},
-	"service": "MinecraftForge",
-	"description": {
-		"en": "Forge allows modders and developers to extend the Minecraft experience.",
-		"nl": "Forge laat modders en ontwikkelaars de Minecraft ervaring uit te breiden."
-	},
-	"url": [
-		"www.minecraftforge.net",
-		"files.minecraftforge.net",
-		"mcforge.readthedocs.io",
-		"forgedev.flocker.tv"
-	],
-	"version": "1.2.23",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/M/MinecraftForge/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MinecraftForge/assets/thumbnail.png",
-	"color": "#d7a664",
-	"category": "games",
-	"tags": [
-		"minecraft",
-		"forge"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Bas950",
+    "id": "241278257335500811"
+  },
+  "service": "MinecraftForge",
+  "description": {
+    "en": "Forge allows modders and developers to extend the Minecraft experience.",
+    "nl": "Forge laat modders en ontwikkelaars de Minecraft ervaring uit te breiden."
+  },
+  "url": [
+    "www.minecraftforge.net",
+    "files.minecraftforge.net",
+    "mcforge.readthedocs.io",
+    "forgedev.flocker.tv"
+  ],
+  "version": "1.2.24",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MinecraftForge/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MinecraftForge/assets/thumbnail.png",
+  "color": "#d7a664",
+  "category": "games",
+  "tags": [
+    "minecraft",
+    "forge"
+  ]
 }

@@ -1,53 +1,52 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "205984221859151873",
-		"name": "joerkig"
-	},
-	"service": "LiveATC",
-	"description": {
-		"en": "LiveATC.Net provides live air traffic control (ATC) broadcasts from air traffic control towers and radar facilities around the world"
-	},
-	"url": [
-		"www.liveatc.net",
-		"forums.liveatc.net"
-	],
-	"version": "1.0.5",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/L/LiveATC/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LiveATC/assets/thumbnail.png",
-	"color": "#FF3333",
-	"category": "other",
-	"tags": [
-		"air",
-		"traffic",
-		"control",
-		"liveatc",
-		"listen",
-		"atc",
-		"planespotting",
-		"aviation",
-		"audio",
-		"feeds",
-		"streaming",
-		"communications",
-		"controller",
-		"pilot",
-		"airport",
-		"controltower",
-		"scanner",
-		"artcc",
-		"enroute",
-		"terminal",
-		"faa",
-		"natca",
-		"radio",
-		"flying",
-		"fbo",
-		"approach",
-		"tracon",
-		"milair",
-		"vfr",
-		"ifr"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "205984221859151873",
+    "name": "joerkig"
+  },
+  "service": "LiveATC",
+  "description": {
+    "en": "LiveATC.Net provides live air traffic control (ATC) broadcasts from air traffic control towers and radar facilities around the world"
+  },
+  "url": [
+    "www.liveatc.net",
+    "forums.liveatc.net"
+  ],
+  "version": "1.0.7",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LiveATC/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LiveATC/assets/thumbnail.png",
+  "color": "#FF3333",
+  "category": "other",
+  "tags": [
+    "air",
+    "traffic",
+    "control",
+    "listen",
+    "atc",
+    "planespotting",
+    "aviation",
+    "audio",
+    "feeds",
+    "streaming",
+    "communications",
+    "controller",
+    "pilot",
+    "airport",
+    "controltower",
+    "scanner",
+    "artcc",
+    "enroute",
+    "terminal",
+    "faa",
+    "natca",
+    "radio",
+    "flying",
+    "fbo",
+    "approach",
+    "tracon",
+    "milair",
+    "vfr",
+    "ifr"
+  ]
 }

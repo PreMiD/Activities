@@ -1,43 +1,42 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "fantomitechno 🦊",
-		"id": "563749920683720709"
-	},
-	"service": "FR-Minecraft",
-	"description": {
-		"en": "News Minecraft, tips, tools and all the help necessary to play Minecraft!",
-		"fr": "L'actualité Minecraft, des astuces, des outils et toute l'aide necessaire pour jouer à Minecraft !",
-		"nl": "Nieuws Minecraft, tips, tools en alle hulp die nodig is om Minecraft te spelen!"
-	},
-	"url": "fr-minecraft.net",
-	"version": "1.1.22",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/F/FR-Minecraft/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FR-Minecraft/assets/thumbnail.png",
-	"color": "#4AD818",
-	"category": "games",
-	"tags": [
-		"community",
-		"fr-minecraft",
-		"minecraft",
-		"news"
-	],
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fad fa-user-secret",
-			"value": false
-		},
-		{
-			"id": "button",
-			"if": {
-				"privacy": false
-			},
-			"title": "Add Button",
-			"icon": "fas fa-compress-arrows-alt",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "fantomitechno 🦊",
+    "id": "563749920683720709"
+  },
+  "service": "FR-Minecraft",
+  "description": {
+    "en": "News Minecraft, tips, tools and all the help necessary to play Minecraft!",
+    "fr": "L'actualité Minecraft, des astuces, des outils et toute l'aide necessaire pour jouer à Minecraft !",
+    "nl": "Nieuws Minecraft, tips, tools en alle hulp die nodig is om Minecraft te spelen!"
+  },
+  "url": "fr-minecraft.net",
+  "version": "1.1.24",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FR-Minecraft/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FR-Minecraft/assets/thumbnail.png",
+  "color": "#4AD818",
+  "category": "games",
+  "tags": [
+    "community",
+    "minecraft",
+    "news"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "button",
+      "if": {
+        "privacy": false
+      },
+      "title": "Add Button",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
 }

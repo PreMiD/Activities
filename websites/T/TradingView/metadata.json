@@ -1,31 +1,31 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Hibanka",
-		"id": "467658348158779393"
-	},
-	"service": "TradingView",
-	"description": {
-		"en": "Free Stock Charts, Stock Quotes and Trade Ideas",
-		"ru": "Бесплатные онлайн-графики акций, котировки и идеи",
-		"nl": "Gratis voorraadgrafieken, aandelenkoersen en handelsideeën"
-	},
-	"url": [
-		"www.tradingview.com",
-		"status.tradingview.com"
-	],
-	"regExp": "([a-z0-9]+)[.]tradingview[.]com",
-	"version": "1.0.19",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/T/TradingView/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TradingView/assets/thumbnail.png",
-	"color": "#2196f3",
-	"category": "other",
-	"tags": [
-		"markets",
-		"exchange",
-		"currency",
-		"crypto",
-		"stocks"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Hibanka",
+    "id": "467658348158779393"
+  },
+  "service": "TradingView",
+  "description": {
+    "en": "Free Stock Charts, Stock Quotes and Trade Ideas",
+    "nl": "Gratis voorraadgrafieken, aandelenkoersen en handelsideeën",
+    "ru": "Бесплатные онлайн-графики акций, котировки и идеи"
+  },
+  "url": [
+    "www.tradingview.com",
+    "status.tradingview.com"
+  ],
+  "regExp": "([a-z0-9]+)[.]tradingview[.]com",
+  "version": "1.0.20",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TradingView/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TradingView/assets/thumbnail.png",
+  "color": "#2196f3",
+  "category": "other",
+  "tags": [
+    "markets",
+    "exchange",
+    "currency",
+    "crypto",
+    "stocks"
+  ]
 }

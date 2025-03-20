@@ -1,46 +1,46 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Dark_Ville",
-		"id": "638080361179512853"
-	},
-	"service": "Wiki.gg",
-	"description": {
-		"en": "We are creating a community of developers and editors to come together and create the best possible experience for gamers.",
-		"nl": "Wij brengen een gemeenschap van ontwikkelaars en editors samen om de best mogelijke ervaring voor gamers te creëren."
-	},
-	"url": "wiki.gg",
-	"regExp": "([a-z0-9-]+[.])*wiki[.]gg[/]",
-	"version": "2.0.10",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wiki.gg/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wiki.gg/assets/thumbnail.jpg",
-	"color": "#ff1980",
-	"category": "other",
-	"tags": [
-		"wiki",
-		"wikis",
-		"terraria"
-	],
-	"settings": [
-		{
-			"id": "lang",
-			"multiLanguage": true
-		},
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fad fa-user-secret",
-			"value": false
-		},
-		{
-			"id": "buttons",
-			"if": {
-				"privacy": false
-			},
-			"title": "Show Buttons",
-			"icon": "fas fa-compress-arrows-alt",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Dark_Ville",
+    "id": "638080361179512853"
+  },
+  "service": "Wiki.gg",
+  "description": {
+    "en": "We are creating a community of developers and editors to come together and create the best possible experience for gamers.",
+    "nl": "Wij brengen een gemeenschap van ontwikkelaars en editors samen om de best mogelijke ervaring voor gamers te creëren."
+  },
+  "url": "wiki.gg",
+  "regExp": "([a-z0-9-]+[.])*wiki[.]gg[/]",
+  "version": "2.0.12",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wiki.gg/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wiki.gg/assets/thumbnail.jpg",
+  "color": "#ff1980",
+  "category": "other",
+  "tags": [
+    "wiki",
+    "wikis",
+    "terraria"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
 }

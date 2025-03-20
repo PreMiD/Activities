@@ -1,25 +1,25 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "195968823990550528",
-		"name": "techyyt"
-	},
-	"service": "Indavideó",
-	"description": {
-		"en": "A Hungarian video sharing site, often used to share anime."
-	},
-	"url": "indavideo.hu",
-	"version": "1.0.7",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/I/Indavide%C3%B3/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Indavide%C3%B3/assets/thumbnail.png",
-	"color": "#e74c3c",
-	"category": "videos",
-	"tags": [
-		"indavideo",
-		"hungarian",
-		"video"
-	],
-	"iframe": true,
-	"iFrameRegExp": ".*[.]indavideo[.]hu"
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "195968823990550528",
+    "name": "techyyt"
+  },
+  "service": "Indavideó",
+  "description": {
+    "en": "A Hungarian video sharing site, often used to share anime."
+  },
+  "url": "indavideo.hu",
+  "version": "1.0.8",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Indavide%C3%B3/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Indavide%C3%B3/assets/thumbnail.png",
+  "color": "#e74c3c",
+  "category": "videos",
+  "tags": [
+    "indavideo",
+    "hungarian",
+    "video"
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*[.]indavideo[.]hu"
 }

@@ -1,27 +1,26 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "sexnine",
-		"id": "807958370887270400"
-	},
-	"service": "Educative",
-	"description": {
-		"en": "Interactive Courses for Software Developers"
-	},
-	"url": [
-		"educative.io",
-		"www.educative.io"
-	],
-	"version": "1.0.20",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/E/Educative/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Educative/assets/thumbnail.png",
-	"color": "#5553ff",
-	"category": "other",
-	"tags": [
-		"learning",
-		"coding",
-		"programming",
-		"educative"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "sexnine",
+    "id": "807958370887270400"
+  },
+  "service": "Educative",
+  "description": {
+    "en": "Interactive Courses for Software Developers"
+  },
+  "url": [
+    "educative.io",
+    "www.educative.io"
+  ],
+  "version": "1.0.22",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Educative/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Educative/assets/thumbnail.png",
+  "color": "#5553ff",
+  "category": "other",
+  "tags": [
+    "learning",
+    "coding",
+    "programming"
+  ]
 }

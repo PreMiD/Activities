@@ -1,60 +1,60 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Atom Skully",
-		"id": "671037171611729920"
-	},
-	"contributors": [
-		{
-			"name": "RisingSunLight",
-			"id": "240521747852558347"
-		}
-	],
-	"service": "Anime Sama",
-	"description": {
-		"en": "Your streaming website for animes and scans without ad.",
-		"fr": "Votre site de streaming préféré pour vos animes et scans sans pubs."
-	},
-	"url": "anime-sama.fr",
-	"version": "1.2.4",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime%20Sama/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime%20Sama/assets/thumbnail.png",
-	"color": "#0063c0",
-	"category": "anime",
-	"tags": [
-		"anime",
-		"anime-sama",
-		"scan",
-		"vf",
-		"vostfr"
-	],
-	"iframe": true,
-	"iFrameRegExp": ".*",
-	"settings": [
-		{
-			"id": "buttons",
-			"title": "Show Buttons",
-			"icon": "fas fa-compress-arrows-alt",
-			"value": true
-		},
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fad fa-user-secret",
-			"value": false
-		},
-		{
-			"id": "timestamps",
-			"title": "Show Timestamps",
-			"icon": "fad fa-stopwatch",
-			"value": true
-		},
-		{
-			"id": "cover",
-			"title": "Show Cover",
-			"icon": "fad fa-images",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Atom Skully",
+    "id": "671037171611729920"
+  },
+  "contributors": [
+    {
+      "name": "RisingSunLight",
+      "id": "240521747852558347"
+    }
+  ],
+  "service": "Anime Sama",
+  "description": {
+    "en": "Your streaming website for animes and scans without ad.",
+    "fr": "Votre site de streaming préféré pour vos animes et scans sans pubs."
+  },
+  "url": "anime-sama.fr",
+  "version": "1.2.6",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime%20Sama/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime%20Sama/assets/thumbnail.png",
+  "color": "#0063c0",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "anime-sama",
+    "scan",
+    "vf",
+    "vostfr"
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*",
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "timestamps",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    }
+  ]
 }

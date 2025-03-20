@@ -1,33 +1,33 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Striker",
-		"id": "215509157837537280"
-	},
-	"service": "Human Benchmark",
-	"description": {
-		"en": "Measure your abilities with brain games and congitive tests.",
-		"nl": "Meet je vaardigheden met hersenspellen en cognitieve tests."
-	},
-	"url": "humanbenchmark.com",
-	"version": "1.0.21",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/H/Human%20Benchmark/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Human%20Benchmark/assets/thumbnail.jpg",
-	"color": "#FFA600",
-	"category": "other",
-	"tags": [
-		"games",
-		"tests",
-		"brain",
-		"cognitive"
-	],
-	"settings": [
-		{
-			"id": "stamp",
-			"title": "Show time elapsed",
-			"icon": "fas fa-stopwatch",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Striker",
+    "id": "215509157837537280"
+  },
+  "service": "Human Benchmark",
+  "description": {
+    "en": "Measure your abilities with brain games and congitive tests.",
+    "nl": "Meet je vaardigheden met hersenspellen en cognitieve tests."
+  },
+  "url": "humanbenchmark.com",
+  "version": "1.0.22",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Human%20Benchmark/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Human%20Benchmark/assets/thumbnail.jpg",
+  "color": "#FFA600",
+  "category": "other",
+  "tags": [
+    "games",
+    "tests",
+    "brain",
+    "cognitive"
+  ],
+  "settings": [
+    {
+      "id": "stamp",
+      "title": "Show time elapsed",
+      "icon": "fas fa-stopwatch",
+      "value": true
+    }
+  ]
 }

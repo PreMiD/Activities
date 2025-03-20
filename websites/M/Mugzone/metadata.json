@@ -1,32 +1,31 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Himori",
-		"id": "350602512044261386"
-	},
-	"service": "Mugzone",
-	"description": {
-		"en": "Malody, cross-platform music game community.",
-		"nl": "Malody, platformonafhankelijke muziekgame-community."
-	},
-	"url": "m.mugzone.net",
-	"version": "2.0.22",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mugzone/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mugzone/assets/thumbnail.png",
-	"color": "#b1b8cd",
-	"category": "games",
-	"tags": [
-		"malody",
-		"mugzone",
-		"game"
-	],
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Keep me hidden",
-			"icon": "fas fa-eye-slash",
-			"value": false
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Himori",
+    "id": "350602512044261386"
+  },
+  "service": "Mugzone",
+  "description": {
+    "en": "Malody, cross-platform music game community.",
+    "nl": "Malody, platformonafhankelijke muziekgame-community."
+  },
+  "url": "m.mugzone.net",
+  "version": "2.0.24",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mugzone/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mugzone/assets/thumbnail.png",
+  "color": "#b1b8cd",
+  "category": "games",
+  "tags": [
+    "malody",
+    "game"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Keep me hidden",
+      "icon": "fas fa-eye-slash",
+      "value": false
+    }
+  ]
 }

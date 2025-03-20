@@ -1,51 +1,51 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Viruz",
-		"id": "158973226465230848"
-	},
-	"contributors": [
-		{
-			"name": "RisingSunLight",
-			"id": "240521747852558347"
-		}
-	],
-	"service": "AniList",
-	"description": {
-		"en": "AniList: Track, Discover, Share Anime & Manga - Sign up for free!",
-		"fr": "AniList : Suis, Découvre, Partage des Animes & Manga - Inscris-toi gratuitement !",
-		"pt-br": "AniList: Rastreie, encontre e compartilhe animes e mangás - Inscreva-se de graça!",
-		"zh": "AniList：追踪，发现，分享动漫和漫画-免费注册！赶快加入我们！",
-		"zh-tw": "AniList：追踪，發掘，分享動漫和漫畫-免費註冊！趕快加入我們！",
-		"ga": "AniList: Track, Discover, Share Anime & Manga - Sign up for free!",
-		"nl": "AniList: volg, ontdek, deel anime en manga - meld je gratis aan!",
-		"it": "AniList: Traccia, Scopri, Condividi Anime & Manga - Registrati gratuitamente!",
-		"vi": "AniList: Theo dõi, tìm kiếm, chia sẻ Anime & Manga - Đăng ký ngay hôm nay!"
-	},
-	"url": "anilist.co",
-	"version": "2.1.11",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniList/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniList/assets/thumbnail.jpg",
-	"color": "#02A9FF",
-	"category": "anime",
-	"tags": [
-		"anime",
-		"manga",
-		"list"
-	],
-	"settings": [
-		{
-			"id": "cover",
-			"title": "Show Cover",
-			"icon": "fad fa-images",
-			"value": true
-		},
-		{
-			"id": "buttons",
-			"title": "Show Buttons",
-			"icon": "fad fa-compress-arrows-alt",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Viruz",
+    "id": "158973226465230848"
+  },
+  "contributors": [
+    {
+      "name": "RisingSunLight",
+      "id": "240521747852558347"
+    }
+  ],
+  "service": "AniList",
+  "description": {
+    "en": "AniList: Track, Discover, Share Anime & Manga - Sign up for free!",
+    "fr": "AniList : Suis, Découvre, Partage des Animes & Manga - Inscris-toi gratuitement !",
+    "ga": "AniList: Track, Discover, Share Anime & Manga - Sign up for free!",
+    "it": "AniList: Traccia, Scopri, Condividi Anime & Manga - Registrati gratuitamente!",
+    "nl": "AniList: volg, ontdek, deel anime en manga - meld je gratis aan!",
+    "pt-br": "AniList: Rastreie, encontre e compartilhe animes e mangás - Inscreva-se de graça!",
+    "vi": "AniList: Theo dõi, tìm kiếm, chia sẻ Anime & Manga - Đăng ký ngay hôm nay!",
+    "zh": "AniList：追踪，发现，分享动漫和漫画-免费注册！赶快加入我们！",
+    "zh-tw": "AniList：追踪，發掘，分享動漫和漫畫-免費註冊！趕快加入我們！"
+  },
+  "url": "anilist.co",
+  "version": "2.1.12",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniList/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniList/assets/thumbnail.jpg",
+  "color": "#02A9FF",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "manga",
+    "list"
+  ],
+  "settings": [
+    {
+      "id": "cover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fad fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
 }

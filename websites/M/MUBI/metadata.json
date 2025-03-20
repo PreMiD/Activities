@@ -1,62 +1,61 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "638080361179512853",
-		"name": "Dark_Ville"
-	},
-	"service": "MUBI",
-	"description": {
-		"en": "Watch truly great cinema. Wherever you are. With no ads. Ever. From new directors to award-winners. Beautiful, interesting, incredible movies — a new film every single day. Stream Now. Download to watch Offline. Start your free 7 day trial now."
-	},
-	"url": "mubi.com",
-	"version": "1.0.14",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/M/MUBI/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MUBI/assets/thumbnail.png",
-	"color": "#B4CDDB",
-	"category": "videos",
-	"tags": [
-		"mubi",
-		"video"
-	],
-	"settings": [
-		{
-			"id": "lang",
-			"multiLanguage": true
-		},
-		{
-			"icon": "fas fa-user-secret",
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"value": false
-		},
-		{
-			"icon": "fas fa-compress-arrows-alt",
-			"id": "buttons",
-			"if": {
-				"privacy": false
-			},
-			"title": "Show Buttons",
-			"value": true
-		},
-		{
-			"icon": "fad fa-images",
-			"id": "covers",
-			"if": {
-				"privacy": false
-			},
-			"title": "Show Cover",
-			"value": true
-		},
-		{
-			"id": "viewState",
-			"if": {
-				"privacy": false
-			},
-			"title": "Movie view row2",
-			"icon": "fas fa-comment-alt-edit",
-			"value": "%tags%",
-			"placeholder": "%tags%, %director%, %locationAndDate%, %minutes% or {0}"
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "638080361179512853",
+    "name": "Dark_Ville"
+  },
+  "service": "MUBI",
+  "description": {
+    "en": "Watch truly great cinema. Wherever you are. With no ads. Ever. From new directors to award-winners. Beautiful, interesting, incredible movies — a new film every single day. Stream Now. Download to watch Offline. Start your free 7 day trial now."
+  },
+  "url": "mubi.com",
+  "version": "1.0.17",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MUBI/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MUBI/assets/thumbnail.png",
+  "color": "#B4CDDB",
+  "category": "videos",
+  "tags": [
+    "video"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "icon": "fas fa-user-secret",
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "value": false
+    },
+    {
+      "icon": "fas fa-compress-arrows-alt",
+      "id": "buttons",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Buttons",
+      "value": true
+    },
+    {
+      "icon": "fad fa-images",
+      "id": "covers",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Cover",
+      "value": true
+    },
+    {
+      "id": "viewState",
+      "if": {
+        "privacy": false
+      },
+      "title": "Movie view row2",
+      "icon": "fas fa-comment-alt-edit",
+      "value": "%tags%",
+      "placeholder": "%tags%, %director%, %locationAndDate%, %minutes% or {0}"
+    }
+  ]
 }

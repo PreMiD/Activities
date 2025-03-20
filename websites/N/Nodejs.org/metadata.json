@@ -1,23 +1,23 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Dominik",
-		"id": "594491170248458250"
-	},
-	"service": "Nodejs.org",
-	"description": {
-		"en": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
-		"nl": "Node.js® is een JavaScript-runtime die is gebouwd op de V8 JavaScript-engine van Chrome."
-	},
-	"url": "nodejs.org",
-	"version": "1.3.23",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nodejs.org/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nodejs.org/assets/thumbnail.png",
-	"color": "#00ff00",
-	"category": "other",
-	"tags": [
-		"node-js",
-		"javascript"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Dominik",
+    "id": "594491170248458250"
+  },
+  "service": "Nodejs.org",
+  "description": {
+    "en": "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
+    "nl": "Node.js® is een JavaScript-runtime die is gebouwd op de V8 JavaScript-engine van Chrome."
+  },
+  "url": "nodejs.org",
+  "version": "1.3.24",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nodejs.org/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nodejs.org/assets/thumbnail.png",
+  "color": "#00ff00",
+  "category": "other",
+  "tags": [
+    "node-js",
+    "javascript"
+  ]
 }

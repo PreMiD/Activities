@@ -1,50 +1,49 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Dark_Ville",
-		"id": "638080361179512853"
-	},
-	"service": "Marktplaats",
-	"description": {
-		"nl": "Ga ervoor het begint op Marktplaats.",
-		"en": "Go for it, it starts on Marktplaats."
-	},
-	"url": [
-		"www.marktplaats.nl",
-		"help.marktplaats.nl"
-	],
-	"version": "1.2.5",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/M/Marktplaats/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Marktplaats/assets/thumbnail.jpg",
-	"color": "#FF0000",
-	"category": "other",
-	"tags": [
-		"sell",
-		"buy",
-		"secondhand",
-		"dutch",
-		"marktplaats",
-		"markt",
-		"marketplace",
-		"nl",
-		"nederlands"
-	],
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fad fa-user-secret",
-			"value": false
-		},
-		{
-			"id": "buttons",
-			"title": "Show Buttons",
-			"icon": "fas fa-compress-arrows-alt",
-			"value": true,
-			"if": {
-				"privacy": false
-			}
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Dark_Ville",
+    "id": "638080361179512853"
+  },
+  "service": "Marktplaats",
+  "description": {
+    "en": "Go for it, it starts on Marktplaats.",
+    "nl": "Ga ervoor het begint op Marktplaats."
+  },
+  "url": [
+    "www.marktplaats.nl",
+    "help.marktplaats.nl"
+  ],
+  "version": "1.2.7",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Marktplaats/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Marktplaats/assets/thumbnail.jpg",
+  "color": "#FF0000",
+  "category": "other",
+  "tags": [
+    "sell",
+    "buy",
+    "secondhand",
+    "dutch",
+    "markt",
+    "marketplace",
+    "nl",
+    "nederlands"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
 }

@@ -1,27 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "AlbaySIMSEK",
-		"id": "432476132609228800"
-	},
-	"service": "Türk Hack Team",
-	"description": {
-		"en": "Türk Hack Team Turkey is one of the popular webmaster forum.",
-		"tr": "Türk Hack Team, Türkiye'nin popüler yazılım geliştirme forumlarından birisidir.",
-		"nl": "Türk Hack Team Turkije is een van de populaire webmasterforums."
-	},
-	"url": [
-		"turkhackteam.org",
-		"www.turkhackteam.org"
-	],
-	"version": "1.2.22",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/T/T%C3%BCrk%20Hack%20Team/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/T%C3%BCrk%20Hack%20Team/assets/thumbnail.png",
-	"color": "#1c1c1c",
-	"category": "other",
-	"tags": [
-		"forum",
-		"turkish"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "AlbaySIMSEK",
+    "id": "432476132609228800"
+  },
+  "service": "Türk Hack Team",
+  "description": {
+    "en": "Türk Hack Team Turkey is one of the popular webmaster forum.",
+    "nl": "Türk Hack Team Turkije is een van de populaire webmasterforums.",
+    "tr": "Türk Hack Team, Türkiye'nin popüler yazılım geliştirme forumlarından birisidir."
+  },
+  "url": [
+    "turkhackteam.org",
+    "www.turkhackteam.org"
+  ],
+  "version": "1.2.23",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/T%C3%BCrk%20Hack%20Team/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/T%C3%BCrk%20Hack%20Team/assets/thumbnail.png",
+  "color": "#1c1c1c",
+  "category": "other",
+  "tags": [
+    "forum",
+    "turkish"
+  ]
 }

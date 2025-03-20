@@ -1,30 +1,30 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "CRUGG",
-		"id": "228965621478588416"
-	},
-	"service": "nekos.life",
-	"description": {
-		"en": "A neko makes your day bright - nekos.life provides you with thousands of SFW and NSFW images of nekos (cat-girls).",
-		"de": "Ein Neko macht den Tag schön - nekos.life versorgt dich mit tausenden von SFW- und NSFW-Bildern von Nekos (Cat-Girls).",
-		"ro": "Un neko îți face ziua mai luminoasă - nekos.life îți oferă mii de poze SFW și NSFW cu nekos (fete-pisică).",
-		"pt-br": "Uma neko faz seu dia brilhar - nekos.life fornece para você milhares de imagens SFW e NSFW de nekos (mulheres-gato).",
-		"fr": "Un neko rend votre journée lumineuse - nekos.life vous fournit des milliers d'images SFW et NSFW de nekos (femmes-chat).",
-		"uk": "Неко робить ваш день яскравим - nekos.life надає вам тисячі зображень SFW та NSFW з nekos (кішка-дівчина).",
-		"nl": "Een neko maakt je dag helder - nekos.life biedt je duizenden SFW- en NSFW-afbeeldingen van nekos (kattenmeisjes)."
-	},
-	"url": "nekos.life",
-	"version": "1.1.24",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/N/nekos.life/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/nekos.life/assets/thumbnail.png",
-	"color": "#512da8",
-	"category": "anime",
-	"tags": [
-		"anime",
-		"manga",
-		"images",
-		"random"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "CRUGG",
+    "id": "228965621478588416"
+  },
+  "service": "nekos.life",
+  "description": {
+    "de": "Ein Neko macht den Tag schön - nekos.life versorgt dich mit tausenden von SFW- und NSFW-Bildern von Nekos (Cat-Girls).",
+    "en": "A neko makes your day bright - nekos.life provides you with thousands of SFW and NSFW images of nekos (cat-girls).",
+    "fr": "Un neko rend votre journée lumineuse - nekos.life vous fournit des milliers d'images SFW et NSFW de nekos (femmes-chat).",
+    "nl": "Een neko maakt je dag helder - nekos.life biedt je duizenden SFW- en NSFW-afbeeldingen van nekos (kattenmeisjes).",
+    "pt-br": "Uma neko faz seu dia brilhar - nekos.life fornece para você milhares de imagens SFW e NSFW de nekos (mulheres-gato).",
+    "ro": "Un neko îți face ziua mai luminoasă - nekos.life îți oferă mii de poze SFW și NSFW cu nekos (fete-pisică).",
+    "uk": "Неко робить ваш день яскравим - nekos.life надає вам тисячі зображень SFW та NSFW з nekos (кішка-дівчина)."
+  },
+  "url": "nekos.life",
+  "version": "1.1.25",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/nekos.life/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/nekos.life/assets/thumbnail.png",
+  "color": "#512da8",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "manga",
+    "images",
+    "random"
+  ]
 }

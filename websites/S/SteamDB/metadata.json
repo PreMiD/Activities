@@ -1,61 +1,61 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "joerkig",
-		"id": "205984221859151873"
-	},
-	"contributors": [
-		{
-			"name": "Dark_Ville",
-			"id": "638080361179512853"
-		}
-	],
-	"service": "SteamDB",
-	"altnames": [
-		"Steam Database"
-	],
-	"description": {
-		"en": "This third-party tool gives you better insight into the Steam platform and everything in its database.",
-		"nl": "Deze tool van derden geeft je een beter inzicht in het Steam-platform en alles in hun database."
-	},
-	"url": [
-		"steamdb.info",
-		"steamstat.us"
-	],
-	"version": "1.1.13",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/SteamDB/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SteamDB/assets/thumbnail.png",
-	"color": "#3871C8",
-	"category": "other",
-	"tags": [
-		"stats",
-		"steam",
-		"database",
-		"db"
-	],
-	"settings": [
-		{
-			"id": "time",
-			"title": "Show Timestamps",
-			"icon": "fas fa-stopwatch",
-			"value": true
-		},
-		{
-			"id": "buttons",
-			"title": "Show Buttons",
-			"icon": "fas fa-compress-arrows-alt",
-			"value": true
-		},
-		{
-			"id": "accountValue",
-			"title": "Account Value",
-			"icon": "fas fa-wallet",
-			"value": 0,
-			"values": [
-				"lowest",
-				"today"
-			]
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "joerkig",
+    "id": "205984221859151873"
+  },
+  "contributors": [
+    {
+      "name": "Dark_Ville",
+      "id": "638080361179512853"
+    }
+  ],
+  "service": "SteamDB",
+  "altnames": [
+    "Steam Database"
+  ],
+  "description": {
+    "en": "This third-party tool gives you better insight into the Steam platform and everything in its database.",
+    "nl": "Deze tool van derden geeft je een beter inzicht in het Steam-platform en alles in hun database."
+  },
+  "url": [
+    "steamdb.info",
+    "steamstat.us"
+  ],
+  "version": "1.1.14",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SteamDB/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SteamDB/assets/thumbnail.png",
+  "color": "#3871C8",
+  "category": "other",
+  "tags": [
+    "stats",
+    "steam",
+    "database",
+    "db"
+  ],
+  "settings": [
+    {
+      "id": "time",
+      "title": "Show Timestamps",
+      "icon": "fas fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "accountValue",
+      "title": "Account Value",
+      "icon": "fas fa-wallet",
+      "value": 0,
+      "values": [
+        "lowest",
+        "today"
+      ]
+    }
+  ]
 }

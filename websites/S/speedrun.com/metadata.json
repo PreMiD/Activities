@@ -1,23 +1,23 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Bas950",
-		"id": "241278257335500811"
-	},
-	"service": "speedrun.com",
-	"description": {
-		"en": "Speedrunning leaderboards, resources, forums, and more!",
-		"nl": "Speedrunning leaderboards, bronnen, forums en meer!"
-	},
-	"url": "www.speedrun.com",
-	"version": "1.2.22",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/speedrun.com/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/speedrun.com/assets/thumbnail.png",
-	"color": "#c6a24c",
-	"category": "games",
-	"tags": [
-		"speed",
-		"run"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Bas950",
+    "id": "241278257335500811"
+  },
+  "service": "speedrun.com",
+  "description": {
+    "en": "Speedrunning leaderboards, resources, forums, and more!",
+    "nl": "Speedrunning leaderboards, bronnen, forums en meer!"
+  },
+  "url": "www.speedrun.com",
+  "version": "1.2.23",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/speedrun.com/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/speedrun.com/assets/thumbnail.png",
+  "color": "#c6a24c",
+  "category": "games",
+  "tags": [
+    "speed",
+    "run"
+  ]
 }

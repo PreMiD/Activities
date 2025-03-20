@@ -1,32 +1,32 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "638080361179512853",
-		"name": "dark_ville"
-	},
-	"service": "FlaviBot",
-	"description": {
-		"en": "Play high quality music on discord for free."
-	},
-	"url": "flavibot.xyz",
-	"version": "1.0.6",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/F/FlaviBot/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FlaviBot/assets/thumbnail.png",
-	"color": "#8468E9",
-	"category": "music",
-	"tags": [
-		"discord",
-		"bot",
-		"music",
-		"spotify",
-		"apple-music",
-		"apple",
-		"soundcloud",
-		"tidal",
-		"deezer",
-		"direct",
-		"links",
-		"radio"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "638080361179512853",
+    "name": "dark_ville"
+  },
+  "service": "FlaviBot",
+  "description": {
+    "en": "Play high quality music on discord for free."
+  },
+  "url": "flavibot.xyz",
+  "version": "1.0.7",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FlaviBot/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FlaviBot/assets/thumbnail.png",
+  "color": "#8468E9",
+  "category": "music",
+  "tags": [
+    "discord",
+    "bot",
+    "music",
+    "spotify",
+    "apple-music",
+    "apple",
+    "soundcloud",
+    "tidal",
+    "deezer",
+    "direct",
+    "links",
+    "radio"
+  ]
 }

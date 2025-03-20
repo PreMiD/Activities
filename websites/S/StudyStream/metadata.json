@@ -1,27 +1,26 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "1040757019705098320",
-		"name": "korriwan"
-	},
-	"service": "StudyStream",
-	"description": {
-		"en": "StudyStream provides an ideal space for both students and professionals in search of productivity and connection."
-	},
-	"url": "app.studystream.live",
-	"version": "1.0.2",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/StudyStream/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/StudyStream/assets/thumbnail.png",
-	"color": "#2d1ecd",
-	"category": "socials",
-	"tags": [
-		"studystream",
-		"study",
-		"stream",
-		"pomodoro",
-		"college",
-		"professional",
-		"collab"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "1040757019705098320",
+    "name": "korriwan"
+  },
+  "service": "StudyStream",
+  "description": {
+    "en": "StudyStream provides an ideal space for both students and professionals in search of productivity and connection."
+  },
+  "url": "app.studystream.live",
+  "version": "1.0.4",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/StudyStream/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/StudyStream/assets/thumbnail.png",
+  "color": "#2d1ecd",
+  "category": "socials",
+  "tags": [
+    "study",
+    "stream",
+    "pomodoro",
+    "college",
+    "professional",
+    "collab"
+  ]
 }

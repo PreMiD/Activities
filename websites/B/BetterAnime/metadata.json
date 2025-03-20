@@ -1,112 +1,59 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "SlowLife",
-		"id": "374905512661221377"
-	},
-	"service": "BetterAnime",
-	"description": {
-		"en": "Come watch and download all Anime and Movie Episodes in high quality up to FullHD! Watch several anime online for free on BetterAnime!",
-		"pt-br": "Vem assistir e baixar todos os Episódios de Animes e Filmes em alta qualidade até FullHD! Assista vários animes online de graça no BetterAnime!",
-		"nl": "Bekijk en download alle anime- en filmafleveringen in hoge kwaliteit tot FullHD! Bekijk gratis verschillende anime online op BetterAnime!",
-		"vi": "Xem các tập anime và phim mới nhất với chất lượng lên tới FullHD! Xem nhiều anime trực tuyến miễn phí trên BetterAnime!"
-	},
-	"url": "betteranime.net",
-	"version": "1.0.16",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/B/BetterAnime/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BetterAnime/assets/thumbnail.png",
-	"color": "#ffffff",
-	"category": "anime",
-	"tags": [
-		"anime",
-		"betteranime"
-	],
-	"iframe": true,
-	"iFrameRegExp": ".*",
-	"settings": [
-		{
-			"id": "lang",
-			"multiLanguage": true
-		},
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fad fa-user-secret",
-			"value": false
-		},
-		{
-			"id": "browse",
-			"title": "Show Browsing Status",
-			"icon": "fad fa-book-reader",
-			"value": true
-		},
-		{
-			"id": "anime",
-			"title": "Show Anime",
-			"icon": "fad fa-film",
-			"value": true
-		},
-		{
-			"id": "AnimeDetails",
-			"if": {
-				"privacy": false
-			},
-			"title": "Anime Details Row 1",
-			"icon": "fas fa-comment-alt-edit",
-			"value": "%title%",
-			"placeholder": "Use %title% or %episode%"
-		},
-		{
-			"id": "AnimeState",
-			"if": {
-				"privacy": false
-			},
-			"title": "Anime Details Row 2",
-			"icon": "fas fa-comment-alt-edit",
-			"value": "%episode%",
-			"placeholder": "Use %title% or %episode% or {0} to delete the row completely"
-		},
-		{
-			"id": "movie",
-			"title": "Show Movies",
-			"icon": "fad fa-camera-movie",
-			"value": true
-		},
-		{
-			"id": "MovieDetails",
-			"if": {
-				"privacy": false
-			},
-			"title": "Movie Details Row 1",
-			"icon": "fas fa-comment-alt-edit",
-			"value": "%title%",
-			"placeholder": "Use %title%"
-		},
-		{
-			"id": "MovieState",
-			"if": {
-				"privacy": false
-			},
-			"title": "Movie Details Row 2",
-			"icon": "fas fa-comment-alt-edit",
-			"value": "Movie",
-			"placeholder": "Use %title% or {0} to delete the row completely"
-		},
-		{
-			"id": "timestamp",
-			"title": "Show Timestamps",
-			"icon": "fad fa-stopwatch",
-			"value": true
-		},
-		{
-			"id": "buttons",
-			"if": {
-				"privacy": false
-			},
-			"title": "Show Buttons",
-			"icon": "fas fa-compress-arrows-alt",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "slowlife.",
+    "id": "374905512661221377"
+  },
+  "service": "BetterAnime",
+  "description": {
+    "en": "Come watch and download all Anime and Movie Episodes in high quality up to FullHD! Watch several anime online for free on BetterAnime!",
+    "nl": "Bekijk en download alle anime- en filmafleveringen in hoge kwaliteit tot FullHD! Bekijk gratis verschillende anime online op BetterAnime!",
+    "pt-br": "Vem assistir e baixar todos os Episódios de Animes e Filmes em alta qualidade até FullHD! Assista vários animes online de graça no BetterAnime!",
+    "vi": "Xem các tập anime và phim mới nhất với chất lượng lên tới FullHD! Xem nhiều anime trực tuyến miễn phí trên BetterAnime!"
+  },
+  "url": "betteranime.net",
+  "version": "2.0.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BetterAnime/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BetterAnime/assets/thumbnail.png",
+  "color": "#ffffff",
+  "category": "anime",
+  "tags": [
+    "anime"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "betteranime[.]net[/]player",
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "useActivtyName",
+      "title": "Show Title as Activity",
+      "icon": "fad fa-user-edit",
+      "value": true
+    },
+    {
+      "id": "browse",
+      "title": "Show Browsing Status",
+      "icon": "fad fa-book-reader",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
 }

@@ -1,40 +1,43 @@
-import { GamePresence } from "..";
+import type { GamePresence } from '../index.js'
 import {
-	getActivePlayerId,
-	getCurrentGameState,
-	getCurrentGameStateType,
-	getPlayerAvatar,
-	getPlayerData,
-	getPlayerScore,
-	getUserPlayerId,
-} from "../../util";
+  getActivePlayerId,
+  getCurrentGameState,
+  getCurrentGameStateType,
+  getPlayerAvatar,
+  getPlayerData,
+  getPlayerScore,
+  getUserPlayerId,
+} from '../../util.js'
 
 const bahamataxi: GamePresence = {
-	logo: "https://cdn.rcd.gg/PreMiD/websites/B/Board%20Game%20Arena/assets/27.png",
-	async getData(presence: Presence) {
-		const gameState = await getCurrentGameState(presence),
-			activePlayer = await getActivePlayerId(presence),
-			gameStateType = await getCurrentGameStateType(presence),
-			userPlayer = await getUserPlayerId(presence),
-			activePlayerData = await getPlayerData(presence, activePlayer),
-			data: PresenceData = {
-				smallImageKey: getPlayerAvatar(userPlayer),
-				smallImageText: `Score: ${getPlayerScore(userPlayer)}`,
-			};
-		if (activePlayer === userPlayer || gameStateType !== "activeplayer") {
-			switch (gameState) {
-				case "turnBeforeMove":
-					data.state = "Moving their taxi";
-					break;
-				case "turnAfterMove":
-					data.state = "Picking up a passenger";
-					break;
-				case "gameEnd":
-					data.state = "Viewing game results";
-					break;
-			}
-		} else data.state = `Waiting for ${activePlayerData.name}`;
-		return data;
-	},
-};
-export default bahamataxi;
+  logo: 'https://cdn.rcd.gg/PreMiD/websites/B/Board%20Game%20Arena/assets/27.png',
+  async getData(presence: Presence) {
+    const gameState = await getCurrentGameState(presence)
+    const activePlayer = await getActivePlayerId(presence)
+    const gameStateType = await getCurrentGameStateType(presence)
+    const userPlayer = await getUserPlayerId(presence)
+    const activePlayerData = await getPlayerData(presence, activePlayer)
+    const data: PresenceData = {
+      smallImageKey: getPlayerAvatar(userPlayer),
+      smallImageText: `Score: ${getPlayerScore(userPlayer)}`,
+    }
+    if (activePlayer === userPlayer || gameStateType !== 'activeplayer') {
+      switch (gameState) {
+        case 'turnBeforeMove':
+          data.state = 'Moving their taxi'
+          break
+        case 'turnAfterMove':
+          data.state = 'Picking up a passenger'
+          break
+        case 'gameEnd':
+          data.state = 'Viewing game results'
+          break
+      }
+    }
+    else {
+      data.state = `Waiting for ${activePlayerData.name}`
+    }
+    return data
+  },
+}
+export default bahamataxi

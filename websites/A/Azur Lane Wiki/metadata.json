@@ -1,26 +1,26 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Bas950",
-		"id": "241278257335500811"
-	},
-	"service": "Azur Lane Wiki",
-	"description": {
-		"en": "Azur Lane English Wiki!",
-		"nl": "Azur Lane Englese Wiki!",
-		"zh": "自由的碧蓝航线英语维基",
-		"vi": "Wiki Azur Lane bằng Tiếng Anh!"
-	},
-	"url": "azurlane.koumakan.jp",
-	"version": "1.2.22",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/A/Azur%20Lane%20Wiki/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Azur%20Lane%20Wiki/assets/thumbnail.png",
-	"color": "#eae0ed",
-	"category": "anime",
-	"tags": [
-		"azur",
-		"lane",
-		"wiki"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Bas950",
+    "id": "241278257335500811"
+  },
+  "service": "Azur Lane Wiki",
+  "description": {
+    "en": "Azur Lane English Wiki!",
+    "nl": "Azur Lane Englese Wiki!",
+    "vi": "Wiki Azur Lane bằng Tiếng Anh!",
+    "zh": "自由的碧蓝航线英语维基"
+  },
+  "url": "azurlane.koumakan.jp",
+  "version": "1.2.23",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Azur%20Lane%20Wiki/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Azur%20Lane%20Wiki/assets/thumbnail.png",
+  "color": "#eae0ed",
+  "category": "anime",
+  "tags": [
+    "azur",
+    "lane",
+    "wiki"
+  ]
 }

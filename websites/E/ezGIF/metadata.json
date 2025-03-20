@@ -1,32 +1,32 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "193714715631812608",
-		"name": "theusaf"
-	},
-	"service": "ezGIF",
-	"description": {
-		"en": "Ezgif.com is a simple online GIF maker and toolset for basic animated GIF editing. Here you can create, resize, crop, reverse, optimize, and apply some effects to GIFs."
-	},
-	"url": "ezgif.com",
-	"version": "1.0.10",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/E/ezGIF/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/ezGIF/assets/thumbnail.png",
-	"color": "#222",
-	"category": "other",
-	"tags": [
-		"video",
-		"animation",
-		"image",
-		"editing"
-	],
-	"settings": [
-		{
-			"id": "showImages",
-			"value": false,
-			"title": "Display Images in Status",
-			"icon": "fas fa-images"
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "theusaf"
+  },
+  "service": "ezGIF",
+  "description": {
+    "en": "Ezgif.com is a simple online GIF maker and toolset for basic animated GIF editing. Here you can create, resize, crop, reverse, optimize, and apply some effects to GIFs."
+  },
+  "url": "ezgif.com",
+  "version": "1.0.11",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/E/ezGIF/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/ezGIF/assets/thumbnail.png",
+  "color": "#222",
+  "category": "other",
+  "tags": [
+    "video",
+    "animation",
+    "image",
+    "editing"
+  ],
+  "settings": [
+    {
+      "id": "showImages",
+      "value": false,
+      "title": "Display Images in Status",
+      "icon": "fas fa-images"
+    }
+  ]
 }

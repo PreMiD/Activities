@@ -1,53 +1,53 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "638080361179512853",
-		"name": "dark_ville"
-	},
-	"service": "MoviesJoy",
-	"description": {
-		"en": "Watch Free HD Movies and TV Series online on Moviesjoy"
-	},
-	"url": "moviesjoytv.to",
-	"regExp": "(www[.])?(ww[0-9]{0,2}[.])?moviesjoy(tv)?[.].*",
-	"version": "1.0.10",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/M/MoviesJoy/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MoviesJoy/assets/thumbnail.png",
-	"color": "#6A43B0",
-	"category": "videos",
-	"tags": [
-		"movies",
-		"series",
-		"watch",
-		"free"
-	],
-	"iframe": true,
-	"iFrameRegExp": ".*",
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fas fa-user-secret",
-			"value": false
-		},
-		{
-			"id": "buttons",
-			"title": "Show Buttons",
-			"icon": "fas fa-compress-arrows-alt",
-			"value": true,
-			"if": {
-				"privacy": false
-			}
-		},
-		{
-			"id": "covers",
-			"title": "Show Covers",
-			"icon": "fas fa-images",
-			"value": true,
-			"if": {
-				"privacy": false
-			}
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "638080361179512853",
+    "name": "dark_ville"
+  },
+  "service": "MoviesJoy",
+  "description": {
+    "en": "Watch Free HD Movies and TV Series online on Moviesjoy"
+  },
+  "url": "moviesjoytv.to",
+  "regExp": "(www[.])?(ww[0-9]{0,2}[.])?moviesjoy(tv)?[.].*",
+  "version": "1.0.11",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MoviesJoy/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MoviesJoy/assets/thumbnail.png",
+  "color": "#6A43B0",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "series",
+    "watch",
+    "free"
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*",
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "covers",
+      "title": "Show Covers",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
 }

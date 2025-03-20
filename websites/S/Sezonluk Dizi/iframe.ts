@@ -1,13 +1,13 @@
-const sezonlukDiziIframe = new iFrame();
+const sezonlukDiziIframe = new iFrame()
 
-sezonlukDiziIframe.on("UpdateData", () => {
-	const video: HTMLVideoElement = document.querySelector("video");
+sezonlukDiziIframe.on('UpdateData', () => {
+  const video = document.querySelector('video')
 
-	if (video && !isNaN(video.duration)) {
-		sezonlukDiziIframe.send({
-			duration: video.duration,
-			currentTime: video.currentTime,
-			paused: video.paused,
-		});
-	}
-});
+  if (video && !Number.isNaN(video.duration)) {
+    sezonlukDiziIframe.send({
+      duration: video.duration,
+      currentTime: video.currentTime,
+      paused: video.paused,
+    })
+  }
+})

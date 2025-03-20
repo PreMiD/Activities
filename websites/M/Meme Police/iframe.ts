@@ -1,10 +1,11 @@
-const iframe = new iFrame();
+const iframe = new iFrame()
 
 interface MemePoliceWindow {
-	presenceData?: PresenceData;
+  presenceData?: PresenceData
 }
 
-iframe.on("UpdateData", async () => {
-	const gameData = (window as MemePoliceWindow).presenceData;
-	if (gameData) iframe.send(gameData);
-});
+iframe.on('UpdateData', async () => {
+  const gameData = (window as MemePoliceWindow).presenceData
+  if (gameData)
+    iframe.send(gameData)
+})

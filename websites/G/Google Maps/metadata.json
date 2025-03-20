@@ -1,31 +1,31 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Tofuine",
-		"id": "734631480541708291"
-	},
-	"service": "Google Maps",
-	"description": {
-		"en": "Google Maps is a web mapping platform and consumer application offered by Google. It offers satellite imagery, aerial photography, street maps, 360° interactive panoramic views of streets, real-time traffic conditions, and route planning for traveling by foot, car, bike, air and public transportation."
-	},
-	"url": "www.google.com",
-	"regExp": "www\\.google\\.com\\/maps",
-	"version": "1.0.10",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/thumbnail.png",
-	"color": "#4e85f2",
-	"category": "other",
-	"tags": [
-		"maps",
-		"navigation"
-	],
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fad fa-user-secret",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Tofuine",
+    "id": "734631480541708291"
+  },
+  "service": "Google Maps",
+  "description": {
+    "en": "Google Maps is a web mapping platform and consumer application offered by Google. It offers satellite imagery, aerial photography, street maps, 360° interactive panoramic views of streets, real-time traffic conditions, and route planning for traveling by foot, car, bike, air and public transportation."
+  },
+  "url": "maps.google.com",
+  "regExp": "www\\.google\\.com\\/maps",
+  "version": "1.0.11",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/thumbnail.png",
+  "color": "#4e85f2",
+  "category": "other",
+  "tags": [
+    "maps",
+    "navigation"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": true
+    }
+  ]
 }

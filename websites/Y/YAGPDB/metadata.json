@@ -1,28 +1,28 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Bas950",
-		"id": "241278257335500811"
-	},
-	"service": "YAGPDB",
-	"description": {
-		"en": "YAGPDB is a multi-purpose Discord Bot.",
-		"nl": "YAGPDB is een multifunctionele Discord Bot.",
-		"zh": "YAGPDB 是一个多用途的 Discord 机器人",
-		"ga": "Is Bot Discord ilchuspóireach é YAGPDB."
-	},
-	"url": [
-		"yagpdb.xyz",
-		"docs.yagpdb.xyz"
-	],
-	"version": "1.2.25",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YAGPDB/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YAGPDB/assets/thumbnail.png",
-	"color": "#ec7760",
-	"category": "other",
-	"tags": [
-		"bot",
-		"discord"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Bas950",
+    "id": "241278257335500811"
+  },
+  "service": "YAGPDB",
+  "description": {
+    "en": "YAGPDB is a multi-purpose Discord Bot.",
+    "ga": "Is Bot Discord ilchuspóireach é YAGPDB.",
+    "nl": "YAGPDB is een multifunctionele Discord Bot.",
+    "zh": "YAGPDB 是一个多用途的 Discord 机器人"
+  },
+  "url": [
+    "yagpdb.xyz",
+    "docs.yagpdb.xyz"
+  ],
+  "version": "1.2.26",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YAGPDB/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YAGPDB/assets/thumbnail.png",
+  "color": "#ec7760",
+  "category": "other",
+  "tags": [
+    "bot",
+    "discord"
+  ]
 }

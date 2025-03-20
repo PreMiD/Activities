@@ -1,25 +1,25 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "MauriceX",
-		"id": "268768664411439115"
-	},
-	"service": "LautFM",
-	"description": {
-		"en": "Laut.FM is a Website to create your own Music station or listening to music.",
-		"de": "Laut.FM ist eine Webseite um dein eigenes Radio zu erstellen oder um Musik zu hören.",
-		"nl": "Laut.FM is een website om uw eigen muziekstation te maken of naar muziek te luisteren."
-	},
-	"url": "laut.fm",
-	"version": "1.3.23",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/L/LautFM/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LautFM/assets/thumbnail.png",
-	"color": "#373b4a",
-	"category": "music",
-	"tags": [
-		"music",
-		"radio",
-		"station"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "MauriceX",
+    "id": "268768664411439115"
+  },
+  "service": "LautFM",
+  "description": {
+    "de": "Laut.FM ist eine Webseite um dein eigenes Radio zu erstellen oder um Musik zu hören.",
+    "en": "Laut.FM is a Website to create your own Music station or listening to music.",
+    "nl": "Laut.FM is een website om uw eigen muziekstation te maken of naar muziek te luisteren."
+  },
+  "url": "laut.fm",
+  "version": "1.3.24",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LautFM/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LautFM/assets/thumbnail.png",
+  "color": "#373b4a",
+  "category": "music",
+  "tags": [
+    "music",
+    "radio",
+    "station"
+  ]
 }

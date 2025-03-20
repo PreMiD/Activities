@@ -1,25 +1,25 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "547923574833545226",
-		"name": "withervt"
-	},
-	"service": "VtuberWiki",
-	"description": {
-		"en": "Search or browse in depth information about Vtubers or software related to Vtubers"
-	},
-	"url": "vtubers.wiki",
-	"version": "1.1.5",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/V/VtuberWiki/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VtuberWiki/assets/thumbnail.jpg",
-	"color": "#43B581",
-	"category": "anime",
-	"tags": [
-		"vtuber",
-		"anime",
-		"fun",
-		"games",
-		"wiki"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "547923574833545226",
+    "name": "withervt"
+  },
+  "service": "VtuberWiki",
+  "description": {
+    "en": "Search or browse in depth information about Vtubers or software related to Vtubers"
+  },
+  "url": "vtubers.wiki",
+  "version": "1.1.6",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VtuberWiki/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VtuberWiki/assets/thumbnail.jpg",
+  "color": "#43B581",
+  "category": "anime",
+  "tags": [
+    "vtuber",
+    "anime",
+    "fun",
+    "games",
+    "wiki"
+  ]
 }

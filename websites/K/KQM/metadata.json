@@ -1,22 +1,22 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "290820916051705868",
-		"name": "clevernt"
-	},
-	"service": "KQM",
-	"description": {
-		"en": "KQM is home to the best Genshin Impact guides and the most reputable theorycrafting community. Learn about your favorite Genshin Impact characters’ builds, artifacts, weapons, teams, and more!"
-	},
-	"url": "keqingmains.com",
-	"version": "1.0.8",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/K/KQM/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KQM/assets/thumbnail.webp",
-	"color": "#dab2f9",
-	"category": "games",
-	"tags": [
-		"genshin-impact",
-		"game"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "290820916051705868",
+    "name": "clevernt"
+  },
+  "service": "KQM",
+  "description": {
+    "en": "KQM is home to the best Genshin Impact guides and the most reputable theorycrafting community. Learn about your favorite Genshin Impact characters’ builds, artifacts, weapons, teams, and more!"
+  },
+  "url": "keqingmains.com",
+  "version": "1.0.9",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KQM/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KQM/assets/thumbnail.webp",
+  "color": "#dab2f9",
+  "category": "games",
+  "tags": [
+    "genshin-impact",
+    "game"
+  ]
 }

@@ -1,27 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "638080361179512853",
-		"name": "dark_ville"
-	},
-	"service": "Vidoza",
-	"description": {
-		"en": "Absolutely free video hosting and streaming. Share your videos without any limitations via a HTML5 video player.",
-		"nl": "Volledig gratis video's hosten en steamen. Deel jouw video's zonder enige beperkingen via een HTML5 video speler."
-	},
-	"url": "vidoza.net",
-	"regExp": "(ww(w)?([0-9])?[.])?vidoza[.][a-z]*",
-	"version": "1.0.6",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vidoza/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vidoza/assets/thumbnail.png",
-	"color": "#43A047",
-	"category": "videos",
-	"tags": [
-		"anime",
-		"video",
-		"stream",
-		"streaming",
-		"sharing"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "638080361179512853",
+    "name": "dark_ville"
+  },
+  "service": "Vidoza",
+  "description": {
+    "en": "Absolutely free video hosting and streaming. Share your videos without any limitations via a HTML5 video player.",
+    "nl": "Volledig gratis video's hosten en steamen. Deel jouw video's zonder enige beperkingen via een HTML5 video speler."
+  },
+  "url": "vidoza.net",
+  "regExp": "(ww(w)?([0-9])?[.])?vidoza[.][a-z]*",
+  "version": "1.0.7",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vidoza/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vidoza/assets/thumbnail.png",
+  "color": "#43A047",
+  "category": "videos",
+  "tags": [
+    "anime",
+    "video",
+    "stream",
+    "streaming",
+    "sharing"
+  ]
 }

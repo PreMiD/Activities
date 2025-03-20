@@ -1,23 +1,23 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Bas950",
-		"id": "241278257335500811"
-	},
-	"service": "Dyno",
-	"description": {
-		"en": "A fully customizable server moderation Discord bot for your Discord server that features a simple and intuitive web dashboard. Server management just got a whole lot easier.",
-		"nl": "Een volledig aanpasbare servermoderatie Discord-bot voor uw Discord-server met een eenvoudig en intuïtief webdashboard. Serverbeheer is nu een stuk eenvoudiger geworden."
-	},
-	"url": "dyno.gg",
-	"version": "1.2.22",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dyno/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dyno/assets/thumbnail.png",
-	"color": "#337fd5",
-	"category": "other",
-	"tags": [
-		"bot",
-		"discord"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Bas950",
+    "id": "241278257335500811"
+  },
+  "service": "Dyno",
+  "description": {
+    "en": "A fully customizable server moderation Discord bot for your Discord server that features a simple and intuitive web dashboard. Server management just got a whole lot easier.",
+    "nl": "Een volledig aanpasbare servermoderatie Discord-bot voor uw Discord-server met een eenvoudig en intuïtief webdashboard. Serverbeheer is nu een stuk eenvoudiger geworden."
+  },
+  "url": "dyno.gg",
+  "version": "1.2.23",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dyno/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dyno/assets/thumbnail.png",
+  "color": "#337fd5",
+  "category": "other",
+  "tags": [
+    "bot",
+    "discord"
+  ]
 }

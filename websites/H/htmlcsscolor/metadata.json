@@ -1,23 +1,23 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Owen",
-		"id": "246778942323818506"
-	},
-	"service": "htmlcsscolor",
-	"description": {
-		"en": "The ultimate color collection!",
-		"nl": "De ultieme kleurencollectie!"
-	},
-	"url": "www.htmlcsscolor.com",
-	"version": "1.2.23",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/H/htmlcsscolor/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/htmlcsscolor/assets/thumbnail.png",
-	"color": "#93C54B",
-	"category": "other",
-	"tags": [
-		"colors",
-		"editor"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Owen",
+    "id": "246778942323818506"
+  },
+  "service": "htmlcsscolor",
+  "description": {
+    "en": "The ultimate color collection!",
+    "nl": "De ultieme kleurencollectie!"
+  },
+  "url": "www.htmlcsscolor.com",
+  "version": "1.2.24",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/htmlcsscolor/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/htmlcsscolor/assets/thumbnail.png",
+  "color": "#93C54B",
+  "category": "other",
+  "tags": [
+    "colors",
+    "editor"
+  ]
 }

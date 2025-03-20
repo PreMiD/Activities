@@ -1,25 +1,25 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Eren",
-		"id": "478937019758673931"
-	},
-	"service": "Discord Bot List",
-	"description": {
-		"en": "Discord Bot List is listing discord bots.",
-		"tr": "Discord Bot List bir bot listesidir.",
-		"nl": "Discord Bot List is een lijst van discord bots."
-	},
-	"url": "discordbotlist.com",
-	"version": "1.2.26",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20Bot%20List/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20Bot%20List/assets/thumbnail.png",
-	"color": "#10C0E7",
-	"category": "other",
-	"tags": [
-		"discord",
-		"bot",
-		"discord-bot-list"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Eren",
+    "id": "478937019758673931"
+  },
+  "service": "Discord Bot List",
+  "description": {
+    "en": "Discord Bot List is listing discord bots.",
+    "nl": "Discord Bot List is een lijst van discord bots.",
+    "tr": "Discord Bot List bir bot listesidir."
+  },
+  "url": "discordbotlist.com",
+  "version": "1.2.27",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20Bot%20List/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20Bot%20List/assets/thumbnail.png",
+  "color": "#10C0E7",
+  "category": "other",
+  "tags": [
+    "discord",
+    "bot",
+    "discord-bot-list"
+  ]
 }

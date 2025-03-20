@@ -1,24 +1,24 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Deleted 7.12i",
-		"id": "591702135310385157"
-	},
-	"service": "Koya",
-	"description": {
-		"fr": "Un puissant bot Discord multifonctionnel et configurable.",
-		"en": "A powerful multi-function and configurable Discord bot.",
-		"nl": "Een krachtige multifunctionele en configureerbare Discord-bot."
-	},
-	"url": "koya.gg",
-	"version": "1.2.25",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/K/Koya/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Koya/assets/thumbnail.png",
-	"color": "#7289da",
-	"category": "other",
-	"tags": [
-		"bot",
-		"discord"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Deleted 7.12i",
+    "id": "591702135310385157"
+  },
+  "service": "Koya",
+  "description": {
+    "en": "A powerful multi-function and configurable Discord bot.",
+    "fr": "Un puissant bot Discord multifonctionnel et configurable.",
+    "nl": "Een krachtige multifunctionele en configureerbare Discord-bot."
+  },
+  "url": "koya.gg",
+  "version": "1.2.26",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Koya/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Koya/assets/thumbnail.png",
+  "color": "#7289da",
+  "category": "other",
+  "tags": [
+    "bot",
+    "discord"
+  ]
 }

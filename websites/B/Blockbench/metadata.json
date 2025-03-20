@@ -1,27 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "tuhana",
-		"id": "852582281112715284"
-	},
-	"service": "Blockbench",
-	"description": {
-		"en": "Blockbench is a boxy 3D model editor.",
-		"nl": "Blockbench is een boxy 3D modeleditor.",
-		"vi": "Blockbench là công cụ chỉnh sửa mô hình 3D khối lập phương."
-	},
-	"url": [
-		"www.blockbench.net",
-		"web.blockbench.net"
-	],
-	"version": "1.1.18",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/B/Blockbench/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Blockbench/assets/thumbnail.png",
-	"color": "#1E93D9",
-	"category": "other",
-	"tags": [
-		"3d",
-		"modelling"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "tuhana",
+    "id": "852582281112715284"
+  },
+  "service": "Blockbench",
+  "description": {
+    "en": "Blockbench is a boxy 3D model editor.",
+    "nl": "Blockbench is een boxy 3D modeleditor.",
+    "vi": "Blockbench là công cụ chỉnh sửa mô hình 3D khối lập phương."
+  },
+  "url": [
+    "www.blockbench.net",
+    "web.blockbench.net"
+  ],
+  "version": "1.1.19",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Blockbench/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Blockbench/assets/thumbnail.png",
+  "color": "#1E93D9",
+  "category": "other",
+  "tags": [
+    "3d",
+    "modelling"
+  ]
 }

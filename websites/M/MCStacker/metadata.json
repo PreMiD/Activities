@@ -1,28 +1,28 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Bas950",
-		"id": "241278257335500811"
-	},
-	"service": "MCStacker",
-	"description": {
-		"en": "Minecraft command generator.",
-		"nl": "Minecraft command generator."
-	},
-	"url": [
-		"mcstacker.net",
-		"bimbimma.com",
-		"mcstacker.bimbimma.com"
-	],
-	"version": "1.3.22",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/M/MCStacker/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MCStacker/assets/thumbnail.png",
-	"color": "#fe5f10",
-	"category": "games",
-	"tags": [
-		"minecraft",
-		"command",
-		"stacker"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Bas950",
+    "id": "241278257335500811"
+  },
+  "service": "MCStacker",
+  "description": {
+    "en": "Minecraft command generator.",
+    "nl": "Minecraft command generator."
+  },
+  "url": [
+    "mcstacker.net",
+    "bimbimma.com",
+    "mcstacker.bimbimma.com"
+  ],
+  "version": "1.3.23",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MCStacker/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MCStacker/assets/thumbnail.png",
+  "color": "#fe5f10",
+  "category": "games",
+  "tags": [
+    "minecraft",
+    "command",
+    "stacker"
+  ]
 }

@@ -1,27 +1,27 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "The Gamerzs",
-		"id": "730142125181894657"
-	},
-	"service": "Lime Pro Gaming",
-	"altnames": [
-		"LPG"
-	],
-	"description": {
-		"en": "Here at LIME, we have some of the best gaming equipment and accessories."
-	},
-	"url": "limeprogaming.com",
-	"version": "1.0.18",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/L/Lime%20Pro%20Gaming/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Lime%20Pro%20Gaming/assets/thumbnail.png",
-	"color": "#9bda45",
-	"category": "other",
-	"tags": [
-		"gaming",
-		"retail",
-		"drinks",
-		"distributor"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "The Gamerzs",
+    "id": "730142125181894657"
+  },
+  "service": "Lime Pro Gaming",
+  "altnames": [
+    "LPG"
+  ],
+  "description": {
+    "en": "Here at LIME, we have some of the best gaming equipment and accessories."
+  },
+  "url": "limeprogaming.com",
+  "version": "1.0.19",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Lime%20Pro%20Gaming/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Lime%20Pro%20Gaming/assets/thumbnail.png",
+  "color": "#9bda45",
+  "category": "other",
+  "tags": [
+    "gaming",
+    "retail",
+    "drinks",
+    "distributor"
+  ]
 }

@@ -1,26 +1,26 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"id": "741973166364164099",
-		"name": "rai_ny._."
-	},
-	"service": "Sorryfield",
-	"altnames": [
-		"쏘리들"
-	],
-	"description": {
-		"en": "Sorryfield is a website which listing karaoke songs. And you can play rhythm game Java!",
-		"ko": "쏘리들은 노래방 곡 목록 사이트입니다. 그리고 리듬 게임 자바!를 플레이 할 수 있습니다."
-	},
-	"url": "sorry.daldal.so",
-	"version": "1.2.8",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sorryfield/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sorryfield/assets/thumbnail.png",
-	"color": "#1b3058",
-	"category": "games",
-	"tags": [
-		"karaoke",
-		"rhythmgame"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "741973166364164099",
+    "name": "rai_ny._."
+  },
+  "service": "Sorryfield",
+  "altnames": [
+    "쏘리들"
+  ],
+  "description": {
+    "en": "Sorryfield is a website which listing karaoke songs. And you can play rhythm game Java!",
+    "ko": "쏘리들은 노래방 곡 목록 사이트입니다. 그리고 리듬 게임 자바!를 플레이 할 수 있습니다."
+  },
+  "url": "sorry.daldal.so",
+  "version": "1.2.9",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sorryfield/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sorryfield/assets/thumbnail.png",
+  "color": "#1b3058",
+  "category": "games",
+  "tags": [
+    "karaoke",
+    "rhythmgame"
+  ]
 }

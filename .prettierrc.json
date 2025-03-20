@@ -1,9 +1,0 @@
-{
-	"trailingComma": "es5",
-	"useTabs": true,
-	"endOfLine": "lf",
-	"proseWrap": "never",
-	"semi": true,
-	"quoteProps": "as-needed",
-	"arrowParens": "avoid"
-}

@@ -1,25 +1,25 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Eren",
-		"id": "478937019758673931"
-	},
-	"service": "Kabal's",
-	"description": {
-		"en": "Kabal's bot is providing social aspects including member profile, fun stuff and moderation..",
-		"tr": "Kabal's bot Türkiye'de popüler olan bir bot.",
-		"nl": "De bot van Kabal biedt sociale aspecten, waaronder een ledenprofiel, leuke dingen en moderatie."
-	},
-	"url": "bot.emirkabal.com",
-	"version": "1.2.24",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kabal's/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kabal's/assets/thumbnail.png",
-	"color": "#2942BF",
-	"category": "other",
-	"tags": [
-		"discord",
-		"bot",
-		"turkish"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Eren",
+    "id": "478937019758673931"
+  },
+  "service": "Kabal's",
+  "description": {
+    "en": "Kabal's bot is providing social aspects including member profile, fun stuff and moderation..",
+    "nl": "De bot van Kabal biedt sociale aspecten, waaronder een ledenprofiel, leuke dingen en moderatie.",
+    "tr": "Kabal's bot Türkiye'de popüler olan bir bot."
+  },
+  "url": "kabals.app",
+  "version": "1.2.26",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kabal%27s/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kabal%27s/assets/thumbnail.png",
+  "color": "#2942BF",
+  "category": "other",
+  "tags": [
+    "discord",
+    "bot",
+    "turkish"
+  ]
 }

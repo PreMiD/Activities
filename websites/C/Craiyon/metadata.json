@@ -1,24 +1,24 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "theusaf",
-		"id": "193714715631812608"
-	},
-	"service": "Craiyon",
-	"description": {
-		"en": "Craiyon is an AI model that can draw images from any text prompt!"
-	},
-	"url": "www.craiyon.com",
-	"version": "1.2.4",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/C/Craiyon/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Craiyon/assets/thumbnail.png",
-	"color": "#ea580c",
-	"category": "other",
-	"tags": [
-		"ai",
-		"dalle",
-		"image",
-		"generation"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "theusaf",
+    "id": "193714715631812608"
+  },
+  "service": "Craiyon",
+  "description": {
+    "en": "Craiyon is an AI model that can draw images from any text prompt!"
+  },
+  "url": "www.craiyon.com",
+  "version": "1.2.5",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Craiyon/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Craiyon/assets/thumbnail.png",
+  "color": "#ea580c",
+  "category": "other",
+  "tags": [
+    "ai",
+    "dalle",
+    "image",
+    "generation"
+  ]
 }

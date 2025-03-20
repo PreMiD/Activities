@@ -1,35 +1,35 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Striker",
-		"id": "215509157837537280"
-	},
-	"contributors": [
-		{
-			"name": "Encrypted",
-			"id": "564434085708038144"
-		},
-		{
-			"name": "TheSlowly",
-			"id": "505071508851523599"
-		}
-	],
-	"service": "Change",
-	"description": {
-		"en": "Change the world",
-		"de": "Verändere die Welt",
-		"nl": "Verander de wereld",
-		"pt-br": "Mude o mundo",
-		"vi": "Thay đổi thế giới"
-	},
-	"url": "www.change.org",
-	"version": "1.2.25",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/C/Change/assets/logo.jpg",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Change/assets/thumbnail.png",
-	"color": "#FF0000",
-	"category": "other",
-	"tags": [
-		"votes"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Striker",
+    "id": "215509157837537280"
+  },
+  "contributors": [
+    {
+      "name": "Encrypted",
+      "id": "564434085708038144"
+    },
+    {
+      "name": "TheSlowly",
+      "id": "505071508851523599"
+    }
+  ],
+  "service": "Change",
+  "description": {
+    "de": "Verändere die Welt",
+    "en": "Change the world",
+    "nl": "Verander de wereld",
+    "pt-br": "Mude o mundo",
+    "vi": "Thay đổi thế giới"
+  },
+  "url": "www.change.org",
+  "version": "1.2.26",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Change/assets/logo.jpg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Change/assets/thumbnail.png",
+  "color": "#FF0000",
+  "category": "other",
+  "tags": [
+    "votes"
+  ]
 }

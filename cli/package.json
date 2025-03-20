@@ -1,64 +1,55 @@
 {
-	"name": "@pmd/cli",
-	"description": "CLI for creating, modifying & translating Presences.",
-	"version": "1.3.4",
-	"author": "Timeraa <me@timeraa.dev>",
-	"main": "src/index.ts",
-	"license": "MPL-2.0",
-	"type": "module",
-	"contributors": [
-		"Bas950 <me@bas950.com>",
-		"EncryptedDev",
-		"veryCrunchy <me@verycrunchy.dev>"
-	],
-	"scripts": {
-		"dev": "tsc -w",
-		"build": "rimraf bin && tsc"
-	},
-	"files": [
-		"template/*",
-		"bin/*"
-	],
-	"bin": {
-		"pmd": "bin/index.js"
-	},
-	"devDependencies": {
-		"@types/discord-rpc": "^4.0.3",
-		"@types/glob": "^8.0.0",
-		"@types/got": "^9.6.12",
-		"@types/inquirer": "^9.0.1",
-		"@types/node": "^18.7.16",
-		"@types/prompts": "^2.0.14",
-		"@types/semver": "^7.3.12",
-		"@types/ws": "^8.5.10",
-		"dotenv": "^16.3.1",
-		"octokit": "^3.1.2",
-		"rimraf": "^3.0.2",
-		"typescript": "^4.8.3"
-	},
-	"dependencies": {
-		"@apollo/client": "^3.6.9",
-		"chalk": "^5.0.1",
-		"chokidar": "^3.5.3",
-		"commander": "^11.1.0",
-		"copy-webpack-plugin": "^11.0.0",
-		"cross-fetch": "^3.1.5",
-		"discord-rpc": "^4.0.1",
-		"displayastree": "^2.0.0",
-		"globby": "^13.1.2",
-		"graphql": "^16.6.0",
-		"inquirer": "^9.1.1",
-		"jsonschema": "^1.4.1",
-		"language-flag-colors": "^2.1.1",
-		"ora": "^6.1.2",
-		"prompts": "^2.4.2",
-		"semver": "^7.3.7",
-		"source-map-support": "^0.5.21",
-		"ts-loader": "^9.4.1",
-		"webpack": "^5.74.0",
-		"ws": "^8.16.0"
-	},
-	"peerDependencies": {
-		"typescript": "^4.8.3"
-	}
+  "name": "pmd",
+  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "bin": {
+    "pmd": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest --ui --coverage",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0",
+    "@types/adm-zip": "^0.5.7",
+    "@types/discord-rpc": "^4.0.9",
+    "@types/got": "^9.6.12",
+    "@types/json-to-ast": "^2.1.4",
+    "@types/semver": "^7.5.8",
+    "@types/ws": "^8.18.0",
+    "@vitest/coverage-v8": "^3.0.8",
+    "@vitest/ui": "^3.0.8",
+    "adm-zip": "^0.5.16",
+    "cac": "^6.7.14",
+    "chalk": "^5.4.1",
+    "chokidar": "^4.0.3",
+    "discord-rpc": "^4.0.1",
+    "esbuild": "^0.25.0",
+    "form-data": "^4.0.2",
+    "gitdiff-parser": "^0.3.1",
+    "globby": "^14.1.0",
+    "got": "^14.4.6",
+    "inquirer": "^12.4.2",
+    "inquirer-autocomplete-standalone": "^0.8.1",
+    "is-ci": "^4.1.0",
+    "json-to-ast": "^2.1.0",
+    "jsonschema": "^1.5.0",
+    "multimatch": "^7.0.0",
+    "ora": "^8.2.0",
+    "semver": "^7.7.1",
+    "sharp": "^0.33.5",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8",
+    "ws": "^8.18.1"
+  },
+  "overrides": {
+    "whatwg-url": "^14.0.0"
+  }
 }

@@ -1,35 +1,35 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.13",
-	"apiVersion": 1,
-	"author": {
-		"name": "Kyrie",
-		"id": "368399721494216706"
-	},
-	"service": "Google Photos",
-	"description": {
-		"en": "Google Photos is the home for all your photos and videos, automatically organized and easy to share.",
-		"vi": "Google Photos là nơi cho tất cả các bức ảnh và video của bạn, được tự động sắp xếp và dễ dàng chia sẻ"
-	},
-	"url": "photos.google.com",
-	"version": "1.0.15",
-	"logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Photos/assets/logo.png",
-	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Photos/assets/thumbnail.jpg",
-	"color": "#FFFFFF",
-	"category": "socials",
-	"tags": [
-		"google",
-		"photos",
-		"images",
-		"videos",
-		"storage",
-		"share"
-	],
-	"settings": [
-		{
-			"id": "albumname",
-			"title": "Show Album Name",
-			"icon": "fas fa-images",
-			"value": false
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Kyrie",
+    "id": "368399721494216706"
+  },
+  "service": "Google Photos",
+  "description": {
+    "en": "Google Photos is the home for all your photos and videos, automatically organized and easy to share.",
+    "vi": "Google Photos là nơi cho tất cả các bức ảnh và video của bạn, được tự động sắp xếp và dễ dàng chia sẻ"
+  },
+  "url": "photos.google.com",
+  "version": "1.0.16",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Photos/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Photos/assets/thumbnail.jpg",
+  "color": "#FFFFFF",
+  "category": "socials",
+  "tags": [
+    "google",
+    "photos",
+    "images",
+    "videos",
+    "storage",
+    "share"
+  ],
+  "settings": [
+    {
+      "id": "albumname",
+      "title": "Show Album Name",
+      "icon": "fas fa-images",
+      "value": false
+    }
+  ]
 }

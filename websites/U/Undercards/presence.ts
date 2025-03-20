@@ -1,69 +1,74 @@
-/* eslint-disable no-eval */
 const presence = new Presence({
-		clientId: "799885664538853417",
-	}),
-	browsingTimestamp = Math.floor(Date.now() / 1000),
-	URLMap: { [index: string]: string[] } = {
-		SignUp: ['"Registering an account"', '""'],
-		AccountValidation: ['"Activating account"', '""'],
-		SignIn: ['"Signing in"', '""'],
-		Tutorial: ['"Playing tutorial"', '""'],
-		"gameUpdates.jsp:": ['"Reading the patch note"', '""'],
-		Disconnect: ['"Disconnected"', '""'],
-		Profile: [
-			'"Viewing profile"',
-			'getText(".mainContent > h2:nth-child(2)") + "(" + getText(".mainContent > p:nth-child(3) > span:nth-child(1)") + ")"',
-		],
-		History: ['"Viewing history"', '""'],
-		Avatars: ['"Customizing avatar"', '""'],
-		CardSkins: ['"Customizing card skins"', '""'],
-		ProfileSkins: ['"Customizing profile skin"', '""'],
-		FrameSkins: ['"Customizing frame skin"', '""'],
-		Settings: ['"Viewing settings"', '""'],
-		Staff: ['"Viewing staff"', '""'],
-		Quests: ['"Viewing quests"', '""'],
-		Bundle: ['"Viewing bundle"', '""'],
-		CardSkinsShop: ['"Browsing card skins shop"', '""'],
-		CosmeticsShop: ['"Browsing cosmetics shop"', '""'],
-		Artifacts: ['"Browsing artifacts shop"', '""'],
-		Packs: ['"Browsing packs shop"', '""'],
-		Shop: ['"Browsing UCP shop"', '""'],
-		Decks: ['"Building decks"', '""'],
-		Crafting: ['"Crafting cards"', '""'],
-		Hub: ['"Viewing hub"', '""'],
-		Friendship: ['"Viewing friendship"', '""'],
-		GamesList: ['"Viewing games list"', '""'],
-		Play: ['"Finding a game..."'],
-		Game: ['"Playing a game"', '"vs "+ getText("#enemyUsername")'],
-		Spectate: [
-			'"Spectating a game"',
-			'(getText("#yourUsername") || "Loading...") + " vs " + (getText("#enemyUsername") || "Loading...")',
-		],
-	};
+  clientId: '799885664538853417',
+})
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+const URLMap: { [index: string]: ((() => string) | string | null)[] } = {
+  'SignUp': ['Registering an account', null],
+  'AccountValidation': ['Activating account', null],
+  'SignIn': ['Signing in', null],
+  'Tutorial': ['Playing tutorial', null],
+  'gameUpdates.jsp:': ['Reading the patch note', null],
+  'Disconnect': ['Disconnected', null],
+  'Profile': [
+    'Viewing profile',
+    () => `${getText('.mainContent > h2:nth-child(2)')}(${getText('.mainContent > p:nth-child(3) > span:nth-child(1)')})`,
+  ],
+  'History': ['Viewing history', null],
+  'Avatars': ['Customizing avatar', null],
+  'CardSkins': ['Customizing card skins', null],
+  'ProfileSkins': ['Customizing profile skin', null],
+  'FrameSkins': ['Customizing frame skin', null],
+  'Settings': ['Viewing settings', null],
+  'Staff': ['Viewing staff', null],
+  'Quests': ['Viewing quests', null],
+  'Bundle': ['Viewing bundle', null],
+  'CardSkinsShop': ['Browsing card skins shop', null],
+  'CosmeticsShop': ['Browsing cosmetics shop', null],
+  'Artifacts': ['Browsing artifacts shop', null],
+  'Packs': ['Browsing packs shop', null],
+  'Shop': ['Browsing UCP shop', null],
+  'Decks': ['Building decks', null],
+  'Crafting': ['Crafting cards', null],
+  'Hub': ['Viewing hub', null],
+  'Friendship': ['Viewing friendship', null],
+  'GamesList': ['Viewing games list', null],
+  'Play': ['Finding a game...', null],
+  'Game': ['Playing a game', () => `vs${getText('#enemyUsername')}`],
+  'Spectate': [
+    'Spectating a game',
+    () => `${getText('#yourUsername') || 'Loading...'} vs ${getText('#enemyUsername') || 'Loading...'}`,
+  ],
+}
 function getText(selector: string) {
-	return document.querySelector(selector).textContent;
+  return document.querySelector(selector)?.textContent
 }
 
-presence.on("UpdateData", async () => {
-	const presenceData: PresenceData = {
-		largeImageKey:
-			"https://cdn.rcd.gg/PreMiD/websites/U/Undercards/assets/logo.png",
-		startTimestamp: browsingTimestamp,
-	};
-	if (document.location.pathname === "/")
-		presenceData.details = "Viewing homepage";
-	else {
-		const [, path] = document.location.pathname.match(
-			new RegExp("^/([a-zA-Z.]+)")
-		);
-		if (Object.prototype.hasOwnProperty.call(URLMap, path)) {
-			presenceData.details = eval(URLMap[path][0]);
-			presenceData.state = eval(URLMap[path][1]);
-		} else if (path.endsWith(".jsp")) {
-			presenceData.details = "Viewing page";
-			presenceData.state = getText(".mainContent > h2:nth-child(2)");
-		} else presenceData.details = "Browsing...";
-	}
-	if (!presenceData.details) presence.setActivity();
-	else presence.setActivity(presenceData);
-});
+presence.on('UpdateData', async () => {
+  const presenceData: PresenceData = {
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/U/Undercards/assets/logo.png',
+    startTimestamp: browsingTimestamp,
+  }
+  if (document.location.pathname === '/') {
+    presenceData.details = 'Viewing homepage'
+  }
+  else {
+    const [, path] = document.location.pathname.match(
+      /^\/([a-z.]+)/i,
+    ) ?? []
+    if (path && Object.prototype.hasOwnProperty.call(URLMap, path)) {
+      const [details, state] = URLMap[path]!
+      presenceData.details = details instanceof Function ? details() : details
+      presenceData.state = state instanceof Function ? state() : state
+    }
+    else if (path?.endsWith('.jsp')) {
+      presenceData.details = 'Viewing page'
+      presenceData.state = getText('.mainContent > h2:nth-child(2)')
+    }
+    else {
+      presenceData.details = 'Browsing...'
+    }
+  }
+  if (!presenceData.details)
+    presence.setActivity()
+  else presence.setActivity(presenceData)
+})

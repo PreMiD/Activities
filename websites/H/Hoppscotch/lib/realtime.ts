@@ -1,9 +1,10 @@
 export function getRealtimeEndpoint(): string | null {
-	const input = document.querySelector<HTMLInputElement>("input[type=url]");
+  const input = document.querySelector<HTMLInputElement>('input[type=url]')
 
-	if (!input) return null;
+  if (!input)
+    return null
 
-	const url = new URL(input.value);
+  const url = new URL(input.value)
 
-	return `${url.hostname}${url.pathname}`;
+  return `${url.hostname}${url.pathname}`
 }
