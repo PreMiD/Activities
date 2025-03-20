@@ -20,8 +20,8 @@ presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
   const [privacyMode, ShowButton] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
-    presence.getSetting<boolean>('buttons')
-  ]);
+    presence.getSetting<boolean>('buttons'),
+  ])
   const jsonobj = JSON.parse(sessionStorage.getItem('batches_urls')!)
 
   if (pathname === '/') {
