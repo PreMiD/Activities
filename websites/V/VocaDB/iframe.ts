@@ -17,7 +17,7 @@ iframe.on('UpdateData', async () => {
       paused: audio.paused,
     })
   }
-  else if (document.location.pathname.startsWith('https://w.soundcloud.com')) {
+  else if (document.location.hostname.startsWith('w.soundcloud.com')) {
     iframe.send({
       duration: 0,
       currentTime: 0,
