@@ -6,9 +6,9 @@ import { SimpleLRU } from './utilities/lru.js'
  * Keys stand for characters' faces urls start with "blob",
  * and the values are their faces but large-scaled in Data URLs
  *
- * In case of something glitches on re-sampling...
+ * In case of something glitches on re-sampling, or discord cache problem...
  * Switching to other effects for 5 times or taking any animated actions
- * to let the oldest cache is re-generated.
+ * to evict the oldest cache.
  */
 const characterFacesCache = new SimpleLRU<string>(5)
 /**
@@ -88,13 +88,10 @@ async function fetchBadge(): Promise<string | undefined> {
   }
   else if (url) {
     return await SingleTaskExecutor.shared.postIfAbsent(url, async () => {
-      const fullUrl = window
-        .getComputedStyle(badgeEl)
-        .backgroundImage
-        .match(
-          // eslint-disable-next-line no-control-regex
-          /url\(("|')([^\x01\s]+)\1\)/,
-        )?.[2]
+      const fullUrl = window.getComputedStyle(badgeEl).backgroundImage.match(
+        // eslint-disable-next-line no-control-regex
+        /url\(("|')([^\x01\s]+)\1\)/,
+      )?.[2]
       if (fullUrl)
         badgesCache.set(url, fullUrl)
       return fullUrl
@@ -155,7 +152,9 @@ async function fetchWithResizePixelatedImage(
     const g = canvas.getContext('2d')!
     g.imageSmoothingEnabled = false
     g.drawImage(img, 0, 0, img.width, img.height, 0, 0, dw, dh)
-    return new Promise<Blob>(resolve => canvas.toBlob(blob => resolve(blob!), 'image/png'))
+    return new Promise<Blob>(resolve =>
+      canvas.toBlob(blob => resolve(blob!), 'image/png'),
+    )
   })
 }
 
