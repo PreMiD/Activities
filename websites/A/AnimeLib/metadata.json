@@ -14,7 +14,7 @@
     "ru": "Смотрите аниме онлайн на русском"
   },
   "url": "anilib.me",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeLib/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeLib/assets/thumbnail.png",
   "color": "#A020F0",
@@ -41,8 +41,11 @@
     },
     {
       "id": "titleAsPresence",
-      "title": "Отображать название аниме как название Презенса",
+      "title": "Отображать аниме в статусе",
       "icon": "fad fa-user-edit",
+      "if": {
+        "privacy": false
+      },
       "value": false
     }
   ]
