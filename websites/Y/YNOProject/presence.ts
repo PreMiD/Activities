@@ -33,7 +33,7 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Playing,
     startTimestamp: GameState.startedAt,
     largeImageText: gameName,
-    largeImageKey: await fetchCharacterFace().then((url) => url || Logo),
+    largeImageKey: await fetchCharacterFace().then(url => url || Logo),
     smallImageKey: await fetchBadge(),
     details: gameName || 'Choosing a game...',
     state: gameName ? gameLocation || 'Disconnected' : null,
@@ -56,7 +56,8 @@ async function fetchCharacterFace(): Promise<string | undefined> {
   const url = document.querySelector<HTMLLinkElement>('#favicon')?.href
   if (url && characterFacesCache.has(url)) {
     return characterFacesCache.get(url)
-  } else if (url) {
+  }
+  else if (url) {
     return await SingleTaskExecutor.shared.postIfAbsent(url, async () => {
       const blob = await fetchWithResizePixelatedImage(url, 40, 40)
       if (blob) {
@@ -84,13 +85,15 @@ async function fetchBadge(): Promise<string | undefined> {
   const url = badgeEl?.style?.backgroundImage // Gives path as segmented url only
   if (url && badgesCache.has(url)) {
     return badgesCache.get(url)
-  } else if (url) {
+  }
+  else if (url) {
     return await SingleTaskExecutor.shared.postIfAbsent(url, async () => {
       const fullUrl = window.getComputedStyle(badgeEl).backgroundImage.match(
         // eslint-disable-next-line no-control-regex
-        /url\(("|')([^\x01\s]+)\1\)/
+        /url\(("|')([^\x01\s]+)\1\)/,
       )?.[2]
-      if (fullUrl) badgesCache.set(url, fullUrl)
+      if (fullUrl)
+        badgesCache.set(url, fullUrl)
       return fullUrl
     })
   }
@@ -103,7 +106,8 @@ async function fetchBadge(): Promise<string | undefined> {
 async function fetchGameName(): Promise<string | undefined> {
   return document
     .querySelector('title')
-    ?.textContent?.match(/^.+(?= Online -)/)?.[0]
+    ?.textContent
+    ?.match(/^.+(?= Online -)/)?.[0]
 }
 
 /**
@@ -133,7 +137,7 @@ class GameState {
 async function fetchWithResizePixelatedImage(
   href: string,
   dw: number,
-  dh: number
+  dh: number,
 ) {
   const img = document.createElement('img')
   const canvas = document.createElement('canvas')
@@ -148,8 +152,8 @@ async function fetchWithResizePixelatedImage(
     const g = canvas.getContext('2d')!
     g.imageSmoothingEnabled = false
     g.drawImage(img, 0, 0, img.width, img.height, 0, 0, dw, dh)
-    return new Promise<Blob>((resolve) =>
-      canvas.toBlob((blob) => resolve(blob!), 'image/png')
+    return new Promise<Blob>(resolve =>
+      canvas.toBlob(blob => resolve(blob!), 'image/png'),
     )
   })
 }
@@ -170,10 +174,11 @@ class SingleTaskExecutor {
   postIfAbsent<T>(key: string, beginHeavyJob: () => Promise<T>) {
     // Force cast, don't result different types on the same key
     let runningJob = this.map.get(key) as Promise<T>
-    if (runningJob) return runningJob
+    if (runningJob)
+      return runningJob
     this.map.set(
       key,
-      (runningJob = beginHeavyJob().finally(() => this.map.delete(key)))
+      (runningJob = beginHeavyJob().finally(() => this.map.delete(key))),
     )
     return runningJob
   }
