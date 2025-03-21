@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '809748404963770398',
@@ -21,7 +21,6 @@ async function getStrings() {
       viewAccount: 'general.viewAccount',
       viewPage: 'general.viewPage',
     },
-
   )
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -42,6 +41,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<number>('logo'),
     presence.getSetting<boolean>('cover'),
   ])
+  const { pathname, search } = document.location
 
   if (oldLang !== newLang || !strings) {
     oldLang = newLang
@@ -55,13 +55,13 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
 
-  if (document.location.pathname === '/') {
+  if (pathname === '/') {
     presenceData.details = strings.browsingThrough
     presenceData.state = Object.values(document.querySelectorAll('.row-title')).find(isInViewport)?.textContent || 'Home page'
   }
   else if (
-    document.location.pathname.includes('/play')
-    || document.location.pathname.includes('/intl-common/')
+    pathname.includes('/play')
+    || pathname.includes('/intl-common/')
   ) {
     const data = {
       title: (
@@ -77,7 +77,7 @@ presence.on('UpdateData', async () => {
       ),
     }
     const coverImage: string = JSON.parse(
-      document.querySelectorAll('script[type="application/ld+json"]')[0]
+      document.querySelector('script[type="application/ld+json"]')
         ?.textContent || '{}',
     )[0]?.thumbnailUrl?.[0]?.replace(/\d{3}_\d{3}/, '1024_1024')
     const URLItem: string = JSON.parse(
@@ -97,7 +97,7 @@ presence.on('UpdateData', async () => {
     const video = document.querySelector('video')
     const isMovie = URLItem.includes('movie')
     const isVShow = URLItem.includes('variety-show')
-    const possiblyVShow = document.location.pathname.includes('/intl-common/')
+    const possiblyVShow = pathname.includes('/intl-common/')
     const isTrial = document.querySelector(
       '.iqp-player-g.iqp-player .iqp-tip-stream .iqp-txt-vip',
     )?.textContent
@@ -111,7 +111,7 @@ presence.on('UpdateData', async () => {
         /[1-9]\d{0,2}/g,
       ) ?? []
     const contentEp: string[] = possiblyVShow
-      ? data.ep?.match(/([1-9]\d{0,2} ?\([1-9]\d?\))/g) ?? []
+      ? data.ep?.match(/[1-9]\d{0,2} ?\([1-9]\d?\)/g) ?? []
       : data.ep?.match(/[1-9]\d{0,2}/g) ?? []
     const isPreview = lastestEp && contentEp && !isVShow && !possiblyVShow
       ? Number.parseInt(contentEp[0]!, 10) > Number.parseInt(lastestEp[0]!, 10)
@@ -123,7 +123,7 @@ presence.on('UpdateData', async () => {
       if (contentEp?.length) {
         data.ep = `${strings.episode} ${contentEp[0]?.match(/.+?(?=\()/g)?.[0]} ${
           contentEp[0]?.includes('(')
-            ? `- ${contentEp[0]?.match(/(\([1-9]\d?\))/g)?.[0]}`
+            ? `- ${contentEp[0]?.match(/\([1-9]\d?\)/g)?.[0]}`
             : 'Variety show'
         }`
       }
@@ -156,9 +156,9 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = coverImage
 
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-      presenceData.smallImageText = video.paused ? strings.pause : strings.play;
-
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      presenceData.smallImageText = video.paused ? strings.pause : strings.play
+      presenceData.type = ActivityType.Watching;
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
       if (showButtons) {
         presenceData.buttons = [
@@ -188,7 +188,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = data.title
     }
   }
-  else if (document.location.pathname.includes('/search')) {
+  else if (pathname.includes('/search')) {
     const result = document
       .querySelector('div.has-result')
       ?.textContent
@@ -196,7 +196,7 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = `${strings.searchFor} ${
       searchQuery
-        ? decodeURI(new URLSearchParams(document.location.search).get('query')!)
+        ? decodeURI(new URLSearchParams(search).get('query')!)
         : '( Hidden )'
     }`
     presenceData.smallImageKey = Assets.Search
@@ -210,8 +210,8 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'No matching result'
     }
   }
-  else if (document.location.pathname.includes('/personal')) {
-    switch (new URLSearchParams(document.location.search).get('type')) {
+  else if (pathname.includes('/personal')) {
+    switch (new URLSearchParams(search).get('type')) {
       case 'settings':
         presenceData.details = strings.viewingSettings
         break
@@ -246,7 +246,7 @@ presence.on('UpdateData', async () => {
         break
     }
   }
-  else if (document.location.pathname.includes('/vip/')) {
+  else if (pathname.includes('/vip/')) {
     presenceData.details = strings.viewPage
     presenceData.state = 'VIP membership'
   }
