@@ -42,7 +42,7 @@ presence.on('UpdateData', async () => {
       else {
         if (document.querySelector('.stats-djName')?.textContent === 'UpBeat')
           djType = 'AutoDJ - '
-        else djType = 'DJ: '
+        else djType = ''
 
         presenceData.smallImageKey = Assets.Play
 
@@ -56,7 +56,7 @@ presence.on('UpdateData', async () => {
               '%artist%',
               document.querySelector('.stats-artist')?.textContent ?? '',
             )
-          presenceData.state = `${djType}${document.querySelector('.stats-djName')?.textContent}`
+          presenceData.state = `${djType}${document.querySelector('.stats-djName')?.textContent}${djType === 'AutoDJ - ' ? '' : ' is currently live'}`
         }
         else {
           presenceData.details = format1
@@ -92,19 +92,24 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Reading
     }
     else if (document.location.pathname.includes('/Account.Profile')) {
-      presenceData.details = 'Viewing profile of:'
-      presenceData.state = document.querySelector(
-        '.profileName > span',
-      )?.textContent
-      presenceData.smallImageKey = Assets.Reading
+      if (document.location.search.includes('?user=')) {
+        presenceData.details = 'Viewing profile of:'
+        presenceData.state = document.querySelector(
+          '.profileName > span',
+        )?.textContent
+        presenceData.smallImageKey = Assets.Reading
+      }
+      else {
+        presenceData.details = 'Viewing their profile...'
+        presenceData.smallImageKey = Assets.Reading
+      }
     }
     else if (document.location.pathname.includes('/Account.Settings')) {
       presenceData.details = 'Changing their settings...'
       presenceData.smallImageKey = Assets.Writing
     }
     else if (document.location.pathname.includes('/Radio.RecentlyPlayed')) {
-      presenceData.details = 'Viewing the'
-      presenceData.state = 'recently played songs'
+      presenceData.details = 'Viewing the recently played songs'
       presenceData.smallImageKey = Assets.Reading
     }
     else if (document.location.pathname.includes('Radio.SongProfile')) {
@@ -124,30 +129,34 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Reading
     }
     else if (document.location.pathname.includes('/UpBeat.OurAffiliates')) {
-      presenceData.details = 'Viewing the'
-      presenceData.state = 'UpBeat affiliates'
+      presenceData.details = 'Viewing the UpBeat affiliates'
       presenceData.smallImageKey = Assets.Reading
     }
     else if (document.location.pathname.includes('/Community.Members')) {
       let type = document
         .querySelector('#mainContent > div.m-b-md.m-t-sm > ul > .active > a')
         ?.textContent
-        ?.toLowerCase()
+        ?.toLowerCase() || document.location.search.split('=')[1]
+      if (type === 'staff')
+        type = 'Staff'
+      if (type === 'veterans')
+        type = 'Veterans'
       if (type === 'vip\'s')
         type = 'VIP'
-      presenceData.details = 'Viewing the'
-      presenceData.state = `${type} members`
-      presenceData.smallImageKey = Assets.Reading
+      presenceData.details = `Viewing the ${type === 'Veterans' ? type : `${type} members`}`
+      presenceData.smallImageKey = Assets.Viewing
     }
     else if (document.querySelector('.bigTitle')) {
-      let type = document.querySelector('.bigTitle')?.textContent?.toLowerCase()
-      if (type === 'faq\'s')
+      let type = document.querySelector('.bigTitle')?.textContent
+      let imageKey = null
+      if (type?.toLowerCase() === 'faq\'s')
         type = 'FAQ\'s'
-      if (type === 'all media')
+      if (type?.toLowerCase() === 'all content ')
         type = 'Articles List'
-      presenceData.details = 'Viewing the'
-      presenceData.state = type
-      presenceData.smallImageKey = Assets.Reading
+      if (type?.toLowerCase() === 'shop')
+        imageKey = 'view'
+      presenceData.details = `Viewing the ${type}`
+      presenceData.smallImageKey = imageKey === 'view' ? Assets.Viewing : Assets.Reading
     }
 
     if (document.querySelector('#modalrequestFormModal')) {
@@ -168,19 +177,30 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'News Reporter'
       presenceData.smallImageKey = Assets.Writing
     }
+    else if (document.querySelector('#modaladministratorAppButton')) {
+      presenceData.details = 'Applying for:'
+      presenceData.state = 'Administrator'
+      presenceData.smallImageKey = Assets.Writing
+    }
     else if (document.querySelector('#accountBio')) {
       presenceData.details = 'Editing their bio'
       presenceData.smallImageKey = Assets.Writing
     }
     else if (document.querySelector('#modalcontactUsButton')) {
-      presenceData.details = 'Sending in a'
-      presenceData.state = 'general enquiry'
+      presenceData.details = 'Sending in a general enquiry'
       presenceData.smallImageKey = Assets.Writing
     }
     else if (document.querySelector('#modalpartnerEnquiryButton')) {
-      presenceData.details = 'Sending in a'
-      presenceData.state = 'partner enquiry'
+      presenceData.details = 'Sending in a partner enquiry'
       presenceData.smallImageKey = Assets.Writing
+    }
+    else if (document.location.pathname.includes('/content.new')) {
+      presenceData.details = 'Writing an article...'
+      presenceData.smallImageKey = Assets.Writing
+    }
+    else if (document.location.pathname.includes('/station.dashboard')) {
+      presenceData.details = 'Presenting a show...'
+      presenceData.smallImageKey = Assets.PremiereLive
     }
   }
   else {
