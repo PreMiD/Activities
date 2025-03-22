@@ -91,9 +91,10 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Viewing home page'
       break
     }
+    case pathname.includes('/watch') && !!video:
     case pathname.includes('/videos') && !!video: {
       const options = {
-        title: document.querySelector('a[aria-label] > span > [class*="x1n2onr6"]')?.textContent ?? 'unknown title',
+        title: document.querySelector('.x78zum5.xdt5ytf.xtp0wl1')?.querySelector('.xzueoph.x1k70j0n')?.textContent ?? document.querySelector('a[aria-label] > span > [class*="x1n2onr6"]')?.textContent ?? 'unknown title',
         uploader: document.querySelector('h1')?.textContent?.trim() ?? 'unknown uploader',
         watchingVid: strings.watchingVid,
         onprofile: strings.onProfileOf,
@@ -193,12 +194,12 @@ presence.on('UpdateData', async () => {
           presenceData.details = privacyMode
             ? `Watching a ${strings.watchingVid}`
             : 'Watching a video on:'
-          presenceData.state = `${
-            document.querySelector('span.x193iq5w > strong > span')
-              ?.textContent
-              ?? document.querySelector(
-                'span.x193iq5w > h2 > span > a > strong > span',
-              )?.textContent
+          presenceData.state = `${document.querySelector('.xzueoph.x1k70j0n')?.textContent
+          ?? document.querySelector('span.x193iq5w > strong > span')
+            ?.textContent
+            ?? document.querySelector(
+              'span.x193iq5w > h2 > span > a > strong > span',
+            )?.textContent
           }'s profile`
 
           presenceData.smallImageKey = video.paused
