@@ -10,8 +10,8 @@ const strings = presence.getStrings({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets { // Other default assets can be found at index.d.ts
-  Logo = 'https://i.imgur.com/In9W0HN.png',
-  LogoPop = 'https://i.imgur.com/JG8joMy.png',
+  Logo = 'https://i.imgur.com/cSmc3k0.png',
+  LogoPop = 'https://i.imgur.com/WysR2og.png',
 }
 
 presence.on('UpdateData', async () => {
