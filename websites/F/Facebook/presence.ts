@@ -75,7 +75,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<string>('vidDetail'),
     presence.getSetting<string>('vidState'),
   ])
-  const video = document.querySelector('video')
+  const video = document.querySelector<HTMLVideoElement>('video')
   const liveCheck = document
     .querySelector('[class="x78zum5 xxk0z11 x10l6tqk x1i5ckhj xoyzfg9"]')
     ?.querySelector('span')
@@ -93,6 +93,8 @@ presence.on('UpdateData', async () => {
     }
     case pathname.includes('/watch') && !!video:
     case pathname.includes('/videos') && !!video: {
+      presenceData.type = ActivityType.Watching
+
       const options = {
         title: document.querySelector('.x78zum5.xdt5ytf.xtp0wl1')?.querySelector('.xzueoph.x1k70j0n')?.textContent ?? document.querySelector('a[aria-label] > span > [class*="x1n2onr6"]')?.textContent ?? document.querySelector('[class="xzueoph x1k70j0n"]')?.textContent ?? 'unknown title',
         creator: document.querySelector('.xjp7ctv > span')?.querySelector('a')?.textContent ?? document.querySelector('h1')?.textContent?.trim() ?? 'unknown creator',
@@ -100,51 +102,71 @@ presence.on('UpdateData', async () => {
         onprofile: strings.onProfileOf,
       }
       presenceData.name = 'Facebook Watch'
-      if (liveCheck) {
-        presenceData.smallImageKey = video.paused
-          ? Assets.Pause
-          : Assets.Live
-        presenceData.smallImageText = video.paused
-          ? strings.paused
-          : strings.live
 
-        presenceData.details = privacyMode
-          ? options.watching
-          : vidDetail.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile)
-        presenceData.state = !privacyMode && vidState !== '{0}' ? vidState.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile) : ''
-        presenceData.buttons = [
-          {
-            label: strings.buttonWatchStream,
-            url: href,
-          },
-        ]
-      }
-      else {
-        presenceData.details = privacyMode
-          ? options.watching
-          : vidDetail.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile)
-        presenceData.state = !privacyMode && vidState !== '{0}' ? vidState.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile) : ''
+      presenceData.details = privacyMode
+        ? options.watching
+        : vidDetail.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile)
 
-        presenceData.smallImageKey = video.paused
-          ? Assets.Pause
-          : Assets.Play
-        presenceData.smallImageText = video.paused
-          ? strings.paused
-          : strings.play
+      presenceData.state = !privacyMode && vidState !== '{0}' ? vidState.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile) : ''
+      switch (true) {
+        case !!liveCheck: {
+          presenceData.smallImageKey = video.paused
+            ? Assets.Pause
+            : Assets.Live
+          presenceData.smallImageText = video.paused
+            ? strings.paused
+            : strings.live
 
-        if (video.paused) {
-          dontShowTmp = true
+          presenceData.buttons = [
+            {
+              label: strings.buttonWatchStream,
+              url: href,
+            },
+          ]
+          break
         }
-        else {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
-        }
+        case pathname.includes('/videos/'): {
+          const allVideos = document.querySelectorAll('video')
+          const currVideo = allVideos[allVideos.length - 1] ?? video
+          presenceData.smallImageKey = currVideo.paused
+            ? Assets.Pause
+            : Assets.Play
+          presenceData.smallImageText = currVideo.paused
+            ? strings.paused
+            : strings.play
 
-        presenceData.buttons = [
-          {
-            label: strings.buttonWatchVideo,
-            url: href,
-          },
-        ]
+          if (currVideo.paused) {
+            dontShowTmp = true
+          }
+          else {
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(currVideo)
+          }
+
+          break
+        }
+        default: {
+          presenceData.smallImageKey = video.paused
+            ? Assets.Pause
+            : Assets.Play
+          presenceData.smallImageText = video.paused
+            ? strings.paused
+            : strings.play
+
+          if (video.paused) {
+            dontShowTmp = true
+          }
+          else {
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+          }
+
+          presenceData.buttons = [
+            {
+              label: strings.buttonWatchVideo,
+              url: href,
+            },
+          ]
+          break
+        }
       }
       break
     }
