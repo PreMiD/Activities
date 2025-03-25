@@ -36,7 +36,7 @@ setInterval(() => {
   PlayQueueStore = JSON.parse(localStorage.getItem('PlayQueueStore') || '{}')
 }, 1000)
 
-enum ActivityAssets { // Other default assets can be found at index.d.ts
+enum ActivityAssets {
   Logo = 'https://i.imgur.com/myu7ChX.png',
 }
 
