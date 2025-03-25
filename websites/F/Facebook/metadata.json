@@ -94,8 +94,8 @@
       },
       "title": "Video Details row1",
       "icon": "fas fa-comment-alt-edit",
-      "value": "%wachtingvid%: %title%",
-      "placeholder": "Use %wachtingvid%, %title%, %onprofile%, %uploader%"
+      "value": "%watching%: %title%",
+      "placeholder": "Use %watching%, %title%, %onprofile%, %creator%"
     },
     {
       "id": "vidState",
@@ -104,7 +104,7 @@
       },
       "title": "Video Details row2",
       "icon": "fas fa-comment-alt-edit",
-      "value": "%onprofile%: %uploader%",
+      "value": "%onprofile%: %creator%",
       "placeholder": "same like row1 or use {0} to delete the row completely"
     }
   ]

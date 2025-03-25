@@ -79,7 +79,7 @@ presence.on('UpdateData', async () => {
   const liveCheck = document
     .querySelector('[class="x78zum5 xxk0z11 x10l6tqk x1i5ckhj xoyzfg9"]')
     ?.querySelector('span')
-    ?.textContent
+    ?.textContent ?? document.querySelector<HTMLElement>('.x1b0d499.x1d2xfc3')?.style
 
   let dontShowTmp = false
 
@@ -94,39 +94,61 @@ presence.on('UpdateData', async () => {
     case pathname.includes('/watch') && !!video:
     case pathname.includes('/videos') && !!video: {
       const options = {
-        title: document.querySelector('.x78zum5.xdt5ytf.xtp0wl1')?.querySelector('.xzueoph.x1k70j0n')?.textContent ?? document.querySelector('a[aria-label] > span > [class*="x1n2onr6"]')?.textContent ?? 'unknown title',
-        uploader: document.querySelector('h1')?.textContent?.trim() ?? 'unknown uploader',
-        watchingVid: strings.watchingVid,
+        title: document.querySelector('.x78zum5.xdt5ytf.xtp0wl1')?.querySelector('.xzueoph.x1k70j0n')?.textContent ?? document.querySelector('a[aria-label] > span > [class*="x1n2onr6"]')?.textContent ?? document.querySelector('[class="xzueoph x1k70j0n"]')?.textContent ?? 'unknown title',
+        creator: document.querySelector('.xjp7ctv > span')?.querySelector('a')?.textContent ?? document.querySelector('h1')?.textContent?.trim() ?? 'unknown creator',
+        watching: !liveCheck ? strings.watchingVid : strings.watchingLive,
         onprofile: strings.onProfileOf,
       }
       presenceData.name = 'Facebook Watch'
-      presenceData.details = privacyMode
-        ? `Watching a ${strings.watchingVid}`
-        : vidDetail.replace('%title%', options.title).replace('%uploader%', options.uploader).replace('%wachtingvid%', options.watchingVid).replace('%onprofile%', options.onprofile)
-      presenceData.state = !privacyMode && vidState !== '{0}' ? vidState.replace('%title%', options.title).replace('%uploader%', options.uploader).replace('%wachtingvid%', options.watchingVid).replace('%onprofile%', options.onprofile) : ''
+      if (liveCheck) {
+        presenceData.smallImageKey = video.paused
+          ? Assets.Pause
+          : Assets.Live
+        presenceData.smallImageText = video.paused
+          ? strings.paused
+          : strings.live
 
-      presenceData.smallImageKey = video.paused
-        ? Assets.Pause
-        : Assets.Play
-      presenceData.smallImageText = video.paused
-        ? strings.paused
-        : strings.play
-
-      if (video.paused) {
-        dontShowTmp = true
+        presenceData.details = privacyMode
+          ? options.watching
+          : vidDetail.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile)
+        presenceData.state = !privacyMode && vidState !== '{0}' ? vidState.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile) : ''
+        presenceData.buttons = [
+          {
+            label: strings.buttonWatchStream,
+            url: href,
+          },
+        ]
       }
       else {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
-      }
+        presenceData.details = privacyMode
+          ? options.watching
+          : vidDetail.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile)
+        presenceData.state = !privacyMode && vidState !== '{0}' ? vidState.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile) : ''
 
-      presenceData.buttons = [
-        {
-          label: strings.buttonWatchVideo,
-          url: href,
-        },
-      ]
+        presenceData.smallImageKey = video.paused
+          ? Assets.Pause
+          : Assets.Play
+        presenceData.smallImageText = video.paused
+          ? strings.paused
+          : strings.play
+
+        if (video.paused) {
+          dontShowTmp = true
+        }
+        else {
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+        }
+
+        presenceData.buttons = [
+          {
+            label: strings.buttonWatchVideo,
+            url: href,
+          },
+        ]
+      }
       break
     }
+
     case pathname.includes('/stories/'): {
       const storyUser = document
         .querySelector('[class=" x15w6uyq"]')
@@ -174,22 +196,7 @@ presence.on('UpdateData', async () => {
             : 'In a group call'
           break
         }
-        case !!video && !!liveCheck: {
-          const parseInfo = JSON.parse(
-            document.querySelector('[data-content-len="40325"]')?.innerHTML ?? '',
-          )
-          presenceData.smallImageKey = Assets.Live
-          presenceData.details = `Watch ${strings.watchingLive}`
-          presenceData.state = `${strings.ofUser} ${
-            parseInfo
-              ? parseInfo.require[0][3][0].__bbox.require[3][3][1].__bbox.result.data.node.section_renderer.section.section_components.edges[1].node.feed_unit.attachments[0].media.owner.name?.trim()
-              : document
-                .querySelector('[class="x1lliihq x6ikm8r x10wlt62 x1n2onr6"]')
-                ?.textContent
-                ?.trim()
-          }`
-          break
-        }
+
         case video && pathname.includes('/videos/'): {
           presenceData.details = privacyMode
             ? `Watching a ${strings.watchingVid}`
