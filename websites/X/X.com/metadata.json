@@ -20,7 +20,7 @@
     "twitter.com",
     "x.com"
   ],
-  "version": "1.1.10",
+  "version": "1.1.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/thumbnail.png",
   "color": "#000000",
@@ -39,7 +39,11 @@
       "id": "privacy",
       "title": "Privacy Mode",
       "icon": "fad fa-user-secret",
-      "value": false
+      "value": 0,
+      "values": [
+        "Displays all details",
+        "Only displays browsing"
+      ]
     },
     {
       "id": "time",
