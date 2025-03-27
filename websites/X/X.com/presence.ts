@@ -141,14 +141,8 @@ presence.on('UpdateData', async () => {
     info = strings.settings
 
   if (pathname.match('/search')) {
-    if (privacy === 1) {
-      title = strings.searchSomething
-      info = null
-    }
-    else {
-      title = strings.search
-      info = document.querySelector('input')?.textContent || null
-    }
+    title = strings.search
+    info = document.querySelector('input')?.textContent || null
   }
 
   const objHeader = document.querySelector(
@@ -184,8 +178,6 @@ presence.on('UpdateData', async () => {
   if (pathname.match('/messages') && objHeader) {
     title = strings.viewDms
     info = stripText(objHeader, 'Object Header')
-    if (privacy === 1)
-      info = null
   }
 
   const etcHeader = Array.from(
@@ -209,7 +201,7 @@ presence.on('UpdateData', async () => {
       ? 'https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/0.png'
       : 'https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/1.png',
   }
-  if (privacy === 2) {
+  if (privacy === 1) {
     delete presenceData.state
     presenceData.details = strings.browsing
     presence.setActivity(presenceData)
