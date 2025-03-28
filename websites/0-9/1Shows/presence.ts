@@ -69,10 +69,10 @@ presence.on('UpdateData', async () => {
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ')
 
-          presenceData.name = `${formattedMovieName}`
+          presenceData.name = `Watching ${formattedMovieName}`
           presenceData.details = '1Shows'
-		  presenceData.type = ActivityType.Watching
-		  
+          presenceData.type = ActivityType.Watching
+
           const rating = document.querySelector('.radial-progress span.text-white')?.textContent?.trim() || 'N/A'
 
           const runtime = document.querySelector('#Movie\\ Runtime time p')?.textContent?.match(/\d+/)?.[0] || 'N/A'
@@ -130,12 +130,12 @@ presence.on('UpdateData', async () => {
           const seasonNo = showData.last_season_watched
           const episodeNo = showData.last_episode_watched
 
-          presenceData.name = ` ${formattedShowName} S${seasonNo}E${episodeNo}`
+          presenceData.name = `Watching ${formattedShowName} S${seasonNo}E${episodeNo}`
           presenceData.details = '1Shows'
-		  presenceData.type = ActivityType.Watching
-		  
+          presenceData.type = ActivityType.Watching
+
           const rating = document.querySelector('.radial-progress span.text-white')?.textContent?.trim() || 'N/A'
-			
+
           let releaseDate = document.querySelector('#TV\\ Shows\\ Air\\ Date time')?.textContent?.trim() || 'N/A'
 
           if (releaseDate !== 'N/A') {
