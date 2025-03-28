@@ -5,9 +5,16 @@
     "name": "Kyrie",
     "id": "368399721494216706"
   },
+  "contributors": [
+    {
+      "name": "Atom Skully",
+      "id": "671037171611729920"
+    }
+  ],
   "service": "Google Photos",
   "description": {
     "en": "Google Photos is the home for all your photos and videos, automatically organized and easy to share.",
+    "fr": "Google Photos vous permet de centraliser toutes vos photos et vidéos, de les classer automatiquement et de les partager facilement.",
     "vi": "Google Photos là nơi cho tất cả các bức ảnh và video của bạn, được tự động sắp xếp và dễ dàng chia sẻ"
   },
   "url": "photos.google.com",
@@ -25,6 +32,10 @@
     "share"
   ],
   "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
     {
       "id": "albumname",
       "title": "Show Album Name",

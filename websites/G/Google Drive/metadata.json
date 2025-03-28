@@ -9,11 +9,16 @@
     {
       "name": "Jake.#1111",
       "id": "480407581085532180"
+    },
+    {
+      "name": "Atom Skully",
+      "id": "671037171611729920"
     }
   ],
   "service": "Google Drive",
   "description": {
     "en": "Google Drive is a file storage and synchronization service developed by Google. Launched on April 24, 2012, Google Drive allows users to store files on their servers, synchronize files across devices, and share files.",
+    "fr": "Google Drive est un service de stockage et de synchronisation de fichiers développé par Google. Lancé le 24 avril 2012, Google Drive permet aux utilisateurs de stocker des fichiers sur leurs serveurs, de synchroniser des fichiers sur différents appareils et de partager des fichiers.",
     "ga": "Is seirbhís stórála agus sioncronaithe é Google Drive a d'fhorbair Google. Le seoladh ar 24 Aibreán, 2012, ceadaíonn Google Drive d'úsáideoirí comhaid a stóráil ar a bhfreastalaithe, comhaid a shioncrónú ar fud na bhfeistí, agus comhaid a roinnt.",
     "nl": "Google Drive is een service voor bestandsopslag en synchronisatie die is gemaakt en wordt beheerd door Google. Met Google Drive kunnen documenten in de cloud worden opgeslagen, bestanden worden gedeeld en documenten samen met anderen worden bewerkt.",
     "vi": "Google Drive là dịch vụ lưu trữ và đồng bộ hóa tập tin được tạo bởi Google. Nó cho phép người dùng có thể lưu trữ tập tin trên đám mây, chia sẻ tập tin, và chỉnh sửa tài liệu, văn bản, bảng tính, và bài thuyết trình với cộng tác viên.",
@@ -22,7 +27,7 @@
   },
   "url": "drive.google.com",
   "regExp": "drive[.]google([.][a-z]+)+[/]",
-  "version": "1.6.13",
+  "version": "1.6.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Drive/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Drive/assets/thumbnail.png",
   "color": "#3aa154",
@@ -32,6 +37,10 @@
     "google"
   ],
   "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
     {
       "id": "privacy",
       "title": "Privacy Mode",
