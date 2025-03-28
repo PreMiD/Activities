@@ -20,7 +20,7 @@
     "live.nicovideo.jp",
     "seiga.nicovideo.jp"
   ],
-  "version": "1.3.30",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/niconico/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/niconico/assets/thumbnail.jpg",
   "color": "#272727",
@@ -29,5 +29,51 @@
     "video",
     "live",
     "manga"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "dc-cdn[.]ads[.]nicovideo[.]jp",
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "ads",
+      "title": "Show Ads Status",
+      "icon": "fas fa-rectangle-ad",
+      "value": false,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "pause",
+      "title": "Show Pause Status",
+      "icon": "fas fa-pause",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "playback",
+      "title": "Show Playback Position",
+      "icon": "fas fa-play",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
   ]
 }

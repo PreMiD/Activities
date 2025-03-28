@@ -10,13 +10,13 @@
     "en": "BeatLeader is Beat Saber's leaderboard with open code and community. Start posting your scores to compete with others on more than 100,000 different maps."
   },
   "url": [
-    "beatleader.xyz",
-    "www.beatleader.xyz",
-    "replay.beatleader.xyz",
-    "royale.beatleader.xyz"
+    "beatleader.com",
+    "www.beatleader.com",
+    "replay.beatleader.com",
+    "royale.beatleader.com"
   ],
-  "regExp": "beatleader\\.xyz|beatleader\\.net",
-  "version": "1.11.7",
+  "regExp": "beatleader\\.(?:xyz|com|net)",
+  "version": "1.12.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BeatLeader/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BeatLeader/assets/thumbnail.png",
   "color": "#c81c9f",
@@ -30,7 +30,7 @@
     "vr"
   ],
   "iframe": true,
-  "iFrameRegExp": "https:\\/\\/replay\\.beatleader\\.xyz",
+  "iFrameRegExp": "https:\\/\\/replay\\.beatleader\\.(?:xyz|com|net)",
   "settings": [
     {
       "id": "logo",

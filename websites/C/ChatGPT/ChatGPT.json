@@ -35,6 +35,10 @@
     "description": "Displayed when the user is engaging in a conversation with the AI. {0} will be replaced with the AI's name. e.g., 'Talking with ChatGPT about something'",
     "message": "Talking with {0} about something"
   },
+  "chatgpt.talkingWithAIInSharedChat": {
+    "description": "Displayed when the user is engaging in a shared chat with the AI. {0} will be replaced with the AI's name. e.g., 'Talking with ChatGPT about something in a shared chat'",
+    "message": "Talking with {0} about something in a shared chat"
+  },
   "chatgpt.talkingWithAIInTemporaryChat": {
     "description": "Displayed when the user is engaging in a temporary chat with the AI. {0} will be replaced with the AI's name. e.g., 'Talking with ChatGPT about something in temporary chat'",
     "message": "Talking with {0} about something in temporary chat"
