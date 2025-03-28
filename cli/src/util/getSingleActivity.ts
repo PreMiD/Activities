@@ -1,6 +1,6 @@
 import type { ActivityMetadata } from '../classes/ActivityCompiler.js'
 import type { ActivityMetadataAndFolder } from './getActivities.js'
-import autocomplete from 'inquirer-autocomplete-standalone'
+import { select } from '@inquirer/prompts'
 import { exit } from '../util/log.js'
 import { mapActivityToChoice } from '../util/mapActivityToChoice.js'
 import { getActivities } from './getActivities.js'
@@ -11,16 +11,9 @@ export async function getSingleActivity(searchMessage: string, service?: string)
   let folder: string
   let versionized: boolean
   if (!service) {
-    ({ metadata, folder, versionized } = await autocomplete<ActivityMetadataAndFolder>({
+    ({ metadata, folder, versionized } = await select({
       message: searchMessage,
-      source: async (input) => {
-        if (!input) {
-          return activities.map(activity => mapActivityToChoice(activity))
-        }
-        return activities
-          .filter(({ metadata }) => metadata.service.toLowerCase().includes(input.toLowerCase()))
-          .map(activity => mapActivityToChoice(activity))
-      },
+      choices: activities.map(activity => mapActivityToChoice(activity)),
     }))
   }
   else {
@@ -31,11 +24,9 @@ export async function getSingleActivity(searchMessage: string, service?: string)
     }
 
     if (sameServiceActivities.length > 1) {
-      ({ metadata, folder, versionized } = await autocomplete<ActivityMetadataAndFolder>({
+      ({ metadata, folder, versionized } = await select({
         message: searchMessage,
-        source: async () => {
-          return sameServiceActivities.map(activity => mapActivityToChoice(activity))
-        },
+        choices: sameServiceActivities.map(activity => mapActivityToChoice(activity)),
       }))
     }
     else {
