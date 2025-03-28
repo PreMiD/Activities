@@ -31,6 +31,5 @@
     "geolocation",
     "streetview"
   ],
-  "iFrameRegExp": "([a-z0-9-]+[.])*openguessr[.]com[/]",
   "readLogs": false
 }
