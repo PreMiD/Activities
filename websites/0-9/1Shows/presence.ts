@@ -69,7 +69,7 @@ presence.on('UpdateData', async () => {
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ')
 
-          presenceData.name = `Watching ${formattedMovieName}`
+          presenceData.name = `${formattedMovieName}`
           presenceData.details = '1Shows'
           presenceData.type = ActivityType.Watching
 
@@ -130,7 +130,7 @@ presence.on('UpdateData', async () => {
           const seasonNo = showData.last_season_watched
           const episodeNo = showData.last_episode_watched
 
-          presenceData.name = `Watching ${formattedShowName} S${seasonNo}E${episodeNo}`
+          presenceData.name = ` ${formattedShowName} S${seasonNo}E${episodeNo}`
           presenceData.details = '1Shows'
           presenceData.type = ActivityType.Watching
 
