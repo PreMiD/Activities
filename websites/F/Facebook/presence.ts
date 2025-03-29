@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '631803867708915732',
@@ -14,26 +14,26 @@ async function getStrings() {
   return presence.getStrings(
     {
       browse: 'general.browsing',
-      buttonViewProfile: 'general.buttonViewProfile',
       buttonViewEpisode: 'general.buttonViewEpisode',
+      buttonViewProfile: 'general.buttonViewProfile',
+      buttonWatchStream: 'general.buttonWatchStream',
+      buttonWatchVideo: 'general.buttonWatchVideo',
+      live: 'general.live',
+      ofUser: 'general.ofUser',
+      onProfileOf: 'facebook.onProfileOf',
       paused: 'general.paused',
       play: 'general.playing',
       search: 'general.searchSomething',
       searchFor: 'general.searchFor',
+      viewAProfile: 'general.viewAProfile',
       viewCategory: 'general.viewCategory',
       viewHome: 'general.viewHome',
       viewMovie: 'general.viewMovie',
-      viewShow: 'general.viewShow',
-      live: 'general.live',
-      buttonWatchStream: 'general.buttonWatchStream',
-      buttonWatchVideo: 'general.buttonWatchVideo',
-      viewAProfile: 'general.viewAProfile',
       viewProfileOf: 'general.viewProfileOf',
+      viewShow: 'general.viewShow',
       watchingLive: 'general.watchingLive',
       watchingVid: 'general.watchingVid',
-      ofUser: 'general.ofUser',
     },
-    'en',
   )
 }
 
@@ -63,6 +63,8 @@ presence.on('UpdateData', async () => {
     showSeachQuery,
     messagerUsername,
     showButtons,
+    vidDetail,
+    vidState,
   ] = await Promise.all([
     presence.getSetting<boolean>('privacyMode'),
     presence.getSetting<boolean>('cover'),
@@ -70,12 +72,14 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('searchQuery'),
     presence.getSetting<boolean>('messagerUsername'),
     presence.getSetting<boolean>('buttons'),
+    presence.getSetting<string>('vidDetail'),
+    presence.getSetting<string>('vidState'),
   ])
-  const video = document.querySelector('video')
+  const video = document.querySelector<HTMLVideoElement>('video')
   const liveCheck = document
     .querySelector('[class="x78zum5 xxk0z11 x10l6tqk x1i5ckhj xoyzfg9"]')
     ?.querySelector('span')
-    ?.textContent
+    ?.textContent ?? document.querySelector<HTMLElement>('.x1b0d499.x1d2xfc3')?.style
 
   let dontShowTmp = false
 
@@ -87,6 +91,86 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Viewing home page'
       break
     }
+    case pathname.includes('/watch') && !!video:
+    case pathname.includes('/videos') && !!video: {
+      presenceData.type = ActivityType.Watching
+
+      const options = {
+        title: document.querySelector('.x78zum5.xdt5ytf.xtp0wl1')?.querySelector('.xzueoph.x1k70j0n')?.textContent ?? document.querySelector('a[aria-label] > span > [class*="x1n2onr6"]')?.textContent ?? document.querySelector('[class="xzueoph x1k70j0n"]')?.textContent ?? 'unknown title',
+        creator: document.querySelector('.xjp7ctv > span')?.querySelector('a')?.textContent ?? document.querySelector('h1')?.textContent?.trim() ?? 'unknown creator',
+        watching: !liveCheck ? strings.watchingVid : strings.watchingLive,
+        onprofile: strings.onProfileOf,
+      }
+      presenceData.name = 'Facebook Watch'
+
+      presenceData.details = privacyMode
+        ? options.watching
+        : vidDetail.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile)
+
+      presenceData.state = !privacyMode && vidState !== '{0}' ? vidState.replace('%title%', options.title).replace('%creator%', options.creator).replace('%watching%', options.watching).replace('%onprofile%', options.onprofile) : ''
+      switch (true) {
+        case !!liveCheck: {
+          presenceData.smallImageKey = video.paused
+            ? Assets.Pause
+            : Assets.Live
+          presenceData.smallImageText = video.paused
+            ? strings.paused
+            : strings.live
+
+          presenceData.buttons = [
+            {
+              label: strings.buttonWatchStream,
+              url: href,
+            },
+          ]
+          break
+        }
+        case pathname.includes('/videos/'): {
+          const allVideos = document.querySelectorAll('video')
+          const currVideo = allVideos[allVideos.length - 1] ?? video
+          presenceData.smallImageKey = currVideo.paused
+            ? Assets.Pause
+            : Assets.Play
+          presenceData.smallImageText = currVideo.paused
+            ? strings.paused
+            : strings.play
+
+          if (currVideo.paused) {
+            dontShowTmp = true
+          }
+          else {
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(currVideo)
+          }
+
+          break
+        }
+        default: {
+          presenceData.smallImageKey = video.paused
+            ? Assets.Pause
+            : Assets.Play
+          presenceData.smallImageText = video.paused
+            ? strings.paused
+            : strings.play
+
+          if (video.paused) {
+            dontShowTmp = true
+          }
+          else {
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+          }
+
+          presenceData.buttons = [
+            {
+              label: strings.buttonWatchVideo,
+              url: href,
+            },
+          ]
+          break
+        }
+      }
+      break
+    }
+
     case pathname.includes('/stories/'): {
       const storyUser = document
         .querySelector('[class=" x15w6uyq"]')
@@ -100,6 +184,7 @@ presence.on('UpdateData', async () => {
       break
     }
     case pathname.includes('/messages'): {
+      presenceData.name = 'Facebook Messenger'
       presenceData.largeImageKey = ActivityAssets.MessengerLogo
       switch (true) {
         case pathname.includes('/t/'): {
@@ -109,14 +194,14 @@ presence.on('UpdateData', async () => {
             ?.textContent
           if (document.querySelector('[data-text="true"]')?.textContent) {
             presenceData.details = privacyMode
-              ? 'Writing to someone'
-              : 'Writing to:'
+              ? 'Writing a message to someone'
+              : messagerUsername ? 'Writing a message to:' : 'Writing a message to someone'
             presenceData.state = messagerUsername ? username : '(Hidden)'
           }
           else {
             presenceData.details = privacyMode
               ? 'Reading messages'
-              : 'Reading messages from:'
+              : messagerUsername ? 'Reading messages from:' : 'Reading messages'
             presenceData.state = messagerUsername ? username : '(Hidden)'
           }
           break
@@ -133,32 +218,17 @@ presence.on('UpdateData', async () => {
             : 'In a group call'
           break
         }
-        case !!video && !!liveCheck: {
-          const parseInfo = JSON.parse(
-            document.querySelector('[data-content-len="40325"]')?.innerHTML ?? '',
-          )
-          presenceData.smallImageKey = Assets.Live
-          presenceData.details = `Watch - ${strings.watchingLive}`
-          presenceData.state = `${strings.ofUser} ${
-            parseInfo
-              ? parseInfo.require[0][3][0].__bbox.require[3][3][1].__bbox.result.data.node.section_renderer.section.section_components.edges[1].node.feed_unit.attachments[0].media.owner.name?.trim()
-              : document
-                .querySelector('[class="x1lliihq x6ikm8r x10wlt62 x1n2onr6"]')
-                ?.textContent
-                ?.trim()
-          }`
-          break
-        }
+
         case video && pathname.includes('/videos/'): {
           presenceData.details = privacyMode
             ? `Watching a ${strings.watchingVid}`
             : 'Watching a video on:'
-          presenceData.state = `${
-            document.querySelector('span.x193iq5w > strong > span')
-              ?.textContent
-              ?? document.querySelector(
-                'span.x193iq5w > h2 > span > a > strong > span',
-              )?.textContent
+          presenceData.state = `${document.querySelector('.xzueoph.x1k70j0n')?.textContent
+          ?? document.querySelector('span.x193iq5w > strong > span')
+            ?.textContent
+            ?? document.querySelector(
+              'span.x193iq5w > h2 > span > a > strong > span',
+            )?.textContent
           }'s profile`
 
           presenceData.smallImageKey = video.paused
@@ -172,7 +242,7 @@ presence.on('UpdateData', async () => {
             dontShowTmp = true
           }
           else {
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
           }
 
           presenceData.buttons = [
@@ -214,7 +284,7 @@ presence.on('UpdateData', async () => {
         case !!hrefReplaced.match(/watch\?v=\d{15}/g)?.[0]: {
           delete presenceData.startTimestamp
           playingVid = document.querySelector<HTMLVideoElement>('video')
-          presenceData.details = `Watch - ${strings.watchingVid} ${
+          presenceData.details = `Watch ${strings.watchingVid} ${
             document.querySelector('[class="xzueoph x1k70j0n"]')?.textContent
           }`
           presenceData.smallImageKey = playingVid?.paused
@@ -228,7 +298,7 @@ presence.on('UpdateData', async () => {
               ?.textContent ?? 'Unknown'
           }`
           if (playingVid && !playingVid.paused) {
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(playingVid)
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(playingVid)
           }
           presenceData.buttons = [
             {
@@ -244,6 +314,7 @@ presence.on('UpdateData', async () => {
           break
         }
         case hrefReplaced === 'https://www.facebook.com/watch': {
+          presenceData.name = 'Facebook Watch'
           switch (true) {
             case !!document
               .querySelector('[aria-label*="ause"]')
@@ -275,7 +346,7 @@ presence.on('UpdateData', async () => {
               playingVidClose = cached.element.closest(
                 'div[class="x78zum5 xdt5ytf"]',
               )
-              presenceData.details = `Watch - ${strings.watchingVid} ${
+              presenceData.details = `${strings.watchingVid}: ${
                 playingVidClose?.querySelector('[class="x14vqqas"]')
                   ?.textContent
               }`
@@ -287,7 +358,7 @@ presence.on('UpdateData', async () => {
                 ?.querySelector('a[aria-label*=" "]')
                 ?.getAttribute('aria-label')}`
               if (!cached.element.paused) {
-                [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(cached.element)
+                [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(cached.element)
               }
               presenceData.buttons = [
                 {
@@ -318,10 +389,8 @@ presence.on('UpdateData', async () => {
               playingVidClose = playingVid.closest(
                 'div[class="x78zum5 xdt5ytf"]',
               )
-
-              presenceData.details = `Watch - ${strings.watchingVid}: ${
-                playingVidClose?.querySelector('[class="x14vqqas"]')
-                  ?.textContent
+              presenceData.details = `${strings.watchingVid}: ${playingVidClose?.querySelector('[class="x14vqqas"]')
+                ?.textContent
               }`
               presenceData.smallImageKey = playingVid.paused
                 ? Assets.Pause
@@ -333,18 +402,18 @@ presence.on('UpdateData', async () => {
               break
             }
             default: {
-              presenceData.details = `Watch - ${strings.browse}`
+              presenceData.details = `Watch ${strings.browse}`
             }
           }
 
           break
         }
         case hrefReplaced === 'https://www.facebook.com/watch/saved': {
-          presenceData.details = 'Watch - Viewing saved videos'
+          presenceData.details = 'Viewing saved videos'
           break
         }
         case hrefReplaced === 'https://www.facebook.com/watch/shows': {
-          presenceData.details = 'Watch - Browsing shows'
+          presenceData.details = 'Browsing shows'
           break
         }
         case hrefReplaced === 'https://www.facebook.com/watch/live': {
@@ -352,7 +421,7 @@ presence.on('UpdateData', async () => {
             '[data-bootloader-hash="UhexK6g"]',
           )?.nextElementSibling?.nextElementSibling?.nextElementSibling?.nextElementSibling?.innerHTML
           presenceData.smallImageKey = Assets.Live
-          presenceData.details = `Watch - ${strings.watchingLive}`
+          presenceData.details = strings.watchingLive
           presenceData.state = `${strings.ofUser} ${
             document
               .querySelector(
@@ -389,8 +458,8 @@ presence.on('UpdateData', async () => {
               '[style=\'background-color: var(--accent);\']',
             )?.parentElement?.textContent
             const profileUsername = document.querySelector(
-              '[class="xy1j3rs xurb0ha x1n2onr6"]',
-            )?.parentElement?.textContent
+              'h1',
+            )?.textContent
             if (profileUsername) {
               if (privacyMode)
                 presenceData.details = strings.viewAProfile
@@ -406,6 +475,7 @@ presence.on('UpdateData', async () => {
       break
     }
     case pathname.includes('/reel'): {
+      presenceData.name = 'Facebook Reels'
       presenceData.details = 'Watching a reel'
       presenceData.largeImageKey = ActivityAssets.ReelLogo
       presenceData.state = `From ${document
@@ -421,13 +491,14 @@ presence.on('UpdateData', async () => {
       break
     }
     case pathname.includes('/marketplace'): {
+      presenceData.name = 'Facebook Marketplace'
       presenceData.largeImageKey = ActivityAssets.MarketplaceLogo
 
       switch (true) {
         case pathname.includes('/search/'): {
           presenceData.smallImageKey = Assets.Search
 
-          presenceData.details = `Marketplace - ${lowercaseIt(
+          presenceData.details = `${lowercaseIt(
             strings.searchFor,
           )}:`
           presenceData.state = showSeachQuery
@@ -437,8 +508,8 @@ presence.on('UpdateData', async () => {
         }
         case pathname.includes('/item/'): {
           presenceData.details = privacyMode
-            ? 'Marketplace - Viewing item'
-            : 'Marketplace - Viewing item:'
+            ? 'Viewing an item'
+            : 'Viewing item:'
           presenceData.state = document
             .querySelector('[class="x1s85apg x4fpnxs"]')
             ?.previousElementSibling
@@ -452,27 +523,28 @@ presence.on('UpdateData', async () => {
           break
         }
         default: {
-          presenceData.details = `Marketplace - ${strings.browse}`
+          presenceData.details = `${strings.browse}`
         }
       }
       break
     }
     case pathname.includes('/groups/'): {
+      presenceData.name = 'Facebook Groups'
       switch (pathname.split('/')[2]) {
         case 'discover':
           presenceData.details = privacyMode
-            ? 'Browsing groups'
-            : 'Groups - Discover'
+            ? strings.browse
+            : 'Discover'
           break
         case 'feed':
           presenceData.details = privacyMode
-            ? 'Browsing groups'
-            : 'Groups - Feed'
+            ? strings.browse
+            : 'Feed'
           break
         case 'notifications':
           presenceData.details = privacyMode
-            ? 'Browsing groups'
-            : 'Groups - Notifications'
+            ? strings.browse
+            : 'Notifications'
           break
         default: {
           const groupName = document.querySelector(
@@ -484,14 +556,14 @@ presence.on('UpdateData', async () => {
             presenceData.state = groupName
           }
           else {
-            presenceData.details = 'Browsing groups'
+            presenceData.details = strings.browse
           }
         }
       }
       break
     }
     case pathname.includes('/friends'): {
-      presenceData.details = 'Friends'
+      presenceData.name = 'Facebook Friends'
       switch (true) {
         case pathname.includes('/friends/requests'): {
           if (
@@ -500,46 +572,43 @@ presence.on('UpdateData', async () => {
             )
           ) {
             presenceData.details = privacyMode
-              ? 'Friends'
-              : 'Friends - Sent requests'
+              ? strings.browse
+              : 'Sent requests'
           }
           else {
-            presenceData.state = privacyMode ? 'Friends' : 'Friends - Requests'
+            presenceData.state = privacyMode ? strings.browse : 'Requests'
           }
           break
         }
         case pathname === '/friends/suggestions': {
           presenceData.details = presenceData.state = privacyMode
-            ? 'Friends'
-            : 'Friends - Requests'
+            ? strings.browse
+            : 'Requests'
           break
         }
         case pathname.includes('/friends/suggestions/'): {
-          presenceData.details = 'Friends - Suggestions'
+          presenceData.details = 'Suggestions'
           presenceData.state = `${strings.viewProfileOf} ${document
-            .querySelector('head > title')
-            ?.innerHTML
-            .replace(/(\(.*\))/g, '')
-            .replace('| Facebook', '')
-            .trim()}`
+            .querySelector('h1')
+            ?.textContent}`
           break
         }
         case pathname.includes('/friends/list'): {
           presenceData.details = presenceData.state = privacyMode
-            ? 'Friends'
-            : 'Friends - All Friends'
+            ? strings.browse
+            : 'All Friends'
           break
         }
         case pathname.includes('/friends/birthdays'): {
           presenceData.details = presenceData.state = privacyMode
-            ? 'Friends'
-            : 'Friends - Birthdays'
+            ? strings.browse
+            : 'Birthdays'
           break
         }
         case pathname.includes('/friends/friendlist'): {
           presenceData.details = presenceData.state = privacyMode
-            ? 'Friends'
-            : 'Friends - Custom lists'
+            ? strings.browse
+            : 'Custom lists'
           break
         }
       }
@@ -547,10 +616,11 @@ presence.on('UpdateData', async () => {
       break
     }
     case pathname.includes('/events'): {
+      presenceData.name = 'Facebook Events'
       if (/events\/\d/.test(pathname)) {
         presenceData.details = privacyMode
-          ? 'Events - Viewing an event'
-          : 'Events - Viewing event:'
+          ? 'Viewing an event'
+          : 'Viewing event:'
         presenceData.state = document.querySelector(
           'span > span.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.pby63qed',
         )?.textContent
@@ -567,14 +637,14 @@ presence.on('UpdateData', async () => {
       }
       else {
         presenceData.details = privacyMode
-          ? 'Events - Home '
-          : `Events - ${strings.browse}`
+          ? 'Home'
+          : strings.browse
       }
       break
     }
     case pathname.includes('/gaming/'): {
       presenceData.largeImageKey = ActivityAssets.GamingLogo
-      presenceData.details = 'Gaming'
+      presenceData.name = 'Facebook Gaming'
       switch (true) {
         case /gaming\/play\/\d/.test(pathname): {
           if (!privacyMode) {
@@ -593,13 +663,13 @@ presence.on('UpdateData', async () => {
             ]
           }
           else {
-            presenceData.details = 'Gaming - Playing'
+            presenceData.details = 'Playing'
           }
 
           break
         }
         case pathname.includes('gaming/play'): {
-          presenceData.details = 'Gaming - Playing'
+          presenceData.details = 'Playing'
           break
         }
       }
@@ -611,7 +681,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = privacyMode ? strings.search : strings.searchFor
       presenceData.state = showSeachQuery
         ? new URLSearchParams(location.search).get('q')
-        : '(Hidded)'
+        : '(Hidden)'
       break
     }
     // if post is open
@@ -644,11 +714,8 @@ presence.on('UpdateData', async () => {
         '[style=\'background-color: var(--accent);\']',
       )?.parentElement?.textContent
       const profileUsername = document
-        .querySelector('head > title')
-        ?.innerHTML
-        .replace(/(\(.*\))/g, '')
-        .replace('| Facebook', '')
-        .trim()
+        .querySelector('h1')
+        ?.textContent
 
       presenceData.largeImageKey = privacyMode || !showCover
         ? ActivityAssets.Logo
@@ -682,216 +749,196 @@ presence.on('UpdateData', async () => {
   }
   const pages: Record<string, PresenceData> = {
     '/events/calendar/': {
-      details: privacyMode ? `Events - ${strings.browse}` : 'Events - Calendar',
+      name: 'Facebook Events',
+      details: privacyMode ? strings.browse : 'Calendar',
     },
     '/events/going/': {
-      details: privacyMode
-        ? `Events - ${strings.browse}`
-        : 'Events - Confirmed',
+      name: 'Facebook Events',
+      details: privacyMode ? strings.browse : 'Confirmed',
     },
     '/events/invites/': {
-      details: privacyMode ? `Events - ${strings.browse}` : 'Events - Invires',
+      name: 'Facebook Events',
+      details: privacyMode ? strings.browse : 'Invites',
     },
     '/events/interested/': {
-      details: privacyMode
-        ? `Events - ${strings.browse}`
-        : 'Events - Interested',
+      name: 'Facebook Events',
+      details: privacyMode ? strings.browse : 'Interested',
     },
     '/events/birthdays/': {
-      details: privacyMode
-        ? `Events - ${strings.browse}`
-        : 'Events - Birthdays',
+      name: 'Facebook Events',
+      details: privacyMode ? strings.browse : 'Birthdays',
     },
     '/events/notifications/': {
-      details: privacyMode
-        ? `Events - ${strings.browse}`
-        : 'Events - Notifcations',
+      name: 'Facebook Events',
+      details: privacyMode ? strings.browse : 'Notifications',
     },
     '/events/create/': {
-      details: privacyMode
-        ? `Events - ${strings.browse}`
-        : 'Events - Creating an event',
+      name: 'Facebook Events',
+      details: privacyMode ? strings.browse : 'Creating an event',
     },
     '/events/search/': {
-      details: privacyMode
-        ? `Events - ${strings.browse}`
-        : `Events - ${strings.search}`,
+      name: 'Facebook Events',
+      details: privacyMode ? strings.browse : strings.search,
     },
     '/pages/': {
-      details: privacyMode
-        ? `Pages - ${strings.browse}`
-        : `Pages - ${lowercaseIt(strings.browse)}`,
+      name: 'Facebook Pages',
+      details: strings.browse,
     },
     '/oculus/': {
-      details: privacyMode
-        ? 'Ocoulus - Browsing oculus'
-        : `Oculus - ${lowercaseIt(strings.browse)}`,
+      name: 'Facebook Oculus',
+      details: strings.browse,
     },
     '/gaming/instantgames': {
-      details: privacyMode
-        ? `Gaming - ${strings.browse}`
-        : 'Gaming - Instant games',
+      name: 'Facebook Games',
+      details: privacyMode ? strings.browse : 'Instant Games',
     },
     '/salesgroups/': {
-      details: `SaleGroups - ${strings.browse}`,
+      name: 'Facebook Sales Groups',
+      details: strings.browse,
     },
     '/jobs/': {
-      details: `Jobs - ${strings.browse}`,
+      name: 'Facebook ADs',
+      details: strings.browse,
     },
     '/ads/': {
-      details: `Ads - ${strings.browse}`,
+      name: 'Facebook ADs',
+      details: strings.browse,
     },
     '/weather/': {
-      details: privacyMode
-        ? `Weather - ${strings.browse}`
-        : 'Weather - Viewing today',
+      name: 'Facebook Weather',
+      details: privacyMode ? strings.browse : 'Viewing today',
     },
     '/saved/': {
-      details: `Saved - ${strings.browse}`,
+      name: 'Facebook Saved',
+      details: strings.browse,
     },
     '/offers/': {
-      details: `Offers - ${strings.browse}`,
+      name: 'Facebook Offers',
+      details: strings.browse,
     },
     '/recommendations/': {
-      details: `Recommendations - ${strings.browse}`,
+      name: 'Facebook Recommendations',
+      details: strings.browse,
     },
     '/bookmarks': {
-      details: `Bookmarks - ${strings.browse}`,
+      name: 'Facebook Bookmarks',
+      details: strings.browse,
     },
     '/news': {
-      details: `News - ${strings.browse}`,
+      name: 'Facebook News',
+      details: strings.browse,
     },
     '/gaming/feed': {
-      details: privacyMode
-        ? `Gaming - ${strings.browse}`
-        : 'Gaming - Browsing the feed',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : 'Browsing the feed',
     },
     '/gaming/following': {
-      details: privacyMode
-        ? `Gaming - ${strings.browse}`
-        : 'Gaming - Viewing following list',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : 'Viewing their following list',
     },
     '/gaming/browse': {
-      details: `Gaming - ${strings.browse}`,
+      name: 'Facebook Gaming',
+      details: strings.browse,
     },
     '/gaming/browse/live': {
-      details: privacyMode
-        ? `Gaming videos - ${strings.browse}`
-        : 'Gaming - Browsing livestreams',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : `Livestreams ${strings.browse}`,
     },
     '/gaming/browse/streamers': {
-      details: privacyMode
-        ? `Gaming videos - ${strings.browse}`
-        : 'Gaming - Browsing streamers',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : `Streamers ${strings.browse}`,
     },
     '/gaming/recent': {
-      details: privacyMode
-        ? `Gaming - ${strings.browse}`
-        : 'Gaming - Browsing livestreams',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : `Recent livestreams ${strings.browse}`,
     },
     '/gaming/recent/activity': {
-      details: privacyMode
-        ? `Gaming - ${strings.browse}`
-        : 'Gaming - Browsing in recent livestreams',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : `Recent activity ${strings.browse}`,
     },
     '/gaming/recent/steamers': {
-      details: privacyMode
-        ? `Gaming - ${strings.browse}`
-        : 'Gaming - Browsing in recent streamers',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : `Recent streamers ${strings.browse}`,
     },
     '/gaming/recent/history': {
-      details: privacyMode
-        ? `Gaming - ${strings.browse}`
-        : 'Gaming - Browsing in recent history',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : `Recent history ${strings.browse}`,
     },
     '/games/recent': {
-      details: privacyMode
-        ? `Gaming - ${strings.browse}`
-        : 'Gaming - Browsing in recent games',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : `Recent games ${strings.browse}`,
     },
     '/gaming/tournaments/hosted': {
-      details: privacyMode
-        ? `Gaming tournaments - ${strings.browse}`
-        : 'Gaming tournaments - Hosted',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : `Hosted tournaments ${strings.browse}`,
     },
     '/gaming/tournaments/registered': {
-      details: privacyMode
-        ? `Gaming tournaments - ${strings.browse}`
-        : 'Gaming tournaments - Registered',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : `Registered tournaments ${strings.browse}`,
     },
     '/gaming/tournaments/completed': {
-      details: privacyMode
-        ? `Gaming tournaments - ${strings.browse}`
-        : 'Gaming tournaments - Completed',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : `Completed tournaments ${strings.browse}`,
     },
     '/gaming/play/registered': {
-      details: privacyMode
-        ? `Gaming - ${strings.browse}`
-        : 'Gaming - Registered',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : `Registered play ${strings.browse}`,
     },
     '/gaming/tournaments': {
-      details: `Gaming tournaments - ${strings.browse}`,
+      name: 'Facebook Gaming',
+      details: `Tournaments ${strings.browse}`,
     },
     '/gaming/play/completed': {
-      details: privacyMode
-        ? `Gaming - ${strings.browse}`
-        : 'Gaming - Completed',
+      name: 'Facebook Gaming',
+      details: privacyMode ? strings.browse : `Completed play ${strings.browse}`,
     },
     '/marketplace/you': {
-      details: privacyMode
-        ? `Marketplace - ${strings.browse}`
-        : 'Marketplace - Viewing your recent activity',
+      name: 'Facebook Marketplace',
+      details: privacyMode ? strings.browse : 'Viewing recent activity',
     },
     '/marketplace/groups': {
-      details: privacyMode
-        ? `Marketplace - ${strings.browse}`
-        : 'Marketplace - Viewing groups',
+      name: 'Facebook Marketplace',
+      details: privacyMode ? strings.browse : 'Viewing groups',
     },
     '/marketplace/stores': {
-      details: privacyMode
-        ? `Marketplace - ${strings.browse}`
-        : 'Marketplace - Viewing stores',
+      name: 'Facebook Marketplace',
+      details: privacyMode ? strings.browse : 'Viewing stores',
     },
     '/marketplace/you/buying': {
-      details: privacyMode
-        ? `Marketplace - ${strings.browse}`
-        : 'Marketplace - Viewing buying',
+      name: 'Facebook Marketplace',
+      details: privacyMode ? strings.browse : 'Viewing buying',
     },
     '/marketplace/you/selling': {
-      details: privacyMode
-        ? `Marketplace - ${strings.browse}`
-        : 'Marketplace - Viewing selling',
+      name: 'Facebook Marketplace',
+      details: privacyMode ? strings.browse : 'Viewing selling',
     },
     '/marketplace/you/saved': {
-      details: privacyMode
-        ? `Marketplace - ${strings.browse}`
-        : 'Marketplace - Viewing saved',
+      name: 'Facebook Marketplace',
+      details: privacyMode ? strings.browse : 'Viewing saved items',
     },
     '/marketplace/you/dashboard': {
-      details: privacyMode
-        ? `Marketplace - ${strings.browse}`
-        : 'Marketplace - Viewing the dashboard',
+      name: 'Facebook Marketplace',
+      details: privacyMode ? strings.browse : 'Viewing the dashboard',
     },
     '/marketplace/notifications': {
-      details: privacyMode
-        ? `Marketplace - ${strings.browse}`
-        : 'Marketplace - Viewing notifications',
+      name: 'Facebook Marketplace',
+      details: privacyMode ? strings.browse : 'Viewing notifications',
     },
     '/marketplace/you/seller_announcement_center': {
-      details: privacyMode
-        ? `Marketplace - ${strings.browse}`
-        : 'Marketplace - Viewing seller announcement center',
+      name: 'Facebook Marketplace',
+      details: privacyMode ? strings.browse : 'Viewing the seller announcement center',
     },
     '/marketplace/you/insights': {
-      details: privacyMode
-        ? `Marketplace - ${strings.browse}`
-        : 'Marketplace - Viewing seller insights',
+      name: 'Facebook Marketplace',
+      details: privacyMode ? strings.browse : 'Viewing seller insights',
     },
     '/settings': {
-      details: `Settings - ${strings.browse}`,
+      name: 'Facebook Settings',
+      details: strings.browse,
     },
     '/places': {
-      details: `Places - ${strings.browse}`,
+      name: 'Facebook Places',
+      details: strings.browse,
     },
   }
   for (const [path, data] of Object.entries(pages)) {
@@ -909,7 +956,9 @@ presence.on('UpdateData', async () => {
 
   if (privacyMode && presenceData.state)
     delete presenceData.state
-  if (presenceData.details)
+  if (presenceData.endTimestamp && presenceData.type !== ActivityType.Watching)
+    presenceData.type = ActivityType.Watching
+  if (presenceData.details || presenceData.name)
     presence.setActivity(presenceData)
   else presence.setActivity()
 })
