@@ -162,18 +162,8 @@ export async function updateAssets() {
     core.info('Committing and pushing changes')
     execSync('git add .')
     execSync('git commit -m "chore: update assets"')
-
-    //* Fetch latest changes and attempt to push
-    try {
-      core.info('Fetching latest changes...')
-      execSync('git fetch')
-      execSync('git push --force-with-lease')
-    }
-    catch {
-      core.warning('Failed to push with --force-with-lease, attempting to rebase and retry...')
-      execSync('git pull --rebase')
-      execSync('git push --force-with-lease')
-    }
+    execSync('git pull --rebase')
+    execSync('git push')
 
     await octokit.rest.repos.createCommitStatus({
       ...context.repo,

@@ -116,7 +116,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = video.paused ? 'Paused' : 'Watching'
 
-    if (!video.paused && Number.isNaN(video.duration)) {
+    if (!video.paused && !Number.isNaN(video.duration)) {
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
         video.currentTime,
         video.duration,

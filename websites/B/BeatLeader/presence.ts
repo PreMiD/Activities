@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 import { contexts, leaderboardImages, logoArr, replayIcon } from './assets.js'
 
 const presence = new Presence({
@@ -17,7 +17,7 @@ function simplifyKey(key: string): string {
   ) {
     result = result.replace('-PinkPlay_Controllable', '')
   }
-  if (result.match(/(Horizontal|Vertical|Inverted|Inverse)/)) {
+  if (result.match(/Horizontal|Vertical|Inverted|Inverse/)) {
     let previous
     do {
       previous = result
@@ -136,11 +136,11 @@ presence.on('UpdateData', async () => {
       ? 'Paused'
       : 'Playing'
     if (document.querySelector('div.btn.pause')) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-        presence.timestampFromFormat(
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+        timestampFromFormat(
           document.querySelector('#songProgress')?.textContent ?? '',
         ),
-        presence.timestampFromFormat(
+        timestampFromFormat(
           document.querySelector('#songDuration')?.textContent ?? '',
         ),
       )
@@ -169,11 +169,11 @@ presence.on('UpdateData', async () => {
       ? 'Paused'
       : 'Playing'
     if (document.querySelector('div.btn.pause')) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-        presence.timestampFromFormat(
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+        timestampFromFormat(
           document.querySelector('#songProgress')?.textContent ?? '',
         ),
-        presence.timestampFromFormat(
+        timestampFromFormat(
           document.querySelector('#songDuration')?.textContent ?? '',
         ),
       )
@@ -259,7 +259,7 @@ presence.on('UpdateData', async () => {
             ?.style
             .backgroundImage
             .match(
-              /(https:\/\/.+\.((png)|(jpg)|(jpeg)|(webp)))/g,
+              /https:\/\/.+\.(?:png|jpg|jpeg|webp)/g,
             )
             ?.toString()
         }
@@ -364,9 +364,9 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = replay.playing ? Assets.Play : Assets.Pause
       presenceData.smallImageText = replay.playing ? 'Playing' : 'Paused'
       if (replay.playing) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-          presence.timestampFromFormat(replay.currentTime),
-          presence.timestampFromFormat(replay.duration),
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+          timestampFromFormat(replay.currentTime),
+          timestampFromFormat(replay.duration),
         )
       }
       presenceData.buttons = [
