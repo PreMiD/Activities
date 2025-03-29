@@ -9,13 +9,14 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 let strings: { pause: string, play: string } | null = null
 let oldLang: string | null = null
 
-async function getStrings(lang: string): Promise<{ pause: string, play: string }> {
-  const translations = {
-    en: { pause: 'Pause', play: 'Play' },
-    vi: { pause: 'Tạm dừng', play: 'Phát' },
-  } as const
+async function getStrings() {
+  return presence.getStrings(
+    {
+      pause: 'general.paused',
+      play: 'general.playing',
+    },
 
-  return translations[lang as keyof typeof translations] ?? translations.en
+  )
 }
 
 enum ActivityAssets {
