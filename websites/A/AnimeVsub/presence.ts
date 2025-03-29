@@ -38,9 +38,9 @@ async function updatePresence() {
     ])
 
     if (oldLang !== newLang || !strings) {
-      oldLang = newLang
-      strings = await getStrings(newLang)
-    }
+    oldLang = newLang
+    strings = await getStrings()
+  }
 
     const presenceData: PresenceData = {
       type: ActivityType.Watching,
