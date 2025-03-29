@@ -6,7 +6,7 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-let strings: { pause: string, play: string } | null = null
+let strings: Awaited<ReturnType<typeof getStrings>>
 let oldLang: string | null = null
 
 async function getStrings() {
