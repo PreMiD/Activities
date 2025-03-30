@@ -7,11 +7,11 @@
   },
   "service": "Chompu",
   "description": {
-    "en": "Chompu is Discord app equipped with a music streaming system that supports multiple platforms, including Joox, TikTok, BiliBili, BiliBiliTV, VKMusic, Facebook Watch, TIDALMusic, AmazonMusic, Deezer, Nico, AppleMusic, Spotify, Soundcloud, Clyp, PornHub, and many more!",
+    "en": "Chompu is a Discord app equipped with a music streaming system that supports multiple platforms, including Joox, TikTok, BiliBili, BiliBiliTV, VKMusic, Facebook Watch, TIDALMusic, AmazonMusic, Deezer, Nico, AppleMusic, Spotify, SoundCloud, Clyp, PornHub, and many more!",
     "th": "Chompu คือ แอปดิสคอร์ดที่มาพร้อมด้วยระบบสตรีมเล่นเพลงที่รองรับสตรีมเล่นเพลงหลายแพลตฟอร์ม Joox, TikTok, BiliBili, BiliBiliTV, VKMusic, Facebook Watch, TIDALMusic, AmazonMusic, Deezer, Nico, AppleMusic, Spotify, Soundcloud, Clyp, PornHub และอื่นๆอีกมากมาย!"
   },
   "url": "chompubot.work",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Chompu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Chompu/assets/thumbnail.png",
   "color": "#ffbcff",
