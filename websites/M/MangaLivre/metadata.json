@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "1220554515149750273",
+    "name": "kyomu_densen"
+  },
+  "service": "MangaLivre",
+  "description": {
+    "en": "Website with manga in pt-br",
+    "pt": "Website com mangás em pt-br"
+  },
+  "url": "mangalivre.tv",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/JEt3cEP.png",
+  "thumbnail": "https://mangalivre.tv/wp-content/uploads/2024/12/mlivre.png",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "mangás",
+    "webtoons",
+    "anime"
+  ]
+}
