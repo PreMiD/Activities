@@ -132,7 +132,7 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.details = strings.browsingXboxCloudGamingGames
       if (document.location.href.includes('gallery/'))
-        presenceData.state = strings.category.replace('{0}', document.title.split('|')[0])
+        presenceData.state = strings.category.replace('{0}', document.title.split('|')[0]!)
     }
   }
   else if (document.location.href.includes('/community')) {
@@ -147,7 +147,7 @@ presence.on('UpdateData', async () => {
         // My Xbox
         presenceData.details = strings.viewingTheirProfile
         if (document.location.href.includes('gamertag=')) {
-          presenceData.details = strings.viewingProfile.replace('{0}', document.title.split('|')[0])
+          presenceData.details = strings.viewingProfile.replace('{0}', document.title.split('|')[0]!)
         }
 
         break
