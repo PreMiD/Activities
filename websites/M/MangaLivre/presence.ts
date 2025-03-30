@@ -8,7 +8,7 @@ enum ActivityAssets {
 }
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
   }
 
@@ -20,18 +20,15 @@ presence.on('UpdateData', async () => {
     if (pathname === '/') {
       presenceData.details = 'em: mangalivre.tv'
       presenceData.state = 'Escolhendo o que ler na página inicial'
-      presenceData.smallImageKey = 'https://i.imgur.com/JEt3cEP.png'
-      presenceData.largeImageKey = 'https://i.imgur.com/JEt3cEP.png'
     }
 
     else if (pathParts[0] === 'manga' && pathParts[2]?.startsWith('capitulo-')) {
       const mangaName = pathParts[1]?.replace(/-/g, ' ') || 'Desconhecido'
       const chapterNumber = pathParts[2]?.replace('capitulo-', '') || '0'
-
+const mangaCover = document.querySelector<HTMLImageElement>('.manga-thumb > div > a > img')?.src 
       presenceData.details = `Lendo: ${mangaName}`
       presenceData.state = `Capítulo: ${chapterNumber}`
-      presenceData.largeImageKey = 'https://i.imgur.com/JEt3cEP.png'
-      presenceData.smallImageKey = 'https://i.imgur.com/JEt3cEP.png'
+      presenceData.largeImageKey = mangaCover ?? ActivityAssets.Logo
       presenceData.buttons = [
         {
           label: `Capítulo ${chapterNumber}`,
@@ -45,25 +42,17 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = 'Visualizando mangá'
       presenceData.state = mangaName
-      presenceData.largeImageKey = 'https://i.imgur.com/JEt3cEP.png'
-      presenceData.smallImageKey = 'https://i.imgur.com/JEt3cEP.png'
     }
     // Outras páginas
     else {
       presenceData.details = 'Navegando no Mangá Livre'
       presenceData.state = 'Explorando conteúdo'
-      presenceData.largeImageKey = 'https://i.imgur.com/JEt3cEP.png'
-      presenceData.smallImageKey = 'https://i.imgur.com/JEt3cEP.png'
     }
 
-    if (presenceData.details) {
-      presence.setActivity(presenceData)
-    }
-    else {
-      presence.setActivity()
-    }
+    if (presenceData.details) presence.setActivity(presenceData)
+  else presence.setActivity()
   }
   catch (error) {
-    console.error('Erro no Presence:', error)
+    presence.error('Erro no Presence:', error)
   }
 })

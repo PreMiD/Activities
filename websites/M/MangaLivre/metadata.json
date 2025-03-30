@@ -8,13 +8,13 @@
   "service": "MangaLivre",
   "description": {
     "en": "Website with manga in pt-br",
-    "pt": "Website com mangás em pt-br"
+    "pt": "Manga Livre Leia online e organize suas leituras aqui. Leia antes em português (PT-BR) os mangás e webtoons mais lidas de ação, romance, fantasia, isekai e outros!"
   },
   "url": "mangalivre.tv",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/JEt3cEP.png",
+  "logo": "https://i.imgur.com/8DAVgZT.png",
   "thumbnail": "https://mangalivre.tv/wp-content/uploads/2024/12/mlivre.png",
-  "color": "#000000",
+  "color": "#262626",
   "category": "anime",
   "tags": [
     "mangás",
