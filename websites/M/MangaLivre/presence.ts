@@ -3,7 +3,9 @@ const presence = new Presence({
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-
+enum ActivityAssets {
+  Logo = 'https://i.imgur.com/8DAVgZT.png',
+}
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'logo',
