@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1219713910165209169',
@@ -18,12 +18,12 @@ presence.on('UpdateData', async () => {
   if (document.querySelector<HTMLElement>('[data-player-status=\'true\']')) {
     const playing = document.querySelector<HTMLButtonElement>('button svg[data-player-pause="true"]')
     const [startPlayer, durationPlayer] = [
-      presence.timestampFromFormat(
+      timestampFromFormat(
         document.querySelector<HTMLElement>('[data-player-position="true"]')?.textContent?.split(' / ')[0] ?? '',
       ),
-      presence.timestampFromFormat(document.querySelector<HTMLElement>('[data-player-position="true"]')?.textContent?.split(' / ')[1] ?? ''),
+      timestampFromFormat(document.querySelector<HTMLElement>('[data-player-position="true"]')?.textContent?.split(' / ')[1] ?? ''),
     ]
-    const [startTimestamp, endTimestamp] = presence.getTimestamps(
+    const [startTimestamp, endTimestamp] = getTimestamps(
       startPlayer,
       durationPlayer,
     );
@@ -44,7 +44,6 @@ presence.on('UpdateData', async () => {
       delete presenceData.startTimestamp
   }
   else {
-    console.log('no')
     presenceData.details = 'No song queue found'
     presenceData.state = 'In the server...'
     presenceData.largeImageKey = ActivityAssets.Logo
