@@ -87,7 +87,7 @@ presence.on('UpdateData', async () => {
   //* Update strings if user selected another language.
   const [newLang, privacy, time, twitter] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),
-    presence.getSetting<boolean>('privacy'),
+    presence.getSetting<number>('privacy'),
     presence.getSetting<boolean>('time'),
     presence.getSetting<boolean>('twitter'),
   ])
@@ -141,14 +141,8 @@ presence.on('UpdateData', async () => {
     info = strings.settings
 
   if (pathname.match('/search')) {
-    if (privacy) {
-      title = strings.searchSomething
-      info = null
-    }
-    else {
-      title = strings.search
-      info = document.querySelector('input')?.textContent || null
-    }
+    title = strings.search
+    info = document.querySelector('input')?.textContent || null
   }
 
   const objHeader = document.querySelector(
@@ -184,8 +178,6 @@ presence.on('UpdateData', async () => {
   if (pathname.match('/messages') && objHeader) {
     title = strings.viewDms
     info = stripText(objHeader, 'Object Header')
-    if (privacy)
-      info = null
   }
 
   const etcHeader = Array.from(
@@ -209,7 +201,12 @@ presence.on('UpdateData', async () => {
       ? 'https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/0.png'
       : 'https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/1.png',
   }
-
+  if (privacy === 1) {
+    delete presenceData.state
+    presenceData.details = strings.browsing
+    presence.setActivity(presenceData)
+    return
+  }
   if (time)
     presenceData.startTimestamp = elapsed
 
