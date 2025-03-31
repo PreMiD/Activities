@@ -30,6 +30,5 @@
     "guessing",
     "geolocation",
     "streetview"
-  ],
-  "readLogs": false
+  ]
 }
