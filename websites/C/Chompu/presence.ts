@@ -47,6 +47,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'No song queue found'
     presenceData.state = 'In the server...'
     presenceData.largeImageKey = ActivityAssets.Logo
+    presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = 'Zzz'
     presenceData.startTimestamp = browsingTimestamp
     if (presenceData.endTimestamp)
