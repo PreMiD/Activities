@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets { // Other default assets can be found at index.d.ts
+enum ActivityAssets {
   Logo = 'https://i.imgur.com/rn6TkM4.png',
 }
 
@@ -34,7 +34,10 @@ presence.on('UpdateData', async () => {
   switch (path[1]) {
     case 'wargame':
       if(rawpath.includes("challenges")) {
-        presenceData.details = '워게임 푸는 중'
+        var tag = document.querySelector(
+          'div.tags'
+        )!.textContent!.split(' ')[6]
+        presenceData.details = tag + ' 분야의 워게임 푸는 중'
         presenceData.state = document.querySelector(
           '#challenge-info > h1'
         )!.textContent
@@ -82,14 +85,20 @@ presence.on('UpdateData', async () => {
       break
     case 'ctf':
       presenceData.details = "CTF 문제 풀이 중"
-      presenceData.state = document.querySelector(
-          "#ctf-title > div"
-      )!.textContent
+      try {
+        presenceData.state = document.querySelector(
+          "div.ctf-title > div.title"
+        )!.textContent
+      } catch (error) {
+        presenceData.state = document.querySelector(
+          "div.ctf-title"
+        )!.textContent
+      }
       break
     case 'users':
       presenceData.details = '유저 보는 중'
       presenceData.state = document.querySelector(
-          "#mypage-profile > section > div.profile-user > div.profile-user-profile > a > span"
+          "div.profile-user > div.profile-user-profile > a > span"
       )!.textContent
       break
     case 'board':
@@ -97,7 +106,7 @@ presence.on('UpdateData', async () => {
       break
     case 'forum':
       presenceData.details = '커뮤니티 보는 중'
-      if(rawpath.includes("posts")){
+      if(rawpath.includes("posts") || rawpath.includes("qna")) {
         presenceData.state = document.querySelector(
           "#__layout > div > main > div > div:nth-child(1) > div > div.header > div > div.left > div.title-wrapper > span"
         )!.textContent
