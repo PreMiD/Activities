@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Osc4r",
+    "id": "156481332652802048"
+  },
+
+  "service": "AnimeJL",
+  "description": {
+    "en": "AnimeJL is a streaming website where you can watch anime with Spanish subtitles. Made by Osc4r",
+    "es": "AnimeJL es un sitio web de streaming donde puedes ver anime con subtítulos y doblajes en español. Hecho por Osc4r"
+
+  },
+  "url": [
+    "www.anime-jl.net",
+    "anime-jl.net"
+  ],
+  "version": "1.0",
+  "logo": "https://www.anime-jl.net/favicon.ico",
+  "thumbnail": "https://c4.wallpaperflare.com/wallpaper/300/771/661/shingeki-no-kyojin-eren-jeager-anime-anime-boys-wallpaper-preview.jpg",
+  "color": "#db0000",
+  "category": "anime",
+  "tags": [
+  
+    "Anime",
+    "Community",
+    "Osc4r"
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*"
+}
