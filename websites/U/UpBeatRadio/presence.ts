@@ -141,10 +141,14 @@ presence.on('UpdateData', async () => {
         type = 'Staff'
       if (type === 'veterans')
         type = 'Veterans'
-      if (type === 'vip\'s')
+      if (type === 'vips' || type === 'vip')
         type = 'VIP'
       presenceData.details = `Viewing the ${type === 'Veterans' ? type : `${type} members`}`
       presenceData.smallImageKey = Assets.Viewing
+    }
+    else if (document.location.pathname.includes('/Account.Applications')) {
+      presenceData.details = `Reading their applications`
+      presenceData.smallImageKey = Assets.Reading
     }
     else if (document.querySelector('.bigTitle')) {
       let type = document.querySelector('.bigTitle')?.textContent
@@ -175,6 +179,11 @@ presence.on('UpdateData', async () => {
     else if (document.querySelector('#modalmediaAppButton')) {
       presenceData.details = 'Applying for:'
       presenceData.state = 'News Reporter'
+      presenceData.smallImageKey = Assets.Writing
+    }
+    else if (document.querySelector('#modalcommunityManagerAppButton')) {
+      presenceData.details = 'Applying for:'
+      presenceData.state = 'Community Manager'
       presenceData.smallImageKey = Assets.Writing
     }
     else if (document.querySelector('#modaladministratorAppButton')) {
