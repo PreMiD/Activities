@@ -13,7 +13,7 @@ let video = {
 let cachedGif: string | null = null; // Cache para evitar múltiples llamadas a Giphy
 
 const ActivityAssets = {
-    DefaultLogo: 'https://www.anime-jl.net/favicon.ico',
+    DefaultLogo: 'https://github.com/OscarHDYT/img/blob/main/favicon.png?raw=true',
     CatalogImageFallback: 'https://www.anime-jl.net/storage/animes_tumbl/default-cover.jpg',
 };
 
