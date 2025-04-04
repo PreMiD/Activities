@@ -34,29 +34,34 @@ presence.on('UpdateData', async () => {
   switch (path[1]) {
     case 'wargame':
       if(rawpath.includes("challenges")) {
-        var tag = document.querySelector(
-          'div.tags'
-        )!.textContent!.split(' ')[6]
-        presenceData.details = tag + ' 분야의 워게임 푸는 중'
-        presenceData.state = document.querySelector(
-          '#challenge-info > h1'
-        )!.textContent
-        var level = document.querySelector(
-          '#challenge-info > div.challenge-level > span'
-        )!.textContent
-        if(level?.includes('LEVEL')){
-          var levelNum = parseInt(level.split(' ')[1] ?? '0')
-          presenceData.smallImageKey = lvlImage[levelNum+1]
-          presenceData.smallImageText = `레벨 ${levelNum+1}`
+        if(rawpath.includes("new")){
+          presenceData.details = '워게임 문제 출제 중'
         }
         else{
-          if(level === "Unranked"){
-            presenceData.smallImageKey = lvlImage[0]
-            presenceData.smallImageText = "Unranked"
+          var tag = document.querySelector(
+            'div.tags'
+          )!.textContent!.split(' ')[6]
+          presenceData.details = tag + ' 분야의 워게임 푸는 중'
+          presenceData.state = document.querySelector(
+            '#challenge-info > h1'
+          )!.textContent
+          var level = document.querySelector(
+            '#challenge-info > div.challenge-level > span'
+          )!.textContent
+          if(level?.includes('LEVEL')){
+            var levelNum = parseInt(level.split(' ')[1] ?? '0')
+            presenceData.smallImageKey = lvlImage[levelNum+1]
+            presenceData.smallImageText = `레벨 ${levelNum+1}`
           }
-          else if(level === "Beginner"){
-            presenceData.smallImageKey = lvlImage[1]
-            presenceData.smallImageText = "Beginner"
+          else{
+            if(level === "Unranked"){
+              presenceData.smallImageKey = lvlImage[0]
+              presenceData.smallImageText = "Unranked"
+            }
+            else if(level === "Beginner"){
+              presenceData.smallImageKey = lvlImage[1]
+              presenceData.smallImageText = "Beginner"
+            }
           }
         }
       }
@@ -111,9 +116,6 @@ presence.on('UpdateData', async () => {
           "#__layout > div > main > div > div:nth-child(1) > div > div.header > div > div.left > div.title-wrapper > span"
         )!.textContent
       }
-      else{
-        presenceData.state = '목록'
-      }
       break
     case 'ranking':
       presenceData.details = '랭킹 보는 중'
@@ -121,8 +123,20 @@ presence.on('UpdateData', async () => {
     case 'mypage':
       presenceData.details = '마이페이지 보는 중'
       break
+    case 'myaccount':
+      presenceData.details = '계정 설정 보는 중'
+      break
+    case 'career':
+      presenceData.details = '커리어 정보 보는 중'
+      break
+    case 'enterprise':
+      presenceData.details = '기업 서비스 보는 중'
+      break
+    case '':
+      presenceData.details = '홈페이지 보는 중'
+      break
     default:
-      presenceData.details = '페이지 보는 중'
+      presenceData.details = '그 외 페이지 보는 중'
       break
   }
   presence.setActivity(presenceData)
