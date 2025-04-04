@@ -3,6 +3,19 @@ const presence = new Presence({
 })
 const tmb = Math.floor(Date.now() / 1000)
 
+async function getStrings() {
+  return presence.getStrings({
+    authentication: 'googlemessages.authentication',
+    browsingConversations: 'googlemessages.browsingConversations',
+    browsingOnGoogleMessages: 'googlemessages.browsingOnGoogleMessages',
+    browsingSettings: 'googlemessages.browsingSettings',
+    hidden: 'googlemessages.hidden',
+    home: 'googlemessages.home',
+    newConversation: 'googlemessages.newConversation',
+    readingMessagesFrom: 'googlemessages.readingMessagesFrom',
+  })
+}
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     smallImageKey: 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Messages/assets/0.png',
@@ -11,17 +24,18 @@ presence.on('UpdateData', async () => {
   }
   const path = document.location.pathname.toLowerCase()
   const showcon = await presence.getSetting<boolean>('showContact')
+  const strings = await getStrings()
   // Home Page
   if (path === '/' || path.includes('/intl/')) {
     presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Messages/assets/logo.png'
-    presenceData.details = 'Home page'
+    presenceData.details = strings.home
   }
   else if (path === '/web/authentication') {
     presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Messages/assets/logo.png'
-    presenceData.details = 'Authentication page'
+    presenceData.details = strings.authentication
   }
   else if (path === '/web/conversations') {
-    presenceData.details = 'Browsing conversations'
+    presenceData.details = strings.browsingConversations
     presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Messages/assets/logo.png'
   }
   else if (
@@ -30,7 +44,7 @@ presence.on('UpdateData', async () => {
   ) {
     // checking parameters
     if (!showcon) {
-      presenceData.state = 'Hidden (adjustable in Presence settings)'
+      presenceData.state = strings.hidden
     }
     else {
       presenceData.state = document
@@ -38,20 +52,20 @@ presence.on('UpdateData', async () => {
         ?.querySelector('div > span > h2')
         ?.textContent
     }
-    presenceData.details = 'Reading messages from:'
+    presenceData.details = strings.readingMessagesFrom
     presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Messages/assets/logo.png'
   }
   else if (path === '/web/conversations/new') {
     presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Messages/assets/logo.png'
-    presenceData.details = 'New conversation page'
+    presenceData.details = strings.newConversation
   }
   else if (path === '/web/settings') {
     presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Messages/assets/logo.png'
-    presenceData.details = 'Browsing settings'
+    presenceData.details = strings.browsingSettings
   }
   else {
     presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Messages/assets/logo.png'
-    presenceData.details = 'Browsing on Google Messages'
+    presenceData.details = strings.browsingOnGoogleMessages
   }
   if (presenceData.details)
     presence.setActivity(presenceData)

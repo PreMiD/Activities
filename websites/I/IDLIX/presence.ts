@@ -24,11 +24,12 @@ enum ActivityAssets {
   Ad = 'https://cdn.rcd.gg/PreMiD/websites/I/IDLIX/assets/0.png',
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/I/IDLIX/assets/logo.png',
 }
-let oldLang: string | null = null
 let current: number
 let duration: number
 let paused: boolean
 let isVideo: boolean
+let strings: Awaited<ReturnType<typeof getStrings>>
+let oldLang: string | null = null
 
 presence.on('iFrameData', (data: unknown) => {
   ({ current, duration, paused, isVideo } = data as {
