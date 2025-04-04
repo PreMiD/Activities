@@ -4,22 +4,22 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/rn6TkM4.png',
+  Logo = 'https://i.imgur.com/4MHJBOf.png',
 }
 
 const lvlImage: Record<number, string> = {
-  0: 'https://i.imgur.com/gGjXxrK.png',
-  1: 'https://i.imgur.com/4ZPn6jm.png',
-  2: 'https://i.imgur.com/awsWATU.png',
-  3: 'https://i.imgur.com/Bkt8c3b.png',
-  4: 'https://i.imgur.com/yJqh3wI.png',
-  5: 'https://i.imgur.com/S5rodGM.png',
-  6: 'https://i.imgur.com/3pSboLl.png',
-  7: 'https://i.imgur.com/FBxHsUn.png',
-  8: 'https://i.imgur.com/wkD9ERb.png',
-  9: 'https://i.imgur.com/Pkyd0iB.png',
-  10: 'https://i.imgur.com/EEW0sz6.png',
-  11: 'https://i.imgur.com/PgeDc90.png',
+  0: 'https://i.imgur.com/mk9w9gX.png',
+  1: 'https://i.imgur.com/DFpk9GA.png',
+  2: 'https://i.imgur.com/o4pn0KG.png',
+  3: 'https://i.imgur.com/K6El8nA.png',
+  4: 'https://i.imgur.com/5uHNYBL.png',
+  5: 'https://i.imgur.com/d4Q50LJ.png',
+  6: 'https://i.imgur.com/QwGWiyd.png',
+  7: 'https://i.imgur.com/qsAw7DV.png',
+  8: 'https://i.imgur.com/FWYAWuz.png',
+  9: 'https://i.imgur.com/SPgQtta.png',
+  10: 'https://i.imgur.com/MHc5zkH.png',
+  11: 'https://i.imgur.com/xdtTdVP.png',
 }
 
 presence.on('UpdateData', async () => {
