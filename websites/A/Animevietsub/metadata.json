@@ -47,6 +47,12 @@
       "title": "Show Title as Presence",
       "icon": "fad fa-user-edit",
       "value": false
+    },
+    {
+      "id": "showtimestamps",
+      "title": "Show timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
     }
   ]
 }
