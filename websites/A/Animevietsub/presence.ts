@@ -30,10 +30,11 @@ async function updatePresence() {
     const { pathname } = document.location
     const splitPath = pathname.split('/')
 
-    const [newLang, showButtons, usePresenceName] = await Promise.all([
+    const [newLang, showButtons, usePresenceName, showtimestamps] = await Promise.all([
       presence.getSetting<string>('lang').catch(() => 'en'),
       presence.getSetting<boolean>('buttons'),
       presence.getSetting<boolean>('usePresenceName'),
+      presence.getSetting<boolean>('showtimestamps')
     ])
 
     if (oldLang !== newLang || !strings) {
@@ -140,16 +141,17 @@ async function updatePresence() {
       if (video) {
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused ? strings.pause : strings.play
-
-        if (!Number.isNaN(video.currentTime) && !Number.isNaN(video.duration) && video.duration > 0) {
-          if (!video.paused) {
-            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
-              video.currentTime,
-              video.duration,
-            )
-          }
-          else {
-            delete presenceData.endTimestamp
+        if (showtimestamps) {
+          if (!Number.isNaN(video.currentTime) && !Number.isNaN(video.duration) && video.duration > 0) {
+            if (!video.paused) {
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+                video.currentTime,
+                video.duration,
+              )
+            }
+            else {
+              delete presenceData.endTimestamp
+            }
           }
         }
 
