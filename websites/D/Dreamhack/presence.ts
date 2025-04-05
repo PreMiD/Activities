@@ -21,7 +21,6 @@ const lvlImages: Record<string, string> = {
   Unranked: 'https://i.imgur.com/OmW5Nj3.png',
   Beginner: 'https://i.imgur.com/LnW9Oiw.png',
 }
-}
 
 presence.on('UpdateData', async () => {
   const rawpath = location.pathname
@@ -47,7 +46,7 @@ presence.on('UpdateData', async () => {
           const level = document.querySelector(
             '.level',
           )!.textContent
-if (level?.includes('LEVEL')) {
+          if (level?.includes('LEVEL')) {
             const levelNum = Number.parseInt(level.split(' ')[1] ?? '0')
             presenceData.smallImageKey = lvlImages[levelNum]
             presenceData.smallImageText = `레벨 ${levelNum}`
