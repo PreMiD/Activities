@@ -35,7 +35,7 @@ presence.on('UpdateData', async () => {
       'div.course-title-wrapper',
     )!.textContent
   }
-  else{
+  else {
     switch (path[1]) {
       case 'wargame':
         if (rawpath.includes('challenges')) {
