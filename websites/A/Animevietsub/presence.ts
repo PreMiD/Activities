@@ -34,7 +34,7 @@ async function updatePresence() {
       presence.getSetting<string>('lang').catch(() => 'en'),
       presence.getSetting<boolean>('buttons'),
       presence.getSetting<boolean>('usePresenceName'),
-      presence.getSetting<boolean>('showtimestamps')
+      presence.getSetting<boolean>('showtimestamps'),
     ])
 
     if (oldLang !== newLang || !strings) {
