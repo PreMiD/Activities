@@ -6,10 +6,10 @@ const startedTime = Math.floor(Date.now() / 1000)
 enum ActivityAssets {
   WovHeroes = 'https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/1.png',
   WovBlog = 'https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/2.png',
-  API = 'https://i.imgur.com/d8PLSNR.png',
-	Legal = 'https://imgur.com/pqasJnG.png',
+  API = 'https://imgur.com/OdeocqN.png',
+  Legal = 'https://imgur.com/WGgzZMl.png',
   Vouchers = 'https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/3.png',
-  Voting = 'https://imgur.com/Nt9hAOP.png',
+  Voting = 'https://imgur.com/m03IeEF.png',
   WovText = 'https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/4.png',
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/5.png',
   WovNoBg = 'https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/6.png',
@@ -97,10 +97,13 @@ presence.on('UpdateData', async () => {
 			presenceData.state = 'Reading the API documentation';
 		} else if (document.location.href.includes('#/?id=')) {
 			if (!privacyMode) {
-				presenceData.details = 'Reading the Public API docs:';
-				presenceData.state = findTitleByHref(
-					document.location.href.split('api-docs.wolvesville.com/')[1]
-				);
+        const hrefPart = document.location.href.split('api-docs.wolvesville.com/')[1];
+        if (hrefPart !== undefined) {
+          presenceData.details = 'Reading the Public API docs:';
+          presenceData.state = findTitleByHref(hrefPart);
+        } else {
+          presenceData.state = 'Reading the API documentation';
+        }        
 				presenceData.buttons = [
 					{
 						label: 'Read Documentation',
@@ -167,7 +170,7 @@ presence.on('UpdateData', async () => {
 		// Voting Gallery
 	}
   else if (document.location.href.includes('voting.wolvesville.com')) {
-		presenceData.smallImageKey = Assets.Voting;
+		presenceData.smallImageKey = ActivityAssets.Voting;
 		presenceData.details = 'Voting Gallery';
 
     const submissionView = document.querySelector('.css-757v71')
