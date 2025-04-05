@@ -164,15 +164,15 @@ async function updatePresence() {
         if (!usePresenceName) {
           presenceData.details = `${titleArrOne}`
           presenceData.state = `Tập ${document.querySelector<HTMLAnchorElement>('.episode.playing')
-            ?.textContent
-            } - ⭐ ${rating} 🕒 ${formattedDuration} 🗓️ ${year}`
+          ?.textContent
+          } - ⭐ ${rating} 🕒 ${formattedDuration} 🗓️ ${year}`
         }
         else {
           presenceData.name = `${titleArrOne}`
           presenceData.details = `Animevietsub`
           presenceData.state = `Tập ${document.querySelector<HTMLAnchorElement>('.episode.playing')
-            ?.textContent
-            } - ⭐ ${rating} 🕒 ${formattedDuration} 🗓️ ${year}`
+          ?.textContent
+          } - ⭐ ${rating} 🕒 ${formattedDuration} 🗓️ ${year}`
         }
         if (showButtons) {
           presenceData.buttons = [
