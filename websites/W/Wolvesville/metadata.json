@@ -5,6 +5,12 @@
     "name": "Vasilis",
     "id": "241929388403195914"
   },
+  "contributors": [
+		{
+			"name": "Black_Wither",
+			"id": "810579335727677472"
+		}
+	],
   "service": "Wolvesville",
   "description": {
     "ar": "المستذئب اونلاين هي لعبه جماعية لأكثر من 16 لاعبين. كل لعبة لديها فرق مختلفة مثل القرويين او المستذئبين وكلهم يقاومون ليكونوا آخر فريق صامد. استخدم القدرات الخاصة للكشف عن أدوار اللاعبين الآخرين وإقناع زملائك بالعمل معك.",
@@ -54,7 +60,8 @@
     "legal.wolvesville.com",
     "heroes.wolvesville.com",
     "voting.wolvesville.com",
-    "app.wolvesville.com"
+    "app.wolvesville.com",
+    "api-docs.wolvesville.com"
   ],
   "version": "1.4.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/logo.png",
@@ -71,7 +78,7 @@
     {
       "id": "privacy",
       "title": "Privacy Mode",
-      "icon": "far fa-user-secret",
+      "icon": "fas fa-user-secret",
       "value": false
     },
     {
@@ -80,7 +87,7 @@
         "privacy": false
       },
       "title": "Hide Clan Tag",
-      "icon": "far fa-tag",
+      "icon": "fas fa-tag",
       "value": false
     },
     {
@@ -89,7 +96,7 @@
         "privacy": false
       },
       "title": "Hide Chat Recipient",
-      "icon": "far fa-comment-slash",
+      "icon": "fas fa-comment-slash",
       "value": false
     },
     {
@@ -98,7 +105,7 @@
         "privacy": false
       },
       "title": "Show Status",
-      "icon": "far fa-play-circle",
+      "icon": "fas fa-play-circle",
       "value": true
     },
     {
@@ -107,19 +114,19 @@
         "privacy": false
       },
       "title": "Hide Name When Invisible",
-      "icon": "far fa-ghost",
+      "icon": "fas fa-ghost",
       "value": false
     },
     {
       "id": "showTimestamp",
       "title": "Show Timestamp",
-      "icon": "far fa-stopwatch",
+      "icon": "fas fa-stopwatch",
       "value": true
     },
     {
       "id": "logo",
       "title": "Icon",
-      "icon": "far fa-images",
+      "icon": "fas fa-images",
       "value": 0,
       "values": [
         "Normal",
