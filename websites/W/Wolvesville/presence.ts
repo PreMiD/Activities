@@ -6,7 +6,10 @@ const startedTime = Math.floor(Date.now() / 1000)
 enum ActivityAssets {
   WovHeroes = 'https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/1.png',
   WovBlog = 'https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/2.png',
+  API = 'https://imgur.com/OdeocqN.png',
+  Legal = 'https://imgur.com/WGgzZMl.png',
   Vouchers = 'https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/3.png',
+  Voting = 'https://imgur.com/m03IeEF.png',
   WovText = 'https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/4.png',
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/5.png',
   WovNoBg = 'https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/6.png',
@@ -22,18 +25,28 @@ enum ActivityAssets {
   Friends = 'https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/16.png',
 }
 
+function findTitleByHref(href: string): string | null {
+	const links: NodeListOf<HTMLAnchorElement> =
+		document.querySelectorAll('a.section-link');
+
+	for (const link of links)
+		if (link.getAttribute('href') === href) return link.getAttribute('title');
+
+	return null;
+}
+
 presence.on('UpdateData', async () => {
-  const [
-    privacyMode,
-    clanTag,
-    privacyChat,
-    showStatus,
-    invisiblePrivacy,
-    showTimestamp,
-    logo,
-  ] = await Promise.all([
-    presence.getSetting<boolean>('privacy'),
-    presence.getSetting<boolean>('clanTag'),
+	const [
+			privacyMode,
+			clanTag,
+			privacyChat,
+			showStatus,
+			invisiblePrivacy,
+			showTimestamp,
+			logo,
+		] = await Promise.all([
+			presence.getSetting<boolean>('privacy'),
+			presence.getSetting<boolean>('clanTag'),
     presence.getSetting<boolean>('privacyChat'),
     presence.getSetting<boolean>('showStatus'),
     presence.getSetting<boolean>('invisiblePrivacy'),
@@ -75,15 +88,39 @@ presence.on('UpdateData', async () => {
       }
     }
 
-    // Legal
-  }
-  else if (document.location.href.includes('legal.wolvesville.com')) {
-    presenceData.details = 'Legal'
-    if (document.location.pathname.includes('tos'))
-      presenceData.state = 'Reading the Terms of Service'
-    else if (document.location.pathname.includes('privacy-policy'))
-      presenceData.state = 'Reading the Privacy Policy'
-    else presenceData.state = 'Reading the imprint'
+		//API
+	} else if (document.location.href.includes('api-docs.wolvesville.com')) {
+		presenceData.smallImageKey = ActivityAssets.API;
+		presenceData.smallImageText = 'Public API';
+		if (!document.location.href.includes('#/?id=')) {
+			presenceData.details = 'Public API';
+			presenceData.state = 'Reading the API documentation';
+		} else if (document.location.href.includes('#/?id=')) {
+			if (!privacyMode) {
+        const hrefPart = document.location.href.split('api-docs.wolvesville.com/')[1];
+        if (hrefPart !== undefined) {
+          presenceData.details = 'Reading the Public API docs:';
+          presenceData.state = findTitleByHref(hrefPart);
+        } else {
+          presenceData.state = 'Reading the API documentation';
+        }        
+				presenceData.buttons = [
+					{
+						label: 'Read Documentation',
+						url: document.location.href,
+					},
+				];
+			} else presenceData.state = 'Reading the API documentation';
+		}
+		//Legal
+	} else if (document.location.href.includes('legal.wolvesville.com')) {
+		presenceData.smallImageKey = ActivityAssets.Legal;
+		presenceData.details = 'Legal';
+		if (document.location.pathname.includes('tos'))
+			presenceData.state = 'Reading the Terms of Service';
+		else if (document.location.pathname.includes('privacy-policy'))
+			presenceData.state = 'Reading the Privacy Policy';
+		else presenceData.state = 'Reading the imprint';
 
     // Wolvesvile Heroes
   }
@@ -130,10 +167,11 @@ presence.on('UpdateData', async () => {
       }
     }
 
-    // Voting Gallery
-  }
+		// Voting Gallery
+	}
   else if (document.location.href.includes('voting.wolvesville.com')) {
-    presenceData.details = 'Voting Gallery'
+		presenceData.smallImageKey = ActivityAssets.Voting;
+		presenceData.details = 'Voting Gallery';
 
     const submissionView = document.querySelector('.css-757v71')
 
