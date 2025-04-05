@@ -118,12 +118,12 @@ async function updatePresence() {
         presenceData.details = accountState
       }
       if (splitPath[1] === 'phim') {
-        const imageLink = document.querySelector('figure.Objf img.wp-post-image') as HTMLImageElement
+        const bannerLink = document.querySelector('figure.Objf img.wp-post-image') as HTMLImageElement
         const name = document.querySelector<HTMLAnchorElement>('.Title')?.textContent
 
         presenceData.details = 'Định xem phim...'
         presenceData.state = `Tên phim: ${name}`
-        presenceData.largeImageKey = imageLink
+        presenceData.largeImageKey = bannerLink
       }
     }
     else {
@@ -133,7 +133,7 @@ async function updatePresence() {
           ? document.querySelector('.Title')?.textContent
           : 'N/A'
       )?.split(' - ') ?? []
-      const imageLink = (document.querySelector('div.TPostBg.Objf > img') as HTMLImageElement)?.src
+      const thumbnailLink = (document.querySelector('div.TPostBg.Objf > img') as HTMLImageElement)?.src
       const rating = document.querySelector('#average_score')?.textContent?.trim()
       const linkElement = document.querySelector('span.Date.AAIco-date_range a')
       const year = linkElement && linkElement.textContent ? linkElement.textContent.trim() : null
@@ -154,27 +154,35 @@ async function updatePresence() {
             }
           }
         }
-
+        presenceData.largeImageKey = thumbnailLink
         const durationInSeconds = video.duration
         const minutes = Math.floor(durationInSeconds / 60)
         const seconds = Math.floor(durationInSeconds % 60)
 
-        const formattedDuration = `${minutes}:${seconds.toString().padStart(2, '0')}`
+        let formattedDuration
 
-        presenceData.largeImageKey = imageLink
+        if (minutes < 60) {
+          formattedDuration = `${minutes}:${seconds.toString().padStart(2, '0')}`
+        }
+        else {
+          const hours = Math.floor(minutes / 60)
+          const remainingMinutes = minutes % 60
+          formattedDuration = `${hours.toString().padStart(2, '0')}:${remainingMinutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+        }
+        const episode = document.querySelector<HTMLAnchorElement>('.episode.playing')
+        let animeEpisode: number | string = Number.NaN
 
+        if (episode?.textContent === 'Xem Full') {
+          animeEpisode = 'Movie'
+        }
         if (!usePresenceName) {
           presenceData.details = `${titleArrOne}`
-          presenceData.state = `Tập ${document.querySelector<HTMLAnchorElement>('.episode.playing')
-            ?.textContent
-          } - ⭐ ${rating} 🕒 ${formattedDuration} 🗓️ ${year}`
+          presenceData.state = `Tập ${animeEpisode} - ⭐ ${rating} 🕒 ${formattedDuration} 🗓️ ${year}`
         }
         else {
           presenceData.name = `${titleArrOne}`
           presenceData.details = `Animevietsub`
-          presenceData.state = `Tập ${document.querySelector<HTMLAnchorElement>('.episode.playing')
-            ?.textContent
-          } - ⭐ ${rating} 🕒 ${formattedDuration} 🗓️ ${year}`
+          presenceData.state = `Tập ${animeEpisode} - ⭐ ${rating} 🕒 ${formattedDuration} 🗓️ ${year}`
         }
         if (showButtons) {
           presenceData.buttons = [
