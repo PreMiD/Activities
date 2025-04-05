@@ -1,8 +1,9 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1016991973531451502',
 })
+
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let strings: Awaited<ReturnType<typeof getStrings>>
@@ -14,162 +15,182 @@ async function getStrings() {
       pause: 'general.paused',
       play: 'general.playing',
     },
-
   )
 }
 
-presence.on('UpdateData', async () => {
-  const playback = !!document.querySelector('#title')
-    || (document.querySelectorAll('video').length
-      && document.querySelectorAll('video')[0]?.className !== 'previewVideo')
-  const { pathname, href } = document.location
-  const [newLang, buttons] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
-    presence.getSetting<boolean>('buttons'),
-  ])
-  const splitPath = pathname.split('/')
-  const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/Animevietsub/assets/logo.jpeg',
-    startTimestamp: browsingTimestamp,
-  }
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/Animevietsub/assets/logo.jpeg',
+}
 
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
+async function updatePresence() {
+  try {
+    const video = document.querySelector('video')
+    const playback = !!document.querySelector('#title') || (video && video.className !== 'previewVideo')
 
-  if (!playback) {
-    switch (splitPath[1]) {
-      case 'anime-bo':
-      case 'anime-sap-chieu':
-      case 'anime-le':
-      case 'danh-sach':
-      case 'hoat-hinh-trung-quoc': {
-        presenceData.details = 'Đang chọn phim'
-        presenceData.buttons = [
-          {
-            label: 'Xem Phim',
-            url: href,
-          },
-        ]
-        break
+    const { pathname } = document.location
+    const splitPath = pathname.split('/')
+
+    const [newLang, showButtons, usePresenceName, showtimestamps] = await Promise.all([
+      presence.getSetting<string>('lang').catch(() => 'en'),
+      presence.getSetting<boolean>('buttons'),
+      presence.getSetting<boolean>('usePresenceName'),
+      presence.getSetting<boolean>('showtimestamps'),
+    ])
+
+    if (oldLang !== newLang || !strings) {
+      oldLang = newLang
+      strings = await getStrings()
+    }
+
+    const presenceData: PresenceData = {
+      type: 3,
+      largeImageKey: ActivityAssets.Logo,
+      startTimestamp: browsingTimestamp,
+    }
+
+    if (!playback) {
+      const pathMap: Record<string, string> = {
+        'lich-chieu-phim.html': 'Đang xem Lịch chiếu phim',
+        'tu-phim': 'Đang xem Tủ phim',
+        'lich-su': 'Đang xem Lịch sử phim',
       }
-      case '': {
-        presenceData.details = 'Đang xem trang chủ...'
-        break
+
+      presenceData.details = pathMap[splitPath[1] ?? ''] ?? 'Đang ở Trang chủ'
+      presenceData.smallImageKey = Assets.Viewing
+
+      if (['anime-bo', 'anime-le', 'hoat-hinh-trung-quoc', 'danh-sach', 'anime-sap-chieu'].includes(splitPath[1] || '')) {
+        const spanElement = document.querySelector<HTMLSpanElement>('.ml-title-page span')
+        const getSpanText = spanElement?.textContent?.trim() ?? ''
+        const getText = getSpanText.split('Danh Sách')?.[1]?.trim()
+        presenceData.details = 'Đang duyệt anime...'
+        presenceData.state = `Duyệt theo - ${getText}`
       }
-      case 'tim-kiem': {
-        presenceData.details = 'Đang tìm kiếm...'
-        break
+
+      if (splitPath[1] === 'season') {
+        const getSeasonText = document.querySelector<HTMLSpanElement>('.ml-title.ml-title-page span')?.textContent?.trim() ?? ''
+        const seasonText = getSeasonText.split(': Mùa')?.[1]?.trim() || 'Không xác định'
+
+        presenceData.details = 'Đang duyệt anime theo mùa 📅'
+        presenceData.state = `Mùa: ${seasonText} 🗓️`
       }
-      case 'the-laoi': {
-        presenceData.details = 'Đang chọn thể loại phim'
-        break
+
+      if (splitPath[1] === 'tim-kiem') {
+        const getsearchText = document.querySelector<HTMLSpanElement>('.ml-title.ml-title-page span')?.textContent?.trim()
+        const searchText = getsearchText?.split('Kết quả tìm kiếm')?.[1]?.trim()
+        presenceData.details = ` Đang tìm kiếm anime... 🔎`
+        presenceData.state = searchText ? `Kết quả: ${searchText}` : `Không tìm thấy kết quả`
+        presenceData.smallImageKey = Assets.Search
       }
-      case 'tu-phim': {
-        presenceData.details = 'Đang xem danh sách đã lưu trong hộp phim'
-        break
+
+      if (splitPath[1] === 'anime') {
+        const getText = document.querySelector<HTMLSpanElement>('.ml-title.ml-title-page span')?.textContent?.trim()
+        presenceData.details = ' Đang duyệt anime...'
+        presenceData.state = `${getText}`
       }
-      case 'season': {
-        presenceData.details = 'Đang chọn mùa phim'
-        presenceData.buttons = [
-          {
-            label: 'Xem Phần',
-            url: href,
-          },
-        ]
-        break
-      }
-      case 'bang-xep-hang': {
-        presenceData.details = 'Đang xem bảng xếp hạng anime'
-        break
-      }
-      case 'phim': {
-        presenceData.details = `Định xem phim ${
-          document.querySelector<HTMLAnchorElement>('.Title')?.textContent
-        }`
-        presenceData.buttons = [
-          {
-            label: 'Xem Phim',
-            url: href,
-          },
-        ]
-        break
-      }
-      case 'quen-mat-khau.html': {
-        presenceData.details = 'Đang bị quên mật khẩu kek.'
-        break
-      }
-      case '/lich-chieu-phim.html': {
-        presenceData.details = 'Đang xem lịch chiếu anime'
-        break
-      }
-      case 'anime':
-      case 'account': {
-        switch (splitPath[2]) {
-          case 'info': {
-            presenceData.details = 'Đang xem profile...'
-            break
-          }
-          case 'login': {
-            presenceData.details = 'Đang đăng nhập...'
-            break
-          }
-          case 'register': {
-            presenceData.details = 'Đang đăng ký...'
-            break
-          }
-          case 'library': {
-            presenceData.details = 'Đang xem thử viện alime'
-            presenceData.buttons = [
-              {
-                label: 'Xem Thư Viện Anime',
-                url: href,
-              },
-            ]
-            break
-          }
+
+      if (splitPath[1] === 'bang-xep-hang' || splitPath[1] === 'bang-xep-hang.html') {
+        const rankingHeader = document.querySelector<HTMLSpanElement>('.title-list-index')
+        if (rankingHeader) {
+          const getText = rankingHeader.textContent?.toLowerCase().split('bảng xếp hạng')?.[1]?.trim()
+          const formattedText = getText && getText.length > 0
+            ? getText.charAt(0).toUpperCase() + getText.slice(1)
+            : 'Thông tin không có sẵn'
+          presenceData.details = 'Đang xem bảng xếp hạng... 📊'
+          presenceData.state = `Xếp hạng - ${formattedText}`
         }
-        break
       }
-      default: {
-        presenceData.details = 'Đang xem trang chủ...'
-        break
+
+      if (splitPath[1] === 'the-loai') {
+        const getCategoryText = document.querySelector<HTMLSpanElement>('.ml-title-page span')?.textContent?.trim() ?? ''
+        const getText = getCategoryText.split('Danh Sách Anime Thuộc Thể Loại ')?.[1]?.trim()
+        presenceData.details = 'Đang duyệt Anime theo thể loại📂'
+        presenceData.state = `Thể loại - ${getText}`
+      }
+
+      if (splitPath[1] === 'account') {
+        const accountMap: Record<string, string> = {
+          info: 'Đang xem profile...',
+          login: 'Đang đăng nhập...',
+          register: 'Đang đăng ký...',
+        }
+
+        const accountState = accountMap[splitPath[2] ?? ''] ?? 'Đang ở trang tài khoản...'
+        presenceData.details = accountState
+      }
+      if (splitPath[1] === 'phim') {
+        const imageLink = document.querySelector('figure.Objf img.wp-post-image') as HTMLImageElement
+        const name = document.querySelector<HTMLAnchorElement>('.Title')?.textContent
+
+        presenceData.details = 'Định xem phim...'
+        presenceData.state = `Tên phim: ${name}`
+        presenceData.largeImageKey = imageLink
       }
     }
-  }
-  else {
-    const [video] = document.querySelectorAll('video')
-
-    if (video && !Number.isNaN(video.duration)) {
-      delete presenceData.startTimestamp
+    else {
+      const [video] = document.querySelectorAll('video')
       const [titleArrOne] = (
         document.querySelectorAll('.Title')
           ? document.querySelector('.Title')?.textContent
-          : 'Không tìm thấy còn cặc - Tập ?'
+          : 'N/A'
       )?.split(' - ') ?? []
-      presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-      presenceData.smallImageText = video.paused ? strings.pause : strings.play;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      const imageLink = (document.querySelector('div.TPostBg.Objf > img') as HTMLImageElement)?.src
+      const rating = document.querySelector('#average_score')?.textContent?.trim()
+      const linkElement = document.querySelector('span.Date.AAIco-date_range a')
+      const year = linkElement && linkElement.textContent ? linkElement.textContent.trim() : null
 
-      presenceData.details = `Đang xem: ${titleArrOne} `
-      presenceData.state = `Tập: ${
-        document.querySelector<HTMLAnchorElement>('.episode.playing')
-          ?.textContent
-      }`
-      presenceData.buttons = [
-        {
-          label: 'Xem Phim',
-          url: href,
-        },
-      ]
-      if (video.paused)
-        delete presenceData.endTimestamp
+      if (video) {
+        presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
+        presenceData.smallImageText = video.paused ? strings.pause : strings.play
+        if (showtimestamps) {
+          if (!Number.isNaN(video.currentTime) && !Number.isNaN(video.duration) && video.duration > 0) {
+            if (!video.paused) {
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+                video.currentTime,
+                video.duration,
+              )
+            }
+            else {
+              delete presenceData.endTimestamp
+            }
+          }
+        }
+
+        const durationInSeconds = video.duration
+        const minutes = Math.floor(durationInSeconds / 60)
+        const seconds = Math.floor(durationInSeconds % 60)
+
+        const formattedDuration = `${minutes}:${seconds.toString().padStart(2, '0')}`
+
+        presenceData.largeImageKey = imageLink
+
+        if (!usePresenceName) {
+          presenceData.details = `${titleArrOne}`
+          presenceData.state = `Tập ${document.querySelector<HTMLAnchorElement>('.episode.playing')
+            ?.textContent
+          } - ⭐ ${rating} 🕒 ${formattedDuration} 🗓️ ${year}`
+        }
+        else {
+          presenceData.name = `${titleArrOne}`
+          presenceData.details = `Animevietsub`
+          presenceData.state = `Tập ${document.querySelector<HTMLAnchorElement>('.episode.playing')
+            ?.textContent
+          } - ⭐ ${rating} 🕒 ${formattedDuration} 🗓️ ${year}`
+        }
+        if (showButtons) {
+          presenceData.buttons = [
+            {
+              label: '📺 Xem Phim',
+              url: document.location.href,
+            },
+          ]
+        }
+      }
     }
-  }
-  if (!buttons)
-    delete presenceData.buttons
-  if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
-})
+  }
+  catch (error) {
+    console.error('Lỗi khi cập nhật trạng thái:', error)
+  }
+}
+
+presence.on('UpdateData', updatePresence)
