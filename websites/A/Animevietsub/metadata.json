@@ -9,6 +9,10 @@
     {
       "name": "Minh",
       "id": "457040540421324812"
+    },
+    {
+      "name": "hasukatsu",
+      "id": "859281355392417824"
     }
   ],
   "service": "Animevietsub",
@@ -33,10 +37,16 @@
       "multiLanguage": true
     },
     {
-      "id": "buttons",
+      "id": "showButtons",
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
       "value": true
+    },
+    {
+      "id": "usePresenceName",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": false
     }
   ]
 }
