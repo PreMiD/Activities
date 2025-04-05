@@ -7,19 +7,20 @@ enum ActivityAssets {
   Logo = 'https://i.imgur.com/4MHJBOf.png',
 }
 
-const lvlImage: Record<number, string> = {
-  0: 'https://i.imgur.com/mk9w9gX.png',
-  1: 'https://i.imgur.com/DFpk9GA.png',
-  2: 'https://i.imgur.com/o4pn0KG.png',
-  3: 'https://i.imgur.com/K6El8nA.png',
-  4: 'https://i.imgur.com/5uHNYBL.png',
-  5: 'https://i.imgur.com/d4Q50LJ.png',
-  6: 'https://i.imgur.com/QwGWiyd.png',
-  7: 'https://i.imgur.com/qsAw7DV.png',
-  8: 'https://i.imgur.com/FWYAWuz.png',
-  9: 'https://i.imgur.com/SPgQtta.png',
-  10: 'https://i.imgur.com/MHc5zkH.png',
-  11: 'https://i.imgur.com/xdtTdVP.png',
+const lvlImages: Record<string, string> = {
+  1: 'https://i.imgur.com/TjnuwDc.png',
+  2: 'https://i.imgur.com/xiirapz.png',
+  3: 'https://i.imgur.com/R4z9ePH.png',
+  4: 'https://i.imgur.com/AdJNjRt.png',
+  5: 'https://i.imgur.com/KnUq4x0.png',
+  6: 'https://i.imgur.com/iHY3vtb.png',
+  7: 'https://i.imgur.com/LKbiyIr.png',
+  8: 'https://i.imgur.com/r1RKlw5.png',
+  9: 'https://i.imgur.com/0i82Y3N.png',
+  10: 'https://i.imgur.com/POpSfD1.png',
+  Unranked: 'https://i.imgur.com/OmW5Nj3.png',
+  Beginner: 'https://i.imgur.com/LnW9Oiw.png',
+}
 }
 
 presence.on('UpdateData', async () => {
@@ -44,22 +45,20 @@ presence.on('UpdateData', async () => {
             '#challenge-info > h1',
           )!.textContent
           const level = document.querySelector(
-            '#challenge-info > div.challenge-level > span',
+            '.level',
           )!.textContent
-          if (level?.includes('LEVEL')) {
+if (level?.includes('LEVEL')) {
             const levelNum = Number.parseInt(level.split(' ')[1] ?? '0')
-            presenceData.smallImageKey = lvlImage[levelNum + 1]
-            presenceData.smallImageText = `레벨 ${levelNum + 1}`
+            presenceData.smallImageKey = lvlImages[levelNum]
+            presenceData.smallImageText = `레벨 ${levelNum}`
           }
-          else {
-            if (level === 'Unranked') {
-              presenceData.smallImageKey = lvlImage[0]
-              presenceData.smallImageText = 'Unranked'
-            }
-            else if (level === 'Beginner') {
-              presenceData.smallImageKey = lvlImage[1]
-              presenceData.smallImageText = 'Beginner'
-            }
+          else if (level === 'Unranked') {
+            presenceData.smallImageKey = lvlImages.Unranked
+            presenceData.smallImageText = 'Unranked'
+          }
+          else if (level === 'Beginner') {
+            presenceData.smallImageKey = lvlImages.Beginner
+            presenceData.smallImageText = 'Beginner'
           }
         }
       }
