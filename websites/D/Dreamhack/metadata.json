@@ -10,7 +10,10 @@
     "en": "Dreamhack is a platform for learning hacking by guides, wargames, and CTF.",
     "ko": "드림핵은 해킹을 가이드와 워게임, CTF 등을 통해 배울 수 있는 플랫폼입니다."
   },
-  "url": "dreamhack.io",
+  "url": [
+    "dreamhack.io",
+    "learn.dreamhack.io"
+  ],
   "version": "1.0.0",
   "logo": "https://i.imgur.com/4MHJBOf.png",
   "thumbnail": "https://i.imgur.com/gx0Bgf0.png",
