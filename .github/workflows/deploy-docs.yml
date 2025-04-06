@@ -92,12 +92,36 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const body = `## 📝 Documentation Preview\n\n**Your documentation changes are ready for preview!**\n\n🔍 [View Preview](${process.env.DEPLOYMENT_URL})\n\n_This preview will be automatically updated when you push new commits to this PR._`;
-            github.rest.issues.createComment({
+            // Check if we already commented on this PR
+            const { data: comments } = await github.rest.issues.listComments({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: body
             });
+
+            const commentMarker = '## 📝 Documentation Preview';
+            const existingComment = comments.find(comment => comment.body.includes(commentMarker));
+
+            const body = `${commentMarker}\n\n**Your documentation changes are ready for preview!**\n\n🔍 [View Preview](${process.env.DEPLOYMENT_URL})\n\n_This preview will be automatically updated when you push new commits to this PR._`;
+
+            if (existingComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                comment_id: existingComment.id,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+              });
+              console.log(`Updated existing comment ID ${existingComment.id}`);
+            } else {
+              // Create new comment
+              const { data: newComment } = await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+              });
+              console.log(`Created new comment ID ${newComment.id}`);
+            }
         env:
           DEPLOYMENT_URL: ${{ steps.deployment.outputs.page_url }}
