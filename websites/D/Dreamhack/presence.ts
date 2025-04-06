@@ -30,10 +30,18 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
   if (location.hostname === 'learn.dreamhack.io') {
-    presenceData.details = '학습 페이지 보는 중'
-    presenceData.state = document.querySelector(
-      'div.course-title-wrapper',
-    )!.textContent
+    if (path[1] === 'quiz') {
+      presenceData.details = '퀴즈 푸는 중'
+      presenceData.state = document.querySelector(
+        'div.quiz-title-wrapper',
+      )!.textContent
+    }
+    else {
+      presenceData.details = '학습 페이지 보는 중'
+      presenceData.state = document.querySelector(
+        'div.course-title-wrapper',
+      )!.textContent
+    }
   }
   else {
     switch (path[1]) {
