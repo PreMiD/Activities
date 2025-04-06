@@ -1,8 +1,9 @@
-import type { DefaultTheme } from 'vitepress'
 import { defineConfig } from 'vitepress'
 
 // Define available versions
-interface VersionItem extends DefaultTheme.NavItemWithLink {
+interface VersionItem {
+  text: string
+  link: string
   disabled?: boolean
 }
 
