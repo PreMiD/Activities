@@ -65,8 +65,8 @@ The `metadata.json` file contains information about your activity, such as the n
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "tag"],
-  "category": "other"
+  "category": "other",
+  "tags": ["example", "tag"]
 }
 ```
 
@@ -76,18 +76,18 @@ The `presence.ts` file contains the main code for your activity. Here's a basic 
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: "logo",
-    details: "Browsing Example.com",
-    state: "Homepage"
-  };
+    largeImageKey: 'logo',
+    details: 'Browsing Example.com',
+    state: 'Homepage'
+  }
 
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 ## Writing Your Activity Code
@@ -100,38 +100,42 @@ Now, let's modify the `presence.ts` file to create a simple activity:
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id" // This will be filled in by the CLI
-});
+  clientId: 'your_client_id' // This will be filled in by the CLI
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get the current URL
-  const path = document.location.pathname;
+  const path = document.location.pathname
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: "logo", // This is the name of the logo file in the assets
-    details: "Browsing Example.com",
+    largeImageKey: 'logo', // This is the name of the logo file in the assets
+    details: 'Browsing Example.com',
     startTimestamp: Date.now() // Show elapsed time
-  };
+  }
 
   // Update the state based on the current page
-  if (path === "/") {
-    presenceData.state = "Homepage";
-  } else if (path.includes("/about")) {
-    presenceData.state = "Reading about us";
-  } else if (path.includes("/contact")) {
-    presenceData.state = "Contacting us";
-  } else {
-    presenceData.state = "Browsing";
+  if (path === '/') {
+    presenceData.state = 'Homepage'
+  }
+  else if (path.includes('/about')) {
+    presenceData.state = 'Reading about us'
+  }
+  else if (path.includes('/contact')) {
+    presenceData.state = 'Contacting us'
+  }
+  else {
+    presenceData.state = 'Browsing'
   }
 
   // Set the activity
   if (presenceData.details) {
-    presence.setActivity(presenceData);
-  } else {
-    presence.clearActivity();
+    presence.setActivity(presenceData)
   }
-});
+  else {
+    presence.clearActivity()
+  }
+})
 ```
 
 This code creates a basic activity that shows what page the user is on, with different messages for different pages.

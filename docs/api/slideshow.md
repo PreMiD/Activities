@@ -15,6 +15,7 @@ const slideshow = presence.createSlideshow()
 ### addSlide
 
 <!-- eslint-skip -->
+
 ```typescript
 addSlide(id: string, data: PresenceData, interval: number): SlideshowSlide;
 ```
@@ -44,6 +45,7 @@ slideshow.addSlide('homepage', {
 ### deleteSlide
 
 <!-- eslint-skip -->
+
 ```typescript
 deleteSlide(id: string): void;
 ```
@@ -63,6 +65,7 @@ slideshow.deleteSlide('homepage')
 ### deleteAllSlides
 
 <!-- eslint-skip -->
+
 ```typescript
 deleteAllSlides(): void;
 ```
@@ -78,6 +81,7 @@ slideshow.deleteAllSlides()
 ### updateSlide
 
 <!-- eslint-skip -->
+
 ```typescript
 updateSlide(id: string, data?: PresenceData, interval?: number): SlideshowSlide;
 ```
@@ -107,6 +111,7 @@ slideshow.updateSlide('homepage', {
 ### hasSlide
 
 <!-- eslint-skip -->
+
 ```typescript
 hasSlide(id: string): boolean;
 ```
@@ -132,6 +137,7 @@ if (slideshow.hasSlide('homepage')) {
 ### getSlides
 
 <!-- eslint-skip -->
+
 ```typescript
 getSlides(): SlideshowSlide[];
 ```
@@ -177,6 +183,7 @@ The `SlideshowSlide` class represents a single slide in a slideshow.
 #### updateData
 
 <!-- eslint-skip -->
+
 ```typescript
 updateData(data?: PresenceData): void;
 ```
@@ -199,6 +206,7 @@ slide.updateData({
 #### updateInterval
 
 <!-- eslint-skip -->
+
 ```typescript
 updateInterval(interval?: number): void;
 ```

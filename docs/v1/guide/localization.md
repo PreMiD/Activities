@@ -36,6 +36,7 @@ Without this setting, users won't be able to select their preferred language.
 The first step in adding localization is to provide translations for the description in your `metadata.json` file:
 
 <!-- eslint-skip -->
+
 ```json
 {
   "description": {
@@ -167,7 +168,6 @@ websites/
 
 The localization file should follow the same structure as the general.json file, but with keys prefixed by your activity's name to avoid conflicts:
 
-<!-- eslint-skip -->
 ```json
 {
   "example.homepage": {
@@ -192,6 +192,7 @@ The localization file should follow the same structure as the general.json file,
 In your `presence.ts` file, you can access these translations:
 
 <!-- eslint-skip -->
+
 ```typescript
 presence.on('UpdateData', async () => {
   // Get the user's language
@@ -249,7 +250,6 @@ Here's a complete example of an activity with localization support:
 
 ### metadata.json
 
-<!-- eslint-skip -->
 ```json
 {
   "author": {

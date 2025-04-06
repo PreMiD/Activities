@@ -30,28 +30,28 @@ When you run `npx pmd dev` or `npx pmd build` for your activity, the PreMiD CLI:
 Once you've added dependencies to your `package.json` file, you can import and use them in your activity code:
 
 ```typescript
+import { get } from 'lodash'
 // Import a dependency in your presence.ts file
-import moment from "moment";
-import { get } from "lodash";
+import moment from 'moment'
 
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Use the imported dependencies
-  const formattedTime = moment().format("h:mm:ss a");
-  const pageTitle = get(document, "title", "Unknown Page");
+  const formattedTime = moment().format('h:mm:ss a')
+  const pageTitle = get(document, 'title', 'Unknown Page')
 
   const presenceData: PresenceData = {
-    largeImageKey: "logo",
+    largeImageKey: 'logo',
     details: pageTitle,
     state: `Current time: ${formattedTime}`,
     startTimestamp: Date.now()
-  };
+  }
 
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 ## Popular Dependencies

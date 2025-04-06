@@ -5,6 +5,7 @@ This page provides an example of a PreMiD Activity for a media website. This exa
 ## Basic Structure
 
 A media activity consists of two files:
+
 - `metadata.json`: Contains information about the activity
 - `presence.ts`: Contains the code for the activity
 
@@ -12,6 +13,7 @@ A media activity consists of two files:
 
 ```json
 {
+  "apiVersion": 1,
   "author": {
     "name": "Your Name",
     "id": "your_discord_id"
@@ -25,85 +27,87 @@ A media activity consists of two files:
   "logo": "https://mediaexample.com/logo.png",
   "thumbnail": "https://mediaexample.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["video", "music", "media"],
   "category": "videos",
-  "apiVersion": 1
+  "tags": ["video", "music", "media"]
 }
 ```
 
 ### presence.ts
 
 ```typescript
-import { getTimestampsFromMedia } from 'premid';
+import { getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: "logo"
-  };
-  
+    largeImageKey: 'logo'
+  }
+
   // Get the video element
-  const video = document.querySelector("video");
-  
+  const video = document.querySelector('video')
+
   if (video && video.readyState > 0) {
     // Get video information
-    const title = document.querySelector(".video-title")?.textContent || "Unknown video";
-    const author = document.querySelector(".video-author")?.textContent || "Unknown author";
-    const isPlaying = !video.paused;
-    
+    const title = document.querySelector('.video-title')?.textContent || 'Unknown video'
+    const author = document.querySelector('.video-author')?.textContent || 'Unknown author'
+    const isPlaying = !video.paused
+
     // Set the activity type to Watching
-    presenceData.type = ActivityType.Watching;
-    
+    presenceData.type = ActivityType.Watching
+
     // Set the details and state
-    presenceData.details = title;
-    presenceData.state = `By ${author}`;
-    
+    presenceData.details = title
+    presenceData.state = `By ${author}`
+
     // Set the large image text
-    presenceData.largeImageText = "MediaExample";
-    
+    presenceData.largeImageText = 'MediaExample'
+
     if (isPlaying) {
       // Set the small image key and text for playing state
-      presenceData.smallImageKey = "play";
-      presenceData.smallImageText = "Playing";
-      
+      presenceData.smallImageKey = 'play'
+      presenceData.smallImageText = 'Playing'
+
       // Calculate timestamps
-      const timestamps = getTimestampsFromMedia(video);
-      presenceData.startTimestamp = timestamps[0];
-      presenceData.endTimestamp = timestamps[1];
-    } else {
-      // Set the small image key and text for paused state
-      presenceData.smallImageKey = "pause";
-      presenceData.smallImageText = "Paused";
+      const timestamps = getTimestampsFromMedia(video)
+      presenceData.startTimestamp = timestamps[0]
+      presenceData.endTimestamp = timestamps[1]
     }
-    
+    else {
+      // Set the small image key and text for paused state
+      presenceData.smallImageKey = 'pause'
+      presenceData.smallImageText = 'Paused'
+    }
+
     // Add buttons
     presenceData.buttons = [
       {
-        label: "Watch Video",
+        label: 'Watch Video',
         url: document.URL
       },
       {
-        label: "Visit Channel",
-        url: document.querySelector(".channel-link")?.getAttribute("href") || document.URL
+        label: 'Visit Channel',
+        url: document.querySelector('.channel-link')?.getAttribute('href') || document.URL
       }
-    ];
-  } else {
-    // User is browsing the website
-    presenceData.details = "Browsing";
-    presenceData.state = "Looking for videos";
-    presenceData.startTimestamp = Date.now();
+    ]
   }
-  
+  else {
+    // User is browsing the website
+    presenceData.details = 'Browsing'
+    presenceData.state = 'Looking for videos'
+    presenceData.startTimestamp = Date.now()
+  }
+
   // Set the activity
   if (presenceData.details) {
-    presence.setActivity(presenceData);
-  } else {
-    presence.clearActivity();
+    presence.setActivity(presenceData)
   }
-});
+  else {
+    presence.clearActivity()
+  }
+})
 ```
 
 ## How It Works
@@ -137,22 +141,22 @@ You can modify this example to handle different types of media:
 
 ```typescript
 // Set the activity type to Listening
-presenceData.type = ActivityType.Listening;
+presenceData.type = ActivityType.Listening
 
 // Set the details and state
-presenceData.details = "Listening to";
-presenceData.state = `${title} by ${artist}`;
+presenceData.details = 'Listening to'
+presenceData.state = `${title} by ${artist}`
 ```
 
 ### For Live Streams
 
 ```typescript
 // For live streams, only use startTimestamp
-presenceData.startTimestamp = Date.now();
-delete presenceData.endTimestamp;
+presenceData.startTimestamp = Date.now()
+delete presenceData.endTimestamp
 
 // Indicate that it's a live stream
-presenceData.state = `${title} (Live)`;
+presenceData.state = `${title} (Live)`
 ```
 
 ## Testing

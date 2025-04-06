@@ -5,6 +5,7 @@ The `Presence` class is the main class for creating activities. It provides meth
 ## Constructor
 
 <!-- eslint-skip -->
+
 ```typescript
 constructor(presenceOptions: PresenceOptions);
 ```
@@ -30,6 +31,7 @@ const presence = new Presence({
 ### setActivity
 
 <!-- eslint-skip -->
+
 ```typescript
 setActivity(data?: PresenceData | Slideshow): Promise<void>;
 ```
@@ -54,6 +56,7 @@ presence.setActivity({
 ### clearActivity
 
 <!-- eslint-skip -->
+
 ```typescript
 clearActivity(): void;
 ```
@@ -69,6 +72,7 @@ presence.clearActivity()
 ### getStrings
 
 <!-- eslint-skip -->
+
 ```typescript
 getStrings<T extends { [K: string]: string }>(strings: T): Promise<T>;
 ```
@@ -94,6 +98,7 @@ console.log(strings.pause) // "Paused"
 ### getPageVariable
 
 <!-- eslint-skip -->
+
 ```typescript
 getPageVariable<T extends Record<string, any> = Record<string, unknown>>(...variables: string[]): Promise<T>;
 ```
@@ -113,6 +118,7 @@ const { title, artist } = await presence.getPageVariable('document.title', 'wind
 ### getSetting
 
 <!-- eslint-skip -->
+
 ```typescript
 getSetting<T extends string | boolean | number>(setting: string): Promise<T>;
 ```
@@ -132,6 +138,7 @@ const showButtons = await presence.getSetting<boolean>('showButtons')
 ### hideSetting
 
 <!-- eslint-skip -->
+
 ```typescript
 hideSetting(settings: string | string[]): Promise<void>;
 ```
@@ -151,6 +158,7 @@ presence.hideSetting('showTimestamp')
 ### showSetting
 
 <!-- eslint-skip -->
+
 ```typescript
 showSetting(settings: string | string[]): Promise<void>;
 ```
@@ -170,6 +178,7 @@ presence.showSetting('showTimestamp')
 ### getLogs
 
 <!-- eslint-skip -->
+
 ```typescript
 getLogs<T = unknown>(regExp?: RegExp, options?: { types?: ConsoleLogType[], contentOnly?: boolean }): Promise<T[] | ConsoleLog<T>[]>;
 ```
@@ -192,6 +201,7 @@ const logs = await presence.getLogs(/error/i, { types: ['error', 'warn'] })
 ### getExtensionVersion
 
 <!-- eslint-skip -->
+
 ```typescript
 getExtensionVersion(onlyNumeric?: boolean): string | number;
 ```
@@ -212,6 +222,7 @@ console.log(version) // "2.2.0"
 ### createSlideshow
 
 <!-- eslint-skip -->
+
 ```typescript
 createSlideshow(): Slideshow;
 ```
@@ -227,6 +238,7 @@ const slideshow = presence.createSlideshow()
 ### on
 
 <!-- eslint-skip -->
+
 ```typescript
 on<K extends keyof PresenceEvents>(eventName: K, listener: (...args: PresenceEvents[K]) => Awaitable<void>): void
 ```
@@ -277,6 +289,7 @@ presence.on('iFrameData', (data) => {
 ### info
 
 <!-- eslint-skip -->
+
 ```typescript
 info(message: string): void;
 ```
@@ -296,6 +309,7 @@ presence.info('This is an info message')
 ### success
 
 <!-- eslint-skip -->
+
 ```typescript
 success(message: string): void;
 ```
@@ -315,6 +329,7 @@ presence.success('This is a success message')
 ### error
 
 <!-- eslint-skip -->
+
 ```typescript
 error(message: string): void;
 ```

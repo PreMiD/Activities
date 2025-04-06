@@ -5,6 +5,7 @@ This guide will help you set up your development environment for creating PreMiD
 ## Prerequisites
 
 Before you begin, make sure you have the following installed:
+
 - [Node.js](https://nodejs.org/) (version 20 or higher)
 - [Git](https://git-scm.com/)
 - A code editor (we recommend [Visual Studio Code](https://code.visualstudio.com/))
@@ -41,12 +42,12 @@ The PreMiD CLI (Command Line Interface) is a tool that helps you create, test, a
 
 Here's a quick overview of the main CLI commands:
 
-| Command | Description |
-|---------|-------------|
-| `npx pmd new "YourActivityName"` | Creates a new activity |
-| `npx pmd dev "YourActivityName"` | Develops an activity with live-reload |
-| `npx pmd versionize "YourActivityName"` | Creates a new version of an activity |
-| `npx pmd build "YourActivityName"` | Builds an activity for production |
+| Command                                 | Description                           |
+| --------------------------------------- | ------------------------------------- |
+| `npx pmd new "YourActivityName"`        | Creates a new activity                |
+| `npx pmd dev "YourActivityName"`        | Develops an activity with live-reload |
+| `npx pmd versionize "YourActivityName"` | Creates a new version of an activity  |
+| `npx pmd build "YourActivityName"`      | Builds an activity for production     |
 
 For detailed instructions on how to use these commands, see the [Creating Your First Activity](/v1/guide/first-activity) guide.
 

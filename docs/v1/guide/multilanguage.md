@@ -21,10 +21,10 @@ The first step in adding multilanguage support is to provide translations for th
 ```json
 {
   "description": {
-    "en": "Example is a website that does something cool.",
     "de": "Example ist eine Website, die etwas Cooles macht.",
-    "fr": "Example est un site web qui fait quelque chose de cool.",
-    "es": "Example es un sitio web que hace algo genial."
+    "en": "Example is a website that does something cool.",
+    "es": "Example es un sitio web que hace algo genial.",
+    "fr": "Example est un site web qui fait quelque chose de cool."
   }
 }
 ```
@@ -36,33 +36,35 @@ The keys are language codes, and the values are the descriptions in those langua
 The `getStrings` method allows you to get translations for specific strings from the PreMiD extension. These translations are maintained by the PreMiD translation team and are available in many languages.
 
 ```typescript
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get translations
   const strings = await presence.getStrings({
-    play: "general.playing",
-    pause: "general.paused",
-    browse: "general.browsing"
-  });
+    play: 'general.playing',
+    pause: 'general.paused',
+    browse: 'general.browsing'
+  })
 
   // Use translations in your presence data
   const presenceData: PresenceData = {
-    largeImageKey: "logo"
-  };
+    largeImageKey: 'logo'
+  }
 
-  const video = document.querySelector("video");
+  const video = document.querySelector('video')
 
   if (video) {
     if (video.paused) {
-      presenceData.details = strings.pause;
-    } else {
-      presenceData.details = strings.play;
+      presenceData.details = strings.pause
     }
-  } else {
-    presenceData.details = strings.browse;
+    else {
+      presenceData.details = strings.play
+    }
+  }
+  else {
+    presenceData.details = strings.browse
   }
 
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 The `getStrings` method takes an object where the keys are the names you want to use for the strings, and the values are the keys for the strings in the PreMiD translation system.
@@ -71,19 +73,19 @@ The `getStrings` method takes an object where the keys are the names you want to
 
 Here are some commonly used translation keys:
 
-| Key | English Value |
-|-----|---------------|
-| `general.playing` | "Playing" |
-| `general.paused` | "Paused" |
-| `general.browsing` | "Browsing..." |
-| `general.reading` | "Reading..." |
-| `general.watching` | "Watching..." |
+| Key                 | English Value  |
+| ------------------- | -------------- |
+| `general.playing`   | "Playing"      |
+| `general.paused`    | "Paused"       |
+| `general.browsing`  | "Browsing..."  |
+| `general.reading`   | "Reading..."   |
+| `general.watching`  | "Watching..."  |
 | `general.listening` | "Listening..." |
-| `general.live` | "Live" |
-| `general.episode` | "Episode" |
-| `general.season` | "Season" |
-| `general.chapter` | "Chapter" |
-| `general.page` | "Page" |
+| `general.live`      | "Live"         |
+| `general.episode`   | "Episode"      |
+| `general.season`    | "Season"       |
+| `general.chapter`   | "Chapter"      |
+| `general.page`      | "Page"         |
 
 For a complete list of available translation keys, check the [PreMiD Localization Repository](https://github.com/PreMiD/Localization).
 
@@ -117,49 +119,51 @@ This special setting tells PreMiD that your activity supports multiple languages
 If you need to use strings that are not available in the PreMiD translation system, you can create custom translations in your activity.
 
 ```typescript
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get the user's language
-  const userLanguage = await presence.getSetting<string>("lang") || "en";
+  const userLanguage = await presence.getSetting<string>('lang') || 'en'
 
   // Define custom translations
   const translations = {
     en: {
-      homepage: "Homepage",
-      about: "About page",
-      contact: "Contact page"
+      homepage: 'Homepage',
+      about: 'About page',
+      contact: 'Contact page'
     },
     de: {
-      homepage: "Startseite",
-      about: "Über uns",
-      contact: "Kontakt"
+      homepage: 'Startseite',
+      about: 'Über uns',
+      contact: 'Kontakt'
     },
     fr: {
-      homepage: "Page d'accueil",
-      about: "À propos",
-      contact: "Contact"
+      homepage: 'Page d\'accueil',
+      about: 'À propos',
+      contact: 'Contact'
     }
-  };
+  }
 
   // Use the user's language or fall back to English
-  const strings = translations[userLanguage] || translations.en;
+  const strings = translations[userLanguage] || translations.en
 
   // Use translations in your presence data
   const presenceData: PresenceData = {
-    largeImageKey: "logo"
-  };
-
-  const path = document.location.pathname;
-
-  if (path === "/") {
-    presenceData.details = strings.homepage;
-  } else if (path.includes("/about")) {
-    presenceData.details = strings.about;
-  } else if (path.includes("/contact")) {
-    presenceData.details = strings.contact;
+    largeImageKey: 'logo'
   }
 
-  presence.setActivity(presenceData);
-});
+  const path = document.location.pathname
+
+  if (path === '/') {
+    presenceData.details = strings.homepage
+  }
+  else if (path.includes('/about')) {
+    presenceData.details = strings.about
+  }
+  else if (path.includes('/contact')) {
+    presenceData.details = strings.contact
+  }
+
+  presence.setActivity(presenceData)
+})
 ```
 
 ## Best Practices
@@ -184,8 +188,8 @@ Here's a complete example of an activity with multilanguage support:
   },
   "service": "Example",
   "description": {
-    "en": "Example is a website that does something cool.",
     "de": "Example ist eine Website, die etwas Cooles macht.",
+    "en": "Example is a website that does something cool.",
     "fr": "Example est un site web qui fait quelque chose de cool."
   },
   "url": "example.com",
@@ -193,8 +197,8 @@ Here's a complete example of an activity with multilanguage support:
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "multilanguage"],
   "category": "other",
+  "tags": ["example", "multilanguage"],
   "settings": [
     {
       "id": "showButtons",
@@ -216,73 +220,76 @@ Here's a complete example of an activity with multilanguage support:
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
 // Define custom translations
 const translations = {
   en: {
-    homepage: "Homepage",
-    about: "About page",
-    contact: "Contact page"
+    homepage: 'Homepage',
+    about: 'About page',
+    contact: 'Contact page'
   },
   de: {
-    homepage: "Startseite",
-    about: "Über uns",
-    contact: "Kontakt"
+    homepage: 'Startseite',
+    about: 'Über uns',
+    contact: 'Kontakt'
   },
   fr: {
-    homepage: "Page d'accueil",
-    about: "À propos",
-    contact: "Contact"
+    homepage: 'Page d\'accueil',
+    about: 'À propos',
+    contact: 'Contact'
   }
-};
+}
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get settings
-  const showButtons = await presence.getSetting<boolean>("showButtons");
-  const userLanguage = await presence.getSetting<string>("language") || "en";
+  const showButtons = await presence.getSetting<boolean>('showButtons')
+  const userLanguage = await presence.getSetting<string>('language') || 'en'
 
   // Get translations from PreMiD
   const strings = await presence.getStrings({
-    browse: "general.browsing"
-  });
+    browse: 'general.browsing'
+  })
 
   // Get custom translations
-  const customStrings = translations[userLanguage] || translations.en;
+  const customStrings = translations[userLanguage] || translations.en
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: "logo",
+    largeImageKey: 'logo',
     startTimestamp: Date.now()
-  };
+  }
 
   // Set details based on the current page
-  const path = document.location.pathname;
+  const path = document.location.pathname
 
-  if (path === "/") {
-    presenceData.details = customStrings.homepage;
-  } else if (path.includes("/about")) {
-    presenceData.details = customStrings.about;
-  } else if (path.includes("/contact")) {
-    presenceData.details = customStrings.contact;
-  } else {
-    presenceData.details = strings.browse;
+  if (path === '/') {
+    presenceData.details = customStrings.homepage
+  }
+  else if (path.includes('/about')) {
+    presenceData.details = customStrings.about
+  }
+  else if (path.includes('/contact')) {
+    presenceData.details = customStrings.contact
+  }
+  else {
+    presenceData.details = strings.browse
   }
 
   // Add buttons if enabled
   if (showButtons) {
     presenceData.buttons = [
       {
-        label: "Visit Website",
+        label: 'Visit Website',
         url: document.URL
       }
-    ];
+    ]
   }
 
   // Set the activity
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 ## Next Steps

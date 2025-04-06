@@ -5,6 +5,7 @@ This page provides an example of a PreMiD Activity that uses iFrames to gather i
 ## Basic Structure
 
 An activity with iFrames consists of three files:
+
 - `metadata.json`: Contains information about the activity, including iFrame settings
 - `presence.ts`: Contains the code for the main activity
 - `iframe.ts`: Contains the code that runs inside the iFrames
@@ -13,6 +14,7 @@ An activity with iFrames consists of three files:
 
 ```json
 {
+  "apiVersion": 1,
   "author": {
     "name": "Your Name",
     "id": "your_discord_id"
@@ -26,9 +28,8 @@ An activity with iFrames consists of three files:
   "logo": "https://iframeexample.com/logo.png",
   "thumbnail": "https://iframeexample.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["video", "iframe", "embed"],
   "category": "videos",
-  "apiVersion": 1,
+  "tags": ["video", "iframe", "embed"],
   "iframe": true,
   "iFrameRegExp": ".*\\.(youtube|vimeo)\\.com/.*"
 }
@@ -37,23 +38,23 @@ An activity with iFrames consists of three files:
 ### iframe.ts
 
 ```typescript
-const iframe = new iFrame();
+const iframe = new iFrame()
 
-iframe.on("UpdateData", async () => {
+iframe.on('UpdateData', async () => {
   // Get the video element in the iframe
-  const video = document.querySelector("video");
-  
+  const video = document.querySelector('video')
+
   if (video && video.readyState > 0) {
     // Get video information
-    const title = document.querySelector(".video-title")?.textContent;
-    const author = document.querySelector(".video-author")?.textContent;
-    const currentTime = video.currentTime;
-    const duration = video.duration;
-    const paused = video.paused;
-    
+    const title = document.querySelector('.video-title')?.textContent
+    const author = document.querySelector('.video-author')?.textContent
+    const currentTime = video.currentTime
+    const duration = video.duration
+    const paused = video.paused
+
     // Get the iframe URL
-    const iframeUrl = await iframe.getUrl();
-    
+    const iframeUrl = await iframe.getUrl()
+
     // Send data to the main presence
     iframe.send({
       video: {
@@ -64,102 +65,105 @@ iframe.on("UpdateData", async () => {
         paused,
         iframeUrl
       }
-    });
+    })
   }
-});
+})
 ```
 
 ### presence.ts
 
 ```typescript
-import { getTimestamps } from 'premid';
+import { getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
 // Store iframe data
 let iframeData: {
   video?: {
-    title?: string;
-    author?: string;
-    currentTime?: number;
-    duration?: number;
-    paused?: boolean;
-    iframeUrl?: string;
-  };
-} = {};
+    title?: string
+    author?: string
+    currentTime?: number
+    duration?: number
+    paused?: boolean
+    iframeUrl?: string
+  }
+} = {}
 
 // Listen for iframe data
-presence.on("iFrameData", (data) => {
-  iframeData = data;
-});
+presence.on('iFrameData', (data) => {
+  iframeData = data
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: "logo"
-  };
-  
+    largeImageKey: 'logo'
+  }
+
   // Check if we have video data from the iframe
   if (iframeData.video) {
-    const { title, author, currentTime, duration, paused, iframeUrl } = iframeData.video;
-    
+    const { title, author, currentTime, duration, paused, iframeUrl } = iframeData.video
+
     // Set the activity type to Watching
-    presenceData.type = ActivityType.Watching;
-    
+    presenceData.type = ActivityType.Watching
+
     // Set the details and state
-    presenceData.details = title || "Watching a video";
-    presenceData.state = author ? `By ${author}` : "Unknown author";
-    
+    presenceData.details = title || 'Watching a video'
+    presenceData.state = author ? `By ${author}` : 'Unknown author'
+
     // Set the large image text
-    presenceData.largeImageText = "iFrameExample";
-    
+    presenceData.largeImageText = 'iFrameExample'
+
     if (paused) {
       // Set the small image key and text for paused state
-      presenceData.smallImageKey = "pause";
-      presenceData.smallImageText = "Paused";
-    } else {
+      presenceData.smallImageKey = 'pause'
+      presenceData.smallImageText = 'Paused'
+    }
+    else {
       // Set the small image key and text for playing state
-      presenceData.smallImageKey = "play";
-      presenceData.smallImageText = "Playing";
-      
+      presenceData.smallImageKey = 'play'
+      presenceData.smallImageText = 'Playing'
+
       // Calculate timestamps if we have currentTime and duration
       if (currentTime && duration) {
-        const timestamps = getTimestamps(currentTime, duration);
-        presenceData.startTimestamp = timestamps[0];
-        presenceData.endTimestamp = timestamps[1];
+        const timestamps = getTimestamps(currentTime, duration)
+        presenceData.startTimestamp = timestamps[0]
+        presenceData.endTimestamp = timestamps[1]
       }
     }
-    
+
     // Add buttons
     presenceData.buttons = [
       {
-        label: "Watch Video",
+        label: 'Watch Video',
         url: document.URL
       }
-    ];
-    
+    ]
+
     // Add a second button with the iframe URL if available
     if (iframeUrl) {
       presenceData.buttons.push({
-        label: "View Original",
+        label: 'View Original',
         url: iframeUrl
-      });
+      })
     }
-  } else {
-    // User is browsing the website
-    presenceData.details = "Browsing";
-    presenceData.state = "Looking for videos";
-    presenceData.startTimestamp = Date.now();
   }
-  
+  else {
+    // User is browsing the website
+    presenceData.details = 'Browsing'
+    presenceData.state = 'Looking for videos'
+    presenceData.startTimestamp = Date.now()
+  }
+
   // Set the activity
   if (presenceData.details) {
-    presence.setActivity(presenceData);
-  } else {
-    presence.clearActivity();
+    presence.setActivity(presenceData)
   }
-});
+  else {
+    presence.clearActivity()
+  }
+})
 ```
 
 ## How It Works
@@ -201,11 +205,12 @@ If your website has multiple iFrames, you can identify them by their URL:
 
 ```typescript
 // In iframe.ts
-const iframeUrl = await iframe.getUrl();
+const iframeUrl = await iframe.getUrl()
 
-if (iframeUrl.includes("youtube.com")) {
+if (iframeUrl.includes('youtube.com')) {
   // Handle YouTube iframe
-} else if (iframeUrl.includes("vimeo.com")) {
+}
+else if (iframeUrl.includes('vimeo.com')) {
   // Handle Vimeo iframe
 }
 ```

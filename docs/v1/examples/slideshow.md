@@ -5,6 +5,7 @@ This page provides an example of a PreMiD Activity that uses the Slideshow class
 ## Basic Structure
 
 An activity with a slideshow consists of two files:
+
 - `metadata.json`: Contains information about the activity
 - `presence.ts`: Contains the code for the activity, including the slideshow logic
 
@@ -12,6 +13,7 @@ An activity with a slideshow consists of two files:
 
 ```json
 {
+  "apiVersion": 1,
   "author": {
     "name": "Your Name",
     "id": "your_discord_id"
@@ -25,9 +27,8 @@ An activity with a slideshow consists of two files:
   "logo": "https://slideshowexample.com/logo.png",
   "thumbnail": "https://slideshowexample.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "slideshow"],
   "category": "other",
-  "apiVersion": 1
+  "tags": ["example", "slideshow"]
 }
 ```
 
@@ -35,144 +36,146 @@ An activity with a slideshow consists of two files:
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
 // Create a slideshow
-const slideshow = presence.createSlideshow();
+const slideshow = presence.createSlideshow()
 
 // Define a constant for slideshow timeout
-const SLIDESHOW_TIMEOUT = 5000; // 5 seconds
+const SLIDESHOW_TIMEOUT = 5000 // 5 seconds
 
 // Track which slideshow keys we've registered to avoid duplicates
-const registeredSlideshowKeys = new Set<string>();
+const registeredSlideshowKeys = new Set<string>()
 
 // Helper function to register slideshow keys and avoid duplicates
 function registerSlideshowKey(key: string): void {
   if (!registeredSlideshowKeys.has(key)) {
-    registeredSlideshowKeys.add(key);
+    registeredSlideshowKeys.add(key)
   }
 }
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Base presence data that will be common across slides
   const presenceData: PresenceData = {
-    largeImageKey: "logo",
+    largeImageKey: 'logo',
     startTimestamp: Date.now()
-  };
-  
+  }
+
   // Get page information
-  const pageTitle = document.title;
-  const path = document.location.pathname;
-  
+  const pageTitle = document.title
+  const path = document.location.pathname
+
   // Determine what page we're on
-  if (path.includes("/gallery/")) {
+  if (path.includes('/gallery/')) {
     // Gallery page with images
-    const images = document.querySelectorAll(".gallery img");
-    
+    const images = document.querySelectorAll('.gallery img')
+
     // Register a unique key for this gallery page
-    const galleryPage = document.querySelector(".pagination-active")?.textContent || "1";
-    registerSlideshowKey(`gallery-page-${galleryPage}`);
-    
+    const galleryPage = document.querySelector('.pagination-active')?.textContent || '1'
+    registerSlideshowKey(`gallery-page-${galleryPage}`)
+
     // Clear previous slides if we have a new set of images
-    slideshow.deleteAllSlides();
-    
+    slideshow.deleteAllSlides()
+
     // Add each image as a slide
     for (const [index, image] of images.entries()) {
-      const imageTitle = image.getAttribute("alt") || `Image ${index + 1}`;
-      
+      const imageTitle = image.getAttribute('alt') || `Image ${index + 1}`
+
       slideshow.addSlide(
         `image-${index}`,
         {
           ...presenceData,
-          details: "Viewing gallery",
+          details: 'Viewing gallery',
           state: `${imageTitle} (${index + 1}/${images.length})`,
           largeImageKey: image.src,
-          smallImageKey: "search",
-          smallImageText: "Browsing images"
+          smallImageKey: 'search',
+          smallImageText: 'Browsing images'
         },
         SLIDESHOW_TIMEOUT
-      );
+      )
     }
-  } else if (path.includes("/profile/")) {
+  }
+  else if (path.includes('/profile/')) {
     // Profile page
-    presenceData.details = "Viewing profile";
-    presenceData.state = document.querySelector(".username")?.textContent || "Unknown user";
-    
+    presenceData.details = 'Viewing profile'
+    presenceData.state = document.querySelector('.username')?.textContent || 'Unknown user'
+
     // Add user stats slide
     slideshow.addSlide(
-      "profile-main",
+      'profile-main',
       {
         ...presenceData,
-        smallImageKey: "user",
-        smallImageText: "User profile"
+        smallImageKey: 'user',
+        smallImageText: 'User profile'
       },
       SLIDESHOW_TIMEOUT
-    );
-    
+    )
+
     // Add user level slide
-    const userLevel = document.querySelector(".user-level")?.textContent || "Unknown level";
+    const userLevel = document.querySelector('.user-level')?.textContent || 'Unknown level'
     slideshow.addSlide(
-      "profile-level",
+      'profile-level',
       {
         ...presenceData,
         details: `Level: ${userLevel}`,
-        state: `User: ${document.querySelector(".username")?.textContent || "Unknown user"}`,
-        smallImageKey: "star",
-        smallImageText: "User level"
+        state: `User: ${document.querySelector('.username')?.textContent || 'Unknown user'}`,
+        smallImageKey: 'star',
+        smallImageText: 'User level'
       },
       SLIDESHOW_TIMEOUT
-    );
-    
+    )
+
     // Add achievements if available
-    const achievements = document.querySelectorAll(".achievement");
+    const achievements = document.querySelectorAll('.achievement')
     if (achievements.length > 0) {
       slideshow.addSlide(
-        "profile-achievements",
+        'profile-achievements',
         {
           ...presenceData,
-          details: "Achievements",
+          details: 'Achievements',
           state: `${achievements.length} unlocked`,
-          smallImageKey: "trophy",
-          smallImageText: "User achievements"
+          smallImageKey: 'trophy',
+          smallImageText: 'User achievements'
         },
         SLIDESHOW_TIMEOUT
-      );
+      )
     }
-  } else {
+  }
+  else {
     // Homepage or other pages
-    presenceData.details = "Browsing SlideshowExample";
-    presenceData.state = pageTitle;
-    
+    presenceData.details = 'Browsing SlideshowExample'
+    presenceData.state = pageTitle
+
     // Just use a single slide for the homepage
-    slideshow.addSlide("homepage", presenceData, SLIDESHOW_TIMEOUT);
-    
+    slideshow.addSlide('homepage', presenceData, SLIDESHOW_TIMEOUT)
+
     // Remove any other slides that might exist from previous pages
     for (const slide of slideshow.getSlides()) {
-      if (slide.id !== "homepage") {
-        slideshow.deleteSlide(slide.id);
+      if (slide.id !== 'homepage') {
+        slideshow.deleteSlide(slide.id)
       }
     }
   }
-  
+
   // Add buttons to all slides if needed
-  const showButtons = await presence.getSetting<boolean>("showButtons");
+  const showButtons = await presence.getSetting<boolean>('showButtons')
   if (showButtons) {
     for (const slide of slideshow.getSlides()) {
-      const data = slide.data;
+      const data = slide.data
       data.buttons = [
         {
-          label: "Visit Website",
+          label: 'Visit Website',
           url: document.URL
         }
-      ];
-      slide.updateData(data);
+      ]
+      slide.updateData(data)
     }
   }
-  
+
   // Set the activity with the slideshow
-  presence.setActivity(slideshow);
-});
+  presence.setActivity(slideshow)
+})
 ```
 
 ## How It Works
@@ -191,11 +194,13 @@ In the `presence.ts` file, we:
 The example demonstrates three different approaches to managing slides based on the current page:
 
 1. **Gallery Page**: Creates a dynamic set of slides for each image
+
    - Clears all previous slides with `slideshow.deleteAllSlides()`
    - Creates a new slide for each image with unique IDs
    - Uses the spread operator (`...presenceData`) to maintain common properties
 
 2. **Profile Page**: Creates multiple slides showing different aspects of the profile
+
    - One slide for basic profile info
    - One slide for user level
    - One conditional slide for achievements (only if they exist)
@@ -206,7 +211,7 @@ The example demonstrates three different approaches to managing slides based on 
 
 ### Tracking Slideshow Keys
 
-The `registerSlideshowKey` function and `registeredSlideshowKeys` Set are used to track which slideshow configurations we've already set up. This is useful when:  
+The `registerSlideshowKey` function and `registeredSlideshowKeys` Set are used to track which slideshow configurations we've already set up. This is useful when:
 
 - Moving between pages with similar content
 - Avoiding duplicate slide creation
@@ -217,17 +222,17 @@ The `registerSlideshowKey` function and `registeredSlideshowKeys` Set are used t
 The example shows how to modify all slides at once based on user settings:
 
 ```typescript
-const showButtons = await presence.getSetting<boolean>("showButtons");
+const showButtons = await presence.getSetting<boolean>('showButtons')
 if (showButtons) {
   for (const slide of slideshow.getSlides()) {
-    const data = slide.data;
+    const data = slide.data
     data.buttons = [
       {
-        label: "Visit Website",
+        label: 'Visit Website',
         url: document.URL
       }
-    ];
-    slide.updateData(data);
+    ]
+    slide.updateData(data)
   }
 }
 ```

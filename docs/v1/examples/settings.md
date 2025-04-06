@@ -5,6 +5,7 @@ This page provides an example of a PreMiD Activity with customizable settings. S
 ## Basic Structure
 
 An activity with settings consists of two files:
+
 - `metadata.json`: Contains information about the activity, including the settings definitions
 - `presence.ts`: Contains the code for the activity, including logic to handle the settings
 
@@ -12,6 +13,7 @@ An activity with settings consists of two files:
 
 ```json
 {
+  "apiVersion": 1,
   "author": {
     "name": "Your Name",
     "id": "your_discord_id"
@@ -25,9 +27,8 @@ An activity with settings consists of two files:
   "logo": "https://settingsexample.com/logo.png",
   "thumbnail": "https://settingsexample.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "settings"],
   "category": "other",
-  "apiVersion": 1,
+  "tags": ["example", "settings"],
   "settings": [
     {
       "id": "showButtons",
@@ -65,89 +66,94 @@ An activity with settings consists of two files:
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
 // Default settings values
-let showButtons = true;
-let showTimestamp = true;
-let detailsFormat = 0;
-let privacyMode = false;
+let showButtons = true
+let showTimestamp = true
+let detailsFormat = 0
+let privacyMode = false
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get settings
-  showButtons = await presence.getSetting<boolean>("showButtons");
-  showTimestamp = await presence.getSetting<boolean>("showTimestamp");
-  detailsFormat = await presence.getSetting<number>("detailsFormat");
-  privacyMode = await presence.getSetting<boolean>("privacyMode");
-  
+  showButtons = await presence.getSetting<boolean>('showButtons')
+  showTimestamp = await presence.getSetting<boolean>('showTimestamp')
+  detailsFormat = await presence.getSetting<number>('detailsFormat')
+  privacyMode = await presence.getSetting<boolean>('privacyMode')
+
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: "logo"
-  };
-  
+    largeImageKey: 'logo'
+  }
+
   // Get page information
-  const pageTitle = document.title;
-  const path = document.location.pathname;
-  
+  const pageTitle = document.title
+  const path = document.location.pathname
+
   // Format details based on user preference
   switch (detailsFormat) {
     case 0:
-      presenceData.details = pageTitle;
-      break;
+      presenceData.details = pageTitle
+      break
     case 1:
-      presenceData.details = `SettingsExample - ${pageTitle}`;
-      break;
+      presenceData.details = `SettingsExample - ${pageTitle}`
+      break
     case 2:
-      presenceData.details = `Browsing: ${pageTitle}`;
-      break;
+      presenceData.details = `Browsing: ${pageTitle}`
+      break
     default:
-      presenceData.details = pageTitle;
+      presenceData.details = pageTitle
   }
-  
+
   // Apply privacy mode if enabled
   if (privacyMode) {
-    presenceData.details = "Browsing SettingsExample";
-    presenceData.state = "Privacy Mode Enabled";
-  } else {
+    presenceData.details = 'Browsing SettingsExample'
+    presenceData.state = 'Privacy Mode Enabled'
+  }
+  else {
     // Set state based on the current page
-    if (path === "/") {
-      presenceData.state = "Homepage";
-    } else if (path.includes("/about")) {
-      presenceData.state = "About page";
-    } else if (path.includes("/contact")) {
-      presenceData.state = "Contact page";
-    } else {
-      presenceData.state = "Browsing";
+    if (path === '/') {
+      presenceData.state = 'Homepage'
+    }
+    else if (path.includes('/about')) {
+      presenceData.state = 'About page'
+    }
+    else if (path.includes('/contact')) {
+      presenceData.state = 'Contact page'
+    }
+    else {
+      presenceData.state = 'Browsing'
     }
   }
-  
+
   // Add timestamp if enabled
   if (showTimestamp) {
-    presenceData.startTimestamp = Date.now();
+    presenceData.startTimestamp = Date.now()
   }
-  
+
   // Add buttons if enabled
   if (showButtons && !privacyMode) {
     presenceData.buttons = [
       {
-        label: "Visit Page",
+        label: 'Visit Page',
         url: document.URL
       },
       {
-        label: "Visit Website",
-        url: "https://settingsexample.com"
+        label: 'Visit Website',
+        url: 'https://settingsexample.com'
       }
-    ];
+    ]
   }
-  
+
   // Set the activity
   if (presenceData.details) {
-    presence.setActivity(presenceData);
-  } else {
-    presence.clearActivity();
+    presence.setActivity(presenceData)
   }
-});
+  else {
+    presence.clearActivity()
+  }
+})
 ```
 
 ## How It Works
@@ -162,6 +168,7 @@ The `settings` array in `metadata.json` defines the settings that users can cust
 4. `privacyMode`: A boolean setting that enables privacy mode, which hides specific information
 
 Each setting has:
+
 - `id`: A unique identifier for the setting
 - `title`: The display name of the setting
 - `icon`: An icon for the setting (using Font Awesome classes)
@@ -192,9 +199,10 @@ You can also show or hide settings dynamically based on the current state of the
 ```typescript
 // Show the timestamp setting only when not in privacy mode
 if (privacyMode) {
-  presence.hideSetting("showTimestamp");
-} else {
-  presence.showSetting("showTimestamp");
+  presence.hideSetting('showTimestamp')
+}
+else {
+  presence.showSetting('showTimestamp')
 }
 ```
 

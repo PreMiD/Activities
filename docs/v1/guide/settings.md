@@ -25,8 +25,8 @@ Here's an example of a `metadata.json` file with settings:
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "tag"],
   "category": "other",
+  "tags": ["example", "tag"],
   "settings": [
     {
       "id": "showButtons",
@@ -144,56 +144,56 @@ To use settings in your code, you need to get their values using the `getSetting
 ![Settings in Activity Code](https://placehold.co/800x400?text=Settings+in+Activity+Code)
 
 ```typescript
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get settings
-  const showButtons = await presence.getSetting<boolean>("showButtons");
-  const showTimestamp = await presence.getSetting<boolean>("showTimestamp");
-  const displayFormat = await presence.getSetting<number>("displayFormat");
+  const showButtons = await presence.getSetting<boolean>('showButtons')
+  const showTimestamp = await presence.getSetting<boolean>('showTimestamp')
+  const displayFormat = await presence.getSetting<number>('displayFormat')
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: "logo",
-    details: "Browsing Example.com"
-  };
+    largeImageKey: 'logo',
+    details: 'Browsing Example.com'
+  }
 
   // Add timestamp if enabled
   if (showTimestamp) {
-    presenceData.startTimestamp = Date.now();
+    presenceData.startTimestamp = Date.now()
   }
 
   // Add buttons if enabled
   if (showButtons) {
     presenceData.buttons = [
       {
-        label: "Visit Website",
-        url: "https://example.com"
+        label: 'Visit Website',
+        url: 'https://example.com'
       },
       {
-        label: "View Page",
+        label: 'View Page',
         url: document.URL
       }
-    ];
+    ]
   }
 
   // Format details based on display format
-  const title = document.querySelector(".title")?.textContent || "Unknown";
-  const artist = document.querySelector(".artist")?.textContent || "Unknown";
+  const title = document.querySelector('.title')?.textContent || 'Unknown'
+  const artist = document.querySelector('.artist')?.textContent || 'Unknown'
 
   switch (displayFormat) {
     case 0:
-      presenceData.details = title;
-      break;
+      presenceData.details = title
+      break
     case 1:
-      presenceData.details = `${title} - ${artist}`;
-      break;
+      presenceData.details = `${title} - ${artist}`
+      break
     case 2:
-      presenceData.details = `${artist} - ${title}`;
-      break;
+      presenceData.details = `${artist} - ${title}`
+      break
   }
 
   // Set the activity
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 ## Dynamically Showing and Hiding Settings
@@ -204,16 +204,16 @@ You can dynamically show and hide settings based on the current state of the pag
 
 ```typescript
 // Show the timestamp setting
-presence.showSetting("showTimestamp");
+presence.showSetting('showTimestamp')
 
 // Hide the timestamp setting
-presence.hideSetting("showTimestamp");
+presence.hideSetting('showTimestamp')
 
 // Show multiple settings
-presence.showSetting(["showButtons", "buttonText"]);
+presence.showSetting(['showButtons', 'buttonText'])
 
 // Hide multiple settings
-presence.hideSetting(["showButtons", "buttonText"]);
+presence.hideSetting(['showButtons', 'buttonText'])
 ```
 
 ## Best Practices
@@ -245,8 +245,8 @@ Here's a complete example of a `metadata.json` file with settings and a `presenc
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "tag"],
   "category": "other",
+  "tags": ["example", "tag"],
   "settings": [
     {
       "id": "showButtons",
@@ -284,41 +284,41 @@ Here's a complete example of a `metadata.json` file with settings and a `presenc
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get settings
-  const showButtons = await presence.getSetting<boolean>("showButtons");
-  const buttonText = await presence.getSetting<string>("buttonText");
-  const showTimestamp = await presence.getSetting<boolean>("showTimestamp");
-  const displayFormat = await presence.getSetting<number>("displayFormat");
+  const showButtons = await presence.getSetting<boolean>('showButtons')
+  const buttonText = await presence.getSetting<string>('buttonText')
+  const showTimestamp = await presence.getSetting<boolean>('showTimestamp')
+  const displayFormat = await presence.getSetting<number>('displayFormat')
 
   // Get page information
-  const title = document.querySelector(".title")?.textContent || "Unknown";
-  const artist = document.querySelector(".artist")?.textContent || "Unknown";
+  const title = document.querySelector('.title')?.textContent || 'Unknown'
+  const artist = document.querySelector('.artist')?.textContent || 'Unknown'
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: "logo"
-  };
+    largeImageKey: 'logo'
+  }
 
   // Format details based on display format
   switch (displayFormat) {
     case 0:
-      presenceData.details = title;
-      break;
+      presenceData.details = title
+      break
     case 1:
-      presenceData.details = `${title} - ${artist}`;
-      break;
+      presenceData.details = `${title} - ${artist}`
+      break
     case 2:
-      presenceData.details = `${artist} - ${title}`;
-      break;
+      presenceData.details = `${artist} - ${title}`
+      break
   }
 
   // Add timestamp if enabled
   if (showTimestamp) {
-    presenceData.startTimestamp = Date.now();
+    presenceData.startTimestamp = Date.now()
   }
 
   // Add buttons if enabled
@@ -328,12 +328,12 @@ presence.on("UpdateData", async () => {
         label: buttonText,
         url: document.URL
       }
-    ];
+    ]
   }
 
   // Set the activity
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 ## Next Steps
