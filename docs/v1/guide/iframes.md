@@ -41,8 +41,8 @@ To use iFrames in your activity, you need to set the `iframe` property to `true`
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "video"],
   "category": "videos",
+  "tags": ["example", "video"],
   "iframe": true
 }
 ```
@@ -65,11 +65,11 @@ When you set `iframe: true` in your `metadata.json` file, you need to create an 
 Here's a basic example of an `iframe.ts` file:
 
 ```typescript
-const iframe = new iFrame();
+const iframe = new iFrame()
 
-iframe.on("UpdateData", async () => {
+iframe.on('UpdateData', async () => {
   // Get the video element
-  const video = document.querySelector("video");
+  const video = document.querySelector('video')
 
   if (video) {
     // Send video information to the presence script
@@ -78,11 +78,11 @@ iframe.on("UpdateData", async () => {
         paused: video.paused,
         currentTime: video.currentTime,
         duration: video.duration,
-        title: document.querySelector(".video-title")?.textContent
+        title: document.querySelector('.video-title')?.textContent
       }
-    });
+    })
   }
-});
+})
 ```
 
 ## Receiving Data from iFrames
@@ -93,61 +93,63 @@ In your `presence.ts` file, you need to listen for the `iFrameData` event to rec
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
 // Store iFrame data
 let iFrameData: {
   video?: {
-    paused?: boolean;
-    currentTime?: number;
-    duration?: number;
-    title?: string;
-  };
-} = {};
+    paused?: boolean
+    currentTime?: number
+    duration?: number
+    title?: string
+  }
+} = {}
 
 // Listen for iFrame data
-presence.on("iFrameData", (data) => {
-  iFrameData = data;
-});
+presence.on('iFrameData', (data) => {
+  iFrameData = data
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: "logo"
-  };
+    largeImageKey: 'logo'
+  }
 
   // Check if we have video data from the iFrame
   if (iFrameData.video) {
-    const { paused, currentTime, duration, title } = iFrameData.video;
+    const { paused, currentTime, duration, title } = iFrameData.video
 
-    presenceData.details = title || "Watching a video";
+    presenceData.details = title || 'Watching a video'
 
     if (paused) {
-      presenceData.state = "Paused";
-    } else {
-      presenceData.state = "Playing";
+      presenceData.state = 'Paused'
+    }
+    else {
+      presenceData.state = 'Playing'
 
       // Calculate timestamps if we have currentTime and duration
       if (currentTime && duration) {
-        const timestamps = getTimestamps(currentTime, duration);
-        presenceData.startTimestamp = timestamps[0];
-        presenceData.endTimestamp = timestamps[1];
+        const timestamps = getTimestamps(currentTime, duration)
+        presenceData.startTimestamp = timestamps[0]
+        presenceData.endTimestamp = timestamps[1]
       }
     }
-  } else {
-    presenceData.details = "Browsing";
-    presenceData.startTimestamp = Date.now();
+  }
+  else {
+    presenceData.details = 'Browsing'
+    presenceData.startTimestamp = Date.now()
   }
 
   // Set the activity
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 
 // Helper function to calculate timestamps
 function getTimestamps(currentTime: number, duration: number): [number, number] {
-  const startTime = Date.now();
-  const endTime = startTime + (duration - currentTime) * 1000;
-  return [startTime, endTime];
+  const startTime = Date.now()
+  const endTime = startTime + (duration - currentTime) * 1000
+  return [startTime, endTime]
 }
 ```
 
@@ -156,17 +158,17 @@ function getTimestamps(currentTime: number, duration: number): [number, number] 
 You can get the URL of the iFrame using the `getUrl` method:
 
 ```typescript
-const iframe = new iFrame();
+const iframe = new iFrame()
 
-iframe.on("UpdateData", async () => {
+iframe.on('UpdateData', async () => {
   // Get the iFrame URL
-  const url = await iframe.getUrl();
+  const url = await iframe.getUrl()
 
   // Send the URL to the presence script
   iframe.send({
-    url: url
-  });
-});
+    url
+  })
+})
 ```
 
 This can be useful for determining which iFrame is sending the data or for extracting information from the URL.
@@ -176,16 +178,16 @@ This can be useful for determining which iFrame is sending the data or for extra
 If the website has multiple iFrames, you can identify them by their URL:
 
 ```typescript
-const iframe = new iFrame();
+const iframe = new iFrame()
 
-iframe.on("UpdateData", async () => {
+iframe.on('UpdateData', async () => {
   // Get the iFrame URL
-  const url = await iframe.getUrl();
+  const url = await iframe.getUrl()
 
   // Handle different types of iFrames
-  if (url.includes("youtube.com")) {
+  if (url.includes('youtube.com')) {
     // Handle YouTube iFrame
-    const video = document.querySelector("video");
+    const video = document.querySelector('video')
 
     if (video) {
       iframe.send({
@@ -193,23 +195,24 @@ iframe.on("UpdateData", async () => {
           paused: video.paused,
           currentTime: video.currentTime,
           duration: video.duration,
-          title: document.querySelector(".ytp-title-link")?.textContent
+          title: document.querySelector('.ytp-title-link')?.textContent
         }
-      });
+      })
     }
-  } else if (url.includes("soundcloud.com")) {
+  }
+  else if (url.includes('soundcloud.com')) {
     // Handle SoundCloud iFrame
-    const playButton = document.querySelector(".playButton");
-    const isPlaying = playButton?.classList.contains("playing") || false;
+    const playButton = document.querySelector('.playButton')
+    const isPlaying = playButton?.classList.contains('playing') || false
 
     iframe.send({
       soundcloud: {
         playing: isPlaying,
-        title: document.querySelector(".soundTitle__title")?.textContent
+        title: document.querySelector('.soundTitle__title')?.textContent
       }
-    });
+    })
   }
-});
+})
 ```
 
 In your `presence.ts` file, you can handle the different types of data:
@@ -218,27 +221,27 @@ In your `presence.ts` file, you can handle the different types of data:
 // Store iFrame data
 let iFrameData: {
   youtube?: {
-    paused?: boolean;
-    currentTime?: number;
-    duration?: number;
-    title?: string;
-  };
+    paused?: boolean
+    currentTime?: number
+    duration?: number
+    title?: string
+  }
   soundcloud?: {
-    playing?: boolean;
-    title?: string;
-  };
-} = {};
+    playing?: boolean
+    title?: string
+  }
+} = {}
 
 // Listen for iFrame data
-presence.on("iFrameData", (data) => {
+presence.on('iFrameData', (data) => {
   // Merge the new data with the existing data
-  iFrameData = { ...iFrameData, ...data };
-});
+  iFrameData = { ...iFrameData, ...data }
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: "logo"
-  };
+    largeImageKey: 'logo'
+  }
 
   // Check if we have YouTube data
   if (iFrameData.youtube) {
@@ -251,8 +254,8 @@ presence.on("UpdateData", async () => {
   }
 
   // Set the activity
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 ## Best Practices
@@ -285,8 +288,8 @@ Here's a complete example of an activity that uses iFrames to gather information
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "video"],
   "category": "videos",
+  "tags": ["example", "video"],
   "iframe": true,
   "iFrameRegExp": "youtube\\.com/embed/.*"
 }
@@ -295,11 +298,11 @@ Here's a complete example of an activity that uses iFrames to gather information
 ### iframe.ts
 
 ```typescript
-const iframe = new iFrame();
+const iframe = new iFrame()
 
-iframe.on("UpdateData", async () => {
+iframe.on('UpdateData', async () => {
   // Get the video element
-  const video = document.querySelector("video");
+  const video = document.querySelector('video')
 
   if (video) {
     // Send video information to the presence script
@@ -308,74 +311,75 @@ iframe.on("UpdateData", async () => {
         paused: video.paused,
         currentTime: video.currentTime,
         duration: video.duration,
-        title: document.querySelector(".ytp-title-link")?.textContent
+        title: document.querySelector('.ytp-title-link')?.textContent
       }
-    });
+    })
   }
-});
+})
 ```
 
 ### presence.ts
 
 ```typescript
-import { getTimestamps } from "premid";
+import { getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
 // Define the type for iFrame data
 interface IFrameData {
   video?: {
-    paused?: boolean;
-    currentTime?: number;
-    duration?: number;
-    title?: string;
-  };
+    paused?: boolean
+    currentTime?: number
+    duration?: number
+    title?: string
+  }
 }
 
 // Store iFrame data
-let iFrameData: IFrameData = {};
+let iFrameData: IFrameData = {}
 
 // Listen for iFrame data
-presence.on("iFrameData", (data: IFrameData) => {
-  iFrameData = data;
-});
+presence.on('iFrameData', (data: IFrameData) => {
+  iFrameData = data
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get settings
-  const showButtons = await presence.getSetting<boolean>("showButtons");
-  const showTimestamp = await presence.getSetting<boolean>("showTimestamp");
+  const showButtons = await presence.getSetting<boolean>('showButtons')
+  const showTimestamp = await presence.getSetting<boolean>('showTimestamp')
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: "logo"
-  };
+    largeImageKey: 'logo'
+  }
 
   // Check if we have video data from the iFrame
   if (iFrameData.video) {
-    const { paused, currentTime, duration, title } = iFrameData.video;
+    const { paused, currentTime, duration, title } = iFrameData.video
 
     // Set the activity type to Watching
-    presenceData.type = ActivityType.Watching;
+    presenceData.type = ActivityType.Watching
 
     // Set the details and state
-    presenceData.details = title || "Watching a video";
+    presenceData.details = title || 'Watching a video'
 
     if (paused) {
-      presenceData.state = "Paused";
-      presenceData.smallImageKey = "pause";
-      presenceData.smallImageText = "Paused";
-    } else {
-      presenceData.state = "Playing";
-      presenceData.smallImageKey = "play";
-      presenceData.smallImageText = "Playing";
+      presenceData.state = 'Paused'
+      presenceData.smallImageKey = 'pause'
+      presenceData.smallImageText = 'Paused'
+    }
+    else {
+      presenceData.state = 'Playing'
+      presenceData.smallImageKey = 'play'
+      presenceData.smallImageText = 'Playing'
 
       // Add timestamps if enabled and we have currentTime and duration
       if (showTimestamp && currentTime && duration) {
-        const timestamps = getTimestamps(currentTime, duration);
-        presenceData.startTimestamp = timestamps[0];
-        presenceData.endTimestamp = timestamps[1];
+        const timestamps = getTimestamps(currentTime, duration)
+        presenceData.startTimestamp = timestamps[0]
+        presenceData.endTimestamp = timestamps[1]
       }
     }
 
@@ -383,20 +387,21 @@ presence.on("UpdateData", async () => {
     if (showButtons) {
       presenceData.buttons = [
         {
-          label: "Watch Video",
+          label: 'Watch Video',
           url: document.URL
         }
-      ];
+      ]
     }
-  } else {
+  }
+  else {
     // No video data, user is browsing the website
-    presenceData.details = "Browsing";
-    presenceData.startTimestamp = Date.now();
+    presenceData.details = 'Browsing'
+    presenceData.startTimestamp = Date.now()
   }
 
   // Set the activity
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 ## Next Steps

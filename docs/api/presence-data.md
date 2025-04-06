@@ -5,6 +5,7 @@ The `PresenceData` interface defines the structure of the data that is sent to D
 ## Structure
 
 The `PresenceData` interface is a union of two interfaces:
+
 - `MediaPresenceData`: For activities related to media (watching or listening)
 - `NonMediaPresenceData`: For other types of activities
 
@@ -14,51 +15,51 @@ Both extend the `BasePresenceData` interface, which contains the common properti
 
 ### Common Properties (BasePresenceData)
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `name` | `string` | Name to show in activity (e.g., "YouTube") |
-| `type` | `ActivityType` | Type of activity (Playing, Listening, Watching, Competing) |
-| `details` | `string \| Node \| null` | Top row of the status |
-| `state` | `string \| Node \| null` | Bottom row of the status |
-| `startTimestamp` | `number \| Date \| null` | Timestamp for the start of the activity (shows time as "elapsed") |
-| `endTimestamp` | `number \| Date \| null` | Timestamp until the end of the activity (shows time as "remaining") |
-| `largeImageKey` | `string \| Blob \| HTMLImageElement \| null` | Large profile artwork |
-| `smallImageKey` | `string \| Blob \| HTMLImageElement \| null` | Small profile artwork |
-| `smallImageText` | `string \| Node \| null` | Tooltip for the smallImageKey |
-| `buttons` | `[ButtonData, ButtonData?]` | Array of buttons (max 2) |
+| Property         | Type                                         | Description                                                         |
+| ---------------- | -------------------------------------------- | ------------------------------------------------------------------- |
+| `name`           | `string`                                     | Name to show in activity (e.g., "YouTube")                          |
+| `type`           | `ActivityType`                               | Type of activity (Playing, Listening, Watching, Competing)          |
+| `details`        | `string \| Node \| null`                     | Top row of the status                                               |
+| `state`          | `string \| Node \| null`                     | Bottom row of the status                                            |
+| `startTimestamp` | `number \| Date \| null`                     | Timestamp for the start of the activity (shows time as "elapsed")   |
+| `endTimestamp`   | `number \| Date \| null`                     | Timestamp until the end of the activity (shows time as "remaining") |
+| `largeImageKey`  | `string \| Blob \| HTMLImageElement \| null` | Large profile artwork                                               |
+| `smallImageKey`  | `string \| Blob \| HTMLImageElement \| null` | Small profile artwork                                               |
+| `smallImageText` | `string \| Node \| null`                     | Tooltip for the smallImageKey                                       |
+| `buttons`        | `[ButtonData, ButtonData?]`                  | Array of buttons (max 2)                                            |
 
 ### Media-Specific Properties (MediaPresenceData)
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `type` | `ActivityType.Listening \| ActivityType.Watching` | Must be either Listening or Watching |
-| `largeImageText` | `string \| Node \| null` | Tooltip for the largeImageKey |
+| Property         | Type                                              | Description                          |
+| ---------------- | ------------------------------------------------- | ------------------------------------ |
+| `type`           | `ActivityType.Listening \| ActivityType.Watching` | Must be either Listening or Watching |
+| `largeImageText` | `string \| Node \| null`                          | Tooltip for the largeImageKey        |
 
 ### Non-Media Properties (NonMediaPresenceData)
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `type` | `Exclude<ActivityType, ActivityType.Listening \| ActivityType.Watching>` | Cannot be Listening or Watching |
-| `largeImageText` | `never` | Not allowed for non-media activities |
+| Property         | Type                                                                     | Description                          |
+| ---------------- | ------------------------------------------------------------------------ | ------------------------------------ |
+| `type`           | `Exclude<ActivityType, ActivityType.Listening \| ActivityType.Watching>` | Cannot be Listening or Watching      |
+| `largeImageText` | `never`                                                                  | Not allowed for non-media activities |
 
 ## ButtonData Interface
 
 The `ButtonData` interface defines the structure of buttons that can be added to the presence.
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `label` | `string \| Node \| null` | Text for the button |
-| `url` | `string \| HTMLAnchorElement \| null` | URL of button link |
+| Property | Type                                  | Description         |
+| -------- | ------------------------------------- | ------------------- |
+| `label`  | `string \| Node \| null`              | Text for the button |
+| `url`    | `string \| HTMLAnchorElement \| null` | URL of button link  |
 
 ## ActivityType Enum
 
 The `ActivityType` enum defines the types of activities that can be displayed.
 
-| Value | Description | Example |
-|-------|-------------|---------|
-| `Playing` | Shows as "Playing [name]" | "Playing Minecraft" |
-| `Listening` | Shows as "Listening to [name]" | "Listening to Spotify" |
-| `Watching` | Shows as "Watching [name]" | "Watching YouTube" |
+| Value       | Description                    | Example                     |
+| ----------- | ------------------------------ | --------------------------- |
+| `Playing`   | Shows as "Playing [name]"      | "Playing Minecraft"         |
+| `Listening` | Shows as "Listening to [name]" | "Listening to Spotify"      |
+| `Watching`  | Shows as "Watching [name]"     | "Watching YouTube"          |
 | `Competing` | Shows as "Competing in [name]" | "Competing in a tournament" |
 
 ## Examples
@@ -67,11 +68,11 @@ The `ActivityType` enum defines the types of activities that can be displayed.
 
 ```typescript
 const presenceData: PresenceData = {
-  details: "Browsing the homepage",
-  state: "Reading articles",
-  largeImageKey: "logo",
+  details: 'Browsing the homepage',
+  state: 'Reading articles',
+  largeImageKey: 'logo',
   startTimestamp: Date.now()
-};
+}
 ```
 
 ### Media Presence (Watching)
@@ -79,33 +80,33 @@ const presenceData: PresenceData = {
 ```typescript
 const presenceData: PresenceData = {
   type: ActivityType.Watching,
-  details: "Watching a video",
-  state: "Video Title",
-  largeImageKey: "logo",
-  largeImageText: "Website Name",
+  details: 'Watching a video',
+  state: 'Video Title',
+  largeImageKey: 'logo',
+  largeImageText: 'Website Name',
   startTimestamp: Date.now(),
   endTimestamp: Date.now() + 360000 // 6 minutes from now
-};
+}
 ```
 
 ### Presence with Buttons
 
 ```typescript
 const presenceData: PresenceData = {
-  details: "Reading an article",
-  state: "Article Title",
-  largeImageKey: "logo",
+  details: 'Reading an article',
+  state: 'Article Title',
+  largeImageKey: 'logo',
   buttons: [
     {
-      label: "Read Article",
-      url: "https://example.com/article"
+      label: 'Read Article',
+      url: 'https://example.com/article'
     },
     {
-      label: "Visit Website",
-      url: "https://example.com"
+      label: 'Visit Website',
+      url: 'https://example.com'
     }
   ]
-};
+}
 ```
 
 ## Notes

@@ -8,8 +8,8 @@ To create a new Presence instance, you need to import the `Presence` class and c
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 ```
 
 The client ID is automatically generated when you create a new activity using the PreMiD CLI.
@@ -19,9 +19,9 @@ The client ID is automatically generated when you create a new activity using th
 The `UpdateData` event is the most important event for a Presence. It is fired regularly by the PreMiD extension, and it's where you should update your activity data.
 
 ```typescript
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Update your activity data here
-});
+})
 ```
 
 ## Setting Activity Data
@@ -29,49 +29,49 @@ presence.on("UpdateData", async () => {
 To set the activity data, you need to create a `PresenceData` object and pass it to the `setActivity` method:
 
 ```typescript
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: "logo",
-    details: "Browsing Example.com",
-    state: "Homepage",
+    largeImageKey: 'logo',
+    details: 'Browsing Example.com',
+    state: 'Homepage',
     startTimestamp: Date.now()
-  };
+  }
 
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 ## PresenceData Properties
 
 The `PresenceData` object can have the following properties:
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `details` | `string` | The first line of the presence |
-| `state` | `string` | The second line of the presence |
-| `startTimestamp` | `number` | The time when the activity started (Unix timestamp in milliseconds) |
-| `endTimestamp` | `number` | The time when the activity will end (Unix timestamp in milliseconds) |
-| `largeImageKey` | `string` | The key of the large image |
-| `largeImageText` | `string` | The text that appears when hovering over the large image |
-| `smallImageKey` | `string` | The key of the small image |
-| `smallImageText` | `string` | The text that appears when hovering over the small image |
-| `buttons` | `ButtonData[]` | An array of buttons (max 2) |
+| Property         | Type           | Description                                                          |
+| ---------------- | -------------- | -------------------------------------------------------------------- |
+| `details`        | `string`       | The first line of the presence                                       |
+| `state`          | `string`       | The second line of the presence                                      |
+| `startTimestamp` | `number`       | The time when the activity started (Unix timestamp in milliseconds)  |
+| `endTimestamp`   | `number`       | The time when the activity will end (Unix timestamp in milliseconds) |
+| `largeImageKey`  | `string`       | The key of the large image                                           |
+| `largeImageText` | `string`       | The text that appears when hovering over the large image             |
+| `smallImageKey`  | `string`       | The key of the small image                                           |
+| `smallImageText` | `string`       | The text that appears when hovering over the small image             |
+| `buttons`        | `ButtonData[]` | An array of buttons (max 2)                                          |
 
 ## Activity Types
 
 You can set the type of activity using the `type` property:
 
 ```typescript
-presenceData.type = ActivityType.Watching;
+presenceData.type = ActivityType.Watching
 ```
 
 The available activity types are:
 
-| Type | Description |
-|------|-------------|
-| `ActivityType.Playing` | Shows as "Playing [name]" |
+| Type                     | Description                    |
+| ------------------------ | ------------------------------ |
+| `ActivityType.Playing`   | Shows as "Playing [name]"      |
 | `ActivityType.Listening` | Shows as "Listening to [name]" |
-| `ActivityType.Watching` | Shows as "Watching [name]" |
+| `ActivityType.Watching`  | Shows as "Watching [name]"     |
 | `ActivityType.Competing` | Shows as "Competing in [name]" |
 
 ## Buttons
@@ -81,14 +81,14 @@ You can add up to two buttons to your activity:
 ```typescript
 presenceData.buttons = [
   {
-    label: "Visit Website",
-    url: "https://example.com"
+    label: 'Visit Website',
+    url: 'https://example.com'
   },
   {
-    label: "View Page",
+    label: 'View Page',
     url: document.URL
   }
-];
+]
 ```
 
 Each button has a `label` and a `url` property. The `label` is the text that appears on the button, and the `url` is the link that opens when the button is clicked.
@@ -99,22 +99,22 @@ You can add timestamps to show how long the user has been doing an activity or h
 
 ```typescript
 // Show elapsed time
-presenceData.startTimestamp = Date.now();
+presenceData.startTimestamp = Date.now()
 
 // Show remaining time
-presenceData.endTimestamp = Date.now() + 60000; // 1 minute from now
+presenceData.endTimestamp = Date.now() + 60000 // 1 minute from now
 ```
 
 You can also use the `getTimestamps` utility function to calculate timestamps for media:
 
 ```typescript
-import { getTimestamps } from "premid";
+import { getTimestamps } from 'premid'
 
-const video = document.querySelector("video");
-const timestamps = getTimestamps(video.currentTime, video.duration);
+const video = document.querySelector('video')
+const timestamps = getTimestamps(video.currentTime, video.duration)
 
-presenceData.startTimestamp = timestamps[0];
-presenceData.endTimestamp = timestamps[1];
+presenceData.startTimestamp = timestamps[0]
+presenceData.endTimestamp = timestamps[1]
 ```
 
 ## Clearing Activity
@@ -122,7 +122,7 @@ presenceData.endTimestamp = timestamps[1];
 If you want to clear the activity, you can use the `clearActivity` method:
 
 ```typescript
-presence.clearActivity();
+presence.clearActivity()
 ```
 
 ## Getting Settings
@@ -130,8 +130,8 @@ presence.clearActivity();
 If your activity has settings, you can get their values using the `getSetting` method:
 
 ```typescript
-const showButtons = await presence.getSetting<boolean>("showButtons");
-const displayFormat = await presence.getSetting<number>("displayFormat");
+const showButtons = await presence.getSetting<boolean>('showButtons')
+const displayFormat = await presence.getSetting<number>('displayFormat')
 ```
 
 ## Complete Example
@@ -140,60 +140,64 @@ Here's a complete example of a Presence class implementation:
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get settings
-  const showButtons = await presence.getSetting<boolean>("showButtons");
-  const showTimestamp = await presence.getSetting<boolean>("showTimestamp");
-  
+  const showButtons = await presence.getSetting<boolean>('showButtons')
+  const showTimestamp = await presence.getSetting<boolean>('showTimestamp')
+
   // Get page information
-  const path = document.location.pathname;
-  
+  const path = document.location.pathname
+
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: "logo",
-    details: "Browsing Example.com"
-  };
-  
-  // Update the state based on the current page
-  if (path === "/") {
-    presenceData.state = "Homepage";
-  } else if (path.includes("/about")) {
-    presenceData.state = "Reading about us";
-  } else if (path.includes("/contact")) {
-    presenceData.state = "Contacting us";
-  } else {
-    presenceData.state = "Browsing";
+    largeImageKey: 'logo',
+    details: 'Browsing Example.com'
   }
-  
+
+  // Update the state based on the current page
+  if (path === '/') {
+    presenceData.state = 'Homepage'
+  }
+  else if (path.includes('/about')) {
+    presenceData.state = 'Reading about us'
+  }
+  else if (path.includes('/contact')) {
+    presenceData.state = 'Contacting us'
+  }
+  else {
+    presenceData.state = 'Browsing'
+  }
+
   // Add timestamp if enabled
   if (showTimestamp) {
-    presenceData.startTimestamp = Date.now();
+    presenceData.startTimestamp = Date.now()
   }
-  
+
   // Add buttons if enabled
   if (showButtons) {
     presenceData.buttons = [
       {
-        label: "Visit Website",
-        url: "https://example.com"
+        label: 'Visit Website',
+        url: 'https://example.com'
       },
       {
-        label: "View Page",
+        label: 'View Page',
         url: document.URL
       }
-    ];
+    ]
   }
-  
+
   // Set the activity
   if (presenceData.details) {
-    presence.setActivity(presenceData);
-  } else {
-    presence.clearActivity();
+    presence.setActivity(presenceData)
   }
-});
+  else {
+    presence.clearActivity()
+  }
+})
 ```
 
 ## Next Steps

@@ -11,36 +11,36 @@ TypeScript is required for all PreMiD Activities. Make sure you're using TypeScr
 ```typescript
 // Good - Using proper type annotations
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: "logo",
-    details: "Browsing Example.com",
-    state: "Homepage",
+    largeImageKey: 'logo',
+    details: 'Browsing Example.com',
+    state: 'Homepage',
     startTimestamp: Date.now()
-  };
+  }
 
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 
 // Bad - Missing type annotations
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Missing PresenceData type annotation
   const presenceData = {
-    largeImageKey: "logo",
-    details: "Browsing Example.com",
-    state: "Homepage",
+    largeImageKey: 'logo',
+    details: 'Browsing Example.com',
+    state: 'Homepage',
     startTimestamp: Date.now()
-  };
+  }
 
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 ### Handle Errors
@@ -49,10 +49,10 @@ Always check if elements exist before trying to access their properties. This wi
 
 ```typescript
 // Good
-const videoTitle = document.querySelector(".video-title")?.textContent || "Unknown video";
+const videoTitle = document.querySelector('.video-title')?.textContent || 'Unknown video'
 
 // Bad
-const videoTitle = document.querySelector(".video-title").textContent;
+const videoTitle = document.querySelector('.video-title').textContent
 ```
 
 ### Use Constants
@@ -61,21 +61,21 @@ Define constants for repeated values to make your code more maintainable.
 
 ```typescript
 // Good
-const SLIDESHOW_TIMEOUT = 5000; // 5 seconds
-const DEFAULT_IMAGE_KEY = "logo";
+const SLIDESHOW_TIMEOUT = 5000 // 5 seconds
+const DEFAULT_IMAGE_KEY = 'logo'
 
-slideshow.addSlide("slide1", {
-  details: "Browsing Example.com",
-  state: "Homepage",
+slideshow.addSlide('slide1', {
+  details: 'Browsing Example.com',
+  state: 'Homepage',
   largeImageKey: DEFAULT_IMAGE_KEY
-}, SLIDESHOW_TIMEOUT);
+}, SLIDESHOW_TIMEOUT)
 
 // Bad
-slideshow.addSlide("slide1", {
-  details: "Browsing Example.com",
-  state: "Homepage",
-  largeImageKey: "logo"
-}, 5000);
+slideshow.addSlide('slide1', {
+  details: 'Browsing Example.com',
+  state: 'Homepage',
+  largeImageKey: 'logo'
+}, 5000)
 ```
 
 ### Comment Your Code
@@ -85,32 +85,32 @@ Add comments to explain what your code is doing, especially for complex logic.
 ```typescript
 // Good
 // Get the video element
-const video = document.querySelector("video");
+const video = document.querySelector('video')
 
 // Check if the video exists and is ready to play
 if (video && video.readyState > 0) {
   // Get video information
-  const title = document.querySelector(".video-title")?.textContent || "Unknown video";
-  const author = document.querySelector(".video-author")?.textContent || "Unknown author";
-  const isPlaying = !video.paused;
+  const title = document.querySelector('.video-title')?.textContent || 'Unknown video'
+  const author = document.querySelector('.video-author')?.textContent || 'Unknown author'
+  const isPlaying = !video.paused
 
   // Set the activity type to Watching
-  presenceData.type = ActivityType.Watching;
+  presenceData.type = ActivityType.Watching
 
   // Set the details and state
-  presenceData.details = title;
-  presenceData.state = `By ${author}`;
+  presenceData.details = title
+  presenceData.state = `By ${author}`
 }
 
 // Bad
-const video = document.querySelector("video");
+const video = document.querySelector('video')
 if (video && video.readyState > 0) {
-  const title = document.querySelector(".video-title")?.textContent || "Unknown video";
-  const author = document.querySelector(".video-author")?.textContent || "Unknown author";
-  const isPlaying = !video.paused;
-  presenceData.type = ActivityType.Watching;
-  presenceData.details = title;
-  presenceData.state = `By ${author}`;
+  const title = document.querySelector('.video-title')?.textContent || 'Unknown video'
+  const author = document.querySelector('.video-author')?.textContent || 'Unknown author'
+  const isPlaying = !video.paused
+  presenceData.type = ActivityType.Watching
+  presenceData.details = title
+  presenceData.state = `By ${author}`
 }
 ```
 
@@ -121,26 +121,26 @@ Use consistent formatting and naming conventions. This makes your code easier to
 ```typescript
 // Good
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-const SLIDESHOW_TIMEOUT = 5000;
+const SLIDESHOW_TIMEOUT = 5000
 
 function getVideoInfo() {
-  const video = document.querySelector("video");
+  const video = document.querySelector('video')
   return {
-    title: document.querySelector(".video-title")?.textContent || "Unknown video",
-    author: document.querySelector(".video-author")?.textContent || "Unknown author",
+    title: document.querySelector('.video-title')?.textContent || 'Unknown video',
+    author: document.querySelector('.video-author')?.textContent || 'Unknown author',
     isPlaying: video ? !video.paused : false
-  };
+  }
 }
 
 // Bad
-const presence=new Presence({clientId:"your_client_id"});
-const slideshow_timeout=5000;
-function get_video_info(){
-  const video=document.querySelector("video");
-  return {title:document.querySelector(".video-title")?.textContent||"Unknown video",author:document.querySelector(".video-author")?.textContent||"Unknown author",isPlaying:video?!video.paused:false};
+const presence = new Presence({ clientId: 'your_client_id' })
+const slideshow_timeout = 5000
+function get_video_info() {
+  const video = document.querySelector('video')
+  return { title: document.querySelector('.video-title')?.textContent || 'Unknown video', author: document.querySelector('.video-author')?.textContent || 'Unknown author', isPlaying: video ? !video.paused : false }
 }
 ```
 
@@ -152,13 +152,13 @@ Cache DOM elements that you use multiple times to avoid unnecessary DOM queries.
 
 ```typescript
 // Good
-const video = document.querySelector("video");
-const title = document.querySelector(".video-title")?.textContent || "Unknown video";
-const author = document.querySelector(".video-author")?.textContent || "Unknown author";
+const video = document.querySelector('video')
+const title = document.querySelector('.video-title')?.textContent || 'Unknown video'
+const author = document.querySelector('.video-author')?.textContent || 'Unknown author'
 
 if (video && video.readyState > 0) {
-  presenceData.details = title;
-  presenceData.state = `By ${author}`;
+  presenceData.details = title
+  presenceData.state = `By ${author}`
 
   if (!video.paused) {
     // Use video
@@ -166,11 +166,11 @@ if (video && video.readyState > 0) {
 }
 
 // Bad
-if (document.querySelector("video") && document.querySelector("video").readyState > 0) {
-  presenceData.details = document.querySelector(".video-title")?.textContent || "Unknown video";
-  presenceData.state = `By ${document.querySelector(".video-author")?.textContent || "Unknown author"}`;
+if (document.querySelector('video') && document.querySelector('video').readyState > 0) {
+  presenceData.details = document.querySelector('.video-title')?.textContent || 'Unknown video'
+  presenceData.state = `By ${document.querySelector('.video-author')?.textContent || 'Unknown author'}`
 
-  if (!document.querySelector("video").paused) {
+  if (!document.querySelector('video').paused) {
     // Use video
   }
 }
@@ -182,12 +182,12 @@ Use efficient selectors to find elements on the page. IDs are the fastest, follo
 
 ```typescript
 // Good
-const video = document.getElementById("video");
-const title = document.querySelector(".video-title");
+const video = document.getElementById('video')
+const title = document.querySelector('.video-title')
 
 // Bad
-const video = document.querySelector("video");
-const title = document.getElementsByClassName("video-title")[0];
+const video = document.querySelector('video')
+const title = document.getElementsByClassName('video-title')[0]
 ```
 
 ### Avoid Heavy Computations
@@ -196,27 +196,27 @@ Avoid heavy computations in the `UpdateData` event, as it is fired regularly. If
 
 ```typescript
 // Good
-let cachedData = null;
-let lastComputation = 0;
+let cachedData = null
+let lastComputation = 0
 
-presence.on("UpdateData", async () => {
-  const now = Date.now();
+presence.on('UpdateData', async () => {
+  const now = Date.now()
 
   // Only compute data every 5 seconds
   if (!cachedData || now - lastComputation > 5000) {
-    cachedData = computeHeavyData();
-    lastComputation = now;
+    cachedData = computeHeavyData()
+    lastComputation = now
   }
 
   // Use cachedData
-});
+})
 
 // Bad
-presence.on("UpdateData", async () => {
-  const data = computeHeavyData();
+presence.on('UpdateData', async () => {
+  const data = computeHeavyData()
 
   // Use data
-});
+})
 ```
 
 ## User Experience
@@ -227,12 +227,12 @@ Make sure the information displayed in your activity is clear and easy to unders
 
 ```typescript
 // Good
-presenceData.details = "Watching: The Title of the Video";
-presenceData.state = "By: The Author of the Video";
+presenceData.details = 'Watching: The Title of the Video'
+presenceData.state = 'By: The Author of the Video'
 
 // Bad
-presenceData.details = "Video";
-presenceData.state = "Author";
+presenceData.details = 'Video'
+presenceData.state = 'Author'
 ```
 
 ### Use Appropriate Activity Types
@@ -241,14 +241,15 @@ Use the appropriate activity type for your activity. For example, use `ActivityT
 
 ```typescript
 // Good
-if (document.querySelector("video")) {
-  presenceData.type = ActivityType.Watching;
-} else if (document.querySelector("audio")) {
-  presenceData.type = ActivityType.Listening;
+if (document.querySelector('video')) {
+  presenceData.type = ActivityType.Watching
+}
+else if (document.querySelector('audio')) {
+  presenceData.type = ActivityType.Listening
 }
 
 // Bad
-presenceData.type = ActivityType.Playing;
+presenceData.type = ActivityType.Playing
 ```
 
 ### Add Timestamps
@@ -258,14 +259,14 @@ Add timestamps to show how long the user has been doing an activity or how much 
 ```typescript
 // Good
 // Show elapsed time
-presenceData.startTimestamp = Date.now();
+presenceData.startTimestamp = Date.now()
 
 // Show remaining time for media
-const video = document.querySelector("video");
+const video = document.querySelector('video')
 if (video && video.readyState > 0) {
-  const timestamps = getTimestamps(video.currentTime, video.duration);
-  presenceData.startTimestamp = timestamps[0];
-  presenceData.endTimestamp = timestamps[1];
+  const timestamps = getTimestamps(video.currentTime, video.duration)
+  presenceData.startTimestamp = timestamps[0]
+  presenceData.endTimestamp = timestamps[1]
 }
 
 // Bad
@@ -278,31 +279,31 @@ Add settings to allow users to customize your activity. This gives users more co
 
 ```typescript
 // Good
-const showButtons = await presence.getSetting<boolean>("showButtons");
-const showTimestamp = await presence.getSetting<boolean>("showTimestamp");
+const showButtons = await presence.getSetting<boolean>('showButtons')
+const showTimestamp = await presence.getSetting<boolean>('showTimestamp')
 
 if (showButtons) {
   presenceData.buttons = [
     {
-      label: "Visit Website",
+      label: 'Visit Website',
       url: document.URL
     }
-  ];
+  ]
 }
 
 if (showTimestamp) {
-  presenceData.startTimestamp = Date.now();
+  presenceData.startTimestamp = Date.now()
 }
 
 // Bad
 // No settings, hardcoded behavior
 presenceData.buttons = [
   {
-    label: "Visit Website",
+    label: 'Visit Website',
     url: document.URL
   }
-];
-presenceData.startTimestamp = Date.now();
+]
+presenceData.startTimestamp = Date.now()
 ```
 
 ### Add Multilanguage Support
@@ -312,30 +313,34 @@ Add multilanguage support to your activity to provide a better experience for us
 ```typescript
 // Good
 const strings = await presence.getStrings({
-  play: "general.playing",
-  pause: "general.paused",
-  browse: "general.browsing"
-});
+  play: 'general.playing',
+  pause: 'general.paused',
+  browse: 'general.browsing'
+})
 
 if (video) {
   if (video.paused) {
-    presenceData.details = strings.pause;
-  } else {
-    presenceData.details = strings.play;
+    presenceData.details = strings.pause
   }
-} else {
-  presenceData.details = strings.browse;
+  else {
+    presenceData.details = strings.play
+  }
+}
+else {
+  presenceData.details = strings.browse
 }
 
 // Bad
 if (video) {
   if (video.paused) {
-    presenceData.details = "Paused";
-  } else {
-    presenceData.details = "Playing";
+    presenceData.details = 'Paused'
   }
-} else {
-  presenceData.details = "Browsing";
+  else {
+    presenceData.details = 'Playing'
+  }
+}
+else {
+  presenceData.details = 'Browsing'
 }
 ```
 
@@ -373,12 +378,12 @@ Avoid exposing sensitive information in your activity, such as user IDs, email a
 
 ```typescript
 // Good
-presenceData.details = "Logged in";
-presenceData.state = "Viewing profile";
+presenceData.details = 'Logged in'
+presenceData.state = 'Viewing profile'
 
 // Bad
-presenceData.details = "Logged in as user123";
-presenceData.state = "Email: user@example.com";
+presenceData.details = 'Logged in as user123'
+presenceData.state = 'Email: user@example.com'
 ```
 
 ### Validate User Input
@@ -387,14 +392,14 @@ If your activity uses user input, validate it to prevent security vulnerabilitie
 
 ```typescript
 // Good
-const userInput = document.querySelector(".user-input")?.textContent || "";
-const sanitizedInput = userInput.replace(/[<>]/g, ""); // Remove < and > to prevent HTML injection
+const userInput = document.querySelector('.user-input')?.textContent || ''
+const sanitizedInput = userInput.replace(/[<>]/g, '') // Remove < and > to prevent HTML injection
 
-presenceData.details = sanitizedInput;
+presenceData.details = sanitizedInput
 
 // Bad
-const userInput = document.querySelector(".user-input")?.textContent || "";
-presenceData.details = userInput;
+const userInput = document.querySelector('.user-input')?.textContent || ''
+presenceData.details = userInput
 ```
 
 ## Complete Example
@@ -411,8 +416,8 @@ Here's a complete example of an activity that follows best practices:
   },
   "service": "Example",
   "description": {
-    "en": "Example is a website that does something cool.",
     "de": "Example ist eine Website, die etwas Cooles macht.",
+    "en": "Example is a website that does something cool.",
     "fr": "Example est un site web qui fait quelque chose de cool."
   },
   "url": "example.com",
@@ -420,8 +425,8 @@ Here's a complete example of an activity that follows best practices:
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "best-practices"],
   "category": "other",
+  "tags": ["example", "best-practices"],
   "settings": [
     {
       "id": "showButtons",
@@ -446,108 +451,112 @@ Here's a complete example of an activity that follows best practices:
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
 // Constants
-const DEFAULT_IMAGE_KEY = "logo";
-const DEFAULT_TIMESTAMP = Date.now();
+const DEFAULT_IMAGE_KEY = 'logo'
+const DEFAULT_TIMESTAMP = Date.now()
 
 // Cache for heavy computations
-let cachedData = null;
-let lastComputation = 0;
+const cachedData = null
+const lastComputation = 0
 
 // Helper function to get page information
 function getPageInfo() {
-  const path = document.location.pathname;
-  const title = document.title;
+  const path = document.location.pathname
+  const title = document.title
 
-  let pageType = "unknown";
+  let pageType = 'unknown'
 
-  if (path === "/") {
-    pageType = "homepage";
-  } else if (path.includes("/about")) {
-    pageType = "about";
-  } else if (path.includes("/contact")) {
-    pageType = "contact";
+  if (path === '/') {
+    pageType = 'homepage'
+  }
+  else if (path.includes('/about')) {
+    pageType = 'about'
+  }
+  else if (path.includes('/contact')) {
+    pageType = 'contact'
   }
 
-  return { path, title, pageType };
+  return { path, title, pageType }
 }
 
 // Helper function to get video information
 function getVideoInfo() {
-  const video = document.querySelector("video");
+  const video = document.querySelector('video')
 
   if (!video || video.readyState === 0) {
-    return null;
+    return null
   }
 
   return {
-    title: document.querySelector(".video-title")?.textContent || "Unknown video",
-    author: document.querySelector(".video-author")?.textContent || "Unknown author",
+    title: document.querySelector('.video-title')?.textContent || 'Unknown video',
+    author: document.querySelector('.video-author')?.textContent || 'Unknown author',
     isPlaying: !video.paused,
     currentTime: video.currentTime,
     duration: video.duration
-  };
+  }
 }
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get settings
-  const showButtons = await presence.getSetting<boolean>("showButtons");
-  const showTimestamp = await presence.getSetting<boolean>("showTimestamp");
-  const showDetails = await presence.getSetting<boolean>("showDetails");
+  const showButtons = await presence.getSetting<boolean>('showButtons')
+  const showTimestamp = await presence.getSetting<boolean>('showTimestamp')
+  const showDetails = await presence.getSetting<boolean>('showDetails')
 
   // Get translations
   const strings = await presence.getStrings({
-    play: "general.playing",
-    pause: "general.paused",
-    browse: "general.browsing"
-  });
+    play: 'general.playing',
+    pause: 'general.paused',
+    browse: 'general.browsing'
+  })
 
   // Create the base presence data
   const presenceData: PresenceData = {
     largeImageKey: DEFAULT_IMAGE_KEY
-  };
+  }
 
   // Get page information
-  const { path, title, pageType } = getPageInfo();
+  const { path, title, pageType } = getPageInfo()
 
   // Get video information (if available)
-  const videoInfo = getVideoInfo();
+  const videoInfo = getVideoInfo()
 
   // Set presence data based on page type
   if (videoInfo) {
     // Video page
-    presenceData.type = ActivityType.Watching;
+    presenceData.type = ActivityType.Watching
 
     if (showDetails) {
-      presenceData.details = videoInfo.title;
-      presenceData.state = `By ${videoInfo.author}`;
+      presenceData.details = videoInfo.title
+      presenceData.state = `By ${videoInfo.author}`
     }
 
     if (videoInfo.isPlaying) {
-      presenceData.smallImageKey = "play";
-      presenceData.smallImageText = strings.play;
+      presenceData.smallImageKey = 'play'
+      presenceData.smallImageText = strings.play
 
       if (showTimestamp) {
-        const timestamps = getTimestamps(videoInfo.currentTime, videoInfo.duration);
-        presenceData.startTimestamp = timestamps[0];
-        presenceData.endTimestamp = timestamps[1];
+        const timestamps = getTimestamps(videoInfo.currentTime, videoInfo.duration)
+        presenceData.startTimestamp = timestamps[0]
+        presenceData.endTimestamp = timestamps[1]
       }
-    } else {
-      presenceData.smallImageKey = "pause";
-      presenceData.smallImageText = strings.pause;
     }
-  } else {
+    else {
+      presenceData.smallImageKey = 'pause'
+      presenceData.smallImageText = strings.pause
+    }
+  }
+  else {
     // Regular page
     if (showDetails) {
-      presenceData.details = strings.browse;
-      presenceData.state = title;
+      presenceData.details = strings.browse
+      presenceData.state = title
     }
 
     if (showTimestamp) {
-      presenceData.startTimestamp = DEFAULT_TIMESTAMP;
+      presenceData.startTimestamp = DEFAULT_TIMESTAMP
     }
   }
 
@@ -555,25 +564,26 @@ presence.on("UpdateData", async () => {
   if (showButtons) {
     presenceData.buttons = [
       {
-        label: "Visit Website",
+        label: 'Visit Website',
         url: document.URL
       }
-    ];
+    ]
   }
 
   // Set the activity
   if (presenceData.details) {
-    presence.setActivity(presenceData);
-  } else {
-    presence.clearActivity();
+    presence.setActivity(presenceData)
   }
-});
+  else {
+    presence.clearActivity()
+  }
+})
 
 // Helper function to calculate timestamps
 function getTimestamps(currentTime: number, duration: number): [number, number] {
-  const startTime = Date.now();
-  const endTime = startTime + (duration - currentTime) * 1000;
-  return [startTime, endTime];
+  const startTime = Date.now()
+  const endTime = startTime + (duration - currentTime) * 1000
+  return [startTime, endTime]
 }
 ```
 

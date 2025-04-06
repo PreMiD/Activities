@@ -59,36 +59,39 @@ Here's the basic structure of a `metadata.json` file:
 
 The `author` field is required and contains information about the activity developer:
 
-<!-- eslint-skip -->
 ```json
-"author": {
-  "name": "Your Name",
-  "id": "your_discord_id"
+{
+  "author": {
+    "name": "Your Name",
+    "id": "your_discord_id"
+  }
 }
 ```
 
 The `contributors` field is optional and contains an array of contributors to the activity:
 
-<!-- eslint-skip -->
 ```json
-"contributors": [
-  {
-    "name": "Contributor Name",
-    "id": "contributor_discord_id"
-  }
-]
+{
+  "contributors": [
+    {
+      "name": "Contributor Name",
+      "id": "contributor_discord_id"
+    }
+  ]
+}
 ```
 
 ## Description
 
 The `description` field contains a small description of the service in different languages. The keys are language codes, and the values are the descriptions in those languages:
 
-<!-- eslint-skip -->
 ```json
-"description": {
-  "en": "Example is a website that does something cool.",
-  "de": "Example ist eine Website, die etwas Cooles macht.",
-  "fr": "Example est un site web qui fait quelque chose de cool."
+{
+  "description": {
+    "de": "Example ist eine Website, die etwas Cooles macht.",
+    "en": "Example is a website that does something cool.",
+    "fr": "Example est un site web qui fait quelque chose de cool."
+  }
 }
 ```
 
@@ -99,14 +102,17 @@ You should at least provide an English description. The PreMiD translation team 
 The `url` field contains the URL of the service. It can be a string or an array of strings:
 
 ```json
-"url": "example.com"
+{
+  "url": "example.com"
+}
 ```
 
 or
 
-<!-- eslint-skip -->
 ```json
-"url": ["example.com", "example.org"]
+{
+  "url": ["example.com", "example.org"]
+}
 ```
 
 **Note**: Do not include `http://` or `https://` in the URL.
@@ -122,9 +128,10 @@ The `category` field defines the category the activity falls under. It must be o
 - `videos`: Video streaming or video related websites
 - `other`: Anything that doesn't fit in the above categories
 
-<!-- eslint-skip -->
 ```json
-"category": "videos"
+{
+  "category": "videos"
+}
 ```
 
 ## Settings
@@ -192,16 +199,18 @@ The `settings` field is an array of settings that users can customize. Each sett
 
 The `regExp` field is a regular expression string used to match URLs:
 
-<!-- eslint-skip -->
 ```json
-"regExp": "([a-z0-9-]+[.])*example[.]com[/]"
+{
+  "regExp": "([a-z0-9-]+[.])*example[.]com[/]"
+}
 ```
 
 The `iFrameRegExp` field is a regular expression selector for iframes to inject into:
 
-<!-- eslint-skip -->
 ```json
-"iFrameRegExp": "([a-z0-9-]+[.])*example[.]com[/]embed[/]"
+{
+  "iFrameRegExp": "([a-z0-9-]+[.])*example[.]com[/]embed[/]"
+}
 ```
 
 ## Complete Example

@@ -5,6 +5,7 @@ This page provides a basic example of a PreMiD Activity. This example shows how 
 ## Basic Structure
 
 A basic activity consists of two files:
+
 - `metadata.json`: Contains information about the activity
 - `presence.ts`: Contains the code for the activity
 
@@ -12,6 +13,7 @@ A basic activity consists of two files:
 
 ```json
 {
+  "apiVersion": 1,
   "author": {
     "name": "Your Name",
     "id": "your_discord_id"
@@ -25,9 +27,8 @@ A basic activity consists of two files:
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "tag"],
   "category": "other",
-  "apiVersion": 1
+  "tags": ["example", "tag"]
 }
 ```
 
@@ -35,42 +36,46 @@ A basic activity consists of two files:
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: "logo"
-  };
+    largeImageKey: 'logo'
+  }
 
   // Get the current URL path
-  const path = document.location.pathname;
+  const path = document.location.pathname
 
   // Set the details based on the current page
-  if (path === "/") {
-    presenceData.details = "Browsing the homepage";
-    presenceData.state = "Home";
-  } else if (path.includes("/about")) {
-    presenceData.details = "Reading about us";
-    presenceData.state = "About page";
-  } else if (path.includes("/contact")) {
-    presenceData.details = "Contacting us";
-    presenceData.state = "Contact page";
-  } else {
-    presenceData.details = "Browsing";
-    presenceData.state = "Unknown page";
+  if (path === '/') {
+    presenceData.details = 'Browsing the homepage'
+    presenceData.state = 'Home'
+  }
+  else if (path.includes('/about')) {
+    presenceData.details = 'Reading about us'
+    presenceData.state = 'About page'
+  }
+  else if (path.includes('/contact')) {
+    presenceData.details = 'Contacting us'
+    presenceData.state = 'Contact page'
+  }
+  else {
+    presenceData.details = 'Browsing'
+    presenceData.state = 'Unknown page'
   }
 
   // Add a timestamp to show how long the user has been on the page
-  presenceData.startTimestamp = Date.now();
+  presenceData.startTimestamp = Date.now()
 
   // Set the activity
   if (presenceData.details) {
-    presence.setActivity(presenceData);
-  } else {
-    presence.clearActivity();
+    presence.setActivity(presenceData)
   }
-});
+  else {
+    presence.clearActivity()
+  }
+})
 ```
 
 ## How It Works

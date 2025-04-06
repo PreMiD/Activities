@@ -66,6 +66,7 @@ npx pmd versionize "Example"
 This command will:
 
 1. If the activity is not already versioned:
+
    - Move the current activity files into a `v1` directory
    - Create a new `v2` directory with the necessary files
    - Update the `apiVersion` field to `2` in the new version's `metadata.json` file
@@ -132,8 +133,8 @@ Here's an example of a `metadata.json` file:
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "tag"],
-  "category": "other"
+  "category": "other",
+  "tags": ["example", "tag"]
 }
 ```
 
@@ -147,19 +148,19 @@ Here's a basic example of a `presence.ts` file:
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: "logo",
-    details: "Browsing Example.com",
-    state: "Homepage",
+    largeImageKey: 'logo',
+    details: 'Browsing Example.com',
+    state: 'Homepage',
     startTimestamp: Date.now()
-  };
+  }
 
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 The `presence.ts` file typically follows this structure:
@@ -179,10 +180,10 @@ The `iframe.ts` file is used to gather information from iframes on the page. Thi
 Here's a basic example of an `iframe.ts` file:
 
 ```typescript
-const iframe = new iFrame();
+const iframe = new iFrame()
 
-iframe.on("UpdateData", async () => {
-  const video = document.querySelector("video");
+iframe.on('UpdateData', async () => {
+  const video = document.querySelector('video')
 
   if (video) {
     iframe.send({
@@ -190,11 +191,11 @@ iframe.on("UpdateData", async () => {
         paused: video.paused,
         currentTime: video.currentTime,
         duration: video.duration,
-        title: document.querySelector(".video-title")?.textContent
+        title: document.querySelector('.video-title')?.textContent
       }
-    });
+    })
   }
-});
+})
 ```
 
 The `iframe.ts` file typically follows this structure:
@@ -239,9 +240,9 @@ websites/
 In your `presence.ts` file, you can import these modules:
 
 ```typescript
-import { formatTime } from "./utils";
-import { VideoData } from "./types";
-import { SELECTORS } from "./constants";
+import { SELECTORS } from './constants'
+import { VideoData } from './types'
+import { formatTime } from './utils'
 ```
 
 ## Best Practices

@@ -7,6 +7,7 @@ Welcome to the PreMiD Activity Development guide! This documentation will help y
 An Activity (previously called a Presence) is a small piece of JavaScript code that runs when a user visits a specific website. It gathers information from the page and sends it to the PreMiD extension, which then updates the user's Discord status to show what they're doing on that website.
 
 Activities can display various information, such as:
+
 - The name of the website
 - What the user is doing on the website (watching a video, listening to music, reading an article, etc.)
 - Additional details like video/song titles, authors, timestamps, etc.
@@ -17,6 +18,7 @@ Activities can display various information, such as:
 Activities work by injecting a JavaScript file into the webpage when a user visits a supported site. This script uses the PreMiD API to gather information from the page and send it to the extension, which then communicates with Discord to update the user's status.
 
 The basic flow is:
+
 1. User visits a supported website
 2. PreMiD extension injects the Activity script into the page
 3. The script gathers information from the page
@@ -27,6 +29,7 @@ The basic flow is:
 ## Prerequisites
 
 Before you start developing activities, you should have:
+
 - Basic knowledge of JavaScript
 - A code editor (VS Code, Sublime Text, etc.)
 - Git installed on your computer

@@ -25,10 +25,10 @@ To create a slideshow, you need to use the `createSlideshow` method of the `Pres
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-const slideshow = presence.createSlideshow();
+const slideshow = presence.createSlideshow()
 ```
 
 ## Adding Slides
@@ -36,12 +36,12 @@ const slideshow = presence.createSlideshow();
 Once you've created a slideshow, you can add slides to it using the `addSlide` method:
 
 ```typescript
-slideshow.addSlide("slide1", {
-  details: "Browsing Example.com",
-  state: "Homepage",
-  largeImageKey: "logo",
+slideshow.addSlide('slide1', {
+  details: 'Browsing Example.com',
+  state: 'Homepage',
+  largeImageKey: 'logo',
   startTimestamp: Date.now()
-}, 5000); // 5 seconds
+}, 5000) // 5 seconds
 ```
 
 The `addSlide` method takes three parameters:
@@ -55,18 +55,18 @@ The `addSlide` method takes three parameters:
 You can update an existing slide using the `updateSlide` method:
 
 ```typescript
-slideshow.updateSlide("slide1", {
-  details: "Updated details",
-  state: "Updated state",
-  largeImageKey: "logo",
+slideshow.updateSlide('slide1', {
+  details: 'Updated details',
+  state: 'Updated state',
+  largeImageKey: 'logo',
   startTimestamp: Date.now()
-});
+})
 ```
 
 You can also update just the interval:
 
 ```typescript
-slideshow.updateSlide("slide1", undefined, 10000); // 10 seconds
+slideshow.updateSlide('slide1', undefined, 10000) // 10 seconds
 ```
 
 ## Deleting Slides
@@ -74,13 +74,13 @@ slideshow.updateSlide("slide1", undefined, 10000); // 10 seconds
 You can delete a slide using the `deleteSlide` method:
 
 ```typescript
-slideshow.deleteSlide("slide1");
+slideshow.deleteSlide('slide1')
 ```
 
 You can also delete all slides using the `deleteAllSlides` method:
 
 ```typescript
-slideshow.deleteAllSlides();
+slideshow.deleteAllSlides()
 ```
 
 ## Checking if a Slide Exists
@@ -88,7 +88,7 @@ slideshow.deleteAllSlides();
 You can check if a slide exists using the `hasSlide` method:
 
 ```typescript
-if (slideshow.hasSlide("slide1")) {
+if (slideshow.hasSlide('slide1')) {
   // Slide exists
 }
 ```
@@ -98,18 +98,18 @@ if (slideshow.hasSlide("slide1")) {
 You can get all slides using the `getSlides` method:
 
 ```typescript
-const slides = slideshow.getSlides();
+const slides = slideshow.getSlides()
 
 // You can then modify all slides at once
 for (const slide of slides) {
-  const data = slide.data;
+  const data = slide.data
   data.buttons = [
     {
-      label: "Visit Website",
+      label: 'Visit Website',
       url: document.URL
     }
-  ];
-  slide.updateData(data);
+  ]
+  slide.updateData(data)
 }
 ```
 
@@ -118,7 +118,7 @@ for (const slide of slides) {
 To set the activity with a slideshow, you pass the slideshow to the `setActivity` method:
 
 ```typescript
-presence.setActivity(slideshow);
+presence.setActivity(slideshow)
 ```
 
 ## Real-World Examples
@@ -129,52 +129,52 @@ presence.setActivity(slideshow);
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-const slideshow = presence.createSlideshow();
+const slideshow = presence.createSlideshow()
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Add slides with different information
-  slideshow.addSlide("info1", {
-    details: "Browsing the website",
+  slideshow.addSlide('info1', {
+    details: 'Browsing the website',
     state: document.title,
-    largeImageKey: "logo"
-  }, 5000); // 5 seconds
+    largeImageKey: 'logo'
+  }, 5000) // 5 seconds
 
-  slideshow.addSlide("info2", {
-    details: "Current time",
+  slideshow.addSlide('info2', {
+    details: 'Current time',
     state: new Date().toLocaleTimeString(),
-    largeImageKey: "logo",
-    smallImageKey: "clock"
-  }, 5000); // 5 seconds
+    largeImageKey: 'logo',
+    smallImageKey: 'clock'
+  }, 5000) // 5 seconds
 
   // Set the activity with the slideshow
-  presence.setActivity(slideshow);
-});
+  presence.setActivity(slideshow)
+})
 ```
 
 ### Dynamic Image Slideshow
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-const slideshow = presence.createSlideshow();
-const SLIDESHOW_TIMEOUT = 5000; // 5 seconds
+const slideshow = presence.createSlideshow()
+const SLIDESHOW_TIMEOUT = 5000 // 5 seconds
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData = {
-    details: "Viewing gallery",
-    largeImageKey: "logo"
-  };
+    details: 'Viewing gallery',
+    largeImageKey: 'logo'
+  }
 
   // Get all images on the page
-  const images = document.querySelectorAll(".gallery img");
+  const images = document.querySelectorAll('.gallery img')
 
   // Clear previous slides if needed
-  slideshow.deleteAllSlides();
+  slideshow.deleteAllSlides()
 
   // Add each image as a slide
   for (const [index, image] of images.entries()) {
@@ -186,94 +186,96 @@ presence.on("UpdateData", async () => {
         largeImageKey: image.src
       },
       SLIDESHOW_TIMEOUT
-    );
+    )
   }
 
   // Set the activity with the slideshow
-  presence.setActivity(slideshow);
-});
+  presence.setActivity(slideshow)
+})
 ```
 
 ### Conditional Slides
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-const slideshow = presence.createSlideshow();
+const slideshow = presence.createSlideshow()
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData = {
-    largeImageKey: "logo",
+    largeImageKey: 'logo',
     startTimestamp: Date.now()
-  };
+  }
 
   // Always add the main slide
-  slideshow.addSlide("main", {
+  slideshow.addSlide('main', {
     ...presenceData,
-    details: "Browsing the website",
+    details: 'Browsing the website',
     state: document.title
-  }, 5000);
+  }, 5000)
 
   // Only add user info slide if user is logged in
-  const username = document.querySelector(".username")?.textContent;
+  const username = document.querySelector('.username')?.textContent
   if (username) {
-    slideshow.addSlide("user", {
+    slideshow.addSlide('user', {
       ...presenceData,
       details: `Logged in as ${username}`,
-      state: "Viewing profile",
-      smallImageKey: "user"
-    }, 5000);
-  } else if (slideshow.hasSlide("user")) {
+      state: 'Viewing profile',
+      smallImageKey: 'user'
+    }, 5000)
+  }
+  else if (slideshow.hasSlide('user')) {
     // Remove the user slide if it exists and user is no longer logged in
-    slideshow.deleteSlide("user");
+    slideshow.deleteSlide('user')
   }
 
   // Set the activity with the slideshow
-  presence.setActivity(slideshow);
-});
+  presence.setActivity(slideshow)
+})
 ```
 
 ### Slideshow with Settings
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
-const slideshow = presence.createSlideshow();
+const slideshow = presence.createSlideshow()
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get settings
-  const showSlideshow = await presence.getSetting<boolean>("showSlideshow");
-  const slideDuration = await presence.getSetting<number>("slideDuration") * 1000; // Convert to milliseconds
+  const showSlideshow = await presence.getSetting<boolean>('showSlideshow')
+  const slideDuration = await presence.getSetting<number>('slideDuration') * 1000 // Convert to milliseconds
 
   const presenceData = {
-    largeImageKey: "logo",
-    details: "Browsing Example.com",
+    largeImageKey: 'logo',
+    details: 'Browsing Example.com',
     state: document.title,
     startTimestamp: Date.now()
-  };
+  }
 
   if (showSlideshow) {
     // Add slides
-    slideshow.addSlide("main", presenceData, slideDuration);
+    slideshow.addSlide('main', presenceData, slideDuration)
 
-    slideshow.addSlide("time", {
+    slideshow.addSlide('time', {
       ...presenceData,
-      details: "Current time",
+      details: 'Current time',
       state: new Date().toLocaleTimeString(),
-      smallImageKey: "clock"
-    }, slideDuration);
+      smallImageKey: 'clock'
+    }, slideDuration)
 
     // Set the activity with the slideshow
-    presence.setActivity(slideshow);
-  } else {
-    // Set the activity with a single presence
-    presence.setActivity(presenceData);
+    presence.setActivity(slideshow)
   }
-});
+  else {
+    // Set the activity with a single presence
+    presence.setActivity(presenceData)
+  }
+})
 ```
 
 ## Best Practices
@@ -306,8 +308,8 @@ Here's a complete example of an activity that uses a slideshow to alternate betw
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "slideshow"],
   "category": "other",
+  "tags": ["example", "slideshow"],
   "settings": [
     {
       "id": "showSlideshow",
@@ -332,107 +334,110 @@ Here's a complete example of an activity that uses a slideshow to alternate betw
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
 // Create a slideshow
-const slideshow = presence.createSlideshow();
+const slideshow = presence.createSlideshow()
 
 // Define a constant for slideshow timeout
-const DEFAULT_SLIDESHOW_TIMEOUT = 5000; // 5 seconds
+const DEFAULT_SLIDESHOW_TIMEOUT = 5000 // 5 seconds
 
 // Track which slideshow keys we've registered to avoid duplicates
-const registeredSlideshowKeys = new Set<string>();
+const registeredSlideshowKeys = new Set<string>()
 
 // Helper function to register slideshow keys and avoid duplicates
 function registerSlideshowKey(key: string): void {
   if (!registeredSlideshowKeys.has(key)) {
-    registeredSlideshowKeys.add(key);
+    registeredSlideshowKeys.add(key)
   }
 }
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get settings
-  const showSlideshow = await presence.getSetting<boolean>("showSlideshow");
-  const slideDuration = await presence.getSetting<number>("slideDuration") * 1000; // Convert to milliseconds
+  const showSlideshow = await presence.getSetting<boolean>('showSlideshow')
+  const slideDuration = await presence.getSetting<number>('slideDuration') * 1000 // Convert to milliseconds
 
   // Base presence data that will be common across slides
   const presenceData: PresenceData = {
-    largeImageKey: "logo",
+    largeImageKey: 'logo',
     startTimestamp: Date.now()
-  };
+  }
 
   // Get page information
-  const path = document.location.pathname;
-  const pageTitle = document.title;
+  const path = document.location.pathname
+  const pageTitle = document.title
 
   // Determine what page we're on
-  if (path.includes("/gallery/")) {
+  if (path.includes('/gallery/')) {
     // Gallery page with images
-    const images = document.querySelectorAll(".gallery img");
+    const images = document.querySelectorAll('.gallery img')
 
     // Register a unique key for this gallery page
-    const galleryPage = document.querySelector(".pagination-active")?.textContent || "1";
-    registerSlideshowKey(`gallery-page-${galleryPage}`);
+    const galleryPage = document.querySelector('.pagination-active')?.textContent || '1'
+    registerSlideshowKey(`gallery-page-${galleryPage}`)
 
     if (showSlideshow) {
       // Clear previous slides if we have a new set of images
-      slideshow.deleteAllSlides();
+      slideshow.deleteAllSlides()
 
       // Add each image as a slide
       for (const [index, image] of images.entries()) {
-        const imageTitle = image.getAttribute("alt") || `Image ${index + 1}`;
+        const imageTitle = image.getAttribute('alt') || `Image ${index + 1}`
 
         slideshow.addSlide(
           `image-${index}`,
           {
             ...presenceData,
-            details: "Viewing gallery",
+            details: 'Viewing gallery',
             state: `${imageTitle} (${index + 1}/${images.length})`,
             largeImageKey: image.src,
-            smallImageKey: "search",
-            smallImageText: "Browsing images"
+            smallImageKey: 'search',
+            smallImageText: 'Browsing images'
           },
           slideDuration || DEFAULT_SLIDESHOW_TIMEOUT
-        );
+        )
       }
 
       // Set the activity with the slideshow
-      presence.setActivity(slideshow);
-    } else {
-      // Show a single presence for the gallery
-      presenceData.details = "Viewing gallery";
-      presenceData.state = `${images.length} images`;
-      presenceData.smallImageKey = "search";
-      presenceData.smallImageText = "Browsing images";
-
-      presence.setActivity(presenceData);
+      presence.setActivity(slideshow)
     }
-  } else {
+    else {
+      // Show a single presence for the gallery
+      presenceData.details = 'Viewing gallery'
+      presenceData.state = `${images.length} images`
+      presenceData.smallImageKey = 'search'
+      presenceData.smallImageText = 'Browsing images'
+
+      presence.setActivity(presenceData)
+    }
+  }
+  else {
     // Homepage or other pages
-    presenceData.details = "Browsing Example.com";
-    presenceData.state = pageTitle;
+    presenceData.details = 'Browsing Example.com'
+    presenceData.state = pageTitle
 
     if (showSlideshow) {
       // Add slides for the homepage
-      slideshow.addSlide("homepage", presenceData, slideDuration || DEFAULT_SLIDESHOW_TIMEOUT);
+      slideshow.addSlide('homepage', presenceData, slideDuration || DEFAULT_SLIDESHOW_TIMEOUT)
 
-      slideshow.addSlide("time", {
+      slideshow.addSlide('time', {
         ...presenceData,
-        details: "Current time",
+        details: 'Current time',
         state: new Date().toLocaleTimeString(),
-        smallImageKey: "clock",
-        smallImageText: "Time information"
-      }, slideDuration || DEFAULT_SLIDESHOW_TIMEOUT);
+        smallImageKey: 'clock',
+        smallImageText: 'Time information'
+      }, slideDuration || DEFAULT_SLIDESHOW_TIMEOUT)
 
       // Set the activity with the slideshow
-      presence.setActivity(slideshow);
-    } else {
+      presence.setActivity(slideshow)
+    }
+    else {
       // Set the activity with a single presence
-      presence.setActivity(presenceData);
+      presence.setActivity(presenceData)
     }
   }
-});
+})
 ```
 
 ## Next Steps

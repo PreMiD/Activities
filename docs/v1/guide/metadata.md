@@ -64,7 +64,6 @@ Here's the basic structure of a `metadata.json` file:
 
 The `author` field is required and contains information about the activity developer:
 
-<!-- eslint-skip -->
 ```json
 {
   "author": {
@@ -76,7 +75,6 @@ The `author` field is required and contains information about the activity devel
 
 The `contributors` field is optional and contains an array of contributors to the activity:
 
-<!-- eslint-skip -->
 ```json
 {
   "contributors": [
@@ -92,7 +90,6 @@ The `contributors` field is optional and contains an array of contributors to th
 
 The `description` field contains a small description of the service in different languages. The keys are language codes, and the values are the descriptions in those languages:
 
-<!-- eslint-skip -->
 ```json
 {
   "description": {
@@ -109,7 +106,6 @@ You should at least provide an English description. The PreMiD translation team 
 
 The `url` field contains the URL of the service. It can be a string or an array of strings:
 
-<!-- eslint-skip -->
 ```json
 {
   "url": "example.com"
@@ -118,7 +114,6 @@ The `url` field contains the URL of the service. It can be a string or an array 
 
 or
 
-<!-- eslint-skip -->
 ```json
 {
   "url": ["example.com", "example.org"]
@@ -132,6 +127,7 @@ or
 The `logo` and `thumbnail` fields contain links to the service's logo and thumbnail images:
 
 <!-- eslint-skip -->
+
 ```json
 {
   "logo": "https://example.com/logo.png",
@@ -145,7 +141,6 @@ The `logo` and `thumbnail` fields contain links to the service's logo and thumbn
 
 **For PreMiD-related activities**: You can use the official PreMiD logo by using this URL:
 
-<!-- eslint-skip -->
 ```json
 {
   "logo": "https://cdn.rcd.gg/PreMiD.png"
@@ -163,7 +158,6 @@ The `category` field defines the category the activity falls under. It must be o
 - `videos`: Video streaming or video related websites
 - `other`: Anything that doesn't fit in the above categories
 
-<!-- eslint-skip -->
 ```json
 {
   "category": "videos"
@@ -235,7 +229,6 @@ The `settings` field is an array of settings that users can customize. Each sett
 
 The `regExp` field is a regular expression string used to match URLs:
 
-<!-- eslint-skip -->
 ```json
 {
   "regExp": "([a-z0-9-]+[.])*example[.]com[/]"
@@ -244,7 +237,6 @@ The `regExp` field is a regular expression string used to match URLs:
 
 The `iFrameRegExp` field is a regular expression selector for iframes to inject into:
 
-<!-- eslint-skip -->
 ```json
 {
   "iFrameRegExp": "([a-z0-9-]+[.])*example[.]com[/]embed[/]"
