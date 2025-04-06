@@ -5,7 +5,7 @@ The `Presence` class is the main class for creating activities. It provides meth
 ## Constructor
 
 ```typescript
-constructor(presenceOptions: PresenceOptions)
+constructor(presenceOptions: PresenceOptions);
 ```
 
 Creates a new Presence instance.
@@ -20,8 +20,8 @@ Creates a new Presence instance.
 
 ```typescript
 const presence = new Presence({
-  clientId: "123456789012345678"
-});
+  clientId: '123456789012345678'
+})
 ```
 
 ## Methods
@@ -29,7 +29,7 @@ const presence = new Presence({
 ### setActivity
 
 ```typescript
-setActivity(data?: PresenceData | Slideshow): Promise<void>
+setActivity(data?: PresenceData | Slideshow): Promise<void>;
 ```
 
 Sets the presence activity and sends it to the application.
@@ -42,17 +42,17 @@ Sets the presence activity and sends it to the application.
 
 ```typescript
 presence.setActivity({
-  details: "Reading documentation",
-  state: "Learning about the Presence class",
-  largeImageKey: "logo",
+  details: 'Reading documentation',
+  state: 'Learning about the Presence class',
+  largeImageKey: 'logo',
   startTimestamp: Date.now()
-});
+})
 ```
 
 ### clearActivity
 
 ```typescript
-clearActivity(): void
+clearActivity(): void;
 ```
 
 Clears the activity shown in Discord.
@@ -60,13 +60,13 @@ Clears the activity shown in Discord.
 #### Example
 
 ```typescript
-presence.clearActivity();
+presence.clearActivity()
 ```
 
 ### getStrings
 
 ```typescript
-getStrings<T extends { [K: string]: string }>(strings: T): Promise<T>
+getStrings<T extends { [K: string]: string }>(strings: T): Promise<T>;
 ```
 
 Gets translations from the extension.
@@ -79,18 +79,18 @@ Gets translations from the extension.
 
 ```typescript
 const strings = await presence.getStrings({
-  play: "general.playing",
-  pause: "general.paused"
-});
+  play: 'general.playing',
+  pause: 'general.paused'
+})
 
-console.log(strings.play); // "Playing"
-console.log(strings.pause); // "Paused"
+console.log(strings.play) // "Playing"
+console.log(strings.pause) // "Paused"
 ```
 
 ### getPageVariable
 
 ```typescript
-getPageVariable<T extends Record<string, any> = Record<string, unknown>>(...variables: string[]): Promise<T>
+getPageVariable<T extends Record<string, any> = Record<string, unknown>>(...variables: string[]): Promise<T>;
 ```
 
 Gets variables from the web page. Supports nested variables using dot notation.
@@ -102,13 +102,13 @@ Gets variables from the web page. Supports nested variables using dot notation.
 #### Example
 
 ```typescript
-const { title, artist } = await presence.getPageVariable("document.title", "window.artist");
+const { title, artist } = await presence.getPageVariable('document.title', 'window.artist')
 ```
 
 ### getSetting
 
 ```typescript
-getSetting<T extends string | boolean | number>(setting: string): Promise<T>
+getSetting<T extends string | boolean | number>(setting: string): Promise<T>;
 ```
 
 Gets a setting from the presence metadata.
@@ -120,13 +120,13 @@ Gets a setting from the presence metadata.
 #### Example
 
 ```typescript
-const showButtons = await presence.getSetting<boolean>("showButtons");
+const showButtons = await presence.getSetting<boolean>('showButtons')
 ```
 
 ### hideSetting
 
 ```typescript
-hideSetting(settings: string | string[]): Promise<void>
+hideSetting(settings: string | string[]): Promise<void>;
 ```
 
 Hides a setting.
@@ -138,13 +138,13 @@ Hides a setting.
 #### Example
 
 ```typescript
-presence.hideSetting("showTimestamp");
+presence.hideSetting('showTimestamp')
 ```
 
 ### showSetting
 
 ```typescript
-showSetting(settings: string | string[]): Promise<void>
+showSetting(settings: string | string[]): Promise<void>;
 ```
 
 Shows a setting.
@@ -156,13 +156,13 @@ Shows a setting.
 #### Example
 
 ```typescript
-presence.showSetting("showTimestamp");
+presence.showSetting('showTimestamp')
 ```
 
 ### getLogs
 
 ```typescript
-getLogs<T = unknown>(regExp?: RegExp, options?: { types?: ConsoleLogType[], contentOnly?: boolean }): Promise<T[] | ConsoleLog<T>[]>
+getLogs<T = unknown>(regExp?: RegExp, options?: { types?: ConsoleLogType[], contentOnly?: boolean }): Promise<T[] | ConsoleLog<T>[]>;
 ```
 
 Returns an array of the past 100 logs, optionally filtered with a RegExp.
@@ -177,13 +177,13 @@ Returns an array of the past 100 logs, optionally filtered with a RegExp.
 #### Example
 
 ```typescript
-const logs = await presence.getLogs(/error/i, { types: ["error", "warn"] });
+const logs = await presence.getLogs(/error/i, { types: ['error', 'warn'] })
 ```
 
 ### getExtensionVersion
 
 ```typescript
-getExtensionVersion(onlyNumeric?: boolean): string | number
+getExtensionVersion(onlyNumeric?: boolean): string | number;
 ```
 
 Returns the extension version.
@@ -195,14 +195,14 @@ Returns the extension version.
 #### Example
 
 ```typescript
-const version = presence.getExtensionVersion();
-console.log(version); // "2.2.0"
+const version = presence.getExtensionVersion()
+console.log(version) // "2.2.0"
 ```
 
 ### createSlideshow
 
 ```typescript
-createSlideshow(): Slideshow
+createSlideshow(): Slideshow;
 ```
 
 Creates a slideshow that allows for alternating between sets of presence data at specific intervals.
@@ -210,7 +210,7 @@ Creates a slideshow that allows for alternating between sets of presence data at
 #### Example
 
 ```typescript
-const slideshow = presence.createSlideshow();
+const slideshow = presence.createSlideshow()
 ```
 
 ### on
@@ -229,9 +229,9 @@ Subscribes to events emitted by the extension.
 #### Example
 
 ```typescript
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Update the presence data
-});
+})
 ```
 
 ## Events
@@ -243,9 +243,9 @@ Emitted on every tick, used to update the data displayed in the presence.
 #### Example
 
 ```typescript
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Update the presence data
-});
+})
 ```
 
 ### iFrameData
@@ -255,9 +255,9 @@ Emitted when data is received from the iframe.ts file.
 #### Example
 
 ```typescript
-presence.on("iFrameData", (data) => {
-  console.log(data);
-});
+presence.on('iFrameData', (data) => {
+  console.log(data)
+})
 ```
 
 ## Utility Methods
@@ -265,7 +265,7 @@ presence.on("iFrameData", (data) => {
 ### info
 
 ```typescript
-info(message: string): void
+info(message: string): void;
 ```
 
 Console logs with an info message.
@@ -277,13 +277,13 @@ Console logs with an info message.
 #### Example
 
 ```typescript
-presence.info("This is an info message");
+presence.info('This is an info message')
 ```
 
 ### success
 
 ```typescript
-success(message: string): void
+success(message: string): void;
 ```
 
 Console logs with a success message.
@@ -295,13 +295,13 @@ Console logs with a success message.
 #### Example
 
 ```typescript
-presence.success("This is a success message");
+presence.success('This is a success message')
 ```
 
 ### error
 
 ```typescript
-error(message: string): void
+error(message: string): void;
 ```
 
 Console logs with an error message.
@@ -313,5 +313,5 @@ Console logs with an error message.
 #### Example
 
 ```typescript
-presence.error("This is an error message");
+presence.error('This is an error message')
 ```
