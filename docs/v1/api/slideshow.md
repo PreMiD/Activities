@@ -7,7 +7,7 @@ The `Slideshow` class allows you to create slideshows that alternate between dif
 You can create a slideshow using the `createSlideshow` method of the `Presence` class:
 
 ```typescript
-const slideshow = presence.createSlideshow();
+const slideshow = presence.createSlideshow()
 ```
 
 ## Methods
@@ -15,7 +15,7 @@ const slideshow = presence.createSlideshow();
 ### addSlide
 
 ```typescript
-addSlide(id: string, data: PresenceData, interval: number): SlideshowSlide
+addSlide(id: string, data: PresenceData, interval: number): SlideshowSlide;
 ```
 
 Adds a slide to the queue. If a slide already exists with the given ID, it will be updated with the new values.
@@ -33,17 +33,17 @@ Adds a slide to the queue. If a slide already exists with the given ID, it will 
 #### Example
 
 ```typescript
-slideshow.addSlide("homepage", {
-  details: "Browsing the homepage",
-  state: "example.com",
-  largeImageKey: "logo"
-}, 5000); // 5 seconds
+slideshow.addSlide('homepage', {
+  details: 'Browsing the homepage',
+  state: 'example.com',
+  largeImageKey: 'logo'
+}, 5000) // 5 seconds
 ```
 
 ### deleteSlide
 
 ```typescript
-deleteSlide(id: string): void
+deleteSlide(id: string): void;
 ```
 
 Deletes a slide from the queue.
@@ -55,13 +55,13 @@ Deletes a slide from the queue.
 #### Example
 
 ```typescript
-slideshow.deleteSlide("homepage");
+slideshow.deleteSlide('homepage')
 ```
 
 ### deleteAllSlides
 
 ```typescript
-deleteAllSlides(): void
+deleteAllSlides(): void;
 ```
 
 Clears the queue of all slides.
@@ -69,13 +69,13 @@ Clears the queue of all slides.
 #### Example
 
 ```typescript
-slideshow.deleteAllSlides();
+slideshow.deleteAllSlides()
 ```
 
 ### updateSlide
 
 ```typescript
-updateSlide(id: string, data?: PresenceData, interval?: number): SlideshowSlide
+updateSlide(id: string, data?: PresenceData, interval?: number): SlideshowSlide;
 ```
 
 Updates a slide already in the queue. Passing `null` or `undefined` will keep the old value.
@@ -93,17 +93,17 @@ Updates a slide already in the queue. Passing `null` or `undefined` will keep th
 #### Example
 
 ```typescript
-slideshow.updateSlide("homepage", {
-  details: "Browsing the updated homepage",
-  state: "example.com",
-  largeImageKey: "logo"
-});
+slideshow.updateSlide('homepage', {
+  details: 'Browsing the updated homepage',
+  state: 'example.com',
+  largeImageKey: 'logo'
+})
 ```
 
 ### hasSlide
 
 ```typescript
-hasSlide(id: string): boolean
+hasSlide(id: string): boolean;
 ```
 
 Returns whether a slide exists in the queue.
@@ -119,7 +119,7 @@ Returns whether a slide exists in the queue.
 #### Example
 
 ```typescript
-if (slideshow.hasSlide("homepage")) {
+if (slideshow.hasSlide('homepage')) {
   // Slide exists
 }
 ```
@@ -127,7 +127,7 @@ if (slideshow.hasSlide("homepage")) {
 ### getSlides
 
 ```typescript
-getSlides(): SlideshowSlide[]
+getSlides(): SlideshowSlide[];
 ```
 
 Returns all slides in the slideshow.
@@ -139,18 +139,18 @@ Returns all slides in the slideshow.
 #### Example
 
 ```typescript
-const slides = slideshow.getSlides();
+const slides = slideshow.getSlides()
 
 // You can then modify all slides at once
 for (const slide of slides) {
-  const data = slide.data;
+  const data = slide.data
   data.buttons = [
     {
-      label: "Visit Website",
+      label: 'Visit Website',
       url: document.URL
     }
-  ];
-  slide.updateData(data);
+  ]
+  slide.updateData(data)
 }
 ```
 
@@ -160,18 +160,18 @@ The `SlideshowSlide` class represents a single slide in a slideshow.
 
 ### Properties
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `id` | `string` | The slide ID |
-| `data` | `PresenceData` | The slide presence data |
-| `interval` | `number` | Interval until the next slide (in milliseconds) |
+| Property   | Type           | Description                                     |
+| ---------- | -------------- | ----------------------------------------------- |
+| `id`       | `string`       | The slide ID                                    |
+| `data`     | `PresenceData` | The slide presence data                         |
+| `interval` | `number`       | Interval until the next slide (in milliseconds) |
 
 ### Methods
 
 #### updateData
 
 ```typescript
-updateData(data?: PresenceData): void
+updateData(data?: PresenceData): void;
 ```
 
 Updates the slide presence data. Passing `null` or `undefined` will keep the original value.
@@ -184,15 +184,15 @@ Updates the slide presence data. Passing `null` or `undefined` will keep the ori
 
 ```typescript
 slide.updateData({
-  details: "Updated details",
-  state: "Updated state"
-});
+  details: 'Updated details',
+  state: 'Updated state'
+})
 ```
 
 #### updateInterval
 
 ```typescript
-updateInterval(interval?: number): void
+updateInterval(interval?: number): void;
 ```
 
 Updates the slide interval. Passing `null` or `undefined` will keep the original value.
@@ -204,7 +204,7 @@ Updates the slide interval. Passing `null` or `undefined` will keep the original
 ##### Example
 
 ```typescript
-slide.updateInterval(10000); // 10 seconds
+slide.updateInterval(10000) // 10 seconds
 ```
 
 ## Real-World Examples
@@ -213,52 +213,52 @@ slide.updateInterval(10000); // 10 seconds
 
 ```typescript
 const presence = new Presence({
-  clientId: "123456789012345678"
-});
+  clientId: '123456789012345678'
+})
 
-const slideshow = presence.createSlideshow();
+const slideshow = presence.createSlideshow()
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Add slides with different information
-  slideshow.addSlide("info1", {
-    details: "Browsing the website",
+  slideshow.addSlide('info1', {
+    details: 'Browsing the website',
     state: document.title,
-    largeImageKey: "logo"
-  }, 5000); // 5 seconds
+    largeImageKey: 'logo'
+  }, 5000) // 5 seconds
 
-  slideshow.addSlide("info2", {
-    details: "Current time",
+  slideshow.addSlide('info2', {
+    details: 'Current time',
     state: new Date().toLocaleTimeString(),
-    largeImageKey: "logo",
-    smallImageKey: "clock"
-  }, 5000); // 5 seconds
+    largeImageKey: 'logo',
+    smallImageKey: 'clock'
+  }, 5000) // 5 seconds
 
   // Set the activity with the slideshow
-  presence.setActivity(slideshow);
-});
+  presence.setActivity(slideshow)
+})
 ```
 
 ### Dynamic Image Slideshow
 
 ```typescript
 const presence = new Presence({
-  clientId: "123456789012345678"
-});
+  clientId: '123456789012345678'
+})
 
-const slideshow = presence.createSlideshow();
-const SLIDESHOW_TIMEOUT = 5000; // 5 seconds
+const slideshow = presence.createSlideshow()
+const SLIDESHOW_TIMEOUT = 5000 // 5 seconds
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData = {
-    details: "Viewing gallery",
-    largeImageKey: "logo"
-  };
+    details: 'Viewing gallery',
+    largeImageKey: 'logo'
+  }
 
   // Get all images on the page
-  const images = document.querySelectorAll(".gallery img");
+  const images = document.querySelectorAll('.gallery img')
 
   // Clear previous slides if needed
-  slideshow.deleteAllSlides();
+  slideshow.deleteAllSlides()
 
   // Add each image as a slide
   for (const [index, image] of images.entries()) {
@@ -270,53 +270,54 @@ presence.on("UpdateData", async () => {
         largeImageKey: image.src
       },
       SLIDESHOW_TIMEOUT
-    );
+    )
   }
 
   // Set the activity with the slideshow
-  presence.setActivity(slideshow);
-});
+  presence.setActivity(slideshow)
+})
 ```
 
 ### Conditional Slides
 
 ```typescript
 const presence = new Presence({
-  clientId: "123456789012345678"
-});
+  clientId: '123456789012345678'
+})
 
-const slideshow = presence.createSlideshow();
+const slideshow = presence.createSlideshow()
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData = {
-    largeImageKey: "logo",
+    largeImageKey: 'logo',
     startTimestamp: Date.now()
-  };
+  }
 
   // Always add the main slide
-  slideshow.addSlide("main", {
+  slideshow.addSlide('main', {
     ...presenceData,
-    details: "Browsing the website",
+    details: 'Browsing the website',
     state: document.title
-  }, 5000);
+  }, 5000)
 
   // Only add user info slide if user is logged in
-  const username = document.querySelector(".username")?.textContent;
+  const username = document.querySelector('.username')?.textContent
   if (username) {
-    slideshow.addSlide("user", {
+    slideshow.addSlide('user', {
       ...presenceData,
       details: `Logged in as ${username}`,
-      state: "Viewing profile",
-      smallImageKey: "user"
-    }, 5000);
-  } else if (slideshow.hasSlide("user")) {
+      state: 'Viewing profile',
+      smallImageKey: 'user'
+    }, 5000)
+  }
+  else if (slideshow.hasSlide('user')) {
     // Remove the user slide if it exists and user is no longer logged in
-    slideshow.deleteSlide("user");
+    slideshow.deleteSlide('user')
   }
 
   // Set the activity with the slideshow
-  presence.setActivity(slideshow);
-});
+  presence.setActivity(slideshow)
+})
 ```
 
 ## Notes

@@ -11,7 +11,7 @@ To use the iFrame class, you need to create an `iframe.ts` file alongside your `
 ### send
 
 ```typescript
-send(data: any): void
+send(data: any): void;
 ```
 
 Sends data from the iFrame back to the presence script.
@@ -23,22 +23,22 @@ Sends data from the iFrame back to the presence script.
 #### Example
 
 ```typescript
-const iframe = new iFrame();
+const iframe = new iFrame()
 
 iframe.send({
   video: {
-    title: document.querySelector(".video-title").textContent,
-    currentTime: document.querySelector("video").currentTime,
-    duration: document.querySelector("video").duration,
-    paused: document.querySelector("video").paused
+    title: document.querySelector('.video-title').textContent,
+    currentTime: document.querySelector('video').currentTime,
+    duration: document.querySelector('video').duration,
+    paused: document.querySelector('video').paused
   }
-});
+})
 ```
 
 ### getUrl
 
 ```typescript
-getUrl(): Promise<string>
+getUrl(): Promise<string>;
 ```
 
 Returns the iFrame URL.
@@ -50,14 +50,14 @@ Returns the iFrame URL.
 #### Example
 
 ```typescript
-const url = await iframe.getUrl();
-console.log(url); // "https://example.com/embed/video"
+const url = await iframe.getUrl()
+console.log(url) // "https://example.com/embed/video"
 ```
 
 ### on
 
 ```typescript
-on<K extends keyof IFrameEvents>(eventName: K, listener: (...args: IFrameEvents[K]) => Awaitable<void>): void
+on<K extends keyof IFrameEvents>(eventName: K, listener: (...args: IFrameEvents[K]) => Awaitable<void>): void;
 ```
 
 Subscribes to events emitted by the extension.
@@ -70,15 +70,15 @@ Subscribes to events emitted by the extension.
 #### Example
 
 ```typescript
-iframe.on("UpdateData", () => {
+iframe.on('UpdateData', () => {
   // Send updated data to the presence script
   iframe.send({
     video: {
-      currentTime: document.querySelector("video").currentTime,
-      paused: document.querySelector("video").paused
+      currentTime: document.querySelector('video').currentTime,
+      paused: document.querySelector('video').paused
     }
-  });
-});
+  })
+})
 ```
 
 ## Events
@@ -90,9 +90,9 @@ Emitted on every tick, used to update the data sent from the iFrame.
 #### Example
 
 ```typescript
-iframe.on("UpdateData", () => {
+iframe.on('UpdateData', () => {
   // Send updated data to the presence script
-});
+})
 ```
 
 ## Complete Example
@@ -102,89 +102,92 @@ Here's a complete example of how to use the iFrame class:
 ### iframe.ts
 
 ```typescript
-const iframe = new iFrame();
+const iframe = new iFrame()
 
-iframe.on("UpdateData", () => {
-  const video = document.querySelector("video");
-  
+iframe.on('UpdateData', () => {
+  const video = document.querySelector('video')
+
   if (video) {
     iframe.send({
       video: {
-        title: document.querySelector(".video-title")?.textContent,
+        title: document.querySelector('.video-title')?.textContent,
         currentTime: video.currentTime,
         duration: video.duration,
         paused: video.paused
       }
-    });
+    })
   }
-});
+})
 ```
 
 ### presence.ts
 
 ```typescript
 const presence = new Presence({
-  clientId: "123456789012345678"
-});
+  clientId: '123456789012345678'
+})
 
 // Store iFrame data
 let iFrameData: {
   video?: {
-    title?: string;
-    currentTime?: number;
-    duration?: number;
-    paused?: boolean;
-  };
-} = {};
+    title?: string
+    currentTime?: number
+    duration?: number
+    paused?: boolean
+  }
+} = {}
 
 // Listen for iFrame data
-presence.on("iFrameData", (data) => {
-  iFrameData = data;
-});
+presence.on('iFrameData', (data) => {
+  iFrameData = data
+})
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: "logo"
-  };
+    largeImageKey: 'logo'
+  }
 
   // Check if we have video data from the iFrame
   if (iFrameData.video) {
-    const { title, currentTime, duration, paused } = iFrameData.video;
+    const { title, currentTime, duration, paused } = iFrameData.video
 
-    presenceData.details = title || "Watching a video";
-    
+    presenceData.details = title || 'Watching a video'
+
     if (paused) {
-      presenceData.state = "Paused";
-      delete presenceData.startTimestamp;
-      delete presenceData.endTimestamp;
-    } else {
-      presenceData.state = "Playing";
-      
+      presenceData.state = 'Paused'
+      delete presenceData.startTimestamp
+      delete presenceData.endTimestamp
+    }
+    else {
+      presenceData.state = 'Playing'
+
       // Calculate timestamps if we have currentTime and duration
       if (currentTime && duration) {
-        const timestamps = getTimestamps(currentTime, duration);
-        presenceData.startTimestamp = timestamps[0];
-        presenceData.endTimestamp = timestamps[1];
+        const timestamps = getTimestamps(currentTime, duration)
+        presenceData.startTimestamp = timestamps[0]
+        presenceData.endTimestamp = timestamps[1]
       }
     }
-  } else {
-    presenceData.details = "Browsing";
-    presenceData.startTimestamp = Date.now();
+  }
+  else {
+    presenceData.details = 'Browsing'
+    presenceData.startTimestamp = Date.now()
   }
 
   // Set the activity
   if (presenceData.details) {
-    presence.setActivity(presenceData);
-  } else {
-    presence.clearActivity();
+    presence.setActivity(presenceData)
   }
-});
+  else {
+    presence.clearActivity()
+  }
+})
 
 // Helper function to calculate timestamps
 function getTimestamps(currentTime: number, duration: number): [number, number] {
-  const startTime = Date.now();
-  const endTime = startTime + (duration - currentTime) * 1000;
-  return [startTime, endTime];
+  const startTime = Date.now()
+  const endTime = startTime + (duration - currentTime) * 1000
+  return [startTime, endTime]
 }
 ```
 
@@ -207,8 +210,8 @@ To use iFrames in your activity, you need to set the `iframe` property to `true`
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "tag"],
   "category": "other",
+  "tags": ["example", "tag"],
   "iframe": true
 }
 ```
