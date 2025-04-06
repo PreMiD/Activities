@@ -13,7 +13,7 @@ const versions: VersionItem[] = [
 ]
 
 export default defineConfig({
-  base: 'Activities',
+  base: '/Activities',
   title: 'PreMiD',
   description: 'Documentation for developing PreMiD Activities',
   themeConfig: {
