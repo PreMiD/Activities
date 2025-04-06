@@ -6,7 +6,12 @@ on:
     branches:
       - main
     paths:
-      - 'docs/**'
+      - "docs/**"
+  # Trigger on pull requests
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "docs/**"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -15,11 +20,12 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  pull-requests: write
 
 # Allow only one concurrent deployment
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   # Build job
@@ -51,11 +57,13 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist
+          name: github-pages
 
-  # Deployment job
-  deploy:
+  # Deployment job for main branch
+  deploy-production:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     environment:
-      name: docs
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
@@ -63,3 +71,33 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # Deployment job for PR previews
+  deploy-preview:
+    if: github.event_name == 'pull_request'
+    environment:
+      name: preview-pr-${{ github.event.pull_request.number }}
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const body = `## 📝 Documentation Preview\n\n**Your documentation changes are ready for preview!**\n\n🔍 [View Preview](${process.env.DEPLOYMENT_URL})\n\n_This preview will be automatically updated when you push new commits to this PR._`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+        env:
+          DEPLOYMENT_URL: ${{ steps.deployment.outputs.page_url }}
