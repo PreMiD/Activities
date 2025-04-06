@@ -10,6 +10,8 @@ To use the iFrame class, you need to create an `iframe.ts` file alongside your `
 
 ### send
 
+<!-- eslint-skip -->
+
 ```typescript
 send(data: any): void;
 ```
@@ -37,6 +39,8 @@ iframe.send({
 
 ### getUrl
 
+<!-- eslint-skip -->
+
 ```typescript
 getUrl(): Promise<string>;
 ```
@@ -55,6 +59,8 @@ console.log(url) // "https://example.com/embed/video"
 ```
 
 ### on
+
+<!-- eslint-skip -->
 
 ```typescript
 on<K extends keyof IFrameEvents>(eventName: K, listener: (...args: IFrameEvents[K]) => Awaitable<void>): void;

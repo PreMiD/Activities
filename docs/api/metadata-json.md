@@ -21,44 +21,45 @@ Here's the basic structure of a `metadata.json` file:
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "tag"],
-  "category": "other"
+  "category": "other",
+  "tags": ["example", "tag"]
 }
 ```
 
 ## Required Fields
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `author` | Object | Information about the activity developer |
-| `service` | String | The title of the service that this activity supports |
-| `description` | Object | Small description of the service in different languages |
-| `url` | String or Array | URL of the service (without http:// or https://) |
-| `version` | String | Version of your activity (Semantic Versioning) |
-| `logo` | String | Link to service's logo |
-| `thumbnail` | String | Link to service's thumbnail |
-| `color` | String | `#HEX` value for the activity color |
-| `tags` | Array | Array with tags to help users find the activity |
-| `category` | String | Category the activity falls under |
+| Field         | Type            | Description                                             |
+| ------------- | --------------- | ------------------------------------------------------- |
+| `author`      | Object          | Information about the activity developer                |
+| `service`     | String          | The title of the service that this activity supports    |
+| `description` | Object          | Small description of the service in different languages |
+| `url`         | String or Array | URL of the service (without http:// or https://)        |
+| `version`     | String          | Version of your activity (Semantic Versioning)          |
+| `logo`        | String          | Link to service's logo                                  |
+| `thumbnail`   | String          | Link to service's thumbnail                             |
+| `color`       | String          | `#HEX` value for the activity color                     |
+| `tags`        | Array           | Array with tags to help users find the activity         |
+| `category`    | String          | Category the activity falls under                       |
 
 ## Optional Fields
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `contributors` | Array | Array of contributors to the activity |
-| `altnames` | Array | Alternative titles for the service |
-| `iframe` | Boolean | Defines whether `iFrames` are used |
-| `regExp` | String | Regular expression string used to match URLs |
-| `iFrameRegExp` | String | Regular expression selector for iframes to inject into |
-| `readLogs` | Boolean | Defines whether `getLogs()` is used |
-| `button` | Boolean | Whether to include a "add activity" button on the store (partnered activities only) |
-| `warning` | Boolean | Whether to display a warning on the activity installation page |
-| `settings` | Array | Array of settings the user can change |
+| Field          | Type    | Description                                                                         |
+| -------------- | ------- | ----------------------------------------------------------------------------------- |
+| `contributors` | Array   | Array of contributors to the activity                                               |
+| `altnames`     | Array   | Alternative titles for the service                                                  |
+| `iframe`       | Boolean | Defines whether `iFrames` are used                                                  |
+| `regExp`       | String  | Regular expression string used to match URLs                                        |
+| `iFrameRegExp` | String  | Regular expression selector for iframes to inject into                              |
+| `readLogs`     | Boolean | Defines whether `getLogs()` is used                                                 |
+| `button`       | Boolean | Whether to include a "add activity" button on the store (partnered activities only) |
+| `warning`      | Boolean | Whether to display a warning on the activity installation page                      |
+| `settings`     | Array   | Array of settings the user can change                                               |
 
 ## Author and Contributors
 
 The `author` field is required and contains information about the activity developer:
 
+<!-- eslint-skip -->
 ```json
 "author": {
   "name": "Your Name",
@@ -68,6 +69,7 @@ The `author` field is required and contains information about the activity devel
 
 The `contributors` field is optional and contains an array of contributors to the activity:
 
+<!-- eslint-skip -->
 ```json
 "contributors": [
   {
@@ -81,6 +83,7 @@ The `contributors` field is optional and contains an array of contributors to th
 
 The `description` field contains a small description of the service in different languages. The keys are language codes, and the values are the descriptions in those languages:
 
+<!-- eslint-skip -->
 ```json
 "description": {
   "en": "Example is a website that does something cool.",
@@ -101,6 +104,7 @@ The `url` field contains the URL of the service. It can be a string or an array 
 
 or
 
+<!-- eslint-skip -->
 ```json
 "url": ["example.com", "example.org"]
 ```
@@ -118,6 +122,7 @@ The `category` field defines the category the activity falls under. It must be o
 - `videos`: Video streaming or video related websites
 - `other`: Anything that doesn't fit in the above categories
 
+<!-- eslint-skip -->
 ```json
 "category": "videos"
 ```
@@ -126,16 +131,16 @@ The `category` field defines the category the activity falls under. It must be o
 
 The `settings` field is an array of settings that users can customize. Each setting has the following properties:
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `id` | String | Identifier of the setting |
-| `title` | String | Title of the setting |
-| `icon` | String | Icon for the setting (Font Awesome class) |
-| `value` | Boolean/String/Number | Default value of the setting |
-| `values` | Array | Array of values for dropdown settings |
-| `placeholder` | String | Placeholder text for string settings |
-| `if` | Object | Conditions for the setting to appear |
-| `multiLanguage` | Boolean | Use strings from localization files |
+| Property        | Type                  | Description                               |
+| --------------- | --------------------- | ----------------------------------------- |
+| `id`            | String                | Identifier of the setting                 |
+| `title`         | String                | Title of the setting                      |
+| `icon`          | String                | Icon for the setting (Font Awesome class) |
+| `value`         | Boolean/String/Number | Default value of the setting              |
+| `values`        | Array                 | Array of values for dropdown settings     |
+| `placeholder`   | String                | Placeholder text for string settings      |
+| `if`            | Object                | Conditions for the setting to appear      |
+| `multiLanguage` | Boolean               | Use strings from localization files       |
 
 ### Boolean Setting Example
 
@@ -187,12 +192,14 @@ The `settings` field is an array of settings that users can customize. Each sett
 
 The `regExp` field is a regular expression string used to match URLs:
 
+<!-- eslint-skip -->
 ```json
 "regExp": "([a-z0-9-]+[.])*example[.]com[/]"
 ```
 
 The `iFrameRegExp` field is a regular expression selector for iframes to inject into:
 
+<!-- eslint-skip -->
 ```json
 "iFrameRegExp": "([a-z0-9-]+[.])*example[.]com[/]embed[/]"
 ```
@@ -216,18 +223,18 @@ Here's a complete example of a `metadata.json` file with all possible fields:
   "service": "Example",
   "altnames": ["Ex", "Sample"],
   "description": {
-    "en": "Example is a website that does something cool.",
-    "de": "Example ist eine Website, die etwas Cooles macht."
+    "de": "Example ist eine Website, die etwas Cooles macht.",
+    "en": "Example is a website that does something cool."
   },
   "url": "example.com",
+  "regExp": "([a-z0-9-]+[.])*example[.]com[/]",
   "version": "1.0.0",
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "sample", "demo"],
   "category": "other",
+  "tags": ["example", "sample", "demo"],
   "iframe": false,
-  "regExp": "([a-z0-9-]+[.])*example[.]com[/]",
   "readLogs": false,
   "settings": [
     {

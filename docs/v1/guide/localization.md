@@ -35,13 +35,14 @@ Without this setting, users won't be able to select their preferred language.
 
 The first step in adding localization is to provide translations for the description in your `metadata.json` file:
 
+<!-- eslint-skip -->
 ```json
 {
   "description": {
-    "en": "Example is a website that does something cool.",
     "de": "Example ist eine Website, die etwas Cooles macht.",
-    "fr": "Example est un site web qui fait quelque chose de cool.",
-    "es": "Example es un sitio web que hace algo genial."
+    "en": "Example is a website that does something cool.",
+    "es": "Example es un sitio web que hace algo genial.",
+    "fr": "Example est un site web qui fait quelque chose de cool."
   }
 }
 ```
@@ -53,33 +54,35 @@ The keys are language codes, and the values are the descriptions in those langua
 The `getStrings` method allows you to get translations for common strings from the PreMiD extension. These translations are maintained by the PreMiD translation team and are available in many languages.
 
 ```typescript
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get translations
   const strings = await presence.getStrings({
-    play: "general.playing",
-    pause: "general.paused",
-    browse: "general.browsing"
-  });
+    play: 'general.playing',
+    pause: 'general.paused',
+    browse: 'general.browsing'
+  })
 
   // Use translations in your presence data
   const presenceData: PresenceData = {
-    largeImageKey: "logo"
-  };
+    largeImageKey: 'logo'
+  }
 
-  const video = document.querySelector("video");
+  const video = document.querySelector('video')
 
   if (video) {
     if (video.paused) {
-      presenceData.details = strings.pause;
-    } else {
-      presenceData.details = strings.play;
+      presenceData.details = strings.pause
     }
-  } else {
-    presenceData.details = strings.browse;
+    else {
+      presenceData.details = strings.play
+    }
+  }
+  else {
+    presenceData.details = strings.browse
   }
 
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 The `getStrings` method takes an object where the keys are the names you want to use for the strings, and the values are the keys for the strings in the PreMiD translation system.
@@ -105,18 +108,18 @@ Here's how the strings are structured in the general.json file:
 
 Here are some commonly used translation keys:
 
-| Key | English Value |
-|-----|---------------|
-| `general.playing` | "Playing" |
-| `general.paused` | "Paused" |
+| Key                | English Value |
+| ------------------ | ------------- |
+| `general.playing`  | "Playing"     |
+| `general.paused`   | "Paused"      |
 | `general.browsing` | "Browsing..." |
-| `general.reading` | "Reading..." |
+| `general.reading`  | "Reading..."  |
 | `general.watching` | "Watching..." |
-| `general.live` | "Live" |
-| `general.episode` | "Episode" |
-| `general.season` | "Season" |
-| `general.chapter` | "Chapter" |
-| `general.page` | "Page" |
+| `general.live`     | "Live"        |
+| `general.episode`  | "Episode"     |
+| `general.season`   | "Season"      |
+| `general.chapter`  | "Chapter"     |
+| `general.page`     | "Page"        |
 
 For a complete list of available translation keys, check the `websites/general.json` file in the PreMiD Activities repository.
 
@@ -164,6 +167,7 @@ websites/
 
 The localization file should follow the same structure as the general.json file, but with keys prefixed by your activity's name to avoid conflicts:
 
+<!-- eslint-skip -->
 ```json
 {
   "example.homepage": {
@@ -187,45 +191,47 @@ The localization file should follow the same structure as the general.json file,
 
 In your `presence.ts` file, you can access these translations:
 
+<!-- eslint-skip -->
 ```typescript
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get the user's language
-  const userLanguage = await presence.getSetting<string>("lang") || "en";
+  const userLanguage = await presence.getSetting<string>('lang') || 'en'
 
   // PreMiD automatically loads your localization file
   // and makes it available through the presence.strings object
-  const strings = presence.strings[userLanguage] || presence.strings.en;
+  const strings = presence.strings[userLanguage] || presence.strings.en
 
   // Access your custom strings
   // The getStrings method automatically extracts the message field
 
   // Create the presence data
   const presenceData: PresenceData = {
-    largeImageKey: "logo",
+    largeImageKey: 'logo',
     details: strings.play // From general.json
-  };
+  }
 
-  const path = document.location.pathname;
+  const path = document.location.pathname
 
   // For custom strings from your activity's localization file
-  if (path === "/") {
-    presenceData.state = await presence.getStrings({ home: "example.homepage" }).home;
+  if (path === '/') {
+    presenceData.state = await presence.getStrings({ home: 'example.homepage' }).home
   }
 
   // You can also get multiple custom strings at once
   const customStrings = await presence.getStrings({
-    about: "example.about",
-    contact: "example.contact"
-  });
+    about: 'example.about',
+    contact: 'example.contact'
+  })
 
-  if (path.includes("/about")) {
-    presenceData.state = customStrings.about;
-  } else if (path.includes("/contact")) {
-    presenceData.state = customStrings.contact;
+  if (path.includes('/about')) {
+    presenceData.state = customStrings.about
+  }
+  else if (path.includes('/contact')) {
+    presenceData.state = customStrings.contact
   }
 
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 ## Best Practices
@@ -243,6 +249,7 @@ Here's a complete example of an activity with localization support:
 
 ### metadata.json
 
+<!-- eslint-skip -->
 ```json
 {
   "author": {
@@ -251,8 +258,8 @@ Here's a complete example of an activity with localization support:
   },
   "service": "Example",
   "description": {
-    "en": "Example is a website that does something cool.",
     "de": "Example ist eine Website, die etwas Cooles macht.",
+    "en": "Example is a website that does something cool.",
     "fr": "Example est un site web qui fait quelque chose de cool."
   },
   "url": "example.com",
@@ -260,8 +267,8 @@ Here's a complete example of an activity with localization support:
   "logo": "https://example.com/logo.png",
   "thumbnail": "https://example.com/thumbnail.png",
   "color": "#FF0000",
-  "tags": ["example", "multilanguage"],
   "category": "other",
+  "tags": ["example", "multilanguage"],
   "settings": [
     {
       "id": "lang",
@@ -281,57 +288,60 @@ Here's a complete example of an activity with localization support:
 
 ```typescript
 const presence = new Presence({
-  clientId: "your_client_id"
-});
+  clientId: 'your_client_id'
+})
 
 // Example.json file is automatically loaded by PreMiD
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   // Get settings
-  const showButtons = await presence.getSetting<boolean>("showButtons");
-  const userLanguage = await presence.getSetting<string>("lang") || "en";
+  const showButtons = await presence.getSetting<boolean>('showButtons')
+  const userLanguage = await presence.getSetting<string>('lang') || 'en'
 
   // Get translations from PreMiD
   const strings = await presence.getStrings({
-    browse: "general.browsing"
-  });
+    browse: 'general.browsing'
+  })
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: "logo",
+    largeImageKey: 'logo',
     startTimestamp: Date.now()
-  };
+  }
 
   // Set details based on the current page
-  const path = document.location.pathname;
+  const path = document.location.pathname
 
   // Get custom translations using getStrings method
-  if (path === "/") {
-    const homeString = await presence.getStrings({ home: "example.homepage" });
-    presenceData.details = homeString.home;
-  } else if (path.includes("/about")) {
-    const aboutString = await presence.getStrings({ about: "example.about" });
-    presenceData.details = aboutString.about;
-  } else if (path.includes("/contact")) {
-    const contactString = await presence.getStrings({ contact: "example.contact" });
-    presenceData.details = contactString.contact;
-  } else {
-    presenceData.details = strings.browse;
+  if (path === '/') {
+    const homeString = await presence.getStrings({ home: 'example.homepage' })
+    presenceData.details = homeString.home
+  }
+  else if (path.includes('/about')) {
+    const aboutString = await presence.getStrings({ about: 'example.about' })
+    presenceData.details = aboutString.about
+  }
+  else if (path.includes('/contact')) {
+    const contactString = await presence.getStrings({ contact: 'example.contact' })
+    presenceData.details = contactString.contact
+  }
+  else {
+    presenceData.details = strings.browse
   }
 
   // Add buttons if enabled
   if (showButtons) {
     presenceData.buttons = [
       {
-        label: "Visit Website",
+        label: 'Visit Website',
         url: document.URL
       }
-    ];
+    ]
   }
 
   // Set the activity
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 ```
 
 ### Example.json
