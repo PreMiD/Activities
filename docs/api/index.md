@@ -15,7 +15,7 @@ The PreMiD API consists of several key components:
 
 ## Getting Started
 
-If you're new to PreMiD Activity Development, we recommend starting with the [Guide](/guide/) section, which provides step-by-step instructions for creating your first activity.
+If you're new to PreMiD Activity Development, we recommend starting with the [Guide](/v1/guide/) section, which provides step-by-step instructions for creating your first activity.
 
 ## Type Definitions
 
@@ -23,4 +23,4 @@ The API is fully typed with TypeScript, and the type definitions are available i
 
 ## Examples
 
-For practical examples of how to use the API, check out the [Examples](/examples/) section, which provides sample code for various types of activities.
+For practical examples of how to use the API, check out the [Examples](/v1/examples/) section, which provides sample code for various types of activities.
