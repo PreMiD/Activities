@@ -170,10 +170,17 @@ async function updatePresence() {
           formattedDuration = `${hours.toString().padStart(2, '0')}:${remainingMinutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
         }
         const episode = document.querySelector<HTMLAnchorElement>('.episode.playing')
-        let animeEpisode: number | string = Number.NaN
+        let animeEpisode: number | string = 'Unknown'
 
         if (episode?.textContent === 'Xem Full') {
           animeEpisode = 'Movie'
+        }
+        else if (episode?.textContent) {
+          const raw = episode.textContent.trim()
+          const match = raw.match(/\d+/)
+          if (match) {
+            animeEpisode = Number.parseInt(match[0], 10)
+          }
         }
         if (!usePresenceName) {
           presenceData.details = `${titleArrOne}`
