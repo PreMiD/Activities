@@ -132,4 +132,4 @@ Now that you're familiar with the Developer Tools, you can:
 
 - Learn about [Best Practices](/v1/guide/best-practices) for creating high-quality activities
 - Explore [Advanced Topics](/v1/guide/slideshows) like slideshows and iframes
-- Understand how to [Publish Your Activity](/v1/guide/publishing) to the PreMiD store
+- Understand how to [Publish Your Activity](/v1/guide/best-practices) to the PreMiD store
