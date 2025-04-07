@@ -11,7 +11,7 @@ async function getStrings() {
       search: 'general.searchSomething',
       listen: 'general.buttonListenAlong',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 function getElement(query: string): string | undefined {

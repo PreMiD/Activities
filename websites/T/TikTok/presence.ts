@@ -31,7 +31,7 @@ async function getStrings() {
       viewAPlaylist: 'general.viewAPlaylist',
       buttonWatchStream: 'general.buttonWatchStream',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

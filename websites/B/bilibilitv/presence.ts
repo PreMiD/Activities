@@ -22,7 +22,7 @@ async function getStrings() {
       buttonWatchVideo: 'general.buttonWatchVideo',
       buttonViewEpisode: 'general.buttonViewEpisode',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 let strings: Awaited<ReturnType<typeof getStrings>>

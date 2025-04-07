@@ -22,7 +22,7 @@ async function getStrings() {
       viewAlbum: 'genius.viewAlbum',
       buttonAlbum: 'general.buttonViewAlbum',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

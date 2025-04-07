@@ -26,7 +26,7 @@ async function getStrings() {
       cookie: 'general.cookie',
       upload: 'youtube.upload',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

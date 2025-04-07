@@ -3,6 +3,20 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+async function getStrings() {
+  return presence.getStrings({
+    buttonViewDirections: 'googlemaps.buttonViewDirections',
+    buttonViewPlace: 'googlemaps.buttonViewPlace',
+    searchingForAPlace: 'googlemaps.searchingForAPlace',
+    searchingForPlace: 'googlemaps.searchingForPlace',
+    viewingAPlace: 'googlemaps.viewingAPlace',
+    viewingDirections: 'googlemaps.viewingDirections',
+    viewingDirectionsToALocation: 'googlemaps.viewingDirectionsToALocation',
+    viewingMap: 'googlemaps.viewingMap',
+    viewingPlace: 'googlemaps.viewingPlace',
+  })
+}
+
 function lettersOnly(str: string) {
   return str.replace(/[^a-z]/gi, ' ')
 }
@@ -13,9 +27,10 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/logo.png',
     startTimestamp: browsingTimestamp,
   }
+  const strings = await getStrings()
   if (document.location.pathname.includes('/place')) {
     if (privacy) {
-      presenceData.details = 'Viewing a place'
+      presenceData.details = strings.viewingAPlace
     }
     else {
       const place = document.location.href
@@ -25,20 +40,18 @@ presence.on('UpdateData', async () => {
           indexes.push(index)
       }
 
-      presenceData.details = `Viewing ${lettersOnly(
-        place.substring(indexes[4]! + 1, indexes[5]),
-      )}`
+      presenceData.details = strings.viewingPlace.replace('{0}', lettersOnly(place.substring(indexes[4]! + 1, indexes[5])))
       presenceData.buttons = [
-        { label: 'View Place', url: document.location.href },
+        { label: strings.buttonViewPlace, url: document.location.href },
       ]
     }
   }
   else if (document.location.pathname.includes('/dir')) {
     if (privacy) {
-      presenceData.details = 'Viewing directions to a location'
+      presenceData.details = strings.viewingDirectionsToALocation
     }
     else {
-      presenceData.details = 'Viewing directions'
+      presenceData.details = strings.viewingDirections
       let from, destination
       if (!document.querySelector('#sb_ifc50 > input')) {
         from = document
@@ -58,13 +71,13 @@ presence.on('UpdateData', async () => {
       }
       presenceData.state = `${from}, ${destination}`
       presenceData.buttons = [
-        { label: 'View Directions', url: document.location.href },
+        { label: strings.buttonViewDirections, url: document.location.href },
       ]
     }
   }
   else if (document.location.pathname.includes('/search')) {
     if (privacy) {
-      presenceData.details = 'Searching for a place'
+      presenceData.details = strings.searchingForAPlace
     }
     else {
       const search = document.location.href
@@ -74,13 +87,11 @@ presence.on('UpdateData', async () => {
           indexes.push(index)
       }
 
-      presenceData.details = `Searching for ${lettersOnly(
-        search.substring(indexes[4]! + 1, indexes[5]),
-      )}`
+      presenceData.details = strings.searchingForPlace.replace('{0}', lettersOnly(search.substring(indexes[4]! + 1, indexes[5])))
     }
   }
   else {
-    presenceData.details = 'Viewing map'
+    presenceData.details = strings.viewingMap
   }
 
   presence.setActivity(presenceData)

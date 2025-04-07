@@ -23,7 +23,7 @@ async function getStrings() {
       watchingLive: 'general.watchingLive',
       watchingVid: 'general.watchingVid',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

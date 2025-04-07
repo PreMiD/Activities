@@ -18,7 +18,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 async function getStrings() {
   return presence.getStrings(
     stringsMap,
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 const slideshow = presence.createSlideshow()

@@ -25,7 +25,7 @@ async function getStrings() {
       buttonWatchVideo: 'general.buttonWatchVideo',
       buttonPlayTrivia: 'watchmojo.buttonPlayTrivia',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 function capitalize(s: string) {

@@ -9,7 +9,7 @@ async function getStrings() {
       play: 'general.playing',
       pause: 'general.paused',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)

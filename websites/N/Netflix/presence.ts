@@ -31,7 +31,7 @@ async function getStrings() {
       seriesDisplayShort: 'netflix.seriesDisplay.short',
       movieDisplay: 'netflix.movieDisplay',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 let oldLang: string | null = null

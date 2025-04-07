@@ -16,7 +16,7 @@ async function getStrings() {
       watchVideo: 'general.buttonWatchVideo',
       viewList: 'netflix.viewList',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 const data: {

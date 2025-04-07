@@ -15,7 +15,7 @@ async function getStrings() {
       viewCategory: 'general.viewCategory',
       search: 'general.searchFor',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

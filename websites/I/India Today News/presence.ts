@@ -24,7 +24,7 @@ async function getStrings() {
       buttonWatchVideo: 'general.buttonWatchVideo',
       buttonReadArticle: 'general.buttonReadArticle',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

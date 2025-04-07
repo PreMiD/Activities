@@ -21,7 +21,7 @@ async function getStrings() {
       browsingPresentation: 'googledocs.browsingPresentation',
       vieiwngPresentation: 'googledocs.viewingPresentation',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

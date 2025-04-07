@@ -12,7 +12,7 @@ async function getStrings() {
     {
       browse: 'general.browsing',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

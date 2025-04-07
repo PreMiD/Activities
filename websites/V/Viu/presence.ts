@@ -19,7 +19,7 @@ async function getStrings() {
       watchEpisode: 'general.buttonViewEpisode',
       searching: 'general.search',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)

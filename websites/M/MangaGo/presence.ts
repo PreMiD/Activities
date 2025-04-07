@@ -21,7 +21,7 @@ async function getStrings() {
       reading: 'general.reading',
       viewGenre: 'general.viewGenre',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

@@ -11,7 +11,7 @@ async function getStrings() {
       pause: 'general.paused',
       live: 'general.live',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

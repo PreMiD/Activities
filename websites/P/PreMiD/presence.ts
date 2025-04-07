@@ -47,7 +47,7 @@ async function getStrings() {
       ts: 'premid.pageTs',
       btnViewPage: 'general.buttonViewPage',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

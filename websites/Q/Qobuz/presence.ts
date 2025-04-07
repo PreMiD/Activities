@@ -12,7 +12,7 @@ async function getStrings() {
       viewAlbum: 'general.buttonViewAlbum',
       viewPlaylist: 'general.buttonViewPlaylist',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

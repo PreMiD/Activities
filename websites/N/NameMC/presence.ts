@@ -33,7 +33,7 @@ async function getStrings() {
       buttonViewProfile: 'general.buttonViewProfile',
       viewSkin: 'namemc.viewSkin',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

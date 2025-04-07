@@ -26,7 +26,7 @@ async function getStrings() {
       viewPage: 'general.viewPage',
       buttonViewPage: 'general.buttonViewPage',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

@@ -12,10 +12,15 @@
   },
   "url": "anitilky.xyz",
   "regExp": "anitilky\\.xyz",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/5ZwoLGq.png",
-  "thumbnail": "https://i.imgur.com/GAw2LbQ.png",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniTilky/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniTilky/assets/thumbnail.png",
   "color": "#FF6B6B",
   "category": "anime",
-  "tags": ["anime", "video", "streaming", "turkish"]
+  "tags": [
+    "anime",
+    "video",
+    "streaming",
+    "turkish"
+  ]
 }

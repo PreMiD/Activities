@@ -19,7 +19,7 @@ async function getStrings() {
       viewProfile: 'general.viewProfile',
       btnViewProfile: 'general.buttonViewProfile',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

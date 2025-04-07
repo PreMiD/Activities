@@ -12,7 +12,7 @@ const videoData = {
 }
 const baseUrl = 'https://anitilky.xyz'
 const apiUrl = 'https://api.anitilky.xyz/api'
-const logoUrl = 'https://i.imgur.com/5ZwoLGq.png'
+const logoUrl = 'https://cdn.rcd.gg/PreMiD/websites/A/AniTilky/assets/logo.png'
 
 interface VideoData {
   current: number

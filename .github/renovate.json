@@ -3,5 +3,8 @@
   "extends": [
     "github>Recodive/Recodive:renovate-config"
   ],
+  "schedule": [
+    "* * * * 5"
+  ],
   "automerge": false
 }

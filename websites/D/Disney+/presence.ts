@@ -42,7 +42,7 @@ async function getStrings() {
       searchFor: 'general.searchFor',
       searchSomething: 'general.searchSomething',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 let strings: Awaited<ReturnType<typeof getStrings>>

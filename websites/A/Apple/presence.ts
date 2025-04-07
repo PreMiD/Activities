@@ -85,7 +85,7 @@ async function getStrings() {
       btnGViewProfile: 'general.buttonViewProfile',
       btnGWatchVideo: 'general.buttonWatchVideo',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

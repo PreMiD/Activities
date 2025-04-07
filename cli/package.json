@@ -1,7 +1,7 @@
 {
   "name": "pmd",
   "type": "module",
-  "version": "0.0.1",
+  "version": "2.1.0",
   "private": true,
   "main": "dist/index.js",
   "bin": {
@@ -18,15 +18,15 @@
   "devDependencies": {
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.0",
+    "@inquirer/prompts": "^7.3.3",
     "@types/adm-zip": "^0.5.7",
-    "@types/discord-rpc": "^4.0.8",
+    "@types/discord-rpc": "^4.0.9",
     "@types/got": "^9.6.12",
     "@types/json-to-ast": "^2.1.4",
     "@types/semver": "^7.5.8",
-    "@types/sharp": "^0.31.1",
-    "@types/ws": "^8.5.14",
-    "@vitest/coverage-v8": "^3.0.6",
-    "@vitest/ui": "^3.0.6",
+    "@types/ws": "^8.18.0",
+    "@vitest/coverage-v8": "^3.0.8",
+    "@vitest/ui": "^3.0.8",
     "adm-zip": "^0.5.16",
     "cac": "^6.7.14",
     "chalk": "^5.4.1",
@@ -37,19 +37,16 @@
     "gitdiff-parser": "^0.3.1",
     "globby": "^14.1.0",
     "got": "^14.4.6",
-    "inquirer": "^12.4.2",
-    "inquirer-autocomplete-standalone": "^0.8.1",
     "is-ci": "^4.1.0",
     "json-to-ast": "^2.1.0",
     "jsonschema": "^1.5.0",
-    "mongodb": "^6.13.0",
     "multimatch": "^7.0.0",
     "ora": "^8.2.0",
     "semver": "^7.7.1",
     "sharp": "^0.33.5",
-    "typescript": "^5.7.3",
-    "vitest": "^3.0.6",
-    "ws": "^8.18.0"
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8",
+    "ws": "^8.18.1"
   },
   "overrides": {
     "whatwg-url": "^14.0.0"

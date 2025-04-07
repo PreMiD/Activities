@@ -14,7 +14,7 @@ async function getStrings() {
       buttonViewSeries: 'general.buttonViewSeries',
       listeningTo: 'general.listeningTo',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

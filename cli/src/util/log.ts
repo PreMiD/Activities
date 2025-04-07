@@ -26,7 +26,6 @@ export const MESSAGES = {
   noToken: 'GITHUB_TOKEN environment variable is required',
   noCdnToken: 'CDN_TOKEN environment variable is required',
   noMongoUrl: 'MONGO_URL environment variable is required',
-  noMongoConnection: 'Failed to connect to MongoDB',
   noActivities: 'No activities changed',
   checkingAndUpdatingAssets: 'Checking and updating assets...',
   someInvalidAssets: 'Some invalid assets were found, check the logs for more details',

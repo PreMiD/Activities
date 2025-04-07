@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1134044987277975616',
@@ -18,7 +18,10 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
   const { pathname, href } = document.location
-  const privacyMode = await presence.getSetting<boolean>('privacy')
+  const [privacyMode, showButton] = await Promise.all([
+    presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('buttons'),
+  ])
   const jsonobj = JSON.parse(sessionStorage.getItem('batches_urls')!)
 
   if (pathname === '/') {
@@ -46,7 +49,9 @@ presence.on('UpdateData', async () => {
       }`
       presenceData.smallImageKey = Assets.Reading
       presenceData.smallImageText = 'Studying'
-      presenceData.buttons = [{ label: 'View Batch', url: href }]
+      if (showButton) {
+        presenceData.buttons = [{ label: 'View Batch', url: href }]
+      }
     }
     else if (href.includes('subject-topics')) {
       if (href.includes('chapterId')) {
@@ -90,8 +95,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = `Watching Lecture${detal}`
 
       presenceData.state = `${deta.topic}`
-
-      presenceData.buttons = [{ label: 'Watch Lecture', url: href }]
+      if (showButton) {
+        presenceData.buttons = [{ label: 'Watch Lecture', url: href }]
+      }
     }
     else {
       presenceData.details = 'Watching a lecture'
@@ -124,11 +130,11 @@ presence.on('UpdateData', async () => {
 })
 
 function updateVideoTimestamps() {
-  return presence.getTimestamps(
-    presence.timestampFromFormat(
+  return getTimestamps(
+    timestampFromFormat(
       document.querySelector('.vjs-current-time-display')?.textContent ?? '',
     ),
-    presence.timestampFromFormat(
+    timestampFromFormat(
       document.querySelector('.vjs-duration-display')?.textContent ?? '',
     ),
   )

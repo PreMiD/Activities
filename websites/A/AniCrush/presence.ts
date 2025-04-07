@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1208440916461887488',
@@ -55,7 +55,7 @@ presence.on('UpdateData', async () => {
         document.querySelector('.seoWidget.d-none')?.textContent ?? '?'
       }`
       presenceData.largeImageKey = document
-        .querySelector('.anime-thumbnail-img')
+        .querySelector('.current .anime-thumbnail-img')
         ?.getAttribute('src')
 
       presenceData.state = `Episode ${
@@ -69,7 +69,7 @@ presence.on('UpdateData', async () => {
       }`
       if (video.exists) {
         if (showTimestamps) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
             Math.floor(video.currentTime),
             Math.floor(video.duration),
           )
@@ -152,7 +152,7 @@ presence.on('UpdateData', async () => {
       }
       if (video.exists) {
         if (showTimestamps) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
             Math.floor(video.currentTime),
             Math.floor(video.duration),
           )

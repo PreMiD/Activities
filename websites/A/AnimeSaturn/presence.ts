@@ -20,7 +20,7 @@ async function getStrings() {
       buttonViewEpisode: 'general.buttonViewEpisode',
       buttonViewShow: 'general.buttonViewShow',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

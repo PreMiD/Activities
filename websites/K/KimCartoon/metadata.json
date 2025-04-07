@@ -12,7 +12,7 @@
   },
   "url": "kimcartoon.si",
   "regExp": "(ww([0-9]?)(w)?[.])?kim(-)?cartoon[.].*",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KimCartoon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KimCartoon/assets/thumbnail.png",
   "color": "#fdf5ad",

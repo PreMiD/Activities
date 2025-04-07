@@ -22,7 +22,7 @@ async function getStrings() {
       viewManga: 'general.viewManga',
       buttonViewProfile: 'general.buttonViewProfile',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 const startsTime = Math.floor(Date.now() / 1000)

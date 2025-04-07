@@ -18,7 +18,7 @@ async function getStrings() {
       watchLive: 'general.live',
       watchStream: 'general.buttonWatchStream',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 
