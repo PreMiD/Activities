@@ -1,4 +1,4 @@
-import { Assets, getTimestamps } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1016991973531451502',
@@ -44,7 +44,7 @@ async function updatePresence(): Promise<void> {
     }
 
     const presenceData: PresenceData = {
-      type: 3,
+      type: ActivityType.Watching,
       largeImageKey: ActivityAssets.Logo,
       startTimestamp: browsingTimestamp,
     }
