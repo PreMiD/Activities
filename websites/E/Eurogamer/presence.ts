@@ -168,7 +168,7 @@ presence.on('UpdateData', async () => {
             {
               label: strings.buttonViewPage,
               url: href,
-            }cas,
+            },
           ]
         }
       }
