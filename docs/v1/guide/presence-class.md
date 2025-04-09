@@ -45,17 +45,17 @@ presence.on('UpdateData', async () => {
 
 The `PresenceData` object can have the following properties:
 
-| Property         | Type           | Description                                                          |
-| ---------------- | -------------- | -------------------------------------------------------------------- |
-| `details`        | `string`       | The first line of the presence                                       |
-| `state`          | `string`       | The second line of the presence                                      |
-| `startTimestamp` | `number`       | The time when the activity started (Unix timestamp in milliseconds)  |
-| `endTimestamp`   | `number`       | The time when the activity will end (Unix timestamp in milliseconds) |
+| Property         | Type           | Description                                                                                            |
+| ---------------- | -------------- | ------------------------------------------------------------------------------------------------------ |
+| `details`        | `string`       | The first line of the presence                                                                         |
+| `state`          | `string`       | The second line of the presence                                                                        |
+| `startTimestamp` | `number`       | The time when the activity started (Unix timestamp in milliseconds)                                    |
+| `endTimestamp`   | `number`       | The time when the activity will end (Unix timestamp in milliseconds)                                   |
 | `largeImageKey`  | `string`       | The key of the large image. Preferably a direct URL to an image (e.g., `https://example.com/logo.png`) |
-| `largeImageText` | `string`       | The text that appears when hovering over the large image             |
+| `largeImageText` | `string`       | The text that appears when hovering over the large image                                               |
 | `smallImageKey`  | `string`       | The key of the small image. Preferably a direct URL to an image (e.g., `https://example.com/icon.png`) |
-| `smallImageText` | `string`       | The text that appears when hovering over the small image             |
-| `buttons`        | `ButtonData[]` | An array of buttons (max 2)                                          |
+| `smallImageText` | `string`       | The text that appears when hovering over the small image                                               |
+| `buttons`        | `ButtonData[]` | An array of buttons (max 2)                                                                            |
 
 ## Activity Types
 

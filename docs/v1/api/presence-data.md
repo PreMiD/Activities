@@ -15,18 +15,18 @@ Both extend the `BasePresenceData` interface, which contains the common properti
 
 ### Common Properties (BasePresenceData)
 
-| Property         | Type                                         | Description                                                         |
-| ---------------- | -------------------------------------------- | ------------------------------------------------------------------- |
-| `name`           | `string`                                     | Name to show in activity (e.g., "YouTube")                          |
-| `type`           | `ActivityType`                               | Type of activity (Playing, Listening, Watching, Competing)          |
-| `details`        | `string \| Node \| null`                     | Top row of the status                                               |
-| `state`          | `string \| Node \| null`                     | Bottom row of the status                                            |
-| `startTimestamp` | `number \| Date \| null`                     | Timestamp for the start of the activity (shows time as "elapsed")   |
-| `endTimestamp`   | `number \| Date \| null`                     | Timestamp until the end of the activity (shows time as "remaining") |
+| Property         | Type                                         | Description                                                                                       |
+| ---------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `name`           | `string`                                     | Name to show in activity (e.g., "YouTube")                                                        |
+| `type`           | `ActivityType`                               | Type of activity (Playing, Listening, Watching, Competing)                                        |
+| `details`        | `string \| Node \| null`                     | Top row of the status                                                                             |
+| `state`          | `string \| Node \| null`                     | Bottom row of the status                                                                          |
+| `startTimestamp` | `number \| Date \| null`                     | Timestamp for the start of the activity (shows time as "elapsed")                                 |
+| `endTimestamp`   | `number \| Date \| null`                     | Timestamp until the end of the activity (shows time as "remaining")                               |
 | `largeImageKey`  | `string \| Blob \| HTMLImageElement \| null` | Large profile artwork. Preferably a direct URL to an image (e.g., `https://example.com/logo.png`) |
 | `smallImageKey`  | `string \| Blob \| HTMLImageElement \| null` | Small profile artwork. Preferably a direct URL to an image (e.g., `https://example.com/icon.png`) |
-| `smallImageText` | `string \| Node \| null`                     | Tooltip for the smallImageKey                                       |
-| `buttons`        | `[ButtonData, ButtonData?]`                  | Array of buttons (max 2)                                            |
+| `smallImageText` | `string \| Node \| null`                     | Tooltip for the smallImageKey                                                                     |
+| `buttons`        | `[ButtonData, ButtonData?]`                  | Array of buttons (max 2)                                                                          |
 
 ### Media-Specific Properties (MediaPresenceData)
 
