@@ -39,7 +39,7 @@ Once you've created a slideshow, you can add slides to it using the `addSlide` m
 slideshow.addSlide('slide1', {
   details: 'Browsing Example.com',
   state: 'Homepage',
-  largeImageKey: 'logo',
+  largeImageKey: 'https://example.com/logo.png',
   startTimestamp: Date.now()
 }, 5000) // 5 seconds
 ```
