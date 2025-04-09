@@ -58,7 +58,7 @@ You can update an existing slide using the `updateSlide` method:
 slideshow.updateSlide('slide1', {
   details: 'Updated details',
   state: 'Updated state',
-  largeImageKey: 'logo',
+  largeImageKey: 'https://example.com/logo.png',
   startTimestamp: Date.now()
 })
 ```
@@ -145,8 +145,8 @@ presence.on('UpdateData', async () => {
   slideshow.addSlide('info2', {
     details: 'Current time',
     state: new Date().toLocaleTimeString(),
-    largeImageKey: 'logo',
-    smallImageKey: 'clock'
+    largeImageKey: 'https://example.com/logo.png',
+    smallImageKey: 'https://example.com/clock.png'
   }, 5000) // 5 seconds
 
   // Set the activity with the slideshow
@@ -167,7 +167,7 @@ const SLIDESHOW_TIMEOUT = 5000 // 5 seconds
 presence.on('UpdateData', async () => {
   const presenceData = {
     details: 'Viewing gallery',
-    largeImageKey: 'logo'
+    largeImageKey: 'https://example.com/logo.png'
   }
 
   // Get all images on the page
@@ -205,7 +205,7 @@ const slideshow = presence.createSlideshow()
 
 presence.on('UpdateData', async () => {
   const presenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://example.com/logo.png',
     startTimestamp: Date.now()
   }
 
@@ -223,7 +223,7 @@ presence.on('UpdateData', async () => {
       ...presenceData,
       details: `Logged in as ${username}`,
       state: 'Viewing profile',
-      smallImageKey: 'user'
+      smallImageKey: 'https://example.com/user.png'
     }, 5000)
   }
   else if (slideshow.hasSlide('user')) {
@@ -251,7 +251,7 @@ presence.on('UpdateData', async () => {
   const slideDuration = await presence.getSetting<number>('slideDuration') * 1000 // Convert to milliseconds
 
   const presenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://example.com/logo.png',
     details: 'Browsing Example.com',
     state: document.title,
     startTimestamp: Date.now()
@@ -265,7 +265,7 @@ presence.on('UpdateData', async () => {
       ...presenceData,
       details: 'Current time',
       state: new Date().toLocaleTimeString(),
-      smallImageKey: 'clock'
+      smallImageKey: 'https://example.com/clock.png'
     }, slideDuration)
 
     // Set the activity with the slideshow
@@ -360,7 +360,7 @@ presence.on('UpdateData', async () => {
 
   // Base presence data that will be common across slides
   const presenceData: PresenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://example.com/logo.png',
     startTimestamp: Date.now()
   }
 
@@ -392,7 +392,7 @@ presence.on('UpdateData', async () => {
             details: 'Viewing gallery',
             state: `${imageTitle} (${index + 1}/${images.length})`,
             largeImageKey: image.src,
-            smallImageKey: 'search',
+            smallImageKey: 'https://example.com/search.png',
             smallImageText: 'Browsing images'
           },
           slideDuration || DEFAULT_SLIDESHOW_TIMEOUT
@@ -406,7 +406,7 @@ presence.on('UpdateData', async () => {
       // Show a single presence for the gallery
       presenceData.details = 'Viewing gallery'
       presenceData.state = `${images.length} images`
-      presenceData.smallImageKey = 'search'
+      presenceData.smallImageKey = 'https://example.com/search.png'
       presenceData.smallImageText = 'Browsing images'
 
       presence.setActivity(presenceData)
@@ -425,7 +425,7 @@ presence.on('UpdateData', async () => {
         ...presenceData,
         details: 'Current time',
         state: new Date().toLocaleTimeString(),
-        smallImageKey: 'clock',
+        smallImageKey: 'https://example.com/clock.png',
         smallImageText: 'Time information'
       }, slideDuration || DEFAULT_SLIDESHOW_TIMEOUT)
 

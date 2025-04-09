@@ -16,7 +16,7 @@ const presence = new Presence({
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://example.com/logo.png',
     details: 'Browsing Example.com',
     state: 'Homepage',
     startTimestamp: Date.now()
@@ -33,7 +33,7 @@ const presence = new Presence({
 presence.on('UpdateData', async () => {
   // Missing PresenceData type annotation
   const presenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://example.com/logo.png',
     details: 'Browsing Example.com',
     state: 'Homepage',
     startTimestamp: Date.now()
@@ -62,7 +62,7 @@ Define constants for repeated values to make your code more maintainable.
 ```typescript
 // Good
 const SLIDESHOW_TIMEOUT = 5000 // 5 seconds
-const DEFAULT_IMAGE_KEY = 'logo'
+const DEFAULT_IMAGE_KEY = 'https://example.com/logo.png'
 
 slideshow.addSlide('slide1', {
   details: 'Browsing Example.com',
@@ -74,7 +74,7 @@ slideshow.addSlide('slide1', {
 slideshow.addSlide('slide1', {
   details: 'Browsing Example.com',
   state: 'Homepage',
-  largeImageKey: 'logo'
+  largeImageKey: 'https://example.com/logo.png'
 }, 5000)
 ```
 
@@ -455,7 +455,7 @@ const presence = new Presence({
 })
 
 // Constants
-const DEFAULT_IMAGE_KEY = 'logo'
+const DEFAULT_IMAGE_KEY = 'https://example.com/logo.png'
 const DEFAULT_TIMESTAMP = Date.now()
 
 // Cache for heavy computations
@@ -534,7 +534,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (videoInfo.isPlaying) {
-      presenceData.smallImageKey = 'play'
+      presenceData.smallImageKey = 'https://example.com/play.png'
       presenceData.smallImageText = strings.play
 
       if (showTimestamp) {
@@ -544,7 +544,7 @@ presence.on('UpdateData', async () => {
       }
     }
     else {
-      presenceData.smallImageKey = 'pause'
+      presenceData.smallImageKey = 'https://example.com/pause.png'
       presenceData.smallImageText = strings.pause
     }
   }
