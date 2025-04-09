@@ -31,7 +31,7 @@ To set the activity data, you need to create a `PresenceData` object and pass it
 ```typescript
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://example.com/logo.png',
     details: 'Browsing Example.com',
     state: 'Homepage',
     startTimestamp: Date.now()
@@ -51,9 +51,9 @@ The `PresenceData` object can have the following properties:
 | `state`          | `string`       | The second line of the presence                                      |
 | `startTimestamp` | `number`       | The time when the activity started (Unix timestamp in milliseconds)  |
 | `endTimestamp`   | `number`       | The time when the activity will end (Unix timestamp in milliseconds) |
-| `largeImageKey`  | `string`       | The key of the large image                                           |
+| `largeImageKey`  | `string`       | The key of the large image. Preferably a direct URL to an image (e.g., `https://example.com/logo.png`) |
 | `largeImageText` | `string`       | The text that appears when hovering over the large image             |
-| `smallImageKey`  | `string`       | The key of the small image                                           |
+| `smallImageKey`  | `string`       | The key of the small image. Preferably a direct URL to an image (e.g., `https://example.com/icon.png`) |
 | `smallImageText` | `string`       | The text that appears when hovering over the small image             |
 | `buttons`        | `ButtonData[]` | An array of buttons (max 2)                                          |
 

@@ -23,8 +23,8 @@ Both extend the `BasePresenceData` interface, which contains the common properti
 | `state`          | `string \| Node \| null`                     | Bottom row of the status                                            |
 | `startTimestamp` | `number \| Date \| null`                     | Timestamp for the start of the activity (shows time as "elapsed")   |
 | `endTimestamp`   | `number \| Date \| null`                     | Timestamp until the end of the activity (shows time as "remaining") |
-| `largeImageKey`  | `string \| Blob \| HTMLImageElement \| null` | Large profile artwork                                               |
-| `smallImageKey`  | `string \| Blob \| HTMLImageElement \| null` | Small profile artwork                                               |
+| `largeImageKey`  | `string \| Blob \| HTMLImageElement \| null` | Large profile artwork. Preferably a direct URL to an image (e.g., `https://example.com/logo.png`) |
+| `smallImageKey`  | `string \| Blob \| HTMLImageElement \| null` | Small profile artwork. Preferably a direct URL to an image (e.g., `https://example.com/icon.png`) |
 | `smallImageText` | `string \| Node \| null`                     | Tooltip for the smallImageKey                                       |
 | `buttons`        | `[ButtonData, ButtonData?]`                  | Array of buttons (max 2)                                            |
 
@@ -70,7 +70,7 @@ The `ActivityType` enum defines the types of activities that can be displayed.
 const presenceData: PresenceData = {
   details: 'Browsing the homepage',
   state: 'Reading articles',
-  largeImageKey: 'logo',
+  largeImageKey: 'https://example.com/logo.png',
   startTimestamp: Date.now()
 }
 ```
@@ -82,7 +82,7 @@ const presenceData: PresenceData = {
   type: ActivityType.Watching,
   details: 'Watching a video',
   state: 'Video Title',
-  largeImageKey: 'logo',
+  largeImageKey: 'https://example.com/logo.png',
   largeImageText: 'Website Name',
   startTimestamp: Date.now(),
   endTimestamp: Date.now() + 360000 // 6 minutes from now
@@ -95,7 +95,7 @@ const presenceData: PresenceData = {
 const presenceData: PresenceData = {
   details: 'Reading an article',
   state: 'Article Title',
-  largeImageKey: 'logo',
+  largeImageKey: 'https://example.com/logo.png',
   buttons: [
     {
       label: 'Read Article',
