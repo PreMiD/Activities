@@ -139,7 +139,7 @@ presence.on('UpdateData', async () => {
   slideshow.addSlide('info1', {
     details: 'Browsing the website',
     state: document.title,
-    largeImageKey: 'logo'
+    largeImageKey: 'https://example.com/logo.png'
   }, 5000) // 5 seconds
 
   slideshow.addSlide('info2', {
