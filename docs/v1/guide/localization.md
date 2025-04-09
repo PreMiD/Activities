@@ -65,7 +65,7 @@ presence.on('UpdateData', async () => {
 
   // Use translations in your presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'logo'
+    largeImageKey: 'https://example.com/logo.png'
   }
 
   const video = document.querySelector('video')
@@ -207,7 +207,7 @@ presence.on('UpdateData', async () => {
 
   // Create the presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://example.com/logo.png',
     details: strings.play // From general.json
   }
 
@@ -305,7 +305,7 @@ presence.on('UpdateData', async () => {
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://example.com/logo.png',
     startTimestamp: Date.now()
   }
 

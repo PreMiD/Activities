@@ -38,7 +38,7 @@ Adds a slide to the queue. If a slide already exists with the given ID, it will 
 slideshow.addSlide('homepage', {
   details: 'Browsing the homepage',
   state: 'example.com',
-  largeImageKey: 'logo'
+  largeImageKey: 'https://example.com/logo.png'
 }, 5000) // 5 seconds
 ```
 
@@ -104,7 +104,7 @@ Updates a slide already in the queue. Passing `null` or `undefined` will keep th
 slideshow.updateSlide('homepage', {
   details: 'Browsing the updated homepage',
   state: 'example.com',
-  largeImageKey: 'logo'
+  largeImageKey: 'https://example.com/logo.png'
 })
 ```
 
@@ -239,14 +239,14 @@ presence.on('UpdateData', async () => {
   slideshow.addSlide('info1', {
     details: 'Browsing the website',
     state: document.title,
-    largeImageKey: 'logo'
+    largeImageKey: 'https://example.com/logo.png'
   }, 5000) // 5 seconds
 
   slideshow.addSlide('info2', {
     details: 'Current time',
     state: new Date().toLocaleTimeString(),
-    largeImageKey: 'logo',
-    smallImageKey: 'clock'
+    largeImageKey: 'https://example.com/logo.png',
+    smallImageKey: 'https://example.com/clock.png'
   }, 5000) // 5 seconds
 
   // Set the activity with the slideshow
@@ -267,7 +267,7 @@ const SLIDESHOW_TIMEOUT = 5000 // 5 seconds
 presence.on('UpdateData', async () => {
   const presenceData = {
     details: 'Viewing gallery',
-    largeImageKey: 'logo'
+    largeImageKey: 'https://example.com/logo.png'
   }
 
   // Get all images on the page
@@ -305,7 +305,7 @@ const slideshow = presence.createSlideshow()
 
 presence.on('UpdateData', async () => {
   const presenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://example.com/logo.png',
     startTimestamp: Date.now()
   }
 
@@ -323,7 +323,7 @@ presence.on('UpdateData', async () => {
       ...presenceData,
       details: `Logged in as ${username}`,
       state: 'Viewing profile',
-      smallImageKey: 'user'
+      smallImageKey: 'https://example.com/user.png'
     }, 5000)
   }
   else if (slideshow.hasSlide('user')) {

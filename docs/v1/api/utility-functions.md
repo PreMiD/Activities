@@ -114,7 +114,7 @@ const presence = new Presence({
 presence.on('UpdateData', async () => {
   const video = document.querySelector('video')
   const presenceData: PresenceData = {
-    largeImageKey: 'logo'
+    largeImageKey: 'https://example.com/logo.png'
   }
 
   if (video && video.readyState > 0) {
@@ -124,11 +124,11 @@ presence.on('UpdateData', async () => {
     presenceData.state = title || 'Unknown video'
 
     if (video.paused) {
-      presenceData.smallImageKey = 'pause'
+      presenceData.smallImageKey = 'https://example.com/pause.png'
       presenceData.smallImageText = 'Paused'
     }
     else {
-      presenceData.smallImageKey = 'play'
+      presenceData.smallImageKey = 'https://example.com/play.png'
       presenceData.smallImageText = 'Playing'
 
       const timestamps = getTimestampsFromMedia(video)
@@ -159,7 +159,7 @@ presence.on('UpdateData', async () => {
   const totalTimeElement = document.querySelector('.total-time')
 
   const presenceData: PresenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://example.com/logo.png',
     details: 'Listening to music',
     state: document.querySelector('.song-title')?.textContent
   }
