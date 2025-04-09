@@ -123,17 +123,11 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Watching a video'
     presenceData.state = title || 'Unknown video'
 
-    if (video.paused) {
-      presenceData.smallImageKey = 'pause'
-      presenceData.smallImageText = 'Paused'
-    }
-    else {
-      presenceData.smallImageKey = 'play'
-      presenceData.smallImageText = 'Playing'
-
-      const timestamps = getTimestampsFromMedia(video)
-      presenceData.startTimestamp = timestamps[0]
-      presenceData.endTimestamp = timestamps[1]
+if (!video.paused) {
+[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video);
+}
+ presenceData.smallImageKey = video.paused ? Assets.Paused : Assets.Play
+  presenceData.smallImageText = video.paused ? "Paused" : "Playing back"
     }
   }
   else {
