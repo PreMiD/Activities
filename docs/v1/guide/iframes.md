@@ -113,7 +113,7 @@ presence.on('iFrameData', (data) => {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'logo'
+    largeImageKey: 'https://example.com/logo.png'
   }
 
   // Check if we have video data from the iFrame
@@ -240,7 +240,7 @@ presence.on('iFrameData', (data) => {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'logo'
+    largeImageKey: 'https://example.com/logo.png'
   }
 
   // Check if we have YouTube data
@@ -352,7 +352,7 @@ presence.on('UpdateData', async () => {
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'logo'
+    largeImageKey: 'https://example.com/logo.png'
   }
 
   // Check if we have video data from the iFrame
@@ -367,12 +367,12 @@ presence.on('UpdateData', async () => {
 
     if (paused) {
       presenceData.state = 'Paused'
-      presenceData.smallImageKey = 'pause'
+      presenceData.smallImageKey = 'https://example.com/pause.png'
       presenceData.smallImageText = 'Paused'
     }
     else {
       presenceData.state = 'Playing'
-      presenceData.smallImageKey = 'play'
+      presenceData.smallImageKey = 'https://example.com/play.png'
       presenceData.smallImageText = 'Playing'
 
       // Add timestamps if enabled and we have currentTime and duration

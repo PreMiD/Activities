@@ -43,7 +43,7 @@ const presence = new Presence({
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'logo'
+    largeImageKey: 'https://mediaexample.com/logo.png'
   }
 
   // Get the video element
@@ -67,7 +67,7 @@ presence.on('UpdateData', async () => {
 
     if (isPlaying) {
       // Set the small image key and text for playing state
-      presenceData.smallImageKey = 'play'
+      presenceData.smallImageKey = 'https://mediaexample.com/play.png'
       presenceData.smallImageText = 'Playing'
 
       // Calculate timestamps
@@ -77,7 +77,7 @@ presence.on('UpdateData', async () => {
     }
     else {
       // Set the small image key and text for paused state
-      presenceData.smallImageKey = 'pause'
+      presenceData.smallImageKey = 'https://mediaexample.com/pause.png'
       presenceData.smallImageText = 'Paused'
     }
 
