@@ -165,6 +165,9 @@ async function updatePresence(): Promise<void> {
         if (raw.includes('xem full')) {
           animeEpisode = 'Movie/(OVA)'
         }
+        else if (raw.includes('pv')) {
+          animeEpisode = 'Preview'
+        }
         else {
           const match = raw.match(/\d+/)
           if (match) {
