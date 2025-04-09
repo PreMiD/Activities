@@ -98,7 +98,7 @@ presence.on('iFrameData', (data) => {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'logo'
+    largeImageKey: 'https://example.com/logo.png'
   }
 
   // Check if we have video data from the iframe
@@ -117,12 +117,12 @@ presence.on('UpdateData', async () => {
 
     if (paused) {
       // Set the small image key and text for paused state
-      presenceData.smallImageKey = 'pause'
+      presenceData.smallImageKey = 'https://example.com/pause.png'
       presenceData.smallImageText = 'Paused'
     }
     else {
       // Set the small image key and text for playing state
-      presenceData.smallImageKey = 'play'
+      presenceData.smallImageKey = 'https://example.com/play.png'
       presenceData.smallImageText = 'Playing'
 
       // Calculate timestamps if we have currentTime and duration

@@ -44,7 +44,7 @@ presence.on('UpdateData', async () => {
   const pageTitle = get(document, 'title', 'Unknown Page')
 
   const presenceData: PresenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://example.com/logo.png',
     details: pageTitle,
     state: `Current time: ${formattedTime}`,
     startTimestamp: Date.now()

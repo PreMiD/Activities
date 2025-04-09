@@ -150,7 +150,7 @@ presence.on('iFrameData', (data) => {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'logo'
+    largeImageKey: 'https://example.com/logo.png'
   }
 
   // Check if we have video data from the iFrame

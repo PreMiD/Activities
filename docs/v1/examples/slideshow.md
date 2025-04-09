@@ -58,7 +58,7 @@ function registerSlideshowKey(key: string): void {
 presence.on('UpdateData', async () => {
   // Base presence data that will be common across slides
   const presenceData: PresenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://example.com/logo.png',
     startTimestamp: Date.now()
   }
 
@@ -89,7 +89,7 @@ presence.on('UpdateData', async () => {
           details: 'Viewing gallery',
           state: `${imageTitle} (${index + 1}/${images.length})`,
           largeImageKey: image.src,
-          smallImageKey: 'search',
+          smallImageKey: 'https://example.com/search.png',
           smallImageText: 'Browsing images'
         },
         SLIDESHOW_TIMEOUT
@@ -106,7 +106,7 @@ presence.on('UpdateData', async () => {
       'profile-main',
       {
         ...presenceData,
-        smallImageKey: 'user',
+        smallImageKey: 'https://example.com/user.png',
         smallImageText: 'User profile'
       },
       SLIDESHOW_TIMEOUT
@@ -120,7 +120,7 @@ presence.on('UpdateData', async () => {
         ...presenceData,
         details: `Level: ${userLevel}`,
         state: `User: ${document.querySelector('.username')?.textContent || 'Unknown user'}`,
-        smallImageKey: 'star',
+        smallImageKey: 'https://example.com/star.png',
         smallImageText: 'User level'
       },
       SLIDESHOW_TIMEOUT
@@ -135,7 +135,7 @@ presence.on('UpdateData', async () => {
           ...presenceData,
           details: 'Achievements',
           state: `${achievements.length} unlocked`,
-          smallImageKey: 'trophy',
+          smallImageKey: 'https://example.com/trophy.png',
           smallImageText: 'User achievements'
         },
         SLIDESHOW_TIMEOUT
