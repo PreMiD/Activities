@@ -32,6 +32,10 @@ Do not use `npm run dev` to create a new activity. That command is for developin
    - `presence.ts`: The main activity code
    - `tsconfig.json`: TypeScript configuration file
 
+::: tip Image Assets
+For `largeImageKey` and `smallImageKey`, we recommend using direct URLs to images (e.g., `https://example.com/logo.png`) rather than asset names. This ensures your images are always accessible and simplifies the development process.
+:::
+
 ### Developing Your Activity
 
 After creating your activity, you can start developing it with:
@@ -109,7 +113,7 @@ presence.on('UpdateData', async () => {
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'logo', // This is the name of the logo file in the assets
+    largeImageKey: 'https://example.com/logo.png', // Direct URL to the logo image
     details: 'Browsing Example.com',
     startTimestamp: Date.now() // Show elapsed time
   }
