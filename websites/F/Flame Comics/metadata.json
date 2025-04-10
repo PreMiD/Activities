@@ -1,0 +1,75 @@
+{
+    "$schema": "https://schemas.premid.app/metadata/1.13",
+    "apiVersion": 1,
+    "author": {
+      "name": "kill9854",
+      "id": "500806382157561857"
+    },
+    "service": "Flame Comics",
+    "description": {
+      "en": "Read Comics on Flame Comics.",
+      "fr": "Lisez des bandes dessinées sur Flame Comics.",
+      "vi": "Đọc truyện tranh tại Flame Comics."
+    },
+    "url":
+      "flamecomics.xyz",
+    "regExp": "flamecomics\\.xyz.*",
+    "version": "2.0.3",
+    "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flame%20Comics/assets/logo.png",
+    "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Asura%20Scans/assets/thumbnail.png",
+    "color": "#AD1227",
+    "category": "other",
+    "tags": [
+      "comic",
+      "scanlation",
+      "manga",
+      "manhua",
+      "manhwa"
+    ],
+    "settings": [
+      {
+        "id": "privacy",
+        "title": "Privacy Mode",
+        "icon": "fa-solid fa-user-secret",
+        "value": false
+      },
+      {
+        "id": "chapterNumber",
+        "title": "Display Current Chapter",
+        "icon": "fa-solid fa-book",
+        "value": true,
+        "if": {
+          "privacy": false
+        }
+      },
+      {
+        "id": "readingPercentage",
+        "title": "Display Reading %",
+        "icon": "fa-solid fa-percent",
+        "value": true,
+        "if": {
+          "privacy": false,
+          "chapterNumber": true
+        }
+      },
+      {
+        "id": "showCover",
+        "title": "Show Cover",
+        "icon": "fa-solid fa-images",
+        "value": true,
+        "if": {
+          "privacy": false
+        }
+      },
+      {
+        "id": "showButtons",
+        "title": "Show Buttons",
+        "icon": "fa-solid fa-compress-arrows-alt",
+        "value": true,
+        "if": {
+          "privacy": false
+        }
+      }
+    ]
+  }
+  
