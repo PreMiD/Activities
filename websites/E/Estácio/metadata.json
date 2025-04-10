@@ -39,19 +39,19 @@
     {
       "id": "show-student-page",
       "title": "Exibir página do estudante (SAVA)",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-user-graduate",
       "value": true
     },
     {
       "id": "show-campus",
       "title": "Exibir campus virtual (SIA)",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-school",
       "value": true
     },
     {
       "id": "show-cursing",
       "title": "Exibir cursando",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-graduation-cap",
       "value": true,
       "if": {
         "show-student-page": true
@@ -60,7 +60,7 @@
     {
       "id": "show-disciplines",
       "title": "Exibir disciplinas",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-book",
       "value": true,
       "if": {
         "show-student-page": true
@@ -69,7 +69,7 @@
     {
       "id": "show-progress",
       "title": "Exibir progresso",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-spinner",
       "value": true,
       "if": {
         "show-disciplines": true
@@ -78,7 +78,7 @@
     {
       "id": "show-contents",
       "title": "Exibir informações da dicliplina",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-circle-info",
       "value": true,
       "if": {
         "show-disciplines": true
@@ -87,7 +87,7 @@
     {
       "id": "show-discipline-name",
       "title": "Exibir nome da disciplina",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-a",
       "value": true,
       "if": {
         "show-contents": true
@@ -96,7 +96,7 @@
     {
       "id": "show-theme",
       "title": "Exibir tema",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-list",
       "value": true,
       "if": {
         "show-contents": true
@@ -105,7 +105,7 @@
     {
       "id": "show-visualizing-exercises",
       "title": "Exibir visualisando exercícios",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-dumbbell",
       "value": true,
       "if": {
         "show-disciplines": true
@@ -114,7 +114,7 @@
     {
       "id": "show-visualizing-works",
       "title": "Exibir visualisando trabalhos",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-file-invoice",
       "value": true,
       "if": {
         "show-disciplines": true
@@ -123,7 +123,7 @@
     {
       "id": "show-visualizing-avaliations",
       "title": "Exibir visualisando avaliações",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-list-check",
       "value": true,
       "if": {
         "show-student-page": true
@@ -132,7 +132,7 @@
     {
       "id": "show-visualizing-socioemocional-formation",
       "title": "Exibir visualisando formação socioemocional",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-masks-theater",
       "value": true,
       "if": {
         "show-student-page": true
@@ -141,7 +141,7 @@
     {
       "id": "show-visualizing-complementary-courses",
       "title": "Exibir visualisando cursos complementares",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-person-rays",
       "value": true,
       "if": {
         "show-student-page": true
@@ -150,7 +150,7 @@
     {
       "id": "show-visualizing-academic-calendar",
       "title": "Exibir visualisando calendário acadêmico",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-calendar-days",
       "value": true,
       "if": {
         "show-student-page": true
@@ -159,13 +159,13 @@
     {
       "id": "show-avaliations-room",
       "title": "Exibir salas de avaliações",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-pencil",
       "value": true
     },
     {
       "id": "show-avaliations",
       "title": "Exibir informações das avaliações",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-scroll",
       "value": true,
       "if": {
         "show-avaliations-room": true
@@ -174,7 +174,7 @@
     {
       "id": "show-exercises",
       "title": "Exibir informações dos exercícios",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-receipt",
       "value": true,
       "if": {
         "show-avaliations-room": true
@@ -183,7 +183,7 @@
     {
       "id": "show-exercise-progress",
       "title": "Exibir progresso dos exercícios",
-      "icon": "fas fa-compress-arrows-alt",
+      "icon": "fas fa-bars-progress",
       "value": true,
       "if": {
         "show-exercises": true
