@@ -151,7 +151,7 @@ presence.on('UpdateData', async () => {
         }
 
         if (!showVisualizingExercises)
-          presenceData.state = ''
+          delete presenceData.state
       }
 
       // Trabalhos
@@ -168,7 +168,7 @@ presence.on('UpdateData', async () => {
         }
 
         if (!showVisualizingWorks)
-          presenceData.state = ''
+          delete presenceData.state
       }
     }
 
@@ -177,7 +177,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Visualisando avaliações'
 
       if (!showVisualizingAvaliations)
-        presenceData.state = ''
+        delete presenceData.state
     }
 
     // Formação socioemocional
@@ -185,7 +185,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Visualisando formação socioemocional'
 
       if (!showVisualizingSocioemotionalFormation)
-        presenceData.state = ''
+        delete presenceData.state
     }
 
     // Cursos complementares
@@ -193,7 +193,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Visualisando cursos complementares'
 
       if (!showVisualizingComplementaryCourses)
-        presenceData.state = ''
+        delete presenceData.state
     }
 
     // Calendário Acadêmico
@@ -201,7 +201,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Visualisando o calendário acadêmico'
 
       if (!showVisualizingAcademicCalendar)
-        presenceData.state = ''
+        delete presenceData.state
     }
   }
 
@@ -210,7 +210,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Navegando no campus virtual'
 
     if (!showCampus)
-      presenceData.details = ''
+      delete presenceData.details
   }
 
   // Sala de avaliações
@@ -236,8 +236,8 @@ presence.on('UpdateData', async () => {
       }
 
       if (!showAvaliations) {
-        presenceData.details = ''
-        presenceData.state = ''
+        delete presenceData.details
+        delete presenceData.state
       }
     }
 
@@ -291,14 +291,14 @@ presence.on('UpdateData', async () => {
       }
 
       if (!showExercises) {
-        presenceData.details = ''
-        presenceData.state = ''
+        delete presenceData.details
+        delete presenceData.state
       }
     }
 
     if (!showAvaliationsRoom) {
-      presenceData.details = ''
-      presenceData.state = ''
+      delete presenceData.details
+      delete presenceData.state
     }
   }
 
