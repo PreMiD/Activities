@@ -56,11 +56,11 @@ presence.on('UpdateData', async () => {
   else if (path.split('/').length < 3) {
     presenceData.state = `📖 ${document.querySelector('._aemo2b3')?.textContent}`
   }
-  else if (path.match(/\/([vae]|quiz)\//)) {
+  else if (path.match(/\/(?:[vae]|quiz)\//)) {
     const breadcrumbLinks = document.querySelectorAll('a[class="_j9iwqrr"]')
     const courseName = breadcrumbLinks[1]?.textContent || ' '
-    const contentTitle =
-      document.querySelector('h1[data-testid="content-library-content-title"]')
+    const contentTitle
+      = document.querySelector('h1[data-testid="content-library-content-title"]')
         ?.textContent || ' '
 
     if (path.includes('/v/')) {
