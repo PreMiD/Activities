@@ -164,7 +164,7 @@
     "zh": "维基百科是一种多语言的在线百科全书，包含基于Wiki的内容的协作编辑系统。"
   },
   "url": "wikipedia.org",
-  "regExp": "([a-z0-9-]+[.])+wikipedia[.]org[/]",
+  "regExp": "([a-z0-9-]+[.])*wikipedia[.]([a-z]*)[/]",
   "version": "2.7.30",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikipedia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikipedia/assets/thumbnail.png",
@@ -178,5 +178,18 @@
     "wikimedia-foundation",
     "wikimedia",
     "wmf"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": 0,
+      "values": [
+        "Displays all details",
+        "Display minimal details",
+        "Only displays browsing"
+      ]
+    }
   ]
 }
