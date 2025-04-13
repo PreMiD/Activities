@@ -208,7 +208,7 @@
     "message": "Reading a DM"
   },
   "general.readingAnArticle": {
-    "description": "",
+    "description": "Reading a not specified article",
     "message": "Reading an article"
   },
   "general.readingAPost": {
@@ -216,7 +216,7 @@
     "message": "Reading a post"
   },
   "general.readingArticle": {
-    "description": "",
+    "description": "Reading an article",
     "message": "Reading article:"
   },
   "general.readingAThread": {
