@@ -64,7 +64,7 @@
     "message": "Viewing an user's page"
   },
   "wikipedia.viewAnUsersTalkPage": {
-    "description": "Viewing auser's talk page",
+    "description": "Viewing an user's talk page",
     "message": "Viewing an user's talkpage"
   },
   "wikipedia.viewAPortal": {
@@ -108,7 +108,7 @@
     "message": "Viewing an interface"
   },
   "wikipedia.viewCategoryTalkPage": {
-    "description": "Viewingcategory talk page",
+    "description": "Viewing category talk page",
     "message": "Viewing category talk page:"
   },
   "wikipedia.viewDraftTalkPage": {
