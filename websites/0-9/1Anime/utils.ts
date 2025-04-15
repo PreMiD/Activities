@@ -16,13 +16,13 @@ export function getTitle(): string | undefined {
   const en = document.querySelector('.title-en')
 
   if (en) {
-    return en.textContent ?? undefined
+    return en.textContent ?? ""
   }
   if (ro) {
-    return ro.textContent ?? undefined
+    return ro.textContent ?? ""
   }
   if (nt) {
-    return nt.textContent ?? undefined
+    return nt.textContent ?? ""
   }
 
   return document.querySelector('h1')?.textContent ?? ""
