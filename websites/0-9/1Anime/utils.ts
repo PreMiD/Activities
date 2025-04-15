@@ -25,7 +25,7 @@ export function getTitle(): string | undefined {
     return nt.textContent ?? undefined
   }
 
-  return document.querySelector('h1')?.textContent ?? undefined
+  return document.querySelector('h1')?.textContent ?? ""
 }
 
 export function getEpisode(): number {
