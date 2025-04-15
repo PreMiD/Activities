@@ -14,7 +14,7 @@ let lastUpdate = 0
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     startTimestamp,
-  } as PresenceData
+  } 
   const video = document.querySelector('video')
   const { pathname, href } = document.location
 
