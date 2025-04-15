@@ -16,16 +16,16 @@ export function getTitle(): string | undefined {
   const en = document.querySelector('.title-en')
 
   if (en) {
-    return en.textContent ?? ""
+    return en.textContent ?? ''
   }
   if (ro) {
-    return ro.textContent ?? ""
+    return ro.textContent ?? ''
   }
   if (nt) {
-    return nt.textContent ?? ""
+    return nt.textContent ?? ''
   }
 
-  return document.querySelector('h1')?.textContent ?? ""
+  return document.querySelector('h1')?.textContent ?? ''
 }
 
 export function getEpisode(): number {
