@@ -31,7 +31,7 @@ cd Activities
 Install the required dependencies:
 
 ```bash
-npm install
+npm clean-install
 ```
 
 This will install all the necessary dependencies, including the PreMiD CLI tool.
@@ -48,6 +48,24 @@ Here's a quick overview of the main CLI commands:
 | `npx pmd dev "YourActivityName"`        | Develops an activity with live-reload |
 | `npx pmd versionize "YourActivityName"` | Creates a new version of an activity  |
 | `npx pmd build "YourActivityName"`      | Builds an activity for production     |
+| `npx pmd --help`                        | Shows all available commands          |
+| `npx pmd [command] --help`              | Shows help for a specific command     |
+
+### Getting Help with Commands
+
+You can use the `--help` flag to get detailed information about any CLI command and its available options:
+
+```bash
+# Show all available commands
+npx pmd --help
+
+# Show help for a specific command
+npx pmd new --help
+npx pmd dev --help
+npx pmd build --help
+```
+
+This will display information about the command's purpose, available options, and examples of how to use it.
 
 For detailed instructions on how to use these commands, see the [Creating Your First Activity](/v1/guide/first-activity) guide.
 

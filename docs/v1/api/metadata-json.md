@@ -95,6 +95,36 @@ The `description` field contains a small description of the service in different
 }
 ```
 
+### Using Open Graph Meta Tags
+
+Many websites provide Open Graph meta tags in their HTML, which include official descriptions of the service. You can use the `og:description` tag to create an accurate description for your activity:
+
+1. Visit the website's homepage
+2. View the page source
+3. Search for `<meta property="og:description" content="...">`
+4. Use this content as a starting point for your description
+
+Example of an Open Graph description tag:
+
+```html
+<meta
+  property="og:description"
+  content="Example is a platform that helps users create and share content with friends, family, and the world."
+/>
+```
+
+This can be converted to your metadata.json description:
+
+```json
+{
+  "description": {
+    "en": "Example is a platform that helps users create and share content with friends, family, and the world."
+  }
+}
+```
+
+If the website doesn't have Open Graph tags, you can also look for a `<meta name="description" content="...">` tag, which serves a similar purpose.
+
 You should at least provide an English description. The PreMiD translation team will help with other languages.
 
 ## URL

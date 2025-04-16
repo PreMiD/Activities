@@ -11,7 +11,7 @@ PreMiD's Activity Forwarding feature allows you to send your current activity da
 
 ![Activity Forwarding Setting](./images/activity-forwarding-setting.png)
 
-*The Activity Forwarding setting can be found in the extension's settings page.*
+_The Activity Forwarding setting can be found in the extension's settings page._
 
 ## Data Format
 
