@@ -342,4 +342,4 @@ Now that you understand how to add settings to your activity, you can learn more
 
 - [iFrames](/v1/guide/iframes): Learn how to gather information from iframes.
 - [Slideshows](/v1/guide/slideshows): Learn how to create a slideshow that alternates between different presence data.
-- [Multilanguage](/v1/guide/multilanguage): Learn how to add support for multiple languages to your activity.
+- [Localization](/v1/guide/localization): Learn how to add support for multiple languages to your activity.

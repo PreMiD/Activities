@@ -409,5 +409,5 @@ presence.on('UpdateData', async () => {
 Now that you understand how to use iFrames in your activity, you can learn more about:
 
 - [Slideshows](/v1/guide/slideshows): Learn how to create a slideshow that alternates between different presence data.
-- [Multilanguage](/v1/guide/multilanguage): Learn how to add support for multiple languages to your activity.
+- [Localization](/v1/guide/localization): Learn how to add support for multiple languages to your activity.
 - [Best Practices](/v1/guide/best-practices): Learn best practices for creating activities.
