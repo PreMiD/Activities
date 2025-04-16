@@ -85,7 +85,7 @@ const presence = new Presence({
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://example.com/logo.png',
     details: 'Browsing Example.com',
     state: 'Homepage'
   }

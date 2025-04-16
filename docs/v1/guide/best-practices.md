@@ -80,29 +80,24 @@ slideshow.addSlide('slide1', {
 
 ### Comment Your Code
 
-Add comments to explain what your code is doing, especially for complex logic.
+Add meaningful comments to explain complex logic, non-obvious decisions, or important context. Avoid commenting on self-explanatory code.
 
 ```typescript
 // Good
-// Get the video element
+// Process video content when available and ready
 const video = document.querySelector('video')
-
-// Check if the video exists and is ready to play
 if (video && video.readyState > 0) {
-  // Get video information
   const title = document.querySelector('.video-title')?.textContent || 'Unknown video'
   const author = document.querySelector('.video-author')?.textContent || 'Unknown author'
   const isPlaying = !video.paused
 
-  // Set the activity type to Watching
+  // Set activity data for video content
   presenceData.type = ActivityType.Watching
-
-  // Set the details and state
   presenceData.details = title
   presenceData.state = `By ${author}`
 }
 
-// Bad
+// Bad - No comments for complex logic
 const video = document.querySelector('video')
 if (video && video.readyState > 0) {
   const title = document.querySelector('.video-title')?.textContent || 'Unknown video'
@@ -110,6 +105,25 @@ if (video && video.readyState > 0) {
   const isPlaying = !video.paused
   presenceData.type = ActivityType.Watching
   presenceData.details = title
+  presenceData.state = `By ${author}`
+}
+
+// Also Bad - Excessive comments for obvious code
+// Create a variable to store the video element
+const video = document.querySelector('video')
+// Check if the video exists and is ready
+if (video && video.readyState > 0) {
+  // Get the title of the video
+  const title = document.querySelector('.video-title')?.textContent || 'Unknown video'
+  // Get the author of the video
+  const author = document.querySelector('.video-author')?.textContent || 'Unknown author'
+  // Check if the video is playing
+  const isPlaying = !video.paused
+  // Set the activity type to watching
+  presenceData.type = ActivityType.Watching
+  // Set the details to the title
+  presenceData.details = title
+  // Set the state to the author
   presenceData.state = `By ${author}`
 }
 ```
