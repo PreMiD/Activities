@@ -18,31 +18,35 @@ presence.on('UpdateData', () => {
       presenceData.state = document
         .querySelector('head > title')
         ?.textContent
-        ?.replace('Google Calendar - ', '')
+        ?.replace(/Google[  ](Calendar|Agenda) -/, '')
         ?.replaceAll(',', ' -')
+        ?.trim()
     }
     else if (document.location.pathname.startsWith('/calendar/r/week')) {
       presenceData.details = 'Viewing the week schedule:'
       presenceData.state = document
         .querySelector('head > title')
         ?.textContent
-        ?.replace('Google Calendar - ', '')
+        ?.replace(/Google[  ](Calendar|Agenda) -/, '')
         ?.replaceAll(',', ' -')
+        ?.trim()
     }
     else if (document.location.pathname.startsWith('/calendar/r/month')) {
       presenceData.details = 'Viewing the month schedule:'
       presenceData.state = document
         .querySelector('head > title')
         ?.textContent
-        ?.replace('Google Calendar - ', '')
+        ?.replace(/Google[  ](Calendar|Agenda) -/, '')
+        ?.trim()
     }
     else if (document.location.pathname.startsWith('/calendar/r/year')) {
       presenceData.details = 'Viewing the year schedule:';
       [, presenceData.state] = document
         .querySelector('head > title')
         ?.textContent
-        ?.replace('Google Calendar - ', '')
+        ?.replace(/Google[  ](Calendar|Agenda) -/, '')
         ?.split(' ') ?? []
+        ?.trim()
     }
     else if (document.location.pathname.startsWith('/calendar/r/agenda')) {
       presenceData.details = 'Browsing in the schedule'

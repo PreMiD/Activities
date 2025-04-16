@@ -32,7 +32,7 @@ presence.on('UpdateData', async () => {
   if (path.startsWith('/drive/folders')) {
     presenceData.details = strings.viewingFolder
     if (!privacy)
-      presenceData.state = document.title.replace('- Google Drive', '')
+      presenceData.state = document.title.replace(/- Google[  ]Drive/, '').trim()
   }
   else if (path.startsWith('/drive/computer')) {
     presenceData.state = strings.linkedComputers
@@ -64,7 +64,7 @@ presence.on('UpdateData', async () => {
       }.${main
         .slice(-1)
         .toString()
-        .replace('- Google Drive', '')
+        .replace(/- Google[  ]Drive/, '').trim()
         .toUpperCase()}`
     }
   }
