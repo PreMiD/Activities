@@ -161,7 +161,9 @@ When you make changes to your activity code, the development server will automat
 
 ## Next Steps
 
-Congratulations! You've created your first PreMiD Activity. To learn more about the different features and capabilities of activities, check out the following guides:
+Congratulations! You've created your first PreMiD Activity. Before submitting your activity, make sure it follows our [Guidelines](/v1/guide/guidelines) to ensure it meets our quality standards and requirements.
+
+To learn more about the different features and capabilities of activities, check out the following guides:
 
 - [Activity Structure](/v1/guide/structure): Learn about the structure of an activity and how to organize your code.
 - [Metadata](/v1/guide/metadata): Learn about the metadata.json file and how to configure your activity.

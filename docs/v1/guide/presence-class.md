@@ -93,6 +93,14 @@ presenceData.buttons = [
 
 Each button has a `label` and a `url` property. The `label` is the text that appears on the button, and the `url` is the link that opens when the button is clicked.
 
+::: warning Button Guidelines
+Buttons must follow our [Guidelines](/v1/guide/guidelines#buttons). Specifically:
+- Redirects to main pages are prohibited
+- Promoting websites is prohibited
+- They can't display information you couldn't fit in other fields
+- Redirecting directly to audio/video streams is prohibited
+:::
+
 ## Timestamps
 
 You can add timestamps to show how long the user has been doing an activity or how much time is left:
@@ -199,6 +207,15 @@ presence.on('UpdateData', async () => {
   }
 })
 ```
+
+## Code Guidelines
+
+When implementing your Presence class, make sure to follow our [Guidelines](/v1/guide/guidelines#code-requirements) for code requirements. These include:
+
+- Using native functions when available
+- Supporting the primary language of the website
+- Using smallImageKey and smallImageText appropriately
+- Properly handling cookies and undefined values
 
 ## Next Steps
 
