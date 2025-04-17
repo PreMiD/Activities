@@ -16,7 +16,7 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Listening,
   }
   const browsing = await presence.getSetting('browsing')
-  const song = document.querySelector('audio') as HTMLAudioElement
+  const song = document.querySelector<HTMLAudioElement>('audio')
   const { pathname, href } = document.location
   const pathArray = pathname.split('/')
 
