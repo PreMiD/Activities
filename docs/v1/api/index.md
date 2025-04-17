@@ -8,7 +8,7 @@ The PreMiD API consists of several key components:
 
 - [Presence Class](/v1/api/presence-class): The main class for creating activities
 - [PresenceData Interface](/v1/api/presence-data): The interface for defining what data to show in Discord
-- [Metadata Interface](/v1/api/metadata): The interface for defining activity metadata
+- [Metadata Interface](/v1/api/metadata-json): The interface for defining activity metadata
 - [Slideshow Class](/v1/api/slideshow): A class for creating slideshows that alternate between different presence data
 - [iFrame Class](/v1/api/iframe): A class for interacting with iframes
 - [Utility Functions](/v1/api/utility-functions): Helper functions for common tasks
