@@ -95,11 +95,12 @@ Each button has a `label` and a `url` property. The `label` is the text that app
 
 ::: warning Button Guidelines
 Buttons must follow our [Guidelines](/v1/guide/guidelines#buttons). Specifically:
+
 - Redirects to main pages are prohibited
 - Promoting websites is prohibited
 - They can't display information you couldn't fit in other fields
 - Redirecting directly to audio/video streams is prohibited
-:::
+  :::
 
 ## Timestamps
 
