@@ -34,8 +34,10 @@ A media activity consists of two files:
 
 ### presence.ts
 
+<!-- eslint-skip -->
+
 ```typescript
-import { getTimestampsFromMedia, Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 // Define custom assets enum
 enum ActivityAssets {
@@ -85,7 +87,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = 'Playing'
 
       // Calculate timestamps using destructuring
-      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     }
     else {
       // Set the small image key and text for paused state

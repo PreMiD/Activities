@@ -304,11 +304,12 @@ presence.on('UpdateData', async () => {
     const video = document.querySelector('video')
     if (video && video.readyState > 0) {
       // Use destructuring assignment
-      [presenceData.startTimestamp, presenceData.endTimestamp] =
-        getTimestamps(video.currentTime, video.duration)
+      [presenceData.startTimestamp, presenceData.endTimestamp]
+        = getTimestamps(video.currentTime, video.duration)
     }
     wasWatchingVideo = true
-  } else {
+  }
+  else {
     // Only update browsing timestamp when changing state
     if (wasWatchingVideo) {
       browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -444,8 +445,6 @@ presenceData.details = 'Logged in as user123'
 presenceData.state = 'Email: user@example.com'
 ```
 
-
-
 ## Complete Example
 
 Here's a complete example of an activity that follows best practices:
@@ -494,7 +493,7 @@ Here's a complete example of an activity that follows best practices:
 ### presence.ts
 
 ```typescript
-import { getTimestamps, Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/XXXXXXX.png', // Will be replaced with CDN URL after review
@@ -596,8 +595,8 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = strings.play
 
       if (showTimestamp) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] =
-          getTimestamps(videoInfo.currentTime, videoInfo.duration)
+        [presenceData.startTimestamp, presenceData.endTimestamp]
+          = getTimestamps(videoInfo.currentTime, videoInfo.duration)
       }
     }
     else {

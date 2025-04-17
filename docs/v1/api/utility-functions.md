@@ -4,6 +4,8 @@ PreMiD provides several utility functions to help with common tasks when develop
 
 ## getTimestamps
 
+<!-- eslint-skip -->
+
 ```typescript
 import { getTimestamps } from 'premid'
 
@@ -23,6 +25,8 @@ Converts time and duration integers into snowflake timestamps.
 
 ### Example
 
+<!-- eslint-skip -->
+
 ```typescript
 import { getTimestamps } from 'premid'
 
@@ -33,10 +37,12 @@ const presenceData: PresenceData = {
 
 const video = document.querySelector('video')
 // Recommended approach using destructuring
-[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
+  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
 ```
 
 ## getTimestampsFromMedia
+
+<!-- eslint-skip -->
 
 ```typescript
 import { getTimestampsFromMedia } from 'premid'
@@ -56,6 +62,8 @@ Similar to `getTimestamps` but takes in a media element and returns snowflake ti
 
 ### Example
 
+<!-- eslint-skip -->
+
 ```typescript
 import { getTimestampsFromMedia } from 'premid'
 
@@ -66,10 +74,12 @@ const presenceData: PresenceData = {
 
 const video = document.querySelector('video')
 // Recommended approach using destructuring
-[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 ```
 
 ## timestampFromFormat
+
+<!-- eslint-skip -->
 
 ```typescript
 import { timestampFromFormat } from 'premid'
@@ -89,6 +99,8 @@ Converts a string with format `HH:MM:SS` or `MM:SS` or `SS` into an integer (Doe
 
 ### Example
 
+<!-- eslint-skip -->
+
 ```typescript
 import { timestampFromFormat } from 'premid'
 
@@ -101,6 +113,8 @@ const timeInSeconds = timestampFromFormat(timeString) // 5445
 These utility functions are particularly useful for media-related activities, where you need to calculate timestamps for videos or audio.
 
 ### Example: Video Activity
+
+<!-- eslint-skip -->
 
 ```typescript
 import { getTimestampsFromMedia } from 'premid'
@@ -145,6 +159,8 @@ presence.on('UpdateData', async () => {
 
 ### Example: Custom Time Format
 
+<!-- eslint-skip -->
+
 ```typescript
 import { timestampFromFormat } from 'premid'
 
@@ -182,6 +198,8 @@ presence.on('UpdateData', async () => {
 
 The `Assets` enum from the `premid` package contains common assets used across activities:
 
+<!-- eslint-skip -->
+
 ```typescript
 import { Assets } from 'premid'
 
@@ -191,6 +209,7 @@ presenceData.smallImageText = 'Playing'
 ```
 
 Common values include:
+
 - `Assets.Play` - Play icon
 - `Assets.Pause` - Pause icon
 - `Assets.Stop` - Stop icon
