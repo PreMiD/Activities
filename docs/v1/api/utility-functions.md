@@ -1,6 +1,6 @@
 # Utility Functions
 
-PreMiD provides several utility functions to help with common tasks when developing activities. These functions are available as standalone imports from the `premid` package.
+PreMiD provides several utility functions and constants to help with common tasks when developing activities. These are available as imports from the `premid` package.
 
 ## getTimestamps
 
@@ -180,8 +180,96 @@ presence.on('UpdateData', async () => {
 })
 ```
 
+## Constants and Enums
+
+### browsingTimestamp
+
+```typescript
+import { browsingTimestamp } from 'premid'
+
+const browsingTimestamp: number
+```
+
+A constant that provides a timestamp for when the user started browsing. This is useful for showing how long a user has been on a website.
+
+### Example
+
+```typescript
+import { browsingTimestamp } from 'premid'
+
+const presenceData: PresenceData = {
+  details: 'Browsing the homepage',
+  startTimestamp: browsingTimestamp
+}
+```
+
+### ActivityType Enum
+
+```typescript
+import { ActivityType } from 'premid'
+
+enum ActivityType {
+  Playing = 0,
+  Listening = 2,
+  Watching = 3,
+  Competing = 5
+}
+```
+
+An enum that defines the type of activity being displayed in Discord.
+
+### Example
+
+```typescript
+import { ActivityType } from 'premid'
+
+const presenceData: PresenceData = {
+  details: 'Watching a video',
+  state: 'Video Title',
+  largeImageKey: 'https://i.imgur.com/example.png',
+  type: ActivityType.Watching
+}
+```
+
+### Assets Enum
+
+```typescript
+import { Assets } from 'premid'
+
+enum Assets {
+  Play = 'https://cdn.rcd.gg/PreMiD/resources/play.png',
+  Pause = 'https://cdn.rcd.gg/PreMiD/resources/pause.png',
+  Stop = 'https://cdn.rcd.gg/PreMiD/resources/stop.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/resources/logo.png',
+  Search = 'https://cdn.rcd.gg/PreMiD/resources/search.png',
+  Question = 'https://cdn.rcd.gg/PreMiD/resources/question.png',
+  Reading = 'https://cdn.rcd.gg/PreMiD/resources/reading.png',
+  Writing = 'https://cdn.rcd.gg/PreMiD/resources/writing.png',
+  Live = 'https://cdn.rcd.gg/PreMiD/resources/live.png',
+  Download = 'https://cdn.rcd.gg/PreMiD/resources/download.png',
+  Shopping = 'https://cdn.rcd.gg/PreMiD/resources/shopping.png'
+}
+```
+
+An enum that provides URLs to common assets used in activities. Using these assets ensures consistency across activities and reduces the need for custom image hosting.
+
+### Example
+
+```typescript
+import { Assets } from 'premid'
+
+const presenceData: PresenceData = {
+  details: 'Watching a video',
+  state: 'Video Title',
+  largeImageKey: 'https://i.imgur.com/example.png',
+  smallImageKey: video.paused ? Assets.Pause : Assets.Play,
+  smallImageText: video.paused ? 'Paused' : 'Playing'
+}
+```
+
 ## Notes
 
-- These utility functions are available as standalone imports from the `premid` package, which is more efficient than using the deprecated methods on the `Presence` class.
+- These utility functions, constants, and enums are available as imports from the `premid` package, which is more efficient than using deprecated methods on the `Presence` class.
 - The `getTimestamps` and `getTimestampsFromMedia` functions return timestamps that can be used directly with the `startTimestamp` and `endTimestamp` properties of the `PresenceData` interface.
 - The `timestampFromFormat` function is useful for parsing time strings in various formats, but it does not return a timestamp that can be used directly with `PresenceData`. You need to use `getTimestamps` to convert the seconds to a proper timestamp.
+- When using `getTimestampsFromMedia` or `getTimestamps`, it's recommended to directly assign the result to `presenceData.startTimestamp` and `presenceData.endTimestamp` using destructuring: `[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)`.
