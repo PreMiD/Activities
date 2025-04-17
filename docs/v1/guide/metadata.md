@@ -312,6 +312,7 @@ Here's a complete example of a `metadata.json` file with all possible fields:
 5. **Follow semantic versioning**: Use the MAJOR.MINOR.PATCH format for versioning.
 6. **Keep settings simple**: Only add settings that are useful for users.
 7. **Test your regular expressions**: Make sure your regular expressions correctly match the URLs you want to support.
+8. **Follow the guidelines**: Make sure your metadata follows our [Guidelines](/v1/guide/guidelines#metadata-requirements) for service naming, tags, and other requirements.
 
 ## Next Steps
 
