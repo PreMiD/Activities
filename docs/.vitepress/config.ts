@@ -64,6 +64,7 @@ export default defineConfig({
             { text: 'Slideshows', link: '/v1/guide/slideshows' },
             { text: 'Localization', link: '/v1/guide/localization' },
             { text: 'Best Practices', link: '/v1/guide/best-practices' },
+            { text: 'Guidelines', link: '/v1/guide/guidelines' },
           ],
         },
       ],
