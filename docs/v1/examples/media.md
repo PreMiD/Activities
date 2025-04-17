@@ -24,8 +24,8 @@ A media activity consists of two files:
   },
   "url": "mediaexample.com",
   "version": "1.0.0",
-  "logo": "https://mediaexample.com/logo.png",
-  "thumbnail": "https://mediaexample.com/thumbnail.png",
+  "logo": "https://i.imgur.com/example.png",
+  "thumbnail": "https://i.imgur.com/thumbnail.png",
   "color": "#FF0000",
   "category": "videos",
   "tags": ["video", "music", "media"]
@@ -35,15 +35,18 @@ A media activity consists of two files:
 ### presence.ts
 
 ```typescript
-import { getTimestampsFromMedia } from 'premid'
+import { getTimestampsFromMedia, browsingTimestamp, Assets, ActivityType } from 'premid'
 
 const presence = new Presence({
   clientId: 'your_client_id'
 })
 
 presence.on('UpdateData', async () => {
+  // Use destructuring for document.location
+  const { href } = document.location
+
   const presenceData: PresenceData = {
-    largeImageKey: 'https://mediaexample.com/logo.png'
+    largeImageKey: 'https://i.imgur.com/example.png'
   }
 
   // Get the video element
@@ -66,18 +69,16 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageText = 'MediaExample'
 
     if (isPlaying) {
-      // Set the small image key and text for playing state
-      presenceData.smallImageKey = 'https://mediaexample.com/play.png'
+      // Set the small image key and text for playing state using Assets enum
+      presenceData.smallImageKey = Assets.Play
       presenceData.smallImageText = 'Playing'
 
-      // Calculate timestamps
-      const timestamps = getTimestampsFromMedia(video)
-      presenceData.startTimestamp = timestamps[0]
-      presenceData.endTimestamp = timestamps[1]
+      // Calculate timestamps using recommended destructuring assignment
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     }
     else {
-      // Set the small image key and text for paused state
-      presenceData.smallImageKey = 'https://mediaexample.com/pause.png'
+      // Set the small image key and text for paused state using Assets enum
+      presenceData.smallImageKey = Assets.Pause
       presenceData.smallImageText = 'Paused'
     }
 
@@ -85,11 +86,11 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [
       {
         label: 'Watch Video',
-        url: document.URL
+        url: href
       },
       {
         label: 'Visit Channel',
-        url: document.querySelector('.channel-link')?.getAttribute('href') || document.URL
+        url: document.querySelector('.channel-link')?.getAttribute('href') || href
       }
     ]
   }
@@ -97,7 +98,7 @@ presence.on('UpdateData', async () => {
     // User is browsing the website
     presenceData.details = 'Browsing'
     presenceData.state = 'Looking for videos'
-    presenceData.startTimestamp = Date.now()
+    presenceData.startTimestamp = browsingTimestamp
   }
 
   // Set the activity
@@ -112,26 +113,27 @@ presence.on('UpdateData', async () => {
 
 ## How It Works
 
-1. We import the `getTimestampsFromMedia` utility function from the `premid` package.
+1. We import the necessary utilities and enums from the `premid` package: `getTimestampsFromMedia`, `browsingTimestamp`, `Assets`, and `ActivityType`.
 2. We create a new `Presence` instance with a client ID.
 3. We listen for the `UpdateData` event, which is fired regularly by the PreMiD extension.
-4. We create a `PresenceData` object with a `largeImageKey` property, which is the name of the logo file.
-5. We get the video element using `document.querySelector("video")`.
-6. If a video is found and it's ready to play:
+4. We use destructuring to get the `href` from `document.location`.
+5. We create a `PresenceData` object with a `largeImageKey` property, which is a direct URL to the logo image on imgur.
+6. We get the video element using `document.querySelector("video")`.
+7. If a video is found and it's ready to play:
    - We get the video title and author from the page.
    - We set the activity type to `ActivityType.Watching`.
    - We set the details and state to show the video title and author.
    - We set the large image text to the name of the service.
    - If the video is playing:
-     - We set the small image key and text to indicate that the video is playing.
-     - We calculate timestamps using the `getTimestampsFromMedia` function.
+     - We set the small image key using the `Assets.Play` enum value.
+     - We calculate timestamps using the `getTimestampsFromMedia` function and assign them directly using destructuring: `[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)`.
    - If the video is paused:
-     - We set the small image key and text to indicate that the video is paused.
-   - We add buttons to link to the video and the channel.
-7. If no video is found or it's not ready to play:
+     - We set the small image key using the `Assets.Pause` enum value.
+   - We add buttons to link to the video and the channel, using the `href` variable.
+8. If no video is found or it's not ready to play:
    - We set the details and state to indicate that the user is browsing the website.
-   - We add a timestamp to show how long the user has been browsing.
-8. Finally, we set the activity using `presence.setActivity()`.
+   - We use the `browsingTimestamp` constant to show how long the user has been browsing.
+9. Finally, we set the activity using `presence.setActivity()`.
 
 ## Handling Different Media Types
 
