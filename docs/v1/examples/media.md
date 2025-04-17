@@ -24,8 +24,8 @@ A media activity consists of two files:
   },
   "url": "mediaexample.com",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/example.png",
-  "thumbnail": "https://i.imgur.com/thumbnail.png",
+  "logo": "https://i.imgur.com/XXXXXXX.png",
+  "thumbnail": "https://i.imgur.com/YYYYYYY.png",
   "color": "#FF0000",
   "category": "videos",
   "tags": ["video", "music", "media"]
@@ -35,18 +35,29 @@ A media activity consists of two files:
 ### presence.ts
 
 ```typescript
-import { getTimestampsFromMedia, browsingTimestamp, Assets, ActivityType } from 'premid'
+import { getTimestampsFromMedia, Assets } from 'premid'
+
+// Define custom assets enum
+enum ActivityAssets {
+  Logo = 'https://i.imgur.com/XXXXXXX.png', // Will be replaced with CDN URL after review
+  Play = 'https://i.imgur.com/YYYYYYY.png',
+  Pause = 'https://i.imgur.com/ZZZZZZZ.png'
+}
 
 const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+// Create browsing timestamp outside UpdateData to maintain consistent timing
+let browsingTimestamp = Math.floor(Date.now() / 1000)
+let wasWatchingVideo = false
+
 presence.on('UpdateData', async () => {
   // Use destructuring for document.location
-  const { href } = document.location
+  const { pathname, hostname, href } = document.location
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://i.imgur.com/example.png'
+    largeImageKey: ActivityAssets.Logo
   }
 
   // Get the video element
@@ -69,15 +80,15 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageText = 'MediaExample'
 
     if (isPlaying) {
-      // Set the small image key and text for playing state using Assets enum
+      // Set the small image key and text for playing state
       presenceData.smallImageKey = Assets.Play
       presenceData.smallImageText = 'Playing'
 
-      // Calculate timestamps using recommended destructuring assignment
+      // Calculate timestamps using destructuring
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     }
     else {
-      // Set the small image key and text for paused state using Assets enum
+      // Set the small image key and text for paused state
       presenceData.smallImageKey = Assets.Pause
       presenceData.smallImageText = 'Paused'
     }
@@ -86,19 +97,30 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [
       {
         label: 'Watch Video',
-        url: href
+        url: document.URL
       },
       {
         label: 'Visit Channel',
-        url: document.querySelector('.channel-link')?.getAttribute('href') || href
+        url: document.querySelector('.channel-link')?.getAttribute('href') || document.URL
       }
     ]
   }
   else {
     // User is browsing the website
+    // Only update browsing timestamp when changing from watching to browsing
+    if (wasWatchingVideo) {
+      browsingTimestamp = Math.floor(Date.now() / 1000)
+      wasWatchingVideo = false
+    }
+
     presenceData.details = 'Browsing'
     presenceData.state = 'Looking for videos'
     presenceData.startTimestamp = browsingTimestamp
+  }
+
+  // Update wasWatchingVideo state for the next update
+  if (video && video.readyState > 0 && !video.paused) {
+    wasWatchingVideo = true
   }
 
   // Set the activity
@@ -113,27 +135,31 @@ presence.on('UpdateData', async () => {
 
 ## How It Works
 
-1. We import the necessary utilities and enums from the `premid` package: `getTimestampsFromMedia`, `browsingTimestamp`, `Assets`, and `ActivityType`.
-2. We create a new `Presence` instance with a client ID.
-3. We listen for the `UpdateData` event, which is fired regularly by the PreMiD extension.
-4. We use destructuring to get the `href` from `document.location`.
-5. We create a `PresenceData` object with a `largeImageKey` property, which is a direct URL to the logo image on imgur.
-6. We get the video element using `document.querySelector("video")`.
-7. If a video is found and it's ready to play:
+1. We import the `getTimestampsFromMedia` and `Assets` from the `premid` package.
+2. We define an `ActivityAssets` enum for custom assets used in our activity.
+3. We create a new `Presence` instance with a client ID.
+4. We initialize a `browsingTimestamp` variable outside the UpdateData event to maintain consistent timing.
+5. We listen for the `UpdateData` event, which is fired regularly by the PreMiD extension.
+6. We use destructuring to access document.location properties: `const { pathname, hostname, href } = document.location`.
+7. We create a `PresenceData` object with a `largeImageKey` property using our ActivityAssets enum.
+8. We get the video element using `document.querySelector("video")`.
+9. If a video is found and it's ready to play:
    - We get the video title and author from the page.
    - We set the activity type to `ActivityType.Watching`.
    - We set the details and state to show the video title and author.
    - We set the large image text to the name of the service.
    - If the video is playing:
-     - We set the small image key using the `Assets.Play` enum value.
-     - We calculate timestamps using the `getTimestampsFromMedia` function and assign them directly using destructuring: `[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)`.
+     - We set the small image key to `Assets.Play` to indicate that the video is playing.
+     - We calculate timestamps using destructuring: `[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)`.
    - If the video is paused:
-     - We set the small image key using the `Assets.Pause` enum value.
-   - We add buttons to link to the video and the channel, using the `href` variable.
-8. If no video is found or it's not ready to play:
-   - We set the details and state to indicate that the user is browsing the website.
-   - We use the `browsingTimestamp` constant to show how long the user has been browsing.
-9. Finally, we set the activity using `presence.setActivity()`.
+     - We set the small image key to `Assets.Pause` to indicate that the video is paused.
+   - We add buttons to link to the video and the channel.
+10. If no video is found or it's not ready to play:
+    - We only update the browsing timestamp when changing from watching to browsing.
+    - We set the details and state to indicate that the user is browsing the website.
+    - We use the consistent browsing timestamp to show how long the user has been browsing.
+11. We update the `wasWatchingVideo` state for the next update cycle.
+12. Finally, we set the activity using `presence.setActivity()`.
 
 ## Handling Different Media Types
 

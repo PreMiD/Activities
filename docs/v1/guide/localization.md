@@ -198,12 +198,9 @@ presence.on('UpdateData', async () => {
   // Get the user's language
   const userLanguage = await presence.getSetting<string>('lang') || 'en'
 
-  // PreMiD automatically loads your localization file
-  // and makes it available through the presence.strings object
-  const strings = presence.strings[userLanguage] || presence.strings.en
+  // You must use the getStrings method to access translations
 
-  // Access your custom strings
-  // The getStrings method automatically extracts the message field
+  // Get translations using the getStrings method
 
   // Create the presence data
   const presenceData: PresenceData = {
@@ -237,7 +234,7 @@ presence.on('UpdateData', async () => {
 
 ## Best Practices
 
-1. **Use the getStrings method**: Use the `getStrings` method for common strings that are already translated by the PreMiD team.
+1. **Use the getStrings method**: Use the `getStrings` method for translations. Get all strings at once at the top of your UpdateData event for better performance.
 2. **Create a localization file**: For custom strings, create a localization file named after your service.
 3. **Provide fallbacks**: Always provide fallbacks for languages that are not supported.
 4. **Keep it simple**: Use simple, clear language that is easy to translate.
@@ -291,7 +288,7 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
-// Example.json file is automatically loaded by PreMiD
+// Use getStrings to access translations from your localization file
 
 presence.on('UpdateData', async () => {
   // Get settings
@@ -312,18 +309,22 @@ presence.on('UpdateData', async () => {
   // Set details based on the current page
   const path = document.location.pathname
 
-  // Get custom translations using getStrings method
+  // Get all custom translations at once at the top of UpdateData
+  const customStrings = await presence.getStrings({
+    home: 'example.homepage',
+    about: 'example.about',
+    contact: 'example.contact'
+  })
+
+  // Use the translations based on the current page
   if (path === '/') {
-    const homeString = await presence.getStrings({ home: 'example.homepage' })
-    presenceData.details = homeString.home
+    presenceData.details = customStrings.home
   }
   else if (path.includes('/about')) {
-    const aboutString = await presence.getStrings({ about: 'example.about' })
-    presenceData.details = aboutString.about
+    presenceData.details = customStrings.about
   }
   else if (path.includes('/contact')) {
-    const contactString = await presence.getStrings({ contact: 'example.contact' })
-    presenceData.details = contactString.contact
+    presenceData.details = customStrings.contact
   }
   else {
     presenceData.details = strings.browse

@@ -55,9 +55,23 @@ const videoTitle = document.querySelector('.video-title')?.textContent || 'Unkno
 const videoTitle = document.querySelector('.video-title').textContent
 ```
 
+### Use Destructuring
+
+Use destructuring to access object properties for cleaner and more readable code.
+
+```typescript
+// Good
+const { pathname, hostname, href } = document.location
+
+// Bad
+const pathname = document.location.pathname
+const hostname = document.location.hostname
+const href = document.location.href
+```
+
 ### Use Constants
 
-Define constants for repeated values to make your code more maintainable.
+Define constants for repeated values to make your code more maintainable. Always define constants outside of the UpdateData event for better performance.
 
 ```typescript
 // Good
@@ -192,16 +206,18 @@ if (document.querySelector('video') && document.querySelector('video').readyStat
 
 ### Use Efficient Selectors
 
-Use efficient selectors to find elements on the page. IDs are the fastest, followed by classes, then tag names.
+Use efficient selectors to find elements on the page. IDs are the fastest, followed by classes, then tag names. However, for elements that are typically unique on a page (like video or audio elements), using tag selectors can be appropriate.
 
 ```typescript
 // Good
-const video = document.getElementById('video')
-const title = document.querySelector('.video-title')
+const videoWithId = document.getElementById('video') // Best if ID exists
+const title = document.querySelector('.video-title') // Using class selector
+const video = document.querySelector('video') // Good for pages with a single video
 
-// Bad
-const video = document.querySelector('video')
-const title = document.getElementsByClassName('video-title')[0]
+// Less preferred
+const title = document.getElementsByClassName('video-title')[0] // Works but querySelector is more consistent
+const videos = document.querySelectorAll('video') // Unnecessary if you only need the first video
+const firstVideo = videos[0]
 ```
 
 ### Avoid Heavy Computations
@@ -241,12 +257,16 @@ Make sure the information displayed in your activity is clear and easy to unders
 
 ```typescript
 // Good
-presenceData.details = 'Watching: The Title of the Video'
+presenceData.type = ActivityType.Watching
+presenceData.details = 'The Title of the Video' // No need for 'Watching:' prefix when type is set
 presenceData.state = 'By: The Author of the Video'
 
 // Bad
 presenceData.details = 'Video'
 presenceData.state = 'Author'
+
+// Also Bad
+presenceData.details = 'Watching: The Title of the Video' // Redundant with ActivityType.Watching
 ```
 
 ### Use Appropriate Activity Types
@@ -272,19 +292,43 @@ Add timestamps to show how long the user has been doing an activity or how much 
 
 ```typescript
 // Good
-// Show elapsed time
-presenceData.startTimestamp = Date.now()
+// Create browsing timestamp outside UpdateData
+let browsingTimestamp = Math.floor(Date.now() / 1000)
+let wasWatchingVideo = false
 
-// Show remaining time for media
-const video = document.querySelector('video')
-if (video && video.readyState > 0) {
-  const timestamps = getTimestamps(video.currentTime, video.duration)
-  presenceData.startTimestamp = timestamps[0]
-  presenceData.endTimestamp = timestamps[1]
-}
+presence.on('UpdateData', async () => {
+  // ...
+
+  if (isWatchingVideo) {
+    // Show remaining time for media
+    const video = document.querySelector('video')
+    if (video && video.readyState > 0) {
+      // Use destructuring assignment
+      [presenceData.startTimestamp, presenceData.endTimestamp] =
+        getTimestamps(video.currentTime, video.duration)
+    }
+    wasWatchingVideo = true
+  } else {
+    // Only update browsing timestamp when changing state
+    if (wasWatchingVideo) {
+      browsingTimestamp = Math.floor(Date.now() / 1000)
+      wasWatchingVideo = false
+    }
+    presenceData.startTimestamp = browsingTimestamp
+  }
+})
 
 // Bad
-// No timestamps
+// Updating browsing timestamp on every UpdateData event
+presence.on('UpdateData', async () => {
+  presenceData.startTimestamp = Math.floor(Date.now() / 1000) // Don't do this!
+})
+
+// Bad
+// Not using destructuring with getTimestamps
+const timestamps = getTimestamps(video.currentTime, video.duration)
+presenceData.startTimestamp = timestamps[0]
+presenceData.endTimestamp = timestamps[1]
 ```
 
 ### Use Settings
@@ -400,21 +444,7 @@ presenceData.details = 'Logged in as user123'
 presenceData.state = 'Email: user@example.com'
 ```
 
-### Validate User Input
 
-If your activity uses user input, validate it to prevent security vulnerabilities.
-
-```typescript
-// Good
-const userInput = document.querySelector('.user-input')?.textContent || ''
-const sanitizedInput = userInput.replace(/[<>]/g, '') // Remove < and > to prevent HTML injection
-
-presenceData.details = sanitizedInput
-
-// Bad
-const userInput = document.querySelector('.user-input')?.textContent || ''
-presenceData.details = userInput
-```
 
 ## Complete Example
 
@@ -436,8 +466,8 @@ Here's a complete example of an activity that follows best practices:
   },
   "url": "example.com",
   "version": "1.0.0",
-  "logo": "https://example.com/logo.png",
-  "thumbnail": "https://example.com/thumbnail.png",
+  "logo": "https://i.imgur.com/XXXXXXX.png",
+  "thumbnail": "https://i.imgur.com/YYYYYYY.png",
   "color": "#FF0000",
   "category": "other",
   "tags": ["example", "best-practices"],
@@ -464,12 +494,20 @@ Here's a complete example of an activity that follows best practices:
 ### presence.ts
 
 ```typescript
+import { getTimestamps, Assets } from 'premid'
+
+enum ActivityAssets {
+  Logo = 'https://i.imgur.com/XXXXXXX.png', // Will be replaced with CDN URL after review
+  Play = 'https://i.imgur.com/YYYYYYY.png',
+  Pause = 'https://i.imgur.com/ZZZZZZZ.png'
+}
+
 const presence = new Presence({
   clientId: 'your_client_id'
 })
 
 // Constants
-const DEFAULT_IMAGE_KEY = 'https://example.com/logo.png'
+const DEFAULT_IMAGE_KEY = ActivityAssets.Logo
 const DEFAULT_TIMESTAMP = Date.now()
 
 // Cache for heavy computations
@@ -478,22 +516,22 @@ const lastComputation = 0
 
 // Helper function to get page information
 function getPageInfo() {
-  const path = document.location.pathname
+  const { pathname, hostname, href } = document.location
   const title = document.title
 
   let pageType = 'unknown'
 
-  if (path === '/') {
+  if (pathname === '/') {
     pageType = 'homepage'
   }
-  else if (path.includes('/about')) {
+  else if (pathname.includes('/about')) {
     pageType = 'about'
   }
-  else if (path.includes('/contact')) {
+  else if (pathname.includes('/contact')) {
     pageType = 'contact'
   }
 
-  return { path, title, pageType }
+  return { pathname, hostname, href, title, pageType }
 }
 
 // Helper function to get video information
@@ -514,10 +552,16 @@ function getVideoInfo() {
 }
 
 presence.on('UpdateData', async () => {
-  // Get settings
-  const showButtons = await presence.getSetting<boolean>('showButtons')
-  const showTimestamp = await presence.getSetting<boolean>('showTimestamp')
-  const showDetails = await presence.getSetting<boolean>('showDetails')
+  // Get settings using Promise.all
+  const [
+    showButtons,
+    showTimestamp,
+    showDetails
+  ] = await Promise.all([
+    presence.getSetting<boolean>('showButtons'),
+    presence.getSetting<boolean>('showTimestamp'),
+    presence.getSetting<boolean>('showDetails')
+  ])
 
   // Get translations
   const strings = await presence.getStrings({
@@ -532,7 +576,7 @@ presence.on('UpdateData', async () => {
   }
 
   // Get page information
-  const { path, title, pageType } = getPageInfo()
+  const { pathname, hostname, href, title, pageType } = getPageInfo()
 
   // Get video information (if available)
   const videoInfo = getVideoInfo()
@@ -548,17 +592,16 @@ presence.on('UpdateData', async () => {
     }
 
     if (videoInfo.isPlaying) {
-      presenceData.smallImageKey = 'https://example.com/play.png'
+      presenceData.smallImageKey = Assets.Play
       presenceData.smallImageText = strings.play
 
       if (showTimestamp) {
-        const timestamps = getTimestamps(videoInfo.currentTime, videoInfo.duration)
-        presenceData.startTimestamp = timestamps[0]
-        presenceData.endTimestamp = timestamps[1]
+        [presenceData.startTimestamp, presenceData.endTimestamp] =
+          getTimestamps(videoInfo.currentTime, videoInfo.duration)
       }
     }
     else {
-      presenceData.smallImageKey = 'https://example.com/pause.png'
+      presenceData.smallImageKey = Assets.Pause
       presenceData.smallImageText = strings.pause
     }
   }
@@ -592,14 +635,17 @@ presence.on('UpdateData', async () => {
     presence.clearActivity()
   }
 })
-
-// Helper function to calculate timestamps
-function getTimestamps(currentTime: number, duration: number): [number, number] {
-  const startTime = Date.now()
-  const endTime = startTime + (duration - currentTime) * 1000
-  return [startTime, endTime]
-}
 ```
+
+## Validating Your Activity
+
+Before submitting your activity to GitHub, you should validate it to ensure it meets all requirements and follows best practices:
+
+```bash
+npx pmd build "YourActivityName" --validate
+```
+
+This command will check your activity for common issues and provide feedback on what needs to be fixed.
 
 ## Conclusion
 
@@ -608,7 +654,10 @@ Following these best practices will help you create high-quality activities that
 1. **Write clean, maintainable code**: Use TypeScript, handle errors, use constants, comment your code, and follow the style guide.
 2. **Optimize for performance**: Minimize DOM queries, use efficient selectors, and avoid heavy computations.
 3. **Enhance user experience**: Provide clear information, use appropriate activity types, add timestamps, use settings, and add multilanguage support.
-4. **Maintain your activity**: Keep your activity updated, write tests, and document your code.
-5. **Ensure security**: Avoid exposing sensitive information and validate user input.
+4. **Use proper timestamps**: Create browsing timestamps outside UpdateData, only update them when changing states, and use destructuring with getTimestamps.
+5. **Use proper image URLs**: Use Imgur links for images during development, which will be transferred to the PreMiD CDN when your PR is merged.
+6. **Maintain your activity**: Keep your activity updated, write tests, and document your code.
+7. **Ensure security**: Avoid exposing sensitive information and validate user input.
+8. **Validate before submission**: Always validate your activity with `npx pmd build "YourActivityName" --validate` before submitting it.
 
 By following these practices, you'll create activities that users will love and that will be easy to maintain over time.

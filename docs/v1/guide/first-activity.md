@@ -85,7 +85,7 @@ const presence = new Presence({
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://i.imgur.com/example.png',
+    largeImageKey: 'https://example.com/logo.png',
     details: 'Browsing Example.com',
     state: 'Homepage'
   }
@@ -103,31 +103,29 @@ Now, let's modify the `presence.ts` file to create a simple activity:
 2. Replace the content with the following code:
 
 ```typescript
-import { browsingTimestamp } from 'premid'
-
 const presence = new Presence({
   clientId: 'your_client_id' // This will be filled in by the CLI
 })
 
 presence.on('UpdateData', async () => {
-  // Get the current URL using destructuring
-  const { pathname } = document.location
+  // Get the current URL
+  const path = document.location.pathname
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'https://i.imgur.com/example.png', // Use imgur for image hosting
+    largeImageKey: 'https://example.com/logo.png', // Direct URL to the logo image
     details: 'Browsing Example.com',
-    startTimestamp: browsingTimestamp // Use browsingTimestamp constant
+    startTimestamp: Date.now() // Show elapsed time
   }
 
   // Update the state based on the current page
-  if (pathname === '/') {
+  if (path === '/') {
     presenceData.state = 'Homepage'
   }
-  else if (pathname.includes('/about')) {
+  else if (path.includes('/about')) {
     presenceData.state = 'Reading about us'
   }
-  else if (pathname.includes('/contact')) {
+  else if (path.includes('/contact')) {
     presenceData.state = 'Contacting us'
   }
   else {
@@ -158,23 +156,6 @@ To test your activity, follow these steps:
 6. Check your Discord status to see if it's showing the activity
 
 When you make changes to your activity code, the development server will automatically reload the activity, and the changes will be reflected in your Discord status.
-
-## Validating Your Activity
-
-Before submitting your activity to the PreMiD repository, you should validate it to ensure it meets all requirements:
-
-```bash
-npx pmd build "YourActivityName" --validate
-```
-
-This command will:
-
-1. Build your activity for production
-2. Validate your activity against PreMiD's requirements
-3. Check for common issues and errors
-4. Ensure your metadata is correctly formatted
-
-Fix any issues reported by the validation process before submitting your activity.
 
 ![Completed Activity in Discord](https://placehold.co/800x400?text=Completed+Activity+in+Discord)
 
