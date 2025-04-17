@@ -260,12 +260,11 @@ presence.on('UpdateData', async () => {
 
 ## Best Practices
 
-1. **Always specify iFrameRegExp**: The `iFrameRegExp` property is required when using iFrames. Make sure to define a specific pattern that only matches the iFrames you need to target.
-2. **Only use iFrames when necessary**: iFrames add complexity to your activity, so only use them when you need to gather information from iFrames.
-3. **Keep it simple**: Only gather the information you need from iFrames.
-4. **Handle errors**: Always check if elements exist before trying to access their properties.
-5. **Use TypeScript interfaces**: Define interfaces for your iFrame data to make your code more maintainable.
-6. **Test thoroughly**: Test your activity with different types of iFrames to ensure it works correctly.
+1. **Always specify iFrameRegExp**: The `iFrameRegExp` property is **required** when using iFrames. Make sure to define a specific pattern that only matches the iFrames you need to target.
+2. **Import getTimestamps from PreMiD**: Always use `import { getTimestamps } from 'premid'` instead of creating your own implementation.
+3. **Manage browsing timestamps correctly**: Initialize browsing timestamps outside the UpdateData event and only update them when changing back to a browsing state, not on every UpdateData event. This ensures consistent elapsed time display.
+4. **Use destructuring for timestamps**: Use the pattern `[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, duration)` for cleaner code.
+5. **Only use iFrames when necessary**: iFrames add complexity to your activity, so only use them when you need to gather information from iFrames.
 
 ## Complete Example
 
@@ -340,6 +339,11 @@ interface IFrameData {
 // Store iFrame data
 let iFrameData: IFrameData = {}
 
+// Create timestamps outside of UpdateData to maintain consistent browsing time
+let browsingTimestamp = Date.now()
+// Track whether we were watching a video in the previous update
+let wasWatchingVideo = false
+
 // Listen for iFrame data
 presence.on('iFrameData', (data: IFrameData) => {
   iFrameData = data
@@ -377,9 +381,8 @@ presence.on('UpdateData', async () => {
 
       // Add timestamps if enabled and we have currentTime and duration
       if (showTimestamp && currentTime && duration) {
-        const timestamps = getTimestamps(currentTime, duration)
-        presenceData.startTimestamp = timestamps[0]
-        presenceData.endTimestamp = timestamps[1]
+        // Use destructuring assignment for timestamps
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, duration)
       }
     }
 
@@ -395,8 +398,21 @@ presence.on('UpdateData', async () => {
   }
   else {
     // No video data, user is browsing the website
+
+    // If we were watching a video before but now we're browsing,
+    // reset the browsing timestamp to the current time
+    if (wasWatchingVideo) {
+      browsingTimestamp = Date.now()
+      wasWatchingVideo = false
+    }
+
     presenceData.details = 'Browsing'
-    presenceData.startTimestamp = Date.now()
+    presenceData.startTimestamp = browsingTimestamp
+  }
+
+  // Update wasWatchingVideo state for the next update
+  if (iFrameData.video) {
+    wasWatchingVideo = true
   }
 
   // Set the activity

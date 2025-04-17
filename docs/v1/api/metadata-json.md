@@ -18,8 +18,8 @@ Here's the basic structure of a `metadata.json` file:
   },
   "url": "example.com",
   "version": "1.0.0",
-  "logo": "https://example.com/logo.png",
-  "thumbnail": "https://example.com/thumbnail.png",
+  "logo": "https://i.imgur.com/XXXXXXX.png",
+  "thumbnail": "https://i.imgur.com/YYYYYYY.png",
   "color": "#FF0000",
   "category": "other",
   "tags": ["example", "tag"]
@@ -126,6 +126,8 @@ This can be converted to your metadata.json description:
 If the website doesn't have Open Graph tags, you can also look for a `<meta name="description" content="...">` tag, which serves a similar purpose.
 
 You should at least provide an English description. The PreMiD translation team will help with other languages.
+
+You can get a list of all available language codes from our API endpoint: `https://api.premid.app/v6/locales`
 
 ## URL
 
@@ -268,13 +270,11 @@ Here's a complete example of a `metadata.json` file with all possible fields:
   "url": "example.com",
   "regExp": "([a-z0-9-]+[.])*example[.]com[/]",
   "version": "1.0.0",
-  "logo": "https://example.com/logo.png",
-  "thumbnail": "https://example.com/thumbnail.png",
+  "logo": "https://i.imgur.com/XXXXXXX.png",
+  "thumbnail": "https://i.imgur.com/YYYYYYY.png",
   "color": "#FF0000",
   "category": "other",
   "tags": ["example", "sample", "demo"],
-  "iframe": false,
-  "readLogs": false,
   "settings": [
     {
       "id": "showButtons",
@@ -306,6 +306,7 @@ Here's a complete example of a `metadata.json` file with all possible fields:
 
 - The `service` name should match the folder name of the activity.
 - The `version` should follow Semantic Versioning (MAJOR.MINOR.PATCH).
-- The `logo` and `thumbnail` must be direct links to images.
+- The `logo` and `thumbnail` must be direct links to images. We recommend using Imgur (`https://i.imgur.com/`) for temporarily hosting your images. When your Pull Request is merged, these images will be automatically transferred to the PreMiD CDN.
 - The `color` must be a valid HEX color code.
 - The `settings` array is optional but allows for user customization of the activity.
+- Boolean fields that are `false` (like `iframe`, `readLogs`, etc.) should be omitted from the metadata.json file rather than explicitly set to false.

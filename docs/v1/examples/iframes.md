@@ -25,8 +25,8 @@ An activity with iFrames consists of three files:
   },
   "url": "iframeexample.com",
   "version": "1.0.0",
-  "logo": "https://iframeexample.com/logo.png",
-  "thumbnail": "https://iframeexample.com/thumbnail.png",
+  "logo": "https://i.imgur.com/XXXXXXX.png",
+  "thumbnail": "https://i.imgur.com/YYYYYYY.png",
   "color": "#FF0000",
   "category": "videos",
   "tags": ["video", "iframe", "embed"],
@@ -73,11 +73,15 @@ iframe.on('UpdateData', async () => {
 ### presence.ts
 
 ```typescript
-import { getTimestamps } from 'premid'
+import { getTimestamps, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: 'your_client_id'
 })
+
+// Create browsing timestamp outside UpdateData to maintain consistent timing
+let browsingTimestamp = Math.floor(Date.now() / 1000)
+let wasWatchingVideo = false
 
 // Store iframe data
 let iframeData: {
@@ -97,8 +101,11 @@ presence.on('iFrameData', (data) => {
 })
 
 presence.on('UpdateData', async () => {
+  // Use destructuring for document.location
+  const { pathname, hostname, href } = document.location
+
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: 'https://i.imgur.com/XXXXXXX.png' // Will be replaced with CDN URL after review
   }
 
   // Check if we have video data from the iframe
@@ -117,19 +124,18 @@ presence.on('UpdateData', async () => {
 
     if (paused) {
       // Set the small image key and text for paused state
-      presenceData.smallImageKey = 'https://example.com/pause.png'
+      presenceData.smallImageKey = Assets.Pause
       presenceData.smallImageText = 'Paused'
     }
     else {
       // Set the small image key and text for playing state
-      presenceData.smallImageKey = 'https://example.com/play.png'
+      presenceData.smallImageKey = Assets.Play
       presenceData.smallImageText = 'Playing'
 
       // Calculate timestamps if we have currentTime and duration
       if (currentTime && duration) {
-        const timestamps = getTimestamps(currentTime, duration)
-        presenceData.startTimestamp = timestamps[0]
-        presenceData.endTimestamp = timestamps[1]
+        // Use destructuring assignment for timestamps
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, duration)
       }
     }
 
@@ -151,9 +157,20 @@ presence.on('UpdateData', async () => {
   }
   else {
     // User is browsing the website
+    // Only update browsing timestamp when changing from watching to browsing
+    if (wasWatchingVideo) {
+      browsingTimestamp = Math.floor(Date.now() / 1000)
+      wasWatchingVideo = false
+    }
+
     presenceData.details = 'Browsing'
     presenceData.state = 'Looking for videos'
-    presenceData.startTimestamp = Date.now()
+    presenceData.startTimestamp = browsingTimestamp
+  }
+
+  // Update wasWatchingVideo state for the next update
+  if (iframeData.video) {
+    wasWatchingVideo = true
   }
 
   // Set the activity

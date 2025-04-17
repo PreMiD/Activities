@@ -9,7 +9,7 @@ Before you begin, make sure you have the following installed:
 - [Node.js](https://nodejs.org/) (version 20 or higher)
 - [Git](https://git-scm.com/)
 - A code editor (we recommend [Visual Studio Code](https://code.visualstudio.com/))
-- [PreMiD](https://premid.app/downloads) extension and application
+- [PreMiD](https://premid.app/downloads) extension
 
 ::: warning TypeScript is Required
 All PreMiD Activities must be written in TypeScript. JavaScript is not supported.
