@@ -20,8 +20,8 @@ presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
   const pathArray = pathname.split('/')
 
-  if (document.querySelector('audio') && !song.paused) {
-    if (!(song.currentTime > 0))
+  if (song && !song.paused) {
+    if (song.currentTime <= 0)
       return
     presenceData.details = document.querySelector('#player h1')
     presenceData.state = document.querySelector('#player p');
