@@ -112,7 +112,9 @@ Gets variables from the web page. Supports nested variables using dot notation.
 #### Example
 
 ```typescript
-const { title, artist } = await presence.getPageVariable('document.title', 'window.artist')
+const pageVars = await presence.getPageVariable('document.title', 'window.artist')
+const title = pageVars['document.title']
+const artist = pageVars['window.artist']
 ```
 
 ### getSetting
