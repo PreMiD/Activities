@@ -328,7 +328,7 @@ presence.on('UpdateData', async () => {
         const languageName = document.querySelector(
           '.language-name-wrapper.text-overflow',
         )?.textContent ?? document.querySelector(
-          `.navbar-item--language`
+          '.navbar-item--language',
         )?.textContent
 
         if (pathname.includes('/proofread'))
