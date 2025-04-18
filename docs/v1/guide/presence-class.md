@@ -114,16 +114,15 @@ presenceData.startTimestamp = Date.now()
 presenceData.endTimestamp = Date.now() + 60000 // 1 minute from now
 ```
 
-You can also use the `getTimestamps` utility function to calculate timestamps for media:
+You can also use the `getTimestampsFromMedia` utility function to calculate timestamps for media:
+
+<!-- eslint-skip -->
 
 ```typescript
-import { getTimestamps } from 'premid'
+import { getTimestampsFromMedia } from 'premid'
 
 const video = document.querySelector('video')
-const timestamps = getTimestamps(video.currentTime, video.duration)
-
-presenceData.startTimestamp = timestamps[0]
-presenceData.endTimestamp = timestamps[1]
+  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 ```
 
 ## Clearing Activity

@@ -198,9 +198,14 @@ presence.on('UpdateData', async () => {
   // Get the user's language
   const userLanguage = await presence.getSetting<string>('lang') || 'en'
 
-  // You must use the getStrings method to access translations
-
-  // Get translations using the getStrings method
+  // Get all translations at the top of UpdateData
+  const strings = await presence.getStrings({
+    play: 'general.playing',
+    browse: 'general.browsing',
+    home: 'example.homepage',
+    about: 'example.about',
+    contact: 'example.contact'
+  })
 
   // Create the presence data
   const presenceData: PresenceData = {
@@ -210,22 +215,15 @@ presence.on('UpdateData', async () => {
 
   const path = document.location.pathname
 
-  // For custom strings from your activity's localization file
+  // Use the strings based on the current page
   if (path === '/') {
-    presenceData.state = await presence.getStrings({ home: 'example.homepage' }).home
+    presenceData.state = strings.home
   }
-
-  // You can also get multiple custom strings at once
-  const customStrings = await presence.getStrings({
-    about: 'example.about',
-    contact: 'example.contact'
-  })
-
-  if (path.includes('/about')) {
-    presenceData.state = customStrings.about
+  else if (path.includes('/about')) {
+    presenceData.state = strings.about
   }
   else if (path.includes('/contact')) {
-    presenceData.state = customStrings.contact
+    presenceData.state = strings.contact
   }
 
   presence.setActivity(presenceData)
@@ -295,9 +293,12 @@ presence.on('UpdateData', async () => {
   const showButtons = await presence.getSetting<boolean>('showButtons')
   const userLanguage = await presence.getSetting<string>('lang') || 'en'
 
-  // Get translations from PreMiD
+  // Get all translations at the top of UpdateData
   const strings = await presence.getStrings({
-    browse: 'general.browsing'
+    browse: 'general.browsing',
+    home: 'example.homepage',
+    about: 'example.about',
+    contact: 'example.contact'
   })
 
   // Create the base presence data
@@ -309,22 +310,15 @@ presence.on('UpdateData', async () => {
   // Set details based on the current page
   const path = document.location.pathname
 
-  // Get all custom translations at once at the top of UpdateData
-  const customStrings = await presence.getStrings({
-    home: 'example.homepage',
-    about: 'example.about',
-    contact: 'example.contact'
-  })
-
   // Use the translations based on the current page
   if (path === '/') {
-    presenceData.details = customStrings.home
+    presenceData.details = strings.home
   }
   else if (path.includes('/about')) {
-    presenceData.details = customStrings.about
+    presenceData.details = strings.about
   }
   else if (path.includes('/contact')) {
-    presenceData.details = customStrings.contact
+    presenceData.details = strings.contact
   }
   else {
     presenceData.details = strings.browse

@@ -43,7 +43,8 @@ import { Assets, getTimestampsFromMedia } from 'premid'
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/XXXXXXX.png', // Will be replaced with CDN URL after review
   Play = 'https://i.imgur.com/YYYYYYY.png',
-  Pause = 'https://i.imgur.com/ZZZZZZZ.png'
+  Pause = 'https://i.imgur.com/ZZZZZZZ.png',
+  Live = 'https://i.imgur.com/WWWWWWW.png'
 }
 
 const presence = new Presence({
@@ -174,19 +175,32 @@ You can modify this example to handle different types of media:
 presenceData.type = ActivityType.Listening
 
 // Set the details and state
-presenceData.details = 'Listening to'
-presenceData.state = `${title} by ${artist}`
+// For music, put the song title in details and artist in state
+presenceData.details = title
+presenceData.state = artist
+
+// Set the small image key to show the playing state
+presenceData.smallImageKey = Assets.Play
+presenceData.smallImageText = 'Playing'
 ```
 
 ### For Live Streams
 
 ```typescript
+// Set the activity type to Watching for live streams
+presenceData.type = ActivityType.Watching
+
 // For live streams, only use startTimestamp
-presenceData.startTimestamp = Date.now()
+presenceData.startTimestamp = browsingTimestamp // Use the existing browsingTimestamp
 delete presenceData.endTimestamp
 
-// Indicate that it's a live stream
-presenceData.state = `${title} (Live)`
+// Set the details and state
+presenceData.details = title
+presenceData.state = 'Live'
+
+// Use the Live asset for small image
+presenceData.smallImageKey = Assets.Live
+presenceData.smallImageText = 'Live'
 ```
 
 ## Testing
