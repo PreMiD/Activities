@@ -116,7 +116,7 @@ const {
   normalVariable,
   'variable.with.deep': deepVariable,
 } = await presence.getPageVariable<{
-  normalVariable: string
+  'normalVariable': string
   'variable.with.deep': string
 }>(
   'normalVariable',
