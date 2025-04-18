@@ -65,6 +65,8 @@ When you set `iframe: true` in your `metadata.json` file, you need to create an 
 Here's a basic example of an `iframe.ts` file:
 
 ```typescript
+import { getTimestamps } from 'premid'
+
 const iframe = new iFrame()
 
 iframe.on('UpdateData', async () => {
@@ -130,9 +132,7 @@ presence.on('UpdateData', async () => {
 
       // Calculate timestamps if we have currentTime and duration
       if (currentTime && duration) {
-        const timestamps = getTimestamps(currentTime, duration)
-        presenceData.startTimestamp = timestamps[0]
-        presenceData.endTimestamp = timestamps[1]
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, duration)
       }
     }
   }
@@ -144,13 +144,6 @@ presence.on('UpdateData', async () => {
   // Set the activity
   presence.setActivity(presenceData)
 })
-
-// Helper function to calculate timestamps
-function getTimestamps(currentTime: number, duration: number): [number, number] {
-  const startTime = Date.now()
-  const endTime = startTime + (duration - currentTime) * 1000
-  return [startTime, endTime]
-}
 ```
 
 ## Getting the iFrame URL
