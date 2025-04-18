@@ -67,6 +67,12 @@ export default defineConfig({
             { text: 'Guidelines', link: '/v1/guide/guidelines' },
           ],
         },
+        {
+          text: 'Extension Features',
+          items: [
+            { text: 'Activity Forwarding', link: '/activity-forwarding' },
+          ],
+        },
       ],
       '/v1/api/': [
         {
