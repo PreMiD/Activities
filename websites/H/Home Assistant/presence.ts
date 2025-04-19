@@ -6,7 +6,7 @@ const presence = new Presence({
 const startTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://pub-d896e4ce4d21475fab8e7d1c02eded98.r2.dev/home-assistant-logomark.png', //TODO Change to a RCD logo, along with metadata.json logo
+  Logo = 'https://pub-d896e4ce4d21475fab8e7d1c02eded98.r2.dev/home-assistant-logomark.png', // TODO Change to a RCD logo, along with metadata.json logo
 }
 
 interface RouteConfig {
@@ -46,20 +46,20 @@ const ROUTES: RouteConfig[] = [
 ]
 
 presence.on('UpdateData', () => {
-  const { pathname } = window.location;
+  const { pathname } = window.location
 
-  const route = ROUTES.find(r => pathname.startsWith(r.prefix));
+  const route = ROUTES.find(r => pathname.startsWith(r.prefix))
   let details = 'Browsing website';
 
   if (route) {
-    details = route.defaultDetail;
+    details = route.defaultDetail
 
     if (route.detailFormatter && route.defaultTitle) {
       const heading = document.querySelector<HTMLHeadingElement>('h1.title.indent')
-      const title = heading?.textContent?.trim() || '';
+      const title = heading?.textContent?.trim() || ''
 
       if (title && title !== route.defaultTitle) {
-        details = route.detailFormatter(title);
+        details = route.detailFormatter(title)
       }
     }
   }
@@ -69,6 +69,6 @@ presence.on('UpdateData', () => {
     smallImageKey: Assets.Search,
     startTimestamp,
     type: ActivityType.Playing,
-    details: details,
+    details,
   })
 })

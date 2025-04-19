@@ -11,7 +11,7 @@
   },
   "url": "www.home-assistant.io",
   "version": "1.0.0",
-  "logo": "https://pub-d896e4ce4d21475fab8e7d1c02eded98.r2.dev/home-assistant-logomark.png", 
+  "logo": "https://pub-d896e4ce4d21475fab8e7d1c02eded98.r2.dev/home-assistant-logomark.png",
   "thumbnail": "https://pub-d896e4ce4d21475fab8e7d1c02eded98.r2.dev/home-assistant-logomark.png",
   "color": "#03A9F4",
   "category": "other",
@@ -20,7 +20,7 @@
     "blog",
     "help",
     "documentation",
-    "automation"  
+    "automation"
   ]
 }
 
