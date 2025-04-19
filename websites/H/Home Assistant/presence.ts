@@ -49,7 +49,7 @@ presence.on('UpdateData', () => {
   const { pathname } = window.location
 
   const route = ROUTES.find(r => pathname.startsWith(r.prefix))
-  let details = 'Browsing website';
+  let details = 'Browsing website'
 
   if (route) {
     details = route.defaultDetail
