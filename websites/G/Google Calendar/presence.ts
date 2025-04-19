@@ -18,7 +18,7 @@ presence.on('UpdateData', () => {
       presenceData.state = document
         .querySelector('head > title')
         ?.textContent
-        ?.replace(/Google[  ](Calendar|Agenda) -/, '')
+        ?.replace(/Google[\xA0 ](Calendar|Agenda) -/, '')
         ?.replaceAll(',', ' -')
         ?.trim()
     }
@@ -27,7 +27,7 @@ presence.on('UpdateData', () => {
       presenceData.state = document
         .querySelector('head > title')
         ?.textContent
-        ?.replace(/Google[  ](Calendar|Agenda) -/, '')
+        ?.replace(/Google[\xA0 ](Calendar|Agenda) -/, '')
         ?.replaceAll(',', ' -')
         ?.trim()
     }
@@ -36,7 +36,7 @@ presence.on('UpdateData', () => {
       presenceData.state = document
         .querySelector('head > title')
         ?.textContent
-        ?.replace(/Google[  ](Calendar|Agenda) -/, '')
+        ?.replace(/Google[\xA0 ](Calendar|Agenda) -/, '')
         ?.trim()
     }
     else if (document.location.pathname.startsWith('/calendar/r/year')) {
@@ -44,7 +44,7 @@ presence.on('UpdateData', () => {
       [, presenceData.state] = document
         .querySelector('head > title')
         ?.textContent
-        ?.replace(/Google[  ](Calendar|Agenda) -/, '')
+        ?.replace(/Google[\xA0 ](Calendar|Agenda) -/, '')
         ?.split(' ') ?? []
         ?.trim()
     }

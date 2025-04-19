@@ -48,10 +48,14 @@ presence.on('UpdateData', async () => {
   }
 
   title = document.title
-    .replace(/- Google[  ]Docs/, '').trim()
-    .replace(/- Google[  ]Forms/, '').trim()
-    .replace(/- Google[  ]Sheets/, '').trim()
-    .replace(/- Google[  ]Slides/, '').trim()
+    .replace(/- Google[\xA0 ]Docs/, '')
+    .trim()
+    .replace(/- Google[\xA0 ]Forms/, '')
+    .trim()
+    .replace(/- Google[\xA0 ]Sheets/, '')
+    .trim()
+    .replace(/- Google[\xA0 ]Slides/, '')
+    .trim()
 
   if (document.location.pathname.includes('/document')) {
     presenceData.largeImageKey = ActivityAssets.DocsLogo
