@@ -14,6 +14,7 @@
   "service": "Google Calendar",
   "description": {
     "en": "Google Calendar is a time-management and scheduling calendar service developed by Google.",
+    "fr": "Google Agenda est un service de gestion du temps et de planification développé par Google.",
     "it": "Google Calendar è un sistema di calendari concepito da Google.",
     "nl": "Google Agenda is een online agenda. Het is een gratis service van Google en kan worden gebruikt met een Google-account.",
     "vi": "Google Calendar là dịch vụ quản lý kế hoạch và thời gian được phát triển bởi Google."
@@ -22,7 +23,7 @@
     "calendar.google.com",
     "www.calendar.google.com"
   ],
-  "version": "1.2.25",
+  "version": "1.2.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Calendar/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Calendar/assets/thumbnail.png",
   "color": "#4689F4",
