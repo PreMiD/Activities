@@ -54,7 +54,7 @@ function updatePresence() {
       || document.location.pathname.includes('/season-7/')
       || document.location.pathname.includes('/season-8/'))) {
     presenceData.largeImageKey = Images.Logo
-    presenceData.details = document.querySelector('.trailer-content > .light-text')?.textContent || 'Loading'
+    presenceData.details = document.querySelectorAll('.breadcrumb-content a')[1]?.textContent || 'Loading'
     presenceData.state = document.querySelectorAll('.breadcrumb-content a')[2]?.textContent || 'Loading'
 
     if (video) {
