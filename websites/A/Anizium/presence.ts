@@ -31,9 +31,7 @@ function observeDOMChanges(callback: () => void) {
 }
 
 function updatePresence() {
-  const presenceData: PresenceData = {
-    largeImageKey: Images.Logo,
-  }
+  const presenceData: PresenceData = {}
 
   presenceData.startTimestamp = browsingTimestamp
   presenceData.type = ActivityType.Watching
@@ -55,9 +53,7 @@ function updatePresence() {
       || document.location.pathname.includes('/season-6/')
       || document.location.pathname.includes('/season-7/')
       || document.location.pathname.includes('/season-8/'))) {
-    const animeImg = document.querySelector<HTMLImageElement>('.anime-blog > .img-block > img')?.src
-
-    presenceData.largeImageKey = animeImg || Images.Logo
+    presenceData.largeImageKey = Images.Logo
     presenceData.details = document.querySelector('.trailer-content > .light-text')?.textContent || 'Loading'
     presenceData.state = document.querySelectorAll('.breadcrumb-content a')[2]?.textContent || 'Loading'
 
@@ -76,9 +72,7 @@ function updatePresence() {
   // EPISODES PAGE
   else if (
     document.location.pathname.includes('/title/')) {
-    const animeImg = document.querySelector<HTMLImageElement>('.anime-blog > .img-block > img')?.src
-
-    presenceData.largeImageKey = animeImg || Images.Logo
+    presenceData.largeImageKey = Images.Logo
     presenceData.details = document.querySelector('.trailer-content h1')?.textContent || 'Loading'
     presenceData.state = 'Bölümler görüntüleniyor'
   }
