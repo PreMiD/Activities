@@ -1,11 +1,11 @@
-name: "Bug Report"
-description: "Create a report to help us improve the PreMiD Store"
-labels: ["bug", "needs-repro"]
+name: Bug Report
+description: Create a report to help us improve the PreMiD Store
+labels: [bug, needs-repro]
 body:
   - type: markdown
     attributes:
       value: |
-        **Before submitting a new issue, ensure your bug hasn’t already been reported.**  
+        **Before submitting a new issue, ensure your bug hasn’t already been reported.**
         If it has, simply reply to the open issue instead.
   - type: textarea
     id: reproduction
@@ -15,8 +15,8 @@ body:
       label: Steps to Reproduce
       description: Provide clear and unambiguous steps on how to reproduce the bug
       placeholder: |
-        1. Go to this link  
-        2. Click on this  
+        1. Go to this link
+        2. Click on this
         3. Observe that…
   - type: input
     id: expected_behavior
@@ -53,7 +53,7 @@ body:
       required: true
     attributes:
       label: Browser and Version
-      description: Include both browser name and version (e.g. Chrome 113.0.5672.63)
+      description: Include both browser name and version (e.g. Chrome 113.0.5672.63)
   - type: textarea
     id: screenshots
     attributes:
