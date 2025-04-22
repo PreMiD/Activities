@@ -54,5 +54,13 @@
   "chatgpt.viewingAGPT": {
     "description": "Displayed when the user is viewing a GPT model.",
     "message": "Viewing a GPT model"
+  },
+  "chatgpt.viewingImage": {
+    "description": "Displayed when the user is viewing an image. {0} will be replaced with the image name.",
+    "message": "Viewing the image: {0}"
+  },
+  "chatgpt.viewingLibrary": {
+    "description": "Displayed when the user is viewing the library.",
+    "message": "Viewing the library"
   }
 }
