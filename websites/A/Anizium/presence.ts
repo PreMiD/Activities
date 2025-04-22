@@ -53,7 +53,11 @@ function updatePresence() {
       || document.location.pathname.includes('/season-6/')
       || document.location.pathname.includes('/season-7/')
       || document.location.pathname.includes('/season-8/'))) {
-    presenceData.largeImageKey = Images.Logo
+    setTimeout(() => {
+      const luiUrl = 'https://luii.xyz/ani?path='
+      presenceData.largeImageKey = luiUrl + document.querySelector('.img-block > img')?.getAttribute('src')
+      presence.setActivity(presenceData)
+    }, 1000)
     presenceData.details = document.querySelectorAll('.breadcrumb-content a')[1]?.textContent || 'Loading'
     presenceData.state = document.querySelectorAll('.breadcrumb-content a')[2]?.textContent || 'Loading'
 
@@ -72,7 +76,11 @@ function updatePresence() {
   // EPISODES PAGE
   else if (
     document.location.pathname.includes('/title/')) {
-    presenceData.largeImageKey = Images.Logo
+    setTimeout(() => {
+      const luiUrl = 'https://luii.xyz/ani?path='
+      presenceData.largeImageKey = luiUrl + document.querySelector('.img-block > img')?.getAttribute('src')
+      presence.setActivity(presenceData)
+    }, 1000)
     presenceData.details = document.querySelector('.trailer-content h1')?.textContent || 'Loading'
     presenceData.state = 'Bölümler görüntüleniyor'
   }
@@ -151,6 +159,7 @@ function updatePresence() {
   }
   presence.setActivity(presenceData)
 }
+
 setInterval(updatePresence, 1000)
 
 document.addEventListener('DOMContentLoaded', () => {
