@@ -1,6 +1,4 @@
-const presence = new Presence({
-  clientId: '1137362720254074972',
-})
+const presence = new Presence({ clientId: '1137362720254074972' })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 const anime = document.querySelector('#anime_name_id')
