@@ -40,9 +40,13 @@ presence.on('UpdateData', async () => {
   const strings = await getStrings()
 
   title = document.title
+    // eslint-disable-next-line regexp/no-unused-capturing-group
     ?.replace(/(- )?Google[\xA0 ]Docs/, '')
+    // eslint-disable-next-line regexp/no-unused-capturing-group
     ?.replace(/(- )?Google[\xA0 ]Forms/, '')
+    // eslint-disable-next-line regexp/no-unused-capturing-group
     ?.replace(/(- )?Google[\xA0 ]Sheets/, '')
+    // eslint-disable-next-line regexp/no-unused-capturing-group
     ?.replace(/(- )?Google[\xA0 ]Slides/, '')
     ?.trim()
 
