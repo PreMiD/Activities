@@ -21,12 +21,8 @@ async function getStrings() {
       browsingPresentation: 'googledocs.browsingPresentation',
       vieiwngPresentation: 'googledocs.viewingPresentation',
     },
-
   )
 }
-
-let strings: Awaited<ReturnType<typeof getStrings>>
-let oldLang: string | null = null
 
 enum ActivityAssets {
   DocsLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/0.png',
@@ -40,12 +36,8 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
   const privacy = await presence.getSetting<boolean>('privacy')
-  const newLang = await presence.getSetting<string>('lang').catch(() => 'en')
 
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
+  const strings = await getStrings()
 
   title = document.title
     ?.replace(/(- )?Google[\xA0 ]Docs/, '')
