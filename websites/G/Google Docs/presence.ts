@@ -48,16 +48,14 @@ presence.on('UpdateData', async () => {
   }
 
   title = document.title
-    .replace(/- Google[\xA0 ]Docs/, '')
-    .trim()
-    .replace(/- Google[\xA0 ]Forms/, '')
-    .trim()
-    .replace(/- Google[\xA0 ]Sheets/, '')
-    .trim()
-    .replace(/- Google[\xA0 ]Slides/, '')
-    .trim()
+    ?.replace(/(- )?Google[\xA0 ]Docs/, '')
+    ?.replace(/(- )?Google[\xA0 ]Forms/, '')
+    ?.replace(/(- )?Google[\xA0 ]Sheets/, '')
+    ?.replace(/(- )?Google[\xA0 ]Slides/, '')
+    ?.trim()
 
   if (document.location.pathname.includes('/document')) {
+    presenceData.name = 'Google Docs'
     presenceData.largeImageKey = ActivityAssets.DocsLogo
     if (document.location.pathname.includes('/edit'))
       presenceData.details = strings.editingDoc
@@ -66,6 +64,7 @@ presence.on('UpdateData', async () => {
     else presenceData.details = strings.viewingDoc
   }
   else if (document.location.pathname.includes('/forms/')) {
+    presenceData.name = 'Google Forms'
     presenceData.largeImageKey = ActivityAssets.FormsLogo
     if (document.location.pathname.includes('/edit'))
       presenceData.details = strings.editingForm
@@ -74,6 +73,7 @@ presence.on('UpdateData', async () => {
     else presenceData.details = strings.viewingForm
   }
   else if (document.location.pathname.includes('/spreadsheets')) {
+    presenceData.name = 'Google Sheets'
     presenceData.largeImageKey = ActivityAssets.SheetsLogo
     if (document.location.pathname.includes('/edit'))
       presenceData.details = strings.editingSheet
@@ -82,6 +82,7 @@ presence.on('UpdateData', async () => {
     else presenceData.details = strings.viewingSheet
   }
   else if (document.location.pathname.includes('/presentation/')) {
+    presenceData.name = 'Google Slides'
     presenceData.largeImageKey = ActivityAssets.SlidesLogo
     if (document.location.pathname.includes('/edit'))
       presenceData.details = strings.editingPresentation
@@ -90,7 +91,7 @@ presence.on('UpdateData', async () => {
     else presenceData.details = strings.vieiwngPresentation
   }
 
-  if (!privacy)
+  if (!privacy && title !== '')
     presenceData.state = title
 
   if (presenceData.details)
