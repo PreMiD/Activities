@@ -74,6 +74,14 @@ The available activity types are:
 | `ActivityType.Watching`  | Shows as "Watching [name]"     |
 | `ActivityType.Competing` | Shows as "Competing in [name]" |
 
+::: tip Special Season and Episode Formatting
+When using `ActivityType.Watching`, you can display a special season and episode indicator by setting the `largeImageText` property to follow the pattern "word digit, digit". For example: `"Season 2, Episode 5"`. Discord will display this as "S2E5" in the activity.
+
+The pattern can use any word, but must follow the structure: word, space, digit, comma, space, digit. Discord will convert this to "SxEy" format automatically.
+
+See the [PresenceData documentation](/v1/api/presence-data#special-season-and-episode-formatting) for more details.
+:::
+
 ## Buttons
 
 You can add up to two buttons to your activity:

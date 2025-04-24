@@ -203,6 +203,30 @@ presenceData.smallImageKey = Assets.Live
 presenceData.smallImageText = 'Live'
 ```
 
+### For TV Shows with Seasons and Episodes
+
+```typescript
+// Set the activity type to Watching for TV shows
+presenceData.type = ActivityType.Watching
+
+// Set the details and state
+presenceData.details = showTitle
+presenceData.state = `S${seasonNumber}:E${episodeNumber} ${episodeTitle}`
+
+// Use the special season and episode formatting in largeImageText
+// This will display a special season and episode indicator in Discord (S2E5 format)
+presenceData.largeImageText = `Season ${seasonNumber}, Episode ${episodeNumber}`
+
+// Set timestamps if available
+[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+```
+
+When implemented correctly, Discord will display a special season and episode indicator like this:
+
+![Season and Episode Indicator Example](https://placehold.co/800x400?text=Season+and+Episode+Indicator+Example)
+
+*Note: This image shows how Discord displays the special season and episode indicator (S1E2) when using the correct formatting pattern. The pattern must be "word digit, digit" but Discord will display it as "S1E2".*
+
 ## Testing
 
 To test this activity:
