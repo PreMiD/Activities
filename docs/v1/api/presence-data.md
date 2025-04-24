@@ -98,7 +98,7 @@ For example:
 ```typescript
 // This will display a special season and episode indicator in Discord
 presenceData.type = ActivityType.Watching
-presenceData.largeImageText = "Season 2, Episode 5"
+presenceData.largeImageText = 'Season 2, Episode 5'
 ```
 
 The important part is the pattern: any word, followed by a space, followed by a digit, followed by a comma and space, followed by another digit. While you can use "Season 2, Episode 5" as shown above, the actual word doesn't matter - Discord only looks for the pattern and will convert it to "S2E5" format in the display.
@@ -109,7 +109,7 @@ Here's how it looks in Discord:
 
 ![Season and Episode Indicator in Discord](https://placehold.co/800x400?text=Season+and+Episode+Indicator+Example)
 
-*Note: This image shows how Discord displays the special season and episode indicator (S1E2) when using the correct formatting pattern.*
+_Note: This image shows how Discord displays the special season and episode indicator (S1E2) when using the correct formatting pattern._
 
 ### Presence with Buttons
 

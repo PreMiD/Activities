@@ -205,6 +205,8 @@ presenceData.smallImageText = 'Live'
 
 ### For TV Shows with Seasons and Episodes
 
+<!-- eslint-skip -->
+
 ```typescript
 // Set the activity type to Watching for TV shows
 presenceData.type = ActivityType.Watching
@@ -225,7 +227,7 @@ When implemented correctly, Discord will display a special season and episode in
 
 ![Season and Episode Indicator Example](https://placehold.co/800x400?text=Season+and+Episode+Indicator+Example)
 
-*Note: This image shows how Discord displays the special season and episode indicator (S1E2) when using the correct formatting pattern. The pattern must be "word digit, digit" but Discord will display it as "S1E2".*
+_Note: This image shows how Discord displays the special season and episode indicator (S1E2) when using the correct formatting pattern. The pattern must be "word digit, digit" but Discord will display it as "S1E2"._
 
 ## Testing
 
