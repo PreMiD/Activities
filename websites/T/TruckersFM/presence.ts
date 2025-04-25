@@ -5,7 +5,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
-    largeImageKey: (document.querySelector('.album-art') as HTMLImageElement)?.src || 'https://i.imgur.com/TCY6psx.png',
+    largeImageKey: (document.querySelector('.album-art') as HTMLImageElement)?.src || 'https://i.imgur.com/ZqheZoX.png',
     startTimestamp: browsingTimestamp,
     type: 2,
   }
@@ -14,7 +14,7 @@ presence.on('UpdateData', () => {
     document.querySelector('.player-artist-text')?.textContent
   } - ${document.querySelector('.player-title-text')?.textContent}`
   presenceData.state = document.querySelector('.live-name')?.textContent ?? 'AutoDJ'
-  presenceData.smallImageKey = 'https://i.imgur.com/TCY6psx.png'
+  presenceData.smallImageKey = 'https://i.imgur.com/ZqheZoX.png'
   presenceData.smallImageText = 'TruckersFM'
 
   presenceData.buttons = [
