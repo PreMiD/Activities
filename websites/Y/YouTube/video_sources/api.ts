@@ -23,6 +23,9 @@ interface YouTubeAPIResponse {
     isPrivate: boolean
     isLiveContent: boolean
   }
+  microformat: {
+    category: string
+  }
 }
 
 async function fetchVideoData(id: string) {
@@ -92,12 +95,17 @@ export function getChannelURL(): string {
   }`
 }
 
+export function isMusic(): boolean {
+  return videoCache.get(getVideoID())?.microformat?.category === 'Music'
+}
+
 const resolver: Resolver = {
   isActive,
   getTitle,
   getUploader,
   getChannelURL,
   getVideoID,
+  isMusic,
 }
 
 export default resolver
