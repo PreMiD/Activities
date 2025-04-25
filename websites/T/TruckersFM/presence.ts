@@ -17,5 +17,22 @@ presence.on('UpdateData', () => {
   presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png'
   presenceData.smallImageText = 'TruckersFM'
 
+  presenceData.buttons = [
+    {
+      label: 'Listen to TruckersFM',
+      url: 'https://truckers.fm',
+    },
+  ]
+
+  const spotifyUrl = document
+    .querySelector('.player-artist-text a')
+    ?.getAttribute('href')
+  if (spotifyUrl) {
+    presenceData.buttons.push({
+      label: 'Listen on Spotify',
+      url: spotifyUrl,
+    })
+  }
+
   presence.setActivity(presenceData)
 })
