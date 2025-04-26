@@ -30,10 +30,12 @@ function updatePoster() {
       seasonModeActive = true
       savedPosterUrl = animeImg ? luiUrl + animeImg : null
     }
-  } else if (pathname.includes('/title/')) {
+  }
+  else if (pathname.includes('/title/')) {
     savedPosterUrl = animeImg ? luiUrl + animeImg : null
     seasonModeActive = false
-  } else {
+  }
+  else {
     savedPosterUrl = null
     seasonModeActive = false
   }
@@ -71,7 +73,8 @@ presence.on('iFrameData', (data: unknown) => {
       if (document.location.pathname.includes('/season-')) {
         iframePresenceData.details = document.querySelectorAll('.breadcrumb-content a')[1]?.textContent || 'Loading'
         iframePresenceData.state = document.querySelectorAll('.breadcrumb-content a')[2]?.textContent || 'Loading'
-      } else {
+      }
+      else {
         iframePresenceData.details = document.querySelector('.trailer-content h1')?.textContent || 'Loading'
         iframePresenceData.state = 'Bölümler görüntüleniyor'
       }
@@ -89,10 +92,10 @@ presence.on('UpdateData', async () => {
     const pathname = document.location.pathname
 
     if (
-      pathname === '/' ||
-      pathname === '/privacy-policy' ||
-      pathname === '/comment-policy' ||
-      pathname === '/tos'
+      pathname === '/' 
+    ||pathname === '/privacy-policy' 
+    ||pathname === '/comment-policy'
+    ||pathname === '/tos'
     ) {
       presenceData.details = 'Anizium'
       presenceData.state = 'Ana Sayfa görüntüleniyor'
@@ -118,26 +121,26 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Kategoriler inceleniyor..'
     }
     else if (
-      pathname === '/premium' ||
-      pathname.includes('/buy/') ||
-      pathname.includes('/gift')
+      pathname === '/premium' 
+      ||pathname.includes('/buy/') 
+      ||pathname.includes('/gift')
     ) {
       presenceData.details = 'Anizium'
       presenceData.state = 'Premium paketleri görüntüleniyor'
     }
     else if (
-      pathname === '/manager' ||
-      pathname === '/premium/manager' ||
-      pathname === '/devices' ||
-      pathname === '/change-password'
+      pathname === '/manager'
+      ||pathname === '/premium/manager'
+      ||pathname === '/devices'
+      ||pathname === '/change-password'
     ) {
       presenceData.smallImageKey = Images.SettingsICO
       presenceData.details = 'Anizium'
       presenceData.state = 'Hesap yönetimi'
     }
     else if (
-      pathname === '/profiles' ||
-      pathname.includes('/option')
+      pathname === '/profiles'
+      ||pathname.includes('/option')
     ) {
       presenceData.smallImageKey = Assets.Viewing
       presenceData.smallImageText = 'Profiller'
@@ -145,8 +148,8 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Profiller görüntüleniyor'
     }
     else if (
-      pathname.includes('/profiles') &&
-      pathname.includes('/avatar')
+      pathname.includes('/profiles')
+      &&pathname.includes('/avatar')
     ) {
       presenceData.smallImageKey = Assets.Viewing
       presenceData.details = 'Anizium'
