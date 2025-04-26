@@ -92,10 +92,10 @@ presence.on('UpdateData', async () => {
     const pathname = document.location.pathname
 
     if (
-      pathname === '/' 
-    ||pathname === '/privacy-policy' 
-    ||pathname === '/comment-policy'
-    ||pathname === '/tos'
+      pathname === '/'
+      || pathname === '/privacy-policy'
+      || pathname === '/comment-policy'
+      || pathname === '/tos'
     ) {
       presenceData.details = 'Anizium'
       presenceData.state = 'Ana Sayfa görüntüleniyor'
@@ -121,18 +121,18 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Kategoriler inceleniyor..'
     }
     else if (
-      pathname === '/premium' 
-      ||pathname.includes('/buy/') 
-      ||pathname.includes('/gift')
+      pathname === '/premium'
+      || pathname.includes('/buy/')
+      || pathname.includes('/gift')
     ) {
       presenceData.details = 'Anizium'
       presenceData.state = 'Premium paketleri görüntüleniyor'
     }
     else if (
       pathname === '/manager'
-      ||pathname === '/premium/manager'
-      ||pathname === '/devices'
-      ||pathname === '/change-password'
+      || pathname === '/premium/manager'
+      || pathname === '/devices'
+      || pathname === '/change-password'
     ) {
       presenceData.smallImageKey = Images.SettingsICO
       presenceData.details = 'Anizium'
@@ -140,7 +140,7 @@ presence.on('UpdateData', async () => {
     }
     else if (
       pathname === '/profiles'
-      ||pathname.includes('/option')
+      || pathname.includes('/option')
     ) {
       presenceData.smallImageKey = Assets.Viewing
       presenceData.smallImageText = 'Profiller'
@@ -149,7 +149,7 @@ presence.on('UpdateData', async () => {
     }
     else if (
       pathname.includes('/profiles')
-      &&pathname.includes('/avatar')
+      && pathname.includes('/avatar')
     ) {
       presenceData.smallImageKey = Assets.Viewing
       presenceData.details = 'Anizium'
