@@ -53,6 +53,7 @@ presence.on('UpdateData', async () => {
   // Xác định kiểu trang
   const isHomePage = pathname === '/'
   const isCategoryPage = pathname.includes('/the-loai')
+  const isRegion = pathname.includes('/quoc-gia')
   const isDetailsPage = splitPath.length === 3 && splitPath[1] === 'phim'
   const isWatchingPage = splitPath.length >= 4 && splitPath[1] === 'phim' && splitPath[3]?.startsWith('tap-')
 
@@ -61,9 +62,14 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Đang xem trang chủ'
   }
   else if (isCategoryPage) {
-    presenceData.details = 'Đang xem danh mục:'
+    presenceData.details = 'Đang xem danh mục'
     const categoryText = document.querySelector('body > div.box-width > div.title > div.title-left > h4')?.textContent?.trim().split('Phim thể loại')?.[1]?.trim() || ''
     presenceData.state = `Thể loại: ${categoryText}`
+  }
+  else if (isRegion) {
+    presenceData.details = 'Đang xem danh mục'
+    const Region = document.querySelector('body > div.box-width > div.title > div.title-left > h4')?.textContent?.trim().split('Phim quốc gia')?.[1]?.trim() || ''
+    presenceData.state = `Phim: ${Region}`
   }
   else if (isDetailsPage) {
     // Trang chi tiết phim
@@ -128,7 +134,7 @@ presence.on('UpdateData', async () => {
     }
     else {
       // Đang ở trang xem phim nhưng chưa phát video hoặc không tìm thấy video
-      presenceData.details = `Chuẩn bị xem: ${movieName}`
+      presenceData.details = `${movieName}`
       presenceData.state = `Tập ${episodeNumberStr}`
     }
 
@@ -142,14 +148,24 @@ presence.on('UpdateData', async () => {
   }
   else if (
     document.querySelector(
-      'body > div.container > div:nth-child(3) > div > div.movie-info > div > div.block-wrapper.page-single > div > div.block-movie-info.movie-info-box > div > div.col-6.movie-detail > h1 > span.title-1',
+      'body > div.box-width > div.player-info > div.player-info-text > div.title > h2 > a > span',
     )
   ) {
     // Trang chi tiết phim (selector cụ thể)
-    presenceData.details = 'Đang xem:'
-    presenceData.state = document.querySelector(
-      'body > div.container > div:nth-child(3) > div > div.movie-info > div > div.block-wrapper.page-single > div > div.block-movie-info.movie-info-box > div > div.col-6.movie-detail > h1 > span.title-1',
-    )?.textContent ?? ''
+    const movieName = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2 > a > span')?.textContent?.trim() || ''
+    const fullTitle = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2')?.textContent?.trim() || ''
+    // Ví dụ: fullTitle = "Tên Phim Gì Đó Chi tiết Tập 15"
+    // 2. Khai báo biến để lưu số tập đã lọc
+    let episodeNumberStr = ''
+    // 3. Dùng Regex để tìm và lọc số tập
+    const regex = /[Tt]ập\s*(\d+)/ // Tìm "Tập" hoặc "tập", theo sau bởi số
+    const match = fullTitle.match(regex)
+    // 4. Lấy số từ kết quả khớp (nếu có)
+    if (match && match[1]) {
+      episodeNumberStr = match[1] // Chỉ lấy phần số, ví dụ: "15"
+    }
+    presenceData.details = movieName
+    presenceData.state = `Tập ${episodeNumberStr}`
     presenceData.smallImageKey = Assets.Reading
   }
   else {

@@ -12,7 +12,7 @@
   },
   "url": "movie.anikenji.xyz",
   "regExp": "movie.animekenji\\..*",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://movie.anikenji.xyz/images/webfilm-logo.png",
   "thumbnail": "https://movie.anikenji.xyz/images/thumbnail.png",
   "color": "#ff71b3",
