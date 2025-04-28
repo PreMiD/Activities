@@ -19,15 +19,5 @@ presence.on('UpdateData', () => {
   presenceData.smallImageKey = 'https://i.imgur.com/ZqheZoX.png'
   presenceData.smallImageText = 'TruckersFM'
 
-  const spotifyUrl = document
-    .querySelector('.player-artist-text a')
-    ?.getAttribute('href')
-  if (spotifyUrl) {
-    presenceData.buttons.push({
-      label: 'Listen on Spotify',
-      url: spotifyUrl,
-    })
-  }
-
   presence.setActivity(presenceData)
 })
