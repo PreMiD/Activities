@@ -13,7 +13,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
     smallImageKey: Assets.Play,
   }
-  const path = new URL(document.URL).pathname.split('/').slice(1)
+  const path = document.location.pathname.split('/').slice(1)
   switch (true) {
     case path[0] === 'u': {
       // class names in this site are too random, possibly might break in a future site update
