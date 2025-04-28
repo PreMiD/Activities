@@ -1,3 +1,5 @@
+import { ActivityType } from 'premid'
+
 const presence = new Presence({
   clientId: '640914619082211338',
 })
@@ -7,7 +9,7 @@ presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
     largeImageKey: document.querySelector<HTMLImageElement>('.album-art')?.src || 'https://i.imgur.com/ZqheZoX.png',
     startTimestamp: browsingTimestamp,
-    type: 2,
+    type: ActivityType.Listening,
   }
 
   presenceData.details = `${
