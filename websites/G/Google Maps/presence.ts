@@ -17,8 +17,8 @@ async function getStrings() {
   })
 }
 
-function lettersOnly(str: string) {
-  return str.replace(/[^a-z]/gi, ' ')
+function placeURISeparator(str: string) {
+  return str.replace(/\+/g, ' ')
 }
 
 presence.on('UpdateData', async () => {
@@ -40,7 +40,8 @@ presence.on('UpdateData', async () => {
           indexes.push(index)
       }
 
-      presenceData.details = strings.viewingPlace.replace('{0}', lettersOnly(place.substring(indexes[4]! + 1, indexes[5])))
+      presenceData.details = strings.viewingPlace
+      presenceData.state = decodeURIComponent(placeURISeparator(place.substring(indexes[4]! + 1, indexes[5])))
       presenceData.buttons = [
         { label: strings.buttonViewPlace, url: document.location.href },
       ]
@@ -87,7 +88,8 @@ presence.on('UpdateData', async () => {
           indexes.push(index)
       }
 
-      presenceData.details = strings.searchingForPlace.replace('{0}', lettersOnly(search.substring(indexes[4]! + 1, indexes[5])))
+      presenceData.details = strings.searchingForPlace
+      presenceData.state = decodeURIComponent(placeURISeparator(search.substring(indexes[4]! + 1, indexes[5])))
     }
   }
   else {
