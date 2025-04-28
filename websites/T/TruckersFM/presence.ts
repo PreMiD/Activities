@@ -5,7 +5,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
-    largeImageKey: (document.querySelector('.album-art') as HTMLImageElement)?.src || 'https://i.imgur.com/ZqheZoX.png',
+    largeImageKey: document.querySelector<HTMLImageElement>('.album-art')?.src || 'https://i.imgur.com/ZqheZoX.png',
     startTimestamp: browsingTimestamp,
     type: 2,
   }
