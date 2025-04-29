@@ -107,7 +107,6 @@ presence.on('UpdateData', async () => {
       episodeNumberStr = match[1] // Chỉ lấy phần số, ví dụ: "15"
     }
     // const Episode = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2')?.textContent?.trim() || ''
-
     // Kiểm tra xem có video đang phát không (từ iframe)
     if (iFrameVideo && !Number.isNaN(duration)) {
       // Có video từ iframe

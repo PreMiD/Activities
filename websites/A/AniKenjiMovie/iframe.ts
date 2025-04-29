@@ -17,8 +17,32 @@ iframe.on('UpdateData', async () => {
     '#mgvideo_html5_api',
     '#player > div.jw-media.jw-reset > video',
     '#vstr > div.jw-wrapper.jw-reset > div.jw-media.jw-reset > video',
+    'player-style-2',
     '.jw-video', // JW Player general class
+    '.jw-video jw-reset',
     '.vjs-tech', // Video.js general class
+    '.vp-video', // Vimeo
+    // Vimeo specific selectors từ Presence.ts
+    '.vp-video-wrapper .vp-video video',
+
+    // Vimeo specific selectors hiện tại
+    '.vimeo-video',
+    '.vimeo-player video',
+    'iframe.vimeo iframe video',
+
+    // Youtube Stream
+
+    '.video-stream', // Youtube Embed
+
+    // Selector Vimeo bổ sung
+    '.player-container .vp-video video',
+    '.player .vp-video video',
+    '.vimeo-player .vp-video video',
+    '[data-player-type="vimeo"] .vp-video video',
+    '[data-vimeo] video',
+    '[data-vimeo-url] video',
+    '.vimeo_player video',
+    '.vimeo-embed video',
     'video', // Bất kỳ thẻ video nào
   ]
   // Thêm các selector cho các player phổ biến khác
