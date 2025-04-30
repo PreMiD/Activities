@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "430729478151602183",
+    "name": "rikunz"
+  },
+  "service": "Microsoft Learn",
+  "description": {
+    "en": "Microsoft Learn is an official platform by Microsoft offering free, interactive training for a wide range of Microsoft products and technologies, from Azure to Power Platform.",
+    "es": "Microsoft Learn es una plataforma oficial de Microsoft que ofrece capacitación interactiva gratuita sobre una amplia gama de productos y tecnologías de Microsoft, desde Azure hasta Power Platform.",
+    "fr": "Microsoft Learn est une plateforme officielle de Microsoft offrant une formation interactive gratuite sur un large éventail de produits et technologies Microsoft, d'Azure à Power Platform.",
+    "hi": "Microsoft Learn Microsoft का एक आधिकारिक प्लेटफ़ॉर्म है जो Azure से लेकर Power Platform तक की विभिन्न तकनीकों पर मुफ्त इंटरैक्टिव प्रशिक्षण प्रदान करता है.",
+    "id": "Microsoft Learn adalah platform resmi dari Microsoft yang menawarkan pelatihan interaktif gratis untuk berbagai produk dan teknologi Microsoft, mulai dari Azure hingga Power Platform.",
+    "ja": "Microsoft Learn は、Microsoft が提供する公式プラットフォームで、Azure や Power Platform など幅広い製品や技術に関する無料のインタラクティブトレーニングを提供しています。",
+    "ru": "Microsoft Learn — это официальная платформа Microsoft, предлагающая бесплатное интерактивное обучение по широкому спектру продуктов и технологий Microsoft, от Azure до Power Platform.",
+    "zh": "Microsoft Learn 是微软官方平台，提供免费的互动式培训，涵盖从 Azure 到 Power Platform 等各种微软产品和技术。"
+  },
+  "url": "learn.microsoft.com",
+  "version": "1.0.0",
+  "logo": "https://minio.rikztech.my.id/personalized/assets%2FMicrosoft_Logo_512px.png",
+  "thumbnail": "https://imgur.com/a/ERluFem.png",
+  "color": "#FFFFFF",
+  "category": "other",
+  "tags": [
+    "learns",
+    "microsoft"
+  ],
+  "settings": [
+    {
+      "id": "time",
+      "title": "Show timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "show-level",
+      "title": "Show Level",
+      "icon": "fad fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "show-button",
+      "title": "Show Button",
+      "icon": "fad fa-hand-pointer",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
