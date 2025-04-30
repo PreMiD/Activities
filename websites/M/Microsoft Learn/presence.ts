@@ -31,7 +31,7 @@ presence.on('UpdateData', async () => {
 
   const pageTitle = document.title.split(' | ')[0]?.trim() || 'Unknown'
 
-  if (page === '/' || page === '/en-us/' || page === '/fr-fr/') {
+  if (/^\/(?:[a-z]{2}-[a-z]{2}\/|\/)?$/.test(page)) {
     presenceData.details = 'Exploring Microsoft Learn'
     presenceData.state = 'Browsing the homepage'
     presenceData.smallImageKey = Assets.Viewing
