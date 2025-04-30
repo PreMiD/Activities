@@ -8,7 +8,6 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
   Logo = 'https://minio.rikztech.my.id/personalized/assets%2FMicrosoft_Logo_512px.png',
-  // Logo Microsoft Learn
 }
 
 presence.on('UpdateData', async () => {
@@ -48,11 +47,16 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.state = pageTitle
       if (showLevel) {
-        const levelElement = document.querySelector('#level-status-text')?.textContent?.trim()
+        const levelElement = document.querySelector('#level-status-text')
+          ?.textContent
+          ?.trim()
         if (levelElement) {
           presenceData.details += ` (${levelElement})`
         }
-        const nextExp = document.querySelector('#level-status-points')?.textContent?.trim()?.replace('/', ' / ')
+        const nextExp = document.querySelector('#level-status-points')
+          ?.textContent
+          ?.trim()
+          ?.replace('/', ' / ')
         if (nextExp) {
           presenceData.details += ` - ${nextExp}`
         }
@@ -61,9 +65,17 @@ presence.on('UpdateData', async () => {
     delete presenceData.buttons
   }
   else if (page.includes('/training/paths/')) {
-    const levelElement = document.querySelector('#level-status-text')?.textContent?.trim() || '0'
-    const nextExp = document.querySelector('#level-status-points')?.textContent?.trim()?.replace('/', ' / ') || '0'
-    presenceData.details = showLevel ? `Following a Path - (${levelElement}) - ${nextExp}` : 'Following a Learning Path'
+    const levelElement = document.querySelector('#level-status-text')
+      ?.textContent
+      ?.trim() || '0'
+    const nextExp = document.querySelector('#level-status-points')
+      ?.textContent
+      ?.trim()
+      ?.replace('/', ' / ')
+      || '0'
+    presenceData.details = showLevel
+      ? `Following a Path - (${levelElement}) - ${nextExp}`
+      : 'Following a Learning Path'
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = 'Studying'
     presenceData.state = privacy ? 'A learning path' : pageTitle
@@ -71,7 +83,7 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = [
         {
           label: 'View Path',
-          url: document.URL.split('?')[0]!,
+          url: document.location.href,
         },
       ]
     }
@@ -108,13 +120,15 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = [
         {
           label: 'View Collection',
-          url: document.URL.split('?')[0]!,
+          url: document.location.href,
         },
       ]
     }
   }
   else if (page.includes('/challenges/')) {
-    const progressDescription = document.querySelector('#progress-description')?.textContent?.trim()
+    const progressDescription = document.querySelector('#progress-description')
+      ?.textContent
+      ?.trim()
     if (progressDescription) {
       presenceData.details = 'Completing a Challenge' + ` (${progressDescription})`
       presenceData.smallImageKey = Assets.Reading
@@ -135,13 +149,15 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = [
         {
           label: 'View Challenge',
-          url: document.URL.split('?')[0]!,
+          url: document.location.href,
         },
       ]
     }
   }
   else if (page.includes('/plans/')) {
-    const resumeButton = document.querySelector('button#resume-plan-button')?.textContent?.trim()
+    const resumeButton = document.querySelector('button#resume-plan-button')
+      ?.textContent
+      ?.trim()
     if (resumeButton) {
       presenceData.details = 'Completing a Plan'
       presenceData.smallImageKey = Assets.Reading
@@ -162,7 +178,7 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = [
         {
           label: 'View Plan',
-          url: document.URL.split('?')[0]!,
+          url: document.location.href,
         },
       ]
     }
@@ -177,7 +193,7 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = [
         {
           label: 'View Course',
-          url: document.URL.split('?')[0]!,
+          url: document.location.href,
         },
       ]
     }
@@ -222,7 +238,7 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = [
         {
           label: 'View Profile',
-          url: document.URL.split('?')[0]!,
+          url: document.location.href,
         },
       ]
     }
