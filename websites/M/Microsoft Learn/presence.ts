@@ -52,7 +52,7 @@ presence.on('UpdateData', async () => {
         if (levelElement) {
           presenceData.details += ` (${levelElement})`
         }
-        const nextExp = document.querySelector('#level-status-points')?.textContent?.trim()?.replace('/', '/ ')
+        const nextExp = document.querySelector('#level-status-points')?.textContent?.trim()?.replace('/', ' / ')
         if (nextExp) {
           presenceData.details += ` - ${nextExp}`
         }
@@ -61,7 +61,9 @@ presence.on('UpdateData', async () => {
     delete presenceData.buttons
   }
   else if (page.includes('/training/paths/')) {
-    presenceData.details = 'Following a Learning Path'
+    const levelElement = document.querySelector('#level-status-text')?.textContent?.trim() || '0'
+    const nextExp = document.querySelector('#level-status-points')?.textContent?.trim()?.replace('/', ' / ') || '0'
+    presenceData.details = showLevel ? `Following a Path - (${levelElement}) - ${nextExp}` : 'Following a Learning Path'
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = 'Studying'
     presenceData.state = privacy ? 'A learning path' : pageTitle
@@ -187,7 +189,7 @@ presence.on('UpdateData', async () => {
     const badgeElement = achievementElement?.[0]?.textContent?.trim() || '0'
     const trophyElement = achievementElement?.[1]?.textContent?.trim() || '0'
     const levelElement = document.querySelector('#level-status-text')?.textContent?.trim() || '0'
-    const nextExp = document.querySelector('#level-status-points')?.textContent?.trim()?.replace('/', '/ ') || '0'
+    const nextExp = document.querySelector('#level-status-points')?.textContent?.trim()?.replace('/', ' / ') || '0'
     if (nameElement === userName) {
       presenceData.details = privacy
         ? 'Checking My Profile'
