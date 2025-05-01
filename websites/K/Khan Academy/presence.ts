@@ -1,8 +1,4 @@
 const presence = new Presence({ clientId: '900882829154598952' })
-const strings = presence.getStrings({
-  homepage: 'Homepage',
-  settings: 'Settings',
-})
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/K/Khan%20Academy/assets/logo.png',
@@ -20,7 +16,7 @@ presence.on('UpdateData', async () => {
   const searchParams = new URLSearchParams(document.location.search)
 
   if (path === '/') {
-    presenceData.state = `🏠 ${(await strings).homepage}`
+    presenceData.state = '🏠 Viewing Home Page'
   }
   else if (path.includes('/courses')) {
     presenceData.state = '📚 Courses'
@@ -35,7 +31,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = '👤 Profile'
   }
   else if (path.includes('/settings')) {
-    presenceData.state = `⚙️ ${(await strings).settings}`
+    presenceData.state = '⚙️ Viewing Settings'
   }
   else if (path.includes('/search')) {
     presenceData.details = '🔍 Searching'
