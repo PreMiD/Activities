@@ -69,6 +69,10 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Viewing the event'
         break
       }
+      case '/lobby': {
+        presenceData.details = 'In the multiplayer lobby'
+        break
+      }
       case '/marketplace': {
         presenceData.details = 'Viewing the marketplace'
         break
@@ -91,6 +95,10 @@ presence.on('UpdateData', async () => {
       }
       case '/profile': {
         presenceData.details = 'Managing their account details'
+        break
+      }
+      case '/pvp': {
+        presenceData.details = 'Playing PvP mode'
         break
       }
       case '/quests': {
