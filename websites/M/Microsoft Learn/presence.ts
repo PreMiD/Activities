@@ -50,15 +50,19 @@ presence.on('UpdateData', async () => {
         const levelElement = document.querySelector('#level-status-text')
           ?.textContent
           ?.trim()
-        if (levelElement) {
-          presenceData.details += ` (${levelElement})`
-        }
+        const plusXp = document.querySelector('.xp-tag-xp')?.textContent?.trim()
         const nextExp = document.querySelector('#level-status-points')
           ?.textContent
           ?.trim()
           ?.replace('/', ' / ')
+        if (levelElement) {
+          presenceData.details += ` (${levelElement})`
+        }
         if (nextExp) {
-          presenceData.details += ` - ${nextExp}`
+          presenceData.details += ` - (${nextExp})`
+        }
+        if (plusXp) {
+          presenceData.details += ` + ${plusXp}`
         }
       }
     }
