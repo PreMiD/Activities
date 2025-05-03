@@ -46,8 +46,8 @@ presence.on('UpdateData', async () => {
   else {
     switch (path[1]) {
       case 'wargame':
-        if(await presence.getSetting('hideWargame')){
-            presence.clearActivity()
+        if (await presence.getSetting('hideWargame')) {
+          presence.clearActivity()
         }
         else if (rawpath.includes('challenges')) {
           if (rawpath.includes('new')) {
@@ -88,8 +88,8 @@ presence.on('UpdateData', async () => {
         }
         break
       case 'lecture':
-        if(await presence.getSetting('hideLecture')){
-            presence.clearActivity()
+        if (await presence.getSetting('hideLecture')) {
+          presence.clearActivity()
         }
         if (path.length < 3) {
           presenceData.details = '학습 목록 보는 중'
@@ -108,19 +108,19 @@ presence.on('UpdateData', async () => {
         }
         break
       case 'ctf':
-        if(await presence.getSetting('hideCTF')){
-            presence.clearActivity()
+        if (await presence.getSetting('hideCTF')) {
+          presence.clearActivity()
         }
-        else{
-            presenceData.details = 'CTF 문제 풀이 중'
-            try {
-              presenceData.state = document.querySelector(
-                'div.ctf-title > div.title',
-              )!.textContent
-            }
-            catch {
-              presenceData.state = document.querySelector('div.ctf-title')!.textContent
-            }
+        else {
+          presenceData.details = 'CTF 문제 풀이 중'
+          try {
+            presenceData.state = document.querySelector(
+              'div.ctf-title > div.title',
+            )!.textContent
+          }
+          catch {
+            presenceData.state = document.querySelector('div.ctf-title')!.textContent
+          }
         }
         break
       case 'users':
