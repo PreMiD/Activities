@@ -16,5 +16,25 @@
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dreamhack/assets/thumbnail.png",
   "color": "#7d89f7",
   "category": "other",
-  "tags": ["hacking", "ctf", "technology", "coding", "programming"]
+  "tags": ["hacking", "ctf", "technology", "coding", "programming"],
+  "settings": [
+    {
+      "id": "hideWargame",
+      "title": "워게임 숨기기",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "hideCTF",
+      "title": "CTF 숨기기",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "hideLecture",
+      "title": "강좌 숨기기",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
+  ]
 }

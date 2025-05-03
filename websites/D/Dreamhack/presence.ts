@@ -46,7 +46,10 @@ presence.on('UpdateData', async () => {
   else {
     switch (path[1]) {
       case 'wargame':
-        if (rawpath.includes('challenges')) {
+        if(await presence.getSetting('hideWargame')){
+            presence.clearActivity()
+        }
+        else if (rawpath.includes('challenges')) {
           if (rawpath.includes('new')) {
             presenceData.details = '워게임 문제 출제 중'
           }
@@ -58,6 +61,12 @@ presence.on('UpdateData', async () => {
             presenceData.state = document.querySelector(
               '#challenge-info > h1',
             )!.textContent
+            presenceData.buttons = [
+              {
+                label: '해당 워게임 풀기',
+                url: `https://dreamhack.io${rawpath}`,
+              },
+            ]
             const level = document.querySelector('.level')!.textContent
             if (level?.includes('LEVEL')) {
               const levelNum = Number.parseInt(level.split(' ')[1] ?? '0')
@@ -79,6 +88,9 @@ presence.on('UpdateData', async () => {
         }
         break
       case 'lecture':
+        if(await presence.getSetting('hideLecture')){
+            presence.clearActivity()
+        }
         if (path.length < 3) {
           presenceData.details = '학습 목록 보는 중'
         }
@@ -96,14 +108,19 @@ presence.on('UpdateData', async () => {
         }
         break
       case 'ctf':
-        presenceData.details = 'CTF 문제 풀이 중'
-        try {
-          presenceData.state = document.querySelector(
-            'div.ctf-title > div.title',
-          )!.textContent
+        if(await presence.getSetting('hideCTF')){
+            presence.clearActivity()
         }
-        catch {
-          presenceData.state = document.querySelector('div.ctf-title')!.textContent
+        else{
+            presenceData.details = 'CTF 문제 풀이 중'
+            try {
+              presenceData.state = document.querySelector(
+                'div.ctf-title > div.title',
+              )!.textContent
+            }
+            catch {
+              presenceData.state = document.querySelector('div.ctf-title')!.textContent
+            }
         }
         break
       case 'users':
@@ -145,7 +162,6 @@ presence.on('UpdateData', async () => {
         presenceData.details = '홈페이지 보는 중'
         break
       default:
-        presenceData.details = '그 외 페이지 보는 중'
         break
     }
   }
