@@ -5,8 +5,8 @@
     "id": "999863217557880842",
     "name": "vintheweirdass"
   },
-  "altnames": ["sekolah.mu", "smm"],
   "service": "sekolahmu",
+  "altnames": ["sekolah.mu", "smm"],
   "description": {
     "en": "Unofficial Discord presence of Sekolahmu LMS",
     "id": "Unofficial status Discord buat LMS Sekolahmu"
