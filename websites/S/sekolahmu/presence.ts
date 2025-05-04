@@ -6,7 +6,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 /// ok
 enum ActivityAssets { // Other default assets can be found at index.d.ts
-  Logo = 'https://raw.githubusercontent.com/vintheweirdass/sekolahmu-premid-assets/refs/heads/main/images/logo.png',
+  Logo = 'https://raw.githubusercontent.com/vintheweirdass/sekolahmu-premid-assets/refs/heads/main/images/logo-v2.png',
 }
 enum LocalAssets {
   Viewing = Assets.Viewing,
