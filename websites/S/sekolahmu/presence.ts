@@ -1,4 +1,4 @@
-'strict mode';
+'strict mode'
 /**
  * Unofficial Discord presence of Sekolahmu
  * 
@@ -44,7 +44,7 @@ presence.on('UpdateData', () => {
           // ]
           presenceData.state = "Viewing the report card"
         } else if (document.location.pathname.startsWith("/kelasku")) {
-          const params = new URLSearchParams(document.location.search);
+          const params = new URLSearchParams(document.location.search)
           presenceData.state = (params.get("page")??"")==="aktivitas-tambahan"?"Viewing the add-on classes":"Viewing the classes"
         } else if (document.location.pathname.startsWith("/dashboard")) { 
           presenceData.state = "Viewing the dashboard"
@@ -54,18 +54,18 @@ presence.on('UpdateData', () => {
           presenceData.smallImageKey = LocalAssets.Viewing
         }
         await presence.setActivity(presenceData)
-        return;
+        return
       }
       const baseApp = "div#base-app"
       const asesmenPanel = baseApp+" div.activity-v2-layout div.main div.outer-content"
       const asemenName = document.querySelector(asesmenPanel+" > div.activity-v2-content div.activity-v2-banner > h2")?.textContent ?? "<loading..>"
       function getNav(name:string):boolean {
-        return [...document.querySelectorAll(asesmenPanel+' > div.activity-v2-content div.inner-content > div.tabs > div.activity-v2-tab-menu > ul.nav.nav-tabs > li.nav-item > a')].some((e)=>{return e.innerHTML.includes(name)});
+        return [...document.querySelectorAll(asesmenPanel+' > div.activity-v2-content div.inner-content > div.tabs > div.activity-v2-tab-menu > ul.nav.nav-tabs > li.nav-item > a')].some((e)=>{return e.innerHTML.includes(name)})
       }
       const programName = document.querySelector("div#base-app div.activity-v2-layout div.main > div#activity-navbar-wrapper-v2 nav#activity-navbar-v2 a#activity-name-desktop")?.textContent ?? "<loading..>"
       const asesmenTugasNotStarted = (!!document.querySelector(asesmenPanel+" div.quiz-intro-v2"))
-      //const asesmenNotStarted = true;
-      presenceData.smallImageText = programName;
+      //const asesmenNotStarted = true
+      presenceData.smallImageText = programName
       if (asesmenTugasNotStarted) {
         presenceData.details = "Viewing homework preview of:"
         presenceData.smallImageKey = LocalAssets.Viewing
