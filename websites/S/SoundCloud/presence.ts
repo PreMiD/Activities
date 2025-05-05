@@ -120,7 +120,8 @@ presence.on('UpdateData', async () => {
     showTimestamps,
     showCover,
     showButtons,
-    usePresenceName,
+    usePresenceTitle,
+    usePresenceArtist,
     newLang,
   ] = await Promise.all([
     presence.getSetting<boolean>('browse'),
@@ -129,7 +130,8 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('timestamp'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('buttons'),
-    presence.getSetting<boolean>('usePresenceName'),
+    presence.getSetting<boolean>('usePresenceTitle'),
+    presence.getSetting<boolean>('usePresenceArtist'),
     presence.getSetting<string>('lang').catch(() => 'en'),
   ])
   const playing = Boolean(document.querySelector('.playControls__play.playing'))
@@ -154,11 +156,17 @@ presence.on('UpdateData', async () => {
   }
 
   if ((playing || (!playing && !showBrowsing)) && showSong) {
-    if (!usePresenceName) {
+    if (!usePresenceTitle && !usePresenceArtist) {
       presenceData.details = getElement(
         '.playbackSoundBadge__titleLink > span:nth-child(2)',
       )
       presenceData.state = getElement('.playbackSoundBadge__lightLink')
+    }
+    else if (usePresenceArtist && !usePresenceTitle) {
+      presenceData.name = getElement('.playbackSoundBadge__lightLink'); 
+      presenceData.details = getElement(
+        '.playbackSoundBadge__titleLink > span:nth-child(2)',
+      );
     }
     else {
       presenceData.name = getElement(
