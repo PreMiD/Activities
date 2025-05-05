@@ -1,7 +1,7 @@
 import { Assets, ActivityType } from 'premid';
 
 const presence = new Presence({
-  clientId: '1369034572859445399', // Ganti dengan clientId yang benar
+  clientId: '1369034572859445399', 
 });
 
 const browsingTimestamp = Math.floor(Date.now() / 1000);
@@ -11,25 +11,21 @@ enum ActivityAssets {
 }
 
 presence.on('UpdateData', async () => {
-  // Mendapatkan judul halaman
+  
   const title = document.querySelector('title')?.textContent?.trim();
 
-  // Mendapatkan nama episode
   const episode = document.querySelector('h4 span:nth-child(2)')?.textContent;
 
-  // Mengambil elemen gambar berdasarkan class
   const imgElement = document.querySelector('img.rounded-md') as HTMLImageElement;
 
-  // Mengatur data aktivitas
   let presenceData;
 
   if (title && episode && imgElement) {
-    // Pastikan imgElement tersedia jika menggunakan sebagai largeImageKey
     presenceData = {
       type: ActivityType.Watching,
       details: `Watching: ${title}`,
       state: `Episode: ${episode}`,
-      largeImageKey: imgElement, // Gunakan src untuk URL gambar
+      largeImageKey: imgElement, 
       smallImageKey: Assets.Play,
       smallImageText: 'You hovered me, and what now?',
       startTimestamp: browsingTimestamp,
@@ -48,8 +44,7 @@ presence.on('UpdateData', async () => {
     };
   }
 
-  console.log(presenceData); // Cek data yang dikirimkan
+  console.log(presenceData);
 
-  // Mengatur aktivitas
   presence.setActivity(presenceData);
 });
