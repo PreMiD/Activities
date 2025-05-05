@@ -23,12 +23,6 @@ presence.on('UpdateData', () => {
           presenceData.state = 'Viewing the homepage'
         }
         else if (window.document.location.pathname.startsWith('/rapor')) {
-          // presenceData.buttons= [
-          //   {
-          //     label: 'Go to the report card',
-          //     url: 'https://sekolah.mu'+document.location.pathname
-          //   },
-          // ]
           presenceData.state = 'Viewing the report card'
         }
         else if (window.document.location.pathname.startsWith('/kelasku')) {
