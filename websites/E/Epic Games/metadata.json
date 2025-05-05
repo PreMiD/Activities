@@ -5,12 +5,6 @@
     "name": "Marino",
     "id": "598953747963707409"
   },
-  "contributors": [
-    {
-      "name": "Dark_Ville",
-      "id": "638080361179512853"
-    }
-  ],
   "service": "Epic Games",
   "description": {
     "en": "Epic Games, Inc. is an American video game and software developer and publisher based in Cary, North Carolina.",
@@ -20,7 +14,7 @@
     "store.epicgames.com",
     "www.epicgames.com"
   ],
-  "version": "1.1.13",
+  "version": "1.1.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Epic%20Games/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Epic%20Games/assets/thumbnail.png",
   "color": "#2A2A2A",
