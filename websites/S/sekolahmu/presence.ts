@@ -4,8 +4,7 @@ const presence = new Presence({
   clientId: '1037219986378338305',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-/// ok
-enum ActivityAssets { // Other default assets can be found at index.d.ts
+enum ActivityAssets {
   Logo = 'https://raw.githubusercontent.com/vintheweirdass/sekolahmu-premid-assets/refs/heads/main/images/logo-v2.png',
 }
 presence.on('UpdateData', () => {
