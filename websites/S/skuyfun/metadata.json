@@ -5,14 +5,14 @@
     "id": "740614721794998293",
     "name": "shinkilofi"
   },
-  "service": "Skuy.fun",
+  "service": "Skuyfun",
   "description": {
     "en": "Watch anime on Skuy.fun"
   },
   "url": "skuy.fun",
   "version": "1.0.0",
-  "logo": "cdn.skuy.fun/public/favicon.svg",
-  "thumbnail": "cdn.skuy.fun/public/favicon.svg",
+  "logo": "https://cdn.skuy.fun/public/favicon.svg",
+  "thumbnail": "https://cdn.skuy.fun/public/favicon.svg",
   "color": "#000000",
   "category": "anime",
   "tags": [

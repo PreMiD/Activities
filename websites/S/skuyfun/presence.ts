@@ -1,46 +1,55 @@
 import { Assets, ActivityType } from 'premid';
 
 const presence = new Presence({
-  clientId: '1369034572859445399'
+  clientId: '1369034572859445399', // Ganti dengan clientId yang benar
 });
 
 const browsingTimestamp = Math.floor(Date.now() / 1000);
 
-enum ActivityAssets { 
+enum ActivityAssets {
   Logo = 'favicon',
 }
 
 presence.on('UpdateData', async () => {
+  // Mendapatkan judul halaman
   const title = document.querySelector('title')?.textContent?.trim();
+
+  // Mendapatkan nama episode
   const episode = document.querySelector('h4 span:nth-child(2)')?.textContent;
+
+  // Mengambil elemen gambar berdasarkan class
   const imgElement = document.querySelector('img.rounded-md') as HTMLImageElement;
 
+  // Mengatur data aktivitas
   let presenceData;
 
-  if (title && episode) {
+  if (title && episode && imgElement) {
+    // Pastikan imgElement tersedia jika menggunakan sebagai largeImageKey
     presenceData = {
       type: ActivityType.Watching,
       details: `Watching: ${title}`,
       state: `Episode: ${episode}`,
-      largeImageKey: imgElement,
+      largeImageKey: imgElement.src, // Gunakan src untuk URL gambar
       smallImageKey: Assets.Play,
-      smallImageText: "You hovered me, and what now?",
+      smallImageText: 'You hovered me, and what now?',
       startTimestamp: browsingTimestamp,
       endTimestamp: browsingTimestamp + 1800,
     };
   } else {
     presenceData = {
       type: ActivityType.Watching,
-      details: "Browsing skuy.fun",
+      details: 'Browsing skuy.fun',
       state: "Chillin' on the web",
       largeImageKey: ActivityAssets.Logo,
       smallImageKey: Assets.Play,
-      smallImageText: "Browse with me!",
+      smallImageText: 'Browse with me!',
       startTimestamp: browsingTimestamp,
       endTimestamp: browsingTimestamp + 1800,
     };
   }
 
-  console.log(presenceData);
+  console.log(presenceData); // Cek data yang dikirimkan
+
+  // Mengatur aktivitas
   presence.setActivity(presenceData);
 });
