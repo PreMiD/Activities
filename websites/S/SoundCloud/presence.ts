@@ -163,10 +163,10 @@ presence.on('UpdateData', async () => {
       presenceData.state = getElement('.playbackSoundBadge__lightLink')
     }
     else if (usePresenceArtist && !usePresenceTitle) {
-      presenceData.name = getElement('.playbackSoundBadge__lightLink'); 
+      presenceData.name = getElement('.playbackSoundBadge__lightLink')
       presenceData.details = getElement(
         '.playbackSoundBadge__titleLink > span:nth-child(2)',
-      );
+      )
     }
     else {
       presenceData.name = getElement(
