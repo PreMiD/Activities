@@ -1,3 +1,5 @@
+// it triggers querySelector and querySelectorAll
+/* eslint-disable ts/no-deprecated */
 import { Assets } from 'premid'
 
 const presence = new Presence({
@@ -17,44 +19,57 @@ presence.on('UpdateData', () => {
       state: 'Viewing LMS',
       smallImageKey: Assets.Search,
     }
-    if (window.document.location.hostname === 'www.sekolah.mu') {
-      if (!window.document.location.pathname.startsWith('/aktivitas')) {
-        if (window.document.location.pathname === '/') {
+    const { querySelector, querySelectorAll, location } = document
+    const { hostname, pathname, search } = location
+    if (hostname === 'www.sekolah.mu') {
+      if (!pathname.startsWith('/aktivitas')) {
+        if (pathname === '/') {
           presenceData.state = 'Viewing the homepage'
         }
-        else if (window.document.location.pathname.startsWith('/rapor')) {
-          presenceData.state = 'Viewing the report card'
-        }
-        else if (window.document.location.pathname.startsWith('/kelasku')) {
-          const params = new URLSearchParams(window.document.location.search)
+        else if (pathname.startsWith('/kelasku')) {
+          const params = new URLSearchParams(search)
           presenceData.state = (params.get('page') ?? '') === 'aktivitas-tambahan' ? 'Viewing the add-on classes' : 'Viewing the classes'
         }
-        else if (window.document.location.pathname.startsWith('/dashboard')) {
+        else if (pathname.startsWith('/laporan-belajar')) {
+          presenceData.state = 'Viewing the learning report'
+          presenceData.smallImageKey = Assets.Viewing
+        }
+        else if (pathname.startsWith('/rapor')) {
+          presenceData.state = 'Viewing the report card'
+          presenceData.smallImageKey = Assets.Viewing
+        }
+        else if (pathname.startsWith('/dashboard')) {
           presenceData.state = 'Viewing the dashboard'
           presenceData.smallImageKey = Assets.Viewing
         }
-        else if (window.document.location.pathname.startsWith('/notifikasi')) {
+        else if (pathname.startsWith('/notifikasi')) {
           presenceData.state = 'Viewing the notifications'
-          presenceData.smallImageKey = Assets.Viewing
         }
         await presence.setActivity(presenceData)
         return
       }
       const baseApp = 'div#base-app'
       const asesmenPanel = `${baseApp} div.activity-v2-layout div.main div.outer-content`
-      const asemenName = document.querySelector(`${asesmenPanel} > div.activity-v2-content div.activity-v2-banner > h2`)?.textContent ?? '<loading..>'
-      const getNav = (name: string): boolean => {
-        return [...window.document.querySelectorAll(`${asesmenPanel} > div.activity-v2-content div.inner-content > div.tabs > div.activity-v2-tab-menu > ul.nav.nav-tabs > li.nav-item > a`)].some(e => e.innerHTML.includes(name))
+      const asemenName = querySelector(`${asesmenPanel} > div.activity-v2-content div.activity-v2-banner > h2`)?.textContent ?? '<loading..>'
+      const getNav = (...name: [string, ...string[]]): boolean => {
+        return [...querySelectorAll(`${asesmenPanel} > div.activity-v2-content div.inner-content > div.tabs > div.activity-v2-tab-menu > ul.nav.nav-tabs > li.nav-item > a`)].some((e) => {
+          for (let i = 0; i < name.length; i++) {
+            if (e.innerHTML.includes(name[i]!)) {
+              return true
+            }
+          }
+          return false
+        })
       }
-      const programName = window.document.querySelector('div#base-app div.activity-v2-layout div.main > div#activity-navbar-wrapper-v2 nav#activity-navbar-v2 a#activity-name-desktop')?.textContent ?? '<loading..>'
-      const asesmenTugasNotStarted = (!!window.document.querySelector(`${asesmenPanel} div.quiz-intro-v2`))
+      const programName = querySelector('div#base-app div.activity-v2-layout div.main > div#activity-navbar-wrapper-v2 nav#activity-navbar-v2 a#activity-name-desktop')?.textContent ?? '<loading..>'
+      const asesmenTugasNotStarted = (!!querySelector(`${asesmenPanel} div.quiz-intro-v2`))
       // const asesmenNotStarted = true
       presenceData.smallImageText = programName
       if (asesmenTugasNotStarted) {
         presenceData.details = 'Viewing homework preview of:'
         presenceData.smallImageKey = Assets.Viewing
       }
-      else if (getNav('Tugas')) {
+      else if (getNav('Tugas', 'Kuis')) {
         presenceData.details = 'Working on homework:'
         presenceData.smallImageKey = Assets.Writing
       }
@@ -67,12 +82,6 @@ presence.on('UpdateData', () => {
         presenceData.smallImageKey = Assets.Viewing
       }
       presenceData.state = asemenName
-      // presenceData.buttons= [
-      //   {
-      //     label: 'Go to assessment',
-      //     url: 'https://sekolah.mu'+window.document.location.pathname
-      //   },
-      // ]
     }
 
     await presence.setActivity(presenceData)
