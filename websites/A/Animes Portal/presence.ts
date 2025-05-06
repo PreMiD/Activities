@@ -11,7 +11,7 @@ enum ActivityAssets {
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
-    largeImageText: 'Animes Portal',
+    name: 'Animes Portal',
   }
   const { pathname, href } = document.location
   const [showThumb, showMessaging] = await Promise.all([
