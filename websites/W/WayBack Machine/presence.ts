@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '941298758598164481',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -9,6 +9,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/W/WayBack%20Machine/assets/logo.png',
     startTimestamp: browsingTimestamp,
+    name: 'WayBack Machine',
   }
   const { pathname, href } = window.location
   const split = pathname.split('/')[2]

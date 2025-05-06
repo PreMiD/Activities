@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '969204609845428234',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -53,6 +53,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/Peario/assets/logo.png',
     startTimestamp: browsingTimestamp,
+    name: 'Peario',
   }
   const video = document.querySelector<HTMLVideoElement>(
     '#app > div > div > div > div.player > video',

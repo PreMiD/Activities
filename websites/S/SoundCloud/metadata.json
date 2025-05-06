@@ -78,8 +78,14 @@
       "value": true
     },
     {
-      "id": "usePresenceName",
+      "id": "usePresenceTitle",
       "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": false
+    },
+    {
+      "id": "usePresenceArtist",
+      "title": "Show Artist as Presence",
       "icon": "fad fa-user-edit",
       "value": false
     }
