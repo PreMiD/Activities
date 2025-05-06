@@ -1,5 +1,3 @@
-// it triggers querySelector and querySelectorAll
-/* eslint-disable ts/no-deprecated */
 import { Assets } from 'premid'
 
 const presence = new Presence({
@@ -19,8 +17,7 @@ presence.on('UpdateData', () => {
       state: 'Viewing LMS',
       smallImageKey: Assets.Search,
     }
-    const { querySelector, querySelectorAll, location } = document
-    const { hostname, pathname, search } = location
+    const { hostname, pathname, search } = document.location
     if (hostname === 'www.sekolah.mu') {
       if (!pathname.startsWith('/aktivitas')) {
         if (pathname === '/') {
@@ -50,9 +47,9 @@ presence.on('UpdateData', () => {
       }
       const baseApp = 'div#base-app'
       const asesmenPanel = `${baseApp} div.activity-v2-layout div.main div.outer-content`
-      const asemenName = querySelector(`${asesmenPanel} > div.activity-v2-content div.activity-v2-banner > h2`)?.textContent ?? '<loading..>'
+      const asemenName = document.querySelector(`${asesmenPanel} > div.activity-v2-content div.activity-v2-banner > h2`)?.textContent ?? '<loading..>'
       const getNav = (...name: [string, ...string[]]): boolean => {
-        return [...querySelectorAll(`${asesmenPanel} > div.activity-v2-content div.inner-content > div.tabs > div.activity-v2-tab-menu > ul.nav.nav-tabs > li.nav-item > a`)].some((e) => {
+        return [...document.querySelectorAll(`${asesmenPanel} > div.activity-v2-content div.inner-content > div.tabs > div.activity-v2-tab-menu > ul.nav.nav-tabs > li.nav-item > a`)].some((e) => {
           for (let i = 0; i < name.length; i++) {
             if (e.innerHTML.includes(name[i]!)) {
               return true
@@ -61,8 +58,8 @@ presence.on('UpdateData', () => {
           return false
         })
       }
-      const programName = querySelector('div#base-app div.activity-v2-layout div.main > div#activity-navbar-wrapper-v2 nav#activity-navbar-v2 a#activity-name-desktop')?.textContent ?? '<loading..>'
-      const asesmenTugasNotStarted = (!!querySelector(`${asesmenPanel} div.quiz-intro-v2`))
+      const programName = document.querySelector('div#base-app div.activity-v2-layout div.main > div#activity-navbar-wrapper-v2 nav#activity-navbar-v2 a#activity-name-desktop')?.textContent ?? '<loading..>'
+      const asesmenTugasNotStarted = (!!document.querySelector(`${asesmenPanel} div.quiz-intro-v2`))
       // const asesmenNotStarted = true
       presenceData.smallImageText = programName
       if (asesmenTugasNotStarted) {
