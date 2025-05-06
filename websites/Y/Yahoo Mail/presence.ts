@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '844109673618735144',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -9,6 +9,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/Y/Yahoo%20Mail/assets/logo.png',
     startTimestamp: browsingTimestamp,
+    name: 'Yahoo Mail',
   }
   const privacy = await presence.getSetting('privacy')
   const { pathname } = document.location

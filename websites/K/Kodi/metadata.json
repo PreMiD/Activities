@@ -5,12 +5,6 @@
     "name": "puppyonline",
     "id": "1000194671747813466"
   },
-  "contributors": [
-    {
-      "name": "Dark_Ville",
-      "id": "638080361179512853"
-    }
-  ],
   "service": "Kodi",
   "description": {
     "en": "Kodi presence for PreMiD! Please read [this page](https://github.com/PreMiD/Presences/blob/master/websites/K/Kodi/readme.md) to get started!",
