@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  logo = 'https://cdn.rcd.gg/PreMiD/websites/S/SoundCloud/assets/logo.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/SoundCloud/assets/logo.png',
 }
 
 async function getStrings() {
@@ -149,7 +149,7 @@ presence.on('UpdateData', async () => {
 
   let presenceData: PresenceData = {
     type: ActivityType.Listening,
-    largeImageKey: ActivityAssets.logo,
+    largeImageKey: ActivityAssets.Logo,
     startTimestamp: elapsed,
   }
 
@@ -214,7 +214,7 @@ presence.on('UpdateData', async () => {
         ?.style
         .backgroundImage
         .match(/"(.*)"/)?.[1]
-        ?.replace('-t50x50.jpg', '-t500x500.jpg') ?? ActivityAssets.logo
+        ?.replace('-t50x50.jpg', '-t500x500.jpg') ?? ActivityAssets.Logo
     }
 
     if (showButtons && pathLinkSong) {
