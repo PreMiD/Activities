@@ -22,7 +22,7 @@ presence.on('UpdateData', async () => {
       type: ActivityType.Watching,
       details: `Watching: ${title}`,
       state: `Episode: ${episode}`,
-      largeImageKey: imgElement.src, // harus pakai src, bukan elemen DOM langsung
+      largeImageKey: imgElement.src,
       smallImageKey: Assets.Play,
       smallImageText: 'You hovered me, and what now?',
       startTimestamp: browsingTimestamp,
