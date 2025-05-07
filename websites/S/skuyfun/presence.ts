@@ -1,10 +1,8 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType } from 'premid'
 
 const presence = new Presence({
   clientId: '1369034572859445399',
 })
-
-const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
   Logo = 'favicon',
