@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '934789855962083359',
+  clientId: '503557087041683458',
 })
 const browingTimestamp = Math.floor(Date.now() / 1000)
 async function getStrings() {
@@ -29,6 +29,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browingTimestamp,
+    name: 'LookMovie',
   }
   const video = document.querySelector<HTMLVideoElement>('video')
   const search = document.querySelector<HTMLInputElement>('[id="search_input"]')

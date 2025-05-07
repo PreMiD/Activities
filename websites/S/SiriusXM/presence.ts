@@ -1,10 +1,11 @@
 const presence = new Presence({
-  clientId: '843058220398542878',
+  clientId: '503557087041683458',
 })
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/S/SiriusXM/assets/logo.jpg',
+    name: 'SiriusXM',
   }
 
   switch (document.location.pathname) {

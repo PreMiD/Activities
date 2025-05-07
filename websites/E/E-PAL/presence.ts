@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1160565099883397211',
+  clientId: '503557087041683458',
 })
 
 enum ActivityAssets {
@@ -34,6 +34,7 @@ presence.on('UpdateData', async () => {
   let presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: timestampCheck.timestamp,
+    name: 'E-PAL',
   }
   const { href, pathname } = document.location
   const pathSplit = pathname.split('/')
