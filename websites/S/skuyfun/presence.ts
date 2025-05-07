@@ -1,13 +1,13 @@
 import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1369034572859445399'
+  clientId: '1369034572859445399',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'favicon'
+  Logo = 'favicon',
 }
 
 presence.on('UpdateData', async () => {
@@ -26,18 +26,19 @@ presence.on('UpdateData', async () => {
       smallImageKey: Assets.Play,
       smallImageText: 'You hovered me, and what now?',
       startTimestamp: browsingTimestamp,
-      endTimestamp: browsingTimestamp
+      endTimestamp: browsingTimestamp,
     }
-  } else {
+  }
+  else {
     presenceData = {
       type: ActivityType.Watching,
       details: 'Browsing skuy.fun',
-      state: "Chillin' on the web",
+      state: 'Chillin\' on the web',
       largeImageKey: ActivityAssets.Logo,
       smallImageKey: Assets.Play,
       smallImageText: 'Browse with me!',
       startTimestamp: browsingTimestamp,
-      endTimestamp: browsingTimestamp
+      endTimestamp: browsingTimestamp,
     }
   }
 
