@@ -5,12 +5,6 @@
     "name": "puppyonline",
     "id": "1000194671747813466"
   },
-  "contributors": [
-    {
-      "name": "Dark_Ville",
-      "id": "638080361179512853"
-    }
-  ],
   "service": "Kodi",
   "description": {
     "en": "Kodi presence for PreMiD! Please read [this page](https://github.com/PreMiD/Presences/blob/master/websites/K/Kodi/readme.md) to get started!",
@@ -20,7 +14,7 @@
     "localhost",
     "127.0.0.1"
   ],
-  "version": "1.0.30",
+  "version": "1.0.31",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kodi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kodi/assets/thumbnail.png",
   "color": "#ff7c00",

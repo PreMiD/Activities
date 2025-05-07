@@ -304,6 +304,33 @@ export class ActivityCompiler {
       }
     }
 
+    const clientIds = await this.assetsManager.getClientIds()
+    if (clientIds.length === 0) {
+      const message = `No Client ID found for activity ${metadata.service}`
+      if (kill) {
+        exit(message)
+      }
+
+      error(message)
+      addSarifLog({
+        path: resolve(this.cwd, 'presence.ts'),
+        message,
+        ruleId: SarifRuleId.clientIdExistsCheck,
+        position: {
+          line: 0,
+          column: 0,
+        },
+      })
+      valid = false
+    }
+    else {
+      for (const clientId of clientIds) {
+        if (!(await this.assetsManager.validateClientId({ clientId, kill }))) {
+          valid = false
+        }
+      }
+    }
+
     const assets = await this.assetsManager.getAssets()
     for (const asset of assets) {
       if (!(await this.assetsManager.validateImage({ asset, kill }))) {

@@ -1,10 +1,11 @@
 const presence = new Presence({
-  clientId: '737633529738952765',
+  clientId: '503557087041683458',
 })
 
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/C/CodAre/assets/logo.png',
+    name: 'CodAre',
   }
   const searchURL = new URL(document.location.href)
   const searchResult = searchURL.searchParams.get('q')
