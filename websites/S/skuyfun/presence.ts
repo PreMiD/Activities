@@ -8,12 +8,13 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
   Logo = 'favicon',
+  Thumbnail = 'thumbnail',
 }
 
 presence.on('UpdateData', async () => {
   const title = document.querySelector('title')?.textContent?.trim()
   const episode = document.querySelector('h4 span:nth-child(2)')?.textContent
-  const imgElement = document.querySelector('img.rounded-md') as HTMLImageElement
+  const imgElement = document.querySelector<HTMLImageElement>('img.rounded-md')
 
   let presenceData
 
@@ -23,10 +24,6 @@ presence.on('UpdateData', async () => {
       details: `Watching: ${title}`,
       state: `Episode: ${episode}`,
       largeImageKey: imgElement.src,
-      smallImageKey: Assets.Play,
-      smallImageText: 'You hovered me, and what now?',
-      startTimestamp: browsingTimestamp,
-      endTimestamp: browsingTimestamp,
     }
   }
   else {
@@ -35,10 +32,6 @@ presence.on('UpdateData', async () => {
       details: 'Browsing skuy.fun',
       state: 'Chillin\' on the web',
       largeImageKey: ActivityAssets.Logo,
-      smallImageKey: Assets.Play,
-      smallImageText: 'Browse with me!',
-      startTimestamp: browsingTimestamp,
-      endTimestamp: browsingTimestamp,
     }
   }
 
