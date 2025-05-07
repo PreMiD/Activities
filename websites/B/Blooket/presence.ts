@@ -9,7 +9,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
  * Image URLs for rich presence
  */
 const presenceImages: Record<string, string> = {
-  "Logo": 'https://i.imgur.com/dX4fpBG.png',
+  "Logo": 'https://i.imgur.com/R1rPCGV.png',
 }
 
 /**
