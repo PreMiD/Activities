@@ -8,7 +8,6 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
   Logo = 'favicon',
-  Thumbnail = 'thumbnail',
 }
 
 presence.on('UpdateData', async () => {
