@@ -26,7 +26,7 @@ presence.on('UpdateData', async () => {
       smallImageKey: Assets.Play,
       smallImageText: 'You hovered me, and what now?',
       startTimestamp: browsingTimestamp,
-      endTimestamp: browsingTimestamp + 1800
+      endTimestamp: browsingTimestamp
     }
   } else {
     presenceData = {
@@ -37,7 +37,7 @@ presence.on('UpdateData', async () => {
       smallImageKey: Assets.Play,
       smallImageText: 'Browse with me!',
       startTimestamp: browsingTimestamp,
-      endTimestamp: browsingTimestamp + 1800
+      endTimestamp: browsingTimestamp
     }
   }
 
