@@ -1,8 +1,13 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '802958833214423081',
 })
+
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/SoundCloud/assets/logo.png',
+}
+
 async function getStrings() {
   return presence.getStrings(
     {
@@ -146,7 +151,7 @@ presence.on('UpdateData', async () => {
 
   let presenceData: PresenceData = {
     type: ActivityType.Listening,
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/S/SoundCloud/assets/logo.png',
+    largeImageKey: ActivityAssets.Logo,
     startTimestamp: elapsed,
   }
 
@@ -182,15 +187,15 @@ presence.on('UpdateData', async () => {
       'div.playbackTimeline__duration > span:nth-child(2)',
     )?.textContent
     const [currentTime, duration] = [
-      presence.timestampFromFormat(timePassed ?? ''),
+      timestampFromFormat(timePassed ?? ''),
       (() => {
         if (!durationString?.startsWith('-')) {
-          return presence.timestampFromFormat(durationString ?? '')
+          return timestampFromFormat(durationString ?? '')
         }
         else {
           return (
-            presence.timestampFromFormat(durationString.slice(1))
-            + presence.timestampFromFormat(timePassed ?? '')
+            timestampFromFormat(durationString.slice(1))
+            + timestampFromFormat(timePassed ?? '')
           )
         }
       })(),
@@ -202,7 +207,7 @@ presence.on('UpdateData', async () => {
       ?.getAttribute('href')
 
     if (playing) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(currentTime, duration)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, duration)
     }
     else {
       presenceData.smallImageKey = Assets.Pause
@@ -217,7 +222,7 @@ presence.on('UpdateData', async () => {
         ?.style
         .backgroundImage
         .match(/"(.*)"/)?.[1]
-        ?.replace('-t50x50.jpg', '-t500x500.jpg') ?? 'soundcloud'
+        ?.replace('-t50x50.jpg', '-t500x500.jpg') ?? ActivityAssets.Logo
     }
 
     if (showButtons && pathLinkSong) {
