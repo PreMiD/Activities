@@ -47,7 +47,7 @@ presence.on('UpdateData', () => {
       }
       const baseApp = 'div#base-app'
       const asesmenPanel = `${baseApp} div.activity-v2-layout div.main div.outer-content`
-      const asemenName = document.querySelector(`${asesmenPanel} > div.activity-v2-content div.activity-v2-banner > h2`)?.textContent ?? '<loading..>'
+      const asesmenName = document.querySelector(`${asesmenPanel} > div.activity-v2-content div.activity-v2-banner > h2`)?.textContent ?? '<loading..>'
       const getNav = (...name: [string, ...string[]]): boolean => {
         return [...document.querySelectorAll(`${asesmenPanel} > div.activity-v2-content div.inner-content > div.tabs > div.activity-v2-tab-menu > ul.nav.nav-tabs > li.nav-item > a`)].some((e) => {
           for (let i = 0; i < name.length; i++) {
@@ -78,7 +78,7 @@ presence.on('UpdateData', () => {
         presenceData.details = 'Viewing material:'
         presenceData.smallImageKey = Assets.Viewing
       }
-      presenceData.state = asemenName
+      presenceData.state = asesmenName
     }
 
     await presence.setActivity(presenceData)
