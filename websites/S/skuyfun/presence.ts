@@ -4,9 +4,7 @@ const presence = new Presence({
   clientId: '1369034572859445399',
 })
 
-enum ActivityAssets {
-  Logo = 'favicon',
-}
+const LOGO_IMAGE_URL = 'https://i.ibb.co.com/cXMm9zNY/logo.png' // largeImage Logo if title not detected
 
 presence.on('UpdateData', async () => {
   const title = document.querySelector('title')?.textContent?.trim()
@@ -28,7 +26,7 @@ presence.on('UpdateData', async () => {
       type: ActivityType.Watching,
       details: 'Browsing skuy.fun',
       state: 'Chillin\' on the web',
-      largeImageKey: ActivityAssets.Logo,
+      largeImageKey: LOGO_IMAGE_URL,
     }
   }
 
