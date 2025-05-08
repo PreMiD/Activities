@@ -7,7 +7,8 @@
   },
   "service": "skuyfun",
   "description": {
-    "en": "Watch anime on Skuy.fun"
+    "en": "Skuy is an Indonesian anime streaming platform that uses Artificial Intelligence to provide automatic and accurate subtitles.",
+    "id": "Skuy adalah platform streaming Anime asal Indonesia yang memanfaatkan Kecerdasan Buatan untuk menyajikan subtitle secara otomatis dan akurat."
   },
   "url": "skuy.fun",
   "version": "1.0.0",
