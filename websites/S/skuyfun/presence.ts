@@ -30,7 +30,7 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  console.warn(presenceData)
+  // console.warn(presenceData)
 
   presence.setActivity(presenceData)
 })
