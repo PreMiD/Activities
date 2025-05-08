@@ -189,6 +189,20 @@
       "title": "Hide Homepage",
       "icon": "fad fa-user-secret",
       "value": false
+    },
+    {
+      "id": "showListening",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Listening to Music",
+      "icon": "fas fa-music",
+      "value": 0,
+      "values": [
+        "Never",
+        "When Music Playing",
+        "Always"
+      ]
     }
   ],
   "mobile": true

@@ -36,12 +36,19 @@ enum LogoMode {
   Channel = 2,
 }
 
+enum ShowListening {
+  Never = 0,
+  WhenMusic = 1,
+  Always = 2,
+}
+
 const nullResolver: Resolver = {
   isActive: () => true,
   getTitle: () => document.title,
   getUploader: () => '',
   getChannelURL: () => '',
   getVideoID: () => '',
+  isMusic: () => false,
 }
 
 presence.on('UpdateData', async () => {
@@ -58,6 +65,7 @@ presence.on('UpdateData', async () => {
     buttons,
     hideHome,
     hidePaused,
+    showListening,
   ] = [
     getSetting<string>('lang', 'en'),
     getSetting<boolean>('privacy', true),
@@ -71,6 +79,7 @@ presence.on('UpdateData', async () => {
     getSetting<boolean>('buttons', true),
     getSetting<boolean>('hideHome', false),
     getSetting<boolean>('hidePaused', true),
+    getSetting<number>('showListening', 0),
   ]
   const { pathname, hostname, search, href } = document.location
   const isMobile = hostname === 'm.youtube.com'
@@ -158,8 +167,12 @@ presence.on('UpdateData', async () => {
       === unlistedBadgeElement?.getAttribute('d')
     const videoId = resolver.getVideoID()!
     const [startTimestamp, endTimestamp] = presence.getTimestampsfromMedia(video)
+    const listening = showListening === ShowListening.Always
+      || (showListening === ShowListening.WhenMusic && resolver.isMusic())
     const presenceData: PresenceData = {
-      type: ActivityType.Watching,
+      type: listening
+        ? ActivityType.Listening
+        : ActivityType.Watching,
       details: vidDetail
         .replace('%title%', title.trim())
         .replace('%uploader%', uploaderName.trim())

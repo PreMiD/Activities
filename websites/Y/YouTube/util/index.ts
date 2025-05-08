@@ -12,6 +12,7 @@ export interface Resolver {
   getUploader: () => string | undefined
   getChannelURL: () => string | undefined
   getVideoID: () => string | undefined
+  isMusic: () => boolean
 }
 
 const stringMap = {

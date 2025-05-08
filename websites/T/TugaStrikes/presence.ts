@@ -1,11 +1,12 @@
 const presence = new Presence({
-  clientId: '630098355145539595',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/T/TugaStrikes/assets/logo.png',
+    name: 'TugaStrikes',
   }
   const [page, section] = window.location.href
     .replace('https://tugastrikes.com/', '')

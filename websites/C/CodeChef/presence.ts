@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '845716323296083999',
+  clientId: '503557087041683458',
 })
 const timeElapsed: number = ~~(Date.now() / 1000)
 
@@ -13,6 +13,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: timeElapsed,
+    name: 'CodeChef',
   }
 
   switch (location.host.split('.')[0]) {

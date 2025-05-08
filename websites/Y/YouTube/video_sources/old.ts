@@ -26,12 +26,17 @@ function getUploader(): string | undefined {
   return document.querySelector('#owner-name a')?.textContent?.trim()
 }
 
+function isMusic(): boolean {
+  return false
+}
+
 const resolver: Resolver = {
   isActive,
   getTitle,
   getUploader,
   getChannelURL,
   getVideoID,
+  isMusic,
 }
 
 export default resolver

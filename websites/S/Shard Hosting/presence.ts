@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '909659570715127848',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -7,6 +7,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/S/Shard%20Hosting/assets/logo.png',
     startTimestamp: browsingTimestamp,
+    name: 'Shard Hosting',
   }
 
   switch (document.location.hostname) {
