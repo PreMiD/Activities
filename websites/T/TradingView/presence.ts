@@ -1,11 +1,19 @@
 const presence = new Presence({
-  clientId: '809817256686649344',
+  clientId: '1370119629132795914',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+enum ActivityAssets {
+  White = 'https://i.imgur.com/f7JLh40.png',
+  WhiteBG = 'https://i.imgur.com/ogCbBzU.png',
+  Black = 'https://i.imgur.com/txwG0bq.png',
+  BlackBG = 'https://i.imgur.com/LthTENs.png',
+}
+
 presence.on('UpdateData', async () => {
+  const logo = await presence.getSetting<number>('logo')
   const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/T/TradingView/assets/logo.png',
+    largeImageKey: [ActivityAssets.White, ActivityAssets.WhiteBG, ActivityAssets.Black, ActivityAssets.BlackBG][logo] || ActivityAssets.White,
     startTimestamp: browsingTimestamp,
   }
 
