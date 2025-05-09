@@ -50,5 +50,8 @@
   },
   "overrides": {
     "whatwg-url": "^14.0.0"
+  },
+  "dependencies": {
+    "pmd": "file:"
   }
 }
