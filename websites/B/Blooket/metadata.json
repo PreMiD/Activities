@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "546102590585438239",
+    "name": "srn1212"
+  },
+  "service": "Blooket",
+  "description": {
+    "en": "Blooket is an exciting new take on the modern classroom review game. It aims to match action with education to create the ultimate learning experience!"
+  },
+  "url": "blooket.com",
+  "regExp": "([a-z0-9-]+[.])*blooket[.]com[/]?.*",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/R1rPCGV.png",
+  "thumbnail": "https://i.imgur.com/x2NyfbX.jpeg",
+  "color": "#52c2cf",
+  "category": "games",
+  "tags": [
+    "games",
+    "fun",
+    "trivia"
+  ],
+  "settings": [
+    {
+      "title": "Privacy Mode",
+      "id": "privacy",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
+  ]
+}
