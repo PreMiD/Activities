@@ -8,8 +8,8 @@
   "service": "sekolahmu",
   "altnames": ["sekolah.mu", "smm"],
   "description": {
-    "en": "(Unofficial) Sekolah.mu is a education and career platform for all ages with the first blended learning approach in Indonesia. This extension is for showing your activity from Sekolahmu in Discord",
-    "id": "(Unofficial) Sekolah.mu adalah platform edukasi dan karir untuk semua kalangan dengan pendekatan blended learning pertama di Indonesia. Extensi ini untuk menampilkan aktivitas anda dari sekolahmu untuk Discord"
+    "en": "Additional study classes according to the child's interests and talents",
+    "id": "Kelas belajar tambahan sesuai minat bakat anak"
   },
   "url": "www.sekolah.mu",
   "version": "1.0.0",
