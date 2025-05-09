@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "740614721794998293",
+    "name": "shinkilofi"
+  },
+  "service": "skuyfun",
+  "description": {
+    "en": "Skuy is an Indonesian anime streaming platform that uses Artificial Intelligence to provide automatic and accurate subtitles.",
+    "id": "Skuy adalah platform streaming Anime asal Indonesia yang memanfaatkan Kecerdasan Buatan untuk menyajikan subtitle secara otomatis dan akurat."
+  },
+  "url": "skuy.fun",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co.com/cXMm9zNY/logo.png",
+  "thumbnail": "https://i.ibb.co.com/YFMdg2gJ/thumbail.jpg",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "indonesia"
+  ]
+}
