@@ -1,17 +1,12 @@
 {
-  "manifest_version": 1,
+  "manifest_version": 3,
   "name": "Hikari",
   "domain": "hikari.gg",
   "author": "Xkareem528",
-  "version": "1.0.0",
   "description": "Displays anime name and episode when watching on Hikari.gg.",
+  "version": "1.0.0",
   "website": "https://hikari.gg",
   "icon": "assets/logo.webp",
   "tags": ["anime", "video", "streaming"],
   "presence": "presence.js"
 }
-
-
-
-
-
