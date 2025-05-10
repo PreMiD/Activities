@@ -1,9 +1,13 @@
 {
-    "name": "Hikari",
-    "main": "presence.js",
-    "description": "Advanced Rich Presence for watching anime on Hikari.gg",
-    "version": "1.2.0",
-    "author": "Kareem",
-    "website": "https://hikari.gg/",
-    "match": ["*://hikari.gg/*"]
+  "manifest_version": 1,
+  "name": "Hikari",
+  "domain": "hikari.gg",
+  "author": "Xkareem528",
+  "version": "1.0.0",
+  "description": "Displays anime name and episode when watching on Hikari.gg.",
+  "website": "https://hikari.gg",
+  "icon": "assets/logo.webp",
+  "tags": ["anime", "video", "streaming"],
+  "presence": "presence.js"
+    
 }
