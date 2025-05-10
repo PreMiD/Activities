@@ -1,0 +1,9 @@
+{
+    "name": "Hikari",
+    "main": "presence.js",
+    "description": "Advanced Rich Presence for watching anime on Hikari.gg",
+    "version": "1.2.0",
+    "author": "Kareem",
+    "website": "https://hikari.gg/",
+    "match": ["*://hikari.gg/*"]
+}
