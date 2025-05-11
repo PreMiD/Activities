@@ -1,14 +1,15 @@
 {
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
-  "author": [{
+  "author": {
     "id": "330333765891129346",
     "name": "tsukizo"
   },
-  {
-    "id": "417391031705796610",
-    "name": "rainbowyoshi"
-  }
+  "contributors": [
+    {
+      "id": "417391031705796610",
+      "name": "rainbowyoshi"
+    }
   ],
   "service": "Watch-Anime",
   "description": {
