@@ -24,7 +24,7 @@ presence.on('UpdateData', async () => {
   else {
     presenceData = {
       type: ActivityType.Watching,
-      details: 'Browsing skuy.fun',
+      details: 'Browsing...',
       state: 'Chillin\' on the web',
       largeImageKey: LOGO_IMAGE_URL,
     }
