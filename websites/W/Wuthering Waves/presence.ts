@@ -36,7 +36,9 @@ presence.on('UpdateData', async () => {
     buttonViewArticle: 'general.buttonViewArticle',
   })
   const { pathname, href, hash } = document.location
-  const [...pathList] = pathname.split('/').filter(Boolean).slice(1)
+  let [...pathList] = pathname.split('/').filter(Boolean)
+  const isMobile = pathList[0] === 'm'
+  pathList = pathList.slice(isMobile ? 2 : 1)
 
   let useSlideshow = false
 
@@ -55,7 +57,7 @@ presence.on('UpdateData', async () => {
         case 'news': {
           if (pathList[2]) {
             presenceData.details = strings.readingArticle
-            presenceData.state = document.querySelector('.news-tit')
+            presenceData.state = document.querySelector(isMobile ? '.title' : '.news-tit')
             presenceData.buttons = [
               { label: strings.buttonViewArticle, url: href },
             ]
@@ -76,21 +78,30 @@ presence.on('UpdateData', async () => {
               break
             }
             case 'resonators': {
-              const groupName = document.querySelector('.group-active .name')
-              const groupImage = document.querySelector<HTMLImageElement>('.group-active .icon')
-              const activeCharacter = document.querySelector<HTMLImageElement>('.role-detail .role-visible .role-img')
+              const groupName = document.querySelector(isMobile ? '.group-active .group_name' : '.group-active .name')
+              const groupImage = document.querySelector<HTMLImageElement>(isMobile ? '.group-active img' : '.group-active .icon')
+              const activeCharacterImage = document.querySelector<HTMLImageElement>(
+                isMobile
+                  ? '.role-detail .role-container .role-visible img'
+                  : '.role-detail .role-visible .role-img',
+              )
               presenceData.smallImageKey = groupImage
               presenceData.smallImageText = groupName
-              if (activeCharacter) {
+              if (
+                activeCharacterImage
+                && (isMobile
+                  ? document.querySelector<HTMLDivElement>('.role-detail')?.style.display !== 'none'
+                  : true)
+              ) {
                 presenceData.details = strings.viewingResonator
-                presenceData.state = document.querySelector('.detail-box .role-name')
-                presenceData.largeImageKey = activeCharacter.nextElementSibling?.classList.contains('show')
-                  ? (activeCharacter.nextElementSibling as HTMLImageElement) // splash art if available and visible
-                  : activeCharacter // large character portrait
-                presenceData.smallImageText = document.querySelector('.detail-box .role-text')
+                presenceData.state = document.querySelector(isMobile ? '.role-intro .name' : '.detail-box .role-name')
+                presenceData.largeImageKey = activeCharacterImage.nextElementSibling?.classList.contains('show')
+                  ? (activeCharacterImage.nextElementSibling as HTMLImageElement) // splash art if available and visible
+                  : activeCharacterImage // large character portrait
+                presenceData.smallImageText = document.querySelector(isMobile ? '.role-intro .role-line' : '.detail-box .role-text')
               }
               else {
-                const characters = document.querySelectorAll('.role-item-box')
+                const characters = document.querySelectorAll(isMobile ? '.role-list-container .swiper-slide' : '.role-item-box')
                 presenceData.details = strings.browsingResonators
                 registerSlideshowKey(`resonators-${groupName?.textContent}`)
                 for (let i = 0; i < characters.length; i++) {
@@ -99,8 +110,8 @@ presence.on('UpdateData', async () => {
                     `resonator-${i}`,
                     {
                       ...presenceData,
-                      largeImageKey: character?.querySelector<HTMLImageElement>('.role-item-active2'),
-                      state: character?.querySelector('.role-name'),
+                      largeImageKey: character?.querySelector<HTMLImageElement>(isMobile ? 'img' : '.role-item-active2'),
+                      state: character?.querySelector(isMobile ? '.role-list-name' : '.role-name'),
                     },
                     5000,
                   )
@@ -111,19 +122,19 @@ presence.on('UpdateData', async () => {
             }
             case 'lore': {
               presenceData.details = strings.readingAbout
-              presenceData.state = document.querySelector('.swiper-slide-visible .world-msg-name')
-              presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.swiper-slide-active.active img')
-              presenceData.smallImageText = document.querySelector('.swiper-slide-visible .world-msg-desc')
+              presenceData.state = document.querySelector(isMobile ? '.swiper-slide-active .feature-name' : '.swiper-slide-visible .world-msg-name')
+              presenceData.smallImageKey = document.querySelector<HTMLImageElement>(isMobile ? '#feature-swiper .swiper-slide-active img' : '.swiper-slide-active.active img')
+              presenceData.smallImageText = document.querySelector(isMobile ? '.swiper-slide-active .feature-des' : '.swiper-slide-visible .world-msg-desc')
               break
             }
             case 'regions': {
-              const mapDetail = document.querySelector('.map-detail')
-              presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.swiper-slide-active .map-imgbox img')
+              const mapDetail = document.querySelector<HTMLDivElement>(isMobile ? '.map-content' : '.map-detail')
+              presenceData.largeImageKey = document.querySelector<HTMLImageElement>(isMobile ? '.swiper-slide-visible .world-bg' : '.swiper-slide-active .map-imgbox img')
               presenceData.details = strings.readingRegion
-              presenceData.state = document.querySelector('.slide-custom.is-current-slide .map-names-box')
-              if (mapDetail) {
-                presenceData.smallImageKey = mapDetail.querySelector<HTMLImageElement>('img.show')
-                presenceData.smallImageText = `${mapDetail.querySelector('.md-name')?.textContent} - ${mapDetail.querySelector('.md-desc')?.textContent}`
+              presenceData.state = document.querySelector(isMobile ? '.swiper-slide-visible .world-name' : '.slide-custom.is-current-slide .map-names-box')
+              if (mapDetail && (isMobile ? mapDetail.style.display !== 'none' : true)) {
+                presenceData.smallImageKey = mapDetail.querySelector<HTMLImageElement>(isMobile ? '.swiper-slide-visible .map-bg' : 'img.show')
+                presenceData.smallImageText = `${mapDetail.querySelector(isMobile ? '.swiper-slide-visible .map-name' : '.md-name')?.textContent} - ${mapDetail.querySelector(isMobile ? '.swiper-slide-visible .map-text' : '.md-desc')?.textContent}`
               }
               break
             }
