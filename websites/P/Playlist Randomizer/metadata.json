@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "theusaf"
+  },
+  "service": "Playlist Randomizer",
+  "description": {
+    "en": "Use playlist-randomizer.com to get the most out of your youtube playlists."
+  },
+  "url": "playlist-randomizer.com",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/6wNLFVL.png",
+  "thumbnail": "https://playlist-randomizer.com/images/bg/10.jpg",
+  "color": "#000000",
+  "category": "music",
+  "tags": [
+    "shuffle",
+    "random",
+    "youtube",
+    "playlist"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https://www.youtube.com/embed/.*",
+  "settings": [
+    {
+      "id": "title",
+      "title": "Main Title Source",
+      "icon": "fad fa-input-text",
+      "values": [
+        "Activity Name",
+        "Playlist Name",
+        "Artist Name",
+        "Song Name"
+      ],
+      "value": 0
+    },
+    {
+      "id": "largeImage",
+      "title": "Image Source",
+      "icon": "fad fa-images",
+      "values": [
+        "Playlist Icon",
+        "Song Icon"
+      ],
+      "value": 0
+    }
+  ],
+  "mobile": true
+}
