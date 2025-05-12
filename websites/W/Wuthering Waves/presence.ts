@@ -40,7 +40,7 @@ function getSelectors(isMobile: boolean) {
     regionName: isMobile ? '.swiper-slide-visible .world-name' : '.slide-custom.is-current-slide .map-names-box',
     regionSubImage: isMobile ? '.swiper-slide-visible .map-bg' : 'img.show',
     regionSubName: isMobile ? '.swiper-slide-visible .map-name' : '.md-name',
-    regionSubDescription: isMobile ? '.swiper-slide-visible .map-text' : '.md-desc'
+    regionSubDescription: isMobile ? '.swiper-slide-visible .map-text' : '.md-desc',
   }
 }
 
@@ -107,7 +107,7 @@ presence.on('UpdateData', async () => {
             case 'resonators': {
               const groupName = document.querySelector(selectors.resonatorGroupActive)
               const groupImage = document.querySelector<HTMLImageElement>(selectors.resonatorGroupActive)
-              const activeCharacterImage = document.querySelector<HTMLImageElement>(selectors.resonatorCharacterImage,)
+              const activeCharacterImage = document.querySelector<HTMLImageElement>(selectors.resonatorCharacterImage)
               presenceData.smallImageKey = groupImage
               presenceData.smallImageText = groupName
               if (
