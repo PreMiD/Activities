@@ -123,7 +123,7 @@ presence.on('UpdateData', async () => {
               presenceData.state = document.querySelector('.slide-custom.is-current-slide .map-names-box')
               if (mapDetail) {
                 presenceData.smallImageKey = mapDetail.querySelector<HTMLImageElement>('img.show')
-                presenceData.smallImageText = `${mapDetail.querySelector('.md-name')?.textContent} - ${mapDetail.querySelector('.md-desc')}`
+                presenceData.smallImageText = `${mapDetail.querySelector('.md-name')?.textContent} - ${mapDetail.querySelector('.md-desc')?.textContent}`
               }
               break
             }
