@@ -28,6 +28,7 @@ presence.on('UpdateData', async () => {
     viewingResonator: 'wuthering waves.viewingResonator',
     browsingNews: 'wuthering waves.browsingNews',
     readingArticle: 'general.readingArticle',
+    readingAbout: 'general.readingAbout',
     buttonViewArticle: 'general.buttonViewArticle',
     browsingResonators: 'wuthering waves.browsingResonators',
   })
@@ -52,7 +53,9 @@ presence.on('UpdateData', async () => {
           if (pathList[2]) {
             presenceData.details = strings.readingArticle
             presenceData.state = document.querySelector('.news-tit')
-            presenceData.buttons = [{ label: strings.buttonViewArticle, url: href }]
+            presenceData.buttons = [
+              { label: strings.buttonViewArticle, url: href },
+            ]
           }
           else {
             displayBrowsingNews()
@@ -72,13 +75,15 @@ presence.on('UpdateData', async () => {
             case 'resonators': {
               const groupName = document.querySelector('.group-active .name')
               const groupImage = document.querySelector<HTMLImageElement>('.group-active .icon')
-              const activeCharacter = document.querySelector<HTMLImageElement>('.role-item-active2.show')
+              const activeCharacter = document.querySelector<HTMLImageElement>('.role-detail .role-visible .role-img')
               presenceData.smallImageKey = groupImage
               presenceData.smallImageText = groupName
               if (activeCharacter) {
                 presenceData.details = strings.viewingResonator
                 presenceData.state = document.querySelector('.detail-box .role-name')
-                presenceData.largeImageKey = activeCharacter
+                presenceData.largeImageKey = activeCharacter.nextElementSibling?.classList.contains('show')
+                  ? (activeCharacter.nextElementSibling as HTMLImageElement) // splash art if available and visible
+                  : activeCharacter // large character portrait
                 presenceData.smallImageText = document.querySelector('.detail-box .role-text')
               }
               else {
@@ -87,14 +92,25 @@ presence.on('UpdateData', async () => {
                 registerSlideshowKey(`resonators-${groupName?.textContent}`)
                 for (let i = 0; i < characters.length; i++) {
                   const character = characters[i]
-                  slideshow.addSlide(`resonator-${i}`, {
-                    ...presenceData,
-                    largeImageKey: character?.querySelector<HTMLImageElement>('.role-item-active2'),
-                    state: character?.querySelector('.role-name'),
-                  }, 5000)
+                  slideshow.addSlide(
+                    `resonator-${i}`,
+                    {
+                      ...presenceData,
+                      largeImageKey: character?.querySelector<HTMLImageElement>('.role-item-active2'),
+                      state: character?.querySelector('.role-name'),
+                    },
+                    5000,
+                  )
                 }
                 useSlideshow = true
               }
+              break
+            }
+            case 'lore': {
+              presenceData.details = strings.readingAbout
+              presenceData.state = document.querySelector('.swiper-slide-visible .world-msg-name')
+              presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.swiper-slide-active.active img')
+              presenceData.smallImageText = document.querySelector('.swiper-slide-visible .world-msg-desc')
               break
             }
           }
