@@ -25,5 +25,11 @@
     "official",
     "mobile"
   ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ],
   "mobile": true
 }
