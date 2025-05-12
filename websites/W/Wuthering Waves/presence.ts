@@ -20,17 +20,20 @@ enum ActivityAssets {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
+    name: 'Wuthering Waves',
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
   }
   const strings = await presence.getStrings({
-    viewHome: 'general.viewHome',
-    viewingResonator: 'wuthering waves.viewingResonator',
+    browsing: 'general.browsing',
     browsingNews: 'wuthering waves.browsingNews',
-    readingArticle: 'general.readingArticle',
-    readingAbout: 'general.readingAbout',
-    buttonViewArticle: 'general.buttonViewArticle',
     browsingResonators: 'wuthering waves.browsingResonators',
+    readingAbout: 'general.readingAbout',
+    readingArticle: 'general.readingArticle',
+    readingRegion: 'wuthering waves.readingRegion',
+    viewingResonator: 'wuthering waves.viewingResonator',
+    viewHome: 'general.viewHome',
+    buttonViewArticle: 'general.buttonViewArticle',
   })
   const { pathname, href, hash } = document.location
   const [...pathList] = pathname.split('/').filter(Boolean).slice(1)
@@ -111,6 +114,21 @@ presence.on('UpdateData', async () => {
               presenceData.state = document.querySelector('.swiper-slide-visible .world-msg-name')
               presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.swiper-slide-active.active img')
               presenceData.smallImageText = document.querySelector('.swiper-slide-visible .world-msg-desc')
+              break
+            }
+            case 'regions': {
+              const mapDetail = document.querySelector('.map-detail')
+              presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.swiper-slide-active .map-imgbox img')
+              presenceData.details = strings.readingRegion
+              presenceData.state = document.querySelector('.slide-custom.is-current-slide .map-names-box')
+              if (mapDetail) {
+                presenceData.smallImageKey = mapDetail.querySelector<HTMLImageElement>('img.show')
+                presenceData.smallImageText = `${mapDetail.querySelector('.md-name')?.textContent} - ${mapDetail.querySelector('.md-desc')}`
+              }
+              break
+            }
+            case 'end': {
+              presenceData.details = strings.browsing
               break
             }
           }
