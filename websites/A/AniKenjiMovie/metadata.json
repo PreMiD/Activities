@@ -12,8 +12,8 @@
   },
   "url": "movie.anikenji.xyz",
   "regExp": "movie.animekenji\\..*",
-  "version": "1.2.0",
-  "logo": "https://movie.anikenji.xyz/images/webfilm-logo.png",
+  "version": "1.0.0",
+  "logo": "https://movie.anikenji.xyz/images/webfilm-logo512x512.png",
   "thumbnail": "https://movie.anikenji.xyz/images/thumbnail.png",
   "color": "#ff71b3",
   "category": "anime",
@@ -21,7 +21,6 @@
     "anime"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*",
   "settings": [
     {
       "id": "showButtons",

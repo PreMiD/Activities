@@ -9,7 +9,7 @@ const strings = presence.getStrings({
 })
 
 enum ActivityAssets {
-  Logo = 'https://movie.anikenji.xyz/images/webfilm-logo.png',
+  Logo = 'https://movie.anikenji.xyz/images/webfilm-logo512x512.png',
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
