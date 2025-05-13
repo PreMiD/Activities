@@ -162,7 +162,7 @@ presence.on('UpdateData', async () => {
     }
 
     // Thêm nút xem phim
-    if(showButtons) {
+    if (showButtons) {
       presenceData.buttons = [
         {
           label: '📺 Xem Phim',
@@ -242,7 +242,7 @@ presence.on('UpdateData', async () => {
     }
 
     // Thêm nút cho presence
-    if(showButtons) {
+    if (showButtons) {
       presenceData.buttons = [
         {
           label: '📺 Xem Phim',
