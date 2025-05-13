@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Anant",
+    "id": "629851641579044874"
+  },
+  "service": "Hexa Watch",
+  "description": {
+    "en": "Hexa Watch is a streaming platform for movies and TV shows. Watch your favorite content with ease!",
+    "fr": "Hexa Watch est une plateforme de streaming pour les films et les émissions de télévision. Regardez votre contenu préféré en toute simplicité!"
+  },
+  "url": [
+    "www.hexa.watch",
+    "hexa.watch"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hexa%20Watch/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hexa%20Watch/assets/thumbnail.png",
+  "color": "#1e1e1e",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "tv",
+    "streaming"
+  ]
+}
