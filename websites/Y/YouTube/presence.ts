@@ -4,6 +4,7 @@ import type {
 import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 import {
   checkStringLanguage,
+  getMobileChapter,
   getQuerySelectors,
   getSetting,
   getThumbnail,
@@ -147,7 +148,10 @@ presence.on('UpdateData', async () => {
       }
     }
 
-    const chapter = document.querySelector(selectors.chapterTitle)?.textContent
+    let chapter = document.querySelector(selectors.chapterTitle)?.textContent
+    if (isMobile && !chapter) {
+      chapter = getMobileChapter(video.currentTime)
+    }
 
     if (logo === LogoMode.Channel) {
       pfp = resolver === youtubeMiniplayerResolver

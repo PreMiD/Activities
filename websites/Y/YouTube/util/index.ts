@@ -1,3 +1,5 @@
+import { timestampFromFormat } from 'premid'
+
 export const presence = new Presence({
   clientId: '463097721130188830',
 })
@@ -229,4 +231,44 @@ export function getQuerySelectors(
   isMobile: boolean,
 ): Record<keyof typeof desktopSelectors, string> {
   return isMobile ? mobileSelectors : desktopSelectors
+}
+
+export function getMobileChapter(videoTime: number): string | null {
+  const crawlerChapterData = document.querySelector<HTMLSpanElement>('.crawler-full-description > span')?.children
+  if (!crawlerChapterData) {
+    return null
+  }
+  let isChapterSection = false
+  let isExpectingChapterTimestamp = true
+  let currentChapterTitle = ''
+  for (let i = 0; i < crawlerChapterData.length; i++) {
+    const item = crawlerChapterData[i]!
+    if (item.textContent?.trim() === 'CHAPTERS:') {
+      isChapterSection = true
+      continue
+    }
+    if (isChapterSection) {
+      if (isExpectingChapterTimestamp) {
+        isExpectingChapterTimestamp = false
+        const timestamp = item.textContent!.trim().split('\n')[0] ?? ''
+        const timestampTime = timestampFromFormat(timestamp)
+        if (timestampTime === 0 && !timestamp.startsWith('00:')) {
+          break
+        }
+
+        // check if timestamp is after current time
+        if (timestampTime > videoTime) {
+          return currentChapterTitle
+        }
+      }
+      else {
+        isExpectingChapterTimestamp = true
+        currentChapterTitle = item.textContent!.trim()
+      }
+    }
+  }
+  if (currentChapterTitle) {
+    return currentChapterTitle // final chapter
+  }
+  return null
 }
