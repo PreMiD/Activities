@@ -147,6 +147,8 @@ presence.on('UpdateData', async () => {
       }
     }
 
+    const chapter = document.querySelector(selectors.chapterTitle)?.textContent
+
     if (logo === LogoMode.Channel) {
       pfp = resolver === youtubeMiniplayerResolver
         ? ''
@@ -177,12 +179,14 @@ presence.on('UpdateData', async () => {
         .replace('%title%', title.trim())
         .replace('%uploader%', uploaderName.trim())
         .replace('%playlistTitle%', playlistTitle.trim())
-        .replace('%playlistQueue%', playlistQueue?.trim() ?? ''),
+        .replace('%playlistQueue%', playlistQueue?.trim() ?? '')
+        .replace('%chapter%', chapter ?? ''),
       state: vidState
         .replace('%title%', title.trim())
         .replace('%uploader%', uploaderName.trim())
         .replace('%playlistTitle%', playlistTitle.trim())
-        .replace('%playlistQueue%', playlistQueue?.trim() ?? ''),
+        .replace('%playlistQueue%', playlistQueue?.trim() ?? '')
+        .replace('%chapter%', chapter ?? ''),
       largeImageKey: unlistedVideo || logo === LogoMode.YouTubeLogo || pfp === ''
         ? YouTubeAssets.Logo
         : logo === LogoMode.Thumbnail
