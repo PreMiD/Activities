@@ -196,14 +196,6 @@ presence.on('UpdateData', async () => {
     if (match && match[1]) {
       episodeNumberStr = match[1] // Chỉ lấy phần số, ví dụ: "15"
     }
-    const Rating = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-info > span.this-desc-score')?.textContent?.trim() || 'N/A'
-    const Year = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-labels > span.this-tag')?.textContent?.trim() || 'N/A'
-    let yearOfMovie = ''
-    const yearRegex = /[Nn]ăm\s*(\d+)/
-    const matchYear = Year.match(yearRegex)
-    if (matchYear && matchYear[1]) {
-      yearOfMovie = matchYear[1]
-    }
     if (iFrameVideo && showTimestamps && !Number.isNaN(duration)) {
       // Có video từ iframe
       presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
@@ -249,7 +241,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${yearOfMovie}`
     }
 
-    
+    // Thêm nút cho presence
     if(showButtons) {
       presenceData.buttons = [
         {
