@@ -1,3 +1,5 @@
+import { use } from '../util.js'
+
 export enum CounterSideAssets {
   Gearbuilder = 'https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/2.png',
   Guide = 'https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/3.png',
@@ -14,30 +16,64 @@ export enum CounterSideAssets {
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {
     case 'operators': {
-      if (pathList[1]) {
-        presenceData.details = 'Looking into an operator\'s profile'
-        presenceData.state = document.querySelector('h1')
-        presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
-          '#gatsby-focus-wrapper > div > main > div > div > div.unit-page.operator > div.unit-header.align-items-center.d-flex.flex-wrap > div:nth-child(1) > span > a > div > div > picture > img',
-        )?.src
-        presenceData.smallImageKey = CounterSideAssets.Ships
-        presenceData.smallImageText = 'Prydwen Institute'
-        presenceData.buttons = [{ label: 'View Operator', url: document.location.href }]
+      interface OperatorData {
+        activeOperator: HTMLDivElement | null
+      }
+
+      const { activeOperator } = use<OperatorData>((data) => {
+        const observer = new MutationObserver((changes) => {
+          for (const change of changes) {
+            switch (change.type) {
+              case 'attributes': {
+                if (change.attributeName === 'aria-expanded') {
+                  const target = change.target as HTMLElement
+                  if (target.getAttribute('aria-expanded') === 'true') {
+                    data.activeOperator = target.closest('.single-operator')
+                    return
+                  }
+                  data.activeOperator = null
+                }
+                break
+              }
+              case 'childList': {
+                // searching or changing filters
+                data.activeOperator = null
+                return
+              }
+            }
+          }
+        })
+        const operatorContainer = document.querySelector(
+          '.operator-simplified-view',
+        )
+        if (!operatorContainer) {
+          return null
+        }
+        observer.observe(operatorContainer, {
+          subtree: true,
+          childList: true,
+          attributes: true,
+        })
+        return () => observer.disconnect()
+      }, pathList)
+      if (activeOperator) {
+        presenceData.details = 'Viewing an Operator'
+        presenceData.state = `${activeOperator.querySelector('.name')?.textContent} - ${activeOperator.querySelector('.nav-link.active')?.textContent}`
+        presenceData.smallImageKey = activeOperator.querySelector('img')
+        presenceData.smallImageText = [
+          ...(activeOperator.querySelector('.details')?.children ?? []),
+        ]
+          .map(child => child.textContent)
+          .join(' ')
       }
       else {
-        presenceData.details = 'Viewing operators'
-        presenceData.largeImageKey = CounterSideAssets.Ships
+        presenceData.details = 'Viewing Operators'
         presenceData.smallImageKey = CounterSideAssets.Operators
-        presenceData.smallImageText = 'Viewing operators'
+        presenceData.smallImageText = 'Viewing Operators'
       }
       break
     }
   }
-  //   if (document.location.pathname === '/operators') {
-  //   }
-  //   else if (document.location.pathname.startsWith('/operators')) {
-
-  //   }
   //   else if (document.location.pathname === '/ships') {
   //     presenceData.details = 'Viewing ships'
   //     presenceData.largeImageKey = CounterSideAssets.Ships
@@ -103,33 +139,5 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
 
   //         break
   //       }
-  //       case '/guides': {
-  //         presenceData.details = 'Finding guides'
-  //         presenceData.largeImageKey = CounterSideAssets.Ships
-  //         presenceData.smallImageKey = CounterSideAssets.Guide
-  //         presenceData.smallImageText = 'Viewing guides'
-
-//         break
-//       }
-//       default:
-//         if (document.location.pathname.startsWith('/guides')) {
-//           presenceData.details = 'Reading a guide:'
-//           presenceData.state = shortTitle
-//           presenceData.largeImageKey = CounterSideAssets.Guide
-//           presenceData.smallImageKey = CounterSideAssets.Ships
-//           presenceData.smallImageText = 'Prydwen Institute'
-//           presenceData.buttons = [{ label: 'Read Guide', url: document.URL }]
-//         }
-//         else if (document.location.href.includes('gear-builder')) {
-//           presenceData.details = 'Making a Gear Builder template'
-//           presenceData.largeImageKey = CounterSideAssets.Ships
-//           presenceData.smallImageKey = CounterSideAssets.Gearbuilder
-//           presenceData.smallImageText = 'Gear building'
-//         }
-//         else {
-//           presenceData.details = 'Browsing the wiki'
-//           presenceData.largeImageKey = CounterSideAssets.Ships
-//         }
-//     }
-//   }
+  //   }
 }
