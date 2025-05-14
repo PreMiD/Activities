@@ -1,9 +1,10 @@
 import type {
   Resolver,
 } from './util/index.js'
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 import {
   checkStringLanguage,
+  getMobileChapter,
   getQuerySelectors,
   getSetting,
   getThumbnail,
@@ -147,6 +148,11 @@ presence.on('UpdateData', async () => {
       }
     }
 
+    let chapter = document.querySelector(selectors.chapterTitle)?.textContent
+    if (isMobile && !chapter) {
+      chapter = getMobileChapter(video.currentTime)
+    }
+
     if (logo === LogoMode.Channel) {
       pfp = resolver === youtubeMiniplayerResolver
         ? ''
@@ -166,7 +172,7 @@ presence.on('UpdateData', async () => {
       && unlistedPathElement?.getAttribute('d')
       === unlistedBadgeElement?.getAttribute('d')
     const videoId = resolver.getVideoID()!
-    const [startTimestamp, endTimestamp] = presence.getTimestampsfromMedia(video)
+    const [startTimestamp, endTimestamp] = getTimestampsFromMedia(video)
     const listening = showListening === ShowListening.Always
       || (showListening === ShowListening.WhenMusic && resolver.isMusic())
     const presenceData: PresenceData = {
@@ -177,12 +183,14 @@ presence.on('UpdateData', async () => {
         .replace('%title%', title.trim())
         .replace('%uploader%', uploaderName.trim())
         .replace('%playlistTitle%', playlistTitle.trim())
-        .replace('%playlistQueue%', playlistQueue?.trim() ?? ''),
+        .replace('%playlistQueue%', playlistQueue?.trim() ?? '')
+        .replace('%chapter%', chapter ?? ''),
       state: vidState
         .replace('%title%', title.trim())
         .replace('%uploader%', uploaderName.trim())
         .replace('%playlistTitle%', playlistTitle.trim())
-        .replace('%playlistQueue%', playlistQueue?.trim() ?? ''),
+        .replace('%playlistQueue%', playlistQueue?.trim() ?? '')
+        .replace('%chapter%', chapter ?? ''),
       largeImageKey: unlistedVideo || logo === LogoMode.YouTubeLogo || pfp === ''
         ? YouTubeAssets.Logo
         : logo === LogoMode.Thumbnail
@@ -359,7 +367,7 @@ presence.on('UpdateData', async () => {
         }
         // Get channel name from website's title
         else if (/\([^)]+\)/.test(documentTitle)) {
-          user = documentTitle.replace(/\(([^)]+)\)/, '')
+          user = documentTitle.replace(/\([^)]+\)/, '')
         }
         else {
           user = documentTitle
@@ -552,7 +560,7 @@ presence.on('UpdateData', async () => {
 
     if (!presenceData.details)
       presence.setActivity()
-    else presence.setActivity(presenceData, true)
+    else presence.setActivity(presenceData)
   }
   else if (hostname === 'studio.youtube.com') {
     const presenceData: PresenceData = {

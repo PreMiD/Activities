@@ -73,7 +73,7 @@
     "studio.youtube.com",
     "m.youtube.com"
   ],
-  "version": "6.0.1",
+  "version": "6.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube/assets/thumbnail.jpg",
   "color": "#E40813",
@@ -137,7 +137,7 @@
       "title": "Video Details row1",
       "icon": "fas fa-comment-alt-edit",
       "value": "%title%",
-      "placeholder": "Use %title%, %uploader%, %playlistTitle%, %playlistQueue%"
+      "placeholder": "Use %title%, %uploader%, %playlistTitle%, %playlistQueue%, %chapter%"
     },
     {
       "id": "vidState",
