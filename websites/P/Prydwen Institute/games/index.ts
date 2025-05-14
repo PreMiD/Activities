@@ -5,6 +5,7 @@ import * as counterSide from './counter-side.js'
 import * as etheriaRestart from './etheria-restart.js'
 import * as eversoul from './eversoul.js'
 import * as gflExilium from './gfl-exilium.js'
+import * as limbusCompany from './limbus-company.js'
 import * as starRail from './star-rail.js'
 
 export interface GameDetails {
@@ -19,5 +20,6 @@ export default {
   'etheria-restart': etheriaRestart,
   eversoul,
   'gfl-exilium': gflExilium,
+  'limbus-company': limbusCompany,
   'star-rail': starRail,
 } as Record<string, GameDetails>
