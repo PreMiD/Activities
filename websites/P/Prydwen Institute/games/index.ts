@@ -8,6 +8,7 @@ import * as gflExilium from './gfl-exilium.js'
 import * as limbusCompany from './limbus-company.js'
 import * as nikke from './nikke.js'
 import * as re1999 from './re1999.js'
+import * as soloLeveling from './solo-leveling.js'
 import * as starRail from './star-rail.js'
 
 export interface GameDetails {
@@ -25,5 +26,6 @@ export default {
   'limbus-company': limbusCompany,
   nikke,
   re1999,
+  'solo-leveling': soloLeveling,
   'star-rail': starRail,
 } as Record<string, GameDetails>
