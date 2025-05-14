@@ -71,6 +71,14 @@ presence.on('UpdateData', async () => {
   if (matchYear && matchYear[1]) {
     yearOfMovie = matchYear[1]
   }
+  const movieName = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2 > a > span')?.textContent?.trim() || ''
+  const fullTitle = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2')?.textContent?.trim() || ''
+  let episodeNumberStr = ''
+  const regex = /[Tt]ập\s*(\d+)/
+  const match = fullTitle.match(regex)
+  if (match && match[1]) {
+    episodeNumberStr = match[1]
+  }
 
   // Xử lý các kiểu trang khác nhau
   if (isHomePage) {
@@ -97,15 +105,6 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (isWatchingPage) {
-    const movieName = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2 > a > span')?.textContent?.trim() || ''
-    const fullTitle = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2')?.textContent?.trim() || ''
-    let episodeNumberStr = ''
-    const regex = /[Tt]ập\s*(\d+)/
-    const match = fullTitle.match(regex)
-    if (match && match[1]) {
-      episodeNumberStr = match[1]
-    }
-
     if (iFrameVideo && showTimestamps && !Number.isNaN(duration)) {
       presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = paused ? (await strings).pause : (await strings).play
@@ -145,21 +144,6 @@ presence.on('UpdateData', async () => {
       'body > div.box-width > div.player-info > div.player-info-text > div.title > h2 > a > span',
     )
   ) {
-    const movieName = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2 > a > span')?.textContent?.trim() || ''
-    const fullTitle = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2')?.textContent?.trim() || ''
-    let episodeNumberStr = ''
-    const regex = /[Tt]ập\s*(\d+)/
-    const match = fullTitle.match(regex)
-    const [
-      showButtons,
-      showTimestamps,
-    ] = await Promise.all([
-      presence.getSetting<boolean>('buttons'),
-      presence.getSetting<boolean>('showtimestamps'),
-    ])
-    if (match && match[1]) {
-      episodeNumberStr = match[1]
-    }
     if (iFrameVideo && showTimestamps && !Number.isNaN(duration)) {
       presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = paused ? (await strings).pause : (await strings).play
