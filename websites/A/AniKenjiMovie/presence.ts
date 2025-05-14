@@ -56,6 +56,21 @@ presence.on('UpdateData', async () => {
   const isRegion = pathname.includes('/quoc-gia')
   const isDetailsPage = splitPath.length === 3 && splitPath[1] === 'phim'
   const isWatchingPage = splitPath.length >= 4 && splitPath[1] === 'phim' && splitPath[3]?.startsWith('tap-')
+  const [
+    showButtons,
+    showTimestamps,
+  ] = await Promise.all([
+    presence.getSetting<boolean>('buttons'),
+    presence.getSetting<boolean>('showtimestamps'),
+  ])
+  const Rating = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-info > span.this-desc-score')?.textContent?.trim() || 'N/A'
+  const Year = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-labels > span.this-tag')?.textContent?.trim() || 'N/A'
+  let yearOfMovie = ''
+  const yearRegex = /[Nn]ăm\s*(\d+)/
+  const matchYear = Year.match(yearRegex)
+  if (matchYear && matchYear[1]) {
+    yearOfMovie = matchYear[1]
+  }
 
   // Xử lý các kiểu trang khác nhau
   if (isHomePage) {
@@ -72,52 +87,26 @@ presence.on('UpdateData', async () => {
     presenceData.state = `Phim: ${Region}`
   }
   else if (isDetailsPage) {
-    // Trang chi tiết phim
     const fullTitle = document.querySelector('head > title')?.textContent?.trim() || ''
     const titleAfterPrefix = fullTitle.split('Phim')?.[1]?.trim() || fullTitle.split('Xem Phim')?.[1]?.trim() || ''
     presenceData.details = 'Định xem phim...'
     presenceData.state = titleAfterPrefix
-
-    // Lấy thumbnail nếu có
     const bannerLink = document.querySelector('.ds-vod-detail .this-pic-bj') as HTMLImageElement
     if (bannerLink && bannerLink.src) {
       presenceData.largeImageKey = bannerLink.src
     }
   }
   else if (isWatchingPage) {
-    // Trang xem phim
-    /*
-    const fullTitle = document.querySelector('head > title')?.textContent?.trim() || ''
-    const titleAfterPrefix = fullTitle.split('Phim')?.[1]?.trim() || fullTitle.split('Xem Phim')?.[1]?.trim() || ''
-    const episodeIndex = titleAfterPrefix.toLowerCase().indexOf('tập')
-    const MovieName = episodeIndex > -1 ? titleAfterPrefix.substring(0, episodeIndex).trim() : titleAfterPrefix
-    const episodeInfo = episodeIndex > -1 ? `Tập ${titleAfterPrefix.substring(episodeIndex + 3).trim()}` : ''
-    */
-
     const movieName = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2 > a > span')?.textContent?.trim() || ''
     const fullTitle = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2')?.textContent?.trim() || ''
-    // Ví dụ: fullTitle = "Tên Phim Gì Đó Chi tiết Tập 15"
-    // 2. Khai báo biến để lưu số tập đã lọc
     let episodeNumberStr = ''
-    // 3. Dùng Regex để tìm và lọc số tập
-    const regex = /[Tt]ập\s*(\d+)/ // Tìm "Tập" hoặc "tập", theo sau bởi số
+    const regex = /[Tt]ập\s*(\d+)/
     const match = fullTitle.match(regex)
-    // 4. Lấy số từ kết quả khớp (nếu có)
     if (match && match[1]) {
-      episodeNumberStr = match[1] // Chỉ lấy phần số, ví dụ: "15"
+      episodeNumberStr = match[1]
     }
-    // const Episode = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2')?.textContent?.trim() || ''
-    // Kiểm tra xem có video đang phát không (từ iframe)
-    const [
-      showButtons,
-      showTimestamps,
-    ] = await Promise.all([
-      presence.getSetting<boolean>('buttons'),
-      presence.getSetting<boolean>('showtimestamps'),
-    ])
 
     if (iFrameVideo && showTimestamps && !Number.isNaN(duration)) {
-      // Có video từ iframe
       presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = paused ? (await strings).pause : (await strings).play
 
@@ -130,38 +119,18 @@ presence.on('UpdateData', async () => {
         presenceData.endTimestamp = endTimestamp
       }
       else {
-        // Xóa timestamps nếu video đang tạm dừng
         delete presenceData.startTimestamp
         delete presenceData.endTimestamp
         presenceData.startTimestamp = browsingTimestamp
-      }
-
-      const Rating = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-info > span.this-desc-score')?.textContent?.trim() || 'N/A'
-      const Year = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-labels > span.this-tag')?.textContent?.trim() || 'N/A'
-      let yearOfMovie = ''
-      const yearRegex = /[Nn]ăm\s*(\d+)/
-      const matchYear = Year.match(yearRegex)
-      if (matchYear && matchYear[1]) {
-        yearOfMovie = matchYear[1]
       }
       presenceData.details = `${movieName}`
       presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${yearOfMovie}`
     }
     else {
-      // Đang ở trang xem phim nhưng chưa phát video hoặc không tìm thấy video
-      const Rating = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-info > span.this-desc-score')?.textContent?.trim() || 'N/A'
-      const Year = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-labels > span.this-tag')?.textContent?.trim() || 'N/A'
-      let yearOfMovie = ''
-      const yearRegex = /[Nn]ăm\s*(\d+)/
-      const matchYear = Year.match(yearRegex)
-      if (matchYear && matchYear[1]) {
-        yearOfMovie = matchYear[1]
-      }
       presenceData.details = `${movieName}`
       presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${yearOfMovie}`
     }
 
-    // Thêm nút xem phim
     if (showButtons) {
       presenceData.buttons = [
         {
@@ -176,14 +145,10 @@ presence.on('UpdateData', async () => {
       'body > div.box-width > div.player-info > div.player-info-text > div.title > h2 > a > span',
     )
   ) {
-    // Trang chi tiết phim (selector cụ thể)
     const movieName = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2 > a > span')?.textContent?.trim() || ''
     const fullTitle = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2')?.textContent?.trim() || ''
-    // Ví dụ: fullTitle = "Tên Phim Gì Đó Chi tiết Tập 15"
-    // 2. Khai báo biến để lưu số tập đã lọc
     let episodeNumberStr = ''
-    // 3. Dùng Regex để tìm và lọc số tập
-    const regex = /[Tt]ập\s*(\d+)/ // Tìm "Tập" hoặc "tập", theo sau bởi số
+    const regex = /[Tt]ập\s*(\d+)/
     const match = fullTitle.match(regex)
     const [
       showButtons,
@@ -192,12 +157,10 @@ presence.on('UpdateData', async () => {
       presence.getSetting<boolean>('buttons'),
       presence.getSetting<boolean>('showtimestamps'),
     ])
-    // 4. Lấy số từ kết quả khớp (nếu có)
     if (match && match[1]) {
-      episodeNumberStr = match[1] // Chỉ lấy phần số, ví dụ: "15"
+      episodeNumberStr = match[1]
     }
     if (iFrameVideo && showTimestamps && !Number.isNaN(duration)) {
-      // Có video từ iframe
       presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = paused ? (await strings).pause : (await strings).play
 
@@ -210,33 +173,14 @@ presence.on('UpdateData', async () => {
         presenceData.endTimestamp = endTimestamp
       }
       else {
-        // Xóa timestamps nếu video đang tạm dừng
         delete presenceData.startTimestamp
         delete presenceData.endTimestamp
         presenceData.startTimestamp = browsingTimestamp
-      }
-
-      const Rating = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-info > span.this-desc-score')?.textContent?.trim() || 'N/A'
-      const Year = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-labels > span.this-tag')?.textContent?.trim() || 'N/A'
-      let yearOfMovie = ''
-      const yearRegex = /[Nn]ăm\s*(\d+)/
-      const matchYear = Year.match(yearRegex)
-      if (matchYear && matchYear[1]) {
-        yearOfMovie = matchYear[1]
       }
       presenceData.details = `${movieName}`
       presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${yearOfMovie}`
     }
     else {
-      // Đang ở trang xem phim nhưng chưa phát video hoặc không tìm thấy video
-      const Rating = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-info > span.this-desc-score')?.textContent?.trim() || 'N/A'
-      const Year = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-labels > span.this-tag')?.textContent?.trim() || 'N/A'
-      let yearOfMovie = ''
-      const yearRegex = /[Nn]ăm\s*(\d+)/
-      const matchYear = Year.match(yearRegex)
-      if (matchYear && matchYear[1]) {
-        yearOfMovie = matchYear[1]
-      }
       presenceData.details = `${movieName}`
       presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${yearOfMovie}`
     }
@@ -250,11 +194,6 @@ presence.on('UpdateData', async () => {
         },
       ]
     }
-    /*
-    presenceData.details = movieName
-    presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${yearOfMovie}`
-    presenceData.smallImageKey = Assets.Reading
-    */
   }
   else {
     // Các trang khác không được xác định cụ thể

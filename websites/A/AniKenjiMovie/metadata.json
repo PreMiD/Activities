@@ -7,12 +7,13 @@
   },
   "service": "AniKenjiMovie",
   "description": {
-    "en": "Free Anime websites",
-    "vi": "Xem anime online với phụ đề tiếng việt."
+    "en": "Watch High Quality Vietsub Movies Online",
+    "vi": "Xem Phim Vietsub Trực Tuyến Chất Lượng Cao",
+    "zh": "在线观看高质量越南语电影"
   },
   "url": "phamhung.xyz",
   "regExp": "phamhung\\..*",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://phamhung.xyz/images/webfilm-logo512x512.png",
   "thumbnail": "https://phamhung.xyz/images/thumbnail.png",
   "color": "#ff71b3",
