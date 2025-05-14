@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "629851641579044874",
+    "name": "Anant"
+  },
+  "service": "Kuroiru",
+  "description": {
+    "en": "Cross-site anime tracker. Track anime across multiple resources and stay updated."
+  },
+  "url": "kuroiru.co",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/zVqQTjNd/apple-icon-120x120.webp",
+  "thumbnail": "https://kuroiru.co/logo/stuff/letter-small.png",
+  "color": "#a347ff",
+  "category": "anime",
+  "tags": ["anime", "tracker", "kuroiru"],
+  "iframe": false
+}
