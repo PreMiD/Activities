@@ -6,6 +6,7 @@ import * as etheriaRestart from './etheria-restart.js'
 import * as eversoul from './eversoul.js'
 import * as gflExilium from './gfl-exilium.js'
 import * as limbusCompany from './limbus-company.js'
+import * as nikke from './nikke.js'
 import * as starRail from './star-rail.js'
 
 export interface GameDetails {
