@@ -8,12 +8,50 @@ presence.on('UpdateData', () => {
     name: 'Prydwen Institute',
     startTimestamp: browsingTimestamp,
   }
-  const { href, pathname, hostname } = document.location
+  const { href, pathname, hostname, search } = document.location
+  const searchParams = new URLSearchParams(search)
   const pathList = pathname.split('/').filter(Boolean)
   let useSlideshow = false
 
   if (hostname === 'blog.prydwen.gg') {
-    // todo
+    presenceData.name += ' Blog'
+    switch (pathList[0] ?? '/') {
+      case '/': {
+        if (searchParams.get('s')) {
+          presenceData.details = 'Searching'
+          presenceData.state = searchParams.get('s')
+        }
+        else {
+          presenceData.details = 'Browsing...'
+        }
+        break
+      }
+      case 'category': {
+        presenceData.details = 'Browsing Posts by Category'
+        presenceData.state = document.querySelector('a[aria-current="page"]')
+        break
+      }
+      case 'tag': {
+        presenceData.details = 'Browsing Posts by Tag'
+        presenceData.state = pathList[1]
+        break
+      }
+      default: {
+        if (!Number.isNaN(Number.parseInt(pathList[0] ?? ''))) {
+          if (pathList[3]) {
+            presenceData.details = 'Reading a Post'
+            presenceData.state = document.querySelector('h1')
+            presenceData.buttons = [{ label: 'Read Post', url: href }]
+          }
+          else {
+            presenceData.details = 'Browsing Post Archives'
+          }
+        }
+        else {
+          presenceData.details = 'Browsing...'
+        }
+      }
+    }
   }
   else {
     if (pathList[0]) {
