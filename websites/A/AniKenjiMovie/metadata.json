@@ -7,9 +7,9 @@
   },
   "service": "AniKenjiMovie",
   "description": {
-    "en": "Watch High Quality Vietsub Movies Online",
-    "vi": "Xem Phim Vietsub Trực Tuyến Chất Lượng Cao",
-    "zh": "在线观看高质量越南语电影"
+    "en": "Watch free movies at high speed without ads, I will upload any series you like.",
+    "vi": "Xem phim miễn phí tốc độ cao không quảng cáo, anh em thích xem bộ nào tôi up bộ đấy",
+    "zh": "高速观看免费电影，无广告，我会上传您喜欢的任何剧集。"
   },
   "url": "phamhung.xyz",
   "regExp": "phamhung\\..*",
