@@ -166,7 +166,7 @@ presence.on('UpdateData', async () => {
       data.buttons = [
         {
           label: 'Visit Website',
-          url: document.URL
+          url: document.location.href
         }
       ]
       slide.updateData(data)
@@ -229,7 +229,7 @@ if (showButtons) {
     data.buttons = [
       {
         label: 'Visit Website',
-        url: document.URL
+        url: document.location.href
       }
     ]
     slide.updateData(data)

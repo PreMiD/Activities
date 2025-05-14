@@ -329,7 +329,7 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [
       {
         label: 'Visit Website',
-        url: document.URL
+        url: document.location.href
       }
     ]
   }

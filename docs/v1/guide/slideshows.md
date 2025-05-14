@@ -106,7 +106,7 @@ for (const slide of slides) {
   data.buttons = [
     {
       label: 'Visit Website',
-      url: document.URL
+      url: document.location.href
     }
   ]
   slide.updateData(data)

@@ -143,7 +143,7 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [
       {
         label: 'Watch Video',
-        url: document.URL
+        url: document.location.href
       }
     ]
 

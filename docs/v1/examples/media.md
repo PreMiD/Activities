@@ -100,11 +100,11 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [
       {
         label: 'Watch Video',
-        url: document.URL
+        url: document.location.href
       },
       {
         label: 'Visit Channel',
-        url: document.querySelector('.channel-link')?.getAttribute('href') || document.URL
+        url: document.querySelector('.channel-link')?.getAttribute('href') || document.location.href
       }
     ]
   }
