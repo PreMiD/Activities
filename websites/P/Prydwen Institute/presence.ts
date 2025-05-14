@@ -107,6 +107,7 @@ presence.on('UpdateData', () => {
             }
             break
           }
+          case 'stats':
           case 'characters-stats': {
             useSlideshow = true
             const characters = [...document.querySelectorAll<HTMLDivElement>('tr')]
