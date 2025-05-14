@@ -4,6 +4,7 @@ import * as ashEchoes from './ash-echoes.js'
 import * as counterSide from './counter-side.js'
 import * as etheriaRestart from './etheria-restart.js'
 import * as eversoul from './eversoul.js'
+import * as gflExilium from './gfl-exilium.js'
 
 export interface GameDetails {
   apply: (presenceData: PresenceData, pathList: string[]) => Awaitable<true | unknown>
@@ -15,5 +16,6 @@ export default {
   'ash-echoes': ashEchoes,
   'counter-side': counterSide,
   'etheria-restart': etheriaRestart,
-  eversoul
+  eversoul,
+  'gfl-exilium': gflExilium,
 } as Record<string, GameDetails>
