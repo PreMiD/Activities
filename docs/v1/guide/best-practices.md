@@ -345,7 +345,7 @@ if (showButtons) {
   presenceData.buttons = [
     {
       label: 'Visit Website',
-      url: document.URL
+      url: document.location.href
     }
   ]
 }
@@ -359,7 +359,7 @@ if (showTimestamp) {
 presenceData.buttons = [
   {
     label: 'Visit Website',
-    url: document.URL
+    url: document.location.href
   }
 ]
 presenceData.startTimestamp = Date.now()
@@ -621,7 +621,7 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [
       {
         label: 'Visit Website',
-        url: document.URL
+        url: document.location.href
       }
     ]
   }

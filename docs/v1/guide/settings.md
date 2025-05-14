@@ -170,7 +170,7 @@ presence.on('UpdateData', async () => {
       },
       {
         label: 'View Page',
-        url: document.URL
+        url: document.location.href
       }
     ]
   }
@@ -326,7 +326,7 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [
       {
         label: buttonText,
-        url: document.URL
+        url: document.location.href
       }
     ]
   }
