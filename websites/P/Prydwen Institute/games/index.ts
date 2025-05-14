@@ -1,3 +1,4 @@
+import * as afkJourney from './afk-journey.js'
 import * as counterSide from './counter-side.js'
 
 export interface GameDetails {
@@ -5,5 +6,6 @@ export interface GameDetails {
 }
 
 export default {
+  'afk-journey': afkJourney,
   'counter-side': counterSide,
 } as Record<string, GameDetails>

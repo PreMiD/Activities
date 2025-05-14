@@ -1,5 +1,5 @@
 import games from './games/index.js'
-import { presence, slideshow } from './util.js'
+import { addButton, presence, slideshow } from './util.js'
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -58,7 +58,12 @@ presence.on('UpdateData', () => {
       const gameName = document.querySelector('.game-name')
       // viewing content for a game
       if (document.querySelector('.left-menu')) {
-        presenceData.buttons = [{ label: 'View Game', url: document.querySelector<HTMLAnchorElement>('.left-menu .nav a') }]
+        presenceData.buttons = [
+          {
+            label: 'View Game',
+            url: document.querySelector<HTMLAnchorElement>('.left-menu .nav a'),
+          },
+        ]
         const path = pathList[1]
         switch (path ?? '/') {
           case '/': {
@@ -83,11 +88,33 @@ presence.on('UpdateData', () => {
             presenceData.details = 'Browsing Database'
             break
           }
+          case 'characters': {
+            if (pathList[1]) {
+              presenceData.details = 'Viewing a Character'
+              presenceData.state = `${document.querySelector('h1 strong')?.textContent} - ${document.querySelector('.single-tab.active')?.textContent}`
+              presenceData.smallImageKey
+                = document.querySelector<HTMLImageElement>(
+                  '.character-top [data-main-image]',
+                )
+              presenceData.smallImageText = document.querySelector('h2')
+              addButton(presenceData, {
+                label: 'View Character',
+                url: document.location.href,
+              })
+            }
+            else {
+              presenceData.details = 'Browsing Characters'
+            }
+            break
+          }
           default: {
             const game = games[path!]
             presenceData.name += ` - ${gameName?.textContent}`
             if (game) {
-              const applySlideshow = game.apply(presenceData, pathList.slice(1))
+              const applySlideshow = game.apply(
+                presenceData,
+                pathList.slice(1),
+              )
               if (applySlideshow) {
                 useSlideshow = true
               }

@@ -67,23 +67,6 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
       }
       break
     }
-    case 'characters': {
-      if (pathList[1]) {
-        presenceData.details = 'Viewing a Character'
-        presenceData.state = `${document.querySelector('h1 strong')?.textContent} - ${document.querySelector('.single-tab.active')?.textContent}`
-        presenceData.smallImageKey
-          = document.querySelector<HTMLImageElement>('.character-top img')
-        presenceData.smallImageText = document.querySelector('h2')
-        addButton(presenceData, {
-          label: 'View Character',
-          url: document.location.href,
-        })
-      }
-      else {
-        presenceData.details = 'Browsing Characters'
-      }
-      break
-    }
     case 'ships': {
       const { active } = useActive()
       if (active) {
