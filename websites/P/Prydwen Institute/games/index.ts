@@ -10,6 +10,8 @@ import * as nikke from './nikke.js'
 import * as re1999 from './re1999.js'
 import * as soloLeveling from './solo-leveling.js'
 import * as starRail from './star-rail.js'
+import * as wutheringWaves from './wuthering-waves.js'
+import * as zenless from './zenless.js'
 
 export interface GameDetails {
   apply: (presenceData: PresenceData, pathList: string[]) => Awaitable<true | unknown>
@@ -28,4 +30,6 @@ export default {
   re1999,
   'solo-leveling': soloLeveling,
   'star-rail': starRail,
+  'wuthering-waves': wutheringWaves,
+  zenless,
 } as Record<string, GameDetails>
