@@ -137,20 +137,18 @@ presence.on('UpdateData', () => {
             break
           }
           default: {
-            const game = games[path!]
-            presenceData.name += ` - ${gameName?.textContent}`
-            if (game) {
-              const applySlideshow = game.apply(
-                presenceData,
-                pathList.slice(1),
-              )
-              if (applySlideshow) {
-                useSlideshow = true
-              }
-            }
-            else {
-              presenceData.details = `Browsing ${document.querySelector('.nav [aria-current]')?.textContent?.trim()}`
-            }
+            presenceData.details = `Browsing ${document.querySelector('.nav [aria-current]')?.textContent?.trim()}`
+          }
+        }
+        const game = games[path!]
+        presenceData.name += ` - ${gameName?.textContent}`
+        if (game) {
+          const applySlideshow = game.apply(
+            presenceData,
+            pathList.slice(1),
+          )
+          if (applySlideshow) {
+            useSlideshow = true
           }
         }
       }
