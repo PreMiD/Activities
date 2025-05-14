@@ -2,56 +2,15 @@ import {
   addButton,
   registerSlideshowKey,
   slideshow,
-  usePathCache,
+  useActive,
 } from '../util.js'
-
-interface ActiveOperatorData {
-  active: HTMLDivElement | null
-}
-
-function useActive(): ActiveOperatorData {
-  return usePathCache<ActiveOperatorData>((data) => {
-    const observer = new MutationObserver((changes) => {
-      for (const change of changes) {
-        switch (change.type) {
-          case 'attributes': {
-            if (change.attributeName === 'aria-expanded') {
-              const target = change.target as HTMLElement
-              if (target.getAttribute('aria-expanded') === 'true') {
-                data.active = target.closest('.single-operator')
-                return
-              }
-              data.active = null
-            }
-            break
-          }
-          case 'childList': {
-            // searching or changing filters
-            data.active = null
-            return
-          }
-        }
-      }
-    })
-    const operatorContainer = document.querySelector(
-      '.operator-simplified-view',
-    )
-    if (!operatorContainer) {
-      return null
-    }
-    observer.observe(operatorContainer, {
-      subtree: true,
-      childList: true,
-      attributes: true,
-    })
-    return () => observer.disconnect()
-  })
-}
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {
     case 'operators': {
-      const { active } = useActive()
+      const { active } = useActive(document.querySelector(
+        '.operator-simplified-view',
+      ))
       if (active) {
         presenceData.details = 'Viewing an Operator'
         presenceData.state = `${active.querySelector('.name')?.textContent} - ${active.querySelector('.nav-link.active')?.textContent}`
@@ -68,7 +27,9 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
       break
     }
     case 'ships': {
-      const { active } = useActive()
+      const { active } = useActive(document.querySelector(
+        '.operator-simplified-view',
+      ))
       if (active) {
         presenceData.details = 'Viewing a Ship'
         presenceData.state = `${active.querySelector('.name')?.textContent} - ${active.querySelector('.nav-link.active')?.textContent}`
