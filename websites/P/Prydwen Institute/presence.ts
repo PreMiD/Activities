@@ -65,6 +65,7 @@ presence.on('UpdateData', () => {
           },
         ]
         const path = pathList[1]
+        presenceData.name += ` - ${gameName?.textContent}`
         switch (path ?? '/') {
           case '/': {
             presenceData.details = 'Viewing a Game'
@@ -140,8 +141,7 @@ presence.on('UpdateData', () => {
             presenceData.details = `Browsing ${document.querySelector('.nav [aria-current]')?.textContent?.trim()}`
           }
         }
-        const game = games[path!]
-        presenceData.name += ` - ${gameName?.textContent}`
+        const game = games[path ?? '']
         if (game) {
           const applySlideshow = game.apply(
             presenceData,
