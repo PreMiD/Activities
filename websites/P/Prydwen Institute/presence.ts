@@ -1,5 +1,5 @@
 import games from './games/index.js'
-import { addButton, presence, slideshow } from './util.js'
+import { addButton, presence, registerSlideshowKey, slideshow } from './util.js'
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -104,6 +104,34 @@ presence.on('UpdateData', () => {
             }
             else {
               presenceData.details = 'Browsing Characters'
+            }
+            break
+          }
+          case 'characters-stats': {
+            useSlideshow = true
+            const characters = [...document.querySelectorAll<HTMLDivElement>('tr')]
+            const statHeaders = [...(characters.splice(0, 1)[0]?.children ?? [])]
+              .slice(1)
+              .map(cell => cell.textContent)
+
+            presenceData.details = 'Browsing Character Stats'
+            if (
+              registerSlideshowKey(`${pathList[0]}-stats-${characters.length}`)
+            ) {
+              for (const character of characters) {
+                const link = character.querySelector('a')
+                const data: PresenceData = {
+                  ...presenceData,
+                  state: character.querySelector('.char'),
+                  smallImageKey:
+                          character.querySelector<HTMLImageElement>('[data-main-image]'),
+                  smallImageText: [...character.querySelectorAll('.stat')]
+                    .map((stat, index) => `${stat.textContent} ${statHeaders[index]}`)
+                    .join(', '),
+                }
+                addButton(data, { label: 'View Character', url: link })
+                slideshow.addSlide(link?.href ?? '', data, 5000)
+              }
             }
             break
           }
