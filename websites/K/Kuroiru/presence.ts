@@ -2,7 +2,6 @@ const presence = new Presence({
   clientId: '1371050079439425576',
 });
 
-// Persist timestamp during session
 let startTimestamp = sessionStorage.getItem('startTimestamp');
 if (!startTimestamp) {
   startTimestamp = Math.floor(Date.now() / 1000).toString();
@@ -15,7 +14,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     details: '',
     state: '',
-    largeImageKey: 'https://i.ibb.co/zVqQTjNd/apple-icon-120x120.webp',
+    largeImageKey: 'https://i.ibb.co/pv5RKDLb/apple-icon-120x120-512x512.png',
     startTimestamp: Number.parseInt(startTimestamp, 10),
   };
 
