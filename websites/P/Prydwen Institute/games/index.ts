@@ -1,9 +1,9 @@
-import * as counterSide from "./counter-side.js"
+import * as counterSide from './counter-side.js'
 
 export interface GameDetails {
-    apply: (presenceData: PresenceData, pathList: string[]) => Awaitable<void>
+  apply: (presenceData: PresenceData, pathList: string[]) => Awaitable<true | unknown>
 }
 
 export default {
-    "counter-side": counterSide
+  'counter-side': counterSide,
 } as Record<string, GameDetails>

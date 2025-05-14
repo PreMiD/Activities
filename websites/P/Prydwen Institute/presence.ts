@@ -1,8 +1,6 @@
 import games from './games/index.js'
+import { presence, slideshow } from './util.js'
 
-const presence = new Presence({
-  clientId: '918337184929546322',
-})
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', () => {
@@ -12,6 +10,7 @@ presence.on('UpdateData', () => {
   }
   const { href, pathname, hostname } = document.location
   const pathList = pathname.split('/').filter(Boolean)
+  let useSlideshow = false
 
   if (hostname === 'blog.prydwen.gg') {
     // todo
@@ -21,32 +20,44 @@ presence.on('UpdateData', () => {
       const gameName = document.querySelector('.game-name')
       // viewing content for a game
       if (document.querySelector('.left-menu')) {
-        // viewing specific content for the game, not a guide
-        if (pathList[1] !== 'guides') {
-          presenceData.name += ` - ${gameName?.textContent}`
-          if (pathList[2]) {
-            presenceData.details = 'Reading a Guide'
-            presenceData.state = document.querySelector('h1')
-            presenceData.buttons = [{ label: 'View Guide', url: href }]
+        presenceData.buttons = [{ label: 'View Game', url: document.querySelector<HTMLAnchorElement>('.left-menu .nav a') }]
+        const path = pathList[1]
+        switch (path ?? '/') {
+          case '/': {
+            presenceData.details = 'Viewing a Game'
+            presenceData.state = gameName
+            break
           }
-          else {
-            presenceData.details = 'Browsing Guides'
+          case 'guides': {
+            presenceData.name += ` - ${gameName?.textContent}`
+            if (pathList[2]) {
+              presenceData.details = 'Reading a Guide'
+              presenceData.state = document.querySelector('h1')
+              presenceData.buttons.push({ label: 'View Guide', url: href })
+            }
+            else {
+              presenceData.details = 'Browsing Guides'
+            }
+            break
           }
-        }
-        else if (pathList[1]) {
-          const game = games[pathList[1]]
-          presenceData.name += ` - ${gameName?.textContent}`
-          if (game) {
-            game.apply(presenceData, pathList.slice(1))
+          case 'database': {
+            presenceData.name += ` - ${gameName?.textContent}`
+            presenceData.details = 'Browsing Database'
+            break
           }
-          else {
-            presenceData.details = `Browsing ${document.querySelector('.nav [aria-current]')?.textContent?.trim()}`
+          default: {
+            const game = games[path!]
+            presenceData.name += ` - ${gameName?.textContent}`
+            if (game) {
+              const applySlideshow = game.apply(presenceData, pathList.slice(1))
+              if (applySlideshow) {
+                useSlideshow = true
+              }
+            }
+            else {
+              presenceData.details = `Browsing ${document.querySelector('.nav [aria-current]')?.textContent?.trim()}`
+            }
           }
-        }
-        else {
-          presenceData.details = 'Viewing a Game'
-          presenceData.state = gameName
-          presenceData.buttons = [{ label: 'View Game', url: href }]
         }
       }
       else {
@@ -58,5 +69,5 @@ presence.on('UpdateData', () => {
     }
   }
 
-  presence.setActivity(presenceData)
+  presence.setActivity(useSlideshow ? slideshow : presenceData)
 })

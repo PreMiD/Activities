@@ -1,143 +1,138 @@
-import { use } from '../util.js'
+import {
+  addButton,
+  registerSlideshowKey,
+  slideshow,
+  usePathCache,
+} from '../util.js'
 
-export enum CounterSideAssets {
-  Gearbuilder = 'https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/2.png',
-  Guide = 'https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/3.png',
-  TierList = 'https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/4.png',
-  Operators = 'https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/5.png',
-  Ships = 'https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/6.png',
-  Upcoming = 'https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/7.png',
-  Skins = 'https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/8.png',
-  Stats = 'https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/9.png',
-  Blogs = 'https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/10.png',
-  ShipBackground = 'https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/11.png',
+interface ActiveOperatorData {
+  active: HTMLDivElement | null
+}
+
+function useActive(): ActiveOperatorData {
+  return usePathCache<ActiveOperatorData>((data) => {
+    const observer = new MutationObserver((changes) => {
+      for (const change of changes) {
+        switch (change.type) {
+          case 'attributes': {
+            if (change.attributeName === 'aria-expanded') {
+              const target = change.target as HTMLElement
+              if (target.getAttribute('aria-expanded') === 'true') {
+                data.active = target.closest('.single-operator')
+                return
+              }
+              data.active = null
+            }
+            break
+          }
+          case 'childList': {
+            // searching or changing filters
+            data.active = null
+            return
+          }
+        }
+      }
+    })
+    const operatorContainer = document.querySelector(
+      '.operator-simplified-view',
+    )
+    if (!operatorContainer) {
+      return null
+    }
+    observer.observe(operatorContainer, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+    })
+    return () => observer.disconnect()
+  })
 }
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {
     case 'operators': {
-      interface OperatorData {
-        activeOperator: HTMLDivElement | null
-      }
-
-      const { activeOperator } = use<OperatorData>((data) => {
-        const observer = new MutationObserver((changes) => {
-          for (const change of changes) {
-            switch (change.type) {
-              case 'attributes': {
-                if (change.attributeName === 'aria-expanded') {
-                  const target = change.target as HTMLElement
-                  if (target.getAttribute('aria-expanded') === 'true') {
-                    data.activeOperator = target.closest('.single-operator')
-                    return
-                  }
-                  data.activeOperator = null
-                }
-                break
-              }
-              case 'childList': {
-                // searching or changing filters
-                data.activeOperator = null
-                return
-              }
-            }
-          }
-        })
-        const operatorContainer = document.querySelector(
-          '.operator-simplified-view',
-        )
-        if (!operatorContainer) {
-          return null
-        }
-        observer.observe(operatorContainer, {
-          subtree: true,
-          childList: true,
-          attributes: true,
-        })
-        return () => observer.disconnect()
-      }, pathList)
-      if (activeOperator) {
+      const { active } = useActive()
+      if (active) {
         presenceData.details = 'Viewing an Operator'
-        presenceData.state = `${activeOperator.querySelector('.name')?.textContent} - ${activeOperator.querySelector('.nav-link.active')?.textContent}`
-        presenceData.smallImageKey = activeOperator.querySelector('img')
+        presenceData.state = `${active.querySelector('.name')?.textContent} - ${active.querySelector('.nav-link.active')?.textContent}`
+        presenceData.smallImageKey = active.querySelector('img')
         presenceData.smallImageText = [
-          ...(activeOperator.querySelector('.details')?.children ?? []),
+          ...(active.querySelector('.details')?.children ?? []),
         ]
           .map(child => child.textContent)
           .join(' ')
       }
       else {
-        presenceData.details = 'Viewing Operators'
-        presenceData.smallImageKey = CounterSideAssets.Operators
-        presenceData.smallImageText = 'Viewing Operators'
+        presenceData.details = 'Browsing Operators'
       }
       break
     }
+    case 'characters': {
+      if (pathList[1]) {
+        presenceData.details = 'Viewing a Character'
+        presenceData.state = `${document.querySelector('h1 strong')?.textContent} - ${document.querySelector('.single-tab.active')?.textContent}`
+        presenceData.smallImageKey
+          = document.querySelector<HTMLImageElement>('.character-top img')
+        presenceData.smallImageText = document.querySelector('h2')
+        addButton(presenceData, {
+          label: 'View Character',
+          url: document.location.href,
+        })
+      }
+      else {
+        presenceData.details = 'Browsing Characters'
+      }
+      break
+    }
+    case 'ships': {
+      const { active } = useActive()
+      if (active) {
+        presenceData.details = 'Viewing a Ship'
+        presenceData.state = `${active.querySelector('.name')?.textContent} - ${active.querySelector('.nav-link.active')?.textContent}`
+        presenceData.smallImageKey = active.querySelector('img')
+        presenceData.smallImageText = [
+          ...(active.querySelector('.details')?.children ?? []),
+        ]
+          .map(child => child.textContent)
+          .join(' ')
+      }
+      else {
+        presenceData.details = 'Browsing Ships'
+      }
+      break
+    }
+    case 'tier-list': {
+      const category = document.querySelector('.tier-list-switcher .selected')
+      presenceData.details = 'Viewing Tier List'
+      presenceData.state = category
+      const characters
+        = document.querySelectorAll<HTMLDivElement>('.tier .avatar-card')
+      if (
+        registerSlideshowKey(
+          `counter-side-tier-list-${category?.textContent}-${characters.length}`,
+        )
+      ) {
+        for (const character of characters) {
+          const image = character.querySelector<HTMLImageElement>(
+            'img[data-main-image]',
+          )
+          const characterPage = character.querySelector('a')
+          const rating = character
+            .closest('.tier')
+            ?.querySelector('.tier-rating')
+          const data = {
+            ...presenceData,
+            smallImageKey: image,
+            smallImageText: `${rating?.textContent} - ${image?.alt}`,
+          }
+          addButton(data, {
+            label: 'View Character',
+            url: character.querySelector('a'),
+          })
+          slideshow.addSlide(characterPage?.href ?? '', data, 5000)
+        }
+      }
+      return true
+    }
   }
-  //   else if (document.location.pathname === '/ships') {
-  //     presenceData.details = 'Viewing ships'
-  //     presenceData.largeImageKey = CounterSideAssets.Ships
-  //     presenceData.smallImageKey = CounterSideAssets.Ships
-  //     presenceData.smallImageText = 'Viewing ships'
-  //   }
-  //   else if (document.location.pathname.startsWith('/ships')) {
-  //     presenceData.details = 'Viewing a ship'
-  //     presenceData.state = shortTitle
-  //     presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
-  //       '#gatsby-focus-wrapper > div > main > div > div > div.unit-page.ship > div.unit-header.align-items-center.d-flex.flex-wrap > div:nth-child(1) > span > a > div > div > picture > img',
-  //     )?.src
-  //     presenceData.smallImageKey = CounterSideAssets.Ships
-  //     presenceData.smallImageText = 'Viewing ships'
-  //     presenceData.buttons = [{ label: 'View Ship', url: document.URL }]
-  //   }
-  //   else if (
-  //     document.querySelector('body > div.fade.modal-backdrop.show')
-  //     && document.location.href.includes('skins')
-  //   ) {
-  //     presenceData.details = 'Viewing skin'
-  //     presenceData.state = document
-  //       .querySelector(
-  //         'body > div.fade.skin-viewer.modal.show > div > div > div.modal-body > div.details > div.name',
-  //       )
-  //       ?.textContent
-  //       ?.substring(
-  //         0,
-  //         (document
-  //           .querySelector(
-  //             'body > div.fade.skin-viewer.modal.show > div > div > div.modal-body > div.details > div.name',
-  //           )
-  //           ?.textContent
-  //           ?.lastIndexOf('-') ?? 0) - 1,
-  //       )
-  //     presenceData.largeImageKey = CounterSideAssets.Ships
-  //     presenceData.smallImageKey = CounterSideAssets.Skins
-  //     presenceData.smallImageText = 'Viewing skins'
-  //   }
-  //   else {
-  //     switch (document.location.pathname) {
-  //       case '/skins': {
-  //         presenceData.details = 'Viewing skins'
-  //         presenceData.largeImageKey = CounterSideAssets.Ships
-  //         presenceData.smallImageKey = CounterSideAssets.Skins
-  //         presenceData.smallImageText = 'Viewing skins'
-
-  //         break
-  //       }
-  //       case '/stats': {
-  //         presenceData.details = 'Viewing stats'
-  //         presenceData.largeImageKey = CounterSideAssets.Ships
-  //         presenceData.smallImageKey = CounterSideAssets.Stats
-  //         presenceData.smallImageText = 'Viewing stats'
-
-  //         break
-  //       }
-  //       case '/tier-list': {
-  //         presenceData.details = 'Viewing the tier list'
-  //         presenceData.largeImageKey = CounterSideAssets.Ships
-  //         presenceData.smallImageKey = CounterSideAssets.Tierlist
-  //         presenceData.smallImageText = 'Viewing tier list'
-
-  //         break
-  //       }
-  //   }
 }
