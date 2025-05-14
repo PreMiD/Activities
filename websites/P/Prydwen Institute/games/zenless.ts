@@ -2,6 +2,17 @@ import { addButton, registerSlideshowKey, slideshow } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {
+    case 'characters': {
+      // adjust terminology
+      if (pathList[1]) {
+        presenceData.details = 'Viewing an Agent'
+        presenceData.buttons = [{ label: 'View Agent', url: document.location.href }]
+      }
+      else {
+        presenceData.details = 'Browsing Agents'
+      }
+      break
+    }
     case 'tier-list': {
       const selection = document.querySelector('.tier-list-switcher .selected')
       const characters = document.querySelectorAll('.avatar-card')
