@@ -46,6 +46,12 @@ function getMetaTagImage(): string | null {
     `meta[name='twitter:image']`,
     `meta[itemprop='image']`,
   ]
+  for (const selector of selectors) {
+    const metaElement = document.querySelector<HTMLMetaElement>(selector)
+    if (metaElement && metaElement.content) {
+      return new URL(metaElement.content, document.location.href).href
+    }
+  }
   return null
 }
 async function updatePresence(): Promise<void> {
