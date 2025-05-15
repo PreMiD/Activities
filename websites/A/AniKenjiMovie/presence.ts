@@ -39,6 +39,38 @@ enum ActivityAssets {
   Logo = 'https://phamhung.xyz/images/webfilm-logo512x512.png',
 }
 
+// --- HÀM TIỆN ÍCH LẤY HÌNH ẢNH ---
+function getMetaTagImage(): string | null {
+  const selectors = [
+    "meta[property='og:image']",
+    "meta[name='twitter:image']",
+    "meta[itemprop='image']",
+  ];
+  for (const selector of selectors) {
+    const metaElement = document.querySelector<HTMLMetaElement>(selector);
+    if (metaElement && metaElement.content) {
+      try {
+        return new URL(metaElement.content, document.location.href).href;
+      } catch (e) { /* Bỏ qua nếu content không phải là URL hợp lệ */ }
+    }
+  }
+  return null;
+}
+
+function getBackgroundImageFromDiv(selector: string): string | null {
+  const divElement = document.querySelector<HTMLDivElement>(selector);
+  if (divElement && divElement.style && divElement.style.backgroundImage) {
+    const styleBackgroundImage = divElement.style.backgroundImage;
+    const urlMatch = styleBackgroundImage.match(/url\(['"]?(.*?)['"]?\)/);
+    if (urlMatch && urlMatch[1]) {
+      try {
+        return new URL(urlMatch[1], document.location.href).href;
+      } catch (e) { return null; }
+    }
+  }
+  return null;
+}
+
 async function updatePresence(): Promise<void> {
   try {
     const video = document.querySelector<HTMLVideoElement>('video')
@@ -80,6 +112,11 @@ async function updatePresence(): Promise<void> {
       largeImageKey: ActivityAssets.Logo,
       startTimestamp: browsingTimestamp,
     }
+    // get banner
+    let dynamicBannerUrl: string | null = null
+    if (isDetailsPage || isPlayback) {
+      dynamicBannerUrl = getMetaTagImage();
+    }
 
     if (isHomePage) {
       presenceData.details = 'Đang xem trang chủ'
@@ -99,13 +136,10 @@ async function updatePresence(): Promise<void> {
       const titleAfterPrefix = fullTitle.split('Phim')?.[1]?.trim() || fullTitle.split('Xem Phim')?.[1]?.trim() || ''
       presenceData.details = 'Định xem phim...'
       presenceData.state = titleAfterPrefix
-      const bannerLink = document.querySelector('.ds-vod-detail .this-pic-bj') as HTMLImageElement
-      if (bannerLink && bannerLink.src) {
-        presenceData.largeImageKey = bannerLink.src
-      }
+      presenceData.largeImageKey = dynamicBannerUrl
     }
-
     if (isPlayback) {
+      // get jwplayer
       if (video) {
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused ? (await strings).pause : (await strings).play
@@ -119,6 +153,7 @@ async function updatePresence(): Promise<void> {
             delete presenceData.endTimestamp
           }
         }
+        presenceData.largeImageKey = dynamicBannerUrl
         presenceData.details = `${movieName}`
         presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${yearOfMovie}`
         if (showButtons) {
@@ -131,6 +166,7 @@ async function updatePresence(): Promise<void> {
         }
       }
     }
+    // get iFrame
     else if (iFrameVideo && showTimestamps && !Number.isNaN(duration)) {
       presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = paused ? (await strings).pause : (await strings).play
@@ -148,6 +184,7 @@ async function updatePresence(): Promise<void> {
         delete presenceData.endTimestamp
         presenceData.startTimestamp = browsingTimestamp
       }
+      presenceData.largeImageKey = dynamicBannerUrl
       presenceData.details = `${movieName}`
       presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${yearOfMovie}`
       if (showButtons) {
