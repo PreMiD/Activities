@@ -14,15 +14,25 @@ export function registerSlideshowKey(key: string): boolean {
 }
 
 const cache = new Map()
-export function renderMatchupIcon(container: HTMLElement) {
+const canvas = document.createElement('canvas')
+const ctx = canvas.getContext('2d')!
+export async function renderMatchupIcon(container: HTMLElement) {
   if (cache.has(container)) {
     return cache.get(container)
   }
-  const [mainImage, targetImage] = document.querySelectorAll('img')
-  const canvas = document.createElement('canvas')
+  const [mainImage, targetImage] = (await Promise.all(
+    [...container.querySelectorAll('img')].map((node) => {
+      return new Promise((res) => {
+        const image = new Image()
+        image.onload = () => res(image)
+        image.crossOrigin = 'anonymous'
+        image.src = node.src
+      })
+    }),
+  )) as HTMLImageElement[]
   canvas.width = mainImage!.width
   canvas.height = mainImage!.height
-  const ctx = canvas.getContext('2d')!
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
 
   ctx.save()
   ctx.moveTo(0, 0)

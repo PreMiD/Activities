@@ -11,7 +11,7 @@
   },
   "url": "royaleapi.com",
   "version": "1.0.0",
-  "logo": "https://cdn.discordapp.com/icons/528327242875535372/a_ff168617165e959a877a5b5f01ccb423.gif?size=512&hack=.gif",
+  "logo": "https://i.imgur.com/nqCP2b5.gif",
   "thumbnail": "https://cdn.discordapp.com/splashes/528327242875535372/b5d9e1726d083c3ecd9d3b2469a506de.jpg?size=2048&hack=.jpg",
   "color": "#ffffff",
   "category": "games",
@@ -36,5 +36,6 @@
       "id": "lang",
       "multiLanguage": true
     }
-  ]
+  ],
+  "mobile": true
 }
