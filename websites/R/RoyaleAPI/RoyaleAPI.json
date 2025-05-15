@@ -1,0 +1,6 @@
+{
+  "royaleapi.buttonViewPlayer": {
+    "description": "Button message to lead user to open player profile in game",
+    "message": "View Player In Game"
+  }
+}
