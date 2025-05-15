@@ -1,11 +1,12 @@
 import games from './games/index.js'
-import { addButton, presence, registerSlideshowKey, slideshow } from './util.js'
+import { addButton, filterScripts, presence, registerSlideshowKey, slideshow } from './util.js'
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
     name: 'Prydwen Institute',
+    largeImageKey: 'https://i.imgur.com/XXdgNCU.png',
     startTimestamp: browsingTimestamp,
   }
   const { href, pathname, hostname, search } = document.location
@@ -64,9 +65,8 @@ presence.on('UpdateData', () => {
             url: document.querySelector<HTMLAnchorElement>('.left-menu .nav a'),
           },
         ]
-        const path = pathList[1]
         presenceData.name += ` - ${gameName?.textContent}`
-        switch (path ?? '/') {
+        switch (pathList[1] ?? '/') {
           case '/': {
             presenceData.details = 'Viewing a Game'
             presenceData.state = gameName
@@ -90,14 +90,14 @@ presence.on('UpdateData', () => {
             break
           }
           case 'characters': {
-            if (pathList[1]) {
+            if (pathList[2]) {
               presenceData.details = 'Viewing a Character'
               presenceData.state = `${document.querySelector('h1 strong')?.textContent} - ${document.querySelector('.single-tab.active')?.textContent}`
               presenceData.smallImageKey
                 = document.querySelector<HTMLImageElement>(
                   '.character-top [data-main-image]',
                 )
-              presenceData.smallImageText = document.querySelector('h2')
+              presenceData.smallImageText = filterScripts(document.querySelector('h2'))
               addButton(presenceData, {
                 label: 'View Character',
                 url: document.location.href,
@@ -124,7 +124,7 @@ presence.on('UpdateData', () => {
                 const link = character.querySelector('a')
                 const data: PresenceData = {
                   ...presenceData,
-                  state: character.querySelector('.char'),
+                  state: filterScripts(character.querySelector('.char')),
                   smallImageKey:
                           character.querySelector<HTMLImageElement>('[data-main-image]'),
                   smallImageText: [...character.querySelectorAll('.stat')]
@@ -141,7 +141,7 @@ presence.on('UpdateData', () => {
             presenceData.details = `Browsing ${document.querySelector('.nav [aria-current]')?.textContent?.trim()}`
           }
         }
-        const game = games[path ?? '']
+        const game = games[pathList[0]]
         if (game) {
           const applySlideshow = game.apply(
             presenceData,

@@ -9,7 +9,7 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
       applyItemList(presenceData, {
         key: 'solo-leveling-weapons',
         nameSelector: 'h4',
-        itemSelector: '.solo-weapon-boX',
+        itemSelector: '.solo-weapon-box',
       })
       return true
     }

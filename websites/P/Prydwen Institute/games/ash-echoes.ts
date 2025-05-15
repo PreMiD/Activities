@@ -1,4 +1,4 @@
-import { applyItemList, applyTierList } from '../lists.js'
+import { applyTierList } from '../lists.js'
 import {
   addButton,
   registerSlideshowKey,
@@ -13,13 +13,13 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
         key: 'ash-echoes-tier-list',
         useSelection: true,
         nameSource: 'emp-name',
-        hasLink: true
+        hasLink: true,
       })
       return true
     }
     case 'memory-traces': {
       const { active } = useActive(
-        document.querySelector('ash-traces-container'),
+        document.querySelector('.ash-traces-container'),
       )
       if (active) {
         presenceData.details = 'Viewing a Memory Trace'

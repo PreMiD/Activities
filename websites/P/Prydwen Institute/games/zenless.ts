@@ -1,5 +1,5 @@
 import { applyItemList, applyTierList } from '../lists.js'
-import { registerSlideshowKey, slideshow, useActive } from '../util.js'
+import { useActive } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {

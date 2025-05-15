@@ -1,6 +1,6 @@
 import { Assets } from 'premid'
 import { applyTierList } from '../lists.js'
-import { registerSlideshowKey, slideshow, useActive } from '../util.js'
+import { filterScripts, registerSlideshowKey, slideshow, useActive } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {
@@ -17,7 +17,7 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
       const { active } = useActive(document.querySelector('.psychube-simplified-view'))
       if (active) {
         presenceData.details = 'Viewing a Psychube'
-        presenceData.state = active.querySelector('h2')
+        presenceData.state = filterScripts(active.querySelector('h2'))
         presenceData.smallImageKey = active.querySelector<HTMLImageElement>('[data-main-image]')
         presenceData.smallImageText = active.querySelector('.nav-link.active')
       }

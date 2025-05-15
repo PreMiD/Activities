@@ -33,14 +33,17 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
       })
       return true
     }
-    case 'relic-sets': {
-      presenceData.details = 'Browsing Relic Sets'
-      applyItemList(presenceData, {
-        key: 'star-rail-light-cones',
-        nameSelector: 'h4',
-        itemSelector: '.hsr-relic-box',
-      })
-      return true
+    case 'guides': {
+      if (pathList[1] === 'relic-sets') {
+        presenceData.details = 'Browsing Relic Sets'
+        applyItemList(presenceData, {
+          key: 'star-rail-light-cones',
+          nameSelector: 'h4',
+          itemSelector: '.hsr-relic-box',
+        })
+        return true
+      }
+      break
     }
     case 'tools': {
       presenceData.details = 'Browsing Tools'
@@ -60,7 +63,7 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
             const name = character.querySelector('h5')
             const data: PresenceData = {
               ...presenceData,
-              state: character.closest('box')?.querySelector<HTMLSelectElement>('.select-role select')?.selectedOptions[0]?.textContent,
+              state: character.closest('.box')?.querySelector<HTMLSelectElement>('.select-role select')?.selectedOptions[0]?.textContent,
               smallImageKey: character.querySelector<HTMLImageElement>('[data-main-image]'),
               smallImageText: name,
             }

@@ -1,5 +1,4 @@
 import { applyItemList } from '../lists.js'
-import { registerSlideshowKey, slideshow } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {

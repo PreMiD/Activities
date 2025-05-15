@@ -41,7 +41,7 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
       return true
     }
     case 'characters-builds': {
-      const { active } = useActive(document.querySelector('builds-container'))
+      const { active } = useActive(document.querySelector('.builds-container'))
       if (active) {
         presenceData.details = 'Viewing a Character Build'
         presenceData.state = active.querySelector('.name')

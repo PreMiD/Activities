@@ -19,9 +19,9 @@ let currentCacheDataStorage: object = {}
  */
 export function usePathCache<Data extends object>(
   callback: (storage: Data) => (() => void) | null,
-  dependenciesGetter?: (baseDeps: string[]) => string[],
+  dependenciesGetter?: (baseDeps: unknown[]) => unknown[],
 ): Data {
-  let dependencies = document.location.pathname.split('/').filter(Boolean)
+  let dependencies: unknown[] = document.location.pathname.split('/').filter(Boolean)
   if (dependenciesGetter) {
     dependencies = dependenciesGetter(dependencies)
   }
@@ -40,6 +40,7 @@ export function usePathCache<Data extends object>(
     currentCacheCallback = () => {
       clearInterval(recheckInterval)
       cb?.()
+      currentCacheCallback = () => {}
     }
   }
   function verify() {
@@ -92,6 +93,9 @@ export interface ActiveAccordionData {
 }
 
 export function useActive(container: HTMLDivElement | null): ActiveAccordionData {
+  if (!container) {
+    return { active: null }
+  }
   return usePathCache<ActiveAccordionData>((data) => {
     const observer = new MutationObserver((changes) => {
       for (const change of changes) {
@@ -100,7 +104,7 @@ export function useActive(container: HTMLDivElement | null): ActiveAccordionData
             if (change.attributeName === 'aria-expanded') {
               const target = change.target as HTMLElement
               if (target.getAttribute('aria-expanded') === 'true') {
-                data.active = target.closest('.accordian')
+                data.active = target.closest('.accordion')
                 return
               }
               data.active = null
@@ -115,14 +119,23 @@ export function useActive(container: HTMLDivElement | null): ActiveAccordionData
         }
       }
     })
-    if (!container) {
-      return null
-    }
+
     observer.observe(container, {
       subtree: true,
       childList: true,
       attributes: true,
     })
-    return () => observer.disconnect()
-  })
+    return () => {
+      observer.disconnect()
+    }
+  }, (deps) => [...deps, container.isConnected])
+}
+
+export function filterScripts(element: HTMLElement | null): string {
+  const clone = element?.cloneNode(true) as HTMLElement
+  const noscripts = clone.querySelectorAll("noscript,script")
+  for (const noscript of noscripts) {
+    noscript.remove()
+  }
+  return clone.textContent ?? ''
 }

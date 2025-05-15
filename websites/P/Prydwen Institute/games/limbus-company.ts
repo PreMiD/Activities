@@ -28,7 +28,7 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
         presenceData.details = 'Viewing an EGO'
         presenceData.state = active.querySelector('h2.name')
         presenceData.smallImageKey = active.querySelector<HTMLImageElement>('[data-main-image]')
-        presenceData.smallImageText = active.querySelector('.nav-item button[selected=true]')
+        presenceData.smallImageText = active.querySelector('.nav-link.active')
       }
       else {
         presenceData.details = 'Browsing EGOs'
