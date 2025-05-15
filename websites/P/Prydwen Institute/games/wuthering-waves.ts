@@ -1,4 +1,5 @@
-import { addButton, registerSlideshowKey, slideshow } from '../util.js'
+import { applyTierList } from '../lists.js'
+import { registerSlideshowKey, slideshow } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {
@@ -39,23 +40,12 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
       return true
     }
     case 'tier-list': {
-      const selection = document.querySelector('.tier-list-switcher .selected')
-      const characters = document.querySelectorAll('.avatar-card')
-      presenceData.details = 'Browsing Tier List'
-      presenceData.state = selection
-      if (registerSlideshowKey(`wuthering-waves-tier-list-${selection?.textContent}-${characters.length}`)) {
-        for (const character of characters) {
-          const link = character.querySelector('a')
-          const image = character.querySelector<HTMLImageElement>('[data-main-image]')
-          const data: PresenceData = {
-            ...presenceData,
-            smallImageKey: image,
-            smallImageText: `${character.closest('.custom-tier')?.querySelector('.tier-rating')?.textContent} - ${image?.alt}`,
-          }
-          addButton(data, { label: 'View Character', url: link })
-          slideshow.addSlide(link?.href ?? '', data, 5000)
-        }
-      }
+      applyTierList(presenceData, {
+        key: 'wuthering-waves-tier-list',
+        nameSource: 'image',
+        useSelection: true,
+        hasLink: true,
+      })
       return true
     }
   }

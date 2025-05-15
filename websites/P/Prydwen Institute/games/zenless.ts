@@ -1,4 +1,5 @@
-import { addButton, registerSlideshowKey, slideshow, useActive } from '../util.js'
+import { applyTierList } from '../lists.js'
+import { registerSlideshowKey, slideshow, useActive } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {
@@ -14,21 +15,13 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
       break
     }
     case 'tier-list': {
-      const characters = document.querySelectorAll('.avatar-card')
-      presenceData.details = 'Browsing Tier List'
-      if (registerSlideshowKey(`zenless-list-${characters.length}`)) {
-        for (const character of characters) {
-          const link = character.querySelector('a')
-          const image = character.querySelector<HTMLImageElement>('[data-main-image]')
-          const data: PresenceData = {
-            ...presenceData,
-            smallImageKey: image,
-            smallImageText: `${character.closest('.custom-tier')?.querySelector('.tier-rating')?.textContent} - ${image?.alt}`,
-          }
-          addButton(data, { label: 'View Agent', url: link })
-          slideshow.addSlide(link?.href ?? '', data, 5000)
-        }
-      }
+      applyTierList(presenceData, {
+        key: 'zenless-tier-list',
+        useSelection: false,
+        nameSource: 'image',
+        hasLink: true,
+        customLinkLabel: 'View Agent',
+      })
       return true
     }
     case 'shiyu-defense': {

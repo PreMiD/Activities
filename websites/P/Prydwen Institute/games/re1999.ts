@@ -1,23 +1,16 @@
 import { Assets } from 'premid'
-import { addButton, registerSlideshowKey, slideshow, useActive } from '../util.js'
+import { applyTierList } from '../lists.js'
+import { registerSlideshowKey, slideshow, useActive } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {
     case 'tier-list': {
-      const characters = document.querySelectorAll('.avatar-card')
-      presenceData.details = 'Browsing Tier List'
-      if (registerSlideshowKey(`re1999-tier-list-${characters.length}`)) {
-        for (const character of characters) {
-          const link = character.querySelector('a')
-          const data: PresenceData = {
-            ...presenceData,
-            smallImageKey: character.querySelector<HTMLImageElement>('[data-main-image]'),
-            smallImageText: `${character.closest('.custom-tier')?.querySelector('.tier-rating')?.textContent} - ${character.querySelector('.emp-name')}`,
-          }
-          addButton(data, { label: 'View Character', url: link })
-          slideshow.addSlide(link?.href ?? '', data, 5000)
-        }
-      }
+      applyTierList(presenceData, {
+        key: 're1999-tier-list',
+        useSelection: false,
+        nameSource: 'emp-name',
+        hasLink: true,
+      })
       return true
     }
     case 'psychubes': {

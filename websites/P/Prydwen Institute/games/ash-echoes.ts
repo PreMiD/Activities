@@ -1,3 +1,4 @@
+import { applyTierList } from '../lists.js'
 import {
   addButton,
   registerSlideshowKey,
@@ -8,31 +9,12 @@ import {
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {
     case 'tier-list': {
-      presenceData.details = 'Viewing Tier List'
-
-      const title
-        = document.querySelector('.tier-list-header .title span')?.textContent
-          ?? ''
-      const characters
-        = document.querySelectorAll<HTMLDivElement>('.avatar-card')
-      if (
-        registerSlideshowKey(
-          `ash-echoes-tier-list-${title}-${characters.length}`,
-        )
-      ) {
-        for (const character of characters) {
-          const link = character.querySelector('a')
-          const data: PresenceData = {
-            ...presenceData,
-            state: title,
-            smallImageKey:
-              character.querySelector<HTMLImageElement>('[data-main-image]'),
-            smallImageText: `${character.closest('.custom-tier')?.querySelector('.tier-rating')?.textContent} - ${character.querySelector('.emp-name')?.textContent}`,
-          }
-          addButton(data, { label: 'View Character', url: link })
-          slideshow.addSlide(link?.href ?? '', data, 5000)
-        }
-      }
+      applyTierList(presenceData, {
+        key: 'ash-echoes-tier-list',
+        useSelection: true,
+        nameSource: 'emp-name',
+        hasLink: true
+      })
       return true
     }
     case 'memory-traces': {

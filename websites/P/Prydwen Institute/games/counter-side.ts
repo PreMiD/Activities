@@ -1,3 +1,4 @@
+import { applyTierList } from '../lists.js'
 import {
   addButton,
   registerSlideshowKey,
@@ -46,36 +47,12 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
       break
     }
     case 'tier-list': {
-      const category = document.querySelector('.tier-list-switcher .selected')
-      presenceData.details = 'Viewing Tier List'
-      presenceData.state = category
-      const characters
-        = document.querySelectorAll<HTMLDivElement>('.tier .avatar-card')
-      if (
-        registerSlideshowKey(
-          `counter-side-tier-list-${category?.textContent}-${characters.length}`,
-        )
-      ) {
-        for (const character of characters) {
-          const image = character.querySelector<HTMLImageElement>(
-            'img[data-main-image]',
-          )
-          const characterPage = character.querySelector('a')
-          const rating = character
-            .closest('.tier')
-            ?.querySelector('.tier-rating')
-          const data = {
-            ...presenceData,
-            smallImageKey: image,
-            smallImageText: `${rating?.textContent} - ${image?.alt}`,
-          }
-          addButton(data, {
-            label: 'View Character',
-            url: character.querySelector('a'),
-          })
-          slideshow.addSlide(characterPage?.href ?? '', data, 5000)
-        }
-      }
+      applyTierList(presenceData, {
+        key: 'counter-side-tier-list',
+        useSelection: true,
+        nameSource: 'image',
+        hasLink: true
+      })
       return true
     }
   }

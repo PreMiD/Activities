@@ -1,5 +1,6 @@
 import { Assets } from 'premid'
-import { addButton, registerSlideshowKey, slideshow } from '../util.js'
+import { applyTierList } from '../lists.js'
+import { registerSlideshowKey, slideshow } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {
@@ -21,42 +22,21 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
       return true
     }
     case 'tier-list': {
-      const characters = document.querySelectorAll('.avatar-card')
-      presenceData.details = 'Browsing Tier List'
-      if (
-        registerSlideshowKey(`solo-leveling-tier-list-${characters.length}`)
-      ) {
-        for (const character of characters) {
-          const link = character.querySelector('a')
-          const data: PresenceData = {
-            ...presenceData,
-            smallImageKey:
-              character.querySelector<HTMLImageElement>('[data-main-image]'),
-            smallImageText: `${character.closest('.custom-tier')?.querySelector('.tier-rating')?.textContent} - ${character.querySelector('.emp-name')}`,
-          }
-          addButton(data, { label: 'View Character', url: link })
-          slideshow.addSlide(link?.href ?? '', data, 5000)
-        }
-      }
+      applyTierList(presenceData, {
+        key: 'solo-leveling-tier-list',
+        useSelection: false,
+        nameSource: 'emp-name',
+        hasLink: true,
+      })
       return true
     }
     case 'tier-list-weapons': {
-      const weapons = document.querySelectorAll('.avatar-card')
-      presenceData.details = 'Browsing Weapon Tier List'
-      if (
-        registerSlideshowKey(`solo-leveling-weapon-tier-list-${weapons.length}`)
-      ) {
-        for (const character of weapons) {
-          const name = character.querySelector('.emp-name')?.textContent ?? ''
-          const data: PresenceData = {
-            ...presenceData,
-            smallImageKey:
-              character.querySelector<HTMLImageElement>('[data-main-image]'),
-            smallImageText: `${character.closest('.custom-tier')?.querySelector('.tier-rating')?.textContent} - ${name}`,
-          }
-          slideshow.addSlide(name, data, 5000)
-        }
-      }
+      applyTierList(presenceData, {
+        key: 'solo-leveling-weapon-tier-list',
+        useSelection: false,
+        nameSource: 'emp-name',
+        hasLink: false,
+      })
       return true
     }
     case 'team-database': {

@@ -1,4 +1,5 @@
 import { Assets } from 'premid'
+import { applyTierList } from '../lists.js'
 import { addButton, registerSlideshowKey, slideshow, useActive } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
@@ -7,22 +8,13 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
       presenceData.details = 'Browsing Tier List'
       if (document.querySelector('.pyramid-variant.selected')) {
         // default view
-        const subChoice = document.querySelector('.tier-list-switcher:not(.type) .selected')?.textContent
-        const characters = document.querySelectorAll('.avatar-card')
-        presenceData.state = subChoice
-        if (registerSlideshowKey(`etheria-restart-tier-list-default-${subChoice}-${characters.length}`)) {
-          for (const character of characters) {
-            const image = character.querySelector<HTMLImageElement>('[data-main-image]')
-            const link = character.querySelector('a')
-            const data: PresenceData = {
-              ...presenceData,
-              smallImageKey: image,
-              smallImageText: `${character.closest('.tier-list')?.querySelector('.tier-rating')?.textContent} - ${image?.alt}`,
-            }
-            addButton(data, { label: 'View Character', url: link })
-            slideshow.addSlide(link?.href ?? '', data, 5000)
-          }
-        }
+        applyTierList(presenceData, {
+          key: 'etheria-restart-tier-list-default',
+          useSelection: true,
+          nameSource: 'image',
+          hasLink: true,
+          customSelectionSelector: '.tier-list-switcher:not(.type) .selected',
+        })
       }
       else {
         // table view
