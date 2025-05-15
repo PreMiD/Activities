@@ -19,9 +19,21 @@
     "description": "Browsing a list of players",
     "message": "Browsing Players"
   },
+  "royaleapi.browseStrategy": {
+    "description": "Browsing list of content regarding game strategy",
+    "message": "Browsing Strategy Guides"
+  },
   "royaleapi.viewEvent": {
     "description": "Viewing details about an event/league",
     "message": "Viewing an Event"
+  },
+  "royaleapi.viewReplay": {
+    "description": "Viewing a Replay",
+    "message": "Viewing a Replay"
+  },
+  "royaleapi.viewTeam": {
+    "description": "Viewing an E-Sport team",
+    "message": "Viewing a Team"
   },
   "royaleapi.browseESports": {
     "description": "Browsing content related to E-Sports",
@@ -38,6 +50,10 @@
   "royaleapi.buttonViewClan": {
     "description": "Button message for viewing clan details",
     "message": "View Clan"
+  },
+  "royaleapi.buttonViewReplay": {
+    "description": "BUtton message to view a game replay",
+    "message": "View Replay"
   },
   "royaleapi.buttonViewEvent": {
     "description": "Button to view an event",

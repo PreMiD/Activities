@@ -29,10 +29,13 @@ presence.on('UpdateData', async () => {
     search: 'general.search',
     playing: 'general.playing',
     viewHome: 'general.viewHome',
+    browsing: 'general.browsing',
     viewPage: 'general.viewPage',
     viewCard: 'royaleapi.viewCard',
+    viewTeam: 'royaleapi.viewTeam',
     viewClan: 'royaleapi.viewClan',
     viewEvent: 'royaleapi.viewEvent',
+    viewReplay: 'roaleapi.viewReplay',
     viewProfile: 'general.viewProfile',
     watchingVid: 'general.watchingVid',
     viewAccount: 'general.viewAccount',
@@ -41,7 +44,9 @@ presence.on('UpdateData', async () => {
     viewPlaylist: 'general.viewPlaylist',
     browsingBlog: 'royaleapi.browsingBlog',
     browseBlogTag: 'royaleapi.browseBlogTag',
+    browsePlayers: 'royaleapi.browsePlayers',
     browseESports: 'royaleapi.browseESports',
+    browseStrategy: 'royaleapi.browseStrategy',
     buttonViewCard: 'royaleapi.buttonViewCard',
     buttonViewTeam: 'royaleapi.buttonViewTeam',
     viewClanFamily: 'royaleapi.viewClanFamily',
@@ -50,6 +55,7 @@ presence.on('UpdateData', async () => {
     buttonWatchVideo: 'general.buttonWatchVideo',
     readingAnArticle: 'general.readingAnArticle',
     buttonReadArticle: 'general.buttonReadArticle',
+    buttonViewReplay: 'royaleapi.buttonViewReplay',
     buttonViewProfile: 'general.buttonViewProfile',
     buttonViewPlaylist: 'general.buttonViewPlaylist',
     buttonViewClanGame: 'royaleapi.buttonViewClanGame',
@@ -307,63 +313,41 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'players': {
-      switch (pathList[1] ?? '/') {
-        case '/': {
-          break
+      presenceData.details = strings.browsePlayers
+      if (pathList[1] === 'leaderboard_history') {
+        const title = document.querySelector('h1')?.textContent
+        const group = document.querySelector('.player_leaderboard_history__menu .item.active')?.textContent
+        let state = `${title} - ${group}`
+        if (pathList[3]) {
+          state += ` - ${document.querySelector('.player_leaderboard_history__year_menu .item.active')?.textContent}`
         }
-        case 'leaderboard': {
-          if (pathList[2]) {
-            if (pathList[2] === 'season') {
-              // by season
-            }
-            else {
-              // regional leaderboard
-            }
-          }
-          else {
-            // global leaderboard
-          }
-          break
-        }
-        case 'leaderboard_history': {
-          if (pathList[3]) {
-            // by year
-          }
-          else {
-            // just by category
-          }
-          break
-        }
-        default: {
-          // other stat sorting
-        }
-      }
-      break
-    }
-    case 'pro': {
-      // searching pros
-      if (searchParams.get('q')) {
-        //
+        presenceData.state = state
       }
       else {
-        //
+        presenceData.state = document.querySelector('h1')
       }
       break
     }
     case 'replay': {
+      presenceData.details = strings.viewReplay
+      presenceData.buttons = [{label: strings.buttonViewReplay, url: href}]
+      const [playerA, playerB] = document.querySelectorAll(searchParams.get('overlay')? '.player_name' : '.stats h5')
+      presenceData.state = `${playerA?.textContent} / ${playerB?.textContent}`
       if (searchParams.get('overlay')) {
-        // summary
-      }
-      else {
-        // main view
+        presenceData.smallImageKey = Assets.Question
+        presenceData.smallImageText = [...document.querySelectorAll('.score')].map(score => score.textContent).join(' - ')
       }
       break
     }
     case 'strategy': {
+      presenceData.details = strings.browseStrategy
       break
     }
     case 'team': {
-      // esports team
+      presenceData.details = strings.viewTeam
+      presenceData.state = document.querySelector('h1')
+      presenceData.smallImageKey = document.querySelector<HTMLImageElement>('#page_content > .segment .floated.right.image')
+      presenceData.buttons = [{label: strings.viewTeam, url: href}]
       break
     }
     case 'tournament': {
@@ -373,6 +357,7 @@ presence.on('UpdateData', async () => {
       break
     }
     default: {
+      presenceData.details = strings.browsing
       break
     }
   }
