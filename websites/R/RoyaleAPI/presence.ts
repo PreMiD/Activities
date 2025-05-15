@@ -1,3 +1,5 @@
+import type { FrameData } from './iframe.js'
+import { ActivityType, Assets } from 'premid'
 import {
   presence,
   registerSlideshowKey,
@@ -11,6 +13,11 @@ enum ActivityAssets {
   Logo = 'https://cdn.discordapp.com/icons/528327242875535372/a_ff168617165e959a877a5b5f01ccb423.gif?size=512&hack=.gif',
 }
 
+let currentData: FrameData | null = null
+presence.on('iFrameData', (data: FrameData) => {
+  currentData = data
+})
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     name: 'RoyaleAPI',
@@ -18,22 +25,29 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
   const strings = await presence.getStrings({
+    paused: 'general.paused',
     search: 'general.search',
+    playing: 'general.playing',
     viewPage: 'general.viewPage',
     viewCard: 'royaleapi.viewCard',
     viewClan: 'royaleapi.viewClan',
     viewHome: 'general.viewHome',
     viewProfile: 'general.viewProfile',
+    watchingVid: 'general.watchingVid',
     viewAccount: 'general.viewAccount',
     browseCards: 'royalapi.browseCards',
+    browseClans: 'royaleapi.browseClans',
+    viewPlaylist: 'general.viewPlaylist',
     browsingBlog: 'royaleapi.browsingBlog',
     browseBlogTag: 'royaleapi.browseBlogTag',
     buttonViewCard: 'royaleapi.buttonViewCard',
     viewClanFamily: 'royaleapi.viewClanFamily',
     buttonViewClan: 'royaleapi.buttonViewClan',
+    buttonWatchVideo: 'general.buttonWatchVideo',
     readingAnArticle: 'general.readingAnArticle',
     buttonReadArticle: 'general.buttonReadArticle',
     buttonViewProfile: 'general.buttonViewProfile',
+    buttonViewPlaylist: 'general.buttonViewPlaylist',
     buttonViewClanGame: 'royaleapi.buttonViewClanGame',
     buttonViewPlayerGame: 'royaleapi.buttonViewPlayerGame',
   })
@@ -203,28 +217,31 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'clans': {
-      switch (pathList[1] ?? '/') {
-        case '/': {
-          break
-        }
-        case 'families': {
-          break
-        }
-        case 'leaderboard': {
-          break
-        }
-        case 'war': {
-          break
-        }
-      }
+      presenceData.details = strings.browseClans
+      presenceData.state = document.querySelector('h1')
       break
     }
     case 'content': {
+      const userLink = document.querySelector<HTMLAnchorElement>('.header.sub a')
       if (searchParams.get('id')) {
-        // video
+        presenceData.details = strings.watchingVid
+        presenceData.state = `${document.querySelector('h3')?.firstChild?.textContent} - ${userLink?.textContent}`
+        presenceData.buttons = [
+          { label: strings.buttonViewPlaylist, url: userLink },
+          { label: strings.buttonWatchVideo, url: `https://youtu.be/${searchParams.get('id')}` },
+        ]
+        if (currentData) {
+          presenceData.type = ActivityType.Watching
+          presenceData.startTimestamp = currentData.startTimestamp
+          presenceData.endTimestamp = currentData.endTimestamp
+          presenceData.smallImageKey = currentData.paused ? Assets.Pause : Assets.Play
+          presenceData.smallImageText = currentData.paused ? strings.paused : strings.playing
+        }
       }
       else {
-        // browsing
+        presenceData.details = strings.viewPlaylist
+        presenceData.state = userLink
+        presenceData.buttons = [{ label: strings.buttonViewPlaylist, url: userLink }]
       }
       break
     }

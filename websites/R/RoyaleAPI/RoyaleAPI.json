@@ -7,6 +7,10 @@
     "description": "Viewing articles categorized by a tag",
     "message": "Browsing Articles by Tag"
   },
+  "royaleapi.browseClans": {
+    "description": "Browsing list of Clans",
+    "message": "Browsing Clans"
+  },
   "royaleapi.browseCards": {
     "description": "Browsing list of Cards",
     "message": "Browsing Cards"

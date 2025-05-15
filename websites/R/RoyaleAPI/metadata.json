@@ -29,6 +29,8 @@
     "cards",
     "pro"
   ],
+  "iframe": true,
+  "iFrameRegExp": "^https://www[.]youtube[.]com[/]embed",
   "settings": [
     {
       "id": "lang",
