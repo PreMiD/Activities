@@ -1,7 +1,10 @@
-const presence = new Presence({
-  clientId: '503557087041683458',
-})
-const slideshow = presence.createSlideshow()
+import {
+  presence,
+  registerSlideshowKey,
+  renderMatchupIcon,
+  slideshow,
+} from './util.js'
+
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
@@ -16,12 +19,16 @@ presence.on('UpdateData', async () => {
   }
   const strings = await presence.getStrings({
     search: 'general.search',
+    viewPage: 'general.viewPage',
+    viewCard: 'royaleapi.viewCard',
     viewClan: 'royaleapi.viewClan',
     viewHome: 'general.viewHome',
     viewProfile: 'general.viewProfile',
     viewAccount: 'general.viewAccount',
+    browseCards: 'royalapi.browseCards',
     browsingBlog: 'royaleapi.browsingBlog',
     browseBlogTag: 'royaleapi.browseBlogTag',
+    buttonViewCard: 'royaleapi.buttonViewCard',
     viewClanFamily: 'royaleapi.viewClanFamily',
     buttonViewClan: 'royaleapi.buttonViewClan',
     readingAnArticle: 'general.readingAnArticle',
@@ -53,7 +60,9 @@ presence.on('UpdateData', async () => {
         case 'tags': {
           if (pathList[2]) {
             presenceData.details = strings.browseBlogTag
-            presenceData.state = document.querySelector('#page_content div.tag')
+            presenceData.state = document.querySelector(
+              '#page_content div.tag',
+            )
           }
           else {
             presenceData.details = strings.browsingBlog
@@ -63,20 +72,48 @@ presence.on('UpdateData', async () => {
         default: {
           presenceData.details = strings.readingAnArticle
           presenceData.state = document.querySelector('h1')
-          presenceData.buttons = [{ label: strings.buttonReadArticle, url: href }]
+          presenceData.buttons = [
+            { label: strings.buttonReadArticle, url: href },
+          ]
         }
       }
       break
     }
     case 'card': {
+      const cardName = document.querySelector('h1')?.textContent ?? ''
+      presenceData.details = strings.viewCard
+      presenceData.smallImageKey
+        = document.querySelector<HTMLImageElement>('.card_image img')
+      presenceData.buttons = [{ label: strings.viewCard, url: href }]
       switch (pathList[2] ?? '/') {
         case '/': {
+          presenceData.state = cardName
           break
         }
         case 'matchup': {
+          useSlideshow = true
+          presenceData.state = `${cardName} - ${document.querySelector('.nav_menu .active')?.textContent}`
+          if (registerSlideshowKey('matchup')) {
+            const matches = document.querySelectorAll<HTMLAnchorElement>(
+              '.items_container .card',
+            )
+            for (const match of matches) {
+              presenceData.smallImageKey = renderMatchupIcon(match!)
+              const opposingName = match.querySelector<HTMLImageElement>(
+                '.matchup_chart + .image img',
+              )?.alt
+              const competition = [
+                ...match.querySelectorAll('.matchup_chart > div > div'),
+              ]
+                .map(text => text.textContent)
+                .join(' - ')
+              presenceData.smallImageText = `${cardName} / ${opposingName}: ${competition}`
+            }
+          }
           break
         }
         case 'season': {
+          presenceData.state = `${cardName} - ${document.querySelector('.nav_menu .active')?.textContent}`
           break
         }
       }
@@ -85,9 +122,38 @@ presence.on('UpdateData', async () => {
     case 'cards': {
       switch (pathList[1]) {
         case 'popular': {
+          const mainSection = document.querySelector(
+            '.card_filter_menu .text',
+          )?.textContent
+          const filter
+            = document.querySelector('.filter_menu .active')?.textContent ?? ''
+          presenceData.details = strings.browseCards
+          presenceData.state = `${mainSection} - ${filter}`
+          useSlideshow = true
+          if (registerSlideshowKey(filter)) {
+            const cards = document.querySelectorAll('[data-card]')
+            for (const card of cards) {
+              const rank = card.querySelector('.card_rank_label_container')
+              const name = card.querySelector('.card_name')?.textContent ?? ''
+              const data: PresenceData = {
+                ...presenceData,
+                smallImageKey: card.querySelector('img'),
+                smallImageText: `#${rank?.textContent} - ${name}`,
+                buttons: [
+                  {
+                    label: strings.buttonViewCard,
+                    url: card.querySelector('a'),
+                  },
+                ],
+              }
+              slideshow.addSlide(name, data, MIN_SLIDE_TIME)
+            }
+          }
           break
         }
         case 'viz': {
+          presenceData.details = strings.viewPage
+          presenceData.details = document.querySelector('h2')?.firstChild
           break
         }
       }
@@ -96,13 +162,16 @@ presence.on('UpdateData', async () => {
     case 'clan': {
       if (pathList[1] === 'family') {
         presenceData.details = strings.viewClanFamily
-        presenceData.state = document.querySelector('#page_content .header.item')
+        presenceData.state = document.querySelector(
+          '#page_content .header.item',
+        )
         break
       }
 
       presenceData.details = strings.viewClan
       presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('.clan__menu .item.active')}`
-      presenceData.smallImageKey = document.querySelector<HTMLImageElement>('img.floated.right')
+      presenceData.smallImageKey
+        = document.querySelector<HTMLImageElement>('img.floated.right')
       presenceData.buttons = [
         {
           label: strings.buttonViewClan,
@@ -117,7 +186,9 @@ presence.on('UpdateData', async () => {
       switch (pathList[2] ?? '/') {
         case '/': {
           useSlideshow = true
-          const stats = document.querySelectorAll('.clan_stats .column .content')
+          const stats = document.querySelectorAll(
+            '.clan_stats .column .content',
+          )
           for (const stat of stats) {
             const text = `${stat.querySelector('h5')?.textContent}: ${stat.querySelector('.value')?.textContent}`
             const data: PresenceData = {

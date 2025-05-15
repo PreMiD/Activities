@@ -7,6 +7,14 @@
     "description": "Viewing articles categorized by a tag",
     "message": "Browsing Articles by Tag"
   },
+  "royaleapi.browseCards": {
+    "description": "Browsing list of Cards",
+    "message": "Browsing Cards"
+  },
+  "royaleapi.buttonViewCard": {
+    "description": "Button message for viewing a card's details",
+    "message": "View Card"
+  },
   "royaleapi.buttonViewPlayerGame": {
     "description": "Button message to lead user to open player profile in game",
     "message": "View Player In-Game"
@@ -22,6 +30,10 @@
   "royaleapi.viewClan": {
     "description": "Viewing information about a Clan",
     "message": "Viewing a Clan"
+  },
+  "royaleapi.viewCard": {
+    "description": "Viewing information about a Card",
+    "message": "Viewing a Card"
   },
   "royaleapi.viewClanFamily": {
     "description": "Viewing a network of related Clans and players",
