@@ -128,12 +128,12 @@ export function useActive(container: HTMLDivElement | null): ActiveAccordionData
     return () => {
       observer.disconnect()
     }
-  }, (deps) => [...deps, container.isConnected])
+  }, deps => [...deps, container.isConnected])
 }
 
 export function filterScripts(element: HTMLElement | null): string {
   const clone = element?.cloneNode(true) as HTMLElement
-  const noscripts = clone.querySelectorAll("noscript,script")
+  const noscripts = clone.querySelectorAll('noscript,script')
   for (const noscript of noscripts) {
     noscript.remove()
   }
