@@ -40,6 +40,7 @@ presence.on('UpdateData', async () => {
     watchingVid: 'general.watchingVid',
     viewAccount: 'general.viewAccount',
     browseCards: 'royalapi.browseCards',
+    browseDecks: 'royaleapi.browseDecks',
     browseClans: 'royaleapi.browseClans',
     viewPlaylist: 'general.viewPlaylist',
     browsingBlog: 'royaleapi.browsingBlog',
@@ -269,6 +270,15 @@ presence.on('UpdateData', async () => {
         presenceData.buttons = [
           { label: strings.buttonViewPlaylist, url: userLink },
         ]
+      }
+      break
+    }
+    case 'decks': {
+      switch (pathList[1]) {
+        default: {
+          presenceData.details = strings.browseDecks
+          presenceData.state = document.querySelector('h1')
+        }
       }
       break
     }

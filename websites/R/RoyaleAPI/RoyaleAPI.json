@@ -3,6 +3,10 @@
     "description": "Browsing blog home page",
     "message": "Browsing the Blog"
   },
+  "royaleapi.browseDecks": {
+    "description": "Browsing decks",
+    "message": "Browsing Decks"
+  },
   "royaleapi.browseBlogTag": {
     "description": "Viewing articles categorized by a tag",
     "message": "Browsing Articles by Tag"
