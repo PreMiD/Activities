@@ -45,7 +45,7 @@ function getMetaTagImage(): string | null {
     "meta[property='og:image']",
     "meta[name='twitter:image']",
     "meta[itemprop='image']",
-  ];
+  ]
   for (const selector of selectors) {
     const metaElement = document.querySelector<HTMLMetaElement>(selector);
     if (metaElement && metaElement.content) {
@@ -54,23 +54,8 @@ function getMetaTagImage(): string | null {
       } catch (e) { /* Bỏ qua nếu content không phải là URL hợp lệ */ }
     }
   }
-  return null;
+  return null
 }
-
-function getBackgroundImageFromDiv(selector: string): string | null {
-  const divElement = document.querySelector<HTMLDivElement>(selector);
-  if (divElement && divElement.style && divElement.style.backgroundImage) {
-    const styleBackgroundImage = divElement.style.backgroundImage;
-    const urlMatch = styleBackgroundImage.match(/url\(['"]?(.*?)['"]?\)/);
-    if (urlMatch && urlMatch[1]) {
-      try {
-        return new URL(urlMatch[1], document.location.href).href;
-      } catch (e) { return null; }
-    }
-  }
-  return null;
-}
-
 async function updatePresence(): Promise<void> {
   try {
     const video = document.querySelector<HTMLVideoElement>('video')
@@ -114,8 +99,8 @@ async function updatePresence(): Promise<void> {
     }
     // get banner
     let dynamicBannerUrl: string | null = null
-    if (isDetailsPage || isPlayback) {
-      dynamicBannerUrl = getMetaTagImage();
+    if (isDetailsPage || iFrameVideo || isPlayback) {
+      dynamicBannerUrl = getMetaTagImage()
     }
 
     if (isHomePage) {
