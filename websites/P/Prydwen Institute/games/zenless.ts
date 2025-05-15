@@ -1,4 +1,4 @@
-import { applyTierList } from '../lists.js'
+import { applyItemList, applyTierList } from '../lists.js'
 import { registerSlideshowKey, slideshow, useActive } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
@@ -47,34 +47,20 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
     }
     case 'w-engines': {
       presenceData.details = 'Browsing W-Engines'
-      const engines = document.querySelectorAll('.zzz-engine')
-      if (registerSlideshowKey(`zenless-w-engines-${engines.length}`)) {
-        for (const engine of engines) {
-          const name = engine.querySelector('h5')
-          const data: PresenceData = {
-            ...presenceData,
-            smallImageKey: engine.querySelector<HTMLImageElement>('[data-main-image]'),
-            smallImageText: name,
-          }
-          slideshow.addSlide(name?.textContent ?? '', data, 5000)
-        }
-      }
+      applyItemList(presenceData, {
+        key: 'zenless-w-enginess',
+        nameSelector: 'h5',
+        itemSelector: '.zzz-engine',
+      })
       return true
     }
     case 'disk-drives': {
       presenceData.details = 'Browsing Drive Disks'
-      const engines = document.querySelectorAll('.zzz-disk-set')
-      if (registerSlideshowKey(`zenless-w-engines-${engines.length}`)) {
-        for (const engine of engines) {
-          const name = engine.querySelector('h5')
-          const data: PresenceData = {
-            ...presenceData,
-            smallImageKey: engine.querySelector<HTMLImageElement>('[data-main-image]'),
-            smallImageText: name,
-          }
-          slideshow.addSlide(name?.textContent ?? '', data, 5000)
-        }
-      }
+      applyItemList(presenceData, {
+        key: 'zenless-w-engines',
+        nameSelector: 'h5',
+        itemSelector: '.zzz-disk-set',
+      })
       return true
     }
   }

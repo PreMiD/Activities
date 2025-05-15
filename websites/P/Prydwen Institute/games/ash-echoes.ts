@@ -1,4 +1,4 @@
-import { applyTierList } from '../lists.js'
+import { applyItemList, applyTierList } from '../lists.js'
 import {
   addButton,
   registerSlideshowKey,

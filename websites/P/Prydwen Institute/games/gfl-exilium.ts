@@ -1,22 +1,15 @@
-import { applyTierList } from '../lists.js'
+import { applyItemList, applyTierList } from '../lists.js'
 import { registerSlideshowKey, slideshow } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {
     case 'weapons': {
       presenceData.details = 'Browsing Weapons'
-      const weapons = document.querySelectorAll('.gfl-weapon-box')
-      if (registerSlideshowKey(`gfl-exilium-weapons-${weapons.length}`)) {
-        for (const weapon of weapons) {
-          const name = weapon.querySelector('h4')
-          const data: PresenceData = {
-            ...presenceData,
-            smallImageKey: weapon.querySelector<HTMLImageElement>('[data-main-image]'),
-            smallImageText: name,
-          }
-          slideshow.addSlide(name?.textContent ?? '', data, 5000)
-        }
-      }
+      applyItemList(presenceData, {
+        key: 'gfl-exilium-weapons',
+        nameSelector: 'h4',
+        itemSelector: '.gfl-weapon-box',
+      })
       return true
     }
     case 'tier-list': {

@@ -1,4 +1,4 @@
-import { applyTierList } from '../lists.js'
+import { applyItemList, applyTierList } from '../lists.js'
 import { registerSlideshowKey, slideshow } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
@@ -26,34 +26,20 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
     }
     case 'light-cones': {
       presenceData.details = 'Browsing Light Cones'
-      const cones = document.querySelectorAll('.hsr-cone-box')
-      if (registerSlideshowKey(`star-rail-light-cones-${cones.length}`)) {
-        for (const cone of cones) {
-          const coneName = cone.querySelector('h4')
-          const data: PresenceData = {
-            ...presenceData,
-            smallImageKey: cone.querySelector<HTMLImageElement>('[data-main-image]'),
-            smallImageText: coneName,
-          }
-          slideshow.addSlide(coneName?.textContent ?? '', data, 5000)
-        }
-      }
+      applyItemList(presenceData, {
+        key: 'star-rail-light-cones',
+        nameSelector: 'h4',
+        itemSelector: '.hsr-cone-box',
+      })
       return true
     }
     case 'relic-sets': {
       presenceData.details = 'Browsing Relic Sets'
-      const relics = document.querySelectorAll('.hsr-relic-box')
-      if (registerSlideshowKey(`star-rail-light-cones-${relics.length}`)) {
-        for (const cone of relics) {
-          const coneName = cone.querySelector('h4')
-          const data: PresenceData = {
-            ...presenceData,
-            smallImageKey: cone.querySelector<HTMLImageElement>('[data-main-image]'),
-            smallImageText: coneName,
-          }
-          slideshow.addSlide(coneName?.textContent ?? '', data, 5000)
-        }
-      }
+      applyItemList(presenceData, {
+        key: 'star-rail-light-cones',
+        nameSelector: 'h4',
+        itemSelector: '.hsr-relic-box',
+      })
       return true
     }
     case 'tools': {

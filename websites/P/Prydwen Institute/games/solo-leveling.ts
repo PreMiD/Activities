@@ -1,24 +1,16 @@
 import { Assets } from 'premid'
-import { applyTierList } from '../lists.js'
+import { applyItemList, applyTierList } from '../lists.js'
 import { registerSlideshowKey, slideshow } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
   switch (pathList[0]) {
     case 'weapons': {
       presenceData.details = 'Browsing Weapons'
-      const weapons = document.querySelectorAll('.solo-weapon-box')
-      if (registerSlideshowKey(`solo-leveling-weapons-${weapons.length}`)) {
-        for (const weapon of weapons) {
-          const name = weapon.querySelector('h4')
-          const data: PresenceData = {
-            ...presenceData,
-            smallImageKey:
-              weapon.querySelector<HTMLImageElement>('[data-main-image]'),
-            smallImageText: name,
-          }
-          slideshow.addSlide(name?.textContent ?? '', data, 5000)
-        }
-      }
+      applyItemList(presenceData, {
+        key: 'solo-leveling-weapons',
+        nameSelector: 'h4',
+        itemSelector: '.solo-weapon-boX',
+      })
       return true
     }
     case 'tier-list': {

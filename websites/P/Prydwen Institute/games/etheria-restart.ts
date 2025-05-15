@@ -1,5 +1,5 @@
 import { Assets } from 'premid'
-import { applyTierList } from '../lists.js'
+import { applyItemList, applyTierList } from '../lists.js'
 import { addButton, registerSlideshowKey, slideshow, useActive } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
@@ -72,18 +72,11 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
     }
     case 'shells': {
       presenceData.details = 'Browsing Shells'
-      const shells = document.querySelectorAll('.single-shell')
-      if (registerSlideshowKey(`ehteria-restart-shells-${shells.length}`)) {
-        for (const shell of shells) {
-          const title = shell.querySelector('h4')
-          const data: PresenceData = {
-            ...presenceData,
-            smallImageKey: shell.querySelector<HTMLImageElement>('[data-main-image]'),
-            smallImageText: title,
-          }
-          slideshow.addSlide(title?.textContent ?? '', data, 5000)
-        }
-      }
+      applyItemList(presenceData, {
+        key: 'etheria-restart-shells',
+        nameSelector: 'h4',
+        itemSelector: '.single-shell',
+      })
       return true
     }
     case 'matrix-effects': {

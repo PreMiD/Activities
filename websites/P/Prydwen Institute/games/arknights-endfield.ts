@@ -1,3 +1,4 @@
+import { applyItemList } from '../lists.js'
 import { registerSlideshowKey, slideshow } from '../util.js'
 
 export function apply(presenceData: PresenceData, pathList: string[]) {
@@ -7,25 +8,12 @@ export function apply(presenceData: PresenceData, pathList: string[]) {
       break
     }
     case 'weapons': {
-      const weapons = document.querySelectorAll<HTMLDivElement>(
-        '.endfield-weapon-box.box',
-      )
-
       presenceData.details = 'Browsing Weapons'
-      if (
-        registerSlideshowKey(`arknights-endfield-weapons-${weapons.length}`)
-      ) {
-        for (const weapon of weapons) {
-          const weaponName = weapon.querySelector('h4')
-          const data: PresenceData = {
-            ...presenceData,
-            smallImageKey:
-              weapon.querySelector<HTMLImageElement>('[data-main-image]'),
-            smallImageText: weaponName,
-          }
-          slideshow.addSlide(weaponName?.textContent ?? '', data, 5000)
-        }
-      }
+      applyItemList(presenceData, {
+        key: 'arknights-endfield-weapons',
+        nameSelector: 'h4',
+        itemSelector: '.endfield-weapon-box.box',
+      })
       return true
     }
     case 'gear': {
