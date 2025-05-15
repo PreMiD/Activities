@@ -12,8 +12,6 @@ presence.on('UpdateData', async () => {
   const { pathname, search, hash } = document.location;
 
   const presenceData: PresenceData = {
-    details: '',
-    state: '',
     largeImageKey: 'https://i.ibb.co/pv5RKDLb/apple-icon-120x120-512x512.png',
     startTimestamp: Number.parseInt(startTimestamp, 10),
   };
