@@ -28,10 +28,11 @@ presence.on('UpdateData', async () => {
     paused: 'general.paused',
     search: 'general.search',
     playing: 'general.playing',
+    viewHome: 'general.viewHome',
     viewPage: 'general.viewPage',
     viewCard: 'royaleapi.viewCard',
     viewClan: 'royaleapi.viewClan',
-    viewHome: 'general.viewHome',
+    viewEvent: 'royaleapi.viewEvent',
     viewProfile: 'general.viewProfile',
     watchingVid: 'general.watchingVid',
     viewAccount: 'general.viewAccount',
@@ -40,9 +41,12 @@ presence.on('UpdateData', async () => {
     viewPlaylist: 'general.viewPlaylist',
     browsingBlog: 'royaleapi.browsingBlog',
     browseBlogTag: 'royaleapi.browseBlogTag',
+    browseESports: 'royaleapi.browseESports',
     buttonViewCard: 'royaleapi.buttonViewCard',
+    buttonViewTeam: 'royaleapi.buttonViewTeam',
     viewClanFamily: 'royaleapi.viewClanFamily',
     buttonViewClan: 'royaleapi.buttonViewClan',
+    buttonViewEvent: 'royaleapi.buttonViewEvent',
     buttonWatchVideo: 'general.buttonWatchVideo',
     readingAnArticle: 'general.readingAnArticle',
     buttonReadArticle: 'general.buttonReadArticle',
@@ -246,20 +250,34 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'esports': {
+      presenceData.details = strings.browseESports
+      presenceData.state = document.querySelector('.menu .active')
       switch (pathList[1]) {
-        case 'leagues': {
-          break
-        }
-        case 'players': {
-          break
-        }
         case 'teams': {
-          break
-        }
-        case 'schedule': {
+          useSlideshow = true
+          const search = document.querySelector<HTMLInputElement>('#tablesearch')
+          if (registerSlideshowKey(search?.value ?? '')) {
+            const teams = document.querySelectorAll('table tr')
+            for (const team of teams) {
+              const teamName = team.querySelector('a')
+              const data: PresenceData = {
+                ...presenceData,
+                smallImageKey: team.querySelector('img'),
+                smallImageText: teamName,
+                buttons: [{ label: strings.buttonViewTeam, url: teamName }],
+              }
+              slideshow.addSlide(teamName?.textContent ?? '', data, MIN_SLIDE_TIME)
+            }
+          }
           break
         }
       }
+      break
+    }
+    case 'events': {
+      presenceData.details = strings.viewEvent
+      presenceData.state = document.querySelector('#page_content div.header.item')
+      presenceData.buttons = [{ label: strings.buttonViewEvent, url: href }]
       break
     }
     case 'feature': {

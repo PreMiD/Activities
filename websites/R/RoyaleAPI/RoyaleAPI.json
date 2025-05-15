@@ -15,6 +15,18 @@
     "description": "Browsing list of Cards",
     "message": "Browsing Cards"
   },
+  "royaleapi.browsePlayers": {
+    "description": "Browsing a list of players",
+    "message": "Browsing Players"
+  },
+  "royaleapi.viewEvent": {
+    "description": "Viewing details about an event/league",
+    "message": "Viewing an Event"
+  },
+  "royaleapi.browseESports": {
+    "description": "Browsing content related to E-Sports",
+    "message": "Browsing E-Sports"
+  },
   "royaleapi.buttonViewCard": {
     "description": "Button message for viewing a card's details",
     "message": "View Card"
@@ -26,6 +38,14 @@
   "royaleapi.buttonViewClan": {
     "description": "Button message for viewing clan details",
     "message": "View Clan"
+  },
+  "royaleapi.buttonViewEvent": {
+    "description": "Button to view an event",
+    "message": "View Event"
+  },
+  "royaleapi.buttonViewTeam": {
+    "description": "Button message to view an E-Sport team",
+    "message": "View Team"
   },
   "royaleapi.buttonViewClanGame": {
     "description": "Button message for viewing clan details in game",
