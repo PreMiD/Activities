@@ -35,7 +35,7 @@ presence.on('UpdateData', async () => {
     viewTeam: 'royaleapi.viewTeam',
     viewClan: 'royaleapi.viewClan',
     viewEvent: 'royaleapi.viewEvent',
-    viewReplay: 'roaleapi.viewReplay',
+    viewReplay: 'royaleapi.viewReplay',
     viewProfile: 'general.viewProfile',
     watchingVid: 'general.watchingVid',
     viewAccount: 'general.viewAccount',
