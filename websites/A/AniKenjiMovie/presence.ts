@@ -150,6 +150,14 @@ async function updatePresence(): Promise<void> {
       }
       presenceData.details = `${movieName}`
       presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${yearOfMovie}`
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: '📺 Xem Phim',
+            url: document.location.href,
+          },
+        ]
+      }
     }
 
     presence.setActivity(presenceData)
