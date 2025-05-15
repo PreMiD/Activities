@@ -42,18 +42,10 @@ enum ActivityAssets {
 // --- HÀM TIỆN ÍCH LẤY HÌNH ẢNH ---
 function getMetaTagImage(): string | null {
   const selectors = [
-    "meta[property='og:image']",
-    "meta[name='twitter:image']",
-    "meta[itemprop='image']",
+    `meta[property='og:image']`,
+    `meta[name='twitter:image']`,
+    `meta[itemprop='image']`,
   ]
-  for (const selector of selectors) {
-    const metaElement = document.querySelector<HTMLMetaElement>(selector);
-    if (metaElement && metaElement.content) {
-      try {
-        return new URL(metaElement.content, document.location.href).href;
-      } catch (e) { /* Bỏ qua nếu content không phải là URL hợp lệ */ }
-    }
-  }
   return null
 }
 async function updatePresence(): Promise<void> {
