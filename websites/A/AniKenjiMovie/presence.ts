@@ -109,7 +109,6 @@ async function updatePresence(): Promise<void> {
       if (video) {
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused ? (await strings).pause : (await strings).play
-  
         if (showTimestamps && !Number.isNaN(video.currentTime) && !Number.isNaN(video.duration) && video.duration > 0) {
           if (!video.paused) {
             const timestamps = getTimestamps(video.currentTime, video.duration)
@@ -122,7 +121,6 @@ async function updatePresence(): Promise<void> {
         }
         presenceData.details = `${movieName}`
         presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${yearOfMovie}`
-  
         if (showButtons) {
           presenceData.buttons = [
             {
