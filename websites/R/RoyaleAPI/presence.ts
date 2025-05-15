@@ -15,11 +15,13 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
   const strings = await presence.getStrings({
+    search: 'general.search',
     viewClan: 'royaleapi.viewClan',
     viewHome: 'general.viewHome',
     viewProfile: 'general.viewProfile',
     viewAccount: 'general.viewAccount',
     browsingBlog: 'royaleapi.browsingBlog',
+    browseBlogTag: 'royaleapi.browseBlogTag',
     viewClanFamily: 'royaleapi.viewClanFamily',
     buttonViewClan: 'royaleapi.buttonViewClan',
     readingAnArticle: 'general.readingAnArticle',
@@ -45,14 +47,16 @@ presence.on('UpdateData', async () => {
           break
         }
         case 'search': {
+          presenceData.details = strings.search
           break
         }
         case 'tags': {
           if (pathList[2]) {
-            // specific tag
+            presenceData.details = strings.browseBlogTag
+            presenceData.state = document.querySelector('#page_content div.tag')
           }
           else {
-            // list
+            presenceData.details = strings.browsingBlog
           }
           break
         }
