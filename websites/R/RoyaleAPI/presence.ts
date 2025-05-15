@@ -57,8 +57,10 @@ presence.on('UpdateData', async () => {
     buttonReadArticle: 'general.buttonReadArticle',
     buttonViewReplay: 'royaleapi.buttonViewReplay',
     buttonViewProfile: 'general.buttonViewProfile',
+    browseTournaments: 'royaleapi.browseTournaments',
     buttonViewPlaylist: 'general.buttonViewPlaylist',
     buttonViewClanGame: 'royaleapi.buttonViewClanGame',
+    buttonJoinTournament: 'royaleapi.buttonJoinTournament',
     buttonViewPlayerGame: 'royaleapi.buttonViewPlayerGame',
   })
   const { pathname, href, search } = document.location
@@ -290,6 +292,8 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'game-mode': {
+      presenceData.details = strings.browseCards
+      presenceData.state = document.querySelector('h1')
       break
     }
     case 'me': {
@@ -351,9 +355,16 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'tournament': {
+      presenceData.details = strings.viewEvent
+      presenceData.state = document.querySelector('h1')
+      presenceData.buttons = [{label: strings.buttonViewEvent, url: href}, {
+        label: strings.buttonJoinTournament,
+        url: `clashroyale://joinTournament?id=${pathList[1]}`
+      }]
       break
     }
     case 'tournaments': {
+      presenceData.details = strings.browseTournaments
       break
     }
     default: {

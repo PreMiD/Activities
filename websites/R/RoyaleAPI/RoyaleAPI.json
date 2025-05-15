@@ -7,6 +7,10 @@
     "description": "Viewing articles categorized by a tag",
     "message": "Browsing Articles by Tag"
   },
+  "royaleapi.browseTournaments": {
+    "description": "Viewing list of tournaments",
+    "message": "Browsing Tournaments"
+  },
   "royaleapi.browseClans": {
     "description": "Browsing list of Clans",
     "message": "Browsing Clans"
@@ -58,6 +62,10 @@
   "royaleapi.buttonViewEvent": {
     "description": "Button to view an event",
     "message": "View Event"
+  },
+  "royaleapi.buttonJoinTournament": {
+    "description": "Button to join tournament in game",
+    "message": "Join Tournamennt"
   },
   "royaleapi.buttonViewTeam": {
     "description": "Button message to view an E-Sport team",
