@@ -1,29 +1,29 @@
-import type { FrameData } from './iframe.js'
-import { ActivityType, Assets } from 'premid'
+import type { FrameData } from './iframe.js';
+import { ActivityType, Assets } from 'premid';
 import {
   presence,
   registerSlideshowKey,
   renderMatchupIcon,
   slideshow,
-} from './util.js'
+} from './util.js';
 
-const browsingTimestamp = Math.floor(Date.now() / 1000)
+const browsingTimestamp = Math.floor(Date.now() / 1000);
 
 enum ActivityAssets {
   Logo = 'https://cdn.discordapp.com/icons/528327242875535372/a_ff168617165e959a877a5b5f01ccb423.gif?size=512&hack=.gif',
 }
 
-let currentData: FrameData | null = null
+let currentData: FrameData | null = null;
 presence.on('iFrameData', (data: FrameData) => {
-  currentData = data
-})
+  currentData = data;
+});
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     name: 'RoyaleAPI',
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-  }
+  };
   const strings = await presence.getStrings({
     paused: 'general.paused',
     search: 'general.search',
@@ -62,105 +62,104 @@ presence.on('UpdateData', async () => {
     buttonViewClanGame: 'royaleapi.buttonViewClanGame',
     buttonJoinTournament: 'royaleapi.buttonJoinTournament',
     buttonViewPlayerGame: 'royaleapi.buttonViewPlayerGame',
-  })
-  const { pathname, href, search } = document.location
-  const searchParams = new URLSearchParams(search)
-  const pathList = pathname.split('/').filter(Boolean)
-  let useSlideshow = false
+  });
+  const { pathname, href, search } = document.location;
+  const searchParams = new URLSearchParams(search);
+  const pathList = pathname.split('/').filter(Boolean);
+  let useSlideshow = false;
 
   switch (pathList[0] ?? '/') {
     case '/': {
-      presenceData.details = strings.viewHome
-      break
+      presenceData.details = strings.viewHome;
+      break;
     }
     case 'blog': {
       switch (pathList[1] ?? '/') {
         case '/': {
-          presenceData.details = strings.browsingBlog
-          break
+          presenceData.details = strings.browsingBlog;
+          break;
         }
         case 'search': {
-          presenceData.details = strings.search
-          break
+          presenceData.details = strings.search;
+          break;
         }
         case 'tags': {
           if (pathList[2]) {
-            presenceData.details = strings.browseBlogTag
+            presenceData.details = strings.browseBlogTag;
             presenceData.state = document.querySelector(
               '#page_content div.tag',
-            )
+            );
+          } else {
+            presenceData.details = strings.browsingBlog;
           }
-          else {
-            presenceData.details = strings.browsingBlog
-          }
-          break
+          break;
         }
         default: {
-          presenceData.details = strings.readingAnArticle
-          presenceData.state = document.querySelector('h1')
+          presenceData.details = strings.readingAnArticle;
+          presenceData.state = document.querySelector('h1');
           presenceData.buttons = [
             { label: strings.buttonReadArticle, url: href },
-          ]
+          ];
         }
       }
-      break
+      break;
     }
     case 'card': {
-      const cardName = document.querySelector('h1')?.textContent ?? ''
-      presenceData.details = strings.viewCard
-      presenceData.smallImageKey
-        = document.querySelector<HTMLImageElement>('.card_image img')
-      presenceData.buttons = [{ label: strings.viewCard, url: href }]
+      const cardName = document.querySelector('h1')?.textContent ?? '';
+      presenceData.details = strings.viewCard;
+      presenceData.smallImageKey =
+        document.querySelector<HTMLImageElement>('.card_image img');
+      presenceData.buttons = [{ label: strings.viewCard, url: href }];
       switch (pathList[2] ?? '/') {
         case '/': {
-          presenceData.state = cardName
-          break
+          presenceData.state = cardName;
+          break;
         }
         case 'matchup': {
-          useSlideshow = true
-          presenceData.state = `${cardName} - ${document.querySelector('.nav_menu .active')?.textContent}`
+          useSlideshow = true;
+          presenceData.state = `${cardName} - ${document.querySelector('.nav_menu .active')?.textContent}`;
           if (registerSlideshowKey('matchup')) {
             const matches = document.querySelectorAll<HTMLAnchorElement>(
               '.items_container .card',
-            )
+            );
             for (const match of matches) {
-              presenceData.smallImageKey = renderMatchupIcon(match!)
+              presenceData.smallImageKey = renderMatchupIcon(match!);
               const opposingName = match.querySelector<HTMLImageElement>(
                 '.matchup_chart + .image img',
-              )?.alt
+              )?.alt;
               const competition = [
                 ...match.querySelectorAll('.matchup_chart > div > div'),
               ]
-                .map(text => text.textContent)
-                .join(' - ')
-              presenceData.smallImageText = `${cardName} / ${opposingName}: ${competition}`
+                .map((text) => text.textContent)
+                .join(' - ');
+              presenceData.smallImageText = `${cardName} / ${opposingName}: ${competition}`;
             }
           }
-          break
+          break;
         }
         case 'season': {
-          presenceData.state = `${cardName} - ${document.querySelector('.nav_menu .active')?.textContent}`
-          break
+          presenceData.state = `${cardName} - ${document.querySelector('.nav_menu .active')?.textContent}`;
+          break;
         }
       }
-      break
+      break;
     }
     case 'cards': {
       switch (pathList[1]) {
         case 'popular': {
           const mainSection = document.querySelector(
             '.card_filter_menu .text',
-          )?.textContent
-          const filter
-            = document.querySelector('.filter_menu .active')?.textContent ?? ''
-          presenceData.details = strings.browseCards
-          presenceData.state = `${mainSection} - ${filter}`
-          useSlideshow = true
+          )?.textContent;
+          const filter =
+            document.querySelector('.filter_menu .active')?.textContent ?? '';
+          presenceData.details = strings.browseCards;
+          presenceData.state = `${mainSection} - ${filter}`;
+          useSlideshow = true;
           if (registerSlideshowKey(filter)) {
-            const cards = document.querySelectorAll('[data-card]')
+            const cards = document.querySelectorAll('[data-card]');
             for (const card of cards) {
-              const rank = card.querySelector('.card_rank_label_container')
-              const name = card.querySelector('.card_name')?.textContent ?? ''
+              const rank = card.querySelector('.card_rank_label_container');
+              const name = card.querySelector('.card_name')?.textContent ?? '';
               const data: PresenceData = {
                 ...presenceData,
                 smallImageKey: card.querySelector('img'),
@@ -171,33 +170,33 @@ presence.on('UpdateData', async () => {
                     url: card.querySelector('a'),
                   },
                 ],
-              }
-              slideshow.addSlide(name, data, MIN_SLIDE_TIME)
+              };
+              slideshow.addSlide(name, data, MIN_SLIDE_TIME);
             }
           }
-          break
+          break;
         }
         case 'viz': {
-          presenceData.details = strings.viewPage
-          presenceData.details = document.querySelector('h2')?.firstChild
-          break
+          presenceData.details = strings.viewPage;
+          presenceData.details = document.querySelector('h2')?.firstChild;
+          break;
         }
       }
-      break
+      break;
     }
     case 'clan': {
       if (pathList[1] === 'family') {
-        presenceData.details = strings.viewClanFamily
+        presenceData.details = strings.viewClanFamily;
         presenceData.state = document.querySelector(
           '#page_content .header.item',
-        )
-        break
+        );
+        break;
       }
 
-      presenceData.details = strings.viewClan
-      presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('.clan__menu .item.active')}`
-      presenceData.smallImageKey
-        = document.querySelector<HTMLImageElement>('img.floated.right')
+      presenceData.details = strings.viewClan;
+      presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('.clan__menu .item.active')}`;
+      presenceData.smallImageKey =
+        document.querySelector<HTMLImageElement>('img.floated.right');
       presenceData.buttons = [
         {
           label: strings.buttonViewClan,
@@ -207,103 +206,116 @@ presence.on('UpdateData', async () => {
           label: strings.buttonViewClanGame,
           url: `clashroyale://clanInfo?id=${pathList[1]}`,
         },
-      ]
+      ];
 
       switch (pathList[2] ?? '/') {
         case '/': {
-          useSlideshow = true
+          useSlideshow = true;
           const stats = document.querySelectorAll(
             '.clan_stats .column .content',
-          )
+          );
           for (const stat of stats) {
-            const text = `${stat.querySelector('h5')?.textContent}: ${stat.querySelector('.value')?.textContent}`
+            const text = `${stat.querySelector('h5')?.textContent}: ${stat.querySelector('.value')?.textContent}`;
             const data: PresenceData = {
               ...presenceData,
               smallImageText: text,
-            }
-            slideshow.addSlide(text, data, MIN_SLIDE_TIME)
+            };
+            slideshow.addSlide(text, data, MIN_SLIDE_TIME);
           }
-          break
+          break;
         }
       }
-      break
+      break;
     }
     case 'clans': {
-      presenceData.details = strings.browseClans
-      presenceData.state = document.querySelector('h1')
-      break
+      presenceData.details = strings.browseClans;
+      presenceData.state = document.querySelector('h1');
+      break;
     }
     case 'content': {
-      const userLink = document.querySelector<HTMLAnchorElement>('.header.sub a')
+      const userLink =
+        document.querySelector<HTMLAnchorElement>('.header.sub a');
       if (searchParams.get('id')) {
-        presenceData.details = strings.watchingVid
-        presenceData.state = `${document.querySelector('h3')?.firstChild?.textContent} - ${userLink?.textContent}`
+        presenceData.details = strings.watchingVid;
+        presenceData.state = `${document.querySelector('h3')?.firstChild?.textContent} - ${userLink?.textContent}`;
         presenceData.buttons = [
           { label: strings.buttonViewPlaylist, url: userLink },
-          { label: strings.buttonWatchVideo, url: `https://youtu.be/${searchParams.get('id')}` },
-        ]
+          {
+            label: strings.buttonWatchVideo,
+            url: `https://youtu.be/${searchParams.get('id')}`,
+          },
+        ];
         if (currentData) {
-          presenceData.type = ActivityType.Watching
-          presenceData.startTimestamp = currentData.startTimestamp
-          presenceData.endTimestamp = currentData.endTimestamp
-          presenceData.smallImageKey = currentData.paused ? Assets.Pause : Assets.Play
-          presenceData.smallImageText = currentData.paused ? strings.paused : strings.playing
+          presenceData.type = ActivityType.Watching;
+          presenceData.startTimestamp = currentData.startTimestamp;
+          presenceData.endTimestamp = currentData.endTimestamp;
+          presenceData.smallImageKey = currentData.paused
+            ? Assets.Pause
+            : Assets.Play;
+          presenceData.smallImageText = currentData.paused
+            ? strings.paused
+            : strings.playing;
         }
+      } else {
+        presenceData.details = strings.viewPlaylist;
+        presenceData.state = userLink;
+        presenceData.buttons = [
+          { label: strings.buttonViewPlaylist, url: userLink },
+        ];
       }
-      else {
-        presenceData.details = strings.viewPlaylist
-        presenceData.state = userLink
-        presenceData.buttons = [{ label: strings.buttonViewPlaylist, url: userLink }]
-      }
-      break
+      break;
     }
     case 'esports': {
-      presenceData.details = strings.browseESports
-      presenceData.state = document.querySelector('.menu .active')
+      presenceData.details = strings.browseESports;
+      presenceData.state = document.querySelector('.menu .active');
       switch (pathList[1]) {
         case 'teams': {
-          useSlideshow = true
-          const search = document.querySelector<HTMLInputElement>('#tablesearch')
+          useSlideshow = true;
+          const search =
+            document.querySelector<HTMLInputElement>('#tablesearch');
           if (registerSlideshowKey(search?.value ?? '')) {
-            const teams = document.querySelectorAll('table tr')
+            const teams = document.querySelectorAll('table tr');
             for (const team of teams) {
-              const teamName = team.querySelector('a')
+              const teamName = team.querySelector('a');
               const data: PresenceData = {
                 ...presenceData,
                 smallImageKey: team.querySelector('img'),
                 smallImageText: teamName,
                 buttons: [{ label: strings.buttonViewTeam, url: teamName }],
-              }
-              slideshow.addSlide(teamName?.textContent ?? '', data, MIN_SLIDE_TIME)
+              };
+              slideshow.addSlide(
+                teamName?.textContent ?? '',
+                data,
+                MIN_SLIDE_TIME,
+              );
             }
           }
-          break
+          break;
         }
       }
-      break
+      break;
     }
     case 'events': {
-      presenceData.details = strings.viewEvent
-      presenceData.state = document.querySelector('#page_content div.header.item')
-      presenceData.buttons = [{ label: strings.buttonViewEvent, url: href }]
-      break
-    }
-    case 'feature': {
-      break
+      presenceData.details = strings.viewEvent;
+      presenceData.state = document.querySelector(
+        '#page_content div.header.item',
+      );
+      presenceData.buttons = [{ label: strings.buttonViewEvent, url: href }];
+      break;
     }
     case 'game-mode': {
-      presenceData.details = strings.browseCards
-      presenceData.state = document.querySelector('h1')
-      break
+      presenceData.details = strings.browseCards;
+      presenceData.state = document.querySelector('h1');
+      break;
     }
     case 'me': {
-      presenceData.details = strings.viewAccount
-      presenceData.state = document.querySelector('.menu .item.active')
-      break
+      presenceData.details = strings.viewAccount;
+      presenceData.state = document.querySelector('.menu .item.active');
+      break;
     }
     case 'player': {
-      presenceData.details = strings.viewProfile
-      presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('.menu[class*=player_profile] .item.active')?.textContent}`
+      presenceData.details = strings.viewProfile;
+      presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('.menu[class*=player_profile] .item.active')?.textContent}`;
       presenceData.buttons = [
         {
           label: strings.buttonViewProfile,
@@ -313,65 +325,75 @@ presence.on('UpdateData', async () => {
           label: strings.buttonViewPlayerGame,
           url: `clashroyale://playerInfo?id=${pathList[1]}`,
         },
-      ]
-      break
+      ];
+      break;
     }
     case 'players': {
-      presenceData.details = strings.browsePlayers
+      presenceData.details = strings.browsePlayers;
       if (pathList[1] === 'leaderboard_history') {
-        const title = document.querySelector('h1')?.textContent
-        const group = document.querySelector('.player_leaderboard_history__menu .item.active')?.textContent
-        let state = `${title} - ${group}`
+        const title = document.querySelector('h1')?.textContent;
+        const group = document.querySelector(
+          '.player_leaderboard_history__menu .item.active',
+        )?.textContent;
+        let state = `${title} - ${group}`;
         if (pathList[3]) {
-          state += ` - ${document.querySelector('.player_leaderboard_history__year_menu .item.active')?.textContent}`
+          state += ` - ${document.querySelector('.player_leaderboard_history__year_menu .item.active')?.textContent}`;
         }
-        presenceData.state = state
+        presenceData.state = state;
+      } else {
+        presenceData.state = document.querySelector('h1');
       }
-      else {
-        presenceData.state = document.querySelector('h1')
-      }
-      break
+      break;
     }
     case 'replay': {
-      presenceData.details = strings.viewReplay
-      presenceData.buttons = [{label: strings.buttonViewReplay, url: href}]
-      const [playerA, playerB] = document.querySelectorAll(searchParams.get('overlay')? '.player_name' : '.stats h5')
-      presenceData.state = `${playerA?.textContent} / ${playerB?.textContent}`
+      presenceData.details = strings.viewReplay;
+      presenceData.buttons = [{ label: strings.buttonViewReplay, url: href }];
+      const [playerA, playerB] = document.querySelectorAll(
+        searchParams.get('overlay') ? '.player_name' : '.stats h5',
+      );
+      presenceData.state = `${playerA?.textContent} / ${playerB?.textContent}`;
       if (searchParams.get('overlay')) {
-        presenceData.smallImageKey = Assets.Question
-        presenceData.smallImageText = [...document.querySelectorAll('.score')].map(score => score.textContent).join(' - ')
+        presenceData.smallImageKey = Assets.Question;
+        presenceData.smallImageText = [...document.querySelectorAll('.score')]
+          .map((score) => score.textContent)
+          .join(' - ');
       }
-      break
+      break;
     }
     case 'strategy': {
-      presenceData.details = strings.browseStrategy
-      break
+      presenceData.details = strings.browseStrategy;
+      break;
     }
     case 'team': {
-      presenceData.details = strings.viewTeam
-      presenceData.state = document.querySelector('h1')
-      presenceData.smallImageKey = document.querySelector<HTMLImageElement>('#page_content > .segment .floated.right.image')
-      presenceData.buttons = [{label: strings.viewTeam, url: href}]
-      break
+      presenceData.details = strings.viewTeam;
+      presenceData.state = document.querySelector('h1');
+      presenceData.smallImageKey = document.querySelector<HTMLImageElement>(
+        '#page_content > .segment .floated.right.image',
+      );
+      presenceData.buttons = [{ label: strings.viewTeam, url: href }];
+      break;
     }
     case 'tournament': {
-      presenceData.details = strings.viewEvent
-      presenceData.state = document.querySelector('h1')
-      presenceData.buttons = [{label: strings.buttonViewEvent, url: href}, {
-        label: strings.buttonJoinTournament,
-        url: `clashroyale://joinTournament?id=${pathList[1]}`
-      }]
-      break
+      presenceData.details = strings.viewEvent;
+      presenceData.state = document.querySelector('h1');
+      presenceData.buttons = [
+        { label: strings.buttonViewEvent, url: href },
+        {
+          label: strings.buttonJoinTournament,
+          url: `clashroyale://joinTournament?id=${pathList[1]}`,
+        },
+      ];
+      break;
     }
     case 'tournaments': {
-      presenceData.details = strings.browseTournaments
-      break
+      presenceData.details = strings.browseTournaments;
+      break;
     }
     default: {
-      presenceData.details = strings.browsing
-      break
+      presenceData.details = strings.browsing;
+      break;
     }
   }
 
-  presence.setActivity(useSlideshow ? slideshow : presenceData)
-})
+  presence.setActivity(useSlideshow ? slideshow : presenceData);
+});
