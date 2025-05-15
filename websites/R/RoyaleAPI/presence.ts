@@ -15,13 +15,16 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
   const strings = await presence.getStrings({
+    viewClan: 'royaleapi.viewClan',
     viewHome: 'general.viewHome',
     viewProfile: 'general.viewProfile',
-    buttonViewProfile: 'general.buttonViewProfile',
     viewAccount: 'general.viewAccount',
-    viewClan: 'royaleapi.viewClan',
+    browsingBlog: 'royaleapi.browsingBlog',
     viewClanFamily: 'royaleapi.viewClanFamily',
     buttonViewClan: 'royaleapi.buttonViewClan',
+    readingAnArticle: 'general.readingAnArticle',
+    buttonReadArticle: 'general.buttonReadArticle',
+    buttonViewProfile: 'general.buttonViewProfile',
     buttonViewClanGame: 'royaleapi.buttonViewClanGame',
     buttonViewPlayerGame: 'royaleapi.buttonViewPlayerGame',
   })
@@ -38,6 +41,7 @@ presence.on('UpdateData', async () => {
     case 'blog': {
       switch (pathList[1] ?? '/') {
         case '/': {
+          presenceData.details = strings.browsingBlog
           break
         }
         case 'search': {
@@ -53,7 +57,9 @@ presence.on('UpdateData', async () => {
           break
         }
         default: {
-          // article
+          presenceData.details = strings.readingAnArticle
+          presenceData.state = document.querySelector('h1')
+          presenceData.buttons = [{ label: strings.buttonReadArticle, url: href }]
         }
       }
       break
@@ -231,6 +237,15 @@ presence.on('UpdateData', async () => {
       }
       else {
         //
+      }
+      break
+    }
+    case 'replay': {
+      if (searchParams.get('overlay')) {
+        // summary
+      }
+      else {
+        // main view
       }
       break
     }

@@ -1,4 +1,8 @@
 {
+  "royaleapi.browseBlog": {
+    "description": "Browsing blog home page",
+    "message": "Browsing the Blog"
+  },
   "royaleapi.buttonViewPlayerGame": {
     "description": "Button message to lead user to open player profile in game",
     "message": "View Player In-Game"
