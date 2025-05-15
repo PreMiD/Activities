@@ -18,19 +18,69 @@ presence.on('UpdateData', async () => {
     viewHome: 'general.viewHome',
     viewProfile: 'general.viewProfile',
     buttonViewProfile: 'general.buttonViewProfile',
+    viewAccount: 'general.viewAccount',
     viewClan: 'royaleapi.viewClan',
     viewClanFamily: 'royaleapi.viewClanFamily',
     buttonViewClan: 'royaleapi.buttonViewClan',
     buttonViewClanGame: 'royaleapi.buttonViewClanGame',
     buttonViewPlayerGame: 'royaleapi.buttonViewPlayerGame',
   })
-  const { pathname, href } = document.location
+  const { pathname, href, search } = document.location
+  const searchParams = new URLSearchParams(search)
   const pathList = pathname.split('/').filter(Boolean)
   let useSlideshow = false
 
   switch (pathList[0] ?? '/') {
     case '/': {
       presenceData.details = strings.viewHome
+      break
+    }
+    case 'blog': {
+      switch (pathList[1] ?? '/') {
+        case '/': {
+          break
+        }
+        case 'search': {
+          break
+        }
+        case 'tags': {
+          if (pathList[2]) {
+            // specific tag
+          }
+          else {
+            // list
+          }
+          break
+        }
+        default: {
+          // article
+        }
+      }
+      break
+    }
+    case 'card': {
+      switch (pathList[2] ?? '/') {
+        case '/': {
+          break
+        }
+        case 'matchup': {
+          break
+        }
+        case 'season': {
+          break
+        }
+      }
+      break
+    }
+    case 'cards': {
+      switch (pathList[1]) {
+        case 'popular': {
+          break
+        }
+        case 'viz': {
+          break
+        }
+      }
       break
     }
     case 'clan': {
@@ -71,6 +121,60 @@ presence.on('UpdateData', async () => {
       }
       break
     }
+    case 'clans': {
+      switch (pathList[1] ?? '/') {
+        case '/': {
+          break
+        }
+        case 'families': {
+          break
+        }
+        case 'leaderboard': {
+          break
+        }
+        case 'war': {
+          break
+        }
+      }
+      break
+    }
+    case 'content': {
+      if (searchParams.get('id')) {
+        // video
+      }
+      else {
+        // browsing
+      }
+      break
+    }
+    case 'esports': {
+      switch (pathList[1]) {
+        case 'leagues': {
+          break
+        }
+        case 'players': {
+          break
+        }
+        case 'teams': {
+          break
+        }
+        case 'schedule': {
+          break
+        }
+      }
+      break
+    }
+    case 'feature': {
+      break
+    }
+    case 'game-mode': {
+      break
+    }
+    case 'me': {
+      presenceData.details = strings.viewAccount
+      presenceData.state = document.querySelector('.menu .item.active')
+      break
+    }
     case 'player': {
       presenceData.details = strings.viewProfile
       presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('.menu[class*=player_profile] .item.active')?.textContent}`
@@ -84,6 +188,66 @@ presence.on('UpdateData', async () => {
           url: `clashroyale://playerInfo?id=${pathList[1]}`,
         },
       ]
+      break
+    }
+    case 'players': {
+      switch (pathList[1] ?? '/') {
+        case '/': {
+          break
+        }
+        case 'leaderboard': {
+          if (pathList[2]) {
+            if (pathList[2] === 'season') {
+              // by season
+            }
+            else {
+              // regional leaderboard
+            }
+          }
+          else {
+            // global leaderboard
+          }
+          break
+        }
+        case 'leaderboard_history': {
+          if (pathList[3]) {
+            // by year
+          }
+          else {
+            // just by category
+          }
+          break
+        }
+        default: {
+          // other stat sorting
+        }
+      }
+      break
+    }
+    case 'pro': {
+      // searching pros
+      if (searchParams.get('q')) {
+        //
+      }
+      else {
+        //
+      }
+      break
+    }
+    case 'strategy': {
+      break
+    }
+    case 'team': {
+      // esports team
+      break
+    }
+    case 'tournament': {
+      break
+    }
+    case 'tournaments': {
+      break
+    }
+    default: {
       break
     }
   }
