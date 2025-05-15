@@ -1,8 +1,7 @@
-import { Assets } from 'premid'
-
 const presence = new Presence({
   clientId: '503557087041683458',
 })
+const slideshow = presence.createSlideshow()
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
@@ -19,26 +18,69 @@ presence.on('UpdateData', async () => {
     viewHome: 'general.viewHome',
     viewProfile: 'general.viewProfile',
     buttonViewProfile: 'general.buttonViewProfile',
-    buttonViewPlayer: 'royaleapi.buttonViewPlayer',
+    viewClan: 'royaleapi.viewClan',
+    viewClanFamily: 'royaleapi.viewClanFamily',
+    buttonViewClan: 'royaleapi.buttonViewClan',
+    buttonViewClanGame: 'royaleapi.buttonViewClanGame',
+    buttonViewPlayerGame: 'royaleapi.buttonViewPlayerGame',
   })
   const { pathname, href } = document.location
   const pathList = pathname.split('/').filter(Boolean)
+  let useSlideshow = false
 
   switch (pathList[0] ?? '/') {
     case '/': {
       presenceData.details = strings.viewHome
       break
     }
+    case 'clan': {
+      if (pathList[1] === 'family') {
+        presenceData.details = strings.viewClanFamily
+        presenceData.state = document.querySelector('#page_content .header.item')
+        break
+      }
+
+      presenceData.details = strings.viewClan
+      presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('.clan__menu .item.active')}`
+      presenceData.smallImageKey = document.querySelector<HTMLImageElement>('img.floated.right')
+      presenceData.buttons = [
+        {
+          label: strings.buttonViewClan,
+          url: href,
+        },
+        {
+          label: strings.buttonViewClanGame,
+          url: `clashroyale://clanInfo?id=${pathList[1]}`,
+        },
+      ]
+
+      switch (pathList[2] ?? '/') {
+        case '/': {
+          useSlideshow = true
+          const stats = document.querySelectorAll('.clan_stats .column .content')
+          for (const stat of stats) {
+            const text = `${stat.querySelector('h5')?.textContent}: ${stat.querySelector('.value')?.textContent}`
+            const data: PresenceData = {
+              ...presenceData,
+              smallImageText: text,
+            }
+            slideshow.addSlide(text, data, MIN_SLIDE_TIME)
+          }
+          break
+        }
+      }
+      break
+    }
     case 'player': {
       presenceData.details = strings.viewProfile
-      presenceData.state = document.querySelector('h1')
+      presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('.menu[class*=player_profile] .item.active')?.textContent}`
       presenceData.buttons = [
         {
           label: strings.buttonViewProfile,
           url: href,
         },
         {
-          label: strings.buttonViewPlayer,
+          label: strings.buttonViewPlayerGame,
           url: `clashroyale://playerInfo?id=${pathList[1]}`,
         },
       ]
@@ -46,5 +88,5 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  presence.setActivity(presenceData)
+  presence.setActivity(useSlideshow ? slideshow : presenceData)
 })

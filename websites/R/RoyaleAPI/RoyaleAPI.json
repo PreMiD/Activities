@@ -1,6 +1,22 @@
 {
-  "royaleapi.buttonViewPlayer": {
+  "royaleapi.buttonViewPlayerGame": {
     "description": "Button message to lead user to open player profile in game",
-    "message": "View Player In Game"
+    "message": "View Player In-Game"
+  },
+  "royaleapi.buttonViewClan": {
+    "description": "Button message for viewing clan details",
+    "message": "View Clan"
+  },
+  "royaleapi.buttonViewClanGame": {
+    "description": "Button message for viewing clan details in game",
+    "message": "View Clan In-Game"
+  },
+  "royaleapi.viewClan": {
+    "description": "Viewing information about a Clan",
+    "message": "Viewing a Clan"
+  },
+  "royaleapi.viewClanFamily": {
+    "description": "Viewing a network of related Clans and players",
+    "message": "Viewing a Clan's Family"
   }
 }
