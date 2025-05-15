@@ -46,7 +46,7 @@
     "devstatus.twitch.tv",
     "status.twitch.tv"
   ],
-  "version": "3.2.30",
+  "version": "3.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/thumbnail.png",
   "color": "#9146FF",
@@ -168,6 +168,15 @@
       },
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "streamerTitle",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Streamer as Title",
+      "icon": "fas fa-user-large",
       "value": true
     }
   ]
