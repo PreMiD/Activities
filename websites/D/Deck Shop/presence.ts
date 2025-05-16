@@ -2,6 +2,7 @@ const presence = new Presence({
   clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
+const slideshow = presence.createSlideshow()
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/UxgNHpE.png',
@@ -13,7 +14,8 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
   }
-  const { pathname, href } = document.location
+  const { pathname, href, search } = document.location
+  const searchParams = new URLSearchParams(search)
   const pathList = pathname.split('/').filter(Boolean)
   if (pathList[0]?.length === 2) {
     // remove language code from path logic
@@ -25,11 +27,49 @@ presence.on('UpdateData', async () => {
     browseGuides: 'deck shop.browseGuides',
     readGuide: 'deck shop.readGuide',
     buttonReadArticle: 'general.buttonReadArticle',
+    search: 'general.search',
+    searchFor: 'general.searchFor',
+    viewProfile: 'general.viewProfile',
+    buttonViewProfile: 'general.buttonViewProfile',
+    viewClan: 'deck shop.viewClan',
+    buttonViewClan: 'deck shop.buttonViewClan',
+    buildDeck: 'deck shop.buildDeck',
+    viewDeck: 'deck shop.viewDeck',
+    buttonViewDeck: 'deck shop.buttonViewDeck',
+    buttonUseDeck: 'deck shop.buttonUseDeck',
   })
+
+  let useSlideshow = false
 
   switch (pathList[0] ?? '/') {
     case '/': {
       presenceData.details = strings.viewHome
+      break
+    }
+    case 'check': {
+      presenceData.details = strings.viewDeck
+      if (searchParams.get('deck')) {
+        useSlideshow = true
+        presenceData.state = document.querySelector('h2')
+        presenceData.buttons = [{ label: strings.buttonViewDeck, url: href }, { label: strings.buttonUseDeck, url: document.querySelector<HTMLAnchorElement>('a[href*=copyDeck]') }]
+        const cards = document.querySelectorAll('.deck a')
+        const ratings = document.querySelectorAll('h3 + div > div')
+        for (const rating of ratings) {
+          for (const card of cards) {
+            const image = card.querySelector('img')
+            const data: PresenceData = {
+              ...presenceData,
+              smallImageKey: image,
+              smallImageText: `${rating.firstElementChild?.textContent}: ${rating.lastElementChild?.textContent}`,
+            }
+            slideshow.addSlide(image?.alt ?? '', data, MIN_SLIDE_TIME)
+          }
+        }
+      }
+      break
+    }
+    case 'deck-builder': {
+      presenceData.details = strings.buildDeck
       break
     }
     case 'guide': {
@@ -44,6 +84,29 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'spy': {
+      switch (pathList[1]) {
+        case 'player': {
+          presenceData.details = strings.viewProfile
+          presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('article nav div > a[class]')?.firstChild?.textContent}`
+          presenceData.buttons = [{ label: strings.buttonViewProfile, url: href }]
+          break
+        }
+        case 'clan': {
+          presenceData.details = strings.viewClan
+          presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('article nav > div:first-child a[class]')?.firstChild?.textContent}`
+          presenceData.smallImageKey = document.querySelector<HTMLImageElement>('article section > div:first-child > img')
+          presenceData.buttons = [{ label: strings.buttonViewClan, url: href }]
+          break
+        }
+        case 'top': {
+          presenceData.details = strings.searchFor
+          presenceData.state = document.querySelector('h1')
+          break
+        }
+        default: {
+          presenceData.details = strings.search
+        }
+      }
       break
     }
     default: {
@@ -51,5 +114,5 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  presence.setActivity(presenceData)
+  presence.setActivity(useSlideshow ? slideshow : presenceData)
 })
