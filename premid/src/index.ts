@@ -12,7 +12,9 @@ export * from './functions/timestampFromFormat.js'
  * import type ExampleStrings from './Example.json'
  *
  * declare module 'premid' {
- *   custom: keyof typeof ExampleStrings
+ *   interface StringKeys {
+ *     custom: keyof typeof ExampleStrings
+ *   }
  * }
  * ```
  */
