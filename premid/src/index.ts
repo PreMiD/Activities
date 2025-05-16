@@ -1,6 +1,26 @@
+import type GeneralStrings from '../../websites/general.json'
+
 export * from './functions/getTimestamps.js'
 export * from './functions/getTimestampsFromMedia.js'
 export * from './functions/timestampFromFormat.js'
+
+/**
+ * Interface which holds keys usable for `Presence#getStrings` for type hints.
+ *
+ * Can be extended with code like this:
+ * ```ts
+ * import type ExampleStrings from './Example.json'
+ *
+ * declare module 'premid' {
+ *   custom: keyof typeof ExampleStrings
+ * }
+ * ```
+ */
+export interface StringKeys {
+  general: keyof typeof GeneralStrings
+}
+
+export type StringKeysResolved = StringKeys[keyof StringKeys]
 
 export enum ActivityType {
   /**

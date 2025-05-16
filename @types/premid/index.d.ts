@@ -1,5 +1,4 @@
-import type { ActivityType } from 'premid'
-import type GeneralStrings from '../../websites/general.json'
+import type { ActivityType, StringKeysResolved } from 'premid'
 
 declare global {
 
@@ -449,7 +448,7 @@ declare global {
      */
     getStrings<
       T extends {
-        [K: string]: keyof typeof GeneralStrings
+        [K: string]: StringKeysResolved
       } | {
         [K: string]: string
       },
@@ -463,7 +462,7 @@ declare global {
      */
     getStrings<
       T extends {
-        [K: string]: keyof typeof GeneralStrings
+        [K: string]: StringKeysResolved
       } | {
         [K: string]: string
       },
