@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "theusaf"
+  },
+  "service": "NeedCoolerShoes",
+  "description": {
+    "en": "Minecraft Skin Editor and Gallery. Edit, upload and share your Minecraft skins, or create banners with our Banner Editor."
+  },
+  "url": "needcoolershoes.com",
+  "version": "1.0.0",
+  "logo": "https://needcoolershoes.com/icon.png",
+  "thumbnail": "https://camo.githubusercontent.com/ca33fce64ac67b6c41d6097ec70641fdcf9af0a4fce268d0e3dc4de167f04140/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f6e656564636f6f6c657273686f65732f696d6167652f75706c6f61642f76313734353937323533342f62313466623138652d303564332d343638392d383935652d3837386161363363313363332e706e67?mime=.png",
+  "color": "#f2c232",
+  "category": "games",
+  "tags": [
+    "minecraft",
+    "skin",
+    "editor",
+    "banner",
+    "share",
+    "upload",
+    "gallery"
+  ]
+}
