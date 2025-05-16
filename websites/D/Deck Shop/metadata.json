@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "theusaf"
+  },
+  "service": "Deck Shop",
+  "description": {
+    "ar": "أفضل تشكيلات كلاش رويال لكل الساحات. افحص تشكيلتك للتقييم والحصول على توصيات. إرشادات ونصائح للمبتدئين والمحترفين.",
+    "de": "Die besten Clash Royale Decks für alle Arenen. Check dein Deck auf Probleme und bekomme Empfehlungen.",
+    "en": "Best Clash Royale decks for challenges and all arenas. Check your deck for problems and get recommendations or use deck builder to find a new deck.",
+    "es": "Los mejores mazos para todas las arenas de Clash Royale. Revisa tu mazo por problemas y consigue recomendaciones. Guías y consejos para los principiantes y avanzados.",
+    "fr": "Meilleurs decks Clash Royale pour toutes les arènes. Évalue ton deck pour repérer des problèmes et avoir des recommandations. Guides et conseils pour débutants et joueurs avancés.",
+    "it": "I migliori mazzi di Clash Royale per tutte le Arene. Controlla il tuo mazzo per vederne i problemi e ricevere suggerimenti. Guide e consigli per principianti e giocatori di livello avanzato.",
+    "nl": "Beste Clash Royale decks voor alle arenas. Bekijk jouw deck om problemen te vinden en tips te vinden. Artikels en tips voor zowel beginners en gevorderde spelers.",
+    "pl": "Najlepsze decki w Clash Royale dla wszystkich aren. Sprawdź swój deck pod kątem problemów i otrzymaj rekomendacje. Poradniki i sztuczki dla początkujących i zaawansowanych graczy.",
+    "pt": "Melhores decks de Clash para todas arenas. Ache no seu deck problemas e veja recomendações. Guias e dicas para jogadores iniciantes e avançados.",
+    "ru": "Лучшие колоды Clash Royale для всех арен. Проверь свою колоду на наличие проблем и получи рекомендации по ее улучшению. Советы и руководства для начинающих и опытных игроков.",
+    "sk": "Najlepšie Clash Royale decky pre všetky arény. Skontroluj si svoj deck pre problémy a získaj odporučenia. Návody a tipy pre začiatočníkov aj pokročilých.",
+    "sv": "Bästa Clash Royale däcken för alla arenor. Kolla ditt däck för problem och få rekommendationer. Guider och tips för nybörjade och advancerade spelare.",
+    "tr": "Tüm arenalar için en iyi Clash Royale desteleri. Desteni eksikliklere karşı kontrol et. Tüm oyuncular için ipuçları ve kılavuzlar burada.",
+    "zh": "为所有竞技场打造的最好的卡组。检查您的牌组来发现它的问题和优化建议吧！这里也有给新手和高级玩家准备的指南和提示。"
+  },
+  "url": "www.deckshop.pro",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/UxgNHpE.png",
+  "thumbnail": "https://www.deckshop.pro/img/share/homepage.jpg",
+  "color": "#222222",
+  "category": "games",
+  "tags": [
+    "clash",
+    "royale",
+    "card",
+    "stats",
+    "meta",
+    "build",
+    "check"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ],
+  "mobile": true
+}

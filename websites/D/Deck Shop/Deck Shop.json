@@ -1,0 +1,10 @@
+{
+  "deck shop.browseGuides": {
+    "description": "Browsing guide articles",
+    "message": "Browsing guides"
+  },
+  "deck shop.readGuide": {
+    "description": "Reading a guide article",
+    "message": "Reading a guide"
+  }
+}
