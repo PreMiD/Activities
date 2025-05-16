@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "theusaf"
+  },
+  "service": "RoyaleAPI",
+  "description": {
+    "en": "The definitive source about decks, players and teams in Clash Royale. Explore advanced statistics about decks and cards based on millions of games per week."
+  },
+  "url": "royaleapi.com",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/nqCP2b5.gif",
+  "thumbnail": "https://cdn.discordapp.com/splashes/528327242875535372/b5d9e1726d083c3ecd9d3b2469a506de.jpg?size=2048&hack=.jpg",
+  "color": "#ffffff",
+  "category": "games",
+  "tags": [
+    "clash",
+    "royale",
+    "stats",
+    "analytics",
+    "decks",
+    "esports",
+    "api",
+    "statistics",
+    "meta",
+    "best",
+    "cards",
+    "pro"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https://www[.]youtube[.]com[/]embed",
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ],
+  "mobile": true
+}
