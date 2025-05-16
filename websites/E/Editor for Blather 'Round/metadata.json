@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "theusaf"
+  },
+  "service": "Editor for Blather 'Round",
+  "description": {
+    "en": "Blather Round Editor is a web application that allows users to create and edit custom projects for the game Blather 'Round by Jackbox Games."
+  },
+  "url": "blather-mod.theusaf.org",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/rFZupTH.png",
+  "thumbnail": "https://i.imgur.com/cwzze4m.png",
+  "color": "#f9fafb",
+  "category": "games",
+  "tags": [
+    "jackbox",
+    "editor",
+    "mod",
+    "project",
+    "custom",
+    "prompts"
+  ],
+  "mobile": true
+}
