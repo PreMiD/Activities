@@ -38,6 +38,9 @@ presence.on('UpdateData', async () => {
     buttonViewDeck: 'deck shop.buttonViewDeck',
     buttonUseDeck: 'deck shop.buttonUseDeck',
     findDeck: 'deck shop.findDeck',
+    browseCards: 'deck shop.browseCards',
+    viewCard: 'deck shop.viewCard',
+    buttonViewCard: 'deck shop.buttonViewCard',
   })
 
   let useSlideshow = false
@@ -45,6 +48,19 @@ presence.on('UpdateData', async () => {
   switch (pathList[0] ?? '/') {
     case '/': {
       presenceData.details = strings.viewHome
+      break
+    }
+    case 'card': {
+      if (pathList[1] === 'detail') {
+        presenceData.details = strings.viewCard
+        presenceData.state = document.querySelector('h1')
+        presenceData.smallImageKey = document.querySelector<HTMLImageElement>('article > section:first-child img[src*=card]')
+        presenceData.buttons = [{ label: strings.buttonViewCard, url: href }]
+      }
+      else {
+        presenceData.details = strings.browseCards
+        presenceData.state = document.querySelector('nav > a.disabled')
+      }
       break
     }
     case 'check': {

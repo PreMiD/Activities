@@ -34,5 +34,17 @@
   "deck shop.findDeck": {
     "description": "Finding decks by criteria",
     "message": "Finding Decks"
+  },
+  "deck shop.browseCards": {
+    "description": "Browsing a list of Cards",
+    "message": "Browsing Cards"
+  },
+  "deck shop.viewCard": {
+    "description": "Viewing details about a Card",
+    "message": "Viewing a Card"
+  },
+  "deck shop.buttonViewCard": {
+    "description": "Button to view details about a Card",
+    "message": "View Card"
   }
 }
