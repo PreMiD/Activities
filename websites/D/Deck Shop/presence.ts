@@ -24,23 +24,23 @@ presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
     viewHome: 'general.viewHome',
     browsing: 'general.browsing',
-    browseGuides: 'deck shop.browseGuides',
-    readGuide: 'deck shop.readGuide',
+    browseGuides: 'deck-shop.browseGuides',
+    readGuide: 'deck-shop.readGuide',
     buttonReadArticle: 'general.buttonReadArticle',
     search: 'general.search',
     searchFor: 'general.searchFor',
     viewProfile: 'general.viewProfile',
     buttonViewProfile: 'general.buttonViewProfile',
-    viewClan: 'deck shop.viewClan',
-    buttonViewClan: 'deck shop.buttonViewClan',
-    buildDeck: 'deck shop.buildDeck',
-    viewDeck: 'deck shop.viewDeck',
-    buttonViewDeck: 'deck shop.buttonViewDeck',
-    buttonUseDeck: 'deck shop.buttonUseDeck',
-    findDeck: 'deck shop.findDeck',
-    browseCards: 'deck shop.browseCards',
-    viewCard: 'deck shop.viewCard',
-    buttonViewCard: 'deck shop.buttonViewCard',
+    viewClan: 'deck-shop.viewClan',
+    buttonViewClan: 'deck-shop.buttonViewClan',
+    buildDeck: 'deck-shop.buildDeck',
+    viewDeck: 'deck-shop.viewDeck',
+    buttonViewDeck: 'deck-shop.buttonViewDeck',
+    buttonUseDeck: 'deck-shop.buttonUseDeck',
+    findDeck: 'deck-shop.findDeck',
+    browseCards: 'deck-shop.browseCards',
+    viewCard: 'deck-shop.viewCard',
+    buttonViewCard: 'deck-shop.buttonViewCard',
   })
 
   let useSlideshow = false
@@ -54,7 +54,9 @@ presence.on('UpdateData', async () => {
       if (pathList[1] === 'detail') {
         presenceData.details = strings.viewCard
         presenceData.state = document.querySelector('h1')
-        presenceData.smallImageKey = document.querySelector<HTMLImageElement>('article > section:first-child img[src*=card]')
+        presenceData.smallImageKey = document.querySelector<HTMLImageElement>(
+          'article > section:first-child img[src*=card]',
+        )
         presenceData.buttons = [{ label: strings.buttonViewCard, url: href }]
       }
       else {
@@ -153,16 +155,20 @@ presence.on('UpdateData', async () => {
     case 'spy': {
       switch (pathList[1]) {
         case 'player': {
+          const tab = document.querySelector('article nav div > a[class]')
           presenceData.details = strings.viewProfile
-          presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('article nav div > a[class]')?.firstChild?.textContent}`
+          presenceData.state = `${document.querySelector('h1')?.textContent} - ${(tab?.firstElementChild ?? tab?.firstChild)?.textContent?.trim()}`
           presenceData.buttons = [
             { label: strings.buttonViewProfile, url: href },
           ]
           break
         }
         case 'clan': {
+          const tab = document.querySelector(
+            'article nav > div:first-child a[class]',
+          )
           presenceData.details = strings.viewClan
-          presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('article nav > div:first-child a[class]')?.firstChild?.textContent}`
+          presenceData.state = `${document.querySelector('h1')?.textContent} - ${(tab?.firstElementChild ?? tab?.firstChild)?.textContent?.trim()}`
           presenceData.smallImageKey = document.querySelector<HTMLImageElement>(
             'article section > div:first-child > img',
           )
