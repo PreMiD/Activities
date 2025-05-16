@@ -1,6 +1,27 @@
-import type { ActivityType, StringKeysResolved } from 'premid'
+import type { ActivityType } from 'premid'
+import type GeneralStrings from '../../websites/general.json'
 
 declare global {
+
+  /**
+   * Interface which holds keys usable for `Presence#getStrings` for type hints.
+   *
+   * Can be extended with code like this:
+   * ```ts
+   * import type ExampleStrings from './Example.json'
+   *
+   * declare global {
+   *   interface StringKeys {
+   *     custom: keyof typeof ExampleStrings
+   *   }
+   * }
+   * ```
+   */
+  interface StringKeys {
+    general: keyof typeof GeneralStrings
+  }
+
+  type StringKeysResolved = StringKeys[keyof StringKeys]
 
   /**
    * @link https://docs.premid.app/dev/presence/class#presencedata-interface
