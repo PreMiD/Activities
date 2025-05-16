@@ -37,6 +37,7 @@ presence.on('UpdateData', async () => {
     viewDeck: 'deck shop.viewDeck',
     buttonViewDeck: 'deck shop.buttonViewDeck',
     buttonUseDeck: 'deck shop.buttonUseDeck',
+    findDeck: 'deck shop.findDeck',
   })
 
   let useSlideshow = false
@@ -51,7 +52,13 @@ presence.on('UpdateData', async () => {
       if (searchParams.get('deck')) {
         useSlideshow = true
         presenceData.state = document.querySelector('h2')
-        presenceData.buttons = [{ label: strings.buttonViewDeck, url: href }, { label: strings.buttonUseDeck, url: document.querySelector<HTMLAnchorElement>('a[href*=copyDeck]') }]
+        presenceData.buttons = [
+          { label: strings.buttonViewDeck, url: href },
+          {
+            label: strings.buttonUseDeck,
+            url: document.querySelector<HTMLAnchorElement>('a[href*=copyDeck]'),
+          },
+        ]
         const cards = document.querySelectorAll('.deck a')
         const ratings = document.querySelectorAll('h3 + div > div')
         for (const rating of ratings) {
@@ -68,6 +75,48 @@ presence.on('UpdateData', async () => {
       }
       break
     }
+    case 'deck': {
+      presenceData.details = strings.findDeck
+      switch (pathList[1]) {
+        case 'list': {
+          presenceData.state = document.querySelector('h1')
+          break
+        }
+        case 'detail': {
+          useSlideshow = true
+          presenceData.details = strings.viewDeck
+          presenceData.state = document.querySelector('h1')
+          presenceData.buttons = [
+            { label: strings.buttonViewDeck, url: href },
+            {
+              label: strings.buttonUseDeck,
+              url: document.querySelector<HTMLAnchorElement>(
+                'a[href*=copyDeck]',
+              ),
+            },
+          ]
+          const cards = document.querySelectorAll(
+            'section:first-child .deck a',
+          )
+          const ratings = document.querySelectorAll(
+            'section:first-child div:nth-child(2) > div:nth-child(2) h3 + div > div',
+          )
+          for (const rating of ratings) {
+            for (const card of cards) {
+              const image = card.querySelector('img')
+              const data: PresenceData = {
+                ...presenceData,
+                smallImageKey: image,
+                smallImageText: `${rating.firstElementChild?.textContent}: ${rating.lastElementChild?.textContent}`,
+              }
+              slideshow.addSlide(image?.alt ?? '', data, MIN_SLIDE_TIME)
+            }
+          }
+          break
+        }
+      }
+      break
+    }
     case 'deck-builder': {
       presenceData.details = strings.buildDeck
       break
@@ -76,7 +125,9 @@ presence.on('UpdateData', async () => {
       if (pathList[1]) {
         presenceData.details = strings.readGuide
         presenceData.state = document.querySelector('h1')
-        presenceData.buttons = [{ label: strings.buttonReadArticle, url: href }]
+        presenceData.buttons = [
+          { label: strings.buttonReadArticle, url: href },
+        ]
       }
       else {
         presenceData.details = strings.browseGuides
@@ -88,13 +139,17 @@ presence.on('UpdateData', async () => {
         case 'player': {
           presenceData.details = strings.viewProfile
           presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('article nav div > a[class]')?.firstChild?.textContent}`
-          presenceData.buttons = [{ label: strings.buttonViewProfile, url: href }]
+          presenceData.buttons = [
+            { label: strings.buttonViewProfile, url: href },
+          ]
           break
         }
         case 'clan': {
           presenceData.details = strings.viewClan
           presenceData.state = `${document.querySelector('h1')?.textContent} - ${document.querySelector('article nav > div:first-child a[class]')?.firstChild?.textContent}`
-          presenceData.smallImageKey = document.querySelector<HTMLImageElement>('article section > div:first-child > img')
+          presenceData.smallImageKey = document.querySelector<HTMLImageElement>(
+            'article section > div:first-child > img',
+          )
           presenceData.buttons = [{ label: strings.buttonViewClan, url: href }]
           break
         }

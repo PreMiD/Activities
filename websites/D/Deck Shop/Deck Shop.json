@@ -30,5 +30,9 @@
   "deck shop.buttonUseDeck": {
     "description": "Button to copy and use the Deck in-game",
     "message": "Use Deck"
+  },
+  "deck shop.findDeck": {
+    "description": "Finding decks by criteria",
+    "message": "Finding Decks"
   }
 }
