@@ -34,6 +34,7 @@ presence.on('UpdateData', async () => {
     viewCard: 'royaleapi.viewCard',
     viewTeam: 'royaleapi.viewTeam',
     viewClan: 'royaleapi.viewClan',
+    viewDeck: 'royaleapi.viewDeck',
     viewEvent: 'royaleapi.viewEvent',
     viewReplay: 'royaleapi.viewReplay',
     viewProfile: 'general.viewProfile',
@@ -44,14 +45,17 @@ presence.on('UpdateData', async () => {
     browseClans: 'royaleapi.browseClans',
     viewPlaylist: 'general.viewPlaylist',
     browsingBlog: 'royaleapi.browsingBlog',
+    buildingDeck: 'royaleapi.buildingDeck',
     browseBlogTag: 'royaleapi.browseBlogTag',
     browsePlayers: 'royaleapi.browsePlayers',
+    buttonUseDeck: 'royaleapi.buttonUseDeck',
     browseESports: 'royaleapi.browseESports',
     browseStrategy: 'royaleapi.browseStrategy',
     buttonViewCard: 'royaleapi.buttonViewCard',
     buttonViewTeam: 'royaleapi.buttonViewTeam',
     viewClanFamily: 'royaleapi.viewClanFamily',
     buttonViewClan: 'royaleapi.buttonViewClan',
+    buttonViewDeck: 'royaleapi.buttonViewDeck',
     buttonViewEvent: 'royaleapi.buttonViewEvent',
     buttonWatchVideo: 'general.buttonWatchVideo',
     readingAnArticle: 'general.readingAnArticle',
@@ -275,9 +279,31 @@ presence.on('UpdateData', async () => {
     }
     case 'decks': {
       switch (pathList[1]) {
+        case 'winner': {
+          presenceData.details = strings.browseDecks
+          presenceData.state = document.querySelector('#page_content .decks__winners_challenge_type_menu .header')
+          break
+        }
+        case 'stats': {
+          if (pathList[2]) {
+            presenceData.details = strings.viewDeck
+            presenceData.state = document.querySelector('h1')
+            presenceData.buttons = [{
+              label: strings.buttonViewDeck,
+              url: href,
+            }, {
+              label: strings.buttonUseDeck,
+              url: document.querySelector<HTMLAnchorElement>('.button_menu a:nth-child(2)'),
+            }]
+          }
+          else {
+            presenceData.details = strings.buildingDeck
+          }
+          break
+        }
         default: {
           presenceData.details = strings.browseDecks
-          presenceData.state = document.querySelector('h1')
+          presenceData.state = document.querySelector('h1, .menu .item.active')
         }
       }
       break
