@@ -5,6 +5,7 @@ const strings = presence.getStrings({
   playing: 'general.playing',
   paused: 'general.paused',
   browsing: 'general.browsing',
+  watching: 'general.watching',
   anime: 'general.anime',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -31,6 +32,18 @@ presence.on('UpdateData', async () => {
   const animeSeries = document
     .querySelector('#pageContent > div > h2 > a')
     ?.getAttribute('href') || document.URL
+
+  // Anime poster URL'sini alma
+  const animeImageElement = document.querySelector('.anizm_posterThumb.anizm_img') as HTMLElement
+  if (animeImageElement && animeImageElement.style) {
+    const bgImage = animeImageElement.style.backgroundImage || ''
+    if (bgImage) {
+      const imgUrl = bgImage.replace(/url\(['"]?([^'"]+)['"]?\)/gi, '$1')
+      if (imgUrl && imgUrl.trim() !== '') {
+        presenceData.largeImageKey = imgUrl
+      }
+    }
+  }
 
   if (!title || !episode)
     video = null
@@ -90,8 +103,8 @@ presence.on('UpdateData', async () => {
   // Episode part
   if (title && episode) {
     presenceData.details = title.textContent
-    presenceData.state = episode.textContent?.split('/ ').slice(1).join(' ')
-    presenceData.state += ' İzliyor'
+    // İzliyor olarak değiştirildi
+    presenceData.state = `${episode.textContent?.split('/ ').slice(1).join(' ')} ${(await strings).watching}`
     presenceData.buttons = [
       {
         label: 'Bölümü İzle',
@@ -141,9 +154,10 @@ presence.on('UpdateData', async () => {
 
   if (video) {
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
+    // İzliyor olarak değiştirildi
     presenceData.smallImageText = video.paused
       ? (await strings).paused
-      : (await strings).playing
+      : (await strings).watching
 
     if (!video.paused && video.duration) {
       [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
