@@ -73,16 +73,10 @@ async function updatePresence(): Promise<void> {
       presence.getSetting<boolean>('buttons'),
       presence.getSetting<boolean>('showtimestamps'),
     ])
-    const Rating = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-info > span.this-desc-score')?.textContent?.trim() || 'N/A'
-    const Year = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.this-desc-labels > span.this-tag')?.textContent?.trim() || 'N/A'
-    let yearOfMovie = ''
-    const yearRegex = /[Nn]ăm\s*(\d+)/
-    const matchYear = Year.match(yearRegex)
-    if (matchYear && matchYear[1]) {
-      yearOfMovie = matchYear[1]
-    }
-    const movieName = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2 > a > span')?.textContent?.trim() || ''
-    const fullTitle = document.querySelector('body > div.box-width > div.player-info > div.player-info-text > div.title > h2')?.textContent?.trim() || ''
+    const Rating = document.querySelector('div.post-ratings > span')?.textContent?.trim() || 'N/A'
+    const Year = document.querySelector('div.TPMvCn > div.Info > span.Date')?.textContent?.trim() || 'N/A'
+    const movieName = document.querySelector('div.TPMvCn > a > h1.Title')?.textContent?.trim() || ''
+    const fullTitle = document.querySelector('Title')?.textContent?.trim() || ''
     let episodeNumberStr = ''
     const regex = /[Tt]ập\s*(\d+)/
     const match = fullTitle.match(regex)
@@ -106,12 +100,12 @@ async function updatePresence(): Promise<void> {
     }
     else if (isCategoryPage) {
       presenceData.details = 'Đang xem danh mục'
-      const categoryText = document.querySelector('body > div.box-width > div.title > div.title-left > h4')?.textContent?.trim().split('Phim thể loại')?.[1]?.trim() || ''
+      const categoryText = document.querySelector('div.Top > h2.Title')?.textContent?.trim().split('Phim thể loại')?.[1]?.trim() || ''
       presenceData.state = `Thể loại: ${categoryText}`
     }
     else if (isRegion) {
       presenceData.details = 'Đang xem danh mục'
-      const Region = document.querySelector('body > div.box-width > div.title > div.title-left > h4')?.textContent?.trim().split('Phim quốc gia')?.[1]?.trim() || ''
+      const Region = document.querySelector('div.Top > h2.Title')?.textContent?.trim().split('Phim quốc gia')?.[1]?.trim() || ''
       presenceData.state = `Phim: ${Region}`
     }
     else if (isDetailsPage) {
@@ -138,7 +132,7 @@ async function updatePresence(): Promise<void> {
         }
         presenceData.largeImageKey = dynamicBannerUrl
         presenceData.details = `${movieName}`
-        presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${yearOfMovie}`
+        presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${Year}`
         if (showButtons) {
           presenceData.buttons = [
             {
@@ -169,7 +163,7 @@ async function updatePresence(): Promise<void> {
       }
       presenceData.largeImageKey = dynamicBannerUrl
       presenceData.details = `${movieName}`
-      presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${yearOfMovie}`
+      presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${Year}`
       if (showButtons) {
         presenceData.buttons = [
           {
