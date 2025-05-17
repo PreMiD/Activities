@@ -36,7 +36,7 @@ const strings = presence.getStrings({
 })
 
 enum ActivityAssets {
-  Logo = 'https://phamhung.xyz/images/webfilm-logo512x512.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AniKenji%20Movie/assets/logo.png',
 }
 
 // --- HÀM TIỆN ÍCH LẤY HÌNH ẢNH ---
