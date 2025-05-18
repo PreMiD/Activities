@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1002899869599551508',
+  clientId: '503557087041683458',
 })
 
 async function getStrings() {
@@ -21,6 +21,7 @@ let oldLang: string | null = null
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/U/UKTV/assets/logo.png',
+    name: 'UKTV',
   }
   const video = document.querySelector<HTMLVideoElement>('video')
   const { href, pathname } = document.location

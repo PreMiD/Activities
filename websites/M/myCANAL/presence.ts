@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '844106861711196179',
+  clientId: '503557087041683458',
 })
 const strings = presence.getStrings({
   play: 'general.playing',
@@ -138,6 +138,7 @@ export async function getThumbnail(
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: myCANALAssets.Logo,
+    name: 'myCANAL',
   }
   const video = document.querySelector<HTMLVideoElement>('.iIZX3IGkM2eBzzWle1QQ')
   const showCover = await presence.getSetting<boolean>('cover')

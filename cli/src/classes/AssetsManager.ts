@@ -69,6 +69,15 @@ export type CdnAsset = {
   mimeType: MimeType
 } | CdnActivityAsset
 
+export interface ClientId {
+  clientId: string
+  location: {
+    filePath: string
+    line: number
+    column: number
+  }
+}
+
 const CDN_BASE_URL = 'https://cdn.rcd.gg'
 
 export class AssetsManager {
@@ -111,7 +120,7 @@ export class AssetsManager {
     return true
   }
 
-  private handleValidationError(message: string, asset: Asset, kill: boolean, ruleId: SarifRuleId): boolean {
+  private handleValidationError(message: string, asset: Asset | ClientId, kill: boolean, ruleId: SarifRuleId): boolean {
     if (kill) {
       exit(message)
     }
@@ -156,6 +165,46 @@ export class AssetsManager {
       return false
 
     return this.validateImageMimeType(dimensionAndType, asset, kill)
+  }
+
+  async validateClientId({ clientId, kill }: {
+    clientId: ClientId
+    kill: boolean
+  }): Promise<boolean> {
+    const clientFound = await got.head(`https://discord.com/api/v9/applications/${clientId.clientId}/rpc`).then(response => response.ok).catch(() => false)
+    if (clientFound) {
+      return true
+    }
+    else {
+      const message = `There is no Discord Application with the ID ${clientId.clientId}`
+      return this.handleValidationError(message, clientId, kill, SarifRuleId.clientIdCheck)
+    }
+  }
+
+  async getClientIds(): Promise<ClientId[]> {
+    //* Check for clientIds in the typescript files
+    const tsFiles = await globby('**/*.ts', { cwd: this.cwd, absolute: true })
+    const clientIds: ClientId[] = []
+
+    for (const file of tsFiles) {
+      const content = await readFile(file, 'utf-8')
+      const regex = /clientId: ['"](\d+)['"]/g
+      const matches = content.matchAll(regex)
+      for (const match of matches) {
+        const clientId = match[1]
+        const line = content.substring(0, match.index).split('\n').length
+        const column = match.index - content.lastIndexOf('\n', match.index) - 1
+        clientIds.push({
+          clientId,
+          location: {
+            filePath: file,
+            line,
+            column,
+          },
+        })
+      }
+    }
+    return clientIds
   }
 
   async getAssets(): Promise<Asset[]> {

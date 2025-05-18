@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '966711989533544580',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -23,6 +23,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    name: 'LiveLinkBio',
   }
   const [newLang, privacy, buttons] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),

@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1224473731070689331',
+  clientId: '503557087041683458',
 })
 
 enum ActivityAssets {
@@ -28,6 +28,7 @@ presence.on('UpdateData', async () => {
   let presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: timestampCheck.timestamp,
+    name: 'EWAIFU',
   }
   const { href, pathname } = document.location
   const ewaifuName = document.querySelector(
