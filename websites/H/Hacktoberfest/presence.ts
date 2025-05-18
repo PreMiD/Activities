@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '768437292486361129',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -7,6 +7,7 @@ presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/H/Hacktoberfest/assets/logo.png',
     startTimestamp: browsingTimestamp,
+    name: 'Hacktoberfest',
   }
 
   if (document.location.hostname === 'hacktoberfest.digitalocean.com') {

@@ -18,7 +18,9 @@ export async function getDiscordUser(): Promise<User | undefined> {
   }
 }
 
-export async function getDiscordUserById(id: string): Promise<{ username: string } | undefined> {
+export async function getDiscordUserById(
+  id: string,
+): Promise<{ username: string } | undefined> {
   const res = await fetch('https://api.premid.app/v3/graphql', {
     method: 'POST',
     headers: {
@@ -34,7 +36,11 @@ export async function getDiscordUserById(id: string): Promise<{ username: string
     }),
   })
 
-  const { data } = await res.json()
-
-  return data.discordUsers[0]
+  try {
+    const { data } = await res.json()
+    return data.discordUsers[0]
+  }
+  catch {
+    return { username: 'unknown-please-replace' }
+  }
 }

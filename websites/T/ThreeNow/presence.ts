@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '691491207356088320',
+  clientId: '503557087041683458',
 })
 
 let currentTime: number, duration: number, paused: boolean
@@ -21,6 +21,7 @@ presence.on('iFrameData', (inc: unknown) => {
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/T/ThreeNow/assets/logo.png',
+    name: 'ThreeNow',
   }
 
   if (document.URL === 'https://www.threenow.co.nz/') {

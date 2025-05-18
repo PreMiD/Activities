@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "852786062496759818",
+    "name": "mikanyuna"
+  },
+  "service": "AniKenji Movie",
+  "description": {
+    "en": "Watch free movies at high speed without ads, I will upload any series you like.",
+    "vi": "Xem phim miễn phí tốc độ cao không quảng cáo, anh em thích xem bộ nào tôi up bộ đấy",
+    "zh": "高速观看免费电影，无广告，我会上传您喜欢的任何剧集。"
+  },
+  "url": "phamhung.xyz",
+  "regExp": "phamhung\\..*",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniKenji%20Movie/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniKenji%20Movie/assets/thumbnail.png",
+  "color": "#ff71b3",
+  "category": "anime",
+  "tags": [
+    "anime"
+  ],
+  "iframe": true,
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "showtimestamps",
+      "title": "Show timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    }
+  ]
+}

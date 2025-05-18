@@ -5,13 +5,19 @@
     "id": "330333765891129346",
     "name": "tsukizo"
   },
+  "contributors": [
+    {
+      "id": "417391031705796610",
+      "name": "rainbowyoshi"
+    }
+  ],
   "service": "Watch-Anime",
   "description": {
     "en": "Watch-Anime is a streaming site where you can watch anime as well as movies in VF and VOSTFR. Site developed by the original creator: rainbowyoshi | Premid extension developed by: tsukizo",
     "fr": "Watch-Anime est un site de streaming où vous pouvez regarder des animés ainsi que des films en VF et VOSTFR. Site développé par le créateur originel : rainbowyoshi | Extension Premid développée par : tsukizo"
   },
   "url": "watch-anime.fr",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Watch-Anime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Watch-Anime/assets/thumbnail.png",
   "color": "#0F0E13",

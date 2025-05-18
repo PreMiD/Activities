@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '827910536049852488',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -9,6 +9,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/Armorgames/assets/logo.png',
     startTimestamp: browsingTimestamp,
+    name: 'Armorgames',
   }
   const { pathname, href } = window.location
   const buttons = await presence.getSetting('buttons')

@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '928611702638010398',
+  clientId: '503557087041683458',
 })
 const appCategories: Record<string, string> = {
   LIBRARIES_AND_DEMO: 'Browsing for libraries and demos',
@@ -41,6 +41,7 @@ const appCategories: Record<string, string> = {
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Play/assets/logo.png',
+    name: 'Google Play',
   }
   const query = new URLSearchParams(document.location.search)
   const paths: string[] = document.location.pathname.split('/')
