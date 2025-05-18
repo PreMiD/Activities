@@ -71,7 +71,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = [
       runtime ? `${runtime}  •  ` : '',
       seasonEpisode ?? '',
-      rating ? `⭐${rating}/10` : '',
+      rating ? `⭐${rating}` : '',
     ].join('')
   }
 
