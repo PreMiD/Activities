@@ -14,7 +14,7 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  if (document.location.pathname === '/') {
+  if (document.location.pathname === '/' || document.location.pathname === '/index.html') {
     const searchInput = document.querySelector<HTMLInputElement>('.search-input')?.value
     if (searchInput && searchInput.length > 0)
       presenceData.state = `Searching for: "${searchInput}"`
