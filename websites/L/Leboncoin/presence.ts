@@ -129,7 +129,10 @@ presence.on('UpdateData', () => {
       presenceData.state = 'Résultats de recherche'
     }
   }
-  else if (document.location.pathname.includes('/ad/')) {
+  else if (
+    document.location.pathname.includes('/ad/')
+    || document.location.pathname.includes('/vi/')
+  ) {
     const titleParts = document.title?.split('-') ?? []
     const title = titleParts.length > 0 ? titleParts[0]?.trim() ?? '' : ''
     presenceData.details = `Annonce ${title}`
