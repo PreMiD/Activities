@@ -23,5 +23,13 @@
     "share",
     "upload",
     "gallery"
+  ],
+  "settings": [
+    {
+      "id": "editorImage",
+      "title": "Display Skin Image",
+      "icon": "fas fa-image-polaroid-user",
+      "value": true
+    }
   ]
 }
