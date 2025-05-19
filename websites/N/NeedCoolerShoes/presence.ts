@@ -11,7 +11,7 @@ enum ActivityAssets {
 let imageCacheDate = 0
 let imageCache = ''
 function captureImage(canvas: HTMLCanvasElement | null | undefined) {
-  if (Date.now() - imageCacheDate > 5000) {
+  if (Date.now() - imageCacheDate > 10000) {
     imageCacheDate = Date.now()
     imageCache = canvas?.toDataURL() ?? ''
   }
