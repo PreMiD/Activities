@@ -28,7 +28,7 @@ presence.on('UpdateData', async () => {
   // Get basic selectors once
   const title = document.querySelector('html > body > main > #pageContent > div > h2 > a')
   const episode = document.querySelector('html > body > main > #pageContent > div > h2.anizm_pageTitle > span')
-  const animeSeries = document.querySelector('#pageContent > div > h2 > a')?.getAttribute('href') || document.URL
+  const animeSeries = document.querySelector('#pageContent > div > h2 > a')?.getAttribute('href') || document.location.href
 
   // Check if this is an anime watching page or anime detail page
   const isAnimeDetailPage = title != null
@@ -40,7 +40,7 @@ presence.on('UpdateData', async () => {
       return 'https://cdn.rcd.gg/PreMiD/websites/A/AnizmTV/assets/logo.png'
 
     // Get URL from blurred cover element
-    const blurredCoverElement = document.querySelector('.cover.blurred') as HTMLElement
+    const blurredCoverElement = document.querySelector<HTMLElement>('.cover.blurred')
     if (blurredCoverElement?.style?.background) {
       const imgUrlMatch = blurredCoverElement.style.background.match(/url\(['"]?([^'"]+)['"]?\)/i)
       if (imgUrlMatch?.[1]) {
@@ -51,7 +51,7 @@ presence.on('UpdateData', async () => {
     }
 
     // Get URL from poster thumb element
-    const animeImageElement = document.querySelector('.anizm_posterThumb.anizm_img') as HTMLElement
+    const animeImageElement = document.querySelector<HTMLElement>('.anizm_posterThumb.anizm_img')
     if (animeImageElement?.style?.backgroundImage) {
       const imgUrl = animeImageElement.style.backgroundImage.replace(/url\(['"]?([^'"]+)['"]?\)/gi, '$1')
       if (imgUrl?.trim())
@@ -75,32 +75,32 @@ presence.on('UpdateData', async () => {
 
   if (adminPaths.some(adminPath => path.includes(adminPath))) {
     tags = path.includes('/yetkiliislemleri')
-      ? document.querySelector('#pageContent > div > div > div > div:nth-child(1) > div > div > div.header')
-      : document.querySelector('#pageContent > div.ui.container.anizm_colorWhite.pb-8 > h2 > span')
+      ? document.querySelector<HTMLElement>('#pageContent > div > div > div > div:nth-child(1) > div > div > div.header')
+      : document.querySelector<HTMLElement>('#pageContent > div.ui.container.anizm_colorWhite.pb-8 > h2 > span')
 
     presenceData.details = 'Yönetici Panelinde'
     presenceData.state = `${tags?.textContent || ''} panelinde!`
   }
   else if (path === '/' || path === '/anime-izle') {
     presenceData.details = 'Ana Sayfada geziniyor'
-    presenceData.buttons = [{ label: 'Ana Sayfayı Ziyaret Et', url: document.URL }]
+    presenceData.buttons = [{ label: 'Ana Sayfayı Ziyaret Et', url: document.location.href }]
   }
   else if (path.includes('/profil')) {
     presenceData.details = 'Profile Göz Atıyor'
     tags = document.querySelector('#pageContent > div > div.profileCoverArea.autoPosterSize.anizm_round > div.info.pfull > div > div > div:nth-child(1) > div.profileNickname')
     presenceData.state = tags?.textContent?.split('@').slice(1).join(' ') || 'Bir profil'
-    presenceData.buttons = [{ label: 'Profili Görüntüle', url: document.URL }]
+    presenceData.buttons = [{ label: 'Profili Görüntüle', url: document.location.href }]
   }
   else if (path.includes('/ayarlar')) {
     presenceData.details = 'Ayarlara Göz Atıyor'
   }
   else if (path.includes('/tavsiyeRobotu') || path.includes('/tavsiye-robotu')) {
     presenceData.details = 'Tavsiye Robotunu Kullanıyor'
-    presenceData.buttons = [{ label: 'Tavsiye Robotunu Kullan', url: document.URL }]
+    presenceData.buttons = [{ label: 'Tavsiye Robotunu Kullan', url: document.location.href }]
   }
   else if (path.includes('/fansublar')) {
     presenceData.details = 'Fansubları İnceliyor'
-    presenceData.buttons = [{ label: 'Fansubları Görüntüle', url: document.URL }]
+    presenceData.buttons = [{ label: 'Fansubları Görüntüle', url: document.location.href }]
   }
   else if (path.includes('/fansub/') && path.includes('/ceviriler')) {
     // Fansub translations page
@@ -119,7 +119,7 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = `${fansubTitle} çevirilerini inceliyor`
     presenceData.state = `${animeCount} Anime, ${episodeCount} Bölüm`
-    presenceData.buttons = [{ label: 'Çevirileri Görüntüle', url: document.URL }]
+    presenceData.buttons = [{ label: 'Çevirileri Görüntüle', url: document.location.href }]
   }
   else if (path.includes('/fansub/')) {
     // Fansub detail page
@@ -137,13 +137,13 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = `${fansubName} inceliyor`
     presenceData.state = `${animeCount} Anime, ${episodeCount} Bölüm`
-    presenceData.buttons = [{ label: 'Fansubu Görüntüle', url: document.URL }]
+    presenceData.buttons = [{ label: 'Fansubu Görüntüle', url: document.location.href }]
   }
   else if (path.includes('/ara')) {
     presenceData.details = 'Aranıyor'
     tags = document.querySelector('#pageContent > div > h2 > span')
     presenceData.state = tags?.textContent?.split('Aranan: ').slice(1).join(' ') || ''
-    presenceData.buttons = [{ label: 'Aramayı Görüntüle', url: document.URL }]
+    presenceData.buttons = [{ label: 'Aramayı Görüntüle', url: document.location.href }]
   }
   else if (path.includes('/girisyap')) {
     presenceData.details = 'Giriş Yapıyor'
@@ -153,17 +153,17 @@ presence.on('UpdateData', async () => {
   }
   else if (path.includes('/takvim')) {
     presenceData.details = 'Takvime Göz Atıyor'
-    presenceData.buttons = [{ label: 'Takvimi Görüntüle', url: document.URL }]
+    presenceData.buttons = [{ label: 'Takvimi Görüntüle', url: document.location.href }]
   }
   else if (window.location.href.indexOf('?sayfa=') > 1) {
-    const pageNumber = document.URL.split('?sayfa=')[1]?.split('#episodes').slice(0).join(' ') || '?'
+    const pageNumber = document.location.href.split('?sayfa=')[1]?.split('#episodes').slice(0).join(' ') || '?'
     presenceData.details = 'Sayfalar Arasında Geziniyor'
     presenceData.state = `Sayfa: ${pageNumber}`
   }
   else if (!title && !episode) {
     // If doesn't match any special condition
     presenceData.details = 'Anizm\'de Geziniyor'
-    presenceData.buttons = [{ label: 'Anizm\'i Ziyaret Et', url: document.URL }]
+    presenceData.buttons = [{ label: 'Anizm\'i Ziyaret Et', url: document.location.href }]
   }
 
   // Episode watching state
@@ -171,7 +171,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = title.textContent || 'Anime İzliyor'
     presenceData.state = `İzliyor: ${episode.textContent?.split('/ ').slice(1).join(' ') || ''}`
     presenceData.buttons = [
-      { label: 'Bölümü İzle', url: document.URL.split('&')[0] || document.URL },
+      { label: 'Bölümü İzle', url: document.location.href.split('&')[0] || document.location.href },
       { label: (await strings).anime, url: animeSeries },
     ]
   }
