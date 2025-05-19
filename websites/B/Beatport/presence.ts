@@ -1,0 +1,112 @@
+import { ActivityType, Assets } from 'premid';
+
+const presence = new Presence({
+  clientId: '1374098754214297670',
+});
+
+let lastPathname = '';
+let startTimestamp = Math.floor(Date.now() / 1000);
+
+presence.on('UpdateData', async () => {
+  const { pathname } = document.location;
+  const showTimestamps = false;
+
+  if (pathname !== lastPathname) {
+    lastPathname = pathname;
+    startTimestamp = Math.floor(Date.now() / 1000);
+  }
+
+  function getReleaseDetails(): string {
+    const song = document.querySelector('.ReleaseDetailCard-style__Name-sc-67b900a1-7.gEsfoH')?.textContent?.trim() || '';
+    const artist = document.querySelector('.ReleaseDetailCard-style__ArtistList-sc-67b900a1-6 a')?.textContent?.trim() || '';
+    return `${artist} - ${song}`;
+  }
+
+  function cleanTrackTitle(title: string): string {
+    if (!title.match(/[\(\[\|]/)) {
+      return title.trim();
+    }
+    
+    const splitTitle = title.split(/[\(\[\|]/);
+    return splitTitle[0]?.trim() || title.trim();
+  }
+
+  function cleanChartTitle(title?: string): string {
+    if (!title) return '';
+    
+    const splitTitle = title.split(' Chart by ');
+    return splitTitle[0]?.trim() || title.trim();
+  }
+
+  function cleanArtistPageTitle(title?: string): string {
+    if (!title) return '';
+    
+    const splitTitle = title.split(' Music');
+    return splitTitle[0]?.trim() || title.trim();
+  }
+
+  function cleanGenreTitle(title?: string): string {
+    if (!title) return '';
+    
+    const match = title.match(/Get (.+?) Tracks/);
+    return match?.[1]?.trim() || '';
+  }
+
+  let largeImage = 'https://play-lh.googleusercontent.com/QLPo7bcbK-y79ydvjFRk0G6gVLYymLGOKiqudoaOw4GVm9Vg67huR3z6D3wM_3eQMA';
+  let details = 'Viewing Beatport';
+  let state = '';
+  let activityType = ActivityType.Playing;
+
+  if (pathname === '/') {
+    details = 'Browsing Home';
+  } else if (pathname.startsWith('/top-100')) {
+    details = 'Viewing Top 100';
+  } else if (pathname.startsWith('/genre')) {
+    details = 'Browsing Genres';
+    state = cleanGenreTitle(document.title)
+  } else if (pathname.startsWith('/release')) {
+    details = 'Viewing a Release';
+    state = getReleaseDetails();
+  } else if (pathname.startsWith('/track')) {
+    details = 'Viewing a Track';
+    state = cleanTrackTitle(document.title)
+  } else if (pathname.startsWith('/artist')) {
+    details = 'Viewing an Artist';
+    state = cleanArtistPageTitle(document.title)
+  } else if (pathname.startsWith('/label')) {
+    details = 'Viewing a Label';
+    state = cleanArtistPageTitle(document.title)
+  } else if (pathname.startsWith('/chart')) {
+    details = 'Viewing a Chart'
+    state = cleanChartTitle(document.title)
+  }
+
+  const pauseIconHref = document.querySelector('svg[data-testid="player-control-pause_track"] use')?.getAttribute('href');
+  const isPlaying = pauseIconHref === '/icons/sprite.svg#track-pause';
+
+  if (isPlaying) {
+    activityType = ActivityType.Listening;
+    details = document.querySelector('.Player-style__TrackName-sc-ff5e7dae-5')?.textContent?.trim() || 'Track';
+    state = document.querySelector('.Player-style__Artists-sc-ff5e7dae-3 a')?.textContent?.trim() || 'Artist';
+    largeImage = document.querySelector('.Artwork-style__Wrapper-sc-687ef72a-0 img.current')?.getAttribute('src') || largeImage;
+  }
+
+  const presenceData: PresenceData = {
+    type: activityType,
+    largeImageKey: largeImage,
+    details,
+    state,
+    startTimestamp: showTimestamps ? startTimestamp : undefined,
+    ...(isPlaying && {
+      smallImageKey: Assets.Play,
+      smallImageText: 'Playing',
+    }),
+  };
+
+  try {
+    presence.setActivity(presenceData);
+    console.log('[Beatport PreMiD] Presence updated:', presenceData);
+  } catch (err) {
+    console.error('[Beatport PreMiD] Failed to set presence:', err);
+  }
+});
