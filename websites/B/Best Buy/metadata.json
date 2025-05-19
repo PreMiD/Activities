@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "unknown-please-replace"
+  },
+  "service": "Best Buy",
+  "description": {
+    "en": "Shop Best Buy for electronics, computers, appliances, cell phones, video games & more new tech. Store pickup & free 2-day shipping on thousands of items."
+  },
+  "url": "www.bestbuy.com",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/000000.png",
+  "thumbnail": "https://i.imgur.com/000000.png",
+  "color": "#000000",
+  "category": "other",
+  "tags": [
+    "computers",
+    "laptops",
+    "games",
+    "televisions",
+    "cameras",
+    "phones",
+    "appliances",
+    "sale"
+  ]
+}
