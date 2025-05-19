@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "unknown-please-replace"
+  },
+  "service": "Emurse",
+  "description": {
+    "en": "TODO"
+  },
+  "url": "google.com",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/000000.png",
+  "thumbnail": "https://i.imgur.com/000000.png",
+  "color": "#000000",
+  "category": "other",
+  "tags": [
+    "language",
+    "thai",
+    "immersion",
+    "japanese",
+    "accent",
+    "pitch",
+    "education"
+  ]
+}
