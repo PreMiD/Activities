@@ -5,16 +5,18 @@
     "id": "331606403057713154",
     "name": "faetalize"
   },
-  "contributors": [{
-    "id": "819085166323564555",
-    "name": "Svznify"
-  }],
+  "contributors": [
+    {
+      "id": "819085166323564555",
+      "name": "Svznify"
+    }
+  ],
   "service": "1Anime",
   "description": {
     "en": "Experience Anime & Manga without Ads, Completely Free!"
   },
   "url": "1anime.app",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/1Anime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/1Anime/assets/thumbnail.jpeg",
   "color": "#C63BAD",
