@@ -26,6 +26,39 @@ presence.on('UpdateData', async () => {
         presenceData.details = `Browsing the ${title}`
         break
       }
+      case 'course': {
+        switch (pathList[2]) {
+          case 'review': {
+            presenceData.details = 'Doing Reviews'
+            presenceData.state = `${document.querySelector('.wordcount')?.textContent ?? '0'} items`
+            break
+          }
+          case 'lesson': {
+            presenceData.details = 'Doing a Lesson'
+            presenceData.state = `${document.querySelector('.wordcount')?.textContent ?? '0'} items`
+            break
+          }
+          case 'posts': {
+            presenceData.details = 'Viewing a Course'
+            presenceData.state = document.querySelector('h1')
+            break
+          }
+          default: {
+            const breadcrumbs = document.querySelector('.drill-toolbar-item')
+            if (breadcrumbs) {
+              const subItemTitle = breadcrumbs.querySelector('span > strong')?.textContent ?? ''
+              const subItem = breadcrumbs.querySelector('span')?.lastChild
+              presenceData.details = `Viewing a ${subItemTitle.slice(0, subItemTitle.length - 1)}`
+              presenceData.state = subItem
+            }
+          }
+        }
+        break
+      }
+      case 'courses': {
+        presenceData.details = 'Browsing Courses'
+        break
+      }
       case 'category': {
         presenceData.details = `Browsing the ${title}`
         presenceData.state = `By Category: ${subList[1]}`
@@ -71,5 +104,10 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  presence.setActivity(presenceData)
+  if (presenceData.details) {
+    presence.setActivity(presenceData)
+  }
+  else {
+    presence.clearActivity()
+  }
 })
