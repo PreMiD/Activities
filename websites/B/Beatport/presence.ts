@@ -115,7 +115,6 @@ presence.on('UpdateData', async () => {
 
   try {
     presence.setActivity(presenceData)
-    console.log('[Beatport PreMiD] Presence updated:', presenceData)
   }
   catch (err) {
     console.error('[Beatport PreMiD] Failed to set presence:', err)
