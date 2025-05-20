@@ -11,11 +11,9 @@
   },
   "url": "www.beatport.com",
   "version": "1.0.0",
-  "logo": "https://play-lh.googleusercontent.com/QLPo7bcbK-y79ydvjFRk0G6gVLYymLGOKiqudoaOw4GVm9Vg67huR3z6D3wM_3eQMA",
-  "thumbnail": "https://i0.wp.com/thedj-diaries.com/wp-content/uploads/2024/03/Screenshot-2024-03-27-at-11.11.22%E2%80%AFPM.png?resize=640%2C368&ssl=1",
+  "logo": "https://i1.sndcdn.com/avatars-JxaRv18vXtTglVU3-z0ws9A-t1080x1080.jpg",
+  "thumbnail": "https://i0.wp.com/thedj-diaries.com/wp-content/uploads/2024/03/Screenshot-2024-03-27-at-11.11.22%E2%80%AFPM.png",
   "color": "#000000",
   "category": "music",
-  "tags": [
-    "music", "streaming", "audio"
-  ]
+  "tags": ["music", "streaming", "audio"]
 }
