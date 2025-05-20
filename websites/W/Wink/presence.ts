@@ -141,7 +141,7 @@ presence.on('UpdateData', async () => {
       }
 
       if (pathList[2] && pathList[2] === 'player') {
-        presenceData.type = ActivityType.Watching
+        (presenceData as PresenceData).type = ActivityType.Watching
         video = getVideoContent('video')
 
         if (video) {
