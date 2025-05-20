@@ -26,7 +26,7 @@ presence.on('UpdateData', async () => {
       break
     }
     case path[0] === 'games' && path[2] === 'clips': {
-      presenceData.type = ActivityType.Watching
+      (presenceData as PresenceData).type = ActivityType.Watching
       const video = document.querySelector<HTMLVideoElement>('[id^=\'mvp-video\'] video')
       if (!video)
         return presence.setActivity(presenceData)

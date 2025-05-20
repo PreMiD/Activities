@@ -87,8 +87,8 @@ presence.on('UpdateData', async () => {
       )?.src
 
       presenceData.largeImageKey = thumbnail
-      presenceData.details = 'In a room'
-      presenceData.type = ActivityType.Watching
+      presenceData.details = 'In a room';
+      (presenceData as PresenceData).type = ActivityType.Watching
       if (filmName)
         presenceData.state = `${filmName.textContent}`
       if (data && !data.paused) {
@@ -122,7 +122,7 @@ presence.on('UpdateData', async () => {
     if (episode)
       presenceData.state = `Episode ${episode}`
     if (data) {
-      presenceData.type = ActivityType.Watching
+      (presenceData as PresenceData).type = ActivityType.Watching
       if (!data.paused) {
         [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(data.currTime, data.duration)
         presenceData.smallImageKey = Assets.Play

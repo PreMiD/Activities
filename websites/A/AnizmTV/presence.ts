@@ -183,7 +183,7 @@ presence.on('UpdateData', async () => {
 
   // If video exists and is playing
   if (video) {
-    presenceData.type = ActivityType.Watching
+    (presenceData as PresenceData).type = ActivityType.Watching
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = video.paused
       ? (await strings).paused

@@ -34,8 +34,8 @@ function updatePresence() {
     largeImageKey: Images.Logo,
   }
 
-  presenceData.startTimestamp = browsingTimestamp
-  presenceData.type = ActivityType.Watching
+  presenceData.startTimestamp = browsingTimestamp;
+  (presenceData as PresenceData).type = ActivityType.Watching
   if (document.location.pathname === '/') {
     presenceData.details = 'AnimeciX'
     presenceData.state = 'Ana Sayfa görüntüleniyor'

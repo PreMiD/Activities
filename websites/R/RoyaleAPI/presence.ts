@@ -257,7 +257,7 @@ presence.on('UpdateData', async () => {
           },
         ]
         if (currentData) {
-          presenceData.type = ActivityType.Watching
+          (presenceData as PresenceData).type = ActivityType.Watching
           presenceData.startTimestamp = currentData.startTimestamp
           presenceData.endTimestamp = currentData.endTimestamp
           presenceData.smallImageKey = currentData.paused
