@@ -26,50 +26,9 @@ presence.on('UpdateData', async () => {
         presenceData.details = `Browsing the ${title}`
         break
       }
-      case 'course': {
-        switch (pathList[2]) {
-          case 'review': {
-            presenceData.details = 'Doing Reviews'
-            presenceData.state = `${document.querySelector('.wordcount')?.textContent ?? '0'} items`
-            break
-          }
-          case 'lesson': {
-            presenceData.details = 'Doing a Lesson'
-            presenceData.state = `${document.querySelector('.wordcount')?.textContent ?? '0'} items`
-            break
-          }
-          case 'posts': {
-            presenceData.details = 'Viewing a Course'
-            presenceData.state = document.querySelector('h1')
-            break
-          }
-          default: {
-            const breadcrumbs = document.querySelector('.drill-toolbar-item')
-            if (breadcrumbs) {
-              const subItemTitle = breadcrumbs.querySelector('span > strong')?.textContent ?? ''
-              const subItem = breadcrumbs.querySelector('span')?.lastChild
-              presenceData.details = `Viewing a ${subItemTitle.slice(0, subItemTitle.length - 1)}`
-              presenceData.state = subItem
-            }
-          }
-        }
-        break
-      }
-      case 'courses': {
-        presenceData.details = 'Browsing Courses'
-        break
-      }
       case 'category': {
         presenceData.details = `Browsing the ${title}`
         presenceData.state = `By Category: ${subList[1]}`
-        break
-      }
-      case 'dashboard': {
-        presenceData.details = 'Viewing Their Dashboard'
-        break
-      }
-      case 'Identity': {
-        presenceData.details = 'Logging in'
         break
       }
       case 'tag': {
@@ -88,15 +47,59 @@ presence.on('UpdateData', async () => {
   switch (pathList[0]) {
     case 'articles': {
       if (pathList[1]) {
-        applyArticleData(`${capitalize(pathList[1])} Articles`, pathList.slice(2))
+        applyArticleData(
+          `${capitalize(pathList[1])} Articles`,
+          pathList.slice(2),
+        )
       }
       else {
         presenceData.details = 'Browsing Articles'
       }
       break
     }
+    case 'course': {
+      switch (pathList[2]) {
+        case 'review': {
+          presenceData.details = 'Doing Reviews'
+          presenceData.state = `${document.querySelector('.wordcount')?.textContent ?? '0'} items`
+          break
+        }
+        case 'lesson': {
+          presenceData.details = 'Doing a Lesson'
+          presenceData.state = `${document.querySelector('.wordcount')?.textContent ?? '0'} items`
+          break
+        }
+        default: {
+          const breadcrumbs = document.querySelector('.drill-toolbar-item')
+          if (breadcrumbs) {
+            const subItemTitle
+              = breadcrumbs.querySelector('span > strong')?.textContent ?? ''
+            const subItem = breadcrumbs.querySelector('span')?.lastChild
+            presenceData.details = `Viewing a ${subItemTitle.slice(0, subItemTitle.length - 1)}`
+            presenceData.state = subItem
+          }
+          else {
+            presenceData.details = 'Viewing a Course'
+            presenceData.state = document.querySelector('h1')
+          }
+        }
+      }
+      break
+    }
+    case 'courses': {
+      presenceData.details = 'Browsing Courses'
+      break
+    }
+    case 'dashboard': {
+      presenceData.details = 'Viewing Their Dashboard'
+      break
+    }
     case 'development-blog': {
       applyArticleData('Development Blog', pathList.slice(1))
+      break
+    }
+    case 'Identity': {
+      presenceData.details = 'Logging in'
       break
     }
     default: {
@@ -104,10 +107,5 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  if (presenceData.details) {
-    presence.setActivity(presenceData)
-  }
-  else {
-    presence.clearActivity()
-  }
+  presence.setActivity(presenceData)
 })
