@@ -96,9 +96,9 @@ presence.on('UpdateData', async () => {
 
   if (isPlaying) {
     activityType = ActivityType.Listening
-    details = document.querySelector('.Player-style__TrackName-sc-ff5e7dae-5')?.textContent?.trim() || 'Track'
-    state = document.querySelector('.Player-style__Artists-sc-ff5e7dae-3 a')?.textContent?.trim() || 'Artist'
-    largeImage = document.querySelector('.Artwork-style__Wrapper-sc-687ef72a-0 img.current')?.getAttribute('src') || largeImage
+    details = document.querySelector('[class*="Player"][class*="TrackName"]')?.textContent?.trim() || 'Track'
+    state = document.querySelector('[class*="Player"][class*="Artists"] a')?.textContent?.trim() || 'Artist'
+    largeImage = document.querySelector('[class*="Artwork"][class*="Wrapper"] img.current')?.getAttribute('src') || largeImage
   }
 
   const presenceData: PresenceData = {
