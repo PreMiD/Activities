@@ -1,0 +1,58 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "257151906038677504",
+    "name": "shisen"
+  },
+  "service": "Wink",
+  "description": {
+    "en": "Wink is a digital video service from Rostelecom that combines the advantages of interactive television and online cinema. The service offers audiobooks, karaoke and cloud games.",
+    "ru": "Wink — цифровой видеосервис компании «Ростелеком», объединяющий преимущества интерактивного телевидения и онлайн-кинотеатра. В сервисе представлены аудиокниги, караоке и облачные игры."
+  },
+  "url": "wink.ru",
+  "regExp": "wink([.][a-z]+)+[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/4mPGGrk.png",
+  "thumbnail": "https://i.imgur.com/EMUhwa7.png",
+  "color": "#ff5a24",
+  "category": "videos",
+  "tags": [
+    "video",
+    "media"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "./*",
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Приватный режим",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "logo",
+      "if": {
+        "privacy": false
+      },
+      "title": "Показывать обложки",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "if": {
+        "privacy": false
+      },
+      "title": "Показывать кнопки",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "time",
+      "title": "Показывать время просмотра",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    }
+  ]
+}
