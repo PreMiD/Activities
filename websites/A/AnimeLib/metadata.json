@@ -13,8 +13,11 @@
     "en": "Watch anime online in Russian",
     "ru": "Смотрите аниме онлайн на русском"
   },
-  "url": "anilib.me",
-  "version": "1.0.12",
+  "url": [
+    "anilib.me",
+    "v1.animelib.org"
+  ],
+  "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeLib/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeLib/assets/thumbnail.png",
   "color": "#A020F0",

@@ -134,7 +134,11 @@ export class AnimeLib {
     endpoint: APIEndpoint,
     endpointPart?: string,
   ) {
-    return await fetch(`${this.api}/${endpoint}/${endpointPart ?? id}`).then(
+    return await fetch(`${this.api}/${endpoint}/${endpointPart ?? id}`, {
+      headers: {
+        'Site-Id': '5',
+      },
+    }).then(
       async (response): Promise<CachedResponse> => {
         return {
           id,
