@@ -17,8 +17,8 @@ presence.on('UpdateData', async () => {
   }
 
   function getReleaseDetails(): string {
-    const song = document.querySelector('.ReleaseDetailCard-style__Name-sc-67b900a1-7.gEsfoH')?.textContent?.trim() || ''
-    const artist = document.querySelector('.ReleaseDetailCard-style__ArtistList-sc-67b900a1-6 a')?.textContent?.trim() || ''
+    const song = document.querySelector('[class*="ReleaseDetailCard"][class*="Name"]')?.textContent?.trim() || ''
+    const artist = document.querySelector('[class*="ReleaseDetailCard"][class*="ArtistList"] a')?.textContent?.trim() || ''
     return `${artist} - ${song}`
   }
 
@@ -55,7 +55,7 @@ presence.on('UpdateData', async () => {
     return match?.[1]?.trim() || ''
   }
 
-  let largeImage = 'https://play-lh.googleusercontent.com/QLPo7bcbK-y79ydvjFRk0G6gVLYymLGOKiqudoaOw4GVm9Vg67huR3z6D3wM_3eQMA'
+  let largeImage = 'https://i.imgur.com/jUa0uPY.jpeg'
   let details = 'Viewing Beatport'
   let state = ''
   let activityType = ActivityType.Playing
@@ -113,10 +113,5 @@ presence.on('UpdateData', async () => {
     }),
   }
 
-  try {
-    presence.setActivity(presenceData)
-  }
-  catch (err) {
-    console.error('[Beatport PreMiD] Failed to set presence:', err)
-  }
+  presence.setActivity(presenceData)
 })
