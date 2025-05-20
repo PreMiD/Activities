@@ -1,8 +1,13 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '463151177836658699',
 })
+
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/logo.png',
+  SmallLogo = `https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/0.png`,
+}
 
 let prevTitleAuthor = ''
 let presenceData: PresenceData
@@ -23,6 +28,7 @@ presence.on('UpdateData', async () => {
     privacyMode,
     useTimeLeft,
     showAsListening,
+    artistAsTitle,
   ] = await Promise.all([
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('timestamps'),
@@ -32,6 +38,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('useTimeLeft'),
     presence.getSetting<boolean>('showAsListening'),
+    presence.getSetting<boolean>('artistAsTitle'),
   ])
   const { mediaSession } = navigator
   const watchID = href.match(/v=([^&#]{5,})/)?.[1]
@@ -76,7 +83,7 @@ presence.on('UpdateData', async () => {
     if (privacyMode) {
       return presence.setActivity({
         type: ActivityType.Listening,
-        largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/logo.png',
+        largeImageKey: ActivityAssets.Logo,
       })
     }
 
@@ -124,11 +131,11 @@ presence.on('UpdateData', async () => {
 
     presenceData = {
       type: ActivityType.Listening,
-      name: showAsListening ? mediaSession.metadata.title : 'YouTube Music',
+      name: artistAsTitle ? mediaSession.metadata.artist : showAsListening ? mediaSession.metadata.title : 'YouTube Music',
       largeImageKey: showCover
         ? mediaSession?.metadata?.artwork?.at(-1)?.src
-        ?? 'https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/1.png'
-        : 'https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/1.png',
+        ?? ActivityAssets.Logo
+        : ActivityAssets.Logo,
       details: mediaSession.metadata.title,
       state: mediaSession.metadata.artist,
       ...(mediaSession.metadata.album && {
@@ -162,7 +169,7 @@ presence.on('UpdateData', async () => {
   else if (showBrowsing) {
     if (privacyMode) {
       return presence.setActivity({
-        largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/logo.png',
+        largeImageKey: ActivityAssets.Logo,
         details: 'Browsing YouTube Music',
       })
     }
@@ -174,7 +181,7 @@ presence.on('UpdateData', async () => {
 
     presenceData = {
       type: ActivityType.Playing,
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/logo.png',
+      largeImageKey: ActivityAssets.Logo,
       details: 'Browsing',
       startTimestamp,
     }
@@ -210,7 +217,7 @@ presence.on('UpdateData', async () => {
       }
 
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('#thumbnail img')?.src
-      presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/0.png'
+      presenceData.smallImageKey = ActivityAssets.SmallLogo
     }
 
     if (pathname.match(/^\/search/)) {
@@ -284,14 +291,14 @@ function updateSongTimestamps(useTimeLeft: boolean) {
     ?.split(' / ') ?? []
 
   if (useTimeLeft && currTimes && totalTimes) {
-    mediaTimestamps = presence.getTimestamps(
-      presence.timestampFromFormat(currTimes),
-      presence.timestampFromFormat(totalTimes),
+    mediaTimestamps = getTimestamps(
+      timestampFromFormat(currTimes),
+      timestampFromFormat(totalTimes),
     )
   }
   else if (currTimes) {
     mediaTimestamps = [
-      Date.now() / 1000 - presence.timestampFromFormat(currTimes),
+      Date.now() / 1000 - timestampFromFormat(currTimes),
       0,
     ]
   }
