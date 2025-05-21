@@ -1,3 +1,10 @@
+import {
+  ActivityType,
+  Assets,
+  getTimestamps,
+  timestampFromFormat,
+} from 'premid'
+
 const presence = new Presence({
   clientId: '503557087041683458',
 })
@@ -35,13 +42,43 @@ presence.on('UpdateData', async () => {
         }
         default: {
           presenceData.details = 'Viewing a page'
-          presenceData.state = document.querySelector('h1')
+          presenceData.state = document.querySelector('h1, h3')
           break
         }
       }
       break
     }
     default: {
+      const player = document.querySelector('.player-basic')
+      if (player) {
+        const isPlaying = !!player.classList.contains('is-playing')
+        const isLive = !!player.querySelector('.icn-stop')
+        const playerTitle = player.querySelector(
+          '.audio-program-label, .audio-info .program-text',
+        )
+        const playerEpisode = player.querySelector(
+          '.audio-title, .audio-info .title',
+        )
+        const timeElapsed = player.querySelector('.time-elapsed')
+        const timeTotal = player.querySelector('.time-total')
+        ;(presenceData as PresenceData).type = ActivityType.Listening
+        presenceData.smallImageKey = isPlaying
+          ? isLive
+            ? Assets.Live
+            : Assets.Play
+          : Assets.Pause
+        presenceData.smallImageText = playerTitle
+          ? `${playerTitle.textContent} - ${playerEpisode?.textContent}`
+          : playerEpisode
+        if (timeTotal && timeElapsed) {
+          [presenceData.startTimestamp, presenceData.endTimestamp]
+            = getTimestamps(
+              timestampFromFormat(timeElapsed.textContent ?? ''),
+              timestampFromFormat(timeTotal.textContent ?? ''),
+            )
+        }
+      }
+
       switch (pathList[0] ?? '/') {
         case '/': {
           presenceData.details = 'Browsing home page'
@@ -66,6 +103,12 @@ presence.on('UpdateData', async () => {
           presenceData.details = 'Browsing articles by author'
           presenceData.state = document.querySelector('h1')
           presenceData.buttons = [{ label: 'View Author', url: href }]
+          break
+        }
+        case 'programs': {
+          presenceData.details = 'Viewing a program'
+          presenceData.state = document.querySelector('h1')
+          presenceData.buttons = [{ label: 'View Program', url: href }]
           break
         }
         case 'podcasts-and-shows': {
@@ -109,7 +152,9 @@ presence.on('UpdateData', async () => {
             presenceData.state = document.querySelector('h1')
             presenceData.buttons = [{ label: 'Read Article', url: href }]
           }
-          presenceData.details = 'Browsing...'
+          else {
+            presenceData.details = 'Browsing...'
+          }
         }
       }
     }
