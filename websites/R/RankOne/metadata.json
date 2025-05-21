@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "354233941550694400",
+    "name": "kuriel."
+  },
+  "service": "RankOne",
+  "description": {
+    "en": "Track all the games you've played, are playing and those in your backlog. Share your taste in games and connect with more of what you love.",
+    "pt": "Acompanhe todos os jogos que já jogou, está jogando e aqueles que estão na sua lista de desejos. Compartilhe seu gosto por jogos e se conecte com mais do que ama.",
+    "pt-br": "Acompanhe todos os jogos que você já jogou, está jogando e aqueles que estão na sua lista de desejos. Compartilhe seu gosto por jogos e conecte-se com mais do que você ama."
+  },
+  "url": ["rankone.global", "www.rankone.global"],
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/dRN96t2.png",
+  "thumbnail": "https://i.imgur.com/mFBEdpi.png",
+  "color": "#766ae5",
+  "category": "games",
+  "tags": ["gaming", "tracking", "reviews", "community"],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}
