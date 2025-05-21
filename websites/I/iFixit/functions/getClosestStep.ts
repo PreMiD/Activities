@@ -8,7 +8,7 @@ export async function getClosestStep() {
   )
   return {
     stepLink: closestStep.querySelector('.fragment-link')?.getAttribute('href'),
-    stepImage: closestStep.querySelector('.stepImage img.visible'),
+    stepImage: closestStep.querySelector<HTMLImageElement>('.stepImage img.visible'),
     stepNumber: closestStep.querySelector('.fragment-link .stepValue')
       ?.textContent,
     stepTitle:

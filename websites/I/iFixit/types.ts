@@ -1,3 +1,5 @@
+import type ActivityStrings from './iFixit.json'
+
 export interface GuideData {
   title: string
   category: string
@@ -7,4 +9,10 @@ export interface GuideData {
   }
   steps: []
   difficulty: string
+}
+
+declare global {
+  interface StringKeys {
+    iFixIt: keyof typeof ActivityStrings
+  }
 }
