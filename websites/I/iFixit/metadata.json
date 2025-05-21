@@ -13,9 +13,21 @@
   ],
   "service": "iFixit",
   "description": {
-    "en": "iFixit is an American e-commerce and how-to website that publishes free wiki-like online repair guides and tear-downs of consumer electronics and gadgets. It also sells repair parts, tools, and accessories."
+    "de": "iFixit ist eine weltweite Gemeinschaft von Menschen, die sich gegenseitig helfen, Dinge zu reparieren",
+    "en": "iFixit is a global community of people helping each other repair things.",
+    "es": "iFixit es una comunidad global de personas mutuamente ayudándose a reparar cosas.",
+    "fr": "iFixit est une communauté de personnes réparties dans le monde et qui s'entraident pour réparer les objets qui les entourent.",
+    "it": "iFixit è una comunità globale di persone che si aiutano a vicenda per riparare cose.",
+    "jp": "iFixitは様々な製品の修理を助け合うためのグローバルなコミュニティです。",
+    "ko": "iFixit 은 물건들을 수리하기 위해 서로 돕는 사람들로 구성된 세계적인 커뮤니티입니다.",
+    "nl": "iFixit is een wereldwijde gemeenschap van mensen die elkaar helpen met reparaties.",
+    "pt": "iFixit é uma comunidade global de pessoas que se ajudam mutuamente a consertar coisas.",
+    "ru": "iFixit — это сообщество людей, которые помогают друг другу что-либо починить или восстановить.",
+    "tr": "iFixit, birbirlerine onarım konusunda yardım eden insanların oluşturduğu global bir topluluktur.",
+    "zh": "iFixit 是一个以维修为主题的全球性互助社区。从一个一个的设备开始，让我们来一步一个脚印一点一点的修复这个世界。"
   },
   "url": "www.ifixit.com",
+  "regExp": "^https://\\w+[.]ifixit[.]com[/]",
   "version": "1.0.0",
   "logo": "https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/ifixit.png",
   "thumbnail": "https://valkyrie.cdn.ifixit.com/media/2022/06/03114104/Blog-Header-original-manta-BBF19-stacked-.jpg",
@@ -29,6 +41,10 @@
     "guides"
   ],
   "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
     {
       "id": "privacy",
       "title": "Privacy",
