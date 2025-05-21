@@ -7,7 +7,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 const DEFAULT_IMAGE = 'https://i.imgur.com/uLMfYgQ.png'
 
-const setDefaultPresence = (presenceData: PresenceData, state: string) => {
+function setDefaultPresence(presenceData: PresenceData, state: string) {
   presenceData.details = 'Tide Radio'
   presenceData.state = state
   presenceData.largeImageKey = DEFAULT_IMAGE
@@ -31,29 +31,40 @@ presence.on('UpdateData', () => {
 
   if (document.location.pathname.includes('/news')) {
     setDefaultPresence(presenceData, 'Viewing the latest news')
-  } else if (document.location.pathname.includes('/about')) {
+  }
+  else if (document.location.pathname.includes('/about')) {
     setDefaultPresence(presenceData, 'Viewing the about page')
-  } else if (document.location.pathname.includes('/team')) {
+  }
+  else if (document.location.pathname.includes('/team')) {
     setDefaultPresence(presenceData, 'Viewing the team')
-  } else if (document.location.pathname.includes('/schedule')) {
+  }
+  else if (document.location.pathname.includes('/schedule')) {
     setDefaultPresence(presenceData, 'Viewing the schedule')
-  } else if (document.location.pathname.includes('/playlist')) {
+  }
+  else if (document.location.pathname.includes('/playlist')) {
     setDefaultPresence(presenceData, 'Viewing the playlist')
-  } else if (document.location.pathname.includes('/listen')) {
+  }
+  else if (document.location.pathname.includes('/listen')) {
     setDefaultPresence(presenceData, 'Viewing ways to listen')
-  } else if (document.location.pathname.includes('/music')) {
+  }
+  else if (document.location.pathname.includes('/music')) {
     setDefaultPresence(presenceData, 'Viewing the music submission form')
-  } else if (document.location.pathname.includes('/advertise')) {
+  }
+  else if (document.location.pathname.includes('/advertise')) {
     setDefaultPresence(presenceData, 'Viewing the advertising page')
-  } else if (document.location.pathname.includes('/catchup')) {
+  }
+  else if (document.location.pathname.includes('/catchup')) {
     setDefaultPresence(presenceData, 'Viewing the on-demand shows')
-  } else if (document.location.pathname.includes('/travel')) {
+  }
+  else if (document.location.pathname.includes('/travel')) {
     setDefaultPresence(presenceData, 'Viewing travel information')
-  } else if (document.location.pathname.includes('/jobs')) {
+  }
+  else if (document.location.pathname.includes('/jobs')) {
     setDefaultPresence(presenceData, 'Viewing the jobs page')
-  } else if (document.location.pathname.includes('/profile')) {
+  }
+  else if (document.location.pathname.includes('/profile')) {
     presenceData.details = 'Tide Radio'
-    presenceData.state = 'Viewing ' + document.querySelector('.name')?.textContent?.trim() + '\'s profile'
+    presenceData.state = `Viewing ${document.querySelector('.name')?.textContent?.trim()}'s profile`
     presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.userHeader .avatar img')?.src || DEFAULT_IMAGE
     presenceData.smallImageKey = DEFAULT_IMAGE
     presenceData.smallImageText = 'Tide Radio'
