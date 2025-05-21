@@ -34,6 +34,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('privacy'),
   ])
   const { pathname, search, href } = document.location
+  const searchParams = new URLSearchParams(search)
   const path = pathname.split('/').filter((x) => x)
   const strings = await presence.getStrings({
     viewHome: 'general.viewHome',
@@ -42,8 +43,9 @@ presence.on('UpdateData', async () => {
     followGuide: 'ifixit.followGuide',
   })
 
-  if (['en-eu', 'en-ca', 'fr-fr', 'en-gb', 'de-de'].includes(path[0] ?? ''))
+  if (/^[a-z]{2}-[a-z]{2}$/.test(path[0] ?? '')) {
     path.shift()
+  }
 
   switch (path[0]) {
     case '': {
@@ -53,17 +55,15 @@ presence.on('UpdateData', async () => {
     case 'Search': {
       presenceData.details = privacy ? strings.search : strings.searchFor
       if (!privacy) {
-        presenceData.state = decodeURIComponent(
-          search.match(/query=([A-Za-z0-9%]+)/)?.[1] ?? '',
-        )
+        presenceData.state = searchParams.get('query')
         presenceData.smallImageKey = Assets.Search
         presenceData.smallImageText = strings.search
       }
       break
     }
     case 'Guide': {
-      if (path.length > 1) {
-        await fetchGuideMetadata(path[2]!)
+      if (path[2]) {
+        await fetchGuideMetadata(path[2])
 
         if (guideMetadata?.data) {
           const { data } = guideMetadata
@@ -168,9 +168,7 @@ presence.on('UpdateData', async () => {
         presenceData.buttons = [
           {
             label: 'View troubleshooting',
-            url:
-              href.split('#')[0]! +
-              document.querySelector('a.css-1fppiwp')?.getAttribute('href'),
+            url: `${href.split('#')[0]}${document.querySelector('a.css-1fppiwp')?.getAttribute('href')}`,
           },
         ]
       }
