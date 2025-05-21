@@ -1,63 +1,69 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.12",
-	"apiVersion": 1,
-	"author": {
-		"id": "290528827715747841",
-		"name": "iuriineves"
-	},
-	"service": "iFixit",
-	"description": {
-		"en": "iFixit is an American e-commerce and how-to website that publishes free wiki-like online repair guides and tear-downs of consumer electronics and gadgets. It also sells repair parts, tools, and accessories."
-	},
-	"url": "www.ifixit.com",
-	"version": "1.0.0",
-	"logo": "https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/ifixit.png",
-	"thumbnail": "https://valkyrie.cdn.ifixit.com/media/2022/06/03114104/Blog-Header-original-manta-BBF19-stacked-.jpg",
-	"color": "#0071ba",
-	"category": "other",
-	"tags": [
-		"ifixit",
-		"tech",
-		"repair",
-		"educational",
-		"guides"
-	],
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Privacy",
-			"icon": "fad fa-user-shield",
-			"value": false
-		},
-		{
-			"id": "thumbnailType",
-			"title": "Guide Big Image",
-			"icon": "fad fa-image",
-			"value": 0,
-			"values": ["Logo", "Guide Thumbnail", "Step Thumbnail"],
-			"if": {
-				"privacy": false
-			}
-		},
-		{
-			"id": "iconType",
-			"title": "Guide Small Image",
-			"icon": "fad fa-info-circle",
-			"value": 0,
-			"values": ["Nothing", "Estimated Time", "Difficulty Rating"],
-			"if": {
-				"privacy": false
-			}
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "290528827715747841",
+    "name": "iuriineves"
+  },
+  "contributors": [
+    {
+      "id": "193714715631812608",
+      "name": "theusaf"
+    }
+  ],
+  "service": "iFixit",
+  "description": {
+    "en": "iFixit is an American e-commerce and how-to website that publishes free wiki-like online repair guides and tear-downs of consumer electronics and gadgets. It also sells repair parts, tools, and accessories."
+  },
+  "url": "www.ifixit.com",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/ifixit.png",
+  "thumbnail": "https://valkyrie.cdn.ifixit.com/media/2022/06/03114104/Blog-Header-original-manta-BBF19-stacked-.jpg",
+  "color": "#0071ba",
+  "category": "other",
+  "tags": [
+    "ifixit",
+    "tech",
+    "repair",
+    "educational",
+    "guides"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy",
+      "icon": "fad fa-user-shield",
+      "value": false
+    },
+    {
+      "id": "thumbnailType",
+      "title": "Guide Big Image",
+      "icon": "fad fa-image",
+      "value": 0,
+      "values": ["Logo", "Guide Thumbnail", "Step Thumbnail"],
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "iconType",
+      "title": "Guide Small Image",
+      "icon": "fad fa-info-circle",
+      "value": 0,
+      "values": ["Nothing", "Estimated Time", "Difficulty Rating"],
+      "if": {
+        "privacy": false
+      }
 
-		},
-		{
-			"id": "showStepTitle",
-			"title": "Show Step Titles",
-			"icon": "fad fa-subtitles",
-			"value": true,
-			"if": {
-				"privacy": false
-			}
-		}
-	]
+    },
+    {
+      "id": "showStepTitle",
+      "title": "Show Step Titles",
+      "icon": "fad fa-subtitles",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
 }
