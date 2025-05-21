@@ -27,7 +27,7 @@
     "zh": "iFixit 是一个以维修为主题的全球性互助社区。从一个一个的设备开始，让我们来一步一个脚印一点一点的修复这个世界。"
   },
   "url": "www.ifixit.com",
-  "regExp": "^https://\\w+[.]ifixit[.]com[/]",
+  "regExp": "^https://[a-z]+[.]ifixit[.]com[/]",
   "version": "1.0.0",
   "logo": "https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/ifixit.png",
   "thumbnail": "https://valkyrie.cdn.ifixit.com/media/2022/06/03114104/Blog-Header-original-manta-BBF19-stacked-.jpg",
