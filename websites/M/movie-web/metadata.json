@@ -11,17 +11,19 @@
   },
   "url": [
     "pstream.org",
+    "mirror.pstream.org",
     "beta.pstream.org",
+    "nostalgia.pstream.org",
+    "iframe.pstream.org",
     "pseudo-flix.pro",
     "mw.lonelil.com",
     "mw.lonelil.ru",
-    "movies.levrx.lol",
     "movies.levrx.de",
     "streamerflix.xyz",
-    "sudo-flix.fmovies0.cc",
     "streamwatch.online",
     "movies.samj.app",
-    "movie-site.tech"
+    "movie-site.tech",
+    "sudo-flix.nl"
   ],
   "regExp": "(dev[.])?(movie-web[.]app)",
   "version": "1.2.0",
