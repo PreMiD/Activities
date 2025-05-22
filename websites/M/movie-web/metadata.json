@@ -6,6 +6,10 @@
     "name": "jordaar"
   },
   "service": "movie-web",
+  "altnames": [
+    "P-Stream",
+    "pstream"
+  ],
   "description": {
     "en": "The place for your favorite movies & shows"
   },
