@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "878830839822176287",
+    "name": "yuusukealmal"
+  },
+  "service": "Asmrone",
+  "description": {
+    "en": "Displays detailed listening and browsing activity for asmr.one, including titles, cover art, and timestamps for audio playback.",
+    "zh": "顯示 asmr.one 的詳細聆聽與瀏覽活動，包括標題、封面和音訊播放的時間戳。",
+    "zh-tw": "顯示 asmr.one 的詳細聆聽與瀏覽活動，包括標題、封面與音訊播放時間。"
+  },
+  "url": "asmr.one",
+  "version": "1.0.0",
+  "logo": "https://upload.cc/i1/2025/05/25/AQ5pLl.jpg",
+  "thumbnail": "https://upload.cc/i1/2025/05/25/0mki4B.png",
+  "color": "#2380cc",
+  "category": "music",
+  "tags": [
+    "asmr",
+    "audio",
+    "media"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
