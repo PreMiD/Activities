@@ -152,6 +152,18 @@ presence.on('UpdateData', async () => {
             presenceData.details = 'Viewing Profile'
             presence.setActivity(presenceData)
           }
+          else if (document.location.pathname.includes('/group')) {
+            /* Viewing Group */
+            presenceData.details = 'Viewing Group:'
+            if (privacymode === false) {
+              presenceData.state = document.querySelector('.home-content')?.querySelector('h2')?.textContent
+            }
+            else {
+              presenceData.details = 'Viewing a group'
+            }
+
+            presence.setActivity(presenceData)
+          }
           else if (document.location.pathname.includes('/search')) {
             /* Searching */
             if (!privacymode) {
