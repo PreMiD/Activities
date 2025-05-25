@@ -176,7 +176,7 @@ presence.on('UpdateData', async () => {
               presenceData.details = 'Searching:'
               presenceData.state = window.location
                 .toString()
-                .substr(window.location.toString().lastIndexOf('/') + 1)
+                .slice(window.location.toString().lastIndexOf('/') + 1)
               presence.setActivity(presenceData)
             }
             else {
