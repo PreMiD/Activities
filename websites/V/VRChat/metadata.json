@@ -5,6 +5,12 @@
     "name": "KnuffelBeestje",
     "id": "219155156569161731"
   },
+  "contributors": [
+    {
+      "name": "Artucuno",
+      "id": "391132891024850945"
+    }
+  ],
   "service": "VRChat",
   "description": {
     "en": "VRChat is a free-to-play massively multiplayer online virtual reality social platform. It allows players to interact with others as 3D character models.",
@@ -16,7 +22,7 @@
     "hello.vrchat.com",
     "feedback.vrchat.com"
   ],
-  "version": "1.0.29",
+  "version": "1.0.30",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VRChat/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VRChat/assets/thumbnail.png",
   "color": "#0B5286",
