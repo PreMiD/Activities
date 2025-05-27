@@ -49,7 +49,7 @@ function extractWorkIdFromUrl(url: string): string | null {
 }
 
 presence.on('UpdateData', async () => {
-  const currentPath = window.location.href
+  const currentPath = document.location.href
   const pathname = new URL(currentPath).pathname.split('/')
   const currentWorkId = pathname[2] || 'unknown'
 
@@ -59,7 +59,7 @@ presence.on('UpdateData', async () => {
   ])
 
   const audio = document.querySelector('audio')
-  const source = audio?.querySelector('source') as HTMLSourceElement | null
+  const source = audio?.querySelector<HTMLSourceElement>('source')
   const audioSrc = source?.src
 
   const actualPlayingId = audioSrc ? extractWorkIdFromUrl(audioSrc) : null
@@ -93,8 +93,8 @@ presence.on('UpdateData', async () => {
       smallImageText: isPaused ? 'Paused' : 'Playing',
       buttons: !privacy && buttonsEnabled
         ? [
-            { label: 'DLsite', url: `${ActivityAssets.DLSite}/${actualPlayingId}.html` },
-            { label: 'Asmr.one', url: currentPath },
+            { label: 'View on DLsite', url: `${ActivityAssets.DLSite}/${actualPlayingId}.html` },
+            { label: 'Open on Asmr.one', url: currentPath },
           ]
         : undefined,
     }
@@ -115,7 +115,7 @@ presence.on('UpdateData', async () => {
   const section = pathname[1]
   switch (section) {
     case 'works': {
-      const keyword = new URLSearchParams(window.location.search)
+      const keyword = new URLSearchParams(document.location.search)
         .get('keyword')
         ?.replace(/^(?:circle:|tag:|va:|["\s]+)/, '')
       if (!privacy) {
