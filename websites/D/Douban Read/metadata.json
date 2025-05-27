@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "357461892526243840",
+    "name": "litomore"
+  },
+  "service": "Douban Read",
+  "description": {
+    "en": "Meet more vivid stories",
+    "zh": "遇见更生动的故事"
+  },
+  "url": "read.douban.com",
+  "version": "1.0.0",
+  "logo": "https://litomore.me/images/doubanread-512.png",
+  "thumbnail": "https://careers.arkread.com/pic1.png",
+  "color": "#24D2C8",
+  "category": "other",
+  "tags": [
+    "novel",
+    "reading",
+    "books"
+  ]
+}
