@@ -153,8 +153,8 @@ presence.on('UpdateData', async () => {
 
           if (buttonsEnabled) {
             presenceData.buttons = [
-              { label: 'DLsite', url: `${ActivityAssets.DLSite}/${currentWorkId}.html` },
-              { label: 'Asmr.one', url: currentPath },
+              { label: 'View on DLsite', url: `${ActivityAssets.DLSite}/${currentWorkId}.html` },
+              { label: 'Listing on Asmr.one', url: currentPath },
             ]
           }
         }
