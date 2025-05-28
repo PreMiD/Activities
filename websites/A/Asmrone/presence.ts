@@ -82,13 +82,13 @@ presence.on('UpdateData', async () => {
 
     const presenceData: PresenceData = {
       type: isPaused ? ActivityType.Watching : ActivityType.Listening,
-      details: privacy ? undefined : title || 'Listening...',
-      state: privacy ? undefined : description || undefined,
+      details: privacy ? 'Listening to something...' : title || 'Listening...',
+      state: privacy ? undefined : description,
       startTimestamp: Math.floor(Date.now() / 1000) - Math.floor(currentTime),
       endTimestamp: isPaused
         ? undefined
         : Math.floor(Date.now() / 1000) + Math.floor(duration - currentTime),
-      largeImageKey: lastImageKey ?? ActivityAssets.Logo,
+      largeImageKey: privacy ? ActivityAssets.Logo : (lastImageKey ?? ActivityAssets.Logo),
       smallImageKey: isPaused ? Assets.Pause : Assets.Play,
       smallImageText: isPaused ? 'Paused' : 'Playing',
       buttons: !privacy && buttonsEnabled
