@@ -11,9 +11,9 @@ function formatTitle(text: string): string {
 }
 
 interface EpisodeInfo {
-  title: string;
-  season: string;
-  episode: string;
+  title: string
+  season: string
+  episode: string
 }
 
 function getEpisodeInfo(url: string): EpisodeInfo | null {
