@@ -20,7 +20,7 @@
     "message": "Browsing guides"
   },
   "ifixit.troubleshooting": {
-    "description": "",
+    "description": "Troubleshooting page",
     "message": "Troubleshooting"
   },
   "ifixit.buttonViewTroubleshooting": {
@@ -52,7 +52,7 @@
     "message": "View Question"
   },
   "ifixit.askQuestion": {
-    "description": "",
+    "description": "Asking a question",
     "message": "Asking a question"
   },
   "ifixit.buttonViewProduct": {
@@ -60,7 +60,39 @@
     "message": "View Product"
   },
   "ifixit.devices": {
-    "description": "",
+    "description": "Devices page",
     "message": "Devices"
+  },
+  "ifixit.editWiki": {
+    "description": "Editing a wiki article",
+    "message": "Editing a wiki article"
+  },
+  "ifixit.reviewWikiHistory": {
+    "description": "Viewing the contributions for a wiki article",
+    "message": "Reviewing article history"
+  },
+  "ifixit.readWikiArticle": {
+    "description": "Reading a wiki article",
+    "message": "Reading a wiki article"
+  },
+  "ifixit.browseNews": {
+    "description": "Browsing news articles",
+    "message": "Browsing news articles"
+  },
+  "ifixit.browseNewsCategories": {
+    "description": "Browsing list of news categories",
+    "message": "Browsing news categories"
+  },
+  "ifixit.browseNewsCategory": {
+    "description": "Browsing news articles by category",
+    "message": "Browsing news by category"
+  },
+  "ifixit.viewTeam": {
+    "description": "Viewing information about a team of uesrs",
+    "message": "Viewing a team"
+  },
+  "ifixit.buttonViewTeam": {
+    "description": "Button leading user to view a team",
+    "message": "View Team"
   }
 }
