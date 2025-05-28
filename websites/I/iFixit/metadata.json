@@ -18,7 +18,7 @@
     "es": "iFixit es una comunidad global de personas mutuamente ayudándose a reparar cosas.",
     "fr": "iFixit est une communauté de personnes réparties dans le monde et qui s'entraident pour réparer les objets qui les entourent.",
     "it": "iFixit è una comunità globale di persone che si aiutano a vicenda per riparare cose.",
-    "jp": "iFixitは様々な製品の修理を助け合うためのグローバルなコミュニティです。",
+    "ja": "iFixitは様々な製品の修理を助け合うためのグローバルなコミュニティです。",
     "ko": "iFixit 은 물건들을 수리하기 위해 서로 돕는 사람들로 구성된 세계적인 커뮤니티입니다.",
     "nl": "iFixit is een wereldwijde gemeenschap van mensen die elkaar helpen met reparaties.",
     "pt": "iFixit é uma comunidade global de pessoas que se ajudam mutuamente a consertar coisas.",
@@ -34,7 +34,6 @@
   "color": "#0071ba",
   "category": "other",
   "tags": [
-    "ifixit",
     "tech",
     "repair",
     "educational",
