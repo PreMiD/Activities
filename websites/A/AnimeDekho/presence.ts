@@ -7,16 +7,22 @@ const ActivityAssets = {
 };
 
 function formatTitle(text: string): string {
-  return text.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  return text.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-function getEpisodeInfo(url: string): { title: string; season: string; episode: string } | null {
+type EpisodeInfo = {
+  title: string;
+  season: string;
+  episode: string;
+};
+
+function getEpisodeInfo(url: string): EpisodeInfo | null {
   const match = url.match(/\/epi\/(.+)-(\d+)x(\d+)\//);
   if (match) {
     return {
       title: formatTitle(match[1] || ''),
       season: `Season ${match[2]}`,
-      episode: `Episode ${match[3]}`,
+      episode: `Episode ${match[3]}`
     };
   }
   return null;
@@ -30,7 +36,7 @@ presence.on('UpdateData', () => {
   const presenceData: any = {};
 
   if (pathname.startsWith('/epi/')) {
-    const info = getEpisodeInfo(pathname + '/');
+    const info = getEpisodeInfo(`${pathname}/`);
 
     if (info) {
       const key = pathname;
@@ -47,26 +53,20 @@ presence.on('UpdateData', () => {
       presence.setActivity(presenceData);
       return;
     }
-  }
-
-else if (pathname.startsWith('/series/')) {
-  const match = pathname.match(/\/series\/([^/]+)\//);
-  if (match) {
-    const rawName = match[1];
-    const title = formatTitle(rawName || '');
-    presenceData.details = title;
-  } else {
-    presenceData.details = 'Viewing Anime Info';
-  }
-}
-
-  else if (pathname.startsWith('/category/')) {
+  } else if (pathname.startsWith('/series/')) {
+    const match = pathname.match(/\/series\/([^/]+)\//);
+    if (match) {
+      const rawName = match[1];
+      const title = formatTitle(rawName || '');
+      presenceData.details = title;
+    } else {
+      presenceData.details = 'Viewing Anime Info';
+    }
+  } else if (pathname.startsWith('/category/')) {
     const category = formatTitle(pathname.split('/')[2] || 'Browsing');
     presenceData.details = 'Browsing Category';
     presenceData.state = category;
-  }
-
-  else {
+  } else {
     presenceData.details = 'Browsing AnimeDekho';
   }
 
