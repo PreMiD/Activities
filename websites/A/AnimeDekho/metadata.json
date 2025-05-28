@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "629851641579044874",
+    "name": "Anant"
+  },
+  "service": "AnimeDekho",
+  "description": {
+    "en": "AnimeDekho is a website to watch anime, cartoon, and dubbed shows online for free in multiple languages."
+  },
+  "url": "animedekho.co",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/Zz6JbkCV/Anime-Dekho.png",
+  "thumbnail": "https://i.ibb.co/prb7kNJ0/Screenshot-2025-05-28-145612.png",
+  "color": "#f1c40f",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "cartoon",
+    "dubbed",
+    "hindi",
+    "tamil",
+    "telugu"
+  ]
+}
