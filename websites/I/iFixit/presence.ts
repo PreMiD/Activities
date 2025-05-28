@@ -147,9 +147,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = deviceDetails
       if (!privacy) {
         presenceData.largeImageKey = thumbnailType
-          ? document
-            .querySelector('.banner-small-photo img')
-            ?.getAttribute('src')
+          ? document.querySelector<HTMLImageElement>('.banner-small-photo img')
           : PresenceImages.Logo
         presenceData.buttons = [
           {
@@ -161,45 +159,52 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'Troubleshooting': {
-      presenceData.name = path[2]?.replaceAll('+', ' ')
-      presenceData.details = privacy
-        ? strings.troubleshooting
-        : `${strings.troubleshooting}: ${path[1]?.replaceAll('_', ' ')}`
-      if (!privacy) {
-        if (showStepTitle) {
-          presenceData.state
-            = document.querySelector('a.css-1fppiwp div')?.textContent !== ''
-              ? `${document.querySelector('a.css-1fppiwp .css-0')?.textContent} ${strings.aOutOfB
+      if (path[2]) {
+        presenceData.name = path[2].replaceAll('+', ' ')
+        presenceData.details = privacy
+          ? strings.troubleshooting
+          : `${strings.troubleshooting}: ${path[1]?.replaceAll('_', ' ')}`
+        if (!privacy) {
+          const steps = document.querySelectorAll<HTMLAnchorElement>(
+            '.summary nav a[href^="#Section"]',
+          )
+          const activeStepClasses = new Set<string>()
+          let activeStep: HTMLAnchorElement | null = null
+          for (const step of steps) {
+            if (activeStepClasses.has(step.className)) {
+              continue
+            }
+            activeStepClasses.add(step.className)
+            activeStep = step
+          }
+          if (showStepTitle) {
+            presenceData.state = activeStep?.querySelector('span')?.textContent
+              ? `${activeStep?.querySelector('span')?.textContent} ${strings.aOutOfB
                 .replace(
                   '{0}',
-                  `${document.querySelector('a.css-1fppiwp div')?.textContent ?? 1}`,
+                  `${activeStep.querySelector('div')?.textContent ?? 1}`,
                 )
-                .replace(
-                  '{1}',
-                  `${Array.from(document.querySelectorAll('div .css-ptse8o')).pop()?.textContent ?? 1}`,
-                )
-              }`
+                .replace('{1}', `${steps.length || 1}`)}`
               : strings.aOutOfB
                   .replace(
                     '{0}',
-                    `${document.querySelector('a.css-1fppiwp div')?.textContent ?? 1}`,
+                    `${activeStep?.querySelector('div')?.textContent ?? 1}`,
                   )
-                  .replace(
-                    '{1}',
-                    `${Array.from(document.querySelectorAll('div .css-ptse8o')).pop()?.textContent ?? 1}`,
-                  )
+                  .replace('{1}', `${steps.length || 1}`)
+          }
+          if (thumbnailType) {
+            presenceData.largeImageKey
+              = document.querySelector<HTMLImageElement>(
+                '[data-testid*=\'troubleshooting-header\'] img',
+              )
+          }
+          presenceData.buttons = [
+            {
+              label: strings.buttonViewTroubleshooting,
+              url: `${activeStep?.href ?? href}`,
+            },
+          ]
         }
-        if (thumbnailType) {
-          presenceData.largeImageKey = document
-            .querySelector('[data-testid*=\'troubleshooting-header\'] img')
-            ?.getAttribute('src')
-        }
-        presenceData.buttons = [
-          {
-            label: strings.buttonViewTroubleshooting,
-            url: `${href.split('#')[0]}${document.querySelector('a.css-1fppiwp')?.getAttribute('href')}`,
-          },
-        ]
       }
       break
     }
@@ -215,13 +220,15 @@ presence.on('UpdateData', async () => {
         case 'View': {
           presenceData.details = privacy
             ? strings.viewQuestion
-            : strings.viewQuestionAuthor.replace('{0}', `${document.querySelector('.post-author-username')?.textContent}`)
+            : strings.viewQuestionAuthor.replace(
+                '{0}',
+                `${document.querySelector('.post-author-username')?.textContent}`,
+              )
           if (!privacy) {
-            presenceData.name
-              = document.querySelector('.post-title')?.textContent ?? 'iFixit'
-            presenceData.state
-              = document.querySelector('.post-answers-header h2')?.textContent
-                ?? strings.noAnswers
+            presenceData.state = `${document.querySelector('.post-title')?.textContent} - ${
+              document.querySelector('.post-answers-header h2')?.textContent
+              ?? strings.noAnswers
+            }`
             presenceData.largeImageKey = thumbnailType
               ? document.querySelector('.device-image')?.getAttribute('src')
               : PresenceImages.Logo
@@ -241,8 +248,6 @@ presence.on('UpdateData', async () => {
           break
         }
         case 'Ask': {
-          presenceData.name
-            = document.querySelector('.sc-fiCwYx.eDiGoK')?.textContent ?? 'iFixit'
           presenceData.details = strings.askQuestion
           if (!privacy) {
             presenceData.state = document.querySelector<HTMLInputElement>(
@@ -274,7 +279,9 @@ presence.on('UpdateData', async () => {
     }
     case 'Parts':
     case 'Tools': {
-      presenceData.details = privacy ? strings.viewAProduct : strings.viewProduct
+      presenceData.details = privacy
+        ? strings.viewAProduct
+        : strings.viewProduct
       if (!privacy) {
         presenceData.state = `${path[1]?.replaceAll('_', ' ') ?? ''} ${path[0]}`
       }
