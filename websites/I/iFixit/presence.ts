@@ -260,11 +260,11 @@ presence.on('UpdateData', async () => {
       }
       break
     }
-    case "News": {
+    case 'News': {
       switch (path[1] ?? '/') {
         case 'all-posts':
         case '/': {
-          presenceData.details  = 'Browsing news articles'
+          presenceData.details = 'Browsing news articles'
           break
         }
         case 'all-categories': {
@@ -274,7 +274,7 @@ presence.on('UpdateData', async () => {
         case 'category': {
           presenceData.details = 'Browsing news by category'
           if (!privacy) {
-          presenceData.state = document.querySelector('h1')
+            presenceData.state = document.querySelector('h1')
           }
           break
         }
@@ -282,22 +282,43 @@ presence.on('UpdateData', async () => {
           if (path[2]) {
             presenceData.details = 'Reading an article'
             if (!privacy) {
-            presenceData.state = document.querySelector('h1')
-            if (thumbnailType) {
-              presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.header-image img')
-            }
-            presenceData.buttons = [{label: 'Read Article', url: href}]
+              presenceData.state = document.querySelector('h1')
+              if (thumbnailType) {
+                presenceData.largeImageKey =
+                  document.querySelector<HTMLImageElement>('.header-image img')
+              }
+              presenceData.buttons = [{ label: 'Read Article', url: href }]
             }
           }
         }
       }
       break
     }
-    // case "User":
-    case "Team": {
+    case 'User': {
+      presenceData.details = "Viewing a user's profile"
+      if (!privacy) {
+        const data = JSON.parse(
+          document.querySelector<HTMLDivElement>('#content .react-component')
+            ?.dataset.props ?? 'null',
+        )
+        presenceData.state = data?.sidebarData.userCardData.summaryData.name
+        presenceData.buttons = [{ label: 'View Profile', url: href }]
+      }
       break
     }
-
+    case 'Team': {
+      presenceData.details = 'Viewing a team'
+      if (!privacy) {
+        presenceData.state = document.querySelector('h1')
+        if (thumbnailType) {
+          presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
+            '.profile-avatar img',
+          )
+        }
+        presenceData.buttons = [{ label: 'View Team', url: href }]
+      }
+      break
+    }
     case 'Answers':
       switch (path[1]) {
         case 'View': {
