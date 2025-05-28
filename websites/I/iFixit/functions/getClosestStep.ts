@@ -1,4 +1,11 @@
-export async function getClosestStep() {
+interface Step {
+  stepLink: HTMLAnchorElement | null;
+  stepImage: HTMLImageElement | null;
+  stepNumber: string | null | undefined;
+  stepTitle: string;
+}
+
+export function getClosestStep(): Step {
   const steps = document.querySelectorAll('.step')
   const closestStep = Array.from(steps).reduce((closest, step) =>
     Math.abs(step.getBoundingClientRect().top)
@@ -7,7 +14,7 @@ export async function getClosestStep() {
       : closest,
   )
   return {
-    stepLink: closestStep.querySelector('.fragment-link')?.getAttribute('href'),
+    stepLink: closestStep.querySelector<HTMLAnchorElement>('.fragment-link'),
     stepImage: closestStep.querySelector<HTMLImageElement>('.stepImage img.visible'),
     stepNumber: closestStep.querySelector('.fragment-link .stepValue')
       ?.textContent,

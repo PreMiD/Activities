@@ -35,7 +35,7 @@ presence.on('UpdateData', async () => {
   ])
   const { pathname, search, href } = document.location
   const searchParams = new URLSearchParams(search)
-  const path = pathname.split('/').filter(x => x)
+  const path = pathname.split('/').filter((x) => x)
   const strings = await presence.getStrings({
     viewHome: 'general.viewHome',
     search: 'general.search',
@@ -81,54 +81,53 @@ presence.on('UpdateData', async () => {
       }
       break
     }
+    case 'Teardown':
     case 'Guide': {
       if (path[2]) {
         await fetchGuideMetadata(path[2])
 
         if (guideMetadata?.data) {
           const { data } = guideMetadata
-          const { title, category: device, steps, image, url } = data
-          const { stepLink, stepImage, stepNumber, stepTitle }
-            = await getClosestStep()
+          const { title, category: device, steps, image } = data
+          const { stepLink, stepImage, stepNumber, stepTitle } =
+            getClosestStep()
 
           presenceData.details = privacy ? strings.followGuide : device
           if (!privacy) {
             presenceData.state = `${title.replaceAll(device, '')} - ${
               showStepTitle
                 ? `${stepTitle} (${stepNumber?.replace(/\D/g, '')}/${
-                  steps.length
-                }) `
+                    steps.length
+                  }) `
                 : strings.aOutOfB
                     .replace('{0}', `${stepNumber}`)
                     .replace('{1}', `${steps.length}`)
             }`
-            presenceData.largeImageKey
-              = thumbnailType === 1 ? image.standard : stepImage
-            presenceData.smallImageKey
-              = iconType === 1
+            presenceData.largeImageKey =
+              thumbnailType === 1 ? image.standard : stepImage
+            presenceData.smallImageKey =
+              iconType === 1
                 ? Icons.Time
                 : Icons[
-                  `${document
-                    .querySelector('.guide-difficulty')
-                    ?.textContent
-                    ?.replaceAll(' ', '')
-                    .toLowerCase()}` as keyof typeof Icons
-                ]
-            presenceData.smallImageText
-              = iconType === 1
+                    `${document
+                      .querySelector('.guide-difficulty')
+                      ?.textContent?.replaceAll(' ', '')
+                      .toLowerCase()}` as keyof typeof Icons
+                  ]
+            presenceData.smallImageText =
+              iconType === 1
                 ? document.querySelector('.guide-time-required')?.textContent
                 : document.querySelector('.guide-difficulty')?.textContent
             presenceData.buttons = [
               {
                 label: strings.buttonViewGuide,
-                url: `${url.split('#')[0]}${stepLink}`,
+                url: stepLink,
               },
               {
                 label: strings.buttonViewDevice,
-                url: `https://www.ifixit.com/Device/${device.replaceAll(
-                  ' ',
-                  '_',
-                )}`,
+                url: document.querySelector<HTMLAnchorElement>(
+                  'nav[itemprop=breadcrumb] li:first-child a',
+                ),
               },
             ]
           }
@@ -182,11 +181,11 @@ presence.on('UpdateData', async () => {
             presenceData.state += ` - ${
               activeStep?.querySelector('span')?.textContent
                 ? `${activeStep?.querySelector('span')?.textContent} ${strings.aOutOfB
-                  .replace(
-                    '{0}',
-                    `${activeStep.querySelector('div')?.textContent ?? 1}`,
-                  )
-                  .replace('{1}', `${steps.length || 1}`)}`
+                    .replace(
+                      '{0}',
+                      `${activeStep.querySelector('div')?.textContent ?? 1}`,
+                    )
+                    .replace('{1}', `${steps.length || 1}`)}`
                 : strings.aOutOfB
                     .replace(
                       '{0}',
@@ -196,9 +195,9 @@ presence.on('UpdateData', async () => {
             }`
           }
           if (thumbnailType) {
-            presenceData.largeImageKey
-              = document.querySelector<HTMLImageElement>(
-                '[data-testid*=\'troubleshooting-header\'] img',
+            presenceData.largeImageKey =
+              document.querySelector<HTMLImageElement>(
+                "[data-testid*='troubleshooting-header'] img",
               )
           }
           presenceData.buttons = [
@@ -212,8 +211,55 @@ presence.on('UpdateData', async () => {
       break
     }
 
-    // case "Wiki":
-    // case "Teardown":
+    case 'Wiki': {
+      switch (path[1]) {
+        case 'Edit': {
+          presenceData.details = 'Editing a Wiki Article'
+          if (!privacy) {
+            presenceData.state = document.querySelector('h2')
+          }
+          break
+        }
+        case 'History': {
+          presenceData.details = 'Reviewing Article History'
+          if (!privacy) {
+            presenceData.state = document.querySelector(
+              'nav[itemprop=breadcrumb] li:nth-child(2)',
+            )
+          }
+          break
+        }
+        default: {
+          presenceData.details = 'Reading a Wiki Article'
+          if (!privacy) {
+            const mainTitle = document.querySelector('h1')?.textContent
+            const activeSection = document.querySelector(
+              '.toc > ul > li > a.scrolled',
+            )
+            const activeSubSection =
+              activeSection?.parentElement?.querySelector('ul li a.scrolled')
+            if (activeSection && activeSubSection) {
+              presenceData.state = `${mainTitle}: ${activeSection.textContent} - ${activeSubSection.textContent}`
+            } else {
+              presenceData.state = mainTitle
+            }
+            if (thumbnailType) {
+              presenceData.largeImageKey =
+                document.querySelector<HTMLImageElement>(
+                  '.banner-small-photo img',
+                )
+            }
+            presenceData.buttons = [
+              {
+                label: 'Read Article',
+                url: href,
+              },
+            ]
+          }
+        }
+      }
+      break
+    }
     // case "News":
     // case "User":
     // case "Team":
@@ -229,8 +275,8 @@ presence.on('UpdateData', async () => {
               )
           if (!privacy) {
             presenceData.state = `${document.querySelector('.post-title')?.textContent} - ${
-              document.querySelector('.post-answers-header h2')?.textContent
-              ?? strings.noAnswers
+              document.querySelector('.post-answers-header h2')?.textContent ??
+              strings.noAnswers
             }`
             presenceData.largeImageKey = thumbnailType
               ? document.querySelector('.device-image')?.getAttribute('src')
@@ -258,8 +304,8 @@ presence.on('UpdateData', async () => {
             )?.value
           }
           if (thumbnailType) {
-            presenceData.largeImageKey
-              = document.querySelector<HTMLImageElement>('.css-fzd5vm img')
+            presenceData.largeImageKey =
+              document.querySelector<HTMLImageElement>('.css-fzd5vm img')
             presenceData.smallImageKey = Assets.Question
             presenceData.smallImageText = strings.askQuestion
           }
@@ -292,7 +338,7 @@ presence.on('UpdateData', async () => {
     }
     case 'products': {
       const image = document.querySelector(
-        'div[data-testid*=\'product-gallery-desktop\'] img',
+        "div[data-testid*='product-gallery-desktop'] img",
       )
 
       presenceData.details = privacy
