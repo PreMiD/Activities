@@ -15,10 +15,10 @@ enum PresenceImages {
 }
 
 enum Icons {
-  VeryEasy = 'https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/diff/very_easy.png',
-  Easy = 'https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/diff/easy.png',
-  Moderate = 'https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/diff/intermediate.png',
-  Difficult = 'https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/diff/difficult.png',
+  very_easy = 'https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/diff/very_easy.png',
+  easy = 'https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/diff/easy.png',
+  moderate = 'https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/diff/intermediate.png',
+  difficult = 'https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/diff/difficult.png',
   Time = 'https://raw.githubusercontent.com/iuriineves/ifixit-icons/refs/heads/main/time.png',
   Answered = 'https://raw.githubusercontent.com/iuriineves/premid-assets/refs/heads/main/answered.png',
 }
@@ -101,48 +101,54 @@ presence.on('UpdateData', async () => {
         if (guideMetadata?.data) {
           const { data } = guideMetadata
           const { title, category: device, steps, image } = data
-          const { stepLink, stepImage, stepNumber, stepTitle }
-            = getClosestStep()
+          const closestStep = getClosestStep()
 
           presenceData.details = privacy ? strings.followGuide : device
           if (!privacy) {
-            presenceData.state = `${title.replaceAll(device, '')} - ${
-              showStepTitle
-                ? `${stepTitle} (${stepNumber?.replace(/\D/g, '')}/${
-                  steps.length
-                }) `
-                : strings.aOutOfB
-                    .replace('{0}', `${stepNumber}`)
-                    .replace('{1}', `${steps.length}`)
-            }`
-            presenceData.largeImageKey
+            if (closestStep) {
+              const { stepLink, stepImage, stepNumber, stepTitle } = closestStep
+
+              presenceData.state = `${title.replaceAll(device, '')} - ${
+                showStepTitle
+                  ? `${stepTitle} (${stepNumber?.replace(/\D/g, '')}/${
+                    steps.length
+                  }) `
+                  : strings.aOutOfB
+                      .replace('{0}', `${stepNumber}`)
+                      .replace('{1}', `${steps.length}`)
+              }`
+              presenceData.largeImageKey
               = thumbnailType === 1 ? image.standard : stepImage
-            presenceData.smallImageKey
+              presenceData.smallImageKey
               = iconType === 1
-                ? Icons.Time
-                : Icons[
-                  `${document
-                    .querySelector('.guide-difficulty')
-                    ?.textContent
-                    ?.replaceAll(' ', '')
-                    .toLowerCase()}` as keyof typeof Icons
-                ]
-            presenceData.smallImageText
+                  ? Icons.Time
+                  : Icons[
+                    `${document
+                      .querySelector('.guide-difficulty')
+                      ?.textContent
+                      ?.replaceAll(' ', '')
+                      .toLowerCase()}` as keyof typeof Icons
+                  ]
+              presenceData.smallImageText
               = iconType === 1
-                ? document.querySelector('.guide-time-required')?.textContent
-                : document.querySelector('.guide-difficulty')?.textContent
-            presenceData.buttons = [
-              {
-                label: strings.buttonViewGuide,
-                url: stepLink,
-              },
-              {
-                label: strings.buttonViewDevice,
-                url: document.querySelector<HTMLAnchorElement>(
-                  'nav[itemprop=breadcrumb] li:first-child a',
-                ),
-              },
-            ]
+                  ? document.querySelector('.guide-time-required')?.textContent
+                  : document.querySelector('.guide-difficulty')?.textContent
+              presenceData.buttons = [
+                {
+                  label: strings.buttonViewGuide,
+                  url: stepLink,
+                },
+                {
+                  label: strings.buttonViewDevice,
+                  url: document.querySelector<HTMLAnchorElement>(
+                    'nav[itemprop=breadcrumb] li:first-child a',
+                  ),
+                },
+              ]
+            }
+            else {
+              presenceData.state = title.replaceAll(device, '')
+            }
           }
           break
         }
@@ -274,6 +280,8 @@ presence.on('UpdateData', async () => {
       }
       break
     }
+    case 'Stories':
+    case 'Story':
     case 'News': {
       switch (path[1] ?? '/') {
         case 'all-posts':
@@ -323,6 +331,7 @@ presence.on('UpdateData', async () => {
       }
       break
     }
+    case 'Business':
     case 'Team': {
       presenceData.details = strings.viewTeam
       if (!privacy) {
