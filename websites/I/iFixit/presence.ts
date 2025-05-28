@@ -93,14 +93,15 @@ presence.on('UpdateData', async () => {
 
           presenceData.details = privacy ? strings.followGuide : device
           if (!privacy) {
-            presenceData.name = title.replaceAll(device, '')
-            presenceData.state = showStepTitle
-              ? `${stepTitle} (${stepNumber?.replace(/\D/g, '')}/${
-                steps.length
-              }) `
-              : strings.aOutOfB
-                  .replace('{0}', `${stepNumber}`)
-                  .replace('{1}', `${steps.length}`)
+            presenceData.state = `${title.replaceAll(device, '')} - ${
+              showStepTitle
+                ? `${stepTitle} (${stepNumber?.replace(/\D/g, '')}/${
+                  steps.length
+                }) `
+                : strings.aOutOfB
+                    .replace('{0}', `${stepNumber}`)
+                    .replace('{1}', `${steps.length}`)
+            }`
             presenceData.largeImageKey
               = thumbnailType === 1 ? image.standard : stepImage
             presenceData.smallImageKey
@@ -160,7 +161,7 @@ presence.on('UpdateData', async () => {
     }
     case 'Troubleshooting': {
       if (path[2]) {
-        presenceData.name = path[2].replaceAll('+', ' ')
+        presenceData.state = path[2].replaceAll('+', ' ')
         presenceData.details = privacy
           ? strings.troubleshooting
           : `${strings.troubleshooting}: ${path[1]?.replaceAll('_', ' ')}`
@@ -178,19 +179,21 @@ presence.on('UpdateData', async () => {
             activeStep = step
           }
           if (showStepTitle) {
-            presenceData.state = activeStep?.querySelector('span')?.textContent
-              ? `${activeStep?.querySelector('span')?.textContent} ${strings.aOutOfB
-                .replace(
-                  '{0}',
-                  `${activeStep.querySelector('div')?.textContent ?? 1}`,
-                )
-                .replace('{1}', `${steps.length || 1}`)}`
-              : strings.aOutOfB
+            presenceData.state += ` - ${
+              activeStep?.querySelector('span')?.textContent
+                ? `${activeStep?.querySelector('span')?.textContent} ${strings.aOutOfB
                   .replace(
                     '{0}',
-                    `${activeStep?.querySelector('div')?.textContent ?? 1}`,
+                    `${activeStep.querySelector('div')?.textContent ?? 1}`,
                   )
-                  .replace('{1}', `${steps.length || 1}`)
+                  .replace('{1}', `${steps.length || 1}`)}`
+                : strings.aOutOfB
+                    .replace(
+                      '{0}',
+                      `${activeStep?.querySelector('div')?.textContent ?? 1}`,
+                    )
+                    .replace('{1}', `${steps.length || 1}`)
+            }`
           }
           if (thumbnailType) {
             presenceData.largeImageKey
