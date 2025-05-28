@@ -35,12 +35,32 @@ presence.on('UpdateData', async () => {
   ])
   const { pathname, search, href } = document.location
   const searchParams = new URLSearchParams(search)
-  const path = pathname.split('/').filter((x) => x)
+  const path = pathname.split('/').filter(x => x)
   const strings = await presence.getStrings({
     viewHome: 'general.viewHome',
     search: 'general.search',
     searchFor: 'general.searchFor',
     followGuide: 'ifixit.followGuide',
+    aOutOfB: 'ifixit.aOutOfB',
+    buttonViewGuide: 'ifixit.buttonViewGuide',
+    buttonViewDevice: 'ifixit.buttonViewDevice',
+    browsingGuides: 'ifixit.browsingGuides',
+    browsing: 'general.browsing',
+    troubleshooting: 'ifixit.troubleshooting',
+    buttonViewTroubleshooting: 'ifixit.buttonViewTroubleshooting',
+    viewQuestion: 'ifixit.viewQuestion',
+    viewQuestionAuthor: 'ifixit.viewQuestionAuthor',
+    noAnswers: 'ifixit.noAnswers',
+    answered: 'ifixit.answered',
+    notAnswered: 'ifixitt.notAnswered',
+    buttonViewQuestion: 'ifixit.buttonViewQuestion',
+    askQuestion: 'ifixit.askQuestion',
+    forums: 'general.forums',
+    store: 'general.store',
+    viewProduct: 'general.viewProduct',
+    viewAProduct: 'general.viewAProduct',
+    buttonViewProduct: 'general.viewProduct',
+    devices: 'ifixit.devices',
   })
 
   if (/^[a-z]{2}-[a-z]{2}$/.test(path[0] ?? '')) {
@@ -68,39 +88,42 @@ presence.on('UpdateData', async () => {
         if (guideMetadata?.data) {
           const { data } = guideMetadata
           const { title, category: device, steps, image, url } = data
-          const { stepLink, stepImage, stepNumber, stepTitle } =
-            await getClosestStep()
+          const { stepLink, stepImage, stepNumber, stepTitle }
+            = await getClosestStep()
 
           presenceData.details = privacy ? strings.followGuide : device
           if (!privacy) {
             presenceData.name = title.replaceAll(device, '')
             presenceData.state = showStepTitle
               ? `${stepTitle} (${stepNumber?.replace(/\D/g, '')}/${
-                  steps.length
-                }) `
-              : `${stepNumber} out of ${steps.length}`
-            presenceData.largeImageKey =
-              thumbnailType === 1 ? image.standard : stepImage
-            presenceData.smallImageKey =
-              iconType === 1
+                steps.length
+              }) `
+              : strings.aOutOfB
+                  .replace('{0}', `${stepNumber}`)
+                  .replace('{1}', `${steps.length}`)
+            presenceData.largeImageKey
+              = thumbnailType === 1 ? image.standard : stepImage
+            presenceData.smallImageKey
+              = iconType === 1
                 ? Icons.Time
                 : Icons[
-                    `${document
-                      .querySelector('.guide-difficulty')
-                      ?.textContent?.replaceAll(' ', '')
-                      .toLowerCase()}` as keyof typeof Icons
-                  ]
-            presenceData.smallImageText =
-              iconType === 1
+                  `${document
+                    .querySelector('.guide-difficulty')
+                    ?.textContent
+                    ?.replaceAll(' ', '')
+                    .toLowerCase()}` as keyof typeof Icons
+                ]
+            presenceData.smallImageText
+              = iconType === 1
                 ? document.querySelector('.guide-time-required')?.textContent
                 : document.querySelector('.guide-difficulty')?.textContent
             presenceData.buttons = [
               {
-                label: 'View Guide',
+                label: strings.buttonViewGuide,
                 url: `${url.split('#')[0]}${stepLink}`,
               },
               {
-                label: 'View Device',
+                label: strings.buttonViewDevice,
                 url: `https://www.ifixit.com/Device/${device.replaceAll(
                   ' ',
                   '_',
@@ -111,25 +134,26 @@ presence.on('UpdateData', async () => {
           break
         }
       }
-      presenceData.details = 'Browsing: Guides'
+      presenceData.details = strings.browsingGuides
       break
     }
     case 'Device': {
       const deviceDetails = privacy
-        ? 'Devices'
+        ? strings.devices
         : decodeURIComponent(
             pathname.replace('/Device/', '').replaceAll('_', ' '),
           )
-      presenceData.details = `Browsing: ${deviceDetails}`
+      presenceData.details = strings.browsing
+      presenceData.state = deviceDetails
       if (!privacy) {
         presenceData.largeImageKey = thumbnailType
           ? document
-              .querySelector('.banner-small-photo img')
-              ?.getAttribute('src')
+            .querySelector('.banner-small-photo img')
+            ?.getAttribute('src')
           : PresenceImages.Logo
         presenceData.buttons = [
           {
-            label: 'View device',
+            label: strings.buttonViewDevice,
             url: href,
           },
         ]
@@ -139,35 +163,40 @@ presence.on('UpdateData', async () => {
     case 'Troubleshooting': {
       presenceData.name = path[2]?.replaceAll('+', ' ')
       presenceData.details = privacy
-        ? 'Troubleshooting'
-        : `Troubleshooting: ${path[1]?.replaceAll('_', ' ')}`
+        ? strings.troubleshooting
+        : `${strings.troubleshooting}: ${path[1]?.replaceAll('_', ' ')}`
       if (!privacy) {
         if (showStepTitle) {
-          presenceData.state =
-            document.querySelector('a.css-1fppiwp div')?.textContent !== ''
-              ? `${
-                  document.querySelector('a.css-1fppiwp .css-0')?.textContent
-                } (${
-                  document.querySelector('a.css-1fppiwp div')?.textContent ?? 1
-                }/${
-                  Array.from(document.querySelectorAll('div .css-ptse8o')).pop()
-                    ?.textContent ?? 1
-                }) `
-              : `Step ${
-                  document.querySelector('a.css-1fppiwp div')?.textContent ?? 1
-                } out of ${
-                  Array.from(document.querySelectorAll('div .css-ptse8o')).pop()
-                    ?.textContent ?? 1
-                }`
+          presenceData.state
+            = document.querySelector('a.css-1fppiwp div')?.textContent !== ''
+              ? `${document.querySelector('a.css-1fppiwp .css-0')?.textContent} ${strings.aOutOfB
+                .replace(
+                  '{0}',
+                  `${document.querySelector('a.css-1fppiwp div')?.textContent ?? 1}`,
+                )
+                .replace(
+                  '{1}',
+                  `${Array.from(document.querySelectorAll('div .css-ptse8o')).pop()?.textContent ?? 1}`,
+                )
+              }`
+              : strings.aOutOfB
+                  .replace(
+                    '{0}',
+                    `${document.querySelector('a.css-1fppiwp div')?.textContent ?? 1}`,
+                  )
+                  .replace(
+                    '{1}',
+                    `${Array.from(document.querySelectorAll('div .css-ptse8o')).pop()?.textContent ?? 1}`,
+                  )
         }
         if (thumbnailType) {
           presenceData.largeImageKey = document
-            .querySelector("[data-testid*='troubleshooting-header'] img")
+            .querySelector('[data-testid*=\'troubleshooting-header\'] img')
             ?.getAttribute('src')
         }
         presenceData.buttons = [
           {
-            label: 'View troubleshooting',
+            label: strings.buttonViewTroubleshooting,
             url: `${href.split('#')[0]}${document.querySelector('a.css-1fppiwp')?.getAttribute('href')}`,
           },
         ]
@@ -185,16 +214,14 @@ presence.on('UpdateData', async () => {
       switch (path[1]) {
         case 'View': {
           presenceData.details = privacy
-            ? 'Viewing an answer'
-            : `by ${
-                document.querySelector('.post-author-username')?.textContent
-              }`
+            ? strings.viewQuestion
+            : strings.viewQuestionAuthor.replace('{0}', `${document.querySelector('.post-author-username')?.textContent}`)
           if (!privacy) {
-            presenceData.name =
-              document.querySelector('.post-title')?.textContent ?? 'iFixit'
-            presenceData.state =
-              document.querySelector('.post-answers-header h2')?.textContent ??
-              'No answers'
+            presenceData.name
+              = document.querySelector('.post-title')?.textContent ?? 'iFixit'
+            presenceData.state
+              = document.querySelector('.post-answers-header h2')?.textContent
+                ?? strings.noAnswers
             presenceData.largeImageKey = thumbnailType
               ? document.querySelector('.device-image')?.getAttribute('src')
               : PresenceImages.Logo
@@ -202,11 +229,11 @@ presence.on('UpdateData', async () => {
               ? Icons.Answered
               : Assets.Question
             presenceData.smallImageText = document.querySelector('.fa-check')
-              ? 'Answered'
-              : 'Not answered'
+              ? strings.answered
+              : strings.notAnswered
             presenceData.buttons = [
               {
-                label: 'View question',
+                label: strings.buttonViewQuestion,
                 url: href,
               },
             ]
@@ -214,36 +241,40 @@ presence.on('UpdateData', async () => {
           break
         }
         case 'Ask': {
-          presenceData.name =
-            document.querySelector('.sc-fiCwYx.eDiGoK')?.textContent ?? 'iFixit'
-          presenceData.details = privacy ? 'Asking a question' : 'Asking: '
-          presenceData.state = document.querySelector<HTMLInputElement>(
-            '#questionTitle input',
-          )?.value
+          presenceData.name
+            = document.querySelector('.sc-fiCwYx.eDiGoK')?.textContent ?? 'iFixit'
+          presenceData.details = strings.askQuestion
+          if (!privacy) {
+            presenceData.state = document.querySelector<HTMLInputElement>(
+              '#questionTitle input',
+            )?.value
+          }
           if (thumbnailType) {
-            presenceData.largeImageKey =
-              document.querySelector<HTMLImageElement>('.css-fzd5vm img')
+            presenceData.largeImageKey
+              = document.querySelector<HTMLImageElement>('.css-fzd5vm img')
             presenceData.smallImageKey = Assets.Question
-            presenceData.smallImageText = 'Asking'
+            presenceData.smallImageText = strings.askQuestion
           }
           break
         }
         default: {
-          presenceData.details = 'Browsing: Answers'
+          presenceData.details = strings.browsing
         }
       }
       break
     case 'Community': {
-      presenceData.details = 'Browsing: Community'
+      presenceData.details = strings.browsing
+      presenceData.state = strings.forums
       break
     }
     case 'Store': {
-      presenceData.details = 'Browsing: Store'
+      presenceData.details = strings.browsing
+      presenceData.state = strings.store
       break
     }
     case 'Parts':
     case 'Tools': {
-      presenceData.details = privacy ? 'Shopping' : 'Shopping:'
+      presenceData.details = privacy ? strings.viewAProduct : strings.viewProduct
       if (!privacy) {
         presenceData.state = `${path[1]?.replaceAll('_', ' ') ?? ''} ${path[0]}`
       }
@@ -251,19 +282,20 @@ presence.on('UpdateData', async () => {
     }
     case 'products': {
       const image = document.querySelector(
-        "div[data-testid*='product-gallery-desktop'] img",
+        'div[data-testid*=\'product-gallery-desktop\'] img',
       )
 
       presenceData.details = privacy
-        ? 'Buying'
-        : `Buying: ${image?.getAttribute('alt')}`
+        ? strings.viewAProduct
+        : strings.viewProduct
       if (!privacy) {
+        presenceData.state = image?.getAttribute('alt')
         presenceData.largeImageKey = thumbnailType
           ? image?.getAttribute('src')
           : PresenceImages.Logo
         presenceData.buttons = [
           {
-            label: 'View product',
+            label: strings.buttonViewProduct,
             url: href,
           },
         ]
