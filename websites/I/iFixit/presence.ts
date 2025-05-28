@@ -260,9 +260,43 @@ presence.on('UpdateData', async () => {
       }
       break
     }
-    // case "News":
+    case "News": {
+      switch (path[1] ?? '/') {
+        case 'all-posts':
+        case '/': {
+          presenceData.details  = 'Browsing news articles'
+          break
+        }
+        case 'all-categories': {
+          presenceData.details = 'Browsing news categories'
+          break
+        }
+        case 'category': {
+          presenceData.details = 'Browsing news by category'
+          if (!privacy) {
+          presenceData.state = document.querySelector('h1')
+          }
+          break
+        }
+        default: {
+          if (path[2]) {
+            presenceData.details = 'Reading an article'
+            if (!privacy) {
+            presenceData.state = document.querySelector('h1')
+            if (thumbnailType) {
+              presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.header-image img')
+            }
+            presenceData.buttons = [{label: 'Read Article', url: href}]
+            }
+          }
+        }
+      }
+      break
+    }
     // case "User":
-    // case "Team":
+    case "Team": {
+      break
+    }
 
     case 'Answers':
       switch (path[1]) {
