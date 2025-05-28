@@ -1,0 +1,62 @@
+{
+  "GOG.redeemACode": {
+    "description": "The user is redeeming a game code on GOG.",
+    "message": "Redeeming a code"
+  },
+  "GOG.workPage": {
+    "description": "A name page for careers",
+    "message": "Work"
+  },
+  "GOG.aboutPage": {
+    "description": "A name page",
+    "message": "About GOG"
+  },
+  "GOG.viewWallet": {
+    "description": "Viewing the wallet.",
+    "message": "Viewing Wallet"
+  },
+  "GOG.browsingGames": {
+    "description": "The user is browsing all games on GOG.",
+    "message": "Browsing games"
+  },
+  "GOG.preservationPage": {
+    "description": "A name page",
+    "message": "GOG Preservation Program"
+  },
+  "GOG.submitGame": {
+    "description": "A name page",
+    "message": "Submit Your Game"
+  },
+  "GOG.feedPage": {
+    "description": "A name page",
+    "message": "Activity Feed"
+  },
+  "GOG.thanksPage": {
+    "description": "A name page",
+    "message": "Thanks"
+  },
+  "GOG.blogPage": {
+    "description": "A name page",
+    "message": "Blog"
+  },
+  "GOG.settings": {
+    "description": "Viewing their profile on settings tab.",
+    "message": "Viewing their settings"
+  },
+  "GOG.games": {
+    "description": "Viewing their profile on games tab.",
+    "message": "Viewing their games"
+  },
+  "GOG.wishlist": {
+    "description": "Viewing their profile on wishlist tab.",
+    "message": "Viewing their wishlist"
+  },
+  "GOG.friends": {
+    "description": "Viewing their profile on friends tab.",
+    "message": "Viewing their friends"
+  },
+  "GOG.chat": {
+    "description": "Viewing their profile on chat tab.",
+    "message": "Chatting"
+  }
+}

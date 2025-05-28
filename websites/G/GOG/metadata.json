@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "354233941550694400",
+    "name": "kuriel."
+  },
+  "service": "GOG",
+  "description": {
+    "de": "Laden Sie die besten klassischen und neuen Spiele für Windows, Mac und Linux herunter. Eine große Auswahl an Titeln, DRM-frei, mit kostenlosen Extras und 30-Tage-Geld-zurück-Garantie.",
+    "en": "Download the best classic and new games on Windows, Mac & Linux. A vast selection of titles, DRM-free, with free goodies and 30-day money-back guarantee.",
+    "es": "Descarga los mejores juegos clásicos y nuevos en Windows, Mac y Linux. Una amplia selección de títulos, sin DRM, con obsequios gratis y garantía de devolución de 30 días.",
+    "fr": "Téléchargez les meilleurs jeux classiques et nouveaux sur Windows, Mac et Linux. Une vaste sélection de titres, sans DRM, avec des bonus gratuits et une garantie de remboursement de 30 jours.",
+    "it": "Scarica i migliori giochi classici e nuovi su Windows, Mac e Linux. Un'ampia selezione di titoli, senza DRM, con omaggi gratuiti e garanzia di rimborso di 30 giorni.",
+    "nl": "Download de beste klassieke en nieuwe games op Windows, Mac & Linux. Een uitgebreide selectie titels, DRM-vrij, met gratis extra's en 30 dagen geld-terug-garantie.",
+    "pl": "Pobierz najlepsze klasyczne i nowe gry na Windows, Mac i Linux. Szeroki wybór tytułów, bez DRM, z darmowymi dodatkami i 30-dniową gwarancją zwrotu pieniędzy.",
+    "pt": "Descarregue os melhores clássicos e novos jogos no Windows, Mac e Linux. Uma vasta seleção de títulos, sem DRM, com brindes grátis e garantia de reembolso de 30 dias.",
+    "pt-br": "Baixe os melhores jogos clássicos e novos no Windows, Mac e Linux. Uma vasta seleção de títulos, sem DRM, com brindes grátis e garantia de reembolso de 30 dias.",
+    "ru": "Загружайте лучшие классические и новые игры на Windows, Mac и Linux. Огромный выбор игр без DRM, с бесплатными дополнениями и 30-дневной гарантией возврата денег."
+
+  },
+  "url": "www.gog.com",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/bgU4DtR.png",
+  "thumbnail": "https://i.imgur.com/qIRuYc5.png",
+  "color": "#6E1D72",
+  "category": "games",
+  "tags": [
+    "games",
+    "gaming"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}
