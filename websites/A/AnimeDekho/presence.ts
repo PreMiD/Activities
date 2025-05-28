@@ -1,9 +1,9 @@
 const presence = new Presence({
-  clientId: '1371050079439425576'
+  clientId: '1371050079439425576',
 })
 
 const ActivityAssets = {
-  DefaultLogo: 'https://i.ibb.co/Zz6JbkCV/Anime-Dekho.png'
+  DefaultLogo: 'https://i.ibb.co/Zz6JbkCV/Anime-Dekho.png',
 }
 
 function formatTitle(text: string): string {
@@ -11,9 +11,9 @@ function formatTitle(text: string): string {
 }
 
 interface EpisodeInfo {
-  title: string,
-  season: string,
-  episode: string
+  title: string;
+  season: string;
+  episode: string;
 }
 
 function getEpisodeInfo(url: string): EpisodeInfo | null {
@@ -22,7 +22,7 @@ function getEpisodeInfo(url: string): EpisodeInfo | null {
     return {
       title: formatTitle(match[1] || ''),
       season: `Season ${match[2]}`,
-      episode: `Episode ${match[3]}`
+      episode: `Episode ${match[3]}`,
     }
   }
   return null
@@ -53,20 +53,24 @@ presence.on('UpdateData', () => {
       presence.setActivity(presenceData)
       return
     }
-  } else if (pathname.startsWith('/series/')) {
+  } 
+  else if (pathname.startsWith('/series/')) {
     const match = pathname.match(/\/series\/([^/]+)\//)
     if (match) {
       const rawName = match[1]
       const title = formatTitle(rawName || '')
       presenceData.details = title
-    } else {
+    } 
+    else {
       presenceData.details = 'Viewing Anime Info'
     }
-  } else if (pathname.startsWith('/category/')) {
+  } 
+  else if (pathname.startsWith('/category/')) {
     const category = formatTitle(pathname.split('/')[2] || 'Browsing')
     presenceData.details = 'Browsing Category'
     presenceData.state = category
-  } else {
+  } 
+  else {
     presenceData.details = 'Browsing AnimeDekho'
   }
 
