@@ -106,7 +106,8 @@ presence.on('UpdateData', async () => {
     playingWorkId = null
   }
 
-if (privacy) return
+  if (privacy) return
+
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     largeImageKey: ActivityAssets.Logo,
