@@ -107,7 +107,7 @@ presence.on('UpdateData', async () => {
   }
 
   if (privacy) {
-    return;
+    return
   }
 
   const presenceData: PresenceData = {
