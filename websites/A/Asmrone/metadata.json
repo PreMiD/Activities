@@ -7,9 +7,9 @@
   },
   "service": "Asmrone",
   "description": {
-    "en": "Displays detailed listening and browsing activity for asmr.one, including titles, cover art, and timestamps for audio playback.",
-    "zh": "顯示 asmr.one 的詳細聆聽與瀏覽活動，包括標題、封面和音訊播放的時間戳。",
-    "zh-tw": "顯示 asmr.one 的詳細聆聽與瀏覽活動，包括標題、封面與音訊播放時間。"
+    "en": "An online ASMR listening platform with features like favorites and downloads.",
+    "zh": "在线听 ASMR 的网站，包含收藏、下载等功能",
+    "zh-tw": "線上聽 ASMR 的網站，包含收藏、下載等功能。"
   },
   "url": "asmr.one",
   "version": "1.0.0",
