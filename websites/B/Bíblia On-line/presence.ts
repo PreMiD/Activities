@@ -298,8 +298,8 @@ const tlList = {
 
 function searchBook(abbreviation: string) {
   const livroEncontrado = bookList.books.find(
-    livro => livro.abbreviation.toLowerCase() === abbreviation
-  );
+    livro => livro.abbreviation.toLowerCase() === abbreviation,
+  )
 
   // Retorna o nome do livro se encontrado, ou undefined se não existir
   return livroEncontrado ? livroEncontrado.name : undefined
@@ -355,7 +355,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Reading
     const result = searchTl(
       document.location.href.split('?')[1]!.split('=')[1]!.toUpperCase()
-    );
+    )
     presenceData.smallImageText = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
   }
   else if (document.title === 'Recursos Bíblicos - Bíblia Online') {
@@ -423,7 +423,7 @@ presence.on('UpdateData', async () => {
       .textContent === 'Versículos por Tema'
       && document.querySelector('.page_letter__MtE07')
       && document.querySelector('.page_letter__MtE07')!.firstChild!.textContent
-        === 'A'
+      === 'A'
   ) {
     presenceData.details = 'Lista de Versículos por Tema'
     presenceData.smallImageKey = Assets.Search
@@ -433,7 +433,7 @@ presence.on('UpdateData', async () => {
       .textContent === 'Livros'
   ) {
     presenceData.details = 'Lista de Livros'
-    const result = searchTl(String(href.split('/')[3]));
+    const result = searchTl(String(href.split('/')[3]))
     presenceData.state = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
     presenceData.smallImageKey = Assets.Viewing
   }
