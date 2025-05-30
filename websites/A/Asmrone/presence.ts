@@ -122,67 +122,62 @@ presence.on('UpdateData', async () => {
       const keyword = new URLSearchParams(document.location.search)
         .get('keyword')
         ?.replace(/^(?:circle:|tag:|va:|["\s]+)/, '')
-      if (!privacy) {
-        presenceData.details = keyword
-          ? `Searching "${keyword}...`
-          : 'Viewing Home Page...'
-      }
+
+      presenceData.details = keyword
+        ? `Searching "${keyword}...`
+        : 'Viewing Home Page...'
       break
     }
 
     case 'work': {
       try {
-        if (!privacy) {
-          const title = document
-            .querySelector<HTMLElement>('h1.text-h6.text-weight-regular')
-            ?.textContent
-            ?.trim()
-          presenceData.details = title || 'Viewing Work'
-          presenceData.state = `Viewing ${currentWorkId}...`
+        const title = document
+          .querySelector<HTMLElement>('h1.text-h6.text-weight-regular')
+          ?.textContent
+          ?.trim()
 
-          if (!playingWorkId && (lastWorkId !== currentWorkId || !lastImageKey)) {
-            const newImage = await getImageFromWork(currentWorkId)
-            if (newImage) {
-              presenceData.largeImageKey = newImage
-              lastImageKey = newImage
-              lastWorkId = currentWorkId
-            }
-            else {
-              presenceData.largeImageKey = ActivityAssets.Logo
-            }
-          }
-          else {
-            presenceData.largeImageKey = lastImageKey ?? ActivityAssets.Logo
-          }
+        presenceData.details = title || 'Viewing Work'
+        presenceData.state = `Viewing ${currentWorkId}...`
 
-          if (buttonsEnabled) {
-            presenceData.buttons = [
-              { label: 'View on DLsite', url: `${ActivityAssets.DLSite}/${currentWorkId}.html` },
-              { label: 'Listing on Asmr.one', url: currentPath },
-            ]
+        if (!playingWorkId && (lastWorkId !== currentWorkId || !lastImageKey)) {
+          const newImage = await getImageFromWork(currentWorkId)
+          if (newImage) {
+            presenceData.largeImageKey = newImage
+            lastImageKey = newImage
+            lastWorkId = currentWorkId
           }
+        }
+        else {
+          presenceData.largeImageKey = lastImageKey ?? ActivityAssets.Logo
+        }
+
+        if (buttonsEnabled) {
+          presenceData.buttons = [
+            { label: 'View on DLsite', url: `${ActivityAssets.DLSite}/${currentWorkId}.html` },
+            { label: 'Listing on Asmr.one', url: currentPath },
+          ]
         }
       }
       catch {
-        presenceData.details = privacy ? undefined : 'Viewing Work (Failed)'
+        presenceData.details = 'Viewing Work (Failed)'
       }
       break
     }
 
     case 'favourites':
-      presenceData.details = privacy ? undefined : 'Viewing Favourites...'
+      presenceData.details = 'Viewing Favourites...'
       break
     case 'playlists':
-      presenceData.details = privacy ? undefined : 'Viewing Playlists...'
+      presenceData.details = 'Viewing Playlists...'
       break
     case 'circles':
-      presenceData.details = privacy ? undefined : 'Viewing Circles...'
+      presenceData.details = 'Viewing Circles...'
       break
     case 'tags':
-      presenceData.details = privacy ? undefined : 'Viewing Tags...'
+      presenceData.details = 'Viewing Tags...'
       break
     case 'vas':
-      presenceData.details = privacy ? undefined : 'Viewing Vocalists...'
+      presenceData.details = 'Viewing Vocalists...'
       break
   }
 
