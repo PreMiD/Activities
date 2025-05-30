@@ -285,7 +285,7 @@ const tlList = {
   'tailandês': [{ abbreviation: 'KJVTHAI', name: 'KJV-Thai' }],
   'filipino': [{ abbreviation: 'TLGANGBIBLIA', name: 'Ang Dating Biblia' }],
   'turco': [{ abbreviation: 'BB31', name: 'Türkçe' }],
-  vietnamita: [
+  'vietnamita': [
     { abbreviation: 'VIETNBR', name: 'New Vietnamese Bible' },
     { abbreviation: 'VIE', name: 'Tiếng Việt' },
   ],
@@ -298,7 +298,7 @@ const tlList = {
 
 function searchBook(abbreviation: string) {
   const livroEncontrado = bookList.books.find(
-    (livro) => livro.abbreviation.toLowerCase() === abbreviation
+    livro => livro.abbreviation.toLowerCase() === abbreviation
   )
 
   // Retorna o nome do livro se encontrado, ou undefined se não existir
@@ -312,11 +312,11 @@ function searchTl(abreviacao: string) {
   // Percorre todos os idiomas
   for (const [language, tlName] of Object.entries(tlList)) {
     // Procura a tradução correspondente à abreviação
-    const foundTl = tlName.find((t) => t.abbreviation === upperAbbrev)
+    const foundTl = tlName.find(t => t.abbreviation === upperAbbrev)
 
     if (foundTl) {
       return {
-        language: language,
+        language,
         abbreviation: foundTl.abbreviation,
         name: foundTl.name,
       }
@@ -336,83 +336,99 @@ presence.on('UpdateData', async () => {
   }
 
   if (
-    document.querySelector('.card_container__bUgtE') &&
-    document.querySelector('.card_container__bUgtE')!.firstChild!
+    document.querySelector('.card_container__bUgtE')
+    && document.querySelector('.card_container__bUgtE')!.firstChild!
       .textContent === 'Receba mais de Deus hoje:'
   ) {
     presenceData.details = 'Página Inicial'
     const resultTl = searchTl(String(href.split('/')[3]))
     if (resultTl) {
       presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`
-    } else {
+    }
+    else {
       presenceData.state = `Tradução: ${document.title.split('-')[1]} | ${document.title.split('-')[2]}`
     }
-  } else if (document.title === 'Devocional Diário') {
-    presenceData.details = 'Devocional Diário'
-    presenceData.state = document.getElementsByClassName('subtitle')[0]
-    presenceData.smallImageKey = Assets.Reading
-    const result = searchTl(
-      document.location.href.split('?')[1]!.split('=')[1]!.toUpperCase()
-    )
-    presenceData.smallImageText = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
-  } else if (document.title === 'Recursos Bíblicos - Bíblia Online') {
-    presenceData.details = 'Artigos'
-    presenceData.state =
-      document.querySelectorAll('.category__title')[0]!.textContent
-    presenceData.smallImageKey = Assets.Search
-  } else if (document.title === 'Explicações - Artigos - Bíblia Online') {
-    presenceData.details = 'Explicações'
-    presenceData.smallImageKey = Assets.Search
-  } else if (
+  }
+  else if (document.title === 'Devocional Diário') {
+      presenceData.details = 'Devocional Diário'
+      presenceData.state = document.getElementsByClassName('subtitle')[0]
+      presenceData.smallImageKey = Assets.Reading
+      const result = searchTl(
+        document.location.href.split('?')[1]!.split('=')[1]!.toUpperCase()
+      )
+      presenceData.smallImageText = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
+  }
+  else if (document.title === 'Recursos Bíblicos - Bíblia Online') {
+      presenceData.details = 'Artigos'
+      presenceData.state
+      = document.querySelectorAll('.category__title')[0]!.textContent
+      presenceData.smallImageKey = Assets.Search
+  }
+  else if (document.title === 'Explicações - Artigos - Bíblia Online') {
+      presenceData.details = 'Explicações'
+      presenceData.smallImageKey = Assets.Search
+  }
+  else if (
     document.title === 'Histórias da Bíblia - Artigos - Bíblia Online'
   ) {
     presenceData.details = 'Histórias da Bíblia'
     presenceData.smallImageKey = Assets.Search
-  } else if (
+  }
+  else if (
     document.title === 'Versículos por Temas - Artigos - Bíblia Online'
   ) {
     presenceData.details = 'Versículos por Temas'
     presenceData.smallImageKey = Assets.Search
-  } else if (document.title === 'Liderança Cristã - Artigos - Bíblia Online') {
+  }
+  else if (document.title === 'Liderança Cristã - Artigos - Bíblia Online') {
     presenceData.details = 'Liderança Cristã'
     presenceData.smallImageKey = Assets.Search
-  } else if (
+  }
+  else if (
     document.title === 'Recursos para Compartilhar - Artigos - Bíblia Online'
   ) {
     presenceData.details = 'Recursos para Compartilhar'
     presenceData.smallImageKey = Assets.Search
-  } else if (
+  }
+  else if (
     document.title === 'Ensinamentos de Jesus - Artigos - Bíblia Online'
   ) {
     presenceData.details = 'Ensinamentos de Jesus'
     presenceData.smallImageKey = Assets.Search
-  } else if (
+  }
+  else if (
     document.title === 'Amor e Relacionamento - Artigos - Bíblia Online'
   ) {
     presenceData.details = 'Amor e Relacionamento'
     presenceData.smallImageKey = Assets.Search
-  } else if (document.title === 'Oração e Fé - Artigos - Bíblia Online') {
+  }
+  else if (document.title === 'Oração e Fé - Artigos - Bíblia Online') {
     presenceData.details = 'Oração e Fé'
     presenceData.smallImageKey = Assets.Search
-  } else if (document.title === 'Bíblia Online - Lista de Traduções Bíblicas') {
+  }
+  else if (document.title === 'Bíblia Online - Lista de Traduções Bíblicas') {
     presenceData.details = 'Lista de Traduções Bíblicas'
     presenceData.smallImageKey = Assets.Search
-  } else if (document.title === 'Anuncie no Bíblia Online') {
+  }
+  else if (document.title === 'Anuncie no Bíblia Online') {
     presenceData.details = 'Anuncie no Bíblia Online'
     presenceData.smallImageKey = Assets.Live
-  } else if (document.title === 'Bíblia Online - Termos de Uso e Privacidade') {
+  }
+  else if (document.title === 'Bíblia Online - Termos de Uso e Privacidade') {
     presenceData.details = 'Termos de Uso e Privacidade'
     presenceData.smallImageKey = Assets.Viewing
-  } else if (
+  }
+  else if (
     document.querySelector('.navbar-subheader_title__URgJZ')!.firstChild!
-      .textContent === 'Versículos por Tema' &&
-    document.querySelector('.page_letter__MtE07') &&
-    document.querySelector('.page_letter__MtE07')!.firstChild!.textContent ===
-      'A'
+      .textContent === 'Versículos por Tema'
+    && document.querySelector('.page_letter__MtE07')
+    && document.querySelector('.page_letter__MtE07')!.firstChild!.textContent
+      === 'A'
   ) {
     presenceData.details = 'Lista de Versículos por Tema'
     presenceData.smallImageKey = Assets.Search
-  } else if (
+  }
+  else if (
     document.querySelector('.navbar-subheader_title__URgJZ')!.firstChild!
       .textContent === 'Livros'
   ) {
@@ -420,7 +436,8 @@ presence.on('UpdateData', async () => {
     const result = searchTl(String(href.split('/')[3]))
     presenceData.state = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
     presenceData.smallImageKey = Assets.Viewing
-  } else if (
+  }
+  else if (
     document.querySelector('.navbar-subheader_title__URgJZ')!.firstChild!
       .textContent === 'Versículos por Tema' &&
     !document.querySelector('.page_letter__MtE07')
@@ -429,7 +446,8 @@ presence.on('UpdateData', async () => {
     const result = searchTl(document.title.split('-')[2]!.trim())
     presenceData.state = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
     presenceData.smallImageKey = Assets.Reading
-  } else if (pathname.includes('/a/')) {
+  }
+  else if (pathname.includes('/a/')) {
     presenceData.details = 'Estudo Bíblico'
     presenceData.state = document.querySelector(
       '.m_f678d540.mantine-Breadcrumbs-breadcrumb.active'
@@ -459,12 +477,14 @@ presence.on('UpdateData', async () => {
     const resultTl = searchTl(document.title.split('-')[2]!.trim())
     presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`
     presenceData.smallImageKey = Assets.Reading
-  } else if (href.split('/').length === 7 && resultBk) {
+  }
+  else if (href.split('/').length === 7 && resultBk) {
     presenceData.details = `Lendo ${resultBk} ${chap}:${verse}`
     const resultTl = searchTl(document.title.split('-')[2]!.trim())
     presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`
     presenceData.smallImageKey = Assets.Reading
-  } else if (resultBk) {
+  }
+  else if (resultBk) {
     const resultTl = searchTl(document.title.split('-')[2]!.trim())
     presenceData.details = `Vendo Capítulos de ${resultBk}`
     presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`
