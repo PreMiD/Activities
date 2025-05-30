@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "784546644766621746",
+    "name": "ntn_ss"
+  },
+  "service": "Bíblia On-line",
+  "description": {
+    "en": "Taking the word of God into the daily lives and hearts of people in various nations.",
+    "pt-br": "Levando a palavra de Deus para o dia a dia e o coração de pessoas em diversas nações."
+  },
+  "url": "www.bibliaonline.com.br",
+  "version": "1.0.0",
+  "logo": "https://www.bibliaonline.com.br/favicon-512.png",
+  "thumbnail": "https://www.bibliaonline.com.br/images/recursos-biblicos/estudos-biblicos.png",
+  "color": "#ee5350",
+  "category": "other",
+  "tags": [
+    "bible",
+    "reading",
+    "portuguese"
+  ]
+}
