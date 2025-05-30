@@ -53,7 +53,6 @@ const bookList = {
     { name: 'Zacarias', abbreviation: 'zc' },
     { name: 'Malaquias', abbreviation: 'ml' },
 
-    // Novo Testamento
     { name: 'Mateus', abbreviation: 'mt' },
     { name: 'Marcos', abbreviation: 'mc' },
     { name: 'Lucas', abbreviation: 'lc' },
@@ -301,17 +300,13 @@ function searchBook(abbreviation: string) {
     livro => livro.abbreviation.toLowerCase() === abbreviation,
   )
 
-  // Retorna o nome do livro se encontrado, ou undefined se não existir
   return livroEncontrado ? livroEncontrado.name : undefined
 }
 
 function searchTl(abreviacao: string) {
-  // Converte a abreviação para maiúsculas para comparar com o JSON
   const upperAbbrev = abreviacao.toUpperCase()
 
-  // Percorre todos os idiomas
   for (const [language, tlName] of Object.entries(tlList)) {
-    // Procura a tradução correspondente à abreviação
     const foundTl = tlName.find(t => t.abbreviation === upperAbbrev)
 
     if (foundTl) {
@@ -323,7 +318,6 @@ function searchTl(abreviacao: string) {
     }
   }
 
-  // Se não encontrou, retorna null ou pode lançar um erro
   return null
 }
 
