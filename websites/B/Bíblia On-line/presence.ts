@@ -1,15 +1,15 @@
-import { Assets } from 'premid';
+import { Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1377799920760918096',
-});
-const browsingTimestamp = Math.floor(Date.now() / 1000);
+})
+const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets { // Other default assets can be found at index.d.ts
   Logo = 'https://www.bibliaonline.com.br/favicon-512.png',
 }
 
-const { pathname, href } = document.location;
+const { pathname, href } = document.location
 
 const bookList = {
   books: [
@@ -82,10 +82,10 @@ const bookList = {
     { name: 'Judas', abbreviation: 'jd' },
     { name: 'Apocalipse', abbreviation: 'ap' },
   ],
-};
+}
 
 const tlList = {
-  português: [
+  'português': [
     { abbreviation: 'ACF', name: 'Almeida Corrigida Fiel' },
     { abbreviation: 'AA', name: 'Almeida Revisada Imprensa Bíblica' },
     { abbreviation: 'ARA', name: 'Almeida Revista e Atualizada' },
@@ -100,7 +100,7 @@ const tlList = {
     { abbreviation: 'TB', name: 'Sociedade Bíblica Britânica' },
     { abbreviation: 'VC', name: 'Versão Católica' },
   ],
-  inglês: [
+  'inglês': [
     { abbreviation: 'ACV', name: 'A Conservative Version' },
     { abbreviation: 'AKJV', name: 'American King James Version' },
     {
@@ -150,11 +150,11 @@ const tlList = {
     { abbreviation: 'WMBBE', name: 'World Messianic Bible British Edition' },
     { abbreviation: 'YLT', name: 'YLT' },
   ],
-  espanhol: [
+  'espanhol': [
     { abbreviation: 'SEV', name: 'Las Sagradas Escrituras' },
     { abbreviation: 'RV', name: 'Reina Valera' },
   ],
-  francês: [
+  'francês': [
     { abbreviation: 'BGNT1669', name: 'Bible de Genève de 1669' },
     { abbreviation: 'BM1844', name: 'Bible Martin 1844' },
     { abbreviation: 'FREPGR', name: 'Bible Perret-Gentil et Rilliet' },
@@ -173,7 +173,7 @@ const tlList = {
     { abbreviation: 'MARTIN', name: 'Martin' },
     { abbreviation: 'OSTERVALD', name: 'Ostervald' },
   ],
-  alemão: [
+  'alemão': [
     { abbreviation: 'AMNT', name: 'Abraham Meister NT' },
     { abbreviation: 'ALBRECHT1926', name: 'Albrecht Bibel 1926' },
     { abbreviation: 'ALMNT', name: 'Alemannische Bibel NT' },
@@ -200,7 +200,7 @@ const tlList = {
     { abbreviation: 'TEXTBIBELAT', name: 'Textbibel' },
     { abbreviation: 'VLX3', name: 'Volxbibel 3.0' },
   ],
-  hebraico: [
+  'hebraico': [
     { abbreviation: 'ALEP', name: 'Aleppo Codex' },
     { abbreviation: 'BHS', name: 'Biblia hebraica' },
     { abbreviation: 'HEBM', name: 'Modern Hebrew Bible' },
@@ -210,121 +210,121 @@ const tlList = {
     },
     { abbreviation: 'WLC', name: 'Westminster Leningrad Codex' },
   ],
-  grego: [
+  'grego': [
     { abbreviation: 'GREEK', name: 'Modern Greek' },
     { abbreviation: 'RECEPTUS', name: 'Textus Receptus' },
   ],
-  lituano: [{ abbreviation: 'LT', name: 'Lithuanian' }],
-  africâner: [{ abbreviation: 'AFR3353', name: '1933/1953 Afrikaans Bybel' }],
-  árabe: [{ abbreviation: 'ARASVD', name: 'Smith Van Dyke Arabic Bible' }],
-  búlgaro: [
+  'lituano': [{ abbreviation: 'LT', name: 'Lithuanian' }],
+  'africâner': [{ abbreviation: 'AFR3353', name: '1933/1953 Afrikaans Bybel' }],
+  'árabe': [{ abbreviation: 'ARASVD', name: 'Smith Van Dyke Arabic Bible' }],
+  'búlgaro': [
     { abbreviation: 'BULCARIGRADNT', name: 'Tsarigrad Edition' },
     { abbreviation: 'BULVEREN', name: 'Veren\'s Contemporary Bible' },
   ],
-  chamorro: [
+  'chamorro': [
     { abbreviation: 'CHAMORRO', name: 'Chamorro: Y Santa Biblia (1908)' },
   ],
-  tcheco: [
+  'tcheco': [
     { abbreviation: 'CZBKR', name: 'Bible Kralicka' },
     { abbreviation: 'BZECEP', name: 'Ekumenicky Cesky Preklad' },
   ],
-  esperanto: [{ abbreviation: 'ESPERANTO', name: 'Esperanto' }],
-  estoniano: [{ abbreviation: 'ESTONIAN', name: 'Estonian' }],
-  basco: [{ abbreviation: 'BASQ1571', name: 'Basque(Navarro-Labourdin)NT' }],
-  finlandês: [
+  'esperanto': [{ abbreviation: 'ESPERANTO', name: 'Esperanto' }],
+  'estoniano': [{ abbreviation: 'ESTONIAN', name: 'Estonian' }],
+  'basco': [{ abbreviation: 'BASQ1571', name: 'Basque(Navarro-Labourdin)NT' }],
+  'finlandês': [
     { abbreviation: 'PR-1938', name: 'Pyhä Raamattu' },
     { abbreviation: 'PR', name: 'Pyhä Raamattu' },
   ],
   'gaélico escocês': [
     { abbreviation: 'GLA2', name: 'Gaelic Scripture (Manx Gaelic)' },
   ],
-  haitiano: [{ abbreviation: 'HAT', name: 'Haitian Creole Version' }],
-  húngaro: [
+  'haitiano': [{ abbreviation: 'HAT', name: 'Haitian Creole Version' }],
+  'húngaro': [
     { abbreviation: 'HUN', name: 'Hungarian Version' },
     { abbreviation: 'KAROLI', name: 'Károli' },
     { abbreviation: 'HUNUJ', name: 'Magyar Újfordítású' },
   ],
-  italiano: [
+  'italiano': [
     { abbreviation: 'ITADIO', name: 'Giovanni Diodati Bibbia' },
     { abbreviation: 'ITALIAN1', name: 'Italian Version' },
     { abbreviation: 'LND-1991', name: 'La Nuova Diodati 1991' },
     { abbreviation: 'IRV', name: 'Riveduta' },
   ],
-  coreano: [{ abbreviation: 'KOR', name: 'Korean Version' }],
-  latim: [
+  'coreano': [{ abbreviation: 'KOR', name: 'Korean Version' }],
+  'latim': [
     { abbreviation: 'VULGATA', name: 'Biblia Sacra Vulgata' },
     { abbreviation: 'CLVUL', name: 'Clementine Vulgate' },
     { abbreviation: 'NVLA', name: 'Nova Vulgata' },
   ],
-  letão: [{ abbreviation: 'LATV', name: 'Lativian Version' }],
-  maori: [{ abbreviation: 'MAO', name: 'Maori Version' }],
-  birmanês: [{ abbreviation: 'JUDSON', name: 'Judson - Myanmar/Burmse' }],
-  holandês: [{ abbreviation: 'DUTCH', name: 'Dutch' }],
-  norueguês: [
+  'letão': [{ abbreviation: 'LATV', name: 'Lativian Version' }],
+  'maori': [{ abbreviation: 'MAO', name: 'Maori Version' }],
+  'birmanês': [{ abbreviation: 'JUDSON', name: 'Judson - Myanmar/Burmse' }],
+  'holandês': [{ abbreviation: 'DUTCH', name: 'Dutch' }],
+  'norueguês': [
     { abbreviation: 'DNB', name: 'Det Norsk Bibelselskap' },
     { abbreviation: 'NOR', name: 'Norwegian Version' },
     { abbreviation: 'NORSMB', name: 'Studentmållagsbibelen frå 1921' },
   ],
-  polonês: [{ abbreviation: 'POLAND', name: 'Polska Biblia' }],
-  romeno: [
+  'polonês': [{ abbreviation: 'POLAND', name: 'Polska Biblia' }],
+  'romeno': [
     { abbreviation: 'CORNILESCU', name: 'Cornilescu' },
     { abbreviation: 'RU', name: 'Rumanian Version' },
   ],
-  russo: [
+  'russo': [
     { abbreviation: 'RUSVZH', name: 'Russian New Testament Strongs' },
     { abbreviation: 'RUSSUB', name: 'Russian Version' },
     { abbreviation: 'UKRUB', name: 'Ukrainian Version' },
     { abbreviation: 'SYNODAL', name: 'Синодальный перевод (Synodal)' },
   ],
-  albanês: [{ abbreviation: 'ALB1', name: 'Albanian Version' }],
-  sueco: [
+  'albanês': [{ abbreviation: 'ALB1', name: 'Albanian Version' }],
+  'sueco': [
     { abbreviation: 'SWEFOLK1998', name: 'Svenska Folkbibeln (1998)' },
     { abbreviation: 'SVD', name: 'Swedish 1917 Version' },
   ],
-  suaíli: [{ abbreviation: 'SWA', name: 'Swahili NT' }],
-  tailandês: [{ abbreviation: 'KJVTHAI', name: 'KJV-Thai' }],
-  filipino: [{ abbreviation: 'TLGANGBIBLIA', name: 'Ang Dating Biblia' }],
-  turco: [{ abbreviation: 'BB31', name: 'Türkçe' }],
+  'suaíli': [{ abbreviation: 'SWA', name: 'Swahili NT' }],
+  'tailandês': [{ abbreviation: 'KJVTHAI', name: 'KJV-Thai' }],
+  'filipino': [{ abbreviation: 'TLGANGBIBLIA', name: 'Ang Dating Biblia' }],
+  'turco': [{ abbreviation: 'BB31', name: 'Türkçe' }],
   vietnamita: [
     { abbreviation: 'VIETNBR', name: 'New Vietnamese Bible' },
     { abbreviation: 'VIE', name: 'Tiếng Việt' },
   ],
-  chinês: [
+  'chinês': [
     { abbreviation: 'CUV', name: 'Chinese Union Version' },
     { abbreviation: 'CUV-S', name: 'Chinese Union Version Simplified' },
     { abbreviation: 'CVS', name: 'New Chinese Version Simplified' },
   ],
-};
+}
 
 function searchBook(abbreviation: string) {
   const livroEncontrado = bookList.books.find(
     (livro) => livro.abbreviation.toLowerCase() === abbreviation
-  );
+  )
 
   // Retorna o nome do livro se encontrado, ou undefined se não existir
-  return livroEncontrado ? livroEncontrado.name : undefined;
+  return livroEncontrado ? livroEncontrado.name : undefined
 }
 
 function searchTl(abreviacao: string) {
   // Converte a abreviação para maiúsculas para comparar com o JSON
-  const upperAbbrev = abreviacao.toUpperCase();
+  const upperAbbrev = abreviacao.toUpperCase()
 
   // Percorre todos os idiomas
   for (const [language, tlName] of Object.entries(tlList)) {
     // Procura a tradução correspondente à abreviação
-    const foundTl = tlName.find((t) => t.abbreviation === upperAbbrev);
+    const foundTl = tlName.find((t) => t.abbreviation === upperAbbrev)
 
     if (foundTl) {
       return {
         language: language,
         abbreviation: foundTl.abbreviation,
         name: foundTl.name,
-      };
+      }
     }
   }
 
   // Se não encontrou, retorna null ou pode lançar um erro
-  return null;
+  return null
 }
 
 presence.on('UpdateData', async () => {
@@ -333,76 +333,76 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
     smallImageKey: Assets.Reading,
     smallImageText: 'VIVA CRISTO REI',
-  };
+  }
 
   if (
     document.querySelector('.card_container__bUgtE') &&
     document.querySelector('.card_container__bUgtE')!.firstChild!
       .textContent === 'Receba mais de Deus hoje:'
   ) {
-    presenceData.details = 'Página Inicial';
-    const resultTl = searchTl(String(href.split('/')[3]));
+    presenceData.details = 'Página Inicial'
+    const resultTl = searchTl(String(href.split('/')[3]))
     if (resultTl) {
-      presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`;
+      presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`
     } else {
-      presenceData.state = `Tradução: ${document.title.split('-')[1]} | ${document.title.split('-')[2]}`;
+      presenceData.state = `Tradução: ${document.title.split('-')[1]} | ${document.title.split('-')[2]}`
     }
   } else if (document.title === 'Devocional Diário') {
-    presenceData.details = 'Devocional Diário';
-    presenceData.state = document.getElementsByClassName('subtitle')[0];
-    presenceData.smallImageKey = Assets.Reading;
+    presenceData.details = 'Devocional Diário'
+    presenceData.state = document.getElementsByClassName('subtitle')[0]
+    presenceData.smallImageKey = Assets.Reading
     const result = searchTl(
       document.location.href.split('?')[1]!.split('=')[1]!.toUpperCase()
-    );
-    presenceData.smallImageText = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`;
+    )
+    presenceData.smallImageText = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
   } else if (document.title === 'Recursos Bíblicos - Bíblia Online') {
-    presenceData.details = 'Artigos';
+    presenceData.details = 'Artigos'
     presenceData.state =
-      document.querySelectorAll('.category__title')[0]!.textContent;
-    presenceData.smallImageKey = Assets.Search;
+      document.querySelectorAll('.category__title')[0]!.textContent
+    presenceData.smallImageKey = Assets.Search
   } else if (document.title === 'Explicações - Artigos - Bíblia Online') {
-    presenceData.details = 'Explicações';
-    presenceData.smallImageKey = Assets.Search;
+    presenceData.details = 'Explicações'
+    presenceData.smallImageKey = Assets.Search
   } else if (
     document.title === 'Histórias da Bíblia - Artigos - Bíblia Online'
   ) {
-    presenceData.details = 'Histórias da Bíblia';
-    presenceData.smallImageKey = Assets.Search;
+    presenceData.details = 'Histórias da Bíblia'
+    presenceData.smallImageKey = Assets.Search
   } else if (
     document.title === 'Versículos por Temas - Artigos - Bíblia Online'
   ) {
-    presenceData.details = 'Versículos por Temas';
-    presenceData.smallImageKey = Assets.Search;
+    presenceData.details = 'Versículos por Temas'
+    presenceData.smallImageKey = Assets.Search
   } else if (document.title === 'Liderança Cristã - Artigos - Bíblia Online') {
-    presenceData.details = 'Liderança Cristã';
-    presenceData.smallImageKey = Assets.Search;
+    presenceData.details = 'Liderança Cristã'
+    presenceData.smallImageKey = Assets.Search
   } else if (
     document.title === 'Recursos para Compartilhar - Artigos - Bíblia Online'
   ) {
-    presenceData.details = 'Recursos para Compartilhar';
-    presenceData.smallImageKey = Assets.Search;
+    presenceData.details = 'Recursos para Compartilhar'
+    presenceData.smallImageKey = Assets.Search
   } else if (
     document.title === 'Ensinamentos de Jesus - Artigos - Bíblia Online'
   ) {
-    presenceData.details = 'Ensinamentos de Jesus';
-    presenceData.smallImageKey = Assets.Search;
+    presenceData.details = 'Ensinamentos de Jesus'
+    presenceData.smallImageKey = Assets.Search
   } else if (
     document.title === 'Amor e Relacionamento - Artigos - Bíblia Online'
   ) {
-    presenceData.details = 'Amor e Relacionamento';
-    presenceData.smallImageKey = Assets.Search;
+    presenceData.details = 'Amor e Relacionamento'
+    presenceData.smallImageKey = Assets.Search
   } else if (document.title === 'Oração e Fé - Artigos - Bíblia Online') {
-    presenceData.details = 'Oração e Fé';
-    presenceData.smallImageKey = Assets.Search;
+    presenceData.details = 'Oração e Fé'
+    presenceData.smallImageKey = Assets.Search
   } else if (document.title === 'Bíblia Online - Lista de Traduções Bíblicas') {
-    presenceData.details = 'Lista de Traduções Bíblicas';
-    presenceData.smallImageKey = Assets.Search;
+    presenceData.details = 'Lista de Traduções Bíblicas'
+    presenceData.smallImageKey = Assets.Search
   } else if (document.title === 'Anuncie no Bíblia Online') {
-    presenceData.details = 'Anuncie no Bíblia Online';
-    presenceData.smallImageKey = Assets.Live;
+    presenceData.details = 'Anuncie no Bíblia Online'
+    presenceData.smallImageKey = Assets.Live
   } else if (document.title === 'Bíblia Online - Termos de Uso e Privacidade') {
-    presenceData.details = 'Termos de Uso e Privacidade';
-    presenceData.smallImageKey = Assets.Viewing;
+    presenceData.details = 'Termos de Uso e Privacidade'
+    presenceData.smallImageKey = Assets.Viewing
   } else if (
     document.querySelector('.navbar-subheader_title__URgJZ')!.firstChild!
       .textContent === 'Versículos por Tema' &&
@@ -410,66 +410,66 @@ presence.on('UpdateData', async () => {
     document.querySelector('.page_letter__MtE07')!.firstChild!.textContent ===
       'A'
   ) {
-    presenceData.details = 'Lista de Versículos por Tema';
-    presenceData.smallImageKey = Assets.Search;
+    presenceData.details = 'Lista de Versículos por Tema'
+    presenceData.smallImageKey = Assets.Search
   } else if (
     document.querySelector('.navbar-subheader_title__URgJZ')!.firstChild!
       .textContent === 'Livros'
   ) {
-    presenceData.details = 'Lista de Livros';
-    const result = searchTl(String(href.split('/')[3]));
-    presenceData.state = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`;
-    presenceData.smallImageKey = Assets.Viewing;
+    presenceData.details = 'Lista de Livros'
+    const result = searchTl(String(href.split('/')[3]))
+    presenceData.state = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
+    presenceData.smallImageKey = Assets.Viewing
   } else if (
     document.querySelector('.navbar-subheader_title__URgJZ')!.firstChild!
       .textContent === 'Versículos por Tema' &&
     !document.querySelector('.page_letter__MtE07')
   ) {
-    presenceData.details = `Lendo Versículos sobre ${document.querySelector('.hero_hero__dVc7g')!.textContent}`;
-    const result = searchTl(document.title.split('-')[2]!.trim());
-    presenceData.state = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`;
-    presenceData.smallImageKey = Assets.Reading;
+    presenceData.details = `Lendo Versículos sobre ${document.querySelector('.hero_hero__dVc7g')!.textContent}`
+    const result = searchTl(document.title.split('-')[2]!.trim())
+    presenceData.state = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
+    presenceData.smallImageKey = Assets.Reading
   } else if (pathname.includes('/a/')) {
-    presenceData.details = 'Estudo Bíblico';
+    presenceData.details = 'Estudo Bíblico'
     presenceData.state = document.querySelector(
       '.m_f678d540.mantine-Breadcrumbs-breadcrumb.active'
-    )!.textContent;
-    presenceData.smallImageKey = Assets.Reading;
+    )!.textContent
+    presenceData.smallImageKey = Assets.Reading
     const result = searchTl(
       document.location.href.split('?')[1]!.split('=')[1]!.toUpperCase()
-    );
-    presenceData.smallImageText = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`;
+    )
+    presenceData.smallImageText = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
   }
 
   if (href.includes('busca?q=')) {
-    presenceData.details = `Buscando por '${href.split('=')[1]}'`;
+    presenceData.details = `Buscando por '${href.split('=')[1]}'`
 
-    const resultTl = searchTl(String(href.split('/')[3]));
-    presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`;
+    const resultTl = searchTl(String(href.split('/')[3]))
+    presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`
 
-    presenceData.smallImageKey = Assets.Search;
+    presenceData.smallImageKey = Assets.Search
   }
 
-  const resultBk = searchBook(String(href.split('/')[4]));
-  const chap = href.split('/')[5];
-  const verse = href.split('/')[6];
+  const resultBk = searchBook(String(href.split('/')[4]))
+  const chap = href.split('/')[5]
+  const verse = href.split('/')[6]
 
   if (href.split('/').length === 6 && resultBk) {
-    presenceData.details = `Lendo ${resultBk} ${chap}`;
-    const resultTl = searchTl(document.title.split('-')[2]!.trim());
-    presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`;
-    presenceData.smallImageKey = Assets.Reading;
+    presenceData.details = `Lendo ${resultBk} ${chap}`
+    const resultTl = searchTl(document.title.split('-')[2]!.trim())
+    presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`
+    presenceData.smallImageKey = Assets.Reading
   } else if (href.split('/').length === 7 && resultBk) {
-    presenceData.details = `Lendo ${resultBk} ${chap}:${verse}`;
-    const resultTl = searchTl(document.title.split('-')[2]!.trim());
-    presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`;
-    presenceData.smallImageKey = Assets.Reading;
+    presenceData.details = `Lendo ${resultBk} ${chap}:${verse}`
+    const resultTl = searchTl(document.title.split('-')[2]!.trim())
+    presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`
+    presenceData.smallImageKey = Assets.Reading
   } else if (resultBk) {
-    const resultTl = searchTl(document.title.split('-')[2]!.trim());
-    presenceData.details = `Vendo Capítulos de ${resultBk}`;
-    presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`;
-    presenceData.smallImageKey = Assets.Viewing;
+    const resultTl = searchTl(document.title.split('-')[2]!.trim())
+    presenceData.details = `Vendo Capítulos de ${resultBk}`
+    presenceData.state = `Tradução: ${resultTl!.abbreviation} | ${resultTl!.name} (${resultTl!.language.charAt(0).toUpperCase()}${resultTl!.language.slice(1)})`
+    presenceData.smallImageKey = Assets.Viewing
   }
 
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
