@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Anant",
+    "id": "6629851641579044874"
+  },
+  "service": "TMBW",
+  "altnames": [
+    "This Might Be A Wiki"
+  ],
+  "description": {
+    "en": "This Might Be A Wiki is an ever-growing reference for all things They Might Be Giants."
+  },
+  "url": [
+    "tmbw.net",
+    "www.tmbw.net"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TMBW/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TMBW/assets/thumbnail.png",
+  "color": "#d69e2e",
+  "category": "other",
+  "tags": [
+    "updates",
+    "wiki",
+    "news",
+    "articles",
+    "country"
+  ]
+}
