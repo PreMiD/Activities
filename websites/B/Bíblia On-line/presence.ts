@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets { // Other default assets can be found at index.d.ts
+enum ActivityAssets {
   Logo = 'https://www.bibliaonline.com.br/favicon-512.png',
 }
 
@@ -336,8 +336,8 @@ presence.on('UpdateData', async () => {
   }
 
   if (
-    document.querySelector('.card_container__bUgtE')
-    && document.querySelector('.card_container__bUgtE')!.firstChild!
+    document.querySelector('[class*="card_container"]')
+    && document.querySelector('[class*="card_container"]')!.firstChild!
       .textContent === 'Receba mais de Deus hoje:'
   ) {
     presenceData.details = 'Página Inicial'
@@ -419,17 +419,17 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Viewing
   }
   else if (
-    document.querySelector('.navbar-subheader_title__URgJZ')!.firstChild!
+    document.querySelector('[class*="navbar-subheader_title"]')!.firstChild!
       .textContent === 'Versículos por Tema'
-      && document.querySelector('.page_letter__MtE07')
-      && document.querySelector('.page_letter__MtE07')!.firstChild!.textContent
+      && document.querySelector('[class*="page_letter"]')
+      && document.querySelector('[class*="page_letter"]')!.firstChild!.textContent
       === 'A'
   ) {
     presenceData.details = 'Lista de Versículos por Tema'
     presenceData.smallImageKey = Assets.Search
   }
   else if (
-    document.querySelector('.navbar-subheader_title__URgJZ')!.firstChild!
+    document.querySelector('[class*="navbar-subheader_title"]')!.firstChild!
       .textContent === 'Livros'
   ) {
     presenceData.details = 'Lista de Livros'
@@ -438,11 +438,11 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Viewing
   }
   else if (
-    document.querySelector('.navbar-subheader_title__URgJZ')!.firstChild!
+    document.querySelector('[class*="navbar-subheader_title"]')!.firstChild!
       .textContent === 'Versículos por Tema'
-      && !document.querySelector('.page_letter__MtE07')
+      && !document.querySelector('[class*="page_letter"]')
   ) {
-    presenceData.details = `Lendo Versículos sobre ${document.querySelector('.hero_hero__dVc7g')!.textContent}`
+    presenceData.details = `Lendo Versículos sobre ${document.querySelector('[class*="hero_hero"]')!.textContent}`
     const result = searchTl(document.title.split('-')[2]!.trim())
     presenceData.state = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
     presenceData.smallImageKey = Assets.Reading
