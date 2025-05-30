@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "878830839822176287",
+    "name": "yuusukealmal"
+  },
+  "service": "Asmrone",
+  "description": {
+    "en": "An online ASMR listening platform with features like favorites and downloads.",
+    "zh": "在线听 ASMR 的网站，包含收藏、下载等功能",
+    "zh-tw": "線上聽 ASMR 的網站，包含收藏、下載等功能。"
+  },
+  "url": "asmr.one",
+  "version": "1.0.0",
+  "logo": "https://upload.cc/i1/2025/05/25/AQ5pLl.jpg",
+  "thumbnail": "https://upload.cc/i1/2025/05/25/0mki4B.png",
+  "color": "#2380cc",
+  "category": "music",
+  "tags": [
+    "asmr",
+    "audio",
+    "media"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
