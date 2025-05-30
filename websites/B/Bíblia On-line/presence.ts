@@ -350,23 +350,23 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (document.title === 'Devocional Diário') {
-      presenceData.details = 'Devocional Diário'
-      presenceData.state = document.getElementsByClassName('subtitle')[0]
-      presenceData.smallImageKey = Assets.Reading
-      const result = searchTl(
-        document.location.href.split('?')[1]!.split('=')[1]!.toUpperCase()
-      )
-      presenceData.smallImageText = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
+    presenceData.details = 'Devocional Diário'
+    presenceData.state = document.getElementsByClassName('subtitle')[0]
+    presenceData.smallImageKey = Assets.Reading
+    const result = searchTl(
+      document.location.href.split('?')[1]!.split('=')[1]!.toUpperCase()
+    )
+    presenceData.smallImageText = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
   }
   else if (document.title === 'Recursos Bíblicos - Bíblia Online') {
-      presenceData.details = 'Artigos'
-      presenceData.state
-      = document.querySelectorAll('.category__title')[0]!.textContent
-      presenceData.smallImageKey = Assets.Search
+    presenceData.details = 'Artigos'
+    presenceData.state
+    = document.querySelectorAll('.category__title')[0]!.textContent
+    presenceData.smallImageKey = Assets.Search
   }
   else if (document.title === 'Explicações - Artigos - Bíblia Online') {
-      presenceData.details = 'Explicações'
-      presenceData.smallImageKey = Assets.Search
+    presenceData.details = 'Explicações'
+    presenceData.smallImageKey = Assets.Search
   }
   else if (
     document.title === 'Histórias da Bíblia - Artigos - Bíblia Online'
@@ -421,8 +421,8 @@ presence.on('UpdateData', async () => {
   else if (
     document.querySelector('.navbar-subheader_title__URgJZ')!.firstChild!
       .textContent === 'Versículos por Tema'
-    && document.querySelector('.page_letter__MtE07')
-    && document.querySelector('.page_letter__MtE07')!.firstChild!.textContent
+      && document.querySelector('.page_letter__MtE07')
+      && document.querySelector('.page_letter__MtE07')!.firstChild!.textContent
       === 'A'
   ) {
     presenceData.details = 'Lista de Versículos por Tema'
