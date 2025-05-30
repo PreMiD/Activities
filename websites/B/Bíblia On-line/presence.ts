@@ -354,7 +354,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = document.getElementsByClassName('subtitle')[0]
     presenceData.smallImageKey = Assets.Reading
     const result = searchTl(
-      document.location.href.split('?')[1]!.split('=')[1]!.toUpperCase()
+      document.location.href.split('?')[1]!.split('=')[1]!.toUpperCase(),
     )
     presenceData.smallImageText = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
   }
@@ -439,8 +439,8 @@ presence.on('UpdateData', async () => {
   }
   else if (
     document.querySelector('.navbar-subheader_title__URgJZ')!.firstChild!
-      .textContent === 'Versículos por Tema' &&
-    !document.querySelector('.page_letter__MtE07')
+      .textContent === 'Versículos por Tema'
+      && !document.querySelector('.page_letter__MtE07')
   ) {
     presenceData.details = `Lendo Versículos sobre ${document.querySelector('.hero_hero__dVc7g')!.textContent}`
     const result = searchTl(document.title.split('-')[2]!.trim())
@@ -450,11 +450,11 @@ presence.on('UpdateData', async () => {
   else if (pathname.includes('/a/')) {
     presenceData.details = 'Estudo Bíblico'
     presenceData.state = document.querySelector(
-      '.m_f678d540.mantine-Breadcrumbs-breadcrumb.active'
+      '.m_f678d540.mantine-Breadcrumbs-breadcrumb.active',
     )!.textContent
     presenceData.smallImageKey = Assets.Reading
     const result = searchTl(
-      document.location.href.split('?')[1]!.split('=')[1]!.toUpperCase()
+      document.location.href.split('?')[1]!.split('=')[1]!.toUpperCase(),
     )
     presenceData.smallImageText = `Tradução: ${result!.abbreviation} | ${result!.name} (${result!.language.charAt(0).toUpperCase()}${result!.language.slice(1)})`
   }
