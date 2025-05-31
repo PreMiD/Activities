@@ -5,9 +5,9 @@
 
 This repository contains the source code of all Activities that are available in [PreMiD's Store](https://premid.app/store). Activities enhance your Discord presence by showing what you're doing on various websites.
 
-<div align="left">
+<div align="center">
     <a target="_blank" href="https://discord.premid.app/" title="Join our Discord!">
-        <img  src="https://discordapp.com/api/guilds/493130730549805057/widget.png?style=banner2" height="76px" draggable="false" alt="Join our Discord!">
+        <img src="https://img.shields.io/discord/493130730549805057?label=Discord&labelColor=7289da&color=ddd&logo=premid&logoColor=fff&logoSize=auto&style=for-the-badge" alt="Join our Discord!">
     </a>
 </div>
 
