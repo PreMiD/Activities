@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "629851641579044874",
+    "name": "Anant"
+  },
+  "service": "Miruro",
+  "description": {
+    "en": "Explore official anime domains, streaming sources, and community resources on Miruro."
+  },
+  "url": "www.miruro.com",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/7xm4GrPh/icon-512x512-tr-512x512.png",
+  "thumbnail": "https://i.ibb.co/TMgNWjfm/Screenshot-2025-05-29-215111.png",
+  "color": "#42a5f5",
+  "category": "anime",
+  "tags": ["anime", "streaming", "directory", "community"]
+}
