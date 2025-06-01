@@ -16,7 +16,11 @@
     "ru": "Смотрите фильмы, телешоу и аниме в высоком разрешении онлайн. Откройте для себя лучшие развлекательные программы на iQIYIs.",
     "zh": "在线观看高清电影、电视节目和动漫。在 iQIYIs 上发现顶级娱乐节目。"
   },
-  "url": "iqiyis.com",
+  "url": [
+    "iqiyis.com",
+    "indielens.org",
+    "tubiii.com"
+  ],
   "version": "1.0.0",
   "logo": "https://iqiyis.com/sites/iqiyis/web-app-manifest-512x512.png",
   "thumbnail": "https://pub-83050fbfffe54dc3a307655bcc4f25a4.r2.dev/free-movies.jpg",
