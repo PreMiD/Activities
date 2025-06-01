@@ -1,64 +1,64 @@
 {
-    "$schema": "https://schemas.premid.app/metadata/1.13",
-    "apiVersion": 1,
-    "author": {
-        "id": "735060742092488744",
-        "name": "justice_wj"
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "735060742092488744",
+    "name": "justice_wj"
+  },
+  "service": "iQIYIs",
+  "description": {
+    "de": "Schau dir Filme, TV-Sendungen und Anime in HD online an. Entdecke erstklassige Unterhaltungsprogramme auf iQIYIs.",
+    "en": "Watch high-definition movies, TV shows, and anime online. Discover top entertainment programs on iQIYIs.",
+    "es": "Mira películas, programas de TV y anime en alta definición en línea. Descubre los mejores programas de entretenimiento en iQIYIs.",
+    "fr": "Regardez des films, des émissions de télévision et des animes en haute définition en ligne. Découvrez les meilleurs programmes de divertissement sur iQIYIs.",
+    "ja": "高画質で映画、テレビ番組、アニメをオンラインで視聴。iQIYIsでトップエンターテインメントを発見。",
+    "pt": "Assista a filmes, programas de TV e animes em alta definição online. Descubra os melhores programas de entretenimento no iQIYIs.",
+    "ru": "Смотрите фильмы, телешоу и аниме в высоком разрешении онлайн. Откройте для себя лучшие развлекательные программы на iQIYIs.",
+    "zh": "在线观看高清电影、电视节目和动漫。在 iQIYIs 上发现顶级娱乐节目。"
+  },
+  "url": "iqiyis.com",
+  "version": "1.0.0",
+  "logo": "https://iqiyis.com/sites/iqiyis/web-app-manifest-512x512.png",
+  "thumbnail": "https://pub-83050fbfffe54dc3a307655bcc4f25a4.r2.dev/free-movies.jpg",
+  "color": "#E40813",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "shows",
+    "anime",
+    "steaming"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
     },
-    "service": "iQIYIs",
-    "description": {
-        "en": "Watch high-definition movies, TV shows, and anime online. Discover top entertainment programs on iQIYIs.",
-        "de": "Schau dir Filme, TV-Sendungen und Anime in HD online an. Entdecke erstklassige Unterhaltungsprogramme auf iQIYIs.",
-        "es": "Mira películas, programas de TV y anime en alta definición en línea. Descubre los mejores programas de entretenimiento en iQIYIs.",
-        "fr": "Regardez des films, des émissions de télévision et des animes en haute définition en ligne. Découvrez les meilleurs programmes de divertissement sur iQIYIs.",
-        "ja": "高画質で映画、テレビ番組、アニメをオンラインで視聴。iQIYIsでトップエンターテインメントを発見。",
-        "pt": "Assista a filmes, programas de TV e animes em alta definição online. Descubra os melhores programas de entretenimento no iQIYIs.",
-        "ru": "Смотрите фильмы, телешоу и аниме в высоком разрешении онлайн. Откройте для себя лучшие развлекательные программы на iQIYIs.",
-        "zh": "在线观看高清电影、电视节目和动漫。在 iQIYIs 上发现顶级娱乐节目。"
+    {
+      "id": "watch",
+      "title": "Play Status",
+      "icon": "fad fa-play",
+      "value": true
     },
-    "url": "iqiyis.com",
-    "version": "1.0.0",
-    "logo": "https://iqiyis.com/sites/iqiyis/web-app-manifest-512x512.png",
-    "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_lvGMDQssgoMaltk_2luN98P6BgLibtb3lCp1OsEb41FoI=s900-c-k-c0x00ffffff-no-rj",
-    "color": "#E40813",
-    "category": "videos",
-    "tags": [
-        "movies",
-        "shows",
-        "anime",
-        "steaming"
-    ],
-    "settings": [
-        {
-            "id": "lang",
-            "multiLanguage": true
-        },
-        {
-            "id": "watch",
-            "title": "Play Status",
-            "icon": "fad fa-play",
-            "value": true
-        },
-        {
-            "id": "timestamp",
-            "title": "Show Timestamp",
-            "icon": "fad fa-stopwatch",
-            "value": true
-        },
-        {
-            "id": "progress",
-            "title": "Show Watch Progress",
-            "icon": "fad fa-bars-progress",
-            "value": true
-        },
-        {
-            "id": "showLabel",
-            "if": {
-                "progress": true
-            },
-            "icon": "fad fa-eye",
-            "title": "Label",
-            "value": true
-        }
-    ]
+    {
+      "id": "timestamp",
+      "title": "Show Timestamp",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "progress",
+      "title": "Show Watch Progress",
+      "icon": "fad fa-bars-progress",
+      "value": true
+    },
+    {
+      "id": "showLabel",
+      "if": {
+        "progress": true
+      },
+      "icon": "fad fa-eye",
+      "title": "Label",
+      "value": true
+    }
+  ]
 }
