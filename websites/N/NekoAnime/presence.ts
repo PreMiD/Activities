@@ -20,6 +20,8 @@ async function videoActive() {
   }
 }
 
+const animePageCache = new Map<string, string>()
+
 async function getAnimeInformation() {
   const animeTitle = document.querySelector('#MediaPage > div > div.head_player > div.player_content > div.episode_info > h2')?.textContent
   const episodeNumber = document.querySelector('#number')?.textContent
@@ -41,13 +43,31 @@ async function getAnimeInformation() {
   }
 
   const urlTitulo = document.querySelector('#MediaPage > div > div.head_player > div.player_content > div.anime_navigation > nav > a:nth-child(3)')?.getAttribute('href')
-  const res = await fetch(`https://nekoanime.mx${urlTitulo}`)
-  const html = await res.text()
-  const parser = new DOMParser()
-  const doc = parser.parseFromString(html, 'text/html')
-  const img = doc.querySelector('#InfoApp > div.anime_cont > div > div.left_cont > div.anim-cover > div > figure > img')?.getAttribute('src')
-  const bannerAnime = img
+  if (!urlTitulo) return { animeTitle, episodeNumber, currentTime, totalTime, videoStatus }
 
+  let html: string
+  if (animePageCache.has(urlTitulo)) {
+    html = animePageCache.get(urlTitulo)!
+  }
+  else {
+    try {
+      const res = await fetch(`https://nekoanime.mx${urlTitulo}`)
+      html = await res.text()
+      animePageCache.set(urlTitulo, html)
+    }
+    catch (e) {
+      console.error('Error fetching anime page:', e)
+      html = ''
+    }
+  }
+
+  let bannerAnime: string | undefined
+  if (html) {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(html, 'text/html')
+    const img = doc.querySelector('#InfoApp > div.anime_cont > div > div.left_cont > div.anim-cover > div > figure > img')?.getAttribute('src')
+    bannerAnime = img || undefined
+  }
   return {
     animeTitle,
     episodeNumber,
