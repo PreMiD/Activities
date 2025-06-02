@@ -34,10 +34,6 @@
   ],
   "settings": [
     {
-      "id": "lang",
-      "multiLanguage": true
-    },
-    {
       "id": "watch",
       "title": "Play Status",
       "icon": "fad fa-play",
