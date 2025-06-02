@@ -43,7 +43,15 @@ async function getAnimeInformation() {
   }
 
   const urlTitulo = document.querySelector('#MediaPage > div > div.head_player > div.player_content > div.anime_navigation > nav > a:nth-child(3)')?.getAttribute('href')
-  if (!urlTitulo) return { animeTitle, episodeNumber, currentTime, totalTime, videoStatus }
+  if (!urlTitulo) {
+    return {
+      animeTitle,
+      episodeNumber,
+      currentTime,
+      totalTime,
+      videoStatus
+    }
+  }
 
   let html: string
   if (animePageCache.has(urlTitulo)) {
