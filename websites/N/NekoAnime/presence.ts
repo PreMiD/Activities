@@ -49,7 +49,7 @@ async function getAnimeInformation() {
       episodeNumber,
       currentTime,
       totalTime,
-      videoStatus
+      videoStatus,
     }
   }
 
