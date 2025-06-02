@@ -15,11 +15,14 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.includes('/dashboard')) {
     presenceData.details = 'Browsing the dashboard'
+    
+    const getProgress = (selector: string) =>
+      document.querySelector(selector)?.textContent?.trim() || 'N/A'
+      
+presenceData.state = `Off: ${getProgress('.red .progress')} `
+  + `Def: ${getProgress('.blue .progress')} `
+  + `Gen: ${getProgress('.green .progress')}`
 
-    presenceData.state = `Off: ${document.querySelector('.red .progress')?.textContent} `
-      + `Def: ${document.querySelector('.blue .progress')?.textContent} `
-      + `Gen: ${document.querySelector('.green .progress')?.textContent}`
-  }
   else if (pathname.includes('/exams')) {
     presenceData.details = 'Browsing the exams'
   }
