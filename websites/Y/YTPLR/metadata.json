@@ -12,8 +12,11 @@
   "description": {
     "en": "Shuffles a YouTube Playlist in random order"
   },
-  "url": "youtube-playlist-randomizer.bitbucket.io",
-  "version": "1.0.9",
+  "url": [
+    "youtube-playlist-randomizer.bitbucket.io",
+    "ytplr.bitbucket.io"
+  ],
+  "version": "1.0.10",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YTPLR/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YTPLR/assets/thumbnail.png",
   "color": "#ff6d70",
@@ -23,7 +26,7 @@
     "media"
   ],
   "iframe": true,
-  "iFrameRegExp": "youtube[-]playlist[-]randomizer[.]bitbucket[.]io",
+  "iFrameRegExp": "youtube[-]playlist[-]randomizer[.]bitbucket[.]io|ytplr[.]bitbucket[.]io",
   "settings": [
     {
       "id": "buttons",

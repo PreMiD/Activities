@@ -3,7 +3,7 @@
   "apiVersion": 1,
   "author": {
     "name": "Anant",
-    "id": "6629851641579044874"
+    "id": "629851641579044874"
   },
   "service": "TMBW",
   "altnames": [
@@ -16,7 +16,7 @@
     "tmbw.net",
     "www.tmbw.net"
   ],
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TMBW/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TMBW/assets/thumbnail.png",
   "color": "#d69e2e",
