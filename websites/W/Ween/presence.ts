@@ -6,7 +6,7 @@ let startTimestamp = Math.floor(Date.now() / 1000)
 let previousPath: string | null = null
 
 const ActivityAssets = {
-  Logo: 'https://i.ibb.co/nMYwMd6t/latest-1504957980-512x512.png',
+  Logo: 'https://cdn.rcd.gg/PreMiD/websites/W/Ween/assets/logo.png',
 }
 
 presence.on('UpdateData', async () => {
