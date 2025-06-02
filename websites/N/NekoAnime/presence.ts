@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia} from 'premid'
 
 const presence = new Presence({
   clientId: '1379070900653260840',
@@ -59,7 +59,7 @@ async function getAnimeInformation() {
 }
 
 presence.on('UpdateData', async () => {
-  const { pathname } = window.location
+  const { pathname } = document.location
 
   if (pathname === '/') {
     const presenceData: PresenceData = {
@@ -128,10 +128,9 @@ presence.on('UpdateData', async () => {
       if (animeData.videoStatus === 'Reproduciendo') {
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = 'Reproduciendo'
-        const videoElement = document.querySelector('video.vjs-tech') as HTMLMediaElement
+        const videoElement = document.querySelector<HTMLVideoElement>('video.vjs-tech')
         if (videoElement && !Number.isNaN(videoElement.duration)) {
-          // eslint-disable-next-line ts/no-deprecated
-          const [startTs, endTs] = presence.getTimestampsfromMedia(videoElement)
+          const [startTs, endTs] = getTimestampsFromMedia(videoElement)
           presenceData.startTimestamp = startTs
           presenceData.endTimestamp = endTs
         }
