@@ -7,7 +7,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
   Logo = 'https://iqiyis.com/sites/iqiyis/web-app-manifest-512x512.png',
-  Thumbnail = 'https://yt3.googleusercontent.com/ytc/AIdro_lvGMDQssgoMaltk_2luN98P6BgLibtb3lCp1OsEb41FoI=s900-c-k-c0x00ffffff-no-rj',
+  Thumbnail = 'https://pub-83050fbfffe54dc3a307655bcc4f25a4.r2.dev/free-movies.jpg',
 }
 
 interface PlayerMeta {
@@ -29,6 +29,7 @@ const barFill = '▰'
 
 let latestPlayerMeta: PlayerMeta | any = {}
 
+// 监听消息
 window.addEventListener('message', (event) => {
   if (event.data.type === 'PREMID_PLAYER_META') {
     latestPlayerMeta = { ...latestPlayerMeta, ...event.data.data }
@@ -54,8 +55,8 @@ presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
   if (pathname.startsWith('/tv') || pathname.startsWith('/movie')) {
     const { type, title, poster, year, runtime, progress, eps_name } = latestPlayerMeta
-    presenceData.largeImageKey = poster || ActivityAssets.Logo
-    presenceData.smallImageKey = Assets.Pause
+    presenceData.largeImageKey = poster || ActivityAssets.Thumbnail
+    presenceData.smallImageKey = ActivityAssets.Logo || Assets.Pause
     presenceData.smallImageText = `watching\`${title}\`in ${document.location.hostname}`
     if (showProgressBar && runtime > 0) {
       if (progress != null && progress > 0) {
