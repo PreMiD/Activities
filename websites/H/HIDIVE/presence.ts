@@ -66,7 +66,7 @@ const TEXTS = {
 
     NAV_PLAYLIST_DETAILS: 'Viendo una película',
     NAV_PLAYLIST_STATE: '¡Revisando su duración!',
-  }
+  },
 } as const
 
 type Lang = keyof typeof TEXTS
@@ -329,7 +329,8 @@ presence.on('UpdateData', async () => {
     if (seasonIdParam && seasonIdParam !== cachedSeason.seasonId) {
       await updateSeasonCache(seasonIdParam)
       cachedSeason.lastVideoId = videoId
-    } else if (!seasonIdParam && videoId && videoId !== cachedSeason.lastVideoId) {
+    }
+    else if (!seasonIdParam && videoId && videoId !== cachedSeason.lastVideoId) {
       cachedSeason = {
         seasonId: '',
         title: '',
@@ -342,7 +343,8 @@ presence.on('UpdateData', async () => {
     if (playlistIdParam && playlistIdParam !== cachedPlaylist.playlistId) {
       await updatePlaylistCache(playlistIdParam)
       cachedPlaylist.lastVideoId = videoId
-    } else if (!playlistIdParam && videoId && videoId !== cachedPlaylist.lastVideoId) {
+    }
+    else if (!playlistIdParam && videoId && videoId !== cachedPlaylist.lastVideoId) {
       cachedPlaylist = {
         playlistId: '',
         title: '',
@@ -370,7 +372,7 @@ presence.on('UpdateData', async () => {
       smallImageKey: isPlaying ? Assets.Play : Assets.Pause,
       smallImageText: isPlaying ? 'Reproduciendo' : 'Pausado',
       type: ActivityType.Watching,
-    };
+    }
 
     if (isPlaying) {
       const videoEl = document.querySelector<HTMLVideoElement>('#dice-player > video')
@@ -381,6 +383,5 @@ presence.on('UpdateData', async () => {
       }
     }
     presence.setActivity(presenceData)
-    return
   }
 })
