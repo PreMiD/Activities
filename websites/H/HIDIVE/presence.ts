@@ -12,163 +12,163 @@ enum ActivityAssets {
 
 const TEXTS = {
   en: {
-    NAV_ROOT_DETAILS:   'Browsing',
-    NAV_ROOT_STATE:     'Checking extras',
+    NAV_ROOT_DETAILS: 'Browsing',
+    NAV_ROOT_STATE: 'Checking extras',
 
-    NAV_HOME_DETAILS:   'Browsing',
-    NAV_HOME_STATE:     'Thinking what to watch!',
+    NAV_HOME_DETAILS: 'Browsing',
+    NAV_HOME_STATE: 'Thinking what to watch!',
 
     NAV_BROWSE_DETAILS: 'Exploring',
-    NAV_BROWSE_STATE:   'New anime!',
+    NAV_BROWSE_STATE: 'New anime!',
 
     NAV_SEARCH_DETAILS: 'Searching',
-    NAV_SEARCH_STATE:   'An anime!',
+    NAV_SEARCH_STATE: 'An anime!',
 
     NAV_SECTION_DETAILS: 'Viewing sections',
-    NAV_SECTION_STATE:   'Checking genres!',
+    NAV_SECTION_STATE: 'Checking genres!',
 
     NAV_WATCHLIST_DETAILS: 'Browsing lists',
-    NAV_WATCHLIST_STATE:   'Checking my lists!',
+    NAV_WATCHLIST_STATE: 'Checking my lists!',
 
     NAV_RELEASES_DETAILS: 'Checking releases',
-    NAV_RELEASES_STATE:   'New premieres!',
+    NAV_RELEASES_STATE: 'New premieres!',
 
-    NAV_SEASON_DETAILS:  'Watching a show',
-    NAV_SEASON_STATE:    'Checking the season!',
+    NAV_SEASON_DETAILS: 'Watching a show',
+    NAV_SEASON_STATE: 'Checking the season!',
 
     NAV_PLAYLIST_DETAILS: 'Watching a movie',
-    NAV_PLAYLIST_STATE:   'Checking its duration!'
+    NAV_PLAYLIST_STATE: 'Checking its duration!',
   },
   es: {
-    NAV_ROOT_DETAILS:   'Navegando',
-    NAV_ROOT_STATE:     'Revisando extras',
+    NAV_ROOT_DETAILS: 'Navegando',
+    NAV_ROOT_STATE: 'Revisando extras',
 
-    NAV_HOME_DETAILS:   'Navegando',
-    NAV_HOME_STATE:     'Pensando qué ver!',
+    NAV_HOME_DETAILS: 'Navegando',
+    NAV_HOME_STATE: 'Pensando qué ver!',
 
     NAV_BROWSE_DETAILS: 'Explorando',
-    NAV_BROWSE_STATE:   'Nuevos animes!',
+    NAV_BROWSE_STATE: 'Nuevos animes!',
 
     NAV_SEARCH_DETAILS: 'Buscando',
-    NAV_SEARCH_STATE:   '¡Un anime!',
+    NAV_SEARCH_STATE: '¡Un anime!',
 
     NAV_SECTION_DETAILS: 'Viendo secciones',
-    NAV_SECTION_STATE:   '¡Revisando géneros!',
+    NAV_SECTION_STATE: '¡Revisando géneros!',
 
     NAV_WATCHLIST_DETAILS: 'Buscando listas',
-    NAV_WATCHLIST_STATE:   '¡Revisando mis listas!',
+    NAV_WATCHLIST_STATE: '¡Revisando mis listas!',
 
     NAV_RELEASES_DETAILS: 'Revisando lanzamientos',
-    NAV_RELEASES_STATE:   '¡Nuevos estrenos!',
+    NAV_RELEASES_STATE: '¡Nuevos estrenos!',
 
-    NAV_SEASON_DETAILS:  'Viendo un anime',
-    NAV_SEASON_STATE:    '¡Revisando la temporada!',
+    NAV_SEASON_DETAILS: 'Viendo un anime',
+    NAV_SEASON_STATE: '¡Revisando la temporada!',
 
     NAV_PLAYLIST_DETAILS: 'Viendo una película',
-    NAV_PLAYLIST_STATE:   '¡Revisando su duración!'
+    NAV_PLAYLIST_STATE: '¡Revisando su duración!',
   }
 } as const
 
-type Lang = keyof typeof TEXTS 
+type Lang = keyof typeof TEXTS
 
 function detectLanguage(): Lang {
   const nav = navigator.language.toLowerCase()
-  if (nav.startsWith('es')) return 'es'
+  if (nav.startsWith('es')) {
+    return 'es'
+  }
   return 'en'
 }
+
 const lang: Lang = detectLanguage()
 
 function extractVideoId(urlStr: string): string | null | undefined {
   try {
-    const pathname = new URL(urlStr).pathname;
-    const parts = pathname.split('/');
+    const pathname = new URL(urlStr).pathname
+    const parts = pathname.split('/')
     if (parts.length >= 3 && parts[1] === 'video') {
       return parts[2]
-    };
-    return null;
-  } catch {
-    return null;
-  };
-};
+    }
+    return null
+  }
+  catch {
+    return null
+  }
+}
 
 let cachedSeason = {
   seasonId: '',
   title: '',
   bannerUrl: '',
   seasonNumber: '',
-  lastVideoId: ''
-};
+  lastVideoId: '',
+}
 
 let cachedPlaylist = {
   playlistId: '',
   title: '',
   bannerUrl: '',
-  lastVideoId: ''
-};
+  lastVideoId: '',
+}
 
 async function updateSeasonCache(seasonId: string) {
-
-  if (cachedSeason.seasonId === seasonId) return;
-
+  if (cachedSeason.seasonId === seasonId) {
+    return
+  }
   try {
-    const res = await fetch(`https://www.hidive.com/season/${seasonId}`);
-    const html = await res.text();
-    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const res = await fetch(`https://www.hidive.com/season/${seasonId}`)
+    const html = await res.text()
+    const doc = new DOMParser().parseFromString(html, 'text/html')
 
-    const ogTitle = doc.querySelector('meta[property="og:title"]')?.getAttribute('content')?.trim() || "";
+    const ogTitle = doc.querySelector('meta[property=\'og:title\']')?.getAttribute('content')?.trim() || ''
+    const [animeTitleRaw, seasonRaw = 'Season 1'] = ogTitle.split(' - ').map(s => s.trim())
+    const titleAnime = animeTitleRaw || 'Unknown Title'
 
-    const [animeTitleRaw, seasonRaw = "Season 1"] = ogTitle.split(" - ").map(s => s.trim());
+    const bannerAnime = doc.querySelector('meta[property=\'og:image\']')?.getAttribute('content')?.trim() || ''
 
-    const titleAnime = animeTitleRaw || "Unknown Title";
-
-    const bannerAnime =
-      doc
-        .querySelector('meta[property="og:image"]')
-        ?.getAttribute("content")
-        ?.trim() || "";
-
-    const matched = seasonRaw.match(/Season\s+(\d+)/);
-    const seasonNumber = matched && matched[1] ? matched[1] : '1';
+    const matched = seasonRaw.match(/Season\s+(\d+)/)
+    const seasonNumber = matched && matched[1] ? matched[1] : '1'
 
     cachedSeason = {
       seasonId,
       title: titleAnime,
       bannerUrl: bannerAnime,
       seasonNumber,
-      lastVideoId: ''
+      lastVideoId: '',
     }
-  } catch (e) {
-    console.error('Error fetching season page:', e);
-  };
-};
+  }
+  catch (e) {
+    console.error('Error fetching season page:', e)
+  }
+}
 
 async function updatePlaylistCache(playlistId: string) {
-  if (cachedPlaylist.playlistId === playlistId) return;
-
+  if (cachedPlaylist.playlistId === playlistId) {
+    return
+  }
   try {
-    const res = await fetch(`https://www.hidive.com/playlist/${playlistId}`);
-    const html = await res.text();
-    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const res = await fetch(`https://www.hidive.com/playlist/${playlistId}`)
+    const html = await res.text()
+    const doc = new DOMParser().parseFromString(html, 'text/html')
 
-    const ogTitle = doc.querySelector('meta[property="og:title"]')?.getAttribute('content')?.trim() || 'Película Desconocida';
-    const banner = doc.querySelector('meta[property="og:image"]')?.getAttribute('content')?.trim() || '';
+    const ogTitle = doc.querySelector('meta[property=\'og:title\']')?.getAttribute('content')?.trim() || 'Película Desconocida'
+    const banner = doc.querySelector('meta[property=\'og:image\']')?.getAttribute('content')?.trim() || ''
 
     cachedPlaylist = {
       playlistId,
       title: ogTitle,
       bannerUrl: banner,
-      lastVideoId: ''
-    };
-  } catch (e) {
-    console.error('Error fetching playlist:', e);
+      lastVideoId: '',
+    }
+  }
+  catch (e) {
+    console.error('Error fetching playlist:', e)
   }
 }
 
-
 async function getEpisodeInfo() {
-  const title = document.querySelector('.player-title')?.textContent?.trim() || 'Unknown Episode';
-  const currentTime = document.querySelector('.time__elapsed')?.textContent?.trim() || '0:00';
-  const totalDuration = document.querySelector('.time__duration')?.textContent?.trim() || '0:00';
+  const title = document.querySelector('.player-title')?.textContent?.trim() || 'Unknown Episode'
+  const currentTime = document.querySelector('.time__elapsed')?.textContent?.trim() || '0:00'
+  const totalDuration = document.querySelector('.time__duration')?.textContent?.trim() || '0:00'
 
   const tooltipText = document.querySelector('.dice-player-control .tooltip__message')?.textContent?.trim()
   const isPlaying = tooltipText === 'Pause (k)'
@@ -182,7 +182,6 @@ async function getEpisodeInfo() {
 }
 
 presence.on('UpdateData', async () => {
-
   const { pathname } = document.location
   const url = new URL(document.location.href)
   const t = TEXTS[lang]
@@ -190,7 +189,7 @@ presence.on('UpdateData', async () => {
   if (pathname === '/') {
     const presenceData: PresenceData = {
       details: t.NAV_ROOT_DETAILS,
-      state:  t.NAV_ROOT_STATE,
+      state: t.NAV_ROOT_STATE,
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'HIDIVE',
       smallImageKey: Assets.Reading,
@@ -323,45 +322,45 @@ presence.on('UpdateData', async () => {
   }
 
   if (pathname.startsWith('/video/')) {
-    const videoId = extractVideoId(document.location.href) || "";
-    const seasonIdParam = url.searchParams.get('seasonId') || "";
-    const playlistIdParam = url.searchParams.get('playlistId') || "";
+    const videoId = extractVideoId(document.location.href) || ''
+    const seasonIdParam = url.searchParams.get('seasonId') || ''
+    const playlistIdParam = url.searchParams.get('playlistId') || ''
 
     if (seasonIdParam && seasonIdParam !== cachedSeason.seasonId) {
-      await updateSeasonCache(seasonIdParam);
-      cachedSeason.lastVideoId = videoId;
+      await updateSeasonCache(seasonIdParam)
+      cachedSeason.lastVideoId = videoId
     } else if (!seasonIdParam && videoId && videoId !== cachedSeason.lastVideoId) {
       cachedSeason = {
         seasonId: '',
         title: '',
         bannerUrl: '',
         seasonNumber: '',
-        lastVideoId: ''
+        lastVideoId: '',
       }
     }
 
     if (playlistIdParam && playlistIdParam !== cachedPlaylist.playlistId) {
-      await updatePlaylistCache(playlistIdParam);
-      cachedPlaylist.lastVideoId = videoId;
-    }else if (!playlistIdParam && videoId && videoId !== cachedPlaylist.lastVideoId) {
+      await updatePlaylistCache(playlistIdParam)
+      cachedPlaylist.lastVideoId = videoId
+    } else if (!playlistIdParam && videoId && videoId !== cachedPlaylist.lastVideoId) {
       cachedPlaylist = {
         playlistId: '',
         title: '',
         bannerUrl: '',
-        lastVideoId: ''
-      };
+        lastVideoId: '',
+      }
     }
 
     const { title: titleEp, isPlaying } = await getEpisodeInfo()
 
-    const isSeasonContext = !!cachedSeason.seasonId;
-    const contextTitle = isSeasonContext ? cachedSeason.title : cachedPlaylist.title;
-    const contextBanner = isSeasonContext ? cachedSeason.bannerUrl : cachedPlaylist.bannerUrl;
-    const contextSeasonNumber = isSeasonContext ? cachedSeason.seasonNumber : '';
+    const isSeasonContext = !!cachedSeason.seasonId
+    const contextTitle = isSeasonContext ? cachedSeason.title : cachedPlaylist.title
+    const contextBanner = isSeasonContext ? cachedSeason.bannerUrl : cachedPlaylist.bannerUrl
+    const contextSeasonNumber = isSeasonContext ? cachedSeason.seasonNumber : ''
 
-    const displayTitle = contextTitle || 'Un Anime';
-    const displayBanner = contextBanner || ActivityAssets.Logo;
-    const displaySeasonOrNothing = contextSeasonNumber ? `S${contextSeasonNumber} • ` : '';
+    const displayTitle = contextTitle || 'Un Anime'
+    const displayBanner = contextBanner || ActivityAssets.Logo
+    const displaySeasonOrNothing = contextSeasonNumber ? `S${contextSeasonNumber} • ` : ''
 
     const presenceData: PresenceData = {
       details: `Viendo ${displayTitle}`,
@@ -374,7 +373,7 @@ presence.on('UpdateData', async () => {
     };
 
     if (isPlaying) {
-      const videoEl = document.querySelector<HTMLVideoElement>('#dice-player > video');
+      const videoEl = document.querySelector<HTMLVideoElement>('#dice-player > video')
       if (videoEl && !Number.isNaN(videoEl.duration)) {
         const [startTs, endTs] = getTimestampsFromMedia(videoEl)
         presenceData.startTimestamp = startTs
