@@ -187,7 +187,7 @@ presence.on('UpdateData', async () => {
         break
       }
       case '/user/notifications': {
-        presenceData.details = 'Look at Notifications'
+        presenceData.details = 'Looking at Notifications'
         presenceData.smallImageKey = Assets.Reading
         break
       }
