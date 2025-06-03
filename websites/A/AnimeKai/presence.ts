@@ -31,7 +31,7 @@ presence.on(
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    name: 'AnimeKai',
+    name: 'AnimeKAI',
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
   }
@@ -39,7 +39,7 @@ presence.on('UpdateData', async () => {
   const buttons = await presence.getSetting<boolean>('buttons')
 
   if (pathname === '/' || pathname === '/home') {
-    presenceData.details = 'Exploring AnimeKai.to'
+    presenceData.details = 'Exploring AnimeKAI'
   }
   else if (
     /\/(?:ongoing|recent|movie|new-releases|updates|tv|completed|top-upcoming|ona|ova|special|genres\/.*)/.test(
@@ -184,6 +184,16 @@ presence.on('UpdateData', async () => {
       case '/user/import': {
         presenceData.details = 'MAL Import/Export'
         presenceData.smallImageKey = Assets.Downloading
+        break
+      }
+      case '/user/notifications': {
+        presenceData.details = 'Look at Notifications'
+        presenceData.smallImageKey = Assets.Reading
+        break
+      }
+      case '/user/bookmarks': {
+        presenceData.details = 'Managing Bookmarks'
+        presenceData.smallImageKey = ActivityAssets.Settings
         break
       }
       default: {
