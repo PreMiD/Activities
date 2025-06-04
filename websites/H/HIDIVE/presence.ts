@@ -44,6 +44,7 @@ async function getStrings() {
     NAV_PAUSED_STATE: 'general.paused',
     NAV_PLAYED_STATE: 'general.playing',
     NAV_WATCHING_STATE: 'general.watching',
+    NAV_UNKNOWTITLE_STATE: 'general.anime',
   })
 }
 
@@ -349,7 +350,7 @@ presence.on('UpdateData', async () => {
     const contextBanner = isSeasonContext ? cachedSeason.bannerUrl : cachedPlaylist.bannerUrl
     const contextSeasonNumber = isSeasonContext ? cachedSeason.seasonNumber : ''
 
-    const displayTitle = contextTitle || 'Un Anime'
+    const displayTitle = contextTitle || strings.NAV_UNKNOWTITLE_STATE
     const displayBanner = contextBanner || ActivityAssets.Logo
     const displaySeasonOrNothing = contextSeasonNumber ? `S${contextSeasonNumber} • ` : ''
 
