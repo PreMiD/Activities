@@ -4,82 +4,48 @@ const presence = new Presence({
   clientId: '1379377567760388196',
 })
 
-const browsingTimestamp = Math.floor(Date.now() / 1000)
-
 enum ActivityAssets {
   Logo = 'https://imgur.com/ORJy91l.png',
 }
 
-const TEXTS = {
-  en: {
-    NAV_ROOT_DETAILS: 'Browsing',
-    NAV_ROOT_STATE: 'Checking extras',
+let strings: Awaited<ReturnType<typeof getStrings>>
+let oldLang: string | null = null
+const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-    NAV_HOME_DETAILS: 'Browsing',
-    NAV_HOME_STATE: 'Thinking what to watch!',
+async function getStrings() {
+  return presence.getStrings({
+    NAV_ROOT_DETAILS: 'general.browsing',
+    NAV_ROOT_STATE: 'general.viewHome',
 
-    NAV_BROWSE_DETAILS: 'Exploring',
-    NAV_BROWSE_STATE: 'New anime!',
+    NAV_HOME_DETAILS: 'general.browsing',
+    NAV_HOME_STATE: 'general.viewHome',
 
-    NAV_SEARCH_DETAILS: 'Searching',
-    NAV_SEARCH_STATE: 'An anime!',
+    NAV_BROWSE_DETAILS: 'general.browsing',
+    NAV_BROWSE_STATE: 'general.searchSomething',
 
-    NAV_SECTION_DETAILS: 'Viewing sections',
-    NAV_SECTION_STATE: 'Checking genres!',
+    NAV_SEARCH_DETAILS: 'general.search',
+    NAV_SEARCH_STATE: 'general.searchSomething',
 
-    NAV_WATCHLIST_DETAILS: 'Browsing lists',
-    NAV_WATCHLIST_STATE: 'Checking my lists!',
+    NAV_SECTION_DETAILS: 'general.browsing',
+    NAV_SECTION_STATE: 'general.viewCategory',
 
-    NAV_RELEASES_DETAILS: 'Checking releases',
-    NAV_RELEASES_STATE: 'New premieres!',
+    NAV_WATCHLIST_DETAILS: 'general.browsing',
+    NAV_WATCHLIST_STATE: 'general.viewPlaylists',
 
-    NAV_SEASON_DETAILS: 'Watching a show',
-    NAV_SEASON_STATE: 'Checking the season!',
+    NAV_RELEASES_DETAILS: 'general.browsing',
+    NAV_RELEASES_STATE: 'general.viewHome',
 
-    NAV_PLAYLIST_DETAILS: 'Watching a movie',
-    NAV_PLAYLIST_STATE: 'Checking its duration!',
-  },
-  es: {
-    NAV_ROOT_DETAILS: 'Navegando',
-    NAV_ROOT_STATE: 'Revisando extras',
+    NAV_SEASON_DETAILS: 'general.browsing',
+    NAV_SEASON_STATE: 'general.viewAnime',
 
-    NAV_HOME_DETAILS: 'Navegando',
-    NAV_HOME_STATE: 'Pensando qué ver!',
+    NAV_PLAYLIST_DETAILS: 'general.browsing',
+    NAV_PLAYLIST_STATE: 'general.viewMovie',
 
-    NAV_BROWSE_DETAILS: 'Explorando',
-    NAV_BROWSE_STATE: 'Nuevos animes!',
-
-    NAV_SEARCH_DETAILS: 'Buscando',
-    NAV_SEARCH_STATE: '¡Un anime!',
-
-    NAV_SECTION_DETAILS: 'Viendo secciones',
-    NAV_SECTION_STATE: '¡Revisando géneros!',
-
-    NAV_WATCHLIST_DETAILS: 'Buscando listas',
-    NAV_WATCHLIST_STATE: '¡Revisando mis listas!',
-
-    NAV_RELEASES_DETAILS: 'Revisando lanzamientos',
-    NAV_RELEASES_STATE: '¡Nuevos estrenos!',
-
-    NAV_SEASON_DETAILS: 'Viendo un anime',
-    NAV_SEASON_STATE: '¡Revisando la temporada!',
-
-    NAV_PLAYLIST_DETAILS: 'Viendo una película',
-    NAV_PLAYLIST_STATE: '¡Revisando su duración!',
-  },
-} as const
-
-type Lang = keyof typeof TEXTS
-
-function detectLanguage(): Lang {
-  const nav = navigator.language.toLowerCase()
-  if (nav.startsWith('es')) {
-    return 'es'
-  }
-  return 'en'
+    NAV_PAUSED_STATE: 'general.paused',
+    NAV_PLAYED_STATE: 'general.playing',
+    NAV_WATCHING_STATE: 'general.watching',
+  })
 }
-
-const lang: Lang = detectLanguage()
 
 function extractVideoId(urlStr: string): string | null | undefined {
   try {
@@ -182,18 +148,17 @@ async function getEpisodeInfo() {
 }
 
 presence.on('UpdateData', async () => {
-  const { pathname } = document.location
-  const url = new URL(document.location.href)
-  const t = TEXTS[lang]
+  const { pathname, href } = document.location
+  const url = new URL(href)
 
   if (pathname === '/') {
     const presenceData: PresenceData = {
-      details: t.NAV_ROOT_DETAILS,
-      state: t.NAV_ROOT_STATE,
+      details: strings.NAV_ROOT_DETAILS,
+      state: strings.NAV_ROOT_STATE,
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'HIDIVE',
       smallImageKey: Assets.Reading,
-      smallImageText: t.NAV_ROOT_STATE,
+      smallImageText: strings.NAV_ROOT_STATE,
       type: ActivityType.Watching,
       startTimestamp: browsingTimestamp,
     }
@@ -203,12 +168,12 @@ presence.on('UpdateData', async () => {
 
   if (pathname === '/home') {
     const presenceData: PresenceData = {
-      details: t.NAV_HOME_DETAILS,
-      state: t.NAV_HOME_STATE,
+      details: strings.NAV_HOME_DETAILS,
+      state: strings.NAV_HOME_STATE,
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'HIDIVE',
       smallImageKey: Assets.Reading,
-      smallImageText: t.NAV_HOME_STATE,
+      smallImageText: strings.NAV_HOME_STATE,
       type: ActivityType.Watching,
       startTimestamp: browsingTimestamp,
     }
@@ -218,12 +183,12 @@ presence.on('UpdateData', async () => {
 
   if (pathname.startsWith('/browse')) {
     const presenceData: PresenceData = {
-      details: t.NAV_BROWSE_DETAILS,
-      state: t.NAV_BROWSE_STATE,
+      details: strings.NAV_BROWSE_DETAILS,
+      state: strings.NAV_BROWSE_STATE,
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'HIDIVE',
       smallImageKey: Assets.Search,
-      smallImageText: t.NAV_BROWSE_STATE,
+      smallImageText: strings.NAV_BROWSE_STATE,
       type: ActivityType.Watching,
       startTimestamp: Math.floor(Date.now() / 1000),
     }
@@ -233,12 +198,12 @@ presence.on('UpdateData', async () => {
 
   if (pathname.startsWith('/search')) {
     const presenceData: PresenceData = {
-      details: t.NAV_SEARCH_DETAILS,
-      state: t.NAV_SEARCH_STATE,
+      details: strings.NAV_SEARCH_DETAILS,
+      state: strings.NAV_SEARCH_STATE,
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'HIDIVE',
       smallImageKey: Assets.Search,
-      smallImageText: t.NAV_SEARCH_STATE,
+      smallImageText: strings.NAV_SEARCH_STATE,
       type: ActivityType.Watching,
       startTimestamp: Math.floor(Date.now() / 1000),
     }
@@ -247,13 +212,15 @@ presence.on('UpdateData', async () => {
   }
 
   if (pathname.startsWith('/section')) {
+    const sectionTitle = document.querySelector('h1')?.textContent?.trim() || 'Unknown'
+
     const presenceData: PresenceData = {
-      details: t.NAV_SECTION_DETAILS,
-      state: t.NAV_SECTION_STATE,
+      details: strings.NAV_SECTION_DETAILS,
+      state: `${strings.NAV_SECTION_STATE} ${sectionTitle}`,
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'HIDIVE',
       smallImageKey: Assets.Search,
-      smallImageText: t.NAV_SECTION_STATE,
+      smallImageText: strings.NAV_SECTION_STATE,
       type: ActivityType.Watching,
       startTimestamp: Math.floor(Date.now() / 1000),
     }
@@ -263,12 +230,12 @@ presence.on('UpdateData', async () => {
 
   if (pathname.startsWith('/watchlists')) {
     const presenceData: PresenceData = {
-      details: t.NAV_WATCHLIST_DETAILS,
-      state: t.NAV_WATCHLIST_STATE,
+      details: strings.NAV_WATCHLIST_DETAILS,
+      state: strings.NAV_WATCHLIST_STATE,
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'HIDIVE',
       smallImageKey: Assets.Search,
-      smallImageText: t.NAV_WATCHLIST_STATE,
+      smallImageText: strings.NAV_WATCHLIST_STATE,
       type: ActivityType.Watching,
       startTimestamp: Math.floor(Date.now() / 1000),
     }
@@ -278,12 +245,12 @@ presence.on('UpdateData', async () => {
 
   if (pathname.startsWith('/releases')) {
     const presenceData: PresenceData = {
-      details: t.NAV_RELEASES_DETAILS,
-      state: t.NAV_RELEASES_STATE,
+      details: strings.NAV_RELEASES_DETAILS,
+      state: strings.NAV_RELEASES_STATE,
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'HIDIVE',
       smallImageKey: Assets.Reading,
-      smallImageText: t.NAV_RELEASES_STATE,
+      smallImageText: strings.NAV_RELEASES_STATE,
       type: ActivityType.Watching,
       startTimestamp: Math.floor(Date.now() / 1000),
     }
@@ -292,13 +259,22 @@ presence.on('UpdateData', async () => {
   }
 
   if (pathname.startsWith('/season')) {
+    const seasonIdFromUrl = pathname.split('/season/')[1]?.split('/')[0] || ''
+
+    if (seasonIdFromUrl && seasonIdFromUrl !== cachedSeason.seasonId) {
+      await updateSeasonCache(seasonIdFromUrl)
+    }
+
+    const animeTitle = cachedSeason.title || 'Unknown Title'
+
+
     const presenceData: PresenceData = {
-      details: t.NAV_SEASON_DETAILS,
-      state: t.NAV_SEASON_STATE,
+      details: strings.NAV_SEASON_DETAILS,
+      state: `${strings.NAV_SEASON_STATE} ${animeTitle}`,
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'HIDIVE',
       smallImageKey: Assets.Reading,
-      smallImageText: t.NAV_SEASON_STATE,
+      smallImageText: strings.NAV_SEASON_STATE,
       type: ActivityType.Watching,
       startTimestamp: Math.floor(Date.now() / 1000),
     }
@@ -307,13 +283,21 @@ presence.on('UpdateData', async () => {
   }
 
   if (pathname.startsWith('/playlist')) {
+    const playlistIdFromUrl = pathname.split('/playlist/')[1]?.split('/')[0] || ''
+
+    if (playlistIdFromUrl && playlistIdFromUrl !== cachedPlaylist.playlistId) {
+      await updatePlaylistCache(playlistIdFromUrl)
+    }
+
+    const movieTitle = cachedPlaylist.title || 'Unknown Title'
+
     const presenceData: PresenceData = {
-      details: t.NAV_PLAYLIST_DETAILS,
-      state: t.NAV_PLAYLIST_STATE,
+      details: strings.NAV_PLAYLIST_DETAILS,
+      state: `${strings.NAV_PLAYLIST_STATE} ${movieTitle}`,
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'HIDIVE',
       smallImageKey: Assets.Reading,
-      smallImageText: t.NAV_PLAYLIST_STATE,
+      smallImageText: strings.NAV_PLAYLIST_STATE,
       type: ActivityType.Watching,
       startTimestamp: Math.floor(Date.now() / 1000),
     }
@@ -322,7 +306,7 @@ presence.on('UpdateData', async () => {
   }
 
   if (pathname.startsWith('/video/')) {
-    const videoId = extractVideoId(document.location.href) || ''
+    const videoId = extractVideoId(href) || ''
     const seasonIdParam = url.searchParams.get('seasonId') || ''
     const playlistIdParam = url.searchParams.get('playlistId') || ''
 
@@ -365,12 +349,12 @@ presence.on('UpdateData', async () => {
     const displaySeasonOrNothing = contextSeasonNumber ? `S${contextSeasonNumber} • ` : ''
 
     const presenceData: PresenceData = {
-      details: `Viendo ${displayTitle}`,
+      details: `${strings.NAV_WATCHING_STATE} ${displayTitle}`,
       state: `${displaySeasonOrNothing}${titleEp}`,
       largeImageKey: displayBanner,
       largeImageText: displayTitle,
       smallImageKey: isPlaying ? Assets.Play : Assets.Pause,
-      smallImageText: isPlaying ? 'Reproduciendo' : 'Pausado',
+      smallImageText: isPlaying ? strings.NAV_PLAYED_STATE : strings.NAV_PAUSED_STATE,
       type: ActivityType.Watching,
     }
 
