@@ -268,7 +268,7 @@ presence.on('UpdateData', async () => {
     const seasonIdFromUrl = pathname.split('/season/')[1]?.split('/')[0] || ''
 
     if (seasonIdFromUrl && seasonIdFromUrl !== cachedSeason.seasonId) {
-     await updateSeasonCache(seasonIdFromUrl)
+      await updateSeasonCache(seasonIdFromUrl)
     }
 
     const animeTitle = cachedSeason.title || 'Unknown Title'
