@@ -11,13 +11,7 @@ enum ActivityAssets {
 }
 
 async function videoActive() {
-  const videoUrl3 = document.querySelector('#MediaPage > div > div.head_player > div.vid-player')
-  if (videoUrl3) {
-    return true
-  }
-  else {
-    return false
-  }
+  return !!document.querySelector('#MediaPage > div > div.head_player > div.vid-player')  
 }
 
 const animePageCache = new Map<string, string>()
