@@ -151,6 +151,12 @@ presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
   const url = new URL(href)
 
+  const currentLang = navigator.language.toLowerCase().startsWith('es') ? 'es' : 'en'
+  if (!strings || oldLang !== currentLang) {
+    strings = await getStrings()
+    oldLang = currentLang
+  }
+
   if (pathname === '/') {
     const presenceData: PresenceData = {
       details: strings.NAV_ROOT_DETAILS,
