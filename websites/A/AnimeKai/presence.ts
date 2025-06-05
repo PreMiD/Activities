@@ -171,11 +171,6 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = ActivityAssets.Settings
         break
       }
-      case '/user/notification': {
-        presenceData.details = 'Looking at Notifications'
-        presenceData.smallImageKey = ActivityAssets.Notifications
-        break
-      }
       case '/user/watching': {
         presenceData.details = 'Continue Watching'
         presenceData.smallImageKey = Assets.Reading
@@ -198,10 +193,10 @@ presence.on('UpdateData', async () => {
       }
       case '/user/notifications': {
         const type = new URLSearchParams(window.location.search).get('type')
-        
         if (type === 'community') {
           presenceData.details = 'Looking at Community Notifications'
-        } else {
+        }
+        else {
           presenceData.details = 'Looking at Anime Notifications'
         }
         presenceData.smallImageKey = Assets.Reading
