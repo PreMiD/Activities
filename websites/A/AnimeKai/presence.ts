@@ -183,12 +183,12 @@ presence.on('UpdateData', async () => {
       }
       case '/user/import': {
         presenceData.details = 'MAL/AL Import'
-        presenceData.smallImageKey = Assets.Uploading
+        presenceData.smallImageKey = Assets.Downloading
         break
       }
       case '/user/export': {
         presenceData.details = 'MAL/AL Export'
-        presenceData.smallImageKey = Assets.Downloading
+        presenceData.smallImageKey = Assets.Uploading
         break
       }
       case '/user/sync': {
