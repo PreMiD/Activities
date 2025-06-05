@@ -195,7 +195,7 @@ presence.on('UpdateData', async () => {
         const type = new URLSearchParams(window.location.search).get('type')
         if (type === 'community') {
           presenceData.details = 'Looking at Community Notifications'
-        } 
+        }
         else {
           presenceData.details = 'Looking at Anime Notifications'
         }
