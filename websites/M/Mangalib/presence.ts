@@ -128,8 +128,8 @@ presence.on('UpdateData', async () => {
    */
   if (pathnameParts[2]?.includes('--')) {
     const slug = pathnameParts[2]
-    const volume = pathnameParts[4]!.replace('v0', '').replace('v', '')
-    const chapter = pathnameParts[5]!.replace('c0', '').replace('c', '')
+    const volume = pathnameParts[4]!.replace('v', '')
+    const chapter = pathnameParts[5]!.replace('c', '')
 
     const { data } = await lib.getTitle<MangaData | RanobeData>(slug, siteId)
 
