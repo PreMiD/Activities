@@ -1,10 +1,11 @@
 const presence = new Presence({
-  clientId: '691867169251655758',
+  clientId: '503557087041683458',
 })
 
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/E/Emojipedia/assets/logo.png',
+    name: 'Emojipedia',
   }
 
   if (

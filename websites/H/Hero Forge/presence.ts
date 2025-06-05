@@ -6,7 +6,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 let characterCreatorMenu: string[] = ['species']
 
 setInterval(() => {
-  if (window.location.pathname === '/') {
+  if (document.location.pathname === '/') {
     characterCreatorMenu = [
       ...document.querySelectorAll<HTMLDivElement>('#menuA, #menuB, #menuC'),
     ].map((menu) => {
@@ -14,6 +14,7 @@ setInterval(() => {
         .find((listItem) => {
           return getComputedStyle(listItem).backgroundImage !== 'none'
         })
+        ?.querySelector('span')
         ?.textContent
         ?.trim()
         .toLowerCase() ?? ''
@@ -26,7 +27,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/H/Hero%20Forge/assets/logo.png',
     startTimestamp: browsingTimestamp,
   }
-  const { pathname } = window.location
+  const { pathname } = document.location
   const [, path] = pathname.split('/')
 
   switch (path ?? '') {
@@ -44,14 +45,14 @@ presence.on('UpdateData', async () => {
       else {
         const characterName = document
           .querySelector<HTMLDivElement>(
-            'img[src=\'/static/svg/character-menu/character.svg\'] + div',
+            'img[src^=\'/static/svg/character-menu/\'] + div',
           )
           ?.textContent
           ?.match(/^(.*?)\*?$/)?.[1]
         const chosenItemContainer = document.querySelector<HTMLSpanElement>(
           '#view span[style*=\'/static/svg/item-selected.svg\']',
         )
-        const chosenItemImage = chosenItemContainer?.firstElementChild as HTMLImageElement
+        const chosenItemImage = chosenItemContainer?.querySelector<HTMLImageElement>('img[alt]')
         const chosenItemName = chosenItemImage?.alt.match(/^(.*?) Add Part$/)?.[1]
 
         let mainState = ''
@@ -62,7 +63,7 @@ presence.on('UpdateData', async () => {
             mainState = 'Species'
             if (chosenItemContainer) {
               subState = `${
-                /Female_thumb/.test(chosenItemImage.src) ? 'Female' : 'Male'
+                /Female_thumb/.test(chosenItemImage?.src ?? '') ? 'Female' : 'Male'
               } ${
                 chosenItemContainer?.parentElement?.nextElementSibling?.textContent
               }`

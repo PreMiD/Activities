@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "nihongojouzu"
+  },
+  "service": "Emurse",
+  "description": {
+    "en": "Emurse is an app for learning languages that combines instructor led-education with effective self study methods and tools to help you learn as efficiently as possible."
+  },
+  "url": "emurse.io",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Emurse/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Emurse/assets/thumbnail.png",
+  "color": "#766df4",
+  "category": "other",
+  "tags": [
+    "language",
+    "thai",
+    "immersion",
+    "japanese",
+    "accent",
+    "pitch",
+    "education"
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "geoguessr.division": {
+    "description": "Shown below 'Duels' text (ex. Duels in the Master II Division)",
+    "message": "in the {0} Division"
+  },
+  "geoguessr.inMenu": {
+    "description": "On menus / unsupported page",
+    "message": "In menu"
+  },
+  "geoguessr.campaign": {
+    "description": "",
+    "message": "Campaign"
+  },
+  "geoguessr.matchmaking": {
+    "description": "Matchmaking (duels / team duels) for old UI users",
+    "message": "Finding match"
+  },
+  "geoguessr.inRanked": {
+    "description": "",
+    "message": "in Ranked"
+  },
+  "geoguessr.inUnranked": {
+    "description": "",
+    "message": "in Unranked"
+  },
+  "geoguessr.brRemaining": {
+    "description": "Amount of players remaining in Battle Royale",
+    "message": "{0} remaining"
+  },
+  "geoguessr.inParty": {
+    "description": "",
+    "message": "In a Party"
+  },
+  "geoguessr.party": {
+    "description": "",
+    "message": "Party"
+  },
+  "geoguessr.partyJoin": {
+    "description": "",
+    "message": "Join party"
+  },
+  "geoguessr.viewMap": {
+    "description": "",
+    "message": "View map"
+  },
+  "geoguessr.streaks": {
+    "description": "",
+    "message": "Streaks"
+  },
+  "geoguessr.city_streaks": {
+    "description": "",
+    "message": "City Streaks"
+  },
+  "geoguessr.maps": {
+    "description": "",
+    "message": "Browsing maps"
+  },
+  "geoguessr.duels": {
+    "description": "",
+    "message": "Duels"
+  },
+  "geoguessr.teamDuels": {
+    "description": "",
+    "message": "Team Duels"
+  },
+  "geoguessr.brDistance": {
+    "description": "",
+    "message": "Battle Royale Distance"
+  },
+  "geoguessr.brCountries": {
+    "description": "",
+    "message": "Battle Royale Countries"
+  },
+  "geoguessr.partyPlayerCount": {
+    "description": "",
+    "message": "with {0} players"
+  },
+  "geoguessr.liveChallenge": {
+    "description": "",
+    "message": "Live Challenge"
+  },
+  "geoguessr.bullseye": {
+    "description": "",
+    "message": "Bullseye"
+  },
+  "geoguessr.quiz": {
+    "description": "",
+    "message": "Quiz"
+  },
+  "geoguessr.multiplayer": {
+    "description": "",
+    "message": "Multiplayer"
+  },
+  "geoguessr.movementMoving": {
+    "description": "",
+    "message": "Moving"
+  },
+  "geoguessr.movementNoMove": {
+    "description": "",
+    "message": "No Move"
+  },
+  "geoguessr.movementNmpz": {
+    "description": "aka No Move Pan Zoom",
+    "message": "NMPZ"
+  },
+  "geoguessr.classicStreakCount": {
+    "description": "",
+    "message": "{0} streak"
+  },
+  "geoguessr.classicScore": {
+    "description": "Classic mode status | {0} is score, {1} is round number, {2} is maximum rounds",
+    "message": "{0} points ({1} of {2})"
+  },
+  "geoguessr.viewActivities": {
+    "description": "",
+    "message": "Viewing activities"
+  },
+  "geoguessr.viewCommunity": {
+    "description": "The /community page",
+    "message": "Viewing community"
+  }
+}

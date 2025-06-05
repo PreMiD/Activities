@@ -156,8 +156,8 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = coverImage
 
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-      presenceData.smallImageText = video.paused ? strings.pause : strings.play
-      presenceData.type = ActivityType.Watching;
+      presenceData.smallImageText = video.paused ? strings.pause : strings.play;
+      (presenceData as PresenceData).type = ActivityType.Watching;
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
       if (showButtons) {

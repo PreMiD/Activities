@@ -1,12 +1,13 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1180842438403825774',
+  clientId: '503557087041683458',
 })
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/B/Bing/assets/logo.png',
+    name: 'Bing',
   }
 
   // Get search query from HTML form input.

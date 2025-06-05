@@ -9,6 +9,10 @@
     {
       "name": "slowlife.",
       "id": "374905512661221377"
+    },
+    {
+      "name": "shisen",
+      "id": "257151906038677504"
     }
   ],
   "service": "Yandex Music",
@@ -22,7 +26,7 @@
     "music.yandex.ru",
     "music.yandex.com"
   ],
-  "version": "2.0.2",
+  "version": "2.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Yandex%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Yandex%20Music/assets/thumbnail.png",
   "color": "#FDCD01",

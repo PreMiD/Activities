@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '703447484025798717',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -9,6 +9,7 @@ presence.on('UpdateData', () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/H/Honeygain/assets/logo.png',
     details: 'Browsing Honeygain',
     startTimestamp: browsingTimestamp,
+    name: 'Honeygain',
   }
 
   if (document.location.hostname === 'www.honeygain.com') {

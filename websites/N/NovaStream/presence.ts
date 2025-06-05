@@ -14,11 +14,23 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  if (document.location.pathname === '/') {
+  if (document.location.pathname === '/' || document.location.pathname === '/index.html') {
     const searchInput = document.querySelector<HTMLInputElement>('.search-input')?.value
     if (searchInput && searchInput.length > 0)
       presenceData.state = `Searching for: "${searchInput}"`
     else presenceData.state = 'Browsing content to watch'
+  }
+  else if (document.location.pathname.includes('/settings')) {
+    const activeSections = Array.from(document.querySelectorAll<HTMLElement>('[x-show^="activeSection"]'))
+      .filter(el => window.getComputedStyle(el).display !== 'none')
+    const firstActiveSection = activeSections[0]
+    const sectionTitle = firstActiveSection?.querySelector('h2')?.textContent?.trim()
+    if (sectionTitle) {
+      presenceData.state = `In settings: ${sectionTitle}`
+    }
+    else {
+      presenceData.state = 'In settings'
+    }
   }
   else if (document.location.pathname.includes('/watch')) {
     let title = document.querySelector('h1.text-2xl')?.textContent
@@ -71,7 +83,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = [
       runtime ? `${runtime}  •  ` : '',
       seasonEpisode ?? '',
-      rating ? `⭐${rating}/10` : '',
+      rating ? `⭐${rating}` : '',
     ].join('')
   }
 

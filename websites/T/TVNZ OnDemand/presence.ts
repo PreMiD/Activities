@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '687426695417823238',
+  clientId: '503557087041683458',
 })
 
 let currentTime: number, duration: number, paused: boolean, playback
@@ -23,6 +23,7 @@ presence.on('UpdateData', () => {
   )
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/T/TVNZ%20OnDemand/assets/logo.png',
+    name: 'TVNZ OnDemand',
   }
 
   if (document.location.href.includes('login.tech.tvnz.co.nz')) {

@@ -14,7 +14,8 @@
     "animego.org",
     "animego.me"
   ],
-  "version": "1.0.19",
+  "regExp": "([a-z0-9]+[.])animego([.][a-z]+)+[/]",
+  "version": "1.0.20",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeGO/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeGO/assets/thumbnail.png",
   "color": "#ff5c57",

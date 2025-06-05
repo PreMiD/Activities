@@ -2,26 +2,50 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "name": "Kyrie",
-    "id": "368399721494216706"
+    "name": "nihongojouzu",
+    "id": "193714715631812608"
   },
+  "contributors": [
+    {
+      "name": "Kyrie",
+      "id": "368399721494216706"
+    }
+  ],
   "service": "Prydwen Institute",
   "description": {
-    "en": "Prydwen Institute is a Counter Side tier list and database that contains information about employees, ships, operators, and skins available in both SEA and KR versions of the game.",
-    "vi": "Prydwen Insutitute là bảng xếp hạng và cơ sở dữ liệu dành cho Counter Side chứa các thông tin của nhân viên, đặc vụ, tàu chiến, và skin có mặt ở trong cả hai phiên bản SEA và KR của trò chơi."
+    "en": "Prydwen.gg provides news, tier lists and detailed guides for Honkai: Star Rail, NIKKE, AFK Journey, Wuthering Waves, Zenless Zone Zero, Reverse 1999 and other gacha games. Everything you need in one place!"
   },
-  "url": "www.prydwen.co",
-  "version": "1.1.20",
+  "url": [
+    "www.prydwen.gg",
+    "blog.prydwen.gg"
+  ],
+  "version": "2.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/thumbnail.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/thumbnail.jpg",
   "color": "#161833",
   "category": "games",
   "tags": [
-    "counter",
-    "side",
     "prydwen",
     "institute",
     "wiki",
-    "database"
-  ]
+    "gacha",
+    "news",
+    "tier",
+    "list",
+    "guide",
+    "honkai",
+    "star",
+    "rail",
+    "zenless",
+    "nikke",
+    "afk",
+    "arena",
+    "wuthering",
+    "waves",
+    "reverse",
+    "1999",
+    "counter",
+    "side"
+  ],
+  "mobile": true
 }
