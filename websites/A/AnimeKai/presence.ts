@@ -171,11 +171,6 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = ActivityAssets.Settings
         break
       }
-      case '/user/notification': {
-        presenceData.details = 'Looking at Notifications'
-        presenceData.smallImageKey = ActivityAssets.Notifications
-        break
-      }
       case '/user/watching': {
         presenceData.details = 'Continue Watching'
         presenceData.smallImageKey = Assets.Reading
