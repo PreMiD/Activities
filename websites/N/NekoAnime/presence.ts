@@ -144,8 +144,9 @@ presence.on('UpdateData', async () => {
   if (isVideoPage) {
     const animeData = await getAnimeInformation()
     if (animeData.animeTitle) {
-      presenceData.details = animeData.animeTitle
-      presenceData.state = `${animeData.episodeNumber || 'Episodio Desconocido'}`
+      presenceData.name = animeData.animeTitle
+      presenceData.details = animeData.episodeNumber || 'Episodio Desconocido'
+      presenceData.state = ''
       presenceData.type = ActivityType.Watching
       if (animeData.videoStatus === 'Reproduciendo') {
         presenceData.smallImageKey = Assets.Play
