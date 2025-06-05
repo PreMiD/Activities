@@ -1,0 +1,64 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "735060742092488744",
+    "name": "justice_wj"
+  },
+  "service": "iQIYIs",
+  "description": {
+    "de": "Schau dir Filme, TV-Sendungen und Anime in HD online an. Entdecke erstklassige Unterhaltungsprogramme auf iQIYIs.",
+    "en": "Watch high-definition movies, TV shows, and anime online. Discover top entertainment programs on iQIYIs.",
+    "es": "Mira películas, programas de TV y anime en alta definición en línea. Descubre los mejores programas de entretenimiento en iQIYIs.",
+    "fr": "Regardez des films, des émissions de télévision et des animes en haute définition en ligne. Découvrez les meilleurs programmes de divertissement sur iQIYIs.",
+    "ja": "高画質で映画、テレビ番組、アニメをオンラインで視聴。iQIYIsでトップエンターテインメントを発見。",
+    "pt": "Assista a filmes, programas de TV e animes em alta definição online. Descubra os melhores programas de entretenimento no iQIYIs.",
+    "ru": "Смотрите фильмы, телешоу и аниме в высоком разрешении онлайн. Откройте для себя лучшие развлекательные программы на iQIYIs.",
+    "zh": "在线观看高清电影、电视节目和动漫。在 iQIYIs 上发现顶级娱乐节目。"
+  },
+  "url": [
+    "iqiyis.com",
+    "indielens.org",
+    "tubiii.com"
+  ],
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/I/iQIYIs/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/iQIYIs/assets/thumbnail.jpg",
+  "color": "#E40813",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "shows",
+    "anime",
+    "steaming"
+  ],
+  "settings": [
+    {
+      "id": "watch",
+      "title": "Play Status",
+      "icon": "fad fa-play",
+      "value": true
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Timestamp",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "progress",
+      "title": "Show Watch Progress",
+      "icon": "fad fa-bars-progress",
+      "value": true
+    },
+    {
+      "id": "showLabel",
+      "if": {
+        "progress": true
+      },
+      "icon": "fad fa-eye",
+      "title": "Label",
+      "value": true
+    }
+  ]
+}

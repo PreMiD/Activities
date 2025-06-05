@@ -34,12 +34,22 @@ export function getChannelURL(): string | undefined {
   )?.href
 }
 
+function isMusic(): boolean {
+  return (document.getElementById('app') as any)
+    ?.data
+    ?.playerResponse
+    ?.microformat
+    ?.playerMicroformatRenderer
+    ?.category === 'Music'
+}
+
 const resolver: Resolver = {
   isActive,
   getTitle,
   getUploader,
   getChannelURL,
   getVideoID,
+  isMusic,
 }
 
 export default resolver

@@ -113,6 +113,7 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
     type: ActivityType.Watching,
     details: 'Stremio',
+    name: 'Stremio',
   }
   const { hash, hostname, pathname, href } = document.location
   const [privacy, thumbnails, buttons, search] = await Promise.all([

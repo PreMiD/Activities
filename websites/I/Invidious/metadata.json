@@ -13,12 +13,13 @@
   },
   "url": [
     "iteroni.com",
-    "invidious.fdn.fr",
-    "invidious.snopyta.org",
-    "vid.mint.lgbt",
-    "yewtu.be"
+    "yewtu.be",
+    "inv.nadeko.net",
+    "id.420129.xyz",
+    "invidious.nerdvpn.de",
+    "invidious.f5.si"
   ],
-  "version": "1.0.28",
+  "version": "1.0.29",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Invidious/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Invidious/assets/thumbnail.jpg",
   "color": "#00B6F0",

@@ -3,7 +3,7 @@ import { cp, mkdir, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
-import { confirm, input, select } from '@inquirer/prompts'
+import { confirm, input, search } from '@inquirer/prompts'
 import chalk from 'chalk'
 import { Validator } from 'jsonschema'
 import { getDiscordUser, getDiscordUserById } from '../util/getDiscordUser.js'
@@ -12,6 +12,7 @@ import { getSchema } from '../util/getSchema.js'
 import { isFirstTimeAuthor } from '../util/isFirstTimeAuthor.js'
 import { exit, prefix, success } from '../util/log.js'
 import { sanitazeFolderName } from '../util/sanitazeFolderName.js'
+import { searchChoices } from '../util/searchChoices.js'
 import { build } from './build.js'
 import { versionizeActivity } from './versionize.js'
 
@@ -88,9 +89,9 @@ export async function newActivity(activity?: string) {
     },
   }).catch(() => exit('Something went wrong.'))
 
-  const category = await select<string>({
+  const category = await search<string>({
     message: 'Category of the service',
-    choices: schema.properties.category.enum,
+    source: input => searchChoices(schema.properties.category.enum, input),
   }).catch(() => exit('Something went wrong.'))
 
   const metadata = {

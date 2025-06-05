@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1235934849085345877',
+  clientId: '503557087041683458',
 })
 
 let prevURL: string
@@ -19,6 +19,7 @@ presence.on('UpdateData', async () => {
       ? ActivityAssets.AirlinesLogo
       : ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    name: 'Nexon',
   }
   const [privacy, buttons, showCover] = await Promise.all([
     presence.getSetting<number>('privacy'),

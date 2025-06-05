@@ -1,75 +1,124 @@
 import { ActivityType, Assets } from 'premid'
+import { getEpisode, getId, getImage, getTitle } from './utils.js'
 
 const presence = new Presence({
   clientId: '1314062632419852309',
 })
-const strings = presence.getStrings({
-  play: 'general.playing',
-  pause: 'general.paused',
-})
-const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Anime/assets/logo.png',
-}
-
-// state
-let playing = false
+let lastPlaybackState = false
+let playback = false
+let startTimestamp = Math.floor(Date.now() / 1000)
+let lastHref: string
+let lastUpdate = 0
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: ActivityAssets.Logo,
-    type: ActivityType.Watching,
+    startTimestamp,
+  }
+  const video = document.querySelector('video')
+  const { pathname, href } = document.location
+
+  if (video) {
+    (presenceData as PresenceData).type = ActivityType.Watching
+    playback = !video.paused && !video.ended
+
+    if (lastPlaybackState !== playback)
+      startTimestamp = Math.floor(Date.now() / 1000)
+
+    presenceData.smallImageKey = playback ? Assets.Play : Assets.Pause
+    presenceData.smallImageText = playback ? 'Playing' : 'Paused'
   }
 
-  switch (document.location.hostname) {
-    case '1anime.one': {
-      if (document.location.pathname === '/') {
-        presenceData.details = 'Checking out 1anime\'s homepage!'
-        presenceData.startTimestamp = browsingTimestamp
-      }
-      else if (document.location.pathname.includes('/anime/watch/')) {
-        // player state ig
-        const player = document.querySelector('video')!
-        const timestamps = presence.getTimestampsfromMedia(player)
-        playing = !player.paused
-        // anime info ig
-        const title = document.querySelector(
-          'div#details h3.font-Archivo',
-        )!.textContent!
-        const splitIndex = title.lastIndexOf(' - ') // title is in "Anime Title - Episode x" format
+  if (video && lastPlaybackState === playback)
+    return
+  lastPlaybackState = playback
 
-        // setting up presence
-        presenceData.details = `${
-          title.slice(0, splitIndex).trim() || 'something..'
-        }`
-        presenceData.state = `Currently on ${
-          title.slice(splitIndex + 3).trim() || 'an episode..'
-        }`
-        presenceData.smallImageKey = playing ? Assets.Play : Assets.Pause
-        presenceData.smallImageText = playing
-          ? (await strings).play
-          : (await strings).pause
-        if (playing) {
-          presenceData.startTimestamp = timestamps[0]
-          presenceData.endTimestamp = timestamps[1]
-        }
-        else {
-          delete presenceData.startTimestamp
-          delete presenceData.endTimestamp
-        }
-        // buttons-actions
-        presenceData.buttons = [
-          {
-            label: 'Watch Now',
-            url: `https://1ani.me/a/${
-              document.location.pathname.split('/')[3]
-            }`,
-          },
-        ]
-      }
-      break
+  if (pathname.startsWith('/schedule')) {
+    presenceData.details = 'Viewing Schedule...'
+
+    presenceData.buttons = [
+      {
+        label: 'View Schedule',
+        url: href,
+      },
+    ]
+  }
+  if (pathname.includes('/settings'))
+    presenceData.details = 'Viewing Settings...'
+  if (pathname.includes('/search/anime'))
+    presenceData.details = 'Searching Anime...'
+  if (href.includes('/search/anime?season='))
+    presenceData.details = 'Viewing Season...'
+  if (
+    pathname.startsWith('/anime/')
+    && !pathname.startsWith('/anime/watch')
+  ) {
+    presenceData.details = getTitle()
+    presenceData.state = 'Viewing Anime...'
+
+    const animeId = pathname.split('/')[2]
+    presenceData.buttons = [
+      {
+        label: 'View Anime',
+        url: `https://1anime.app/anime/${animeId}`,
+      },
+    ]
+  }
+  else if (pathname.startsWith('/manga/')) {
+    presenceData.details = getTitle()
+    presenceData.state = 'Viewing Manga...'
+
+    presenceData.buttons = [
+      {
+        label: 'View Manga',
+        url: href,
+      },
+    ]
+  }
+  else if (typeof presenceData.details !== 'string') {
+    presenceData.details = 'Viewing Home...'
+  }
+
+  if (pathname.startsWith('/anime/watch')) {
+    const episode = getEpisode()
+
+    presenceData.details = getTitle()
+    presenceData.state = !Number.isNaN(episode)
+      ? `Episode ${episode}`
+      : 'Unable to retrieve episode';
+    (presenceData as PresenceData).type = ActivityType.Watching
+
+    presenceData.buttons = [
+      {
+        label: 'Watch Anime',
+        url: `https://1anime.app/watch?id=${getId()}&n=${episode}`,
+      },
+    ]
+  }
+
+  if (pathname.startsWith('/profile/')) {
+    const username = pathname.split('/').pop()
+    if (username !== 'profile' && username !== '') {
+      presenceData.details = `Viewing ${username}'s Profile`
+      presenceData.buttons = [
+        {
+          label: 'View Profile',
+          url: href,
+        },
+      ]
     }
   }
+
+  const now = Date.now()
+  if (lastHref !== href || (now - lastUpdate) / 1000 >= 1) {
+    lastHref = href
+    lastUpdate = now
+  }
+  else {
+    return
+  }
+
+  presenceData.largeImageKey = getImage()
+
   presence.setActivity(presenceData)
 })

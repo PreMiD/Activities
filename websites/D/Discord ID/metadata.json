@@ -2,8 +2,8 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "name": "Dark_Ville",
-    "id": "638080361179512853"
+    "name": "PreMiD",
+    "id": "503557087041683458"
   },
   "service": "Discord ID",
   "description": {
@@ -13,7 +13,7 @@
     "wiki.discord.id",
     "discord.id"
   ],
-  "version": "1.1.5",
+  "version": "1.1.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20ID/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20ID/assets/thumbnail.png",
   "color": "#7289da",

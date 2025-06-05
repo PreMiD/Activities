@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1191396494381694976',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.round(Date.now() / 1000)
 const strings = presence.getStrings({
@@ -13,6 +13,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     startTimestamp: browsingTimestamp,
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/V/Vidoza/assets/logo.png',
+    name: 'Vidoza',
   }
   const { pathname } = document.location
   const video = document.querySelector<HTMLVideoElement>('video')

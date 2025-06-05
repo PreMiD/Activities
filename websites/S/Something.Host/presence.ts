@@ -1,10 +1,11 @@
 const presence = new Presence({
-  clientId: '783325015860838452',
+  clientId: '503557087041683458',
 })
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/S/Something.Host/assets/logo.png',
+    name: 'Something.Host',
   }
 
   // Support - support.something.host

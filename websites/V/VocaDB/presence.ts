@@ -276,14 +276,14 @@ presence.on('UpdateData', async () => {
     }
   }
   if (hostname === 'wiki.vocadb.net') {
-    presenceData.name = 'VocaDB Wiki'
-    presenceData.type = ActivityType.Playing
+    presenceData.name = 'VocaDB Wiki';
+    (presenceData as PresenceData).type = ActivityType.Playing
     if (pathArr[1])
       presenceData.details = document.querySelector('h1')
   }
   if (hostname === 'blog.vocadb.net') {
-    presenceData.name = 'VocaDB Blog'
-    presenceData.type = ActivityType.Playing
+    presenceData.name = 'VocaDB Blog';
+    (presenceData as PresenceData).type = ActivityType.Playing
     if (pathArr[1]) {
       presenceData.details = 'Viewing a post'
       presenceData.state = document.querySelector('h1')

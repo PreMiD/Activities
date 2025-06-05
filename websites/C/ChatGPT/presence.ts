@@ -20,6 +20,8 @@ async function getStrings() {
     thinkingOfPrompt: 'chatgpt.thinkingOfPrompt',
     viewingGPT: 'chatgpt.viewingGPT',
     viewingAGPT: 'chatgpt.viewingAGPT',
+    viewingImage: 'chatgpt.viewingImage',
+    viewingLibrary: 'chatgpt.viewingLibrary',
   })
 }
 
@@ -165,6 +167,11 @@ presence.on('UpdateData', async () => {
         )}`,
       )
       .replace('{1}', `${wordCount}`)
+  }
+  else if (pathname.split('/')[1] === 'library') {
+    const titleBar = document.querySelector('div[data-testid="modal-image-gen-lightbox"]')
+    presenceData.details = titleBar ? strings.viewingImage.replace('{0}', document.querySelector('div[data-testid="modal-image-gen-lightbox"] h2.text-token-text-primary')!.textContent!) : strings.viewingLibrary
+    presenceData.state = titleBar ? document.querySelector('div[data-testid="modal-image-gen-lightbox"] span.text-token-text-secondary')?.textContent : ''
   }
   else {
     presenceData.details = strings.startNewConversation

@@ -2,212 +2,238 @@ const presence = new Presence({
   clientId: '609364070684033044',
 })
 
-let currentURL = new URL(document.location.href)
-let currentPath = currentURL.pathname.replace(/^\/|\/$/g, '').split('/')
-const browsingTimestamp = Math.floor(Date.now() / 1000)
-let presenceData: PresenceData = {
-  details: 'Viewing an unsupported page',
-  largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/W/Wikipedia/assets/logo.png',
-  startTimestamp: browsingTimestamp,
+async function getStrings() {
+  return presence.getStrings(
+    {
+      browsing: 'general.browsing',
+      readingAnArticle: 'general.readingAnArticle',
+      readingArticle: 'general.readingArticle',
+      viewACategoryTalkPage: 'wikipedia.viewACategoryTalkPage',
+      viewADraft: 'general.viewADraft',
+      viewADraftTalkPage: 'wikipedia.viewADraftTalkPage',
+      viewAFile: 'general.viewAFile',
+      viewAFileTalkPage: 'wikipedia.viewAFileTalkPage',
+      viewAGadget: 'wikipedia.viewAGadget',
+      viewAGadgetDefinitionPage: 'wikipedia.viewAGadgetDefinitionPage',
+      viewAGadgetDefinitionTalkPage: 'wikipedia.viewAGadgetDefinitionTalkPage',
+      viewAGadgetTalkPage: 'wikipedia.viewAGadgetTalkPage',
+      viewAHelppage: 'general.viewAHelppage',
+      viewAHelpTalkPage: 'wikipedia.viewAHelpTalkPage',
+      viewAMedia: 'wikipedia.viewAMedia',
+      viewAMediaSubtitles: 'wikipedia.viewAMediaSubtitles',
+      viewAMediaSubtitlesTalkPage: 'wikipedia.viewAMediaSubtitlesTalkPage',
+      viewAModule: 'general.viewAModule',
+      viewAModuleTalkPage: 'wikipedia.viewAModuleTalkPage',
+      viewAnEducationProgramPage: 'wikipedia.viewAnEducationProgramPage',
+      viewAnEducationProgramTalkPage: 'wikipedia.viewAnEducationProgramTalkPage',
+      viewAnInterface: 'wikipedia.viewAnInterface',
+      viewAnInterfaceTalkPage: 'wikipedia.viewAnInterfaceTalkPage',
+      viewAnUsersPage: 'wikipedia.viewAnUsersPage',
+      viewAnUsersTalkPage: 'wikipedia.viewAnUsersTalkPage',
+      viewAPage: 'general.viewAPage',
+      viewAPortal: 'wikipedia.viewAPortal',
+      viewAPortalTalkPage: 'wikipedia.viewAPortalTalkPage',
+      viewAProjectPage: 'wikipedia.viewAProjectPage',
+      viewAProjectTalkPage: 'wikipedia.viewAProjectTalkPage',
+      viewASpecialPage: 'wikipedia.viewSpecialPage',
+      viewATalkPage: 'wikipedia.viewATalkPage',
+      ViewATemplate: 'general.ViewATemplate',
+      viewATemplateTalkPage: 'wikipedia.viewATemplateTalkPage',
+      viewATopic: 'general.viewATopic',
+      viewAWikipediaBook: 'wikipedia.viewAWikipediaBook',
+      viewAWikipediaBookTalkPage: 'wikipedia.viewAWikipediaBookTalkPage',
+      viewCategory: 'general.viewCategory',
+      viewCategoryTalkPage: 'wikipedia.viewCategoryTalkPage',
+      viewDraft: 'general.viewDraft',
+      viewDraftTalkPage: 'wikipedia.viewDraftTalkPage',
+      viewEducationProgramPage: 'wikipedia.viewEducationProgramPage',
+      viewEducationProgramTalkPage: 'wikipedia.viewEducationProgramTalkPage',
+      viewFile: 'general.viewFile',
+      viewFileTalkPage: 'wikipedia.viewFileTalkPage',
+      viewGadget: 'wikipedia.viewGadget',
+      viewGadgetDefinitionPage: 'wikipedia.viewGadgetDefinitionPage',
+      viewGadgetDefinitionTalkPage: 'wikipedia.viewGadgetDefinitionTalkPage',
+      viewGadgetTalkPage: 'wikipedia.viewGadgetTalkPage',
+      viewHelppage: 'general.viewHelppage',
+      viewHelpTalkPage: 'wikipedia.viewHelpTalkPage',
+      viewHome: 'general.viewHome',
+      viewInterface: 'wikipedia.viewInterface',
+      viewInterfaceTalkPage: 'wikipedia.viewInterfaceTalkPage',
+      viewMedia: 'wikipedia.viewMedia',
+      viewMediaSubtitles: 'wikipedia.viewMediaSubtitles',
+      viewMediaSubtitlesTalkPage: 'wikipedia.viewMediaSubtitlesTalkPage',
+      viewModule: 'general.viewModule',
+      viewModuleTalkPage: 'wikipedia.viewModuleTalkPage',
+      viewPage: 'general.viewPage',
+      viewPortal: 'wikipedia.viewPortal',
+      viewPortalTalkPage: 'wikipedia.viewPortalTalkPage',
+      viewProjectPage: 'wikipedia.viewProjectPage',
+      viewProjectTalkPage: 'wikipedia.viewProjectTalkPage',
+      viewSpecialPage: 'wikipedia.viewASpecialPage',
+      viewTalkPage: 'wikipedia.viewTalkPage',
+      ViewTemplate: 'general.ViewTemplate',
+      viewTemplateTalkPage: 'wikipedia.viewTemplateTalkPage',
+      viewTopic: 'general.viewTopic',
+      viewUsersPage: 'wikipedia.viewUsersPage',
+      viewUsersTalkPage: 'wikipedia.viewUsersTalkPage',
+      viewWikipediaBook: 'wikipedia.viewWikipediaBook',
+      viewWikipediaBookTalkPage: 'wikipedia.viewWikipediaBookTalkPage',
+    },
+
+  )
 }
-const updateCallback = {
-  _function: null as unknown as () => void,
-  get function(): () => void {
-    return this._function
-  },
-  set function(parameter) {
-    this._function = parameter
-  },
-  get present(): boolean {
-    return this._function !== null
-  },
-}
-/**
- * Initialize/reset presenceData.
- */
-function resetData(defaultData: PresenceData = {
-  details: 'Viewing an unsupported page',
-  largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/W/Wikipedia/assets/logo.png',
-  startTimestamp: browsingTimestamp,
-}): void {
-  currentURL = new URL(document.location.href)
-  currentPath = currentURL.pathname.replace(/^\/|\/$/g, '').split('/')
-  presenceData = { ...defaultData }
-}
-/**
- * Search for URL parameters.
- * @param urlParam The parameter that you want to know about the value.
- */
-function getURLParam(urlParam: string): string {
-  return currentURL.searchParams.get(urlParam)!
+let strings: Awaited<ReturnType<typeof getStrings>>
+let prevURL: string
+let browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/W/Wikipedia/assets/logo.png',
 }
 
-((): void => {
-  if (currentURL.hostname === 'www.wikipedia.org') {
-    presenceData.details = 'On the home page'
+presence.on('UpdateData', async () => {
+  const { pathname, href } = document.location
+  const presenceData: PresenceData = {
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: browsingTimestamp,
   }
-  else {
-    let title: string
-    const actionResult = (): string =>
-      getURLParam('action') || getURLParam('veaction')
-    const [lang] = currentURL.hostname.split('.')
-    const titleFromURL = (): string => {
-      return decodeURI(
-        (currentPath[1] === 'index.php'
-          ? getURLParam('title')
-          : currentPath.slice(1).join('/')
-        ).replaceAll('_', ' '),
-      )
-    }
+  const privacy = await presence.getSetting<number>('privacy')
+  const title = document.querySelector('.mw-page-title-main,h1')?.textContent
 
-    try {
-      title = document.querySelector('h1')?.textContent ?? ''
-    }
-    catch {
-      title = titleFromURL()
-    }
+  let details: { [index: string]: string }
 
-    /**
-     * Returns details based on the namespace.
-     * @link https://en.wikipedia.org/wiki/Wikipedia:Namespace
-     */
-    const namespaceDetails = (): string => {
-      const details: { [index: string]: string } = {
-        '-2': 'Viewing a media',
-        '-1': 'Viewing a special page',
-        '0': 'Reading an article',
-        '1': 'Viewing a talk page',
-        '2': 'Viewing a user page',
-        '3': 'Viewing a user talk page',
-        '4': 'Viewing a project page',
-        '5': 'Viewing a project talk page',
-        '6': 'Viewing a file',
-        '7': 'Viewing a file talk page',
-        '8': 'Viewing an interface page',
-        '9': 'Viewing an interface talk page',
-        '10': 'Viewing a template',
-        '11': 'Viewing a template talk page',
-        '12': 'Viewing a help page',
-        '13': 'Viewing a help talk page',
-        '14': 'Viewing a category',
-        '15': 'Viewing a category talk page',
-        '100': 'Viewing a portal',
-        '101': 'Viewing a portal talk page',
-        '118': 'Viewing a draft',
-        '119': 'Viewing a draft talk page',
-        '710': 'Viewing a media\'s subtitles',
-        '711': 'Viewing a media\'s subtitles talk page',
-        '828': 'Viewing a module',
-        '829': 'Viewing a module talk page',
-        '108': 'Viewing a Wikipedia book',
-        '109': 'Viewing a Wikipedia book talk page',
-        '446': 'Viewing an Education Program page',
-        '447': 'Viewing an Education Program talk page',
-        '2300': 'Viewing a gadget',
-        '2301': 'Viewing a gadget talk page',
-        '2302': 'Viewing a gadget definition page',
-        '2303': 'Viewing a gadget definition talk page',
-        '2600': 'Viewing a topic',
+  if (!prevURL)
+    prevURL = href
+  else if (prevURL !== href)
+    browsingTimestamp = Math.floor(Date.now() / 1000)
+
+  if (!strings) {
+    strings = await getStrings()
+  }
+
+  switch (true) {
+    case pathname === '':
+    case pathname === '/': {
+      presenceData.details = privacy === 0 || privacy === 1
+        ? strings.viewHome
+        : strings.browsing
+      break
+    }
+    case privacy === 0: {
+      details = {
+        '-2': strings.viewMedia,
+        '-1': strings.viewSpecialPage,
+        '0': strings.readingArticle,
+        '1': strings.viewTalkPage,
+        '2': strings.viewUsersPage,
+        '3': strings.viewUsersTalkPage,
+        '4': strings.viewProjectPage,
+        '5': strings.viewProjectTalkPage,
+        '6': strings.viewFile,
+        '7': strings.viewFileTalkPage,
+        '8': strings.viewInterface,
+        '9': strings.viewInterfaceTalkPage,
+        '10': strings.ViewTemplate,
+        '11': strings.viewTemplateTalkPage,
+        '12': strings.viewHelppage,
+        '13': strings.viewCategoryTalkPage,
+        '14': strings.viewCategory,
+        '15': strings.viewHelpTalkPage,
+        '100': strings.viewPortal,
+        '101': strings.viewPortalTalkPage,
+        '118': strings.viewDraft,
+        '119': strings.viewDraftTalkPage,
+        '710': strings.viewMediaSubtitles,
+        '711': strings.viewMediaSubtitlesTalkPage,
+        '828': strings.viewModule,
+        '829': strings.viewModuleTalkPage,
+        '108': strings.viewWikipediaBook,
+        '109': strings.viewWikipediaBookTalkPage,
+        '446': strings.viewEducationProgramPage,
+        '447': strings.viewEducationProgramTalkPage,
+        '2300': strings.viewGadget,
+        '2301': strings.viewGadgetTalkPage,
+        '2302': strings.viewGadgetDefinitionPage,
+        '2303': strings.viewGadgetDefinitionTalkPage,
+        '2600': strings.viewTopic,
       }
-      return (
-        details[
+      if (details) {
+        presenceData.details = details[
           [...document.querySelector('body')?.classList ?? []]
             .find(v => /ns--?\d/.test(v))
             ?.split('[', 1)[0]
             ?.slice(3) ?? ''
-        ] || 'Viewing a page'
-      )
-    }
-
-    //
-    // Important note:
-    //
-    // When checking for the current location, avoid using the URL.
-    // The URL is going to be different in other languages.
-    // Use the elements on the page instead.
-    //
-
-    if (
-      (
-        (document.querySelector('#n-mainpage a')
-          || document.querySelector('#p-navigation a')
-          || document.querySelector('.mw-wiki-logo')) as HTMLAnchorElement
-      )?.href === currentURL.href
-    ) {
-      presenceData.details = 'On the main page'
-    }
-    else if (document.querySelector('#wpLoginAttempt')) {
-      presenceData.details = 'Logging in'
-    }
-    else if (document.querySelector('#wpCreateaccount')) {
-      presenceData.details = 'Creating an account'
-    }
-    else if (document.querySelector('.searchresults')) {
-      presenceData.details = 'Searching for a page'
-      presenceData.state = (
-        document.querySelector('input[type=search]') as HTMLInputElement
-      ).value
-    }
-    else if (actionResult() === 'history') {
-      presenceData.details = 'Viewing revision history'
-      presenceData.state = titleFromURL()
-    }
-    else if (getURLParam('diff')) {
-      presenceData.details = 'Viewing difference between revisions'
-      presenceData.state = titleFromURL()
-    }
-    else if (getURLParam('oldid')) {
-      presenceData.details = 'Viewing an old revision of a page'
-      presenceData.state = titleFromURL()
-    }
-    else if (
-      document.querySelector('#ca-ve-edit')
-      || getURLParam('veaction')
-    ) {
-      presenceData.state = `${
-        title.toLowerCase() === titleFromURL().toLowerCase()
-          ? `${title}`
-          : `${title} (${titleFromURL()})`
-      }`
-      updateCallback.function = (): void => {
-        if (actionResult() === 'edit' || actionResult() === 'editsource')
-          presenceData.details = 'Editing a page'
-        else presenceData.details = namespaceDetails()
+        ] || strings.viewAPage
       }
+      break
     }
-    else if (actionResult() === 'edit') {
-      presenceData.details = document.querySelector('#ca-edit')
-        ? 'Editing a page'
-        : 'Viewing source'
-      presenceData.state = titleFromURL()
-    }
-    else {
-      presenceData.details = namespaceDetails()
-      presenceData.state = `${
-        title.toLowerCase() === titleFromURL().toLowerCase()
-          ? `${title}`
-          : `${title} (${titleFromURL()})`
-      }`
-    }
-
-    if (lang !== 'en') {
-      if (presenceData.state)
-        presenceData.state += ` (${lang})`
-      else presenceData.details += ` (${lang})`
+    case privacy === 1:
+    {
+      details = {
+        '-2': strings.viewAMedia,
+        '-1': strings.viewASpecialPage,
+        '0': strings.readingAnArticle,
+        '1': strings.viewATalkPage,
+        '2': strings.viewAnUsersPage,
+        '3': strings.viewAnUsersTalkPage,
+        '4': strings.viewAProjectPage,
+        '5': strings.viewAProjectTalkPage,
+        '6': strings.viewAFile,
+        '7': strings.viewAFileTalkPage,
+        '8': strings.viewAnInterface,
+        '9': strings.viewAnInterfaceTalkPage,
+        '10': strings.ViewATemplate,
+        '11': strings.viewATemplateTalkPage,
+        '12': strings.viewAHelppage,
+        '13': strings.viewACategoryTalkPage,
+        '14': strings.viewCategory,
+        '15': strings.viewAHelpTalkPage,
+        '100': strings.viewAPortal,
+        '101': strings.viewAPortalTalkPage,
+        '118': strings.viewADraft,
+        '119': strings.viewADraftTalkPage,
+        '710': strings.viewAMediaSubtitles,
+        '711': strings.viewAMediaSubtitlesTalkPage,
+        '828': strings.viewAModule,
+        '829': strings.viewAModuleTalkPage,
+        '108': strings.viewAWikipediaBook,
+        '109': strings.viewAWikipediaBookTalkPage,
+        '446': strings.viewAnEducationProgramPage,
+        '447': strings.viewAnEducationProgramTalkPage,
+        '2300': strings.viewAGadget,
+        '2301': strings.viewAGadgetTalkPage,
+        '2302': strings.viewAGadgetDefinitionPage,
+        '2303': strings.viewAGadgetDefinitionTalkPage,
+        '2600': strings.viewATopic,
+      }
+      if (details) {
+        presenceData.details = details[
+          [...document.querySelector('body')?.classList ?? []]
+            .find(v => /ns--?\d/.test(v))
+            ?.split('[', 1)[0]
+            ?.slice(3) ?? ''
+        ] || strings.viewAPage
+      }
+      break
     }
   }
-})()
 
-if (updateCallback.present) {
-  const defaultData = { ...presenceData }
-  presence.on('UpdateData', async () => {
-    resetData(defaultData)
-    updateCallback.function()
-    presence.setActivity(presenceData)
-  })
-}
-else {
-  presence.on('UpdateData', async () => {
-    presence.setActivity(presenceData)
-  })
-}
+  if (privacy === 0 && title)
+    presenceData.state = title
+
+  if (
+    privacy === 3
+    && presenceData.smallImageKey
+    && presenceData.smallImageText
+  ) {
+    delete presenceData.smallImageText
+    delete presenceData.smallImageKey
+  }
+
+  if (privacy === 3 && presenceData.smallImageKey)
+    delete presenceData.smallImageKey
+
+  if (privacy !== 0 && presenceData.state)
+    delete presenceData.state
+
+  presence.setActivity(presenceData)
+})
