@@ -201,13 +201,11 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = Assets.Reading
         break
       }
-      
       case '/user/bookmarks': {
         presenceData.details = 'Managing Bookmarks'
         presenceData.smallImageKey = ActivityAssets.Settings
         break
       }
-      
       case '/upcoming': {
         presenceData.details = 'Looking at Upcoming'
         presenceData.smallImageKey = Assets.Reading
