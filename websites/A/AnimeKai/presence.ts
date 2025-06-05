@@ -193,17 +193,28 @@ presence.on('UpdateData', async () => {
       }
       case '/user/sync': {
         presenceData.details = 'Syncing with AL'
-        presenceData.smallImageKey = Assets.Writing
+        presenceData.smallImageKey = Assets.Live
         break
       }
       case '/user/notifications': {
-        presenceData.details = 'Looking at Notifications'
+        const type = new URLSearchParams(window.location.search).get('type')
+        
+        if (type === 'community') {
+          presenceData.details = 'Looking at Community Notifications'
+        } else {
+          presenceData.details = 'Looking at Anime Notifications'
+        }
         presenceData.smallImageKey = Assets.Reading
         break
       }
       case '/user/bookmarks': {
         presenceData.details = 'Managing Bookmarks'
         presenceData.smallImageKey = ActivityAssets.Settings
+        break
+      }
+      case '/upcoming': {
+        presenceData.details = 'Looking at Upcoming'
+        presenceData.smallImageKey = Assets.Reading
         break
       }
       default: {
