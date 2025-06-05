@@ -1,9 +1,13 @@
-import { ActivityAssets } from '../presence.js'
-
 export enum SiteId {
   MangaLib = '1',
   RanobeLib = '3',
   AnimeLib = '5',
+}
+
+enum CustomAssets {
+  MangaLibLogo = 'https://i.imgur.com/FY6BDdR.png',
+  RanobeLibLogo = 'https://i.imgur.com/1Dcjjm0.png',
+  AnimeLibLogo = 'https://i.imgur.com/9Oh0Y36.png',
 }
 
 export function getSiteId(hostname: string) {
@@ -22,11 +26,11 @@ export function getSiteId(hostname: string) {
 export function switchLogo(siteId: SiteId) {
   switch (siteId) {
     case SiteId.MangaLib:
-      return ActivityAssets.MangaLibLogo
+      return CustomAssets.MangaLibLogo
     case SiteId.RanobeLib:
-      return ActivityAssets.RanobeLibLogo
+      return CustomAssets.RanobeLibLogo
     case SiteId.AnimeLib:
-      return ActivityAssets.AnimeLibLogo
+      return CustomAssets.AnimeLibLogo
   }
 }
 

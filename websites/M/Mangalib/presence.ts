@@ -2,7 +2,7 @@ import type { AnimeData } from './api/models/anime.js'
 import type { AgeRestriction } from './api/models/common.js'
 import type { MangaData } from './api/models/manga.js'
 import type { RanobeData } from './api/models/ranobe.js'
-import { ActivityType, getTimestamps, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
 import { Lib } from './api/lib.js'
 import { cleanUrl, getSiteId, SiteId, switchLogo } from './api/utils.js'
 
@@ -10,14 +10,6 @@ const presence = new Presence({
   clientId: '684124119146692619',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-
-export enum ActivityAssets {
-  MangaLibLogo = 'https://i.imgur.com/FY6BDdR.png',
-  RanobeLibLogo = 'https://i.imgur.com/1Dcjjm0.png',
-  AnimeLibLogo = 'https://i.imgur.com/9Oh0Y36.png',
-  Play = 'https://cdn.rcd.gg/PreMiD/resources/play.png',
-  Pause = 'https://cdn.rcd.gg/PreMiD/resources/pause.png',
-}
 
 interface IFrameVideo {
   duration: number
@@ -603,7 +595,7 @@ presence.on('UpdateData', async () => {
               },
             ]
 
-            presenceData.smallImageKey = ActivityAssets.Pause
+            presenceData.smallImageKey = Assets.Pause
             presenceData.smallImageText = 'На паузе'
           }
 
@@ -611,8 +603,8 @@ presence.on('UpdateData', async () => {
             if (video) {
               [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
               presenceData.smallImageKey = video.paused
-                ? ActivityAssets.Pause
-                : ActivityAssets.Play
+                ? Assets.Pause
+                : Assets.Play
               presenceData.smallImageText = video.paused
                 ? 'На паузе'
                 : 'Воспроизводится'
@@ -625,8 +617,8 @@ presence.on('UpdateData', async () => {
                 iFrameVideo.duration,
               )
               presenceData.smallImageKey = iFrameVideo.paused
-                ? ActivityAssets.Pause
-                : ActivityAssets.Play
+                ? Assets.Pause
+                : Assets.Play
               presenceData.smallImageText = iFrameVideo.paused
                 ? 'На паузе'
                 : 'Воспроизводится'
