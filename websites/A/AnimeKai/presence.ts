@@ -192,7 +192,7 @@ presence.on('UpdateData', async () => {
         break
       }
       case '/user/notifications': {
-        const type = new URLSearchParams(window.location.search).get('type')
+        const type = new URLSearchParams(document.location.search).get('type')
         if (type === 'community') {
           presenceData.details = 'Looking at Community Notifications'
         }
