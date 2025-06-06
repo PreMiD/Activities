@@ -146,7 +146,7 @@ presence.on('UpdateData', async () => {
     if (animeData.animeTitle) {
       presenceData.name = animeData.animeTitle
       presenceData.details = animeData.episodeNumber || 'Miau!'
-      presenceData.state = ''
+      delete presenceData.state
       presenceData.type = ActivityType.Watching
       if (animeData.videoStatus === 'Reproduciendo') {
         presenceData.smallImageKey = Assets.Play
