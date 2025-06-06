@@ -145,7 +145,7 @@ presence.on('UpdateData', async () => {
     const animeData = await getAnimeInformation()
     if (animeData.animeTitle) {
       presenceData.name = animeData.animeTitle
-      presenceData.details = animeData.episodeNumber || 'Episodio Desconocido'
+      presenceData.details = animeData.episodeNumber || 'Miau!'
       presenceData.state = ''
       presenceData.type = ActivityType.Watching
       if (animeData.videoStatus === 'Reproduciendo') {
