@@ -61,15 +61,16 @@ async function updateSeasonInformation(titleId: string) {
     const doc = new DOMParser().parseFromString(html, 'text/html')
     const banner = doc.querySelector('#app-wrapper > main > div.flex.flex-col.md\\:flex-row > div.flex > div.w-24.md\\:w-52.flex-none.justify-start.items-start > div > img')?.getAttribute('src')
     const bannerUrl = `https://anixl.to${banner}`
-    const fullName = doc.querySelector("#app-wrapper > main > div.flex.flex-col.md\\:flex-row > div.mt-3.md\\:mt-0.md\\:pl-3.grow.grid.gap-3.grid-cols-1.lg\\:grid-cols-3 > div.space-y-2.hidden.md\\:block > h3 > a")?.textContent
+    const fullName = doc.querySelector('#app-wrapper > main > div.flex.flex-col.md\\:flex-row > div.mt-3.md\\:mt-0.md\\:pl-3.grow.grid.gap-3.grid-cols-1.lg\\:grid-cols-3 > div.space-y-2.hidden.md\\:block > h3 > a')?.textContent
     const cleanName = fullName!.split(/Season\s+\d+/i)[0]!.trim()
     cacheSeason = {
-      bannerUrl: bannerUrl,
-      titleId: '',
+      bannerUrl,
+      titleId,
       nameAnime: cleanName,
     }
-  } catch (e) {
-    console.error(`Error fetching banner`, e)
+  } 
+  catch (e) {
+    console.error('Error fetching banner', e)
   }
 }
 
@@ -136,7 +137,9 @@ presence.on('UpdateData', async () => {
   if (pathname.startsWith('/title/')) {
     const parts = pathname.split('/')
     titleId = parts[2]
-    if (titleId) await updateSeasonInformation(titleId)
+    if (titleId) {
+      await updateSeasonInformation(titleId)
+    }
   }
 
   if (videoActive()) {
@@ -154,7 +157,8 @@ presence.on('UpdateData', async () => {
       if (info.isPlaying && info.startTs && info.endTs) {
         presenceData.startTimestamp = info.startTs
         presenceData.endTimestamp = info.endTs
-      } else {
+      } 
+      else {
         delete presenceData.startTimestamp
         delete presenceData.endTimestamp
       }
