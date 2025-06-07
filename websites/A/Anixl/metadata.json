@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Anant",
+    "id": "629851641579044874"
+  },
+  "contributors": [
+    {
+      "name": "xDoritos",
+      "id": "432215088686956565"
+    }
+  ],
+  "service": "Anixl",
+  "description": {
+    "en": "Anixl is a modern anime tracker and viewer. Track, review, and organize anime the way you like.",
+    "hi": "Anixl एक आधुनिक एनीमे ट्रैकर है जहाँ आप आसानी से एनीमे ट्रैक, रिव्यू और मैनेज कर सकते हैं।"
+  },
+  "url": [
+    "anixl.to",
+    "www.anixl.to"
+  ],
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/ycdcwCC0/icon.png",
+  "thumbnail": "https://i.ibb.co/8DhVyvVy/thumbnail.png",
+  "color": "#8151ff",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "manga",
+    "tracker",
+    "anilist"
+  ]
+}
