@@ -7,7 +7,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.ibb.co/ycdcwCC0/icon.png',
+  Logo = 'https://imgur.com/G2blWgf.png',
 }
 
 function videoActive() {
@@ -68,7 +68,7 @@ async function updateSeasonInformation(titleId: string) {
       titleId,
       nameAnime: cleanName,
     }
-  } 
+  }
   catch (e) {
     console.error('Error fetching banner', e)
   }
@@ -157,7 +157,7 @@ presence.on('UpdateData', async () => {
       if (info.isPlaying && info.startTs && info.endTs) {
         presenceData.startTimestamp = info.startTs
         presenceData.endTimestamp = info.endTs
-      } 
+      }
       else {
         delete presenceData.startTimestamp
         delete presenceData.endTimestamp
