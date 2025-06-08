@@ -65,6 +65,7 @@ presence.on('UpdateData', async () => {
 
     if (!video.paused) {
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+      delete presenceData.smallImageKey
     }
     else {
       presenceData.smallImageKey = Assets.Pause
