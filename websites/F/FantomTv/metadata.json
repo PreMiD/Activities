@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "795215767104651294",
+    "name": "mr_leaderyt"
+  },
+  "service": "FantomTv",
+  "description": {
+    "en": "FantomTV is your all-in-one binge zone for the latest Movies, TV Shows, and Anime—streamed in style with a sleek UI, smooth navigation, and savage recommendations.\n🎥 From trending thrillers to cult anime classics, we got it all.\n✨ Watch. Chill. Repeat."
+  },
+  "url": "fantomtv.netlify.app",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/Parthsadaria/Fantom-assets/refs/heads/main/fantom_512.png",
+  "thumbnail": "https://raw.githubusercontent.com/Parthsadaria/Fantom-assets/refs/heads/main/fantom_thumbnail.png",
+  "color": "#000000",
+  "category": "videos",
+  "tags": [
+    "movie",
+    "tv",
+    "anime",
+    "streaming"
+  ]
+}
