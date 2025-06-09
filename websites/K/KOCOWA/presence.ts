@@ -165,7 +165,7 @@ presence.on('UpdateData', async () => {
     presence.setActivity(presenceData)
     return
   }
-  else if(pathname.includes('search')) {
+  else if (pathname.includes('search')) {
     presenceData.details = strings.NAV_SEARCH_DETAILS
     presenceData.state = `${strings.NAV_SEARCH_STATE} KDramas!`
     presenceData.smallImageText = `${strings.NAV_SEARCH_STATE} KDramas!`
@@ -218,7 +218,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = `${strings.NAV_SEASON_DETAILS} ${seasonInfo.title}`
         presenceData.state = seasonInfo.description
         presenceData.smallImageText = `${strings.NAV_SEASON_DETAILS} ${seasonInfo.title}`
-        presenceData.largeImageKey = seasonInfo.bannerUrl ||  ActivityAssets.Logo
+        presenceData.largeImageKey = seasonInfo.bannerUrl || ActivityAssets.Logo
       }
       presence.setActivity(presenceData)
       return
