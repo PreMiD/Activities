@@ -73,24 +73,6 @@ async function fetchTvDetails(id: string) {
   }
 }
 
-presence.setActivity(
-  {
-    type: ActivityType.Watching,
-    details: 'Browsing FantomTV 🎬',
-    state: 'Ready to stream movies, shows & anime 🍿',
-    largeImageKey: defaultLogo,
-    largeImageText: 'FantomTV - Watch. Chill. Repeat.',
-    smallImageKey: Assets.Play,
-    startTimestamp: browsingTimestamp,
-    buttons: [
-      {
-        label: 'Visit FantomTV',
-        url: 'https://fantomtv.netlify.app/',
-      },
-    ],
-  },
-)
-
 presence.on('UpdateData', async () => {
   let details = 'Browsing FantomTV 🎬'
   let state = 'Ready to stream movies, shows & anime 🍿'
@@ -100,17 +82,10 @@ presence.on('UpdateData', async () => {
   let smallImageText = 'Browsing FantomTV'
   const startTimestamp = browsingTimestamp
   const endTimestamp: number | undefined = undefined
-  let buttons: [ButtonData, ButtonData?] = [
-    {
-      label: 'Visit FantomTV',
-      url: 'https://fantomtv.netlify.app/',
-    },
-  ]
+  let buttons: [ButtonData, ButtonData?] | undefined
 
   const videoModal = document.getElementById('video-modal')
-  const videoFrame = document.getElementById(
-    'video-frame',
-  ) as HTMLIFrameElement | null
+  const videoFrame = document.querySelector<HTMLIFrameElement>('#video-frame')
 
   if (
     videoModal
@@ -147,10 +122,6 @@ presence.on('UpdateData', async () => {
             label: 'View on TMDB',
             url: `https://www.themoviedb.org/movie/${id}`,
           },
-          {
-            label: 'Watch on FantomTV',
-            url: document.location.href,
-          },
         ]
       }
       else {
@@ -182,10 +153,6 @@ presence.on('UpdateData', async () => {
             label: 'View on TMDB',
             url: `https://www.themoviedb.org/tv/${id}`,
           },
-          {
-            label: 'Watch on FantomTV',
-            url: document.location.href,
-          },
         ]
       }
       else {
@@ -201,19 +168,11 @@ presence.on('UpdateData', async () => {
           || 'Unknown Anime'
       details = `Watching: ${animeTitle}`
       state = 'Streaming anime episode 🍥'
-      const animeImg = document.querySelector(
-        '#anime-player-poster img',
-      ) as HTMLImageElement | null
+      const animeImg = document.querySelector<HTMLImageElement>('#anime-player-poster img')
       largeImageKey = animeImg?.src || defaultLogo
       largeImageText = animeTitle
       smallImageKey = Assets.Anime
       smallImageText = 'Now Playing'
-      buttons = [
-        {
-          label: 'Watch on FantomTV',
-          url: document.location.href,
-        },
-      ]
     }
   }
   else
@@ -227,21 +186,13 @@ presence.on('UpdateData', async () => {
         || 'Unknown Movie'
       details = `Viewing details of ${movieTitle}`
       state = 'Checking out info, cast, and more!'
-      const imgElement = document.getElementById(
-        'details-backdrop',
-      ) as HTMLImageElement | null
+      const imgElement = document.querySelector<HTMLImageElement>('#details-backdrop')
       if (imgElement && imgElement.src && !imgElement.src.includes('placehold.co')) {
         largeImageKey = imgElement.src
         largeImageText = movieTitle
       }
       smallImageKey = Assets.Info
       smallImageText = 'Viewing Details'
-      buttons = [
-        {
-          label: 'Watch Now',
-          url: document.location.href,
-        },
-      ]
     }
     else
       if (
@@ -250,21 +201,13 @@ presence.on('UpdateData', async () => {
       ) {
         details = 'Browsing Anime 🍥'
         state = 'Explore trending anime series!'
-        const heroImg = document.querySelector(
-          '#anime-hero-slider img',
-        ) as HTMLImageElement | null
+        const heroImg = document.querySelector<HTMLImageElement>('#anime-hero-slider img')
         if (heroImg && heroImg.src && !heroImg.src.includes('placehold.co')) {
           largeImageKey = heroImg.src
           largeImageText = 'Anime Spotlight'
         }
         smallImageKey = Assets.Anime
         smallImageText = 'Anime Section'
-        buttons = [
-          {
-            label: 'Browse Anime',
-            url: document.location.href,
-          },
-        ]
       }
       else
         if (
@@ -273,21 +216,13 @@ presence.on('UpdateData', async () => {
         ) {
           details = 'Browsing TV Shows 📺'
           state = 'Find your next binge!'
-          const heroImg = document.querySelector(
-            '#tv-hero-slider img',
-          ) as HTMLImageElement | null
+          const heroImg = document.querySelector<HTMLImageElement>('#tv-hero-slider img')
           if (heroImg && heroImg.src && !heroImg.src.includes('placehold.co')) {
             largeImageKey = heroImg.src
             largeImageText = 'TV Show Spotlight'
           }
           smallImageKey = Assets.TV
           smallImageText = 'TV Shows Section'
-          buttons = [
-            {
-              label: 'Browse TV Shows',
-              url: document.location.href,
-            },
-          ]
         }
         else
           if (
@@ -299,21 +234,13 @@ presence.on('UpdateData', async () => {
         || 'Profile'
             details = `Viewing profile: ${username}`
             state = 'Checking out watch history & lists'
-            const imgElement = document.getElementById(
-              'profile-avatar',
-            ) as HTMLImageElement | null
+            const imgElement = document.querySelector<HTMLImageElement>('#profile-avatar')
             if (imgElement && imgElement.src) {
               largeImageKey = imgElement.src
               largeImageText = username
             }
             smallImageKey = Assets.Profile
             smallImageText = 'Profile Section'
-            buttons = [
-              {
-                label: 'View Profile',
-                url: document.location.href,
-              },
-            ]
           }
           else
             if (
@@ -324,12 +251,6 @@ presence.on('UpdateData', async () => {
               state = 'Checking your favorite movies and shows'
               smallImageKey = Assets.Star
               smallImageText = 'Wishlist'
-              buttons = [
-                {
-                  label: 'View Wishlist',
-                  url: document.location.href,
-                },
-              ]
             }
 
   presence.setActivity(
