@@ -43,7 +43,27 @@ const API_KEY = 'f1e9f26e7db297085d5c15e7ea4f15db'
 const API_URL = 'https://api.themoviedb.org/3'
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/'
 
+// Cache to prevent repeated API calls
+const cache = new Map<string, any>()
+const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
+
+// Track current state to prevent unnecessary updates
+let currentState = {
+  type: '',
+  id: '',
+  lastUpdate: 0,
+  data: null as any,
+}
+
 async function fetchMovieDetails(id: string) {
+  const cacheKey = `movie-${id}`
+  const cached = cache.get(cacheKey)
+
+  // Return cached data if it exists and is still valid
+  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    return cached.data
+  }
+
   try {
     const res = await fetch(
       `${API_URL}/movie/${id}?api_key=${API_KEY}&language=en-US`,
@@ -51,7 +71,15 @@ async function fetchMovieDetails(id: string) {
     if (!res.ok)
       return null
 
-    return await res.json()
+    const data = await res.json()
+
+    // Cache the result
+    cache.set(cacheKey, {
+      data,
+      timestamp: Date.now(),
+    })
+
+    return data
   }
   catch {
     return null
@@ -59,6 +87,14 @@ async function fetchMovieDetails(id: string) {
 }
 
 async function fetchTvDetails(id: string) {
+  const cacheKey = `tv-${id}`
+  const cached = cache.get(cacheKey)
+
+  // Return cached data if it exists and is still valid
+  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    return cached.data
+  }
+
   try {
     const res = await fetch(
       `${API_URL}/tv/${id}?api_key=${API_KEY}&language=en-US`,
@@ -66,12 +102,33 @@ async function fetchTvDetails(id: string) {
     if (!res.ok)
       return null
 
-    return await res.json()
+    const data = await res.json()
+
+    // Cache the result
+    cache.set(cacheKey, {
+      data,
+      timestamp: Date.now(),
+    })
+
+    return data
   }
   catch {
     return null
   }
 }
+
+// Clean up old cache entries
+function cleanupCache() {
+  const now = Date.now()
+  for (const [key, value] of cache.entries()) {
+    if (now - value.timestamp > CACHE_DURATION) {
+      cache.delete(key)
+    }
+  }
+}
+
+// Cleanup cache every 10 minutes
+setInterval(cleanupCache, 10 * 60 * 1000)
 
 presence.on('UpdateData', async () => {
   let details = 'Browsing FantomTV 🎬'
@@ -98,12 +155,22 @@ presence.on('UpdateData', async () => {
     const type = url.searchParams.get('type')
     const id = url.searchParams.get('id')
 
+    // Check if we need to fetch new data
+    const now = Date.now()
+    const shouldFetch = currentState.type !== type
+      || currentState.id !== id
+      || (now - currentState.lastUpdate > CACHE_DURATION)
+
     if (type === 'movie' && id) {
-      const movie = await fetchMovieDetails(id)
+      let movie = currentState.data
+
+      if (shouldFetch) {
+        movie = await fetchMovieDetails(id)
+        currentState = { type, id, lastUpdate: now, data: movie }
+      }
+
       if (movie) {
-        details = `Watching: ${
-          movie.title || movie.original_title || 'Unknown Movie'
-        }`
+        details = `Watching: ${movie.title || movie.original_title || 'Unknown Movie'}`
         state = movie.tagline
           ? movie.tagline
           : movie.release_date
@@ -115,7 +182,7 @@ presence.on('UpdateData', async () => {
             ? `${IMAGE_BASE_URL}w500${movie.poster_path}`
             : defaultLogo
         largeImageText = movie.title || 'FantomTV'
-        smallImageKey = Assets.Play
+        smallImageKey = Assets.Movie
         smallImageText = 'Now Playing'
         buttons = [
           {
@@ -127,12 +194,18 @@ presence.on('UpdateData', async () => {
       else {
         details = 'Watching: Unknown Movie'
         state = 'Streaming now 🍿'
-        smallImageKey = Assets.Play
+        smallImageKey = Assets.Movie
         smallImageText = 'Now Playing'
       }
     }
     else if (type === 'tv' && id) {
-      const tv = await fetchTvDetails(id)
+      let tv = currentState.data
+
+      if (shouldFetch) {
+        tv = await fetchTvDetails(id)
+        currentState = { type, id, lastUpdate: now, data: tv }
+      }
+
       if (tv) {
         details = `Watching: ${tv.name || 'Unknown TV Show'}`
         state = tv.tagline
@@ -163,6 +236,11 @@ presence.on('UpdateData', async () => {
       }
     }
     else if (type === 'anime' && id) {
+      // Reset current state for anime since we don't fetch API data
+      if (currentState.type !== 'anime' || currentState.id !== id) {
+        currentState = { type: 'anime', id, lastUpdate: now, data: null }
+      }
+
       const animeTitle
         = document.getElementById('anime-player-title')?.textContent?.trim()
           || 'Unknown Anime'
@@ -175,7 +253,10 @@ presence.on('UpdateData', async () => {
       smallImageText = 'Now Playing'
     }
   }
-  else
+  else {
+    // Reset current state when not watching
+    currentState = { type: '', id: '', lastUpdate: 0, data: null }
+
     if (
       document.getElementById('details-modal')
       && document.getElementById('details-modal')!.style.display !== 'none'
@@ -194,64 +275,61 @@ presence.on('UpdateData', async () => {
       smallImageKey = Assets.Info
       smallImageText = 'Viewing Details'
     }
-    else
-      if (
-        document.getElementById('anime-page-container')
-        && !document.getElementById('anime-page-container')!.classList.contains('hidden')
-      ) {
-        details = 'Browsing Anime 🍥'
-        state = 'Explore trending anime series!'
-        const heroImg = document.querySelector<HTMLImageElement>('#anime-hero-slider img')
-        if (heroImg && heroImg.src && !heroImg.src.includes('placehold.co')) {
-          largeImageKey = heroImg.src
-          largeImageText = 'Anime Spotlight'
-        }
-        smallImageKey = Assets.Anime
-        smallImageText = 'Anime Section'
+    else if (
+      document.getElementById('anime-page-container')
+      && !document.getElementById('anime-page-container')!.classList.contains('hidden')
+    ) {
+      details = 'Browsing Anime 🍥'
+      state = 'Explore trending anime series!'
+      const heroImg = document.querySelector<HTMLImageElement>('#anime-hero-slider img')
+      if (heroImg && heroImg.src && !heroImg.src.includes('placehold.co')) {
+        largeImageKey = heroImg.src
+        largeImageText = 'Anime Spotlight'
       }
-      else
-        if (
-          document.getElementById('tv-shows-page-container')
-          && !document.getElementById('tv-shows-page-container')!.classList.contains('hidden')
-        ) {
-          details = 'Browsing TV Shows 📺'
-          state = 'Find your next binge!'
-          const heroImg = document.querySelector<HTMLImageElement>('#tv-hero-slider img')
-          if (heroImg && heroImg.src && !heroImg.src.includes('placehold.co')) {
-            largeImageKey = heroImg.src
-            largeImageText = 'TV Show Spotlight'
-          }
-          smallImageKey = Assets.TV
-          smallImageText = 'TV Shows Section'
-        }
-        else
-          if (
-            document.getElementById('profile-page-container')
-            && !document.getElementById('profile-page-container')!.classList.contains('hidden')
-          ) {
-            const username
-      = document.getElementById('profile-username')?.textContent?.trim()
-        || 'Profile'
-            details = `Viewing profile: ${username}`
-            state = 'Checking out watch history & lists'
-            const imgElement = document.querySelector<HTMLImageElement>('#profile-avatar')
-            if (imgElement && imgElement.src) {
-              largeImageKey = imgElement.src
-              largeImageText = username
-            }
-            smallImageKey = Assets.Profile
-            smallImageText = 'Profile Section'
-          }
-          else
-            if (
-              document.getElementById('wishlist-modal')
-              && !document.getElementById('wishlist-modal')!.classList.contains('hidden')
-            ) {
-              details = 'Viewing Wishlist ⭐'
-              state = 'Checking your favorite movies and shows'
-              smallImageKey = Assets.Star
-              smallImageText = 'Wishlist'
-            }
+      smallImageKey = Assets.Anime
+      smallImageText = 'Anime Section'
+    }
+    else if (
+      document.getElementById('tv-shows-page-container')
+      && !document.getElementById('tv-shows-page-container')!.classList.contains('hidden')
+    ) {
+      details = 'Browsing TV Shows 📺'
+      state = 'Find your next binge!'
+      const heroImg = document.querySelector<HTMLImageElement>('#tv-hero-slider img')
+      if (heroImg && heroImg.src && !heroImg.src.includes('placehold.co')) {
+        largeImageKey = heroImg.src
+        largeImageText = 'TV Show Spotlight'
+      }
+      smallImageKey = Assets.TV
+      smallImageText = 'TV Shows Section'
+    }
+    else if (
+      document.getElementById('profile-page-container')
+      && !document.getElementById('profile-page-container')!.classList.contains('hidden')
+    ) {
+      const username
+    = document.getElementById('profile-username')?.textContent?.trim()
+      || 'Profile'
+      details = `Viewing profile: ${username}`
+      state = 'Checking out watch history & lists'
+      const imgElement = document.querySelector<HTMLImageElement>('#profile-avatar')
+      if (imgElement && imgElement.src) {
+        largeImageKey = imgElement.src
+        largeImageText = username
+      }
+      smallImageKey = Assets.Profile
+      smallImageText = 'Profile Section'
+    }
+    else if (
+      document.getElementById('wishlist-modal')
+      && !document.getElementById('wishlist-modal')!.classList.contains('hidden')
+    ) {
+      details = 'Viewing Wishlist ⭐'
+      state = 'Checking your favorite movies and shows'
+      smallImageKey = Assets.Star
+      smallImageText = 'Wishlist'
+    }
+  }
 
   presence.setActivity(
     {
