@@ -56,7 +56,7 @@ const dashboardRoutes: { [k: string]: string } = {
   '/export': 'Export',
   '/analytics': 'Analytics',
   '/seo': 'SEO',
-  '/domains': 'Domains',
+  '/domain': 'Domain',
 }
 
 presence.on('UpdateData', async () => {
