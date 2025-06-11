@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "1063860912173359114",
+    "name": "chromavisionmusic"
+  },
+  "service": "Hashnode",
+  "description": {
+    "en": "Hashnode is a blogging platform tailored for developers and tech enthusiasts. It allows users to write, share, and read articles on various tech topics, fostering a community of writers and readers in the tech space."
+  },
+  "url": "hashnode.com",
+  "version": "1.0.0",
+  "logo": "https://res.cloudinary.com/dg9yrubdu/image/upload/w_512,h_512,c_fill/hashnode-logo.png",
+  "thumbnail": "https://res.cloudinary.com/dg9yrubdu/image/upload/hashnode-screenshot.png",
+  "color": "#2962ff",
+  "category": "socials",
+  "tags": [
+    "blogging",
+    "tech",
+    "developer",
+    "programming",
+    "writing",
+    "articles",
+    "reading",
+    "blogs"
+  ]
+}
