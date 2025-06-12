@@ -147,7 +147,7 @@ presence.on('UpdateData', async () => {
     const urlParams = new URLSearchParams(search)
     const categoryName = urlParams.get('q')
     presenceData.details = 'Searching Shows!'
-    presenceData.state = `Looking: ${categoryName?.toUpperCase()}` // Agregar Revisando:
+    presenceData.state = `Looking: ${categoryName?.toUpperCase()}`
     presenceData.largeImageText = `Watching Generes`
     presenceData.smallImageKey = Assets.Reading
   }
@@ -186,7 +186,9 @@ presence.on('UpdateData', async () => {
     if (episodeId) {
       const episodeInfo = await getAnimeInformation(episodeId)
       if (episodeInfo && episodeInfo.anTitle && episodeInfo.epTitle) {
-        presenceData.name = episodeInfo.anTitle
+        if (episodeInfo.anTitle !== episodeInfo.epTitle) {
+          presenceData.name = episodeInfo.anTitle
+        }
         if (episodeInfo.anTitle === seasonCache.animeName) {
           presenceData.largeImageKey = seasonCache.bannerUrl
         }
