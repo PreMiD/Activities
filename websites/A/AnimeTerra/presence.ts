@@ -1,7 +1,7 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '1073310499057451119',
+  clientId: '1073310499057451119'
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -13,25 +13,23 @@ let data: {
 } | null = null
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/tZcHnJA.png',   
-  Settings = 'https://i.imgur.com/tZcHnJA.png',   
-  Notifications = 'https://i.imgur.com/tZcHnJA.png',   
+  Logo = 'https://i.imgur.com/tZcHnJA.png',
+  Settings = 'https://i.imgur.com/tZcHnJA.png',
+  Notifications = 'https://i.imgur.com/tZcHnJA.png'
 }
 
 async function getStrings() {
-  return presence.getStrings(
-    {
-      exploring: 'general.browsing',
-      animeList: 'general.viewAnimeList',
-      specials: 'general.viewSpecials',
-      watching: 'general.watching',
-      paused: 'general.paused',
-      playing: 'general.playing',
-      profile: 'general.viewProfile',
-      viewAnime: 'general.buttonViewAnime',
-      watchEpisode: 'general.buttonViewEpisode'
-    }
-  )
+  return presence.getStrings({
+    exploring: 'general.browsing',
+    animeList: 'general.viewAnimeList',
+    specials: 'general.viewSpecials',
+    watching: 'general.watching',
+    paused: 'general.paused',
+    playing: 'general.playing',
+    profile: 'general.viewProfile',
+    viewAnime: 'general.buttonViewAnime',
+    watchEpisode: 'general.buttonViewEpisode'
+  })
 }
 
 presence.on(
@@ -42,14 +40,14 @@ presence.on(
     paused: boolean
   }) => {
     data = receivedData
-  },
+  }
 )
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     name: 'AnimeTerra',
     largeImageKey: ActivityAssets.Logo,
-    startTimestamp: browsingTimestamp,
+    startTimestamp: browsingTimestamp
   }
 
   const [buttonsEnabled, strings] = await Promise.all([
@@ -61,16 +59,13 @@ presence.on('UpdateData', async () => {
 
   if (pathname === '/' || pathname === '/home') {
     presenceData.details = strings.exploring
-  }
-  else if (pathname === '/animes') {
+  } else if (pathname === '/animes') {
     presenceData.details = strings.animeList
     presenceData.smallImageKey = Assets.Reading
-  }
-  else if (pathname === '/specials') {
+  } else if (pathname === '/specials') {
     presenceData.details = strings.specials
     presenceData.smallImageKey = Assets.Reading
-  }
-  else if (pathname.startsWith('/anime/')) {
+  } else if (pathname.startsWith('/anime/')) {
     const title = document.querySelector<HTMLHeadingElement>('h1.text-2xl.font-bold.text-white')
     const thumbnail = document.querySelector<HTMLImageElement>('img[data-nimg="fill"]')?.src
 
@@ -80,12 +75,11 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = [
         {
           label: strings.viewAnime,
-          url: href,
+          url: href
         }
       ]
     }
-  }
-  else if (pathname.startsWith('/watch/')) {
+  } else if (pathname.startsWith('/watch/')) {
     const title = document.querySelector<HTMLHeadingElement>('h1.text-3xl.md\\:text-4xl.font-extrabold.mb-4')
     const thumbnail = document.querySelector<HTMLImageElement>('div.relative.aspect-\\[2\\/3\\] img[data-nimg="fill"]')?.src
 
@@ -109,12 +103,11 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = [
         {
           label: strings.watchEpisode,
-          url: href,
+          url: href
         }
       ]
     }
-  }
-  else if (pathname === '/profile') {
+  } else if (pathname === '/profile') {
     presenceData.details = strings.profile
     presenceData.smallImageKey = ActivityAssets.Settings
   }
