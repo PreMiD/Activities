@@ -3,7 +3,7 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets { // Other default assets can be found at index.d.ts
+enum ActivityAssets {
   Logo = 'https://res.cloudinary.com/dg9yrubdu/image/upload/w_512,h_512,c_fill/hashnode-logo.png',
 }
 
