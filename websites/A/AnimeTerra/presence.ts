@@ -18,41 +18,20 @@ enum ActivityAssets {
   Notifications = 'https://i.imgur.com/tZcHnJA.png',   
 }
 
-interface Strings {
-  exploring: string
-  animeList: string
-  specials: string
-  watching: string
-  paused: string
-  playing: string
-  profile: string
-  viewAnime: string
-  watchEpisode: string
-}
-
-const strings: Record<'en' | 'ro', Strings> = {
-  en: {
-    exploring: 'Exploring AnimeTerra',
-    animeList: 'Looking at Anime List',
-    specials: 'Looking at Specials & Movies',
-    watching: 'Watching',
-    paused: 'Paused',
-    playing: 'Playing',
-    profile: 'Checking User Profile',
-    viewAnime: 'View Anime',
-    watchEpisode: 'Watch Episode'
-  },
-  ro: {
-    exploring: 'Explorează AnimeTerra',
-    animeList: 'Se uită pe Lista de Anime',
-    specials: 'Se uită pe Lista de Speciale & Filme',
-    watching: 'Se uită la',
-    paused: 'Pauză',
-    playing: 'Se uită',
-    profile: 'Verifică Profilul Utilizatorului',
-    viewAnime: 'Vezi Anime',
-    watchEpisode: 'Vezi Episodul'
-  }
+async function getStrings() {
+  return presence.getStrings(
+    {
+      exploring: 'general.browsing',
+      animeList: 'general.viewAnimeList',
+      specials: 'general.viewSpecials',
+      watching: 'general.watching',
+      paused: 'general.paused',
+      playing: 'general.playing',
+      profile: 'general.viewProfile',
+      viewAnime: 'general.buttonViewAnime',
+      watchEpisode: 'general.buttonViewEpisode'
+    }
+  )
 }
 
 presence.on(
@@ -73,21 +52,22 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
 
-  const buttonsEnabled = await presence.getSetting<boolean>('buttons')
-  const lang = await presence.getSetting<string>('lang') || '0'
-  const currentStrings = strings[lang === '0' ? 'en' : 'ro'] ?? strings.en
+  const [buttonsEnabled, strings] = await Promise.all([
+    presence.getSetting<boolean>('buttons'),
+    getStrings()
+  ])
 
   const { pathname, href } = document.location
 
   if (pathname === '/' || pathname === '/home') {
-    presenceData.details = currentStrings.exploring
+    presenceData.details = strings.exploring
   }
   else if (pathname === '/animes') {
-    presenceData.details = currentStrings.animeList
+    presenceData.details = strings.animeList
     presenceData.smallImageKey = Assets.Reading
   }
   else if (pathname === '/specials') {
-    presenceData.details = currentStrings.specials
+    presenceData.details = strings.specials
     presenceData.smallImageKey = Assets.Reading
   }
   else if (pathname.startsWith('/anime/')) {
@@ -99,7 +79,7 @@ presence.on('UpdateData', async () => {
     if (buttonsEnabled) {
       presenceData.buttons = [
         {
-          label: currentStrings.viewAnime,
+          label: strings.viewAnime,
           url: href,
         }
       ]
@@ -116,10 +96,10 @@ presence.on('UpdateData', async () => {
       if (!data.paused) {
         [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(data.currTime, data.duration)
         presenceData.smallImageKey = Assets.Play
-        presenceData.smallImageText = currentStrings.playing
+        presenceData.smallImageText = strings.playing
       } else {
         presenceData.smallImageKey = Assets.Pause
-        presenceData.smallImageText = currentStrings.paused
+        presenceData.smallImageText = strings.paused
         delete presenceData.startTimestamp
         delete presenceData.endTimestamp
       }
@@ -128,14 +108,14 @@ presence.on('UpdateData', async () => {
     if (buttonsEnabled) {
       presenceData.buttons = [
         {
-          label: currentStrings.watchEpisode,
+          label: strings.watchEpisode,
           url: href,
         }
       ]
     }
   }
   else if (pathname === '/profile') {
-    presenceData.details = currentStrings.profile
+    presenceData.details = strings.profile
     presenceData.smallImageKey = ActivityAssets.Settings
   }
 

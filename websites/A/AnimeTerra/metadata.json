@@ -22,7 +22,7 @@
     "site"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*",
+  "iFrameRegExp": ".*watch.*",
   "settings": [
     {
       "id": "buttons",
