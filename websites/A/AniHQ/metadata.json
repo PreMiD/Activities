@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Anant",
+    "id": "629851641579044874"
+  },
+  "contributors": [
+    {
+      "name": "xDoritos",
+      "id": "432215088686956565"
+    }
+  ],
+  "service": "AniHQ",
+  "description": {
+    "en": "AniHQ is a modern anime streaming site with English subbed content.",
+    "hi-in": "AniHQ एक आधुनिक एनीमे स्ट्रीमिंग साइट है जहाँ आप English सब्टाइटल के साथ एनीमे देख सकते हैं।"
+  },
+  "url": [
+    "anihq.to",
+    "www.anihq.to"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniHQ/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniHQ/assets/thumbnail.png",
+  "color": "#8151ff",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "subbed",
+    "watch"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "https://animestream\\.playerp2p\\.com/.*"
+}

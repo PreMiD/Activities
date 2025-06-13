@@ -44,6 +44,18 @@ presence.on('UpdateData', async () => {
       details: 'Browsing Search 🔎',
       smallImageKey: Assets.Viewing,
     },
+    '/livetv': {
+      details: 'Browsing Live TV 📶',
+      smallImageKey: Assets.Viewing,
+    },
+    '/sports': {
+      details: 'Live Sports ⚽',
+      smallImageKey: Assets.Viewing,
+    },
+    '/games': {
+      details: 'Browsing Games 🎮',
+      smallImageKey: Assets.Viewing,
+    },
   }
 
   for (const [path, data] of Object.entries(pages)) {
