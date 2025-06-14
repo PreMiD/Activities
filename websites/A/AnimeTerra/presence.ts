@@ -28,7 +28,7 @@ async function getStrings() {
       profile: 'general.viewProfile',
       viewAnime: 'general.buttonViewAnime',
       watchEpisode: 'general.buttonViewEpisode',
-    }
+    },
   )
 }
 
