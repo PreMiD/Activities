@@ -661,7 +661,7 @@ presence.on('UpdateData', async () => {
       if (path.length > 2) {
         if (path[2] === 'music') {
           if (path.length > 3) {
-            if (path[3] === 'collections') {
+            if (path[3] === 'collections' || path[3] === 'songs') {
               if (path.length > 4) {
                 setListening(`music-collection-${path[4]}`)
               }
