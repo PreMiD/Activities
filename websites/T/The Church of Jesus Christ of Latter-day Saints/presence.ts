@@ -26,6 +26,7 @@ let currentTimestamp: number = Math.floor(Date.now() / 1000)
 let currentState: string = 'initializing'
 let presenceData: PresenceData = { }
 let attemptCount: number = 0
+const cachedCnfrenceImgs: Map<string, string> = new Map()
 
 // Browsing state variables
 let browseLocation: string | undefined
@@ -56,6 +57,7 @@ function setBrowsing(location: string, _additional?: string) {
 
   // Determine detailed name
   let browsingTitle: string | undefined
+  let browsingImage: string | undefined
   if (location === 'my-home') {
     browsingTitle = 'their home page'
   }
@@ -82,6 +84,11 @@ function setBrowsing(location: string, _additional?: string) {
   }
   else if (location.startsWith('general-conference')) {
     if (_additional !== undefined) {
+      const year: string | undefined = location.split('-')[2]
+      const month: string | undefined = location.split('-')[3]
+      if (year !== undefined && month !== undefined && cachedCnfrenceImgs.has(`${year}-${month}`)) {
+        browsingImage = cachedCnfrenceImgs.get(`${year}-${month}`)
+      }
       browsingTitle = `${_additional} conference talks`
     }
     else {
@@ -117,7 +124,7 @@ function setBrowsing(location: string, _additional?: string) {
   }
   presenceData = {
     type: ActivityType.Playing,
-    largeImageKey: ActivityAssets.Logo,
+    largeImageKey: browsingImage || ActivityAssets.Logo,
     smallImageKey: Assets.Search,
     smallImageText: 'Browsing...',
     startTimestamp: currentTimestamp,
@@ -529,6 +536,29 @@ function parsePlayerStyle(): string | undefined {
   return undefined
 }
 
+function cacheConferenceImages() {
+  if (cachedCnfrenceImgs.size > 0)
+    return // Images are already cached
+
+  const references = document.querySelectorAll('[class*="portrait-"]')
+  for (const reference of references) {
+    const link = reference.getAttribute('href')
+    if (link === null)
+      continue // Skip if no link is found
+    const year = link.split('/')[3] // Extract the year from the link
+    const month = link.split('/')[4]?.split('?')[0] // Extract the month from the link
+    if (year === undefined || month === undefined)
+      continue // Skip if year or month is not found
+
+    const image = reference.querySelector('img')
+    if (image === null || !(image instanceof HTMLImageElement))
+      continue // Skip if no image is found
+    const imageUrl = `${image.src}.jpeg` // Append .jpeg to ensure correct format
+
+    cachedCnfrenceImgs.set(`${year}-${month}`, imageUrl) // Cache the image URL
+  }
+}
+
 presence.on('UpdateData', async () => {
   // Determine our current state
   const path = document.location.pathname.split('/')
@@ -611,6 +641,7 @@ presence.on('UpdateData', async () => {
             }
           }
           else {
+            cacheConferenceImages()
             setBrowsing('general-conference')
           }
 
