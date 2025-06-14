@@ -247,6 +247,9 @@ function setReading(location: string, _additional?: string) {
   else if (location === 'pearl-of-great-price') {
     readingImage = ActivityAssets.PearlOfGreatPrice
   }
+  else if (location.startsWith('general-conference')) {
+    readingImage = parseTalkPreview() || ActivityAssets.Logo // Use the talk preview image or fallback to the logo
+  }
   else {
     readingImage = ActivityAssets.Logo
   }
@@ -424,6 +427,15 @@ function parseTalkAuthor(): string | undefined {
     }
 
     return author
+  }
+  return undefined
+}
+
+function parseTalkPreview(): string | undefined {
+  // Attempt to parse the talk preview image
+  const preview = document.querySelectorAll('[class*="posterFallback"]')[0]
+  if (preview !== undefined && preview instanceof HTMLImageElement) {
+    return `${preview.src}.jpeg` // Append .jpeg to ensure correct format
   }
   return undefined
 }
