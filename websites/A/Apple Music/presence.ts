@@ -12,8 +12,9 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/Apple%20Music/assets/logo.png',
   } as PresenceData
-  const [timestamps, cover, listening] = await Promise.all([
+  const [timestamps, artistAsTitle, cover, listening] = await Promise.all([
     presence.getSetting<boolean>('timestamps'),
+    presence.getSetting<boolean>('artistAsTitle'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('listening'),
   ])
@@ -43,7 +44,7 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = navigator.mediaSession.metadata?.title
     presenceData.state = navigator.mediaSession.metadata?.artist
-
+    presenceData.name = artistAsTitle ? navigator.mediaSession.metadata?.artist : 'Apple Music'
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused
       ? (await strings).pause
