@@ -5,12 +5,12 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/98GSvcP.png',
-  OldTestament = 'https://www.churchofjesuschrist.org/imgs/6de4c15152c1c0e56b9ac5004e62d80cd04ad02d/0,0,3000,3000/max/0/default.jpeg',
-  NewTestament = 'https://www.churchofjesuschrist.org/imgs/7d175abca40ddfa795593e4f713a44489acc6cd5/0,0,3000,3000/max/0/default.jpeg',
-  BookOfMormon = 'https://www.churchofjesuschrist.org/imgs/59fa03a8250ea7aea58e9f3515031ea47b6ab7eb/0,0,3000,3000/max/0/default.jpeg',
-  DoctrineAndCovenants = 'https://www.churchofjesuschrist.org/imgs/d9930401562cdd688233134c5f20a5d75b968b14/0,0,3000,3000/max/0/default.jpeg',
-  PearlOfGreatPrice = 'https://www.churchofjesuschrist.org/imgs/16cf3d24af3de0ca15a4f6d7de71a8e870616fb9/0,0,3000,3000/max/0/default.jpeg',
+  Logo = 'https://i.imgur.com/oeQLobD.png',
+  OldTestament = 'https://www.churchofjesuschrist.org/imgs/6de4c15152c1c0e56b9ac5004e62d80cd04ad02d/0,0,3000,3000/512,512/0/default.jpeg',
+  NewTestament = 'https://www.churchofjesuschrist.org/imgs/7d175abca40ddfa795593e4f713a44489acc6cd5/0,0,3000,3000/512,512/0/default.jpeg',
+  BookOfMormon = 'https://www.churchofjesuschrist.org/imgs/59fa03a8250ea7aea58e9f3515031ea47b6ab7eb/0,0,3000,3000/512,512/0/default.jpeg',
+  DoctrineAndCovenants = 'https://www.churchofjesuschrist.org/imgs/d9930401562cdd688233134c5f20a5d75b968b14/0,0,3000,3000/512,512/0/default.jpeg',
+  PearlOfGreatPrice = 'https://www.churchofjesuschrist.org/imgs/16cf3d24af3de0ca15a4f6d7de71a8e870616fb9/0,0,3000,3000/512,512/0/default.jpeg',
 }
 
 enum CommonStrings {
