@@ -14,7 +14,6 @@ let data: {
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/tZcHnJA.png',
-  Settings = 'https://i.imgur.com/tZcHnJA.png',
 }
 
 async function getStrings() {
@@ -120,7 +119,7 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname === '/profile') {
     presenceData.details = 'Viewing profile'
-    presenceData.smallImageKey = ActivityAssets.Settings
+    presenceData.smallImageKey = ActivityAssets.Logo
   }
 
   presence.setActivity(presenceData)
