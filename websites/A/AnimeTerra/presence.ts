@@ -15,7 +15,6 @@ let data: {
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/tZcHnJA.png',
   Settings = 'https://i.imgur.com/tZcHnJA.png',
-  Notifications = 'https://i.imgur.com/tZcHnJA.png',
 }
 
 async function getStrings() {
