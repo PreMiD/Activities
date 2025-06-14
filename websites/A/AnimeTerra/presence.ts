@@ -18,17 +18,19 @@ enum ActivityAssets {
 }
 
 async function getStrings() {
-  return presence.getStrings({
-    exploring: 'general.browsing',
-    animeList: 'general.viewAnimeList',
-    specials: 'general.viewSpecials',
-    watching: 'general.watching',
-    paused: 'general.paused',
-    playing: 'general.playing',
-    profile: 'general.viewProfile',
-    viewAnime: 'general.buttonViewAnime',
-    watchEpisode: 'general.buttonViewEpisode',
-  })
+  return presence.getStrings(
+    {
+      exploring: 'general.browsing',
+      animeList: 'general.viewAnimeList',
+      specials: 'general.viewSpecials',
+      watching: 'general.watching',
+      paused: 'general.paused',
+      playing: 'general.playing',
+      profile: 'general.viewProfile',
+      viewAnime: 'general.buttonViewAnime',
+      watchEpisode: 'general.buttonViewEpisode',
+    }
+  )
 }
 
 presence.on(
@@ -60,11 +62,11 @@ presence.on('UpdateData', async () => {
     presenceData.details = strings.exploring
   }
   else if (pathname === '/animes') {
-    presenceData.details = strings.animeList
+    presenceData.details = 'Viewing anime list'
     presenceData.smallImageKey = Assets.Reading
   }
   else if (pathname === '/specials') {
-    presenceData.details = strings.specials
+    presenceData.details = 'Viewing specials & movies'
     presenceData.smallImageKey = Assets.Reading
   }
   else if (pathname.startsWith('/anime/')) {
@@ -73,7 +75,7 @@ presence.on('UpdateData', async () => {
 
     presenceData.largeImageKey = thumbnail
     if (title) {
-      presenceData.details = title.textContent
+      presenceData.details = `Viewing anime: ${title.textContent}`
     }
     if (buttonsEnabled) {
       presenceData.buttons = [
@@ -90,7 +92,7 @@ presence.on('UpdateData', async () => {
 
     presenceData.largeImageKey = thumbnail
     if (title) {
-      presenceData.details = title.textContent
+      presenceData.details = `Watching: ${title.textContent}`
     }
     if (data) {
       presenceData.type = ActivityType.Playing
@@ -117,7 +119,7 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (pathname === '/profile') {
-    presenceData.details = strings.profile
+    presenceData.details = 'Viewing profile'
     presenceData.smallImageKey = ActivityAssets.Settings
   }
 
