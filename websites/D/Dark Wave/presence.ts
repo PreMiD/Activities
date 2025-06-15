@@ -14,7 +14,7 @@ presence.on('UpdateData', async () => {
         url: `https://dark-wave.fr`,
       },
     ],
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/D/Dark%20Wave/assets/logo.png',
+    largeImageKey: 'https://i.ibb.co/xtSHCx1F/logo.png',
   }
 
   const video = document.querySelector('video') as HTMLVideoElement
