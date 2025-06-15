@@ -13,6 +13,10 @@
     {
       "name": "Vasilis",
       "id": "241929388403195914"
+    },
+    {
+      "name": "Skye 🎀",
+      "id": "694986869204713482"
     }
   ],
   "service": "Apple Music",
@@ -41,6 +45,12 @@
     "media"
   ],
   "settings": [
+    {
+      "id": "artistAsTitle",
+      "title": "Show Artist as Title",
+      "icon": "fad fa-user-large",
+      "value": false
+    },
     {
       "id": "timestamps",
       "title": "Show timestamps",
