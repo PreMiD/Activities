@@ -58,5 +58,9 @@
   "GOG.chat": {
     "description": "Viewing their profile on chat tab.",
     "message": "Chatting"
+  },
+  "GOG.mods": {
+    "description": "Viewing all mods on the page.",
+    "message": "All Mods"
   }
 }
