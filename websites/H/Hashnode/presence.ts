@@ -89,7 +89,7 @@ presence.on('UpdateData', async () => {
   // Search
   else if (page.includes('/search')) {
     presenceData.details = 'Searching for:'
-    presenceData.state = new URLSearchParams(location.search).get('q') ?? 'something...'
+    presenceData.state = new URLSearchParams(document.location.search).get('q') ?? 'something...'
   }
 
   // Dashboard
