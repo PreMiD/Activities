@@ -8,12 +8,6 @@ presence.on('UpdateData', async () => {
   const data: PresenceData = {
     type: ActivityType.Watching,
     name: 'DarkWave - Looking..',
-    buttons: [
-      {
-        label: 'Open DarkWave',
-        url: `https://dark-wave.fr`,
-      },
-    ],
     largeImageKey: 'https://i.ibb.co/Xrbhkrm9/image-1.png',
   }
 
