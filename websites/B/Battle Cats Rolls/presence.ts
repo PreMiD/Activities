@@ -22,12 +22,14 @@ function generateSeedTrackerSlides(presenceData: PresenceData) {
   const rows = document.querySelectorAll('tr')
   let currentRowNumber = ''
   for (const row of rows) {
-    const rowId = row.firstElementChild ?? row.lastElementChild
+    const rowId = [row.firstElementChild, row.lastElementChild].find(row => !!row?.id)
     if (rowId) {
       // not a roll-over cat
       const [pickA, pickB] = row.querySelectorAll<HTMLTableCellElement>('.cat')
-      if (!pickA || !pickB)
+      if (!pickA || !pickB) {
+        currentRowNumber = rowId.textContent ?? ''
         continue
+      }
       let mainPick: HTMLTableCellElement
       let extraPick: HTMLTableCellElement
       if (pickA?.getAttribute('onclick')?.includes('G')) {
@@ -39,27 +41,27 @@ function generateSeedTrackerSlides(presenceData: PresenceData) {
         extraPick = pickB
       }
       const data: PresenceData = {
-        ...presenceData,
+        ...structuredClone(presenceData),
         smallImageKey: Assets.Question,
       }
       const baseText = `${currentRowNumber} - ${mainPick.querySelector('a')?.textContent}`
-      data.smallImageText = extraPick.childElementCount > 0
+      data.smallImageText = extraPick.childElementCount === 0
         ? baseText
         : `${baseText} or ${extraPick.querySelector('a')?.textContent} guaranteed`
       data.buttons?.push({
         label: 'View Cat',
-        url: mainPick.querySelector('a'),
+        url: mainPick.querySelector<HTMLAnchorElement>('a:last-child'),
       })
       slideshow.addSlide(currentRowNumber, data, MIN_SLIDE_TIME)
       if (extraPick.childElementCount) {
-        const extraData = { ...data, buttons: presenceData.buttons }
+        const extraData: PresenceData = { ...data, buttons: structuredClone(presenceData.buttons) }
         extraData.buttons?.push({
           label: 'View Guaranteed Cat',
-          url: extraPick.querySelector('a'),
+          url: extraPick.querySelector<HTMLAnchorElement>('a:last-child'),
         })
         slideshow.addSlide(`${currentRowNumber}G`, extraData, MIN_SLIDE_TIME)
       }
-      currentRowNumber = rowId.id ?? ''
+      currentRowNumber = rowId.textContent ?? ''
     }
   }
 }
@@ -98,12 +100,12 @@ function generateCatDetailSlides(presenceData: PresenceData) {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
+    name: 'Battle Cats Rolls',
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    smallImageKey: Assets.Play,
   }
   const { pathname, href, search } = document.location
-  const mainPath = pathname.split('/')[1] ?? '/'
+  const mainPath = pathname.split('/')[1] || '/'
   const params = new URLSearchParams(search)
   let useSlideshow = false
 
@@ -114,8 +116,8 @@ presence.on('UpdateData', async () => {
         '#event_select',
       )?.selectedOptions[0]?.textContent
       if (Number(params.get('seed'))) {
-        generateSlideshow(() => generateSeedTrackerSlides(presenceData))
         presenceData.buttons = [{ label: 'View Rolls', url: href }]
+        generateSlideshow(() => generateSeedTrackerSlides(presenceData))
         useSlideshow = true
       }
       break

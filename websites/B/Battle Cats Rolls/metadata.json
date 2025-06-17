@@ -9,7 +9,7 @@
   "description": {
     "en": "This is a simulator rolling the rare gacha (rare cat capsule) for Battle Cats. With the simulator, you can look into the future to predict and track your future rolling results. "
   },
-  "url": "bc.godfat.org",
+  "url": ["bc.godfat.org", "bc-seek.godfat.org"],
   "version": "1.0.0",
   "logo": "https://i.imgur.com/Sj13xSA.png",
   "thumbnail": "https://i.imgur.com/5XUNAkK.png",
