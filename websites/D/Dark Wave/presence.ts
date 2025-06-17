@@ -11,7 +11,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://i.ibb.co/Xrbhkrm9/image-1.png',
   }
 
-  const video = document.querySelector<HTMLVideoElement>('video');
+  const video = document.querySelector<HTMLVideoElement>('video')
   if (video) {
     if (!video.paused) {
       const timestamps = getTimestamps(video.currentTime, video.duration)
