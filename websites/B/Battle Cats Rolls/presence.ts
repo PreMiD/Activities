@@ -23,7 +23,8 @@ function generateSeedTrackerSlides(presenceData: PresenceData) {
   let currentRowNumber = ''
   for (const row of rows) {
     const rowId = row.firstElementChild ?? row.lastElementChild
-    if (rowId) { // not a roll-over cat
+    if (rowId) {
+      // not a roll-over cat
       const [pickA, pickB] = row.querySelectorAll<HTMLTableCellElement>('.cat')
       if (!pickA || !pickB)
         continue
@@ -63,6 +64,38 @@ function generateSeedTrackerSlides(presenceData: PresenceData) {
   }
 }
 
+function generateCatDetailSlides(presenceData: PresenceData) {
+  const catVariants = [
+    ...document.querySelectorAll<HTMLTableCellElement>('th:first-child'),
+  ].map(e => e.parentElement)
+  const variantSet = new Set(catVariants)
+  const rows = document.querySelectorAll('tr')
+  let catName = catVariants[0]?.textContent ?? ''
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i]
+    if (row && variantSet.has(row)) {
+      catName = row.textContent ?? ''
+      continue
+    }
+    if (
+      row?.childElementCount === 6
+      && !row.classList.contains('attack')
+    ) {
+      for (let i = 0; i < 3; i++) {
+        const statName = row.children[i * 2]?.textContent
+        const statValue = row.children[i * 2 + 1]?.textContent
+        const data: PresenceData = {
+          ...presenceData,
+          state: catName,
+          smallImageKey: Assets.Search,
+          smallImageText: `${statName} - ${statValue}`,
+        }
+        slideshow.addSlide(`${catName} - ${statName}`, data, MIN_SLIDE_TIME)
+      }
+    }
+  }
+}
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -70,10 +103,11 @@ presence.on('UpdateData', async () => {
     smallImageKey: Assets.Play,
   }
   const { pathname, href, search } = document.location
+  const mainPath = pathname.split('/')[1] ?? '/'
   const params = new URLSearchParams(search)
   let useSlideshow = false
 
-  switch (pathname) {
+  switch (mainPath) {
     case '/': {
       presenceData.details = 'Viewing Upcoming Rolls'
       presenceData.state = document.querySelector<HTMLSelectElement>(
@@ -83,6 +117,40 @@ presence.on('UpdateData', async () => {
         generateSlideshow(() => generateSeedTrackerSlides(presenceData))
         presenceData.buttons = [{ label: 'View Rolls', url: href }]
         useSlideshow = true
+      }
+      break
+    }
+    case 'cats': {
+      if (pathname === '/cats') {
+        presenceData.details = 'Searching for Cats'
+      }
+      else {
+        presenceData.details = 'Viewing a Cat'
+        presenceData.buttons = [{ label: 'View Cat', url: href }]
+        generateSlideshow(() => generateCatDetailSlides(presenceData))
+        useSlideshow = true
+      }
+      break
+    }
+    case 'help': {
+      presenceData.details = 'Reading Tutorial'
+      break
+    }
+    case 'logs': {
+      presenceData.details = 'Reading Changelog'
+      break
+    }
+    case 'seek': {
+      presenceData.details = 'Looking up their seed'
+      if (pathname.includes('result')) {
+        const seed = document.querySelector<HTMLAnchorElement>('li:nth-of-type(2) a')
+        if (seed) {
+          presenceData.state = 'Viewing result'
+          presenceData.buttons = [{ label: 'View Seed', url: seed }]
+        }
+        else {
+          presenceData.state = 'Pending results'
+        }
       }
       break
     }
