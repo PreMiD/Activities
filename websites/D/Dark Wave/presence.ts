@@ -68,10 +68,10 @@ presence.on('UpdateData', async () => {
         if (titleElement) {
           const name = titleElement.textContent
           data.name = 'Dark Wave - Sheet Page'
-          data.state = `Looking ${name}`
+          data.state = `Looking at ${name}`
           data.buttons = [
             {
-              label: `Show ${name}`,
+              label: `View ${name}`,
               url,
             },
           ]
