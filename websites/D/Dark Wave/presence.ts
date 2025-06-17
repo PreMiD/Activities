@@ -11,7 +11,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://i.ibb.co/Xrbhkrm9/image-1.png',
   }
 
-  const video = document.querySelector('video') as HTMLVideoElement
+  const video = document.querySelector<HTMLVideoElement>('video');
   if (video) {
     if (!video.paused) {
       const timestamps = getTimestamps(video.currentTime, video.duration)
@@ -23,8 +23,8 @@ presence.on('UpdateData', async () => {
       data.smallImageText = 'Paused'
     }
 
-    const videoName = document.querySelector('#app > div > div > div > div > div.w-full.absolute.bottom-0.right-0.left-0 > div.relative.z-20.p-grid-xs.pt-0 > div > div:nth-child(1) > div > div > small')?.innerHTML
-    const videoTitle = document.querySelector('#app > div > div > div > div > div.w-full.absolute.bottom-0.right-0.left-0 > div.relative.z-20.p-grid-xs.pt-0 > div > div:nth-child(1) > div > div > h1')?.innerHTML
+    const videoName = document.getElementById('videoTitle')?.textContent
+    const videoTitle = document.getElementById('videoName')?.textContent
 
     if (videoTitle && titleInfo.title !== videoTitle) {
       titleInfo.title = videoTitle
