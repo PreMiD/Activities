@@ -82,7 +82,7 @@ presence.on('UpdateData', async () => {
     && href.match('[^/]*$')![0] === href.slice(-href.match('[^/]*$')![0].length)
   ) {
     presenceData.details = 'Viewing a profile:'
-    presenceData.state = document.querySelector('div div main main div div div div div div div h1 a span')?.textContent
+    presenceData.state = document.querySelector('h1 a span')?.textContent
       ?? 'Unknown User'
   }
 
@@ -118,7 +118,7 @@ presence.on('UpdateData', async () => {
     && href.split('hashnode.com/docs/')[1]!.match(/^[a-z0-9/]+$/i)
   ) {
     presenceData.details = 'Editing API Docs:'
-    presenceData.state = document.querySelector('div div section aside div div span')?.textContent || 'Unknown'
+    presenceData.state = document.querySelector('section aside div div span')?.textContent || 'Unknown'
   }
 
   // Unknown Page
