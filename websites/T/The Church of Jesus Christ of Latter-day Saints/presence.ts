@@ -41,6 +41,18 @@ let listeningTitle: string | undefined
 let listeningAlbum: string | undefined
 let listeningStyle: string | undefined
 
+// Always triple-update our presence to ensure that Discord
+// synchronizes correctly and it gets properly displayed
+function tripleUpdate() {
+  if (attemptCount < 3) {
+    attemptCount++
+    currentState = 'triple-update'
+  }
+  else {
+    attemptCount = 0
+  }
+}
+
 function setBrowsing(location: string, _additional?: string) {
   // If we are already browsing this location, do nothing
   if (currentState === 'browsing' && browseLocation === location)
@@ -130,6 +142,9 @@ function setBrowsing(location: string, _additional?: string) {
     startTimestamp: currentTimestamp,
     details: browsingDetails,
   }
+
+  // Perform triple-update
+  tripleUpdate()
 }
 
 function setReading(location: string, _additional?: string) {
@@ -148,6 +163,7 @@ function setReading(location: string, _additional?: string) {
       return
     }
     else {
+      attemptCount = 0
       readingState = 'Reading a scripture passage...'
     }
   }
@@ -283,6 +299,9 @@ function setReading(location: string, _additional?: string) {
       url: button2Url,
     })
   }
+
+  // Perform triple-update
+  tripleUpdate()
 }
 
 function setListening(location: string, _additional?: string) {
@@ -295,10 +314,7 @@ function setListening(location: string, _additional?: string) {
   listeningTitle = title
 
   // Fetch the song album
-  let album = parsePlayerAlbum()
-  if (album === undefined) {
-    album = undefined // we don't need to set the album if it's not available
-  }
+  const album = parsePlayerAlbum()
   const previousAlbum: string | undefined = listeningAlbum
   listeningAlbum = album
 
@@ -320,7 +336,7 @@ function setListening(location: string, _additional?: string) {
   }
   else {
     presenceData.startTimestamp = currentTimestamp
-    presenceData.endTimestamp = undefined
+    delete presenceData.endTimestamp
   }
 
   // Attempt to parse if the player is playing
@@ -377,7 +393,7 @@ function setListening(location: string, _additional?: string) {
     type: ActivityType.Listening,
     largeImageKey: thumbnail,
     smallImageKey: Assets.Pause,
-    smallImageText: `Paused`,
+    smallImageText: 'Paused',
     startTimestamp: currentTimestamp,
     details: listeningTitle,
     state: stateText,
@@ -388,45 +404,38 @@ function setListening(location: string, _additional?: string) {
       },
     ],
   }
+
+  // Perform triple-update
+  tripleUpdate()
 }
 
 function parseScriptureReference(): string | undefined {
   // Attempt to parse via content title
-  const contentTitle = document.getElementsByClassName('contentTitle-JbPZw')[0]
-  if (contentTitle !== undefined) {
+  const contentTitle = document.querySelector('.contentTitle-JbPZw')
+  if (contentTitle !== null) {
     if (contentTitle.children.length > 0) {
-      // If the content title has children, we assume it's a dual title (e.g., "Book of Mormon" and "1 Nephi 1:1")
-      const reference = contentTitle.children[0]?.textContent?.trim()
-      if (reference !== undefined) {
-        return reference
-      }
-      else {
-        return undefined
-      }
+      return contentTitle.children[0]?.textContent?.trim() ?? undefined
     }
     else {
-      return contentTitle.textContent?.trim()
+      return contentTitle.textContent?.trim() ?? undefined
     }
   }
 
   // Attempt to parse via the title id
-  const title = document.getElementById('title1')
-  if (title !== null)
-    return title.textContent?.trim()
-
-  return undefined
+  const title = document.querySelector('#title1')
+  return title?.textContent?.trim() ?? undefined
 }
 
 function parseTalkAuthor(): string | undefined {
   // Attempt to parse via the talk author name
   let author: string | undefined
-  const authorName = document.getElementsByClassName('author-name')[0]
-  if (authorName !== undefined) {
+  const authorName = document.querySelector('.author-name')
+  if (authorName !== null) {
     author = authorName.textContent?.trim()
 
     // Attempt to parse the author's calling, too
-    const authorCalling = document.getElementsByClassName('author-role')[0]
-    if (authorCalling !== undefined) {
+    const authorCalling = document.querySelector('.author-role')
+    if (authorCalling !== null) {
       const calling = authorCalling.textContent?.trim()
       if (calling !== undefined && calling.length > 0) {
         author += `, ${calling}`
@@ -440,8 +449,8 @@ function parseTalkAuthor(): string | undefined {
 
 function parseTalkPreview(): string | undefined {
   // Attempt to parse the talk preview image
-  const preview = document.querySelectorAll('[class*="posterFallback"]')[0]
-  if (preview !== undefined && preview instanceof HTMLImageElement) {
+  const preview = document.querySelector('[class*="posterFallback"]')
+  if (preview !== null && preview instanceof HTMLImageElement) {
     return `${preview.src}.jpeg` // Append .jpeg to ensure correct format
   }
   return undefined
@@ -449,8 +458,8 @@ function parseTalkPreview(): string | undefined {
 
 function parsePlayerTitle(): string | undefined {
   // Fetch the player card
-  const playerCard = document.querySelectorAll('[class*="AudioPlayerCard__TitleAndOptions"]')[0]
-  if (playerCard !== undefined) {
+  const playerCard = document.querySelector('[class*="AudioPlayerCard__TitleAndOptions"]')
+  if (playerCard !== null) {
     // If it has children, we assume it's a dual title (e.g., "Book of Mormon" and "1 Nephi 1:1")
     if (playerCard.children.length > 0) {
       const title = playerCard.children[0]?.textContent?.trim()
@@ -469,8 +478,8 @@ function parsePlayerTitle(): string | undefined {
 }
 
 function parsePlayerTimestamp1(): number | undefined {
-  const elapsedTime = document.querySelectorAll('[class*="TimeBar__Elapsed"]')[0]
-  if (elapsedTime !== undefined) {
+  const elapsedTime = document.querySelector('[class*="TimeBar__Elapsed"]')
+  if (elapsedTime !== null) {
     const timeText = elapsedTime.textContent?.trim()
     if (timeText !== undefined) {
       return timestampFromFormat(timeText)
@@ -480,8 +489,8 @@ function parsePlayerTimestamp1(): number | undefined {
 }
 
 function parsePlayerTimestamp2(): number | undefined {
-  const elapsedTime = document.querySelectorAll('[class*="TimeBar__Duration"]')[0]
-  if (elapsedTime !== undefined) {
+  const elapsedTime = document.querySelector('[class*="TimeBar__Duration"]')
+  if (elapsedTime !== null) {
     const timeText = elapsedTime.textContent?.trim()
     if (timeText !== undefined) {
       return timestampFromFormat(timeText)
@@ -492,22 +501,17 @@ function parsePlayerTimestamp2(): number | undefined {
 
 function parsePlayerIsPlaying(): boolean {
   // Check if the player is playing
-  const controls = document.querySelectorAll('[class*="Controls__PlaybackWrapper"]')[0]
-  if (controls !== undefined && controls.children.length > 1) {
+  const controls = document.querySelector('[class*="Controls__PlaybackWrapper"]')
+  if (controls !== null && controls.children.length > 1) {
     const playControl = controls.children[1]
-    if (playControl?.ariaPressed === 'true') {
-      return true // The player is playing
-    }
-    else {
-      return false // The player is paused or stopped
-    }
+    return playControl?.ariaPressed === 'true'
   }
   return false
 }
 
 function parsePlayerThumbnail(): string | undefined {
   // Attempt to parse the thumbnail image
-  const thumbnail = document.querySelectorAll('[class*="AudioPlayerCard__Thumbnail"] img')[0]
+  const thumbnail = document.querySelector('[class*="AudioPlayerCard__Thumbnail"] img')
   if (thumbnail !== undefined && thumbnail instanceof HTMLImageElement) {
     return `${thumbnail.src}.jpeg` // Append .jpeg to ensure correct format
   }
@@ -516,8 +520,8 @@ function parsePlayerThumbnail(): string | undefined {
 
 function parsePlayerAlbum(): string | undefined {
   // Attempt to parse the album name
-  const h1 = document.getElementsByTagName('h1')[0]
-  if (h1 !== undefined) {
+  const h1 = document.querySelector('h1')
+  if (h1 !== null) {
     return h1.textContent?.trim()
   }
   return undefined
@@ -525,7 +529,7 @@ function parsePlayerAlbum(): string | undefined {
 
 function parsePlayerStyle(): string | undefined {
   // Attempt to parse the player style
-  const select = document.querySelectorAll('[class*="AudioPlayerCard__StyledSelect"]')[0]
+  const select = document.querySelector('[class*="AudioPlayerCard__StyledSelect"]')
   if (select !== undefined && select instanceof HTMLSelectElement) {
     // Find the selected option
     const selectedOption = select.options[select.selectedIndex]
@@ -717,12 +721,6 @@ presence.on('UpdateData', async () => {
           smallImageText: 'Welcome to the Church of Jesus Christ of Latter-day Saints',
           startTimestamp: currentTimestamp,
           details: 'Viewing a welcome section!',
-          buttons: [
-            {
-              label: 'Visit Welcome Page',
-              url: 'https://www.churchofjesuschrist.org/welcome',
-            },
-          ],
         }
       }
 
