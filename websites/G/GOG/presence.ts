@@ -42,6 +42,7 @@ async function getStrings() {
     wishlist: 'GOG.wishlist',
     friends: 'GOG.friends',
     chat: 'GOG.chat',
+    mods: 'GOG.mods',
   })
 }
 
@@ -103,6 +104,12 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.browsing
       if (pathname.split('/')[2]) {
         switch (pathname.split('/')[2]) {
+          case 'mods':
+          {
+            presenceData.details = strings.viewPage
+            presenceData.state = strings.mods
+            break
+          }
           case 'games':
           {
             presenceData.details = strings.browsingGames
@@ -113,6 +120,10 @@ presence.on('UpdateData', async () => {
               presenceData.details = strings.search
               presenceData.smallImageKey = Assets.Search
               presenceData.state = searchInput
+            }
+            if (pathname.split('/')[3] === 'tags') {
+              presenceData.details = strings.viewPage
+              presenceData.state = strings.mods
             }
             break
           }
