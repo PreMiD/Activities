@@ -6,6 +6,10 @@
     "name": "sw3do"
   },
   "service": "AnimEly",
+  "altnames": [
+    "AnimeElysium",
+    "Anime Elysium"
+  ],
   "description": {
     "en": "Watch anime online with Turkish subtitles",
     "tr": "Türkçe altyazılı anime izleyin"

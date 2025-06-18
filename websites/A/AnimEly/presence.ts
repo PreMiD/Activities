@@ -27,12 +27,6 @@ presence.on('UpdateData', () => {
   if (path === '/') {
     presenceData.details = 'Ana sayfaya göz atıyor'
     presenceData.smallImageKey = Assets.Reading
-    presenceData.buttons = [
-      {
-        label: 'Ana Sayfayı Ziyaret Et',
-        url: 'https://animely.net/',
-      },
-    ]
   }
   else if (path === '/yeni-bolumler') {
     presenceData.details = 'Yeni bölümlere göz atıyor'
