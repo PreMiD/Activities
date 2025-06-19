@@ -24,9 +24,9 @@ async function getVideoInformation(videoId: string) {
   if (videoCache.idVideo === videoId && videoCache.descVideo !== '' && videoCache.nameVideo !== '') {
     return videoCache
   }
-  const videoName = document.querySelector('.player-overlay-top_text_title__srK73')!.textContent || ''
-  const videoDesc = document.querySelector('.player-media-info_text__6QoK5')?.textContent || ''
-  const movieId = location.href.match(/movie\/([^/]+)\/watch/)?.[1] || ''
+  const videoName = document.querySelector('[class*="player-overlay-top_text_title"]')!.textContent || ''
+  const videoDesc = document.querySelector('[class*="player-media-info_text"]')?.textContent || ''
+  const movieId = document.location.href.match(/movie\/([^/]+)\/watch/)?.[1] || ''
   if (videoName && videoDesc) {
     videoCache = {
       nameVideo: videoName,
