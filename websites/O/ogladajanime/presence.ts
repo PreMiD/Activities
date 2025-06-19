@@ -233,7 +233,7 @@ function updatePresence() {
         presenceData.largeImageKey = animeicon.getAttribute('data-src')?.split(' ')[0]
       }
     }
-    else if(pathname.includes('/character/')){
+    else if(pathname.includes('/character/') && browsingStatusEnabled){
       const characterInfo = document.getElementById('animemenu_info')
       const name = characterInfo?.querySelector('div[class="row card-body justify-content-center"] h4[class="card-title col-12 text-center mb-1"]')
       const image = document.querySelector('img[class="img-fluid lozad rounded text-center"]')?.getAttribute("data-src")?.trim()
@@ -248,7 +248,7 @@ function updatePresence() {
     }
     // Simple
 
-    else if (pathname.includes('/watch2gether')) {
+    else if (pathname.includes('/watch2gether') && browsingStatusEnabled) {
       presenceData.details = 'Przegląda pokoje do oglądania z innymi'
     }
 
@@ -260,6 +260,9 @@ function updatePresence() {
     }
     else if (pathname.includes('/chat') && browsingStatusEnabled) {
       presenceData.details = 'Rozmawia na chacie'
+    }
+    else if (pathname.includes('/user_activity') && browsingStatusEnabled) {
+      presenceData.details = 'Przegląda swoją ostatnią aktywność'
     }
     else if (pathname.includes('/last_comments') && browsingStatusEnabled) {
       presenceData.details = 'Przegląda ostatnie komentarze'
