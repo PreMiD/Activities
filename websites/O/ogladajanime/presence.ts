@@ -89,9 +89,9 @@ function updatePresence() {
           presenceData.details = 'Przegląda listę Anime'
         }
         if (watching === 0)
-          presenceData.state = `${watched} obejrzanych`
+          presenceData.state = `${watchedString(watched)}`
         else
-          presenceData.state = `${watching} oglądanych • ${watched} obejrzanych`
+          presenceData.state = `${watchingString(watching)} • ${watchedString(watched)}`
         presenceData.buttons = [{ label: 'Zobacz Listę Anime', url: document.location.href }]
 
         presenceData.largeImageKey = `https://cdn.ogladajanime.pl/images/user/${id}.webp`
@@ -165,6 +165,20 @@ function updatePresence() {
 
     presence.setActivity(presenceData)
   })
+}
+
+function watchingString(num: number): string {
+  if (num < 5)
+    return `${num} oglądane`
+  else
+    return `${num} oglądanych`
+}
+
+function watchedString(num: number): string {
+  if (num < 5)
+    return `${num} obejrzane`
+  else
+    return `${num} obejrzanych`
 }
 
 function checkForPlayer() {
