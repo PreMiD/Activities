@@ -48,8 +48,8 @@ async function getSeriesInformation(serieId: string) {
   if (serieCache.idSerie === serieId && serieCache.nameSerie !== '' && serieCache.episodeSerie !== '') {
     return serieCache
   }
-  const nameEpisode = document.querySelector('.player-overlay-top_text_description__h4vWY')?.textContent || ''
-  const rawTitle = document.querySelector('.player-overlay-top_text_title__srK73')?.textContent || ''
+  const nameEpisode = document.querySelector('[class*="player-overlay-top_text_description"]')?.textContent || ''
+  const rawTitle = document.querySelector('[class*="player-overlay-top_text_title"]')?.textContent || ''
   const match = rawTitle.match(/^(\S+)\s+(S\d+\s+E\d+)$/i)
   const titleSerie = match?.[1]?.trim() || rawTitle
   const numberSerie = match?.[2] || ''
