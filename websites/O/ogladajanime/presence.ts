@@ -79,32 +79,72 @@ function updatePresence() {
       }
     }
     else if (pathname.includes('/anime_list/') && browsingStatusEnabled) {
-      const id = pathname.replace('/anime_list/', '').replace(/\/\d/, '')
+      let id = pathname.replace('/anime_list/', '')
+      const match = id.match(/\/\d/)
+      let category = 0
+      if (match != null) {
+        const split = id.split('/')
+        category = Number.parseInt(split.at(1) as string)
+      }
+      id = id.replace(/\/\d/, '')
+
       presenceData.details = 'Przegląda listę Anime'
       presenceData.buttons = [{ label: 'Zobacz listę Anime', url: document.location.href }]
       if (id != null) {
-        const statuses = document.querySelectorAll('td[class="px-1 px-sm-2"]')
-        let watched = 0
-        let watching = 0
-        statuses.forEach((elem, _, __) => {
-          const select = elem.querySelector('select')
-          if (select != null) {
-            if (select.value === '2')
-              watched++
-            else if (select.value === '1')
-              watching++
+        if (category === 0) {
+          const statuses = document.querySelectorAll('td[class="px-1 px-sm-2"]')
+          let watched = 0
+          let watching = 0
+          statuses.forEach((elem, _, __) => {
+            const select = elem.querySelector('select')
+            if (select != null) {
+              if (select.value === '2')
+                watched++
+              else if (select.value === '1')
+                watching++
+            }
+            else if (elem.innerHTML != null) {
+              if (elem.innerHTML?.trim()?.replace(' ', '') === 'Obejrzane')
+                watched++
+              else if (elem.textContent?.trim()?.replace(' ', '') === 'Oglądam')
+                watching++
+            }
+          })
+
+          if (watching === 0)
+            presenceData.state = `${watchedString(watched)}`
+          else
+            presenceData.state = `Ogląda ${watching} • ${watchedString(watched)}`
+        }
+        else {
+          let categoryName: string = 'N/A'
+          switch (category) {
+            case 1:
+              categoryName = 'Oglądam'
+              break
+            case 2:
+              categoryName = 'Obejrzane'
+              break
+            case 3:
+              categoryName = 'Planuje'
+              break
+            case 4:
+              categoryName = 'Wstrzymane'
+              break
+            case 5:
+              categoryName = 'Porzucone'
+              break
           }
-        })
+
+          const count = document.querySelectorAll('td[class="px-0 px-sm-2"]').length / 2
+          presenceData.state = `Kategoria '${categoryName}' • ${count} anime`
+        }
+
         const name = document.querySelector('h4[class="card-title col-12 text-center mb-1"]')?.textContent?.replace('- Lista anime', '')?.replace(/\s/g, '')
 
         if (name) {
           presenceData.details = `Przegląda listę '${name}'`
         }
-
-        if (watching === 0)
-          presenceData.state = `${watchedString(watched)}`
-        else
-          presenceData.state = `${watchingString(watching)} • ${watchedString(watched)}`
 
         presenceData.largeImageKey = `https://cdn.ogladajanime.pl/images/user/${id}.webp`
         presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
@@ -178,15 +218,6 @@ function updatePresence() {
 
     presence.setActivity(presenceData)
   })
-}
-
-function watchingString(num: number): string {
-  if (num === 0)
-    return `${num} oglądanych`
-  else if (num < 5)
-    return `${num} oglądane`
-  else
-    return `${num} oglądanych`
 }
 
 function watchedString(num: number): string {
