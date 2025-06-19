@@ -1,0 +1,10 @@
+{
+  "mygamatoto.viewCat": {
+    "message": "Viewing a Cat",
+    "description": "Viewing details page for a Cat"
+  },
+  "mygamatoto.buttonViewCat": {
+    "message": "View Cat",
+    "description": "Button to view Cat information"
+  }
+}
