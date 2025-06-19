@@ -233,6 +233,19 @@ function updatePresence() {
         presenceData.largeImageKey = animeicon.getAttribute('data-src')?.split(' ')[0]
       }
     }
+    else if(pathname.includes('/character/')){
+      const characterInfo = document.getElementById('animemenu_info')
+      const name = characterInfo?.querySelector('div[class="row card-body justify-content-center"] h4[class="card-title col-12 text-center mb-1"]')
+      const image = document.querySelector('img[class="img-fluid lozad rounded text-center"]')?.getAttribute("data-src")?.trim()
+      if(name)
+        presenceData.details = `Sprawdza postać '${name?.textContent}'`
+      else
+        presenceData.details = 'Sprawdza postać'
+      if(image){
+        presenceData.largeImageKey = image
+        presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
+      }
+    }
     // Simple
 
     else if (pathname.includes('/watch2gether')) {
