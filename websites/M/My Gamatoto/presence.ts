@@ -28,6 +28,39 @@ function registerSlideshowKey(inputKey?: string): boolean {
   return false
 }
 
+function addStatSlides(card: HTMLDivElement, presenceData: PresenceData) {
+  const thumbnail = card.querySelector<HTMLImageElement>('.ant-card-head-title img')
+  const name = card.querySelector<HTMLHeadingElement>('.ant-card-head-title h3')
+  const description = card.querySelector<HTMLDivElement>('.ant-card-grid > .ant-card-grid:last-child')
+  const levelInput = card.querySelector('input')
+  const stats: HTMLDivElement[] = []
+
+  let currentItem = levelInput?.closest('.ant-card-grid')?.nextElementSibling
+  while (currentItem && currentItem?.querySelector('hr') === null) {
+    stats.push(currentItem as HTMLDivElement)
+    currentItem = currentItem.nextElementSibling
+  }
+
+  const data: PresenceData = structuredClone(presenceData)
+  data.largeImageKey = thumbnail
+  data.state = `${name?.textContent} - LV${levelInput?.value}`
+  data.smallImageKey = Assets.Question
+  for (const stat of stats) {
+    const statName = stat.querySelector('div')
+    let statText = ''
+    for (const node of stat.childNodes) {
+      if (node.nodeType === document.TEXT_NODE) {
+        statText += node.textContent
+      }
+    }
+    const subData = structuredClone(data)
+    subData.smallImageText = `${statName?.textContent}: ${statText}`
+    slideshow.addSlide(`${name?.textContent}-${statName?.textContent}`, subData, MIN_SLIDE_TIME)
+  }
+  data.smallImageText = description
+  slideshow.addSlide(`${name?.textContent}-description`, data, MIN_SLIDE_TIME)
+}
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     name: 'My Gamatoto',
@@ -46,19 +79,23 @@ presence.on('UpdateData', async () => {
     browsing: 'general.browsing',
     buttonViewCat: 'mygamatoto.buttonViewCat',
     buttonViewComparison: 'mygamatoto.buttonViewComparison',
+    buttonViewEnemy: 'mygamatoto.buttonViewEnemy',
     compareCat: 'mygamatoto.compareCat',
     viewCat: 'mygamatoto.viewCat',
+    viewEnemy: 'mygamatoto.viewEnemy',
     viewList: 'general.viewList',
   })
 
   switch (pathList[0]) {
     case 'allcats':
-    case 'allenemies': {
+    case 'allenemies':
+    case 'allstages': {
       presenceData.details = strings.viewList
       presenceData.state = document.querySelector('h1')
       break
     }
     case 'comparecats': {
+      useSlideshow = true
       presenceData.details = strings.compareCat
       presenceData.buttons = [{ label: strings.buttonViewComparison, url: href }]
       const rows = document.querySelectorAll<HTMLTableRowElement>('.ant-table-body > table > tbody tr')
@@ -73,48 +110,33 @@ presence.on('UpdateData', async () => {
           slideshow.addSlide(`${image?.alt}`, data, MIN_SLIDE_TIME)
         }
       }
-      useSlideshow = true
       break
     }
     case 'catinfo': {
+      useSlideshow = true
       presenceData.details = strings.viewCat
       presenceData.buttons = [{ label: strings.buttonViewCat, url: href }]
       const catEvolutions = document.querySelectorAll<HTMLDivElement>('.ant-card')
       if (registerSlideshowKey()) {
         for (const evolutionCard of catEvolutions) {
-          const thumbnail = evolutionCard.querySelector<HTMLImageElement>('.ant-card-head-title img')
-          const name = evolutionCard.querySelector<HTMLHeadingElement>('.ant-card-head-title h3')
-          const description = evolutionCard.querySelector<HTMLDivElement>('.ant-card-grid > .ant-card-grid:last-child')
-          const levelInput = evolutionCard.querySelector('input')
-          const stats: HTMLDivElement[] = []
-
-          let currentItem = levelInput?.closest('.ant-card-grid')?.nextElementSibling
-          while (currentItem && currentItem?.querySelector('hr') === null) {
-            stats.push(currentItem as HTMLDivElement)
-            currentItem = currentItem.nextElementSibling
-          }
-
-          const data: PresenceData = structuredClone(presenceData)
-          data.largeImageKey = thumbnail
-          data.state = `${name?.textContent} - LV${levelInput?.value}`
-          data.smallImageKey = Assets.Question
-          for (const stat of stats) {
-            const statName = stat.querySelector('div')
-            let statText = ''
-            for (const node of stat.childNodes) {
-              if (node.nodeType === document.TEXT_NODE) {
-                statText += node.textContent
-              }
-            }
-            const subData = structuredClone(data)
-            subData.smallImageText = `${statName?.textContent}: ${statText}`
-            slideshow.addSlide(`${name?.textContent}-${statName?.textContent}`, subData, MIN_SLIDE_TIME)
-          }
-          data.smallImageText = description
-          slideshow.addSlide(`${name?.textContent}-description`, data, MIN_SLIDE_TIME)
+          addStatSlides(evolutionCard, presenceData)
         }
       }
+      break
+    }
+    case 'enemyinfo': {
       useSlideshow = true
+      presenceData.details = strings.viewEnemy
+      presenceData.buttons = [{ label: strings.buttonViewEnemy, url: href }]
+      if (registerSlideshowKey()) {
+        const card = document.querySelector<HTMLDivElement>('.ant-card')
+        if (card) {
+          addStatSlides(card, presenceData)
+        }
+        else {
+          useSlideshow = false
+        }
+      }
       break
     }
     default: {

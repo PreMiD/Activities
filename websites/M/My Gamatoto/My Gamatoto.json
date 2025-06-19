@@ -7,6 +7,14 @@
     "message": "View Cat",
     "description": "Button to view Cat information"
   },
+  "mygamatoto.viewEnemy": {
+    "message": "Viewing an Enemy",
+    "description": "Viewing details page for an Enemy"
+  },
+  "mygamatoto.buttonViewEnemy": {
+    "message": "View Enemy",
+    "description": "Button to view Enemy information"
+  },
   "mygamatoto.compareCat": {
     "message": "Comparing Cats",
     "description": "Viewing a customized list of cats"
