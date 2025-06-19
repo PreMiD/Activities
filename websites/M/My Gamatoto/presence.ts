@@ -94,21 +94,27 @@ presence.on('UpdateData', async () => {
       presenceData.state = document.querySelector('h1')
       break
     }
+    case 'best-cats-for-attack':
+    case 'best-cats-for-health':
+    case 'best-cats-for-range':
+    case 'best-cats-for-speed':
+    case 'best-cats-for-meatshields': {
+      break
+    }
     case 'comparecats': {
       useSlideshow = true
       presenceData.details = strings.compareCat
       presenceData.buttons = [{ label: strings.buttonViewComparison, url: href }]
       const rows = document.querySelectorAll<HTMLTableRowElement>('.ant-table-body > table > tbody tr')
-      if (registerSlideshowKey()) {
-        for (const row of rows) {
-          const link = row.querySelector('a')
-          const image = link?.querySelector('img')
-          const data = structuredClone(presenceData)
-          data.buttons?.push({ label: strings.buttonViewCat, url: link })
-          data.state = image?.alt
-          data.smallImageKey = image
-          slideshow.addSlide(`${image?.alt}`, data, MIN_SLIDE_TIME)
-        }
+      registerSlideshowKey()
+      for (const row of rows) {
+        const link = row.querySelector('a')
+        const image = link?.querySelector('img')
+        const data = structuredClone(presenceData)
+        data.buttons?.push({ label: strings.buttonViewCat, url: link })
+        data.state = image?.alt
+        data.smallImageKey = image
+        slideshow.addSlide(`${image?.alt}`, data, MIN_SLIDE_TIME)
       }
       break
     }
@@ -117,10 +123,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.viewCat
       presenceData.buttons = [{ label: strings.buttonViewCat, url: href }]
       const catEvolutions = document.querySelectorAll<HTMLDivElement>('.ant-card')
-      if (registerSlideshowKey()) {
-        for (const evolutionCard of catEvolutions) {
-          addStatSlides(evolutionCard, presenceData)
-        }
+      registerSlideshowKey()
+      for (const evolutionCard of catEvolutions) {
+        addStatSlides(evolutionCard, presenceData)
       }
       break
     }
@@ -128,14 +133,13 @@ presence.on('UpdateData', async () => {
       useSlideshow = true
       presenceData.details = strings.viewEnemy
       presenceData.buttons = [{ label: strings.buttonViewEnemy, url: href }]
-      if (registerSlideshowKey()) {
-        const card = document.querySelector<HTMLDivElement>('.ant-card')
-        if (card) {
-          addStatSlides(card, presenceData)
-        }
-        else {
-          useSlideshow = false
-        }
+      registerSlideshowKey()
+      const card = document.querySelector<HTMLDivElement>('.ant-card')
+      if (card) {
+        addStatSlides(card, presenceData)
+      }
+      else {
+        useSlideshow = false
       }
       break
     }
