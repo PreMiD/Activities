@@ -168,14 +168,18 @@ function updatePresence() {
 }
 
 function watchingString(num: number): string {
-  if (num < 5)
+  if (num === 0)
+    return `${num} oglądanych`
+  else if (num < 5)
     return `${num} oglądane`
   else
     return `${num} oglądanych`
 }
 
 function watchedString(num: number): string {
-  if (num < 5)
+  if (num === 0)
+    return `${num} obejrzanych`
+  else if (num < 5)
     return `${num} obejrzane`
   else
     return `${num} obejrzanych`
