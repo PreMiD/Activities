@@ -60,14 +60,29 @@ function updatePresence() {
     else if (pathname.includes('/harmonogram') && browsingStatusEnabled) {
       presenceData.details = 'Przegląda harmonogram emisji odcinków Anime'
     }
+    else if (pathname.includes('/user_comments/') && browsingStatusEnabled) {
+      const id = pathname.replace('/user_comments/', '')
+      presenceData.buttons = [{ label: 'Zobacz listę komentarzy', url: document.location.href }]
+      presenceData.details = 'Przegląda komentarze wysłane przez użytkownika'
+      if (id != null) {
+        const name = document.querySelector('h4[class="card-title col-12 text-center mb-1"]')?.textContent?.replace('Komentarze użytkownika: ', '')?.replace(/\s/g, '')
+        const comments = (document.querySelector('#site-content section .row')?.querySelectorAll('div[class="col-12 mb-3"]').length ?? 1) - 1
+
+        if (name) {
+          presenceData.details = `Przegląda komentarze wysłane przez '${name}'`
+        }
+
+        presenceData.state = `${commentsString(comments)} przez użytkownika`
+
+        presenceData.largeImageKey = `https://cdn.ogladajanime.pl/images/user/${id}.webp`
+        presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
+      }
+    }
     else if (pathname.includes('/anime_list/') && browsingStatusEnabled) {
       const id = pathname.replace('/anime_list/', '').replace(/\/\d/, '')
-      if (id == null) {
-        presenceData.details = 'Przegląda listę Anime'
-        presenceData.state = pathname
-        presenceData.buttons = [{ label: 'Zobacz Listę Anime', url: document.location.href }]
-      }
-      else {
+      presenceData.details = 'Przegląda listę Anime'
+      presenceData.buttons = [{ label: 'Zobacz listę Anime', url: document.location.href }]
+      if (id != null) {
         const statuses = document.querySelectorAll('td[class="px-1 px-sm-2"]')
         let watched = 0
         let watching = 0
@@ -85,14 +100,11 @@ function updatePresence() {
         if (name) {
           presenceData.details = `Przegląda listę '${name}'`
         }
-        else {
-          presenceData.details = 'Przegląda listę Anime'
-        }
+
         if (watching === 0)
           presenceData.state = `${watchedString(watched)}`
         else
           presenceData.state = `${watchingString(watching)} • ${watchedString(watched)}`
-        presenceData.buttons = [{ label: 'Zobacz Listę Anime', url: document.location.href }]
 
         presenceData.largeImageKey = `https://cdn.ogladajanime.pl/images/user/${id}.webp`
         presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
@@ -184,6 +196,13 @@ function watchedString(num: number): string {
     return `${num} obejrzane`
   else
     return `${num} obejrzanych`
+}
+
+function commentsString(num: number): string {
+  if (num === 1)
+    return `${num} wysłany komentarz`
+  else
+    return `${num} wysłanych komentarzy`
 }
 
 function checkForPlayer() {
