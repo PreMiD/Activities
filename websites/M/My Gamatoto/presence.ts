@@ -98,7 +98,26 @@ presence.on('UpdateData', async () => {
     case 'best-cats-for-health':
     case 'best-cats-for-range':
     case 'best-cats-for-speed':
-    case 'best-cats-for-meatshields': {
+    case 'best-cats-for-meatshields':
+    case 'ultra-souls-tier-list':
+    case 'dynamites-tier-list':
+    case 'galaxy-gals-tier-list':
+    case 'almighties-tier-list':
+    case 'lugas-tier-list': {
+      presenceData.details = strings.viewList
+      presenceData.state = document.querySelector('h2')
+      registerSlideshowKey()
+      const rows = document.querySelector<HTMLDivElement>('h3+.ant-table-wrapper')
+        ?.querySelectorAll<HTMLTableRowElement>('.ant-table-body > table > tbody tr')
+      for (const row of rows ?? []) {
+        const link = row.querySelector('a')
+        const image = link?.querySelector('img')
+        const data = structuredClone(presenceData)
+        data.buttons?.push({ label: strings.buttonViewCat, url: link })
+        data.state = image?.alt
+        data.smallImageKey = image
+        slideshow.addSlide(`${image?.alt}`, data, MIN_SLIDE_TIME)
+      }
       break
     }
     case 'comparecats': {
