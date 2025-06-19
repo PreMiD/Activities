@@ -101,6 +101,7 @@ function updatePresence() {
     else if (pathname.includes('/profile') && browsingStatusEnabled) {
       const pfp = document.querySelector('img[alt="Profile Avatar"]')
       const name = document.querySelector('h4[class="card-title col-12 text-center m-0 text-dark"]')?.textContent?.replace(/\s/g, '')?.replace('-Profil', '')
+      // TODO: add a state for presence
       if (name) {
         presenceData.details = `Przegląda profil '${name}'`
       }
@@ -188,7 +189,6 @@ function watchedString(num: number): string {
 function checkForPlayer() {
   const { pathname } = document.location
   if (pathname.includes('/anime')) {
-    presence.info('looking for video')
     const _player = document.querySelector('video')
     if (_player != null) {
       if (player != null) {
