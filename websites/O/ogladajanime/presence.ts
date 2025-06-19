@@ -42,25 +42,9 @@ function updatePresence() {
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png',
     }
 
-    if ((pathname === '/main2' || pathname === '/') && browsingStatusEnabled) {
-      presenceData.details = 'Przegląda stronę główną'
-    }
-    else if (pathname.includes('/search/name/') && browsingStatusEnabled) {
-      presenceData.details = 'Szuka Anime'
-    }
-    else if (pathname.includes('/chat') && browsingStatusEnabled) {
-      presenceData.details = 'Rozmawia na chacie'
-    }
-    else if (pathname.includes('/radio') && browsingStatusEnabled) {
-      presenceData.details = 'Słucha Radio Anime'
-    }
-    else if (pathname.includes('/rules') && browsingStatusEnabled) {
-      presenceData.details = 'Czyta regulamin'
-    }
-    else if (pathname.includes('/harmonogram') && browsingStatusEnabled) {
-      presenceData.details = 'Przegląda harmonogram emisji odcinków Anime'
-    }
-    else if (pathname.includes('/user_comments/') && browsingStatusEnabled) {
+    // Complex
+
+    if (pathname.includes('/user_comments/') && browsingStatusEnabled) {
       const id = pathname.replace('/user_comments/', '')
       presenceData.buttons = [{ label: 'Zobacz listę komentarzy', url: document.location.href }]
       presenceData.details = 'Przegląda komentarze wysłane przez użytkownika'
@@ -212,6 +196,85 @@ function updatePresence() {
         presenceData.largeImageKey = animeicon.getAttribute('data-srcset')?.split(' ')[0]
       }
     }
+    else if (pathname.match(/\/watch2gether\/\d+/)) {
+      checkForPlayer()
+      const animeicon = document.querySelector('img[class="img-fluid lozad rounded tooltip tooltip-anime mb-2 tooltipstered"]')
+      const name = document.querySelector('h5[class="card-title text-dark"]')
+      const infoElem = document.querySelector('h6[class="card-subtitle mb-2 text-muted"]')
+      const spans = infoElem?.querySelectorAll('span[class="text-gray"]')
+
+      if(spans == null || spans.length == 0)
+        return presence.clearActivity()
+
+      const episode = spans[0]?.textContent
+      const roomName = spans[spans.length-1]?.textContent
+
+
+      if (name) {
+        presenceData.details = name.textContent
+        presenceData.state = `Odcinek ${episode} • Pokój '${roomName}'`
+        presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
+        presenceData.buttons = [{ label: 'Obejrzyj ze mną', url: document.location.href }]
+      }
+      else {
+        return presence.clearActivity()
+      }
+
+      if (player != null && isPlaying) {
+        const timestamps = getTimestamps(player.currentTime, player.duration)
+        presenceData.startTimestamp = timestamps[0]
+        presenceData.endTimestamp = timestamps[1]
+      }
+      else if (!isPlaying && !browsingStatusEnabled && hideWhenPaused) {
+        return presence.clearActivity()
+      }
+
+      if (animeicon) {
+        presenceData.largeImageKey = animeicon.getAttribute('data-src')?.split(' ')[0]
+      }
+    }
+    // Simple
+
+    else if (pathname.includes('/watch2gether')) {
+      presenceData.details = 'Przegląda pokoje do oglądania z innymi'
+    }
+
+    else if ((pathname === '/main2' || pathname === '/') && browsingStatusEnabled) {
+      presenceData.details = 'Przegląda stronę główną'
+    }
+    else if ((pathname.includes('/search/name/') || pathname.includes('/search/custom')) && browsingStatusEnabled) {
+      presenceData.details = 'Szuka Anime'
+    }
+    else if (pathname.includes('/chat') && browsingStatusEnabled) {
+      presenceData.details = 'Rozmawia na chacie'
+    }
+    else if (pathname.includes('/last_comments') && browsingStatusEnabled) {
+      presenceData.details = 'Przegląda ostatnie komentarze'
+    }
+    else if (pathname.includes('/active_sessions') && browsingStatusEnabled) {
+      presenceData.details = 'Przegląda aktywne sesje logowania'
+    }
+    else if (pathname.includes('/last_comments') && browsingStatusEnabled) {
+      presenceData.details = 'Przegląda ostatnie edycje'
+    }
+    else if (pathname.includes('/anime_list_to_load') && browsingStatusEnabled) {
+      presenceData.details = 'Ładuję listę anime z innej strony'
+    }
+    else if (pathname.includes('/discord') && browsingStatusEnabled) {
+      presenceData.details = 'Sprawdza jak można się skontaktować'
+    }
+    else if (pathname.includes('/discord') && browsingStatusEnabled) {
+      presenceData.details = 'Sprawdza jak można wspierać OA'
+    }
+    else if (pathname.includes('/radio') && browsingStatusEnabled) {
+      presenceData.details = 'Słucha Radio Anime'
+    }
+    else if (pathname.includes('/rules') && browsingStatusEnabled) {
+      presenceData.details = 'Czyta regulamin'
+    }
+    else if (pathname.includes('/harmonogram') && browsingStatusEnabled) {
+      presenceData.details = 'Przegląda harmonogram emisji odcinków Anime'
+    }
     else {
       return presence.clearActivity()
     }
@@ -238,7 +301,7 @@ function commentsString(num: number): string {
 
 function checkForPlayer() {
   const { pathname } = document.location
-  if (pathname.includes('/anime')) {
+  if (pathname.includes('/anime') || pathname.includes('/watch2gether/')) {
     const _player = document.querySelector('video')
     if (_player != null) {
       if (player != null) {
