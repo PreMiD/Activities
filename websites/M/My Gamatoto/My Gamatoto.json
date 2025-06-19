@@ -6,5 +6,13 @@
   "mygamatoto.buttonViewCat": {
     "message": "View Cat",
     "description": "Button to view Cat information"
+  },
+  "mygamatoto.compareCat": {
+    "message": "Comparing Cats",
+    "description": "Viewing a customized list of cats"
+  },
+  "mygamatoto.buttonViewComparison": {
+    "message": "View Comparison",
+    "description": "Button to view comparison list"
   }
 }

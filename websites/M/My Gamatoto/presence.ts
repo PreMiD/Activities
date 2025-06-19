@@ -18,8 +18,9 @@ enum ActivityAssets {
 }
 
 let oldSlideshowKey: string
-function registerSlideshowKey(key = ''): boolean {
-  if (oldSlideshowKey !== key || document.location.href) {
+function registerSlideshowKey(inputKey?: string): boolean {
+  const key = inputKey ?? document.location.href
+  if (oldSlideshowKey !== (key)) {
     slideshow.deleteAllSlides()
     oldSlideshowKey = key
     return true
@@ -44,10 +45,37 @@ presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
     browsing: 'general.browsing',
     buttonViewCat: 'mygamatoto.buttonViewCat',
+    buttonViewComparison: 'mygamatoto.buttonViewComparison',
+    compareCat: 'mygamatoto.compareCat',
     viewCat: 'mygamatoto.viewCat',
+    viewList: 'general.viewList',
   })
 
   switch (pathList[0]) {
+    case 'allcats':
+    case 'allenemies': {
+      presenceData.details = strings.viewList
+      presenceData.state = document.querySelector('h1')
+      break
+    }
+    case 'comparecats': {
+      presenceData.details = strings.compareCat
+      presenceData.buttons = [{ label: strings.buttonViewComparison, url: href }]
+      const rows = document.querySelectorAll<HTMLTableRowElement>('.ant-table-body > table > tbody tr')
+      if (registerSlideshowKey()) {
+        for (const row of rows) {
+          const link = row.querySelector('a')
+          const image = link?.querySelector('img')
+          const data = structuredClone(presenceData)
+          data.buttons?.push({ label: strings.buttonViewCat, url: link })
+          data.state = image?.alt
+          data.smallImageKey = image
+          slideshow.addSlide(`${image?.alt}`, data, MIN_SLIDE_TIME)
+        }
+      }
+      useSlideshow = true
+      break
+    }
     case 'catinfo': {
       presenceData.details = strings.viewCat
       presenceData.buttons = [{ label: strings.buttonViewCat, url: href }]
