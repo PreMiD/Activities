@@ -157,9 +157,11 @@ function updatePresence() {
       const alternativeName = anime?.parentElement?.querySelector(
         'i[class="text-muted text-trim"]',
       )
-      const altName = alternativeName?.getAttribute('title')
-      if (altName != null && useAltName)
-        name = altName
+      if (alternativeName != null) {
+        const altName = alternativeName?.getAttribute('title')
+        if (altName != null && altName.length !== 0 && useAltName)
+          name = altName
+      }
       const animeicon = document.querySelector('.img-fluid.lozad')
       const episodeList = document.querySelector('#ep_list')
       const activeEpisode = episodeList?.querySelector('.active')
@@ -203,12 +205,11 @@ function updatePresence() {
       const infoElem = document.querySelector('h6[class="card-subtitle mb-2 text-muted"]')
       const spans = infoElem?.querySelectorAll('span[class="text-gray"]')
 
-      if(spans == null || spans.length == 0)
+      if (spans == null || spans.length === 0)
         return presence.clearActivity()
 
       const episode = spans[0]?.textContent
-      const roomName = spans[spans.length-1]?.textContent
-
+      const roomName = spans[spans.length - 1]?.textContent
 
       if (name) {
         presenceData.details = name.textContent
@@ -233,15 +234,15 @@ function updatePresence() {
         presenceData.largeImageKey = animeicon.getAttribute('data-src')?.split(' ')[0]
       }
     }
-    else if(pathname.includes('/character/') && browsingStatusEnabled){
+    else if (pathname.includes('/character/') && browsingStatusEnabled) {
       const characterInfo = document.getElementById('animemenu_info')
       const name = characterInfo?.querySelector('div[class="row card-body justify-content-center"] h4[class="card-title col-12 text-center mb-1"]')
-      const image = document.querySelector('img[class="img-fluid lozad rounded text-center"]')?.getAttribute("data-src")?.trim()
-      if(name)
+      const image = document.querySelector('img[class="img-fluid lozad rounded text-center"]')?.getAttribute('data-src')?.trim()
+      if (name)
         presenceData.details = `Sprawdza postać '${name?.textContent}'`
       else
         presenceData.details = 'Sprawdza postać'
-      if(image){
+      if (image) {
         presenceData.largeImageKey = image
         presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
       }
@@ -258,6 +259,15 @@ function updatePresence() {
     else if ((pathname.includes('/search/name/') || pathname.includes('/search/custom')) && browsingStatusEnabled) {
       presenceData.details = 'Szuka Anime'
     }
+    else if (pathname.includes('/search/rand') && browsingStatusEnabled) {
+      presenceData.details = 'Przegląda losowe anime'
+    }
+    else if (pathname.includes('/search/new') && browsingStatusEnabled) {
+      presenceData.details = 'Przegląda najnowsze anime'
+    }
+    else if (pathname.includes('/search/main') && browsingStatusEnabled) {
+      presenceData.details = 'Przegląda najlepiej oceniane anime'
+    }
     else if (pathname.includes('/chat') && browsingStatusEnabled) {
       presenceData.details = 'Rozmawia na chacie'
     }
@@ -270,7 +280,7 @@ function updatePresence() {
     else if (pathname.includes('/active_sessions') && browsingStatusEnabled) {
       presenceData.details = 'Przegląda aktywne sesje logowania'
     }
-    else if (pathname.includes('/last_comments') && browsingStatusEnabled) {
+    else if (pathname.includes('/manage_edits') && browsingStatusEnabled) {
       presenceData.details = 'Przegląda ostatnie edycje'
     }
     else if (pathname.includes('/anime_list_to_load') && browsingStatusEnabled) {
@@ -279,7 +289,7 @@ function updatePresence() {
     else if (pathname.includes('/discord') && browsingStatusEnabled) {
       presenceData.details = 'Sprawdza jak można się skontaktować'
     }
-    else if (pathname.includes('/discord') && browsingStatusEnabled) {
+    else if (pathname.includes('/support') && browsingStatusEnabled) {
       presenceData.details = 'Sprawdza jak można wspierać OA'
     }
     else if (pathname.includes('/radio') && browsingStatusEnabled) {
@@ -291,6 +301,7 @@ function updatePresence() {
     else if (pathname.includes('/harmonogram') && browsingStatusEnabled) {
       presenceData.details = 'Przegląda harmonogram emisji odcinków Anime'
     }
+    // TODO: add support for https://ogladajanime.pl/anime_seasons. Would have done that if I only knew what it was about
     else {
       return presence.clearActivity()
     }
