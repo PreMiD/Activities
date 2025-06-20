@@ -33,7 +33,7 @@ presence.on('UpdateData', async () => {
     && href.match(/enka\.network\/u\/(\d+)/)
   ) {
     const UID = href.match(/enka\.network\/u\/(\d+)/)![1]
-    const characterName = document.querySelector('div.Card div.name')?.childNodes[0]?.nodeValue?.trim()
+    const characterName = document.querySelector('div.name')?.childNodes[0]?.nodeValue?.trim()
     const player = fetchPlayerDetails()
 
     presenceData.details = `Viewing ${characterName} build`
