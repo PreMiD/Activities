@@ -45,10 +45,10 @@ function updatePresence() {
     getUserID()
     const { pathname } = document.location
     const [browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence] = await Promise.all([
-      await presence.getSetting<boolean>('browsingStatus'),
-      await presence.getSetting<boolean>('useAltName'),
-      await presence.getSetting<boolean>('hideWhenPaused'),
-      await presence.getSetting<boolean>('titleAsPresence'),
+      presence.getSetting<boolean>('browsingStatus'),
+      presence.getSetting<boolean>('useAltName'),
+      presence.getSetting<boolean>('hideWhenPaused'),
+      presence.getSetting<boolean>('titleAsPresence'),
     ])
     const presenceData: PresenceData = {
       type: ActivityType.Watching,
