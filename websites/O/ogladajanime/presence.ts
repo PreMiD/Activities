@@ -37,7 +37,7 @@ enum ListItemStatus {
   Obejrzane = 2,
   Planuje = 3,
   Wstrzymane = 4,
-  Porzucone = 5
+  Porzucone = 5,
 }
 
 function updatePresence() {
@@ -111,7 +111,7 @@ function updatePresence() {
             presenceData.state = `Ogląda ${watching} • ${watchedString(watched)}`
         }
         else {
-          let categoryName: string = ListItemStatus[category as ListItemStatus]
+          const categoryName: string = ListItemStatus[category as ListItemStatus]
 
           const count = document.querySelectorAll('td[class="px-0 px-sm-2"]').length / 2
           presenceData.state = `Kategoria '${categoryName}' • ${count} anime`
@@ -141,7 +141,7 @@ function updatePresence() {
         presenceData.largeImageKey = pfp.getAttribute('src')
         presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
       }
-      if(pathname.replace('/profile/', '') == userID.toString())
+      if (pathname.replace('/profile/', '') === userID.toString())
         presenceData.buttons = await profileButton()
       else
         presenceData.buttons = await setButton('Zobacz Profil', document.location.href)
