@@ -23,8 +23,14 @@
   "color": "#29C5F6",
   "category": "anime",
   "tags": ["anime", "video"],
-  "iframe": true,
   "settings": [
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false,
+      "description": "Hides 'Mój Profil' button"
+    },
     {
       "id": "browsingStatus",
       "title": "Display Browsing Status",

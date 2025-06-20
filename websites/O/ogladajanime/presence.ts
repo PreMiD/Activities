@@ -4,31 +4,10 @@ const presence = new Presence({ clientId: '1137362720254074972' })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-const content = document.getElementById('site-content')
-let lastContentOpacity = 0
+let userID = 0
 
 let player: HTMLMediaElement
 let isPlaying = false
-
-if (content != null) {
-  new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.attributeName === 'style') {
-        if (content != null) {
-          const opacity = Number.parseInt(content.style.opacity)
-          if (opacity <= 0 && lastContentOpacity > 0) {
-            isPlaying = false
-            updatePresence()
-          }
-
-          lastContentOpacity = opacity
-        }
-      }
-    })
-  }).observe(content, {
-    attributes: true,
-  })
-}
 
 // TODO: add support for https://ogladajanime.pl/anime_seasons. Would have done that if I only knew what it was about
 const staticBrowsing = {
@@ -53,8 +32,17 @@ const staticBrowsing = {
   '/': 'Przegląda stronę główną', // This MUST stay at the end, otherwise this will always display no matter the page
 }
 
+enum ListItemStatus {
+  Oglądam = 1,
+  Obejrzane = 2,
+  Planuje = 3,
+  Wstrzymane = 4,
+  Porzucone = 5
+}
+
 function updatePresence() {
   presence.on('UpdateData', async () => {
+    getUserID()
     const { pathname } = document.location
     const browsingStatusEnabled = await presence.getSetting<boolean>('browsingStatus')
     const useAltName = await presence.getSetting<boolean>('useAltName')
@@ -67,7 +55,7 @@ function updatePresence() {
 
     if (pathname.includes('/user_comments/') && browsingStatusEnabled) {
       const id = pathname.replace('/user_comments/', '')
-      presenceData.buttons = [{ label: 'Zobacz listę komentarzy', url: document.location.href }]
+      presenceData.buttons = await setButton('Zobacz listę komentarzy', document.location.href)
       presenceData.details = 'Przegląda komentarze wysłane przez użytkownika'
       if (id != null) {
         const name = document.querySelector('h4[class="card-title col-12 text-center mb-1"]')?.textContent?.replace('Komentarze użytkownika: ', '')?.replace(/\s/g, '')
@@ -94,7 +82,7 @@ function updatePresence() {
       id = id.replace(/\/\d/, '')
 
       presenceData.details = 'Przegląda listę Anime'
-      presenceData.buttons = [{ label: 'Zobacz listę Anime', url: document.location.href }]
+      presenceData.buttons = await setButton('Zobacz listę Anime', document.location.href)
       if (id != null) {
         if (category === 0) {
           const statuses = document.querySelectorAll('td[class="px-1 px-sm-2"]')
@@ -103,15 +91,16 @@ function updatePresence() {
           statuses.forEach((elem, _, __) => {
             const select = elem.querySelector('select')
             if (select != null) {
-              if (select.value === '2')
+              const value = Number.parseInt(select.value)
+              if (value === ListItemStatus.Obejrzane)
                 watched++
-              else if (select.value === '1')
+              else if (value === ListItemStatus.Oglądam)
                 watching++
             }
             else if (elem.innerHTML != null) {
-              if (elem.innerHTML?.trim()?.replace(' ', '') === 'Obejrzane')
+              if (elem.innerHTML?.trim()?.replace(' ', '') === ListItemStatus[ListItemStatus.Obejrzane])
                 watched++
-              else if (elem.textContent?.trim()?.replace(' ', '') === 'Oglądam')
+              else if (elem.textContent?.trim()?.replace(' ', '') === ListItemStatus[ListItemStatus.Oglądam])
                 watching++
             }
           })
@@ -122,24 +111,7 @@ function updatePresence() {
             presenceData.state = `Ogląda ${watching} • ${watchedString(watched)}`
         }
         else {
-          let categoryName: string = 'N/A'
-          switch (category) {
-            case 1:
-              categoryName = 'Oglądam'
-              break
-            case 2:
-              categoryName = 'Obejrzane'
-              break
-            case 3:
-              categoryName = 'Planuje'
-              break
-            case 4:
-              categoryName = 'Wstrzymane'
-              break
-            case 5:
-              categoryName = 'Porzucone'
-              break
-          }
+          let categoryName: string = ListItemStatus[category as ListItemStatus]
 
           const count = document.querySelectorAll('td[class="px-0 px-sm-2"]').length / 2
           presenceData.state = `Kategoria '${categoryName}' • ${count} anime`
@@ -169,7 +141,10 @@ function updatePresence() {
         presenceData.largeImageKey = pfp.getAttribute('src')
         presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
       }
-      presenceData.buttons = [{ label: 'Zobacz Profil', url: document.location.href }]
+      if(pathname.replace('/profile/', '') == userID.toString())
+        presenceData.buttons = await profileButton()
+      else
+        presenceData.buttons = await setButton('Zobacz Profil', document.location.href)
     }
     else if (pathname.includes('/anime')) {
       checkForPlayer()
@@ -193,8 +168,6 @@ function updatePresence() {
 
       if (name) {
         presenceData.details = name
-        presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
-        presenceData.buttons = [{ label: 'Obejrzyj Teraz', url: document.location.href }]
         presenceData.state = `Odcinek ${activeEpisode?.getAttribute('value') ?? 0
         } • ${activeEpisode?.querySelector('p')?.innerHTML ?? 'N/A'}`
       }
@@ -216,8 +189,11 @@ function updatePresence() {
       }
 
       if (animeicon) {
+        presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
         presenceData.largeImageKey = animeicon.getAttribute('data-srcset')?.split(' ')[0]
       }
+
+      presenceData.buttons = await setButton('Obejrzyj Teraz', document.location.href)
     }
     else if (pathname.match(/\/watch2gether\/\d+/)) {
       checkForPlayer()
@@ -235,8 +211,6 @@ function updatePresence() {
       if (name) {
         presenceData.details = name.textContent
         presenceData.state = `Odcinek ${episode} • Pokój '${roomName}'`
-        presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
-        presenceData.buttons = [{ label: 'Obejrzyj ze mną', url: document.location.href }]
       }
       else {
         return presence.clearActivity()
@@ -252,14 +226,17 @@ function updatePresence() {
       }
 
       if (animeicon) {
+        presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
         presenceData.largeImageKey = animeicon.getAttribute('data-src')?.split(' ')[0]
       }
+
+      presenceData.buttons = await setButton('Obejrzyj ze mną', document.location.href)
     }
     else if (pathname.includes('/character/') && browsingStatusEnabled) {
       const characterInfo = document.getElementById('animemenu_info')
       const name = characterInfo?.querySelector('div[class="row card-body justify-content-center"] h4[class="card-title col-12 text-center mb-1"]')
       const image = document.querySelector('img[class="img-fluid lozad rounded text-center"]')?.getAttribute('data-src')?.trim()
-      presenceData.buttons = [{ label: 'Zobacz Postać', url: document.location.href }]
+      presenceData.buttons = await setButton('Zobacz Postać', document.location.href)
       if (name)
         presenceData.details = `Sprawdza postać '${name?.textContent}'`
       else
@@ -275,6 +252,7 @@ function updatePresence() {
         for (const [key, value] of Object.entries(staticBrowsing)) {
           if (pathname.includes(key)) {
             presenceData.details = value
+            presenceData.buttons = await profileButton()
             recognized = true
             break
           }
@@ -290,6 +268,32 @@ function updatePresence() {
 
     presence.setActivity(presenceData)
   })
+}
+
+function getUserID() {
+  const dropdowns = document.querySelectorAll('a[class="dropdown-item"]')
+  dropdowns.forEach((elem, _, __) => {
+    const href = elem.getAttribute('href')
+    if (href != null && href.startsWith('/profile/')) {
+      userID = Number.parseInt(href.replace('/profile/', ''))
+    }
+  })
+}
+
+async function setButton(label: string, url: string): Promise<[ButtonData, (ButtonData | undefined)]> {
+  const privacyMode = await presence.getSetting<boolean>('privacyMode')
+  if (privacyMode || userID === 0)
+    return [{ label, url }, undefined]
+  else
+    return [{ label: 'Mój profil', url: `https://ogladajanime.pl/profile/${userID}` }, { label, url }]
+}
+
+async function profileButton(): Promise<[ButtonData, undefined] | undefined> {
+  const privacyMode = await presence.getSetting<boolean>('privacyMode')
+  if (privacyMode || userID === 0)
+    return undefined
+  else
+    return [{ label: 'Mój profil', url: `https://ogladajanime.pl/profile/${userID}` }, undefined]
 }
 
 function watchedString(num: number): string {
