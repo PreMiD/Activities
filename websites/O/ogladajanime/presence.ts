@@ -44,10 +44,12 @@ function updatePresence() {
   presence.on('UpdateData', async () => {
     getUserID()
     const { pathname } = document.location
-    const browsingStatusEnabled = await presence.getSetting<boolean>('browsingStatus')
-    const useAltName = await presence.getSetting<boolean>('useAltName')
-    const hideWhenPaused = await presence.getSetting<boolean>('hideWhenPaused')
-    const titleAsPresence = await presence.getSetting<boolean>('titleAsPresence')
+    const [browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence] = await Promise.all([
+      await presence.getSetting<boolean>('browsingStatus'),
+      await presence.getSetting<boolean>('useAltName'),
+      await presence.getSetting<boolean>('hideWhenPaused'),
+      await presence.getSetting<boolean>('titleAsPresence'),
+    ])
     const presenceData: PresenceData = {
       type: ActivityType.Watching,
       startTimestamp: browsingTimestamp,
@@ -171,12 +173,12 @@ function updatePresence() {
         if (titleAsPresence) {
           presenceData.name = name
           presenceData.state = `Odcinek ${activeEpisode?.getAttribute('value') ?? 0
-          } • ${activeEpisode?.querySelector('p')?.innerHTML ?? 'N/A'}`
+          } • ${activeEpisode?.querySelector('p')?.textContent ?? 'N/A'}`
         }
         else {
           presenceData.details = name
           presenceData.state = `Odcinek ${activeEpisode?.getAttribute('value') ?? 0
-          } • ${activeEpisode?.querySelector('p')?.innerHTML ?? 'N/A'}`
+          } • ${activeEpisode?.querySelector('p')?.textContent ?? 'N/A'}`
         }
       }
       else {
