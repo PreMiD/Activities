@@ -5,10 +5,10 @@ const presence = new Presence({ clientId: '1137362720254074972' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 const content = document.getElementById('site-content')
+let lastContentOpacity = 0
+
 let player: HTMLMediaElement
 let isPlaying = false
-
-let lastContentOpacity = 0
 
 if (content != null) {
   new MutationObserver((mutations) => {
@@ -259,6 +259,7 @@ function updatePresence() {
       const characterInfo = document.getElementById('animemenu_info')
       const name = characterInfo?.querySelector('div[class="row card-body justify-content-center"] h4[class="card-title col-12 text-center mb-1"]')
       const image = document.querySelector('img[class="img-fluid lozad rounded text-center"]')?.getAttribute('data-src')?.trim()
+      presenceData.buttons = [{ label: 'Zobacz Postać', url: document.location.href }]
       if (name)
         presenceData.details = `Sprawdza postać '${name?.textContent}'`
       else
