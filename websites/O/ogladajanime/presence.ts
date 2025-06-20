@@ -30,6 +30,29 @@ if (content != null) {
   })
 }
 
+// TODO: add support for https://ogladajanime.pl/anime_seasons. Would have done that if I only knew what it was about
+const staticBrowsing = {
+  '/watch2gether': 'Przegląda pokoje do oglądania z innymi',
+  '/main2': 'Przegląda stronę główną',
+  '/search/name/': 'Szuka Anime',
+  '/search/custom': 'Szuka Anime',
+  '/search/rand': 'Przegląda losowe anime',
+  '/search/new': 'Przegląda najnowsze anime',
+  '/search/main': 'Przegląda najlepiej oceniane anime',
+  '/chat': 'Rozmawia na chacie',
+  '/user_activity': 'Przegląda swoją ostatnią aktywność',
+  '/last_comments': 'Przegląda ostatnie komentarze',
+  '/active_sessions': 'Przegląda aktywne sesje logowania',
+  '/manage_edits': 'Przegląda ostatnie edycje',
+  '/anime_list_to_load': 'Ładuję listę anime z innej strony',
+  '/discord': 'Sprawdza jak można się skontaktować',
+  '/support': 'Sprawdza jak można wspierać OA',
+  '/radio': 'Słucha Radio Anime',
+  '/rules': 'Czyta regulamin',
+  '/harmonogram': 'Przegląda harmonogram emisji odcinków Anime',
+  '/': 'Przegląda stronę główną', // This MUST stay at the end, otherwise this will always display no matter the page
+}
+
 function updatePresence() {
   presence.on('UpdateData', async () => {
     const { pathname } = document.location
@@ -41,8 +64,6 @@ function updatePresence() {
       startTimestamp: browsingTimestamp,
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png',
     }
-
-    // Complex
 
     if (pathname.includes('/user_comments/') && browsingStatusEnabled) {
       const id = pathname.replace('/user_comments/', '')
@@ -247,63 +268,23 @@ function updatePresence() {
         presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
       }
     }
-    // Simple
-
-    else if (pathname.includes('/watch2gether') && browsingStatusEnabled) {
-      presenceData.details = 'Przegląda pokoje do oglądania z innymi'
-    }
-
-    else if ((pathname === '/main2' || pathname === '/') && browsingStatusEnabled) {
-      presenceData.details = 'Przegląda stronę główną'
-    }
-    else if ((pathname.includes('/search/name/') || pathname.includes('/search/custom')) && browsingStatusEnabled) {
-      presenceData.details = 'Szuka Anime'
-    }
-    else if (pathname.includes('/search/rand') && browsingStatusEnabled) {
-      presenceData.details = 'Przegląda losowe anime'
-    }
-    else if (pathname.includes('/search/new') && browsingStatusEnabled) {
-      presenceData.details = 'Przegląda najnowsze anime'
-    }
-    else if (pathname.includes('/search/main') && browsingStatusEnabled) {
-      presenceData.details = 'Przegląda najlepiej oceniane anime'
-    }
-    else if (pathname.includes('/chat') && browsingStatusEnabled) {
-      presenceData.details = 'Rozmawia na chacie'
-    }
-    else if (pathname.includes('/user_activity') && browsingStatusEnabled) {
-      presenceData.details = 'Przegląda swoją ostatnią aktywność'
-    }
-    else if (pathname.includes('/last_comments') && browsingStatusEnabled) {
-      presenceData.details = 'Przegląda ostatnie komentarze'
-    }
-    else if (pathname.includes('/active_sessions') && browsingStatusEnabled) {
-      presenceData.details = 'Przegląda aktywne sesje logowania'
-    }
-    else if (pathname.includes('/manage_edits') && browsingStatusEnabled) {
-      presenceData.details = 'Przegląda ostatnie edycje'
-    }
-    else if (pathname.includes('/anime_list_to_load') && browsingStatusEnabled) {
-      presenceData.details = 'Ładuję listę anime z innej strony'
-    }
-    else if (pathname.includes('/discord') && browsingStatusEnabled) {
-      presenceData.details = 'Sprawdza jak można się skontaktować'
-    }
-    else if (pathname.includes('/support') && browsingStatusEnabled) {
-      presenceData.details = 'Sprawdza jak można wspierać OA'
-    }
-    else if (pathname.includes('/radio') && browsingStatusEnabled) {
-      presenceData.details = 'Słucha Radio Anime'
-    }
-    else if (pathname.includes('/rules') && browsingStatusEnabled) {
-      presenceData.details = 'Czyta regulamin'
-    }
-    else if (pathname.includes('/harmonogram') && browsingStatusEnabled) {
-      presenceData.details = 'Przegląda harmonogram emisji odcinków Anime'
-    }
-    // TODO: add support for https://ogladajanime.pl/anime_seasons. Would have done that if I only knew what it was about
     else {
-      return presence.clearActivity()
+      if (browsingStatusEnabled) {
+        let recognized = false
+        for (const [key, value] of Object.entries(staticBrowsing)) {
+          if (pathname.includes(key)) {
+            presenceData.details = value
+            recognized = true
+            break
+          }
+        }
+
+        if (!recognized)
+          return presence.clearActivity()
+      }
+      else {
+        return presence.clearActivity()
+      }
     }
 
     presence.setActivity(presenceData)
