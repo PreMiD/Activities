@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.14",
+  "apiVersion": 1,
+  "author": {
+    "id": "639720838635061248",
+    "name": "eveeifyeve"
+  },
+  "service": "TeaClient",
+  "description": {
+    "en": "A QOL Minecraft Client for modern versions of Minecraft"
+  },
+  "url": "teaclinet.com",
+  "version": "1.0.0",
+  "logo": "https://teaclient.com/icon.webp",
+  "thumbnail": "https://teaclient.com/banner.webp",
+  "color": "#410A6B",
+  "category": "games",
+  "tags": [
+    "minecraftclient",
+    "minecraft",
+    "teaclient",
+    "qolminecraftclient"
+  ]
+}
