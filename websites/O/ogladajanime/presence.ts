@@ -47,6 +47,7 @@ function updatePresence() {
     const browsingStatusEnabled = await presence.getSetting<boolean>('browsingStatus')
     const useAltName = await presence.getSetting<boolean>('useAltName')
     const hideWhenPaused = await presence.getSetting<boolean>('hideWhenPaused')
+    const titleAsPresence = await presence.getSetting<boolean>('titleAsPresence')
     const presenceData: PresenceData = {
       type: ActivityType.Watching,
       startTimestamp: browsingTimestamp,
@@ -167,9 +168,16 @@ function updatePresence() {
       const voteCount = ratingElement?.parentElement?.querySelector('.text-left')
 
       if (name) {
-        presenceData.details = name
-        presenceData.state = `Odcinek ${activeEpisode?.getAttribute('value') ?? 0
-        } • ${activeEpisode?.querySelector('p')?.innerHTML ?? 'N/A'}`
+        if (titleAsPresence) {
+          presenceData.name = name
+          presenceData.state = `Odcinek ${activeEpisode?.getAttribute('value') ?? 0
+          } • ${activeEpisode?.querySelector('p')?.innerHTML ?? 'N/A'}`
+        }
+        else {
+          presenceData.details = name
+          presenceData.state = `Odcinek ${activeEpisode?.getAttribute('value') ?? 0
+          } • ${activeEpisode?.querySelector('p')?.innerHTML ?? 'N/A'}`
+        }
       }
       else {
         return presence.clearActivity()
@@ -209,8 +217,14 @@ function updatePresence() {
       const roomName = spans[spans.length - 1]?.textContent
 
       if (name) {
-        presenceData.details = name.textContent
-        presenceData.state = `Odcinek ${episode} • Pokój '${roomName}'`
+        if (titleAsPresence) {
+          presenceData.name = name.textContent ?? undefined
+          presenceData.state = `Odcinek ${episode} • Pokój '${roomName}'`
+        }
+        else {
+          presenceData.details = name.textContent
+          presenceData.state = `Odcinek ${episode} • Pokój '${roomName}'`
+        }
       }
       else {
         return presence.clearActivity()

@@ -47,6 +47,12 @@
       "value": true
     },
     {
+      "id": "titleAsPresence",
+      "title": "Show Title as Presence",
+      "icon": "fas fa-user-edit",
+      "value": true
+    },
+    {
       "id": "useAltName",
       "title": "Use Alternative Name",
       "icon": "fas fa-font",
