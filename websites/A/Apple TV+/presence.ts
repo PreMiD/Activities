@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '835157562432290836',
@@ -22,19 +22,17 @@ presence.on('UpdateData', async () => {
 
   if (
     video
-    && document.querySelector('.video-player-tabs')?.textContent?.trim()
+    && document.querySelector('.video-player__tabs')
   ) {
     const title = document
-      .querySelector('#video-player-title')
+      .querySelector('.video-metadata .title')
       ?.textContent
       ?.trim()
     const subtitle = document
-      .querySelector('.scrim-footer__info-subtitle-text')
+      .querySelector('.video-metadata .subtitle-text')
       ?.textContent
       ?.trim()
-    const thumbnail = document.querySelector<HTMLSourceElement>(
-      '.tabs__tab-pane.video-player-tabs__info-pane source',
-    )
+    const thumbnail = navigator.mediaSession.metadata?.artwork
 
     if (!thumbnail)
       return
@@ -44,7 +42,7 @@ presence.on('UpdateData', async () => {
     if (subtitle) {
       const [seasonNumber, episodeNumber, episodeTitle] = subtitle
         .split(/, | · /)
-        .flatMap(x => Number.parseInt(x.replace(/^S|^E/, '')) || x)
+        .flatMap(x => Number.parseInt(x.replace(/^./, '')) || x)
 
       presenceData.details = useActivityName ? (episodeTitle as string) : title
       presenceData.state = useActivityName
@@ -55,20 +53,19 @@ presence.on('UpdateData', async () => {
       presenceData.details = title
       presenceData.state = document
         .querySelector(
-          '.typ-footnote-emph.video-player-tabs__info-pane-release-data-metadata',
+          '.metadata-genre',
         )
         ?.textContent
         ?.trim()
     }
 
     if (showCover) {
-      presenceData.largeImageKey = thumbnail.srcset
-        .split(' ')
-        .find(x => x.startsWith('https://'))
+      presenceData.largeImageKey = thumbnail[thumbnail.length - 1]?.src
     }
 
     if (!video.paused) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+      delete presenceData.smallImageKey
     }
     else {
       presenceData.smallImageKey = Assets.Pause

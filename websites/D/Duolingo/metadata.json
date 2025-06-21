@@ -37,9 +37,9 @@
     "vi": "Cách học ngôn ngữ miễn phí, vui nhộn và hiệu quả!",
     "zh": "学习外语，寓教于乐"
   },
-  "url": "www.duolingo.com",
-  "regExp": "www\\.duolingo\\.(com|cn)",
-  "version": "3.1.8",
+  "url": "duolingo.com",
+  "regExp": "(www|preview)\\.duolingo\\.(com|cn)",
+  "version": "3.1.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Duolingo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Duolingo/assets/thumbnail.png",
   "color": "#5dcd32",

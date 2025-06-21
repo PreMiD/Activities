@@ -65,6 +65,8 @@ async function updateStrings() {
     brDistance: 'geoguessr.brDistance',
     brRemaining: 'geoguessr.brRemaining',
     bullseye: 'geoguessr.bullseye',
+    challenge: 'geoguessr.challenge',
+    cityStreaks: 'geoguessr.cityStreaks',
     classicScore: 'geoguessr.classicScore',
     classicStreakCount: 'geoguessr.classicStreakCount',
     division: 'geoguessr.division',
@@ -89,12 +91,11 @@ async function updateStrings() {
     support: 'general.support',
     teamDuels: 'geoguessr.teamDuels',
     terms: 'general.terms',
-    viewMap: 'geoguessr.viewMap',
     viewAProfile: 'general.viewAProfile',
     viewActivities: 'geoguessr.viewActivities',
     viewCommunity: 'geoguessr.viewCommunity',
     viewHelppage: 'general.viewHelppage',
-    cityStreaks: 'geoguessr.cityStreaks',
+    viewMap: 'geoguessr.viewMap',
   })
   infoFromFirstPath = {
     'shop': {
@@ -147,7 +148,7 @@ async function updateStrings() {
       largeImageKey: gameModeIcons.streaks,
       details: strings.streaks,
     },
-    'competitive-streaks': {
+    'competitive-streak': {
       largeImageKey: gameModeIcons.city_streaks,
       details: strings.cityStreaks,
     },
@@ -237,6 +238,24 @@ presence.on('UpdateData', async () => {
     }
     presenceData.details = `${prefix}${scoreText || ''}`
   }
+  async function getMapIconFromInfo(mapInfo: any) {
+    if (!isConnected() || !mapInfo) {
+      return
+    }
+    const mapId = mapInfo.slug || mapInfo.id
+    if (mapId && mapInfo.images && mapInfo.images.backgroundLarge && mapAvatarOfficial[mapId]) {
+      return {
+        url: mapAvatarOfficial[mapId],
+        name: mapInfo.name,
+      }
+    }
+    else {
+      return {
+        url: mapAvatar[`${mapInfo.avatar.background}-${mapInfo.avatar.landscape}-${mapInfo.avatar.decoration}-${mapInfo.avatar.ground}`] || logo,
+        name: mapInfo.name,
+      }
+    }
+  }
 
   async function getMapIconFromId(mapId: string) {
     if (!mapId) {
@@ -256,21 +275,7 @@ presence.on('UpdateData', async () => {
       }
     }
     const mapInfo = await fetchUrl(`https://www.geoguessr.com/api/maps/${mapId}`, true)
-    if (!isConnected() || !mapInfo) {
-      return
-    }
-    if (mapInfo.images.backgroundLarge && mapAvatarOfficial[mapId]) {
-      return {
-        url: mapAvatarOfficial[mapId],
-        name: mapInfo.name,
-      }
-    }
-    else {
-      return {
-        url: mapAvatar[`${mapInfo.avatar.background}-${mapInfo.avatar.landscape}-${mapInfo.avatar.decoration}-${mapInfo.avatar.ground}`] || logo,
-        name: mapInfo.name,
-      }
-    }
+    return await getMapIconFromInfo(mapInfo)
   }
 
   async function setDivisionInfo(divisionName: any = null) {
@@ -347,6 +352,16 @@ presence.on('UpdateData', async () => {
         }`
         presenceData.state = mapName
       }
+      else if (gameInfo.type === 'challenge') {
+        presenceData.details = `${gameMode} ${strings.challenge} | ${strings.classicScore
+          .replace('{0}', gameInfo.player.totalScore.amount)
+          .replace('{1}', gameInfo.round)
+          .replace('{2}', gameInfo.roundCount)
+        }`
+        presenceData.state = mapName
+        presenceData.smallImageKey = gameModeIcons.challenges
+        presenceData.smallImageText = strings.challenge
+      }
       else {
         presenceData.details = `${gameMode} | ${
           strings.classicScore
@@ -361,9 +376,49 @@ presence.on('UpdateData', async () => {
       alreadyFetchedList.game = false
     }
   }
+  else if (currentPath[0] === 'challenge') {
+    if (!alreadyFetchedList.challenge) {
+      alreadyFetchedList.challenge = true
+      const gameId = currentPath[1]
+      const gameInfo = await fetchUrl(`https://www.geoguessr.com/api/v3/challenges/${gameId}`, true, 60)
+      if (!isConnected()) {
+        return
+      }
+      const mapName = gameInfo.map.name
+      const mapId = gameInfo.map.id
+      presenceData.largeImageText = mapName
+      presenceData.buttons = [
+        {
+          label: strings.viewMap,
+          url: `https://www.geoguessr.com/maps/${mapId}`,
+        },
+      ]
+      const mapIconInfo = await getMapIconFromInfo(gameInfo.map)
+      if (!isConnected()) {
+        return
+      }
+      if (mapIconInfo && mapIconInfo.url) {
+        presenceData.largeImageKey = mapIconInfo.url
+      }
+      else {
+        presenceData.largeImageKey = logo
+      }
+      let gameMode = strings.movementMoving
+      if (gameInfo.forbidMoving) {
+        gameMode = strings.movementNoMove
+        if (gameInfo.forbidZooming && gameInfo.forbidRotating) {
+          gameMode = strings.movementNmpz
+        }
+      }
+      presenceData.details = `${gameMode} ${strings.challenge}`
+      presenceData.smallImageKey = gameModeIcons.challenges
+      presenceData.smallImageText = strings.challenge
+      presenceData.state = mapName
+    }
+  }
   else if (currentPath[0] === 'duels' || currentPath[0] === 'team-duels') {
     // duels (Legacy UI support)
-    if (!currentPath[0] && !cooldowns[currentPath[0]]) {
+    if (currentPath[0] && !cooldowns[currentPath[0]]) {
       cooldowns[currentPath[0]] = true
       setTimeout(() => {
         cooldowns[currentPath[0] as string] = false

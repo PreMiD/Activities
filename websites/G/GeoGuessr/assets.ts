@@ -144,6 +144,7 @@ export const mapAvatarOfficial: Record<string, string> = {
   'northern-mariana-islands': 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/134.png',
   'sao-tome-and-principe': 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/135.png',
   'oman': 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/136.png',
+  'namibia': 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/3372.png',
 }
 
 export const logo = 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/137.png'

@@ -47,7 +47,7 @@
     "description": "",
     "message": "Streaks"
   },
-  "geoguessr.city_streaks": {
+  "geoguessr.cityStreaks": {
     "description": "",
     "message": "City Streaks"
   },
@@ -109,7 +109,11 @@
   },
   "geoguessr.classicScore": {
     "description": "Classic mode status | {0} is score, {1} is round number, {2} is maximum rounds",
-    "message": "{0} points ({1} of {2})"
+    "message": "{0} points (Round {1}/{2})"
+  },
+  "geoguessr.challenge": {
+    "description": "Shows after the movement type (ex. Moving Challenge)",
+    "message": "Challenge"
   },
   "geoguessr.viewActivities": {
     "description": "",
