@@ -2,8 +2,8 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "name": "joerkig",
-    "id": "205984221859151873"
+    "name": "PreMiD",
+    "id": "503557087041683458"
   },
   "service": "OpenSea",
   "description": {
@@ -13,7 +13,7 @@
     "opensea.io",
     "docs.opensea.io"
   ],
-  "version": "1.0.12",
+  "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OpenSea/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OpenSea/assets/thumbnail.png",
   "color": "#1868B7",
