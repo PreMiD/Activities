@@ -196,6 +196,22 @@ presence.on('UpdateData', async () => {
   else if (pathname.includes('/profile') && browsingStatusEnabled) {
     const pfp = document.querySelector('img[alt="Profile Avatar"]')
     const name = document.querySelector('h4[class="card-title col-12 text-center m-0 text-dark"]')?.textContent?.replace(/\s/g, '')?.replace('-Profil', '')
+
+    let watchTime
+
+    const headers = document.querySelectorAll('h4[class="card-title col-12 text-center mb-1 mt-2"]')
+    let tableHeader = null
+    for (const elem of headers) {
+      if (elem.textContent === 'Statystyki')
+        tableHeader = elem
+    }
+    if (tableHeader) {
+      const entry = tableHeader.parentElement?.querySelector('table tbody tr')
+      if (entry != null && entry.childNodes.length >= 4) {
+        watchTime = entry.childNodes[3]?.textContent?.trim()
+      }
+    }
+
     // TODO: add a state for presence
     if (name) {
       presenceData.details = `Przegląda profil '${name}'`
@@ -203,6 +219,10 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.details = 'Przegląda profil'
     }
+
+    if (watchTime)
+      presenceData.state = `Czas oglądania: ${watchTime}`
+
     if (pfp) {
       presenceData.largeImageKey = pfp.getAttribute('src')
       presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
