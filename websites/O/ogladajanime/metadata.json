@@ -23,6 +23,8 @@
   "color": "#29C5F6",
   "category": "anime",
   "tags": ["anime", "video"],
+  "iframe": true,
+  "iFrameRegExp": ".*",
   "settings": [
     {
       "id": "privacyMode",
