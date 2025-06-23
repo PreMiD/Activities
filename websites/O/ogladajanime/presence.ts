@@ -212,7 +212,6 @@ presence.on('UpdateData', async () => {
       }
     }
 
-    // TODO: add a state for presence
     if (name) {
       presenceData.details = `Przegląda profil '${name}'`
     }
