@@ -1,26 +1,64 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.14",
   "apiVersion": 1,
   "author": {
     "id": "954843951297351771",
     "name": "_eki"
   },
+  "contributors": [
+    {
+      "id": "936579169842786325",
+      "name": "HAHOOS"
+    }
+  ],
   "service": "ogladajanime",
   "description": {
     "en": "Watch anime with Polish subtitles for free",
     "pl": "Oglądaj anime z polskimi napisami za darmo"
   },
-  "url": [
-    "ogladajanime.pl",
-    "www.ogladajanime.pl"
-  ],
-  "version": "1.1.0",
+  "url": ["ogladajanime.pl", "www.ogladajanime.pl"],
+  "version": "2.0.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/thumbnail.png",
   "color": "#29C5F6",
   "category": "anime",
-  "tags": [
-    "anime",
-    "ogladajanimepl"
+  "tags": ["anime", "video"],
+  "iframe": true,
+  "iFrameRegExp": ".*",
+  "settings": [
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false,
+      "description": "Hides 'Mój Profil' button"
+    },
+    {
+      "id": "browsingStatus",
+      "title": "Display Browsing Status",
+      "icon": "fas fa-book-reader",
+      "value": true
+    },
+    {
+      "id": "hideWhenPaused",
+      "title": "Hide Anime When Paused",
+      "icon": "fas fa-film",
+      "if": {
+        "browsingStatus": false
+      },
+      "value": true
+    },
+    {
+      "id": "titleAsPresence",
+      "title": "Show Title as Presence",
+      "icon": "fas fa-user-edit",
+      "value": true
+    },
+    {
+      "id": "useAltName",
+      "title": "Use Alternative Name",
+      "icon": "fas fa-font",
+      "value": true
+    }
   ]
 }
