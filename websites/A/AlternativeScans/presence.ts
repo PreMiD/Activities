@@ -1,11 +1,11 @@
-import { Assets, ActivityType } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1382462713682460672',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets { 
+enum ActivityAssets {
   Logo = 'https://i.imgur.com/O9MN9Th.png',
 }
 
@@ -14,94 +14,102 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
     smallImageKey: Assets.Search,
-    type: ActivityType.Watching
+    type: ActivityType.Watching,
   }
   const { pathname, href } = document.location
   const pathArr = pathname.split('/')
-  var pathred
+  let pathred
+  let img
+  let titlename
 
-    if(pathArr[1]){
-    pathred = pathArr[1].split('?') 
+  if (pathArr[1]) {
+    pathred = pathArr[1].split('?')
 
     switch (pathArr[1]) {
-      case 'series': 
-        const img = document.querySelector<HTMLImageElement>('.cover-column img.cover-image');
+      case 'series':
+        img = document.querySelector<HTMLImageElement>('.cover-column img.cover-image')
 
-        presenceData.largeImageKey = img?.src ?? '';
+        presenceData.largeImageKey = img?.src ?? ''
         presenceData.smallImageKey = Assets.Viewing
 
-        const titlename = document
+        titlename = document
           .querySelector('head > title')
           ?.textContent
 
-        presenceData.details =  `Viewing:  ${titlename}`
+        presenceData.details = `Viewing:  ${titlename}`
         presenceData.buttons = [{
-          label: "View Series",
-          url: href
-        },{
-          label: "Join Discord Server",
-          url: "https://discord.gg/Rr5HWHuk7Y"
+          label: 'View Series',
+          url: href,
+        }, {
+          label: 'Join Discord Server',
+          url: 'https://discord.gg/Rr5HWHuk7Y',
         }]
         break
 
       case 'routes':
-        presenceData.details =  `Searching for Series`
+        presenceData.details = `Searching for Series`
         presenceData.buttons = [{
-          label: "View Site",
-          url: "https://alternativescans.icu/"
-        },{
-          label: "Join Discord Server",
-          url: "https://discord.gg/Rr5HWHuk7Y"
+          label: 'View Site',
+          url: 'https://alternativescans.icu/',
+        }, {
+          label: 'Join Discord Server',
+          url: 'https://discord.gg/Rr5HWHuk7Y',
         }]
 
         break
 
       default:
 
-        if(pathred[0]==="reader"){
-                    
-        const currentUrl = new URL(window.location.href);
-        const params = currentUrl.searchParams; 
-        const seriesparam = params.get('series');
-        const chapterparam = params.get('chapter');
-        var seriesparamup;
+        if (pathred[0] === 'reader') {
+          const currentUrl = new URL(window.location.href)
+          const params = currentUrl.searchParams
+          const seriesparam = params.get('series')
+          const chapterparam = params.get('chapter')
+          let seriesparamup
 
-        if(seriesparam){
-          seriesparamup  = seriesparam.toUpperCase()
+          if (seriesparam) {
+            seriesparamup = seriesparam.toUpperCase()
+          }
+
+          const name = document
+            .querySelector<HTMLAnchorElement>('#current-chapter-name a')
+            ?.textContent
+            ?.trim()
+            ?? ''
+
+          presenceData.details = `${name}`
+          presenceData.state = document
+            .querySelector('head > title')
+            ?.textContent
+            ?.replace(` - ${seriesparamup}`, '')
+          presenceData.largeImageKey = `https://files.alternativescans.icu/file/public-chapter-images/${seriesparam}/${chapterparam}/1.png`
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.buttons = [{
+            label: 'Read Chapter',
+            url: href,
+          }, {
+            label: 'Join Discord Server',
+            url: 'https://discord.gg/Rr5HWHuk7Y',
+
+          }]
         }
-        
-        const name = document
-          .querySelector<HTMLAnchorElement>('#current-chapter-name a')  
-          ?.textContent                                                
-          ?.trim()                                                    
-          ?? ''; 
-        
-        presenceData.details =  `${name}`
-        presenceData.state = document
-          .querySelector('head > title')
-          ?.textContent  
-          ?.replace(` - ${seriesparamup}`, '')
-        presenceData.largeImageKey = `https://files.alternativescans.icu/file/public-chapter-images/${seriesparam}/${chapterparam}/1.png`
-        presenceData.smallImageKey = Assets.Reading
-        presenceData.buttons = [{
-          label: "Read Chapter",
-          url: href
-        },{
-          label: "Join Discord Server",
-          url: "https://discord.gg/Rr5HWHuk7Y"
-
-        }]}}}
-  else{
-    presenceData.details =  "Viewing the Homepage"
+    }
+  }
+  else {
+    presenceData.details = 'Viewing the Homepage'
     presenceData.buttons = [{
-      label: "View Site",
-      url: "https://alternativescans.icu/"
-    },{
-      label: "Join Discord Server",
-      url: "https://discord.gg/Rr5HWHuk7Y"
-    }]}
+      label: 'View Site',
+      url: 'https://alternativescans.icu/',
+    }, {
+      label: 'Join Discord Server',
+      url: 'https://discord.gg/Rr5HWHuk7Y',
+    }]
+  }
 
-  if (presenceData.details)
+  if (presenceData.details) {
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  }
+  else {
+    presence.setActivity()
+  }
 })
