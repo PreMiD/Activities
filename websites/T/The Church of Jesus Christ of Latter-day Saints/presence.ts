@@ -319,10 +319,7 @@ function setListening(location: string, _additional?: string) {
   listeningAlbum = album
 
   // Fetch the song style
-  let style = parsePlayerStyle()
-  if (style === undefined) {
-    style = undefined // we don't need to set the style if it's not available
-  }
+  const style = parsePlayerStyle()
   const previousStyle: string | undefined = listeningStyle
   listeningStyle = style
 
@@ -411,19 +408,19 @@ function setListening(location: string, _additional?: string) {
 
 function parseScriptureReference(): string | undefined {
   // Attempt to parse via content title
-  const contentTitle = document.querySelector('.contentTitle-JbPZw')
+  const contentTitle = document.querySelector('[class*=contentTitle]')
   if (contentTitle !== null) {
     if (contentTitle.children.length > 0) {
-      return contentTitle.children[0]?.textContent?.trim() ?? undefined
+      return contentTitle.children[0]?.textContent?.trim()
     }
     else {
-      return contentTitle.textContent?.trim() ?? undefined
+      return contentTitle.textContent?.trim()
     }
   }
 
   // Attempt to parse via the title id
   const title = document.querySelector('#title1')
-  return title?.textContent?.trim() ?? undefined
+  return title?.textContent?.trim()
 }
 
 function parseTalkAuthor(): string | undefined {
@@ -462,13 +459,7 @@ function parsePlayerTitle(): string | undefined {
   if (playerCard !== null) {
     // If it has children, we assume it's a dual title (e.g., "Book of Mormon" and "1 Nephi 1:1")
     if (playerCard.children.length > 0) {
-      const title = playerCard.children[0]?.textContent?.trim()
-      if (title !== undefined) {
-        return title
-      }
-      else {
-        return undefined
-      }
+      return playerCard.children[0]?.textContent?.trim()
     }
     else {
       return playerCard.textContent?.trim()
@@ -520,11 +511,7 @@ function parsePlayerThumbnail(): string | undefined {
 
 function parsePlayerAlbum(): string | undefined {
   // Attempt to parse the album name
-  const h1 = document.querySelector('h1')
-  if (h1 !== null) {
-    return h1.textContent?.trim()
-  }
-  return undefined
+  return document.querySelector('h1')?.textContent?.trim()
 }
 
 function parsePlayerStyle(): string | undefined {
