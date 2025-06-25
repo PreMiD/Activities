@@ -57,6 +57,15 @@
       "value": false
     },
     {
+      "id": "usePresenceName",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
       "id": "time",
       "title": "Show Timestamps",
       "icon": "fad fa-stopwatch",
