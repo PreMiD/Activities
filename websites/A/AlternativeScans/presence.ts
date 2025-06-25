@@ -40,31 +40,22 @@ presence.on('UpdateData', async () => {
         presenceData.buttons = [{
           label: 'View Series',
           url: href,
-        }, {
-          label: 'Join Discord Server',
-          url: 'https://discord.gg/Rr5HWHuk7Y',
         }]
         break
 
       case 'routes':
         presenceData.details = `Searching for Series`
-        presenceData.buttons = [{
-          label: 'View Site',
-          url: 'https://alternativescans.icu/',
-        }, {
-          label: 'Join Discord Server',
-          url: 'https://discord.gg/Rr5HWHuk7Y',
-        }]
 
         break
 
       default:
 
         if (pathred[0] === 'reader') {
-          const currentUrl = new URL(window.location.href)
+          const currentUrl = new URL(href)
           const params = currentUrl.searchParams
           const seriesparam = params.get('series')
           const chapterparam = params.get('chapter')
+          const idparam = params.get('id')
           let seriesparamup
 
           if (seriesparam) {
@@ -88,28 +79,20 @@ presence.on('UpdateData', async () => {
             label: 'Read Chapter',
             url: href,
           }, {
-            label: 'Join Discord Server',
-            url: 'https://discord.gg/Rr5HWHuk7Y',
-
+            label: 'View Series',
+            url: `https://alternativescans.icu/series/?series=${idparam}&id=${idparam}`,
           }]
         }
     }
   }
   else {
     presenceData.details = 'Viewing the Homepage'
-    presenceData.buttons = [{
-      label: 'View Site',
-      url: 'https://alternativescans.icu/',
-    }, {
-      label: 'Join Discord Server',
-      url: 'https://discord.gg/Rr5HWHuk7Y',
-    }]
   }
 
   if (presenceData.details) {
     presence.setActivity(presenceData)
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
   }
 })
