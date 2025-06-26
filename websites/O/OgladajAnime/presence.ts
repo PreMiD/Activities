@@ -4,6 +4,8 @@ const presence = new Presence({ clientId: '1137362720254074972' })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+const { pathname } = document.location
+
 let userID = 0
 
 let playbackInfo: PlaybackInfo | null
@@ -106,7 +108,6 @@ presence.on('iFrameData', (data) => {
 
 presence.on('UpdateData', async () => {
   getUserID()
-  const { pathname } = document.location
   const [browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent] = await Promise.all([
     presence.getSetting<boolean>('browsingStatus'),
     presence.getSetting<boolean>('useAltName'),
@@ -187,7 +188,7 @@ presence.on('UpdateData', async () => {
       const name = document.querySelector('h4[class="card-title col-12 text-center mb-1"]')?.textContent?.replace('- Lista anime', '')?.replace(/\s/g, '')
 
       if (name) {
-        presenceData.details = `Przegląda listę '${name}'`
+        presenceData.details = `Przegląda listę: ${name}`
       }
 
       presenceData.largeImageKey = `https://cdn.ogladajanime.pl/images/user/${id}.webp`
@@ -201,24 +202,16 @@ presence.on('UpdateData', async () => {
     let watchTime
 
     const headers = document.querySelectorAll('h4[class="card-title col-12 text-center mb-1 mt-2"]')
-    let tableHeader = null
     for (const elem of headers) {
-      if (elem.textContent === 'Statystyki')
-        tableHeader = elem
-    }
-    if (tableHeader) {
-      const entry = tableHeader.parentElement?.querySelector('table > tbody > tr')
-      if (entry != null && entry.childNodes.length >= 4) {
-        watchTime = entry.childNodes[3]?.textContent?.trim()
+      if (elem.textContent === 'Statystyki') {
+        const entry = elem.parentElement?.querySelector('table > tbody > tr')
+        if (entry != null && entry.childNodes.length >= 4) {
+          watchTime = entry.childNodes[3]?.textContent?.trim()
+        }
+        break
       }
     }
-
-    if (name) {
-      presenceData.details = `Przegląda profil '${name}'`
-    }
-    else {
-      presenceData.details = 'Przegląda profil'
-    }
+    presenceData.details = `Przegląda profil${(name ? `: ${name}` : '')}`
 
     if (watchTime)
       presenceData.state = `Czas oglądania: ${watchTime}`
@@ -252,16 +245,13 @@ presence.on('UpdateData', async () => {
     const voteCount = ratingElement?.parentElement?.querySelector('.text-left')
 
     if (name) {
-      if (titleAsPresence) {
+      if (titleAsPresence)
         presenceData.name = name
-        presenceData.state = `Odcinek ${activeEpisode?.getAttribute('value') ?? 0
-        } • ${activeEpisode?.querySelector('p')?.textContent ?? 'N/A'}`
-      }
-      else {
+      else
         presenceData.details = name
-        presenceData.state = `Odcinek ${activeEpisode?.getAttribute('value') ?? 0
-        } • ${activeEpisode?.querySelector('p')?.textContent ?? 'N/A'}`
-      }
+
+      presenceData.state = `Odcinek ${activeEpisode?.getAttribute('value') ?? 0
+      } • ${activeEpisode?.querySelector('p')?.textContent ?? 'N/A'}`
     }
     else {
       return presence.clearActivity()
@@ -305,14 +295,11 @@ presence.on('UpdateData', async () => {
     const roomName = spans[spans.length - 1]?.textContent
 
     if (name) {
-      if (titleAsPresence) {
+      if (titleAsPresence)
         presenceData.name = name.textContent ?? undefined
-        presenceData.state = `Odcinek ${episode} • Pokój '${roomName}'`
-      }
-      else {
+      else
         presenceData.details = name.textContent
-        presenceData.state = `Odcinek ${episode} • Pokój '${roomName}'`
-      }
+      presenceData.state = `Odcinek ${episode} • Pokój '${roomName}'`
     }
     else {
       return presence.clearActivity()
@@ -343,15 +330,23 @@ presence.on('UpdateData', async () => {
     const characterInfo = document.getElementById('animemenu_info')
     const name = characterInfo?.querySelector('div[class="row card-body justify-content-center"] h4[class="card-title col-12 text-center mb-1"]')
     const image = document.querySelector('img[class="img-fluid lozad rounded text-center"]')?.getAttribute('data-src')?.trim()
+
     presenceData.buttons = await setButton('Zobacz Postać', document.location.href)
-    if (name)
-      presenceData.details = `Sprawdza postać '${name?.textContent}'`
-    else
-      presenceData.details = 'Sprawdza postać'
+    presenceData.details = `Sprawdza postać${(name?.textContent ? `: ${name?.textContent}` : '')}`
+
     if (image) {
       presenceData.largeImageKey = image
       presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
     }
+  }
+  else if (pathname.includes('/all_anime_list') && browsingStatusEnabled) {
+    const letter = pathname.replace('/all_anime_list/', '')?.toUpperCase()
+    presenceData.details = 'Przegląda wszystkie dostępne anime'
+
+    if (letter)
+      presenceData.details = `Przegląda anime na literę: ${letter}`
+    else if (document.location.href.endsWith('#'))
+      presenceData.details = 'Przegląda anime zaczynające się nie na literę'
   }
   else if (pathname.includes('/search/name/') && browsingStatusEnabled) {
     if (showSearchContent) {
@@ -360,10 +355,7 @@ presence.on('UpdateData', async () => {
       const resultCountElem = resultCountElements[resultCountElements.length - 1]
       const resultCount = resultCountElem?.textContent?.match('Znaleziono: (.*?)\.S')?.[1]
 
-      if (search)
-        presenceData.details = `Szuka Anime: ${search}`
-      else
-        presenceData.details = 'Szuka Anime'
+      presenceData.details = `Szuka Anime${(search ? `: ${search}` : '')}`
 
       if (resultCount)
         presenceData.state = resultCount
