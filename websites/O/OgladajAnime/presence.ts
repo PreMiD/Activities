@@ -18,11 +18,11 @@ interface PlaybackInfo {
 const staticBrowsing = {
   '/watch2gether': 'Przegląda pokoje do oglądania z innymi',
   '/main2': 'Przegląda stronę główną',
-  '/search/name/': 'Szuka Anime',
   '/search/custom': 'Szuka Anime',
   '/search/rand': 'Przegląda losowe anime',
   '/search/new': 'Przegląda najnowsze anime',
   '/search/main': 'Przegląda najlepiej oceniane anime',
+  '/all_anime_list': 'Przegląda wszystkie dostępne anime',
   '/chat': 'Rozmawia na chacie',
   '/user_activity': 'Przegląda swoją ostatnią aktywność',
   '/last_comments': 'Przegląda ostatnie komentarze',
@@ -107,11 +107,12 @@ presence.on('iFrameData', (data) => {
 presence.on('UpdateData', async () => {
   getUserID()
   const { pathname } = document.location
-  const [browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence] = await Promise.all([
+  const [browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent] = await Promise.all([
     presence.getSetting<boolean>('browsingStatus'),
     presence.getSetting<boolean>('useAltName'),
     presence.getSetting<boolean>('hideWhenPaused'),
     presence.getSetting<boolean>('titleAsPresence'),
+    presence.getSetting<boolean>('showSearchContent'),
   ])
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
@@ -125,7 +126,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Przegląda komentarze wysłane przez użytkownika'
     if (id != null) {
       const name = document.querySelector('h4[class="card-title col-12 text-center mb-1"]')?.textContent?.replace('Komentarze użytkownika: ', '')?.replace(/\s/g, '')
-      const comments = (document.querySelector('#site-content section .row')?.querySelectorAll('div[class="col-12 mb-3"]').length ?? 1) - 1
+      const comments = (document.querySelectorAll('section > .row > div[class="col-12 mb-3"]')?.length ?? 1) - 1
 
       if (name) {
         presenceData.details = `Przegląda komentarze wysłane przez '${name}'`
@@ -206,7 +207,7 @@ presence.on('UpdateData', async () => {
         tableHeader = elem
     }
     if (tableHeader) {
-      const entry = tableHeader.parentElement?.querySelector('table tbody tr')
+      const entry = tableHeader.parentElement?.querySelector('table > tbody > tr')
       if (entry != null && entry.childNodes.length >= 4) {
         watchTime = entry.childNodes[3]?.textContent?.trim()
       }
@@ -243,9 +244,8 @@ presence.on('UpdateData', async () => {
       if (altName != null && altName.length !== 0 && useAltName)
         name = altName
     }
-    const animeicon = document.querySelector('.img-fluid.lozad')
-    const episodeList = document.querySelector('#ep_list')
-    const activeEpisode = episodeList?.querySelector('.active')
+    const animeicon = document.querySelector('img[class="img-fluid lozad rounded float-right"]')
+    const activeEpisode = document.querySelector('#ep_list > .active')
 
     const ratingElement = document.getElementById('my_anime_rate')
     const rating = ratingElement?.parentElement?.querySelector('h4')
@@ -296,8 +296,7 @@ presence.on('UpdateData', async () => {
     const player = checkForPlayer()
     const animeicon = document.querySelector('img[class="img-fluid lozad rounded tooltip tooltip-anime mb-2 tooltipstered"]')
     const name = document.querySelector('h5[class="card-title text-dark"]')
-    const infoElem = document.querySelector('h6[class="card-subtitle mb-2 text-muted"]')
-    const spans = infoElem?.querySelectorAll('span[class="text-gray"]')
+    const spans = document.querySelectorAll('h6[class="card-subtitle mb-2 text-muted"] > span[class="text-gray"]')
 
     if (spans == null || spans.length === 0)
       return presence.clearActivity()
@@ -352,6 +351,25 @@ presence.on('UpdateData', async () => {
     if (image) {
       presenceData.largeImageKey = image
       presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
+    }
+  }
+  else if (pathname.includes('/search/name/') && browsingStatusEnabled) {
+    if (showSearchContent) {
+      const search = document.getElementsByClassName('search-info')?.[0]?.querySelector('div[class="card bg-white"] > div[class="row card-body justify-content-center"] > p[class="col-12 p-0 m-0"]')?.textContent?.replace('Wyszukiwanie: ', '')
+      const resultCountElements = document.querySelectorAll('div[class="card bg-white"] > div[class="row card-body justify-content-center"]')
+      const resultCountElem = resultCountElements[resultCountElements.length - 1]
+      const resultCount = resultCountElem?.textContent?.match('Znaleziono: (.*?)\.S')?.[1]
+
+      if (search)
+        presenceData.details = `Szuka Anime: ${search}`
+      else
+        presenceData.details = 'Szuka Anime'
+
+      if (resultCount)
+        presenceData.state = resultCount
+    }
+    else {
+      presenceData.details = 'Szuka Anime'
     }
   }
   else {

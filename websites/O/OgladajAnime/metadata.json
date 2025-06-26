@@ -49,6 +49,15 @@
       "value": true
     },
     {
+      "id": "showSearchContent",
+      "title": "Show Search Content",
+      "icon": "fas fa-magnifying-glass",
+      "if": {
+        "browsingStatus": true
+      },
+      "value": true
+    },
+    {
       "id": "titleAsPresence",
       "title": "Show Title as Presence",
       "icon": "fas fa-user-edit",
