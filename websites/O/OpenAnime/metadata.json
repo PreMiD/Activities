@@ -8,12 +8,12 @@
   "service": "OpenAnime",
   "description": {
     "en": "OpenSource, fast and beautifully designed anime platform for enhancing your anime viewing experience.",
-    "tr": "Anime izleme deneyiminizi geliştirmek için tasarlanmış açık kaynaklı, hızlı ve güzel anime platformu."
+    "tr": "Anime izleme deneyiminizi geliştirmek için tasarlanmış açık kaynaklı, hızlı ve şık anime platformu."
   },
   "url": "openani.me",
   "version": "1.0.0",
-  "logo": "https://openani.me/favicon512_padding.png",
-  "thumbnail": "https://openani.me/embed_banner.png",
+  "logo": "https://i.imgur.com/hdkxlIm.png",
+  "thumbnail": "https://i.imgur.com/jLH5WDk.png",
   "color": "#61cdfd",
   "category": "anime",
   "tags": [

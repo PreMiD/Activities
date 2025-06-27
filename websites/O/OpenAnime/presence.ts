@@ -6,7 +6,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  logo = 'https://openani.me/favicon512_padding.png',
+  logo = 'https://i.imgur.com/hdkxlIm.png',
 }
 
 presence.on('UpdateData', async () => {
