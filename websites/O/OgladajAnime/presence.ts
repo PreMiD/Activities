@@ -20,6 +20,7 @@ interface PlaybackInfo {
 const staticBrowsing = {
   '/watch2gether': 'Przegląda pokoje do oglądania z innymi',
   '/main2': 'Przegląda stronę główną',
+  '/search/name/': 'Szuka Anime',
   '/search/custom': 'Szuka Anime',
   '/search/rand': 'Przegląda losowe anime',
   '/search/new': 'Przegląda najnowsze anime',
@@ -101,6 +102,13 @@ function checkForPlayer(): HTMLVideoElement | undefined {
   return undefined
 }
 
+function append(text: string, append: string | undefined | null): string {
+  if (append)
+    return `${text}: ${append}`
+  else
+    return text
+}
+
 presence.on('iFrameData', (data) => {
   const info = data as PlaybackInfo
   playbackInfo = info
@@ -130,7 +138,7 @@ presence.on('UpdateData', async () => {
       const comments = (document.querySelectorAll('section > .row > div[class="col-12 mb-3"]')?.length ?? 1) - 1
 
       if (name) {
-        presenceData.details = `Przegląda komentarze wysłane przez '${name}'`
+        presenceData.details = `Przegląda komentarze wysłane przez: ${name}`
       }
 
       presenceData.state = `${commentsString(comments)} przez użytkownika`
@@ -187,9 +195,7 @@ presence.on('UpdateData', async () => {
 
       const name = document.querySelector('h4[class="card-title col-12 text-center mb-1"]')?.textContent?.replace('- Lista anime', '')?.replace(/\s/g, '')
 
-      if (name) {
-        presenceData.details = `Przegląda listę: ${name}`
-      }
+      presenceData.details = append('Przegląda listę Anime', name)
 
       presenceData.largeImageKey = `https://cdn.ogladajanime.pl/images/user/${id}.webp`
       presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
@@ -211,7 +217,8 @@ presence.on('UpdateData', async () => {
         break
       }
     }
-    presenceData.details = `Przegląda profil${(name ? `: ${name}` : '')}`
+
+    presenceData.details = append('Przegląda profil', name)
 
     if (watchTime)
       presenceData.state = `Czas oglądania: ${watchTime}`
@@ -299,6 +306,7 @@ presence.on('UpdateData', async () => {
         presenceData.name = name.textContent ?? undefined
       else
         presenceData.details = name.textContent
+
       presenceData.state = `Odcinek ${episode} • Pokój '${roomName}'`
     }
     else {
@@ -332,7 +340,7 @@ presence.on('UpdateData', async () => {
     const image = document.querySelector('img[class="img-fluid lozad rounded text-center"]')?.getAttribute('data-src')?.trim()
 
     presenceData.buttons = await setButton('Zobacz Postać', document.location.href)
-    presenceData.details = `Sprawdza postać${(name?.textContent ? `: ${name?.textContent}` : '')}`
+    presenceData.details = append('Sprawdza postać', name?.textContent)
 
     if (image) {
       presenceData.largeImageKey = image
@@ -341,6 +349,7 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.includes('/all_anime_list') && browsingStatusEnabled) {
     const letter = pathname.replace('/all_anime_list/', '')?.toUpperCase()
+
     presenceData.details = 'Przegląda wszystkie dostępne anime'
 
     if (letter)
@@ -348,21 +357,16 @@ presence.on('UpdateData', async () => {
     else if (document.location.href.endsWith('#'))
       presenceData.details = 'Przegląda anime zaczynające się nie na literę'
   }
-  else if (pathname.includes('/search/name/') && browsingStatusEnabled) {
-    if (showSearchContent) {
-      const search = document.getElementsByClassName('search-info')?.[0]?.querySelector('div[class="card bg-white"] > div[class="row card-body justify-content-center"] > p[class="col-12 p-0 m-0"]')?.textContent?.replace('Wyszukiwanie: ', '')
-      const resultCountElements = document.querySelectorAll('div[class="card bg-white"] > div[class="row card-body justify-content-center"]')
-      const resultCountElem = resultCountElements[resultCountElements.length - 1]
-      const resultCount = resultCountElem?.textContent?.match('Znaleziono: (.*?)\.S')?.[1]
+  else if (pathname.includes('/search/name/') && browsingStatusEnabled && showSearchContent) {
+    const search = document.getElementsByClassName('search-info')?.[0]?.querySelector('div[class="card bg-white"] > div[class="row card-body justify-content-center"] > p[class="col-12 p-0 m-0"]')?.textContent?.replace('Wyszukiwanie: ', '')
+    const resultCountElements = document.querySelectorAll('div[class="card bg-white"] > div[class="row card-body justify-content-center"]')
+    const resultCountElem = resultCountElements[resultCountElements.length - 1]
+    const resultCount = resultCountElem?.textContent?.match('Znaleziono: (.*?)\.S')?.[1]
 
-      presenceData.details = `Szuka Anime${(search ? `: ${search}` : '')}`
+    presenceData.details = append('Szuka Anime', search)
 
-      if (resultCount)
-        presenceData.state = resultCount
-    }
-    else {
-      presenceData.details = 'Szuka Anime'
-    }
+    if (resultCount)
+      presenceData.state = resultCount
   }
   else {
     if (browsingStatusEnabled) {
