@@ -80,7 +80,7 @@ presence.on('UpdateData', async () => {
             url: href,
           }, {
             label: 'View Series',
-            url: `https://alternativescans.icu/series/?series=${idparam}&id=${idparam}`,
+            url: `https://alternativescans.icu/series/?series=${seriesparam}&id=${idparam}`,
           }]
         }
     }
