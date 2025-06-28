@@ -30,12 +30,29 @@ enum Assets {
 
 function getUserID() {
   const dropdowns = document.querySelectorAll('a[class="dropdown-item"]')
+  let found = false
   dropdowns.forEach((elem, _, __) => {
     const href = elem.getAttribute('href')
     if (href != null && href.startsWith('/profile/')) {
       userID = Number.parseInt(href.replace('/profile/', ''))
+      found = true
     }
   })
+  if (!found)
+    userID = 0
+}
+
+function getPlayerInfo(): [isPaused: boolean, startTimestamp: number, endTimestamp: number] {
+  const player = getOAPlayer()
+  if (player != null && player.paused === false) {
+    const timestamps = getTimestamps(player.currentTime, player.duration)
+    return [false, timestamps[0], timestamps[1]]
+  }
+  else if (playbackInfo != null && playbackInfo.paused === false) {
+    const timestamps = getTimestamps(playbackInfo.currTime, playbackInfo.duration)
+    return [false, timestamps[0], timestamps[1]]
+  }
+  return [true, -1, -1]
 }
 
 async function setButton(label: string, url: string): Promise<[ButtonData, (ButtonData | undefined)]> {
@@ -70,7 +87,7 @@ function commentsString(num: number): string {
     return `${num} wysłanych komentarzy`
 }
 
-function checkForPlayer(): HTMLVideoElement | undefined {
+function getOAPlayer(): HTMLVideoElement | undefined {
   const { pathname } = document.location
   if (pathname.includes('/anime') || pathname.includes('/watch2gether/')) {
     const _player = document.querySelector('video')
@@ -106,7 +123,6 @@ const staticBrowsing = {
   '/search/rand': 'Przegląda losowe anime',
   '/search/new': 'Przegląda najnowsze anime',
   '/search/main': 'Przegląda najlepiej oceniane anime',
-  '/all_anime_list': 'Przegląda wszystkie dostępne anime',
   '/chat': 'Rozmawia na chacie',
   '/user_activity': 'Przegląda swoją ostatnią aktywność',
   '/last_comments': 'Przegląda ostatnie komentarze',
@@ -144,7 +160,6 @@ presence.on('UpdateData', async () => {
   }
 
   if (pathname.includes('/anime')) {
-    const player = checkForPlayer()
     const anime = document.querySelector('#anime_name_id')
     const animeID = anime?.getAttribute('anime_id')
     let name = anime?.textContent
@@ -174,17 +189,12 @@ presence.on('UpdateData', async () => {
       return presence.clearActivity()
     }
 
-    if (player != null && player.paused === false) {
-      const timestamps = getTimestamps(player.currentTime, player.duration)
-      presenceData.startTimestamp = timestamps[0]
-      presenceData.endTimestamp = timestamps[1]
+    const [isPaused, startTimestamp, endTimestamp] = getPlayerInfo()
+    if (!isPaused) {
+      presenceData.startTimestamp = startTimestamp
+      presenceData.endTimestamp = endTimestamp
     }
-    else if (playbackInfo != null && playbackInfo.paused === false) {
-      const timestamps = getTimestamps(playbackInfo.currTime, playbackInfo.duration)
-      presenceData.startTimestamp = timestamps[0]
-      presenceData.endTimestamp = timestamps[1]
-    }
-    else if (((playbackInfo != null && playbackInfo.paused === true) || (player != null && player.paused === true)) && !browsingStatusEnabled && hideWhenPaused) {
+    else if (isPaused && !browsingStatusEnabled && hideWhenPaused) {
       return presence.clearActivity()
     }
 
@@ -200,7 +210,6 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = await setButton('Obejrzyj Teraz', document.location.href)
   }
   else if (pathname.match(/\/watch2gether\/\d+/)) {
-    const player = checkForPlayer()
     const name = document.querySelector('h5[class="card-title text-dark"]')
     const animeID = name?.getElementsByTagName('a')?.[0]?.getAttribute('onclick')?.match('loadAnimePage\((.*?),')?.[1]
     const spans = document.querySelectorAll('h6[class="card-subtitle mb-2 text-muted"] > span[class="text-gray"]')
@@ -223,17 +232,12 @@ presence.on('UpdateData', async () => {
       return presence.clearActivity()
     }
 
-    if (player != null && player.paused === false) {
-      const timestamps = getTimestamps(player.currentTime, player.duration)
-      presenceData.startTimestamp = timestamps[0]
-      presenceData.endTimestamp = timestamps[1]
+    const [isPaused, startTimestamp, endTimestamp] = getPlayerInfo()
+    if (!isPaused) {
+      presenceData.startTimestamp = startTimestamp
+      presenceData.endTimestamp = endTimestamp
     }
-    else if (playbackInfo != null && playbackInfo.paused === false) {
-      const timestamps = getTimestamps(playbackInfo.currTime, playbackInfo.duration)
-      presenceData.startTimestamp = timestamps[0]
-      presenceData.endTimestamp = timestamps[1]
-    }
-    else if (((playbackInfo != null && playbackInfo.paused === true) || (player != null && player.paused === true)) && !browsingStatusEnabled && hideWhenPaused) {
+    else if (isPaused && !browsingStatusEnabled && hideWhenPaused) {
       return presence.clearActivity()
     }
 
