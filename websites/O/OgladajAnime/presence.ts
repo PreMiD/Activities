@@ -159,7 +159,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: Assets.Logo,
   }
 
-  if (pathname.includes('/anime')) {
+  if (pathname.startsWith('/anime/')) {
     const anime = document.querySelector('#anime_name_id')
     const animeID = anime?.getAttribute('anime_id')
     let name = anime?.textContent
@@ -249,7 +249,7 @@ presence.on('UpdateData', async () => {
 
     presenceData.buttons = await setButton('Obejrzyj ze mną', document.location.href)
   }
-  else if (pathname.includes('/anime_list/') && browsingStatusEnabled) {
+  else if (pathname.startsWith('/anime_list/') && browsingStatusEnabled) {
     let id = pathname.replace('/anime_list/', '')
     const match = id.match(/\/\d/)
     let category = 0
@@ -303,7 +303,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Logo
     }
   }
-  else if (pathname.includes('/user_comments/') && browsingStatusEnabled) {
+  else if (pathname.startsWith('/user_comments/') && browsingStatusEnabled) {
     const id = pathname.replace('/user_comments/', '')
     presenceData.buttons = await setButton('Zobacz listę komentarzy', document.location.href)
     presenceData.details = 'Przegląda komentarze wysłane przez użytkownika'
@@ -321,7 +321,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Logo
     }
   }
-  else if (pathname.includes('/profile') && browsingStatusEnabled) {
+  else if (pathname.startsWith('/profile') && browsingStatusEnabled) {
     const id = pathname.replace('/profile/', '')
     const name = document.querySelector('.card-title.col-12.text-center.m-0')?.textContent?.replace(/\s/g, '')?.replace('-Profil', '')
 
@@ -351,7 +351,7 @@ presence.on('UpdateData', async () => {
     else
       presenceData.buttons = await setButton('Zobacz Profil', document.location.href)
   }
-  else if (pathname.includes('/character/') && browsingStatusEnabled) {
+  else if (pathname.startsWith('/character/') && browsingStatusEnabled) {
     const name = document.querySelector('#animemenu_info > div[class="row card-body justify-content-center"] h4[class="card-title col-12 text-center mb-1"]')
     const image = document.querySelector('img[class="img-fluid lozad rounded text-center"]')?.getAttribute('data-src')?.trim()
 
@@ -363,7 +363,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Logo
     }
   }
-  else if (pathname.includes('/all_anime_list') && browsingStatusEnabled) {
+  else if (pathname.startsWith('/all_anime_list') && browsingStatusEnabled) {
     const letter = pathname.replace('/all_anime_list', '')?.replace('/', '')?.toUpperCase()
 
     presenceData.details = 'Przegląda wszystkie dostępne anime'
@@ -373,7 +373,7 @@ presence.on('UpdateData', async () => {
     else
       presenceData.details = 'Przegląda anime nie zaczynające się na literę'
   }
-  else if (pathname.includes('/search/name/') && browsingStatusEnabled && showSearchContent) {
+  else if (pathname.startsWith('/search/name/') && browsingStatusEnabled && showSearchContent) {
     const search = document.getElementsByClassName('search-info')?.[0]?.querySelector('div[class="card bg-white"] > div[class="row card-body justify-content-center"] > p[class="col-12 p-0 m-0"]')?.textContent?.replace('Wyszukiwanie: ', '')
     const resultCountElements = document.querySelectorAll('div[class="card bg-white"] > div[class="row card-body justify-content-center"]')
     const resultCount = resultCountElements[resultCountElements.length - 1]?.textContent?.match('Znaleziono: (.*?)\.S')?.[1]
