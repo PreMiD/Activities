@@ -11,18 +11,18 @@
       "name": "HAHOOS"
     }
   ],
-  "service": "ogladajanime",
+  "service": "OgladajAnime",
   "description": {
     "en": "Watch anime with Polish subtitles for free",
     "pl": "Oglądaj anime z polskimi napisami za darmo"
   },
   "url": ["ogladajanime.pl", "www.ogladajanime.pl"],
-  "version": "2.0.0",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/thumbnail.png",
   "color": "#29C5F6",
   "category": "anime",
-  "tags": ["anime", "video"],
+  "tags": ["polish", "anime", "video"],
   "iframe": true,
   "iFrameRegExp": ".*",
   "settings": [
@@ -45,6 +45,15 @@
       "icon": "fas fa-film",
       "if": {
         "browsingStatus": false
+      },
+      "value": true
+    },
+    {
+      "id": "showSearchContent",
+      "title": "Show Search Content",
+      "icon": "fas fa-magnifying-glass",
+      "if": {
+        "browsingStatus": true
       },
       "value": true
     },
