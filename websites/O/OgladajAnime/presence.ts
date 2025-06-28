@@ -16,36 +16,16 @@ interface PlaybackInfo {
   paused: boolean
 }
 
-// TODO: add support for https://ogladajanime.pl/anime_seasons. Would have done that if I only knew what it was about
-const staticBrowsing = {
-  '/watch2gether': 'Przegląda pokoje do oglądania z innymi',
-  '/main2': 'Przegląda stronę główną',
-  '/search/name/': 'Szuka Anime',
-  '/search/custom': 'Szuka Anime',
-  '/search/rand': 'Przegląda losowe anime',
-  '/search/new': 'Przegląda najnowsze anime',
-  '/search/main': 'Przegląda najlepiej oceniane anime',
-  '/all_anime_list': 'Przegląda wszystkie dostępne anime',
-  '/chat': 'Rozmawia na chacie',
-  '/user_activity': 'Przegląda swoją ostatnią aktywność',
-  '/last_comments': 'Przegląda ostatnie komentarze',
-  '/active_sessions': 'Przegląda aktywne sesje logowania',
-  '/manage_edits': 'Przegląda ostatnie edycje',
-  '/anime_list_to_load': 'Ładuję listę anime z innej strony',
-  '/discord': 'Sprawdza jak można się skontaktować',
-  '/support': 'Sprawdza jak można wspierać OA',
-  '/radio': 'Słucha Radio Anime',
-  '/rules': 'Czyta regulamin',
-  '/harmonogram': 'Przegląda harmonogram emisji odcinków Anime',
-  '/': 'Przegląda stronę główną', // This MUST stay at the end, otherwise this will always display no matter the page
-}
-
 enum ListItemStatus {
   Oglądam = 1,
   Obejrzane = 2,
   Planuje = 3,
   Wstrzymane = 4,
   Porzucone = 5,
+}
+
+enum Assets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png',
 }
 
 function getUserID() {
@@ -102,11 +82,43 @@ function checkForPlayer(): HTMLVideoElement | undefined {
   return undefined
 }
 
-function append(text: string, append: string | undefined | null): string {
-  if (append)
-    return `${text}: ${append}`
+function append(text: string, append: string | undefined | null, separator: string = ': '): string {
+  if (append && append.trim().replace(' ', ''))
+    return `${text}${separator} ${append}`
   else
     return text
+}
+
+function getProfilePicture(id: number | string): string {
+  return `https://cdn.ogladajanime.pl/images/user/${id}.webp`
+}
+
+function getAnimeIcon(id: number | string): string {
+  return `https://cdn.ogladajanime.pl/images/anime_new/${id}/2.webp`
+}
+
+// TODO: add support for https://ogladajanime.pl/anime_seasons. Would have done that if I only knew what it was about
+const staticBrowsing = {
+  '/watch2gether': 'Przegląda pokoje do oglądania z innymi',
+  '/main2': 'Przegląda stronę główną',
+  '/search/name/': 'Szuka Anime',
+  '/search/custom': 'Szuka Anime',
+  '/search/rand': 'Przegląda losowe anime',
+  '/search/new': 'Przegląda najnowsze anime',
+  '/search/main': 'Przegląda najlepiej oceniane anime',
+  '/all_anime_list': 'Przegląda wszystkie dostępne anime',
+  '/chat': 'Rozmawia na chacie',
+  '/user_activity': 'Przegląda swoją ostatnią aktywność',
+  '/last_comments': 'Przegląda ostatnie komentarze',
+  '/active_sessions': 'Przegląda aktywne sesje logowania',
+  '/manage_edits': 'Przegląda ostatnie edycje',
+  '/anime_list_to_load': 'Ładuję listę anime z innej strony',
+  '/discord': 'Sprawdza jak można się skontaktować',
+  '/support': 'Sprawdza jak można wspierać OA',
+  '/radio': 'Słucha Radia Anime',
+  '/rules': 'Czyta regulamin',
+  '/harmonogram': 'Przegląda harmonogram emisji odcinków Anime',
+  '/': 'Przegląda stronę główną', // This MUST stay at the end, otherwise this will always display no matter the page
 }
 
 presence.on('iFrameData', (data) => {
@@ -116,6 +128,7 @@ presence.on('iFrameData', (data) => {
 
 presence.on('UpdateData', async () => {
   getUserID()
+
   const [browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent] = await Promise.all([
     presence.getSetting<boolean>('browsingStatus'),
     presence.getSetting<boolean>('useAltName'),
@@ -123,13 +136,115 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('titleAsPresence'),
     presence.getSetting<boolean>('showSearchContent'),
   ])
+
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     startTimestamp: browsingTimestamp,
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png',
+    largeImageKey: Assets.Logo,
   }
 
-  if (pathname.includes('/user_comments/') && browsingStatusEnabled) {
+  if (pathname.includes('/anime')) {
+    const player = checkForPlayer()
+    const anime = document.querySelector('#anime_name_id')
+    const animeID = anime?.getAttribute('anime_id')
+    let name = anime?.textContent
+    const alternativeName = anime?.parentElement?.querySelector(
+      'i[class="text-muted text-trim"]',
+    )
+    if (alternativeName != null) {
+      const altName = alternativeName?.getAttribute('title')
+      if (altName != null && altName.length !== 0 && useAltName)
+        name = altName
+    }
+    const activeEpisode = document.querySelector('#ep_list > .active')
+
+    const ratingElement = document.getElementById('my_anime_rate')
+    const rating = ratingElement?.parentElement?.querySelector('h4')
+    const voteCount = ratingElement?.parentElement?.querySelector('.text-left')
+
+    if (name) {
+      if (titleAsPresence)
+        presenceData.name = name
+      else
+        presenceData.details = name
+
+      presenceData.state = append(`Odcinek ${activeEpisode?.getAttribute('value') ?? 0}`, activeEpisode?.querySelector('p')?.textContent, ' • ')
+    }
+    else {
+      return presence.clearActivity()
+    }
+
+    if (player != null && player.paused === false) {
+      const timestamps = getTimestamps(player.currentTime, player.duration)
+      presenceData.startTimestamp = timestamps[0]
+      presenceData.endTimestamp = timestamps[1]
+    }
+    else if (playbackInfo != null && playbackInfo.paused === false) {
+      const timestamps = getTimestamps(playbackInfo.currTime, playbackInfo.duration)
+      presenceData.startTimestamp = timestamps[0]
+      presenceData.endTimestamp = timestamps[1]
+    }
+    else if (((playbackInfo != null && playbackInfo.paused === true) || (player != null && player.paused === true)) && !browsingStatusEnabled && hideWhenPaused) {
+      return presence.clearActivity()
+    }
+
+    if (rating && voteCount) {
+      presenceData.largeImageText = `${rating.textContent} • ${voteCount.textContent}`
+    }
+
+    if (animeID) {
+      presenceData.smallImageKey = Assets.Logo
+      presenceData.largeImageKey = getAnimeIcon(animeID)
+    }
+
+    presenceData.buttons = await setButton('Obejrzyj Teraz', document.location.href)
+  }
+  else if (pathname.match(/\/watch2gether\/\d+/)) {
+    const player = checkForPlayer()
+    const name = document.querySelector('h5[class="card-title text-dark"]')
+    const animeID = name?.getElementsByTagName('a')?.[0]?.getAttribute('onclick')?.match('loadAnimePage\((.*?),')?.[1]
+    const spans = document.querySelectorAll('h6[class="card-subtitle mb-2 text-muted"] > span[class="text-gray"]')
+
+    if (spans == null || spans.length === 0)
+      return presence.clearActivity()
+
+    const episode = spans[0]?.textContent
+    const roomName = spans[spans.length - 1]?.textContent
+
+    if (name) {
+      if (titleAsPresence)
+        presenceData.name = name.textContent ?? undefined
+      else
+        presenceData.details = name.textContent
+
+      presenceData.state = append(`Odcinek ${episode}`, roomName, ' • ')
+    }
+    else {
+      return presence.clearActivity()
+    }
+
+    if (player != null && player.paused === false) {
+      const timestamps = getTimestamps(player.currentTime, player.duration)
+      presenceData.startTimestamp = timestamps[0]
+      presenceData.endTimestamp = timestamps[1]
+    }
+    else if (playbackInfo != null && playbackInfo.paused === false) {
+      const timestamps = getTimestamps(playbackInfo.currTime, playbackInfo.duration)
+      presenceData.startTimestamp = timestamps[0]
+      presenceData.endTimestamp = timestamps[1]
+    }
+    else if (((playbackInfo != null && playbackInfo.paused === true) || (player != null && player.paused === true)) && !browsingStatusEnabled && hideWhenPaused) {
+      return presence.clearActivity()
+    }
+
+    if (animeID) {
+      presenceData.smallImageKey = Assets.Logo
+      presenceData.largeImageKey = getAnimeIcon(animeID)
+    }
+
+    presenceData.buttons = await setButton('Obejrzyj ze mną', document.location.href)
+  }
+  else if (pathname.includes('/user_comments/') && browsingStatusEnabled) {
     const id = pathname.replace('/user_comments/', '')
     presenceData.buttons = await setButton('Zobacz listę komentarzy', document.location.href)
     presenceData.details = 'Przegląda komentarze wysłane przez użytkownika'
@@ -143,8 +258,8 @@ presence.on('UpdateData', async () => {
 
       presenceData.state = `${commentsString(comments)} przez użytkownika`
 
-      presenceData.largeImageKey = `https://cdn.ogladajanime.pl/images/user/${id}.webp`
-      presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
+      presenceData.largeImageKey = getProfilePicture(id)
+      presenceData.smallImageKey = Assets.Logo
     }
   }
   else if (pathname.includes('/anime_list/') && browsingStatusEnabled) {
@@ -197,12 +312,12 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = append('Przegląda listę Anime', name)
 
-      presenceData.largeImageKey = `https://cdn.ogladajanime.pl/images/user/${id}.webp`
-      presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
+      presenceData.largeImageKey = getProfilePicture(id)
+      presenceData.smallImageKey = Assets.Logo
     }
   }
   else if (pathname.includes('/profile') && browsingStatusEnabled) {
-    const pfp = document.querySelector('img[alt="Profile Avatar"]')
+    const id = pathname.replace('/profile/', '')
     const name = document.querySelector('h4[class="card-title col-12 text-center m-0 text-dark"]')?.textContent?.replace(/\s/g, '')?.replace('-Profil', '')
 
     let watchTime
@@ -223,120 +338,16 @@ presence.on('UpdateData', async () => {
     if (watchTime)
       presenceData.state = `Czas oglądania: ${watchTime}`
 
-    if (pfp) {
-      presenceData.largeImageKey = pfp.getAttribute('src')
-      presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
-    }
-    if (pathname.replace('/profile/', '') === userID.toString())
+    presenceData.largeImageKey = getProfilePicture(userID)
+    presenceData.smallImageKey = Assets.Logo
+
+    if (id === userID.toString())
       presenceData.buttons = await profileButton()
     else
       presenceData.buttons = await setButton('Zobacz Profil', document.location.href)
   }
-  else if (pathname.includes('/anime')) {
-    const player = checkForPlayer()
-    const anime = document.querySelector('#anime_name_id')
-    let name = anime?.textContent
-    const alternativeName = anime?.parentElement?.querySelector(
-      'i[class="text-muted text-trim"]',
-    )
-    if (alternativeName != null) {
-      const altName = alternativeName?.getAttribute('title')
-      if (altName != null && altName.length !== 0 && useAltName)
-        name = altName
-    }
-    const animeicon = document.querySelector('img[class="img-fluid lozad rounded float-right"]')
-    const activeEpisode = document.querySelector('#ep_list > .active')
-
-    const ratingElement = document.getElementById('my_anime_rate')
-    const rating = ratingElement?.parentElement?.querySelector('h4')
-    const voteCount = ratingElement?.parentElement?.querySelector('.text-left')
-
-    if (name) {
-      if (titleAsPresence)
-        presenceData.name = name
-      else
-        presenceData.details = name
-
-      presenceData.state = `Odcinek ${activeEpisode?.getAttribute('value') ?? 0
-      } • ${activeEpisode?.querySelector('p')?.textContent ?? 'N/A'}`
-    }
-    else {
-      return presence.clearActivity()
-    }
-
-    if (player != null && player.paused === false) {
-      const timestamps = getTimestamps(player.currentTime, player.duration)
-      presenceData.startTimestamp = timestamps[0]
-      presenceData.endTimestamp = timestamps[1]
-    }
-    else if (playbackInfo != null && playbackInfo.paused === false) {
-      const timestamps = getTimestamps(playbackInfo.currTime, playbackInfo.duration)
-      presenceData.startTimestamp = timestamps[0]
-      presenceData.endTimestamp = timestamps[1]
-    }
-    else if (((playbackInfo != null && playbackInfo.paused === true) || (player != null && player.paused === true)) && !browsingStatusEnabled && hideWhenPaused) {
-      return presence.clearActivity()
-    }
-
-    if (rating && voteCount) {
-      presenceData.largeImageText = `${rating.textContent} • ${voteCount.textContent}`
-    }
-
-    if (animeicon) {
-      presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
-      presenceData.largeImageKey = animeicon.getAttribute('data-srcset')?.split(' ')[0]
-    }
-
-    presenceData.buttons = await setButton('Obejrzyj Teraz', document.location.href)
-  }
-  else if (pathname.match(/\/watch2gether\/\d+/)) {
-    const player = checkForPlayer()
-    const animeicon = document.querySelector('img[class="img-fluid lozad rounded tooltip tooltip-anime mb-2 tooltipstered"]')
-    const name = document.querySelector('h5[class="card-title text-dark"]')
-    const spans = document.querySelectorAll('h6[class="card-subtitle mb-2 text-muted"] > span[class="text-gray"]')
-
-    if (spans == null || spans.length === 0)
-      return presence.clearActivity()
-
-    const episode = spans[0]?.textContent
-    const roomName = spans[spans.length - 1]?.textContent
-
-    if (name) {
-      if (titleAsPresence)
-        presenceData.name = name.textContent ?? undefined
-      else
-        presenceData.details = name.textContent
-
-      presenceData.state = `Odcinek ${episode} • Pokój '${roomName}'`
-    }
-    else {
-      return presence.clearActivity()
-    }
-
-    if (player != null && player.paused === false) {
-      const timestamps = getTimestamps(player.currentTime, player.duration)
-      presenceData.startTimestamp = timestamps[0]
-      presenceData.endTimestamp = timestamps[1]
-    }
-    else if (playbackInfo != null && playbackInfo.paused === false) {
-      const timestamps = getTimestamps(playbackInfo.currTime, playbackInfo.duration)
-      presenceData.startTimestamp = timestamps[0]
-      presenceData.endTimestamp = timestamps[1]
-    }
-    else if (((playbackInfo != null && playbackInfo.paused === true) || (player != null && player.paused === true)) && !browsingStatusEnabled && hideWhenPaused) {
-      return presence.clearActivity()
-    }
-
-    if (animeicon) {
-      presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
-      presenceData.largeImageKey = animeicon.getAttribute('data-src')?.split(' ')[0]
-    }
-
-    presenceData.buttons = await setButton('Obejrzyj ze mną', document.location.href)
-  }
   else if (pathname.includes('/character/') && browsingStatusEnabled) {
-    const characterInfo = document.getElementById('animemenu_info')
-    const name = characterInfo?.querySelector('div[class="row card-body justify-content-center"] h4[class="card-title col-12 text-center mb-1"]')
+    const name = document.querySelector('#animemenu_info > div[class="row card-body justify-content-center"] h4[class="card-title col-12 text-center mb-1"]')
     const image = document.querySelector('img[class="img-fluid lozad rounded text-center"]')?.getAttribute('data-src')?.trim()
 
     presenceData.buttons = await setButton('Zobacz Postać', document.location.href)
@@ -344,7 +355,7 @@ presence.on('UpdateData', async () => {
 
     if (image) {
       presenceData.largeImageKey = image
-      presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png'
+      presenceData.smallImageKey = Assets.Logo
     }
   }
   else if (pathname.includes('/all_anime_list') && browsingStatusEnabled) {
@@ -360,8 +371,7 @@ presence.on('UpdateData', async () => {
   else if (pathname.includes('/search/name/') && browsingStatusEnabled && showSearchContent) {
     const search = document.getElementsByClassName('search-info')?.[0]?.querySelector('div[class="card bg-white"] > div[class="row card-body justify-content-center"] > p[class="col-12 p-0 m-0"]')?.textContent?.replace('Wyszukiwanie: ', '')
     const resultCountElements = document.querySelectorAll('div[class="card bg-white"] > div[class="row card-body justify-content-center"]')
-    const resultCountElem = resultCountElements[resultCountElements.length - 1]
-    const resultCount = resultCountElem?.textContent?.match('Znaleziono: (.*?)\.S')?.[1]
+    const resultCount = resultCountElements[resultCountElements.length - 1]?.textContent?.match('Znaleziono: (.*?)\.S')?.[1]
 
     presenceData.details = append('Szuka Anime', search)
 
@@ -374,7 +384,9 @@ presence.on('UpdateData', async () => {
       for (const [key, value] of Object.entries(staticBrowsing)) {
         if (pathname.includes(key)) {
           presenceData.details = value
-          presenceData.buttons = await profileButton()
+          const buttons = await profileButton()
+          if (buttons)
+            presenceData.buttons = buttons
           recognized = true
           break
         }
