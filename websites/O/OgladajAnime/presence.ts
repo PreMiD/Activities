@@ -212,7 +212,7 @@ presence.on('UpdateData', async () => {
   else if (pathname.match(/\/watch2gether\/\d+/)) {
     const name = document.querySelector('h5[class="card-title text-dark"]')
     const animeIcon = document.querySelector('img[class="img-fluid lozad rounded tooltip tooltip-anime mb-2 tooltipstered"]')
-    const spans = document.querySelector('.card-subtitle')?.querySelectorAll('.text-gray')
+    const spans = document.querySelectorAll('.card-subtitle > .text-gray')
 
     if (spans == null || spans.length === 0) {
       return presence.clearActivity()
@@ -227,7 +227,7 @@ presence.on('UpdateData', async () => {
       else
         presenceData.details = name.textContent
 
-      presenceData.state = append(`Odcinek ${episode}`, roomName, ' • ')
+      presenceData.state = append(`Odcinek ${episode}`, `Pokój '${roomName}'`, ' • ')
     }
     else {
       return presence.clearActivity()
@@ -352,7 +352,7 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = await setButton('Zobacz Profil', document.location.href)
   }
   else if (pathname.startsWith('/character/') && browsingStatusEnabled) {
-    const name = document.querySelector('#animemenu_info > div[class="row card-body justify-content-center"] h4[class="card-title col-12 text-center mb-1"]')
+    const name = document.querySelector('#animemenu_info > div[class="row card-body justify-content-center"] > h4[class="card-title col-12 text-center mb-1"]')
     const image = document.querySelector('img[class="img-fluid lozad rounded text-center"]')?.getAttribute('data-src')?.trim()
 
     presenceData.buttons = await setButton('Zobacz Postać', document.location.href)
