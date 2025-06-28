@@ -98,8 +98,8 @@ function getOAPlayer(): HTMLVideoElement | undefined {
 }
 
 function append(text: string, append: string | undefined | null, separator: string = ': '): string {
-  if (append && append.trim().replace(' ', ''))
-    return `${text}${separator} ${append}`
+  if (append?.trim()?.replace(' ', ''))
+    return `${text}${separator}${append}`
   else
     return text
 }
@@ -211,18 +211,19 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.match(/\/watch2gether\/\d+/)) {
     const name = document.querySelector('h5[class="card-title text-dark"]')
-    const animeID = name?.getElementsByTagName('a')?.[0]?.getAttribute('onclick')?.match('loadAnimePage\((.*?),')?.[1]
-    const spans = document.querySelectorAll('h6[class="card-subtitle mb-2 text-muted"] > span[class="text-gray"]')
+    const animeIcon = document.querySelector('img[class="img-fluid lozad rounded tooltip tooltip-anime mb-2 tooltipstered"]')
+    const spans = document.querySelector('.card-subtitle')?.querySelectorAll('.text-gray')
 
-    if (spans == null || spans.length === 0)
+    if (spans == null || spans.length === 0) {
       return presence.clearActivity()
+    }
 
     const episode = spans[0]?.textContent
     const roomName = spans[spans.length - 1]?.textContent
 
-    if (name) {
+    if (name && name.textContent) {
       if (titleAsPresence)
-        presenceData.name = name.textContent ?? undefined
+        presenceData.name = name.textContent
       else
         presenceData.details = name.textContent
 
@@ -241,36 +242,18 @@ presence.on('UpdateData', async () => {
       return presence.clearActivity()
     }
 
-    if (animeID) {
+    if (animeIcon) {
       presenceData.smallImageKey = Assets.Logo
-      presenceData.largeImageKey = getAnimeIcon(animeID)
+      presenceData.largeImageKey = animeIcon.getAttribute('src')?.replace('0.webp', '2.webp').replace('1.webp', '2.webp')
     }
 
     presenceData.buttons = await setButton('Obejrzyj ze mną', document.location.href)
-  }
-  else if (pathname.includes('/user_comments/') && browsingStatusEnabled) {
-    const id = pathname.replace('/user_comments/', '')
-    presenceData.buttons = await setButton('Zobacz listę komentarzy', document.location.href)
-    presenceData.details = 'Przegląda komentarze wysłane przez użytkownika'
-    if (id != null) {
-      const name = document.querySelector('h4[class="card-title col-12 text-center mb-1"]')?.textContent?.replace('Komentarze użytkownika: ', '')?.replace(/\s/g, '')
-      const comments = (document.querySelectorAll('section > .row > div[class="col-12 mb-3"]')?.length ?? 1) - 1
-
-      if (name) {
-        presenceData.details = `Przegląda komentarze wysłane przez: ${name}`
-      }
-
-      presenceData.state = `${commentsString(comments)} przez użytkownika`
-
-      presenceData.largeImageKey = getProfilePicture(id)
-      presenceData.smallImageKey = Assets.Logo
-    }
   }
   else if (pathname.includes('/anime_list/') && browsingStatusEnabled) {
     let id = pathname.replace('/anime_list/', '')
     const match = id.match(/\/\d/)
     let category = 0
-    if (match != null) {
+    if (match) {
       const split = id.split('/')
       category = Number.parseInt(split.at(1) as string)
     }
@@ -278,7 +261,7 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = 'Przegląda listę Anime'
     presenceData.buttons = await setButton('Zobacz listę Anime', document.location.href)
-    if (id != null) {
+    if (id) {
       if (category === 0) {
         const statuses = document.querySelectorAll('td[class="px-1 px-sm-2"]')
         let watched = 0
@@ -301,7 +284,7 @@ presence.on('UpdateData', async () => {
         })
 
         if (watching === 0)
-          presenceData.state = `${watchedString(watched)}`
+          presenceData.state = watchedString(watched)
         else
           presenceData.state = `Ogląda ${watching} • ${watchedString(watched)}`
       }
@@ -320,9 +303,27 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Logo
     }
   }
+  else if (pathname.includes('/user_comments/') && browsingStatusEnabled) {
+    const id = pathname.replace('/user_comments/', '')
+    presenceData.buttons = await setButton('Zobacz listę komentarzy', document.location.href)
+    presenceData.details = 'Przegląda komentarze wysłane przez użytkownika'
+    if (id != null) {
+      const name = document.querySelector('h4[class="card-title col-12 text-center mb-1"]')?.textContent?.replace('Komentarze użytkownika: ', '')?.replace(/\s/g, '')
+      const comments = (document.querySelectorAll('section > .row > div[class="col-12 mb-3"]')?.length ?? 1) - 1
+
+      if (name) {
+        presenceData.details = `Przegląda komentarze wysłane przez: ${name}`
+      }
+
+      presenceData.state = `${commentsString(comments)} przez użytkownika`
+
+      presenceData.largeImageKey = getProfilePicture(id)
+      presenceData.smallImageKey = Assets.Logo
+    }
+  }
   else if (pathname.includes('/profile') && browsingStatusEnabled) {
     const id = pathname.replace('/profile/', '')
-    const name = document.querySelector('h4[class="card-title col-12 text-center m-0 text-dark"]')?.textContent?.replace(/\s/g, '')?.replace('-Profil', '')
+    const name = document.querySelector('.card-title.col-12.text-center.m-0')?.textContent?.replace(/\s/g, '')?.replace('-Profil', '')
 
     let watchTime
 
@@ -342,7 +343,7 @@ presence.on('UpdateData', async () => {
     if (watchTime)
       presenceData.state = `Czas oglądania: ${watchTime}`
 
-    presenceData.largeImageKey = getProfilePicture(userID)
+    presenceData.largeImageKey = getProfilePicture(id)
     presenceData.smallImageKey = Assets.Logo
 
     if (id === userID.toString())
@@ -363,14 +364,14 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (pathname.includes('/all_anime_list') && browsingStatusEnabled) {
-    const letter = pathname.replace('/all_anime_list/', '')?.toUpperCase()
+    const letter = pathname.replace('/all_anime_list', '')?.replace('/', '')?.toUpperCase()
 
     presenceData.details = 'Przegląda wszystkie dostępne anime'
 
     if (letter)
       presenceData.details = `Przegląda anime na literę: ${letter}`
-    else if (document.location.href.endsWith('#'))
-      presenceData.details = 'Przegląda anime zaczynające się nie na literę'
+    else
+      presenceData.details = 'Przegląda anime nie zaczynające się na literę'
   }
   else if (pathname.includes('/search/name/') && browsingStatusEnabled && showSearchContent) {
     const search = document.getElementsByClassName('search-info')?.[0]?.querySelector('div[class="card bg-white"] > div[class="row card-body justify-content-center"] > p[class="col-12 p-0 m-0"]')?.textContent?.replace('Wyszukiwanie: ', '')
