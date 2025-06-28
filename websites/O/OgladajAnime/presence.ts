@@ -4,8 +4,6 @@ const presence = new Presence({ clientId: '1137362720254074972' })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-const { pathname } = document.location
-
 let userID = 0
 
 let playbackInfo: PlaybackInfo | null
@@ -144,6 +142,8 @@ presence.on('iFrameData', (data) => {
 
 presence.on('UpdateData', async () => {
   getUserID()
+
+  const { pathname } = document.location
 
   const [browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent] = await Promise.all([
     presence.getSetting<boolean>('browsingStatus'),
