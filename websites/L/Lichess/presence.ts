@@ -25,6 +25,7 @@ const pages: {
   '/paste': 'Import Game',
   '/games/search': 'Advanced Search',
 }
+const startTimestamp: number = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
   const page = document.location.pathname
@@ -42,7 +43,7 @@ presence.on('UpdateData', async () => {
     ?.trim()
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/L/Lichess/assets/logo.png',
-    startTimestamp: Math.floor(Date.now() / 1000),
+    startTimestamp: startTimestamp,
   }
 
   if ((page && pages[page]) || (page && pages[page.slice(0, -1)])) {
