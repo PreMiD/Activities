@@ -303,13 +303,14 @@ presence.on('UpdateData', async () => {
   }
 
   if (currentPath[0] === 'game') {
-    // Handle classic games
-    const resultElements = document.querySelectorAll('[class^="result-layout_root__"]')
-    const resultsExist = resultElements.length > 0
-    if (isNewURL || (resultsExist && !alreadyFetchedList.game)) {
-      alreadyFetchedList.game = true
+    if (!cooldowns[currentPath[0]]) {
+      cooldowns[currentPath[0]] = true
+      setTimeout(() => {
+        cooldowns[currentPath[0] as string] = false
+      }, 5000)
+      // Handle classic games
       const gameId = currentPath[1]
-      const gameInfo = await fetchUrl(`https://www.geoguessr.com/api/v3/games/${gameId}`, true, 1)
+      const gameInfo = await fetchUrl(`https://www.geoguessr.com/api/v3/games/${gameId}`, true)
       if (!isConnected()) {
         return
       }
@@ -343,44 +344,51 @@ presence.on('UpdateData', async () => {
         }
       }
       presenceData.smallImageText = gameMode
+
       if (gameInfo.mode === 'streak') {
+        const statsRoundContainer = document.querySelector('[class*="status_section__"][data-qa="round-number"]')
+        const streaksValue = statsRoundContainer && statsRoundContainer.querySelector('[class*="status_streaksValue__"]')
         presenceData.smallImageKey = gameModeIcons.streaks
         presenceData.smallImageText = strings.streaks
-        presenceData.details = `${gameMode} | ${
-          strings.classicStreakCount
-            .replace('{0}', gameInfo.player.totalStreak || 0)
+        presenceData.details = `${gameMode} | ${strings.classicStreakCount
+          .replace('{0}', (streaksValue && streaksValue.textContent) || gameInfo.player.totalStreak || 0)
         }`
         presenceData.state = mapName
-      }
-      else if (gameInfo.type === 'challenge') {
-        presenceData.details = `${gameMode} ${strings.challenge} | ${strings.classicScore
-          .replace('{0}', gameInfo.player.totalScore.amount)
-          .replace('{1}', gameInfo.round)
-          .replace('{2}', gameInfo.roundCount)
-        }`
-        presenceData.state = mapName
-        presenceData.smallImageKey = gameModeIcons.challenges
-        presenceData.smallImageText = strings.challenge
       }
       else {
-        presenceData.details = `${gameMode} | ${
-          strings.classicScore
-            .replace('{0}', gameInfo.player.totalScore.amount)
-            .replace('{1}', gameInfo.round)
-            .replace('{2}', gameInfo.roundCount)
-        }`
-        presenceData.state = mapName
+        const statsScoreContainer = document.querySelector('[class*="status_section__"][data-qa="score"]')
+        const statsScoreValue = statsScoreContainer && statsScoreContainer.querySelector('[class*="status_value__"]')
+
+        const statsRoundContainer = document.querySelector('[class*="status_section__"][data-qa="round-number"]')
+        const statsRoundValue = statsRoundContainer && statsRoundContainer.querySelector('[class*="status_value__"]')
+        const statsRoundValues = statsRoundValue && statsRoundValue.textContent && statsRoundValue.textContent.split(' / ').map(Number)
+        if (gameInfo.type === 'challenge') {
+          presenceData.state = mapName
+          presenceData.smallImageKey = gameModeIcons.challenges
+          presenceData.smallImageText = strings.challenge
+          presenceData.details = `${gameMode} ${strings.challenge} | ${strings.classicScore
+            .replace('{0}', (statsScoreValue && statsScoreValue.textContent) || gameInfo.player.totalScore.amount)
+            .replace('{1}', (statsRoundValues && statsRoundValues[0]) || gameInfo.round)
+            .replace('{2}', (statsRoundValues && statsRoundValues[1]) || gameInfo.roundCount)
+          }`
+        }
+        else {
+          presenceData.details = `${gameMode} | ${strings.classicScore
+            .replace('{0}', (statsScoreValue && statsScoreValue.textContent) || gameInfo.player.totalScore.amount)
+            .replace('{1}', (statsRoundValues && statsRoundValues[0]) || gameInfo.round)
+            .replace('{2}', (statsRoundValues && statsRoundValues[1]) || gameInfo.roundCount)
+          }`
+          presenceData.state = mapName
+        }
       }
     }
-    else if (alreadyFetchedList.game && !resultsExist) {
-      alreadyFetchedList.game = false
-    }
   }
+
   else if (currentPath[0] === 'challenge') {
     if (!alreadyFetchedList.challenge) {
       alreadyFetchedList.challenge = true
       const gameId = currentPath[1]
-      const gameInfo = await fetchUrl(`https://www.geoguessr.com/api/v3/challenges/${gameId}`, true, 60)
+      const gameInfo = await fetchUrl(`https://www.geoguessr.com/api/v3/challenges/${gameId}`, true)
       if (!isConnected()) {
         return
       }

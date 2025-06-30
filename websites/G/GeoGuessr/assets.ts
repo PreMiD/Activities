@@ -145,6 +145,7 @@ export const mapAvatarOfficial: Record<string, string> = {
   'sao-tome-and-principe': 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/135.png',
   'oman': 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/136.png',
   'namibia': 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/3372.png',
+  'vietnam': 'https://raw.githubusercontent.com/Rawblocky/geoguessr-image-assets/refs/heads/main/map/official/vietnam.png',
 }
 
 export const logo = 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/137.png'
