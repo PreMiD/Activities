@@ -6,9 +6,7 @@ const presence = new Presence({
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/logo.png',
-
   OpenBook = 'https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/0.png',
-
 }
 
 async function getStrings() {
@@ -105,6 +103,7 @@ presence.on('UpdateData', async () => {
         if (json && json['@id']) {
           episode = json.episodeNumber
           season = json.partOfSeason.seasonNumber
+          break
         }
       }
     }
@@ -149,7 +148,19 @@ presence.on('UpdateData', async () => {
   else if (pathname.includes('/series') && showBrowsingActivity) {
     presenceData.details = strings.viewPage
     presenceData.state = document.querySelector<HTMLHeadingElement>('h1[class^="heading--"]')?.textContent
-    presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')?.content ?? ActivityAssets.Logo
+
+    let rating = document.querySelector('[class*=" star-rating-average-data__label"]')?.textContent
+    rating = rating?.replace('(', '').replace(')', '')
+
+    const _stars = rating?.split(' ')[0]
+    const _rating = rating?.split(' ')[1]
+
+    if (rating) {
+      rating = `${_stars} • ${_rating}`
+      presenceData.largeImageText = rating
+    }
+
+    presenceData.largeImageKey = document.head?.querySelector<HTMLMetaElement>('[property="og:image"]')?.content ?? ActivityAssets.Logo
     presenceData.buttons = [
       {
         label: strings.viewSeries,
@@ -176,9 +187,7 @@ presence.on('UpdateData', async () => {
     const headline = document.querySelector<HTMLHeadingElement>('[class^="articleDetail_headline"]')?.textContent
     if (headline) {
       presenceData.details = `${strings.readingArticle} ${document.querySelector<HTMLHeadingElement>('[class^="articleDetail_headline"]')?.textContent}`
-      presenceData.state = document.querySelector<HTMLHeadingElement>(
-        '[class^="articleDetail_leadtext"]',
-      )?.textContent
+      presenceData.state = document.querySelector<HTMLHeadingElement>('[class^="articleDetail_leadtext"]')?.textContent
     }
     else {
       presenceData.details = strings.readingAnArticle

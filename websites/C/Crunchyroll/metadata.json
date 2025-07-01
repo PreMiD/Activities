@@ -17,6 +17,10 @@
     {
       "name": "theusaf",
       "id": "193714715631812608"
+    },
+    {
+      "name": "HAHOOS",
+      "id": "936579169842786325"
     }
   ],
   "service": "Crunchyroll",
@@ -33,7 +37,7 @@
     "zh-tw": "Crunchyroll是美國的一家提供東亞相關串流媒體影視服務和國際交流社區的網站。"
   },
   "url": "www.crunchyroll.com",
-  "version": "3.1.8",
+  "version": "3.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/thumbnail.png",
   "color": "#f47521",
@@ -44,7 +48,7 @@
     "manga"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*",
+  "iFrameRegExp": "static.crunchyroll.com",
   "settings": [
     {
       "id": "lang",
