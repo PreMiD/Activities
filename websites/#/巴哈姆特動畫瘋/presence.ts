@@ -70,24 +70,22 @@ presence.on('UpdateData', async () => {
       }
       else if (Number.isNaN(video.duration)) {
         presenceData.startTimestamp = browsingTimestamp
-        presenceData.details = '正在瀏覽 '
         const title = document.querySelector(
           '#BH_background > div.container-player > div.anime-title > div.anime-option > section.videoname > div.anime_name > h1',
         )
-        presenceData.state = title?.textContent
+        presenceData.details = title?.textContent
         presenceData.smallImageKey = Assets.Reading
       }
     }
     else if (document.location.pathname.includes('/animeList')) {
       presenceData.startTimestamp = browsingTimestamp
-      presenceData.details = '瀏覽所有動畫'
+      presenceData.state = '所有動畫'
     }
   }
 
   if (!presenceData.details) {
     presenceData.startTimestamp = browsingTimestamp
-    presenceData.details = '正在瀏覽:'
-    presenceData.state = document
+    presenceData.details = document
       .querySelector('head > title')
       ?.textContent
       ?.replace(' - 巴哈姆特動畫瘋', '')
