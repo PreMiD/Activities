@@ -69,6 +69,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     type: ActivityType.Watching,
+    startTimestamp: browsingTimestamp,
   }
   const { href, pathname } = window.location
   const [newLang, showCover, showBrowsingActivity] = await Promise.all([
@@ -129,7 +130,7 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.includes('/search') && showBrowsingActivity) {
     presenceData.details = strings.search
-    presenceData.state = document.querySelector<HTMLInputElement>('.search-input')?.value
+    presenceData.state = document.querySelector<HTMLInputElement>('input[class^="search-input"]')?.value
     presenceData.smallImageKey = Assets.Search
   }
   else if (pathname.includes('/simulcasts') && showBrowsingActivity) {
