@@ -42,7 +42,7 @@ presence.on('UpdateData', async () => {
         presenceData.name = title?.textContent || '巴哈姆特動畫瘋'
 
         const score = document.querySelector<HTMLElement>(
-          '.score-overall-number'
+          '.score-overall-number',
         )
 
         const views = document.querySelector<HTMLElement>(
