@@ -82,53 +82,7 @@ presence.on('UpdateData', async () => {
     strings = await getStrings()
   }
 
-  if (pathname.includes('/manga')) {
-    if (pathname.includes('/read')) {
-      const queryTitle = document.querySelector<HTMLHeadingElement>('.chapter-header h1')
-      presenceData.details = queryTitle?.children[0]?.textContent?.trim()
-      presenceData.state = `${
-        strings.reading
-      } ${queryTitle?.lastChild?.textContent?.trim()}`
-      presenceData.startTimestamp = browsingTimestamp
-      presenceData.smallImageKey = ActivityAssets.OpenBook
-      const pageNumber = document.querySelector<HTMLOutputElement>(
-        '.first-page-number',
-      )?.textContent
-      presenceData.smallImageText = `${strings.page} ${
-        pageNumber === '' ? '1' : pageNumber
-      }/${document.querySelector<HTMLOListElement>('.images')?.children.length}`
-      presenceData.buttons = [
-        {
-          label: `Read ${strings.chapter}`,
-          url: href,
-        },
-      ]
-    }
-    else if (pathname.includes('/volumes') && showBrowsingActivity) {
-      presenceData.details = strings.viewManga
-      presenceData.state = document
-        .querySelector<HTMLHeadingElement>('.ellipsis')
-        ?.textContent
-        ?.split('Manga > ')[1]
-      presenceData.buttons = [
-        {
-          label: `View ${strings.manga}`,
-          url: href,
-        },
-      ]
-    }
-    else {
-      if (!showBrowsingActivity)
-        return presence.clearActivity()
-
-      presenceData.details = strings.browse
-      presenceData.startTimestamp = browsingTimestamp
-
-      delete presenceData.state
-      delete presenceData.smallImageKey
-    }
-  }
-  else if (
+  if (
     iFrameVideo !== false
     && !Number.isNaN(duration)
     && pathname.includes('/watch/')
