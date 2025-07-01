@@ -8,6 +8,7 @@ enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/logo.png',
 
   OpenBook = 'https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/0.png',
+
 }
 
 async function getStrings() {
@@ -22,6 +23,7 @@ async function getStrings() {
       viewSeries: 'general.buttonViewSeries',
       watchEpisode: 'general.buttonViewEpisode',
       readingArticle: 'general.readingArticle',
+      readingAnArticle: 'general.readingAnArticle',
       viewCategory: 'general.viewCategory',
       chapter: 'general.chapter',
       search: 'general.search',
@@ -170,13 +172,20 @@ presence.on('UpdateData', async () => {
     presenceData.details = strings.viewCategory
     presenceData.state = document.querySelector('h1')?.textContent
   }
-  else if (/\/anime-.*?\/\d{4}\//.test(pathname) && showBrowsingActivity) {
-    presenceData.details = strings.readingArticle
-    presenceData.state = document.querySelector<HTMLHeadingElement>(
-      '.crunchynews-header',
-    )?.textContent
+  else if (/\/news\/.*?\/\d{4}\//.test(pathname) && showBrowsingActivity) {
+    const headline = document.querySelector<HTMLHeadingElement>('[class^="articleDetail_headline"]')?.textContent
+    if (headline) {
+      presenceData.details = `${strings.readingArticle} ${document.querySelector<HTMLHeadingElement>('[class^="articleDetail_headline"]')?.textContent}`
+      presenceData.state = document.querySelector<HTMLHeadingElement>(
+        '[class^="articleDetail_leadtext"]',
+      )?.textContent
+    }
+    else {
+      presenceData.details = strings.readingAnArticle
+    }
+
     if (showCover) {
-      presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.mug')?.src
+      presenceData.largeImageKey = document.querySelector<HTMLImageElement>('[class^="ArticleThumbnail_articleThumbnail"] > div > picture > img')?.src
     }
   }
   else if (showBrowsingActivity) {
