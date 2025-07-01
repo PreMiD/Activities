@@ -61,6 +61,18 @@
       "title": "Show Cover",
       "icon": "fad fa-images",
       "value": true
+    },
+    {
+      "id": "hideWhenPaused",
+      "title": "Hide When Paused",
+      "icon": "fad fa-pause",
+      "value": false
+    },
+    {
+      "id": "titleAsPresence",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": true
     }
   ]
 }

@@ -72,10 +72,12 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
   const { href, pathname } = window.location
-  const [newLang, showCover, showBrowsingActivity] = await Promise.all([
+  const [newLang, showCover, showBrowsingActivity, showTitleAsPresence, hideWhenPaused] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('browsingActivity'),
+    presence.getSetting<boolean>('titleAsPresence'),
+    presence.getSetting<boolean>('hideWhenPaused'),
   ])
 
   if (oldLang !== newLang || !strings) {
@@ -88,18 +90,24 @@ presence.on('UpdateData', async () => {
     && !Number.isNaN(duration)
     && pathname.includes('/watch/')
   ) {
-    const videoTitle = document.querySelector<HTMLHeadingElement>('a > h4')?.textContent
+    const videoTitle = document.querySelector<HTMLHeadingElement>('a > h4')?.textContent ?? 'Title not found...'
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? strings.pause : strings.play;
     [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
 
-    presenceData.details = videoTitle ?? 'Title not found...'
+    if (showTitleAsPresence)
+      presenceData.name = videoTitle
+    else
+      presenceData.details = videoTitle
+
     presenceData.state = document.querySelector<HTMLHeadingElement>('h1.title')?.textContent
 
     presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
       ?.content ?? ActivityAssets.Logo
 
     if (paused) {
+      if (hideWhenPaused)
+        return presence.clearActivity()
       delete presenceData.startTimestamp
       delete presenceData.endTimestamp
     }
@@ -119,7 +127,7 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.includes('/series') && showBrowsingActivity) {
     presenceData.details = strings.viewPage
-    presenceData.state = document.querySelector<HTMLHeadingElement>('h1.title')?.textContent
+    presenceData.state = document.querySelector<HTMLHeadingElement>('h1[class^="heading--"]')?.textContent
     presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')?.content ?? ActivityAssets.Logo
     presenceData.buttons = [
       {
@@ -166,7 +174,5 @@ presence.on('UpdateData', async () => {
   if (!showCover)
     presenceData.largeImageKey = ActivityAssets.Logo
 
-  if (presenceData.details)
-    presence.setActivity(presenceData)
-  else presence.clearActivity()
+  presence.setActivity(presenceData)
 })
