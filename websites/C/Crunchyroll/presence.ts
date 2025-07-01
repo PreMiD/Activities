@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '608065709741965327',
@@ -71,9 +71,10 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
   const { href, pathname } = window.location
-  const [newLang, showCover] = await Promise.all([
+  const [newLang, showCover, showBrowsingActivity] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('cover'),
+    presence.getSetting<boolean>('browsingActivity'),
   ])
 
   if (oldLang !== newLang || !strings) {
@@ -103,7 +104,7 @@ presence.on('UpdateData', async () => {
         },
       ]
     }
-    else if (pathname.includes('/volumes')) {
+    else if (pathname.includes('/volumes') && showBrowsingActivity) {
       presenceData.details = strings.viewManga
       presenceData.state = document
         .querySelector<HTMLHeadingElement>('.ellipsis')
@@ -117,6 +118,9 @@ presence.on('UpdateData', async () => {
       ]
     }
     else {
+      if (!showBrowsingActivity)
+        return presence.clearActivity()
+
       presenceData.details = strings.browse
       presenceData.startTimestamp = browsingTimestamp
 
@@ -132,7 +136,7 @@ presence.on('UpdateData', async () => {
     const videoTitle = document.querySelector<HTMLHeadingElement>('a > h4')?.textContent
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? strings.pause : strings.play;
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(Math.floor(currentTime), Math.floor(duration))
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
 
     presenceData.details = videoTitle ?? 'Title not found...'
     presenceData.state = document.querySelector<HTMLHeadingElement>('h1.title')?.textContent
@@ -158,7 +162,7 @@ presence.on('UpdateData', async () => {
       ]
     }
   }
-  else if (pathname.includes('/series')) {
+  else if (pathname.includes('/series') && showBrowsingActivity) {
     presenceData.details = strings.viewPage
     presenceData.state = document.querySelector<HTMLHeadingElement>('h1.title')?.textContent
     presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')?.content ?? ActivityAssets.Logo
@@ -169,22 +173,22 @@ presence.on('UpdateData', async () => {
       },
     ]
   }
-  else if (pathname.includes('/search')) {
+  else if (pathname.includes('/search') && showBrowsingActivity) {
     presenceData.details = strings.search
     presenceData.state = document.querySelector<HTMLInputElement>('.search-input')?.value
     presenceData.smallImageKey = Assets.Search
   }
-  else if (pathname.includes('/simulcasts')) {
+  else if (pathname.includes('/simulcasts') && showBrowsingActivity) {
     presenceData.details = strings.viewPage
     presenceData.state = `${
       document.querySelector('h1 + div span')?.textContent
     } ${document.querySelector('h1')?.textContent}`
   }
-  else if (pathname.includes('/videos')) {
+  else if (pathname.includes('/videos') && showBrowsingActivity) {
     presenceData.details = strings.viewCategory
     presenceData.state = document.querySelector('h1')?.textContent
   }
-  else if (/\/anime-.*?\/\d{4}\//.test(pathname)) {
+  else if (/\/anime-.*?\/\d{4}\//.test(pathname) && showBrowsingActivity) {
     presenceData.details = strings.readingArticle
     presenceData.state = document.querySelector<HTMLHeadingElement>(
       '.crunchynews-header',
@@ -193,12 +197,15 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.mug')?.src
     }
   }
-  else {
+  else if (showBrowsingActivity) {
     presenceData.details = strings.browse
     presenceData.startTimestamp = browsingTimestamp
 
     delete presenceData.state
     delete presenceData.smallImageKey
+  }
+  else {
+    return presence.clearActivity()
   }
 
   if (!showCover)
@@ -206,5 +213,5 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })
