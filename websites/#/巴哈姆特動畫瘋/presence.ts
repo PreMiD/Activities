@@ -55,7 +55,7 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = image || ActivityAssets.Logo
         presenceData.largeImageText = 'Premid - 巴哈姆特動畫瘋';
 
-        if (score)
+        if (score && views)
           presenceData.state = `動畫瘋 | ✩${score.textContent} | ${views?.textContent}觀看`
 
         presenceData.buttons = [
