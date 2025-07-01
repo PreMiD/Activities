@@ -39,21 +39,19 @@ presence.on('UpdateData', async () => {
           '#BH_background > div.container-player > div.anime-title > div.anime-option > section.videoname > div.anime_name > h1',
         )
         presenceData.details = title?.textContent
-        presenceData.name = title?.textContent || '巴哈姆特動畫瘋';
+        presenceData.name = title?.textContent || '巴哈姆特動畫瘋'
 
         const score = document.querySelector<HTMLElement>(
           '.score-overall-number'
         )
 
         const views = document.querySelector<HTMLElement>(
-          '.newanime-count span'
+          '.newanime-count span',
         )
 
-        const image = document.querySelector<HTMLImageElement>(
-          '.data-file .data-img')?.getAttribute('data-src'
-        )
+        const image = document.querySelector<HTMLImageElement>('.data-file .data-img')?.getAttribute('data-src')
         presenceData.largeImageKey = image || ActivityAssets.Logo
-        presenceData.largeImageText = 'Premid - 巴哈姆特動畫瘋';
+        presenceData.largeImageText = 'Premid - 巴哈姆特動畫瘋'
 
         if (score && views)
           presenceData.state = `動畫瘋 | ✩${score.textContent} | ${views?.textContent}觀看`
