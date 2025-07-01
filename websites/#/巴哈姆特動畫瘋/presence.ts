@@ -7,6 +7,7 @@ const strings = presence.getStrings({
   play: 'general.playing',
   pause: 'general.paused',
   browsing: 'general.browsing',
+  browseanime: 'general.buttonViewAnime',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -59,7 +60,7 @@ presence.on('UpdateData', async () => {
 
         presenceData.buttons = [
           {
-            label: '前往動畫瘋觀看',
+            label: (await strings).browseanime,
             url: document.location.href,
           },
         ]
