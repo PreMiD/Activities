@@ -95,18 +95,31 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = paused ? strings.pause : strings.play;
     [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
 
-    const ratingStars = document.querySelector('p[class*=" star-rating-short-static__rating--"]')?.textContent
-    const ratingCount = document.querySelector('p[data-t="rating-count"]')?.textContent?.replace('(', '')?.replace(')', '')
+    let [season, episode] = [-1, -1]
+    const infos = document.head?.querySelectorAll('script[type="application/ld+json"]')
+    if (infos) {
+      for (const info of infos) {
+        const json = JSON.parse(info.innerHTML) as InfoScript
+        if (json && json['@id']) {
+          episode = json.episodeNumber
+          season = json.partOfSeason.seasonNumber
+        }
+      }
+    }
 
-    if (ratingStars && ratingCount)
-      presenceData.largeImageText = `${ratingStars} • ${ratingCount}`
+    let episodeName = document.querySelector<HTMLHeadingElement>('h1.title')?.textContent
+
+    if (season !== -1 && episode !== -1) {
+      presenceData.largeImageText = `Season ${season}, Episode ${episode}`
+      episodeName = episodeName?.replace(`E${episode} - `, '')
+    }
 
     if (showTitleAsPresence)
       presenceData.name = videoTitle
     else
       presenceData.details = videoTitle
 
-    presenceData.state = document.querySelector<HTMLHeadingElement>('h1.title')?.textContent
+    presenceData.state = episodeName
 
     presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
       ?.content ?? ActivityAssets.Logo
@@ -182,3 +195,11 @@ presence.on('UpdateData', async () => {
 
   presence.setActivity(presenceData)
 })
+
+interface InfoScript {
+  '@id': string
+  'episodeNumber': number
+  'partOfSeason': {
+    seasonNumber: number
+  }
+}
