@@ -6,6 +6,7 @@ const presence = new Presence({
 const strings = presence.getStrings({
   play: 'general.playing',
   pause: 'general.paused',
+  browsing: 'general.browsing',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -70,10 +71,11 @@ presence.on('UpdateData', async () => {
       }
       else if (Number.isNaN(video.duration)) {
         presenceData.startTimestamp = browsingTimestamp
+        presenceData.details = (await strings).browsing
         const title = document.querySelector(
           '#BH_background > div.container-player > div.anime-title > div.anime-option > section.videoname > div.anime_name > h1',
         )
-        presenceData.details = title?.textContent
+        presenceData.state = title?.textContent
         presenceData.smallImageKey = Assets.Reading
       }
     }
@@ -85,7 +87,8 @@ presence.on('UpdateData', async () => {
 
   if (!presenceData.details) {
     presenceData.startTimestamp = browsingTimestamp
-    presenceData.details = document
+    presenceData.details = (await strings).browsing
+    presenceData.state = document
       .querySelector('head > title')
       ?.textContent
       ?.replace(' - 巴哈姆特動畫瘋', '')
