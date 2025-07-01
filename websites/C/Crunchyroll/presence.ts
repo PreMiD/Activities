@@ -95,6 +95,12 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = paused ? strings.pause : strings.play;
     [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
 
+    const ratingStars = document.querySelector('p[class*=" star-rating-short-static__rating--"]')?.textContent
+    const ratingCount = document.querySelector('p[data-t="rating-count"]')?.textContent?.replace('(', '')?.replace(')', '')
+
+    if (ratingStars && ratingCount)
+      presenceData.largeImageText = `${ratingStars} • ${ratingCount}`
+
     if (showTitleAsPresence)
       presenceData.name = videoTitle
     else
