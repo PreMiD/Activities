@@ -114,10 +114,6 @@ presence.on('UpdateData', async () => {
         }
       }
     }
-    else if (document.location.pathname.includes('/animeList')) {
-      presenceData.startTimestamp = browsingTimestamp
-      presenceData.state = '所有動畫'
-    }
   }
 
   if (!presenceData.details) {
