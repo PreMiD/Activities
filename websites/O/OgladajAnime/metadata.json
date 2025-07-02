@@ -29,14 +29,14 @@
     {
       "id": "privacyMode",
       "title": "Privacy Mode",
-      "icon": "fas fa-user-secret",
+      "icon": "fad fa-user-secret",
       "value": false,
       "description": "Hides 'Mój Profil' button"
     },
     {
       "id": "browsingStatus",
       "title": "Show Browsing Status",
-      "icon": "fas fa-book-reader",
+      "icon": "fad fa-book-reader",
       "value": true
     },
     {
@@ -60,20 +60,20 @@
     {
       "id": "titleAsPresence",
       "title": "Show Title as Presence",
-      "icon": "fas fa-user-edit",
+      "icon": "fad fa-user-edit",
       "value": true
     },
     {
       "id": "showCover",
       "title": "Show Cover",
       "description": "This also affects profile pictures",
-      "icon": "fas fa-images",
+      "icon": "fad fa-images",
       "value": true
     },
     {
       "id": "showSmallImages",
       "title": "Show Small Images",
-      "icon": "fas fa-image",
+      "icon": "fad fa-image",
       "value": false,
       "if": {
         "showCover": true
