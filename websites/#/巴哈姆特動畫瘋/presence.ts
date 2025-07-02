@@ -93,7 +93,7 @@ presence.on('UpdateData', async () => {
           : (await strings).play
 
         const data = document.querySelector<HTMLImageElement>(
-          '.ani-play-queue-item.is-playing .img-block img'
+          '.ani-play-queue-item.is-playing .img-block img',
         )
 
         presenceData.largeImageKey = data?.getAttribute('data-src') || ActivityAssets.Logo
@@ -111,8 +111,7 @@ presence.on('UpdateData', async () => {
         if (video.paused) {
           delete presenceData.startTimestamp
           delete presenceData.endTimestamp
-        }
-
+      }
     }
   }
     else if (document.location.pathname.includes('/animeList')) {
