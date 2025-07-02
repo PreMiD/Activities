@@ -80,6 +80,48 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = Assets.Reading
       }
     }
+    else if (document.querySelector('#partyPlayer_html5_api')) {
+      const video = document.querySelector<HTMLVideoElement>(
+        '#partyPlayer_html5_api',
+      )!;
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+      if (!Number.isNaN(video.duration)) {
+        presenceData.type = ActivityType.Watching
+        presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
+        presenceData.smallImageText = video.paused
+          ? (await strings).pause
+          : (await strings).play
+
+        const data = document.querySelector<HTMLImageElement>(
+          '.ani-play-queue-item.is-playing .img-block img'
+        )
+
+        presenceData.largeImageKey = data?.getAttribute('data-src') || ActivityAssets.Logo
+        presenceData.largeImageText = 'Premid - 巴哈姆特動畫瘋'
+        presenceData.details = data?.getAttribute('alt')
+        presenceData.name = data?.getAttribute('alt') || '巴哈姆特動畫瘋'
+
+        const onlineViewers = document.querySelector<HTMLElement>(
+          '.people-count'
+        )
+        const queueList = document.querySelector('.ani-queue-list')
+        const upcomingEpisodes = queueList? queueList.querySelectorAll('.ani-play-queue-item').length: 0
+        
+        presenceData.state = `動畫派對 | ${onlineViewers?.textContent || ''}| ${upcomingEpisodes}集待看`
+
+        presenceData.buttons = [
+          {
+            label: (await strings).browseanime,
+            url: document.location.href,
+          },
+        ]
+        if (video.paused) {
+          delete presenceData.startTimestamp
+          delete presenceData.endTimestamp
+        }
+
+    }
+  }
     else if (document.location.pathname.includes('/animeList')) {
       presenceData.startTimestamp = browsingTimestamp
       presenceData.state = '所有動畫'
