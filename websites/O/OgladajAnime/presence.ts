@@ -192,17 +192,13 @@ presence.on('UpdateData', async () => {
     }
 
     const [isPaused, startTimestamp, endTimestamp] = getPlayerInfo()
-    if (!isPaused) {
-      presenceData.startTimestamp = startTimestamp
-      presenceData.endTimestamp = endTimestamp
-    }
-    else if (isPaused && !browsingStatusEnabled && hideWhenPaused) {
+    if (!isPaused)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = [startTimestamp, endTimestamp]
+    else if (isPaused && !browsingStatusEnabled && hideWhenPaused)
       return presence.clearActivity()
-    }
 
-    if (rating && voteCount) {
+    if (rating && voteCount)
       presenceData.largeImageText = `${rating.textContent} • ${voteCount.textContent}`
-    }
 
     if (animeID && showCover) {
       if (showSmallImages)
@@ -237,13 +233,10 @@ presence.on('UpdateData', async () => {
     }
 
     const [isPaused, startTimestamp, endTimestamp] = getPlayerInfo()
-    if (!isPaused) {
-      presenceData.startTimestamp = startTimestamp
-      presenceData.endTimestamp = endTimestamp
-    }
-    else if (isPaused && !browsingStatusEnabled && hideWhenPaused) {
+    if (!isPaused)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = [startTimestamp, endTimestamp]
+    else if (isPaused && !browsingStatusEnabled && hideWhenPaused)
       return presence.clearActivity()
-    }
 
     if (animeIcon && showCover) {
       if (showSmallImages)
