@@ -35,14 +35,14 @@
     },
     {
       "id": "browsingStatus",
-      "title": "Display Browsing Status",
+      "title": "Show Browsing Status",
       "icon": "fas fa-book-reader",
       "value": true
     },
     {
       "id": "hideWhenPaused",
       "title": "Hide Anime When Paused",
-      "icon": "fas fa-film",
+      "icon": "fas fa-pause",
       "if": {
         "browsingStatus": false
       },
@@ -62,6 +62,22 @@
       "title": "Show Title as Presence",
       "icon": "fas fa-user-edit",
       "value": true
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover",
+      "description": "This also affects profile pictures",
+      "icon": "fas fa-images",
+      "value": true
+    },
+    {
+      "id": "showSmallImages",
+      "title": "Show Small Images",
+      "icon": "fas fa-image",
+      "value": false,
+      "if": {
+        "showCover": true
+      }
     },
     {
       "id": "useAltName",
