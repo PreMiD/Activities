@@ -106,15 +106,8 @@ presence.on('UpdateData', async () => {
         )
         const queueList = document.querySelector('.ani-queue-list')
         const upcomingEpisodes = queueList? queueList.querySelectorAll('.ani-play-queue-item').length: 0
-        
         presenceData.state = `動畫派對 | ${onlineViewers?.textContent || ''}| ${upcomingEpisodes}集待看`
 
-        presenceData.buttons = [
-          {
-            label: (await strings).browseanime,
-            url: document.location.href,
-          },
-        ]
         if (video.paused) {
           delete presenceData.startTimestamp
           delete presenceData.endTimestamp
