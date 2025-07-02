@@ -102,10 +102,10 @@ presence.on('UpdateData', async () => {
         presenceData.name = data?.getAttribute('alt') || '巴哈姆特動畫瘋'
 
         const onlineViewers = document.querySelector<HTMLElement>(
-          '.people-count'
+          '.people-count',
         )
         const queueList = document.querySelector('.ani-queue-list')
-        const upcomingEpisodes = queueList? queueList.querySelectorAll('.ani-play-queue-item').length: 0
+        const upcomingEpisodes = queueList ? queueList.querySelectorAll('.ani-play-queue-item').length : 0
         presenceData.state = `動畫派對 | ${onlineViewers?.textContent || ''}| ${upcomingEpisodes}集待看`
 
         if (video.paused) {
