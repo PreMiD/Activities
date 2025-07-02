@@ -111,9 +111,9 @@ presence.on('UpdateData', async () => {
         if (video.paused) {
           delete presenceData.startTimestamp
           delete presenceData.endTimestamp
+        }
       }
     }
-  }
     else if (document.location.pathname.includes('/animeList')) {
       presenceData.startTimestamp = browsingTimestamp
       presenceData.state = '所有動畫'
