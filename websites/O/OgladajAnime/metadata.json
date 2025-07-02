@@ -24,7 +24,7 @@
   "category": "anime",
   "tags": ["polish", "anime", "video"],
   "iframe": true,
-  "iFrameRegExp": ".*",
+  "iFrameRegExp": "^(?!youtube.com|youtu.be).*",
   "settings": [
     {
       "id": "privacyMode",
