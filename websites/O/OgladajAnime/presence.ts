@@ -1,4 +1,4 @@
-import { ActivityType, getTimestamps } from 'premid'
+import { ActivityType, getTimestamps, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({ clientId: '1137362720254074972' })
 
@@ -40,17 +40,14 @@ function getUserID() {
     userID = 0
 }
 
-function getPlayerInfo(): [isPaused: boolean, startTimestamp: number, endTimestamp: number] {
+function getPlayerInfo(): [isPaused: boolean, timestamp: [start: number, end: number]] {
   const player = getOAPlayer()
-  if (player != null && player.paused === false) {
-    const timestamps = getTimestamps(player.currentTime, player.duration)
-    return [false, timestamps[0], timestamps[1]]
-  }
-  else if (playbackInfo != null && playbackInfo.paused === false) {
-    const timestamps = getTimestamps(playbackInfo.currTime, playbackInfo.duration)
-    return [false, timestamps[0], timestamps[1]]
-  }
-  return [true, -1, -1]
+  if (player?.paused === false)
+    return [false, getTimestampsFromMedia(player)]
+  else if (playbackInfo?.paused === false)
+    return [false, getTimestamps(playbackInfo.currTime, playbackInfo.duration)]
+  else
+    return [true, [-1, -1]]
 }
 
 async function setButton(label: string, url: string): Promise<[ButtonData, (ButtonData | undefined)]> {
@@ -191,9 +188,9 @@ presence.on('UpdateData', async () => {
       return presence.clearActivity()
     }
 
-    const [isPaused, startTimestamp, endTimestamp] = getPlayerInfo()
+    const [isPaused, timestamp] = getPlayerInfo()
     if (!isPaused)
-      [presenceData.startTimestamp, presenceData.endTimestamp] = [startTimestamp, endTimestamp]
+      [presenceData.startTimestamp, presenceData.endTimestamp] = [timestamp[0], timestamp[1]]
     else if (isPaused && !browsingStatusEnabled && hideWhenPaused)
       return presence.clearActivity()
 
@@ -232,9 +229,9 @@ presence.on('UpdateData', async () => {
       return presence.clearActivity()
     }
 
-    const [isPaused, startTimestamp, endTimestamp] = getPlayerInfo()
+    const [isPaused, timestamp] = getPlayerInfo()
     if (!isPaused)
-      [presenceData.startTimestamp, presenceData.endTimestamp] = [startTimestamp, endTimestamp]
+      [presenceData.startTimestamp, presenceData.endTimestamp] = [timestamp[0], timestamp[1]]
     else if (isPaused && !browsingStatusEnabled && hideWhenPaused)
       return presence.clearActivity()
 
