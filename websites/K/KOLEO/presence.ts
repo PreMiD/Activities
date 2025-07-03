@@ -620,7 +620,7 @@ presence.on('UpdateData', async () => {
         || pathname.startsWith('/duch-podrozy/')
         || pathname.startsWith('/marka/')
         || pathname.split('/')[2]?.includes('page'))
-     && !document.querySelector('.product_title')
+      && !document.querySelector('.product_title')
     ) {
       const pageNumber = document.querySelector('.page-numbers.current')?.textContent
       presenceData.details = `Przegląda produkty ${pathname.startsWith('/marka') ? 'marki' : 'katalogu'}${!privacySetting ? ` - ${document.querySelector('.woocommerce-products-header__title')?.textContent}` : ''}.`
