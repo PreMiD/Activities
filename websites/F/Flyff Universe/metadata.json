@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.14",
+  "apiVersion": 1,
+  "author": {
+    "id": "142786385387061249",
+    "name": "KHRM"
+  },
+  "service": "Flyff Universe",
+  "description": {
+    "en": "Flyff Universe is a new Free to Play web MMORPG in 3D. Play the best Flyff version on your PC, Mac, Phone or Tablet. Fly for Fun, anywhere, anytime!"
+  },
+  "url": "universe.flyff.com",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/38g32Vx.png",
+  "thumbnail": "https://i.imgur.com/38g32Vx.png",
+  "color": "#50A7D8",
+  "category": "games",
+  "tags": [
+    "flyff",
+    "mmorpg",
+    "fantasy",
+    "manga",
+    "mmo",
+    "flyforfun"
+  ]
+}
