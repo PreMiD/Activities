@@ -12,7 +12,7 @@ async function getStrings() {
 }
 
 enum ActivityAssets { // Other default assets can be found at index.d.ts
-  Logo = 'https://cdn.tsukime.com/icon.png',
+  Logo = 'https://cdn.tsukime.com/logo.png',
 }
 
 let strings: Awaited<ReturnType<typeof getStrings>>
