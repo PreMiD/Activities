@@ -7,6 +7,8 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets { // Other default assets can be found at index.d.ts
   Logo = 'https://i.imgur.com/9mLtpOG.png',
+  SP_Logo = "https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png",
+  SC_Logo = "https://d21buns5ku92am.cloudfront.net/26628/images/419679-1x1_SoundCloudLogo_cloudmark-f5912b-original-1645807040.jpg"
 }
 
 function parseToSeconds(time?: string | undefined | null): number | undefined {
@@ -94,15 +96,15 @@ presence.on('UpdateData', async () => {
 
   [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(timestampFromFormat(currentTime ?? ''), timestampFromFormat(totalDuration ?? ''))
 
+  //Settings
   const [title, clear] = await Promise.all([
     presence.getSetting<boolean>('title'),
     presence.getSetting<boolean>('clear')
   ]);
-
+  //Clear setting
   if(clear){
     return presence.clearActivity();
   }
-  
   //Title setting
   if(title){
     presenceData.name = trackTitle;
@@ -121,11 +123,11 @@ presence.on('UpdateData', async () => {
   }
   
   if(sc_platform){
-    presenceData.smallImageKey = "https://d21buns5ku92am.cloudfront.net/26628/images/419679-1x1_SoundCloudLogo_cloudmark-f5912b-original-1645807040.jpg";
+    presenceData.smallImageKey = ActivityAssets.SC_Logo;
     presenceData.smallImageText = "SoundCloud";
   }
   if(sp_platform){
-    presenceData.smallImageKey = "https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png";
+    presenceData.smallImageKey = ActivityAssets.SP_Logo;
     presenceData.smallImageText = "Spotify";
   }
   
