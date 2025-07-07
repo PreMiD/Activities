@@ -31,7 +31,7 @@
       "title": "Clear listening activity",
       "description": "CONSTANTLY CLEARS PRESENCE ACTIVITY WHILE ON, TURN ON IF PRESENCE IS STUCK",
       "icon": "fad fa-stopwatch",
-      "value": "false"
+      "value": false
     }
   ]
 }

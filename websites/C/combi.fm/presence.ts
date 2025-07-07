@@ -98,6 +98,10 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('title'),
     presence.getSetting<boolean>('clear')
   ]);
+
+  if(clear){
+    return presence.clearActivity();
+  }
   
   //Title setting
   if(title){
