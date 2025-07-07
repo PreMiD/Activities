@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.14",
+  "apiVersion": 1,
+  "author": {
+    "id": "323136330844471298",
+    "name": "omster"
+  },
+  "service": "combi.fm",
+  "description": {
+    "en": "combi.fm is a platform-agnostic music service for listening with friends "
+  },
+  "url": "combi.fm",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/9mLtpOG.png",
+  "thumbnail": "https://i.imgur.com/WISG2za.png",
+  "color": "#000000",
+  "category": "music",
+  "tags": [
+    "music"
+  ],
+  "settings": [
+    {
+      "id": "title",
+      "title": "Listening to... Title",
+      "description": "Replace subject of `Listening to..` with the track title",
+      "icon": "fad fa-stream",
+      "value": false
+    },
+    {
+      "id": "clear",
+      "title": "Clear listening activity",
+      "description": "CONSTANTLY CLEARS PRESENCE ACTIVITY WHILE ON, TURN ON IF PRESENCE IS STUCK",
+      "icon": "fad fa-stopwatch",
+      "value": "false"
+    }
+  ]
+}
