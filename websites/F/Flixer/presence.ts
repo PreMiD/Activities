@@ -24,7 +24,7 @@ const strings = presence.getStrings({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 const ActivityAssets = {
-  Logo: 'https://flixer.su/apple-touch-icon.png',
+  Logo: 'https://i.imgur.com/ZcoObRR.png',
 }
 
 let currentData: {
@@ -61,11 +61,11 @@ function setCachedData(id: string, data: any) {
 }
 
 function getTMDBId(): string | null {
-  const urlParams = new URLSearchParams(window.location.search)
+  const urlParams = new URLSearchParams(document.location.search)
   const idFromQuery = urlParams.get('id')
   if (idFromQuery) return idFromQuery
   
-  const path = window.location.pathname
+  const path = document.location.pathname
   const pathParts = path.split('/')
   
   if (path.includes('/watch/tv/') || path.includes('/watch/movie/')) {
@@ -210,9 +210,9 @@ function extractSeasonEpisode(text: string) {
 }
 
 function getPageInfo() {
-  const path = window.location.pathname
-  const url = window.location.href
-  const urlParams = new URLSearchParams(window.location.search)
+  const path = document.location.pathname
+  const url = document.location.href
+  const urlParams = new URLSearchParams(document.location.search)
   
   const hasVideo = document.querySelector('video')
   
@@ -323,10 +323,30 @@ function getPageInfo() {
       }
     }
     
-    const query = new URLSearchParams(window.location.search).get('q') || 
-                  new URLSearchParams(window.location.search).get('query') ||
-                  (document.querySelector('input[type="text"][placeholder*="search"], input[type="text"][placeholder*="Search"]') as HTMLInputElement)?.value ||
-                  (document.querySelector('input[type="search"], .search-input') as HTMLInputElement)?.value
+    let query = new URLSearchParams(document.location.search).get('q') || 
+                new URLSearchParams(document.location.search).get('query') ||
+                new URLSearchParams(document.location.search).get('search')
+    
+    if (!query) {
+      const searchInputs = [
+        'input[type="text"][placeholder*="search"]',
+        'input[type="text"][placeholder*="Search"]', 
+        'input[type="text"][placeholder*="suchen"]',
+        'input[type="text"][placeholder*="Nach Filmen"]',
+        'input[type="search"]',
+        'input.search-input',
+        'input[type="text"].w-full',
+        'input[placeholder*="suchen"]'
+      ]
+      
+      for (const selector of searchInputs) {
+        const input = document.querySelector(selector) as HTMLInputElement
+        if (input && input.value && input.value.trim()) {
+          query = input.value.trim()
+          break
+        }
+      }
+    }
 
     return {
       type: 'search',
@@ -406,10 +426,10 @@ presence.on('UpdateData', async () => {
     
       if (tmdbId && (!tmdbData || tmdbData.id !== parseInt(tmdbId))) {
         try {
-          const urlParams = new URLSearchParams(window.location.search)
+          const urlParams = new URLSearchParams(document.location.search)
           const isTV = urlParams.has('tv') || 
-                       window.location.pathname.includes('/tv/') || 
-                       window.location.pathname.includes('/watch/tv/') ||
+                       document.location.pathname.includes('/tv/') || 
+                       document.location.pathname.includes('/watch/tv/') ||
                        pageInfo?.isTV
           
           tmdbData = getCachedData(tmdbId)
@@ -504,7 +524,7 @@ presence.on('UpdateData', async () => {
         
         const buttons: { label: string; url: string }[] = [{
           label: 'Watch on Flixer',
-          url: window.location.href,
+          url: document.location.href,
         }]
         
         if (tmdbData?.id) {
@@ -549,7 +569,7 @@ presence.on('UpdateData', async () => {
         
         const buttons: { label: string; url: string }[] = [{
           label: 'View Details',
-          url: window.location.href,
+          url: document.location.href,
         }]
         
         if (tmdbData?.id) {
