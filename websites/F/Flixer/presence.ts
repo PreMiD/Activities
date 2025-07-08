@@ -21,9 +21,6 @@ const strings = presence.getStrings({
   episode: 'general.episode',
 })
 
-// Get settings
-const showButtons = presence.getSetting('showButtons')
-const showTimestamp = presence.getSetting('showTimestamp')
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -424,6 +421,11 @@ function formatTime(seconds: number): string {
 let updateTimeout: ReturnType<typeof setTimeout>
 const DEBOUNCE_DELAY = 100
 
+function forceUpdate() {
+  clearTimeout(updateTimeout)
+  updateTimeout = setTimeout(() => {}, 10)
+}
+
 presence.on('UpdateData', async () => {
   clearTimeout(updateTimeout)
   updateTimeout = setTimeout(async () => {
@@ -432,7 +434,10 @@ presence.on('UpdateData', async () => {
         largeImageKey: ActivityAssets.Logo,
       }
 
-      if (await showTimestamp) {
+      const showTimestamp = await presence.getSetting('showTimestamp')
+      const showButtons = await presence.getSetting('showButtons')
+
+      if (showTimestamp) {
         presenceData.startTimestamp = browsingTimestamp
       }
 
@@ -533,7 +538,7 @@ presence.on('UpdateData', async () => {
 
           if (videoInfo.isPlaying && !videoInfo.paused && !videoInfo.ended && !videoInfo.buffering) {
             const timeLeft = videoInfo.duration - videoInfo.currentTime
-            if (timeLeft > 0 && timeLeft < 86400 && await showTimestamp) {
+            if (timeLeft > 0 && timeLeft < 86400 && showTimestamp) {
               presenceData.endTimestamp = Date.now() + (timeLeft * 1000)
             }
           }
@@ -547,7 +552,7 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageKey = poster
         }
 
-        if (await showButtons) {
+        if (showButtons) {
           const buttons: { label: string, url: string }[] = [{
             label: 'Watch on Flixer',
             url: document.location.href,
@@ -594,7 +599,7 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageKey = poster
         }
 
-        if (await showButtons) {
+        if (showButtons) {
           const buttons: { label: string, url: string }[] = [{
             label: 'View Details',
             url: document.location.href,
@@ -645,11 +650,12 @@ presence.on('UpdateData', async () => {
         details: 'Browsing Flixer',
         largeImageKey: ActivityAssets.Logo,
       }
-      
-      if (await showTimestamp) {
+
+      const showTimestamp = await presence.getSetting('showTimestamp')
+      if (showTimestamp) {
         fallbackData.startTimestamp = browsingTimestamp
       }
-      
+
       presence.setActivity(fallbackData)
     }
   }, DEBOUNCE_DELAY)
@@ -660,8 +666,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const video = document.querySelector('video')
     if (video) {
       const updateImmediately = () => {
-        clearTimeout(updateTimeout)
-        updateTimeout = setTimeout(() => {}, 10)
+        forceUpdate()
       }
 
       video.addEventListener('play', updateImmediately)
@@ -689,19 +694,16 @@ document.addEventListener('DOMContentLoaded', () => {
 const observer = new MutationObserver(() => {
   const video = document.querySelector('video')
   if (video) {
-    clearTimeout(updateTimeout)
-    updateTimeout = setTimeout(() => {}, 10)
+    forceUpdate()
   }
 })
 
 observer.observe(document.body, { childList: true, subtree: true })
 
 window.addEventListener('popstate', () => {
-  clearTimeout(updateTimeout)
-  updateTimeout = setTimeout(() => {}, 10)
+  forceUpdate()
 })
 
 window.addEventListener('hashchange', () => {
-  clearTimeout(updateTimeout)
-  updateTimeout = setTimeout(() => {}, 10)
+  forceUpdate()
 })
