@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.14",
+  "apiVersion": 1,
+  "author": {
+    "id": "644313519147319297",
+    "name": "krex_dll"
+  },
+  "service": "Flixer",
+  "description": {
+    "en": "flixer.su is a streaming platform for movies and TV shows"
+  },
+  "url": "flixer.su",
+  "version": "1.0.0",
+  "logo": "https://flixer.su/apple-touch-icon.png",
+  "thumbnail": "https://flixer.su/logo.png",
+  "color": "#1a1a1a",
+  "category": "videos",
+  "tags": [
+    "flixer",
+    "movies",
+    "tv",
+    "streaming",
+    "watch"
+  ]
+}
