@@ -21,6 +21,10 @@ const strings = presence.getStrings({
   episode: 'general.episode',
 })
 
+// Get settings
+const showButtons = presence.getSetting('showButtons')
+const showTimestamp = presence.getSetting('showTimestamp')
+
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 const ActivityAssets = {
@@ -426,7 +430,10 @@ presence.on('UpdateData', async () => {
     try {
       const presenceData: PresenceData = {
         largeImageKey: ActivityAssets.Logo,
-        startTimestamp: browsingTimestamp,
+      }
+
+      if (await showTimestamp) {
+        presenceData.startTimestamp = browsingTimestamp
       }
 
       const pageInfo = getPageInfo()
@@ -526,7 +533,7 @@ presence.on('UpdateData', async () => {
 
           if (videoInfo.isPlaying && !videoInfo.paused && !videoInfo.ended && !videoInfo.buffering) {
             const timeLeft = videoInfo.duration - videoInfo.currentTime
-            if (timeLeft > 0 && timeLeft < 86400) {
+            if (timeLeft > 0 && timeLeft < 86400 && await showTimestamp) {
               presenceData.endTimestamp = Date.now() + (timeLeft * 1000)
             }
           }
@@ -540,27 +547,29 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageKey = poster
         }
 
-        const buttons: { label: string, url: string }[] = [{
-          label: 'Watch on Flixer',
-          url: document.location.href,
-        }]
+        if (await showButtons) {
+          const buttons: { label: string, url: string }[] = [{
+            label: 'Watch on Flixer',
+            url: document.location.href,
+          }]
 
-        if (tmdbData?.id) {
-          const tmdbType = isTV ? 'tv' : 'movie'
-          buttons.push({
-            label: 'View on TMDB',
-            url: `https://www.themoviedb.org/${tmdbType}/${tmdbData.id}`,
-          })
+          if (tmdbData?.id) {
+            const tmdbType = isTV ? 'tv' : 'movie'
+            buttons.push({
+              label: 'View on TMDB',
+              url: `https://www.themoviedb.org/${tmdbType}/${tmdbData.id}`,
+            })
+          }
+
+          if (tmdbData?.imdb_id) {
+            buttons.push({
+              label: 'View on IMDb',
+              url: `https://www.imdb.com/title/${tmdbData.imdb_id}`,
+            })
+          }
+
+          presenceData.buttons = buttons.slice(0, 2) as [{ label: string, url: string }, ({ label: string, url: string } | undefined)?]
         }
-
-        if (tmdbData?.imdb_id) {
-          buttons.push({
-            label: 'View on IMDb',
-            url: `https://www.imdb.com/title/${tmdbData.imdb_id}`,
-          })
-        }
-
-        presenceData.buttons = buttons.slice(0, 2) as [{ label: string, url: string }, ({ label: string, url: string } | undefined)?]
       }
       else if (pageInfo?.type === 'viewing') {
         const title = tmdbData?.title || tmdbData?.name || tmdbData?.original_title || tmdbData?.original_name || pageInfo.title || 'Unknown'
@@ -585,27 +594,29 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageKey = poster
         }
 
-        const buttons: { label: string, url: string }[] = [{
-          label: 'View Details',
-          url: document.location.href,
-        }]
+        if (await showButtons) {
+          const buttons: { label: string, url: string }[] = [{
+            label: 'View Details',
+            url: document.location.href,
+          }]
 
-        if (tmdbData?.id) {
-          const tmdbType = tmdbData?.name || tmdbData?.original_name ? 'tv' : 'movie'
-          buttons.push({
-            label: 'View on TMDB',
-            url: `https://www.themoviedb.org/${tmdbType}/${tmdbData.id}`,
-          })
+          if (tmdbData?.id) {
+            const tmdbType = tmdbData?.name || tmdbData?.original_name ? 'tv' : 'movie'
+            buttons.push({
+              label: 'View on TMDB',
+              url: `https://www.themoviedb.org/${tmdbType}/${tmdbData.id}`,
+            })
+          }
+
+          if (tmdbData?.imdb_id) {
+            buttons.push({
+              label: 'View on IMDb',
+              url: `https://www.imdb.com/title/${tmdbData.imdb_id}`,
+            })
+          }
+
+          presenceData.buttons = buttons.slice(0, 2) as [{ label: string, url: string }, ({ label: string, url: string } | undefined)?]
         }
-
-        if (tmdbData?.imdb_id) {
-          buttons.push({
-            label: 'View on IMDb',
-            url: `https://www.imdb.com/title/${tmdbData.imdb_id}`,
-          })
-        }
-
-        presenceData.buttons = buttons.slice(0, 2) as [{ label: string, url: string }, ({ label: string, url: string } | undefined)?]
       }
       else if (pageInfo?.type === 'search') {
         presenceData.details = 'Searching'
@@ -630,11 +641,16 @@ presence.on('UpdateData', async () => {
     }
     catch (error) {
       console.error('Presence error:', error)
-      presence.setActivity({
+      const fallbackData: PresenceData = {
         details: 'Browsing Flixer',
         largeImageKey: ActivityAssets.Logo,
-        startTimestamp: browsingTimestamp,
-      })
+      }
+      
+      if (await showTimestamp) {
+        fallbackData.startTimestamp = browsingTimestamp
+      }
+      
+      presence.setActivity(fallbackData)
     }
   }, DEBOUNCE_DELAY)
 })
