@@ -21,7 +21,6 @@ const strings = presence.getStrings({
   episode: 'general.episode',
 })
 
-
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 const ActivityAssets = {
