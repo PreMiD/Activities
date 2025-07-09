@@ -27,9 +27,16 @@
       "value": false
     },
     {
+      "id": "artists",
+      "title": "Listening to... Artists",
+      "description": "Replace subject of `Listening to..` with the track artists",
+      "icon": "fad fa-stream",
+      "value": false
+    },
+    {
       "id": "clear",
       "title": "Clear listening activity",
-      "description": "CONSTANTLY CLEARS PRESENCE ACTIVITY WHILE ON, TURN ON IF PRESENCE IS STUCK",
+      "description": "TEMPORARILY TURN ON IF PRESENCE IS STUCK",
       "icon": "fad fa-stopwatch",
       "value": false
     }
