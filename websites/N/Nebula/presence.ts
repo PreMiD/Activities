@@ -176,32 +176,31 @@ function getOtherDetails(
 
   if (videoElement === null && audioElement === null) {
     // Viewing a channel or podcast page
-    let channelName: string | null = null;
+    let channelName: string | null = null
 
     // Try getting channel name from the page
-    const channelHeading = document.querySelector('main > div > h1');
+    const channelHeading = document.querySelector('main > div > h1')
     if (channelHeading instanceof HTMLElement) {
-      channelName = channelHeading.textContent?.trim() || null;
+      channelName = channelHeading.textContent?.trim() || null
     }
 
-    const podcastElement = document.querySelector('main > div > div > div > div > h1') as HTMLElement | null;
-    const podcastName = podcastElement?.textContent?.trim() || null;
+    const podcastElement = document.querySelector('main > div > div > div > div > h1') as HTMLElement | null
+    const podcastName = podcastElement?.textContent?.trim() || null
 
     // Fallback to RSS link + title if no channel heading
     // I know this solution is very... "what" but all headings are images and this is the only way to tell for sure that a page is a channel
     if (!channelName && !podcastName) {
-      const rssLink = document.querySelector('link[rel="alternate"][type="application/rss+xml"]') as HTMLLinkElement | null;
-      const title = document.querySelector('title')?.textContent?.trim();
-      if (!channelName && rssLink?.href && title) {
-        channelName = title.includes(' | ') ? title.split(' | ')[0] || null : null;
-      } else {
-        return;
-      }
+      const rssLink = document.querySelector('link[rel="alternate"][type="application/rss+xml"]') as HTMLLinkElement | null
+      const title = document.querySelector('title')?.textContent?.trim()
+      if (channelName || !(rssLink?.href && title))
+        return
+
+      channelName = title.includes(' | ') ? title.split(' | ')[0] || null : null
     }
 
-    const isPodcast = !channelName;
-    presenceData.details = isPodcast ? 'Viewing a podcast' : 'Viewing a channel';
-    presenceData.state = isPodcast ? podcastName : channelName;
+    const isPodcast = !channelName
+    presenceData.details = isPodcast ? 'Viewing a podcast' : 'Viewing a channel'
+    presenceData.state = isPodcast ? podcastName : channelName
 
     if (showButtons) {
       presenceData.buttons = [
@@ -209,7 +208,7 @@ function getOtherDetails(
           label: isPodcast ? 'View Podcast' : 'View Channel',
           url: href,
         },
-      ];
+      ]
     }
   }
 
@@ -255,10 +254,10 @@ function getOtherDetails(
       presenceData.details = `${document.querySelector(
         `${classInfoElementSelector} > div:nth-of-type(1)`,
       )?.textContent
-        } | ${document.querySelector(
-          `${classInfoElementSelector} > div:nth-of-type(2)`,
-        )?.textContent
-        }`
+      } | ${document.querySelector(
+        `${classInfoElementSelector} > div:nth-of-type(2)`,
+      )?.textContent
+      }`
       presenceData.state = document.querySelector(
         `${classInfoElementSelector} > div:nth-of-type(3)`,
       )?.textContent
@@ -317,5 +316,5 @@ function parseQueryParams(): QueryParams {
 
 function getRootUrl(): string {
   return `${document.location.protocol}//${document.location.hostname}${document.location.port ? `:${document.location.port}` : ''
-    }`
+  }`
 }
