@@ -1,4 +1,5 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets } from 'premid'
+import { getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1212664221788274698',
@@ -38,6 +39,9 @@ function getDetails(
   }
 
   switch (path[0]?.toLowerCase()) {
+    case 'featured':
+      presenceData.details = 'Viewing featured page'
+      break
     case 'classes':
       presenceData.details = 'Viewing classes'
       break
@@ -236,15 +240,13 @@ function getOtherDetails(
       )?.textContent
     }
     else {
-      presenceData.details = `${
-        document.querySelector(
-          `${classInfoElementSelector} > div:nth-of-type(1)`,
-        )?.textContent
-      } | ${
-        document.querySelector(
+      presenceData.details = `${document.querySelector(
+        `${classInfoElementSelector} > div:nth-of-type(1)`,
+      )?.textContent
+        } | ${document.querySelector(
           `${classInfoElementSelector} > div:nth-of-type(2)`,
         )?.textContent
-      }`
+        }`
       presenceData.state = document.querySelector(
         `${classInfoElementSelector} > div:nth-of-type(3)`,
       )?.textContent
@@ -268,12 +270,13 @@ function setTimestamps(
   presenceData: PresenceData,
 ): void {
   delete presenceData.startTimestamp;
-  [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(element)
+  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(element)
   if (element.paused) {
     delete presenceData.endTimestamp
     presenceData.smallImageKey = Assets.Pause
   }
   else {
+    presenceData.type = ActivityType.Watching
     presenceData.smallImageKey = Assets.Play
   }
 }
@@ -301,7 +304,6 @@ function parseQueryParams(): QueryParams {
 }
 
 function getRootUrl(): string {
-  return `${document.location.protocol}//${document.location.hostname}${
-    document.location.port ? `:${document.location.port}` : ''
-  }`
+  return `${document.location.protocol}//${document.location.hostname}${document.location.port ? `:${document.location.port}` : ''
+    }`
 }
