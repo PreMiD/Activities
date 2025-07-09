@@ -1,5 +1,4 @@
-import { ActivityType, Assets } from 'premid'
-import { getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1212664221788274698',
@@ -176,31 +175,44 @@ function getOtherDetails(
   const audioElement = document.querySelector('audio')
 
   if (videoElement === null && audioElement === null) {
-    // viewing a channel or podcast page
-    const channelName = document.querySelector('main > div > h1')
-    const podcastName = document.querySelector('main > div > div > div > div > h1')
+    // Viewing a channel or podcast page
+    let channelName: string | null = null;
 
-    if (channelName === null && podcastName === null)
-      return
+    // Try getting channel name from the page
+    const channelHeading = document.querySelector('main > div > h1');
+    if (channelHeading instanceof HTMLElement) {
+      channelName = channelHeading.textContent?.trim() || null;
+    }
 
-    if (channelName === null) {
-      presenceData.details = 'Viewing a podcast'
-      presenceData.state = podcastName?.textContent
+    const podcastElement = document.querySelector('main > div > div > div > div > h1') as HTMLElement | null;
+    const podcastName = podcastElement?.textContent?.trim() || null;
+
+    // Fallback to RSS link + title if no channel heading
+    // I know this solution is very... "what" but all headings are images and this is the only way to tell for sure that a page is a channel
+    if (!channelName && !podcastName) {
+      const rssLink = document.querySelector('link[rel="alternate"][type="application/rss+xml"]') as HTMLLinkElement | null;
+      const title = document.querySelector('title')?.textContent?.trim();
+      if (!channelName && rssLink?.href && title) {
+        channelName = title.includes(' | ') ? title.split(' | ')[0] || null : null;
+      } else {
+        return;
+      }
     }
-    else {
-      presenceData.details = 'Viewing a channel'
-      presenceData.state = channelName.textContent
-    }
+
+    const isPodcast = !channelName;
+    presenceData.details = isPodcast ? 'Viewing a podcast' : 'Viewing a channel';
+    presenceData.state = isPodcast ? podcastName : channelName;
 
     if (showButtons) {
       presenceData.buttons = [
         {
-          label: channelName === null ? 'View Podcast' : 'View Channel',
+          label: isPodcast ? 'View Podcast' : 'View Channel',
           url: href,
         },
-      ]
+      ];
     }
   }
+
   else if (videoElement === null) {
     // listening to a podcast
     const channelElement = document.querySelector('main')?.querySelector('a')
