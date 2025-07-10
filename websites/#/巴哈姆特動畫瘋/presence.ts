@@ -53,7 +53,7 @@ presence.on('UpdateData', async () => {
 
         const image = document.querySelector<HTMLImageElement>('.data-file .data-img')?.getAttribute('data-src')
         presenceData.largeImageKey = image || ActivityAssets.Logo
-        presenceData.largeImageText = 'Premid - 巴哈姆特動畫瘋'
+        presenceData.largeImageText = 'PreMiD - 巴哈姆特動畫瘋'
 
         if (score && views)
           presenceData.state = `動畫瘋 | ✩${score.textContent} | ${views?.textContent}觀看`
@@ -97,7 +97,7 @@ presence.on('UpdateData', async () => {
         )
 
         presenceData.largeImageKey = data?.getAttribute('data-src') || ActivityAssets.Logo
-        presenceData.largeImageText = 'Premid - 巴哈姆特動畫瘋'
+        presenceData.largeImageText = 'PreMiD - 巴哈姆特動畫瘋'
         presenceData.details = data?.getAttribute('alt')
         presenceData.name = data?.getAttribute('alt') || '巴哈姆特動畫瘋'
 
