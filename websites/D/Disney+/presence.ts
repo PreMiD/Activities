@@ -111,11 +111,14 @@ presence.on('UpdateData', async () => {
               ? presenceData.details = document
                 .querySelector('.subtitle-field')
                 ?.textContent
-                ?.replace(/S(\d+):E(\d+) /, '')
+                ?.replace(/S\d+:E\d+ /, '')
+                || document.querySelector(
+                  '.title-field.body-copy',
+                )?.textContent
               : presenceData.state = document
                 .querySelector('.subtitle-field')
                 ?.textContent
-                ?.replace(/S(\d+):E(\d+) /, '')
+                ?.replace(/S\d+:E\d+ /, '')
 
             presenceData.buttons = [
               {
