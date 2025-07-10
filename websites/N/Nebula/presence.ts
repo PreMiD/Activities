@@ -62,12 +62,12 @@ function getDetails(
     case 'library':
       if (path.length === 1)
         presenceData.details = 'Viewing library page'
-      else presenceData.details = getLibraryCategory(path[1]!.toLowerCase())
+      else presenceData.details = "Viewing " + path[1]!.toLowerCase().replaceAll('-', ' ')
       break
     case 'explore':
       if (path.length === 1)
         presenceData.details = 'Viewing explore page'
-      else presenceData.details = getExploreCategory(path[1]!.toLowerCase())
+      else presenceData.details = "Exploring " + path[1]!.toLowerCase()
       break
     case 'videos':
       getVideoDetails(presenceData, showButtons, href)
@@ -78,46 +78,6 @@ function getDetails(
     default:
       getOtherDetails(presenceData, showButtons, href)
       break
-  }
-}
-
-function getExploreCategory(category: string): string | undefined {
-  switch (category) {
-    case 'videos':
-      return 'Exploring videos'
-    case 'channels':
-      return 'Exploring channels'
-    case 'podcasts':
-      return 'Exploring podcasts'
-    case 'episodes':
-      return 'Exploring episodes'
-  }
-}
-
-function getLibraryCategory(category: string): string | undefined {
-  switch (category) {
-    case 'latest-videos':
-      return 'Viewing latest videos'
-    case 'followed-channels':
-      return 'Viewing followed channels'
-    case 'watch-later':
-      return 'Viewing Watch Later'
-    case 'watch-history':
-      return 'Viewing watch history'
-    case 'latest-episodes':
-      return 'Viewing latest episodes'
-    case 'followed-shows':
-      return 'Viewing followed shows'
-    case 'saved-episodes':
-      return 'Viewing saved episodes'
-    case 'listen-history':
-      return 'Viewing listening history'
-    case 'classes-in-progress':
-      return 'Viewing classes in progress'
-    case 'saved-classes':
-      return 'Viewing saved classes'
-    case 'lesson-history':
-      return 'Viewing lesson history'
   }
 }
 
