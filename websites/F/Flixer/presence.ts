@@ -24,7 +24,7 @@ const strings = presence.getStrings({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 const ActivityAssets = {
-  Logo: 'https://i.imgur.com/ElDXOQr.png',
+  Logo: 'https://i.imgur.com/aY4D04N.jpeg',
 }
 
 const currentData: {
