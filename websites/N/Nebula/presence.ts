@@ -62,12 +62,12 @@ function getDetails(
     case 'library':
       if (path.length === 1)
         presenceData.details = 'Viewing library page'
-      else presenceData.details = "Viewing " + path[1]!.toLowerCase().replaceAll('-', ' ')
+      else presenceData.details = `Viewing ${path[1]!.toLowerCase().replaceAll('-', ' ')}`
       break
     case 'explore':
       if (path.length === 1)
         presenceData.details = 'Viewing explore page'
-      else presenceData.details = "Exploring " + path[1]!.toLowerCase()
+      else presenceData.details = `Exploring ${path[1]!.toLowerCase()}`
       break
     case 'videos':
       getVideoDetails(presenceData, showButtons, href)
@@ -117,7 +117,7 @@ function getVideoDetails(
 
   if (videoElement === null)
     return
-  setTimestamps(videoElement, presenceData)
+  setTimestamps(videoElement, presenceData, true)
 }
 
 function getSearchDetails(presenceData: PresenceData): void {
@@ -174,13 +174,13 @@ function getOtherDetails(
 
   else if (videoElement === null) {
     // listening to a podcast
-    const channelElement = document.querySelector('main')?.querySelector('a')
+    const channelElement = document.querySelector('main > div:nth-of-type(2) > div:nth-of-type(1) > div > div:nth-of-type(1) > a')
 
     presenceData.details = document.querySelector(
-      'main > div > div > div > div > div',
+      'main > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1)',
     )?.textContent
     presenceData.state = channelElement?.textContent
-    audioElement && setTimestamps(audioElement, presenceData)
+    audioElement && setTimestamps(audioElement, presenceData, false)
 
     if (showButtons) {
       presenceData.buttons = [
@@ -223,7 +223,7 @@ function getOtherDetails(
       )?.textContent
     }
 
-    setTimestamps(videoElement, presenceData)
+    setTimestamps(videoElement, presenceData, true)
 
     if (showButtons) {
       presenceData.buttons = [
@@ -239,6 +239,7 @@ function getOtherDetails(
 function setTimestamps(
   element: HTMLAudioElement | HTMLVideoElement,
   presenceData: PresenceData,
+  isVideo: boolean,
 ): void {
   delete presenceData.startTimestamp;
   [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(element)
@@ -247,7 +248,7 @@ function setTimestamps(
     presenceData.smallImageKey = Assets.Pause
   }
   else {
-    presenceData.type = ActivityType.Watching
+    presenceData.type = isVideo ? ActivityType.Watching : ActivityType.Listening
     presenceData.smallImageKey = Assets.Play
   }
 }
