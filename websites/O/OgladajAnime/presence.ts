@@ -1,4 +1,4 @@
-import { ActivityType, getTimestamps, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({ clientId: '1137362720254074972' })
 
@@ -8,10 +8,17 @@ let userID = 0
 
 let playbackInfo: PlaybackInfo | null
 
+let lastWatched: Playback
+
 interface PlaybackInfo {
   currTime: number
   duration: number
   paused: boolean
+}
+
+interface Playback {
+  animeID: string
+  episode: string
 }
 
 enum ListItemStatus {
@@ -22,7 +29,7 @@ enum ListItemStatus {
   Porzucone = 5,
 }
 
-enum Assets {
+enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png',
 }
 
@@ -142,20 +149,19 @@ presence.on('UpdateData', async () => {
 
   const { pathname } = document.location
 
-  const [browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent, showSmallImages, showCover] = await Promise.all([
+  const [browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent, showCover] = await Promise.all([
     presence.getSetting<boolean>('browsingStatus'),
     presence.getSetting<boolean>('useAltName'),
     presence.getSetting<boolean>('hideWhenPaused'),
     presence.getSetting<boolean>('titleAsPresence'),
     presence.getSetting<boolean>('showSearchContent'),
-    presence.getSetting<boolean>('showSmallImages'),
     presence.getSetting<boolean>('showCover'),
   ])
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     startTimestamp: browsingTimestamp,
-    largeImageKey: Assets.Logo,
+    largeImageKey: ActivityAssets.Logo,
   }
 
   if (pathname.startsWith('/anime/')) {
@@ -176,32 +182,48 @@ presence.on('UpdateData', async () => {
     const rating = ratingElement?.parentElement?.querySelector('h4')
     const voteCount = ratingElement?.parentElement?.querySelector('.text-left')
 
+    const epNum = activeEpisode?.getAttribute('value') ?? 0
+    const epName = activeEpisode?.querySelector('p')?.textContent
+
     if (name) {
       if (titleAsPresence)
         presenceData.name = name
       else
         presenceData.details = name
 
-      presenceData.state = append(`Odcinek ${activeEpisode?.getAttribute('value') ?? 0}`, activeEpisode?.querySelector('p')?.textContent, ' • ')
+      presenceData.state = append(`Odcinek ${epNum}`, epName, ' • ')
     }
     else {
       return presence.clearActivity()
     }
 
     const [isPaused, timestamp] = getPlayerInfo()
-    if (!isPaused)
+    if (!isPaused) {
+      lastWatched = {
+        animeID: animeID ?? '',
+        episode: epNum,
+      } as Playback
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = 'Obecnie ogląda';
       [presenceData.startTimestamp, presenceData.endTimestamp] = [timestamp[0], timestamp[1]]
-    else if (isPaused && !browsingStatusEnabled && hideWhenPaused)
+    }
+    else if (isPaused && !browsingStatusEnabled && hideWhenPaused) {
       return presence.clearActivity()
+    }
+    else if (isPaused && lastWatched && lastWatched.animeID === animeID && lastWatched.episode === epNum) {
+      presenceData.smallImageKey = Assets.Pause
+      presenceData.smallImageText = 'Odtwarzanie anime jest wstrzymane'
+    }
+    else {
+      presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = 'Przegląda stronę anime'
+    }
 
     if (rating && voteCount)
       presenceData.largeImageText = `${rating.textContent} • ${voteCount.textContent}`
 
-    if (animeID && showCover) {
-      if (showSmallImages)
-        presenceData.smallImageKey = Assets.Logo
+    if (animeID && showCover)
       presenceData.largeImageKey = getAnimeIcon(animeID)
-    }
 
     presenceData.buttons = await setButton('Obejrzyj Teraz', document.location.href)
   }
@@ -230,16 +252,21 @@ presence.on('UpdateData', async () => {
     }
 
     const [isPaused, timestamp] = getPlayerInfo()
-    if (!isPaused)
+    if (!isPaused) {
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = 'Obecnie ogląda';
       [presenceData.startTimestamp, presenceData.endTimestamp] = [timestamp[0], timestamp[1]]
-    else if (isPaused && !browsingStatusEnabled && hideWhenPaused)
-      return presence.clearActivity()
-
-    if (animeIcon && showCover) {
-      if (showSmallImages)
-        presenceData.smallImageKey = Assets.Logo
-      presenceData.largeImageKey = animeIcon.getAttribute('src')?.replace('0.webp', '2.webp').replace('1.webp', '2.webp')
     }
+    else if (isPaused && !browsingStatusEnabled && hideWhenPaused) {
+      return presence.clearActivity()
+    }
+    else if (isPaused) {
+      presenceData.smallImageKey = Assets.Pause
+      presenceData.smallImageText = 'Odtwarzanie anime jest wstrzymane'
+    }
+
+    if (animeIcon && showCover)
+      presenceData.largeImageKey = animeIcon.getAttribute('src')?.replace('0.webp', '2.webp').replace('1.webp', '2.webp')
 
     presenceData.buttons = await setButton('Obejrzyj ze mną', document.location.href)
   }
@@ -293,11 +320,8 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = append('Przegląda listę Anime', name)
 
-      if (showCover) {
+      if (showCover)
         presenceData.largeImageKey = getProfilePicture(id)
-        if (showSmallImages)
-          presenceData.smallImageKey = Assets.Logo
-      }
     }
   }
   else if (pathname.startsWith('/user_comments/') && browsingStatusEnabled) {
@@ -314,11 +338,8 @@ presence.on('UpdateData', async () => {
 
       presenceData.state = `${commentsString(comments)} przez użytkownika`
 
-      if (showCover) {
+      if (showCover)
         presenceData.largeImageKey = getProfilePicture(id)
-        if (showSmallImages)
-          presenceData.smallImageKey = Assets.Logo
-      }
     }
   }
   else if (pathname.startsWith('/profile') && browsingStatusEnabled) {
@@ -343,11 +364,8 @@ presence.on('UpdateData', async () => {
     if (watchTime)
       presenceData.state = `Czas oglądania: ${watchTime}`
 
-    if (showCover) {
+    if (showCover)
       presenceData.largeImageKey = getProfilePicture(id)
-      if (showSmallImages)
-        presenceData.smallImageKey = Assets.Logo
-    }
 
     if (id === userID.toString())
       presenceData.buttons = await profileButton()
@@ -361,11 +379,8 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = await setButton('Zobacz Postać', document.location.href)
     presenceData.details = append('Sprawdza postać', name?.textContent)
 
-    if (image && showCover) {
+    if (image && showCover)
       presenceData.largeImageKey = image
-      if (showSmallImages)
-        presenceData.smallImageKey = Assets.Logo
-    }
   }
   else if (pathname.startsWith('/all_anime_list') && browsingStatusEnabled) {
     const letter = pathname.replace('/all_anime_list', '')?.replace('/', '')?.toUpperCase()

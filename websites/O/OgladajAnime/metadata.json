@@ -71,15 +71,6 @@
       "value": true
     },
     {
-      "id": "showSmallImages",
-      "title": "Show Small Images",
-      "icon": "fad fa-image",
-      "value": false,
-      "if": {
-        "showCover": true
-      }
-    },
-    {
       "id": "useAltName",
       "title": "Use Alternative Name",
       "icon": "fas fa-font",
