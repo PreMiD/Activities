@@ -22,5 +22,5 @@
     "video"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*"
+  "iFrameRegExp": "(.*\\.)?jkanime\\.net"
 }
