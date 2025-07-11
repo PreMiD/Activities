@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.14",
   "apiVersion": 1,
   "author": {
     "name": "TheDrop.",
@@ -17,6 +17,10 @@
     {
       "name": "theusaf",
       "id": "193714715631812608"
+    },
+    {
+      "name": "HAHOOS",
+      "id": "936579169842786325"
     }
   ],
   "service": "Crunchyroll",
@@ -33,27 +37,44 @@
     "zh-tw": "Crunchyroll是美國的一家提供東亞相關串流媒體影視服務和國際交流社區的網站。"
   },
   "url": "www.crunchyroll.com",
-  "version": "3.1.7",
+  "version": "3.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/thumbnail.png",
   "color": "#f47521",
   "category": "anime",
   "tags": [
     "video",
-    "anime",
-    "manga"
+    "anime"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*",
+  "iFrameRegExp": "static.crunchyroll.com",
   "settings": [
     {
       "id": "lang",
       "multiLanguage": true
     },
     {
+      "id": "browsingActivity",
+      "title": "Show Browsing Activity",
+      "icon": "fad fa-book-reader",
+      "value": true
+    },
+    {
       "id": "cover",
       "title": "Show Cover",
       "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "hideWhenPaused",
+      "title": "Hide When Paused",
+      "icon": "fad fa-pause",
+      "value": false
+    },
+    {
+      "id": "titleAsPresence",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
       "value": true
     }
   ]

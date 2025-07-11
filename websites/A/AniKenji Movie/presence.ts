@@ -70,7 +70,7 @@ async function updatePresence(): Promise<void> {
       showButtons,
       showTimestamps,
     ] = await Promise.all([
-      presence.getSetting<boolean>('buttons'),
+      presence.getSetting<boolean>('showButtons'),
       presence.getSetting<boolean>('showtimestamps'),
     ])
     const Rating = document.querySelector('div.post-ratings > span')?.textContent?.trim() || 'N/A'
@@ -136,7 +136,7 @@ async function updatePresence(): Promise<void> {
         if (showButtons) {
           presenceData.buttons = [
             {
-              label: '📺 Xem Phim',
+              label: 'Xem Phim',
               url: document.location.href,
             },
           ]
@@ -167,7 +167,7 @@ async function updatePresence(): Promise<void> {
       if (showButtons) {
         presenceData.buttons = [
           {
-            label: '📺 Xem Phim',
+            label: 'Xem Phim',
             url: document.location.href,
           },
         ]

@@ -1,269 +1,340 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
+import { AnimeDataFetcher } from './functions/animeData.js'
 
 const presence = new Presence({
-  clientId: '969716001090437120',
+  clientId: '1387112561362604104',
 })
-const pages: { [k: string]: string } = {
-  '/animes': 'Betrachtet alle Animes',
-  '/beliebte-animes': 'Betrachtet beliebte Animes',
-  '/support/anleitung': 'So funktioniert\'s -',
-  '/animekalender': 'Animekalender - ',
-  '/random': 'Der Anime-Zufallsgenerator',
-  '/zufall': 'Der Anime-Zufallsgenerator',
-  '/neu': 'Betrachtet neue Animes',
-  '/support/regeln': 'Betrachtet die Nutzungsbedingungen',
-  '/dmca': 'Digital Millennium Copyright Act of 1998',
-  '/animewuensche': 'Betrachtet Animewünsche',
-  '/login': 'Login bei AniWorld',
-  '/registation': 'Registrierung bei AniWorld',
-  '/account': 'Betrachtet sein Account',
-  '/user/profil/': 'Betrachtet ein Profil',
-  '/account/nachrichten': 'Betrachtet seine Nachrichten',
-  '/account/notifications': 'Betrachtet seine Benachrichtigungen',
-  '/account/support': 'im Support Bereich',
-  '/account/watchlist': 'Betrachtet seine Watchlist',
-  '/account/subscribed': 'Betrachtet seine Abonnierte Animes',
-  '/account/settings': 'Account Einstellungen',
-  '/support/fragen': 'Betrachtet Fragen & Antworten',
-  '/support': 'Hilfe & Support bei AniWorld',
-  '/edit:information': 'Neue Serieninformationen vorschlagen',
-}
-let video,
-  timeEnd: number,
-  currentTime: number,
-  paused: boolean,
-  played: boolean
 
-presence.on(
-  'iFrameData',
-  async (data: unknown) => {
-    ({ currentTime, timeEnd, played, paused } = data as {
-      currentTime: number
-      timeEnd: number
-      paused: boolean
-      played: boolean
-    })
-  },
-)
+async function getStrings() {
+  return presence.getStrings({
+    animes: 'aniworld.animes',
+    popular: 'aniworld.popular',
+    guide: 'aniworld.support.guide',
+    calendar: 'aniworld.calendar',
+    random: 'aniworld.random',
+    new: 'aniworld.new',
+    terms: 'aniworld.terms',
+    dmca: 'aniworld.dmca',
+    wishes: 'aniworld.wishes',
+    login: 'aniworld.login',
+    registration: 'aniworld.registration',
+    account: 'aniworld.account',
+    messages: 'aniworld.messages',
+    notifications: 'aniworld.notifications',
+    support: 'aniworld.support.help',
+    watchlist: 'aniworld.watchlist',
+    subscribed: 'aniworld.subscribed',
+    settings: 'aniworld.settings',
+    faq: 'aniworld.support.faq',
+    editinfo: 'aniworld.edit.info',
+    episodeList: 'aniworld.episodeList',
+    browsing: 'aniworld.general.browsing',
+    videoPaused: 'general.paused',
+    videoPlaying: 'general.playing',
+    watchButton: 'aniworld.video.watchButton',
+    home: 'aniworld.home',
+    profile: 'aniworld.profile',
+    searchQuery: 'aniworld.search.query',
+    searchLoading: 'aniworld.search.loading',
+    catalogBrowsing: 'aniworld.catalog.browsing',
+    catalogBrowsingState: 'aniworld.catalog.state',
+    supportQuestionState: 'aniworld.support.questionState',
+    supportViewingQuestion: 'aniworld.support.viewingQuestion',
+    supportQuestion: 'aniworld.support.question',
+    buttonWatchAnime: 'general.playing',
+    buttonWatchEpisode: 'general.buttonViewEpisode',
+    buttonWatchMovie: 'general.buttonWatchMovie',
+    buttonViewProfile: 'general.buttonViewProfile',
+  })
+}
+
+interface StaticPageInfo {
+  details: string
+  smallImageKey?: Assets
+  smallImageText?: string
+  largeImageKey?: string
+  largeImageText?: string
+  state?: string
+  buttons?: { label: string, url: string }[]
+  startTimestamp?: number
+  endTimestamp?: number
+}
+
+let videoData: {
+  currTime?: number
+  duration?: number
+  paused?: boolean
+  title?: string | null
+} | null = null
+
+presence.on('iFrameData', (data: unknown) => {
+  const iframeData = (data as { iframe_video?: any })?.iframe_video
+  if (iframeData) {
+    videoData = {
+      currTime: iframeData.currTime,
+      duration: iframeData.duration,
+      paused: iframeData.paused,
+      title: iframeData.iFrameTitle || null,
+    }
+  }
+})
+
+let oldLang: string | null = null
+let strings: Awaited<ReturnType<typeof getStrings>>
+
+async function getStaticPages(): Promise<{ [key: string]: StaticPageInfo }> {
+  strings = await getStrings()
+
+  return {
+    '/animes': {
+      details: strings.animes,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.animes,
+    },
+    '/beliebte-animes': {
+      details: strings.popular,
+    },
+    '/support/anleitung': {
+      details: strings.guide,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.guide,
+    },
+    '/animekalender': {
+      details: strings.calendar,
+      smallImageKey: Assets.Search,
+      smallImageText: strings.calendar,
+    },
+    '/random': {
+      details: strings.random,
+      smallImageKey: Assets.Search,
+      smallImageText: strings.random,
+    },
+    '/zufall': {
+      details: strings.random,
+      smallImageKey: Assets.Search,
+      smallImageText: strings.random,
+    },
+    '/neu': {
+      details: strings.new,
+      smallImageKey: Assets.Search,
+      smallImageText: strings.new,
+    },
+    '/support/regeln': {
+      details: strings.terms,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.terms,
+    },
+    '/dmca': {
+      details: strings.dmca,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.dmca,
+    },
+    '/animewuensche': {
+      details: strings.wishes,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.wishes,
+    },
+    '/login': {
+      details: strings.login,
+      smallImageKey: Assets.Writing,
+      smallImageText: strings.login,
+    },
+    '/registrierung': {
+      details: strings.registration,
+      smallImageKey: Assets.Writing,
+      smallImageText: strings.registration,
+    },
+    '/account': {
+      details: strings.account,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.account,
+    },
+    '/account/nachrichten': {
+      details: strings.messages,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.messages,
+    },
+    '/account/notifications': {
+      details: strings.notifications,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.notifications,
+    },
+    '/account/support': {
+      details: strings.support,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.support,
+    },
+    '/account/watchlist': {
+      details: strings.watchlist,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.watchlist,
+    },
+    '/account/subscribed': {
+      details: strings.subscribed,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.subscribed,
+    },
+    '/account/settings': {
+      details: strings.settings,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.settings,
+    },
+    '/support/fragen': {
+      details: strings.faq,
+      smallImageKey: Assets.Question,
+      smallImageText: strings.faq,
+    },
+    '/support': {
+      details: strings.support,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.support,
+    },
+    '/edit:information': {
+      details: strings.editinfo,
+      smallImageKey: Assets.Writing,
+      smallImageText: strings.editinfo,
+    },
+  }
+}
 
 presence.on('UpdateData', async () => {
+  strings = await getStrings()
+
+  const [lang, privacyMode, showTitleAsPresence, showCover, showTimestamp] = await Promise.all([
+    presence.getSetting<string>('lang').catch(() => 'en'),
+    presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('showTitleAsPresence'),
+    presence.getSetting<boolean>('showCover'),
+    presence.getSetting<boolean>('timestamp'),
+  ])
+
+  if (oldLang !== lang) {
+    oldLang = lang
+    strings = await getStrings()
+  }
+
   const page = document.location.pathname
-  const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png',
-    startTimestamp: Math.floor(Date.now() / 1000),
+  const staticPages = await getStaticPages()
+
+  if (privacyMode) {
+    await presence.setActivity({
+      details: strings.browsing,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.browsing,
+      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png',
+    })
+    return
   }
-  if (page === '/') {
-    presenceData.details = 'Betrachtet die Startseite'
-  }
-  else if (page.startsWith('/anime/')) {
-    // Check if we are on the episode selection page
+
+  if (page.startsWith('/anime/')) {
+    const animeDataFetcher = new AnimeDataFetcher()
+    const animeData = await animeDataFetcher.getAnimeData()
+    const largeImageKey = showCover
+      ? animeData.coverImg || 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png'
+      : 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png'
+
+    const detailsText = showTitleAsPresence ? animeData.title : 'AniWorld'
+
     if (page.split('/').length === 4) {
-      presenceData.details = document.querySelector<HTMLHeadingElement>('h1')?.textContent
-      presenceData.state = 'Betrachtet die Episodenliste'
+      return presence.setActivity({
+        type: ActivityType.Watching,
+        details: detailsText,
+        state: strings.episodeList,
+        largeImageKey,
+        largeImageText: animeData.title,
+        smallImageKey: Assets.Reading,
+        smallImageText: strings.episodeList,
+        buttons: [{ label: strings.buttonWatchAnime, url: document.location.href }],
+      })
     }
     else {
-      presenceData.details = document.querySelector<HTMLHeadingElement>('h1')?.textContent
-      presenceData.state = `${document
-        .querySelector<HTMLTitleElement>('title')
-        ?.textContent
-        ?.split('Staffel')[0]
-        ?.replace('Filme von', ' ')
-        ?.split(' | AniWorld.to - Animes gratis online ansehen')} - ${
-        document.querySelector<HTMLHeadingElement>('h2')?.textContent
-      }`;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(currentTime, timeEnd)
-      presenceData.buttons = [
-        {
-          label: 'Watch Anime',
-          url: document.location.href,
-        },
-      ]
+      const title = document.querySelector('title')?.textContent ?? ''
+      const heading = document.querySelector('h2')
+      const textWithoutSmall = heading
+        ? Array.from(heading.childNodes)
+            .filter(node => !(node.nodeType === Node.ELEMENT_NODE && (node as Element).matches('small.episodeEnglishTitle')))
+            .map(node => node.textContent ?? '')
+            .join('')
+            .trim()
+        : ''
+      const stateText = [title, textWithoutSmall]
+        .map((t) => {
+          const str = typeof t === 'string' ? t : (t && typeof (t as any).textContent === 'string' ? (t as any).textContent ?? '' : '')
+          return str.replace(/Staffel.*|Episode.*|Filme von| \| AniWorld\.to - Animes gratis online ansehen/g, '').trim()
+        })
+        .filter(Boolean)
+        .join(' - ')
+        .replace(/^-\s*/, '')
 
-      video = document.querySelector<HTMLVideoElement>('video')
-      if (video) {
-        played = video.currentTime !== 0;
-        ({ currentTime, duration: timeEnd, paused } = video)
+      let timestamps: [number, number] = [Math.floor(Date.now() / 1000), Math.floor(Date.now() / 1000)]
+      if (videoData?.currTime != null && videoData?.duration != null) {
+        timestamps = getTimestamps(videoData.currTime, videoData.duration)
       }
-      if (played) {
-        if (!paused) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(currentTime, timeEnd)
-        }
-        presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
-        presenceData.smallImageText = paused ? 'Pausiert' : 'Wiedergabe'
-      }
-    }
-    // Obere Reiter
-  }
-  else {
-    switch (page) {
-      case '/animes':
-      case '/animes-alphabet':
-      case '/animes-genres': {
-        presenceData.details = pages[page]
-        presenceData.state = `Sortiert nach: ${
-          document.querySelector<HTMLSpanElement>(
-            '#wrapper > div.container.marginBottom > div.seriesListNavigation > strong',
-          )?.textContent
-        }`
 
-        break
+      if (videoData?.paused || !videoData) {
+        return presence.setActivity({
+          type: ActivityType.Watching,
+          details: detailsText,
+          state: stateText,
+          largeImageKey,
+          largeImageText: `Season ${animeData.season ?? 'N/A'}, Episode ${animeData.episode ?? 'N/A'}`,
+          smallImageKey: Assets.Pause,
+          smallImageText: strings.videoPaused,
+          buttons: [{ label: strings.buttonWatchAnime, url: document.location.href }],
+        })
       }
-      case '/beliebte-animes': {
-        presenceData.state = `${
-          document
-            .querySelector<HTMLTitleElement>('title')
-            ?.textContent
-            ?.split('|')[0]
-        }`
 
-        break
-      }
-      case '/support/anleitung': {
-        presenceData.details = pages[page]
-        presenceData.state = 'Die Anleitung'
-
-        break
-      }
-      default:
-        if (page.includes('/search')) {
-          presenceData.details = 'Sucht nach:'
-          presenceData.state = `${
-            document.querySelector<HTMLSpanElement>(
-              '#wrapper > div.container > div.pageTitle.searchResultsPageTitle > h2 > strong',
-            )?.textContent
-          }`
-        }
-        else {
-          switch (page) {
-            case '/animekalender': {
-              presenceData.details = pages[page]
-              presenceData.state = `${
-                document.querySelector<HTMLSpanElement>(
-                  '#wrapper > div.container > div.seriesWishListHeader > div.row > div.col-md-4 > small',
-                )?.textContent
-              }`
-
-              break
-            }
-            case '/zufall': {
-              presenceData.details = pages[page]
-              break
-            }
-            case '/random': {
-              presenceData.details = pages[page]
-              break
-            }
-            case '/neu': {
-              presenceData.details = pages[page]
-              break
-            }
-            case '/support/regeln': {
-              presenceData.details = pages[page]
-              break
-            }
-            case '/dmca': {
-              presenceData.details = pages[page]
-              break
-            }
-            case '/animewuensche': {
-              presenceData.details = pages[page]
-              break
-            }
-            case '/login': {
-              presenceData.details = pages[page]
-              break
-            }
-            case '/registrierung': {
-              presenceData.details = pages[page]
-              break
-            }
-            case '/account': {
-              presenceData.details = pages[page]
-              break
-            }
-            default:
-              if (page.startsWith('/user/profil/')) {
-                presenceData.details = 'Betrachtet ein Profil'
-                presenceData.state = `${
-                  document.querySelector<HTMLHeadingElement>('h1')?.textContent
-                }`
-                presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/0.png'
-                presenceData.smallImageText = `${
-                  document.querySelector<HTMLDivElement>(
-                    '#userDetails > div > div > div:nth-child(3) > div',
-                  )?.textContent
-                }`
-              }
-              else {
-                switch (page) {
-                  case '/account/nachrichten': {
-                    presenceData.details = pages[page]
-                    break
-                  }
-                  case '/account/notifications': {
-                    presenceData.details = pages[page]
-                    break
-                  }
-                  case '/account/support': {
-                    presenceData.details = pages[page]
-                    break
-                  }
-                  case '/account/watchlist': {
-                    presenceData.details = pages[page]
-                    break
-                  }
-                  case '/account/subscribed': {
-                    presenceData.details = pages[page]
-                    break
-                  }
-                  case '/account/settings': {
-                    presenceData.details = pages[page]
-                    break
-                  }
-                  default:
-                    if (page.startsWith('/support/fragen')) {
-                      presenceData.details = pages[page]
-                    }
-                    else if (page === '/support') {
-                      presenceData.details = pages[page]
-                    }
-                    else if (page === '/edit:information') {
-                      presenceData.details = pages[page]
-                    }
-                    else if (page.startsWith('/katalog/')) {
-                      presenceData.details = `Betrachtet Animes mit ${
-                        document.querySelector<HTMLSpanElement>(
-                          '#wrapper > div.container.marginBottom > div.pageTitle > h1 > strong',
-                        )?.textContent
-                      }`
-                    }
-                    else if (page.startsWith('/support/frage/')) {
-                      presenceData.details = `Frage von ${
-                        document.querySelector<HTMLHeadingElement>('h5')
-                          ?.textContent
-                      }`
-                      presenceData.state = `${
-                        document.querySelector<HTMLHeadingElement>('h1')
-                          ?.textContent
-                      }`
-                    }
-                    else if (page.startsWith('/genre/')) {
-                      presenceData.details = `Sucht nach ${
-                        document.querySelector<HTMLHeadingElement>(
-                          '#wrapper > div.container.marginBottom > div.seriesListSection > div.pageTitle.pageCenter.homeTitle > h1',
-                        )?.textContent
-                      }`
-                    }
-                    else {
-                      presenceData.details = 'Befindet sich auf einer Unbekannte Seite'
-                    }
-                }
-              }
-          }
-        }
+      return presence.setActivity({
+        type: ActivityType.Watching,
+        name: detailsText,
+        details: detailsText,
+        state: stateText,
+        largeImageKey,
+        largeImageText: `Season ${animeData.season ?? 'N/A'}, Episode ${animeData.episode ?? 'N/A'}`,
+        smallImageKey: Assets.Play,
+        smallImageText: strings.videoPlaying,
+        startTimestamp: showTimestamp ? timestamps[0] : undefined,
+        endTimestamp: showTimestamp ? timestamps[1] : undefined,
+        buttons: [{ label: strings.buttonWatchAnime, url: document.location.href }],
+      })
     }
   }
 
-  if (presenceData.details)
-    presence.setActivity(presenceData)
+  if (page === '/') {
+    await presence.setActivity({
+      details: strings.home,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.home,
+      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png',
+    })
+    return
+  }
+  if (page in staticPages) {
+    const info = staticPages[page]
+    if (info) {
+      const { largeImageText, buttons, ...restPageInfo } = info
+      const activityData: Record<string, unknown> = {
+        ...restPageInfo,
+        largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png',
+      }
+
+      if (buttons && buttons.length > 0) {
+        activityData.buttons = buttons.slice(0, 2) as [typeof buttons[0], typeof buttons[1]?]
+      }
+
+      if (largeImageText) {
+        activityData.largeImageText = largeImageText
+      }
+
+      await presence.setActivity(activityData)
+      return
+    }
+  }
+
+  await presence.setActivity({
+    details: strings.browsing,
+    smallImageKey: Assets.Reading,
+    smallImageText: strings.browsing,
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png',
+  })
 })
