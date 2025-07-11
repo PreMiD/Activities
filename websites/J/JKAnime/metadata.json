@@ -7,7 +7,8 @@
   },
   "service": "JKAnime",
   "description": {
-    "en": "TODO"
+    "en": "JKAnime is an HD anime streaming platform. With subtitles and free from invasive ads!",
+    "es": "JKAnime es una plataforma de streaming para Anime en HD. Con subtítulos y libre de publicidad invasiva!"
   },
   "url": "jkanime.net",
   "version": "1.0.0",
