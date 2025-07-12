@@ -22,7 +22,7 @@ presence.on('UpdateData', async () => {
   const showButtons = await presence.getSetting<boolean>('showButtons')
   const showTimestamp = await presence.getSetting<boolean>('showTimestamp')
 
-  // Language strings
+  // Language strings - corrected implementation
   const strings = await presence.getStrings({
     browsing: 'general.browsing',
     watching: 'general.watching',
@@ -38,7 +38,17 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing Gronkh.tv'
     presenceData.state = strings.homepage || 'Browsing homepage'
     presenceData.startTimestamp = Date.now()
+
+    if (showButtons) {
+      presenceData.buttons = [
+        {
+          label: 'Visit Gronkh.tv',
+          url: href,
+        },
+      ]
+    }
   }
+
   else if (pathname.startsWith('/streams/')) {
     const episodeMatch = pathname.match(/\/streams\/(\d+)/)
     const episodeNumber = episodeMatch ? episodeMatch[1] : null
@@ -102,7 +112,7 @@ presence.on('UpdateData', async () => {
       if (playback) {
         const currentTimeFormatted = currentTimeText || formatTime(currentTime)
         const totalTimeFormatted = totalTimeText || formatTime(currentDuration)
-        const statusText = paused ? strings.paused : strings.watching
+        const statusText = paused ? (strings.paused || 'Paused') : (strings.watching || 'Watching')
         presenceData.state = `${statusText} • ${currentTimeFormatted} / ${totalTimeFormatted}`
 
         if (showTimestamp && !paused) {
@@ -111,30 +121,30 @@ presence.on('UpdateData', async () => {
         }
       }
       else {
-        presenceData.state = paused ? strings.paused : strings.watching
+        presenceData.state = paused ? (strings.paused || 'Paused') : (strings.watching || 'Watching')
       }
 
       if (paused) {
         presenceData.smallImageKey = Assets.Pause
-        presenceData.smallImageText = strings.paused
+        presenceData.smallImageText = strings.paused || 'Paused'
         delete presenceData.startTimestamp
         delete presenceData.endTimestamp
       }
       else if (playback) {
         presenceData.smallImageKey = Assets.Play
-        presenceData.smallImageText = strings.watching
+        presenceData.smallImageText = strings.watching || 'Watching'
       }
     }
     else {
-      presenceData.details = `${videoTitle}${episodeNumber ? ` (${strings.episode} ${episodeNumber})` : ''}`
-      presenceData.state = strings.loading || 'Loading video'
+      presenceData.details = `${videoTitle}${episodeNumber ? ` (${strings.episode || 'Episode'} ${episodeNumber})` : ''}`
+      presenceData.state = 'Loading video'
       presenceData.startTimestamp = Date.now()
     }
 
     if (showButtons) {
       presenceData.buttons = [
         {
-          label: strings.viewVideo || 'Watch Video',
+          label: 'Watch Video',
           url: href,
         },
       ]
@@ -142,7 +152,7 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.startsWith('/streams')) {
     presenceData.details = 'Viewing Gronkh.tv'
-    presenceData.state = strings.streams || 'Browsing streams'
+    presenceData.state = strings.browsing || 'Browsing streams'
     presenceData.startTimestamp = Date.now()
 
     if (showButtons) {
