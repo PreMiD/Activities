@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/Ht9axHi.jpeg',
+  Logo = 'https://i.imgur.com/6iiBTYz.jpeg',
 }
 
 let currentTime: number,
