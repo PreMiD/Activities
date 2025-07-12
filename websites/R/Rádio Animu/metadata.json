@@ -34,5 +34,5 @@
     "moe"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*"
+  "iFrameRegExp": "player\\.animu\\.moe"
 }
