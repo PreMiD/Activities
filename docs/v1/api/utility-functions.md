@@ -119,11 +119,6 @@ These utility functions are particularly useful for media-related activities, wh
 ```typescript
 import { getTimestampsFromMedia, Assets } from 'premid'
 
-// Define your activity assets
-const ActivityAssets = {
-  Logo: 'logo' // This would be your activity's logo asset ID
-}
-
 const presence = new Presence({
   clientId: '123456789012345678'
 })
@@ -131,7 +126,7 @@ const presence = new Presence({
 presence.on('UpdateData', async () => {
   const video = document.querySelector('video')
   const presenceData: PresenceData = {
-    largeImageKey: ActivityAssets.Logo
+    largeImageKey: 'https://example.com/logo.png'
   }
 
   if (video && video.readyState > 0) {

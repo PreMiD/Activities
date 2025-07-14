@@ -190,7 +190,7 @@ The `settings` field is an array of settings that users can customize. Each sett
   "title": "Show Buttons",
   "icon": "fas fa-compress-arrows-alt",
   "value": true,
-  "description": "Display buttons in the Discord Rich Presence"
+  "description": "Display buttons in the Discord Activity"
 }
 ```
 
@@ -244,7 +244,7 @@ Currently, settings only support string descriptions. Multi-language description
   "title": "Show Buttons",
   "icon": "fas fa-compress-arrows-alt",
   "value": true,
-  "description": "Display buttons in the Discord Rich Presence"
+  "description": "Display buttons in the Discord Activity"
 }
 ```
 
@@ -263,7 +263,7 @@ Currently, settings only support string descriptions. Multi-language description
 
 **Examples:**
 - ✅ Good: "Show elapsed time since the activity started"
-- ✅ Good: "Display interactive buttons in Discord Rich Presence"
+- ✅ Good: "Display interactive buttons in Discord Activity"
 - ❌ Poor: "Timestamp setting"
 - ❌ Poor: "Buttons"
 
@@ -321,7 +321,7 @@ Here's a complete example of a `metadata.json` file with all possible fields:
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
       "value": true,
-      "description": "Display buttons in the Discord Rich Presence"
+      "description": "Display buttons in the Discord Activity"
     },
     {
       "id": "showTimestamp",

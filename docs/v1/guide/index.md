@@ -1,6 +1,6 @@
 # Introduction to Activity Development
 
-Welcome to the PreMiD Activity Development guide! This documentation will help you learn how to create activities for PreMiD, which allow users to share what they're doing on the web through Discord's Rich Presence feature.
+Welcome to the PreMiD Activity Development guide! This documentation will help you learn how to create activities for PreMiD, which allow users to share what they're doing on the web through Discord's Activity feature.
 
 ## What is an Activity?
 

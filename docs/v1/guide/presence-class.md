@@ -12,7 +12,7 @@ const presence = new Presence({
 })
 ```
 
-The client ID is automatically generated when you create a new activity using the PreMiD CLI.
+The client ID is not automatically generated. You must obtain your own client ID from Discord's Developer Portal and enter it yourself.
 
 ## The UpdateData Event
 
@@ -47,8 +47,8 @@ The `PresenceData` object can have the following properties:
 
 | Property         | Type           | Description                                                                                            |
 | ---------------- | -------------- | ------------------------------------------------------------------------------------------------------ |
-| `details`        | `string`       | The first line of the presence                                                                         |
-| `state`          | `string`       | The second line of the presence                                                                        |
+| `details`        | `string`       | The first line of the activity                                                                         |
+| `state`          | `string`       | The second line of the activity                                                                        |
 | `startTimestamp` | `number`       | The time when the activity started (Unix timestamp in milliseconds)                                    |
 | `endTimestamp`   | `number`       | The time when the activity will end (Unix timestamp in milliseconds)                                   |
 | `largeImageKey`  | `string`       | The key of the large image. Preferably a direct URL to an image (e.g., `https://example.com/logo.png`) |
@@ -75,9 +75,9 @@ The available activity types are:
 | `ActivityType.Competing` | Shows as "Competing in [name]" |
 
 ::: tip Special Season and Episode Formatting
-When using `ActivityType.Watching`, you can display a special season and episode indicator by setting the `largeImageText` property to follow the pattern "word digit, digit". For example: `"Season 2, Episode 5"`. Discord will display this as "S2E5" in the activity.
+When using `ActivityType.Watching`, you can display a special season and episode indicator by setting the `largeImageText` property to follow the pattern "word digit, digit". For example: `"Season 2, Episode 5"`. Discord will automatically detect this pattern and display it as "S2E5" in the activity.
 
-The pattern can use any word, but must follow the structure: word, space, digit, comma, space, digit. Discord will convert this to "SxEy" format automatically.
+The pattern must follow the exact structure: word, space, digit, comma, space, digit. Discord will automatically convert this to "SxEy" format regardless of what word you use.
 
 See the [PresenceData documentation](/v1/api/presence-data#special-season-and-episode-formatting) for more details.
 :::
@@ -130,7 +130,8 @@ You can also use the `getTimestampsFromMedia` utility function to calculate time
 import { getTimestampsFromMedia } from 'premid'
 
 const video = document.querySelector('video')
-  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+
+[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 ```
 
 ## Clearing Activity
@@ -169,22 +170,29 @@ presence.on('UpdateData', async () => {
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png',
-    details: 'Browsing Example.com'
+    largeImageKey: 'https://example.com/logo.png'
   }
 
-  // Update the state based on the current page
+  // Only show activity on public pages, not private/sensitive ones
   if (path === '/') {
+    presenceData.details = 'Browsing Example.com'
     presenceData.state = 'Homepage'
   }
   else if (path.includes('/about')) {
-    presenceData.state = 'Reading about us'
+    presenceData.details = 'Reading about Example.com'
+    presenceData.state = 'About page'
   }
   else if (path.includes('/contact')) {
-    presenceData.state = 'Contacting us'
+    presenceData.details = 'Contacting Example.com'
+    presenceData.state = 'Contact page'
+  }
+  else if (path.includes('/login') || path.includes('/signup') || path.includes('/account')) {
+    // Don't show activity on private/login pages for privacy
+    // details will remain undefined
   }
   else {
-    presenceData.state = 'Browsing'
+    presenceData.details = 'Browsing Example.com'
+    presenceData.state = 'Exploring'
   }
 
   // Add timestamp if enabled

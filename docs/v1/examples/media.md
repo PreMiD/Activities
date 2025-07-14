@@ -39,13 +39,7 @@ A media activity consists of two files:
 ```typescript
 import { Assets, getTimestampsFromMedia } from 'premid'
 
-// Define custom assets enum
-enum ActivityAssets {
-  Logo = 'https://i.imgur.com/XXXXXXX.png', // Will be replaced with CDN URL after review
-  Play = 'https://i.imgur.com/YYYYYYY.png',
-  Pause = 'https://i.imgur.com/ZZZZZZZ.png',
-  Live = 'https://i.imgur.com/WWWWWWW.png'
-}
+// Use direct URLs for image assets
 
 const presence = new Presence({
   clientId: 'your_client_id'
@@ -60,7 +54,7 @@ presence.on('UpdateData', async () => {
   const { pathname, hostname, href } = document.location
 
   const presenceData: PresenceData = {
-    largeImageKey: ActivityAssets.Logo
+    largeImageKey: 'https://example.com/logo.png'
   }
 
   // Get the video element
@@ -139,12 +133,12 @@ presence.on('UpdateData', async () => {
 ## How It Works
 
 1. We import the `getTimestampsFromMedia` and `Assets` from the `premid` package.
-2. We define an `ActivityAssets` enum for custom assets used in our activity.
+2. We use direct URLs for image assets instead of enum constants.
 3. We create a new `Presence` instance with a client ID.
 4. We initialize a `browsingTimestamp` variable outside the UpdateData event to maintain consistent timing.
 5. We listen for the `UpdateData` event, which is fired regularly by the PreMiD extension.
 6. We use destructuring to access document.location properties: `const { pathname, hostname, href } = document.location`.
-7. We create a `PresenceData` object with a `largeImageKey` property using our ActivityAssets enum.
+7. We create a `PresenceData` object with a `largeImageKey` property using a direct URL.
 8. We get the video element using `document.querySelector("video")`.
 9. If a video is found and it's ready to play:
    - We get the video title and author from the page.
