@@ -178,6 +178,7 @@ The `settings` field is an array of settings that users can customize. Each sett
 | `placeholder`   | String                | Placeholder text for string settings      |
 | `if`            | Object                | Conditions for the setting to appear      |
 | `multiLanguage` | Boolean               | Use strings from localization files       |
+| `description`   | String                | Description of the setting (schema v1.0.9+) |
 
 #### Boolean Setting Example
 
@@ -186,7 +187,8 @@ The `settings` field is an array of settings that users can customize. Each sett
   "id": "showButtons",
   "title": "Show Buttons",
   "icon": "fas fa-compress-arrows-alt",
-  "value": true
+  "value": true,
+  "description": "Display buttons in the Discord Rich Presence"
 }
 ```
 
@@ -198,7 +200,8 @@ The `settings` field is an array of settings that users can customize. Each sett
   "title": "Display Format",
   "icon": "fas fa-paragraph",
   "value": 0,
-  "values": ["Title", "Title - Artist", "Artist - Title"]
+  "values": ["Title", "Title - Artist", "Artist - Title"],
+  "description": "Choose how to display the title and artist information"
 }
 ```
 
@@ -210,6 +213,7 @@ The `settings` field is an array of settings that users can customize. Each sett
   "title": "Show Timestamp",
   "icon": "fas fa-clock",
   "value": true,
+  "description": "Display timestamp information in the presence",
   "if": {
     "showButtons": true
   }
@@ -222,6 +226,23 @@ The `settings` field is an array of settings that users can customize. Each sett
 {
   "id": "showButtons",
   "multiLanguage": true
+}
+```
+
+#### Description Property (v1.0.9+)
+
+Starting with metadata schema version 1.0.9, every setting supports an optional `description` property that provides additional context about the setting. The description will be displayed in the extension starting from version 2.8.0 and upwards. While descriptions are not required, they are highly encouraged. Some settings where the title already provides enough context may not require this property.
+
+Currently, settings only support string descriptions. Multi-language descriptions for settings will be added later.
+
+**String Description Example:**
+```json
+{
+  "id": "showButtons",
+  "title": "Show Buttons",
+  "icon": "fas fa-compress-arrows-alt",
+  "value": true,
+  "description": "Display buttons in the Discord Rich Presence"
 }
 ```
 
@@ -281,13 +302,15 @@ Here's a complete example of a `metadata.json` file with all possible fields:
       "id": "showButtons",
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
-      "value": true
+      "value": true,
+      "description": "Display buttons in the Discord Rich Presence"
     },
     {
       "id": "showTimestamp",
       "title": "Show Timestamp",
       "icon": "fas fa-clock",
       "value": true,
+      "description": "Display timestamp information in the presence",
       "if": {
         "showButtons": true
       }
@@ -297,7 +320,8 @@ Here's a complete example of a `metadata.json` file with all possible fields:
       "title": "Button Type",
       "icon": "fas fa-mouse-pointer",
       "value": 0,
-      "values": ["View Page", "Visit Website", "Read More"]
+      "values": ["View Page", "Visit Website", "Read More"],
+      "description": "Choose the type of button to display"
     }
   ]
 }
