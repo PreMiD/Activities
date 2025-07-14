@@ -25,7 +25,7 @@ Do not use `npm run dev` to create a new activity. That command is for developin
    - Enter tags for the activity (comma-separated)
    - Select the category that best fits the website
 
-![CLI Creating New Activity](https://placehold.co/800x400?text=CLI+Creating+New+Activity)
+![CLI Creating New Activity](/tapes/create-activity.gif)
 
 3. The CLI will create a new directory for your activity with the necessary files:
    - `metadata.json`: Contains information about the activity
@@ -46,7 +46,7 @@ npx pmd dev "YourActivityName"
 
 This will start the development server and automatically reload your activity when you make changes to the code.
 
-![Development Process with Hot Reload](https://placehold.co/800x400?text=Development+Process+with+Hot+Reload)
+![Development Process with Hot Reload](/tapes/developing-activity.gif)
 
 ## Understanding the Files
 
