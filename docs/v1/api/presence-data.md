@@ -1,6 +1,6 @@
 # PresenceData Interface
 
-The `PresenceData` interface defines the structure of the data that is sent to Discord to display in the user's status. It allows you to customize what information is shown in the Discord Rich Presence.
+The `PresenceData` interface defines the structure of the data that is sent to Discord to display in the user's status. It allows you to customize what information is shown in the Discord Activity.
 
 ## Structure
 
@@ -101,7 +101,7 @@ presenceData.type = ActivityType.Watching
 presenceData.largeImageText = 'Season 2, Episode 5'
 ```
 
-The important part is the pattern: any word, followed by a space, followed by a digit, followed by a comma and space, followed by another digit. While you can use "Season 2, Episode 5" as shown above, the actual word doesn't matter - Discord only looks for the pattern and will convert it to "S2E5" format in the display.
+The important part is the pattern: any word, followed by a space, followed by a digit, followed by a comma and space, followed by another digit. While you can use "Season 2, Episode 5" as shown above, the actual word doesn't matter - Discord automatically detects this pattern and converts it to "S2E5" format in the display.
 
 This special formatting only works when the activity type is set to `ActivityType.Watching`.
 

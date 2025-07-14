@@ -135,7 +135,7 @@ The `logo` and `thumbnail` fields contain links to the service's logo and thumbn
 }
 ```
 
-**Logo**: A square image that represents the service. This will be displayed in the Discord Rich Presence small image and in the PreMiD store.
+**Logo**: A square image that represents the service. This will be displayed in the Discord Activity small image and in the PreMiD store.
 
 **Thumbnail**: A wider image (16:9 recommended) that showcases the service. This will be displayed in the PreMiD store.
 
@@ -188,7 +188,7 @@ The `settings` field is an array of settings that users can customize. Each sett
   "title": "Show Buttons",
   "icon": "fas fa-compress-arrows-alt",
   "value": true,
-  "description": "Display buttons in the Discord Rich Presence"
+  "description": "Display buttons in the Discord Activity"
 }
 ```
 
@@ -242,7 +242,7 @@ Currently, settings only support string descriptions. Multi-language description
   "title": "Show Buttons",
   "icon": "fas fa-compress-arrows-alt",
   "value": true,
-  "description": "Display buttons in the Discord Rich Presence"
+  "description": "Display buttons in the Discord Activity"
 }
 ```
 
@@ -261,7 +261,7 @@ Currently, settings only support string descriptions. Multi-language description
 
 **Examples:**
 - ✅ Good: "Show elapsed time since the activity started"
-- ✅ Good: "Display interactive buttons in Discord Rich Presence"
+- ✅ Good: "Display interactive buttons in Discord Activity"
 - ❌ Poor: "Timestamp setting"
 - ❌ Poor: "Buttons"
 
@@ -314,15 +314,13 @@ Here's a complete example of a `metadata.json` file with all possible fields:
   "color": "#FF0000",
   "category": "other",
   "tags": ["example", "sample", "demo"],
-  "iframe": false,
-  "readLogs": false,
   "settings": [
     {
       "id": "showButtons",
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
       "value": true,
-      "description": "Display buttons in the Discord Rich Presence"
+      "description": "Display buttons in the Discord Activity"
     },
     {
       "id": "showTimestamp",
@@ -355,7 +353,8 @@ Here's a complete example of a `metadata.json` file with all possible fields:
 5. **Follow semantic versioning**: Use the MAJOR.MINOR.PATCH format for versioning.
 6. **Keep settings simple**: Only add settings that are useful for users.
 7. **Test your regular expressions**: Make sure your regular expressions correctly match the URLs you want to support.
-8. **Follow the guidelines**: Make sure your metadata follows our [Guidelines](/v1/guide/guidelines#metadata-requirements) for service naming, tags, and other requirements.
+8. **Omit false values**: Boolean fields that are `false` (like `iframe`, `readLogs`, etc.) should be omitted from the metadata.json file rather than explicitly set to false.
+9. **Follow the guidelines**: Make sure your metadata follows our [Guidelines](/v1/guide/guidelines#metadata-requirements) for service naming, tags, and other requirements.
 
 ## Next Steps
 

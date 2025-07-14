@@ -32,8 +32,8 @@ Do not use `npm run dev` to create a new activity. That command is for developin
    - `presence.ts`: The main activity code
    - `tsconfig.json`: TypeScript configuration file
 
-::: tip Image Assets
-For `largeImageKey` and `smallImageKey`, we recommend using direct URLs to images (e.g., `https://example.com/logo.png`) rather than asset names. This ensures your images are always accessible and simplifies the development process.
+::: tip Image Assets (Required)
+For `largeImageKey` and `smallImageKey`, we **require** using direct URLs to images (e.g., `https://example.com/logo.png`) rather than asset names. This ensures your images are always accessible and simplifies the development process.
 :::
 
 ### Developing Your Activity
@@ -104,7 +104,7 @@ Now, let's modify the `presence.ts` file to create a simple activity:
 
 ```typescript
 const presence = new Presence({
-  clientId: 'your_client_id' // This will be filled in by the CLI
+  clientId: 'your_client_id' // You must enter this yourself
 })
 
 presence.on('UpdateData', async () => {
