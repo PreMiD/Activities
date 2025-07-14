@@ -12,7 +12,8 @@ Enter
 
 # Pause for dramatic effect...
 Wait+Screen /Discord ID/
-Sleep 1s
+Type '223238938716798978'
+Sleep 500ms
 
 # Run the command by pressing enter.
 Enter
