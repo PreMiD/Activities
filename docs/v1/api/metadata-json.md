@@ -215,7 +215,7 @@ The `settings` field is an array of settings that users can customize. Each sett
   "title": "Show Timestamp",
   "icon": "fas fa-clock",
   "value": true,
-  "description": "Display timestamp information in the presence",
+  "description": "Show elapsed time since the activity started",
   "if": {
     "showButtons": true
   }
@@ -252,6 +252,20 @@ Currently, settings only support string descriptions. Multi-language description
 - Metadata schema v1.0.9+: Description property is supported
 - Extension v2.8.0+: Description is displayed in the settings UI
 - Earlier versions: Description property is ignored
+
+**Best Practices for Descriptions:**
+- Keep descriptions concise (under 100 characters recommended)
+- Use clear, action-oriented language
+- Explain what the setting does, not just what it is
+- Consider what users need to know to make an informed choice
+- Use consistent tone and terminology across all settings
+- Test descriptions with users who are unfamiliar with the feature
+
+**Examples:**
+- ✅ Good: "Show elapsed time since the activity started"
+- ✅ Good: "Display interactive buttons in Discord Rich Presence"
+- ❌ Poor: "Timestamp setting"
+- ❌ Poor: "Buttons"
 
 ## Regular Expressions
 
@@ -314,7 +328,7 @@ Here's a complete example of a `metadata.json` file with all possible fields:
       "title": "Show Timestamp",
       "icon": "fas fa-clock",
       "value": true,
-      "description": "Display timestamp information in the presence",
+      "description": "Show elapsed time since the activity started",
       "if": {
         "showButtons": true
       }
