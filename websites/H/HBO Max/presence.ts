@@ -1,13 +1,13 @@
 import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1256196660657393714',
+  clientId: '1394513095367463043',
 })
 
 let isFetching = false
 
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/M/Max/assets/logo.png',
+  Logo = 'https://i.imgur.com/emhftkc.jpeg',
 }
 
 let fetchedInfo: {
@@ -54,7 +54,7 @@ async function fetchPageInfo() {
 
   try {
     fetchedInfo = await fetch(
-      `https://default.any-amer.prd.api.max.com/cms/routes${pathname}?include=default&page[items.size]=10`,
+      `https://default.any-amer.prd.api.hbomax.com/cms/routes${pathname}?include=default&page[items.size]=10`,
       {
         method: 'GET',
         credentials: 'include',
