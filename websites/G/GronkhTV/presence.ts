@@ -168,15 +168,6 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing Gronkh.tv'
     presenceData.state = strings.browsing || 'Browsing'
     presenceData.startTimestamp = Date.now()
-
-    if (showButtons) {
-      presenceData.buttons = [
-        {
-          label: 'Visit Gronkh.tv',
-          url: href,
-        },
-      ]
-    }
   }
 
   presence.setActivity(presenceData)
