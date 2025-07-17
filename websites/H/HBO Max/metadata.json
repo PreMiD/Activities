@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Slowlife",
+    "id": "374905512661221377"
+  },
+  "contributors": [
+    {
+      "name": "entraptaa",
+      "id": "153980822670671872"
+    }
+  ],
+  "service": "HBO Max",
+  "description": {
+    "en": "The streaming platform with a personalized user experience that brings unique and unexpected stories ranging from the highest quality in scripted programming to the best of unscripted, family-friendly content, the HBO service, HBO Max Originals and more."
+  },
+  "url": "play.hbomax.com",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20Max/assets/logo.jpeg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20Max/assets/thumbnail.jpeg",
+  "color": "#0014a4",
+  "category": "videos",
+  "tags": [
+    "originals",
+    "streaming-platform",
+    "hulu-bundle"
+  ],
+  "settings": [
+    {
+      "id": "cover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "usePresenceName",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": true
+    }
+  ]
+}

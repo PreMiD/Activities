@@ -21,8 +21,8 @@
     "nl": "De meest moe radio in Brazilië",
     "pt-br": "A rádio mais moe do Brasil"
   },
-  "url": "www.animu.com.br",
-  "version": "1.2.37",
+  "url": "www.animu.moe",
+  "version": "1.2.38",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/R%C3%A1dio%20Animu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/R%C3%A1dio%20Animu/assets/thumbnail.png",
   "color": "#2c004b",
@@ -34,5 +34,5 @@
     "moe"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*"
+  "iFrameRegExp": "player\\.animu\\.moe"
 }
