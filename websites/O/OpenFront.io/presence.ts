@@ -59,7 +59,8 @@ presence.on('UpdateData', async () => {
 
       observer.observe(targetDiv, { childList: true, subtree: true, characterData: true })
     }
-  } else {
+  }
+  else {
     isInGame = false
     gameStartTimestamp = null
 
