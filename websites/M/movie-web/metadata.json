@@ -15,14 +15,12 @@
   },
   "url": [
     "pstream.mov",
-    "pseudo-flix.pro",
-    "mw.lonelil.com",
-    "mw.lonelil.ru",
+    "beta.pstream.mov",
+    "mirror.pstream.mov",
     "movies.levrx.de",
     "streamerflix.xyz",
     "streamwatch.online",
     "movies.samj.app",
-    "movie-site.tech",
     "sudo-flix.nl"
   ],
   "regExp": "(dev[.])?(movie-web[.]app)",
