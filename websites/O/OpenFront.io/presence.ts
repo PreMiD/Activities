@@ -28,7 +28,7 @@ presence.on('UpdateData', async () => {
     presence.setActivity({
       largeImageKey: ActivityAssets.Logo,
       smallImageKey: Assets.Search,
-      details: 'Waiting for players...',
+      details: 'Loading players...',
     })
 
     const targetDiv = document.querySelector('div.w-15.h-8.lg\\:w-24.lg\\:h-10')
