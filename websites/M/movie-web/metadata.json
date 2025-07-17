@@ -14,11 +14,11 @@
     "en": "The place for your favorite movies & shows"
   },
   "url": [
-    "pstream.org",
-    "mirror.pstream.org",
-    "beta.pstream.org",
-    "nostalgia.pstream.org",
-    "iframe.pstream.org",
+    "pstream.mov",
+    "mirror.pstream.mov",
+    "beta.pstream.mov",
+    "nostalgia.pstream.mov",
+    "iframe.pstream.mov",
     "pseudo-flix.pro",
     "mw.lonelil.com",
     "mw.lonelil.ru",
@@ -27,7 +27,8 @@
     "streamwatch.online",
     "movies.samj.app",
     "movie-site.tech",
-    "sudo-flix.nl"
+    "sudo-flix.nl",
+    "film.kace.dev"
   ],
   "regExp": "(dev[.])?(movie-web[.]app)",
   "version": "1.2.0",
