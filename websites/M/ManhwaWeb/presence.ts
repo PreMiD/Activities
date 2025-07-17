@@ -84,24 +84,15 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = strings.reading
 
-    const firstImage = document.querySelector<HTMLImageElement>('img.w-full, img.w-7\\/12')?.src
-
-    presenceData.largeImageKey = !privacy && showCover
-      ? firstImage ?? ActivityAssets.Logo
-      : ActivityAssets.Logo
+    presenceData.largeImageKey = ActivityAssets.Logo
 
   } else if (pathname.startsWith('/profile')) {
     const username = document.querySelector<HTMLDivElement>(
       "div.text-md, .xs\\:text-2xl, .sm\\:text-3xl, .md\\:text-4xl.font-semibold"
     )?.textContent?.trim()
 
-    const avatarImg = document.querySelector<HTMLImageElement>(
-      "img.object-cover.rounded-md.border-bronce"
-    )
-    const avatarUrl = avatarImg?.src
-
     presenceData.details = `${'Viendo perfil:'} ${username ?? 'Usuario desconocido'}`
-    presenceData.largeImageKey = avatarUrl ?? ActivityAssets.Logo
+    presenceData.largeImageKey = ActivityAssets.Logo
 
   } else if (pathname.startsWith('/mis-manhwas')) {
     presenceData.details = strings.library
