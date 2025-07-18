@@ -15,6 +15,14 @@
     "message": "View Enemy",
     "description": "Button to view Enemy information"
   },
+  "mygamatoto.viewStage": {
+    "message": "Viewing a Stage",
+    "description": "Viewing details about a game stage/level"
+  },
+  "mygamatoto.buttonViewStage": {
+    "message": "View Stage",
+    "description": "Button to view Stage information"
+  },
   "mygamatoto.compareCat": {
     "message": "Comparing Cats",
     "description": "Viewing a customized list of cats"

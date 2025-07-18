@@ -149,10 +149,12 @@ presence.on('UpdateData', async () => {
     buttonViewCat: 'mygamatoto.buttonViewCat',
     buttonViewComparison: 'mygamatoto.buttonViewComparison',
     buttonViewEnemy: 'mygamatoto.buttonViewEnemy',
+    buttonViewStage: 'mygamatoto.buttonViewStage',
     compareCat: 'mygamatoto.compareCat',
     viewCat: 'mygamatoto.viewCat',
     viewEnemy: 'mygamatoto.viewEnemy',
     viewList: 'general.viewList',
+    viewStage: 'mygamatoto.viewStage',
   })
 
   switch (pathList[0]) {
@@ -203,6 +205,12 @@ presence.on('UpdateData', async () => {
       else {
         useSlideshow = false
       }
+      break
+    }
+    case 'stageinfo': {
+      presenceData.details = strings.viewStage
+      presenceData.state = document.querySelector<HTMLDivElement>('.ant-descriptions-title')
+      presenceData.buttons = [{ label: strings.buttonViewStage, url: href }]
       break
     }
     default: {
