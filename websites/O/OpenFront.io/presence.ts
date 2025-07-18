@@ -12,7 +12,7 @@ let isInGame = false
 let gameStartTimestamp: number | null = null
 
 presence.on('UpdateData', async () => {
-  const path = window.location.pathname.toLowerCase()
+  const path = document.location.pathname.toLowerCase()
 
   if (path.includes('/join/')) {
     if (isInGame && gameStartTimestamp !== null) {
