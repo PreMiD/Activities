@@ -28,12 +28,73 @@ function registerSlideshowKey(inputKey?: string): boolean {
   return false
 }
 
-function addStatSlides(card: HTMLDivElement, presenceData: PresenceData) {
+function sleep(seconds: number): Promise<void> {
+  return new Promise((res) => {
+    setTimeout(res, seconds * 1000)
+  })
+}
+
+const imageCache: Record<string, Promise<Blob | string>> = {}
+function squareImage(image: HTMLImageElement): Promise<Blob | string> {
+  const { src, complete } = image
+  const newImage = document.createElement('img')
+  newImage.crossOrigin = 'anonymous'
+  newImage.src = src
+  if (src in imageCache)
+    return imageCache[src]!
+  const render = async () => {
+    while (true) {
+      const { naturalHeight: height, naturalWidth: width, complete } = newImage
+      if (!complete) {
+        await sleep(1)
+        continue
+      }
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')!
+      canvas.width = width
+      canvas.height = height
+      if (width > height)
+        canvas.height = width
+      if (height > width)
+        canvas.width = height
+      if (width === height) {
+        imageCache[src] = Promise.resolve(src)
+        return imageCache[src]
+      }
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.drawImage(
+        newImage,
+        (canvas.width - width) / 2,
+        (canvas.height - height) / 2,
+      )
+      const output = new Promise<Blob>((resolve) => {
+        canvas.toBlob((blob) => {
+          resolve(blob!)
+        })
+      })
+      imageCache[src] = output
+      return output
+    }
+  }
+  if (!complete) {
+    return new Promise((resolve) => {
+      newImage.onload = () => {
+        resolve(render())
+      }
+    })
+  }
+  return render()
+}
+
+async function addStatSlides(card: HTMLDivElement, presenceData: PresenceData) {
   const thumbnail = card.querySelector<HTMLImageElement>('.ant-card-head-title img')
-  const name = card.querySelector<HTMLHeadingElement>('.ant-card-head-title h3')
+  const name = card.querySelector<HTMLHeadingElement>('.ant-card-head-title h3')?.firstChild
   const description = card.querySelector<HTMLDivElement>('.ant-card-grid > .ant-card-grid:last-child')
   const levelInput = card.querySelector('input')
   const stats: HTMLDivElement[] = []
+
+  if ((name?.textContent?.trim() ?? '') === '')
+    return
 
   let currentItem = levelInput?.closest('.ant-card-grid')?.nextElementSibling
   while (currentItem && currentItem?.querySelector('hr') === null) {
@@ -41,8 +102,8 @@ function addStatSlides(card: HTMLDivElement, presenceData: PresenceData) {
     currentItem = currentItem.nextElementSibling
   }
 
-  const data: PresenceData = structuredClone(presenceData)
-  data.largeImageKey = thumbnail
+  const data: PresenceData = cloneData(presenceData)
+  data.largeImageKey = thumbnail ? await squareImage(thumbnail) : ActivityAssets.Logo
   data.state = `${name?.textContent} - LV${levelInput?.value}`
   data.smallImageKey = Assets.Question
   for (const stat of stats) {
@@ -53,12 +114,20 @@ function addStatSlides(card: HTMLDivElement, presenceData: PresenceData) {
         statText += node.textContent
       }
     }
-    const subData = structuredClone(data)
+    const subData = cloneData(data)
     subData.smallImageText = `${statName?.textContent}: ${statText}`
     slideshow.addSlide(`${name?.textContent}-${statName?.textContent}`, subData, MIN_SLIDE_TIME)
   }
   data.smallImageText = description
   slideshow.addSlide(`${name?.textContent}-description`, data, MIN_SLIDE_TIME)
+}
+
+function cloneData(data: PresenceData): PresenceData {
+  const newData = { ...data }
+  if (data.buttons) {
+    newData.buttons = [...data.buttons]
+  }
+  return newData
 }
 
 presence.on('UpdateData', async () => {
@@ -103,7 +172,7 @@ presence.on('UpdateData', async () => {
       for (const row of rows) {
         const link = row.querySelector('a')
         const image = link?.querySelector('img')
-        const data = structuredClone(presenceData)
+        const data = cloneData(presenceData)
         data.buttons?.push({ label: strings.buttonViewCat, url: link })
         data.state = image?.alt
         data.smallImageKey = image
@@ -118,7 +187,7 @@ presence.on('UpdateData', async () => {
       const catEvolutions = document.querySelectorAll<HTMLDivElement>('.ant-card')
       registerSlideshowKey()
       for (const evolutionCard of catEvolutions) {
-        addStatSlides(evolutionCard, presenceData)
+        await addStatSlides(evolutionCard, presenceData)
       }
       break
     }
@@ -129,7 +198,7 @@ presence.on('UpdateData', async () => {
       registerSlideshowKey()
       const card = document.querySelector<HTMLDivElement>('.ant-card')
       if (card) {
-        addStatSlides(card, presenceData)
+        await addStatSlides(card, presenceData)
       }
       else {
         useSlideshow = false
@@ -141,15 +210,18 @@ presence.on('UpdateData', async () => {
         presenceData.details = strings.viewList
         presenceData.state = document.querySelector('h2')
         registerSlideshowKey()
+        useSlideshow = true
         const rows = document.querySelector<HTMLDivElement>('h3+.ant-table-wrapper')
           ?.querySelectorAll<HTMLTableRowElement>('.ant-table-body > table > tbody tr')
         for (const row of rows ?? []) {
           const link = row.querySelector('a')
           const image = link?.querySelector('img')
-          const data = structuredClone(presenceData)
+          const data = cloneData(presenceData)
           data.buttons?.push({ label: strings.buttonViewCat, url: link })
-          data.state = image?.alt
-          data.smallImageKey = image
+          data.smallImageText = image?.alt
+          if (image) {
+            data.smallImageKey = await squareImage(image)
+          }
           slideshow.addSlide(`${image?.alt}`, data, MIN_SLIDE_TIME)
         }
       }
