@@ -44,7 +44,7 @@ async function getEpisodeInfo(text: string) {
   const nombreAnime = tituloCompleto?.replace(/Season\s*\d+/i, '').trim() || ''
   const season = seasonMatch ? `Season ${seasonMatch[1]}` : 'Season 1'
 
-  const bannerElement = document.querySelector('body > div.page-content > section > div > div.row.pb-1.justify-content-start > div.col-lg-9.col-12.player_normal > div.video-info.pc.mb-5 > div > div.video_t > a > img')
+  const bannerElement = document.querySelector('div.video_t > a > img')
   const bannerImg = bannerElement?.getAttribute('src') || ActivityAssets.Gif
 
   cache = {
@@ -209,7 +209,7 @@ presence.on('UpdateData', async () => {
     const animeTitle = pathname.split('/')[1] || ''
 
     if (animeTitle) {
-      const title = document.querySelector('body > div.page-content > section > div > div.anime__details__content > div.row > div.col-lg-10 > div.anime_info > h3')?.textContent
+      const title = document.querySelector('div.anime_info > h3')?.textContent
 
       presenceData.details = 'Viendo Descripción'
       presenceData.state = `Leyendo sobre: ${title}`
