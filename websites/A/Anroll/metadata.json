@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.9",
+  "author": {
+    "name": "Nestz",
+    "id": "753271371781374074"
+  },
+  "service": "Anroll",
+  "description": {
+    "en": "Anime and manga streaming platform",
+    "pt_BR": "Plataforma de streaming de animes e mangás"
+  },
+  "url": "www.anroll.net",
+  "version": "1.0.1",
+  "logo": "https://static.anroll.net/app-images/login_cad.png",
+  "thumbnail": "https://www.anroll.net/_next/image?url=https://static.anroll.net/app-images/wallpaper_bg_black.jpg",
+  "color": "#6A5ACD",
+  "tags": ["anime", "manga", "streaming", "brazil"],
+  "category": "anime",
+  "regExp": "([a-z0-9-]+[.])*anroll[.]net[/]",
+  "iframe": false,
+  "iFrameRegExp": ""
+}

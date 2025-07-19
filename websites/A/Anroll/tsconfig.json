@@ -1,0 +1,6 @@
+{
+  "extends": "@premid/tsconfig",
+  "compilerOptions": {
+    "outDir": "dist"
+  }
+}
