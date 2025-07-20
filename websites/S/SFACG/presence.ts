@@ -57,6 +57,43 @@ function decodeSearchKey(str: string) {
   }
 }
 
+function extractNovelIdFromPath(path: string): string | null {
+  const match = path.match(/^\/Novel\/(\d+)/)
+  return match?.[1] || null
+}
+
+async function fetchOutlinePage(novelId: string): Promise<string | null> {
+  const url = `https://book.sfacg.com/Novel/${novelId}/`
+  try {
+    const res = await fetch(url)
+    if (!res.ok) return null
+    const html = await res.text()
+    return html
+  }
+  catch (e) {
+    console.error('Failed to fetch outline page:', e)
+    return null
+  }
+}
+
+function extractCoverUrlFromHTML(html: string): string | null {
+  const parser = new DOMParser()
+  const doc = parser.parseFromString(html, 'text/html')
+  const imgEl = doc.querySelector('.left-part .pic img')
+  if (imgEl instanceof HTMLImageElement) return imgEl.src
+  return null
+}
+
+async function resolveCoverFromOutline(): Promise<string | null> {
+  const novelId = extractNovelIdFromPath(document.location.pathname)
+  if (!novelId) return null
+
+  const html = await fetchOutlinePage(novelId)
+  if (!html) return null
+
+  return extractCoverUrlFromHTML(html)
+}
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -123,10 +160,22 @@ presence.on('UpdateData', async () => {
           break
         }
         case currentPathname.includes('/Novel/'): {
+          let coverUrl = ''
           switch (true) {
             case /^\/Novel\/\d+\/?$/.test(currentPathname): {
               // 小说简介页
+              const el = document.querySelector('.summary-pic img')
+              if (el instanceof HTMLImageElement) {
+                coverUrl = el.src
+              }
+              if (!coverUrl) {
+                const el2 = document.querySelector('.left-part .pic img')
+                if (el2 instanceof HTMLImageElement) {
+                  coverUrl = el2.src
+                }
+              }
               presenceData.details = '浏览小说简介'
+              presenceData.largeImageKey = coverUrl
               const titleElement = document.querySelector('h1.title .text')
               const authorElement = document.querySelector('.author-name span')
 
@@ -151,6 +200,8 @@ presence.on('UpdateData', async () => {
             }
             case /^\/Novel\/\d+\/MainIndex\/?$/.test(currentPathname): {
               // 章节索引页
+              coverUrl = await resolveCoverFromOutline() ?? ActivityAssets.Logo
+              presenceData.largeImageKey = coverUrl
               presenceData.details = '查看章节目录'
               const novelTitle = document.querySelector('h1')?.textContent?.trim()
               presenceData.state = novelTitle ? `《${novelTitle}》` : '未知作品'
@@ -158,6 +209,8 @@ presence.on('UpdateData', async () => {
             }
             case /^\/Novel\/\d+\/\d+\/\d+\/?$/.test(currentPathname): {
               // 正在阅读章节中
+              coverUrl = await resolveCoverFromOutline() ?? ActivityAssets.Logo
+              presenceData.largeImageKey = coverUrl
               presenceData.smallImageKey = Assets.Reading
               const title = document.querySelector('a.item.bold')?.textContent?.trim()
               const chapterName = document.querySelector('h1')?.textContent?.trim()
