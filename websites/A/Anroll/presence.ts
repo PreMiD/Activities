@@ -3,7 +3,7 @@ const presence = new Presence({ clientId: "1395970198405644350" });
 const browsingTimestamp = Math.floor(Date.now() / 1000);
 
 enum ActivityAssets {
-  Logo = "https://i.imgur.com/LOGO.png",
+  Logo = "https://static.anroll.net/images/login_cad.png",
   Home = "https://www.anroll.net/_next/image?url=https://static.anroll.net/app-images/wallpaper_bg_black.jpg&w=1920&q=90",
   Calendar = "https://www.anroll.net/_next/image?url=https://static.anroll.net/app-images/wallpaper_bg_black.jpg&w=1920&q=90",
   Search = "https://i.imgur.com/SEARCH_IMG.png",
