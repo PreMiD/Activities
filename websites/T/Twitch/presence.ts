@@ -464,8 +464,10 @@ presence.on('UpdateData', async () => {
 
         // fallback, broken? Maybe just on my browser
         if (!streamerinfo) {
-          presenceData.state = getElement('.stream-info-card p > a')
+          streamerinfo = getElement('.stream-info-card p > a')
         }
+
+        presenceData.state = streamerinfo
 
         if (getElement('.modview-dock-widget p') !== 'Offline') {
           presenceData.smallImageKey = Assets.Live
