@@ -10,11 +10,13 @@ enum ActivityAssets {
 
 let isInGame = false
 let gameStartTimestamp: number | null = null
+let observerInitialized = false
+let observer: MutationObserver | null = null
 
 presence.on('UpdateData', async () => {
-  const path = document.location.pathname.toLowerCase()
+  const hash = window.location.hash.toLowerCase()
 
-  if (path.includes('/join/')) {
+  if (hash.startsWith('#join=')) {
     if (isInGame && gameStartTimestamp !== null) {
       presence.setActivity({
         largeImageKey: ActivityAssets.Logo,
@@ -31,34 +33,37 @@ presence.on('UpdateData', async () => {
       details: 'Loading players...',
     })
 
-    const targetDiv = document.querySelector('div.w-15.h-8.lg\\:w-24.lg\\:h-10')
+    const targetDiv = document.querySelector('div.h-8.lg\\:w-24.lg\\:h-10.border.border-slate-400.flex.items-center.justify-center.text-white')
+    if (!targetDiv || observerInitialized)
+      return
 
-    if (targetDiv) {
-      const observer = new MutationObserver((mutationsList) => {
-        for (const mutation of mutationsList) {
-          if (mutation.type === 'childList' || mutation.type === 'characterData') {
-            const newText = (targetDiv.textContent ?? '').trim()
+    observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'childList' || mutation.type === 'characterData') {
+          const newText = (targetDiv.textContent ?? '').trim()
 
-            if (/^\d+/.test(newText)) {
-              isInGame = true
-              gameStartTimestamp = Math.floor(Date.now() / 1000)
+          if (/^\d+/.test(newText)) {
+            isInGame = true
+            gameStartTimestamp = Math.floor(Date.now() / 1000)
 
-              presence.setActivity({
-                largeImageKey: ActivityAssets.Logo,
-                smallImageKey: Assets.Play,
-                startTimestamp: gameStartTimestamp,
-                details: 'In a game',
-              })
+            presence.setActivity({
+              largeImageKey: ActivityAssets.Logo,
+              smallImageKey: Assets.Play,
+              startTimestamp: gameStartTimestamp,
+              details: 'In a game',
+            })
 
-              observer.disconnect()
-              break
-            }
+            observer?.disconnect()
+            observerInitialized = false
+            observer = null
+            break
           }
         }
-      })
+      }
+    })
 
-      observer.observe(targetDiv, { childList: true, subtree: true, characterData: true })
-    }
+    observer.observe(targetDiv, { childList: true, subtree: true, characterData: true })
+    observerInitialized = true
   }
   else {
     isInGame = false
@@ -68,5 +73,11 @@ presence.on('UpdateData', async () => {
       largeImageKey: ActivityAssets.Logo,
       details: 'In the lobby',
     })
+
+    if (observer) {
+      observer.disconnect()
+      observer = null
+      observerInitialized = false
+    }
   }
 })
