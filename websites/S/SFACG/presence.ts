@@ -1,4 +1,4 @@
-import { ActivityType, Assets} from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1396393095100104785',
@@ -45,16 +45,14 @@ const UpdatedWithinDaysMap: Record<number, string> = {
 }
 
 function decodeUnicode(str: string) {
-  return str.replace(/%u[0-9a-fA-F]{4}/g, match =>
-    String.fromCharCode(parseInt(match.slice(2), 16))
-  );
+  return str.replace(/%u[0-9a-fA-F]{4}/g, match => String.fromCharCode(Number.parseInt(match.slice(2), 16)))
 }
 
 function decodeSearchKey(str: string) {
   try {
-    return decodeURIComponent(str); // 尝试标准 URI 解码
+    return decodeURIComponent(str) // 尝试标准 URI 解码
   } catch {
-    return decodeUnicode(str);      // 如果失败则用 %u 解码
+    return decodeUnicode(str) // 如果失败则用 %u 解码
   }
 }
 
@@ -128,11 +126,11 @@ presence.on('UpdateData', async () => {
             case /^\/Novel\/\d+\/?$/.test(currentPathname): {
               // 小说简介页
               presenceData.details = '浏览小说简介'
-              const titleElement = document.querySelector("h1.title .text");
-              const authorElement = document.querySelector(".author-name span");
+              const titleElement = document.querySelector('h1.title .text')
+              const authorElement = document.querySelector('.author-name span')
 
-              const title = titleElement?.childNodes[0]?.nodeValue?.trim();
-              const author = authorElement?.textContent?.trim();
+              const title = titleElement?.childNodes[0]?.nodeValue?.trim()
+              const author = authorElement?.textContent?.trim()
 
               let displayTitle: string | undefined
               if (title && author) {
@@ -147,7 +145,6 @@ presence.on('UpdateData', async () => {
               presenceData.state = displayTitle
               break
             }
-          
             case /^\/Novel\/\d+\/MainIndex\/?$/.test(currentPathname): {
               // 章节索引页
               presenceData.details = '查看章节目录'
@@ -155,15 +152,13 @@ presence.on('UpdateData', async () => {
               presenceData.state = novelTitle ? `《${novelTitle}》` : '未知作品'
               break
             }
-          
             case /^\/Novel\/\d+\/\d+\/\d+\/?$/.test(currentPathname): {
               // 正在阅读章节中
               presenceData.smallImageKey = Assets.Reading
-              const title = document.querySelector('a.item.bold')?.textContent?.trim();
-              const chapterName = document.querySelector('h1')?.textContent?.trim();
-              const authorText = document.querySelector('.article-desc .text')?.textContent;
-              const author = authorText?.replace(/^作者：/, '').trim();
-              
+              const title = document.querySelector('a.item.bold')?.textContent?.trim()
+              const chapterName = document.querySelector('h1')?.textContent?.trim()
+              const authorText = document.querySelector('.article-desc .text')?.textContent
+              const author = authorText?.replace(/^作者：/, '').trim()
               const detailsText = title ? `《${title}》` : '未知作品'
               let stateText: string | undefined
               if (chapterName && author) {
@@ -175,7 +170,6 @@ presence.on('UpdateData', async () => {
               } else {
                 stateText = `未知章节 · 未知作者`
               }
-
               presenceData.details = detailsText
               presenceData.state = stateText
               break
@@ -189,11 +183,10 @@ presence.on('UpdateData', async () => {
     case 's.sfacg.com': {
       // 此处获取QueryKey
       const urlParams = new URLSearchParams(document.location.search)
-      const key = urlParams.get('Key') ?? "";
-      const decodedKey = decodeSearchKey(key) ?? undefined;
-      
-      presenceData.details = '搜索小说';
-      presenceData.state = decodedKey ? `>> "${decodedKey}"` : '未知关键词';
+      const key = urlParams.get('Key') ?? ''
+      const decodedKey = decodeSearchKey(key) ?? undefined
+      presenceData.details = '搜索小说'
+      presenceData.state = decodedKey ? `>> "${decodedKey}"` : '未知关键词'
     }
   }
   presence.setActivity(presenceData)
