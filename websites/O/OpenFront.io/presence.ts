@@ -14,7 +14,7 @@ let observerInitialized = false
 let observer: MutationObserver | null = null
 
 presence.on('UpdateData', async () => {
-  const hash = window.location.hash.toLowerCase()
+  const hash = document.location.hash.toLowerCase()
 
   if (hash.startsWith('#join=')) {
     if (isInGame && gameStartTimestamp !== null) {
