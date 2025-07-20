@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType } from 'premid'
 
 const presence = new Presence({
   clientId: '1396529263095582890',
@@ -15,7 +15,7 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
     type: ActivityType.Watching,
     // smallImageKey: Assets.Play,
-    details: 'Viewing other pages'
+    details: 'Viewing other pages',
   }
 
   const curPath = document.location.pathname
@@ -42,7 +42,7 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = [
         {
           label: 'Watch Post',
-          url: document.location.href
+          url: document.location.href,
         },
       ]
     }
