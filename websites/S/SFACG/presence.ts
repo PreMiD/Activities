@@ -51,7 +51,8 @@ function decodeUnicode(str: string) {
 function decodeSearchKey(str: string) {
   try {
     return decodeURIComponent(str) // 尝试标准 URI 解码
-  } catch {
+  }
+  catch {
     return decodeUnicode(str) // 如果失败则用 %u 解码
   }
 }
@@ -135,11 +136,14 @@ presence.on('UpdateData', async () => {
               let displayTitle: string | undefined
               if (title && author) {
                 displayTitle = `《${title}》· ${author}`
-              } else if (title) {
+              }
+              else if (title) {
                 displayTitle = `《${title}》· 未知作者`
-              } else if (author) {
+              }
+              else if (author) {
                 displayTitle = `未知作品 · ${author}`
-              } else {
+              }
+              else {
                 displayTitle = `未知作品 · 未知作者`
               }
               presenceData.state = displayTitle
@@ -163,11 +167,14 @@ presence.on('UpdateData', async () => {
               let stateText: string | undefined
               if (chapterName && author) {
                 stateText = `${chapterName} · ${author}`
-              } else if (chapterName) {
+              }
+              else if (chapterName) {
                 stateText = `${chapterName} · 未知作者`
-              } else if (author) {
+              }
+              else if (author) {
                 stateText = `未知章节 · ${author}`
-              } else {
+              }
+              else {
                 stateText = `未知章节 · 未知作者`
               }
               presenceData.details = detailsText
