@@ -66,7 +66,9 @@ async function fetchOutlinePage(novelId: string): Promise<string | null> {
   const url = `https://book.sfacg.com/Novel/${novelId}/`
   try {
     const res = await fetch(url)
-    if (!res.ok) return null
+    if (!res.ok) {
+      return null
+    }
     const html = await res.text()
     return html
   }
@@ -80,16 +82,22 @@ function extractCoverUrlFromHTML(html: string): string | null {
   const parser = new DOMParser()
   const doc = parser.parseFromString(html, 'text/html')
   const imgEl = doc.querySelector('.left-part .pic img')
-  if (imgEl instanceof HTMLImageElement) return imgEl.src
+  if (imgEl instanceof HTMLImageElement) {
+    return imgEl.src
+  }
   return null
 }
 
 async function resolveCoverFromOutline(): Promise<string | null> {
   const novelId = extractNovelIdFromPath(document.location.pathname)
-  if (!novelId) return null
+  if (!novelId) {
+    return null
+  }
 
   const html = await fetchOutlinePage(novelId)
-  if (!html) return null
+  if (!html) {
+    return null
+  }
 
   return extractCoverUrlFromHTML(html)
 }
