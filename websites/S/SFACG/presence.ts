@@ -21,24 +21,24 @@ enum NovelTypeID {
   Mystery = 29, // 悬疑
 }
 
-const NovelType: Record<number, { zh: string; en: string }> = {
-  [NovelTypeID.Magic]:    { zh: '魔幻', en: 'Magic' },
-  [NovelTypeID.Fantasy]:  { zh: '玄幻', en: 'Fantasy' },
+const NovelType: Record<number, { zh: string, en: string }> = {
+  [NovelTypeID.Magic]: { zh: '魔幻', en: 'Magic' },
+  [NovelTypeID.Fantasy]: { zh: '玄幻', en: 'Fantasy' },
   [NovelTypeID.Historical]: { zh: '古风', en: 'Historical' },
-  [NovelTypeID.SciFi]:    { zh: '科幻', en: 'Sci-Fi' },
-  [NovelTypeID.School]:   { zh: '校园', en: 'School' },
-  [NovelTypeID.Urban]:    { zh: '都市', en: 'Urban' },
-  [NovelTypeID.Game]:     { zh: '游戏', en: 'Game' },
-  [NovelTypeID.Doujin]:   { zh: '同人', en: 'Doujin' },
-  [NovelTypeID.Mystery]:  { zh: '悬疑', en: 'Mystery' },
+  [NovelTypeID.SciFi]: { zh: '科幻', en: 'Sci-Fi' },
+  [NovelTypeID.School]: { zh: '校园', en: 'School' },
+  [NovelTypeID.Urban]: { zh: '都市', en: 'Urban' },
+  [NovelTypeID.Game]: { zh: '游戏', en: 'Game' },
+  [NovelTypeID.Doujin]: { zh: '同人', en: 'Doujin' },
+  [NovelTypeID.Mystery]: { zh: '悬疑', en: 'Mystery' },
 }
 
-const NovelProgressStatusMap: Record<number, { zh: string; en: string }> = {
+const NovelProgressStatusMap: Record<number, { zh: string, en: string }> = {
   0: { zh: '连载中', en: 'Ongoing' },
   1: { zh: '完结', en: 'Completed' },
 }
 
-const UpdatedWithinDaysMap: Record<number, { zh: string; en: string }> = {
+const UpdatedWithinDaysMap: Record<number, { zh: string, en: string }> = {
   7:  { zh: '7天内更新',  en: 'Updated within 7 days' },
   15: { zh: '15天内更新', en: 'Updated within 15 days' },
   30: { zh: '30天内更新', en: 'Updated within 30 days' },
