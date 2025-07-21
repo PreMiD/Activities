@@ -4,6 +4,19 @@ import type GeneralStrings from '../../websites/general.json'
 declare global {
 
   /**
+   * Status display types for Rich Presence
+   * @since 2.8.0
+   */
+  enum StatusDisplayType {
+    /** Display the activity name - e.g. "Listening to Spotify" */
+    Name = 0,
+    /** Display the state field - e.g. "Listening to Rick Astley" */
+    State = 1,
+    /** Display the details field - e.g. "Listening to Never Gonna Give You Up" */
+    Details = 2
+  }
+
+  /**
    * Interface which holds keys usable for `Presence#getStrings` for type hints.
    *
    * Can be extended with code like this:
@@ -124,6 +137,31 @@ declare global {
      * Array of buttons, max 2, label is the button text, and url is the link
      */
     buttons?: [ButtonData, ButtonData?]
+    /**
+     * Controls which field is displayed in the user's status text in the member list
+     * @since 2.8.0
+     */
+    statusDisplayType?: StatusDisplayType
+    /**
+     * URL that is linked when clicking on the details text
+     * @since 2.8.0
+     */
+    detailsUrl?: string
+    /**
+     * URL that is linked when clicking on the state text
+     * @since 2.8.0
+     */
+    stateUrl?: string
+    /**
+     * URL that is opened when clicking on the large image
+     * @since 2.8.0
+     */
+    largeImageUrl?: string
+    /**
+     * URL that is opened when clicking on the small image
+     * @since 2.8.0
+     */
+    smallImageUrl?: string
   }
 
   interface MediaPresenceData extends BasePresenceData {
