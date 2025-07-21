@@ -9,7 +9,7 @@ const slideshow = presence.createSlideshow()
 
 declare global {
   interface StringKeys {
-    iFixIt: keyof typeof ActivityStrings
+    MyGamatoto: keyof typeof ActivityStrings
   }
 }
 
