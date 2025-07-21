@@ -39,7 +39,7 @@ const NovelProgressStatusMap: Record<number, { zh: string, en: string }> = {
 }
 
 const UpdatedWithinDaysMap: Record<number, { zh: string, en: string }> = {
-  7:  { zh: '7天内更新',  en: 'Updated within 7 days' },
+  7: { zh: '7天内更新', en: 'Updated within 7 days' },
   15: { zh: '15天内更新', en: 'Updated within 15 days' },
   30: { zh: '30天内更新', en: 'Updated within 30 days' },
 }
