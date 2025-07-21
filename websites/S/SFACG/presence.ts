@@ -102,7 +102,7 @@ async function resolveCoverFromOutline(): Promise<string | null> {
   return extractCoverUrlFromHTML(html)
 }
 
-const browserLang = navigator.language;
+const browserLang = navigator.language
 const userLang = browserLang.includes('zh') ? 'zh' : 'en'
 function t(zh: string, en: string): string {
   return userLang === 'zh' ? zh : en
