@@ -14,7 +14,6 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
     type: ActivityType.Watching,
-    // smallImageKey: Assets.Play,
     details: 'Viewing other pages',
   }
 
@@ -29,7 +28,6 @@ presence.on('UpdateData', async () => {
       // 只有板块，没有帖子
       const section = `/${parts[1]}/${parts[2]}` // "/h/nature"
       presenceData.details = `Browsing section: ${section}`
-      presenceData.state = ''
     }
     else if (parts.length >= 6 && parts[1] === 'h' && parts[3] === 'post') {
       // 具体帖子
