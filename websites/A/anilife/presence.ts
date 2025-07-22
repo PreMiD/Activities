@@ -43,7 +43,7 @@ presence.on('UpdateData', async () => {
         presenceData.state = '탐색 중'
       }
       else if (document.location.pathname.split('/')[1] === 'season') {
-        presenceData.details = `${document.querySelector('h1')?.textContent ?? '(로딩 중)'} 애니 목록`
+        presenceData.details = `${document.querySelector('h1')?.textContent?.replace('작품 목록', '') ?? '(로딩 중)'} 애니 목록`
         presenceData.state = '탐색 중'
       }
       else if (document.location.pathname === '/browse') {
@@ -59,7 +59,6 @@ presence.on('UpdateData', async () => {
       else if (document.location.pathname.startsWith('/notice')) {
         presenceData.details = '공지사항'
         presenceData.state = '탐색 중'
-
       }
       else if (document.location.pathname === '/browse/female') {
         presenceData.details = '여성향 애니 목록'
@@ -90,7 +89,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = `${document.querySelector('.entry-title')?.textContent ?? '(로딩 중)'} 에피소드 목록`
         presenceData.state = '탐색 중'
       }
-      else if (['/vodtype','/quarter','/genre','/tag','/studio'].includes(document.location.pathname ?? ' ')) {
+      else if (['/vodtype', '/quarter', '/genre', '/tag', '/studio'].includes(document.location.pathname ?? ' ')) {
         presenceData.details = document.querySelector('.releases span')?.textContent
         presenceData.state = '탐색 중'
       }
@@ -105,7 +104,6 @@ presence.on('UpdateData', async () => {
       else if (document.location.pathname === '/notice') {
         presenceData.details = '공지사항'
         presenceData.state = '탐색 중'
-
       }
     }
   }
