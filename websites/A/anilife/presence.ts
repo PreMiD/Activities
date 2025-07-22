@@ -4,10 +4,6 @@ const presence = new Presence({
   clientId: '833689728774832168',
 })
 
-enum ActivityAssets { // Other default assets can be found at index.d.ts
-  Logo = 'https://i.imgur.com/jsplbi8.png',
-}
-
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://i.imgur.com/jsplbi8.png',
