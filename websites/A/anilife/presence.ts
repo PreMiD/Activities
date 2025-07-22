@@ -6,7 +6,7 @@ const presence = new Presence({
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://i.imgur.com/jsplbi8.png',
+    largeImageKey: 'https://i.imgur.com/HYG2VEb.png',
     type: ActivityType.Watching,
     name: 'Anilife',
   }
