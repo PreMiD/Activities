@@ -42,6 +42,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('titleAsPresence'),
   ])
   const variables = await presence.getPageVariable('currPage')
+  const { pathname } = document.location
 
   if (variables.currPage === 'watch') {
     const showTitle = document.querySelector('.heading-name')?.textContent
@@ -86,17 +87,75 @@ presence.on('UpdateData', async () => {
   else if (browsingStatus) {
     switch (variables.currPage) {
       case '': {
-        presenceData.details = 'Searching'
-        presenceData.smallImageKey = Assets.Search
-        presenceData.smallImageText = 'Searching'
-        presenceData.state = privacy
-          ? ''
-          : document
-            .querySelector('h2[class*=\'cat-heading\']')
+        if (pathname.startsWith('/search')) {
+          presenceData.details = 'Searching'
+          presenceData.smallImageKey = Assets.Search
+          presenceData.smallImageText = 'Searching'
+          presenceData.state = privacy
+            ? ''
+            : document
+              .querySelector('h2[class*=\'cat-heading\']')
+              ?.textContent
+              ?.split('"')[1]
+              || document.querySelector('h2[class*=\'cat-heading\']')?.textContent
+        }
+        else if (pathname.startsWith('/android-movies-apk')) {
+          presenceData.details = 'Checking the Android App'
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.smallImageText = 'Browsing'
+        }
+        else if (pathname.startsWith('/filter')) {
+          presenceData.details = 'Searching with filters'
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.smallImageText = 'Browsing'
+        }
+        else if (pathname.startsWith('/terms')) {
+          presenceData.details = 'Checking the Terms Of Service'
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.smallImageText = 'Browsing'
+        }
+        else if (pathname.startsWith('/contact')) {
+          presenceData.details = 'Contacting Sflix Support'
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.smallImageText = 'Browsing'
+        }
+        else if (pathname.startsWith('/tv-show')) {
+          presenceData.details = 'Checking Popular TV Shows'
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.smallImageText = 'Browsing'
+        }
+        else if (pathname.startsWith('/movie')) {
+          presenceData.details = 'Checking Popular Movies'
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.smallImageText = 'Browsing'
+        }
+        else if (pathname.startsWith('/country')) {
+          const title = document
+            .querySelector('h2[class=\'cat-heading\']')
             ?.textContent
-            ?.split('"')[1]
-            || document.querySelector('h2[class*=\'cat-heading\']')?.textContent
+          presenceData.details = 'Checking Movies & TV Shows from Country'
+          presenceData.state = title
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.smallImageText = 'Browsing'
+        }
+        else if (pathname.startsWith('/top-imdb')) {
+          presenceData.details = 'Checking the Top IMDB rated'
 
+          const paramsString = window.location.search
+          const searchParams = new URLSearchParams(paramsString)
+          if (searchParams.has('type')) {
+            const type = searchParams.get('type')
+            if (type === 'tv') {
+              presenceData.state = 'TV Shows'
+            }
+            else if (type === 'movie') {
+              presenceData.state = 'Movies'
+            }
+          }
+          else {
+            presenceData.state = 'Movies & TV Shows'
+          }
+        }
         break
       }
       case 'home_search':
@@ -119,6 +178,15 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = Assets.Reading
         presenceData.smallImageText = 'Browsing'
         break
+      }
+      case 'genre': {
+        const title = document
+          .querySelector('h2[class=\'cat-heading\']')
+          ?.textContent
+        presenceData.details = 'Checking Movies & TV Shows from Genre'
+        presenceData.state = title?.replace(' Movies and TV Shows', '')
+        presenceData.smallImageKey = Assets.Reading
+        presenceData.smallImageText = 'Browsing'
       }
     }
   }
