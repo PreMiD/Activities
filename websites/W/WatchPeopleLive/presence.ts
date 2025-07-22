@@ -47,7 +47,6 @@ presence.on('UpdateData', async () => {
     else {
       // 其他路径处理
       presenceData.details = `Browsing ${curPath}`
-      presenceData.state = ''
     }
   }
   presence.setActivity(presenceData)
