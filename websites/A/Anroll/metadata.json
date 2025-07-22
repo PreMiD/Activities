@@ -9,14 +9,14 @@
   "altnames": ["Anroll Brasil", "Anroll Anime"],
   "description": {
     "en": "Brazilian anime and movie streaming platform.",
-    "br": "Sua plataforma brasileira para assistir animes e filmes online."
+    "pt_br": "Sua plataforma brasileira para assistir animes e filmes online."
   },
   "url": [
     "www.anroll.net",
     "my.anroll.net"
   ],
   "regExp": "([a-z0-9-]+\\.)*anroll\\.net[/]",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "logo": "https://static.anroll.net/app-images/login_cad.png",
   "thumbnail": "https://i.pinimg.com/736x/0d/69/f1/0d69f1c3b2aee2f9fca2b0b81abb16bb.jpg",
   "color": "#FFFFFF",
