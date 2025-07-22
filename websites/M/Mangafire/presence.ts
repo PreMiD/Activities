@@ -48,7 +48,7 @@ async function getMangaCoverImage(): Promise<string | null> {
       const html = await res.text()
       const parser = new DOMParser()
       const doc = parser.parseFromString(html, 'text/html')
-      const img = doc.querySelector('.poster img[itemprop="image"]') as HTMLImageElement
+      const img = doc.querySelector<HTMLImageElement>('.poster img[itemprop="image"]')
 
       return img?.src || null
     }
