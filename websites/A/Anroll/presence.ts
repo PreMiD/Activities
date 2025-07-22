@@ -3,12 +3,12 @@ const presence = new Presence({ clientId: "1395970198405644350" });
 const browsingTimestamp = Math.floor(Date.now() / 1000);
 
 enum ActivityAssets {
-  Logo = "https://static.anroll.net/app-images/login_cad.png",
+  Logo = "https://static.anroll.net/app-images/login_cad.png?f=webp&w=512",
   Home = "https://cdn.iconscout.com/icon/premium/png-512-thumb/home-icon-download-in-svg-png-gif-file-formats--house-casa-building-categories-pack-miscellaneous-icons-112182.png?f=webp&w=512",
   Calendar = "https://cdn.iconscout.com/icon/premium/png-512-thumb/calendar-icon-download-in-svg-png-gif-file-formats--schedule-planning-date-business-pack-icons-1650787.png?f=webp&w=512",
-  Search = "https://github.com/PreMiD/Activities/blob/main/.resources/search.png",
+  Search = "https://github.com/PreMiD/Activities/blob/main/.resources/search.png?f=webp&w=512",
   Profile = "https://cdn.iconscout.com/icon/premium/png-512-thumb/user-rounded-icon-download-in-svg-png-gif-file-formats--person-people-avatar-profile-ui-8-pack-design-development-icons-11410209.png?f=webp&w=512",
-  Films = "https://github.com/PreMiD/Activities/blob/main/.resources/search.png",
+  Films = "https://github.com/PreMiD/Activities/blob/main/.resources/search.png?f=webp&w=512",
   Partyroll = "https://cdn.iconscout.com/icon/premium/png-512-thumb/people-5156504-4302647.png?f=webp&w=512",
   Notes = "https://cdn.iconscout.com/icon/premium/png-512-thumb/changelog-11796821-9633010.png?f=webp&w=512",
   VIP = "https://cdn.iconscout.com/icon/premium/png-512-thumb/vip-stars-4877729-4058729.png?f=webp&w=512",
