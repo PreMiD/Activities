@@ -68,7 +68,6 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
     details: Fields.defaultDetails,
     state: Fields.defaultState,
-    // smallImageKey: Assets.Play,
   }
 
   const curURL = document.location.pathname
