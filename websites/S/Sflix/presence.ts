@@ -49,6 +49,12 @@ presence.on('UpdateData', async () => {
       .querySelector(`img[title*="${showTitle}"]`)
       ?.getAttribute('src')
 
+    const currSeason = document.getElementById('current-season')?.textContent
+    const season = currSeason?.match('Season ([0-9]*)')?.at(0)
+
+    const currEpisode = document.querySelector('.on-air > div > .episode-number')?.textContent
+    const ep = currEpisode?.match('Episode ([0-9]*)')?.at(0)
+
     if (titleAsPresence)
       presenceData.name = privacy ? 'Sflix' : `${showTitle}`
     else if (!privacy)
@@ -57,6 +63,8 @@ presence.on('UpdateData', async () => {
       ? ''
       : document.querySelector('.on-air div h3')?.textContent ?? ''
     presenceData.largeImageKey = thumbnail && thumbnailURL && !privacy ? thumbnailURL : ActivityAssets.Logo
+    if (season && ep)
+      presenceData.largeImageText = `${season}, ${ep}`
 
     if (!video.paused && !Number.isNaN(video.duration)) {
       if (!privacy) {
