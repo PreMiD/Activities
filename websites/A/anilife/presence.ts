@@ -3,7 +3,6 @@ import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 const presence = new Presence({
   clientId: '833689728774832168',
 })
-const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets { // Other default assets can be found at index.d.ts
   Logo = 'https://i.imgur.com/jsplbi8.png',
@@ -20,7 +19,7 @@ presence.on('UpdateData', async () => {
       const videoData = document.querySelector('video')
       presenceData.name = document.querySelector('h1')?.textContent?.replace(/\s*\d+화$/, '') ?? '(로딩 중)'
       presenceData.details = Array.from(document.querySelectorAll('b')).reverse().find(b => b.textContent?.includes(document.querySelector('h1')?.textContent?.split(' ').at(-1) ?? '')); // get episode title
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(videoData!)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(videoData!)
       presenceData.state = videoData?.paused ? '일시 정지됨' : '재생 중'
       presenceData.smallImageKey = videoData?.paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = videoData?.paused ? '일시 정지됨' : '재생 중'
@@ -71,7 +70,7 @@ presence.on('UpdateData', async () => {
       const videoData = document.querySelector('video')
       presenceData.name = document.querySelector('h2')?.textContent ?? '(로딩 중)'
       presenceData.details = document.querySelector('.entry-title')?.textContent?.replace(`${document.querySelector('h2')?.textContent} : `, ''); // get episode title
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(videoData!)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(videoData!)
       presenceData.state = videoData?.paused ? '일시 정지됨' : '재생 중'
       presenceData.smallImageKey = videoData?.paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = videoData?.paused ? '일시 정지됨' : '재생 중'
