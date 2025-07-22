@@ -39,7 +39,7 @@ presence.on('UpdateData', async () => {
     const cards = document.querySelectorAll<HTMLElement>('html body main div.container ul.card-list')[1]
     const beltsCards = cards?.querySelectorAll<HTMLElement>('.progress-bar')
     if (cards && beltsCards) {
-      beltsCards?.forEach((element, i) => { 
+      beltsCards?.forEach((element, i) => {
         const progress = utils.stripPercent(element?.style?.width)
         if (progress === 100) {
           currentBelt = beltsArray[i]!
