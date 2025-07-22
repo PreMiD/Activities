@@ -1,6 +1,6 @@
 const iframe = new iFrame()
 
-setInterval(() => {
+iframe.on('UpdateData', () => {
   const video = document.querySelector('video')
   if (video != null && !Number.isNaN(video.duration)) {
     iframe.send({
@@ -9,4 +9,4 @@ setInterval(() => {
       paused: video.paused,
     })
   }
-}, 500)
+})
