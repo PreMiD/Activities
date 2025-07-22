@@ -28,7 +28,7 @@ async function getMangaCoverImage(): Promise<string | null> {
 
   // 情况 1: 当前就是 /manga/{title}
   if (/^\/manga\/[^/]+\/?$/.test(curPath)) {
-    const img = document.querySelector('.poster img[itemprop="image"]') as HTMLImageElement
+    const img = document.querySelector<HTMLImageElement>('.poster img[itemprop="image"]')
     return img?.src || null
   }
 
