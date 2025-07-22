@@ -1,3 +1,4 @@
+// Assets are edited to follow PreMid standards, all rights reserved to pwn.college
 import { Assets } from 'premid'
 
 const presence = new Presence({
@@ -17,10 +18,6 @@ const beltsURLs: Record<string, string> = {
 const beltsArray: string[] = Object?.keys(beltsURLs)
 let currentBelt = "white"
 let nextBelt = 'orange'
-
-const messages = {
-  // mastering: `🔍 Mastering: ${module} technique`
-}
 
 const utils = {
   stripPercent: (percentage: string = "0%") => +percentage.replace("%", ""),
