@@ -1,0 +1,68 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Nestz",
+    "id": "753271371781374074"
+  },
+  "service": "Anroll",
+  "altnames": ["Anroll Brasil", "Anroll Anime"],
+  "description": {
+    "en": "Brazilian anime and movie streaming platform.",
+    "br": "Sua plataforma brasileira para assistir animes e filmes online."
+  },
+  "url": [
+    "www.anroll.net",
+    "my.anroll.net"
+  ],
+  "regExp": "([a-z0-9-]+\\.)*anroll\\.net[/]",
+  "version": "2.0.0",
+  "logo": "https://static.anroll.net/app-images/login_cad.png",
+  "thumbnail": "https://i.pinimg.com/736x/0d/69/f1/0d69f1c3b2aee2f9fca2b0b81abb16bb.jpg",
+  "color": "#FFFFFF",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "brazil",
+    "movies",
+    "community"
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*",
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Mostrar Botões",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "privacy",
+      "title": "Modo Privacidade",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "timestamps",
+      "title": "Mostrar Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Mostrar Capa",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "partyPresence",
+      "title": "Mostrar Partyroll",
+      "icon": "fas fa-users",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
