@@ -30,8 +30,7 @@ enum ActivityAssets { // Other default assets can be found at index.d.ts
 }
 
 presence.on('UpdateData', async () => {
-  console.log(beltsURLs[currentBelt])
-  const presenceData: PresenceData = {
+   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
     smallImageKey: beltsURLs[currentBelt], 
