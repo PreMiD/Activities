@@ -29,15 +29,21 @@ presence.on('UpdateData', async () => {
   const pathList = pathname.split('/').filter(Boolean)
   const title = document.querySelector('h1')
   const strings = await presence.getStrings({
+    browseClubs: 'myfigurecollection.browseClubs',
     browseEntries: 'myfigurecollection.browseEntries',
     browseItems: 'myfigurecollection.browseItems',
     browseTag: 'myfigurecollection.browseTag',
     browsing: 'general.browsing',
+    buttonReadArticle: 'general.buttonReadArticle',
+    buttonViewClub: 'myfigurecollection.buttonViewClub',
     buttonViewEntry: 'myfigurecollection.buttonViewEntry',
     buttonViewItem: 'myfigurecollection.buttonViewItem',
+    buttonViewPage: 'general.buttonViewPage',
     buttonViewPicture: 'myfigurecollection.buttonViewPicture',
     buttonViewProfile: 'general.buttonViewProfile',
     byAuthor: 'myfigurecollection.byAuthor',
+    readingAnArticle: 'general.readingAnArticle',
+    viewClub: 'myfigurecollection.viewClub',
     viewEntry: 'myfigurecollection.viewEntry',
     viewHome: 'general.viewHome',
     viewItem: 'myfigurecollection.viewItem',
@@ -47,10 +53,13 @@ presence.on('UpdateData', async () => {
     viewPicture: 'myfigurecollection.viewPicture',
     viewPictureComments: 'myfigurecollection.viewPictureComments',
     viewProfile: 'general.viewProfile',
+    viewThread: 'general.viewThread',
   })
   let useSlideshow = false
 
   const searchSection = params.get('_tb')
+  const searchTab = params.get('tab')
+  const searchMode = params.get('mode')
   if (searchSection) { // Search
     //
   }
@@ -62,6 +71,25 @@ presence.on('UpdateData', async () => {
     switch (pathList[0] ?? '/') {
       case '/': {
         presenceData.details = strings.viewHome
+        break
+      }
+      case 'blogpost': {
+        presenceData.details = strings.readingAnArticle
+        presenceData.state = title
+        presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.thumbnail')
+        presenceData.buttons = [{ label: strings.buttonReadArticle, url: href }]
+        break
+      }
+      case 'club': {
+        if (pathList[1] === 'browse') {
+          presenceData.details = strings.browseClubs
+          break
+        }
+        presenceData.details = strings.viewClub
+        presenceData.state = title
+        presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.thumbnail')
+        presenceData.smallImageText = document.querySelector('.current')
+        presenceData.buttons = [{ label: strings.buttonViewClub, url: href }]
         break
       }
       case 'entry': {
@@ -191,6 +219,12 @@ presence.on('UpdateData', async () => {
       case 'tag': {
         presenceData.details = strings.browseTag
         presenceData.state = title
+        break
+      }
+      case 'thread': {
+        presenceData.details = strings.viewThread
+        presenceData.state = title
+        presenceData.buttons = [{ label: strings.buttonViewPage, url: href }]
         break
       }
       default: {

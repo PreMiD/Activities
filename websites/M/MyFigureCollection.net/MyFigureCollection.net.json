@@ -1,4 +1,8 @@
 {
+  "myfigurecollection.browseClubs": {
+    "description": "Browsing list of clubs/groups",
+    "message": "Browsing clubs"
+  },
   "myfigurecollection.browseEntries": {
     "description": "Browsing list of encyclopedia entries",
     "message": "Browsing entries"
@@ -10,6 +14,10 @@
   "myfigurecollection.browseTag": {
     "description": "Viewing things organized by a tag",
     "message": "Browsing pages by tag"
+  },
+  "myfigurecollection.buttonViewClub": {
+    "description": "Button linking user to view a club",
+    "message": "View Club"
   },
   "myfigurecollection.buttonViewEntry": {
     "description": "Button linking user to view an encylopedia entry",
@@ -26,6 +34,10 @@
   "myfigurecollection.byAuthor": {
     "description": "Text attributing {author} for something, such as a photo. {author} will be replaced with the author's name",
     "message": "By {author}"
+  },
+  "myfigurecollection.viewClub": {
+    "description": "Viewing a club/user group",
+    "message": "Viewing a club"
   },
   "myfigurecollection.viewEntry": {
     "description": "Viewing an encyclopedia entry/page",
