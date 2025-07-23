@@ -1,7 +1,6 @@
 import type { ActivityType } from 'premid'
 import { Assets } from 'premid'
 
-// Declarações necessárias para o ambiente PreMiD
 declare class Presence {
   constructor(options: { clientId: string })
   on(event: string, callback: (...args: any[]) => void): void
@@ -136,17 +135,11 @@ presence.on('UpdateData', async () => {
     const { pathname, href, hostname } = document.location
     const pathArr = pathname.split('/').filter(Boolean)
 
-    [
-      showButtons,
-      privacyMode,
-      showTimestamps,
-      showCover
-    ] = await Promise.all([
-      presence.getSetting<boolean>('buttons'),
-      presence.getSetting<boolean>('privacy'),
-      presence.getSetting<boolean>('timestamps'),
-      presence.getSetting<boolean>('cover')
-    ])
+    // Corrigido: atribuições individuais para evitar problemas de tipagem
+    showButtons = await presence.getSetting<boolean>('buttons')
+    privacyMode = await presence.getSetting<boolean>('privacy')
+    showTimestamps = await presence.getSetting<boolean>('timestamps')
+    showCover = await presence.getSetting<boolean>('cover')
 
     const firstSegment = pathArr[0] || ''
     const secondSegment = pathArr[1] || ''
@@ -190,6 +183,7 @@ presence.on('UpdateData', async () => {
       }
 
       if (secondSegment) {
+        // Corrigido: verificação de string
         if (firstSegment === 'categoria') {
           presenceData.state = `Categoria: ${secondSegment.replace(/-/g, ' ')}`
         } else if (firstSegment === 'filmes') {
@@ -336,6 +330,7 @@ presence.on('UpdateData', async () => {
       const pageTitle = document.title.replace(/( - Anroll| - Assistir.*)/i, '')
       presenceData.details = privacyMode ? 'Navegando...' : `Explorando: ${pageTitle}`
 
+      // Corrigido: verificação de string
       if (firstSegment === 'genero' && secondSegment) {
         presenceData.details = 'Explorando gênero'
         presenceData.state = secondSegment.replace(/-/g, ' ')
