@@ -29,6 +29,7 @@ presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
     browseEntries: 'myfigurecollection.browseEntries',
     browseItems: 'myfigurecollection.browseItems',
+    browseTag: 'myfigurecollection.browseTag',
     browsing: 'general.browsing',
     buttonViewEntry: 'myfigurecollection.buttonViewEntry',
     buttonViewItem: 'myfigurecollection.buttonViewItem',
@@ -45,7 +46,8 @@ presence.on('UpdateData', async () => {
   })
   let useSlideshow = false
 
-  if (params.get('_tb') === 'item') { // Search
+  const searchSection = params.get('_tb')
+  if (searchSection) { // Search
     //
   }
   else if (pathList.length === 1) {
@@ -59,7 +61,7 @@ presence.on('UpdateData', async () => {
         break
       }
       case 'entry': {
-        if (pathList[1] === 'browse' || !pathList[1]) {
+        if (pathList[1] === 'browse') {
           presenceData.details = strings.browseEntries
           presenceData.state = document.querySelector('.current')
           break
@@ -139,6 +141,11 @@ presence.on('UpdateData', async () => {
             presenceData.buttons.push({ label: strings.viewItem, url: relatedItem.querySelector('a') })
           }
         }
+        break
+      }
+      case 'tag': {
+        presenceData.details = strings.browseTag
+        presenceData.state = title
         break
       }
       default: {

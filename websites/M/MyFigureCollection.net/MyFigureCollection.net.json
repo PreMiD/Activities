@@ -7,6 +7,10 @@
     "description": "",
     "message": "Browsing items"
   },
+  "myfigurecollection.browseTag": {
+    "description": "Viewing things organized by a tag",
+    "message": "Browsing pages by tag"
+  },
   "myfigurecollection.buttonViewEntry": {
     "description": "Button linking user to view an encylopedia entry",
     "message": "View Entry"
