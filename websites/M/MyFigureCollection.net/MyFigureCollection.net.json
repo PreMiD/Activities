@@ -39,6 +39,10 @@
     "description": "Button linking user to view a picture",
     "message": "View Picture"
   },
+  "myfigurecollection.buttonViewShop": {
+    "description": "Button linking user to view a shop",
+    "message": "View Shop"
+  },
   "myfigurecollection.byAuthor": {
     "description": "Text attributing {author} for something, such as a photo. {author} will be replaced with the author's name",
     "message": "By {author}"
@@ -70,5 +74,9 @@
   "myfigurecollection.viewPictureComments": {
     "description": "Viewing comments on a picture/photo",
     "message": "Viewing comments for a picture"
+  },
+  "myfigurecollection.viewShop": {
+    "description": "Viewing information about a shop",
+    "message": "Viewing a shop"
   }
 }

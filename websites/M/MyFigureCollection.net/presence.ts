@@ -43,6 +43,7 @@ presence.on('UpdateData', async () => {
     buttonViewPage: 'general.buttonViewPage',
     buttonViewPicture: 'myfigurecollection.buttonViewPicture',
     buttonViewProfile: 'general.buttonViewProfile',
+    buttonViewShop: 'myfigurecollection.buttonViewShop',
     byAuthor: 'myfigurecollection.byAuthor',
     readingAnArticle: 'general.readingAnArticle',
     viewAd: 'myfigurecollection.viewAd',
@@ -56,6 +57,7 @@ presence.on('UpdateData', async () => {
     viewPicture: 'myfigurecollection.viewPicture',
     viewPictureComments: 'myfigurecollection.viewPictureComments',
     viewProfile: 'general.viewProfile',
+    viewShop: 'myfigurecollection.viewShop',
     viewThread: 'general.viewThread',
   })
   let useSlideshow = false
@@ -230,6 +232,14 @@ presence.on('UpdateData', async () => {
             break
           }
         }
+        break
+      }
+      case 'shop': {
+        presenceData.details = strings.viewShop
+        presenceData.state = title
+        presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.thumbnail')
+        presenceData.smallImageText = document.querySelector('.current')
+        presenceData.buttons = [{ label: strings.buttonViewShop, url: href }]
         break
       }
       case 'tag': {
