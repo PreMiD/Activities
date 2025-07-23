@@ -35,14 +35,17 @@ presence.on('UpdateData', async () => {
     browseTag: 'myfigurecollection.browseTag',
     browsing: 'general.browsing',
     buttonReadArticle: 'general.buttonReadArticle',
+    buttonViewAd: 'myfigurecollection.buttonViewAd',
     buttonViewClub: 'myfigurecollection.buttonViewClub',
     buttonViewEntry: 'myfigurecollection.buttonViewEntry',
     buttonViewItem: 'myfigurecollection.buttonViewItem',
+    buttonViewList: 'myfigurecollection.buttonViewList',
     buttonViewPage: 'general.buttonViewPage',
     buttonViewPicture: 'myfigurecollection.buttonViewPicture',
     buttonViewProfile: 'general.buttonViewProfile',
     byAuthor: 'myfigurecollection.byAuthor',
     readingAnArticle: 'general.readingAnArticle',
+    viewAd: 'myfigurecollection.viewAd',
     viewClub: 'myfigurecollection.viewClub',
     viewEntry: 'myfigurecollection.viewEntry',
     viewHome: 'general.viewHome',
@@ -78,6 +81,12 @@ presence.on('UpdateData', async () => {
         presenceData.state = title
         presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.thumbnail')
         presenceData.buttons = [{ label: strings.buttonReadArticle, url: href }]
+        break
+      }
+      case 'classified': {
+        presenceData.details = strings.viewAd
+        // presenceData.state = title // TODO: extract item name
+        presenceData.buttons = [{ label: strings.buttonViewAd, url: href }]
         break
       }
       case 'club': {
@@ -138,6 +147,13 @@ presence.on('UpdateData', async () => {
             slideshow.addSlide(heading, data, MIN_SLIDE_TIME)
           }
         }
+        break
+      }
+      case 'list': {
+        presenceData.details = strings.viewList
+        presenceData.state = title
+        presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.thumbnail')
+        presenceData.buttons = [{ label: strings.buttonViewList, url: href }]
         break
       }
       case 'picture': {

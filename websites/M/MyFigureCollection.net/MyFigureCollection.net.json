@@ -15,6 +15,10 @@
     "description": "Viewing things organized by a tag",
     "message": "Browsing pages by tag"
   },
+  "myfigurecollection.buttonViewAd": {
+    "description": "Button linking user to view a sale/ad",
+    "message": "View Ad"
+  },
   "myfigurecollection.buttonViewClub": {
     "description": "Button linking user to view a club",
     "message": "View Club"
@@ -27,6 +31,10 @@
     "description": "Button linking user to view an item",
     "message": "View Item"
   },
+  "myfigurecollection.buttonViewList": {
+    "description": "Button linking user to view a list",
+    "message": "View List"
+  },
   "myfigurecollection.buttonViewPicture": {
     "description": "Button linking user to view a picture",
     "message": "View Picture"
@@ -34,6 +42,10 @@
   "myfigurecollection.byAuthor": {
     "description": "Text attributing {author} for something, such as a photo. {author} will be replaced with the author's name",
     "message": "By {author}"
+  },
+  "myfigurecollection.viewAd": {
+    "description": "Viewing an ad for a sale for an item",
+    "message": "Viewing an ad"
   },
   "myfigurecollection.viewClub": {
     "description": "Viewing a club/user group",
