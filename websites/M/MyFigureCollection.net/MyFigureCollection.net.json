@@ -7,6 +7,14 @@
     "description": "Button linking user to view an item",
     "message": "View Item"
   },
+  "myfigurecollection.buttonViewPicture": {
+    "description": "Button linking user to view a picture",
+    "message": "View Picture"
+  },
+  "myfigurecollection.byAuthor": {
+    "description": "Text attributing {author} for something, such as a photo. {author} will be replaced with the author's name",
+    "message": "By {author}"
+  },
   "myfigurecollection.viewItem": {
     "description": "",
     "message": "Viewing an item"
@@ -14,5 +22,13 @@
   "myfigurecollection.viewItemComments": {
     "description": "Viewing comments on an item page",
     "message": "Viewing comments for an item"
+  },
+  "myfigurecollection.viewPicture": {
+    "description": "",
+    "message": "Viewing a picture"
+  },
+  "myfigurecollection.viewPictureComments": {
+    "description": "Viewing comments on a picture/photo",
+    "message": "Viewing comments for a picture"
   }
 }

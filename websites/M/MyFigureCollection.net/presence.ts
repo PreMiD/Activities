@@ -30,10 +30,15 @@ presence.on('UpdateData', async () => {
     browsing: 'general.browsing',
     browseItems: 'myfigurecollection.browseItems',
     buttonViewItem: 'myfigurecollection.buttonViewItem',
+    buttonViewPicture: 'myfigurecollection.buttonViewPicture',
+    byAuthor: 'myfigurecollection.byAuthor',
     viewHome: 'general.viewHome',
     viewItem: 'myfigurecollection.viewItem',
-    viewPage: 'general.viewPage',
     viewItemComments: 'myfigurecollection.viewItemComments',
+    viewList: 'general.viewList',
+    viewPage: 'general.viewPage',
+    viewPicture: 'myfigurecollection.viewPicture',
+    viewPictureComments: 'myfigurecollection.viewPictureComments',
   })
   let useSlideshow = false
 
@@ -80,6 +85,42 @@ presence.on('UpdateData', async () => {
                 data.smallImageText = `${heading} - ${elements.join(', ')}`
               }
               slideshow.addSlide(heading, data, MIN_SLIDE_TIME)
+            }
+          }
+        }
+        break
+      }
+      case 'picture': {
+        if (pathList[1] === 'browse') {
+          useSlideshow = true
+          presenceData.details = strings.viewList
+          presenceData.state = document.querySelector('.current')
+          const pictures = document.querySelectorAll<HTMLSpanElement>('.results .picture-icon')
+          for (const picture of pictures) {
+            const data = { ...presenceData }
+            const link = picture.querySelector('a')?.href ?? href
+            data.smallImageKey = picture.querySelector('span')?.style.background.match(/url\("(.*)"\)/)?.[1]
+            data.buttons = [{ label: strings.buttonViewPicture, url: link }]
+            slideshow.addSlide(link, data, MIN_SLIDE_TIME)
+          }
+        }
+        else {
+          presenceData.buttons = [{ label: strings.buttonViewPicture, url: href }]
+          if (pathList[2]) {
+            presenceData.details = strings.viewPictureComments
+          }
+          else {
+            presenceData.details = strings.viewPicture
+            presenceData.state = `#${pathList[1]}`
+            presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.the-picture img')
+            presenceData.smallImageText = strings.byAuthor.replace(
+              '{author}',
+              document.querySelector<HTMLDivElement>('.object-meta .user-anchor')?.textContent ?? 'Unknown',
+            )
+            const relatedItem = document.querySelector<HTMLDivElement>('.tbx-target-ITEMS .stamp')
+            if (relatedItem) {
+              presenceData.state += ` - ${relatedItem.textContent}`
+              presenceData.buttons.push({ label: strings.viewItem, url: relatedItem.querySelector('a') })
             }
           }
         }
