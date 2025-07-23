@@ -10,15 +10,15 @@ declare class Presence {
 }
 
 interface PresenceData {
-  type?: ActivityType
-  largeImageKey?: string
-  startTimestamp?: number
-  endTimestamp?: number
-  details?: string
-  state?: string
-  buttons?: Array<{ label: string; url: string }>
-  smallImageKey?: string
-  smallImageText?: string
+  type?: ActivityType;
+  largeImageKey?: string;
+  startTimestamp?: number;
+  endTimestamp?: number;
+  details?: string;
+  state?: string;
+  buttons?: Array<{ label: string; url: string }>;
+  smallImageKey?: string;
+  smallImageText?: string;
 }
 
 const presence = new Presence({ clientId: '1395970198405644350' })
@@ -36,32 +36,32 @@ enum ActivityAssets {
   VIP = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/vip-stars-4877729-4058729.png?f=webp&w=512',
   Requests = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/request-1890238-1600612.png?f=webp&w=512',
   ARPCoins = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/coin-11766103-9604340.png?f=webp&w=512',
-  Account = 'https://cdn.iconscout.com/icon/free/png-512/free-account-icon-download-in-svg-png-gif-file-formats--circle-user-profile-avatar-action-vol-1-pack-interface-icons-1512648.png?f=webp&w=512'
+  Account = 'https://cdn.iconscout.com/icon/free/png-512/free-account-icon-download-in-svg-png-gif-file-formats--circle-user-profile-avatar-action-vol-1-pack-interface-icons-1512648.png?f=webp&w=512',
 }
 
 const pageDetails: Record<string, { title: string; image?: string }> = {
   '': { title: 'Vendo a página inicial', image: ActivityAssets.Home },
-  animes: { title: 'Procurando animes', image: ActivityAssets.Search },
-  calendario: { title: 'Vendo o calendário de lançamentos', image: ActivityAssets.Calendar },
-  ajuda: { title: 'Lendo a página de ajuda' },
-  perfil: { title: 'Vendo seu perfil', image: ActivityAssets.Profile },
-  filmes: { title: 'Explorando filmes', image: ActivityAssets.Films },
-  party: { title: 'Usando Partyroll', image: ActivityAssets.Partyroll },
-  notes: { title: 'Lendo notas de atualização', image: ActivityAssets.Notes },
-  vip: { title: 'Visualizando área VIP', image: ActivityAssets.VIP },
-  pedidos: { title: 'Fazendo pedidos de animes', image: ActivityAssets.Requests },
-  arp: { title: 'Gerenciando ARPCoins', image: ActivityAssets.ARPCoins },
-  categoria: { title: 'Explorando categoria' },
-  lista: { title: 'Vendo lista de animes' },
-  dublados: { title: 'Filtrando animes dublados' },
-  legendados: { title: 'Filtrando animes legendados' },
-  login: { title: 'Fazendo login' },
-  registrar: { title: 'Criando conta' },
-  recuperar: { title: 'Recuperando conta' },
-  configuracoes: { title: 'Ajustando configurações' },
-  notificacoes: { title: 'Verificando notificações' },
-  favoritos: { title: 'Vendo favoritos' },
-  historico: { title: 'Revisando histórico' }
+  'animes': { title: 'Procurando animes', image: ActivityAssets.Search },
+  'calendario': { title: 'Vendo o calendário de lançamentos', image: ActivityAssets.Calendar },
+  'ajuda': { title: 'Lendo a página de ajuda' },
+  'perfil': { title: 'Vendo seu perfil', image: ActivityAssets.Profile },
+  'filmes': { title: 'Explorando filmes', image: ActivityAssets.Films },
+  'party': { title: 'Usando Partyroll', image: ActivityAssets.Partyroll },
+  'notes': { title: 'Lendo notas de atualização', image: ActivityAssets.Notes },
+  'vip': { title: 'Visualizando área VIP', image: ActivityAssets.VIP },
+  'pedidos': { title: 'Fazendo pedidos de animes', image: ActivityAssets.Requests },
+  'arp': { title: 'Gerenciando ARPCoins', image: ActivityAssets.ARPCoins },
+  'categoria': { title: 'Explorando categoria' },
+  'lista': { title: 'Vendo lista de animes' },
+  'dublados': { title: 'Filtrando animes dublados' },
+  'legendados': { title: 'Filtrando animes legendados' },
+  'login': { title: 'Fazendo login' },
+  'registrar': { title: 'Criando conta' },
+  'recuperar': { title: 'Recuperando conta' },
+  'configuracoes': { title: 'Ajustando configurações' },
+  'notificacoes': { title: 'Verificando notificações' },
+  'favoritos': { title: 'Vendo favoritos' },
+  'historico': { title: 'Revisando histórico' },
 }
 
 interface VideoData {
