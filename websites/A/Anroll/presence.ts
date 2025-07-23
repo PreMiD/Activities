@@ -1,28 +1,27 @@
-import { ActivityType, Assets } from 'premid';
-
+import type { ActivityType } from 'premid'
 // Declarações necessárias para o ambiente PreMiD
 declare class Presence {
-  constructor(options: { clientId: string });
-  on(event: string, callback: (...args: any[]) => void): void;
-  setActivity(data: PresenceData): void;
-  getSetting<T>(setting: string): Promise<T>;
-  getTimestamps(current: number, duration: number): [number, number];
+  constructor(options: { clientId: string }) // ; removido
+  on(event: string, callback: (...args: any[]) => void): void // ; removido
+  setActivity(data: PresenceData): void // ; removido
+  getSetting<T>(setting: string): Promise<T> // ; removido
+  getTimestamps(current: number, duration: number): [number, number] // ; removido
 }
 
 interface PresenceData {
-  type?: ActivityType;
-  largeImageKey?: string;
-  startTimestamp?: number;
-  endTimestamp?: number;
-  details?: string;
-  state?: string;
-  buttons?: { label: string; url: string }[];
-  smallImageKey?: string;
-  smallImageText?: string;
+  type?: ActivityType, // ; substituído por ,
+  largeImageKey?: string, // ; substituído por ,
+  startTimestamp?: number, // ; substituído por ,
+  endTimestamp?: number, // ; substituído por ,
+  details?: string, // ; substituído por ,
+  state?: string, // ; substituído por ,
+  buttons?: Array<{ label: string; url: string }>, // Correção dupla: , no final e ; interno permitido
+  smallImageKey?: string, // ; substituído por ,
+  smallImageText?: string // ; removido (último item sem delimitador)
 }
 
-const presence = new Presence({ clientId: '1395970198405644350' });
-const browsingTimestamp: number = Math.floor(Date.now() / 1000);
+const presence = new Presence({ clientId: '1395970198405644350' }) // ; removido
+const browsingTimestamp: number = Math.floor(Date.now() / 1000) // ; removido
 
 enum ActivityAssets {
   Logo = 'https://i.ibb.co/hJwCZCTx/ico-menu-2.png',
@@ -30,13 +29,13 @@ enum ActivityAssets {
   Calendar = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/calendar-icon-download-in-svg-png-gif-file-formats--schedule-planning-date-business-pack-icons-1650787.png?f=webp&w=512',
   Search = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/search-icon-download-in-svg-png-gif-file-formats--find-magnifier-glass-ios-11-ui-elements-vol-2-pack-user-interface-icons-475061.png?f=webp&w=512',
   Profile = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/user-rounded-icon-download-in-svg-png-gif-file-formats--person-people-avatar-profile-ui-8-pack-design-development-icons-11410209.png?f=webp&w=512',
-  Films = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/film-reel-1381038-1160929.png?f=webp&w=512',
+  Films = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/film-reel-1381038-1160929.png?f=webp&w=512', // ; removido
   Partyroll = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/people-5156504-4302647.png?f=webp&w=512',
   Notes = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/changelog-11796821-9633010.png?f=webp&w=512',
   VIP = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/vip-stars-4877729-4058729.png?f=webp&w=512',
   Requests = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/request-1890238-1600612.png?f=webp&w=512',
   ARPCoins = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/coin-11766103-9604340.png?f=webp&w=512',
-  Account = 'https://cdn.iconscout.com/icon/free/png-512/free-account-icon-download-in-svg-png-gif-file-formats--circle-user-profile-avatar-action-vol-1-pack-interface-icons-1512648.png?f=webp&w=512',
+  Account = 'https://cdn.iconscout.com/icon/free/png-512/free-account-icon-download-in-svg-png-gif-file-formats--circle-user-profile-avatar-action-vol-1-pack-interface-icons-1512648.png?f=webp&w=512'
 }
 
 const pageDetails: Record<string, { title: string; image?: string }> = {
