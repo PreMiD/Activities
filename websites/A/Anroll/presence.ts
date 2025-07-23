@@ -10,15 +10,15 @@ declare class Presence {
 }
 
 interface PresenceData {
-  type?: ActivityType;
-  largeImageKey?: string;
-  startTimestamp?: number;
-  endTimestamp?: number;
-  details?: string;
-  state?: string;
-  buttons?: Array<{ label: string; url: string }>;
-  smallImageKey?: string;
-  smallImageText?: string;
+  type?: ActivityType
+  largeImageKey?: string
+  startTimestamp?: number
+  endTimestamp?: number
+  details?: string
+  state?: string
+  buttons?: Array<{ label: string; url: string }>
+  smallImageKey?: string
+  smallImageText?: string
 }
 
 const presence = new Presence({ clientId: '1395970198405644350' })
@@ -73,7 +73,7 @@ interface VideoData {
 let video: VideoData = {
   duration: 0,
   currentTime: 0,
-  paused: true
+  paused: true,
 }
 
 const imageCache: Record<string, string> = {}
@@ -81,7 +81,9 @@ const imageCache: Record<string, string> = {}
 async function getCoverImage(): Promise<string> {
   try {
     const currentUrl = window.location.href
-    if (imageCache[currentUrl]) return imageCache[currentUrl]
+    if (imageCache[currentUrl]) {
+      return imageCache[currentUrl]
+    }
 
     const ogImage = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content
     if (ogImage) {
@@ -106,7 +108,7 @@ async function getCoverImage(): Promise<string> {
     }
 
     return ActivityAssets.Logo
-  } catch (err) {
+  } catch (_err) {
     return ActivityAssets.Logo
   }
 }
@@ -114,7 +116,9 @@ async function getCoverImage(): Promise<string> {
 presence.on('iFrameData', (data: unknown) => {
   try {
     const videoData = data as VideoData
-    if (videoData && typeof videoData.duration === 'number') video = videoData
+    if (videoData && typeof videoData.duration === 'number') {
+      video = videoData
+    }
   } catch (error) {
     console.error('Erro ao receber dados do iframe:', error)
   }
@@ -123,7 +127,7 @@ presence.on('iFrameData', (data: unknown) => {
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
-    startTimestamp: browsingTimestamp
+    startTimestamp: browsingTimestamp,
   }
 
   let showButtons = true
@@ -135,7 +139,6 @@ presence.on('UpdateData', async () => {
     const { pathname, href, hostname } = document.location
     const pathArr = pathname.split('/').filter(Boolean)
 
-    // Corrigido: atribuições individuais para evitar problemas de tipagem
     showButtons = await presence.getSetting<boolean>('buttons')
     privacyMode = await presence.getSetting<boolean>('privacy')
     showTimestamps = await presence.getSetting<boolean>('timestamps')
@@ -153,14 +156,14 @@ presence.on('UpdateData', async () => {
       const accountPages: Record<string, string> = {
         '': 'Minha Conta',
         '?p=config': 'Editando configurações',
-        history: 'Visualizando histórico',
+        'history': 'Visualizando histórico',
         '?p=gift': 'Visualizando presentes',
-        favorites: 'Visualizando favoritos',
-        subscription: 'Gerenciando assinatura VIP',
-        login: 'Fazendo login',
-        register: 'Criando conta',
-        forgot: 'Recuperando senha',
-        confirm: 'Confirmando conta'
+        'favorites': 'Visualizando favoritos',
+        'subscription': 'Gerenciando assinatura VIP',
+        'login': 'Fazendo login',
+        'register': 'Criando conta',
+        'forgot': 'Recuperando senha',
+        'confirm': 'Confirmando conta',
       }
 
       presenceData.details = accountPages[firstSegment] || 'Gerenciando conta'
