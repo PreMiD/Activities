@@ -1,7 +1,15 @@
 {
+  "myfigurecollection.browseEntries": {
+    "description": "Browsing list of encyclopedia entries",
+    "message": "Browsing entries"
+  },
   "myfigurecollection.browseItems": {
     "description": "",
     "message": "Browsing items"
+  },
+  "myfigurecollection.buttonViewEntry": {
+    "description": "Button linking user to view an encylopedia entry",
+    "message": "View Entry"
   },
   "myfigurecollection.buttonViewItem": {
     "description": "Button linking user to view an item",
@@ -14,6 +22,10 @@
   "myfigurecollection.byAuthor": {
     "description": "Text attributing {author} for something, such as a photo. {author} will be replaced with the author's name",
     "message": "By {author}"
+  },
+  "myfigurecollection.viewEntry": {
+    "description": "Viewing an encyclopedia entry/page",
+    "message": "Viewing an entry"
   },
   "myfigurecollection.viewItem": {
     "description": "",
