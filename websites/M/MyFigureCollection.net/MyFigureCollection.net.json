@@ -1,0 +1,18 @@
+{
+  "myfigurecollection.browseItems": {
+    "description": "",
+    "message": "Browsing items"
+  },
+  "myfigurecollection.buttonViewItem": {
+    "description": "Button linking user to view an item",
+    "message": "View Item"
+  },
+  "myfigurecollection.viewItem": {
+    "description": "",
+    "message": "Viewing an item"
+  },
+  "myfigurecollection.viewItemComments": {
+    "description": "Viewing comments on an item page",
+    "message": "Viewing comments for an item"
+  }
+}
