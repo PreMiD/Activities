@@ -165,9 +165,8 @@ presence.on('UpdateData', async () => {
       case 'detail': {
         const title = document.querySelector('.heading-name')?.textContent
         presenceData.details = 'Browsing'
-        presenceData.state = privacy
-          ? ''
-          : title
+        if (!privacy)
+          presenceData.state = title
         if (thumbnail) {
           presenceData.largeImageKey = document.querySelector(`img[title="${title}"]`)?.getAttribute('src')
         }
