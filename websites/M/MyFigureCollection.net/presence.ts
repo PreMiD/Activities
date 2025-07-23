@@ -12,6 +12,8 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 const slideshow = presence.createSlideshow()
 
+const BACKGROUND_URL_REGEX = /url\("(.*)"\)/
+
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/bRgn1zR.png',
 }
@@ -34,6 +36,7 @@ presence.on('UpdateData', async () => {
     buttonViewEntry: 'myfigurecollection.buttonViewEntry',
     buttonViewItem: 'myfigurecollection.buttonViewItem',
     buttonViewPicture: 'myfigurecollection.buttonViewPicture',
+    buttonViewProfile: 'general.buttonViewProfile',
     byAuthor: 'myfigurecollection.byAuthor',
     viewEntry: 'myfigurecollection.viewEntry',
     viewHome: 'general.viewHome',
@@ -43,6 +46,7 @@ presence.on('UpdateData', async () => {
     viewPage: 'general.viewPage',
     viewPicture: 'myfigurecollection.viewPicture',
     viewPictureComments: 'myfigurecollection.viewPictureComments',
+    viewProfile: 'general.viewProfile',
   })
   let useSlideshow = false
 
@@ -117,7 +121,7 @@ presence.on('UpdateData', async () => {
           for (const picture of pictures) {
             const data = { ...presenceData }
             const link = picture.querySelector('a')?.href ?? href
-            data.smallImageKey = picture.querySelector('span')?.style.background.match(/url\("(.*)"\)/)?.[1]
+            data.smallImageKey = picture.querySelector('span')?.style.background.match(BACKGROUND_URL_REGEX)?.[1]
             data.buttons = [{ label: strings.buttonViewPicture, url: link }]
             slideshow.addSlide(link, data, MIN_SLIDE_TIME)
           }
@@ -139,6 +143,47 @@ presence.on('UpdateData', async () => {
           if (relatedItem) {
             presenceData.state += ` - ${relatedItem.textContent}`
             presenceData.buttons.push({ label: strings.viewItem, url: relatedItem.querySelector('a') })
+          }
+        }
+        break
+      }
+      case 'profile': {
+        const profilePicture = document.querySelector<HTMLImageElement>('.thumbnail')
+        const tab = document.querySelector('.content-tabs .selected')?.textContent ?? 'Unknown'
+        presenceData.details = strings.viewProfile
+        presenceData.state = title
+        presenceData.smallImageKey = profilePicture
+        presenceData.smallImageText = tab
+        presenceData.buttons = [{ label: strings.buttonViewProfile, url: href }]
+        switch (pathList[2]) {
+          case 'collection': {
+            useSlideshow = true
+            const items = document.querySelectorAll('.content-wrapper .item-icon')
+            for (const item of items) {
+              const data = { ...presenceData }
+              const itemLink = item.querySelector('a')
+              const image = item.querySelector('img')
+              data.largeImageKey = profilePicture
+              data.smallImageKey = image
+              data.smallImageText = `${tab} - ${image?.alt}`
+              data.buttons?.push({ label: strings.buttonViewItem, url: itemLink })
+              slideshow.addSlide(itemLink?.textContent ?? 'unknown', data, MIN_SLIDE_TIME)
+            }
+            break
+          }
+          case 'pictures': {
+            useSlideshow = true
+            const items = document.querySelectorAll('.content-wrapper .picture-icon')
+            for (const item of items) {
+              const data = { ...presenceData }
+              const itemLink = item.querySelector('a')
+              const image = item.querySelector('span')
+              data.largeImageKey = profilePicture
+              data.smallImageKey = image?.style.background.match(BACKGROUND_URL_REGEX)?.[1]
+              data.buttons?.push({ label: strings.buttonViewPicture, url: itemLink })
+              slideshow.addSlide(itemLink?.textContent ?? 'unknown', data, MIN_SLIDE_TIME)
+            }
+            break
           }
         }
         break
