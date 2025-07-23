@@ -22,7 +22,7 @@ const utils = {
   stripPercent: (percentage: string = '0%') => +percentage.replace('%', ''),
 }
 
-enum ActivityAssets { // Other default assets can be found at index.d.ts
+enum ActivityAssets {
   Logo = 'https://cdn.imgchest.com/files/yd5cemrrpz4.png',
   thumbnail = 'https://cdn.imgchest.com/files/yrgcn9zz3b4.png',
 }
