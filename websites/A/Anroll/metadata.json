@@ -29,7 +29,7 @@
     "community"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*",
+  "iFrameRegExp": "([a-z0-9-]+\\.)*anroll\\.net[/]",
   "settings": [
     {
       "id": "buttons",
