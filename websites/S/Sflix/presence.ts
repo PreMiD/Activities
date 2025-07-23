@@ -60,9 +60,9 @@ presence.on('UpdateData', async () => {
       presenceData.name = privacy ? 'Sflix' : `${showTitle}`
     else if (!privacy)
       presenceData.details = showTitle
-    presenceData.state = privacy
-      ? ''
-      : document.querySelector('.on-air div h3')?.textContent ?? ''
+    if (!privacy) {
+      presenceData.state = document.querySelector('.on-air div h3')?.textContent ?? ''
+    }
     presenceData.largeImageKey = thumbnail && thumbnailURL && !privacy ? thumbnailURL : ActivityAssets.Logo
     if (season && ep)
       presenceData.largeImageText = `${season}, ${ep}`
