@@ -3,7 +3,7 @@ const presence = new Presence({ clientId: "1395970198405644350" });
 const browsingTimestamp = Math.floor(Date.now() / 1000);
 
 enum ActivityAssets {
-  Logo = "https://static.anroll.net/app-images/login_cad.png?f=webp&w=512",
+  Logo = "https://static.anroll.net/app-images/login_cad.png",
   Home = "https://cdn.iconscout.com/icon/premium/png-512-thumb/home-icon-download-in-svg-png-gif-file-formats--house-casa-building-categories-pack-miscellaneous-icons-112182.png?f=webp&w=512",
   Calendar = "https://cdn.iconscout.com/icon/premium/png-512-thumb/calendar-icon-download-in-svg-png-gif-file-formats--schedule-planning-date-business-pack-icons-1650787.png?f=webp&w=512",
   Search = "https://github.com/PreMiD/Activities/blob/main/.resources/search.png?f=webp&w=512",
