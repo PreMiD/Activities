@@ -91,13 +91,9 @@ presence.on('UpdateData', async () => {
           presenceData.details = 'Searching'
           presenceData.smallImageKey = Assets.Search
           presenceData.smallImageText = 'Searching'
-          presenceData.state = privacy
-            ? ''
-            : document
-              .querySelector('h2[class*=\'cat-heading\']')
-              ?.textContent
-              ?.split('"')[1]
-              || document.querySelector('h2[class*=\'cat-heading\']')?.textContent
+          if (!privacy) {
+            presenceData.state = document.querySelector('h2[class*=\'cat-heading\']')?.textContent?.split('"')[1] || document.querySelector('h2[class*=\'cat-heading\']')?.textContent
+          }
         }
         else if (pathname.startsWith('/android-movies-apk')) {
           presenceData.details = 'Checking the Android App'
