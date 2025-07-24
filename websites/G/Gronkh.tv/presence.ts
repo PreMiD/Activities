@@ -15,7 +15,7 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
     startTimestamp: browsingTimestamp,
     details: 'Gronkh.tv',
-    state: 'Viewing other pages'
+    state: 'Viewing other pages',
   }
 
   const curURL = document.location.pathname
@@ -54,11 +54,11 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Gronkh.tv'
     presenceData.state = 'Viewing the landing page'
   }
-  else if(curURL.startsWith('/watchparties')) {
+  else if (curURL.startsWith('/watchparties')) {
     presenceData.details = 'Gronkh.tv'
     presenceData.state = 'Viewing watchparties'
   }
-  else if(curURL.startsWith('/live/GronkhTV')) {
+  else if (curURL.startsWith('/live/GronkhTV')) {
     presenceData.details = 'Gronkh.tv'
     presenceData.smallImageKey = Assets.Play
     const stateText = `Watching Gronkh\'s live stream`
