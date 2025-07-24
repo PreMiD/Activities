@@ -1,4 +1,8 @@
 {
+  "myfigurecollection.browseArticles": {
+    "description": "Browsing list of blog posts/articles",
+    "message": "Browsing articles"
+  },
   "myfigurecollection.browseClubs": {
     "description": "Browsing list of clubs/groups",
     "message": "Browsing clubs"
