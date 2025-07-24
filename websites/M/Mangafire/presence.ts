@@ -23,42 +23,47 @@ const Fields = {
   readingState: 'Reading The Manga...',
 }
 
+const mangaCoverCache = new Map<string, string | null>()
+
 async function getMangaCoverImage(): Promise<string | null> {
   const curPath = document.location.pathname
 
-  // 情况 1: 当前就是 /manga/{title}
-  if (/^\/manga\/[^/]+\/?$/.test(curPath)) {
+  // 从 pathname 提取 title，无论是 /manga/{title} 还是 /read/{title}/xxx
+  const match = curPath.match(/^\/(?:manga|read)\/([^/]+)/)
+  const mangaTitle = match?.[1]
+  if (!mangaTitle) {
+    return null
+  }
+  // 如果已有缓存，直接返回
+  if (mangaCoverCache.has(mangaTitle)) {
+    return mangaCoverCache.get(mangaTitle)!
+  }
+  // 情况 1：当前是 manga 页面，可以直接 querySelector
+  if (curPath.startsWith(`/manga/${mangaTitle}`)) {
     const img = document.querySelector<HTMLImageElement>('.poster img[itemprop="image"]')
-    return img?.src || null
+    const result = img?.src || null
+    mangaCoverCache.set(mangaTitle, result)
+    return result
   }
 
-  // 情况 2: 当前是 /read/{title}/xxx，提取 title 并跳转抓图
-  if (/^\/read\/[^/]+\//.test(curPath)) {
-    const match = curPath.match(/^\/read\/([^/]+)\//)
-    const mangaTitle = match?.[1]
-
-    if (!mangaTitle)
-      return null
-
-    // 构造 /manga/{title} 页面地址
+  // 情况 2：从 read 页面跳转请求 /manga/{title}
+  try {
     const mangaUrl = `/manga/${mangaTitle}`
+    const res = await fetch(mangaUrl)
+    const html = await res.text()
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(html, 'text/html')
+    const img = doc.querySelector<HTMLImageElement>('.poster img[itemprop="image"]')
 
-    try {
-      const res = await fetch(mangaUrl)
-      const html = await res.text()
-      const parser = new DOMParser()
-      const doc = parser.parseFromString(html, 'text/html')
-      const img = doc.querySelector<HTMLImageElement>('.poster img[itemprop="image"]')
-
-      return img?.src || null
-    }
-    catch (err) {
-      console.error('封面获取失败', err)
-      return null
-    }
+    const result = img?.src || null
+    mangaCoverCache.set(mangaTitle, result)
+    return result
   }
-
-  return null
+  catch (err) {
+    console.error('封面获取失败', err)
+    mangaCoverCache.set(mangaTitle, null)
+    return null
+  }
 }
 
 presence.on('UpdateData', async () => {
