@@ -57,23 +57,33 @@ function decodeSearchKey(str: string) {
   }
 }
 
+const outlineCache: Record<string, string | null> = {}
+
 function extractNovelIdFromPath(path: string): string | null {
   const match = path.match(/^\/Novel\/(\d+)/)
   return match?.[1] || null
 }
 
 async function fetchOutlinePage(novelId: string): Promise<string | null> {
+  const cached = outlineCache[novelId]
+  if (cached !== undefined) {
+    return cached
+  }
+
   const url = `https://book.sfacg.com/Novel/${novelId}/`
   try {
     const res = await fetch(url)
     if (!res.ok) {
+      outlineCache[novelId] = null
       return null
     }
     const html = await res.text()
+    outlineCache[novelId] = html
     return html
   }
   catch (e) {
     console.error('Failed to fetch outline page:', e)
+    outlineCache[novelId] = null
     return null
   }
 }
