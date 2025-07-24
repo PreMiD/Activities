@@ -9,13 +9,6 @@ export class ItemPage extends BasePage {
   }
 
   override async executeView(presenceData: PresenceData): Promise<boolean> {
-    presenceData.details = strings.viewItemComments
-    presenceData.state = getSubtitle()
-    presenceData.buttons = [getButton(strings.buttonViewItem)]
-    return false
-  }
-
-  override async executeTab(presenceData: PresenceData, _tab: string): Promise<boolean> {
     presenceData.details = strings.viewItem
     presenceData.state = getTitle()
     presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.main img')
@@ -35,6 +28,13 @@ export class ItemPage extends BasePage {
       }
       slideshow.addSlide(heading, data, MIN_SLIDE_TIME)
     }
+    return false
+  }
+
+  override async executeTab(presenceData: PresenceData, _tab: string): Promise<boolean> {
+    presenceData.details = strings.viewItemComments
+    presenceData.state = getSubtitle()
+    presenceData.buttons = [getButton(strings.buttonViewItem)]
     return true
   }
 }

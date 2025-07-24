@@ -23,6 +23,9 @@ export class BasePage {
     if (mode === 'browse') {
       useSlideshow = await this.executeBrowse(presenceData)
     }
+    else if (mode === 'submit') {
+      presenceData.details = strings.submit
+    }
     else if (tab) {
       useSlideshow = await this.executeTab(presenceData, tab)
     }

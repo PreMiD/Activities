@@ -51,6 +51,10 @@
     "description": "Text attributing {author} for something, such as a photo. {author} will be replaced with the author's name",
     "message": "By {author}"
   },
+  "myfigurecollection.submit": {
+    "description": "Uploading, editing, or creating a submission",
+    "message": "Submitting something"
+  },
   "myfigurecollection.viewAd": {
     "description": "Viewing an ad for a sale for an item",
     "message": "Viewing an ad"

@@ -34,6 +34,7 @@ export function getStrings() {
     buttonViewShop: 'myfigurecollection.buttonViewShop',
     byAuthor: 'myfigurecollection.byAuthor',
     readingAnArticle: 'general.readingAnArticle',
+    submit: 'myfigurecollection.submit',
     viewAd: 'myfigurecollection.viewAd',
     viewClub: 'myfigurecollection.viewClub',
     viewEntry: 'myfigurecollection.viewEntry',
