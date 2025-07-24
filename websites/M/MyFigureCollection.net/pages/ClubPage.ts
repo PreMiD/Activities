@@ -15,4 +15,10 @@ export class ClubPage extends BasePage {
     presenceData.buttons = [getButton(strings.buttonViewClub)]
     return false
   }
+
+  override async executeTab(presenceData: PresenceData, _tab: string): Promise<boolean> {
+    await this.executeView(presenceData)
+    presenceData.smallImageText = document.querySelector('.content-tabs .selected')
+    return false
+  }
 }

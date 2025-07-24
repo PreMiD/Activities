@@ -39,5 +39,6 @@
       "id": "lang",
       "multiLanguage": true
     }
-  ]
+  ],
+  "mobile": true
 }

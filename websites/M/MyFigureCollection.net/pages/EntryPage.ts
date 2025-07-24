@@ -11,7 +11,7 @@ export class EntryPage extends BasePage {
   override async executeView(presenceData: PresenceData): Promise<boolean> {
     presenceData.details = strings.viewEntry
     presenceData.state = getTitle()
-    presenceData.smallImageKey = await squareImage(document.querySelector<HTMLImageElement>('.entry-picture'))
+    presenceData.smallImageKey = await squareImage(document.querySelector<HTMLImageElement>('.entry-picture img'))
     presenceData.smallImageText = document.querySelector('.entry-data .data-value')
     presenceData.buttons = [getButton(strings.buttonViewEntry)]
     return false

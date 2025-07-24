@@ -81,18 +81,18 @@ export function squareImage(inputImage: HTMLImageElement | string | null): Promi
     const { naturalHeight: height, naturalWidth: width } = image
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')!
-    canvas.width = width
-    canvas.height = height
-    if (width > height)
-      canvas.height = width
-    if (height > width)
-      canvas.width = height
+    const size = 512
+
+    const scale = Math.min(size / width, size / height)
+    const scaledWidth = width * scale
+    const scaledHeight = height * scale
+    const offsetX = (size - scaledWidth) / 2
+    const offsetY = (size - scaledHeight) / 2
+
+    canvas.width = size
+    canvas.height = size
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.drawImage(
-      image,
-      (canvas.width - width) / 2,
-      (canvas.height - height) / 2,
-    )
+    ctx.drawImage(image, offsetX, offsetY, scaledWidth, scaledHeight)
     const output = new Promise<Blob>((resolve) => {
       canvas.toBlob((blob) => {
         resolve(blob!)
