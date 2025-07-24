@@ -6,6 +6,9 @@
     "name": "o0_ice_0o"
   },
   "service": "anilife",
+  "altnames": [
+    "애니라이프"
+  ],
   "description": {
     "en": "Watch and stream the latest anime for free",
     "ko": "최신 애니메이션 무료 다시보기 및 스트리밍"
