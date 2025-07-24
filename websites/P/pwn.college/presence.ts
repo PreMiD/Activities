@@ -66,7 +66,6 @@ presence.on('UpdateData', async () => {
 
   if (pathname.includes('/settings')) {
     presenceData.details = '⚙️ Tweaking the experience...'
-    presenceData.state = ''
   }
   presence.setActivity(presenceData)
 })
