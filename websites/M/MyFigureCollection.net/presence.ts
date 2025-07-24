@@ -1,4 +1,4 @@
-import page from './page.js'
+import page from './pages/index.js'
 import { ActivityAssets, browsingTimestamp, getStrings, presence } from './util.js'
 
 presence.on('UpdateData', async () => {
