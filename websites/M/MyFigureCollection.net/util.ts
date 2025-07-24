@@ -1,4 +1,5 @@
 import type ActivityStrings from './MyFigureCollection.net.json'
+import { Assets } from 'premid'
 
 declare global {
   interface StringKeys {
@@ -63,6 +64,9 @@ export function squareImage(inputImage: HTMLImageElement | string | null): Promi
   }
   let src = ''
   if (inputImage instanceof HTMLImageElement) {
+    if (!inputImage.complete) {
+      return Promise.resolve(ActivityAssets.Logo)
+    }
     src = inputImage.src
   }
   else {
@@ -97,7 +101,7 @@ export function squareImage(inputImage: HTMLImageElement | string | null): Promi
     imageCache[src] = output
     return output
   }
-  imageCache[src] = Promise.resolve(src)
+  imageCache[src] = Promise.resolve(Assets.Uploading)
   return new Promise((resolve) => {
     image.onload = () => {
       resolve(render())
