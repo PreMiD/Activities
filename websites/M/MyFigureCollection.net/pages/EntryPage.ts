@@ -8,7 +8,7 @@ export class EntryPage extends BasePage {
     return false
   }
 
-  override async executeView(presenceData: PresenceData, _id: string): Promise<boolean> {
+  override async executeView(presenceData: PresenceData): Promise<boolean> {
     presenceData.details = strings.viewEntry
     presenceData.state = getTitle()
     presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.entry-picture')

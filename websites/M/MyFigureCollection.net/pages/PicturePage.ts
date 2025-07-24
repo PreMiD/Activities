@@ -16,9 +16,9 @@ export class PicturePage extends BasePage {
     return true
   }
 
-  override async executeView(presenceData: PresenceData, id: string): Promise<boolean> {
+  override async executeView(presenceData: PresenceData): Promise<boolean> {
     presenceData.details = strings.viewPicture
-    presenceData.state = `#${id}`
+    presenceData.state = `#${this.input.id}`
     presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.the-picture img')
     presenceData.smallImageText = strings.byAuthor.replace(
       '{author}',

@@ -2,7 +2,7 @@ import { getButton, getCurrentLink, getThumbnail, getTitle } from '../util.js'
 import { BasePage, strings } from './base.js'
 
 export class ShopPage extends BasePage {
-  override async executeView(presenceData: PresenceData, _id: string): Promise<boolean> {
+  override async executeView(presenceData: PresenceData): Promise<boolean> {
     presenceData.details = strings.viewShop
     presenceData.state = getTitle()
     presenceData.smallImageKey = getThumbnail()

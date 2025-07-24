@@ -1,12 +1,12 @@
 import { Assets } from 'premid'
 import { getStrings, getSubtitle, getTitle, presence, slideshow } from '../util.js'
 
-export interface PageInput {
+export type PageInput = {
   presenceData: PresenceData
   tab?: string | null
+  id?: string
   mode: string
-  id: string
-}
+} & Record<string, unknown>
 
 // global strings variable for use across all pages
 type StringData = Awaited<ReturnType<typeof getStrings>>
@@ -27,7 +27,7 @@ export class BasePage {
       useSlideshow = await this.executeTab(presenceData, tab)
     }
     else if (id) {
-      useSlideshow = await this.executeView(presenceData, id)
+      useSlideshow = await this.executeView(presenceData)
     }
     else {
       presenceData.details = strings.browsing
@@ -39,12 +39,12 @@ export class BasePage {
     return false
   }
 
-  async executeView(_presenceData: PresenceData, _id: string): Promise<boolean> {
+  async executeView(_presenceData: PresenceData): Promise<boolean> {
     return false
   }
 
   async executeTab(presenceData: PresenceData, _tab: string): Promise<boolean> {
-    await this.executeView(presenceData, this.input.id)
+    await this.executeView(presenceData)
     presenceData.state = getSubtitle()
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = getTitle()

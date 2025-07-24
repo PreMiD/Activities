@@ -8,7 +8,7 @@ export class ItemPage extends BasePage {
     return false
   }
 
-  override async executeView(presenceData: PresenceData, _id: string): Promise<boolean> {
+  override async executeView(presenceData: PresenceData): Promise<boolean> {
     presenceData.details = strings.viewItemComments
     presenceData.state = getSubtitle()
     presenceData.buttons = [getButton(strings.buttonViewItem)]

@@ -2,7 +2,7 @@ import { BACKGROUND_URL_REGEX, getButton, getThumbnail, getTitle, slideshow } fr
 import { BasePage, strings } from './base.js'
 
 export class UserPage extends BasePage {
-  override async executeView(presenceData: PresenceData, _id: string): Promise<boolean> {
+  override async executeView(presenceData: PresenceData): Promise<boolean> {
     presenceData.details = strings.viewProfile
     presenceData.state = getTitle()
     presenceData.smallImageKey = getThumbnail()
@@ -12,7 +12,7 @@ export class UserPage extends BasePage {
 
   override async executeTab(presenceData: PresenceData, tab: string): Promise<boolean> {
     let useSlideshow = false
-    await this.executeView(presenceData, this.input.id)
+    await this.executeView(presenceData)
     switch (tab) {
       case 'collection': {
         useSlideshow = true

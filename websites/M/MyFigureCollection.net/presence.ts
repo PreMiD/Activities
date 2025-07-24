@@ -15,21 +15,20 @@ presence.on('UpdateData', async () => {
   const searchSection = params.get('_tb')
   const searchTab = params.get('tab')
   const searchMode = params.get('mode')
+
+  const props: Record<string, string | null> = {}
+  for (const key of params.keys()) {
+    props[key] = params.get(key)
+  }
+
   if (searchSection) { // Search or specific queries
     if (page[searchSection]) {
       const instance = new page[searchSection]()
-      let id = ''
-      switch (searchSection) {
-        case 'user': {
-          id = params.get('username') ?? ''
-          break
-        }
-      }
       instance.execute({
+        ...props,
         presenceData,
         tab: searchTab,
-        mode: searchMode ?? 'view',
-        id,
+        mode: searchMode ?? 'browse',
       })
     }
     else {
@@ -58,7 +57,6 @@ presence.on('UpdateData', async () => {
         pageInstance.execute({
           presenceData,
           mode: 'browse',
-          id: '',
         })
       }
       else if (pathList[1]) {

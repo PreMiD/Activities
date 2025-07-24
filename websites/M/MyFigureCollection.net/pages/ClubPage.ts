@@ -7,7 +7,7 @@ export class ClubPage extends BasePage {
     return false
   }
 
-  override async executeView(presenceData: PresenceData, _id: string): Promise<boolean> {
+  override async executeView(presenceData: PresenceData): Promise<boolean> {
     presenceData.details = strings.viewClub
     presenceData.state = getTitle()
     presenceData.smallImageKey = getThumbnail()
