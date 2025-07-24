@@ -55,6 +55,57 @@ export enum ActivityAssets {
   Logo = 'https://i.imgur.com/bRgn1zR.png',
 }
 
+// mostly needed because the site's images don't load on Discord
+const imageCache: Record<string, Promise<Blob | string>> = {}
+export function squareImage(inputImage: HTMLImageElement | string | null): Promise<Blob | string> {
+  if (inputImage === null) {
+    return Promise.resolve(ActivityAssets.Logo)
+  }
+  let src = ''
+  if (inputImage instanceof HTMLImageElement) {
+    src = inputImage.src
+  }
+  else {
+    src = inputImage
+  }
+  if (src in imageCache) {
+    return imageCache[src]!
+  }
+  const image = document.createElement('img')
+  image.crossOrigin = 'anonymous'
+  const render = () => {
+    const { naturalHeight: height, naturalWidth: width } = image
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')!
+    canvas.width = width
+    canvas.height = height
+    if (width > height)
+      canvas.height = width
+    if (height > width)
+      canvas.width = height
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.drawImage(
+      image,
+      (canvas.width - width) / 2,
+      (canvas.height - height) / 2,
+    )
+    const output = new Promise<Blob>((resolve) => {
+      canvas.toBlob((blob) => {
+        resolve(blob!)
+      })
+    })
+    imageCache[src] = output
+    return output
+  }
+  imageCache[src] = Promise.resolve(src)
+  return new Promise((resolve) => {
+    image.onload = () => {
+      resolve(render())
+    }
+    image.src = src
+  })
+}
+
 export function getTitle(): HTMLHeadingElement | null {
   return document.querySelector('h1')
 }

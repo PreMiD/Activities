@@ -1,4 +1,4 @@
-import { getButton, getCurrentLink, getTitle } from '../util.js'
+import { getButton, getCurrentLink, getTitle, squareImage } from '../util.js'
 import { BasePage, strings } from './base.js'
 
 export class EntryPage extends BasePage {
@@ -11,7 +11,7 @@ export class EntryPage extends BasePage {
   override async executeView(presenceData: PresenceData): Promise<boolean> {
     presenceData.details = strings.viewEntry
     presenceData.state = getTitle()
-    presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.entry-picture')
+    presenceData.smallImageKey = await squareImage(document.querySelector<HTMLImageElement>('.entry-picture'))
     presenceData.smallImageText = document.querySelector('.entry-data .data-value')
     presenceData.buttons = [getButton(strings.buttonViewEntry)]
     return false

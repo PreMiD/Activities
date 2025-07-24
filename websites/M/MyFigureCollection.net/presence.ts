@@ -17,10 +17,9 @@ presence.on('UpdateData', async () => {
   const searchMode = params.get('mode')
 
   const props: Record<string, string | null> = {}
-  for (const key of params.keys()) {
-    props[key] = params.get(key)
-  }
-
+  params.forEach((val, key) => {
+    props[key] = val
+  })
   if (searchSection) { // Search or specific queries
     if (page[searchSection]) {
       const instance = new page[searchSection]()

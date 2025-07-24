@@ -1,4 +1,4 @@
-import { BACKGROUND_URL_REGEX, getButton, getCurrentLink, slideshow } from '../util.js'
+import { BACKGROUND_URL_REGEX, getButton, getCurrentLink, getTitle, slideshow, squareImage } from '../util.js'
 import { BasePage, strings } from './base.js'
 
 export class PicturePage extends BasePage {
@@ -18,8 +18,8 @@ export class PicturePage extends BasePage {
 
   override async executeView(presenceData: PresenceData): Promise<boolean> {
     presenceData.details = strings.viewPicture
-    presenceData.state = `#${this.input.id}`
-    presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.the-picture img')
+    presenceData.state = getTitle()?.textContent ?? this.input.id
+    presenceData.smallImageKey = await squareImage(document.querySelector<HTMLImageElement>('.the-picture img'))
     presenceData.smallImageText = strings.byAuthor.replace(
       '{author}',
       document.querySelector('.object-meta .user-anchor')?.textContent ?? 'Unknown',

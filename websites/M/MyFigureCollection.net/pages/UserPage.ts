@@ -1,11 +1,11 @@
-import { BACKGROUND_URL_REGEX, getButton, getThumbnail, getTitle, slideshow } from '../util.js'
+import { BACKGROUND_URL_REGEX, getButton, getThumbnail, getTitle, slideshow, squareImage } from '../util.js'
 import { BasePage, strings } from './base.js'
 
 export class UserPage extends BasePage {
   override async executeView(presenceData: PresenceData): Promise<boolean> {
     presenceData.details = strings.viewProfile
     presenceData.state = getTitle()
-    presenceData.smallImageKey = getThumbnail()
+    presenceData.smallImageKey = await squareImage(getThumbnail())
     presenceData.buttons = [getButton(strings.buttonViewProfile)]
     return false
   }
@@ -20,10 +20,11 @@ export class UserPage extends BasePage {
         for (const item of items) {
           const data = { ...presenceData }
           const itemLink = item.querySelector('a')
-          const image = item.querySelector('img')
-          data.largeImageKey = getThumbnail()
+          const baseImage = item.querySelector('img')
+          const image = await squareImage(baseImage)
+          data.largeImageKey = await squareImage(getThumbnail())
           data.smallImageKey = image
-          data.smallImageText = `${tab} - ${image?.alt}`
+          data.smallImageText = `${tab} - ${baseImage?.alt}`
           data.buttons?.push({ label: strings.buttonViewItem, url: itemLink })
           slideshow.addSlide(itemLink?.textContent ?? 'unknown', data, MIN_SLIDE_TIME)
         }
@@ -36,7 +37,7 @@ export class UserPage extends BasePage {
           const data = { ...presenceData }
           const itemLink = item.querySelector('a')
           const image = item.querySelector('span')
-          data.largeImageKey = getThumbnail()
+          data.largeImageKey = await squareImage(getThumbnail())
           data.smallImageKey = image?.style.background.match(BACKGROUND_URL_REGEX)?.[1]
           data.buttons?.push({ label: strings.buttonViewPicture, url: itemLink })
           slideshow.addSlide(itemLink?.textContent ?? 'unknown', data, MIN_SLIDE_TIME)
