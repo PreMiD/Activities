@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets { // Other default assets can be found at index.d.ts
+enum ActivityAssets {
   Logo = 'https://i.imgur.com/rZooYzo.png',
 }
 
@@ -14,14 +14,17 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
     type: ActivityType.Watching,
     startTimestamp: browsingTimestamp,
-    // smallImageKey: Assets.Play,
-    endTimestamp: undefined,
-    details: 'Viewing Gronkh.tv',
+    details: 'Gronkh.tv',
+    state: 'Viewing other pages'
   }
 
-  const curURL = document.location.href
+  const curURL = document.location.pathname
 
-  if (curURL.includes('streams')) {
+  if (curURL.startsWith('/streams')) {
+    presenceData.details = 'Gronkh.tv'
+    presenceData.state = 'Viewing all streams'
+  }
+  else if (curURL.includes('streams')) {
     const el = document.querySelector('video')
     if (el instanceof HTMLVideoElement) {
       const timestamps = getTimestamps(el.currentTime, el.duration)
@@ -46,6 +49,20 @@ presence.on('UpdateData', async () => {
         url: curURL,
       },
     ]
+  }
+  else if (curURL.startsWith('/landing')) {
+    presenceData.details = 'Gronkh.tv'
+    presenceData.state = 'Viewing the landing page'
+  }
+  else if(curURL.startsWith('/watchparties')) {
+    presenceData.details = 'Gronkh.tv'
+    presenceData.state = 'Viewing watchparties'
+  }
+  else if(curURL.startsWith('/live/GronkhTV')) {
+    presenceData.details = 'Gronkh.tv'
+    presenceData.smallImageKey = Assets.Play
+    const stateText = `Watching Gronkh\'s live stream`
+    presenceData.state = stateText
   }
   presence.setActivity(presenceData)
 })
