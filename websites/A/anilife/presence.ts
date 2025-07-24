@@ -32,6 +32,7 @@ presence.on('UpdateData', async () => {
       else if (document.location.pathname === '/results') {
         presenceData.details = `'${document.querySelector('h1')?.textContent?.split('\'')[1]}' 검색 결과`
         presenceData.state = '탐색 중'
+        presenceData.smallImageKey = Assets.Search
       }
       else if (['anime', 'daily', 'complete', 'top', 'random'].includes(document.location.pathname.split('/')[1] ?? '')) {
         presenceData.details = document.querySelector('h1')?.textContent ?? '(로딩 중)'
@@ -79,6 +80,7 @@ presence.on('UpdateData', async () => {
       else if (document.location.pathname === '/search') {
         presenceData.details = document.querySelector('.releases span')?.textContent ?? '(로딩 중)'
         presenceData.state = '탐색 중'
+        presenceData.smallImageKey = Assets.Search
       }
       else if (['g', 'ani'].includes(document.location.pathname.split('/')[1] ?? ' ')) {
         presenceData.details = `${document.querySelector('.entry-title')?.textContent ?? '(로딩 중)'} 에피소드 목록`
@@ -104,6 +106,8 @@ presence.on('UpdateData', async () => {
   }
   if (await presence.getSetting('hide')) { // hide using anilife
     delete presenceData.largeImageKey
+    if (!['play', 'h', 'search', 'results'].includes(document.location.pathname.split('/')[1] ?? ' '))
+      presenceData.largeImageKey = Assets.Play
     if (['anilife', 'Anilife'].includes(presenceData.name ?? ' '))
       presenceData.name = '애니메이션'
   }
