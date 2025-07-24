@@ -1,5 +1,5 @@
 import { getButton, getThumbnail, getTitle } from '../util.js'
-import { BasePage, strings } from './index.js'
+import { BasePage, strings } from './base.js'
 
 export class BlogPostPage extends BasePage {
   override async executeBrowse(presenceData: PresenceData): Promise<boolean> {

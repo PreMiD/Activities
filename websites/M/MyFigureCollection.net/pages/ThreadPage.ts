@@ -1,5 +1,5 @@
 import { getButton, getTitle } from '../util.js'
-import { BasePage, strings } from './index.js'
+import { BasePage, strings } from './base.js'
 
 export class ThreadPage extends BasePage {
   override async executeView(presenceData: PresenceData, _id: string): Promise<boolean> {

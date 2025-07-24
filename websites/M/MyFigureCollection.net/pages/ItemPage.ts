@@ -1,5 +1,5 @@
 import { getButton, getCurrentLink, getSubtitle, getTitle, slideshow } from '../util.js'
-import { BasePage, strings } from './index.js'
+import { BasePage, strings } from './base.js'
 
 export class ItemPage extends BasePage {
   override async executeBrowse(presenceData: PresenceData): Promise<boolean> {

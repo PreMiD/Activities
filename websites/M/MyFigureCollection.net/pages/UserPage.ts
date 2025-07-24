@@ -1,5 +1,5 @@
 import { BACKGROUND_URL_REGEX, getButton, getThumbnail, getTitle, slideshow } from '../util.js'
-import { BasePage, strings } from './index.js'
+import { BasePage, strings } from './base.js'
 
 export class UserPage extends BasePage {
   override async executeView(presenceData: PresenceData, _id: string): Promise<boolean> {

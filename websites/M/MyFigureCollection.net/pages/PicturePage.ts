@@ -1,5 +1,5 @@
 import { BACKGROUND_URL_REGEX, getButton, getCurrentLink, slideshow } from '../util.js'
-import { BasePage, strings } from './index.js'
+import { BasePage, strings } from './base.js'
 
 export class PicturePage extends BasePage {
   override async executeBrowse(presenceData: PresenceData): Promise<boolean> {
