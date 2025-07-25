@@ -66,7 +66,6 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  // const curURL = document.location.href Replaced at beggining
   if (pathname === '/') {
     presenceData.details = 'Viewing home page'
   }
