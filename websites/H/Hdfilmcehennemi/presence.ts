@@ -9,31 +9,75 @@ enum ActivityAssets {
   Logo = 'https://i.imgur.com/rFXu6Em.png',
 }
 
+let iframePlayback = false
+let currTime = 0
+let durTime = 0
+let isPaused = true
+let mainTitle: string | null = null
+let germanTitle: string | null = null
+let year: string | null = null
+
+presence.on('iFrameData', (data: any) => {
+  if (data.iFrameVideoData) {
+    iframePlayback = true
+    currTime = data.iFrameVideoData.currTime
+    durTime = data.iFrameVideoData.dur
+    isPaused = data.iFrameVideoData.paused
+  }
+})
+
 presence.on('UpdateData', async () => {
+  const { pathname, href } = document.location
+
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     type: ActivityType.Watching,
     startTimestamp: browsingTimestamp,
-    // smallImageKey: Assets.Play,
     endTimestamp: undefined,
     details: 'Viewing hdfilmcehennemi.nl',
   }
 
-  const curURL = document.location.href
-  if(document.location.pathname === '/') {
+  // Player Reproduction
+  const player = document.querySelector('#router > div.player-container')
+  if (player) {
+    // Movie Title As Name
+    presenceData.name = document.querySelector('.section-title')?.childNodes[0]?.textContent?.trim()
+    const categoryLinks = document.querySelectorAll('.post-info-cats a')
+    const categories = Array.from(categoryLinks).map(a => a.textContent?.trim())
+    presenceData.state = categories.join(' · ')
+    presenceData.largeImageText = `Watching: ${mainTitle || 'Unknow Movie'}`
+
+    if (iframePlayback) {
+      presenceData.smallImageKey = isPaused ? Assets.Pause : Assets.Play
+      presenceData.smallImageText = isPaused ? 'Paused' : 'Playing'
+    }
+
+    if (!isPaused) {
+      const [startTs, endTs] = getTimestamps(
+        Math.floor(currTime),
+        Math.floor(durTime),
+      )
+      presenceData.startTimestamp = startTs
+      presenceData.endTimestamp = endTs
+    }
+    else {
+      delete presenceData.startTimestamp
+      delete presenceData.endTimestamp
+    }
+  }
+
+  // const curURL = document.location.href Replaced at beggining
+  if (pathname === '/') {
     presenceData.details = 'Viewing home page'
   }
   else {
-    let mainTitle: string | null = null
-    let germanTitle: string | null = null
-    let year: string | null = null
 
-    const h1 = document.querySelector("h1.section-title");
+    const h1 = document.querySelector('h1.section-title')
     if (h1 instanceof HTMLElement) {
-      const first = h1.firstChild;
-      const small = h1.querySelector("small");
+      const first = h1.firstChild
+      const small = h1.querySelector('small')
 
-      mainTitle = first?.textContent?.trim().replace(/ izle$/, "") ?? null
+      mainTitle = first?.textContent?.trim().replace(/ izle$/, '') ?? null
 
       const smallText = small?.textContent?.trim() ?? null
       if (smallText) {
@@ -45,28 +89,12 @@ presence.on('UpdateData', async () => {
       }
     }
 
-    // I tried many method but still cannot get the video element 
-    
-    // const el = document.querySelector('video')
-    // if (el instanceof HTMLVideoElement) {
-    //   const timestamps = getTimestamps(el.currentTime, el.duration)
-    //   const isPlaying = !el.paused && !el.ended && el.readyState > 2
-    //   if (isPlaying) {
-    //     presenceData.smallImageKey = Assets.Play
-    //   }
-    //   else {
-    //     presenceData.smallImageKey = Assets.Pause
-    //   }
-    //   presenceData.startTimestamp = timestamps[0]
-    //   presenceData.endTimestamp = timestamps[1]
-    // }
-
     const detailsText = `${mainTitle} · ${germanTitle} · ${year}`
     presenceData.details = detailsText
     presenceData.buttons = [
       {
         label: 'Watch Together',
-        url: curURL,
+        url: href,
       },
     ]
   }

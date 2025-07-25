@@ -5,6 +5,12 @@
     "id": "792589695590465567",
     "name": "h2so4_chan"
   },
+  "contributors": [
+    {
+      "name": "xDoritos",
+      "id": "432215088686956565"
+    }
+  ],
   "service": "Hdfilmcehennemi",
   "description": {
     "en": "HDFilmCehennemi provides the latest movies in high definition for Turkish cinema enthusiasts and is the first online platform of its kind. Our platform holds a prominent position in search results for \"watch movies,\" \"watch HD movies,\" and \"HD Movie Cehennemi,\" offering quick access to the newest foreign films and TV series.",
@@ -20,5 +26,7 @@
   "tags": [
     "movie",
     "streaming"
-  ]
+  ],
+  "iframe": true,
+  "iFrameRegExp": "(.*\\.)?hdfilmcehennemi\\.nl"
 }
