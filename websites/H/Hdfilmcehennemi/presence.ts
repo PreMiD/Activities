@@ -71,7 +71,6 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing home page'
   }
   else {
-
     const h1 = document.querySelector('h1.section-title')
     if (h1 instanceof HTMLElement) {
       const first = h1.firstChild
