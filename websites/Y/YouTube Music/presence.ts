@@ -137,7 +137,7 @@ presence.on('UpdateData', async () => {
         ?? ActivityAssets.Logo
         : ActivityAssets.Logo,
       details: mediaSession.metadata.title,
-      state: mediaSession.metadata.artist,
+      state: !artistAsTitle ? mediaSession.metadata.artist : '',
       ...(mediaSession.metadata.album && {
         largeImageText: mediaSession.metadata.album,
       }),
