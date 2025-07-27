@@ -453,7 +453,21 @@ presence.on('UpdateData', async () => {
 
       if (path.includes('/moderator/')) {
         presenceData.details = strings.modStreamer
-        presenceData.state = getElement('.stream-info-card p > a')
+
+        // the title on top of the display box
+        let streamerinfo = document.querySelector('[data-a-target="player-info-title"]')?.textContent
+
+        // "Streamername's Mod View - Twitch"
+        if (!streamerinfo) {
+          streamerinfo = document.title.split('\'s')[0]
+        }
+
+        // fallback, broken? Maybe just on my browser
+        if (!streamerinfo) {
+          streamerinfo = getElement('.stream-info-card p > a')
+        }
+
+        presenceData.state = streamerinfo
 
         if (getElement('.modview-dock-widget p') !== 'Offline') {
           presenceData.smallImageKey = Assets.Live
