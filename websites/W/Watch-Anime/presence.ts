@@ -1,5 +1,4 @@
 // #region PRESENCEDECLARATION
-/// <reference types="@types/premid" />
 const presence = new Presence({
   clientId: '1146930741570187385',
 })
