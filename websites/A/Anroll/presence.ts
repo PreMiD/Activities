@@ -77,34 +77,32 @@ const initialVideoState: VideoData = {
 };
 
 let video: VideoData = { ...initialVideoState };
-const imageCache: Record<string, string> = {};
+const imageCache = new Map<string, string>();
 
 async function getCoverImage(): Promise<string> {
   try {
     const currentUrl = window.location.href;
-    if (imageCache[currentUrl]) {
-      return imageCache[currentUrl];
+    if (imageCache.has(currentUrl)) {
+      return imageCache.get(currentUrl) as string;
     }
 
-    const ogImage = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content;
-    if (ogImage) {
-      imageCache[currentUrl] = ogImage;
-      return ogImage;
-    }
+    // Tenta diferentes métodos para obter a imagem
+    const imageSources = [
+      () => document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content,
+      () => document.querySelector<HTMLImageElement>('#anime_title img')?.src,
+      () => {
+        const bgElement = document.querySelector<HTMLElement>('.sc-kpOvIu.ixIKbI');
+        const bgStyle = bgElement ? getComputedStyle(bgElement) : null;
+        const bgImage = bgStyle?.backgroundImage.match(/url\(['"]?(.*?)['"]?\)/i);
+        return bgImage?.[1];
+      }
+    ];
 
-    const coverElement = document.querySelector<HTMLImageElement>('#anime_title img');
-    if (coverElement?.src) {
-      imageCache[currentUrl] = coverElement.src;
-      return coverElement.src;
-    }
-
-    const bgElement = document.querySelector<HTMLElement>('.sc-kpOvIu.ixIKbI');
-    if (bgElement) {
-      const bgStyle = window.getComputedStyle(bgElement);
-      const bgImageMatch = bgStyle.backgroundImage.match(/url\(['"]?(.*?)['"]?\)/i);
-      if (bgImageMatch?.[1]) {
-        imageCache[currentUrl] = bgImageMatch[1];
-        return bgImageMatch[1];
+    for (const source of imageSources) {
+      const imageUrl = source();
+      if (imageUrl) {
+        imageCache.set(currentUrl, imageUrl);
+        return imageUrl;
       }
     }
 
@@ -143,47 +141,146 @@ presence.on('iFrameData', (data: unknown) => {
   }
 });
 
-presence.on('UpdateData', async () => {
+function handleAccountPages(pathSegments: string[], privacyMode: boolean): PresenceData {
+  const accountPages: Record<string, string> = {
+    '': 'Minha Conta',
+    '?p=config': 'Editando configurações',
+    history: 'Visualizando histórico',
+    '?p=gift': 'Visualizando presentes',
+    favorites: 'Visualizando favoritos',
+    subscription: 'Gerenciando assinatura VIP',
+    login: 'Fazendo login',
+    register: 'Criando conta',
+    forgot: 'Recuperando senha',
+    confirm: 'Confirmando conta',
+  };
+
+  const pageKey = pathSegments[0] || '';
   const presenceData: PresenceData = {
+    details: accountPages[pageKey] || 'Gerenciando conta',
+    largeImageKey: ActivityAssets.Account,
+  };
+
+  if (!privacyMode) {
+    presenceData.state = 'Área de conta do usuário';
+  }
+
+  return presenceData;
+}
+
+function handleEpisodePage(
+  href: string,
+  showTimestamps: boolean,
+  showButtons: boolean,
+  privacyMode: boolean,
+  hideWhenPaused: boolean
+): PresenceData {
+  const animeTitle = document.querySelector('#anime_title span')?.textContent?.trim() || 'Anime Desconhecido';
+  const episode = document.querySelector('#current_ep strong')?.textContent?.trim() || 'Episódio Desconhecido';
+
+  const presenceData: PresenceData = {
+    details: `Assistindo ${animeTitle}`,
+    state: episode,
+    smallImageKey: video.paused ? Assets.Pause : Assets.Play,
+    smallImageText: video.paused ? 'Pausado' : 'Assistindo'
+  };
+
+  // Timestamps apenas quando o vídeo está tocando
+  if (showTimestamps && !video.paused && video.duration > 0) {
+    const [startTimestamp, endTimestamp] = presence.getTimestamps(
+      Math.floor(video.currentTime),
+      Math.floor(video.duration)
+    );
+    presenceData.startTimestamp = startTimestamp;
+    presenceData.endTimestamp = endTimestamp;
+  }
+
+  // Botões quando não está em modo privado
+  if (!privacyMode && showButtons) {
+    presenceData.buttons = [{ label: 'Assistir Anime', url: href }];
+  }
+
+  // Ocultar quando pausado se configurado
+  if (video.paused && hideWhenPaused) {
+    return {};
+  }
+
+  return presenceData;
+}
+
+function handleMoviePage(
+  href: string,
+  showTimestamps: boolean,
+  showButtons: boolean,
+  privacyMode: boolean,
+  hideWhenPaused: boolean
+): PresenceData {
+  const movieTitle = document.querySelector('h1.title')?.textContent?.trim() || 'Filme Desconhecido';
+
+  const presenceData: PresenceData = {
+    details: `Assistindo filme: ${movieTitle}`,
+    largeImageKey: ActivityAssets.Films,
+    smallImageKey: video.paused ? Assets.Pause : Assets.Play,
+    smallImageText: video.paused ? 'Pausado' : 'Assistindo'
+  };
+
+  // Timestamps apenas quando o vídeo está tocando
+  if (showTimestamps && !video.paused && video.duration > 0) {
+    const [startTimestamp, endTimestamp] = presence.getTimestamps(
+      Math.floor(video.currentTime),
+      Math.floor(video.duration)
+    );
+    presenceData.startTimestamp = startTimestamp;
+    presenceData.endTimestamp = endTimestamp;
+  }
+
+  // Botões quando não está em modo privado
+  if (!privacyMode && showButtons) {
+    presenceData.buttons = [{ label: 'Assistir Filme', url: href }];
+  }
+
+  // Ocultar quando pausado se configurado
+  if (video.paused && hideWhenPaused) {
+    return {};
+  }
+
+  return presenceData;
+}
+
+presence.on('UpdateData', async () => {
+  let presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
   };
 
   try {
-    const showButtons = await presence.getSetting<boolean>('buttons');
-    const privacyMode = await presence.getSetting<boolean>('privacy');
-    const showTimestamps = await presence.getSetting<boolean>('timestamps');
-    const showCover = await presence.getSetting<boolean>('cover');
+    // Obter configurações
+    const [
+      showButtons,
+      privacyMode,
+      showTimestamps,
+      showCover,
+      hideWhenPaused
+    ] = await Promise.all([
+      presence.getSetting<boolean>('buttons'),
+      presence.getSetting<boolean>('privacy'),
+      presence.getSetting<boolean>('timestamps'),
+      presence.getSetting<boolean>('cover'),
+      presence.getSetting<boolean>('hideWhenPaused'),
+    ]);
 
     const { pathname, href, hostname } = document.location;
     const pathArr = pathname.split('/').filter(Boolean);
     const [firstSegment = '', secondSegment = '', thirdSegment = ''] = pathArr;
 
+    // Obter imagem de capa se necessário
     if (showCover) {
       presenceData.largeImageKey = await getCoverImage();
     }
 
     // Área de conta do usuário
     if (hostname === 'my.anroll.net') {
-      const accountPages: Record<string, string> = {
-        '': 'Minha Conta',
-        '?p=config': 'Editando configurações',
-        history: 'Visualizando histórico',
-        '?p=gift': 'Visualizando presentes',
-        favorites: 'Visualizando favoritos',
-        subscription: 'Gerenciando assinatura VIP',
-        login: 'Fazendo login',
-        register: 'Criando conta',
-        forgot: 'Recuperando senha',
-        confirm: 'Confirmando conta',
-      };
-
-      presenceData.details = accountPages[firstSegment] || 'Gerenciando conta';
-      presenceData.largeImageKey = ActivityAssets.Account;
-
-      if (!privacyMode) {
-        presenceData.state = 'Área de conta do usuário';
-      }
+      presenceData = { ...presenceData, ...handleAccountPages(pathArr, privacyMode) };
     }
     // Páginas principais
     else if (Object.hasOwn(pageDetails, firstSegment)) {
@@ -243,59 +340,25 @@ presence.on('UpdateData', async () => {
     }
     // Assistindo episódio
     else if (pathArr.length === 2 && firstSegment === 'e') {
-      const animeTitle = document.querySelector('#anime_title span')?.textContent?.trim() || 'Anime Desconhecido';
-      const episode = document.querySelector('#current_ep strong')?.textContent?.trim() || 'Episódio Desconhecido';
-
-      presenceData.details = `Assistindo ${animeTitle}`;
-      presenceData.state = episode;
-
-      if (showTimestamps && video.duration > 0) {
-        const [startTimestamp, endTimestamp] = presence.getTimestamps(
-          Math.floor(video.currentTime),
-          Math.floor(video.duration)
-        );
-        presenceData.startTimestamp = startTimestamp;
-        presenceData.endTimestamp = endTimestamp;
-      }
-
-      presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play;
-      presenceData.smallImageText = video.paused ? 'Pausado' : 'Assistindo';
-
-      if (!privacyMode && showButtons) {
-        presenceData.buttons = [{ label: 'Assistir Anime', url: href }];
-      }
-
-      if (video.paused) {
-        delete presenceData.startTimestamp;
-        delete presenceData.endTimestamp;
-      }
+      const episodeData = handleEpisodePage(
+        href,
+        showTimestamps,
+        showButtons,
+        privacyMode,
+        hideWhenPaused
+      );
+      presenceData = { ...presenceData, ...episodeData };
     }
     // Assistindo filme
     else if (firstSegment === 'filmes' && secondSegment === 'assistir' && thirdSegment) {
-      const movieTitle = document.querySelector('h1.title')?.textContent?.trim() || 'Filme Desconhecido';
-      presenceData.details = `Assistindo filme: ${movieTitle}`;
-      presenceData.largeImageKey = ActivityAssets.Films;
-
-      if (showTimestamps && video.duration > 0) {
-        const [startTimestamp, endTimestamp] = presence.getTimestamps(
-          Math.floor(video.currentTime),
-          Math.floor(video.duration)
-        );
-        presenceData.startTimestamp = startTimestamp;
-        presenceData.endTimestamp = endTimestamp;
-      }
-
-      presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play;
-      presenceData.smallImageText = video.paused ? 'Pausado' : 'Assistindo';
-
-      if (!privacyMode && showButtons) {
-        presenceData.buttons = [{ label: 'Assistir Filme', url: href }];
-      }
-
-      if (video.paused) {
-        delete presenceData.startTimestamp;
-        delete presenceData.endTimestamp;
-      }
+      const movieData = handleMoviePage(
+        href,
+        showTimestamps,
+        showButtons,
+        privacyMode,
+        hideWhenPaused
+      );
+      presenceData = { ...presenceData, ...movieData };
     }
     // Página genérica
     else {
@@ -307,15 +370,33 @@ presence.on('UpdateData', async () => {
         presenceData.state = secondSegment.replace(/-/g, ' ');
       }
     }
+
+    // Aplicar configurações de privacidade
+    if (privacyMode) {
+      delete presenceData.state;
+      delete presenceData.buttons;
+    }
+
+    // Remover botões se necessário
+    if (!showButtons) {
+      delete presenceData.buttons;
+    }
+
+    // Remover timestamps se necessário
+    if (!showTimestamps) {
+      delete presenceData.startTimestamp;
+      delete presenceData.endTimestamp;
+    }
+
   } catch (error) {
     console.error('Erro na Presence:', error);
     presenceData.details = 'Erro ao carregar';
   } finally {
     // Limpeza final dos dados
-    if (!presenceData.buttons) delete presenceData.buttons;
-    if (!presenceData.startTimestamp) delete presenceData.startTimestamp;
-    if (!presenceData.endTimestamp) delete presenceData.endTimestamp;
-    
-    presence.setActivity(presenceData);
+    if (!presenceData.details) {
+      presence.setActivity();
+    } else {
+      presence.setActivity(presenceData);
+    }
   }
 });
