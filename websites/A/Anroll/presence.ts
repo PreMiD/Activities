@@ -1,26 +1,6 @@
 import type { ActivityType } from 'premid';
 import { Assets } from 'premid';
 
-interface Presence {
-  constructor(options: { clientId: string });
-  on(event: string, callback: (...args: unknown[]) => void): void;
-  setActivity(data: PresenceData): void;
-  getSetting<T>(setting: string): Promise<T>;
-  getTimestamps(current: number, duration: number): [number, number];
-}
-
-interface PresenceData {
-  type?: ActivityType;
-  largeImageKey?: string;
-  startTimestamp?: number;
-  endTimestamp?: number;
-  details?: string;
-  state?: string;
-  buttons?: Array<{ label: string; url: string }>;
-  smallImageKey?: string;
-  smallImageText?: string;
-}
-
 const presence = new Presence({ clientId: '1395970198405644350' });
 const browsingTimestamp = Math.floor(Date.now() / 1000);
 
