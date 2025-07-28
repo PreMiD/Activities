@@ -8,11 +8,13 @@
   "service": "HDrezka",
   "description": {
     "en": "Website for watching movies, cartoons and TV series.",
-    "ru": "Сайт для просмтра фильмов, мультфильмов и сериалов."
+    "ru": "Сайт для просмтра фильмов, мультфильмов и сериалов.",
+    "ua": "Сайт для перегляду фільмів, мультфільмів та серіалів."
   },
   "url": [
     "rezka.ag",
-    "hdrezka.ag"
+    "hdrezka.ag",
+    "standby-rezka.tv"
   ],
   "version": "1.0.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/logo.png",
