@@ -64,7 +64,7 @@ async function getEpisodeInfo(
   lecteur: string,
 ): Promise<EpisodeInfo | null> {
 
-  let lecteurNb = lecteur.replace('Lecteur-', '')
+  const lecteurNb = lecteur.replace('Lecteur-', '')
 
   const cacheKey = `${nameAnime}-${langue}-${saison}-${episode}-${lecteurNb}`
 
