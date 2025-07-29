@@ -94,4 +94,4 @@ class IFrameHandler {
 }
 
 // Inicia o handler do iframe
-new IFrameHandler()
+const _iframeHandler = new IFrameHandler()
