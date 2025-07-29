@@ -21,12 +21,12 @@ class IFrameHandler {
 
     // Se não encontrar, tenta novamente a cada 2 segundos
     if (!this.videoElement) {
-        const findVideoInterval = setInterval(() => {
-            this.findVideoElement()
-            if (this.videoElement) {
-                clearInterval(findVideoInterval)
-            }
-        }, 2000)
+      const findVideoInterval = setInterval(() => {
+        this.findVideoElement()
+        if (this.videoElement) {
+          clearInterval(findVideoInterval)
+        }
+      }, 2000)
     }
   }
 
@@ -88,7 +88,7 @@ class IFrameHandler {
 
     // Verifica se o tempo mudou mais de 1 segundo ou se o estado de pausa mudou.
     const timeDifference = Math.abs(currentState.currentTime - this.lastVideoState.currentTime)
-    
+
     return timeDifference > 1.5 || currentState.paused !== this.lastVideoState.paused
   }
 }
