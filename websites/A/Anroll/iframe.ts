@@ -1,73 +1,97 @@
 interface VideoData {
-  duration: number;
-  currentTime: number;
-  paused: boolean;
-}
-
-// Supondo que 'iFrame' seja uma classe definida em outro lugar ou uma dependência.
-// Para este exemplo, declarei uma classe placeholder para evitar erros de tipo.
-declare class iFrame {
-  send(data: VideoData): void;
+  duration: number
+  currentTime: number
+  paused: boolean
 }
 
 class IFrameHandler {
-  private iframe = new iFrame();
-  private lastVideoState: VideoData | null = null;
+  private iframe = new iFrame()
+  // Armazena o último estado do vídeo para evitar envios desnecessários
+  private lastVideoState: VideoData | null = null
+  private videoElement: HTMLVideoElement | null = null
+  private checkInterval: number | null = null
 
   constructor() {
-    this.init();
+    this.init()
   }
 
   private init(): void {
-    setInterval(() => this.checkVideo(), 1000);
+    // Tenta encontrar o vídeo assim que o script é carregado
+    this.findVideoElement()
+
+    // Se não encontrar, tenta novamente a cada 2 segundos
+    if (!this.videoElement) {
+        const findVideoInterval = setInterval(() => {
+            this.findVideoElement()
+            if (this.videoElement) {
+                clearInterval(findVideoInterval)
+            }
+        }, 2000)
+    }
   }
 
-  private getVideoElement(): HTMLVideoElement | null {
+  /**
+   * Procura pelo elemento de vídeo na página usando seletores comuns.
+   */
+  private findVideoElement(): void {
     const playerSelectors = [
       '#player0',
       '#player_html5_api',
       '.jw-video',
-      '.html5-video-container > video',
       'video',
-    ];
+    ]
 
     for (const selector of playerSelectors) {
-      const video = document.querySelector<HTMLVideoElement>(selector);
-      if (video) return video;
-    }
-    return null;
-  }
-
-  private shouldUpdate(currentState: VideoData): boolean {
-    if (!this.lastVideoState) return true;
-
-    return (
-      Math.abs(currentState.currentTime - this.lastVideoState.currentTime) > 1 ||
-      currentState.paused !== this.lastVideoState.paused
-    );
-  }
-
-  private checkVideo(): void {
-    try {
-      const video = this.getVideoElement();
-
-      // Corrigido: Adicionado ')' para fechar a condição do if.
-      if (video && !Number.isNaN(video.duration)) {
-        const currentState: VideoData = {
-          currentTime: video.currentTime,
-          duration: video.duration,
-          paused: video.paused,
-        };
-
-        if (this.shouldUpdate(currentState)) {
-          this.iframe.send(currentState);
-          this.lastVideoState = currentState;
+      const video = document.querySelector<HTMLVideoElement>(selector)
+      if (video) {
+        this.videoElement = video
+        // Uma vez que o vídeo é encontrado, começa a verificação de estado
+        if (this.checkInterval === null) {
+          this.checkInterval = window.setInterval(() => this.checkVideoState(), 500)
         }
+        return
       }
-    } catch (error) {
-      console.error('Video check error:', error);
     }
+  }
+
+  /**
+   * Verifica se o estado do vídeo mudou (tempo ou pausa)
+   * e envia os dados se necessário.
+   */
+  private checkVideoState(): void {
+    if (!this.videoElement || Number.isNaN(this.videoElement.duration)) {
+      return
+    }
+
+    const currentState: VideoData = {
+      currentTime: this.videoElement.currentTime,
+      duration: this.videoElement.duration,
+      paused: this.videoElement.paused,
+    }
+
+    // Compara o estado atual com o anterior para decidir se atualiza
+    if (this.shouldUpdate(currentState)) {
+      this.iframe.send(currentState)
+      this.lastVideoState = currentState
+    }
+  }
+
+  /**
+   * Determina se a atualização deve ser enviada.
+   * @param currentState O estado atual do vídeo.
+   * @returns Verdadeiro se o estado mudou significativamente.
+   */
+  private shouldUpdate(currentState: VideoData): boolean {
+    if (!this.lastVideoState) {
+      return true
+    }
+
+    // Verifica se o tempo mudou mais de 1 segundo ou se o estado de pausa mudou.
+    const timeDifference = Math.abs(currentState.currentTime - this.lastVideoState.currentTime)
+    
+    return timeDifference > 1.5 || currentState.paused !== this.lastVideoState.paused
   }
 }
 
-new IFrameHandler();
+// Inicia o handler do iframe
+new IFrameHandler()
