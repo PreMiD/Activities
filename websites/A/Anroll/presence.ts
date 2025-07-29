@@ -86,10 +86,13 @@ async function getCoverImage(): Promise<string> {
       }
       else {
         const bgStyle = getComputedStyle(element)
-        const bgImage = bgStyle.backgroundImage.match(/url\(['"]?(.*?)['"]?\)/i)
-        if (bgImage?.[1]) {
-          imageCache.set(currentUrl, bgImage[1])
-          return bgImage[1]
+
+        // eslint-disable-next-line regexp/no-unused-capturing-group
+        const match = bgStyle.backgroundImage.match(/url\(['"]?(.*?)['"]?\)/i)
+        const bgImageUrl = match?.[1]
+        if (bgImageUrl) {
+          imageCache.set(currentUrl, bgImageUrl)
+          return bgImageUrl
         }
       }
     }
@@ -116,7 +119,7 @@ function getTitle(): string {
       let title = element.textContent.trim()
       // Limpa o título se for da tag <title>
       if (selector === 'title') {
-        title = title.replace(/( - Assistir Online grátis em HD| - Anroll)$/i, '')
+        title = title.replace(/(Anroll)$/i, '')
       }
       if (title)
         return title
@@ -279,3 +282,4 @@ presence.on('UpdateData', async () => {
     presence.setActivity({ details: 'Ocorreu um erro' })
   }
 })
+
