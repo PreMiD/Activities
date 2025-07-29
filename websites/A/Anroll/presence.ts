@@ -143,7 +143,7 @@ presence.on('iFrameData', (data: unknown) => {
 
 // Função principal que atualiza a presence
 presence.on('UpdateData', async () => {
-  const { pathname, href, hostname } = window.location
+  const { pathname, href, hostname } = document.location
   const pathSegments = pathname.split('/').filter(Boolean)
   const [firstSegment = ''] = pathSegments
 
