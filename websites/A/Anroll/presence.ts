@@ -1,12 +1,11 @@
 import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({ clientId: '1395970198405644350' })
-const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 // Definição dos assets para usar nas atividades
 enum ActivityAssets {
   Logo = 'https://i.ibb.co/hJwCZCTx/ico-menu-2.png',
-  Home = 'https://i.ibb.co/hJwCZCTx/ico-menu-2.png',
+  Home = 'https://iili.io/F8bJaLX.png',
   Calendar = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/calendar-icon-download-in-svg-png-gif-file-formats--schedule-planning-date-business-pack-icons-1650787.png?f=webp&w=512',
   Search = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/search-icon-download-in-svg-png-gif-file-formats--find-magnifier-glass-ios-11-ui-elements-vol-2-pack-user-interface-icons-475061.png?f=webp&w=512',
   Profile = 'https://cdn.iconscout.com/icon/premium/png-512-thumb/user-rounded-icon-download-in-svg-png-gif-file-formats--person-people-avatar-profile-ui-8-pack-design-development-icons-11410209.png?f=webp&w=512',
