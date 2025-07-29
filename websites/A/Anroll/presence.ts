@@ -1,4 +1,3 @@
-import type { ActivityType } from 'premid'
 import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({ clientId: '1395970198405644350' })
@@ -78,13 +77,15 @@ async function getCoverImage(): Promise<string> {
           imageCache.set(currentUrl, imageUrl)
           return imageUrl
         }
-      } else if (element.tagName === 'IMG') {
+      }
+      else if (element.tagName === 'IMG') {
         const imageUrl = (element as HTMLImageElement).src
         if (imageUrl) {
           imageCache.set(currentUrl, imageUrl)
           return imageUrl
         }
-      } else {
+      }
+      else {
         const bgStyle = getComputedStyle(element)
         const bgImage = bgStyle.backgroundImage.match(/url\(['"]?(.*?)['"]?\)/i)
         if (bgImage?.[1]) {
@@ -118,7 +119,8 @@ function getTitle(): string {
       if (selector === 'title') {
         title = title.replace(/( - Assistir Online grátis em HD| - Anroll)$/i, '')
       }
-      if (title) return title
+      if (title)
+        return title
     }
   }
 
@@ -128,11 +130,11 @@ function getTitle(): string {
 // Escuta por dados vindos do iframe (player de vídeo)
 presence.on('iFrameData', (data: unknown) => {
   if (
-    data &&
-    typeof data === 'object' &&
-    'duration' in data &&
-    'currentTime' in data &&
-    'paused' in data
+    data
+    && typeof data === 'object'
+    && 'duration' in data
+    && 'currentTime' in data
+    && 'paused' in data
   ) {
     video = data as VideoData
   }
@@ -171,7 +173,7 @@ presence.on('UpdateData', async () => {
       if (video.paused && hideWhenPaused) {
         return presence.clearActivity()
       }
-      
+
       const animeTitle = getTitle()
       const episodeTitle = document.querySelector('#current_ep strong')?.textContent?.trim() || 'Episódio desconhecido'
 
@@ -179,7 +181,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = episodeTitle
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = video.paused ? 'Pausado' : 'Assistindo'
-      
+
       if (showCover) {
         presenceData.largeImageKey = await getCoverImage()
       }
@@ -191,15 +193,16 @@ presence.on('UpdateData', async () => {
         )
         presenceData.startTimestamp = startTimestamp
         presenceData.endTimestamp = endTimestamp
-      } else {
-         delete presenceData.startTimestamp
+      }
+      else {
+        delete presenceData.startTimestamp
       }
 
       if (showButtons && !privacyMode) {
         presenceData.buttons = [{ label: 'Assistir Episódio', url: href }]
       }
     }
-     // Lógica para página de filme
+    // Lógica para página de filme
     else if (firstSegment === 'filmes' && pathSegments[1] === 'assistir' && pathSegments.length === 3) {
       if (video.paused && hideWhenPaused) {
         return presence.clearActivity()
@@ -219,11 +222,12 @@ presence.on('UpdateData', async () => {
       if (showTimestamps && !video.paused && video.duration > 0) {
         const [startTimestamp, endTimestamp] = getTimestamps(
           Math.floor(video.currentTime),
-          Math.floor(video.duration)
-        );
+          Math.floor(video.duration),
+        )
         presenceData.startTimestamp = startTimestamp
         presenceData.endTimestamp = endTimestamp
-      } else {
+      }
+      else {
         delete presenceData.startTimestamp
       }
 
@@ -257,7 +261,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Navegando no Anroll'
       const pageTitle = document.title.replace(' - Anroll', '')
       if (!privacyMode && pageTitle !== 'Anroll') {
-          presenceData.state = pageTitle
+        presenceData.state = pageTitle
       }
     }
 
@@ -268,9 +272,10 @@ presence.on('UpdateData', async () => {
       delete presenceData.buttons
       presenceData.largeImageKey = ActivityAssets.Logo
     }
-    
+
     presence.setActivity(presenceData)
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Erro ao atualizar a Presence:', error)
     presence.setActivity({ details: 'Ocorreu um erro' })
   }
