@@ -10,7 +10,7 @@
     "en": "Watch your favorite movies and series in streaming.",
     "fr": "Regardez vos films et séries préférés en streaming."
   },
-  "url": "flemmix.stream",
+  "url": "flemmix.*",
   "version": "1.0.0",
   "logo": "https://flemmix.stream/templates/flemmixnew/images/favicon.png",
   "thumbnail": "https://flemmix.stream/templates/flemmixnew/images/favicon.png",
