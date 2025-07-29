@@ -21,7 +21,6 @@ presence.on('UpdateData', async () => {
   switch (true) {
     case pathname.endsWith(''): {
       presenceData.details = 'Viewing home page'
-      presenceData.smallImageKey = Assets.Reading
       break
     }
     case pathname.endsWith('/terms-of-service'): {
