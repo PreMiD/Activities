@@ -282,4 +282,3 @@ presence.on('UpdateData', async () => {
     presence.setActivity({ details: 'Ocorreu um erro' })
   }
 })
-
