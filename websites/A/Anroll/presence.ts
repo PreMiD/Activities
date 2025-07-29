@@ -119,7 +119,7 @@ function getTitle(): string {
       let title = element.textContent.trim()
       // Limpa o título se for da tag <title>
       if (selector === 'title') {
-        title = title.replace(/(Anroll)$/i, '')
+        title = title.replace(/['"]/g, '').trim()
       }
       if (title)
         return title
