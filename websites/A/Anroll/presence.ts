@@ -56,7 +56,7 @@ const imageCache = new Map<string, string>()
  * @returns A URL da imagem de capa ou o logo padrão.
  */
 async function getCoverImage(): Promise<string> {
-  const currentUrl = window.location.href
+  const currentUrl = document.location.href
   if (imageCache.has(currentUrl)) {
     return imageCache.get(currentUrl)!
   }
