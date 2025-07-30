@@ -8,7 +8,7 @@ const presence = new Presence({ clientId: '1399867497750069389' });
 const browsingTimestamp = Math.floor(Date.now() / 1000);
 
 const ActivityAssets = {
-  Logo: 'https://flemmix.stream/templates/flemmixnew/images/favicon.png',
+  Logo: 'https://i.imgur.com/JRsbkwB.png',
 };
 
 let video = {
