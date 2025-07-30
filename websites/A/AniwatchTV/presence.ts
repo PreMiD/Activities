@@ -1,20 +1,20 @@
 import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1399965482609541172'
+  clientId: '1399965482609541172',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.postimg.cc/VkWpvxpL/favicon-1-1.png' // replace with 512x512 image
+  Logo = 'https://i.postimg.cc/VkWpvxpL/favicon-1-1.png', 
 }
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    type: ActivityType.Watching
+    type: ActivityType.Watching,
   }
 
   const { href, pathname, search } = document.location
@@ -51,13 +51,14 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = [
         {
           label: 'Watch on AniwatchTV',
-          url: href
-        }
+          url: href,
+        },
       ]
 
       const video = document.querySelector('video') as HTMLVideoElement | null
       if (video && !Number.isNaN(video.duration)) {
-        presenceData.startTimestamp = Date.now() - Math.floor(video.currentTime * 1000)
+        presenceData.startTimestamp =
+          Date.now() - Math.floor(video.currentTime * 1000)
         presenceData.endTimestamp =
           Date.now() + Math.floor((video.duration - video.currentTime) * 1000)
       }
