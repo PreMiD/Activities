@@ -1,4 +1,4 @@
-declare const iFrame: any;
+declare const iFrame: any
 
 const iFrameHandler = new iFrame()
 
