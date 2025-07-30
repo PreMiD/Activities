@@ -31,16 +31,12 @@ presence.on('UpdateData', async () => {
       break
 
     case pathname.includes('/watch/'): {
-      const title = document
-        .querySelector<HTMLAnchorElement>(
-          '#ani_detail .anis-watch-detail .anisc-detail h2 a',
-        )
-        ?.textContent?.trim()
+      const title = document.querySelector<HTMLAnchorElement>(
+        '#ani_detail .anis-watch-detail .anisc-detail h2 a'
+      )?.textContent?.trim()
 
-      const episode = document
-        .querySelector('.server-notice b')
-        ?.textContent?.trim()
-        ?.match(/\d+/)?.[0]
+      const episode = document.querySelector('.server-notice b')
+        ?.textContent?.trim()?.match(/\d+/)?.[0]
 
       const cover = document.querySelector<HTMLImageElement>(
         '#ani_detail .film-poster img',
