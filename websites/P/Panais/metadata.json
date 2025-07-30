@@ -20,14 +20,18 @@
     "bot",
     "discord",
     "music",
-    "streaming",
-    "radio",
-    "audio",
-    "youtube",
-    "spotify",
-    "soundcloud",
-    "bandcamp",
-    "deezer",
-    "apple-music"
+    "streaming"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
   ]
 }
