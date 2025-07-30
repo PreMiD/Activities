@@ -6,12 +6,13 @@
     "name": "sauced.on"
   },
   "service": "AniwatchTV",
+  "altnames": ["Aniwatch"],
   "description": {
-    "en": "Free anime streaming site with thousands of picks."
+    "en": "The best site to watch anime online for free."
   },
   "url": "aniwatchtv.to",
   "version": "1.0.0",
-  "logo": "https://aniwatchtv.to/images/favicon.png",
+  "logo": "https://i.postimg.cc/VkWpvxpL/favicon-1-1.png",
   "thumbnail": "https://aniwatchtv.to/images/anw-min.webp",
   "color": "#FFDD95",
   "category": "anime",
