@@ -7,7 +7,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.postimg.cc/VkWpvxpL/favicon-1-1.png', 
+  Logo = 'https://i.postimg.cc/VkWpvxpL/favicon-1-1.png',
 }
 
 presence.on('UpdateData', async () => {
@@ -32,16 +32,19 @@ presence.on('UpdateData', async () => {
 
     case pathname.includes('/watch/'): {
       const title = document
-        .querySelector<HTMLAnchorElement>('#ani_detail .anis-watch-detail .anisc-detail h2 a')
+        .querySelector<HTMLAnchorElement>(
+          '#ani_detail .anis-watch-detail .anisc-detail h2 a',
+        )
         ?.textContent?.trim()
 
       const episode = document
         .querySelector('.server-notice b')
-        ?.textContent
-        ?.trim()
+        ?.textContent?.trim()
         ?.match(/\d+/)?.[0]
 
-      const cover = document.querySelector<HTMLImageElement>('#ani_detail .film-poster img')?.src
+      const cover = document.querySelector<HTMLImageElement>(
+        '#ani_detail .film-poster img',
+      )?.src
 
       presenceData.details = title ?? 'Hidden anime...'
       presenceData.state = episode ? `Watching ep. ${episode}` : 'Watching episodes!'
