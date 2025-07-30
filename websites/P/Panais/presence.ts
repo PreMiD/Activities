@@ -13,38 +13,65 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+  }
 
+  const setDetails = (details: string, smallKey?: string) => {
+    presenceData.details = details
+    if (smallKey)
+      presenceData.smallImageKey = smallKey
   }
 
   const { pathname } = document.location
 
-  switch (true) {
-    case pathname.endsWith(''): {
-      presenceData.details = 'Viewing home page'
-      break
+  if (pathname.endsWith('/terms-of-service')) {
+    setDetails('Reading terms of service', Assets.Reading)
+  }
+  else if (pathname.endsWith('/privacy-policy')) {
+    setDetails('Reading privacy policy', Assets.Reading)
+  }
+  else if (pathname.endsWith('/profile')) {
+    setDetails('Viewing a profile')
+  }
+  else if (pathname.endsWith('/invite')) {
+    setDetails('Viewing an invite')
+  }
+  else if (pathname.endsWith('/panais-canary/servers')) {
+    setDetails('Viewing the dashboard')
+  }
+  else if (/\/panais-canary\/(\d+)\/dashboard$/.test(pathname)) {
+    setDetails('Viewing dashboard')
+
+    const musicTitle = document.querySelector('.text-sm.font-medium.truncate')?.textContent?.trim() || null
+    const musicArtist = document.querySelector('.text-xs.text-muted-foreground.truncate')?.textContent?.trim() || null
+
+    if (musicTitle || musicArtist) {
+      presenceData.startTimestamp = Math.floor(Date.now() / 1000)
+      presenceData.endTimestamp = presenceData.startTimestamp + 180
+      presenceData.smallImageKey = Assets.Play
+
+      if (musicTitle && musicArtist) {
+        presenceData.name = musicTitle
+        presenceData.details = musicArtist
+      }
+      else if (musicTitle) {
+        presenceData.name = musicTitle
+        presenceData.details = 'Unknown Artist'
+      }
+      else {
+        presenceData.name = 'Playing: Unknown Song'
+        presenceData.details = musicArtist!
+      }
     }
-    case pathname.endsWith('/terms-of-service'): {
-      presenceData.details = 'Reading terms of service'
-      presenceData.smallImageKey = Assets.Reading
-      break
-    }
-    case pathname.endsWith('/privacy-policy'): {
-      presenceData.details = 'Reading privacy policy'
-      presenceData.smallImageKey = Assets.Reading
-      break
-    }
-    case pathname.endsWith('/profile'): {
-      presenceData.details = 'Viewing a profile'
-      break
-    }
-    case pathname.endsWith('/invite'): {
-      presenceData.details = 'Viewing an invite'
-      break
-    }
-    case pathname.endsWith('/panais-canary/servers'): {
-      presenceData.details = 'Viewing the dashboard'
-      break
+    else {
+      delete presenceData.startTimestamp
+      delete presenceData.endTimestamp
+      delete presenceData.state
+      delete presenceData.smallImageKey
     }
   }
+  else if (pathname.endsWith('')) {
+    setDetails('Viewing home page')
+  }
+
   presence.setActivity(presenceData)
 })
