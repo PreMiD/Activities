@@ -10,21 +10,20 @@
     "en": "Watch your favorite movies and series in streaming.",
     "fr": "Regardez vos films et séries préférés en streaming."
   },
-  "url": "flemmix.*",
+  "url": "flemmix.stream",
   "version": "1.0.0",
-  "logo": "https://flemmix.stream/templates/flemmixnew/images/favicon.png",
-  "thumbnail": "https://flemmix.stream/templates/flemmixnew/images/favicon.png",
+  "logo": "https://i.imgur.com/JRsbkwB.png",
+  "thumbnail": "https://i.imgur.com/JRsbkwB.png",
   "color": "#d90000",
   "category": "videos",
   "tags": [
     "streaming",
     "movies",
     "series",
-    "vf",
-    "flemmix"
+    "vf"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*",
+  "iFrameRegExp": ".*(d-s\\.io|jilliandescribecompany\\.com|uqload\\.cx|vidhidevip\\.com|vudeo\\.ws|waaw1\\.tv|streamtape\\.(to|com)|upstream\\.to|embedwish\\.com|ups2up\\.fun|luluvdoo\\.com|tipfly\\.xyz|vidmoly\\.net|Mivalyo\\.com|hglink\\.to).*",
   "settings": [
     {
       "id": "buttons",
