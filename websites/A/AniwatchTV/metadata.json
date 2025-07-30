@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "834381079795990538",
+    "name": "sauced.on"
+  },
+  "service": "AniwatchTV",
+  "description": {
+    "en": "Free anime streaming site with thousands of picks."
+  },
+  "url": "aniwatchtv.to",
+  "version": "1.0.0",
+  "logo": "https://aniwatchtv.to/images/favicon.png",
+  "thumbnail": "https://aniwatchtv.to/images/anw-min.webp",
+  "color": "#FFDD95",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "aniwatch",
+    "streaming",
+    "free"
+  ]
+}
