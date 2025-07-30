@@ -38,16 +38,27 @@ presence.on('UpdateData', async () => {
   else if (pathname.endsWith('/panais-canary/servers')) {
     setDetails('Viewing the dashboard')
   }
-  else if (/\/panais-canary\/(\d+)\/dashboard$/.test(pathname)) {
+  else if (/\/panais-canary\/\d+\//.test(pathname)) {
     setDetails('Viewing dashboard')
 
     const musicTitle = document.querySelector('.text-sm.font-medium.truncate')?.textContent?.trim() || null
     const musicArtist = document.querySelector('.text-xs.text-muted-foreground.truncate')?.textContent?.trim() || null
 
+    const isPlaying = document.querySelector('.lucide.lucide-play.h-6.w-6') !== null
+    const isPaused = document.querySelector('.lucide.lucide-pause.h-6.w-6') !== null
+
     if (musicTitle || musicArtist) {
-      presenceData.startTimestamp = Math.floor(Date.now() / 1000)
-      presenceData.endTimestamp = presenceData.startTimestamp + 180
-      presenceData.smallImageKey = Assets.Play
+      if (isPlaying) {
+        presenceData.smallImageKey = Assets.Pause
+        presenceData.smallImageText = 'Pause'
+      }
+      else if (isPaused) {
+        presenceData.smallImageKey = Assets.Play
+        presenceData.smallImageText = 'Playing'
+      }
+      else {
+        delete presenceData.smallImageKey
+      }
 
       if (musicTitle && musicArtist) {
         presenceData.name = musicTitle
@@ -63,8 +74,6 @@ presence.on('UpdateData', async () => {
       }
     }
     else {
-      delete presenceData.startTimestamp
-      delete presenceData.endTimestamp
       delete presenceData.state
       delete presenceData.smallImageKey
     }
