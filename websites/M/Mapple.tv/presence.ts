@@ -1,4 +1,4 @@
-import { Assets } from "preMid";
+import { Assets } from 'premid';
 
 const presence = new Presence({
   clientId: "1400642676487098519",
@@ -87,7 +87,7 @@ async function updatePresence() {
   // Privacy mode enabled — show nothing except icon + timestamps (if any)
   if (privacy) {
     const presenceData: PresenceData = {
-      largeImageKey: "https://i.ibb.co/0H29dLk/mappletv.png",
+      largeImageKey: "https://i.ibb.co/9PPkt6L/mappletv.png",
     };
 
     const video = document.querySelector("video");
@@ -105,7 +105,7 @@ async function updatePresence() {
   }
 
   const presenceData: PresenceData = {
-    largeImageKey: "https://i.ibb.co/0H29dLk/mappletv.png",
+    largeImageKey: "https://i.ibb.co/9PPkt6L/mappletv.png",
     details: constructAction[action],
   };
 
