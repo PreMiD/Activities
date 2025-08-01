@@ -1,9 +1,5 @@
 import { ActivityType, Assets } from 'premid'
 
-declare const Presence: any
-declare type PresenceData = any
-
-// Remplacez le clientId par le vôtre
 const presence = new Presence({ clientId: '1399867497750069389' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -165,7 +161,6 @@ presence.on('UpdateData', async () => {
       presenceData.state = `Profil de ${username}`
     }
   }
-  // --- BLOC D'ORDRE CORRIGÉ ---
   // Cas 11 : Page d'accueil (VÉRIFIÉ EN PREMIER)
   else if (pathname === '/') {
     presenceData.details = 'Parcourt la page d\'accueil'
@@ -188,7 +183,6 @@ presence.on('UpdateData', async () => {
   else {
     presenceData.details = privacyMode ? 'Navigue...' : 'Navigue sur le site'
   }
-  // --- FIN DU BLOC CORRIGÉ ---
 
   // Application des paramètres
   if (!showButtons || privacyMode)
