@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({ clientId: '1399867497750069389' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -65,7 +65,7 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = `https://flemmix.stream${coverImageSrc}`
     }
 
-    const [startTimestamp, endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+    const [startTimestamp, endTimestamp] = getTimestamps(video.currentTime, video.duration)
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = video.paused ? 'En pause' : 'En lecture'
     if (!video.paused && showTimestamps) {
