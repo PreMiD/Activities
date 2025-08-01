@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "638069634460811276",
+    "name": "realkjng"
+  },
+  "service": "MangaDex",
+  "description": {
+    "en": "Displays your reading activity on MangaDex."
+  },
+  "url": "mangadex.org",
+  "version": "1.0.0",
+  "logo": "https://mangadex.dev/content/images/2021/08/icon.png",
+  "thumbnail": "https://mangadex.dev/content/images/2021/08/icon.png",
+  "color": "#FF6740",
+  "category": "anime",
+  "tags": [
+    "manga",
+    "reading"
+  ]
+}
