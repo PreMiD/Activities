@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 function getAction(): string {
-  const href = window.location.href
+  const href = document.location.href
   if (href.includes('/movie'))
     return 'movie'
   if (href.includes('/tv'))
@@ -32,7 +32,7 @@ function getStatus(): string {
 
   // Sports: extract from h2 element
   if (url.includes('/sports/')) {
-    const h2 = document.querySelector('h2.text-transparent') as HTMLElement
+    const h2 = document.querySelector<HTMLElement>('h2.text-transparent')
     return h2?.textContent?.trim() || 'Browsing'
   }
 
@@ -125,7 +125,7 @@ async function updatePresence() {
       presenceData.startTimestamp = Math.floor(Date.now() / 1000)
     }
     else {
-      presenceData.details = ''
+      delete presenceData.details
     }
     presence.setActivity(presenceData)
     return
@@ -158,27 +158,4 @@ async function updatePresence() {
   presence.setActivity(presenceData)
 }
 
-function hookUrlChange(callback: () => void) {
-  const pushState = history.pushState
-  const replaceState = history.replaceState
-
-  history.pushState = function (...args) {
-    pushState.apply(this, args)
-    callback()
-  }
-
-  history.replaceState = function (...args) {
-    replaceState.apply(this, args)
-    callback()
-  }
-
-  window.addEventListener('popstate', callback)
-
-  const observer = new MutationObserver(() => {
-    callback()
-  })
-  observer.observe(document.body, { childList: true, subtree: true })
-}
-
 presence.on('UpdateData', updatePresence)
-hookUrlChange(updatePresence)
