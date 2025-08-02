@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1399774169536921660',
@@ -11,8 +11,16 @@ enum ActivityAssets {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
+    type: ActivityType.Watching,
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    largeImageUrl: 'https://panais.xyz',
+    buttons: [
+      {
+        label: 'Panais Dashboard',
+        url: 'https://panais.xyz/',
+      },
+    ],
   }
 
   const setDetails = (details: string, smallKey?: string) => {
@@ -44,33 +52,59 @@ presence.on('UpdateData', async () => {
     const musicTitle = document.querySelector('.text-sm.font-medium.truncate')?.textContent?.trim() || null
     const musicArtist = document.querySelector('.text-xs.text-muted-foreground.truncate')?.textContent?.trim() || null
 
-    const isPlaying = document.querySelector('.lucide.lucide-play.h-6.w-6') !== null
-    const isPaused = document.querySelector('.lucide.lucide-pause.h-6.w-6') !== null
+    const elapsedTimeElement = document.querySelector('[data-id="elapsedTime"]')
+    const durationTimeElement = document.querySelector('[data-id="durationTime"]')
+    const elapsedTime = elapsedTimeElement?.textContent?.trim()
+    const durationTime = durationTimeElement?.textContent?.trim()
+
+    const playButton = document.querySelector('.lucide.lucide-play.h-6.w-6')
+    const pauseButton = document.querySelector('.lucide.lucide-pause.h-6.w-6')
+    const isPlaying = pauseButton !== null
+    const isPaused = playButton !== null
 
     if (musicTitle || musicArtist) {
-      if (isPlaying) {
-        presenceData.smallImageKey = Assets.Pause
-        presenceData.smallImageText = 'Pause'
+      if (elapsedTime && durationTime && isPlaying) {
+        try {
+          const elapsedSeconds = timestampFromFormat(elapsedTime)
+          const durationSeconds = timestampFromFormat(durationTime)
+          const [startTimestamp, endTimestamp] = getTimestamps(elapsedSeconds, durationSeconds)
+          presenceData.startTimestamp = startTimestamp
+          presenceData.endTimestamp = endTimestamp
+        }
+        catch {
+          delete presenceData.startTimestamp
+          delete presenceData.endTimestamp
+        }
       }
-      else if (isPaused) {
+
+      if (isPlaying) {
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = 'Playing'
       }
+      else if (isPaused) {
+        presenceData.smallImageKey = Assets.Pause
+        presenceData.smallImageText = 'Paused'
+
+        delete presenceData.startTimestamp
+        delete presenceData.endTimestamp
+      }
       else {
         delete presenceData.smallImageKey
+        delete presenceData.startTimestamp
+        delete presenceData.endTimestamp
       }
 
       if (musicTitle && musicArtist) {
-        presenceData.name = musicTitle
-        presenceData.details = musicArtist
+        presenceData.details = musicTitle
+        presenceData.state = musicArtist
       }
       else if (musicTitle) {
-        presenceData.name = musicTitle
-        presenceData.details = 'Unknown Artist'
+        presenceData.details = musicTitle
+        presenceData.state = 'Unknown Artist'
       }
       else {
-        presenceData.name = 'Playing: Unknown Song'
-        presenceData.details = musicArtist!
+        presenceData.details = 'Playing: Unknown Song'
+        presenceData.state = musicArtist!
       }
     }
     else {
