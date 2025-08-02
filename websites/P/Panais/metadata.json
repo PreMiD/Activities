@@ -11,9 +11,9 @@
     "fr": "Panais est un bot de musique intelligent qui vous permet de profiter de vos morceaux préférés à tout moment. Il est facile à utiliser et offre une expérience personnalisée pour vous aider à découvrir et écouter de la nouvelle musique."
   },
   "url": "panais.xyz",
-  "version": "1.0.0",
-  "logo": "https://imgur.com/pjywsu6.png",
-  "thumbnail": "https://imgur.com/k2lPchV.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Panais/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Panais/assets/thumbnail.png",
   "color": "#26b6e1",
   "category": "music",
   "tags": [
