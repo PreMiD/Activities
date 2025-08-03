@@ -1,8 +1,3 @@
-import { Assets } from 'premid'
-
-let level: string = 'Unknown'
-let pixelsPainted: string = 'Unknown'
-
 const presence = new Presence({
   clientId: '1401582122975891466',
 })
@@ -12,7 +7,9 @@ enum ActivityAssets { // Other default assets can be found at index.d.ts
   Logo = 'https://i.imgur.com/ZfNOTBm.png',
 }
 
-// Update global variables as soon as possible if not 'Unknown'
+let level: string = 'Unknown'
+let pixelsPainted: string = 'Unknown'
+
 function updateGlobals() {
   const levelValue = document.querySelector('div.text-primary-content')?.textContent ?? 'Unknown'
   if (levelValue !== 'Unknown')
