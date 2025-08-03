@@ -80,9 +80,9 @@ async function getEpisodeInfo(
 
     if (data.length > 0) {
       const episodeInfo: EpisodeInfo = {
-        nomLangue: data[0].nom_langue,
-        nomSaison: data[0].nom_saison,
-        nomEpisode: data[0].nom_episode,
+        nomLangue: data.nom_langue,
+        nomSaison: data.nom_saison,
+        nomEpisode: data.nom_episode,
       }
 
       // Store the fetched data in the cache
