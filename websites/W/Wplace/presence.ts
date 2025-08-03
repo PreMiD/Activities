@@ -30,7 +30,6 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    smallImageKey: Assets.Play,
   }
 
   const coordinatesElement = document.querySelector('.whitespace-nowrap')
