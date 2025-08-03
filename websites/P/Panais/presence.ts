@@ -10,6 +10,11 @@ enum ActivityAssets {
 }
 
 presence.on('UpdateData', async () => {
+  const { pathname } = document.location
+
+  const match = pathname.match(/\/panais-canary\/(\d+)\//)
+  const serverId = match ? match[1] : null
+
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     largeImageKey: ActivityAssets.Logo,
@@ -18,7 +23,7 @@ presence.on('UpdateData', async () => {
     buttons: [
       {
         label: 'Panais Dashboard',
-        url: 'https://panais.xyz/',
+        url: `https://panais.xyz/panais-canary/${serverId}/dashboard`,
       },
     ],
   }
@@ -28,8 +33,6 @@ presence.on('UpdateData', async () => {
     if (smallKey)
       presenceData.smallImageKey = smallKey
   }
-
-  const { pathname } = document.location
 
   if (pathname.endsWith('/terms-of-service')) {
     setDetails('Reading terms of service', Assets.Reading)
@@ -84,7 +87,6 @@ presence.on('UpdateData', async () => {
       else if (isPaused) {
         presenceData.smallImageKey = Assets.Pause
         presenceData.smallImageText = 'Paused'
-
         delete presenceData.startTimestamp
         delete presenceData.endTimestamp
       }
