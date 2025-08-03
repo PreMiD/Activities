@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '608109837657702566',
@@ -25,6 +25,7 @@ function stripText(element: HTMLElement, id = 'None', log = true) {
 presence.on('UpdateData', async () => {
   // Define presence data
   const presenceData: PresenceData = {
+    type: ActivityType.Listening,
     details: 'Browsing...',
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/Pandora/assets/logo.png',
   }
