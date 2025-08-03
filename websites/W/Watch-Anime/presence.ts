@@ -78,7 +78,7 @@ async function getEpisodeInfo(
     )
     const data = await response.json()
 
-    if (data.length > 0) {
+    if (data) {
       const episodeInfo: EpisodeInfo = {
         nomLangue: data.nom_langue,
         nomSaison: data.nom_saison,
