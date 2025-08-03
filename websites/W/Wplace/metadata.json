@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "390265556357611521",
+    "name": "lenoch"
+  },
+  "service": "Wplace",
+  "description": {
+    "en": "Wplace is a collaborative, real-time pixel canvas layered over the world map, where anyone can paint and create art together."
+  },
+  "url": "wplace.live",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/ZfNOTBm.png",
+  "thumbnail": "https://i.imgur.com/3iaxuqv.png",
+  "color": "#1C61E7",
+  "category": "games",
+  "tags": [
+    "place",
+    "redditplace",
+    "game"
+  ]
+}
