@@ -37,9 +37,9 @@ function getStatus(): string {
   }
 
   // Get content from meta tag
-  const meta = document.querySelector(
+  const meta = document.querySelector<HTMLMetaElement>(
     'meta[name="twitter:title"]',
-  ) as HTMLMetaElement
+  )
   const rawTitle = meta?.content?.trim()
   if (!rawTitle)
     return 'Browsing'
