@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "1203605618745933880",
+    "name": "Fridayplayzz"
+  },
+  "service": "Primeshows",
+  "description": {
+    "en": "PrimeShows is a website that allows you to watch movies and TV shows for free. It is a great way to save money on your entertainment."
+  },
+  "url": "www.primeshows.live",
+  "version": "1.4.2",
+  "logo": "https://i.ibb.co/vxRrCsHC/logo.png",
+  "thumbnail": "https://i.ibb.co/rRGmJyhx/6-CE24630-A59-D-4-AA4-86-B9-A89-E3609323-D.png",
+  "color": "#19e3f3",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "series",
+    "anime",
+    "prime"
+  ]
+}
