@@ -16,6 +16,7 @@ export default defineConfig({
   base: '/Activities',
   title: 'PreMiD',
   description: 'Documentation for developing PreMiD Activities',
+  head: [['link', { rel: 'icon', href: 'https://cdn.rcd.gg/PreMiD.png', type: 'image/png' }]],
   themeConfig: {
     search: {
       provider: 'local',

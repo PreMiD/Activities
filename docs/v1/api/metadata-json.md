@@ -43,17 +43,18 @@ Here's the basic structure of a `metadata.json` file:
 
 ## Optional Fields
 
-| Field          | Type    | Description                                                                         |
-| -------------- | ------- | ----------------------------------------------------------------------------------- |
-| `contributors` | Array   | Array of contributors to the activity                                               |
-| `altnames`     | Array   | Alternative titles for the service                                                  |
-| `iframe`       | Boolean | Defines whether `iFrames` are used                                                  |
-| `regExp`       | String  | Regular expression string used to match URLs                                        |
-| `iFrameRegExp` | String  | Regular expression selector for iframes to inject into                              |
-| `readLogs`     | Boolean | Defines whether `getLogs()` is used                                                 |
-| `button`       | Boolean | Whether to include a "add activity" button on the store (partnered activities only) |
-| `warning`      | Boolean | Whether to display a warning on the activity installation page                      |
-| `settings`     | Array   | Array of settings the user can change                                               |
+| Field               | Type    | Description                                                                         |
+| ------------------- | ------- | ----------------------------------------------------------------------------------- |
+| `contributors`      | Array   | Array of contributors to the activity                                               |
+| `altnames`          | Array   | Alternative titles for the service                                                  |
+| `iframe`            | Boolean | Defines whether `iFrames` are used                                                  |
+| `regExp`            | String  | Regular expression string used to match URLs                                        |
+| `iFrameRegExp`      | String  | Regular expression selector for iframes to inject into                              |
+| `readLogs`          | Boolean | Defines whether `getLogs()` is used                                                 |
+| `button`            | Boolean | Whether to include a "add activity" button on the store (partnered activities only) |
+| `warning`           | Boolean | Whether to display a warning on the activity installation page                      |
+| `settings`          | Array   | Array of settings the user can change                                               |
+| `allowURLOverrides` | Boolean | Whether to allow users to override the URL of the activity                          |
 
 ## Author and Contributors
 
@@ -282,6 +283,18 @@ The `iFrameRegExp` field is a regular expression selector for iframes to inject 
 ```json
 {
   "iFrameRegExp": "([a-z0-9-]+[.])*example[.]com[/]embed[/]"
+}
+```
+
+## Allow URL Overrides
+
+The `allowURLOverrides` field is a boolean that determines whether users can override the activity's target URL. When set to `true`, users can input a custom regular expression in the activity settings to match different URLs.
+
+This is particularly useful for services that support self-hosting, allowing users to configure the activity to work with their own server instances.
+
+```json
+{
+  "allowURLOverrides": true
 }
 ```
 
