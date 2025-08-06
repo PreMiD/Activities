@@ -150,13 +150,18 @@ Here's a basic example of a `presence.ts` file:
 const presence = new Presence({
   clientId: 'your_client_id'
 })
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png',
+    largeImageKey: ActivityAssets.Logo,
     details: 'Browsing Example.com',
     state: 'Homepage',
-    startTimestamp: Date.now()
+    startTimestamp: browsingTimestamp
   }
 
   presence.setActivity(presenceData)

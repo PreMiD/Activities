@@ -39,8 +39,8 @@ Once you've created a slideshow, you can add slides to it using the `addSlide` m
 slideshow.addSlide('slide1', {
   details: 'Browsing Example.com',
   state: 'Homepage',
-  largeImageKey: 'https://example.com/logo.png',
-  startTimestamp: Date.now()
+  largeImageKey: ActivityAssets.Logo,
+  startTimestamp: browsingTimestamp
 }, 5000) // 5 seconds
 ```
 
@@ -58,8 +58,8 @@ You can update an existing slide using the `updateSlide` method:
 slideshow.updateSlide('slide1', {
   details: 'Updated details',
   state: 'Updated state',
-  largeImageKey: 'https://example.com/logo.png',
-  startTimestamp: Date.now()
+  largeImageKey: ActivityAssets.Logo,
+  startTimestamp: browsingTimestamp
 })
 ```
 
@@ -132,6 +132,11 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+  Clock = 'https://example.com/clock.png'
+}
+
 const slideshow = presence.createSlideshow()
 
 presence.on('UpdateData', async () => {
@@ -139,14 +144,14 @@ presence.on('UpdateData', async () => {
   slideshow.addSlide('info1', {
     details: 'Browsing the website',
     state: document.title,
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo,
   }, 5000) // 5 seconds
 
   slideshow.addSlide('info2', {
     details: 'Current time',
     state: new Date().toLocaleTimeString(),
-    largeImageKey: 'https://example.com/logo.png',
-    smallImageKey: 'https://example.com/clock.png'
+    largeImageKey: ActivityAssets.Logo,
+    smallImageKey: ActivityAssets.Clock
   }, 5000) // 5 seconds
 
   // Set the activity with the slideshow
@@ -201,12 +206,19 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+  User = 'https://example.com/user.png'
+}
+
 const slideshow = presence.createSlideshow()
 
 presence.on('UpdateData', async () => {
   const presenceData = {
-    largeImageKey: 'https://example.com/logo.png',
-    startTimestamp: Date.now()
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: browsingTimestamp
   }
 
   // Always add the main slide
@@ -223,7 +235,7 @@ presence.on('UpdateData', async () => {
       ...presenceData,
       details: `Logged in as ${username}`,
       state: 'Viewing profile',
-      smallImageKey: 'https://example.com/user.png'
+      smallImageKey: ActivityAssets.User
     }, 5000)
   }
   else if (slideshow.hasSlide('user')) {
@@ -243,6 +255,13 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+  Clock = 'https://example.com/clock.png'
+}
+
 const slideshow = presence.createSlideshow()
 
 presence.on('UpdateData', async () => {
@@ -251,10 +270,10 @@ presence.on('UpdateData', async () => {
   const slideDuration = await presence.getSetting<number>('slideDuration') * 1000 // Convert to milliseconds
 
   const presenceData = {
-    largeImageKey: 'https://example.com/logo.png',
+    largeImageKey: ActivityAssets.Logo,
     details: 'Browsing Example.com',
     state: document.title,
-    startTimestamp: Date.now()
+    startTimestamp: browsingTimestamp
   }
 
   if (showSlideshow) {
@@ -265,7 +284,7 @@ presence.on('UpdateData', async () => {
       ...presenceData,
       details: 'Current time',
       state: new Date().toLocaleTimeString(),
-      smallImageKey: 'https://example.com/clock.png'
+      smallImageKey: ActivityAssets.Clock
     }, slideDuration)
 
     // Set the activity with the slideshow
@@ -333,9 +352,18 @@ Here's a complete example of an activity that uses a slideshow to alternate betw
 ### presence.ts
 
 ```typescript
+import { Assets } from 'premid'
+
 const presence = new Presence({
   clientId: 'your_client_id'
 })
+
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+  Clock = 'https://example.com/clock.png'
+}
 
 // Create a slideshow
 const slideshow = presence.createSlideshow()
@@ -360,8 +388,8 @@ presence.on('UpdateData', async () => {
 
   // Base presence data that will be common across slides
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png',
-    startTimestamp: Date.now()
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: browsingTimestamp
   }
 
   // Get page information
@@ -392,7 +420,7 @@ presence.on('UpdateData', async () => {
             details: 'Viewing gallery',
             state: `${imageTitle} (${index + 1}/${images.length})`,
             largeImageKey: image.src,
-            smallImageKey: 'https://example.com/search.png',
+            smallImageKey: Assets.Search,
             smallImageText: 'Browsing images'
           },
           slideDuration || DEFAULT_SLIDESHOW_TIMEOUT
@@ -406,7 +434,7 @@ presence.on('UpdateData', async () => {
       // Show a single presence for the gallery
       presenceData.details = 'Viewing gallery'
       presenceData.state = `${images.length} images`
-      presenceData.smallImageKey = 'https://example.com/search.png'
+      presenceData.smallImageKey = Assets.Search
       presenceData.smallImageText = 'Browsing images'
 
       presence.setActivity(presenceData)
@@ -425,7 +453,7 @@ presence.on('UpdateData', async () => {
         ...presenceData,
         details: 'Current time',
         state: new Date().toLocaleTimeString(),
-        smallImageKey: 'https://example.com/clock.png',
+        smallImageKey: ActivityAssets.Clock,
         smallImageText: 'Time information'
       }, slideDuration || DEFAULT_SLIDESHOW_TIMEOUT)
 

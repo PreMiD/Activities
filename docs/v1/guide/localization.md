@@ -55,6 +55,14 @@ The keys are language codes, and the values are the descriptions in those langua
 The `getStrings` method allows you to get translations for common strings from the PreMiD extension. These translations are maintained by the PreMiD translation team and are available in many languages.
 
 ```typescript
+const presence = new Presence({
+  clientId: 'your_client_id'
+})
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
+
 presence.on('UpdateData', async () => {
   // Get translations
   const strings = await presence.getStrings({
@@ -65,7 +73,7 @@ presence.on('UpdateData', async () => {
 
   // Use translations in your presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo
   }
 
   const video = document.querySelector('video')
@@ -194,6 +202,14 @@ In your `presence.ts` file, you can access these translations:
 <!-- eslint-skip -->
 
 ```typescript
+const presence = new Presence({
+  clientId: 'your_client_id'
+})
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
+
 presence.on('UpdateData', async () => {
   // Get the user's language
   const userLanguage = await presence.getSetting<string>('lang') || 'en'
@@ -209,7 +225,7 @@ presence.on('UpdateData', async () => {
 
   // Create the presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png',
+    largeImageKey: ActivityAssets.Logo,
     details: strings.play // From general.json
   }
 
@@ -286,6 +302,11 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
 // Use getStrings to access translations from your localization file
 
 presence.on('UpdateData', async () => {
@@ -303,8 +324,8 @@ presence.on('UpdateData', async () => {
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png',
-    startTimestamp: Date.now()
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: browsingTimestamp
   }
 
   // Set details based on the current page

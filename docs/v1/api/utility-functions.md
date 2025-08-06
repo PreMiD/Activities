@@ -35,9 +35,9 @@ const presenceData: PresenceData = {
   state: 'Video Title'
 }
 
-const video = document.querySelector('video')
+const video = document.querySelector('video');
 // Recommended approach using destructuring
-  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
+[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
 ```
 
 ## getTimestampsFromMedia
@@ -72,9 +72,9 @@ const presenceData: PresenceData = {
   state: 'Video Title'
 }
 
-const video = document.querySelector('video')
+const video = document.querySelector('video');
 // Recommended approach using destructuring
-  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 ```
 
 ## timestampFromFormat
@@ -123,10 +123,16 @@ const presence = new Presence({
   clientId: '123456789012345678'
 })
 
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png'
+}
+
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
 presence.on('UpdateData', async () => {
   const video = document.querySelector('video')
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo
   }
 
   if (video && video.readyState > 0) {
@@ -141,16 +147,14 @@ presence.on('UpdateData', async () => {
     }
     else {
       presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = 'Playing'
+      presenceData.smallImageText = 'Playing';
 
-      const timestamps = getTimestampsFromMedia(video)
-      presenceData.startTimestamp = timestamps[0]
-      presenceData.endTimestamp = timestamps[1]
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     }
   }
   else {
     presenceData.details = 'Browsing'
-    presenceData.startTimestamp = Date.now()
+    presenceData.startTimestamp = browsingTimestamp
   }
 
   presence.setActivity(presenceData)
@@ -164,6 +168,12 @@ presence.on('UpdateData', async () => {
 ```typescript
 import { timestampFromFormat } from 'premid'
 
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png'
+}
+
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
 const presence = new Presence({
   clientId: '123456789012345678'
 })
@@ -173,7 +183,7 @@ presence.on('UpdateData', async () => {
   const totalTimeElement = document.querySelector('.total-time')
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png',
+    largeImageKey: ActivityAssets.Logo,
     details: 'Listening to music',
     state: document.querySelector('.song-title')?.textContent
   }
@@ -182,12 +192,10 @@ presence.on('UpdateData', async () => {
     const currentTime = timestampFromFormat(currentTimeElement.textContent)
     const totalTime = timestampFromFormat(totalTimeElement.textContent)
 
-    const timestamps = getTimestamps(currentTime, totalTime)
-    presenceData.startTimestamp = timestamps[0]
-    presenceData.endTimestamp = timestamps[1]
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, totalTime)
   }
   else {
-    presenceData.startTimestamp = Date.now()
+    presenceData.startTimestamp = browsingTimestamp
   }
 
   presence.setActivity(presenceData)

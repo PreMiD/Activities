@@ -38,7 +38,7 @@ Adds a slide to the queue. If a slide already exists with the given ID, it will 
 slideshow.addSlide('homepage', {
   details: 'Browsing the homepage',
   state: 'example.com',
-  largeImageKey: 'https://example.com/logo.png'
+  largeImageKey: ActivityAssets.Logo
 }, 5000) // 5 seconds
 ```
 
@@ -104,7 +104,7 @@ Updates a slide already in the queue. Passing `null` or `undefined` will keep th
 slideshow.updateSlide('homepage', {
   details: 'Browsing the updated homepage',
   state: 'example.com',
-  largeImageKey: 'https://example.com/logo.png'
+  largeImageKey: ActivityAssets.Logo
 })
 ```
 
@@ -232,6 +232,11 @@ const presence = new Presence({
   clientId: '123456789012345678'
 })
 
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+  Clock = 'https://example.com/clock.png'
+}
+
 const slideshow = presence.createSlideshow()
 
 presence.on('UpdateData', async () => {
@@ -239,14 +244,14 @@ presence.on('UpdateData', async () => {
   slideshow.addSlide('info1', {
     details: 'Browsing the website',
     state: document.title,
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo
   }, 5000) // 5 seconds
 
   slideshow.addSlide('info2', {
     details: 'Current time',
     state: new Date().toLocaleTimeString(),
-    largeImageKey: 'https://example.com/logo.png',
-    smallImageKey: 'https://example.com/clock.png'
+    largeImageKey: ActivityAssets.Logo,
+    smallImageKey: ActivityAssets.Clock
   }, 5000) // 5 seconds
 
   // Set the activity with the slideshow
@@ -261,13 +266,17 @@ const presence = new Presence({
   clientId: '123456789012345678'
 })
 
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png'
+}
+
 const slideshow = presence.createSlideshow()
 const SLIDESHOW_TIMEOUT = 5000 // 5 seconds
 
 presence.on('UpdateData', async () => {
   const presenceData = {
     details: 'Viewing gallery',
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo
   }
 
   // Get all images on the page
@@ -301,12 +310,19 @@ const presence = new Presence({
   clientId: '123456789012345678'
 })
 
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+  User = 'https://example.com/user.png'
+}
+
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
 const slideshow = presence.createSlideshow()
 
 presence.on('UpdateData', async () => {
   const presenceData = {
-    largeImageKey: 'https://example.com/logo.png',
-    startTimestamp: Date.now()
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: browsingTimestamp
   }
 
   // Always add the main slide
@@ -323,7 +339,7 @@ presence.on('UpdateData', async () => {
       ...presenceData,
       details: `Logged in as ${username}`,
       state: 'Viewing profile',
-      smallImageKey: 'https://example.com/user.png'
+      smallImageKey: ActivityAssets.User
     }, 5000)
   }
   else if (slideshow.hasSlide('user')) {

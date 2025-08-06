@@ -75,6 +75,10 @@ iframe.on('UpdateData', async () => {
 ```typescript
 import { Assets, getTimestamps } from 'premid'
 
+enum ActivityAssets {
+  Logo = 'https://i.imgur.com/logo.png'
+}
+
 const presence = new Presence({
   clientId: 'your_client_id'
 })
@@ -105,7 +109,7 @@ presence.on('UpdateData', async () => {
   const { pathname, hostname, href } = document.location
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://i.imgur.com/XXXXXXX.png' // Will be replaced with CDN URL after review
+    largeImageKey: ActivityAssets.Logo
   }
 
   // Check if we have video data from the iframe

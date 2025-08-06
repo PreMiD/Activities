@@ -39,9 +39,15 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png'
+}
+
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo
   }
 
   // Get the current URL path
@@ -66,7 +72,7 @@ presence.on('UpdateData', async () => {
   }
 
   // Add a timestamp to show how long the user has been on the page
-  presenceData.startTimestamp = Date.now()
+  presenceData.startTimestamp = browsingTimestamp
 
   // Set the activity
   if (presenceData.details) {

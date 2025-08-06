@@ -35,9 +35,20 @@ An activity with a slideshow consists of two files:
 ### presence.ts
 
 ```typescript
+import { Assets } from 'premid'
+
 const presence = new Presence({
   clientId: 'your_client_id'
 })
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+  User = 'https://example.com/user.png',
+  Star = 'https://example.com/star.png',
+  Trophy = 'https://example.com/trophy.png'
+}
+
+const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 // Create a slideshow
 const slideshow = presence.createSlideshow()
@@ -58,8 +69,8 @@ function registerSlideshowKey(key: string): void {
 presence.on('UpdateData', async () => {
   // Base presence data that will be common across slides
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png',
-    startTimestamp: Date.now()
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: browsingTimestamp
   }
 
   // Get page information
@@ -89,7 +100,7 @@ presence.on('UpdateData', async () => {
           details: 'Viewing gallery',
           state: `${imageTitle} (${index + 1}/${images.length})`,
           largeImageKey: image.src,
-          smallImageKey: 'https://example.com/search.png',
+          smallImageKey: Assets.Search, //Search is in the provided Assets enum
           smallImageText: 'Browsing images'
         },
         SLIDESHOW_TIMEOUT
@@ -106,7 +117,7 @@ presence.on('UpdateData', async () => {
       'profile-main',
       {
         ...presenceData,
-        smallImageKey: 'https://example.com/user.png',
+        smallImageKey: ActivityAssets.User,
         smallImageText: 'User profile'
       },
       SLIDESHOW_TIMEOUT
@@ -120,7 +131,7 @@ presence.on('UpdateData', async () => {
         ...presenceData,
         details: `Level: ${userLevel}`,
         state: `User: ${document.querySelector('.username')?.textContent || 'Unknown user'}`,
-        smallImageKey: 'https://example.com/star.png',
+        smallImageKey: Assets.Star,
         smallImageText: 'User level'
       },
       SLIDESHOW_TIMEOUT
@@ -135,7 +146,7 @@ presence.on('UpdateData', async () => {
           ...presenceData,
           details: 'Achievements',
           state: `${achievements.length} unlocked`,
-          smallImageKey: 'https://example.com/trophy.png',
+          smallImageKey: Assets.Trophy,
           smallImageText: 'User achievements'
         },
         SLIDESHOW_TIMEOUT

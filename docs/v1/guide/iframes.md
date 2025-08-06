@@ -98,6 +98,12 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
+
 // Store iFrame data
 let iFrameData: {
   video?: {
@@ -115,7 +121,7 @@ presence.on('iFrameData', (data) => {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo,
   }
 
   // Check if we have video data from the iFrame
@@ -138,7 +144,7 @@ presence.on('UpdateData', async () => {
   }
   else {
     presenceData.details = 'Browsing'
-    presenceData.startTimestamp = Date.now()
+    presenceData.startTimestamp = browsingTimestamp
   }
 
   // Set the activity
@@ -233,7 +239,7 @@ presence.on('iFrameData', (data) => {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo,
   }
 
   // Check if we have YouTube data
@@ -313,11 +319,15 @@ iframe.on('UpdateData', async () => {
 ### presence.ts
 
 ```typescript
-import { getTimestamps } from 'premid'
+import { getTimestamps, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: 'your_client_id'
 })
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
 
 // Define the type for iFrame data
 interface IFrameData {
@@ -333,7 +343,7 @@ interface IFrameData {
 let iFrameData: IFrameData = {}
 
 // Create timestamps outside of UpdateData to maintain consistent browsing time
-let browsingTimestamp = Date.now()
+let browsingTimestamp = Math.floor(Date.now() / 1000)
 // Track whether we were watching a video in the previous update
 let wasWatchingVideo = false
 
@@ -349,7 +359,7 @@ presence.on('UpdateData', async () => {
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo,
   }
 
   // Check if we have video data from the iFrame
@@ -364,12 +374,12 @@ presence.on('UpdateData', async () => {
 
     if (paused) {
       presenceData.state = 'Paused'
-      presenceData.smallImageKey = 'https://example.com/pause.png'
+      presenceData.smallImageKey = Assets.Pause
       presenceData.smallImageText = 'Paused'
     }
     else {
       presenceData.state = 'Playing'
-      presenceData.smallImageKey = 'https://example.com/play.png'
+      presenceData.smallImageKey = Assets.Play
       presenceData.smallImageText = 'Playing'
 
       // Add timestamps if enabled and we have currentTime and duration
@@ -395,7 +405,7 @@ presence.on('UpdateData', async () => {
     // If we were watching a video before but now we're browsing,
     // reset the browsing timestamp to the current time
     if (wasWatchingVideo) {
-      browsingTimestamp = Date.now()
+      browsingTimestamp = Math.floor(Date.now() / 1000)
       wasWatchingVideo = false
     }
 

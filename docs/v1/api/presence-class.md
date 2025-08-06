@@ -48,8 +48,8 @@ Sets the presence activity and sends it to the application.
 presence.setActivity({
   details: 'Reading documentation',
   state: 'Learning about the Presence class',
-  largeImageKey: 'https://example.com/logo.png',
-  startTimestamp: Date.now()
+  largeImageKey: ActivityAssets.Logo,
+  startTimestamp: browsingTimestamp
 })
 ```
 

@@ -69,6 +69,12 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png'
+}
+
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
 // Default settings values
 let showButtons = true
 let showTimestamp = true
@@ -84,7 +90,7 @@ presence.on('UpdateData', async () => {
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo
   }
 
   // Get page information
@@ -129,7 +135,7 @@ presence.on('UpdateData', async () => {
 
   // Add timestamp if enabled
   if (showTimestamp) {
-    presenceData.startTimestamp = Date.now()
+    presenceData.startTimestamp = browsingTimestamp
   }
 
   // Add buttons if enabled

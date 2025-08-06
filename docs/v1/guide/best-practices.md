@@ -14,21 +14,29 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png',
+    largeImageKey: ActivityAssets.Logo,
     details: 'Browsing Example.com',
     state: 'Homepage',
-    startTimestamp: Date.now()
+    startTimestamp: browsingTimestamp
   }
 
   presence.setActivity(presenceData)
 })
 
-// Bad - Missing type annotations
+// Bad - Missing type annotations, not using enum for assets
 const presence = new Presence({
   clientId: 'your_client_id'
 })
+
+const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
   // Missing PresenceData type annotation
@@ -36,7 +44,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://example.com/logo.png',
     details: 'Browsing Example.com',
     state: 'Homepage',
-    startTimestamp: Date.now()
+    startTimestamp: browsingTimestamp
   }
 
   presence.setActivity(presenceData)
@@ -71,17 +79,20 @@ const href = document.location.href
 
 ### Use Constants
 
-Define constants for repeated values to make your code more maintainable. Always define constants outside of the UpdateData event for better performance.
+Define constants for repeated values to make your code more maintainable. Always define constants outside of the UpdateData event for better performance. Use the `enum` keyword to define constants for assets.
 
 ```typescript
 // Good
 const SLIDESHOW_TIMEOUT = 5000 // 5 seconds
-const DEFAULT_IMAGE_KEY = 'https://example.com/logo.png'
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
 
 slideshow.addSlide('slide1', {
   details: 'Browsing Example.com',
   state: 'Homepage',
-  largeImageKey: DEFAULT_IMAGE_KEY
+  largeImageKey: ActivityAssets.Logo
 }, SLIDESHOW_TIMEOUT)
 
 // Bad
@@ -493,12 +504,10 @@ Here's a complete example of an activity that follows best practices:
 ### presence.ts
 
 ```typescript
-import { Assets, getTimestamps } from 'premid'
+import { Assets, getTimestamps, ActivityType } from 'premid'
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/XXXXXXX.png', // Will be replaced with CDN URL after review
-  Play = 'https://i.imgur.com/YYYYYYY.png',
-  Pause = 'https://i.imgur.com/ZZZZZZZ.png'
+  Logo = 'https://i.imgur.com/logo.png',
 }
 
 const presence = new Presence({
@@ -506,8 +515,7 @@ const presence = new Presence({
 })
 
 // Constants
-const DEFAULT_IMAGE_KEY = ActivityAssets.Logo
-const DEFAULT_TIMESTAMP = Date.now()
+const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 // Cache for heavy computations
 const cachedData = null
@@ -571,7 +579,7 @@ presence.on('UpdateData', async () => {
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: DEFAULT_IMAGE_KEY
+    largeImageKey: ActivityAssets.Logo
   }
 
   // Get page information
@@ -612,7 +620,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (showTimestamp) {
-      presenceData.startTimestamp = DEFAULT_TIMESTAMP
+      presenceData.startTimestamp = browsingTimestamp
     }
   }
 

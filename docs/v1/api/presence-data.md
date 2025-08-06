@@ -70,8 +70,8 @@ The `ActivityType` enum defines the types of activities that can be displayed.
 const presenceData: PresenceData = {
   details: 'Browsing the homepage',
   state: 'Reading articles',
-  largeImageKey: 'https://example.com/logo.png',
-  startTimestamp: Date.now()
+  largeImageKey: ActivityAssets.Logo,
+  startTimestamp: browsingTimestamp
 }
 ```
 
@@ -82,11 +82,11 @@ const presenceData: PresenceData = {
   type: ActivityType.Watching,
   details: 'Watching a video',
   state: 'Video Title',
-  largeImageKey: 'https://example.com/logo.png',
+  largeImageKey: ActivityAssets.Logo,
   largeImageText: 'Website Name',
-  startTimestamp: Date.now(),
-  endTimestamp: Date.now() + 360000 // 6 minutes from now
 }
+
+[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(document.querySelector('video'))
 ```
 
 #### Special Season and Episode Formatting
@@ -117,7 +117,7 @@ _Note: This image shows how Discord displays the special season and episode indi
 const presenceData: PresenceData = {
   details: 'Reading an article',
   state: 'Article Title',
-  largeImageKey: 'https://example.com/logo.png',
+  largeImageKey: ActivityAssets.Logo,
   buttons: [
     {
       label: 'Read Article',

@@ -83,9 +83,13 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png',
+    largeImageKey: ActivityAssets.Logo,
     details: 'Browsing Example.com',
     state: 'Homepage'
   }
@@ -106,34 +110,36 @@ Now, let's modify the `presence.ts` file to create a simple activity:
 const presence = new Presence({
   clientId: 'your_client_id' // You must enter this yourself
 })
+const browsingTimestamp = Math.floor(Date.now() / 1000) // Show elapsed time
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
 
 presence.on('UpdateData', async () => {
   // Get the current URL
-  const path = document.location.pathname
+  const { pathname } = document.location
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png', // Direct URL to the logo image
+    largeImageKey: ActivityAssets.Logo, // Direct URL to the logo image
     details: 'Browsing Example.com',
-    startTimestamp: Date.now() // Show elapsed time
+    startTimestamp: browsingTimestamp // Show elapsed time
   }
 
   // Update the state based on the current page
-  if (path === '/') {
+  if (pathname === '/') {
     presenceData.state = 'Homepage'
   }
-  else if (path.includes('/about')) {
+  else if (pathname.includes('/about')) {
     presenceData.state = 'Reading about us'
   }
-  else if (path.includes('/contact')) {
+  else if (pathname.includes('/contact')) {
     presenceData.state = 'Contacting us'
-  }
-  else {
-    presenceData.state = 'Browsing'
   }
 
   // Set the activity
-  if (presenceData.details) {
+  if (presenceData.state) {
     presence.setActivity(presenceData)
   }
   else {

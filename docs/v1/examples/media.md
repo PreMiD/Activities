@@ -45,6 +45,10 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png'
+}
+
 // Create browsing timestamp outside UpdateData to maintain consistent timing
 let browsingTimestamp = Math.floor(Date.now() / 1000)
 let wasWatchingVideo = false
@@ -54,7 +58,7 @@ presence.on('UpdateData', async () => {
   const { pathname, hostname, href } = document.location
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo
   }
 
   // Get the video element

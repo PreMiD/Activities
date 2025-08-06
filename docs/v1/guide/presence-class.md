@@ -29,12 +29,18 @@ presence.on('UpdateData', async () => {
 To set the activity data, you need to create a `PresenceData` object and pass it to the `setActivity` method:
 
 ```typescript
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png',
+    largeImageKey: ActivityAssets.Logo,
     details: 'Browsing Example.com',
     state: 'Homepage',
-    startTimestamp: Date.now()
+    startTimestamp: browsingTimestamp
   }
 
   presence.setActivity(presenceData)
@@ -160,33 +166,39 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
+
 presence.on('UpdateData', async () => {
   // Get settings
   const showButtons = await presence.getSetting<boolean>('showButtons')
   const showTimestamp = await presence.getSetting<boolean>('showTimestamp')
 
   // Get page information
-  const path = document.location.pathname
+  const { pathname } = document.location
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo,
   }
 
   // Only show activity on public pages, not private/sensitive ones
-  if (path === '/') {
+  if (pathname === '/') {
     presenceData.details = 'Browsing Example.com'
     presenceData.state = 'Homepage'
   }
-  else if (path.includes('/about')) {
+  else if (pathname.includes('/about')) {
     presenceData.details = 'Reading about Example.com'
     presenceData.state = 'About page'
   }
-  else if (path.includes('/contact')) {
+  else if (pathname.includes('/contact')) {
     presenceData.details = 'Contacting Example.com'
     presenceData.state = 'Contact page'
   }
-  else if (path.includes('/login') || path.includes('/signup') || path.includes('/account')) {
+  else if (pathname.includes('/login') || pathname.includes('/signup') || pathname.includes('/account')) {
     // Don't show activity on private/login pages for privacy
     // details will remain undefined
   }
@@ -197,7 +209,7 @@ presence.on('UpdateData', async () => {
 
   // Add timestamp if enabled
   if (showTimestamp) {
-    presenceData.startTimestamp = Date.now()
+    presenceData.startTimestamp = browsingTimestamp
   }
 
   // Add buttons if enabled

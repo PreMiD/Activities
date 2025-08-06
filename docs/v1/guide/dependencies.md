@@ -38,16 +38,22 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
+
 presence.on('UpdateData', async () => {
   // Use the imported dependencies
   const formattedTime = moment().format('h:mm:ss a')
   const pageTitle = get(document, 'title', 'Unknown Page')
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png',
+    largeImageKey: ActivityAssets.Logo,
     details: pageTitle,
     state: `Current time: ${formattedTime}`,
-    startTimestamp: Date.now()
+    startTimestamp: browsingTimestamp
   }
 
   presence.setActivity(presenceData)

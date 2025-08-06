@@ -144,6 +144,16 @@ To use settings in your code, you need to get their values using the `getSetting
 ![Settings in Activity Code](https://placehold.co/800x400?text=Settings+in+Activity+Code)
 
 ```typescript
+const presence = new Presence({
+  clientId: 'your_client_id'
+})
+
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
+
 presence.on('UpdateData', async () => {
   // Get settings
   const showButtons = await presence.getSetting<boolean>('showButtons')
@@ -152,13 +162,14 @@ presence.on('UpdateData', async () => {
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png',
-    details: 'Browsing Example.com'
+    largeImageKey: ActivityAssets.Logo,
+    details: 'Browsing Example.com',
+    startTimestamp: browsingTimestamp
   }
 
   // Add timestamp if enabled
   if (showTimestamp) {
-    presenceData.startTimestamp = Date.now()
+    presenceData.startTimestamp = browsingTimestamp
   }
 
   // Add buttons if enabled
@@ -287,6 +298,12 @@ const presence = new Presence({
   clientId: 'your_client_id'
 })
 
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://example.com/logo.png',
+}
+
 presence.on('UpdateData', async () => {
   // Get settings
   const showButtons = await presence.getSetting<boolean>('showButtons')
@@ -300,7 +317,7 @@ presence.on('UpdateData', async () => {
 
   // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo
   }
 
   // Format details based on display format
@@ -318,7 +335,7 @@ presence.on('UpdateData', async () => {
 
   // Add timestamp if enabled
   if (showTimestamp) {
-    presenceData.startTimestamp = Date.now()
+    presenceData.startTimestamp = browsingTimestamp
   }
 
   // Add buttons if enabled
