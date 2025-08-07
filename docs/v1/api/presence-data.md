@@ -15,18 +15,23 @@ Both extend the `BasePresenceData` interface, which contains the common properti
 
 ### Common Properties (BasePresenceData)
 
-| Property         | Type                                         | Description                                                                                       |
-| ---------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `name`           | `string`                                     | Name to show in activity (e.g., "YouTube")                                                        |
-| `type`           | `ActivityType`                               | Type of activity (Playing, Listening, Watching, Competing)                                        |
-| `details`        | `string \| Node \| null`                     | Top row of the status                                                                             |
-| `state`          | `string \| Node \| null`                     | Bottom row of the status                                                                          |
-| `startTimestamp` | `number \| Date \| null`                     | Timestamp for the start of the activity (shows time as "elapsed")                                 |
-| `endTimestamp`   | `number \| Date \| null`                     | Timestamp until the end of the activity (shows time as "remaining")                               |
-| `largeImageKey`  | `string \| Blob \| HTMLImageElement \| null` | Large profile artwork. Preferably a direct URL to an image (e.g., `https://example.com/logo.png`) |
-| `smallImageKey`  | `string \| Blob \| HTMLImageElement \| null` | Small profile artwork. Preferably a direct URL to an image (e.g., `https://example.com/icon.png`) |
-| `smallImageText` | `string \| Node \| null`                     | Tooltip for the smallImageKey                                                                     |
-| `buttons`        | `[ButtonData, ButtonData?]`                  | Array of buttons (max 2)                                                                          |
+| Property           | Type                                         | Description                                                                                       |
+| ------------------ | -------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `name`             | `string`                                     | Name to show in activity (e.g., "YouTube")                                                        |
+| `type`             | `ActivityType`                               | Type of activity (Playing, Listening, Watching, Competing)                                        |
+| `stateDisplayType` | `StatusDisplayType`                          | Controls which field is displayed in the user's status text in the member list                    |
+| `details`          | `string \| Node \| null`                     | Top row of the status                                                                             |
+| `detailsUrl`       | `string \| null`        | URL that is linked when clicking on the details text                                              |
+| `state`            | `string \| Node \| null`                     | Bottom row of the status                                                                          |
+| `stateUrl`         | `string \| null`        | URL that is linked when clicking on the state text                                                |
+| `startTimestamp`   | `number \| Date \| null`                     | Timestamp for the start of the activity (shows time as "elapsed")                                 |
+| `endTimestamp`     | `number \| Date \| null`                     | Timestamp until the end of the activity (shows time as "remaining")                               |
+| `largeImageKey`    | `string \| Blob \| HTMLImageElement \| null` | Large profile artwork. Preferably a direct URL to an image (e.g., `https://example.com/logo.png`) |
+| `largeImageUrl`    | `string \| null`                             | URL that is opened when clicking on the large image                                              |
+| `smallImageKey`    | `string \| Blob \| HTMLImageElement \| null` | Small profile artwork. Preferably a direct URL to an image (e.g., `https://example.com/icon.png`) |
+| `smallImageUrl`    | `string \| null`                             | URL that is opened when clicking on the small image                                              |
+| `smallImageText`   | `string \| Node \| null`                     | Tooltip for the smallImageKey                                                                     |
+| `buttons`          | `[ButtonData, ButtonData?]`                  | Array of buttons (max 2)                                                                          |
 
 ### Media-Specific Properties (MediaPresenceData)
 
@@ -61,6 +66,16 @@ The `ActivityType` enum defines the types of activities that can be displayed.
 | `Listening` | Shows as "Listening to [name]" | "Listening to Spotify"      |
 | `Watching`  | Shows as "Watching [name]"     | "Watching YouTube"          |
 | `Competing` | Shows as "Competing in [name]" | "Competing in a tournament" |
+
+## StatusDisplayType Enum
+
+The `StatusDisplayType` enum controls which field is displayed in the user's status text in the member list.
+
+| Value     | Description                  | Example                |
+| --------- | ---------------------------- | ---------------------- |
+| `Name`    | Display the activity name    | "Playing [name]"       |
+| `State`   | Display the state field      | "Listening to [state]" |
+| `Details` | Display the details field    | "Watching [details]"   |
 
 ## Examples
 
