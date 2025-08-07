@@ -13,7 +13,7 @@ declare global {
     /** Display the state field - e.g. "Listening to Rick Astley" */
     State = 1,
     /** Display the details field - e.g. "Listening to Never Gonna Give You Up" */
-    Details = 2
+    Details = 2,
   }
 
   /**
@@ -426,12 +426,12 @@ declare global {
     event: 'reconnect'
   }
 
-  type PresenceClassEvents =
-    | PresenceClassSetActivityEvent
-    | PresenceClassClearActivityEvent
-    | PresenceClassGetPresenceLetiableEvent
-    | PresenceClassGetPageVariablesEvent
-    | PresenceClassReconnectEvent
+  type PresenceClassEvents
+    = | PresenceClassSetActivityEvent
+      | PresenceClassClearActivityEvent
+      | PresenceClassGetPresenceLetiableEvent
+      | PresenceClassGetPageVariablesEvent
+      | PresenceClassReconnectEvent
 
   type ConsoleLogType = 'log' | 'info' | 'warn' | 'error'
   interface ConsoleLog<T = unknown> {
