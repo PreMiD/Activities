@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "1011198811072368681",
+    "name": "Xmer"
+  },
+  "service": "TinDay",
+  "description": {
+    "en": "Match by birthday. Chat freely. Celebrate safely."
+  },
+  "url": "tinday.app.tc",
+  "version": "1.0.0",
+  "logo": "https://tinday.app.tc/assets/twinday/TinDay-Logo.png",
+  "thumbnail": "https://tinday.app.tc/assets/twinday/TinDay-Logo.png",
+  "color": "#fc918c",
+  "category": "socials",
+  "tags": [
+    "tinday",
+    "match",
+    "birthday",
+    "anonymous",
+    "chat"
+  ]
+}
