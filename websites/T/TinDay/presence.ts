@@ -7,7 +7,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://tinday.app.tc/assets/twinday/TinDay-Logo.png',
+  Logo = 'https://tinday.app.tc/assets/512x512.png',
 }
 
 presence.on('UpdateData', async () => {
@@ -31,7 +31,8 @@ presence.on('UpdateData', async () => {
         }
         age = calculatedAge.toString()
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error('LocalStorage Error ', error)
     }
   }
