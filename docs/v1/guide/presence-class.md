@@ -56,19 +56,19 @@ The `PresenceData` object can have the following properties:
 | `name`             | `string`            | The name of the activity                                                                               |
 | `type`             | `ActivityType`      | The type of activity                                                                                   |
 | `stateDisplayType` | `StatusDisplayType` | Controls which field is displayed in the user's status text in the member list                         |
-| `details`          | `string`       | The first line of the activity                                                                              |
-| `detailsUrl`       | `string`       | The URL the user will be redirected to when clicking the details text                                       |
-| `state`            | `string`       | The second line of the activity                                                                             |
-| `stateUrl`         | `string`       | The URL the user will be redirected to when clicking the state text                                         |
-| `startTimestamp`   | `number`       | The time when the activity started (Unix timestamp in milliseconds)                                         |
-| `endTimestamp`     | `number`       | The time when the activity will end (Unix timestamp in milliseconds)                                        |
-| `largeImageKey`    | `string`       | The key of the large image. Preferably a direct URL to an image (e.g., `https://example.com/logo.png`)      |
-| `largeImageUrl`    | `string`       | The URL the user will be redirected to when clicking the large image                                        |
-| `largeImageText`   | `string`       | The text that appears when hovering over the large image                                                    |
-| `smallImageKey`    | `string`       | The key of the small image. Preferably a direct URL to an image (e.g., `https://example.com/icon.png`)      |
-| `smallImageUrl`    | `string`       | The URL the user will be redirected to when clicking the small image                                        |
-| `smallImageText`   | `string`       | The text that appears when hovering over the small image                                                    |
-| `buttons`          | `ButtonData[]` | An array of buttons (max 2)                                                                                 |
+| `details`          | `string`            | The first line of the activity                                                                         |
+| `detailsUrl`       | `string`            | The URL the user will be redirected to when clicking the details text                                  |
+| `state`            | `string`            | The second line of the activity                                                                        |
+| `stateUrl`         | `string`            | The URL the user will be redirected to when clicking the state text                                    |
+| `startTimestamp`   | `number`            | The time when the activity started (Unix timestamp in milliseconds)                                    |
+| `endTimestamp`     | `number`            | The time when the activity will end (Unix timestamp in milliseconds)                                   |
+| `largeImageKey`    | `string`            | The key of the large image. Preferably a direct URL to an image (e.g., `https://example.com/logo.png`) |
+| `largeImageUrl`    | `string`            | The URL the user will be redirected to when clicking the large image                                   |
+| `largeImageText`   | `string`            | The text that appears when hovering over the large image                                               |
+| `smallImageKey`    | `string`            | The key of the small image. Preferably a direct URL to an image (e.g., `https://example.com/icon.png`) |
+| `smallImageUrl`    | `string`            | The URL the user will be redirected to when clicking the small image                                   |
+| `smallImageText`   | `string`            | The text that appears when hovering over the small image                                               |
+| `buttons`          | `ButtonData[]`      | An array of buttons (max 2)                                                                            |
 
 ## Activity Types
 

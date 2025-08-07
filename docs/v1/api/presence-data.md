@@ -21,15 +21,15 @@ Both extend the `BasePresenceData` interface, which contains the common properti
 | `type`             | `ActivityType`                               | Type of activity (Playing, Listening, Watching, Competing)                                        |
 | `stateDisplayType` | `StatusDisplayType`                          | Controls which field is displayed in the user's status text in the member list                    |
 | `details`          | `string \| Node \| null`                     | Top row of the status                                                                             |
-| `detailsUrl`       | `string \| null`        | URL that is linked when clicking on the details text                                              |
+| `detailsUrl`       | `string \| null`                             | URL that is linked when clicking on the details text                                              |
 | `state`            | `string \| Node \| null`                     | Bottom row of the status                                                                          |
-| `stateUrl`         | `string \| null`        | URL that is linked when clicking on the state text                                                |
+| `stateUrl`         | `string \| null`                             | URL that is linked when clicking on the state text                                                |
 | `startTimestamp`   | `number \| Date \| null`                     | Timestamp for the start of the activity (shows time as "elapsed")                                 |
 | `endTimestamp`     | `number \| Date \| null`                     | Timestamp until the end of the activity (shows time as "remaining")                               |
 | `largeImageKey`    | `string \| Blob \| HTMLImageElement \| null` | Large profile artwork. Preferably a direct URL to an image (e.g., `https://example.com/logo.png`) |
-| `largeImageUrl`    | `string \| null`                             | URL that is opened when clicking on the large image                                              |
+| `largeImageUrl`    | `string \| null`                             | URL that is opened when clicking on the large image                                               |
 | `smallImageKey`    | `string \| Blob \| HTMLImageElement \| null` | Small profile artwork. Preferably a direct URL to an image (e.g., `https://example.com/icon.png`) |
-| `smallImageUrl`    | `string \| null`                             | URL that is opened when clicking on the small image                                              |
+| `smallImageUrl`    | `string \| null`                             | URL that is opened when clicking on the small image                                               |
 | `smallImageText`   | `string \| Node \| null`                     | Tooltip for the smallImageKey                                                                     |
 | `buttons`          | `[ButtonData, ButtonData?]`                  | Array of buttons (max 2)                                                                          |
 
@@ -71,11 +71,11 @@ The `ActivityType` enum defines the types of activities that can be displayed.
 
 The `StatusDisplayType` enum controls which field is displayed in the user's status text in the member list.
 
-| Value     | Description                  | Example                |
-| --------- | ---------------------------- | ---------------------- |
-| `Name`    | Display the activity name    | "Playing [name]"       |
-| `State`   | Display the state field      | "Listening to [state]" |
-| `Details` | Display the details field    | "Watching [details]"   |
+| Value     | Description               | Example                |
+| --------- | ------------------------- | ---------------------- |
+| `Name`    | Display the activity name | "Playing [name]"       |
+| `State`   | Display the state field   | "Listening to [state]" |
+| `Details` | Display the details field | "Watching [details]"   |
 
 ## Examples
 
@@ -99,7 +99,7 @@ const presenceData: PresenceData = {
   state: 'Video Title',
   largeImageKey: ActivityAssets.Logo,
   largeImageText: 'Website Name',
-}
+};
 
 [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(document.querySelector('video'))
 ```

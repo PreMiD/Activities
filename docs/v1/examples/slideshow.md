@@ -100,7 +100,7 @@ presence.on('UpdateData', async () => {
           details: 'Viewing gallery',
           state: `${imageTitle} (${index + 1}/${images.length})`,
           largeImageKey: image.src,
-          smallImageKey: Assets.Search, //Search is in the provided Assets enum
+          smallImageKey: Assets.Search, // Search is in the provided Assets enum
           smallImageText: 'Browsing images'
         },
         SLIDESHOW_TIMEOUT

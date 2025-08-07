@@ -169,16 +169,16 @@ The `category` field defines the category the activity falls under. It must be o
 
 The `settings` field is an array of settings that users can customize. Each setting has the following properties:
 
-| Property        | Type                  | Description                               |
-| --------------- | --------------------- | ----------------------------------------- |
-| `id`            | String                | Identifier of the setting                 |
-| `title`         | String                | Title of the setting                      |
-| `icon`          | String                | Icon for the setting (Font Awesome class) |
-| `value`         | Boolean/String/Number | Default value of the setting              |
-| `values`        | Array                 | Array of values for dropdown settings     |
-| `placeholder`   | String                | Placeholder text for string settings      |
-| `if`            | Object                | Conditions for the setting to appear      |
-| `multiLanguage` | Boolean               | Use strings from localization files       |
+| Property        | Type                  | Description                                 |
+| --------------- | --------------------- | ------------------------------------------- |
+| `id`            | String                | Identifier of the setting                   |
+| `title`         | String                | Title of the setting                        |
+| `icon`          | String                | Icon for the setting (Font Awesome class)   |
+| `value`         | Boolean/String/Number | Default value of the setting                |
+| `values`        | Array                 | Array of values for dropdown settings       |
+| `placeholder`   | String                | Placeholder text for string settings        |
+| `if`            | Object                | Conditions for the setting to appear        |
+| `multiLanguage` | Boolean               | Use strings from localization files         |
 | `description`   | String                | Description of the setting (schema v1.0.9+) |
 
 #### Boolean Setting Example
@@ -237,6 +237,7 @@ Starting with metadata schema version 1.0.9, every setting supports an optional 
 Currently, settings only support string descriptions. Multi-language descriptions for settings will be added later.
 
 **String Description Example:**
+
 ```json
 {
   "id": "showButtons",
@@ -248,11 +249,13 @@ Currently, settings only support string descriptions. Multi-language description
 ```
 
 **Version Compatibility:**
+
 - Metadata schema v1.0.9+: Description property is supported
 - Extension v2.8.0+: Description is displayed in the settings UI
 - Earlier versions: Description property is ignored
 
 **Best Practices for Descriptions:**
+
 - Keep descriptions concise (under 100 characters recommended)
 - Use clear, action-oriented language
 - Explain what the setting does, not just what it is
@@ -261,6 +264,7 @@ Currently, settings only support string descriptions. Multi-language description
 - Test descriptions with users who are unfamiliar with the feature
 
 **Examples:**
+
 - ✅ Good: "Show elapsed time since the activity started"
 - ✅ Good: "Display interactive buttons in Discord Activity"
 - ❌ Poor: "Timestamp setting"

@@ -504,7 +504,7 @@ Here's a complete example of an activity that follows best practices:
 ### presence.ts
 
 ```typescript
-import { Assets, getTimestamps, ActivityType } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/logo.png',

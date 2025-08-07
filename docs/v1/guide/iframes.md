@@ -319,7 +319,7 @@ iframe.on('UpdateData', async () => {
 ### presence.ts
 
 ```typescript
-import { getTimestamps, Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: 'your_client_id'

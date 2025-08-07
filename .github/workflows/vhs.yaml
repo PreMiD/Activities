@@ -28,11 +28,11 @@ jobs:
 
       - uses: charmbracelet/vhs-action@v2.1.0
         with:
-          path: 'docs/tapes/create-activity.tape'
+          path: docs/tapes/create-activity.tape
 
       - uses: charmbracelet/vhs-action@v2.1.0
         with:
-          path: 'docs/tapes/developing-activity.tape'
+          path: docs/tapes/developing-activity.tape
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         env:
