@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "333875846961954839",
+    "name": "jaydenzkoci"
+  },
+  "service": "Jaydenz Encore",
+  "description": {
+    "en": "Shows your current activity on the Jaydenz Encore Customs Site."
+  },
+  "url": "jaydenzkoci.github.io",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/3jYqfYg.png",
+  "thumbnail": "https://i.imgur.com/HwTxNdw.png",
+  "color": "#FFFFFF",
+  "category": "music",
+  "tags": [
+    "music",
+    "tracks",
+    "encore"
+  ],
+    "settings": [
+      {
+        "id": "useButtons",
+        "title": "Show Action Buttons",
+        "value": true
+      },
+      {
+        "id": "useDetails",
+        "title": "Show Game Details",
+        "value": true
+      }
+    ]
+  }
