@@ -88,7 +88,7 @@ presence.on('UpdateData', async () => {
         if (!privacyMode) {
           presenceData.state = urlsobj.searchParams.get('topic')
         }
-        else {presenceData.state = 'Improving skills'}
+        else { presenceData.state = 'Improving skills' }
 
         presenceData.startTimestamp = browsingTimestamp
         presenceData.smallImageKey = Assets.Reading
@@ -103,7 +103,7 @@ presence.on('UpdateData', async () => {
         if (!privacyMode) {
           presenceData.state = urlsobj.searchParams.get('topic')
         }
-        else {presenceData.state = 'Class Notes'}
+        else { presenceData.state = 'Class Notes' }
       }
     }
   }
