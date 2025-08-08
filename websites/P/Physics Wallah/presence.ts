@@ -151,7 +151,6 @@ presence.on('UpdateData', async () => {
   presence.setActivity(presenceData)
 
 })
-
 function updateVideoTimestamps() {
   return getTimestamps(
     timestampFromFormat(
