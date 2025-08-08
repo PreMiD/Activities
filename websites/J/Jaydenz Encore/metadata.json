@@ -20,16 +20,16 @@
     "tracks",
     "encore"
   ],
-    "settings": [
-      {
-        "id": "useButtons",
-        "title": "Show Action Buttons",
-        "value": true
-      },
-      {
-        "id": "useDetails",
-        "title": "Show Game Details",
-        "value": true
-      }
-    ]
-  }
+  "settings": [
+    {
+      "id": "useButtons",
+      "title": "Show Action Buttons",
+      "value": true
+    },
+    {
+      "id": "useDetails",
+      "title": "Show Game Details",
+      "value": true
+    }
+  ]
+}
