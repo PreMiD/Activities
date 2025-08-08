@@ -76,7 +76,7 @@ presence.on("UpdateData", async () => {
       const trackCountEl = document.getElementById('trackCount');
       const trackCountText = trackCountEl?.textContent || '';
       const trackCount = trackCountText.match(/\d+/) || [0];
-      presenceData.state = `Searching Through ${trackCount[0]} Tracks`;
+      presenceData.state = `Searching ${trackCount[0]} Tracks`;
     }
   }
   
