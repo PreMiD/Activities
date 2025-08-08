@@ -2,7 +2,6 @@ const presence = new Presence({
   clientId: '1392106746906153073',
 })
 
-const BOT_USER_ID = '1403261327849291876'
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
