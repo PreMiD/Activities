@@ -223,29 +223,54 @@ presence.on('UpdateData', async () => {
   // Check for static pages first
   if (staticPages[pathname]) {
     Object.assign(presenceData, staticPages[pathname])
+    // Add a quick action button for the current page
+    if (showButtons) {
+      presenceData.buttons = [
+        {
+          label: strings.buttonViewPage,
+          url: href,
+        },
+      ]
+    }
   }
   // Handle movie pages
   else if (pathname.startsWith('/movies/')) {
     const movieMatch = pathname.match(/\/movies\/(\d+)(?:-([^/]+))?/)
     if (movieMatch && movieMatch[1]) {
-      const movieId = movieMatch[1]
+      const _movieId = movieMatch[1]
       const movieSlug = movieMatch[2] || 'unknown-movie'
       const movieTitle = formatTitle(movieSlug)
-      
+
+      // Watching is considered a media activity; set watching-friendly fields but keep type compatible
       presenceData.details = `🎬 ${movieTitle}`
       presenceData.name = movieTitle
-      presenceData.largeImageKey = getPosterImage()
-      
+      presenceData.largeImageKey = showCover ? getPosterImage() : ActivityAssets.Logo
+
       // Get movie metadata
       const rating = getContentRating()
       const runtime = document.querySelector('[data-runtime], .runtime')?.textContent?.match(/\d+/)?.[0] || 'N/A'
       const year = document.querySelector('.release-year, [data-year]')?.textContent?.trim() || 'N/A'
-      
+
       presenceData.state = `⭐ ${rating} • ⏱️ ${runtime}min • 📅 ${year}`
-      presenceData.smallImageKey = Assets.Play
-    } else {
+      // Details page → treat as browsing
+      presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = strings.viewPage
+
+      // Add buttons for better interaction
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewMovie,
+            url: href,
+          },
+        ]
+      }
+    }
+    else {
       presenceData.details = 'Browsing Movies 🎬'
       presenceData.state = 'Exploring movie collection'
+      presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = strings.browse
     }
   }
   // Handle TV show pages
@@ -255,23 +280,39 @@ presence.on('UpdateData', async () => {
       const showId = tvMatch[1]
       const showSlug = tvMatch[2] || 'unknown-show'
       const showTitle = formatTitle(showSlug)
-      
+
+      // Watching is considered a media activity; set watching-friendly fields but keep type compatible
       presenceData.details = `📺 ${showTitle}`
       presenceData.name = showTitle
-      presenceData.largeImageKey = getPosterImage()
-      
+      presenceData.largeImageKey = showCover ? getPosterImage() : ActivityAssets.Logo
+
       // Try to get season/episode info from localStorage or page
       const watchData = JSON.parse(localStorage.getItem('watchProgress') || '{}')
       const currentShow = watchData[showId] || { season: 1, episode: 1 }
-      
+
       const rating = getContentRating()
       const year = document.querySelector('.release-year, [data-year]')?.textContent?.trim() || 'N/A'
-      
+
       presenceData.state = `S${currentShow.season}E${currentShow.episode} • ⭐ ${rating} • 📅 ${year}`
-      presenceData.smallImageKey = Assets.Play
-    } else {
+      // Details page → treat as browsing
+      presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = strings.viewPage
+
+      // Add buttons for better interaction
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewSeries,
+            url: href,
+          },
+        ]
+      }
+    }
+    else {
       presenceData.details = 'Browsing TV Shows 📺'
       presenceData.state = 'Exploring series collection'
+      presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = strings.browse
     }
   }
   // Handle player pages
@@ -279,34 +320,56 @@ presence.on('UpdateData', async () => {
     const isMovie = pathname.includes('/movie/')
     const isTV = pathname.includes('/tv/')
     const contentType = isMovie ? 'Movie' : isTV ? 'TV Show' : 'Content'
-    
-    const contentMatch = pathname.match(/\/(player|watch)\/(movie|tv)\/(\d+)/)
-    if (contentMatch) {
-      const platform = contentMatch[1] === 'player' ? 'Player' : 'Watch'
-      const contentId = contentMatch[3]
-      
+
+    if (/\/(?:player|watch)\/(?:movie|tv)\/\d+/.test(pathname)) {
+      // Matched a valid watch/player path
+
       // Try to get title from page or localStorage
       const titleElement = document.querySelector('h1, .video-title, [data-title]')
-      const contentTitle = titleElement?.textContent?.trim() || `${contentType} ${contentId}`
-      
+      const contentTitle = titleElement?.textContent?.trim() || `${contentType}`
+
+      // Watching is considered a media activity; set watching-friendly fields but keep type compatible
       presenceData.details = `▶️ Watching ${contentTitle}`
       presenceData.name = contentTitle
       presenceData.largeImageKey = getPosterImage()
-      
-      // Check if video is playing or paused
-      const video = document.querySelector('video')
-      const isPlaying = video && !video.paused
-      const currentTime = video?.currentTime || 0
-      const duration = video?.duration || 0
-      
-      if (isPlaying && duration > 0) {
-        const remainingTime = duration - currentTime
-        presenceData.endTimestamp = Date.now() + (remainingTime * 1000)
+
+      // Enhanced video detection and timestamp handling
+      const video = getVideoElement()
+
+      if (video) {
+        const isPlaying = !video.paused
+        if (isPlaying) {
+          if (showTimestamp) {
+            ;[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+          }
+          presenceData.smallImageKey = Assets.Play
+          presenceData.smallImageText = strings.play
+          presenceData.state = 'Currently playing'
+        }
+        else {
+          // Handle paused state
+          if (hideWhenPaused) {
+            presence.setActivity()
+            return
+          }
+          presenceData.smallImageKey = Assets.Pause
+          presenceData.smallImageText = strings.pause
+          presenceData.state = 'Paused'
+          delete presenceData.endTimestamp
+        }
+      }
+      else {
         presenceData.smallImageKey = Assets.Play
-        presenceData.state = 'Currently playing'
-      } else {
-        presenceData.smallImageKey = Assets.Pause
-        presenceData.state = 'Paused'
+        presenceData.state = 'Loading player...'
+      }
+
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewPage,
+            url: href,
+          },
+        ]
       }
     }
   }
@@ -315,9 +378,18 @@ presence.on('UpdateData', async () => {
     const genreMatch = pathname.match(/\/genres?\/([^/]+)/)
     if (genreMatch && genreMatch[1]) {
       const genre = formatTitle(genreMatch[1])
+      presenceData.type = ActivityType.Playing
       presenceData.details = `🎭 Browsing ${genre} Genre`
       presenceData.state = `Discovering ${genre.toLowerCase()} content`
       presenceData.smallImageKey = Assets.Viewing
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewPage,
+            url: href,
+          },
+        ]
+      }
     }
   }
   // Handle studio pages
@@ -325,33 +397,61 @@ presence.on('UpdateData', async () => {
     const studioMatch = pathname.match(/\/studio\/(\d+)/)
     if (studioMatch) {
       const studioName = document.querySelector('.studio-name, h1')?.textContent?.trim() || `Studio ${studioMatch[1]}`
+      presenceData.type = ActivityType.Playing
       presenceData.details = `🏢 Viewing ${studioName}`
       presenceData.state = 'Exploring studio content'
       presenceData.smallImageKey = Assets.Viewing
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewPage,
+            url: href,
+          },
+        ]
+      }
     }
   }
   // Handle section pages
   else if (pathname.startsWith('/section/')) {
-    const sectionMatch = pathname.match(/\/section\/([^/]+)\/(\d+)/)
+    const sectionMatch = pathname.match(/\/section\/([^/]+)\/\d+/)
     if (sectionMatch && sectionMatch[1]) {
       const sectionType = formatTitle(sectionMatch[1])
+      presenceData.type = ActivityType.Playing
       presenceData.details = `📂 Browsing ${sectionType} Section`
       presenceData.state = 'Exploring curated content'
       presenceData.smallImageKey = Assets.Viewing
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewPage,
+            url: href,
+          },
+        ]
+      }
     }
   }
   // Handle search with query
   else if (pathname === '/search' && urlParams.get('q')) {
     const query = urlParams.get('q')
+    presenceData.type = ActivityType.Playing
     presenceData.details = '🔍 Searching PrimeShows'
     presenceData.state = `Query: "${query}"`
     presenceData.smallImageKey = Assets.Search
+    if (showButtons) {
+      presenceData.buttons = [
+        {
+          label: strings.buttonViewPage,
+          url: href,
+        },
+      ]
+    }
   }
 
   // Set the activity
   if (presenceData.details) {
     presence.setActivity(presenceData)
-  } else {
+  }
+  else {
     presence.setActivity()
   }
 })
