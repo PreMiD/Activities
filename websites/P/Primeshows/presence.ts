@@ -45,28 +45,104 @@ function getContentRating(): string {
   return ratingElement?.textContent?.trim() || 'N/A'
 }
 
-// Helper function to get poster image
+// Enhanced image detection with multiple fallbacks
 function getPosterImage(): string {
-  const posterElement = document.querySelector('img[alt*="poster"], .poster-image, .movie-poster, .show-poster')
-  return posterElement?.getAttribute('src') || ActivityAssets.Logo
+  const selectors = [
+    'img[alt*="poster"]',
+    '.poster-image',
+    '.movie-poster',
+    '.show-poster',
+    '.content-poster',
+    '.media-poster',
+    'img[src*="poster"]',
+    '.hero-image img',
+    '.backdrop img',
+    'meta[property="og:image"]',
+  ]
+
+  for (const selector of selectors) {
+    const element = document.querySelector(selector)
+    if (element) {
+      const src = element.getAttribute('src') || element.getAttribute('content')
+      if (src && src.startsWith('http'))
+        return src
+    }
+  }
+
+  return ActivityAssets.Logo
+}
+
+// Enhanced video detection with multiple fallbacks
+function getVideoElement(): HTMLVideoElement | null {
+  const selectors = [
+    'video',
+    '.video-player video',
+    '.player-container video',
+    '#video-player video',
+    '.media-player video',
+    'video[src]',
+    'video:not([style*="display: none"])',
+  ]
+
+  for (const selector of selectors) {
+    const video = document.querySelector<HTMLVideoElement>(selector)
+    if (video && !Number.isNaN(video.duration) && video.duration > 0) {
+      return video
+    }
+  }
+
+  return null
 }
 
 presence.on('UpdateData', async () => {
-  let presenceData: PresenceData = {
-    largeImageKey: ActivityAssets.Logo,
-    startTimestamp: browsingTimestamp,
-    details: 'Exploring PrimeShows',
+  // Get user settings
+  const [
+    lang,
+    privacy,
+    showTimestamp,
+    showBrowsingStatus,
+    showCover,
+    hideWhenPaused,
+    showButtons,
+  ] = await Promise.all([
+    presence.getSetting<string>('lang').catch(() => 'en'),
+    presence.getSetting<boolean>('privacy').catch(() => false),
+    presence.getSetting<boolean>('timestamp').catch(() => true),
+    presence.getSetting<boolean>('browsing').catch(() => true),
+    presence.getSetting<boolean>('cover').catch(() => true),
+    presence.getSetting<boolean>('hideWhenPaused').catch(() => false),
+    presence.getSetting<boolean>('buttons').catch(() => true),
+  ])
+
+  // Update strings if language changed
+  if (oldLang !== lang || !strings) {
+    oldLang = lang
+    strings = await getStrings()
   }
 
-  const { pathname, search } = document.location
+  const presenceData: PresenceData = {
+    type: ActivityType.Playing,
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: showTimestamp ? browsingTimestamp : undefined,
+    details: 'Exploring PrimeShows',
+    name: 'PrimeShows',
+  }
+
+  const { pathname, search, href } = document.location
   const urlParams = new URLSearchParams(search)
-  
+
   // Privacy mode check
-  const privacy = await presence.getSetting<boolean>('privacy')
   if (privacy) {
+    presenceData.type = ActivityType.Playing
     presenceData.details = 'Browsing PrimeShows'
     presenceData.state = 'Privacy mode enabled'
     presence.setActivity(presenceData)
+    return
+  }
+
+  // Hide browsing activity if disabled
+  if (!showBrowsingStatus) {
+    presence.setActivity()
     return
   }
 
