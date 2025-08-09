@@ -14,7 +14,7 @@
     "www.navidrome.org"
   ],
   "regExp": "navidrome[.]([a-z0-9]+)[.]([a-z0-9]+)",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Navidrome/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Navidrome/assets/thumbnail.png",
   "color": "#2979ff",
@@ -22,5 +22,19 @@
   "tags": [
     "music",
     "selfhosted"
+  ],
+  "settings": [
+    {
+      "id": "artistAsTitle",
+      "title": "Show Artist as Title",
+      "icon": "fad fa-user-large",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    }
   ]
 }

@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '882761234271834142',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -23,6 +23,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    name: 'Império Network',
   }
   const strings = await getStrings()
   const { pathname, href, search } = document.location

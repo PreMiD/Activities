@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1003206856958816296',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -21,6 +21,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    name: 'Discord ID',
   }
   const { hostname, href } = document.location
   const [privacy, covers, idAndUsername] = await Promise.all([

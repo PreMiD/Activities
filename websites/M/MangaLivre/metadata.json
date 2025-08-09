@@ -5,19 +5,13 @@
     "id": "1220554515149750273",
     "name": "kyomu_densen"
   },
-  "contributors": [
-    {
-      "id": "638080361179512853",
-      "name": "Dark_Ville"
-    }
-  ],
   "service": "MangaLivre",
   "description": {
     "en": "Manga Livre is the best way to read the most popular action, romance, fantasy, isekai and other manga and webtoons!",
     "pt": "O Manga Livre é a melhor maneira de ler os mangás e webtoons mais populares de ação, romance, fantasia, isekai e outros!"
   },
   "url": "mangalivre.tv",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaLivre/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaLivre/assets/thumbnail.png",
   "color": "#262626",

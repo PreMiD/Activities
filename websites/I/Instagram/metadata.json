@@ -9,10 +9,6 @@
     {
       "name": "N0chteil ^^",
       "id": "495901098926669825"
-    },
-    {
-      "name": "Dark_Ville",
-      "id": "638080361179512853"
     }
   ],
   "service": "Instagram",
@@ -29,7 +25,7 @@
     "zh-tw": "Instagram是Facebook公司旗下一款免費提供線上圖片及視訊分享的社群應用軟體。"
   },
   "url": "www.instagram.com",
-  "version": "2.3.6",
+  "version": "2.3.7",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Instagram/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Instagram/assets/thumbnail.png",
   "color": "#E1306C",

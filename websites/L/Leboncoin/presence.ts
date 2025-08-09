@@ -16,7 +16,7 @@ presence.on('UpdateData', () => {
   }
 
   function getAdvertiserName(): string {
-    const name = document.querySelector('.ml-lg > a:nth-child(1)')?.textContent
+    const name = document.querySelector('.ml-lg > a:nth-child(1)')?.textContent ?? ''
     if (name) {
       return name
     }
@@ -24,11 +24,11 @@ presence.on('UpdateData', () => {
       // Pro seller
       let fallbackName = document.querySelector(
         '.styles_wrapperBottom__unGZF > div:nth-child(2) > h2:nth-child(1)',
-      )?.textContent
+      )?.textContent ?? ''
       if (!fallbackName) {
         fallbackName = document.querySelector(
           '.styles_wrapperBottom__unGZF > div:nth-child(2) > a:nth-child(1)',
-        )?.textContent
+        )?.textContent ?? ''
       }
       return fallbackName || 'Vendeur inconnu'
     }
@@ -40,14 +40,14 @@ presence.on('UpdateData', () => {
         'div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > p:nth-child(1)',
       )
       ?.textContent
-      ?.trim()
+      ?.trim() ?? ''
     if (!price || !price.includes('€')) {
       price = document
         .querySelector(
           'article > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(1)',
         )
         ?.textContent
-        ?.trim()
+        ?.trim() ?? ''
     }
     return price || 'Prix inconnu'
   }
@@ -90,7 +90,7 @@ presence.on('UpdateData', () => {
     || document.location.pathname.includes('/profile/')
   ) {
     presenceData.state = `Profil de ${
-      document.querySelector('h3.mr-lg')?.textContent
+      document.querySelector('h3.mr-lg')?.textContent ?? 'Inconnu'
     }`
     presenceData.buttons = [
       { label: 'Consulter le profil', url: document.location.href },
@@ -98,7 +98,7 @@ presence.on('UpdateData', () => {
   }
   else if (document.location.pathname.includes('/boutique')) {
     presenceData.state = `Boutique ${
-      document.querySelector('h1.mb-md')?.textContent
+      document.querySelector('h1.mb-md')?.textContent ?? 'Inconnue'
     }`
     presenceData.buttons = [
       { label: 'Consulter la boutique', url: document.location.href },
@@ -107,30 +107,53 @@ presence.on('UpdateData', () => {
   else if (document.location.pathname.includes('/recherche')) {
     presenceData.details = 'Dans les résultats de recherche :'
 
-    const searchTitle = document.querySelector('h1')?.textContent?.trim()
-    if (!searchTitle)
+    const searchTitle = document.querySelector('h1')?.textContent?.trim() ?? ''
+    if (!searchTitle) {
+      presenceData.state = 'Recherche en cours'
+      presence.setActivity(presenceData)
       return
-    const searchTitleParts = searchTitle?.split('«') ?? []
+    }
+
+    const searchTitleParts = searchTitle.split('«') || []
     if (searchTitleParts.length > 1) {
-      const lastPart = searchTitleParts.pop()
-      if (!lastPart)
+      const lastPart = searchTitleParts.pop() ?? ''
+      if (!lastPart) {
+        presenceData.state = 'Résultats de recherche'
+        presence.setActivity(presenceData)
         return
-      presenceData.state = `Annonces pour «${lastPart.split('»')[0] ?? ''}»`
+      }
+      const searchTerms = lastPart.split('»')[0] ?? ''
+      presenceData.state = `Annonces pour «${searchTerms}»`
+    }
+    else {
+      presenceData.state = 'Résultats de recherche'
     }
   }
-  else if (document.location.pathname.includes('/ad/')) {
-    presenceData.details = `Annonce ${document.title.split('-')[0]?.trim() ?? ''}`
+  else if (
+    document.location.pathname.includes('/ad/')
+    || document.location.pathname.includes('/vi/')
+  ) {
+    const titleParts = document.title?.split('-') ?? []
+    const title = titleParts.length > 0 ? titleParts[0]?.trim() ?? '' : ''
+    presenceData.details = `Annonce ${title}`
+
     const adsPrice = getAdPrice()
     const advertiserName = getAdvertiserName()
-    if (!adsPrice && !advertiserName)
-      return // If both are unknown, don't update the presence
+
+    if (!adsPrice && !advertiserName) {
+      presenceData.state = 'Consulte une annonce'
+      presence.setActivity(presenceData)
+      return
+    }
+
+    const contractType = document.querySelector(
+      'div.py-lg:nth-child(2) > div:nth-child(1) > div:nth-child(1) > p:nth-child(2)',
+    )?.textContent ?? '?'
+
     const finalPrice = document.location.pathname.includes('/offres_d_emploi/')
-      ? `Payé ${adsPrice} ${
-        document.querySelector(
-          'div.py-lg:nth-child(2) > div:nth-child(1) > div:nth-child(1) > p:nth-child(2)',
-        )?.textContent || '?'
-      }`
-      : `Vendu ${adsPrice}`
+      ? `Payé ${adsPrice} ${contractType}` // 'Payé' is used for job offers
+      : `Vendu ${adsPrice}` // 'Vendu' is used for other ads
+
     presenceData.state = `${finalPrice} par ${advertiserName}`
     presenceData.buttons = [
       { label: 'Consulter l\'annonce', url: document.location.href },

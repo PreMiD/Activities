@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "theusaf"
+  },
+  "service": "Wuthering Waves",
+  "description": {
+    "de": "Wuthering Waves ist ein Open-World-Spiel mit einer komplexen Handlung und einem hohen Maß an Freiheit. Als Rover, der aus einem tiefen Schlummer erwacht, begibst du dich mit einer lebendigen Besetzung von Resonatoren auf eine Reise, um deine verlorenen Erinnerungen zurückzugewinnen und das Klagen zu überwinden.",
+    "en": "Wuthering Waves is a story-rich open-world action RPG with a high degree of freedom. You wake from your slumber as Rover, joined by a vibrant cast of Resonators on a journey to reclaim your lost memories and surmount the Lament.",
+    "ja": "『鳴潮』は自由度の高い戦闘と多種多彩なコンテンツが楽しめるオープンワールドアクションRPGである。プレイヤーは長い眠りから目覚めた「漂泊者」となって自分の記憶と物語を探す旅に就き、十人十色の共鳴者の仲間たちと「悲鳴」を乗り越えていく。",
+    "ko": "『명조:워더링 웨이브』는 오픈월드 ARPG입니다. 높은 자유도를 강조하는 플레이와 다양한 오픈월드 탐색을 체험할 수 있습니다. 유저는 이 세상에서 깨어나는 방랑자가 되어 기억을 되찾고 자신의 정체성을 찾으면서 수많은 공명자 파트너를 만나고 그들과 함께 「비명」을 넘는 여정을 떠납니다.",
+    "zh-tw": "《鳴潮》是一款開放世界動作遊戲，主打高自由度的動作戰鬥玩法與豐富多樣的開放世界探索。而你，在這個世界甦醒的漂泊者，將在找回記憶、尋找自我身份的同時結識無數的共鳴者同伴，並和伙伴一起踏上跨越悲鳴的旅途。"
+  },
+  "url": "wutheringwaves.kurogames.com",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wuthering%20Waves/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wuthering%20Waves/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "games",
+  "tags": [
+    "open-world",
+    "wuwa",
+    "official",
+    "mobile"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ],
+  "mobile": true
+}

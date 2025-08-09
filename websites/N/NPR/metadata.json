@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "theusaf"
+  },
+  "service": "NPR",
+  "description": {
+    "en": "NPR is an independent, nonprofit media organization that was founded on a mission to create a more informed public."
+  },
+  "url": [
+    "www.npr.org",
+    "text.npr.org"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NPR/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NPR/assets/thumbnail.png",
+  "color": "#fff",
+  "category": "other",
+  "tags": [
+    "nonprofit",
+    "news",
+    "radio",
+    "public",
+    "podcast",
+    "wait",
+    "network",
+    "global",
+    "national"
+  ]
+}

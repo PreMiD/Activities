@@ -24,7 +24,7 @@
   ],
   "description": {
     "en": "Twitch is the world's leading live streaming platform for gamers and the things we love. Watch and chat now with millions of other fans from around the world.",
-    "fr": "Twitch est la plateforme leader mondial en streaming pour gamers e choses que nous aimons. Regardez et discutez maintenant avec des millions d'autres fans du monde entier.",
+    "fr": "Twitch est la plateforme leader mondial en streaming pour gamers et les choses que nous aimons. Regardez et discutez maintenant avec des millions d'autres fans du monde entier.",
     "nl": "Twitch is 's werelds grootste livestreaming-platform voor gamers en de dingen waar we van houden. Kijk en chat nu met miljoenen andere fans van over de hele wereld.",
     "pt-br": "Twitch é a plataforma líder mundial em streaming para gamers e coisas que amamos. Assista e converse agora com milhões de outros fãs ao redor do mundo.",
     "ro": "Twitch este cea mai mare platformă de live streaming pentru gameri și chestii pe care le iubim. Vizionează și vorbește cu milioane de alți fani din alte țări.",
@@ -46,7 +46,7 @@
     "devstatus.twitch.tv",
     "status.twitch.tv"
   ],
-  "version": "3.2.29",
+  "version": "3.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/thumbnail.png",
   "color": "#9146FF",
@@ -168,6 +168,15 @@
       },
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "streamerTitle",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Streamer as Title",
+      "icon": "fas fa-user-large",
       "value": true
     }
   ]

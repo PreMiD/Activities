@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1160179473044476017',
+  clientId: '503557087041683458',
 })
 
 interface iframeData {
@@ -27,6 +27,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/O/OneTouchTV/assets/logo.png',
     startTimestamp: timestampCheck.timestamp,
+    name: 'OneTouchTV',
   }
   const { href, pathname } = document.location
   const hash = href

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "673477059904929802",
+    "name": "kiesume"
+  },
+  "service": "Beatport",
+  "description": {
+    "en": "Beatport is the world’s largest electronic music platform for DJs, serving both downloads and streaming via web store, mobile app, DJ Web App, and integrations directly into DJ software and hardware."
+  },
+  "url": "www.beatport.com",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Beatport/assets/logo.jpeg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Beatport/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "music",
+  "tags": [
+    "music",
+    "streaming",
+    "audio"
+  ]
+}

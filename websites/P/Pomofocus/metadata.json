@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Anant",
+    "id": "629851641579044874"
+  },
+  "service": "Pomofocus",
+  "description": {
+    "en": "A simple Pomodoro timer for focused work sessions.",
+    "fr": "Un minuteur Pomodoro simple pour des sessions de travail concentré."
+  },
+  "url": [
+    "pomofocus.io",
+    "www.pomofocus.io"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pomofocus/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pomofocus/assets/thumbnail.png",
+  "color": "#dc4c3e",
+  "category": "other",
+  "tags": [
+    "productivity",
+    "study",
+    "focus"
+  ]
+}

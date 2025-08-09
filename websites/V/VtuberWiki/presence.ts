@@ -8,7 +8,7 @@ enum ActivityAssets {
 type StaticPagesType = Record<string, PresenceData>
 
 const presence = new Presence({
-  clientId: '1164189020922843257',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 const staticPages: StaticPagesType = {
@@ -68,6 +68,7 @@ presence.on('UpdateData', async () => {
   let presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    name: 'Vtuber Wiki',
   }
 
   for (const [path, data] of Object.entries(staticPages)) {

@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1358046741634617504',
+  clientId: '503557087041683458',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -12,6 +12,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    name: 'MangaLivre',
   }
   const [privacy, buttons] = await Promise.all([
     presence.getSetting<boolean>('privacy'),

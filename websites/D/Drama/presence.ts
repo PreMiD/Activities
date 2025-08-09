@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '852245069984825394',
+  clientId: '503557087041683458',
 })
 
 presence.on('UpdateData', () => {
@@ -11,6 +11,7 @@ presence.on('UpdateData', () => {
     smallImageText: 'Looking for a thread',
     details: 'Looking for drama!',
     state: 'Browsing',
+    name: 'Drama',
   }
 
   switch (true) {

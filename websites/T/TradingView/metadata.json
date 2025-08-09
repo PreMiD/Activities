@@ -8,6 +8,7 @@
   "service": "TradingView",
   "description": {
     "en": "Free Stock Charts, Stock Quotes and Trade Ideas",
+    "fr": "Graphiques boursiers gratuits, cotations boursières et idées de trading",
     "nl": "Gratis voorraadgrafieken, aandelenkoersen en handelsideeën",
     "ru": "Бесплатные онлайн-графики акций, котировки и идеи"
   },
@@ -16,7 +17,7 @@
     "status.tradingview.com"
   ],
   "regExp": "([a-z0-9]+)[.]tradingview[.]com",
-  "version": "1.0.20",
+  "version": "1.0.22",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TradingView/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TradingView/assets/thumbnail.png",
   "color": "#2196f3",
@@ -27,5 +28,19 @@
     "currency",
     "crypto",
     "stocks"
+  ],
+  "settings": [
+    {
+      "id": "logo",
+      "title": "Icon",
+      "icon": "fad fa-images",
+      "value": 0,
+      "values": [
+        "White Logo",
+        "White Logo with BG",
+        "Black Logo",
+        "Black Logo with BG"
+      ]
+    }
   ]
 }

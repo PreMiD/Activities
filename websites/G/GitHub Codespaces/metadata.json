@@ -20,7 +20,7 @@
   },
   "url": "github.dev",
   "regExp": "(.*[.])?github.dev",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GitHub%20Codespaces/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GitHub%20Codespaces/assets/thumbnail.png",
   "color": "#000000",

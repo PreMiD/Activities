@@ -1,8 +1,13 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '802958833214423081',
 })
+
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/SoundCloud/assets/logo.png',
+}
+
 async function getStrings() {
   return presence.getStrings(
     {
@@ -120,7 +125,8 @@ presence.on('UpdateData', async () => {
     showTimestamps,
     showCover,
     showButtons,
-    usePresenceName,
+    usePresenceTitle,
+    usePresenceArtist,
     newLang,
   ] = await Promise.all([
     presence.getSetting<boolean>('browse'),
@@ -129,7 +135,8 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('timestamp'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('buttons'),
-    presence.getSetting<boolean>('usePresenceName'),
+    presence.getSetting<boolean>('usePresenceTitle'),
+    presence.getSetting<boolean>('usePresenceArtist'),
     presence.getSetting<string>('lang').catch(() => 'en'),
   ])
   const playing = Boolean(document.querySelector('.playControls__play.playing'))
@@ -144,7 +151,7 @@ presence.on('UpdateData', async () => {
 
   let presenceData: PresenceData = {
     type: ActivityType.Listening,
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/S/SoundCloud/assets/logo.png',
+    largeImageKey: ActivityAssets.Logo,
     startTimestamp: elapsed,
   }
 
@@ -154,11 +161,17 @@ presence.on('UpdateData', async () => {
   }
 
   if ((playing || (!playing && !showBrowsing)) && showSong) {
-    if (!usePresenceName) {
+    if (!usePresenceTitle && !usePresenceArtist) {
       presenceData.details = getElement(
         '.playbackSoundBadge__titleLink > span:nth-child(2)',
       )
       presenceData.state = getElement('.playbackSoundBadge__lightLink')
+    }
+    else if (usePresenceArtist && !usePresenceTitle) {
+      presenceData.name = getElement('.playbackSoundBadge__lightLink')
+      presenceData.details = getElement(
+        '.playbackSoundBadge__titleLink > span:nth-child(2)',
+      )
     }
     else {
       presenceData.name = getElement(
@@ -174,15 +187,15 @@ presence.on('UpdateData', async () => {
       'div.playbackTimeline__duration > span:nth-child(2)',
     )?.textContent
     const [currentTime, duration] = [
-      presence.timestampFromFormat(timePassed ?? ''),
+      timestampFromFormat(timePassed ?? ''),
       (() => {
         if (!durationString?.startsWith('-')) {
-          return presence.timestampFromFormat(durationString ?? '')
+          return timestampFromFormat(durationString ?? '')
         }
         else {
           return (
-            presence.timestampFromFormat(durationString.slice(1))
-            + presence.timestampFromFormat(timePassed ?? '')
+            timestampFromFormat(durationString.slice(1))
+            + timestampFromFormat(timePassed ?? '')
           )
         }
       })(),
@@ -194,7 +207,7 @@ presence.on('UpdateData', async () => {
       ?.getAttribute('href')
 
     if (playing) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(currentTime, duration)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, duration)
     }
     else {
       presenceData.smallImageKey = Assets.Pause
@@ -209,7 +222,7 @@ presence.on('UpdateData', async () => {
         ?.style
         .backgroundImage
         .match(/"(.*)"/)?.[1]
-        ?.replace('-t50x50.jpg', '-t500x500.jpg') ?? 'soundcloud'
+        ?.replace('-t50x50.jpg', '-t500x500.jpg') ?? ActivityAssets.Logo
     }
 
     if (showButtons && pathLinkSong) {

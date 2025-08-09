@@ -93,7 +93,7 @@ presence.on('UpdateData', async () => {
     }
     case pathname.includes('/watch') && !!video:
     case pathname.includes('/videos') && !!video: {
-      presenceData.type = ActivityType.Watching
+      (presenceData as PresenceData).type = ActivityType.Watching
 
       const options = {
         title: document.querySelector('.x78zum5.xdt5ytf.xtp0wl1')?.querySelector('.xzueoph.x1k70j0n')?.textContent ?? document.querySelector('a[aria-label] > span > [class*="x1n2onr6"]')?.textContent ?? document.querySelector('[class="xzueoph x1k70j0n"]')?.textContent ?? 'unknown title',
@@ -956,8 +956,9 @@ presence.on('UpdateData', async () => {
 
   if (privacyMode && presenceData.state)
     delete presenceData.state
-  if (presenceData.endTimestamp && presenceData.type !== ActivityType.Watching)
-    presenceData.type = ActivityType.Watching
+  if (presenceData.endTimestamp && presenceData.type !== ActivityType.Watching) {
+    (presenceData as PresenceData).type = ActivityType.Watching
+  }
   if (presenceData.details || presenceData.name)
     presence.setActivity(presenceData)
   else presence.setActivity()

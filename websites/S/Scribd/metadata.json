@@ -2,15 +2,15 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "id": "638080361179512853",
-    "name": "Dark_Ville#2756"
+    "id": "503557087041683458",
+    "name": "PreMiD"
   },
   "service": "Scribd",
   "description": {
     "en": "Discover +2M top ebooks and audiobooks on the leading digital library. Free for 30 days! Access millions of ebooks, audiobooks, magazines, and more. All in one simple subscription. Explore Documents. Personal Growth. Non-Fiction Titles. Explore Magazines."
   },
   "url": "www.scribd.com",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Scribd/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Scribd/assets/thumbnail.png",
   "color": "#00858E",

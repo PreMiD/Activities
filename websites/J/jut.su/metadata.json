@@ -9,10 +9,6 @@
     {
       "id": "226622016986415104",
       "name": "cramatsu"
-    },
-    {
-      "id": "638080361179512853",
-      "name": "Dark_Ville"
     }
   ],
   "service": "jut.su",
@@ -22,7 +18,7 @@
     "ru": "Jut.su — это русский сайт с аниме"
   },
   "url": "jut.su",
-  "version": "3.0.14",
+  "version": "3.0.15",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/jut.su/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/jut.su/assets/thumbnail.png",
   "color": "#c9e58b",

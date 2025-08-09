@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '969245744261390337',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -9,6 +9,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/E/e926/assets/logo.png',
     startTimestamp: browsingTimestamp,
+    name: 'e926',
   }
   const { pathname, href } = document.location
   const [privacy, buttons, covers] = await Promise.all([

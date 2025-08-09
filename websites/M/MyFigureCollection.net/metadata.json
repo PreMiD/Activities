@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "nihongojouzu"
+  },
+  "service": "MyFigureCollection.net",
+  "altnames": [
+    "MyFigureCollection",
+    "MFC"
+  ],
+  "description": {
+    "en": "MyFigureCollection.net is a service for Japanese pop-culture (anime, manga, video-games, etc.) goods (figures, artbooks, CDs, cups, collectibles, dakimakura, etc.) collectors."
+  },
+  "url": "myfigurecollection.net",
+  "regExp": "^https://(\\w+[.])?myfigurecollection[.]net[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MyFigureCollection.net/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MyFigureCollection.net/assets/thumbnail.jpeg",
+  "color": "#57A052",
+  "category": "anime",
+  "tags": [
+    "figure",
+    "hobby",
+    "list",
+    "japan",
+    "database",
+    "pictures",
+    "community",
+    "social",
+    "media",
+    "sale",
+    "store",
+    "shop"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ],
+  "mobile": true
+}

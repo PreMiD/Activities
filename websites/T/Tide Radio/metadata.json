@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "JackD",
+    "id": "1311839340816502835"
+  },
+  "contributors": [
+    {
+      "name": "Yusuf",
+      "id": "226609097263415299"
+    }
+  ],
+  "service": "Tide Radio",
+  "description": {
+    "en": "Tide Radio is a dynamic and innovative online Internet radio station, offering listeners around the world a vast selection of the freshest and best hits spanning a multitude of music genres."
+  },
+  "url": "tideradio.uk",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tide%20Radio/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tide%20Radio/assets/thumbnail.png",
+  "color": "#01b0fa",
+  "category": "music",
+  "tags": [
+    "tr",
+    "radio",
+    "music"
+  ]
+}

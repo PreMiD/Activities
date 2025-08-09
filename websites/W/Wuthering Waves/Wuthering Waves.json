@@ -1,0 +1,18 @@
+{
+  "wuthering waves.browsingNews": {
+    "description": "Browsing list of news articles",
+    "message": "Browsing News Articles"
+  },
+  "wuthering waves.browsingResonators": {
+    "description": "Browsing list of Resonators",
+    "message": "Browsing Resonators"
+  },
+  "wuthering waves.readingRegion": {
+    "description": "Viewing information about a Region",
+    "message": "Reading about a region"
+  },
+  "wuthering waves.viewingResonator": {
+    "description": "Viewing information about a Resonator",
+    "message": "Viewing a Resonator"
+  }
+}

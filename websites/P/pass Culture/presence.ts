@@ -1,10 +1,11 @@
 const presence = new Presence({
-  clientId: '1165384499987742800',
+  clientId: '503557087041683458',
 })
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/pass%20Culture/assets/logo.png',
+    name: 'pass Culture',
   }
   const path = document.location.pathname.split('/')
   const showCounts = await presence.getSetting<boolean>('show_counts')

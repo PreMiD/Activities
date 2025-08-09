@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "519174178474295301",
+    "name": "ruz.dev"
+  },
+  "service": "OpenAnime",
+  "description": {
+    "en": "OpenSource, fast and beautifully designed anime platform for enhancing your anime viewing experience.",
+    "tr": "Anime izleme deneyiminizi geliştirmek için tasarlanmış açık kaynaklı, hızlı ve şık anime platformu."
+  },
+  "url": "openani.me",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OpenAnime/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OpenAnime/assets/thumbnail.jpeg",
+  "color": "#61cdfd",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "movie",
+    "series"
+  ]
+}

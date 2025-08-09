@@ -6,6 +6,6 @@
     "p-limit": "^6.2.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.16"
+    "@types/lodash": "^4.17.20"
   }
 }

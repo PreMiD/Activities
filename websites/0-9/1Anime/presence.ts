@@ -19,7 +19,7 @@ presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
 
   if (video) {
-    presenceData.type = ActivityType.Watching
+    (presenceData as PresenceData).type = ActivityType.Watching
     playback = !video.paused && !video.ended
 
     if (lastPlaybackState !== playback)
@@ -85,8 +85,8 @@ presence.on('UpdateData', async () => {
     presenceData.details = getTitle()
     presenceData.state = !Number.isNaN(episode)
       ? `Episode ${episode}`
-      : 'Unable to retrieve episode'
-    presenceData.type = ActivityType.Watching
+      : 'Unable to retrieve episode';
+    (presenceData as PresenceData).type = ActivityType.Watching
 
     presenceData.buttons = [
       {

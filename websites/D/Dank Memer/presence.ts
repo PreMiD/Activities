@@ -1,10 +1,11 @@
 const presence = new Presence({
-  clientId: '653324146503188490',
+  clientId: '503557087041683458',
 })
 
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/D/Dank%20Memer/assets/logo.png',
+    name: 'Dank Memer',
   }
 
   if (window.location.pathname.endsWith('commands')) {

@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '882003722270572574',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -25,6 +25,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/H/Harmony/assets/logo.png',
     smallImageKey: Assets.Live,
+    name: 'Harmony',
   }
 
   if (document.location.hash.startsWith('#/')) {

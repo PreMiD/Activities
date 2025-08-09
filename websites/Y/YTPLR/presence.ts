@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1284161421957136486',
@@ -42,7 +42,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
   } as PresenceData
-  const [startTimestamp, endTimestamp] = presence.getTimestamps(
+  const [startTimestamp, endTimestamp] = getTimestamps(
     Math.floor(videoCurrentTime),
     Math.floor(videoDuration),
   )

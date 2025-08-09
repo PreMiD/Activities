@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "354233941550694400",
+    "name": "kuriel."
+  },
+  "service": "The Verge",
+  "description": {
+    "en": "The Verge is about technology and how it makes us feel. Founded in 2011, we offer our audience everything from breaking news to reviews to award-winning features and investigations, on our site, in video, and in podcasts.",
+    "pt": "The Verge é sobre tecnologia e como ela nos faz sentir. Fundado em 2011, oferecemos ao nosso público desde notícias de última hora até análises, reportagens e investigações premiadas, em nosso site, em vídeo e em podcasts.",
+    "pt-br": "The Verge é sobre tecnologia e como isso nos faz sentir. Fundada em 2011, nós oferecemos à nossa audiência desde notícias de última hora até análises, reportagens e investigações premiadas, em nosso site, em vídeos e em podcasts."
+  },
+  "url": [
+    "www.theverge.com",
+    "theverge.com"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Verge/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Verge/assets/thumbnail.png",
+  "color": "#5200ff",
+  "category": "other",
+  "tags": [
+    "news",
+    "articles"
+  ]
+}

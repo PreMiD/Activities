@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1127599137374871563',
+  clientId: '503557087041683458',
 })
 
 enum ActivityAssets {
@@ -44,6 +44,7 @@ presence.on('UpdateData', async () => {
     details: 'Где-то на сайте',
     largeImageKey: ActivityAssets.Logo,
     smallImageText: 'AniMi Club',
+    name: 'AniMi Club',
   }
 
   if (!strings)

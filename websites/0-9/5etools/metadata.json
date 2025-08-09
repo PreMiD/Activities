@@ -9,8 +9,8 @@
   "description": {
     "en": "A suite of browser-based tools for 5th Edition  Dungeons &amp; Dragons players and Dungeon Masters."
   },
-  "url": "5e.tools",
-  "version": "1.0.11",
+  "url": ["5e.tools", "2014.5e.tools"],
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/5etools/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/5etools/assets/thumbnail.png",
   "color": "#1e90ff",
@@ -21,5 +21,6 @@
     "dnd",
     "calculator",
     "guide"
-  ]
+  ],
+  "mobile": true
 }

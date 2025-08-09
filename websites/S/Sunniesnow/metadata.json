@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "586808226058862623",
+    "name": "UlyssesZhan"
+  },
+  "service": "Sunniesnow",
+  "description": {
+    "en": "An open-source web rhythm game"
+  },
+  "url": "sunniesnow.github.io",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sunniesnow/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sunniesnow/assets/thumbnail.png",
+  "color": "#ffa520",
+  "category": "games",
+  "tags": [
+    "game",
+    "rhythm"
+  ],
+  "settings": [
+    {
+      "id": "hideBrowsing",
+      "title": "Hide browsing",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "useWatching",
+      "title": "Use watching instead of playing",
+      "icon": "fad fa-gamepad",
+      "value": true
+    }
+  ]
+}

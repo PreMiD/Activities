@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1212664221788274698',
@@ -38,6 +38,9 @@ function getDetails(
   }
 
   switch (path[0]?.toLowerCase()) {
+    case 'featured':
+      presenceData.details = 'Viewing featured page'
+      break
     case 'classes':
       presenceData.details = 'Viewing classes'
       break
@@ -59,12 +62,12 @@ function getDetails(
     case 'library':
       if (path.length === 1)
         presenceData.details = 'Viewing library page'
-      else presenceData.details = getLibraryCategory(path[1]!.toLowerCase())
+      else presenceData.details = `Viewing ${path[1]!.toLowerCase().replaceAll('-', ' ')}`
       break
     case 'explore':
       if (path.length === 1)
         presenceData.details = 'Viewing explore page'
-      else presenceData.details = getExploreCategory(path[1]!.toLowerCase())
+      else presenceData.details = `Exploring ${path[1]!.toLowerCase()}`
       break
     case 'videos':
       getVideoDetails(presenceData, showButtons, href)
@@ -75,46 +78,6 @@ function getDetails(
     default:
       getOtherDetails(presenceData, showButtons, href)
       break
-  }
-}
-
-function getExploreCategory(category: string): string | undefined {
-  switch (category) {
-    case 'videos':
-      return 'Exploring videos'
-    case 'channels':
-      return 'Exploring channels'
-    case 'podcasts':
-      return 'Exploring podcasts'
-    case 'episodes':
-      return 'Exploring episodes'
-  }
-}
-
-function getLibraryCategory(category: string): string | undefined {
-  switch (category) {
-    case 'latest-videos':
-      return 'Viewing latest videos'
-    case 'followed-channels':
-      return 'Viewing followed channels'
-    case 'watch-later':
-      return 'Viewing Watch Later'
-    case 'watch-history':
-      return 'Viewing watch history'
-    case 'latest-episodes':
-      return 'Viewing latest episodes'
-    case 'followed-shows':
-      return 'Viewing followed shows'
-    case 'saved-episodes':
-      return 'Viewing saved episodes'
-    case 'listen-history':
-      return 'Viewing listening history'
-    case 'classes-in-progress':
-      return 'Viewing classes in progress'
-    case 'saved-classes':
-      return 'Viewing saved classes'
-    case 'lesson-history':
-      return 'Viewing lesson history'
   }
 }
 
@@ -154,7 +117,7 @@ function getVideoDetails(
 
   if (videoElement === null)
     return
-  setTimestamps(videoElement, presenceData)
+  setTimestamps(videoElement, presenceData, true)
 }
 
 function getSearchDetails(presenceData: PresenceData): void {
@@ -172,40 +135,52 @@ function getOtherDetails(
   const audioElement = document.querySelector('audio')
 
   if (videoElement === null && audioElement === null) {
-    // viewing a channel or podcast page
-    const channelName = document.querySelector('main > div > h1')
-    const podcastName = document.querySelector('main > div > div > div > div > h1')
+    // Viewing a channel or podcast page
+    let channelName: string | null = null
 
-    if (channelName === null && podcastName === null)
-      return
+    // Try getting channel name from the page
+    const channelHeading = document.querySelector('main > div > h1')
+    if (channelHeading instanceof HTMLElement) {
+      channelName = channelHeading.textContent?.trim() || null
+    }
 
-    if (channelName === null) {
-      presenceData.details = 'Viewing a podcast'
-      presenceData.state = podcastName?.textContent
+    const podcastElement = document.querySelector('main > div > div > div > div > h1') as HTMLElement | null
+    const podcastName = podcastElement?.textContent?.trim() || null
+
+    // Fallback to RSS link + title if no channel heading
+    // I know this solution is very... "what" but all headings are images and this is the only way to tell for sure that a page is a channel
+    if (!channelName && !podcastName) {
+      const rssLink = document.querySelector('link[rel="alternate"][type="application/rss+xml"]') as HTMLLinkElement | null
+      const title = document.querySelector('title')?.textContent?.trim()
+      if (channelName || !(rssLink?.href && title))
+        return
+
+      channelName = title.includes(' | ') ? title.split(' | ')[0] || null : null
     }
-    else {
-      presenceData.details = 'Viewing a channel'
-      presenceData.state = channelName.textContent
-    }
+
+    const isPodcast = !channelName
+    presenceData.details = isPodcast ? 'Viewing a podcast' : 'Viewing a channel'
+    presenceData.state = isPodcast ? podcastName : channelName
 
     if (showButtons) {
       presenceData.buttons = [
         {
-          label: channelName === null ? 'View Podcast' : 'View Channel',
+          label: isPodcast ? 'View Podcast' : 'View Channel',
           url: href,
         },
       ]
     }
   }
+
   else if (videoElement === null) {
     // listening to a podcast
-    const channelElement = document.querySelector('main')?.querySelector('a')
+    const channelElement = document.querySelector('main > div:nth-of-type(2) > div:nth-of-type(1) > div > div:nth-of-type(1) > a')
 
     presenceData.details = document.querySelector(
-      'main > div > div > div > div > div',
+      'main > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1)',
     )?.textContent
     presenceData.state = channelElement?.textContent
-    audioElement && setTimestamps(audioElement, presenceData)
+    audioElement && setTimestamps(audioElement, presenceData, false)
 
     if (showButtons) {
       presenceData.buttons = [
@@ -236,21 +211,19 @@ function getOtherDetails(
       )?.textContent
     }
     else {
-      presenceData.details = `${
-        document.querySelector(
-          `${classInfoElementSelector} > div:nth-of-type(1)`,
-        )?.textContent
-      } | ${
-        document.querySelector(
-          `${classInfoElementSelector} > div:nth-of-type(2)`,
-        )?.textContent
+      presenceData.details = `${document.querySelector(
+        `${classInfoElementSelector} > div:nth-of-type(1)`,
+      )?.textContent
+      } | ${document.querySelector(
+        `${classInfoElementSelector} > div:nth-of-type(2)`,
+      )?.textContent
       }`
       presenceData.state = document.querySelector(
         `${classInfoElementSelector} > div:nth-of-type(3)`,
       )?.textContent
     }
 
-    setTimestamps(videoElement, presenceData)
+    setTimestamps(videoElement, presenceData, true)
 
     if (showButtons) {
       presenceData.buttons = [
@@ -266,14 +239,16 @@ function getOtherDetails(
 function setTimestamps(
   element: HTMLAudioElement | HTMLVideoElement,
   presenceData: PresenceData,
+  isVideo: boolean,
 ): void {
   delete presenceData.startTimestamp;
-  [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(element)
+  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(element)
   if (element.paused) {
     delete presenceData.endTimestamp
     presenceData.smallImageKey = Assets.Pause
   }
   else {
+    presenceData.type = isVideo ? ActivityType.Watching : ActivityType.Listening
     presenceData.smallImageKey = Assets.Play
   }
 }
@@ -301,7 +276,6 @@ function parseQueryParams(): QueryParams {
 }
 
 function getRootUrl(): string {
-  return `${document.location.protocol}//${document.location.hostname}${
-    document.location.port ? `:${document.location.port}` : ''
+  return `${document.location.protocol}//${document.location.hostname}${document.location.port ? `:${document.location.port}` : ''
   }`
 }

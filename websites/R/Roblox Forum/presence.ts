@@ -1,10 +1,11 @@
 const presence = new Presence({
-  clientId: '993929577099448481',
+  clientId: '503557087041683458',
 })
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/R/Roblox%20Forum/assets/logo.png',
+    name: 'Roblox Forum',
   }
   if (document.location.pathname === '/') {
     presenceData.details = 'Viewing the homepage'

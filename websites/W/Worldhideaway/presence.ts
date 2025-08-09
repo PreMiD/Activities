@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '815515385326469131',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -9,6 +9,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/W/Worldhideaway/assets/logo.png',
     startTimestamp: browsingTimestamp,
+    name: 'World Hideaway',
   }
   const search = document.querySelector<HTMLInputElement>(
     '#masthead > div.header-search-wrap > div > form > label > input',

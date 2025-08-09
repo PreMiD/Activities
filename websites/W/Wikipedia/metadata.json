@@ -9,10 +9,6 @@
     {
       "name": "Hans5958",
       "id": "279855717203050496"
-    },
-    {
-      "name": "Dark_Ville",
-      "id": "638080361179512853"
     }
   ],
   "service": "Wikipedia",
@@ -169,7 +165,7 @@
   },
   "url": "wikipedia.org",
   "regExp": "([a-z0-9-]+[.])*wikipedia[.]([a-z]*)[/]",
-  "version": "2.8.0",
+  "version": "2.8.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikipedia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikipedia/assets/thumbnail.png",
   "color": "#f9f9f9",

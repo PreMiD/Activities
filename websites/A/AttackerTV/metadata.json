@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "432215088686956565",
+    "name": "_doritos."
+  },
+  "service": "AttackerTV",
+  "description": {
+    "en": "AttackerTV is a free streaming platform that lets you watch movies and TV shows online without registration. It features a wide selection of genres and countries, making it easy and fast to find something to watch",
+    "es": "AttackerTV es una plataforma de streaming gratuita que ofrece películas y series en línea sin necesidad de registro. Cuenta con un amplio catálogo de géneros y países para disfrutar contenido de forma rápida y sencilla"
+  },
+  "url": "attackertv.so",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AttackerTV/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AttackerTV/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "videos",
+  "tags": [
+    "movies"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "(.*\\.)?videostr\\.net"
+}

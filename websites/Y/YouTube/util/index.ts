@@ -1,3 +1,5 @@
+import { timestampFromFormat } from 'premid'
+
 export const presence = new Presence({
   clientId: '463097721130188830',
 })
@@ -69,9 +71,7 @@ const stringMap = {
 }
 
 // eslint-disable-next-line import/no-mutable-exports
-export let strings: Awaited<
-  ReturnType<typeof presence.getStrings<typeof stringMap>>
->
+export let strings: typeof stringMap
 
 let oldLang: string | null = null
 let currentTargetLang: string | null = null
@@ -145,7 +145,8 @@ export function getSetting<E extends string | boolean | number>(
   return (cachedSettings[setting] as E) ?? fallback
 }
 
-let generatedId: string, generatedImage: string
+let generatedId: string
+let generatedImage: string
 export async function getThumbnail(videoId: string): Promise<string> {
   if (generatedId === videoId)
     return generatedImage
@@ -155,8 +156,11 @@ export async function getThumbnail(videoId: string): Promise<string> {
     img.crossOrigin = 'anonymous'
     img.src = `https://i3.ytimg.com/vi/${videoId}/mqdefault.jpg`
 
-    img.onload = function () {
-      let newWidth, newHeight, offsetX, offsetY
+    img.onload = () => {
+      let newWidth: number
+      let newHeight: number
+      let offsetX: number
+      let offsetY: number
 
       if (img.width > img.height) {
         newWidth = wh
@@ -182,7 +186,7 @@ export async function getThumbnail(videoId: string): Promise<string> {
       generatedImage = tempCanvas.toDataURL('image/png')
       resolve(generatedImage)
     }
-    img.onerror = function () {
+    img.onerror = () => {
       resolve(`https://i3.ytimg.com/vi/${videoId}/hqdefault.jpg`)
     }
   })
@@ -203,6 +207,7 @@ const desktopSelectors = {
   videoChannelImage: '#avatar.ytd-video-owner-renderer > img',
   videoLive: '.ytp-live',
   privacyParentBox: '.ytp-chrome-controls .ytp-right-controls',
+  chapterTitle: '.ytp-chapter-title-content',
 }
 const mobileSelectors: Record<keyof typeof desktopSelectors, string> = {
   searchInput: '.yt-searchbox-input',
@@ -219,10 +224,51 @@ const mobileSelectors: Record<keyof typeof desktopSelectors, string> = {
   videoChannelImage: '[class*=owner-icon-and-title] .ytProfileIconImage',
   videoLive: '.ytwPlayerTimeDisplayContentLiveDot',
   privacyParentBox: '[class*=video-action-bar-actions]',
+  chapterTitle: '.ytwPlayerTimeDisplayTimeMacro',
 }
 
 export function getQuerySelectors(
   isMobile: boolean,
 ): Record<keyof typeof desktopSelectors, string> {
   return isMobile ? mobileSelectors : desktopSelectors
+}
+
+export function getMobileChapter(videoTime: number): string | null {
+  const crawlerChapterData = document.querySelector<HTMLSpanElement>('.crawler-full-description > span')?.children
+  if (!crawlerChapterData) {
+    return null
+  }
+  let isChapterSection = false
+  let isExpectingChapterTimestamp = true
+  let currentChapterTitle = ''
+  for (let i = 0; i < crawlerChapterData.length; i++) {
+    const item = crawlerChapterData[i]!
+    if (item.textContent?.trim() === 'CHAPTERS:') {
+      isChapterSection = true
+      continue
+    }
+    if (isChapterSection) {
+      if (isExpectingChapterTimestamp) {
+        isExpectingChapterTimestamp = false
+        const timestamp = item.textContent!.trim().split('\n')[0] ?? ''
+        const timestampTime = timestampFromFormat(timestamp)
+        if (timestampTime === 0 && !timestamp.startsWith('00:')) {
+          break
+        }
+
+        // check if timestamp is after current time
+        if (timestampTime > videoTime) {
+          return currentChapterTitle
+        }
+      }
+      else {
+        isExpectingChapterTimestamp = true
+        currentChapterTitle = item.textContent!.trim()
+      }
+    }
+  }
+  if (currentChapterTitle) {
+    return currentChapterTitle // final chapter
+  }
+  return null
 }

@@ -5,12 +5,6 @@
     "name": "MauriceX",
     "id": "268768664411439115"
   },
-  "contributors": [
-    {
-      "name": "Dark_Ville",
-      "id": "638080361179512853"
-    }
-  ],
   "service": "I Love Music",
   "description": {
     "de": "Das beste Internet-Radio in Deutschland - Die beste Musik für jeden!",
@@ -18,7 +12,7 @@
     "nl": "De beste webradio van Duitsland - de beste muziek voor iedereen!"
   },
   "url": "ilovemusic.de",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/I%20Love%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/I%20Love%20Music/assets/thumbnail.png",
   "color": "#F7C516",

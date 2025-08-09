@@ -1,0 +1,34 @@
+{
+  "mygamatoto.viewCat": {
+    "message": "Viewing a Cat",
+    "description": "Viewing details page for a Cat"
+  },
+  "mygamatoto.buttonViewCat": {
+    "message": "View Cat",
+    "description": "Button to view Cat information"
+  },
+  "mygamatoto.viewEnemy": {
+    "message": "Viewing an Enemy",
+    "description": "Viewing details page for an Enemy"
+  },
+  "mygamatoto.buttonViewEnemy": {
+    "message": "View Enemy",
+    "description": "Button to view Enemy information"
+  },
+  "mygamatoto.viewStage": {
+    "message": "Viewing a Stage",
+    "description": "Viewing details about a game stage/level"
+  },
+  "mygamatoto.buttonViewStage": {
+    "message": "View Stage",
+    "description": "Button to view Stage information"
+  },
+  "mygamatoto.compareCat": {
+    "message": "Comparing Cats",
+    "description": "Viewing a customized list of cats"
+  },
+  "mygamatoto.buttonViewComparison": {
+    "message": "View Comparison",
+    "description": "Button to view comparison list"
+  }
+}

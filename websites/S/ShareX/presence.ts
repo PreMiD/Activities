@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '888726220571811914',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -17,6 +17,7 @@ presence.on('UpdateData', async () => {
         url: document.location.href,
       },
     ],
+    name: 'ShareX',
   }
   // Main Pages
   if (document.location.pathname === '/') {

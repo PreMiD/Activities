@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "689564989484302415",
+    "name": "theAsk"
+  },
+  "service": "ManhwaWeb",
+  "description": {
+    "en": "Your online library of 18+ Manhwas in Spanish and favorite raws on a single page - Manhwa Web"
+  },
+  "url": [
+    "www.manhwaweb.com",
+    "manhwaweb.com"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/ManhwaWeb/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/ManhwaWeb/assets/thumbnail.png",
+  "color": "#1e1e2e",
+  "category": "anime",
+  "tags": [
+    "manga",
+    "manhwa",
+    "reading"
+  ],
+  "settings": [
+    {
+      "id": "time",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover Art",
+      "icon": "fad fa-image",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}

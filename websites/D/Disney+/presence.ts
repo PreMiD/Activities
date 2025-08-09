@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
 
 //* I think this is a browser bug because the custom element does not have any properties when accessing it directly...
 
@@ -42,15 +42,12 @@ async function getStrings() {
       searchFor: 'general.searchFor',
       searchSomething: 'general.searchSomething',
     },
-
   )
 }
-let strings: Awaited<ReturnType<typeof getStrings>>
-let oldLang: string | null = null
 
 presence.on('UpdateData', async () => {
-  const [newLang, privacy, time, buttons] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
+  const [usePresenceName, privacy, time, buttons] = await Promise.all([
+    presence.getSetting<boolean>('usePresenceName'),
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('time'),
     presence.getSetting<number>('buttons'),
@@ -60,11 +57,7 @@ presence.on('UpdateData', async () => {
     partySize?: number
     partyMax?: number
   } = { startTimestamp: browsingTimestamp, type: ActivityType.Watching }
-
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
+  const strings = await getStrings()
 
   switch (true) {
     case /(?:www\.)?disneyplus\.com/.test(hostname): {
@@ -81,9 +74,13 @@ presence.on('UpdateData', async () => {
           if (!privacy) {
             if (presenceData.startTimestamp)
               delete presenceData.startTimestamp
-            presenceData.details = document.querySelector(
-              '.title-field.body-copy',
-            )?.textContent
+            usePresenceName
+              ? presenceData.name = document.querySelector(
+                '.title-field.body-copy',
+              )?.textContent || 'Disney+'
+              : presenceData.details = document.querySelector(
+                '.title-field.body-copy',
+              )?.textContent
 
             const { paused } = video
 
@@ -91,7 +88,7 @@ presence.on('UpdateData', async () => {
               const sliderEl = document.querySelector(
                 '.progress-bar .slider-container',
               )
-              const timestamps = presence.getTimestamps(
+              const timestamps = getTimestamps(
                 Number.parseInt(sliderEl?.getAttribute('aria-valuenow') ?? '0'),
                 Number.parseInt(sliderEl?.getAttribute('aria-valuemax') ?? '0'),
               )
@@ -110,10 +107,18 @@ presence.on('UpdateData', async () => {
             if (parts && parts.length > 2)
               presenceData.largeImageText = `Season ${parts[1]}, Episode ${parts[2]}`
 
-            presenceData.state = document
-              .querySelector('.subtitle-field')
-              ?.textContent
-              ?.replace(/S(\d+):E(\d+) /, '')
+            usePresenceName
+              ? presenceData.details = document
+                .querySelector('.subtitle-field')
+                ?.textContent
+                ?.replace(/S\d+:E\d+ /, '')
+                || document.querySelector(
+                  '.title-field.body-copy',
+                )?.textContent
+              : presenceData.state = document
+                .querySelector('.subtitle-field')
+                ?.textContent
+                ?.replace(/S\d+:E\d+ /, '')
 
             presenceData.buttons = [
               {
@@ -245,7 +250,7 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/D/Disney%2B/assets/0.png'
 
       if (video && !Number.isNaN(video.duration)) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
         const title = document.querySelector(
           'h1.ON_IMAGE.BUTTON1_MEDIUM',
@@ -263,8 +268,8 @@ presence.on('UpdateData', async () => {
             : strings.watchingMovie
         }
         else {
-          presenceData.details = title
-          presenceData.state = subtitle || 'Movie'
+          usePresenceName ? presenceData.name = title || 'Disney+' : presenceData.details = title
+          usePresenceName ? presenceData.details = subtitle || 'Movie' : presenceData.state = subtitle || 'Movie'
         }
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused
@@ -286,7 +291,7 @@ presence.on('UpdateData', async () => {
         }
 
         if (title)
-          presence.setActivity(presenceData, !video.paused)
+          presence.setActivity(presenceData)
       }
       break
     }
