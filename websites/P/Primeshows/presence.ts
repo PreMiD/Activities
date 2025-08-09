@@ -11,6 +11,26 @@ enum ActivityAssets {
   Logo = 'https://i.ibb.co/vxRrCsHC/logo.png',
 }
 
+// Internationalization support
+async function getStrings() {
+  return presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    browse: 'general.browsing',
+    watchingMovie: 'general.watchingMovie',
+    watchingSeries: 'general.watchingSeries',
+    viewPage: 'general.viewPage',
+    search: 'general.search',
+    live: 'general.live',
+    buttonViewPage: 'general.buttonViewPage',
+    buttonViewMovie: 'general.buttonViewMovie',
+    buttonViewSeries: 'general.buttonViewSeries',
+  })
+}
+
+let strings: Awaited<ReturnType<typeof getStrings>>
+let oldLang: string | null = null
+
 // Helper function to format titles properly
 function formatTitle(title: string): string {
   return title
