@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "726098763017486449",
+    "name": "Guhszvv"
+  },
+  "service": "OnShape",
+  "description": {
+    "en": "A online design software"
+  },
+  "url": "cad.onshape.com",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/Hi8NUuU.png",
+  "thumbnail": "https://i.imgur.com/UxGiB8U.png",
+  "color": "#64bc4f",
+  "category": "other",
+  "tags": [
+    "onshape",
+    "cad",
+    "desing"
+  ]
+}
