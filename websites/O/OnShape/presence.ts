@@ -5,7 +5,6 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  // Other default assets can be found at index.d.ts
   Logo = 'https://i.imgur.com/Hi8NUuU.png',
 }
 
@@ -21,9 +20,9 @@ function getOnshapeStatus(): string {
   const status = document.title
   if (status.includes('Documents')) {
     return ''
-  } 
+  }
   else {
-    return 'Editing...';
+    return 'Editing...'
   }
 }
 
@@ -34,7 +33,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
     details: `${title}`,
-    state: `${state}`
+    state: `${state}`,
   }
 
   presence.setActivity(presenceData)
