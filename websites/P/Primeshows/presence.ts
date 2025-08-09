@@ -1,4 +1,5 @@
-import { Assets } from 'premid'
+/// <reference path='../../../@types/premid/index.d.ts' />
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1203605618745933880',
