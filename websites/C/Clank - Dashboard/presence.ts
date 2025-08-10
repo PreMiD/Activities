@@ -43,20 +43,22 @@ let currentSubImg: string = Assets.Reading
 let currentLogo: string = ActivityAssets.Logo
 presence.on('UpdateData', async () => {
   const { pathname } = document.location
-  const { details, state, sections, dashboard } = translations[getUserLanguage()] || translations['de-DE']
+  const showButton: boolean = await presence.getSetting<boolean>('showButton')
+  const { details, state, sections, dashboard, invite_button } = translations[getUserLanguage()] || translations['de-DE']
 
   let sectionDetails: string
   let sectionState: string = state
 
   if (pathname.includes('/dashboard')) {
     sectionDetails = dashboard
-    currentSubImg = Assets.Live
+    currentLogo = ActivityAssets.Logo
+    currentSubImg = Assets.Search
     if (pathname.endsWith('/dashboard')) {
       sectionState = sections['dashboard-intro'] as string
     }
     else {
       const path_list: string[] = pathname.split('/dashboard/')[1]!.split('/')
-      const key = `dashboard-${path_list[path_list.length - 1]}`
+      const key: string = `dashboard-${path_list[path_list.length - 1]}`
       if (path_list && sections[key]) {
         sectionState = sections[key]
       }
@@ -92,5 +94,16 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
 
-  presence.setActivity(presenceData)
+  if (showButton) {
+    presenceData.buttons = [
+      {
+        label: invite_button,
+        url: 'https://clank.dev',
+      },
+    ]
+  }
+
+  if (presenceData.details)
+    presence.setActivity(presenceData)
+  else presence.setActivity()
 })

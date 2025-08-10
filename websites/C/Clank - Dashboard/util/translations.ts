@@ -2,6 +2,7 @@ interface Translation {
   details: string
   dashboard: string
   state: string
+  invite_button: string
   sections: Record<string, string>
 }
 
@@ -10,6 +11,7 @@ export const translations: Record<'de-DE' | 'en-US', Translation> = {
     details: '📌 Auf der Startseite',
     dashboard: '📌 Angemeldet im Dashboard',
     state: 'Bewundert unseren Discord-Bot.. 💝',
+    invite_button: '🤖 ~ Clank einladen',
     sections: {
       'discord-bot': 'Schaut sich das Intro an.. 👋',
       'discord-bot-features': 'Liest sich die Vorteile des Bots durch.. 💎',
@@ -37,6 +39,7 @@ export const translations: Record<'de-DE' | 'en-US', Translation> = {
     details: '📌 On the homepage',
     dashboard: '📌 Logged into the dashboard',
     state: 'Admiring our Discord bot.. 💝',
+    invite_button: '🤖 ~ Invite Clank',
     sections: {
       'discord-bot': 'Checking out the intro.. 👋',
       'discord-bot-features': 'Reading about the bot\'s features.. 💎',
