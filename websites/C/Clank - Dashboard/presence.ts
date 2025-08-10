@@ -24,7 +24,7 @@ function getUserLanguage(): 'de-DE' | 'en-US' {
   if (lang.startsWith('en'))
     return 'en-US'
 
-  return 'de-DE' // fallback
+  return 'en-US' // fallback
 }
 
 window.addEventListener('load', (): void => {
