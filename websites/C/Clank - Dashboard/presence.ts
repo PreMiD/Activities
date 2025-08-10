@@ -68,7 +68,7 @@ presence.on('UpdateData', async () => {
     }
   }
   else {
-    currentLogo = 'https://i.imgur.com/3fFYVXV.png'
+    currentLogo = 'https://i.imgur.com/fxYUKmB.png'
     sectionDetails = details
     switch (currentVisibleId) {
       case 'discord-bot':
