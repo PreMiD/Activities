@@ -39,19 +39,35 @@ enum ActivityAssets { // Other default assets can be found at index.d.ts
   Logo = 'https://clank.dev/assets/img/logo/android-chrome-512x512.png',
 }
 
-const currentLogo: string = ActivityAssets.Logo
+let currentSubImg: string = Assets.Reading
+let currentLogo: string = ActivityAssets.Logo
 presence.on('UpdateData', async () => {
   const { pathname } = document.location
-  const { details, state, sections } = translations[getUserLanguage()] || translations['de-DE']
+  const { details, state, sections, dashboard } = translations[getUserLanguage()] || translations['de-DE']
 
+  let sectionDetails: string
   let sectionState: string = state
-  let sectionLogo: string = currentLogo
 
   if (pathname.includes('/dashboard')) {
-    sectionState = 'Watching YouTube'
+    sectionDetails = dashboard
+    currentSubImg = Assets.Live
+    if (pathname.endsWith('/dashboard')) {
+      sectionState = sections['dashboard-intro'] as string
+    }
+    else {
+      const path_list: string[] = pathname.split('/dashboard/')[1]!.split('/')
+      const key = `dashboard-${path_list[path_list.length - 1]}`
+      if (path_list && sections[key]) {
+        sectionState = sections[key]
+      }
+      else {
+        sectionState = sections['dashboard-intro'] as string // Fallback
+      }
+    }
   }
   else {
-    sectionLogo = 'https://i.imgur.com/3fFYVXV.png'
+    currentLogo = 'https://i.imgur.com/3fFYVXV.png'
+    sectionDetails = details
     switch (currentVisibleId) {
       case 'discord-bot':
         sectionState = sections['discord-bot']!
@@ -69,9 +85,9 @@ presence.on('UpdateData', async () => {
   }
 
   const presenceData: PresenceData = {
-    largeImageKey: sectionLogo,
-    smallImageKey: Assets.Reading,
-    details,
+    largeImageKey: currentLogo,
+    smallImageKey: currentSubImg,
+    details: sectionDetails,
     state: sectionState,
     startTimestamp: browsingTimestamp,
   }
