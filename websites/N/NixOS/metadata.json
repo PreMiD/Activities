@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "332082083604463616",
+    "name": "tsrk."
+  },
+  "service": "NixOS",
+  "description": {
+    "en": "Nix & NixOS, the purely-functional package manager and Linux® distribution."
+  },
+  "url": "nixos.org",
+  "regExp": "([a-z0-9-]+[.])*nixos[.]org[/]",
+  "version": "1.0.0",
+  "logo": "https://gist.github.com/ItsShamed/98d1d577936b5009e8ee2b6b3b31ae09/raw/2dc68888f34ffa1aa379a0d40b7aa810c277e1b8/nixos.png",
+  "thumbnail": "https://gist.github.com/ItsShamed/98d1d577936b5009e8ee2b6b3b31ae09/raw/2a495adffd2b46ac549535f8135dc4b04e65321e/satty-20250810-00:37:16.png",
+  "color": "#4d6fb7",
+  "category": "other",
+  "tags": [
+    "nix",
+    "linux",
+    "nixpkgs"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
+  ]
+}
