@@ -1,0 +1,42 @@
+name: VHS
+on:
+  push:
+    paths:
+      - 'docs/taps/*.tape'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  vhs:
+    name: Create VHS
+    runs-on: ubuntu-latest
+    if: ${{github.repository=='PreMiD/Activities'}}
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - uses: charmbracelet/vhs-action@v2.1.0
+        with:
+          path: docs/tapes/create-activity.tape
+
+      - uses: charmbracelet/vhs-action@v2.1.0
+        with:
+          path: docs/tapes/developing-activity.tape
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commit_message: 'docs(tapes): Update GIFs'
+          file_pattern: 'docs/public/tapes/*.gif'
