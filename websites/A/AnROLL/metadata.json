@@ -13,7 +13,7 @@
   },
   "url": ["www.anroll.net", "my.anroll.net"],
   "regExp": "([a-z0-9-]+\\.)*anroll\\.net[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/thumbnail.jpg",
   "color": "#FFFFFF",
