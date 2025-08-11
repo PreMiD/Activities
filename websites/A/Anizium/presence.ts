@@ -24,7 +24,7 @@ function updatePoster() {
   const pathname = document.location.pathname
 
   if (pathname.includes('/anime/')) {
-    const bannerimage = document.querySelector('.overlay-wrapper.iq-main-slider') as HTMLElement
+    const bannerimage = document.querySelector<HTMLElement>('.overlay-wrapper.iq-main-slider')
     if (!bannerimage)
       return
 
@@ -141,7 +141,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Ana Sayfa görüntüleniyor'
     }
     else if (pathname.includes('/watch/')) {
-      const params = new URLSearchParams(window.location.search)
+      const params = new URLSearchParams(document.location.search)
       const season = params.get('season')
       const episode = params.get('episode')
 
