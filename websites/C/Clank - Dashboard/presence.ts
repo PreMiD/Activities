@@ -35,7 +35,7 @@ window.addEventListener('load', (): void => {
   })
 })
 
-enum ActivityAssets { // Other default assets can be found at index.d.ts
+enum ActivityAssets {
   Logo = 'https://clank.dev/assets/img/logo/android-chrome-512x512.png',
 }
 
@@ -98,7 +98,7 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [
       {
         label: invite_button,
-        url: 'https://clank.dev',
+        url: document.location.href,
       },
     ]
   }
