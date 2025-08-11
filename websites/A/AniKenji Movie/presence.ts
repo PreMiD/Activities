@@ -110,9 +110,8 @@ async function updatePresence(): Promise<void> {
     }
     else if (isDetailsPage) {
       const fullTitle = document.querySelector('head > title')?.textContent?.trim() || ''
-      const titleAfterPrefix = fullTitle.split('Phim')?.[1]?.trim() || fullTitle.split('Xem Phim')?.[1]?.trim() || ''
       presenceData.details = 'Định xem phim...'
-      presenceData.state = titleAfterPrefix
+      presenceData.state = fullTitle
       presenceData.largeImageKey = dynamicBannerUrl
     }
     if (isPlayback) {
