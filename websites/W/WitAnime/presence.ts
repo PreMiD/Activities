@@ -47,7 +47,7 @@ async function getEpisodeInfo(text: string) {
   const episodeTitle = document.querySelector('body > div.main-section > div > h3')?.textContent
   const episodeMatch = episodeTitle?.match(/الحلقة\s+(\d+)/)
   const numberEpisode = episodeMatch?.[1] ? Number.parseInt(episodeMatch[1]) : 1
-  const urlMatchBanner = location.href
+  const urlMatchBanner = document.location.href
 
   let bannerImg: string = ActivityAssets.Logo
   if (cacheEpisode.nameAnimeUrl === nameAnimeUrl && cacheEpisode.bannerImg !== ActivityAssets.Logo) {
@@ -134,7 +134,7 @@ presence.on('iFrameData', (data: any) => {
 })
 
 presence.on('UpdateData', async () => {
-  const { pathname, href } = document.location
+  const { pathname, href, search } = document.location
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
@@ -223,8 +223,8 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageText = 'Viewing Contact Us'
     presenceData.smallImageKey = Assets.Reading
   }
-  else if (pathname === '/' && location.search.includes('search_param=animes')) {
-    const urlParams = new URLSearchParams(location.search)
+  else if (pathname === '/' && search.includes('search_param=animes')) {
+    const urlParams = new URLSearchParams(search)
     const searchQuery = urlParams.get('s')
 
     presenceData.details = 'Browsing'
