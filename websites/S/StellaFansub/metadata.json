@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "1328446510454669447",
+    "name": "aldeebarann"
+  },
+  "service": "StellaFansub",
+  "description": {
+    "en": "StellaFansub shows what is being read (main/series/chapter) on Türkiye's most advanced novel site.",
+    "tr": "StellaFansub Türkiyenin en yenilikçi novel sitesinde (ana/seri/bölüm) ne okuduğunuzu gösterir."
+  },
+  "url": "stellafansub.com",
+  "version": "1.0.2",
+  "logo": "https://stellafansub.com/logo.png",
+  "thumbnail": "https://stellafansub.com/backgrounds/sunset.jpg",
+  "color": "#8b5cf6",
+  "category": "anime",
+  "tags": [
+    "novel",
+    "reading",
+    "anime",
+    "turkish"
+  ]
+}
