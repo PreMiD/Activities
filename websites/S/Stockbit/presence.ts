@@ -81,7 +81,7 @@ presence.on('UpdateData', async () => {
             const moduleName = document.querySelector('meta[name="title"]')?.getAttribute('content') || ''
             presenceData.state = `Module: ${moduleName}`
           }
-          presenceData.details = 'Learning in academy'
+          presenceData.details = 'Studying...'
           presenceData.smallImageKey = Assets.Reading
           break
         }
