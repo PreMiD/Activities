@@ -42,7 +42,7 @@ export class Lib {
 
     return {
       id: this.extractId(url),
-      data: json.data as T,
+      data: data as T,
     }
   }
 
