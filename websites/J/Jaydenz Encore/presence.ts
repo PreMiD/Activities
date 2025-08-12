@@ -7,15 +7,14 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://jaydenzkoci.github.io/assets/images/icon512.png',
   }
 
-const [showButtons, showDetails, showTime] = await Promise.all([
-  presence.getSetting('useButtons'),
-  presence.getSetting('useDetails'),
-  presence.getSetting('useTime'),
-])
+  const [showButtons, showDetails, showTime] = await Promise.all([
+    presence.getSetting('useButtons'),
+    presence.getSetting('useDetails'),
+    presence.getSetting('useTime'),
+  ])
 
   let secondaryButton: ButtonData | undefined
   const searchInputEl = document.querySelector<HTMLInputElement>('#searchInput')
-  const videoCover = document.querySelector<HTMLImageElement>('#videoTrackCover')
 
   if (document.body.classList.contains('video-popup-open')) {
     const videoTitle = document.getElementById('videoTrackTitle')?.textContent
@@ -85,9 +84,9 @@ const [showButtons, showDetails, showTime] = await Promise.all([
     }
   }
 
-if (showButtons && secondaryButton) {
-  presenceData.buttons = [secondaryButton]
-}
+  if (showButtons && secondaryButton) {
+    presenceData.buttons = [secondaryButton]
+  }
 
   presence.setActivity(presenceData)
 })
