@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '607651992567021580',
@@ -106,11 +106,11 @@ presence.on('UpdateData', async () => {
   const artistLink = document
     .querySelector('[data-testid="item_subtitle"] > a')
     ?.getAttribute('href')
-  const timestamps = presence.getTimestamps(
-    presence.timestampFromFormat(
+  const timestamps = getTimestamps(
+    timestampFromFormat(
       document.querySelector('[data-testid="elapsed_time"]')?.textContent ?? '',
     ),
-    presence.timestampFromFormat(
+    timestampFromFormat(
       document.querySelector('[data-testid="remaining_time"]')?.textContent ?? '',
     ),
   )
@@ -127,7 +127,8 @@ presence.on('UpdateData', async () => {
 
   const mainArtistName = document
     .querySelector('[data-testid="item_subtitle"] > a')
-    ?.textContent?.trim()
+    ?.textContent
+    ?.trim()
   if (mainArtistName)
     presenceData.name = mainArtistName
 
@@ -136,7 +137,7 @@ presence.on('UpdateData', async () => {
       .querySelector('[data-testid="item_cover"]')
       ?.querySelector('img')
       ?.getAttribute('src')
-      ?.replace(/(264x264)|(48x48)/g, '512x512') ?? ActivityAssets.Logo
+      ?.replace(/264x264|48x48/g, '512x512') ?? ActivityAssets.Logo
     : ActivityAssets.Logo
   presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
   presenceData.smallImageText = paused ? strings.pause : strings.play;
