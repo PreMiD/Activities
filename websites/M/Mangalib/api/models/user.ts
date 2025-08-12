@@ -1,3 +1,10 @@
+export interface UserData {
+  id: number
+  username: string
+  avatar: UserAvatar
+  last_online_at: Date
+}
+
 export interface UserAvatar {
   filename: string
   /**
@@ -8,11 +15,4 @@ export interface UserAvatar {
    * Custom property with adjusted avatar
    */
   adjusted: Blob
-}
-
-export interface UserData {
-  id: number
-  username: string
-  avatar: UserAvatar
-  last_online_at: Date
 }
