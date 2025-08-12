@@ -125,6 +125,12 @@ presence.on('UpdateData', async () => {
     '[data-testid="item_subtitle"]',
   )?.textContent
 
+  const mainArtistName = document
+    .querySelector('[data-testid="item_subtitle"] > a')
+    ?.textContent?.trim()
+  if (mainArtistName)
+    presenceData.name = mainArtistName
+
   presenceData.largeImageKey = cover
     ? document
       .querySelector('[data-testid="item_cover"]')
