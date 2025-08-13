@@ -65,10 +65,11 @@ presence.on('UpdateData', async () => {
     if (coordinatesPrivacy) {
       if (countryPrivacy) {
         presenceData.details = `Viewing a pixel`
-      } else {
+      }
+      else {
         presenceData.details = zone === 'Unknown'
-        ? `Viewing a pixel`
-        : `Viewing a pixel in ${zone}`
+          ? `Viewing a pixel`
+          : `Viewing a pixel in ${zone}`
       }
     }
     else {
