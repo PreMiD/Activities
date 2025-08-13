@@ -12,7 +12,7 @@
   },
   "url": "roosterteeth.com",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/sxZnjmY.png",
+  "logo": "https://i.imgur.com/pO33yHV.png",
   "thumbnail": "https://i.imgur.com/ILa9nfe.png",
   "color": "#2c2420",
   "category": "videos",
@@ -22,7 +22,7 @@
     "streaming"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*",
+  "iFrameRegExp": "(?:https?:)?\\/\\/(?:www\\.)?(?:youtube\\.com\\/embed\\/[A-Za-z0-9_-]+|player\\.vimeo\\.com\\/video\\/\\d+)",
   "settings": [
     {
       "id": "buttons",

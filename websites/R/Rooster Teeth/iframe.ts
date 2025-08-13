@@ -9,8 +9,8 @@ iframe.on('UpdateData', async () => {
         paused: video.paused,
         currentTime: video.currentTime,
         duration: video.duration,
-        title: document.querySelector('.video-title')?.textContent
-      }
+        title: document.querySelector('.video-title')?.textContent,
+      },
     })
   }
 })
