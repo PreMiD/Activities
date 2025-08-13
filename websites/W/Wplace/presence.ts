@@ -23,6 +23,9 @@ function updateGlobals() {
 }
 
 presence.on('UpdateData', async () => {
+  const coordinatesPrivacy = await presence.getSetting<boolean>('coordinatesPrivacy')
+  const countryPrivacy = !coordinatesPrivacy ? false : await presence.getSetting<boolean>('countryPrivacy')
+
   updateGlobals()
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -59,9 +62,20 @@ presence.on('UpdateData', async () => {
     }
   }
   else {
-    presenceData.details = zone === 'Unknown'
-      ? `Looking at pixel ${coordinates} (Unknown zone)`
-      : `Looking at pixel ${coordinates} (${zone})`
+    if (coordinatesPrivacy) {
+      if (countryPrivacy) {
+        presenceData.details = `Viewing a pixel`
+      } else {
+        presenceData.details = zone === 'Unknown'
+        ? `Viewing a pixel`
+        : `Viewing a pixel in ${zone}`
+      }
+    }
+    else {
+      presenceData.details = zone === 'Unknown'
+        ? `Looking at pixel ${coordinates} (Unknown zone)`
+        : `Looking at pixel ${coordinates} (${zone})`
+    }
     presenceData.state = getState()
   }
 

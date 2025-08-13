@@ -19,5 +19,22 @@
     "place",
     "redditplace",
     "game"
+  ],
+  "settings": [
+    {
+      "id": "coordinatesPrivacy",
+      "title": "Hide Coordinates",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "countryPrivacy",
+      "title": "Hide Country",
+      "icon": "fad fa-user-secret",
+      "value": false,
+      "if": {
+        "coordinatesPrivacy": true
+      }
+    }
   ]
 }
