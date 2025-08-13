@@ -4,6 +4,10 @@ const presence = new Presence({ clientId: '639591760791732224' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 const urlpath = document.location.pathname.split('/')
 
+enum CustomAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/B/bilibili/assets/logo.png',
+}
+
 let uploader: HTMLElement | null,
   uploaderName: string,
   uploaderLink: string,
@@ -23,10 +27,16 @@ presence.on('iFrameData', (data: any) => {
 })
 
 presence.on('UpdateData', async () => {
+  const [privacy, showCover] = await Promise.all([
+    presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('cover'),
+  ])
   const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/B/bilibili/assets/logo.png',
+    largeImageKey: privacy || !showCover
+    ? CustomAssets.Logo
+    : navigator.mediaSession.metadata?.artwork[0]?.src
+    ?? CustomAssets.Logo,
   }
-  const privacy = await presence.getSetting<boolean>('privacy')
 
   async function internalGetTimestamps() {
     let video = document.querySelector<HTMLVideoElement>('bpx-player-container')
