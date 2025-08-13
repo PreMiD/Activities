@@ -1,4 +1,4 @@
-import { Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat } from 'premid'
 
 const presence = new Presence({ clientId: '639591760791732224' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -13,7 +13,9 @@ let uploader: HTMLElement | null,
   videoPaused: boolean,
   currentTime: number,
   duration: number,
-  timestamps: number[]
+  timestamps: number[],
+  isMusicVideo: boolean | undefined,
+  vid: string | undefined
 
 presence.on('iFrameData', (data: any) => {
   iFrameTitle = data.details
@@ -83,9 +85,21 @@ presence.on('UpdateData', async () => {
 
     uploaderLink = uploader?.getAttribute('href') ?? ''
     title = document.querySelector('.video-title')
+    const newVid = document.location.href.match(/BV[^&]{10}|av\d+/)?.[0]
+    if (vid !== newVid) {
+      vid = newVid
+      const idType = vid?.startsWith('BV') ? 'bvid' : 'aid'
+      const response = await (fetch(
+        `https://api.bilibili.com/x/web-interface/view?${idType}=${vid}`,
+      ).then((e)=>e.json()))
+      const tagNames = (response?.data?.tname ?? '') + (response?.data?.tname_v2 ?? '')
+      isMusicVideo = /音乐|翻唱|MV/.test(tagNames)
+    }
 
+    presenceData.type = isMusicVideo ? ActivityType.Listening : ActivityType.Watching
+    presenceData.name = uploaderName
+    presenceData.state = null
     presenceData.details = title?.getAttribute('title')
-    presenceData.state = uploaderName
     presenceData.buttons = [
       {
         label: 'Watch Video', // getString() later
