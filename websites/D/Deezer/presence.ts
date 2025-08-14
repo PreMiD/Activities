@@ -41,11 +41,12 @@ presence.on('UpdateData', async () => {
   let strings = await getStrings()
   let paused = false
 
-  const [buttons, newLang, cover, browseInfo] = await Promise.all([
+  const [buttons, newLang, cover, browseInfo, artistAsTitle] = await Promise.all([
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('browseInfo'),
+    presence.getSetting<boolean>('artistAsTitle'),
   ])
   const { pathname, hostname } = document.location
   const remainingTest = document.querySelector(
@@ -121,16 +122,24 @@ presence.on('UpdateData', async () => {
   presenceData.details = document.querySelector(
     '[data-testid="item_title"]',
   )?.textContent
-  presenceData.state = document.querySelector(
-    '[data-testid="item_subtitle"]',
-  )?.textContent
 
-  const mainArtistName = document
-    .querySelector('[data-testid="item_subtitle"] > a')
-    ?.textContent
-    ?.trim()
-  if (mainArtistName)
-    presenceData.name = mainArtistName
+  const artistElements = [
+    ...document.querySelectorAll<HTMLAnchorElement>(
+      '[data-testid="item_subtitle"] a',
+    ),
+  ]
+  const joinedArtists = artistElements
+    .map(a => a.textContent?.trim())
+    .filter((t): t is string => Boolean(t))
+    .join(', ')
+
+  presenceData.state = artistAsTitle
+    ? ''
+    : joinedArtists
+      || document.querySelector('[data-testid="item_subtitle"]')?.textContent
+
+  if (artistAsTitle && joinedArtists)
+    presenceData.name = joinedArtists
 
   presenceData.largeImageKey = cover
     ? document

@@ -51,6 +51,12 @@
       "value": true
     },
     {
+      "id": "artistAsTitle",
+      "title": "Show Artist as Title",
+      "icon": "fad fa-user-large",
+      "value": true
+    },
+    {
       "id": "browseInfo",
       "title": "Only show browsing info",
       "icon": "fad fa-magnifying-glass",
