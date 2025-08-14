@@ -3,7 +3,8 @@ const presence = new Presence({
 })
 
 presence.on('UpdateData', async () => {
-  const path = window.location.pathname
+  const { href, pathname } = document.location
+  const path = pathname
     .replace('/book/', '')
     .replace('.html', '')
   const presenceData: PresenceData = {
@@ -12,7 +13,7 @@ presence.on('UpdateData', async () => {
     buttons: [
       {
         label: 'Read Book',
-        url: window.location.href,
+        url: href,
       },
     ],
   }
@@ -24,20 +25,20 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Reading the foreword'
   }
   else if (path.startsWith('ch')) {
-    presenceData.details = `Reading chapter ${
-      path.replace('ch', '').split('-')[0]
-    }`
-    if (path.split('-')[1] === '00')
-      presenceData.state = document.querySelectorAll('h1')[1]?.textContent
-    else presenceData.state = document.querySelector('h2')?.textContent
+    const [chapterNumber, subChapterNumber] = path.replace('ch', '').split('-')
+    presenceData.details = `Reading chapter ${Number(chapterNumber)}`
+    presenceData.state = document.querySelector('h1 .header')?.textContent
+      || document.querySelector('h2 .header')?.textContent
+    if (subChapterNumber !== '00') {
+      presenceData.details += `.${Number(subChapterNumber)}`
+    }
   }
   else if (path.startsWith('appendix')) {
-    presenceData.details = `Reading appendix ${
-      path.replace('appendix', '').split('-')[0]
-    }`
-    if (path.split('-')[1] === '00')
-      presenceData.state = document.querySelectorAll('h1')[1]?.textContent
-    else presenceData.state = document.querySelector('h2')?.textContent
+    presenceData.details = 'Reading appendix'
+    if (path.split('-')[1] !== '00') {
+      presenceData.state = document.querySelector('h1 .header')?.textContent
+        || document.querySelector('h2 .header')?.textContent
+    }
   }
 
   presence.setActivity(presenceData)
