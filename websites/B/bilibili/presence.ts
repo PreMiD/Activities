@@ -103,7 +103,7 @@ presence.on('UpdateData', async () => {
         `https://api.bilibili.com/x/web-interface/view?${idType}=${vid}`,
       ).then(e => e.json()))
       const tagNames = (response?.data?.tname ?? '') + (response?.data?.tname_v2 ?? '')
-      isMusicVideo = /音乐|翻唱|MV/.test(tagNames)
+      isMusicVideo = /音乐|翻唱|MV|VOCALOID|电台/.test(tagNames)
     }
 
     presenceData.type = isMusicVideo ? ActivityType.Listening : ActivityType.Watching
