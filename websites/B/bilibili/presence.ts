@@ -33,9 +33,9 @@ presence.on('UpdateData', async () => {
   ])
   const presenceData: PresenceData = {
     largeImageKey: privacy || !showCover
-    ? CustomAssets.Logo
-    : navigator.mediaSession.metadata?.artwork[0]?.src
-    ?? CustomAssets.Logo,
+      ? CustomAssets.Logo
+      : navigator.mediaSession.metadata?.artwork[0]?.src
+        ?? CustomAssets.Logo,
   }
 
   async function internalGetTimestamps() {
@@ -101,7 +101,7 @@ presence.on('UpdateData', async () => {
       const idType = vid?.startsWith('BV') ? 'bvid' : 'aid'
       const response = await (fetch(
         `https://api.bilibili.com/x/web-interface/view?${idType}=${vid}`,
-      ).then((e)=>e.json()))
+      ).then(e => e.json()))
       const tagNames = (response?.data?.tname ?? '') + (response?.data?.tname_v2 ?? '')
       isMusicVideo = /音乐|翻唱|MV/.test(tagNames)
     }
