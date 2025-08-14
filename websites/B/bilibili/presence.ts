@@ -95,7 +95,7 @@ presence.on('UpdateData', async () => {
 
     uploaderLink = uploader?.getAttribute('href') ?? ''
     title = document.querySelector('.video-title')
-    const newVid = document.location.href.match(/BV[^&]{10}|av\d+/)?.[0]
+    const newVid = document.location.href.match(/BV[^&]{10}|(?<=av)\d+/)?.[0]
     if (vid !== newVid) {
       vid = newVid
       const idType = vid?.startsWith('BV') ? 'bvid' : 'aid'
