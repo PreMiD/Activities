@@ -133,10 +133,10 @@ presence.on('UpdateData', async () => {
     .filter((t): t is string => Boolean(t))
     .join(', ')
 
-  presenceData.state = artistAsTitle
-    ? ''
-    : joinedArtists
+  if (!artistAsTitle) {
+    presenceData.state = joinedArtists
       || document.querySelector('[data-testid="item_subtitle"]')?.textContent
+  }
 
   if (artistAsTitle && joinedArtists)
     presenceData.name = joinedArtists
