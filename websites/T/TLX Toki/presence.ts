@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 const presenceData: PresenceData = {
-  largeImageKey: 'https://raw.githubusercontent.com/ia-toki/judgels/master/judgels-client/src/assets/images/logo.png',
+  largeImageKey: 'https://i.imgur.com/7K6Wwke.png',
   startTimestamp: Math.floor(Date.now() / 1000),
   type: ActivityType.Playing,
   name: 'TLX Toki',
