@@ -5,13 +5,22 @@
     "id": "633779863840489484",
     "name": "lucasb25"
   },
+  "contributors": [
+    {
+      "name": "the.skinny.rat",
+      "id": "493752775721746432"
+    }
+  ],
   "service": "Panais",
   "description": {
     "en": "Panais is a smart music bot that lets you enjoy your favorite tracks anytime. It's easy to use and offers a personalized experience to help you discover and listen to new music.",
     "fr": "Panais est un bot de musique intelligent qui vous permet de profiter de vos morceaux préférés à tout moment. Il est facile à utiliser et offre une expérience personnalisée pour vous aider à découvrir et écouter de la nouvelle musique."
   },
-  "url": "panais.xyz",
-  "version": "1.0.1",
+  "url": [
+    "www.panais.xyz",
+    "panais.xyz"
+  ],
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Panais/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Panais/assets/thumbnail.png",
   "color": "#26b6e1",
