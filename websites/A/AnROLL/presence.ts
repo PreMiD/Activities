@@ -4,18 +4,18 @@ const presence = new Presence({ clientId: '1395970198405644350' })
 
 // ENUMS e Mapeamentos de Página
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/logo.png',
-  Home = 'https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/0.png',
-  Calendar = 'https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/1.png',
-  Search = 'https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/2.png',
-  Profile = 'https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/3.png',
-  Films = 'https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/4.png',
-  Partyroll = 'https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/5.png',
-  Notes = 'https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/6.png',
-  VIP = 'https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/7.png',
-  Requests = 'https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/8.png',
-  ARPCoins = 'https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/9.png',
-  Account = 'https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/10.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/logo.png',
+  Home = 'https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/0.png',
+  Calendar = 'https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/1.png',
+  Search = 'https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/2.png',
+  Profile = 'https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/3.png',
+  Films = 'https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/4.png',
+  Partyroll = 'https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/5.png',
+  Notes = 'https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/6.png',
+  VIP = 'https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/7.png',
+  Requests = 'https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/8.png',
+  ARPCoins = 'https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/9.png',
+  Account = 'https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/10.png',
 }
 const pageDetails: Record<string, { title: string, image?: string }> = {
   '': { title: 'Página Inicial', image: ActivityAssets.Home },
