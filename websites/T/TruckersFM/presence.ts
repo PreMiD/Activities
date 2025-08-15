@@ -7,7 +7,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
-    largeImageKey: (document.getElementById('song-art') as HTMLImageElement)?.src || 'https://i.imgur.com/R5xHjtR.png',
+    largeImageKey: document.querySelector<HTMLImageElement>("#song-art")?.src || 'https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png',
     startTimestamp: browsingTimestamp,
     type: ActivityType.Listening,
   }
@@ -22,7 +22,7 @@ presence.on('UpdateData', () => {
 
   presenceData.details = `${artist} - ${title}`
   presenceData.state = presenter
-  presenceData.smallImageKey = 'https://i.imgur.com/R5xHjtR.png'
+  presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png'
   presenceData.smallImageText = 'TruckersFM'
 
   presence.setActivity(presenceData)
