@@ -7,7 +7,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
-    largeImageKey: document.querySelector<HTMLImageElement>("#song-art")?.src || 'https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png',
+    largeImageKey: document.querySelector<HTMLImageElement>('#song-art')?.src || 'https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png',
     startTimestamp: browsingTimestamp,
     type: ActivityType.Listening,
   }
