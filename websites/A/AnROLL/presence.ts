@@ -115,12 +115,12 @@ function getTitles(): { title: string, subtitle: string, year: string } {
         }
       }
       catch { // CORREÇÃO 1: Variável de erro removida
-        const titleElement = document.querySelector('article.sc-jJAtPt h2')
+        const titleElement = document.querySelector('article h2')
         result = { title: titleElement?.textContent?.trim() || 'Filme', subtitle: 'Filme', year: '' }
       }
     }
     else {
-      const titleElement = document.querySelector('article.sc-jJAtPt h2')
+      const titleElement = document.querySelector('article h2')
       result = { title: titleElement?.textContent?.trim() || 'Filme', subtitle: 'Filme', year: '' }
     }
   }
