@@ -22,13 +22,14 @@
   },
   "url": [
     "mangalib.me",
-    "anilib.me",
-    "ranobelib.me",
     "mangalib.org",
+    "ranobelib.me",
+    "v1.novelslib.me",
+    "anilib.me",
     "v1.animelib.org",
-    "v1.novelslib.me"
+    "v2.animelib.org"
   ],
-  "version": "1.4.26",
+  "version": "1.4.27",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mangalib/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mangalib/assets/thumbnail.jpeg",
   "color": "#ff8c00",
