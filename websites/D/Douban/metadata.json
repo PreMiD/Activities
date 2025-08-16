@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "357461892526243840",
+    "name": "litomore"
+  },
+  "service": "Douban",
+  "description": {
+    "en": "Douban is a Chinese social networking service where users can share their interests in books, movies, music, and more. It allows users to create profiles, join groups, and interact with others through comments and ratings."
+  },
+  "url": ["douban.com", "www.douban.com", "book.douban.com", "movie.douban.com", "music.douban.com", "market.douban.com"],
+  "version": "1.0.0",
+  "logo": "https://litomore.me/images/douban-512.png",
+  "thumbnail": "https://img1.doubanio.com/view/puppy_image/raw/public/17705622af81ieohwm0.jpg",
+  "color": "#2D963D",
+  "category": "socials",
+  "tags": [
+    "books",
+    "groups",
+    "movies",
+    "musics",
+    "podcasts",
+    "swags"
+  ]
+}
