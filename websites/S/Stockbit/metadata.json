@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "278821688894947328",
+    "name": "momonnie"
+  },
+  "service": "Stockbit",
+  "description": {
+    "en": "Stockbit is an Indonesian platform for stock trading, analysis, and discussion, designed with a user-friendly interface for both beginners and experienced investors. It combines social networking features with trading tools and educational resources."
+  },
+  "url": [
+    "stockbit.com",
+    "academy.stockbit.com",
+    "careers.stockbit.com",
+    "help.stockbit.com",
+    "snips.stockbit.com",
+    "emitten-announcement.stockbit.com"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stockbit/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stockbit/assets/thumbnail.png",
+  "color": "#B2E6D2",
+  "category": "other",
+  "tags": [
+    "finance",
+    "stocks",
+    "money",
+    "bond",
+    "share",
+    "investment",
+    "news"
+  ]
+}
