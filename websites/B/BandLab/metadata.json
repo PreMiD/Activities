@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "708455359525945384",
+    "name": "toxisue"
+  },
+  "service": "BandLab",
+  "description": {
+    "en": "BandLab is an all-in-one music production platform, where musicians and music fans make and share music."
+  },
+  "url": ["bandlab.com","www.bandlab.com","licensing.bandlab.com","edu.bandlab.com"],
+  "version": "1.0.0",
+  "logo": "https://assets.stickpng.com/images/631205e3b661e15cdf54dede.png",
+  "thumbnail": "https://www.bandlab.com/web-app/images/open-graph-4fd21aa09f.png",
+  "color": "#f12c18",
+  "category": "music",
+  "tags": [
+    "bandlab",
+    "music"
+  ],
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "value": true,
+      "description": "Display buttons in the Discord Activity"
+    },
+    {
+      "id": "privacyMode",
+      "title": "Hide Project Names",
+      "value": true,
+      "description": "Hide names of private projects and projects open in the Studio"
+    },
+    {
+      "id": "titleArtistFormat",
+      "title": "Song Display Format",
+      "value": "%title% - %artist%",
+      "placeholder": "Use %title% and %artist%...",
+      "description": "Customize how song titles are displayed in the Discord Activity"
+    },
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}

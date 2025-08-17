@@ -1,0 +1,26 @@
+{
+    "bandlab.trending": {
+        "description": "Shown when logged-in user is on 'Trending' tab on homepage",
+        "message": "Looking at what's trending"
+    },
+    "bandlab.following": {
+        "description": "Shown when logged-in user is on 'Following' tab on homepage",
+        "message": "Catching up with the people they follow"
+    },
+    "bandlab.forYou": {
+        "description": "Shown when logged-in user is on 'Music'/'For You' tab on homepage",
+        "message": "The For You page"
+    },
+    "bandlab.videoBrowse": {
+        "description": "Shown when logged-in user is on 'Video' tab on homepage",
+        "message": "Looking at popular videos"
+    },
+    "bandlab.comms": {
+        "description": "Shown when logged-in user is on 'Communities' tab on homepage",
+        "message": "Looking for communities"
+    },
+    "bandlab.videoTarget": {
+        "description": "[Watching] a video by [1]. [1] will be replaced with the display name of the video poster.",
+        "message": "A video by [1]"
+    }
+}
