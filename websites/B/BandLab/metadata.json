@@ -16,7 +16,6 @@
   "color": "#f12c18",
   "category": "music",
   "tags": [
-    "bandlab",
     "music"
   ],
   "settings": [
@@ -44,10 +43,6 @@
       "value": "%title% - %artist%",
       "placeholder": "Use %title% and %artist%...",
       "description": "Customize how song titles are displayed in the Discord Activity"
-    },
-    {
-      "id": "lang",
-      "multiLanguage": true
     }
   ]
 }
