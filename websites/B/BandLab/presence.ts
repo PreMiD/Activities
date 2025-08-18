@@ -3,8 +3,9 @@ import { ActivityType, Assets } from 'premid'
 const presence = new Presence({
   clientId: '801743263052726292',
 })
+
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-let studioTimestamp = 0
+let studioTimestamp : number = 0
 
 enum ActivityAssets {
   Logo = 'https://assets.stickpng.com/images/631205e3b661e15cdf54dede.png',
@@ -86,7 +87,7 @@ presence.on('UpdateData', async () => {
           username: ""
         }
 
-        let homeElement = document.querySelector("post-card-header-content > div > .post-card-header-title > a") // Grabs the link element that points to the originating account in the video player
+        let homeElement : Element | null = document.querySelector("post-card-header-content > div > .post-card-header-title > a") // Grabs the link element that points to the originating account in the video player
 
         if (homeElement) {
           videoAuthor.element = homeElement
@@ -145,8 +146,8 @@ presence.on('UpdateData', async () => {
         ]
       }
 
-      let bottomPlayButton = document.querySelector("button.ds-play-button")
-      if (bottomPlayButton != null) { // Has the audio player on the bottom been engaged?
+      let bottomPlayButton : Element | null = document.querySelector("button.ds-play-button")
+      if (bottomPlayButton) { // Has the audio player on the bottom been engaged?
         if (bottomPlayButton.className.includes("status-paused")) {
           presenceData.smallImageKey = ActivityAssets.Paused,
           presenceData.smallImageText = strings.pause
@@ -169,8 +170,8 @@ presence.on('UpdateData', async () => {
     if (privacyMode) {
       presenceData.state = "Cooking up some heat"
     } else {
-      let inputBox = document.getElementById("studio-project-name-input") as HTMLInputElement
-      let title = inputBox.value.trim() || "New Project"
+      let inputBox : HTMLInputElement = document.getElementById("studio-project-name-input")
+      let title : string = inputBox.value.trim() || "New Project"
       presenceData.state = "Working on project: {0}".replace("{0}",title)
     }
   }
@@ -219,9 +220,9 @@ presence.on('UpdateData', async () => {
       }
     ]
 
-    let pfp = firstSrcFromSrcsetProvided(document.querySelector(".profile-card-picture > a > img")) // Grab first profile picture of user available
+    let pfp : string = firstSrcFromSrcsetProvided(document.querySelector(".profile-card-picture > a > img")) // Grab first profile picture of user available
 
-    if (pfp != null) {
+    if (pfp != ActivityAssets.Logo) {
       presenceData.largeImageKey = pfp
       presenceData.smallImageKey = ActivityAssets.Logo
       presenceData.smallImageText = "BandLab"
