@@ -103,7 +103,7 @@ presence.on('UpdateData', async () => {
               label: strings.viewUser,
               url: videoAuthor.target,
             }
-          ],
+          ]
         }
 
         presenceData.state = 'A video by [1]'.replace('[1]', videoAuthor.username)
@@ -220,7 +220,7 @@ presence.on('UpdateData', async () => {
       {
         label: strings.buttonViewPage,
         url: href
-      }
+      },
     ]
 
     let pfp : string | undefined = firstSrcFromSrcsetProvided(document.querySelector('.profile-card-picture > a > img')) // Grab first profile picture of user available
