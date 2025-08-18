@@ -170,8 +170,8 @@ presence.on('UpdateData', async () => {
     if (privacyMode) {
       presenceData.state = "Cooking up some heat"
     } else {
-      let inputBox : HTMLInputElement = document.getElementById("studio-project-name-input")
-      let title : string = inputBox.value.trim() || "New Project"
+      let inputBox = document.getElementById("studio-project-name-input") as HTMLInputElement
+      let title : string = inputBox?.value.trim() || "New Project"
       presenceData.state = "Working on project: {0}".replace("{0}",title)
     }
   }
@@ -220,7 +220,7 @@ presence.on('UpdateData', async () => {
       }
     ]
 
-    let pfp : string = firstSrcFromSrcsetProvided(document.querySelector(".profile-card-picture > a > img")) // Grab first profile picture of user available
+    let pfp : string | undefined = firstSrcFromSrcsetProvided(document.querySelector(".profile-card-picture > a > img")) // Grab first profile picture of user available
 
     if (pfp != ActivityAssets.Logo) {
       presenceData.largeImageKey = pfp
