@@ -25,7 +25,7 @@ presence.on('UpdateData', async () => {
   if (username && avatar) {
     presenceData.buttons = [
       {
-        label: 'My Profile',
+        label: 'View My Profile',
         url: new URL(`./profiles/${username}`, baseOrigin).href,
       },
       {
