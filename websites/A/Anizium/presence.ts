@@ -590,5 +590,4 @@ class AniziumPresence {
   }
 }
 
-// eslint-disable-next-line unused-imports/no-unused-vars
-const aniziumPresence = new AniziumPresence()
+const _aniziumPresence = new AniziumPresence()
