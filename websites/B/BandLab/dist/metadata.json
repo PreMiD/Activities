@@ -33,6 +33,12 @@
       "description": "Hide names of private projects and projects open in the Studio"
     },
     {
+      "id": "privacyModeStrict",
+      "title": "Hide Sensitive Info",
+      "value": true,
+      "description": "HIde more sensitive information e.g. search queries and DMs"
+    },
+    {
       "id": "titleArtistFormat",
       "title": "Song Display Format",
       "value": "%title% - %artist%",
