@@ -8,6 +8,7 @@ presence.on('UpdateData', () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/M/Monkeytype/assets/logo.png',
   }
   presenceData.startTimestamp = time
+  let isLoading = false
   switch (document.location.pathname.toLowerCase()) {
     case '/': {
       presenceData.details = 'Idling'
@@ -27,13 +28,18 @@ presence.on('UpdateData', () => {
           raw: moreStatsElem?.querySelector('.raw .bottom')?.textContent,
           char: moreStatsElem?.querySelector('.key .bottom')?.textContent,
           con: moreStatsElem?.querySelector('.consistency .bottom')?.textContent,
-          time: moreStatsElem?.querySelector('.time .bottom')?.textContent,
+          time: moreStatsElem?.querySelector('.time .bottom .text')?.textContent,
         }
-        presenceData.details = `Finished ${document
-          .querySelector('.testType .bottom')
-          ?.textContent
-          ?.replaceAll('<br>', ' ')}`
-        presenceData.state = `${stats.wpm} wpm ${stats.acc} acc ${stats.raw} raw ${stats.char} ${stats.con} consistency ${stats.time}`
+        if (Object.values(stats).some(v => !v)) {
+          isLoading = true
+        }
+        else{
+          presenceData.details = `Finished ${document
+            .querySelector('.testType .bottom')
+            ?.textContent
+            ?.replaceAll('<br>', ' ')}`
+          presenceData.state = `${stats.wpm} wpm ${stats.acc} acc ${stats.raw} raw ${stats.char} ${stats.con} consistency ${stats.time}`
+        }
       }
       else if (
         document.querySelector('#words letter.correct')
@@ -43,10 +49,10 @@ presence.on('UpdateData', () => {
           document.querySelector('.pageTest #premidTestMode')?.textContent
         }`
         presenceData.state = `${
-          document.querySelector('.pageTest #largeLiveWpmAndAcc #liveWpm')
+          document.querySelector('.pageTest .speed')
             ?.textContent
         } wpm ${
-          document.querySelector('.pageTest #largeLiveWpmAndAcc #liveAcc')
+          document.querySelector('.pageTest .acc')
             ?.textContent
         } acc`
 
@@ -90,6 +96,11 @@ presence.on('UpdateData', () => {
       presenceData.details = 'Checking stats'
       break
     }
+  }
+
+  if (isLoading) {
+    presenceData.details = 'Loading…'
+    presenceData.state = undefined
   }
 
   presence.setActivity(presenceData)
