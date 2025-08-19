@@ -10,6 +10,10 @@ enum Images {
   SettingsICO = 'https://cdn.rcd.gg/PreMiD/websites/A/Anizium/assets/0.png',
 }
 
+interface AniziumSettings {
+  showButtons: boolean
+}
+
 const GenreMap: Record<string, string> = {
   2263: 'Video Oyunları',
   59517: 'Politik',
@@ -99,6 +103,23 @@ class AniziumPresence {
         this.handlePresenceUpdate()
       }, 1000)
     })
+  }
+
+  private async getSettings(): Promise<AniziumSettings> {
+    const settingKeys: (keyof AniziumSettings)[] = ['showButtons']
+
+    const settingPromises = settingKeys.map(key =>
+      presence.getSetting<boolean>(key),
+    )
+
+    const settingValues = await Promise.all(settingPromises)
+
+    const settingsObject = settingKeys.reduce((acc, key, index) => {
+      acc[key] = settingValues[index]!
+      return acc
+    }, {} as Partial<AniziumSettings>)
+
+    return settingsObject as AniziumSettings
   }
 
   private updatePoster(): void {
@@ -397,7 +418,7 @@ class AniziumPresence {
   }
 
   private handlePremiumPage(presenceData: PresenceData): void {
-    presenceData.details = 'Anizium'
+    presenceData.details = 'Premium'
 
     const donationPopup
             = document.querySelector<HTMLElement>('#donationPopup')
@@ -538,7 +559,7 @@ class AniziumPresence {
     presenceData.state = 'Hizmet Şart ve Koşullarını görüntülüyor'
   }
 
-  private handleWatchPageUpdate(presenceData: PresenceData): void {
+  private async handleWatchPageUpdate(presenceData: PresenceData): Promise<void> {
     const params = new URLSearchParams(document.location.search)
     const season = params.get('season')
     const episode = params.get('episode')
@@ -554,14 +575,35 @@ class AniziumPresence {
       presenceData.details = animeTitle
       presenceData.state = 'Tek Bölüm'
     }
+    const settings = await this.getSettings()
+    if (settings?.showButtons) {
+      presenceData.buttons = [
+        {
+          label: 'Bölümü Görüntüle',
+          url: document.location.href,
+        },
+      ]
+    }
   }
 
-  private handleAnimePageUpdate(presenceData: PresenceData): void {
+  private async handleAnimePageUpdate(presenceData: PresenceData): Promise<void> {
     const pageTitle
             = document.querySelector('html > head > title')?.textContent
               || 'Loading'
     presenceData.details = pageTitle.replace(/ - Anizium$/, '')
-    presenceData.state = 'Bölümler görüntüleniyor'
+    presenceData.smallImageKey = Assets.Viewing
+    presenceData.state = 'Anime detayları ve bölümleri görüntüleniyor'
+
+    const settings = await this.getSettings()
+
+    if (settings?.showButtons) {
+      presenceData.buttons = [
+        {
+          label: 'Animeyi Görüntüle',
+          url: document.location.href,
+        },
+      ]
+    }
   }
 
   private handleCatalogPage(presenceData: PresenceData): void {

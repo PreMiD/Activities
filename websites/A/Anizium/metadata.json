@@ -24,5 +24,13 @@
   "category": "anime",
   "tags": ["anime", "turkish", "dizi", "video"],
   "iframe": true,
-  "iFrameRegExp": "https?:\\/\\/x\\.anizium\\.co\\/embed.*"
+  "iFrameRegExp": "https?:\\/\\/x\\.anizium\\.co\\/embed.*",
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
 }
