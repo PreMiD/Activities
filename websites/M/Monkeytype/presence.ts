@@ -33,7 +33,7 @@ presence.on('UpdateData', () => {
         if (Object.values(stats).some(v => !v)) {
           isLoading = true
         }
-        else{
+        else {
           presenceData.details = `Finished ${document
             .querySelector('.testType .bottom')
             ?.textContent
