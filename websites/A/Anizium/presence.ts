@@ -130,10 +130,10 @@ class AniziumPresence {
     }
     else if (pathname.includes('/watch/')) {
       this.handleWatchPagePoster()
-    }/* //*luii nin studio logolarını eklemesi bekleniyor
+    }
     else if (pathname.includes('/studio')) {
       this.handleStudioPagePoster()
-    } */
+    }
     else {
       this.resetPoster()
     }
@@ -175,25 +175,28 @@ class AniziumPresence {
     }
   }
 
-  /* //*luii nin studio logolarını eklemesi bekleniyor
   private handleStudioPagePoster(): void {
     const studioImg = document.querySelector<HTMLImageElement>('#studio_logo')?.src
 
     if (!studioImg)
       return
 
-    const luiUrl = this.convertToLuiiUrl(studioImg, 'studio-logo')
+    const WSRVUrl = this.convertToWSRVUrl(studioImg)
 
-    this.savedPosterUrl = luiUrl
+    this.savedPosterUrl = WSRVUrl
     this.seasonModeActive = false
   }
-    */
 
   private convertToLuiiUrl(originalUrl: string, path: string): string {
     return originalUrl.replace(
       `https://x.anizium.co/assets/${path}/`,
       `https://ani.luii.xyz/assets/${path}/`,
     )
+  }
+
+  // for caching
+  private convertToWSRVUrl(originalUrl: string): string {
+    return `https://wsrv.nl/?url=${originalUrl}`
   }
 
   private resetPoster(): void {
