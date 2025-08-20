@@ -31,6 +31,17 @@
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
       "value": true
+    },
+    {
+      "id": "logoType",
+      "title": "Icon",
+      "icon": "fad fa-images",
+      "value": 0,
+      "values": [
+        "Animated",
+        "Still",
+        "Still, No Background"
+      ]
     }
   ]
 }
