@@ -7,8 +7,8 @@
   },
   "service": "FFXIV Lodestone",
   "description": {
-    "en": "Official community site for FINAL FANTASY XIV: A Realm Reborn.",
-    "de": "Offizielle Community-Site für FINAL FANTASY XIV: A Realm Reborn."
+    "de": "Offizielle Community-Site für FINAL FANTASY XIV: A Realm Reborn.",
+    "en": "Official community site for FINAL FANTASY XIV: A Realm Reborn."
   },
   "url": ["na.finalfantasyxiv.com", "de.finalfantasyxiv.com"],
   "version": "1.0.0",
