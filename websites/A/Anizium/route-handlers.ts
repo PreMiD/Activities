@@ -61,14 +61,45 @@ export class RouteHandlers {
       'a#animeRequestStatus[style*="rgba(51, 255, 29, 0.43)"]',
     )
 
-    if (activeButton?.textContent) {
+    if (activeButton && activeButton.dataset.status !== 'waiting' && activeButton.textContent) {
       presenceData.details = 'Anime İstek'
       const buttonText = activeButton.textContent.trim()
       presenceData.state = `${buttonText} listesine göz atıyor`
+      return
     }
-    else {
-      presenceData.state = 'İstek animelere göz atıyor...'
+
+    const animeCards = document.querySelectorAll<HTMLDivElement>('#table > .col-md-3')
+    const firstCard = animeCards[0]
+    const lastCard = animeCards[animeCards.length - 1]
+
+    if (firstCard && lastCard) {
+      const firstRankEl = firstCard.querySelector<HTMLDivElement>('.bg-secondary')
+      const lastRankEl = lastCard.querySelector<HTMLDivElement>('.bg-secondary')
+
+      if (firstRankEl?.textContent && lastRankEl?.textContent) {
+        const startRank = firstRankEl.textContent.trim().replace('#', '')
+        const endRank = lastRankEl.textContent.trim().replace('#', '')
+
+        if (activeButton && activeButton.textContent) {
+          const buttonText = activeButton.textContent.trim()
+          presenceData.details = `Anime İstek - ${buttonText}`
+        }
+        else {
+          presenceData.details = 'Anime İstek'
+        }
+
+        if (startRank === endRank) {
+          presenceData.state = `#${startRank} numaralı isteğe bakıyor`
+        }
+        else {
+          presenceData.state = `#${startRank}-${endRank} arası isteklere göz atıyor`
+        }
+        return
+      }
     }
+
+    presenceData.details = 'Anime İstek'
+    presenceData.state = 'İstek animelere göz atıyor...'
   }
 
   static handlePremiumPage(presenceData: PresenceData): void {
