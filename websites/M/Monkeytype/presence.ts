@@ -100,7 +100,7 @@ presence.on('UpdateData', () => {
 
   if (isLoading) {
     presenceData.details = 'Loading…'
-    presenceData.state = undefined
+    delete presenceData.state
   }
 
   presence.setActivity(presenceData)
