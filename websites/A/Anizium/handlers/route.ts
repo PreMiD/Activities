@@ -236,6 +236,11 @@ export class RouteHandlers {
     presenceData.state = 'Hizmet Şart ve Koşullarını görüntülüyor'
   }
 
+  static handleApp(presenceData: PresenceData): void {
+    presenceData.details = 'Anizium'
+    presenceData.state = 'Uygulamalar bölümünü görüntülüyor'
+  }
+
   static handleWatchPageUpdate(presenceData: PresenceData, settings: AniziumSettings): void {
     const params = new URLSearchParams(document.location.search)
     const season = params.get('season')

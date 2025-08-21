@@ -128,6 +128,7 @@ class AniziumPresence {
       '/privacy-policy': () => RouteHandlers.handlePrivacyPolicy(presenceData),
       '/comment-policy': () => RouteHandlers.handleCommentPolicy(presenceData),
       '/tos': () => RouteHandlers.handleTos(presenceData),
+      '/app': () => RouteHandlers.handleApp(presenceData),
 
       // Dinamik routelar
       '/watch/': () => RouteHandlers.handleWatchPageUpdate(presenceData, settings),
