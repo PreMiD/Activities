@@ -9,8 +9,8 @@
   "description": {
     "en": "A fast all-in-one JavaScript runtime"
   },
-  "url": "bun.sh",
-  "version": "1.0.1",
+  "url": ["bun.sh", "bun.com"],
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bun/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bun/assets/thumbnail.png",
   "color": "#000000",

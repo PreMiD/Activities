@@ -146,6 +146,7 @@ export const mapAvatarOfficial: Record<string, string> = {
   'oman': 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/136.png',
   'namibia': 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/3372.png',
   'vietnam': 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/3373.png',
+  'nepal': 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/3374.png',
 }
 
 export const logo = 'https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/137.png'
