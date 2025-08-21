@@ -1,8 +1,8 @@
 export enum Images {
   AnimatedLogo = 'https://mrrerhan.mrrmiss.com/static/gif_logo.gif',
-  AnimetedLogo2 = 'https://cdn.discordapp.com/icons/1069960275224166440/a_8bd9fed15e7fc11ad98c4bf445bdb59e.gif?size=4096',
+  AnimetedLogo2 = 'https://cdn.discordapp.com/icons/1069960275224166440/a_8bd9fed15e7fc11ad98c4bf445bdb59e.gif?size=512',
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/Anizium/assets/logo.png',
-  LogoNoBg = 'https://cdn.discordapp.com/app-assets/1385789899415883806/1385804635675037786.png?size=4096',
+  LogoNoBg = 'https://cdn.discordapp.com/app-assets/1385789899415883806/1385804635675037786.png?size=512',
   SettingsICO = 'https://cdn.rcd.gg/PreMiD/websites/A/Anizium/assets/0.png',
 }
 
