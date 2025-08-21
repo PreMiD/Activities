@@ -1,6 +1,23 @@
 import type { AniziumSettings } from './types.js'
 import { Images } from './types.js'
 
+const SETTINGS_CONFIG: {
+  key: keyof AniziumSettings
+  type: 'boolean' | 'number' | 'string'
+  defaultValue: any
+}[] = [
+  { key: 'showButtons', type: 'boolean', defaultValue: true },
+  { key: 'showPosters', type: 'boolean', defaultValue: true },
+  { key: 'logoType', type: 'number', defaultValue: 0 },
+  { key: 'showTimestamp', type: 'boolean', defaultValue: true },
+  { key: 'watchingDetails', type: 'string', defaultValue: '%anime_title%' },
+  {
+    key: 'watchingState',
+    type: 'string',
+    defaultValue: 'Sezon %season% | Bölüm %episode%',
+  },
+]
+
 export class SettingsManager {
   private presence: any
   private settings: AniziumSettings | undefined
@@ -10,21 +27,40 @@ export class SettingsManager {
   }
 
   async getSettings(): Promise<AniziumSettings> {
-    const settingKeys: (keyof AniziumSettings)[] = ['showButtons', 'logoType']
+    const settingKeys = SETTINGS_CONFIG.map(config => config.key)
 
     const settingPromises = settingKeys.map(key => this.presence.getSetting(key))
     const settingValues = await Promise.all(settingPromises)
 
-    const settingsObject = settingKeys.reduce((acc, key, index) => {
-      const value = settingValues[index]
-      if (key === 'showButtons') {
-        acc[key] = typeof value === 'boolean' ? value : true
-      }
-      else if (key === 'logoType') {
-        acc[key] = typeof value === 'number' ? value : 0 // Varsayılan olarak animasyonlu logo
-      }
-      return acc
-    }, {} as Partial<AniziumSettings>)
+    const settingsObject = SETTINGS_CONFIG.reduce(
+      (acc, config, index) => {
+        const receivedValue = settingValues[index]
+        const { key, type, defaultValue } = config
+
+        let isTypeValid = false
+
+        switch (type) {
+          case 'string':
+            isTypeValid = typeof receivedValue === 'string'
+            break
+          case 'number':
+            isTypeValid = typeof receivedValue === 'number'
+            break
+          case 'boolean':
+            isTypeValid = typeof receivedValue === 'boolean'
+            break
+        }
+
+        const isValueValid
+                    = type === 'string'
+                      ? isTypeValid && receivedValue
+                      : isTypeValid
+
+        acc[key] = isValueValid ? receivedValue : defaultValue
+        return acc
+      },
+      {} as Partial<AniziumSettings>,
+    )
 
     this.settings = settingsObject as AniziumSettings
     return this.settings

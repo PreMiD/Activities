@@ -4,6 +4,18 @@ import { GenreMap, Images } from './types.js'
 import { Utils } from './utils.js'
 
 export class RouteHandlers {
+  private static formatString(
+    template: string,
+    data: Record<string, string | null>,
+  ): string {
+    let result = template
+    for (const key in data) {
+      const value = data[key] || '?'
+      result = result.replace(new RegExp(`%${key}%`, 'g'), value)
+    }
+    return result
+  }
+
   static handleDefaultPage(presenceData: PresenceData): void {
     presenceData.details = 'Anizium'
     presenceData.state = 'Sayfa görüntüleniyor..'
@@ -189,13 +201,25 @@ export class RouteHandlers {
     let animeTitle = Utils.getAnimeTitle()
     animeTitle = animeTitle.replace(/\s*S\d+\s*B\d+$/i, '').trim()
 
+    const placeholders = {
+      anime_title: animeTitle,
+      season,
+      episode,
+    }
+
     if (season && episode) {
-      presenceData.details = animeTitle
-      presenceData.state = `Sezon ${season} | Bölüm ${episode}`
+      presenceData.details = this.formatString(settings.watchingDetails, placeholders)
+      presenceData.state = this.formatString(settings.watchingState, placeholders)
     }
     else {
-      presenceData.details = animeTitle
-      presenceData.state = 'Tek Bölüm'
+      const singleEpisodeState
+                = settings.watchingState.includes('%season%')
+                  || settings.watchingState.includes('%episode%')
+                  ? 'Tek Bölüm'
+                  : settings.watchingState
+
+      presenceData.details = this.formatString(settings.watchingDetails, placeholders)
+      presenceData.state = this.formatString(singleEpisodeState, placeholders)
     }
 
     if (settings?.showButtons) {

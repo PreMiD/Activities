@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.15",
   "apiVersion": 1,
   "author": {
     "id": "858743749240684564",
@@ -30,7 +30,17 @@
       "id": "showButtons",
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
-      "value": true
+      "value": true,
+      "description": "Shows/hides the 'View Episode' or 'View Anime' buttons on your Discord status."
+
+    },
+    {
+      "id": "showPosters",
+      "title": "Show Posters",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Toggles the display of anime and studio posters on your Discord status. If disabled, the Anizium logo will be shown instead."
+
     },
     {
       "id": "logoType",
@@ -41,7 +51,35 @@
         "Animated",
         "Still",
         "Still, No Background"
-      ]
+      ],
+      "description": "Select the type of Anizium logo to use when posters are hidden or unavailable."
+
+    },
+    {
+      "id": "watchingDetails",
+      "title": "Watching Details (Line 1)",
+      "icon": "fas fa-comment-alt-edit",
+      "value": "%anime_title%",
+      "placeholder": "Available: %anime_title%, %season%, %episode%",
+      "description": "Customize the first line of text on your Discord status when watching an anime."
+
+    },
+    {
+      "id": "watchingState",
+      "title": "Watching Details (Line 2)",
+      "icon": "fas fa-comment-alt-edit",
+      "value": "Sezon %season% | Bölüm %episode%",
+      "placeholder": "Available: %anime_title%, %season%, %episode%",
+      "description": "Customize the second line of text on your Discord status when watching an anime."
+
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "description": "Shows/hides the elapsed and remaining time on your Discord status when watching an episode."
+
     }
   ]
 }

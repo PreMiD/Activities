@@ -7,7 +7,11 @@ export enum Images {
 
 export interface AniziumSettings {
   showButtons: boolean
+  showPosters: boolean
   logoType: number
+  showTimestamp: boolean
+  watchingDetails: string
+  watchingState: string
 }
 
 export interface IframeData {

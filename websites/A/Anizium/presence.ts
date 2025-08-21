@@ -40,8 +40,15 @@ class AniziumPresence {
   }
 
   private buildBasePresence(): PresenceData {
+    const settings = this.settingsManager.currentSettings
+
+    const largeImage
+            = settings?.showPosters && this.posterManager.posterUrl
+              ? this.posterManager.posterUrl
+              : this.settingsManager.getLogo()
+
     const presenceData: PresenceData = {
-      largeImageKey: this.posterManager.posterUrl || this.settingsManager.getLogo(),
+      largeImageKey: largeImage,
       startTimestamp: browsingTimestamp,
       type: ActivityType.Watching,
     }
@@ -54,14 +61,16 @@ class AniziumPresence {
         ? 'Duraklatıldı'
         : 'Oynatılıyor'
 
-      const [start, end] = getTimestamps(
-        this.video.currentTime,
-        this.video.duration,
-      )
-      presenceData.startTimestamp = start
+      if (this.settingsManager.currentSettings?.showTimestamp) {
+        const [start, end] = getTimestamps(
+          this.video.currentTime,
+          this.video.duration,
+        )
+        presenceData.startTimestamp = start
 
-      if (!this.video.paused) {
-        presenceData.endTimestamp = end
+        if (!this.video.paused) {
+          presenceData.endTimestamp = end
+        }
       }
     }
 
