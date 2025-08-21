@@ -1,5 +1,5 @@
-import type { AniziumSettings } from './types.js'
-import { Images } from './types.js'
+import type { AniziumSettings } from '../types.js'
+import { Images } from '../types.js'
 
 const SETTINGS_CONFIG: {
   key: keyof AniziumSettings
@@ -73,9 +73,11 @@ export class SettingsManager {
     switch (this.settings.logoType) {
       case 0: // Animasyonlu
         return Images.AnimatedLogo
-      case 1: // Düz
+      case 1: // Animasyonlu2
+        return Images.AnimetedLogo2
+      case 2: // Düz
         return Images.Logo
-      case 2: // Düz, Arkaplan yok
+      case 3: // Düz, Arkaplan yok
         return Images.LogoNoBg
       default:
         return Images.AnimatedLogo

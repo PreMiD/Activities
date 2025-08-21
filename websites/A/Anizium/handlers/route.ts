@@ -1,7 +1,7 @@
-import type { AniziumSettings } from './types.js'
+import type { AniziumSettings } from '../types.js'
 import { Assets } from 'premid'
-import { GenreMap, Images } from './types.js'
-import { Utils } from './utils.js'
+import { GenreMap, Images } from '../types.js'
+import { Utils } from '../utils.js'
 
 export class RouteHandlers {
   private static formatString(
@@ -46,6 +46,18 @@ export class RouteHandlers {
   }
 
   static handleAnimeRequestsPage(presenceData: PresenceData): void {
+    const activeModal = document.querySelector<HTMLDivElement>('.swal2-popup.swal2-show')
+
+    if (activeModal) {
+      const modalTitle = activeModal.querySelector<HTMLElement>('#swal2-content')
+
+      if (modalTitle && modalTitle.textContent?.trim() === 'Eklenmesi istediğiniz animenin adını yazınız') {
+        presenceData.details = 'Anime İstek'
+        presenceData.state = 'Yeni bir istekte bulunuyor...'
+        return
+      }
+    }
+
     const params = new URLSearchParams(document.location.search)
     const searchValue = params.get('search')
 

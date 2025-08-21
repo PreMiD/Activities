@@ -1,8 +1,8 @@
 import type { IframeData } from './types.js'
 import { ActivityType, Assets, getTimestamps } from 'premid'
-import { PosterManager } from './poster-manager.js'
-import { RouteHandlers } from './route-handlers.js'
-import { SettingsManager } from './settings-manager.js'
+import { RouteHandlers } from './handlers/route.js'
+import { PosterManager } from './managers/poster.js'
+import { SettingsManager } from './managers/settings.js'
 
 import { Utils } from './utils.js'
 

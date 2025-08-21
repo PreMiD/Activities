@@ -1,4 +1,4 @@
-import { Utils } from './utils.js'
+import { Utils } from '../utils.js'
 
 export class PosterManager {
   private savedPosterUrl: string | null = null
