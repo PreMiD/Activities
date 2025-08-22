@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "1097446134852636683",
+    "name": "Al3ss1Am0d"
+  },
+  "service": "Easyfun",
+"description": {
+    "en": "Enjoy mobile games online for free! Smooth, download-free, lag-free. Just visit EasyFun.gg.",
+    "pt": "Jogue jogos mobile online gratuitamente! Sem downloads, sem travamentos. Basta acessar EasyFun.gg.",
+    "jp": "無料でモバイルゲームをオンラインで楽しもう！ダウンロード不要、ラグなし。EasyFun.ggにアクセスするだけ。",
+    "es": "¡Juega juegos móviles en línea gratis! Sin descargas, sin lag. Solo visita EasyFun.gg.",
+    "kr": "모바일 게임을 무료로 온라인에서 즐기세요! 다운로드 없이, 끊김 없이. EasyFun.gg에 접속하세요.",
+    "fr": "Jouez à des jeux mobiles en ligne gratuitement ! Sans téléchargement, sans latence. Visitez EasyFun.gg.",
+    "ch": "免费在线畅玩手机游戏！无需下载，无延迟。只需访问 EasyFun.gg。"
+  },
+ "url": [
+    "www.easyfun.gg",
+    "easyfun.gg"
+  ],
+  "version": "1.0.0",
+  "logo": "https://images-ext-1.discordapp.net/external/MsHmFXqr9pqCkuhA3oaPcHiNkqry9xcGMHRh1hbyf7w/%3Fsize%3D4096/https/cdn.discordapp.com/icons/1218302146995556422/263cef731b755103d3a010a8941458d7.png?format=png&quality=lossless&width=669&height=669",
+  "thumbnail": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhciV7swuTPL2GHNWewiX__l-uhBFG2pg6_20IfNmHEnDwZpTmiigdzsjv8JgnQ1UtX1XXdq8sXIwz9WgaqjUKxMn5_-iR4F60JnT_jAs2KgtvaiSSe-2oTGrvkqewjZuE7-aubMb0pT6_-gtHEDchQytCIZvZIthJc9heym0oAzRrrZQZAtRyscPwy3vo/s16000/images%20(27).jpeg",
+  "color": "#00FF66",
+  "category": "games",
+  "tags": [
+    "games",
+    "anime"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}
