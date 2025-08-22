@@ -3,7 +3,7 @@
   "dependencies": {
     "franc-min": "^6.2.0",
     "lodash": "^4.17.21",
-    "p-limit": "^6.2.0"
+    "p-limit": "^7.1.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.20"
