@@ -8,12 +8,7 @@
   "service": "Easyfun",
 "description": {
     "en": "Enjoy mobile games online for free! Smooth, download-free, lag-free. Just visit EasyFun.gg.",
-    "pt": "Jogue jogos mobile online gratuitamente! Sem downloads, sem travamentos. Basta acessar EasyFun.gg.",
-    "jp": "無料でモバイルゲームをオンラインで楽しもう！ダウンロード不要、ラグなし。EasyFun.ggにアクセスするだけ。",
-    "es": "¡Juega juegos móviles en línea gratis! Sin descargas, sin lag. Solo visita EasyFun.gg.",
-    "kr": "모바일 게임을 무료로 온라인에서 즐기세요! 다운로드 없이, 끊김 없이. EasyFun.gg에 접속하세요.",
-    "fr": "Jouez à des jeux mobiles en ligne gratuitement ! Sans téléchargement, sans latence. Visitez EasyFun.gg.",
-    "ch": "免费在线畅玩手机游戏！无需下载，无延迟。只需访问 EasyFun.gg。"
+    "pt": "Jogue jogos mobile online gratuitamente! Sem downloads, sem travamentos. Basta acessar EasyFun.gg."
   },
  "url": [
     "www.easyfun.gg",
