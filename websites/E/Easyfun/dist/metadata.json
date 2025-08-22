@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "1097446134852636683",
+    "name": "Al3ss1Am0d"
+  },
+  "service": "Easyfun",
+  "description": {
+    "en": "Enjoy the mobile games online for free! Smooth, download-free, lag-free. Simply access EasyFun.gg on your browser, a free cloud gaming platform."
+  },
+ "url": [
+    "www.easyfun.gg",
+    "easyfun.gg"
+  ],
+  "version": "1.0.0",
+  "logo": "https://images-ext-1.discordapp.net/external/MsHmFXqr9pqCkuhA3oaPcHiNkqry9xcGMHRh1hbyf7w/%3Fsize%3D4096/https/cdn.discordapp.com/icons/1218302146995556422/263cef731b755103d3a010a8941458d7.png?format=png&quality=lossless&width=669&height=669",
+  "thumbnail": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhciV7swuTPL2GHNWewiX__l-uhBFG2pg6_20IfNmHEnDwZpTmiigdzsjv8JgnQ1UtX1XXdq8sXIwz9WgaqjUKxMn5_-iR4F60JnT_jAs2KgtvaiSSe-2oTGrvkqewjZuE7-aubMb0pT6_-gtHEDchQytCIZvZIthJc9heym0oAzRrrZQZAtRyscPwy3vo/s16000/images%20(27).jpeg",
+  "color": "#00FF66",
+  "category": "games",
+  "tags": [
+    "games",
+    "anime"
+  ]
+}
