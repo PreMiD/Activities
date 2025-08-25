@@ -7,8 +7,8 @@
   },
   "service": "KMS Digital Solutions",
   "description": {
-    "en": "Rich Presence for the KMS Digital Solutions website and customer portal.",
-    "de": "Rich Presence für die Website und das Kundenportal von KMS Digital Solutions."
+    "de": "Rich Presence für die Website und das Kundenportal von KMS Digital Solutions.",
+    "en": "Rich Presence for the KMS Digital Solutions website and customer portal."
   },
   "url": [
     "kmsdigitalsolutions.de",
@@ -17,8 +17,8 @@
   ],
   "regExp": "(?:([a-z]+[.])+)?(?:kmsdigitalsolutions[.]de|kundenaccess[.]de)[/]",
   "version": "1.0.0",
-  "logo": "http://www.kmsdigitalsolutions.de/assets/img/logo-color.png",
-  "thumbnail": "http://www.kmsdigitalsolutions.de/assets/img/logo-color.png",
+  "logo": "https://www.kmsdigitalsolutions.de/assets/img/logo-color.png",
+  "thumbnail": "https://www.kmsdigitalsolutions.de/assets/img/logo-color.png",
   "color": "#0ea5e9",
   "category": "other",
   "tags": [

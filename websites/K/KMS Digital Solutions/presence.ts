@@ -2,27 +2,28 @@
 const presence = new Presence({ clientId: '1332727864684187728' })
 
 enum ActivityAssets {
-  Logo = 'http://www.kmsdigitalsolutions.de/assets/img/logo-color.png',
+  Logo = 'https://www.kmsdigitalsolutions.de/assets/img/logo-color.png',
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 function sanitize(input?: string | null, maxLen = 96): string | undefined {
   if (!input) return undefined
+
   // Strip excessive whitespace and unsafe chars
   const cleaned = input.replace(/[\n\r\t]+/g, ' ').replace(/\s{2,}/g, ' ').trim()
-  return cleaned.length > maxLen ? cleaned.slice(0, maxLen - 1) + '…' : cleaned
+  return cleaned.length > maxLen ? `${cleaned.slice(0, maxLen - 1)}…` : cleaned
 }
 
 function isPortalHost(host: string): boolean {
-  return /(^|\.)kundenaccess\.de$/i.test(host)
+  return /(?:^|\.)kundenaccess\.de$/i.test(host)
 }
 
 function isKmsHost(host: string): boolean {
-  return /(^|\.)kmsdigitalsolutions\.de$/i.test(host)
+  return /(?:^|\.)kmsdigitalsolutions\.de$/i.test(host)
 }
 
-function getSectionFromPath(pathname: string): { section: string; label?: string } {
+function getSectionFromPath(pathname: string): { section: string, label?: string } {
   const parts = pathname.toLowerCase().split('/').filter(Boolean)
   const first = parts[0] || ''
 
@@ -65,7 +66,7 @@ function getSectionFromPath(pathname: string): { section: string; label?: string
       return { section: 'AGB' }
     case 'sla':
       return { section: 'SLA' }
-    case 'k\u00fcndigungs-und-widerrufsformular':
+    case 'k\u00FCndigungs-und-widerrufsformular':
     case 'kuendigungs-und-widerrufsformular':
       return { section: 'Kündigung/Widerruf' }
     case 'widerrufsbelehrung':
@@ -101,15 +102,25 @@ function getPortalSection(pathname: string, search?: string): { section: string 
   const s = virt || p
 
   if (s.includes('clientarea.php') || s.startsWith('/clientarea')) return { section: 'Client Area' }
+
   if (s.includes('cart.php') || s.startsWith('/cart')) return { section: 'Store / Cart' }
+
   if (s.includes('/store')) return { section: 'Store' }
+
   if (s.includes('knowledgebase')) return { section: 'Knowledgebase' }
+
   if (s.includes('supporttickets') || s.includes('submitticket')) return { section: 'Support Tickets' }
+
   if (s.includes('downloads')) return { section: 'Downloads' }
+
   if (s.includes('announcements')) return { section: 'Announcements' }
+
   if (s.includes('serverstatus') || s.includes('networkstatus')) return { section: 'Serverstatus' }
+
   if (s.includes('affiliates')) return { section: 'Affiliates' }
+
   if (s.includes('register') || s.includes('pwreset') || s.includes('password')) return { section: 'Auth' }
+
   if (s.includes('contact')) return { section: 'Kontakt' }
 
   // Product and category hints
@@ -128,7 +139,7 @@ function getPortalSection(pathname: string, search?: string): { section: string 
     [/mail.*sogo|sogo/, 'Mail-Hosting mit SOGo'],
     [/j-?lawyer/, 'J-Lawyer Kanzleisoftware (B2B)'],
     [/dns/, 'DNS-Hosting'],
-    [/resell|reselling|reseller/, 'Reselling (B2B)'],
+    [/resell(?:ing|er)?/, 'Reselling (B2B)'],
     [/mitglied/, 'Mitgliedschaften'],
     [/ssl/, 'SSL-Zertifikate'],
     [/email/, 'Email-Services'],
@@ -227,7 +238,7 @@ presence.on('UpdateData', async () => {
     }
 
     // If on search-like page, include non-sensitive query info
-    if (search && /[?&](q|query|search)=/i.test(search)) {
+    if (search && /[?&](?:q|query|search)=/i.test(search)) {
       const masked = maskQuery(search)
       if (masked) presenceData.state = sanitize(`${presenceData.state} · ${masked}`, 96)
     }
