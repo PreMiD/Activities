@@ -17,8 +17,8 @@
   ],
   "regExp": "(?:([a-z]+[.])+)?(?:kmsdigitalsolutions[.]de|kundenaccess[.]de)[/]",
   "version": "1.0.0",
-  "logo": "https://screens.lordreider.de/VUsu2/wAbEtOqi54.png/raw",
-  "thumbnail": "https://screens.lordreider.de/VUsu2/wAbEtOqi54.png/raw",
+  "logo": "http://www.kmsdigitalsolutions.de/assets/img/logo-color.png",
+  "thumbnail": "http://www.kmsdigitalsolutions.de/assets/img/logo-color.png",
   "color": "#0ea5e9",
   "category": "other",
   "tags": [

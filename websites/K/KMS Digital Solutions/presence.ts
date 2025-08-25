@@ -2,7 +2,7 @@
 const presence = new Presence({ clientId: '1332727864684187728' })
 
 enum ActivityAssets {
-  Logo = 'https://screens.lordreider.de/VUsu2/wAbEtOqi54.png/raw',
+  Logo = 'http://www.kmsdigitalsolutions.de/assets/img/logo-color.png',
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
