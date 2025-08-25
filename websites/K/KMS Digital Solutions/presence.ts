@@ -69,9 +69,9 @@ function getSectionFromPath(pathname: string): { section: string, label?: string
     case 'k\u00FCndigungs-und-widerrufsformular':
     case 'kuendigungs-und-widerrufsformular':
       return { section: 'Kündigung/Widerruf' }
-    case 'widerrufsbelehrung':
+    case 'widerruf':
       return { section: 'Widerrufsbelehrung' }
-    case 'downloadbereich':
+    case 'download':
       return { section: 'Downloadbereich' }
     case 'strompreis-rechner':
       return { section: 'Strompreis-Rechner' }
@@ -99,6 +99,7 @@ function getPortalSection(pathname: string, search?: string): { section: string 
     }
   }
   catch { /* ignore */ }
+
   const s = virt || p
 
   if (s.includes('clientarea.php') || s.startsWith('/clientarea')) return { section: 'Client Area' }
@@ -147,14 +148,17 @@ function getPortalSection(pathname: string, search?: string): { section: string 
     [/domain.*registr|registerdomain|domainchecker/, 'Domain registrieren'],
     [/domain.*transfer|transferdomain/, 'Domain transferieren'],
   ]
+
   for (const [rx, label] of map) {
     try {
       if (rx.test(s)) return { section: label }
+
     }
     catch {
       // ignore bad regex
     }
   }
+
   return { section: s === '/' || s === '' ? 'Startseite' : s.replace(/^\/+|\/+$/g, '') }
 }
 
@@ -166,6 +170,7 @@ function maskQuery(query: string): string {
     for (const key of sensitive) {
       if (params.has(key)) params.set(key, '*')
     }
+
     // Limit output
     const entries = Array.from(params.entries()).slice(0, 3)
     return entries.map(([k, v]) => `${k}=${v}`).join('&')
@@ -190,6 +195,7 @@ presence.on('UpdateData', async () => {
     const section = getPortalSection(pathname, search)
     presenceData.details = 'KMS Kundenportal'
     presenceData.state = sanitize(section.section)
+
   }
   else if (isKmsHost(hostname)) {
     // Öffentliche Website
@@ -202,45 +208,56 @@ presence.on('UpdateData', async () => {
     if (section.section === 'Startseite') {
       presenceData.details = 'KMS Digital Solutions'
       presenceData.state = 'Startseite'
+
     }
     else if (section.section === 'Artikel') {
       presenceData.details = 'Liest Artikel'
       // Use title if it seems like an article title and not the site name only
       presenceData.state = title && title.length > 5 ? title : sanitize(section.label)
+
     }
     else if (section.section === 'Blog') {
       presenceData.details = 'Durchstöbert Blog'
       presenceData.state = 'Beiträge'
+
     }
     else if (section.section === 'Leistungen') {
       presenceData.details = 'Erkundet Leistungen'
       presenceData.state = 'Services'
+
     }
     else if (section.section === 'Portfolio') {
       presenceData.details = 'Sichtet Portfolio'
       presenceData.state = 'Referenzen'
+
     }
     else if (section.section === 'Karriere') {
       presenceData.details = 'Sieht sich Jobs an'
       presenceData.state = 'Karriere'
+
     }
     else if (section.section === 'Kontakt') {
       presenceData.details = 'Kontaktseite'
       presenceData.state = '—'
+
     }
     else if (section.section === 'Impressum' || section.section === 'Datenschutz') {
       presenceData.details = section.section
       presenceData.state = 'Rechtliches'
+
     }
     else {
       presenceData.details = 'Browsing'
       presenceData.state = sanitize(section.section)
+
     }
 
     // If on search-like page, include non-sensitive query info
     if (search && /[?&](?:q|query|search)=/i.test(search)) {
       const masked = maskQuery(search)
+
       if (masked) presenceData.state = sanitize(`${presenceData.state} · ${masked}`, 96)
+
     }
   }
   else {
