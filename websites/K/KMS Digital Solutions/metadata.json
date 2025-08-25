@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Lordreider",
+    "id": "853251440763600897"
+  },
+  "service": "KMS Digital Solutions",
+  "description": {
+    "en": "Rich Presence for the KMS Digital Solutions website and customer portal.",
+    "de": "Rich Presence für die Website und das Kundenportal von KMS Digital Solutions."
+  },
+  "url": [
+    "kmsdigitalsolutions.de",
+    "www.kmsdigitalsolutions.de",
+    "kundenaccess.de"
+  ],
+  "regExp": "(?:([a-z]+[.])+)?(?:kmsdigitalsolutions[.]de|kundenaccess[.]de)[/]",
+  "version": "1.0.0",
+  "logo": "https://www.kmsdigitalsolutions.de/assets/img/favicon.png",
+  "thumbnail": "https://www.kmsdigitalsolutions.de/assets/img/Logo-1.png",
+  "color": "#0ea5e9",
+  "category": "other",
+  "tags": [
+    "agency",
+    "services",
+    "consulting",
+    "digital",
+    "portal"
+  ]
+}
