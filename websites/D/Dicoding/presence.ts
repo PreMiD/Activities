@@ -14,7 +14,9 @@ function textFrom(sel: string): string | null {
 
 function meta(prop: string): string | null {
   return (
-    (document.querySelector(`meta[property="${prop}"]`) as HTMLMetaElement)?.content?.trim() || null
+    document.querySelector<HTMLMetaElement>(`meta[property="${prop}"]`)
+      ?.content
+      ?.trim() || null
   )
 }
 
