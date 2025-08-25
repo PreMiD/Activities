@@ -96,6 +96,7 @@ function getPortalSection(pathname: string, search?: string): { section: string 
       const qs = new URLSearchParams(search)
       const rp = qs.get('rp')
       if (rp) virt = decodeURIComponent(rp.toLowerCase())
+
     }
   }
   catch { /* ignore */ }
@@ -169,6 +170,7 @@ function maskQuery(query: string): string {
     const sensitive = ['q', 'query', 'search', 'email', 'user', 'id', 'token']
     for (const key of sensitive) {
       if (params.has(key)) params.set(key, '*')
+
     }
 
     // Limit output
@@ -191,6 +193,7 @@ presence.on('UpdateData', async () => {
 
   // Decide context by host
   if (isPortalHost(hostname)) {
+
     // Kundenportal
     const section = getPortalSection(pathname, search)
     presenceData.details = 'KMS Kundenportal'
@@ -198,6 +201,7 @@ presence.on('UpdateData', async () => {
 
   }
   else if (isKmsHost(hostname)) {
+
     // Öffentliche Website
     const section = getSectionFromPath(pathname)
 
@@ -206,42 +210,50 @@ presence.on('UpdateData', async () => {
 
     // Build nice details/state
     if (section.section === 'Startseite') {
+
       presenceData.details = 'KMS Digital Solutions'
       presenceData.state = 'Startseite'
 
     }
     else if (section.section === 'Artikel') {
+
       presenceData.details = 'Liest Artikel'
       // Use title if it seems like an article title and not the site name only
       presenceData.state = title && title.length > 5 ? title : sanitize(section.label)
 
     }
     else if (section.section === 'Blog') {
+
       presenceData.details = 'Durchstöbert Blog'
       presenceData.state = 'Beiträge'
 
     }
     else if (section.section === 'Leistungen') {
+
       presenceData.details = 'Erkundet Leistungen'
       presenceData.state = 'Services'
 
     }
     else if (section.section === 'Portfolio') {
+
       presenceData.details = 'Sichtet Portfolio'
       presenceData.state = 'Referenzen'
 
     }
     else if (section.section === 'Karriere') {
+
       presenceData.details = 'Sieht sich Jobs an'
       presenceData.state = 'Karriere'
 
     }
     else if (section.section === 'Kontakt') {
+
       presenceData.details = 'Kontaktseite'
       presenceData.state = '—'
 
     }
     else if (section.section === 'Impressum' || section.section === 'Datenschutz') {
+
       presenceData.details = section.section
       presenceData.state = 'Rechtliches'
 
@@ -254,6 +266,7 @@ presence.on('UpdateData', async () => {
 
     // If on search-like page, include non-sensitive query info
     if (search && /[?&](?:q|query|search)=/i.test(search)) {
+        
       const masked = maskQuery(search)
 
       if (masked) presenceData.state = sanitize(`${presenceData.state} · ${masked}`, 96)
