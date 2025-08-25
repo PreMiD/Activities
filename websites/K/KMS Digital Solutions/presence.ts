@@ -8,7 +8,8 @@ enum ActivityAssets {
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 function sanitize(input?: string | null, maxLen = 96): string | undefined {
-  if (!input) return undefined
+  if (!input)
+    return undefined
 
   // Strip excessive whitespace and unsafe chars
   const cleaned = input.replace(/[\n\r\t]+/g, ' ').replace(/\s{2,}/g, ' ').trim()
@@ -95,7 +96,8 @@ function getPortalSection(pathname: string, search?: string): { section: string 
     if (search) {
       const qs = new URLSearchParams(search)
       const rp = qs.get('rp')
-      if (rp) virt = decodeURIComponent(rp.toLowerCase())
+      if (rp)
+        virt = decodeURIComponent(rp.toLowerCase())
 
     }
   }
@@ -103,27 +105,38 @@ function getPortalSection(pathname: string, search?: string): { section: string 
 
   const s = virt || p
 
-  if (s.includes('clientarea.php') || s.startsWith('/clientarea')) return { section: 'Client Area' }
+  if (s.includes('clientarea.php') || s.startsWith('/clientarea'))
+    return { section: 'Client Area' }
 
-  if (s.includes('cart.php') || s.startsWith('/cart')) return { section: 'Store / Cart' }
+  if (s.includes('cart.php') || s.startsWith('/cart'))
+    return { section: 'Store / Cart' }
 
-  if (s.includes('/store')) return { section: 'Store' }
+  if (s.includes('/store'))
+    return { section: 'Store' }
 
-  if (s.includes('knowledgebase')) return { section: 'Knowledgebase' }
+  if (s.includes('knowledgebase'))
+    return { section: 'Knowledgebase' }
 
-  if (s.includes('supporttickets') || s.includes('submitticket')) return { section: 'Support Tickets' }
+  if (s.includes('supporttickets') || s.includes('submitticket'))
+    return { section: 'Support Tickets' }
 
-  if (s.includes('downloads')) return { section: 'Downloads' }
+  if (s.includes('downloads'))
+    return { section: 'Downloads' }
 
-  if (s.includes('announcements')) return { section: 'Announcements' }
+  if (s.includes('announcements'))
+    return { section: 'Announcements' }
 
-  if (s.includes('serverstatus') || s.includes('networkstatus')) return { section: 'Serverstatus' }
+  if (s.includes('serverstatus') || s.includes('networkstatus'))
+    return { section: 'Serverstatus' }
 
-  if (s.includes('affiliates')) return { section: 'Affiliates' }
+  if (s.includes('affiliates'))
+    return { section: 'Affiliates' }
 
-  if (s.includes('register') || s.includes('pwreset') || s.includes('password')) return { section: 'Auth' }
+  if (s.includes('register') || s.includes('pwreset') || s.includes('password'))
+    return { section: 'Auth' }
 
-  if (s.includes('contact')) return { section: 'Kontakt' }
+  if (s.includes('contact'))
+    return { section: 'Kontakt' }
 
   // Product and category hints
   const map: Array<[RegExp, string]> = [
@@ -152,7 +165,8 @@ function getPortalSection(pathname: string, search?: string): { section: string 
 
   for (const [rx, label] of map) {
     try {
-      if (rx.test(s)) return { section: label }
+      if (rx.test(s))
+        return { section: label }
 
     }
     catch {
@@ -169,7 +183,8 @@ function maskQuery(query: string): string {
     // Remove/Mask potentially sensitive keys
     const sensitive = ['q', 'query', 'search', 'email', 'user', 'id', 'token']
     for (const key of sensitive) {
-      if (params.has(key)) params.set(key, '*')
+      if (params.has(key))
+        params.set(key, '*')
 
     }
 
@@ -269,7 +284,8 @@ presence.on('UpdateData', async () => {
         
       const masked = maskQuery(search)
 
-      if (masked) presenceData.state = sanitize(`${presenceData.state} · ${masked}`, 96)
+      if (masked)
+        presenceData.state = sanitize(`${presenceData.state} · ${masked}`, 96)
 
     }
   }
