@@ -15,10 +15,13 @@ enum ActivityAssets {
 }
 
 presence.on('UpdateData', async () => {
-  const showButtons = await presence.getSetting<boolean>('showButtons')
-  const privacyMode = await presence.getSetting<boolean>('privacyMode')
-  const privacyModeStrict = await presence.getSetting<boolean>('privacyModeStrict')
-  const titleArtistFormat = await presence.getSetting<string>('titleArtistFormat') || '%title% - %artist%'
+  const [showButtons, privacyMode, privacyModeStrict, titleArtistFormat] =
+  await Promise.all([
+    presence.getSetting<boolean>('showButtons'),
+    presence.getSetting<boolean>('privacyMode'),
+    presence.getSetting<boolean>('privacyModeStrict'),
+    presence.getSetting<string>('titleArtistFormat').then(str => str || '%title% - %artist%'),
+  ])
   
   const strings = await presence.getStrings({
     play: 'general.playing',
