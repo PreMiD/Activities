@@ -44,7 +44,7 @@ presence.on('UpdateData', async () => {
   })
 
   function firstSrcFromSrcsetProvided(e: Element | null): string | undefined {
-    return e === null ? ActivityAssets.Logo : e.getAttribute('srcset')?.split(' ')[0] 
+    return e === null ? ActivityAssets.Logo : e.getAttribute('srcset')?.split(' ')[0]
     // Reads the first image in srcset - images on BandLab have multiple src's, we only need one for the scope of the RPC
     // If e doesn't exist, safely return BandLab logo
   }
@@ -62,7 +62,7 @@ presence.on('UpdateData', async () => {
 
     if (pathname.includes('trending')) {
       presenceData.state = 'Looking at what\'s trending'
-    } 
+    }
     else if (pathname.includes('following')) {
       presenceData.state = 'Catching up with the people they follow'
     } 
@@ -73,15 +73,15 @@ presence.on('UpdateData', async () => {
       if (search.trim() === '') {
         // User is just browsing the video feed
         presenceData.state = 'Looking at popular videos'
-      } 
+      }
       else if (search.includes('postId')) {
         // User is watching a specific video
         presenceData.details = strings.watching
 
         const videoAuthor: {
-          element: Element | null,
-          target: string,
-          username: string,
+          element: Element | null;
+          target: string;
+          username: string;
         } = {
           element: null,
           target: '',
@@ -111,7 +111,7 @@ presence.on('UpdateData', async () => {
 
         presenceData.state = 'A video by [1]'.replace('[1]', videoAuthor.username)
       }
-    } 
+    }
     else if (pathname.includes('communities')) {
       presenceData.state = 'Looking for communities'
     }
@@ -128,13 +128,13 @@ presence.on('UpdateData', async () => {
 
     if (!isPublic && privacyMode) {
       presenceData.state = strings.listening_unspecified
-    } 
+    }
     else {
       const title: string = document.querySelector('.track-page-player-title-name')?.textContent?.trim() || 'A song'
       const artist: string = document.querySelector('a.track-card-subtitle-text')?.textContent?.trim() || 'someone'
 
       presenceData.details = strings.view
-      presenceData.state = titleArtistFormat.replace('%title%',title).replace('%artist%',artist) // Example: tell me - ToxiPlays
+      presenceData.state = titleArtistFormat.replace('%title%', title).replace('%artist%', artist) // Example: tell me - ToxiPlays
 
       presenceData.largeImageKey = firstSrcFromSrcsetProvided(document.querySelector('img.ds-cover')) // Set Discord Activity image to first provided copy of song cover art
       presenceData.smallImageKey = ActivityAssets.Logo
@@ -149,12 +149,12 @@ presence.on('UpdateData', async () => {
         ]
       }
 
-      let bottomPlayButton : Element | null = document.querySelector('button.ds-play-button')
+      const bottomPlayButton: Element | null = document.querySelector('button.ds-play-button')
       if (bottomPlayButton) { // Has the audio player on the bottom been engaged?
         if (bottomPlayButton.className.includes('status-paused')) {
           presenceData.smallImageKey = ActivityAssets.Paused
           presenceData.smallImageText = strings.pause
-        } 
+        }
         else if (bottomPlayButton.className.includes('status-playing')) {
           presenceData.details = strings.listening.replace('{0}{1}', `:`) // Listening to:
           presenceData.smallImageKey = ActivityAssets.Playing
@@ -173,20 +173,21 @@ presence.on('UpdateData', async () => {
 
     if (privacyMode) {
       presenceData.state = 'Cooking up some heat'
-    } else {
-      let inputBox = document.getElementById('studio-project-name-input') as HTMLInputElement
-      let title : string = inputBox?.value.trim() || 'New Project'
-      presenceData.state = 'Working on project: {0}'.replace('{0}',title)
+    } 
+    else {
+      const inputBox = document.getElementById('studio-project-name-input') as HTMLInputElement
+      const title: string = inputBox?.value.trim() || 'New Project'
+      presenceData.state = 'Working on project: {0}'.replace('{0}', title)
     }
   }
 
   if (pathname.startsWith('/chat')) {
     if (privacyModeStrict) {
       presenceData.state = strings.readingADM
-    } 
+    }
     else if (!privacyModeStrict && document.querySelector('header.conversation-partner')) { // Checking if user info for the DM recipient exists
-      let dmRecipientName : string | null | undefined = document.querySelector('.profile-tile-title > a')?.textContent
-      let dmSubtitleName : string | null | undefined = document.querySelector('.profile-tile-subtitle-wrap > ng-pluralize')?.textContent || document.querySelector('.profile-tile-subtitle-wrap > a')?.textContent || 'a BandLab user' // Checking for band ('X Members') or user ('@username')
+      const dmRecipientName: string | null | undefined = document.querySelector('.profile-tile-title > a')?.textContent
+      const dmSubtitleName: string | null | undefined = document.querySelector('.profile-tile-subtitle-wrap > ng-pluralize')?.textContent || document.querySelector('.profile-tile-subtitle-wrap > a')?.textContent || 'a BandLab user' // Checking for band ('X Members') or user ('@username')
       
       presenceData.details = strings.readingDM
       presenceData.state = `${dmRecipientName} (${dmSubtitleName})`
@@ -195,7 +196,7 @@ presence.on('UpdateData', async () => {
 
       presenceData.smallImageKey = ActivityAssets.Logo
       presenceData.smallImageText = 'BandLab'
-    } 
+    }
     else {
       presenceData.state = strings.readingADM
     }
@@ -207,7 +208,7 @@ presence.on('UpdateData', async () => {
 
     if (privacyModeStrict) {
       presenceData.state = strings.searchUnspecified
-    } 
+    }
     else {
       presenceData.details = strings.search
       presenceData.state = new URLSearchParams(document.location.search).get('q') // Get search query from URL parameter
@@ -222,27 +223,31 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [
       {
         label: strings.buttonViewPage,
-        url: href
+        url: href,
       },
     ]
 
-    let pfp : string | undefined = firstSrcFromSrcsetProvided(document.querySelector('.profile-card-picture > a > img')) // Grab first profile picture of user available
+    const pfp: string | undefined = firstSrcFromSrcsetProvided(document.querySelector('.profile-card-picture > a > img')) // Grab first profile picture of user available
 
     if (pfp !== ActivityAssets.Logo) {
       presenceData.largeImageKey = pfp
       presenceData.smallImageKey = ActivityAssets.Logo
       presenceData.smallImageText = 'BandLab'
-    } 
+    }
     else {
       presenceData.largeImageKey = ActivityAssets.Logo
     }
 
-    presenceData.state = `${document.querySelector('.profile-card-title')?.textContent?.trim()}${pathname.startsWith('/band/') ? '' : ' ('+document.querySelector('.profile-card-subtitle > a')?.textContent?.trim()+')'}` // For users... [display name] {@[username]} | Example: JoeSchmoe (@j_milbo). For bands... Just shows the band name
+    presenceData.state = `${document.querySelector('.profile-card-title')?.textContent?.trim()}${
+      pathname.startsWith('/band/')
+        ? ''
+        : ` (${document.querySelector('.profile-card-subtitle > a')?.textContent?.trim()})`
+    }`; // For users... [display name] {@[username]} | Example: JoeSchmoe (@j_milbo). For bands... Just shows the band name
   }
 
   if (presenceData.state) {
     presence.setActivity(presenceData)
-  } 
+  }
   else {
     presence.clearActivity()
   }
