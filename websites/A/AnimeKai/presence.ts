@@ -188,7 +188,7 @@ presence.on('UpdateData', async () => {
       }
       case '/user/sync': {
         presenceData.details = 'Syncing with AL'
-        presenceData.smallImageKey = Assets.Live
+        presenceData.smallImageKey = Assets.Repeat
         break
       }
       case '/user/notifications': {

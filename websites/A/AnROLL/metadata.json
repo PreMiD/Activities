@@ -19,7 +19,7 @@
     "my.anroll.net"
   ],
   "regExp": "([a-z0-9-]+\\.)*anroll\\.net[/]",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/thumbnail.png",
   "color": "#FFFFFF",

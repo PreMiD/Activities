@@ -19,6 +19,7 @@ export function getSiteId(hostname: string) {
     case 'v1.novelslib.me':
       return SiteId.RanobeLib
     case 'anilib.me':
+    case 'animelib.org':
     case 'v1.animelib.org':
     case 'v2.animelib.org':
       return SiteId.AnimeLib
