@@ -1,0 +1,457 @@
+/// <reference path='../../../@types/premid/index.d.ts' />
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
+
+const presence = new Presence({
+  clientId: '1203605618745933880',
+})
+
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://i.ibb.co/vxRrCsHC/logo.png',
+}
+
+// Internationalization support
+async function getStrings() {
+  return presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    browse: 'general.browsing',
+    watchingMovie: 'general.watchingMovie',
+    watchingSeries: 'general.watchingSeries',
+    viewPage: 'general.viewPage',
+    search: 'general.search',
+    live: 'general.live',
+    buttonViewPage: 'general.buttonViewPage',
+    buttonViewMovie: 'general.buttonViewMovie',
+    buttonViewSeries: 'general.buttonViewSeries',
+  })
+}
+
+let strings: Awaited<ReturnType<typeof getStrings>>
+let oldLang: string | null = null
+
+// Helper function to format titles properly
+function formatTitle(title: string): string {
+  return title
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+
+// Helper function to extract content rating
+function getContentRating(): string {
+  const ratingElement = document.querySelector('.rating-display, .imdb-rating, [data-rating]')
+  return ratingElement?.textContent?.trim() || 'N/A'
+}
+
+// Enhanced image detection with multiple fallbacks
+function getPosterImage(): string {
+  const selectors = [
+    'img[alt*="poster"]',
+    '.poster-image',
+    '.movie-poster',
+    '.show-poster',
+    '.content-poster',
+    '.media-poster',
+    'img[src*="poster"]',
+    '.hero-image img',
+    '.backdrop img',
+    'meta[property="og:image"]',
+  ]
+
+  for (const selector of selectors) {
+    const element = document.querySelector(selector)
+    if (element) {
+      const src = element.getAttribute('src') || element.getAttribute('content')
+      if (src && src.startsWith('http'))
+        return src
+    }
+  }
+
+  return ActivityAssets.Logo
+}
+
+// Enhanced video detection with multiple fallbacks
+function getVideoElement(): HTMLVideoElement | null {
+  const selectors = [
+    'video',
+    '.video-player video',
+    '.player-container video',
+    '#video-player video',
+    '.media-player video',
+    'video[src]',
+    'video:not([style*="display: none"])',
+  ]
+
+  for (const selector of selectors) {
+    const video = document.querySelector<HTMLVideoElement>(selector)
+    if (video && !Number.isNaN(video.duration) && video.duration > 0) {
+      return video
+    }
+  }
+
+  return null
+}
+
+presence.on('UpdateData', async () => {
+  // Get user settings
+  const [
+    lang,
+    privacy,
+    showTimestamp,
+    showBrowsingStatus,
+    showCover,
+    hideWhenPaused,
+    showButtons,
+  ] = await Promise.all([
+    presence.getSetting<string>('lang').catch(() => 'en'),
+    presence.getSetting<boolean>('privacy').catch(() => false),
+    presence.getSetting<boolean>('timestamp').catch(() => true),
+    presence.getSetting<boolean>('browsing').catch(() => true),
+    presence.getSetting<boolean>('cover').catch(() => true),
+    presence.getSetting<boolean>('hideWhenPaused').catch(() => false),
+    presence.getSetting<boolean>('buttons').catch(() => true),
+  ])
+
+  // Update strings if language changed
+  if (oldLang !== lang || !strings) {
+    oldLang = lang
+    strings = await getStrings()
+  }
+
+  const presenceData: PresenceData = {
+    type: ActivityType.Playing,
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: showTimestamp ? browsingTimestamp : undefined,
+    details: 'Exploring PrimeShows',
+    name: 'PrimeShows',
+  }
+
+  const { pathname, search, href } = document.location
+  const urlParams = new URLSearchParams(search)
+
+  // Privacy mode check
+  if (privacy) {
+    presenceData.type = ActivityType.Playing
+    presenceData.details = 'Browsing PrimeShows'
+    presenceData.state = 'Privacy mode enabled'
+    presence.setActivity(presenceData)
+    return
+  }
+
+  // Hide browsing activity if disabled
+  if (!showBrowsingStatus) {
+    presence.setActivity()
+    return
+  }
+
+  // Static pages mapping
+  const staticPages: Record<string, PresenceData> = {
+    '/': {
+      details: 'Viewing Homepage 🏠',
+      state: 'Discovering new content',
+      smallImageKey: Assets.Viewing,
+    },
+    '/movies': {
+      details: 'Browsing Movies 🎬',
+      state: 'Looking for something to watch',
+      smallImageKey: Assets.Viewing,
+    },
+    '/tv': {
+      details: 'Browsing TV Shows 📺',
+      state: 'Exploring series collection',
+      smallImageKey: Assets.Viewing,
+    },
+    '/search': {
+      details: 'Searching Content 🔍',
+      state: 'Finding the perfect match',
+      smallImageKey: Assets.Search,
+    },
+    '/trending': {
+      details: 'Viewing Trending 📈',
+      state: 'What\'s hot right now',
+      smallImageKey: Assets.Viewing,
+    },
+    '/favorites': {
+      details: 'Viewing Favorites ❤️',
+      state: 'Personal collection',
+      smallImageKey: Assets.Viewing,
+    },
+    '/watchlist': {
+      details: 'Managing Watchlist 📋',
+      state: 'Planning next binge session',
+      smallImageKey: Assets.Viewing,
+    },
+    '/profile': {
+      details: 'Viewing Profile 👤',
+      state: 'Managing account',
+      smallImageKey: Assets.Viewing,
+    },
+    '/settings': {
+      details: 'Configuring Settings ⚙️',
+      state: 'Personalizing experience',
+      smallImageKey: Assets.Viewing,
+    },
+    '/contact': {
+      details: 'Contact Support 📞',
+      state: 'Getting help',
+      smallImageKey: Assets.Viewing,
+    },
+    '/faq': {
+      details: 'Reading FAQ ❓',
+      state: 'Finding answers',
+      smallImageKey: Assets.Viewing,
+    },
+    '/privacy': {
+      details: 'Privacy Policy 🔒',
+      state: 'Understanding data usage',
+      smallImageKey: Assets.Viewing,
+    },
+    '/terms': {
+      details: 'Terms of Service 📄',
+      state: 'Reading the fine print',
+      smallImageKey: Assets.Viewing,
+    },
+    '/promos': {
+      details: 'Viewing Promotions 🎁',
+      state: 'Checking out deals',
+      smallImageKey: Assets.Viewing,
+    },
+  }
+
+  // Check for static pages first
+  if (staticPages[pathname]) {
+    Object.assign(presenceData, staticPages[pathname])
+    // Add a quick action button for the current page
+    if (showButtons) {
+      presenceData.buttons = [
+        {
+          label: strings.buttonViewPage,
+          url: href,
+        },
+      ]
+    }
+  }
+  // Handle movie pages
+  else if (pathname.startsWith('/movies/')) {
+    const movieMatch = pathname.match(/\/movies\/(\d+)(?:-([^/]+))?/)
+    if (movieMatch && movieMatch[1]) {
+      const _movieId = movieMatch[1]
+      const movieSlug = movieMatch[2] || 'unknown-movie'
+      const movieTitle = formatTitle(movieSlug)
+
+      // Watching is considered a media activity; set watching-friendly fields but keep type compatible
+      presenceData.details = `🎬 ${movieTitle}`
+      presenceData.name = movieTitle
+      presenceData.largeImageKey = showCover ? getPosterImage() : ActivityAssets.Logo
+
+      // Get movie metadata
+      const rating = getContentRating()
+      const runtime = document.querySelector('[data-runtime], .runtime')?.textContent?.match(/\d+/)?.[0] || 'N/A'
+      const year = document.querySelector('.release-year, [data-year]')?.textContent?.trim() || 'N/A'
+
+      presenceData.state = `⭐ ${rating} • ⏱️ ${runtime}min • 📅 ${year}`
+      // Details page → treat as browsing
+      presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = strings.viewPage
+
+      // Add buttons for better interaction
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewMovie,
+            url: href,
+          },
+        ]
+      }
+    }
+    else {
+      presenceData.details = 'Browsing Movies 🎬'
+      presenceData.state = 'Exploring movie collection'
+      presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = strings.browse
+    }
+  }
+  // Handle TV show pages
+  else if (pathname.startsWith('/tv/')) {
+    const tvMatch = pathname.match(/\/tv\/(\d+)(?:-([^/]+))?/)
+    if (tvMatch && tvMatch[1]) {
+      const showId = tvMatch[1]
+      const showSlug = tvMatch[2] || 'unknown-show'
+      const showTitle = formatTitle(showSlug)
+
+      // Watching is considered a media activity; set watching-friendly fields but keep type compatible
+      presenceData.details = `📺 ${showTitle}`
+      presenceData.name = showTitle
+      presenceData.largeImageKey = showCover ? getPosterImage() : ActivityAssets.Logo
+
+      // Try to get season/episode info from localStorage or page
+      const watchData = JSON.parse(localStorage.getItem('watchProgress') || '{}')
+      const currentShow = watchData[showId] || { season: 1, episode: 1 }
+
+      const rating = getContentRating()
+      const year = document.querySelector('.release-year, [data-year]')?.textContent?.trim() || 'N/A'
+
+      presenceData.state = `S${currentShow.season}E${currentShow.episode} • ⭐ ${rating} • 📅 ${year}`
+      // Details page → treat as browsing
+      presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = strings.viewPage
+
+      // Add buttons for better interaction
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewSeries,
+            url: href,
+          },
+        ]
+      }
+    }
+    else {
+      presenceData.details = 'Browsing TV Shows 📺'
+      presenceData.state = 'Exploring series collection'
+      presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = strings.browse
+    }
+  }
+  // Handle player pages
+  else if (pathname.startsWith('/player/') || pathname.startsWith('/watch/')) {
+    const isMovie = pathname.includes('/movie/')
+    const isTV = pathname.includes('/tv/')
+    const contentType = isMovie ? 'Movie' : isTV ? 'TV Show' : 'Content'
+
+    if (/\/(?:player|watch)\/(?:movie|tv)\/\d+/.test(pathname)) {
+      // Matched a valid watch/player path
+
+      // Try to get title from page or localStorage
+      const titleElement = document.querySelector('h1, .video-title, [data-title]')
+      const contentTitle = titleElement?.textContent?.trim() || `${contentType}`
+
+      // Watching is considered a media activity; set watching-friendly fields but keep type compatible
+      presenceData.details = `▶️ Watching ${contentTitle}`
+      presenceData.name = contentTitle
+      presenceData.largeImageKey = getPosterImage()
+
+      // Enhanced video detection and timestamp handling
+      const video = getVideoElement()
+
+      if (video) {
+        const isPlaying = !video.paused
+        if (isPlaying) {
+          if (showTimestamp) {
+            ;[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+          }
+          presenceData.smallImageKey = Assets.Play
+          presenceData.smallImageText = strings.play
+          presenceData.state = 'Currently playing'
+        }
+        else {
+          // Handle paused state
+          if (hideWhenPaused) {
+            presence.setActivity()
+            return
+          }
+          presenceData.smallImageKey = Assets.Pause
+          presenceData.smallImageText = strings.pause
+          presenceData.state = 'Paused'
+          delete presenceData.endTimestamp
+        }
+      }
+      else {
+        presenceData.smallImageKey = Assets.Play
+        presenceData.state = 'Loading player...'
+      }
+
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewPage,
+            url: href,
+          },
+        ]
+      }
+    }
+  }
+  // Handle genre pages
+  else if (pathname.startsWith('/genre/') || pathname.startsWith('/genres/')) {
+    const genreMatch = pathname.match(/\/genres?\/([^/]+)/)
+    if (genreMatch && genreMatch[1]) {
+      const genre = formatTitle(genreMatch[1])
+      presenceData.type = ActivityType.Playing
+      presenceData.details = `🎭 Browsing ${genre} Genre`
+      presenceData.state = `Discovering ${genre.toLowerCase()} content`
+      presenceData.smallImageKey = Assets.Viewing
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewPage,
+            url: href,
+          },
+        ]
+      }
+    }
+  }
+  // Handle studio pages
+  else if (pathname.startsWith('/studio/')) {
+    const studioMatch = pathname.match(/\/studio\/(\d+)/)
+    if (studioMatch) {
+      const studioName = document.querySelector('.studio-name, h1')?.textContent?.trim() || `Studio ${studioMatch[1]}`
+      presenceData.type = ActivityType.Playing
+      presenceData.details = `🏢 Viewing ${studioName}`
+      presenceData.state = 'Exploring studio content'
+      presenceData.smallImageKey = Assets.Viewing
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewPage,
+            url: href,
+          },
+        ]
+      }
+    }
+  }
+  // Handle section pages
+  else if (pathname.startsWith('/section/')) {
+    const sectionMatch = pathname.match(/\/section\/([^/]+)\/\d+/)
+    if (sectionMatch && sectionMatch[1]) {
+      const sectionType = formatTitle(sectionMatch[1])
+      presenceData.type = ActivityType.Playing
+      presenceData.details = `📂 Browsing ${sectionType} Section`
+      presenceData.state = 'Exploring curated content'
+      presenceData.smallImageKey = Assets.Viewing
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: strings.buttonViewPage,
+            url: href,
+          },
+        ]
+      }
+    }
+  }
+  // Handle search with query
+  else if (pathname === '/search' && urlParams.get('q')) {
+    const query = urlParams.get('q')
+    presenceData.type = ActivityType.Playing
+    presenceData.details = '🔍 Searching PrimeShows'
+    presenceData.state = `Query: "${query}"`
+    presenceData.smallImageKey = Assets.Search
+    if (showButtons) {
+      presenceData.buttons = [
+        {
+          label: strings.buttonViewPage,
+          url: href,
+        },
+      ]
+    }
+  }
+
+  // Set the activity
+  if (presenceData.details) {
+    presence.setActivity(presenceData)
+  }
+  else {
+    presence.setActivity()
+  }
+})
