@@ -1,267 +1,150 @@
+import type { IframeData } from './types.js'
 import { ActivityType, Assets, getTimestamps } from 'premid'
+import { RouteHandlers } from './handlers/route.js'
+import { PosterManager } from './managers/poster.js'
+import { SettingsManager } from './managers/settings.js'
+
+import { Utils } from './utils.js'
 
 const presence = new Presence({
   clientId: '1342545631629152287',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum Images {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/Anizium/assets/logo.png',
-  SettingsICO = 'https://cdn.rcd.gg/PreMiD/websites/A/Anizium/assets/0.png',
-}
+class AniziumPresence {
+  private video: IframeData | undefined
+  private settingsManager: SettingsManager
+  private posterManager: PosterManager
 
-interface iframeData {
-  duration: number
-  currentTime: number
-  paused: boolean
-}
-let video: iframeData | undefined
-
-let savedPosterUrl: string | null = null
-let seasonModeActive = false
-
-function updatePoster() {
-  const pathname = document.location.pathname
-
-  if (pathname.includes('/anime/')) {
-    const bannerimage = document.querySelector<HTMLElement>('.overlay-wrapper.iq-main-slider')
-    if (!bannerimage)
-      return
-
-    const backgroundimg = bannerimage.style.background || window.getComputedStyle(bannerimage).background
-
-    const urlMatch = backgroundimg.match(/url\(["']?(.*?)["']?\)/)
-
-    if (!urlMatch || urlMatch.length < 2)
-      return
-
-    const aniURL = urlMatch[1] as string
-    const luiUrl = aniURL.replace(
-      /^https:\/\/x\.anizium\.co\/assets\/anime-details-banner\//,
-      'https://ani.luii.xyz/assets/anime-details-banner/',
-    )
-
-    savedPosterUrl = luiUrl
-    seasonModeActive = false
+  constructor() {
+    this.settingsManager = new SettingsManager(presence)
+    this.posterManager = new PosterManager()
+    this.init()
   }
 
-  else if (pathname.includes('/watch/')) {
-    const animeImg = document.querySelector('.image-box > img')?.getAttribute('src')
+  private init(): void {
+    presence.on('iFrameData', (data: unknown) => {
+      if (data) {
+        this.video = data as IframeData
+        this.posterManager.updatePoster()
+        this.handleWatchPage()
+      }
+    })
 
-    if (!animeImg)
-      return
+    presence.on('UpdateData', async () => {
+      setTimeout(() => {
+        this.posterManager.updatePoster()
+        this.handlePresenceUpdate()
+      }, 1000)
+    })
+  }
 
-    const luiUrl = animeImg.replace(
-      /^https:\/\/x\.anizium\.co\/assets\/anime-poster\//,
-      'https://ani.luii.xyz/assets/anime-poster/',
-    )
+  private buildBasePresence(): PresenceData {
+    const settings = this.settingsManager.currentSettings
 
-    if (!seasonModeActive) {
-      seasonModeActive = true
-      savedPosterUrl = luiUrl
+    const largeImage
+            = settings?.showPosters && this.posterManager.posterUrl
+              ? this.posterManager.posterUrl
+              : this.settingsManager.getLogo()
+
+    const presenceData: PresenceData = {
+      largeImageKey: largeImage,
+      startTimestamp: browsingTimestamp,
+      type: ActivityType.Watching,
     }
-  }
 
-  else {
-    savedPosterUrl = null
-    seasonModeActive = false
-  }
-}
+    if (this.video && document.location.pathname.includes('/watch/')) {
+      presenceData.smallImageKey = this.video.paused
+        ? Assets.Pause
+        : Assets.Play
+      presenceData.smallImageText = this.video.paused
+        ? 'Duraklatıldı'
+        : 'Oynatılıyor'
 
-function buildPresence(): PresenceData {
-  const presenceData: PresenceData = {
-    largeImageKey: savedPosterUrl || Images.Logo,
-    startTimestamp: browsingTimestamp,
-    type: ActivityType.Watching,
-  }
+      if (this.settingsManager.currentSettings?.showTimestamp) {
+        const [start, end] = getTimestamps(
+          this.video.currentTime,
+          this.video.duration,
+        )
+        presenceData.startTimestamp = start
 
-  if (video && document.location.pathname.includes('/watch/')) {
-    presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-    presenceData.smallImageText = video.paused ? 'Duraklatıldı' : 'Oynatılıyor'
-    const [start, end] = getTimestamps(video.currentTime, video.duration)
-    presenceData.startTimestamp = start
-    if (!video.paused) {
-      presenceData.endTimestamp = end
-    }
-  }
-
-  return presenceData
-}
-
-presence.on('iFrameData', (data: unknown) => {
-  if (data) {
-    video = data as iframeData
-
-    updatePoster()
-
-    if (document.location.pathname === '/anime'
-      || document.location.pathname.includes('/anime/')
-    ) {
-      const iframePresenceData = buildPresence()
-
-      if (document.location.pathname.includes('/watch/')) {
-        const animetitleelement = document.querySelector('.d-block > h2')
-        const animetitle = animetitleelement && animetitleelement.textContent ? animetitleelement.textContent.trim() : 'Loading'
-
-        const cut = animetitle.match(/^(.*)\s(S\d+\sB\d+)$/)
-
-        if (cut && cut[1] && cut[2]) {
-          iframePresenceData.details = cut[1].trim()
-          iframePresenceData.state = cut[2]
-        }
-        else {
-          iframePresenceData.details = animetitle
-          iframePresenceData.state = 'Bölüm bilgisi bulunamadı'
+        if (!this.video.paused) {
+          presenceData.endTimestamp = end
         }
       }
-      else {
-        iframePresenceData.details = document.querySelector('.trailer-content h1')?.textContent || 'Loading'
-        iframePresenceData.state = 'Bölümler görüntüleniyor'
-      }
-
-      presence.setActivity(iframePresenceData)
     }
+
+    return presenceData
   }
-})
 
-presence.on('UpdateData', async () => {
-  setTimeout(() => {
-    updatePoster()
+  private handleWatchPage(): void {
+    if (!document.location.pathname.includes('/anime/'))
+      return
 
-    const presenceData = buildPresence()
-    const pathname = document.location.pathname
+    const presenceData = this.buildBasePresence()
 
-    if (
-      pathname === '/'
-      || pathname === '/privacy-policy'
-      || pathname === '/comment-policy'
-      || pathname === '/tos'
-    ) {
-      presenceData.details = 'Anizium'
-      presenceData.state = 'Ana Sayfa görüntüleniyor'
-    }
-    else if (pathname.includes('/watch/')) {
-      const params = new URLSearchParams(document.location.search)
-      const season = params.get('season')
-      const episode = params.get('episode')
+    if (document.location.pathname.includes('/watch/')) {
+      const animeTitle = Utils.getAnimeTitle()
+      const { title, episode } = Utils.parseAnimeTitle(animeTitle)
 
-      const animetitleelement = document.querySelector('.d-block > h2')
-      let animetitle = animetitleelement?.textContent?.trim() || 'Loading'
-
-      if (/\s*S\d+\s*B\d+$/i.test(animetitle)) {
-        animetitle = animetitle.replace(/\s*S\d+\s*B\d+$/i, '').trim()
-      }
-
-      if (season && episode) {
-        presenceData.details = animetitle
-        presenceData.state = `Sezon ${season} | Bölüm ${episode}`
-      }
-      else {
-        presenceData.details = animetitle
-        presenceData.state = 'Tek Bölüm'
-      }
-    }
-    else if (pathname.includes('/anime/')) {
-      const animetitle = document.querySelector('html > head > title')?.textContent || 'Loading'
-      const titlecut = animetitle.replace(/ - Anizium$/, '')
-      presenceData.details = titlecut
-      presenceData.state = 'Bölümler görüntüleniyor'
-    }
-    else if (
-      pathname === '/animes'
-      || pathname.includes('/animes/')
-    ) {
-      presenceData.smallImageKey = Assets.Reading
-      presenceData.smallImageText = 'Göz atılıyor..'
-      presenceData.details = 'Anizium'
-      presenceData.state = 'Göz atılıyor..'
-    }
-    else if (pathname.includes('/catalog')) {
-      presenceData.smallImageKey = Assets.Reading
-      presenceData.details = 'Anizium'
-      presenceData.state = 'Kategoriler inceleniyor..'
-    }
-    else if (
-      pathname === '/premium'
-      || pathname.includes('/pay/')
-    ) {
-      presenceData.details = 'Anizium'
-      presenceData.state = 'Premium paketleri görüntüleniyor'
-    }
-    else if (
-      pathname === '/anime-request'
-      || pathname.includes('/anime-request/')
-    ) {
-      presenceData.details = 'Anizium'
-      presenceData.state = 'İstek animeler görüntüleniyor'
-    }
-    else if (
-      pathname === '/calendar'
-    ) {
-      presenceData.details = 'Anizium'
-      presenceData.state = 'Takvim görüntüleniyor'
-    }
-    else if (
-      pathname === '/account'
-      || pathname === '/premium/manager'
-      || pathname === '/devices'
-      || pathname === '/change-password'
-    ) {
-      presenceData.smallImageKey = Images.SettingsICO
-      presenceData.details = 'Anizium'
-      presenceData.state = 'Hesap yönetimi'
-    }
-    else if (
-      pathname === '/profiles'
-      || pathname.includes('/option')
-    ) {
-      presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = 'Profiller'
-      presenceData.details = 'Anizium'
-      presenceData.state = 'Profiller görüntüleniyor'
-    }
-    else if (
-      pathname.includes('/avatar-list')
-    ) {
-      presenceData.smallImageKey = Assets.Viewing
-      presenceData.details = 'Anizium'
-      presenceData.state = 'Avatar seçimi'
-    }
-    else if (
-      pathname.includes('/watch-list')
-    ) {
-      presenceData.smallImageKey = Assets.Viewing
-      presenceData.details = 'Anizium'
-      presenceData.state = 'İzleme listesi görüntüleniyor'
-    }
-    else if (
-      pathname.includes('/favorite-list')
-    ) {
-      presenceData.smallImageKey = Assets.Viewing
-      presenceData.details = 'Anizium'
-      presenceData.state = 'Favoriler görüntüleniyor'
+      presenceData.details = title
+      presenceData.state = episode
     }
     else {
-      switch (pathname) {
-        case '/list':
-          presenceData.smallImageKey = Assets.Viewing
-          presenceData.smallImageText = 'Listeler'
-          presenceData.details = 'Anizium'
-          presenceData.state = 'Listeler görüntüleniyor..'
-          break
-        case '/search':
-          presenceData.smallImageKey = Assets.Search
-          presenceData.smallImageText = 'Aranıyor'
-          presenceData.details = 'Aranıyor:'
-          presenceData.state = document.querySelector('.container > .heading h2')?.textContent
-          break
-        default:
-          presenceData.details = 'Anizium'
-          presenceData.state = 'Sayfa görüntüleniyor..'
-          break
-      }
+      presenceData.details
+                = document.querySelector('.trailer-content h1')?.textContent
+                  || 'Loading'
+      presenceData.state = 'Bölümler görüntüleniyor'
     }
 
     presence.setActivity(presenceData)
-  }, 1000)
-})
+  }
+
+  private async handlePresenceUpdate(): Promise<void> {
+    await this.settingsManager.getSettings()
+    const settings = this.settingsManager.currentSettings!
+
+    const presenceData = this.buildBasePresence()
+    const pathname = document.location.pathname
+    const routePattern = Utils.getRoutePattern(pathname)
+
+    const routeHandlers: Record<string, () => void> = {
+      // Statik routelar
+      '/': () => RouteHandlers.handleHomePage(presenceData),
+      '/profiles': () => RouteHandlers.handleProfilesPage(presenceData),
+      '/avatar-list': () => RouteHandlers.handleAvatarListPage(presenceData),
+      '/animes': () => RouteHandlers.handleAnimesPage(presenceData),
+      '/anime-request': () => RouteHandlers.handleAnimeRequestsPage(presenceData),
+      '/premium': () => RouteHandlers.handlePremiumPage(presenceData),
+      '/pay/process': () => RouteHandlers.handlePayPage(presenceData),
+      '/calendar': () => RouteHandlers.handleCalendarPage(presenceData),
+      '/account': () => RouteHandlers.handleAccountPage(presenceData),
+      '/ticket': () => RouteHandlers.handleTicketPage(presenceData),
+      '/search': () => RouteHandlers.handleSearchPage(presenceData),
+      '/favorite-list': () => RouteHandlers.handleFavoriteList(presenceData),
+      '/watch-list': () => RouteHandlers.handleWatchList(presenceData),
+      '/watched-list': () => RouteHandlers.handleWatchedList(presenceData),
+      '/studio': () => RouteHandlers.handleStudioPage(presenceData),
+      '/privacy-policy': () => RouteHandlers.handlePrivacyPolicy(presenceData),
+      '/comment-policy': () => RouteHandlers.handleCommentPolicy(presenceData),
+      '/tos': () => RouteHandlers.handleTos(presenceData),
+      '/app': () => RouteHandlers.handleApp(presenceData),
+
+      // Dinamik routelar
+      '/watch/': () => RouteHandlers.handleWatchPageUpdate(presenceData, settings),
+      '/anime/': () => RouteHandlers.handleAnimePageUpdate(presenceData, settings),
+      '/catalog/': () => RouteHandlers.handleCatalogPage(presenceData),
+    }
+
+    if (routeHandlers[routePattern]) {
+      routeHandlers[routePattern]()
+    }
+    else {
+      RouteHandlers.handleDefaultPage(presenceData)
+    }
+
+    presence.setActivity(presenceData)
+  }
+}
+
+const _aniziumPresence = new AniziumPresence()
