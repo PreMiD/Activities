@@ -5,7 +5,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000);
 
 enum ActivityAssets {
-  Logo = "https://cdn.corenexis.com/file/?serve=7296171168.png&token=a5a20b22ebb9d1f55ee01327900d4d850063d4e6ec2d71e2dccad960a41c8205.NzI5NjE3MTE2OC5wbmd8MTc1NjMyMTA0Mw==", // Logo do EasyFun
+  Logo = "https://geographical-lime-9pydlktowb.edgeone.app/263cef731b755103d3a010a8941458d7%20(1).png", // Logo do EasyFun
 }
 
 presence.on("UpdateData", async () => {
