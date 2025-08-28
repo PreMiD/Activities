@@ -23,7 +23,7 @@ presence.on('UpdateData', async () => {
           ? word
           : word.charAt(0).toUpperCase() + word.slice(1)
       )
-      .join(' '),
+      .join(' ')
   }
 
   const gameIcon = document.querySelector('img[alt$="-icon"]')?.getAttribute('src')
