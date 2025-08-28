@@ -531,7 +531,7 @@ presence.on('UpdateData', async () => {
 
         if (showVideo && !live) {
           //* Video or Clips
-          const title = getElement('.channel-info-content h2')
+          const title = getElement('[data-a-target="stream-title"]')
             ?.split('•')
             .shift()
           const uploader = document.querySelector('.channel-info-content h1')?.textContent
@@ -543,7 +543,7 @@ presence.on('UpdateData', async () => {
             || 'Just Chatting'
           const profilePic = document
             .querySelector<HTMLImageElement>(
-              '.tw-halo > .tw-aspect > .tw-avatar > .tw-image-avatar',
+              '.Layout-sc-1xcs6mc-0 .hHGLGY > a > .tw-avatar > .tw-image',
             )
             ?.src
             ?.replace(/-\d{1,2}x\d{1,2}/, '-600x600')
