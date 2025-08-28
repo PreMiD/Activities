@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "212701689579438080",
+    "name": "bnwkr"
+  },
+  "service": "NOW TV",
+  "description": {
+    "en": "Stream the world's best entertainment, movies and sport, brought to you by Sky."
+  },
+  "url": [
+    "nowtv.com",
+    "www.nowtv.com"
+  ],
+  "version": "1.0.0",
+  "logo": "https://m.media-amazon.com/images/I/61sDr8btlTL.png",
+  "thumbnail": "https://m.media-amazon.com/images/I/61sDr8btlTL.png",
+  "color": "#000000",
+  "category": "videos",
+  "tags": [
+    "video",
+    "streaming"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
+  ]
+}
