@@ -34,7 +34,7 @@ presence.on('UpdateData', async () => {
     details: gameName ? `Playing ${gameName}` : 'Exploring EasyFun',
     state: gameName ? 'Cloud Gaming' : 'Browsing on site',
     startTimestamp: browsingTimestamp,
-    buttons: gameName ? [{ label: 'Play now', url: href }] : undefined,
+    buttons: gameName ? [{ label: 'Play Now', url: href }] : undefined,
   }
 
   presence.setActivity(presenceData)
