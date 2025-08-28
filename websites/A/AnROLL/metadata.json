@@ -5,10 +5,10 @@
     "name": "Nestz",
     "id": "753271371781374074"
   },
-  "service": "Anroll",
+  "service": "AnROLL",
   "altnames": [
-    "Anroll Brasil",
-    "Anroll Anime"
+    "AnROLL Brasil",
+    "AnROLL Anime"
   ],
   "description": {
     "en": "AnimesROLL: The best way to watch anime online for free. Just hit play and enjoy your favorite anime in HD, updated daily.",
@@ -19,9 +19,9 @@
     "my.anroll.net"
   ],
   "regExp": "([a-z0-9-]+\\.)*anroll\\.net[/]",
-  "version": "1.0.1",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anroll/assets/thumbnail.jpg",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/thumbnail.png",
   "color": "#FFFFFF",
   "category": "anime",
   "tags": [
@@ -31,15 +31,7 @@
     "movies",
     "community"
   ],
-  "iframe": true,
-  "iFrameRegExp": "([a-z0-9-]+\\.)*anroll\\.net[/]",
   "settings": [
-    {
-      "id": "buttons",
-      "title": "Mostrar Botões",
-      "icon": "fas fa-compress-arrows-alt",
-      "value": true
-    },
     {
       "id": "privacy",
       "title": "Modo Privacidade",
@@ -57,6 +49,12 @@
       "title": "Mostrar Capa",
       "icon": "fad fa-images",
       "value": true
+    },
+    {
+      "id": "hideWhenPaused",
+      "title": "Ocultar Presence quando pausado",
+      "icon": "fas fa-eye-slash",
+      "value": false
     },
     {
       "id": "partyPresence",

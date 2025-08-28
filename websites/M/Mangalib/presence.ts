@@ -28,26 +28,26 @@ function setPrivacyMode(presenceData: PresenceData) {
   presenceData.state = 'Вам не следует знать лишнего!'
 }
 
-type RouteName =
-  | ''
-  | 'anime'
-  | 'manga'
-  | 'book'
-  | 'characters'
-  | 'people'
-  | 'catalog'
-  | 'user'
-  | 'top-views'
-  | 'collections'
-  | 'reviews'
-  | 'team'
-  | 'franchise'
-  | 'publisher'
-  | 'media'
-  | 'news'
-  | 'faq'
-  | 'messages'
-  | 'downloads'
+type RouteName
+  = | ''
+    | 'anime'
+    | 'manga'
+    | 'book'
+    | 'characters'
+    | 'people'
+    | 'catalog'
+    | 'user'
+    | 'top-views'
+    | 'collections'
+    | 'reviews'
+    | 'team'
+    | 'franchise'
+    | 'publisher'
+    | 'media'
+    | 'news'
+    | 'faq'
+    | 'messages'
+    | 'downloads'
 
 let iFrameVideo: IFrameVideo | null = null
 let currentDub: string
@@ -57,7 +57,7 @@ presence.on('iFrameData', (data: unknown) => {
 })
 
 presence.on('UpdateData', async () => {
-  const { pathname, hostname, href } = document.location
+  const { pathname, hostname, href, origin } = document.location
   const siteId = getSiteId(hostname)
   /**
    * `[2]` - route, but when reading manga or ranobe it becomes a slug
@@ -123,7 +123,7 @@ presence.on('UpdateData', async () => {
     const volume = pathnameParts[4]!.replace('v', '')
     const chapter = pathnameParts[5]!.replace('c', '')
 
-    const { data } = await lib.getTitle<MangaData | RanobeData>(slug, siteId)
+    const { data } = await lib.getTitle<MangaData | RanobeData>(slug, siteId, origin)
 
     switch (siteId) {
       case SiteId.MangaLib: {
@@ -135,7 +135,7 @@ presence.on('UpdateData', async () => {
 
         presenceData.details = `Читает ${rus_name ?? name}`
         presenceData.state = `Том ${volume} Глава ${chapter}`
-        presenceData.largeImageKey = cover.default
+        presenceData.largeImageKey = cover.adjusted
         presenceData.smallImageKey = switchLogo(siteId)
         presenceData.buttons = [
           {
@@ -154,7 +154,7 @@ presence.on('UpdateData', async () => {
 
         presenceData.details = `Читает ${rus_name ?? name}`
         presenceData.state = `Том ${volume} Глава ${chapter}`
-        presenceData.largeImageKey = cover.default
+        presenceData.largeImageKey = cover.adjusted
         presenceData.smallImageKey = switchLogo(siteId)
         presenceData.buttons = [
           {
@@ -209,12 +209,12 @@ presence.on('UpdateData', async () => {
             presenceData.state = 'Очередной аниме персонаж...'
           }
           else {
-            const character = await lib.getCharacter(slug, siteId)
+            const character = await lib.getCharacter(slug, siteId, origin)
             const { name, rus_name, cover } = character.data
 
             presenceData.details = 'Страница персонажа'
             presenceData.state = `${rus_name} (${name})`
-            presenceData.largeImageKey = cover.default
+            presenceData.largeImageKey = cover.adjusted
             presenceData.smallImageKey = switchLogo(siteId)
             presenceData.buttons = [
               {
@@ -314,7 +314,7 @@ presence.on('UpdateData', async () => {
             presenceData.state = 'Какая-то известная личность?'
           }
           else {
-            const person = await lib.getPerson(slug, siteId)
+            const person = await lib.getPerson(slug, siteId, origin)
             const { name: mainName, rus_name, alt_name, cover } = person.data
 
             const name = rus_name !== ''
@@ -325,7 +325,7 @@ presence.on('UpdateData', async () => {
 
             presenceData.details = 'Страница человека'
             presenceData.state = `${name} (${mainName})`
-            presenceData.largeImageKey = cover.default
+            presenceData.largeImageKey = cover.adjusted
             presenceData.smallImageKey = switchLogo(siteId)
             presenceData.buttons = [
               {
@@ -350,7 +350,7 @@ presence.on('UpdateData', async () => {
             presenceData.state = 'В ней будет много интересного!'
           }
           else {
-            const collection = await lib.getCollection(id, siteId)
+            const collection = await lib.getCollection(id, siteId, origin)
             const { name, user, type, adult } = collection.data
 
             // Show collection viewing in privacy mode if it's enabled, or enforce it when collection was marked as for adults
@@ -374,7 +374,7 @@ presence.on('UpdateData', async () => {
 
             presenceData.details = `Коллекция по ${collectionType}`
             presenceData.state = `${name} от ${user.username}`
-            presenceData.smallImageKey = user.avatar.url
+            presenceData.smallImageKey = user.avatar.adjusted
             presenceData.smallImageText = user.username
             presenceData.buttons = [
               {
@@ -399,12 +399,12 @@ presence.on('UpdateData', async () => {
             presenceData.state = 'Что-то новенькое?'
           }
           else {
-            const user = await lib.getUser(id, siteId)
+            const user = await lib.getUser(id, siteId, origin)
             const { username, avatar } = user.data
 
             presenceData.details = 'Страница пользователя'
             presenceData.state = username
-            presenceData.largeImageKey = avatar.url
+            presenceData.largeImageKey = avatar.adjusted
             presenceData.smallImageKey = switchLogo(siteId)
             presenceData.buttons = [
               {
@@ -429,7 +429,7 @@ presence.on('UpdateData', async () => {
             presenceData.state = 'Излагает свои мысли...'
           }
           else {
-            const review = await lib.getReview(id, siteId)
+            const review = await lib.getReview(id, siteId, origin)
             const { title, user, related } = review.data
 
             // Show review reading in privacy mode if it's enabled, or enforce it when related anime is RX rated
@@ -442,8 +442,8 @@ presence.on('UpdateData', async () => {
 
             presenceData.details = `Отзыв на ${related.rus_name}`
             presenceData.state = `${title} от ${user.username}`
-            presenceData.largeImageKey = related.cover.default
-            presenceData.smallImageKey = user.avatar.url
+            presenceData.largeImageKey = related.cover.adjusted
+            presenceData.smallImageKey = user.avatar.adjusted
             presenceData.smallImageText = user.username
             presenceData.buttons = [
               {
@@ -501,12 +501,12 @@ presence.on('UpdateData', async () => {
             presenceData.state = 'Да что они там издают?'
           }
           else {
-            const publisher = await lib.getPublisher(slug, siteId)
+            const publisher = await lib.getPublisher(slug, siteId, origin)
             const { name, rus_name, cover } = publisher.data
 
             presenceData.details = 'Страница издателя'
             presenceData.state = `${rus_name || name} (${name})`
-            presenceData.largeImageKey = cover.default
+            presenceData.largeImageKey = cover.adjusted
             presenceData.buttons = [
               {
                 label: 'Открыть издателя',
@@ -523,7 +523,7 @@ presence.on('UpdateData', async () => {
       }
       case 'anime': {
         const slug = pathnameParts[3]!
-        const { data } = await lib.getTitle<AnimeData>(slug, siteId)
+        const { data } = await lib.getTitle<AnimeData>(slug, siteId, origin)
         const { name, rus_name, cover, ageRestriction, toast } = data
 
         if (isPrivacyMode(privacySetting, ageRestriction)) {
@@ -585,7 +585,7 @@ presence.on('UpdateData', async () => {
                 : (presenceData.details = title)
               presenceData.state = `${episode ? (episode.includes('эпизод') ? episode : 'Фильм') : 'Фильм'
               } | ${currentDub}`
-              presenceData.largeImageKey = cover.default
+              presenceData.largeImageKey = cover.adjusted
             }
 
             presenceData.buttons = [
@@ -655,7 +655,7 @@ presence.on('UpdateData', async () => {
           else {
             presenceData.details = 'Страница аниме'
             presenceData.state = `${rus_name !== '' ? rus_name : name}`
-            presenceData.largeImageKey = cover.default
+            presenceData.largeImageKey = cover.adjusted
             presenceData.smallImageKey = switchLogo(siteId)
           }
 
@@ -672,7 +672,7 @@ presence.on('UpdateData', async () => {
         const slug = pathnameParts[3]
 
         if (slug) {
-          const { data } = await lib.getTitle<RanobeData>(slug, siteId)
+          const { data } = await lib.getTitle<RanobeData>(slug, siteId, origin)
 
           if (data.toast) {
             setPrivacyMode(presenceData)
@@ -680,7 +680,7 @@ presence.on('UpdateData', async () => {
           else {
             presenceData.details = 'Страница манги'
             presenceData.state = `${data.rus_name !== '' ? data.rus_name : data.name}`
-            presenceData.largeImageKey = data.cover.default
+            presenceData.largeImageKey = data.cover.adjusted
             presenceData.smallImageKey = switchLogo(siteId)
 
             presenceData.buttons = [
@@ -697,7 +697,7 @@ presence.on('UpdateData', async () => {
         const slug = pathnameParts[3]
 
         if (slug) {
-          const { data } = await lib.getTitle<RanobeData>(slug, siteId)
+          const { data } = await lib.getTitle<RanobeData>(slug, siteId, origin)
 
           if (data.toast) {
             setPrivacyMode(presenceData)
@@ -705,7 +705,7 @@ presence.on('UpdateData', async () => {
           else {
             presenceData.details = 'Страница ранобэ'
             presenceData.state = `${data.rus_name !== '' ? data.rus_name : data.name}`
-            presenceData.largeImageKey = data.cover.default
+            presenceData.largeImageKey = data.cover.adjusted
             presenceData.smallImageKey = switchLogo(siteId)
 
             presenceData.buttons = [

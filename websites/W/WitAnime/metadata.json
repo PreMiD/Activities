@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "432215088686956565",
+    "name": "_doritos."
+  },
+  "service": "WitAnime",
+  "description": {
+    "en": "The most popular Arabic streaming site for anime and online entertainment"
+  },
+  "url": "witanime.world",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WitAnime/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WitAnime/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "stream",
+    "video"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "(ok\\.ru|dhcplay\\.com|dailymotion\\.com|videa\\.hu|yonaplay\\.org|vidia\\.tv|anavids\\.com|vup\\.to|uqload\\.com|vidbem\\.com|uptostream\\.com|vidfast\\.co|mega\\.nz|drive\\.google\\.com|mp4upload\\.com|hailindihg\\.com|[a-z0-9]+\\.(com|net|org))"
+}
