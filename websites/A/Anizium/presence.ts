@@ -124,7 +124,7 @@ class AniziumPresence {
       '/favorite-list': () => RouteHandlers.handleFavoriteList(presenceData),
       '/watch-list': () => RouteHandlers.handleWatchList(presenceData),
       '/watched-list': () => RouteHandlers.handleWatchedList(presenceData),
-      '/studio': () => RouteHandlers.handleStudioPage(presenceData),
+      '/studio': () => RouteHandlers.handleStudioPage(presenceData, settings),
       '/privacy-policy': () => RouteHandlers.handlePrivacyPolicy(presenceData),
       '/comment-policy': () => RouteHandlers.handleCommentPolicy(presenceData),
       '/tos': () => RouteHandlers.handleTos(presenceData),

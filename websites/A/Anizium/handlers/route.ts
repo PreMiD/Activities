@@ -202,13 +202,22 @@ export class RouteHandlers {
     presenceData.state = 'İzlediklerim listesi görüntüleniyor'
   }
 
-  static handleStudioPage(presenceData: PresenceData): void {
+  static handleStudioPage(presenceData: PresenceData, settings: AniziumSettings): void {
     presenceData.smallImageKey = Assets.Reading
     presenceData.details = 'Anizium'
 
     const titleElement = document.querySelector('html > head > title')
     const pageTitle = titleElement?.textContent?.trim()
 
+    if (settings?.showButtons) {
+      presenceData.buttons = [
+        {
+          label: 'Stüdyoyu Görüntüle',
+          url: document.location.href,
+        },
+
+      ]
+    }
     if (pageTitle && pageTitle !== 'Anizium - Türkçe Dublaj & 4K İzleme Platformu') {
       const studioName = pageTitle.replace(/ - Anizium$/, '').trim()
       presenceData.state = `${studioName} stüdyosunu görüntülüyor`
@@ -271,12 +280,26 @@ export class RouteHandlers {
     }
 
     if (settings?.showButtons) {
-      presenceData.buttons = [
-        {
-          label: 'Bölümü Görüntüle',
-          url: document.location.href,
-        },
-      ]
+      const match = document.location.href.match(/watch\/(\d+)/)
+      const animeId = match ? match[1] : null
+
+      const episodeButton = {
+        label: 'Bölümü Görüntüle',
+        url: document.location.href,
+      }
+
+      if (animeId) {
+        presenceData.buttons = [
+          {
+            label: 'Animeyi Görüntüle',
+            url: `https://anizium.co/anime/${animeId}`,
+          },
+          episodeButton,
+        ]
+      }
+      else {
+        presenceData.buttons = [episodeButton]
+      }
     }
   }
 
