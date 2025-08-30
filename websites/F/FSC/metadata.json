@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "300222163456229396",
+    "name": "_bruno.benicio"
+  },
+  "service": "FSC",
+  "description": {
+    "en": "Programming school Full Stack Club",
+    "pt-br": "Escola de programação Full Stack Club"
+  },
+  "url": "alunos.fullstackclub.com.br",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/mFF5hMO.png",
+  "thumbnail": "https://i.imgur.com/sQYdfrS.png",
+  "color": "#9547fc",
+  "category": "socials",
+  "tags": [
+    "fsc",
+    "fullstackclub",
+    "programming",
+    "school",
+    "developers"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}
