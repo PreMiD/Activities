@@ -42,28 +42,5 @@
     "technicalinterviews",
     "codingproblems",
     "problemsolving"
-  ],
-  "settings": [
-    {
-      "id": "showTimestamp",
-      "title": "Show Timestamp",
-      "icon": "fas fa-clock",
-      "value": true,
-      "description": "Show elapsed time since the activity started"
-    },
-    {
-      "id": "showButtons",
-      "title": "Show Buttons",
-      "icon": "fas fa-external-link-alt",
-      "value": true,
-      "description": "Display buttons to visit the current page"
-    },
-    {
-      "id": "showProgress",
-      "title": "Show Course Progress",
-      "icon": "fas fa-chart-line",
-      "value": false,
-      "description": "Display progress information for courses and lessons"
-    }
   ]
 }
