@@ -10,10 +10,10 @@
   "description": {
     "en": "Google AI Studio is a developer platform that lets you quickly prototype and build applications using Google's next-generation, multimodal generative AI models, known as Gemini."
   },
-  "url": ["aistudio.google.com","www.aistudio.google.com"],
+  "url": ["aistudio.google.com", "www.aistudio.google.com"],
   "version": "1.0.0",
-  "logo": "https://www.gstatic.com/aistudio/ai_studio_favicon_2_256x256.png",
-  "thumbnail": "https://aitoolinsight.com/wp-content/uploads/2022/09/Google-ai-studio-3.png.webp",
+  "logo": "https://mido.anlayana.com/premid/images/aistudio/logo.png",
+  "thumbnail": "https://mido.anlayana.com/premid/images/aistudio/banner.png",
   "color": "#6ad2f7",
   "category": "other",
   "tags": [
