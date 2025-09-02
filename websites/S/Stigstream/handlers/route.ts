@@ -47,7 +47,7 @@ export class RouteHandlers {
     }
 
     if (settings?.showButtons) {
-      const pathname = window.location.pathname
+      const pathname = document.location.pathname
 
       let buttonLabel = 'View Content'
 
@@ -68,7 +68,7 @@ export class RouteHandlers {
   }
 
   public static handleWatchPageUpdate(presenceData: PresenceData, settings: Settings): void {
-    const pathname = window.location.pathname
+    const pathname = document.location.pathname
     const isTvShow = pathname.startsWith('/watch/tv/')
     const isMovie = pathname.startsWith('/watch/movie/')
 
