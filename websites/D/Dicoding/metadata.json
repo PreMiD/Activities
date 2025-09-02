@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "762992235385716756",
+    "name": ".peii"
+  },
+  "service": "Dicoding",
+  "altnames": [
+    "Dicoding Indonesia"
+  ],
+  "description": {
+    "en": "Learn to code with industry-level curriculum from Dicoding.",
+    "id": "Belajar ngoding dengan kurikulum standar industri dari Dicoding."
+  },
+  "url": [
+    "dicoding.com",
+    "www.dicoding.com"
+  ],
+  "regExp": "([a-z0-9-]+[.])*dicoding[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dicoding/assets/logo.jpeg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dicoding/assets/thumbnail.png",
+  "color": "#2C7BE5",
+  "category": "other",
+  "tags": [
+    "education",
+    "programming",
+    "courses",
+    "events",
+    "blog"
+  ]
+}
