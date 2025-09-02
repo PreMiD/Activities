@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "300222163456229396",
+    "name": "_bruno.benicio"
+  },
+  "service": "Gran Cursos",
+  "description": {
+    "en": "Gran Cursos is undoubtedly a national benchmark in the education sector. The company built its reputation in competitive exam preparation and continues to expand its horizons into the Higher Education and Technology markets.",
+    "pt-br": "O Gran Cursos é, sem dúvidas, uma empresa referência nacional na área da educação. A empresa construiu sua reputação na área de preparatório para concursos e hoje segue expandindo seus horizontes para o mercado de Ensino Superior e Tecnologia."
+  },
+  "url": "aluno.grancursosonline.com.br",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/uiKB6mM.png",
+  "thumbnail": "https://i.imgur.com/8WeHmtK.jpeg",
+  "color": "#9547fc",
+  "category": "socials",
+  "tags": [
+    "school",
+    "concourse"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}
