@@ -16,7 +16,7 @@ presence.on('UpdateData', async () => {
   const { pathname } = document.location
 
   if (pathname.includes('pos/curso/')) {
-    const titleElement = document.querySelector('#video-wrapper > div > div.col-12 > div.row.m-0 > div.col-8.pl-lg-0 > div > div > span')
+    const titleElement = document.querySelector('#video-wrapper .col-8 span')
 
     if (titleElement && titleElement.textContent) {
       presenceData.details = `Pós-graduação: ${titleElement.textContent}`
@@ -24,7 +24,7 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.details = 'Navegando no Gran Cursos Online'
     }
-    const subtitleElement = document.querySelector('#menu-container > div > div > div > div.d-flex.flex-row.w-100.justify-content-between > div:nth-child(1) > div.d-flex.flex-wrap.align-content-center.align-items-center.font-weight-600.text-color-light-0.lh-5.fs-5.fs-md-1.fs-lg-2.cursor-pointer > span')
+    const subtitleElement = document.querySelector('#menu-container .font-weight-600.cursor-pointer > span')
     if (subtitleElement && subtitleElement.textContent) {
       presenceData.state = `Assistindo a aula: ${subtitleElement.textContent}`
     }
