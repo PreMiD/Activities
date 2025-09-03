@@ -35,13 +35,9 @@ export class Utils {
         return this.findLiveModelVoiceName()
 
       case 'currentTokenCount':
-        return this.getTokenCount('current')
-
-      case 'maxTokenCount':
-        return this.getTokenCount('max')
+        return this.getTokenCount()
 
       default:
-        console.warn(`Unknown infoName provided: ${infoName}`)
         return 'Unknown'
     }
   }
@@ -81,25 +77,21 @@ export class Utils {
     return 'Unknown Voice'
   }
 
-  private static getTokenCount(part: 'current' | 'max'): string {
-    const selector = '.token-count-value'
-    const defaultValue = '0 / 0'
+  private static getTokenCount(): string {
+    const selector = '.v3-token-count-value'
+
+    const defaultValue = '0 tokens'
     const defaultReturnValue = '0'
 
     try {
       const fullTokenText = this.getTextFromSelector(selector, defaultValue)
-      const parts = fullTokenText.split('/').map(s => s.trim())
 
-      if (part === 'current') {
-        return parts[0] ?? defaultReturnValue
-      }
-      else {
-        const maxToken = parts[1] ?? defaultReturnValue
-        return maxToken
-      }
+      const parts = fullTokenText.trim().split(/\s+/)
+
+      return parts[0] ?? defaultReturnValue
     }
     catch (error) {
-      console.error('Token bilgisi alınırken hata oluştu:', error)
+      console.error('Error receiving token information:', error)
       return defaultReturnValue
     }
   }

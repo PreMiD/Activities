@@ -18,4 +18,3 @@ export type ChatInfoType
     | 'liveModelName'
     | 'liveModelVoiceName'
     | 'currentTokenCount'
-    | 'maxTokenCount'

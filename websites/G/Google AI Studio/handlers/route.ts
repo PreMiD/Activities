@@ -36,12 +36,11 @@ export class RouteHandlers {
 
     if (settings?.showTokenCount) {
       const currentTokens = Utils.getInfoByName('currentTokenCount')
-      const maxTokens = Utils.getInfoByName('maxTokenCount')
 
-      if (maxTokens && maxTokens !== '0') {
+      if (currentTokens) {
         const tokenText = (currentTokens === 'progress_activity')
           ? 'Tokens: Calculating'
-          : `Tokens: ${currentTokens} / ${maxTokens}`
+          : `Tokens: ${currentTokens}`
 
         stateParts.push(tokenText)
       }
