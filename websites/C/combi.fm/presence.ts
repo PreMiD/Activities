@@ -31,27 +31,8 @@ interface HandleSettingsResult {
   name: string | null
   details: string | null
   state: string | null
+  clear: boolean
   bHidden: boolean
-}
-
-function parseToSeconds(time?: string | undefined | null): number | undefined {
-  if (!time)
-    return undefined
-
-  const parts = time.split(':')
-
-  if (parts.some(p => !/^\d+$/.test(p))) {
-    return undefined
-  }
-
-  const nums: number[] = parts.map(p => Number.parseInt(p, 10))
-
-  const [mins, secs] = nums
-  if (!mins || !secs) {
-    return undefined
-  }
-
-  return mins * 60 + secs
 }
 
 function handleSettings({
@@ -59,12 +40,16 @@ function handleSettings({
   bHidden,
   trackTitle,
   artistsContent,
-}: HandleSettingsParams) {
-  const { title, artists } = settings
+}: HandleSettingsParams): HandleSettingsResult {
+  const { title, artists, clear, friends, constant } = settings
 
   let name: string | null
   let details: string | null
-  let state: string | null
+  let state: string | null = null
+
+  if (clear) {
+    return { name, details, state, clear, bHidden }
+  }
 
   // Title setting
   if (title || artists) {
@@ -90,17 +75,16 @@ function handleSettings({
         state = 'Listening on combi.fm'
       }
     }
-  }
-  else {
-    name = 'combi.fm'
-    details = trackTitle
-    state = null
-    if (artistsContent) {
-      state = artistsContent
-    }
+    return { name, details, state, bHidden, clear }
   }
 
-  return { name, details, state, bHidden }
+  name = 'combi.fm'
+  details = trackTitle
+  if (artistsContent) {
+    state = artistsContent
+  }
+
+  return { name, details, state, bHidden, clear }
 }
 
 let timerId: ReturnType<typeof setTimeout> | null = null
@@ -169,7 +153,6 @@ presence.on('UpdateData', async () => {
 
     // If still paused:
     if (result) {
-      // If presence doesn't clear properly
       if (constantSetting) {
         const detailsMsg = oldTitle ? `Last listened to: \n ${oldTitle}` : null
         if (!(oldTitle || oldTitle === trackTitle) && trackTitle) {
@@ -182,7 +165,7 @@ presence.on('UpdateData', async () => {
           state: 'Paused',
         })
       }
-
+      // If presence doesn't clear properly
       return presence.clearActivity()
     }
   }
@@ -193,12 +176,8 @@ presence.on('UpdateData', async () => {
 
   [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(timestampFromFormat(currentTime ?? ''), timestampFromFormat(totalDuration ?? ''))
 
-  // Clear setting
-  if (clearSetting) {
-    return presence.clearActivity()
-  }
-
-  const { name, details, state, bHidden } = handleSettings({
+  // Settings
+  const { name, details, state, bHidden, clear } = handleSettings({
     settings: {
       title: titleSetting,
       artists: artistsSetting,
@@ -210,6 +189,9 @@ presence.on('UpdateData', async () => {
     artistsContent,
     bHidden: false,
   })
+  if (clear) {
+    return presence.clearActivity()
+  }
 
   presenceData.name = name
   presenceData.details = details
