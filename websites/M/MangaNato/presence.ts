@@ -52,10 +52,10 @@ class MangaNatoPresence {
     const routePattern = Utils.getRoutePattern(document.location)
 
     const MANGA_CATEGORIES = [
-      'latest-manga',
-      'hot-manga',
-      'new-manga',
-      'completed-manga',
+      '/latest-manga',
+      '/hot-manga',
+      '/new-manga',
+      '/completed-manga',
     ]
 
     const routeHandlers: Record<string, () => void> = {
