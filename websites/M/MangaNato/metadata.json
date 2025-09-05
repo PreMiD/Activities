@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "526822284694913042",
+    "name": "Mido"
+  },
+  "service": "MangaNato",
+  "description": {
+    "en": "Read manga online for free on MangaNato! Explore a vast selection of manga and manhwa with easy access to top free manga websites. Enjoy popular genres like yaoi and more on MangaNato’s seamless, user-friendly platform."
+  },
+  "url": ["www.manganato.gg", "manganato.gg"],
+  "version": "1.0.0",
+  "logo": "https://mido.anlayana.com/premid/images/manganato/logo.png",
+  "thumbnail": "https://mido.anlayana.com/premid/images/manganato/banner.png",
+  "color": "#6ad2f7",
+  "category": "anime",
+  "tags": ["manga", "manhwa", "anime"],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "description": "Hides all information from your presence.",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "description": "Shows/hides the buttons"
+    }
+  ]
+}
