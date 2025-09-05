@@ -21,16 +21,30 @@
   "settings": [
     {
       "id": "title",
-      "title": "Listening to... Title",
-      "description": "Replace subject of `Listening to..` with the track title",
-      "icon": "fad fa-stream",
+      "title": "Listening to [title]",
+      "description": "Replace subject of `Listening to..` with the title",
+      "icon": "fad fa-pencil",
       "value": false
     },
     {
       "id": "artists",
-      "title": "Listening to... Artists",
-      "description": "Replace subject of `Listening to..` with the track artists",
-      "icon": "fad fa-stream",
+      "title": "Listening to [artists]",
+      "description": "Replace subject of `Listening to..` with the artists",
+      "icon": "fad fa-pencil",
+      "value": false
+    },
+    {
+      "id": "constant",
+      "title": "Constant Presence",
+      "description": "Display a constant presence, playing or paused.",
+      "icon": "fad fa-bookmark",
+      "value": false
+    },
+    {
+      "id": "friends",
+      "title": "Session Count",
+      "description": "Display how many people you are in a session with.",
+      "icon": "fad fa-group",
       "value": false
     },
     {
