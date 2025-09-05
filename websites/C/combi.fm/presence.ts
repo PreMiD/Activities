@@ -20,7 +20,6 @@ interface Settings {
 
 interface HandleSettingsParams {
   settings: Settings
-  bHidden?: boolean
   trackTitle: string
   artistsContent?: string | null
 }
@@ -35,7 +34,6 @@ interface HandleSettingsResult {
 
 function handleSettings({
   settings,
-  bHidden,
   trackTitle,
   artistsContent,
 }: HandleSettingsParams): HandleSettingsResult {
@@ -44,6 +42,7 @@ function handleSettings({
   let name: string | null = null
   let details: string | null = null
   let state: string | null = null
+  let bHidden: boolean = false
 
   if (clear) {
     return { name, details, state, clear, bHidden }
@@ -187,7 +186,6 @@ presence.on('UpdateData', async () => {
     },
     trackTitle,
     artistsContent,
-    bHidden: false,
   })
   if (clear) {
     return presence.clearActivity()
