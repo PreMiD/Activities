@@ -43,6 +43,8 @@ export class RouteHandlers {
     if (titleElement && titleElement.textContent) {
       const mangaTitle = titleElement.textContent.trim()
       if (mangaTitle) {
+                  presenceData.smallImageKey = Assets.Viewing
+          presenceData.smallImageText = 'Viewing'
         presenceData.details = mangaTitle
       }
     }
