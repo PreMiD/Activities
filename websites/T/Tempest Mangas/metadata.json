@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "526822284694913042",
+    "name": "Mido"
+  },
+  "service": "Tempest Mangas",
+  "description": {
+    "en": "Welcome to Tempest Fansub, Turkey's most productive, up-to-date, and high-quality Turkish webtoon, manhwa, manhua, and manga reading platform.",
+    "tr": "Türkiyenin En Üretken Güncel ve Kaliteli, Türkçe Webtoon Manhwa Manhua Manga Okuma Platformu Tempest Fansub'a hoş geldiniz."
+  },
+  "url": "tempestmangas.com",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tempest%20Mangas/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tempest%20Mangas/assets/thumbnail.png",
+  "color": "#6ad2f7",
+  "category": "anime",
+  "tags": [
+    "manga",
+    "webtoon",
+    "manhwa",
+    "manhua",
+    "turk",
+    "türk",
+    "türkçe"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "description": "Hides all information from your presence.",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "description": "Shows/hides the buttons"
+    }
+  ]
+}

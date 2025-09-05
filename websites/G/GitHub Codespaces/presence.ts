@@ -610,7 +610,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Inactive Codespace'
     // Idle/Start Screen
   }
-  else if (activeTab && editorMode) {
+  else if (activeTab?.getAttribute('data-resource-name') && editorMode?.getAttribute('aria-label')) {
     const branch = scmTab?.textContent?.trim()
     const workspace = scmTab!.getAttribute('aria-label')!.split('(Git)')[0]
     const filename = activeTab.getAttribute('data-resource-name')

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "432215088686956565",
+    "name": "_doritos."
+  },
+  "service": "JKAnime",
+  "description": {
+    "en": "JKAnime is an HD anime streaming platform. With subtitles and free from invasive ads!",
+    "es": "JKAnime es una plataforma de streaming para Anime en HD. Con subtítulos y libre de publicidad invasiva!"
+  },
+  "url": "jkanime.net",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/J/JKAnime/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/JKAnime/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "stream",
+    "video"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "(.*\\.)?jkanime\\.net"
+}

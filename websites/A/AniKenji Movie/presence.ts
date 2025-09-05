@@ -70,7 +70,7 @@ async function updatePresence(): Promise<void> {
       showButtons,
       showTimestamps,
     ] = await Promise.all([
-      presence.getSetting<boolean>('buttons'),
+      presence.getSetting<boolean>('showButtons'),
       presence.getSetting<boolean>('showtimestamps'),
     ])
     const Rating = document.querySelector('div.post-ratings > span')?.textContent?.trim() || 'N/A'
@@ -110,9 +110,8 @@ async function updatePresence(): Promise<void> {
     }
     else if (isDetailsPage) {
       const fullTitle = document.querySelector('head > title')?.textContent?.trim() || ''
-      const titleAfterPrefix = fullTitle.split('Phim')?.[1]?.trim() || fullTitle.split('Xem Phim')?.[1]?.trim() || ''
       presenceData.details = 'Định xem phim...'
-      presenceData.state = titleAfterPrefix
+      presenceData.state = fullTitle
       presenceData.largeImageKey = dynamicBannerUrl
     }
     if (isPlayback) {
@@ -136,7 +135,7 @@ async function updatePresence(): Promise<void> {
         if (showButtons) {
           presenceData.buttons = [
             {
-              label: '📺 Xem Phim',
+              label: 'Xem Phim',
               url: document.location.href,
             },
           ]
@@ -167,7 +166,7 @@ async function updatePresence(): Promise<void> {
       if (showButtons) {
         presenceData.buttons = [
           {
-            label: '📺 Xem Phim',
+            label: 'Xem Phim',
             url: document.location.href,
           },
         ]

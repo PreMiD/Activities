@@ -60,7 +60,7 @@ Each activity has a descriptor file called `metadata.json`, the metadata has a s
 
 ```json
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.15",
   "apiVersion": 1,
   "author": {
     "name": "USER",

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "526822284694913042",
+    "name": "Mido"
+  },
+  "service": "Stigstream",
+  "description": {
+    "en": "Stream thousands of movies and TV shows on Stigstream. Watch the latest releases, classic films, and binge-worthy series with our premium streaming platform."
+  },
+  "url": [
+    "stigstream.com",
+    "www.stigstream.com"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stigstream/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stigstream/assets/thumbnail.png",
+  "color": "#db0000",
+  "category": "videos",
+  "tags": [
+    "video",
+    "media"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?://(player\\.vidplus\\.to|turbovid\\.eu|player\\.videasy\\.net|embed\\.su)/(?:.*?/)?(tv|movie)/\\d+(?:/\\d+)*$",
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "description": "Hides all information from your presence.",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "description": "Shows/hides the buttons"
+    },
+    {
+      "id": "showPosters",
+      "title": "Show Posters",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Toggles the display of Tv Series and Movies posters"
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "description": "Shows/hides the elapsed and remaining time"
+    }
+  ]
+}

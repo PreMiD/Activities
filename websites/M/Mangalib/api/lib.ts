@@ -25,71 +25,88 @@ export class Lib {
     return string.split('/').pop()!.split('-')[0]!
   }
 
-  private async fetch<T extends DataType>(url: string, siteId: SiteId): Promise<CachedResponse<T>> {
+  private async fetch<T extends DataType>(url: string, siteId: SiteId, origin: string): Promise<CachedResponse<T>> {
     const response = await fetch(url, { headers: { 'Site-Id': siteId } })
     const json = await response.json()
+
+    const { data } = json
+
+    if (data.cover)
+      data.cover.adjusted = await this.fetchCover(data.cover.default, origin)
+    if (data.related)
+      data.related.cover.adjusted = await this.fetchCover(data.related.cover.default, origin)
+    if (data.avatar)
+      data.avatar.adjusted = await this.fetchCover(data.avatar.url, origin)
+    if (data.user)
+      data.user.avatar.adjusted = await this.fetchCover(data.user.avatar.url, origin)
+
     return {
       id: this.extractId(url),
-      data: json.data as T,
+      data: data as T,
     }
   }
 
-  public async getTitle<T extends MangaData | RanobeData | AnimeData>(slug: string, siteId: SiteId): Promise<CachedResponse<T>> {
+  private async fetchCover(url: string, origin: string): Promise<Blob> {
+    const response = await fetch(url, { referrer: origin })
+    return await response.blob()
+  }
+
+  public async getTitle<T extends MangaData | RanobeData | AnimeData>(slug: string, siteId: SiteId, origin: string): Promise<CachedResponse<T>> {
     const id = this.extractId(slug)
 
     switch (siteId) {
       case SiteId.MangaLib:
         if (!this.cache || this.cache.id !== id)
-          this.cache = await this.fetch<MangaData>(MangaCdn(slug), siteId)
+          this.cache = await this.fetch<MangaData>(MangaCdn(slug), siteId, origin)
         break
       case SiteId.RanobeLib:
         if (!this.cache || this.cache.id !== id)
-          this.cache = await this.fetch<RanobeData>(MangaCdn(slug), siteId)
+          this.cache = await this.fetch<RanobeData>(MangaCdn(slug), siteId, origin)
         break
       case SiteId.AnimeLib:
         if (!this.cache || this.cache.id !== id) {
-          this.cache = await this.fetch<AnimeData>(AnimeCdn(slug), siteId)
+          this.cache = await this.fetch<AnimeData>(AnimeCdn(slug), siteId, origin)
         }
     }
 
     return this.cache as CachedResponse<T>
   }
 
-  public async getCollection(id: string, siteId: SiteId): Promise<CachedResponse<CollectionData>> {
+  public async getCollection(id: string, siteId: SiteId, origin: string): Promise<CachedResponse<CollectionData>> {
     if (!this.cache || this.cache.id !== id)
-      this.cache = await this.fetch<CollectionData>(CollectionsCdn(id), siteId)
+      this.cache = await this.fetch<CollectionData>(CollectionsCdn(id), siteId, origin)
 
     return this.cache as CachedResponse<CollectionData>
   }
 
-  public async getReview(id: string, siteId: SiteId): Promise<CachedResponse<ReviewData>> {
+  public async getReview(id: string, siteId: SiteId, origin: string): Promise<CachedResponse<ReviewData>> {
     if (!this.cache || this.cache.id !== id)
-      this.cache = await this.fetch<ReviewData>(ReviewsCdn(id), siteId)
+      this.cache = await this.fetch<ReviewData>(ReviewsCdn(id), siteId, origin)
 
     return this.cache as CachedResponse<ReviewData>
   }
 
-  public async getCharacter(slug: string, siteId: SiteId): Promise<CachedResponse<CharacterData>> {
+  public async getCharacter(slug: string, siteId: SiteId, origin: string): Promise<CachedResponse<CharacterData>> {
     const id = this.extractId(slug)
 
     if (!this.cache || this.cache.id !== id)
-      this.cache = await this.fetch<CharacterData>(CharacterCdn(slug), siteId)
+      this.cache = await this.fetch<CharacterData>(CharacterCdn(slug), siteId, origin)
 
     return this.cache as CachedResponse<CharacterData>
   }
 
-  public async getPerson(slug: string, siteId: SiteId): Promise<CachedResponse<PersonData>> {
+  public async getPerson(slug: string, siteId: SiteId, origin: string): Promise<CachedResponse<PersonData>> {
     const id = this.extractId(slug)
 
     if (!this.cache || this.cache.id !== id)
-      this.cache = await this.fetch<PersonData>(PeopleCdn(slug), siteId)
+      this.cache = await this.fetch<PersonData>(PeopleCdn(slug), siteId, origin)
 
     return this.cache as CachedResponse<PersonData>
   }
 
-  public async getUser(id: string, siteId: SiteId): Promise<CachedResponse<UserData>> {
+  public async getUser(id: string, siteId: SiteId, origin: string): Promise<CachedResponse<UserData>> {
     if (!this.cache || this.cache.id !== id)
-      this.cache = await this.fetch<UserData>(UserCdn(id), siteId)
+      this.cache = await this.fetch<UserData>(UserCdn(id), siteId, origin)
 
     return this.cache as CachedResponse<UserData>
   }
@@ -98,20 +115,20 @@ export class Lib {
    *
    * Can't be currencly used due to API changes
    */
-  public async getTeam(slug: string, siteId: SiteId): Promise<CachedResponse<TeamData>> {
+  public async getTeam(slug: string, siteId: SiteId, origin: string): Promise<CachedResponse<TeamData>> {
     const id = this.extractId(slug)
 
     if (!this.cache || this.cache.id !== id)
-      this.cache = await this.fetch<TeamData>(TeamsCdn(slug), siteId)
+      this.cache = await this.fetch<TeamData>(TeamsCdn(slug), siteId, origin)
 
     return this.cache as CachedResponse<TeamData>
   }
 
-  public async getPublisher(slug: string, siteId: SiteId): Promise<CachedResponse<PublisherData>> {
+  public async getPublisher(slug: string, siteId: SiteId, origin: string): Promise<CachedResponse<PublisherData>> {
     const id = this.extractId(slug)
 
     if (!this.cache || this.cache.id !== id)
-      this.cache = await this.fetch<PublisherData>(PublisherCdn(slug), siteId)
+      this.cache = await this.fetch<PublisherData>(PublisherCdn(slug), siteId, origin)
 
     return this.cache as CachedResponse<PublisherData>
   }

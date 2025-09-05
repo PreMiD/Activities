@@ -1,8 +1,12 @@
-import { Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat } from 'premid'
 
 const presence = new Presence({ clientId: '639591760791732224' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 const urlpath = document.location.pathname.split('/')
+
+enum CustomAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/B/bilibili/assets/logo.png',
+}
 
 let uploader: HTMLElement | null,
   uploaderName: string,
@@ -13,7 +17,9 @@ let uploader: HTMLElement | null,
   videoPaused: boolean,
   currentTime: number,
   duration: number,
-  timestamps: number[]
+  timestamps: number[],
+  isMusicVideo: boolean | undefined,
+  vid: string | undefined
 
 presence.on('iFrameData', (data: any) => {
   iFrameTitle = data.details
@@ -21,10 +27,16 @@ presence.on('iFrameData', (data: any) => {
 })
 
 presence.on('UpdateData', async () => {
+  const [privacy, showCover] = await Promise.all([
+    presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('cover'),
+  ])
   const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/B/bilibili/assets/logo.png',
+    largeImageKey: privacy || !showCover
+      ? CustomAssets.Logo
+      : navigator.mediaSession.metadata?.artwork[0]?.src
+        ?? CustomAssets.Logo,
   }
-  const privacy = await presence.getSetting<boolean>('privacy')
 
   async function internalGetTimestamps() {
     let video = document.querySelector<HTMLVideoElement>('bpx-player-container')
@@ -83,9 +95,21 @@ presence.on('UpdateData', async () => {
 
     uploaderLink = uploader?.getAttribute('href') ?? ''
     title = document.querySelector('.video-title')
+    const newVid = document.location.href.match(/BV[^&]{10}|(?<=av)\d+/)?.[0]
+    if (vid !== newVid) {
+      vid = newVid
+      const idType = vid?.startsWith('BV') ? 'bvid' : 'aid'
+      const response = await (fetch(
+        `https://api.bilibili.com/x/web-interface/view?${idType}=${vid}`,
+      ).then(e => e.json()))
+      const tagNames = (response?.data?.tname ?? '') + (response?.data?.tname_v2 ?? '')
+      isMusicVideo = /音乐|翻唱|MV|VOCALOID|电台/.test(tagNames)
+    }
 
+    presenceData.type = isMusicVideo ? ActivityType.Listening : ActivityType.Watching
+    presenceData.name = uploaderName
+    presenceData.state = null
     presenceData.details = title?.getAttribute('title')
-    presenceData.state = uploaderName
     presenceData.buttons = [
       {
         label: 'Watch Video', // getString() later

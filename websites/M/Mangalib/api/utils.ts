@@ -13,13 +13,18 @@ enum CustomAssets {
 export function getSiteId(hostname: string) {
   switch (hostname) {
     case 'mangalib.me':
+    case 'mangalib.org':
       return SiteId.MangaLib
     case 'ranobelib.me':
+    case 'v1.novelslib.me':
       return SiteId.RanobeLib
     case 'anilib.me':
+    case 'animelib.org':
+    case 'v1.animelib.org':
+    case 'v2.animelib.org':
       return SiteId.AnimeLib
     default:
-      throw new Error('An unknown host name was received.')
+      throw new Error('MangaLib Activity: An unknown host name was received.')
   }
 }
 

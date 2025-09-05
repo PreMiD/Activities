@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "212701689579438080",
+    "name": "bnwkr"
+  },
+  "service": "Fantasy Premier League",
+  "description": {
+    "en": "With over 11 million players, Fantasy Premier League is the biggest Fantasy Football game in the world."
+  },
+  "url": "fantasy.premierleague.com",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fantasy%20Premier%20League/assets/logo.jpeg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fantasy%20Premier%20League/assets/thumbnail.png",
+  "color": "#7367ff",
+  "category": "other",
+  "tags": [
+    "fantasy",
+    "soccer",
+    "football",
+    "sports",
+    "game",
+    "league"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showButtons",
+      "title": "Show buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}

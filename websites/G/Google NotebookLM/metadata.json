@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "526822284694913042",
+    "name": "Mido"
+  },
+  "service": "Google NotebookLM",
+  "description": {
+    "en": "NotebookLM is an AI-powered research and writing tool that helps you summarize and extract information across dense and complex sources. You can upload PDFs, Google Docs, Google Slides, website URLs, and more to build a notebook with many sources."
+  },
+  "url": [
+    "notebooklm.google",
+    "notebooklm.google.com",
+    "www.notebooklm.google.com"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20NotebookLM/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20NotebookLM/assets/thumbnail.png",
+  "color": "#6ad2f7",
+  "category": "other",
+  "tags": [
+    "ai",
+    "research",
+    "writing",
+    "documents",
+    "summarization",
+    "google"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "description": "Hides all information from your presence.",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showNotebookName",
+      "title": "Show Notebook Name",
+      "description": "Displays the name of the current notebook you are working on.",
+      "icon": "fas fa-book-open",
+      "value": true
+    }
+  ]
+}

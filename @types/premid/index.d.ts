@@ -124,6 +124,31 @@ declare global {
      * Array of buttons, max 2, label is the button text, and url is the link
      */
     buttons?: [ButtonData, ButtonData?]
+    /**
+     * Controls which field is displayed in the user's status text in the member list
+     * @since 2.8.0
+     */
+    statusDisplayType?: StatusDisplayType
+    /**
+     * URL that is linked when clicking on the details text
+     * @since 2.8.0
+     */
+    detailsUrl?: string
+    /**
+     * URL that is linked when clicking on the state text
+     * @since 2.8.0
+     */
+    stateUrl?: string
+    /**
+     * URL that is opened when clicking on the large image
+     * @since 2.8.0
+     */
+    largeImageUrl?: string
+    /**
+     * URL that is opened when clicking on the small image
+     * @since 2.8.0
+     */
+    smallImageUrl?: string
   }
 
   interface MediaPresenceData extends BasePresenceData {
@@ -388,12 +413,12 @@ declare global {
     event: 'reconnect'
   }
 
-  type PresenceClassEvents =
-    | PresenceClassSetActivityEvent
-    | PresenceClassClearActivityEvent
-    | PresenceClassGetPresenceLetiableEvent
-    | PresenceClassGetPageVariablesEvent
-    | PresenceClassReconnectEvent
+  type PresenceClassEvents
+    = | PresenceClassSetActivityEvent
+      | PresenceClassClearActivityEvent
+      | PresenceClassGetPresenceLetiableEvent
+      | PresenceClassGetPageVariablesEvent
+      | PresenceClassReconnectEvent
 
   type ConsoleLogType = 'log' | 'info' | 'warn' | 'error'
   interface ConsoleLog<T = unknown> {
@@ -407,7 +432,7 @@ declare global {
    * Useful tools for developing presences
    * @link https://docs.premid.app/en/dev/presence/class
    */
-  declare class Presence {
+  class Presence {
     private clientId
     private injectOnComplete
     private internalPresence
@@ -663,11 +688,11 @@ declare global {
   /**
    * Minimum amount of time in ms between slide updates
    */
-  declare const MIN_SLIDE_TIME: number
+  const MIN_SLIDE_TIME: number
   /**
    * Represents a slideshow slide
    */
-  declare class SlideshowSlide {
+  class SlideshowSlide {
     id: string
     data: PresenceData
     private _interval
@@ -691,7 +716,7 @@ declare global {
    * Controller for alternating between multiple sets of
    * presence data at specific intervals
    */
-  declare class Slideshow {
+  class Slideshow {
     private index
     private slides
     currentSlide: PresenceData
@@ -743,7 +768,7 @@ declare global {
    * Is used to gather information from iFrames
    * @link https://docs.premid.app/en/dev/presence/iframe
    */
-  declare class iFrame {
+  class iFrame {
     _events: any
     /**
      * Send data from iFrames back to the presence script

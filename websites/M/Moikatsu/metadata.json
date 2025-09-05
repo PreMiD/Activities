@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "526822284694913042",
+    "name": "Mido"
+  },
+  "service": "Moikatsu",
+  "description": {
+    "en": "Moikatsu #1 Watch High Quality Anime Online Without Ads. You can watch anime online free in HD without Ads. Best place for free find and one-click anime."
+  },
+  "url": "moikatsu.in",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Moikatsu/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Moikatsu/assets/thumbnail.png",
+  "color": "#ffffff",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "video",
+    "media"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "https://(moikatsu\\.in/src/player/sub\\.php\\?.*|megaplay\\.buzz/stream/.*)",
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "description": "Hides all information from your presence.",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "description": "Shows/hides the buttons"
+    },
+    {
+      "id": "showPosters",
+      "title": "Show Posters",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Toggles the display of anime posters"
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "description": "Shows/hides the elapsed and remaining time"
+    }
+  ]
+}

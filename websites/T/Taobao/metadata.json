@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "792589695590465567",
+    "name": "h2so4_chan"
+  },
+  "service": "Taobao",
+  "description": {
+    "en": "China’s largest online shopping platform offering everything from daily essentials to electronics, with personalized recommendations, live commerce, and worldwide delivery. It’s all on Taobao.",
+    "zh": "中国最大的综合性购物平台，提供从日用品到电子产品的一切商品，支持个性化推荐、直播带货与全球配送，尽在淘宝。"
+  },
+  "url": "taobao.com",
+  "regExp": "([a-z0-9-]+[.])*(taobao|tmall)[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Taobao/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Taobao/assets/thumbnail.jpeg",
+  "color": "#FF5000",
+  "category": "other",
+  "tags": [
+    "social",
+    "shopping"
+  ]
+}

@@ -1,22 +1,15 @@
 const iframe = new iFrame()
+
 iframe.on('UpdateData', async () => {
-  const { hostname } = window.location
-  if (
-    hostname === 'voe.sx'
-    || hostname === 'streamtape.com'
-    || hostname === 'playtube.ws'
-    || hostname === 'vidoza.net'
-    || hostname === 'strcloud.link'
-    || hostname === 'ninjastream.to'
-  ) {
-    const video = document.querySelector('video')
-    if (video) {
-      iframe.send({
-        currentTime: video.currentTime,
-        timeEnd: video.duration,
+  const video = document.querySelector('video.jw-video') as HTMLVideoElement | null
+  if (video && !Number.isNaN(video.duration)) {
+    iframe.send({
+      iframe_video: {
+        iFrameVideo: true,
+        currTime: video.currentTime,
+        duration: video.duration,
         paused: video.paused,
-        played: video.currentTime !== 0,
-      })
-    }
+      },
+    })
   }
 })
