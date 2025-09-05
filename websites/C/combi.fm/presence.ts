@@ -1,10 +1,8 @@
-/* eslint-disable unused-imports/no-unused-vars */
-import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
+import { ActivityType, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1390080838925811784',
 })
-const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets { // Other default assets can be found at index.d.ts
   Logo = 'https://i.imgur.com/9mLtpOG.png',
@@ -41,10 +39,10 @@ function handleSettings({
   trackTitle,
   artistsContent,
 }: HandleSettingsParams): HandleSettingsResult {
-  const { title, artists, clear, friends, constant } = settings
+  let { title, artists, clear } = settings
 
-  let name: string | null
-  let details: string | null
+  let name: string | null = null
+  let details: string | null = null
   let state: string | null = null
 
   if (clear) {
@@ -75,14 +73,16 @@ function handleSettings({
         state = 'Listening on combi.fm'
       }
     }
-    return { name, details, state, bHidden, clear }
   }
-
-  name = 'combi.fm'
-  details = trackTitle
-  if (artistsContent) {
-    state = artistsContent
+  else {
+    name = 'combi.fm'
+    details = trackTitle
+    if (artistsContent) {
+      state = artistsContent
+    }
   }
+  bHidden = bHidden ?? false
+  clear = clear ?? false
 
   return { name, details, state, bHidden, clear }
 }
@@ -114,7 +114,7 @@ presence.on('UpdateData', async () => {
   const currentTime = document.querySelector<HTMLElement>('#footer-time-elapsed')?.textContent
   const totalDuration = document.querySelector<HTMLElement>('#footer-duration')?.textContent
   const paused = document.querySelector<HTMLElement>('#footer-paused')
-  const playing = document.querySelector<HTMLElement>('#footer-playing')
+  // const playing = document.querySelector<HTMLElement>('#footer-playing')
   const sp_platform = document.querySelector<HTMLElement>('#footer-platform-spotify')
   const sc_platform = document.querySelector<HTMLElement>('#footer-platform-soundcloud')
 
@@ -193,9 +193,13 @@ presence.on('UpdateData', async () => {
     return presence.clearActivity()
   }
 
-  presenceData.name = name
-  presenceData.details = details
-  presenceData.state = state
+  if (name && details) {
+    presenceData.name = name
+    presenceData.details = details
+  }
+  if (state) {
+    presenceData.state = state
+  }
 
   if (bHidden) {
     presenceData.smallImageKey = ActivityAssets.Logo
