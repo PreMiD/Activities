@@ -543,7 +543,7 @@ presence.on('UpdateData', async () => {
             || 'Just Chatting'
           const profilePic = document
             .querySelector<HTMLImageElement>(
-              '.Layout-sc-1xcs6mc-0 .hHGLGY > a > .tw-avatar > .tw-image',
+              '.channel-info-content .tw-avatar > .tw-image',
             )
             ?.src
             ?.replace(/-\d{1,2}x\d{1,2}/, '-600x600')
