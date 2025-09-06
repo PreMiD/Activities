@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "212701689579438080",
+    "name": "bnwkr"
+  },
+  "service": "NOW TV",
+  "description": {
+    "en": "Stream the world's best entertainment, movies and sport, brought to you by Sky."
+  },
+  "url": [
+    "nowtv.com",
+    "www.nowtv.com"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NOW%20TV/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NOW%20TV/assets/thumbnail.jpeg",
+  "color": "#066b73",
+  "category": "videos",
+  "tags": [
+    "video",
+    "streaming",
+    "sports",
+    "movies",
+    "hayu",
+    "hbo",
+    "tv"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
+  ]
+}

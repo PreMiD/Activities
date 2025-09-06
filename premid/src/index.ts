@@ -2,6 +2,19 @@ export * from './functions/getTimestamps.js'
 export * from './functions/getTimestampsFromMedia.js'
 export * from './functions/timestampFromFormat.js'
 
+/**
+ * Status display types for Rich Presence
+ * @since 2.8.0
+ */
+export enum StatusDisplayType {
+  /** Display the activity name - e.g. "Listening to Spotify" */
+  Name = 0,
+  /** Display the state field - e.g. "Listening to Rick Astley" */
+  State = 1,
+  /** Display the details field - e.g. "Listening to Never Gonna Give You Up" */
+  Details = 2,
+}
+
 export enum ActivityType {
   /**
    * Playing {name}
