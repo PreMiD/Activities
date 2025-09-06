@@ -169,22 +169,22 @@ presence.on('UpdateData', async () => {
         '/channels/(\\d*)/(\\d*)/': {
           details: serverTyping
             ? strings.channelTyping
-              .split('{0}')[0]
-              ?.replace('{1}', serverChannel)
-              .replace('{2}', serverServerName)
+                .split('{0}')[0]
+                ?.replace('{1}', serverChannel)
+                .replace('{2}', serverServerName)
             : strings.channelReading
-              .split('{0}')[0]
-              ?.replace('{1}', serverChannel)
-              .replace('{2}', serverServerName),
+                .split('{0}')[0]
+                ?.replace('{1}', serverChannel)
+                .replace('{2}', serverServerName),
           state: serverTyping
             ? strings.channelTyping
-              .split('{0}')[1]
-              ?.replace('{1}', serverChannel)
-              .replace('{2}', serverServerName)
+                .split('{0}')[1]
+                ?.replace('{1}', serverChannel)
+                .replace('{2}', serverServerName)
             : strings.channelReading
-              .split('{0}')[1]
-              ?.replace('{1}', serverChannel)
-              .replace('{2}', serverServerName),
+                .split('{0}')[1]
+                ?.replace('{1}', serverChannel)
+                .replace('{2}', serverServerName),
           smallImageKey: serverTyping ? Assets.Writing : Assets.Reading,
           smallImageText: serverTyping ? strings.writing : strings.reading,
         },
@@ -195,65 +195,65 @@ presence.on('UpdateData', async () => {
           details: dmsTyping
             ? groupDm
               ? strings.dmGroupTyping
-                .split('{0}')[0]
-                ?.replace('{1}', dmsUserGroupName)
+                  .split('{0}')[0]
+                  ?.replace('{1}', dmsUserGroupName)
               : strings.dmTyping
-                .split('{0}')[0]
-                ?.replace('{1}', dmsUserGroupName)
+                  .split('{0}')[0]
+                  ?.replace('{1}', dmsUserGroupName)
             : groupDm
               ? document.querySelector('head > title')?.textContent
               === 'Discord'
                 ? ''
                 : strings.dmGroupReading
-                  .split('{0}')[0]
-                  ?.replace('{1}', dmsUserGroupName)
+                    .split('{0}')[0]
+                    ?.replace('{1}', dmsUserGroupName)
               : document.querySelector('head > title')?.textContent
                 === 'Discord'
                 ? ''
                 : strings.dmReading
-                  .split('{0}')[0]
-                  ?.replace('{1}', dmsUserGroupName),
+                    .split('{0}')[0]
+                    ?.replace('{1}', dmsUserGroupName),
           state: dmsTyping
             ? groupDm
               ? strings.dmGroupTyping
-                .split('{0}')[1]
-                ?.replace('{1}', dmsUserGroupName)
+                  .split('{0}')[1]
+                  ?.replace('{1}', dmsUserGroupName)
               : strings.dmTyping
-                .split('{0}')[1]
-                ?.replace('{1}', dmsUserGroupName)
+                  .split('{0}')[1]
+                  ?.replace('{1}', dmsUserGroupName)
             : groupDm
               ? document.querySelector('head > title')?.textContent
               === 'Discord'
                 ? ''
                 : strings.dmGroupReading
-                  .split('{0}')[1]
-                  ?.replace('{1}', dmsUserGroupName)
+                    .split('{0}')[1]
+                    ?.replace('{1}', dmsUserGroupName)
               : document.querySelector('head > title')?.textContent
                 === 'Discord'
                 ? ''
                 : strings.dmReading
-                  .split('{0}')[1]
-                  ?.replace('{1}', dmsUserGroupName),
+                    .split('{0}')[1]
+                    ?.replace('{1}', dmsUserGroupName),
           smallImageKey: dmsTyping ? Assets.Writing : Assets.Reading,
           smallImageText: dmsTyping ? strings.writing : strings.reading,
         },
         '/invite/(\\w*\\d*)/': {
           details: showInvites
             ? strings.invite
-              .split('{0}')[0]
-              ?.replace('{1}', document.URL.split('/')[4]!)
-              .replace('{2}', document.title)
+                .split('{0}')[0]
+                ?.replace('{1}', document.URL.split('/')[4]!)
+                .replace('{2}', document.title)
             : strings.inviteServer
-              .split('{0}')[0]
-              ?.replace('{1}', document.title),
+                .split('{0}')[0]
+                ?.replace('{1}', document.title),
           state: showInvites
             ? strings.invite
-              .split('{0}')[1]
-              ?.replace('{1}', document.URL.split('/')[4]!)
-              .replace('{2}', document.title)
+                .split('{0}')[1]
+                ?.replace('{1}', document.URL.split('/')[4]!)
+                .replace('{2}', document.title)
             : strings.inviteServer
-              .split('{0}')[1]
-              ?.replace('{1}', document.title),
+                .split('{0}')[1]
+                ?.replace('{1}', document.title),
           smallImageKey: Assets.Reading,
           buttons: showInvites
             ? [
@@ -433,32 +433,32 @@ presence.on('UpdateData', async () => {
 
           presenceData.details = connectedToDm
             ? strings.voiceConnectedWith
-              .split('{0}')[0]
-              ?.replace('{1}', connectedTo.textContent ?? '')
+                .split('{0}')[0]
+                ?.replace('{1}', connectedTo.textContent ?? '')
             : strings.voiceConnectedTo
-              .split('{0}')[0]
-              ?.replace(
-                '{1}',
-                connectedTo.textContent?.replace(
-                  ` / ${connectedTo.textContent?.split(' / ').pop()}`,
-                  '',
-                ) ?? '',
-              )
-              .replace('{2}', connectedTo.textContent?.split(' / ').pop() ?? '')
+                .split('{0}')[0]
+                ?.replace(
+                  '{1}',
+                  connectedTo.textContent?.replace(
+                    ` / ${connectedTo.textContent?.split(' / ').pop()}`,
+                    '',
+                  ) ?? '',
+                )
+                .replace('{2}', connectedTo.textContent?.split(' / ').pop() ?? '')
           presenceData.state = connectedToDm
             ? strings.voiceConnectedWith
-              .split('{0}')[1]
-              ?.replace('{1}', connectedTo.textContent ?? '')
+                .split('{0}')[1]
+                ?.replace('{1}', connectedTo.textContent ?? '')
             : strings.voiceConnectedTo
-              .split('{0}')[1]
-              ?.replace(
-                '{1}',
-                connectedTo.textContent?.replace(
-                  ` / ${connectedTo.textContent?.split(' / ').pop()}`,
-                  '',
-                ) ?? '',
-              )
-              .replace('{2}', connectedTo.textContent?.split(' / ').pop() ?? '')
+                .split('{0}')[1]
+                ?.replace(
+                  '{1}',
+                  connectedTo.textContent?.replace(
+                    ` / ${connectedTo.textContent?.split(' / ').pop()}`,
+                    '',
+                  ) ?? '',
+                )
+                .replace('{2}', connectedTo.textContent?.split(' / ').pop() ?? '')
           presenceData.smallImageKey = Assets.Call
           presenceData.smallImageText = strings.calling
         }

@@ -131,9 +131,9 @@ presence.on('UpdateData', async () => {
           presenceData.details = strings.viewUser
           presenceData.state = document.querySelector('div.user-data p')
             ? document
-              .querySelector('div.user-data p')
-              ?.textContent
-              ?.replace(/\s+/g, '')
+                .querySelector('div.user-data p')
+                ?.textContent
+                ?.replace(/\s+/g, '')
             : 'USER NOT FOUND...'
 
           if (icon) {
@@ -151,9 +151,9 @@ presence.on('UpdateData', async () => {
             '.header__title > div > h1',
           )
             ? document
-              .querySelector('.header__title > div > h1')
-              ?.textContent
-              ?.replace(/^\s+|\s+$/g, '')
+                .querySelector('.header__title > div > h1')
+                ?.textContent
+                ?.replace(/^\s+|\s+$/g, '')
             : strings.store
 
           if (icon) {

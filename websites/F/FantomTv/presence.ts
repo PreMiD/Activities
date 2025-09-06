@@ -13,8 +13,8 @@ enum Assets {
   Movie = 'https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/5.png',
   Anime = 'https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/6.png',
   Heart = 'https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/7.png',
-  Trending =
-  'https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/8.png',
+  Trending
+  = 'https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/8.png',
   Clock = 'https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/9.png',
 }
 

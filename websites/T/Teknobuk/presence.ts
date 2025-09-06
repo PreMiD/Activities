@@ -58,9 +58,9 @@ presence.on('UpdateData', () => {
   if (page.startsWith('/etiket') && page !== '/etiket') {
     const category = document.querySelector('#blog-entries > header > h1')
       ? document
-        .querySelector('#blog-entries > header > h1')
-        ?.textContent
-        ?.substring(8)
+          .querySelector('#blog-entries > header > h1')
+          ?.textContent
+          ?.substring(8)
       : 'Bilinmeyen'
     makeRPC(`${category?.charAt(0).toUpperCase()}${category?.substring(1)}`, 'etiket')
   }
