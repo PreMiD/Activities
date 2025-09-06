@@ -157,9 +157,9 @@ presence.on('UpdateData', async () => {
       pfp = resolver === youtubeMiniplayerResolver
         ? ''
         : document
-          .querySelector<HTMLImageElement>(selectors.videoChannelImage)
-          ?.src
-          .replace(/=s\d+/, '=s512')
+            .querySelector<HTMLImageElement>(selectors.videoChannelImage)
+            ?.src
+            .replace(/=s\d+/, '=s512')
     }
     const unlistedPathElement = document.querySelector<SVGPathElement>(
       'g#privacy_unlisted > path',

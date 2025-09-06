@@ -119,10 +119,10 @@ presence.on('UpdateData', async () => {
           ) // Must not match default auvio image https://ds.static.rtbf.be/default/image/770x770/default-auvio_0.jpg
             ? getChannel(channelName).logo
             : await getThumbnail(
-              coverArt,
-              cropPreset.squared,
-              getChannel(channelName).color,
-            )
+                coverArt,
+                cropPreset.squared,
+                getChannel(channelName).color,
+              )
           showData.largeImageText += ' - Radio'
 
           if (showData.state)

@@ -21,7 +21,7 @@ presence.on('UpdateData', async () => {
       .map(word =>
         /^\d+$/.test(word)
           ? word
-          : word.charAt(0).toUpperCase() + word.slice(1)
+          : word.charAt(0).toUpperCase() + word.slice(1),
       )
       .join(' ')
   }
@@ -39,4 +39,3 @@ presence.on('UpdateData', async () => {
 
   presence.setActivity(presenceData)
 })
-
