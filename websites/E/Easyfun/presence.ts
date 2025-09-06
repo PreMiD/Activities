@@ -15,13 +15,13 @@ presence.on('UpdateData', async () => {
   let gameName = null
 
   if (match) {
-    const rawName = pathname.split('/').pop()?.replace(/(-cloud.*|\.html)$/i, '') ?? ''
+    const rawName = pathname.split('/').pop()?.replace(/-cloud.*|\.html$/i, '') ?? ''
     gameName = rawName
       .split('-')
       .map(word =>
         /^\d+$/.test(word)
           ? word
-          : word.charAt(0).toUpperCase() + word.slice(1),
+          : word.charAt(0).toUpperCase() + word.slice(1)
       )
       .join(' ')
   }
