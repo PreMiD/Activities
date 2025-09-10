@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "name": "m.liminal",
+    "id": "512996440486969345"
+  },
+  "contributors": [],
+  "service": "NeetCode",
+  "altnames": [
+    "NeetCode.io",
+    "Neet Code"
+  ],
+  "description": {
+    "en": "NeetCode is a platform for coding interview preparation with curated problems, video explanations, and roadmaps for software engineering interviews.",
+    "id": "NeetCode adalah platform persiapan wawancara coding dengan masalah yang dikurasi, penjelasan video, dan roadmap untuk wawancara software engineering.",
+    "ja": "NeetCodeは、厳選された問題、ビデオ解説、ソフトウェアエンジニアリング面接のためのロードマップを提供するコーディング面接準備プラットフォームです。",
+    "ko": "NeetCode는 엄선된 문제, 비디오 설명, 소프트웨어 엔지니어링 인터뷰를 위한 로드맵을 제공하는 코딩 인터뷰 준비 플랫폼입니다.",
+    "zh": "NeetCode是一个编程面试准备平台，提供精选题目、视频解析和软件工程面试路线图。"
+  },
+  "url": "neetcode.io",
+  "regExp": "([a-z0-9-]+[.])*neetcode[.]io[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NeetCode/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NeetCode/assets/thumbnail.png",
+  "color": "#10B981",
+  "category": "other",
+  "tags": [
+    "coding",
+    "programming",
+    "softwareengineering",
+    "computerscience",
+    "algorithms",
+    "datastructures",
+    "leetcode",
+    "codinginterview",
+    "interviewprep",
+    "dsa",
+    "competitiveprogramming",
+    "systemdesign",
+    "dynamicprogramming",
+    "codingchallenges",
+    "codingpractice",
+    "onlinejudge",
+    "technicalinterviews",
+    "codingproblems",
+    "problemsolving"
+  ]
+}
