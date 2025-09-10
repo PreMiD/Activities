@@ -92,19 +92,16 @@ let bPausedLongTime: boolean = false
 let oldTitle: string | null = null
 
 presence.on('UpdateData', async () => {
-  const logo = document.getElementById('#header-logo') as HTMLImageElement
-    ?? ActivityAssets.Logo
-
   const presenceData: PresenceData = {
     name: 'combi.fm',
-    largeImageKey: logo,
-    smallImageKey: logo,
+    largeImageKey: ActivityAssets.Logo,
+    smallImageKey: ActivityAssets.Logo,
     smallImageText: 'combi.fm',
     type: ActivityType.Listening,
   }
 
   const trackTitle = document.querySelector<HTMLDivElement>('#footer-track-title')?.textContent
-  const trackImgEl = document.querySelector('#footer-track-img') as HTMLImageElement
+  const trackImgEl = document.querySelector<HTMLImageElement>('#footer-track-img')
   const artistsContent = document.querySelector<HTMLDivElement>('#footer-track-artists')?.textContent
   const currentTime = document.querySelector<HTMLElement>('#footer-time-elapsed')?.textContent
   const totalDuration = document.querySelector<HTMLElement>('#footer-duration')?.textContent
@@ -126,7 +123,7 @@ presence.on('UpdateData', async () => {
     if (constantSetting) {
       return await presence.setActivity({
         type: ActivityType.Playing,
-        largeImageKey: logo,
+        largeImageKey: ActivityAssets.Logo,
         state: 'Paused',
       })
     }
@@ -154,7 +151,7 @@ presence.on('UpdateData', async () => {
         }
         return await presence.setActivity({
           type: ActivityType.Playing,
-          largeImageKey: logo,
+          largeImageKey: ActivityAssets.Logo,
           details: detailsMsg,
           state: 'Paused',
         })
@@ -211,7 +208,9 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = 'Tidal'
   }
 
-  presenceData.largeImageKey = trackImgEl.src
+  if (trackImgEl?.src) {
+    presenceData.largeImageKey = trackImgEl.src
+  }
 
   presence.setActivity(presenceData)
 })
