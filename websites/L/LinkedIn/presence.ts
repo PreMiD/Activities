@@ -24,12 +24,6 @@ presence.on('UpdateData', async () => {
   // Feed section
   if (pathname.startsWith('/feed/')) {
     presenceData.details = 'Browsing Feed'
-    // Check if text editor exists
-    const textEditor = document.querySelector('.ql-editor')
-    if (textEditor) {
-      presenceData.details = 'Writing a post'
-      presenceData.smallImageKey = Assets.Writing
-    }
   }
   // My Network section
   else if (pathname.startsWith('/mynetwork/')) {
