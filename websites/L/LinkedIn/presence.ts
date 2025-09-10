@@ -117,6 +117,56 @@ presence.on('UpdateData', async () => {
       }
     }
   }
+  // Learning section
+  else if (pathname.startsWith('/learning/')) {
+    if (pathname.endsWith('/learning/')) {
+      presenceData.details = 'Browsing learning courses'
+    }
+    else if (pathname.startsWith('/learning/search')) {
+      presenceData.details = 'Searching learning materials'
+      presenceData.smallImageKey = Assets.Search
+    }
+    else if (pathname.startsWith('/learning/paths/')) {
+      presenceData.details = 'Viewing a learning path'
+      if (!privacyMode)
+        presenceData.state = document.querySelector('.layout-container h1')?.textContent || ''
+    }
+    else if (pathname.endsWith('/career-journey')) {
+      presenceData.details = 'Viewing Career Journey'
+    }
+    else if (pathname.includes('/my-library/')) {
+      presenceData.details = 'Viewing learning library'
+    }
+    else if (pathname.includes('/browse/')) {
+      presenceData.details = 'Browsing learning materials'
+      if (pathname.endsWith('/certifications'))
+        presenceData.details = 'Browsing certifications'
+    }
+    else if (pathname.includes('/roles/')) {
+      presenceData.details = 'Learning a role'
+      if (!privacyMode)
+        presenceData.state = document.querySelector('main h2')?.textContent || ''
+    }
+    else if (pathname.includes('/topics/')) {
+      presenceData.details = 'Viewing a learning topic'
+      if (!privacyMode)
+        presenceData.state = document.querySelector('header h1')?.textContent || ''
+    }
+    else if (pathname.includes('/showcase/')) {
+      presenceData.details = 'Viewing a showcase'
+      if (!privacyMode)
+        presenceData.state = document.querySelector('main h2')?.textContent || ''
+    }
+    else {
+      presenceData.details = 'Viewing a course'
+      presenceData.smallImageKey = Assets.Viewing
+      if (!privacyMode) {
+        presenceData.state = document.querySelector<HTMLTitleElement>('title')
+          ?.textContent
+          ?.replace(' | LinkedIn Learning', '') || ''
+      }
+    }
+  }
   else if (pathname.startsWith('/search/results/')) {
     const keyword = params.get('keywords') || 'something'
     presenceData.details = privacyMode ? 'Searching...' : `Searching for ${keyword}`
