@@ -31,6 +31,10 @@
   ],
   "settings": [
     {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
       "id": "privacy",
       "title": "Privacy Mode",
       "icon": "fad fa-shield-alt",
@@ -44,15 +48,6 @@
         "privacy": false
       },
       "value": false
-    },
-    {
-      "id": "artistAsTitle",
-      "if": {
-        "privacy": false
-      },
-      "title": "Show Artist as Title",
-      "icon": "fad fa-user-large",
-      "value": true
     },
     {
       "id": "cover",
@@ -95,12 +90,6 @@
       "if": {
         "privacy": false
       }
-    },
-    {
-      "id": "useTimeLeft",
-      "title": "Use Time Left",
-      "icon": "fad fa-stopwatch",
-      "value": true
     }
   ]
 }
