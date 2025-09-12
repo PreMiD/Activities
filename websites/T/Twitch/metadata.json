@@ -13,6 +13,10 @@
     {
       "name": "Hikki",
       "id": "533014724569333770"
+    },
+    {
+      "name": "TsuKiZo",
+      "id": "330333765891129346"
     }
   ],
   "service": "Twitch",
@@ -46,7 +50,7 @@
     "devstatus.twitch.tv",
     "status.twitch.tv"
   ],
-  "version": "3.3.1",
+  "version": "3.3.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/thumbnail.png",
   "color": "#9146FF",
