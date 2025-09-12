@@ -352,7 +352,7 @@ presence.on('UpdateData', async () => {
         if (
           documentTitle.includes(
             document.querySelector(selectors.userName)?.textContent?.trim() ?? '',
-          )
+          ) && document.querySelector(selectors.userName)?.textContent
         ) {
           user = document.querySelector(selectors.userName)?.textContent
         }
