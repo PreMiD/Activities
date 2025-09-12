@@ -613,11 +613,11 @@ async function setPresenceByMediaId(mediaId: string): Promise<void> {
     const paused = mediaElement
       ? mediaElement.paused
       : document
-          .querySelector<HTMLSpanElement>(
-            '.nowPlayingBar .playPauseButton span',
-          )
-          ?.classList
-          .contains('play_arrow')
+        .querySelector<HTMLSpanElement>(
+          '.nowPlayingBar .playPauseButton span',
+        )
+        ?.classList
+        .contains('play_arrow')
 
     if (paused) {
       presenceData.smallImageKey = Assets.Pause

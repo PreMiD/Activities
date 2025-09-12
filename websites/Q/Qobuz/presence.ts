@@ -41,11 +41,11 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: cover
       ? document
-          .querySelector<HTMLImageElement>(
-            'div[class="player__track-cover"] img',
-          )
-          ?.src
-          .replaceAll('230', '600')
+        .querySelector<HTMLImageElement>(
+          'div[class="player__track-cover"] img',
+        )
+        ?.src
+        .replaceAll('230', '600')
       : ActivityAssets.Logo,
   }
   const songTitle = document.querySelector<HTMLAnchorElement>(

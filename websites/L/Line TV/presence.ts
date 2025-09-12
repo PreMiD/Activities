@@ -74,10 +74,10 @@ presence.on('UpdateData', async () => {
 
       presenceData.largeImageKey = cover
         ? await shortenURL(
-            document.querySelector<HTMLImageElement>(
-              `img[alt='${title?.join('：')}']`,
-            )?.src ?? '',
-          )
+          document.querySelector<HTMLImageElement>(
+            `img[alt='${title?.join('：')}']`,
+          )?.src ?? '',
+        )
         : 'linetv_logo'
 
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play

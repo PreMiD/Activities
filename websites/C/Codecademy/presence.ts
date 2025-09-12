@@ -98,11 +98,11 @@ presence.on('UpdateData', async () => {
           presenceData.state = `"${
             document.querySelector('[class^=goalHeader__]')
               ? document
-                  .querySelector('main h1')
-                  ?.textContent
-                  ?.slice(
-                    document.querySelector('[class^=goalHeader__]')?.textContent?.length,
-                  )
+                .querySelector('main h1')
+                ?.textContent
+                ?.slice(
+                  document.querySelector('[class^=goalHeader__]')?.textContent?.length,
+                )
               : document.querySelector('main h1')?.textContent
           }"`
           break

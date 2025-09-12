@@ -1,7 +1,7 @@
-type Workspace
-  = | { kind: 'Personal' }
-    | { kind: 'Team', name: string }
-    | { kind: 'Error' }
+type Workspace =
+  | { kind: 'Personal' }
+  | { kind: 'Team', name: string }
+  | { kind: 'Error' }
 
 function getWorkspace(): Workspace {
   // This selector is used to get the `Personal Workspace` svg, located in the header.

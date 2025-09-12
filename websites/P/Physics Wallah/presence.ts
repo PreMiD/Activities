@@ -149,6 +149,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = 'Viewing DPP'
   }
   presence.setActivity(presenceData)
+
 })
 function updateVideoTimestamps() {
   return getTimestamps(

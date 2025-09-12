@@ -1,4 +1,4 @@
-import type { AgeRestriction, CommonData, Status } from './common.js'
+import type { AgeRestriction, CommonData, Cover, Status } from './common.js'
 
 export interface AnimeData extends Omit<CommonData, 'stats'> {
   ageRestriction: AgeRestriction
@@ -16,11 +16,11 @@ export interface AnimeData extends Omit<CommonData, 'stats'> {
   }
 }
 
-type Type
-  = | { id: 16, label: 'TV Сериал' }
-    | { id: 17, label: 'Фильм' }
-    | { id: 18, label: 'Короткометражка' }
-    | { id: 19, label: 'Спешл' }
-    | { id: 20, label: 'OVA' }
-    | { id: 21, label: 'ONA' }
-    | { id: 22, label: 'Клип' }
+type Type =
+  | { id: 16, label: 'TV Сериал' }
+  | { id: 17, label: 'Фильм' }
+  | { id: 18, label: 'Короткометражка' }
+  | { id: 19, label: 'Спешл' }
+  | { id: 20, label: 'OVA' }
+  | { id: 21, label: 'ONA' }
+  | { id: 22, label: 'Клип' }

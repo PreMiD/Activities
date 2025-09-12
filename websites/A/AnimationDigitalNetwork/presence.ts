@@ -79,8 +79,8 @@ presence.on('UpdateData', async () => {
       presenceData.state = `Looking at ${
         episode?.partOfSeries?.name ?? pathname?.includes('episode-')
           ? pathname
-              ?.match(/episode-\d*/g)?.[0]
-              ?.replace('episode-', 'episode ')
+            ?.match(/episode-\d*/g)?.[0]
+            ?.replace('episode-', 'episode ')
           : 'An episode'
       }`
       presenceData.details = title && title.length > 5 ? `${title?.[0]} - ${title?.[1]}` : title?.[0]

@@ -313,9 +313,9 @@ presence.on('UpdateData', async () => {
           if (
             (appVersion === AppVersion.V4
               ? document
-                  .querySelector('#loading-logo')
-                  ?.className
-                  .includes('flashing')
+                .querySelector('#loading-logo')
+                ?.className
+                .includes('flashing')
               : !!document.querySelector(
                   'div[class*=\'buffering-loader-container\']',
                 ))

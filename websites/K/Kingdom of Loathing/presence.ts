@@ -14,20 +14,20 @@ interface KoLStatus {
   daysthisrun: string
 }
 
-type Action
-  = | { type: 'MONSTER', payload: string }
-    | { type: 'CHOICE', payload: number }
-    | { type: 'ADVENTURES', payload: number }
-    | {
-      type:
-        | 'MALL'
-        | 'KMAIL'
-        | 'UNHANDLED'
-        | 'FAMILIAR'
-        | 'INVENTORY'
-        | 'SKILLS'
-        | 'SENDMESSAGE'
-    }
+type Action =
+  | { type: 'MONSTER', payload: string }
+  | { type: 'CHOICE', payload: number }
+  | { type: 'ADVENTURES', payload: number }
+  | {
+    type:
+      | 'MALL'
+      | 'KMAIL'
+      | 'UNHANDLED'
+      | 'FAMILIAR'
+      | 'INVENTORY'
+      | 'SKILLS'
+      | 'SENDMESSAGE'
+  }
 
 let kolStatus: Partial<KoLStatus> = {}
 

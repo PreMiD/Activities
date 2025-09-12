@@ -80,10 +80,10 @@ presence.on('UpdateData', async () => {
         && document.querySelector('#search > div.title > h1 > span.text-muted')
           ?.textContent
           ? document
-              .querySelector('#search > div.title > h1 > span.text-muted')
-              ?.textContent
-              ?.replace('(', '')
-              .replace(')', '')
+            .querySelector('#search > div.title > h1 > span.text-muted')
+            ?.textContent
+            ?.replace('(', '')
+            .replace(')', '')
           : 'Belirsiz',
         smallImageKey: Assets.Search,
         startTimestamp: Math.floor(Date.now() / 1000),
