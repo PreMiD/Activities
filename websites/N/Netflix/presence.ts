@@ -37,6 +37,35 @@ async function getStrings() {
 let oldLang: string | null = null
 let strings: Awaited<ReturnType<typeof getStrings>>
 
+// First Try to get Box Art if its is max than 256 characters, use alternative image to avoid limitations of Discord Api
+function getValidImageUrl(metadata: any) {
+  const LIMIT = 256
+
+  const boxart = metadata?.data?.video?.boxart
+  if (Array.isArray(boxart)) {
+    for (const img of boxart) {
+      if (img?.url && img.url.length <= LIMIT) {
+        return img.url
+      }
+    }
+  }
+
+  const fallbackTypes = ['artwork', 'storyart']
+
+  for (const type of fallbackTypes) {
+    const images = metadata?.data?.video?.[type]
+    if (Array.isArray(images)) {
+      for (const img of images) {
+        if (img?.url && img.url.length <= LIMIT) {
+          return img.url
+        }
+      }
+    }
+  }
+
+  return null
+}
+
 presence.on('UpdateData', async () => {
   const [
     lang,
@@ -142,7 +171,7 @@ presence.on('UpdateData', async () => {
           ? [ActivityAssets.Animated, ActivityAssets.Logo, ActivityAssets.Noback][
               logoType
             ] || ActivityAssets.Logo
-          : metadata?.data?.video.boxart.at(0)?.url,
+          : getValidImageUrl(metadata),
         largeImageText: `Season ${season?.seq.toString()}, Episode ${episode?.seq.toString()}`,
         ...(showSmallImages
           && paused && {
@@ -194,7 +223,7 @@ presence.on('UpdateData', async () => {
           ? [ActivityAssets.Animated, ActivityAssets.Logo, ActivityAssets.Noback][
               logoType
             ] || ActivityAssets.Logo
-          : metadata.data.video.boxart.at(0)?.url,
+          : getValidImageUrl(metadata),
         ...(showSmallImages && {
           smallImageKey: paused ? Assets.Pause : Assets.Play,
         }),
