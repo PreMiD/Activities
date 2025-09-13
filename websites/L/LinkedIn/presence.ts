@@ -1,11 +1,13 @@
+import { Assets } from 'premid'
+
 const presence = new Presence({
   clientId: '785263902321541181', // Presence Application ID on Discord Developers.
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-function unescapeHTML(string: string): string {
+function unEscapeHTML(text: string): string {
   const textarea = document.createElement('textarea')
-  textarea.textContent = string
+  textarea.textContent = text
   return textarea.textContent
 }
 
@@ -14,346 +16,232 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/L/LinkedIn/assets/logo.png',
     startTimestamp: browsingTimestamp,
   }
-  const path = document.location.pathname
+  const { pathname, search } = document.location
+  const pathList = pathname.split('/').filter(Boolean)
+  const params = new URLSearchParams(search)
+  const privacyMode = await presence.getSetting<boolean>('privacyMode')
 
-  if (document.location.hostname === 'www.linkedin.com') {
-    // Homepage.
-    if (path === '/feed/') {
-      presenceData.details = 'Browsing Feed.'
-    }
-    else if (path.includes('/feed/hashtag/')) {
-      // Feed hashtag subsection.
-      presenceData.details = 'Browsing Feed:'
-      presenceData.state = `#${unescapeHTML(
-        document
-          .querySelector(
-            'div.application-outlet > div.authentication-outlet > div > div > div > div > section > div > div:first-child > div > h3 > span > span:last-child',
-          )
-          ?.textContent
-          ?.trim() ?? '',
-      )}.`
-    }
-    else if (path.includes('/feed/')) {
-      // Feed follow subsections.
-      enum feedSubSection {
-        'follow/' = 'Browsing suggestions.',
-        'following/' = 'Viewing Following:',
-        'followers/' = 'Viewing Followers.',
-      }
-      enum filterType {
-        connection = 'Connections',
-        member = 'Members',
-        company = 'Companies',
-        channel = 'Hashtags',
-      }
-      const subSection = feedSubSection[
-        path.split('/feed/').pop() as keyof typeof feedSubSection
-      ]
-
-      presenceData.details = subSection
-      // If the user is on following/ subsection, show the selected filter.
-      if (subSection === feedSubSection['following/']) {
-        presenceData.state = `Filtering by ${
-          filterType[
-            document.location.search
-              .split('?filterType=')
-              .pop()!
-              .split('&')
-              .shift() as keyof typeof filterType
-          ] || 'All'
-        }.`
-      }
-    }
-    else if (path.includes('/mynetwork/')) {
-      // My Network section & subsections.
-      presenceData.details = 'Managing Network:'
-      // Invitations subsection.
-      if (path.includes('/invitation-manager/')) {
-        presenceData.state = 'Viewing Invitations.'
-      }
-      // Contacts subsections.
-      else if (
-        path.includes('/import-contacts/')
-        || path === '/mynetwork/contacts/'
-      ) {
-        // Contacts homepage.
-        if (path === '/mynetwork/contacts/')
-          presenceData.state = 'Browsing Contacts.'
-        // Saved contacts.
-        else if (path.endsWith('saved-contacts/'))
-          presenceData.state = 'Browsing Saved contacts.'
-        // Adding contacts.
-        else presenceData.state = 'Adding Contacts.'
-      }
-      else if (path.includes('/colleagues/')) {
-        // Teammates subsection.
-        presenceData.state = 'Browsing Colleagues.'
-      }
-      // My Network subsections with same link path structure.
-      else {
-        enum networkSubSection {
-          'connections/' = 'Browsing Connections.',
-          'events/' = 'Browsing Events.',
-          'newsletters/' = 'Reading Newsletters.',
-        }
-
-        presenceData.state = networkSubSection[
-          path
-            .split(/\/[a-z]+-[a-z]+\//)
-            .pop() as keyof typeof networkSubSection
-        ] || 'Homepage.'
-      }
-    }
-    else if (path.includes('/jobs/') || path === '/my-items/saved-jobs/') {
-      // Jobs section.
-      // Application settings subsection.
-      if (path.endsWith('application-settings/')) {
-        presenceData.details = 'Editing settings:'
-        presenceData.state = 'Application.'
-      }
-      else {
-        // Others subsections.
-        presenceData.details = 'Browsing Jobs:'
-
-        // Saved Jobs subsection.
-        if (path === '/my-items/saved-jobs/') {
-          presenceData.state = 'Saved Jobs.'
-        }
-        // Searching for a Job subsection.
-        else if (path === '/jobs/search/') {
-          // Getting user preference for showJobsQuery.
-          const showJobsQuery = await presence.getSetting<boolean>(
-            'showJobsQuery',
-          )
-
-          if (showJobsQuery) {
-            presenceData.state = `Searching for a "${decodeURI(
-              document.location.search
-                .split('keywords=')
-                .pop()!
-                .split('&')
-                .shift()!,
-            )}" position.`
-          }
-          else {
-            presenceData.state = 'Searching for a job.'
-          }
-        }
-        else {
-          presenceData.state = 'Homepage.'
-        }
-        // Homepage.
-      }
-    }
-    else if (path.includes('/interview-prep/')) {
-      // Interview prep section (Jobs related section with a different path).
-
-      presenceData.details = 'Taking an Interview Prep:'
-      presenceData.state = `${unescapeHTML(
-        document
-          .querySelector(
-            'div.application-outlet > div.authentication-outlet > main > div > section > section > header > div > div:first-child > h2',
-          )
-          ?.textContent
-          ?.trim() ?? '',
-      )}.`
-    }
-    else if (path.includes('/messaging/')) {
-      // Messaging section.
-      presenceData.details = 'Messaging:'
-      // New message subsection.
-      if (path === '/messaging/thread/new/') {
-        presenceData.state = 'Writing a new message.'
-      }
-      // New group subsection.
-      else if (path === '/messaging/compose-group/') {
-        presenceData.state = 'Creating a new group.'
-      }
-      // Chats subsection.
-      else {
-        // Getting user preference for showChatUsername.
-        const showChatUsername = await presence.getSetting<boolean>(
-          'showChatUsername',
-        )
-
-        if (showChatUsername) {
-          presenceData.state = `Chatting with ${unescapeHTML(
-            document
-              .querySelector(
-                'div.application-outlet > div.authentication-outlet > #messaging > div > div > div:nth-child(2) > div:first-child > div > a > div > div > dl > dt > #thread-detail-jump-target',
-              )
-              ?.textContent
-              ?.trim() ?? '',
-          )}.`
-        }
-        else {
-          presenceData.state = 'Chatting with someone.'
-        }
-      }
-    }
-    else if (path === '/notifications/') {
-      // Notifications section.
-      presenceData.details = 'Viewing Notifications.'
-    }
-    else if (path.match(/\/in\/[A-Za-z0-9-]+\/$/)) {
-      // Profile page section.
-      presenceData.details = 'Viewing a profile:'
-      presenceData.state = `${document
-        .querySelector(
-          'div.application-outlet > div.authentication-outlet > #profile-content > div > div > div > div:nth-child(2) > main > div > section > div:nth-child(2) > div:nth-child(2) > div:first-child > ul:first-child > li:first-child',
-        )
-        ?.textContent
-        ?.trim()}.`
-    }
-    else if (path.match(/\/in\/[A-Za-z0-9-]+\//)) {
-      // Profile detail subsection.
-      if (path.includes('/detail/')) {
-        enum detailSubSection {
-          'recent-activity' = 'Activities',
-          'skills' = 'Skills',
-          'interests' = 'Interests',
-          'contact-info' = 'Contact Info',
-        }
-        // If the user is editing skills (the only edit related subsection with "detail" path).
-        if (path === '/in/luca-biagetti/detail/skills/add/') {
-          presenceData.details = 'Editing profile:'
-          presenceData.state = 'Skills.'
-        }
-        else {
-          // Actually detail subsections.
-          presenceData.details = 'Viewing user details:'
-          presenceData.state = `${unescapeHTML(
-            path !== '/in/luca-biagetti/detail/recent-activity/'
-              ? document
-                .querySelector(
-                  'div.application-outlet > div.authentication-outlet > #profile-content > div > div > div > div:nth-child(2) > main > div > section > div:nth-child(2) > div:nth-child(2) > div:first-child > ul:first-child > li:first-child',
-                )
-                ?.textContent
-                ?.trim() ?? ''
-              : document
-                .querySelector(
-                  'div.application-outlet > div.authentication-outlet > #profile-content > div > div > div > div > div:first-child > header > h1',
-                )
-                ?.textContent
-                ?.trim()
-                ?.replace('’s Activity', '') ?? '',
-          )}'s ${
-            detailSubSection[
-              path
-                .split(/\/in\/[A-Za-z0-9-]+\/detail\//)
-                .pop()!
-                .split('/')
-                .shift() as keyof typeof detailSubSection as keyof typeof detailSubSection
-            ]
-          }.`
-        }
-      }
-      else if (path.includes('/edit/')) {
-        // Profile edit subsection.
-        enum editSubSection {
-          'intro' = 'Intro.',
-          'about' = 'About.',
-          'add-feed-post' = 'Posts.',
-          'add-article' = 'Articles.',
-          'add-link' = 'Links.',
-          'position' = 'Experiences.',
-          'education' = 'Education.',
-          'certification' = 'Certifications.',
-          'volunteer-experience' = 'Volunteer experiences.',
-          'publication' = 'Publications.',
-          'patent' = 'Patents.',
-          'course' = 'Courses.',
-          'project' = 'Projects.',
-          'honor' = 'Honors & Awards.',
-          'test-score' = 'Test scores.',
-          'language' = 'Languages.',
-          'organization' = 'Organizations.',
-          'secondary-language' = 'Secondary language.',
-          'contact-info' = 'Contact info.',
-        }
-
-        presenceData.details = 'Editing profile:'
-        presenceData.state = editSubSection[
-          path
-            .split(/\/in\/[A-Za-z0-9-]+\/edit\//)
-            .pop()!
-            .replace('forms/', '')
-            .split('/')
-            .shift() as keyof typeof editSubSection
-        ]
-      }
-    }
-    else if (path.match(/\/company\/[A-Za-z0-9-]+\//)) {
-      // Company page section.
-      presenceData.details = 'Viewing a company:'
-      presenceData.state = `${unescapeHTML(
-        document
-          .querySelector(
-            'div.application-outlet > div.authentication-outlet > div > div:nth-child(3) > div:first-child > section > div > div > div:nth-child(2) > div:first-child > div:first-child > div:nth-child(2) > div > h1 > span',
-          )
-          ?.textContent
-          ?.trim() ?? '',
-      )}.`
-    }
-    else if (path.match(/\/school\/[A-Za-z0-9-]+\//)) {
-      // School page section.
-      presenceData.details = 'Viewing a school:'
-      presenceData.state = `${unescapeHTML(
-        document
-          .querySelector(
-            'div.application-outlet > div.authentication-outlet > div > div:nth-child(3) > div:first-child > section > div > div > div:nth-child(2) > div:first-child > div:first-child > div:nth-child(2) > div > h1 > span',
-          )
-          ?.textContent
-          ?.trim() ?? '',
-      )}.`
-    }
-    else if (path.startsWith('/groups/')) {
-      // Groups section.
-      // Group page subsection.
-      if (path.match(/\/groups\/\d+\//)) {
-        presenceData.details = 'Viewing a group:'
-        presenceData.state = `${unescapeHTML(
-          document
-            .querySelector(
-              'div.application-outlet > div.authentication-outlet > div > div:nth-child(2) > main > div:first-child > section > div > h1 > span',
-            )
-            ?.textContent
-            ?.trim()
-            ?.replaceAll('<!---->', '') ?? '',
-        )}.`
-      }
-      else {
-        presenceData.details = 'Browsing Groups:'
-        // Requested groups subsection.
-        if (path === '/groups/requests/')
-          presenceData.state = 'Requested groups.'
-        // Homepage.
-        else presenceData.state = 'My groups.'
-      }
-    }
-    else if (path.includes('/psettings/')) {
-      // Settings section.
-      presenceData.details = 'Editing settings.'
-    }
-    else if (path === '/my-items/') {
-      // My Items section.
-      presenceData.details = 'Browsing My Items.'
-    }
-    else if (path === '/post/new/') {
-      // New Post section.
-      presenceData.details = 'Writing a New Post.'
-    }
-    else if (path.includes('/search/results/')) {
-      // Searching for something section.
-      presenceData.details = 'Searching for something.'
+  // Feed section
+  if (pathname.startsWith('/feed/')) {
+    presenceData.details = 'Browsing Feed'
+  }
+  // My Network section
+  else if (pathname.startsWith('/mynetwork/')) {
+    presenceData.details = 'Managing Network'
+    if (pathname.includes('/invitation-manager/')) {
+      presenceData.state = 'Viewing Invitations'
     }
     else {
-      // Others sections in "Work" category not supported atm.
-      presenceData.details = 'Doing stuffs.'
+      switch (pathList[1]) {
+        case 'grow': {
+          presenceData.state = 'Viewing Network Recommendations'
+          break
+        }
+        case 'catch-up': {
+          presenceData.state = 'Viewing Network Updates'
+          break
+        }
+        case 'invite-connect': {
+          presenceData.state = 'Viewing Connections List'
+          break
+        }
+        case 'network-manager': {
+          const networkStates: Record<string, string> = {
+            following: 'Viewing Following',
+            followers: 'Viewing Followers',
+            company: 'Viewing Followed Company/Organization List',
+            newsletters: 'Viewing Subscribed Newsletters',
+          }
+          presenceData.state = networkStates[pathList.at(-1) as string] ?? 'Managing Network'
+          break
+        }
+      }
     }
   }
+  // Jobs section
+  else if (pathname.startsWith('/jobs/')) {
+    presenceData.details = 'Browsing Jobs'
+    if (pathList[1] === 'collections') {
+      const collectionName = document.querySelector(
+        '.jobs-search-discovery-tabs__tablist a[aria-current="true"]',
+      )?.textContent || ''
+      presenceData.state = collectionName
+    }
+    else if (pathList[1] === 'view') {
+      presenceData.details = 'Viewing a job'
+      if (!privacyMode) {
+        presenceData.state = document.querySelector('.jobs-details h1')?.textContent || ''
+        presenceData.smallImageKey = document.querySelector<HTMLImageElement>(
+          '.jobs-details .p5 img',
+        )?.src || Assets.Question
+        presenceData.smallImageText = document.querySelector(
+          '.job-details-jobs-unified-top-card__company-name',
+        )?.textContent || ''
+      }
+    }
+    else if (pathList[1] === 'search') {
+      presenceData.details = 'Searching for a job'
+    }
+  }
+  // Events section
+  else if (pathname.startsWith('/events/')) {
+    presenceData.details = 'Browsing Events'
+    if (pathList.length > 1) {
+      presenceData.details = 'Viewing an Event'
+      if (!privacyMode) {
+        presenceData.state = document.querySelector(
+          'h1.events-live-top-card__title',
+        )?.textContent || ''
+      }
+    }
+  }
+  // Groups section
+  else if (pathname.startsWith('/groups/')) {
+    presenceData.details = 'Viewing Joined Groups'
+    if (pathList.length > 1) {
+      if (pathList[1] === 'requests') {
+        presenceData.details = 'Viewing Requested Groups'
+      }
+      else if (pathList[1]?.match(/^\d+$/)) {
+        const GroupLogoSrc = document.querySelector<HTMLImageElement>(
+          '.groups-header__logo',
+        )?.src
+        presenceData.details = 'Viewing a Group'
+        if (!privacyMode) {
+          presenceData.state = document.querySelector('section h1')?.textContent || ''
+          presenceData.smallImageKey = GroupLogoSrc?.startsWith('data:')
+            ? null
+            : GroupLogoSrc
+              || null
+        }
+      }
+    }
+  }
+  // Learning section
+  else if (pathname.startsWith('/learning/')) {
+    if (pathname.endsWith('/learning/')) {
+      presenceData.details = 'Browsing learning courses'
+    }
+    else if (pathname.startsWith('/learning/search')) {
+      presenceData.details = 'Searching learning materials'
+      presenceData.smallImageKey = Assets.Search
+    }
+    else if (pathname.startsWith('/learning/paths/')) {
+      presenceData.details = 'Viewing a learning path'
+      if (!privacyMode)
+        presenceData.state = document.querySelector('.layout-container h1')?.textContent || ''
+    }
+    else if (pathname.endsWith('/career-journey')) {
+      presenceData.details = 'Viewing Career Journey'
+    }
+    else if (pathname.includes('/my-library/')) {
+      presenceData.details = 'Viewing learning library'
+    }
+    else if (pathname.includes('/browse/')) {
+      presenceData.details = 'Browsing learning materials'
+      if (pathname.endsWith('/certifications'))
+        presenceData.details = 'Browsing certifications'
+    }
+    else if (pathname.includes('/roles/')) {
+      presenceData.details = 'Learning a role'
+      if (!privacyMode)
+        presenceData.state = document.querySelector('main h2')?.textContent || ''
+    }
+    else if (pathname.includes('/topics/')) {
+      presenceData.details = 'Viewing a learning topic'
+      if (!privacyMode)
+        presenceData.state = document.querySelector('header h1')?.textContent || ''
+    }
+    else if (pathname.includes('/showcase/')) {
+      presenceData.details = 'Viewing a showcase'
+      if (!privacyMode)
+        presenceData.state = document.querySelector('main h2')?.textContent || ''
+    }
+    else {
+      presenceData.details = 'Viewing a course'
+      presenceData.smallImageKey = Assets.Viewing
+      if (!privacyMode) {
+        presenceData.state = document.querySelector<HTMLTitleElement>('title')
+          ?.textContent
+          ?.replace(' | LinkedIn Learning', '') || ''
+      }
+    }
+  }
+  else if (pathname.startsWith('/search/results/')) {
+    const keyword = params.get('keywords') || 'something'
+    presenceData.details = privacyMode ? 'Searching...' : `Searching for ${keyword}`
+    presenceData.smallImageKey = Assets.Search
+  }
+  else if (pathname.startsWith('/messaging/')) {
+    presenceData.details = 'Checking Messages'
+  }
+  else if (pathname.startsWith('/notifications/')) {
+    presenceData.details = 'Checking Notifications'
+  }
+  // Recent Activity section
+  else if (pathname.includes('/recent-activity/')) {
+    presenceData.details = 'Viewing recent activity'
+  }
+  // Profile page section
+  else if (pathname.match(/\/in\/[A-Za-z0-9-]+\//)) {
+    presenceData.details = 'Viewing a profile'
+    const profileName = document.querySelector('span h1')?.textContent?.trim()
+      || document.querySelector('.artdeco-entity-lockup__title')?.textContent?.trim()
+      || ''
+    if (!privacyMode)
+      presenceData.state = profileName
 
-  if (presenceData.details)
-    presence.setActivity(presenceData)
-  else presence.setActivity()
+    // Profile detail subsection
+    if (pathname.includes('/edit/')) {
+      presenceData.details = 'Editing profile'
+    }
+    else if (pathname.includes('/details/')) {
+      presenceData.details = 'Viewing a profile details'
+    }
+  }
+  // Company page section
+  else if (pathname.match(/\/company\/[A-Za-z0-9-]+\//)) {
+    presenceData.details = 'Viewing a company'
+    if (!privacyMode) {
+      presenceData.state = unEscapeHTML(
+        document.querySelector('section h1')?.textContent?.trim() || '',
+      )
+      presenceData.smallImageKey = document.querySelector<HTMLImageElement>(
+        '.org-top-card-primary-content__logo-container img',
+      )?.src || Assets.Question
+    }
+  }
+  // School page section
+  else if (pathname.match(/\/school\/[A-Za-z0-9-]+\//)) {
+    presenceData.details = 'Viewing a school'
+    if (!privacyMode) {
+      presenceData.state = unEscapeHTML(
+        document.querySelector('section h1')?.textContent?.trim() || '',
+      )
+      presenceData.smallImageKey = document.querySelector<HTMLImageElement>(
+        '.org-top-card-primary-content__logo-container img',
+      )?.src || Assets.Question
+    }
+  }
+  // Settings section
+  else if (pathname.startsWith('/mypreferences/')) {
+    presenceData.details = 'Editing settings'
+  }
+  // My Items section
+  else if (pathname.startsWith('/my-items/')) {
+    presenceData.details = 'Viewing My items'
+  }
+  else if (pathname.startsWith('/posts/')) {
+    presenceData.details = 'Reading a post'
+    const authorName = document.querySelector(
+      '.update-components-actor__title .visually-hidden',
+    )?.textContent || 'someone'
+    presenceData.state = privacyMode ? 'from someone' : `from ${authorName}`
+    presenceData.smallImageKey = Assets.Reading
+  }
+
+  if (!presenceData.details) {
+    presenceData.details = 'Doing something...'
+  }
+  presence.setActivity(presenceData)
 })
