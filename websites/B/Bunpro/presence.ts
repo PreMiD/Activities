@@ -29,19 +29,19 @@ function getLevelIcon(level: number) {
   return iconKey
 }
 
-function applyGrammarPointDetails(presenceData: PresenceData) {
+function applyItemDetails(presenceData: PresenceData) {
   const { pathname, href } = document.location
   presenceData.details = 'Viewing an item'
-  presenceData.state = removeRubyCharacters(document.querySelector('h1 span span')!)
+  presenceData.state = `${removeRubyCharacters(document.querySelector('h1 span span')!)} - ${document.querySelector('h1 span:nth-child(2)')?.textContent}`
   if (!pathname.startsWith('/learn'))
     presenceData.buttons = [{ label: 'View Grammar Point', url: href }]
 }
 
-function applyGrammarReviewDetails(presenceData: PresenceData) {
-  const details = document.querySelector<HTMLUListElement>(
-    'header ul:nth-child(2)',
-  )?.children
-  presenceData.state = `${details?.[0]?.textContent} | ${details?.[1]?.textContent} correct | ${details?.[2]?.textContent} remaining`
+function applyReviewDetails(presenceData: PresenceData) {
+  const details = document.querySelector<HTMLDivElement>(
+    '#js-tour-quiz-info',
+  )?.firstChild?.childNodes
+  presenceData.state = `${details?.[1]?.textContent} correct | ${details?.[2]?.textContent} remaining`
 }
 
 function removeRubyCharacters(element: HTMLElement) {
@@ -159,31 +159,32 @@ presence.on('UpdateData', () => {
         presenceData.details = 'Cramming'
         if (document.querySelector<HTMLDivElement>('#new-cram'))
           presenceData.state = 'Selecting grammar to cram'
-        else applyGrammarReviewDetails(presenceData)
+        else applyReviewDetails(presenceData)
         break
       }
       case 'dashboard': {
         const reviews = document.querySelector<HTMLDivElement>(
-          'article ul:last-child a span',
+          'span.border-secondary-bg',
         )?.textContent
+        const learned = document.querySelector<HTMLParagraphElement>('button.group > div:nth-child(1) > p:nth-child(2)')?.textContent
         presenceData.details = 'Viewing dashboard'
-        presenceData.state = `${reviews} review${reviews === '1' ? '' : 's'}`
+        presenceData.state = `${learned} learned | ${reviews} review${reviews === '1' ? '' : 's'}`
         break
       }
       case 'grammar_points': {
         if (pathSplit[1])
-          applyGrammarPointDetails(presenceData)
+          applyItemDetails(presenceData)
         else presenceData.details = 'Browsing grammar points'
         break
       }
       case 'learn': {
         if (document.querySelector('#js-quiz')) {
-          presenceData.details = 'Learning new items'
-          applyGrammarReviewDetails(presenceData)
+          applyReviewDetails(presenceData)
         }
         else {
-          applyGrammarPointDetails(presenceData)
+          applyItemDetails(presenceData)
         }
+        presenceData.details = 'Learning new items'
         break
       }
       case 'lessons': {
@@ -204,7 +205,7 @@ presence.on('UpdateData', () => {
       case 'paths': {
         if (pathSplit[1]) {
           if (pathSplit[2]) {
-            applyGrammarPointDetails(presenceData)
+            applyItemDetails(presenceData)
           }
           else {
             presenceData.details = 'Viewing a grammar path'
@@ -223,7 +224,7 @@ presence.on('UpdateData', () => {
       }
       case 'reviews': {
         presenceData.details = 'Doing reviews'
-        applyGrammarReviewDetails(presenceData)
+        applyReviewDetails(presenceData)
         break
       }
       case 'summary': {
