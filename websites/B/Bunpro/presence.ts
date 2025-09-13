@@ -32,7 +32,7 @@ function getLevelIcon(level: number) {
 function applyGrammarPointDetails(presenceData: PresenceData) {
   const { pathname, href } = document.location
   presenceData.details = 'Viewing a grammar point'
-  presenceData.state = removeRubyCharacters(document.querySelector('h1 > div')!)
+  presenceData.state = removeRubyCharacters(document.querySelector('h1 span span')!)
   if (!pathname.startsWith('/learn'))
     presenceData.buttons = [{ label: 'View Grammar Point', url: href }]
 }
@@ -164,7 +164,7 @@ presence.on('UpdateData', () => {
       }
       case 'dashboard': {
         const reviews = document.querySelector<HTMLDivElement>(
-          'article li:last-child a div:nth-child(2)',
+          'article ul:last-child a span',
         )?.textContent
         presenceData.details = 'Viewing dashboard'
         presenceData.state = `${reviews} review${reviews === '1' ? '' : 's'}`
@@ -309,8 +309,8 @@ presence.on('UpdateData', () => {
         if (pathSplit[1]) {
           presenceData.details = 'Viewing a vocabulary'
           presenceData.state = `${removeRubyCharacters(
-            document.querySelector<HTMLDivElement>('h1 > div')!,
-          )} - ${document.querySelector('h2')?.textContent}`
+            document.querySelector<HTMLDivElement>('h1 span span')!,
+          )} - ${document.querySelector('h1 span:nth-child(2)')?.textContent}`
           presenceData.buttons = [{ label: 'View Vocabulary', url: href }]
         }
         else {
