@@ -469,9 +469,11 @@ presence.on('UpdateData', async () => {
           }
           else {
             const name = document.querySelector('.cover__wrap')?.parentElement?.nextSibling?.textContent
-            const cover = document.querySelector<HTMLImageElement>('.cover__img')?.src
+            const coverSrc = document.querySelector<HTMLImageElement>('.cover__img')?.src
 
-            if (name && cover) {
+            if (name && coverSrc) {
+              const cover = await lib.fetchCover(coverSrc, origin)
+
               presenceData.details = 'Страница команды'
               presenceData.state = name
               presenceData.largeImageKey = cover
@@ -566,9 +568,11 @@ presence.on('UpdateData', async () => {
              */
             if (toast) {
               const title = document.querySelector('h1')?.textContent
-              const cover = document.querySelector<HTMLImageElement>('.cover__img')?.src
+              const coverSrc = document.querySelector<HTMLImageElement>('.cover__img')?.src
 
-              if (title && cover) {
+              if (title && coverSrc) {
+                const cover = await lib.fetchCover(coverSrc, origin)
+
                 titleSetting
                   ? (presenceData.name = title)
                   : (presenceData.details = title)
@@ -636,10 +640,12 @@ presence.on('UpdateData', async () => {
            * Slighty different behaviour when anime is licensed
            */
           if (toast) {
-            const cover = document.querySelector<HTMLImageElement>('.cover__img')?.src
             const title = document.querySelector('h1')?.textContent
+            const coverSrc = document.querySelector<HTMLImageElement>('.cover__img')?.src
 
-            if (cover && title) {
+            if (title && coverSrc) {
+              const cover = await lib.fetchCover(coverSrc, origin)
+
               presenceData.details = 'Страница аниме'
               presenceData.state = `${title}`
               presenceData.largeImageKey = cover

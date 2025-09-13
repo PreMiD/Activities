@@ -22,6 +22,7 @@ export function getSiteId(hostname: string) {
     case 'animelib.org':
     case 'v1.animelib.org':
     case 'v2.animelib.org':
+    case 'v3.animelib.org':
       return SiteId.AnimeLib
     default:
       throw new Error('MangaLib Activity: An unknown host name was received.')
