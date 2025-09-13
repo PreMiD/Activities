@@ -20,7 +20,7 @@
     "zh-tw": "一個支援 Android，iOS 和 PC 的音樂平台。官方專輯，單曲，視頻，混音，現場表演都在這裡！"
   },
   "url": "music.youtube.com",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/thumbnail.png",
   "color": "#E40813",
@@ -30,6 +30,10 @@
     "music"
   ],
   "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
     {
       "id": "privacy",
       "title": "Privacy Mode",
@@ -44,15 +48,6 @@
         "privacy": false
       },
       "value": false
-    },
-    {
-      "id": "artistAsTitle",
-      "if": {
-        "privacy": false
-      },
-      "title": "Show Artist as Title",
-      "icon": "fad fa-user-large",
-      "value": true
     },
     {
       "id": "cover",
@@ -95,12 +90,6 @@
       "if": {
         "privacy": false
       }
-    },
-    {
-      "id": "useTimeLeft",
-      "title": "Use Time Left",
-      "icon": "fad fa-stopwatch",
-      "value": true
     }
   ]
 }
