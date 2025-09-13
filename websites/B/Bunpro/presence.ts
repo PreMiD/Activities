@@ -31,7 +31,7 @@ function getLevelIcon(level: number) {
 
 function applyGrammarPointDetails(presenceData: PresenceData) {
   const { pathname, href } = document.location
-  presenceData.details = 'Viewing a grammar point'
+  presenceData.details = 'Viewing an item'
   presenceData.state = removeRubyCharacters(document.querySelector('h1 span span')!)
   if (!pathname.startsWith('/learn'))
     presenceData.buttons = [{ label: 'View Grammar Point', url: href }]
@@ -178,7 +178,7 @@ presence.on('UpdateData', () => {
       }
       case 'learn': {
         if (document.querySelector('#js-quiz')) {
-          presenceData.details = 'Learning new grammar'
+          presenceData.details = 'Learning new items'
           applyGrammarReviewDetails(presenceData)
         }
         else {
