@@ -164,9 +164,11 @@ presence.on('UpdateData', () => {
       }
       case 'dashboard': {
         const reviews = document.querySelector<HTMLDivElement>(
-          'span.border-secondary-bg',
+          '#js-tour-dash-quicklinks>li:nth-child(2) span'
         )?.textContent
-        const learned = document.querySelector<HTMLParagraphElement>('#js-tour-dash-quicklinks a p')?.textContent
+        const learned = document.querySelector<HTMLParagraphElement>(
+          '#js-tour-dash-quicklinks>li:first-child>div>*:not(.hidden) p'
+        )?.textContent
         presenceData.details = 'Viewing dashboard'
         presenceData.state = `${learned} learned | ${reviews} review${reviews === '1' ? '' : 's'}`
         break
