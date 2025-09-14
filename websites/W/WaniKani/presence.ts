@@ -122,11 +122,16 @@ presence.on('UpdateData', () => {
         case '/dashboard':
         case '/login': {
           const buttons = document.querySelector(
-            '.lessons-and-reviews',
+            '.dashboard__lessons-and-reviews',
           )?.children ?? []
           if (buttons.length === 2) {
-            const lessons = +buttons[0]!.querySelector<HTMLSpanElement>('[class*=__count]')!.textContent!
-            const reviews = +buttons[1]!.querySelector<HTMLSpanElement>('[class*=__count]')!.textContent!
+            let lessonsText = document.querySelector<HTMLSpanElement>('.todays-lessons__count-text')!.textContent!
+            let lessons;
+            if (lessonsText.includes('Done'))
+              lessons = 0
+            else  
+              lessons = +lessonsText
+            const reviews = +document.querySelector<HTMLSpanElement>('.reviews-dashboard__count-text')!.textContent!
             presenceData.details = 'Viewing Dashboard'
             presenceData.state = `${lessons} lessons | ${reviews} reviews`
             presenceData.smallImageText = document.querySelector<HTMLAnchorElement>(
