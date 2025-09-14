@@ -125,11 +125,11 @@ presence.on('UpdateData', async () => {
             '.dashboard__lessons-and-reviews',
           )?.children ?? []
           if (buttons.length === 2) {
-            let lessonsText = document.querySelector<HTMLSpanElement>('.todays-lessons__count-text')!.textContent!
-            let lessons;
+            const lessonsText = document.querySelector<HTMLSpanElement>('.todays-lessons__count-text')!.textContent!
+            let lessons
             if (lessonsText.includes('Done'))
               lessons = 0
-            else  
+            else
               lessons = +lessonsText
             const reviews = +document.querySelector<HTMLSpanElement>('.reviews-dashboard__count-text')!.textContent!
             presenceData.details = 'Viewing Dashboard'
@@ -172,7 +172,7 @@ presence.on('UpdateData', async () => {
               presenceData.smallImageKey = ActivityAssets.Reviews1000
             }
             const hideOnDone = await presence.getSetting<boolean>('hideOnDone')
-            if (hideOnDone && lessons == 0 && reviews == 0)
+            if (hideOnDone && lessons === 0 && reviews === 0)
               presence.clearActivity()
           }
           else {
