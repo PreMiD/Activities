@@ -9,7 +9,11 @@
   "description": {
     "en": "Shows what you're watching on mapple.tv"
   },
-  "url": "mapple.tv",
+  "url": [
+    "mapple.tv",
+    "mapple.mov",
+    "mapple.uk"
+  ],
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mapple.tv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mapple.tv/assets/thumbnail.jpg",
