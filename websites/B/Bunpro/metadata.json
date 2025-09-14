@@ -31,7 +31,7 @@
     "bunpro.jp",
     "community.bunpro.jp"
   ],
-  "version": "2.0.14",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bunpro/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bunpro/assets/thumbnail.png",
   "color": "#5e6266",
@@ -42,5 +42,13 @@
     "grammar",
     "srs",
     "language"
+  ],
+  "settings": [
+    {
+      "id": "hideOnDone",
+      "title": "Hide dashboard presence when lessons and reviews are done",
+      "icon": "fas fa-eye-slash",
+      "value": false
+    }
   ]
 }

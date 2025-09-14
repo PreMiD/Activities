@@ -54,7 +54,8 @@ function removeRubyCharacters(element: HTMLElement) {
   return text
 }
 
-presence.on('UpdateData', () => {
+presence.on('UpdateData', async () => {
+  let hideActivity = false;
   const { pathname, hostname, href } = document.location
   const pathSplit = pathname.split('/').slice(1)
   const presenceData: PresenceData = {
@@ -165,12 +166,16 @@ presence.on('UpdateData', () => {
       case 'dashboard': {
         const reviews = document.querySelector<HTMLDivElement>(
           '#js-tour-dash-quicklinks>li:nth-child(2) span'
-        )?.textContent
+        )?.textContent!
         const learned = document.querySelector<HTMLParagraphElement>(
           '#js-tour-dash-quicklinks>li:first-child>div>*:not(.hidden) p'
-        )?.textContent
+        )?.textContent!
         presenceData.details = 'Viewing dashboard'
         presenceData.state = `${learned} learned | ${reviews} review${reviews === '1' ? '' : 's'}`
+        const hideOnDone = await presence.getSetting("hideOnDone")
+        // "learned" is a string of format x/y with x and y as numbers in strings, lessons are done if x === y
+        if (hideOnDone && +reviews === 0 && +learned.split("/")[0]! === +learned.split("/")[1]!)
+          hideActivity = true
         break
       }
       case 'grammar_points': {
@@ -329,7 +334,7 @@ presence.on('UpdateData', () => {
     }
   }
 
-  if (presenceData.details) {
+  if (presenceData.details && !hideActivity) {
     presence.setActivity(presenceData)
     slideshow.deleteAllSlides()
   }
