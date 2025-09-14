@@ -55,7 +55,7 @@ function removeRubyCharacters(element: HTMLElement) {
 }
 
 presence.on('UpdateData', async () => {
-  let hideActivity = false;
+  let hideActivity = false
   const { pathname, hostname, href } = document.location
   const pathSplit = pathname.split('/').slice(1)
   const presenceData: PresenceData = {
@@ -165,11 +165,11 @@ presence.on('UpdateData', async () => {
       }
       case 'dashboard': {
         const reviews = document.querySelector<HTMLDivElement>(
-          '#js-tour-dash-quicklinks>li:nth-child(2) span'
-        )?.textContent!
+          '#js-tour-dash-quicklinks>li:nth-child(2) span',
+        )!.textContent!
         const learned = document.querySelector<HTMLParagraphElement>(
-          '#js-tour-dash-quicklinks>li:first-child>div>*:not(.hidden) p'
-        )?.textContent!
+          '#js-tour-dash-quicklinks>li:first-child>div>*:not(.hidden) p',
+        )!.textContent!
         presenceData.details = 'Viewing dashboard'
         presenceData.state = `${learned} learned | ${reviews} review${reviews === '1' ? '' : 's'}`
         const hideOnDone = await presence.getSetting("hideOnDone")
