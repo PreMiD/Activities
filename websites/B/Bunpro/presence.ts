@@ -172,9 +172,9 @@ presence.on('UpdateData', async () => {
         )!.textContent!
         presenceData.details = 'Viewing dashboard'
         presenceData.state = `${learned} learned | ${reviews} review${reviews === '1' ? '' : 's'}`
-        const hideOnDone = await presence.getSetting("hideOnDone")
-        // "learned" is a string of format x/y with x and y as numbers in strings, lessons are done if x === y
-        if (hideOnDone && +reviews === 0 && +learned.split("/")[0]! === +learned.split("/")[1]!)
+        const hideOnDone = await presence.getSetting('hideOnDone')
+        // 'learned' is a string of format x/y with x and y as numbers in strings, lessons are done if x === y
+        if (hideOnDone && +reviews === 0 && +learned.split('/')[0]! === +learned.split('/')[1]!)
           hideActivity = true
         break
       }
