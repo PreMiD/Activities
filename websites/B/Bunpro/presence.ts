@@ -166,7 +166,7 @@ presence.on('UpdateData', () => {
         const reviews = document.querySelector<HTMLDivElement>(
           'span.border-secondary-bg',
         )?.textContent
-        const learned = document.querySelector<HTMLParagraphElement>('button.group > div:nth-child(1) > p:nth-child(2)')?.textContent
+        const learned = document.querySelector<HTMLParagraphElement>('#js-tour-dash-quicklinks a p')?.textContent
         presenceData.details = 'Viewing dashboard'
         presenceData.state = `${learned} learned | ${reviews} review${reviews === '1' ? '' : 's'}`
         break
