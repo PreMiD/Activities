@@ -113,6 +113,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
   }
+  let hideActivity = false
 
   switch (hostname) {
     case 'wanikani.com':
@@ -173,7 +174,7 @@ presence.on('UpdateData', async () => {
             }
             const hideOnDone = await presence.getSetting<boolean>('hideOnDone')
             if (hideOnDone && lessons === 0 && reviews === 0)
-              presence.clearActivity()
+              hideActivity = true
           }
           else {
             presenceData.details = 'Browsing'
@@ -276,5 +277,8 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  presence.setActivity(presenceData)
+  if (hideActivity)
+    presence.clearActivity()
+  else
+    presence.setActivity(presenceData)
 })
