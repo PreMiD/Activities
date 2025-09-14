@@ -107,7 +107,7 @@ function getLessonPresence(): PresenceData {
   return presenceData
 }
 
-presence.on('UpdateData', () => {
+presence.on('UpdateData', async () => {
   const { hostname, pathname } = document.location
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -171,6 +171,9 @@ presence.on('UpdateData', () => {
             else {
               presenceData.smallImageKey = ActivityAssets.Reviews1000
             }
+            const hideOnDone = await presence.getSetting<boolean>('hideOnDone')
+            if (hideOnDone && lessons == 0 && reviews == 0)
+              presence.clearActivity()
           }
           else {
             presenceData.details = 'Browsing'
