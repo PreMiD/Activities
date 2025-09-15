@@ -39,7 +39,7 @@
   "settings": [
     {
       "id": "hideOnDone",
-      "title": "Hide presence when lessons and reviews are done",
+      "title": "Hide dashboard presence when lessons and reviews are done",
       "icon": "fas fa-eye-slash",
       "value": false
     }
