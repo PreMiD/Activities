@@ -66,8 +66,7 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
   const { href, pathname } = window.location
-  const [userLanguage, privacy, showCover, showBrowsingActivity, showTitleAsPresence, hideWhenPaused] = await Promise.all([
-    presence.getSetting<string>('lang') || 'en',
+  const [privacy, showCover, showBrowsingActivity, showTitleAsPresence, hideWhenPaused] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('browsingActivity'),
