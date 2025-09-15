@@ -342,7 +342,7 @@ presence.on('UpdateData', async () => {
     presence.setActivity(slideshow)
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
     slideshow.deleteAllSlides()
   }
 })
