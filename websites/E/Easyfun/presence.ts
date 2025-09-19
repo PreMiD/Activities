@@ -5,14 +5,14 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://th.bing.com/th/id/ODF.2fU0nE7YI6b9b_lj-9F9QA?w=152&h=152&qlt=100&pcl=fffffa&o=6&pid=1.5.png',
+  Logo: 'https://i.postimg.cc/jjppBgff/ODF-1-1.png',
 }
 
 presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
 
   const match = pathname.match(/\/cloud-games\/[a-z0-9-]+\.html/i)
-  let gameName = null
+  let gameName: string | null = null
 
   if (match) {
     const rawName = pathname.split('/').pop()?.replace(/-cloud.*|\.html$/i, '') ?? ''
@@ -26,7 +26,8 @@ presence.on('UpdateData', async () => {
       .join(' ')
   }
 
-  const gameIcon = document.querySelector('img[data-nimg="1"]')?.getAttribute('src') ?? ActivityAssets.Logo
+  const gameIcon =
+    document.querySelector('img[data-nimg="1"]')?.getAttribute('src') ?? ActivityAssets.Logo
 
   const presenceData: PresenceData = {
     largeImageKey: gameIcon,
