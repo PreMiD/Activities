@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 2,
+  "author": {
+    "name": "Zen",
+    "id": "725331428962992131"
+  },
+  "contributors": [
+    {
+      "name": "fukh",
+      "id": "216236687389491212"
+    }
+  ],
+  "service": "Vidio",
+  "description": {
+    "en": "Vidio.com is a video streaming service with various streaming content for tv, films, soap operas, original series and sports such as League 1, Champions and Europe",
+    "ga": "Is seirbhís sruthú físeáin é Vidio.com le hábhar sruthú éagsúil le haghaidh teilifíse, scannáin, ceoldrámaí gallúnaí, sraitheanna bunaidh agus spóirt mar League 1, Seaimpíní agus an Eoraip",
+    "id": "Streaming TV, film, serial, & olahraga favoritmu. Tayangan eksklusif lokal & internasional. Temukan pengalaman menonton yang #LebihDariHiburan di Vidio.",
+    "nl": "Vidio.com is een videostreamingdienst met verschillende streamingcontent voor tv, films, soapseries, originele series en sporten zoals League 1, Champions en Europa"
+  },
+  "url": [
+    "vidio.com",
+    "www.vidio.com"
+  ],
+  "version": "2.0.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vidio/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vidio/assets/thumbnail.jpg",
+  "color": "#ffffff",
+  "category": "videos",
+  "tags": [
+    "streaming",
+    "other"
+  ]
+}
