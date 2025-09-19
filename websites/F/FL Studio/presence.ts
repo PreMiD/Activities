@@ -31,7 +31,7 @@ presence.on('UpdateData', async () => {
   ] = await Promise.all([
     presence.getSetting<boolean>('privacyMode'),
     presence.getSetting<boolean>('searchQuery'),
-    presence.getSetting<boolean>('timestamp')
+    presence.getSetting<boolean>('timestamp'),
   ])
 
   if (!strings)
@@ -51,7 +51,6 @@ presence.on('UpdateData', async () => {
     const searchQuery = new URLSearchParams(search).get('q')
     presenceData.details = privacyMode ? strings.search : strings.searchFor
     presenceData.state = showSearchQuery && !privacyMode ? searchQuery : '(Hidden)'
-    presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/F/FL%20Studio/assets/search.png'
     matched = true
   }
   // Plugins page - exact match or starting with /plugins/

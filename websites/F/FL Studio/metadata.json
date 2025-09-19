@@ -2,13 +2,12 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "name": "Inkflow59",
+    "name": "Inkflow",
     "id": "286179374204583938"
   },
   "service": "FL Studio",
   "description": {
     "bg": "FL Studio е цифрова аудио работна станция, разработенаа от Image-Line. Програмата разполага с графичен потребителски интерфейс с музикален секвенсор, базиран на модели.",
-    "ca": "FL Studio és una estació de treball d'àudio digital desenvolupada per Image-Line. El programa compta amb una interfície d'usuari gràfica amb un seqüenciador musical basat en patrons.",
     "cs": "FL Studio je digitální audio pracovní stanice vyvinutá společností Image-Line. Program nabízí grafické uživatelské rozhraní s hudebním sekvencerem založeným na vzorcích.",
     "da": "FL Studio er en digital lydarbejdsstation udviklet af Image-Line. Programmet har en grafisk brugergrænseflade med en mønsterbaseret musiksekvenser.",
     "de": "FL Studio ist eine von Image-Line entwickelte digitale Audio-Workstation. Das Programm verfügt über eine grafische Benutzeroberfläche mit einem patternbasierten Musiksequencer.",
