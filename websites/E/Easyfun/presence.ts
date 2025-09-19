@@ -5,7 +5,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.postimg.cc/jjppBgff/ODF-1-1.png',
+  Logo = 'https://i.postimg.cc/jjppBgff/ODF-1-1.png'
 }
 
 presence.on('UpdateData', async () => {
@@ -14,19 +14,19 @@ presence.on('UpdateData', async () => {
   const match = pathname.match(/\/cloud-games\/[a-z0-9-]+\.html/i)
   let gameName: string | null = null
 
-if (match) {
-  const rawName = pathname.split('/').pop()?.replace(/-cloud.*|\.html$/i, '') ?? ''
-  gameName = rawName
-    .split('-')
-    .map(word =>
-      /^\d+$/.test(word)
-        ? word
-        : word.charAt(0).toUpperCase() + word.slice(1)
-    )
-    .join(' '), // ✅ trailing comma
-}
+  if (match) {
+    const rawName = pathname.split('/').pop()?.replace(/-cloud.*|\.html$/i, '') ?? ''
+    gameName = rawName
+      .split('-')
+      .map(word =>
+        /^\d+$/.test(word)
+          ? word
+          : word.charAt(0).toUpperCase() + word.slice(1)
+      )
+      .join(' ')
+  }
 
-const gameIcon: string = document.querySelector('img[data-nimg="1"]')?.getAttribute('src') ?? ActivityAssets.Logo
+  const gameIcon: string = document.querySelector('img[data-nimg="1"]')?.getAttribute('src') ?? ActivityAssets.Logo
 
   const presenceData: PresenceData = {
     largeImageKey: gameIcon,
