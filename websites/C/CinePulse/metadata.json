@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "name": "rabaisseur",
+    "id": "966261671763001395"
+  },
+  "service": "CinePulse",
+  "description": {
+    "en": "Watch movies and TV shows on CinePulse.to",
+    "fr": "Regarder des films et séries sur CinePulse.to"
+  },
+  "url": "cinepulse.to",
+  "regExp": "([a-z0-9-]+\\.)*cinepulse\\.to[/]?",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CinePulse/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CinePulse/assets/thumbnail.webp",
+  "color": "#000000",
+  "category": "videos",
+  "tags": [
+    "video",
+    "streaming",
+    "movies",
+    "tv-shows",
+    "entertainment"
+  ],
+  "readLogs": false,
+  "settings": [
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamps",
+      "icon": "fas fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "showPoster",
+      "title": "Show Movie/Series Poster",
+      "icon": "fas fa-image",
+      "value": true
+    },
+    {
+      "id": "showEpisodeInfo",
+      "title": "Show Episode Information",
+      "icon": "fas fa-tv",
+      "value": true
+    }
+  ]
+}

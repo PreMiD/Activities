@@ -29,19 +29,19 @@ function getLevelIcon(level: number) {
   return iconKey
 }
 
-function applyGrammarPointDetails(presenceData: PresenceData) {
+function applyItemDetails(presenceData: PresenceData) {
   const { pathname, href } = document.location
-  presenceData.details = 'Viewing a grammar point'
-  presenceData.state = removeRubyCharacters(document.querySelector('h1 > div')!)
+  presenceData.details = 'Viewing an item'
+  presenceData.state = `${removeRubyCharacters(document.querySelector('h1 span span')!)} - ${document.querySelector('h1 span:nth-child(2)')?.textContent}`
   if (!pathname.startsWith('/learn'))
     presenceData.buttons = [{ label: 'View Grammar Point', url: href }]
 }
 
-function applyGrammarReviewDetails(presenceData: PresenceData) {
-  const details = document.querySelector<HTMLUListElement>(
-    'header ul:nth-child(2)',
-  )?.children
-  presenceData.state = `${details?.[0]?.textContent} | ${details?.[1]?.textContent} correct | ${details?.[2]?.textContent} remaining`
+function applyReviewDetails(presenceData: PresenceData) {
+  const details = document.querySelector<HTMLDivElement>(
+    '#js-tour-quiz-info',
+  )?.firstChild?.childNodes
+  presenceData.state = `${details?.[1]?.textContent} correct | ${details?.[2]?.textContent} remaining`
 }
 
 function removeRubyCharacters(element: HTMLElement) {
@@ -54,7 +54,8 @@ function removeRubyCharacters(element: HTMLElement) {
   return text
 }
 
-presence.on('UpdateData', () => {
+presence.on('UpdateData', async () => {
+  let hideActivity = false
   const { pathname, hostname, href } = document.location
   const pathSplit = pathname.split('/').slice(1)
   const presenceData: PresenceData = {
@@ -159,31 +160,38 @@ presence.on('UpdateData', () => {
         presenceData.details = 'Cramming'
         if (document.querySelector<HTMLDivElement>('#new-cram'))
           presenceData.state = 'Selecting grammar to cram'
-        else applyGrammarReviewDetails(presenceData)
+        else applyReviewDetails(presenceData)
         break
       }
       case 'dashboard': {
         const reviews = document.querySelector<HTMLDivElement>(
-          'article li:last-child a div:nth-child(2)',
-        )?.textContent
+          '#js-tour-dash-quicklinks>li:nth-child(2) span',
+        )!.textContent!
+        const learned = document.querySelector<HTMLParagraphElement>(
+          '#js-tour-dash-quicklinks>li:first-child>div>*:not(.hidden) p',
+        )!.textContent!
         presenceData.details = 'Viewing dashboard'
-        presenceData.state = `${reviews} review${reviews === '1' ? '' : 's'}`
+        presenceData.state = `${learned} learned | ${reviews} review${reviews === '1' ? '' : 's'}`
+        const hideOnDone = await presence.getSetting('hideOnDone')
+        // 'learned' is a string of format x/y with x and y as numbers in strings, lessons are done if x === y
+        if (hideOnDone && +reviews === 0 && +learned.split('/')[0]! === +learned.split('/')[1]!)
+          hideActivity = true
         break
       }
       case 'grammar_points': {
         if (pathSplit[1])
-          applyGrammarPointDetails(presenceData)
+          applyItemDetails(presenceData)
         else presenceData.details = 'Browsing grammar points'
         break
       }
       case 'learn': {
         if (document.querySelector('#js-quiz')) {
-          presenceData.details = 'Learning new grammar'
-          applyGrammarReviewDetails(presenceData)
+          applyReviewDetails(presenceData)
         }
         else {
-          applyGrammarPointDetails(presenceData)
+          applyItemDetails(presenceData)
         }
+        presenceData.details = 'Learning new items'
         break
       }
       case 'lessons': {
@@ -204,7 +212,7 @@ presence.on('UpdateData', () => {
       case 'paths': {
         if (pathSplit[1]) {
           if (pathSplit[2]) {
-            applyGrammarPointDetails(presenceData)
+            applyItemDetails(presenceData)
           }
           else {
             presenceData.details = 'Viewing a grammar path'
@@ -223,7 +231,7 @@ presence.on('UpdateData', () => {
       }
       case 'reviews': {
         presenceData.details = 'Doing reviews'
-        applyGrammarReviewDetails(presenceData)
+        applyReviewDetails(presenceData)
         break
       }
       case 'summary': {
@@ -309,8 +317,8 @@ presence.on('UpdateData', () => {
         if (pathSplit[1]) {
           presenceData.details = 'Viewing a vocabulary'
           presenceData.state = `${removeRubyCharacters(
-            document.querySelector<HTMLDivElement>('h1 > div')!,
-          )} - ${document.querySelector('h2')?.textContent}`
+            document.querySelector<HTMLDivElement>('h1 span span')!,
+          )} - ${document.querySelector('h1 span:nth-child(2)')?.textContent}`
           presenceData.buttons = [{ label: 'View Vocabulary', url: href }]
         }
         else {
@@ -326,7 +334,7 @@ presence.on('UpdateData', () => {
     }
   }
 
-  if (presenceData.details) {
+  if (presenceData.details && !hideActivity) {
     presence.setActivity(presenceData)
     slideshow.deleteAllSlides()
   }
@@ -334,7 +342,7 @@ presence.on('UpdateData', () => {
     presence.setActivity(slideshow)
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
     slideshow.deleteAllSlides()
   }
 })

@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '767402228825980929',
@@ -19,6 +19,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/Peacock/assets/logo.png',
     startTimestamp: elapsed,
+    type: ActivityType.Watching,
   }
 
   strings ??= await newStrings

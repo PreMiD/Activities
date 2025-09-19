@@ -1,5 +1,5 @@
 import type { ShowVideo } from './types.js'
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 import {
   clearMetadata,
   fetchMetadata,
@@ -111,7 +111,7 @@ presence.on('UpdateData', async () => {
       return
 
     const { paused } = video
-    const [startTimestamp, endTimestamp] = presence.getTimestampsfromMedia(video)
+    const [startTimestamp, endTimestamp] = getTimestampsFromMedia(video)
 
     if (metadata?.data?.video.type === 'show' && showSeries) {
       if (privacyMode) {
