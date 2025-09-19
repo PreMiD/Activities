@@ -229,6 +229,22 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Viewing Packages Promo'
       break
     default: {
+      if (document.location.pathname.startsWith('/tags/')) {
+        const tag = document.querySelector('div[data-testid="advanced-tag"] h2')
+        const tagText = document.querySelector('div[data-testid="advanced-tag"] p')
+        const ogImage = document.querySelector('div[data-testid="advanced-tag"] img')
+
+        // Get tag name from element or fallback to pathname
+        const tagName = tag?.textContent || document.location.pathname
+          .substring('/tags/'.length)
+          .split('-')
+          .join(' ')
+
+        presenceData.details = `Viewing ${toTitleCase(tagName)} Videos`
+        presenceData.state = tagText?.textContent || undefined
+        presenceData.largeImageKey = ogImage?.getAttribute('src') || presenceData.largeImageKey
+      }
+
       if (document.location.pathname.startsWith('/dashboard'))
         presenceData.details = 'Viewing Account Dashboard'
 
