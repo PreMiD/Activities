@@ -5,7 +5,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo: 'https://i.postimg.cc/jjppBgff/ODF-1-1.png',
+  Logo = 'https://i.postimg.cc/jjppBgff/ODF-1-1.png',
 }
 
 presence.on('UpdateData', async () => {
@@ -26,7 +26,7 @@ presence.on('UpdateData', async () => {
       .join(' ')
   }
 
-  const gameIcon =
+  const gameIcon: string =
     document.querySelector('img[data-nimg="1"]')?.getAttribute('src') ?? ActivityAssets.Logo
 
   const presenceData: PresenceData = {
