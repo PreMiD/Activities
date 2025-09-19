@@ -5,14 +5,14 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/E/Easyfun/assets/logo.png',
+  Logo = 'https://i.postimg.cc/jjppBgff/ODF-1-1.png',
 }
 
 presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
 
   const match = pathname.match(/\/cloud-games\/[a-z0-9-]+\.html/i)
-  let gameName = null
+  let gameName: string | null = null
 
   if (match) {
     const rawName = pathname.split('/').pop()?.replace(/-cloud.*|\.html$/i, '') ?? ''
@@ -23,13 +23,14 @@ presence.on('UpdateData', async () => {
           ? word
           : word.charAt(0).toUpperCase() + word.slice(1),
       )
-      .join(' ')
+      .join(' '),
   }
 
-  const gameIcon = document.querySelector('img[alt$="-icon"]')?.getAttribute('src')
+  const gameIcon: string =
+    document.querySelector('img[data-nimg="1"]')?.getAttribute('src') ?? ActivityAssets.Logo
 
   const presenceData: PresenceData = {
-    largeImageKey: gameIcon ?? undefined,
+    largeImageKey: gameIcon,
     smallImageKey: ActivityAssets.Logo,
     details: gameName ? `Playing ${gameName}` : 'Exploring EasyFun',
     state: gameName ? 'Cloud Gaming' : 'Browsing on site',
