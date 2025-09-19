@@ -21,34 +21,52 @@ presence.on('UpdateData', () => {
       return name
     }
     else {
-      // Pro seller
+      // Individual seller
       let fallbackName = document.querySelector(
-        '.styles_wrapperBottom__unGZF > div:nth-child(2) > h2:nth-child(1)',
+        '#aside > section:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > a:nth-child(1)',
       )?.textContent ?? ''
       if (!fallbackName) {
         fallbackName = document.querySelector(
-          '.styles_wrapperBottom__unGZF > div:nth-child(2) > a:nth-child(1)',
+          '.gap-y-md > div:nth-child(2) > a:nth-child(1)',
         )?.textContent ?? ''
       }
+
+      // Pro seller
+      if (!fallbackName) {
+        fallbackName = document.querySelector(
+          '#aside > div:nth-child(1) > section:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > h2:nth-child(1)',
+        )?.textContent ?? ''
+      }
+      if (!fallbackName) {
+        fallbackName = document.querySelector(
+          '.gap-y-md > div:nth-child(2) > div:nth-child(1) > h2:nth-child(1)',
+        )?.textContent ?? ''
+      }
+
+      // Company
+      if (!fallbackName) {
+        fallbackName = document.querySelector(
+          'a.break-words',
+        )?.textContent ?? ''
+      }
+      if (!fallbackName) {
+        fallbackName = document.querySelector(
+          'a.block:nth-child(1)',
+        )?.textContent ?? ''
+      }
+
       return fallbackName || 'Vendeur inconnu'
     }
   }
 
   function getAdPrice(): string {
-    let price = document
+    const price = document
       .querySelector(
-        'div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > p:nth-child(1)',
+        'p.text-headline-1',
       )
       ?.textContent
-      ?.trim() ?? ''
-    if (!price || !price.includes('€')) {
-      price = document
-        .querySelector(
-          'article > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(1)',
-        )
-        ?.textContent
-        ?.trim() ?? ''
-    }
+      ?.trim()
+      .replace(/\s+/g, '') ?? ''
     return price || 'Prix inconnu'
   }
 
@@ -58,7 +76,8 @@ presence.on('UpdateData', () => {
   else if (document.location.pathname.includes('/favorites')) {
     presenceData.state = 'Mes annonces sauvegardées'
   }
-  else if (document.location.pathname.includes('/mes-recherches')) {
+  else if (document.location.pathname.includes('/mes-recherches')
+    || document.location.pathname.includes('/my-searches')) {
     presenceData.state = 'Mes recherches sauvegardées'
   }
   else if (document.location.pathname.includes('/mes-annonces')) {
@@ -90,7 +109,7 @@ presence.on('UpdateData', () => {
     || document.location.pathname.includes('/profile/')
   ) {
     presenceData.state = `Profil de ${
-      document.querySelector('h3.mr-lg')?.textContent ?? 'Inconnu'
+      document.querySelector('h1.mr-lg')?.textContent ?? 'Inconnu'
     }`
     presenceData.buttons = [
       { label: 'Consulter le profil', url: document.location.href },
@@ -107,27 +126,18 @@ presence.on('UpdateData', () => {
   else if (document.location.pathname.includes('/recherche')) {
     presenceData.details = 'Dans les résultats de recherche :'
 
-    const searchTitle = document.querySelector('h1')?.textContent?.trim() ?? ''
+    const searchTitle = document.querySelector('h1.mb-lg')?.textContent?.trim() ?? ''
     if (!searchTitle) {
       presenceData.state = 'Recherche en cours'
       presence.setActivity(presenceData)
       return
     }
 
-    const searchTitleParts = searchTitle.split('«') || []
-    if (searchTitleParts.length > 1) {
-      const lastPart = searchTitleParts.pop() ?? ''
-      if (!lastPart) {
-        presenceData.state = 'Résultats de recherche'
-        presence.setActivity(presenceData)
-        return
-      }
-      const searchTerms = lastPart.split('»')[0] ?? ''
-      presenceData.state = `Annonces pour «${searchTerms}»`
-    }
-    else {
-      presenceData.state = 'Résultats de recherche'
-    }
+    const searchTitleParts = searchTitle.split(':')
+    const lastPart = searchTitleParts.slice(0, -1).join(':').trim()
+    presenceData.state = lastPart
+    presence.setActivity(presenceData)
+    return
   }
   else if (
     document.location.pathname.includes('/ad/')
@@ -146,12 +156,8 @@ presence.on('UpdateData', () => {
       return
     }
 
-    const contractType = document.querySelector(
-      'div.py-lg:nth-child(2) > div:nth-child(1) > div:nth-child(1) > p:nth-child(2)',
-    )?.textContent ?? '?'
-
     const finalPrice = document.location.pathname.includes('/offres_d_emploi/')
-      ? `Payé ${adsPrice} ${contractType}` // 'Payé' is used for job offers
+      ? `Payé ${adsPrice}` // 'Payé' is used for job offers
       : `Vendu ${adsPrice}` // 'Vendu' is used for other ads
 
     presenceData.state = `${finalPrice} par ${advertiserName}`
