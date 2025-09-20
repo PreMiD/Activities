@@ -10,16 +10,12 @@
     "en": "An anime streaming site"
   },
   "url": "toonstream.love",
-  "version": "1.1.0",
-  "logo": "https://i.imgur.com/SKGu5jg.png",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/llW08V7.png",
   "thumbnail": "https://i.imgur.com/iNIg3ia.png",
   "color": "#A700FA",
   "category": "anime",
-  "tags": [
-    "toonstream",
-    "anime",
-    "streaming"
-  ],
+  "tags": ["anime", "streaming", "video"],
   "iframe": false,
   "settings": [
     {
