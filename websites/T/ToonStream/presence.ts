@@ -1,11 +1,11 @@
 import { ActivityType } from 'premid'
 
 const presence = new Presence({
-  clientId: '1400527594537095179'
+  clientId: '1400527594537095179',
 })
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/llW08V7.png'
+  Logo = 'https://i.imgur.com/llW08V7.png',
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -16,13 +16,13 @@ presence.on('UpdateData', async () => {
   const [privacy, showBrowsingActivity, showCover] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('browsingActivity'),
-    presence.getSetting<boolean>('cover')
+    presence.getSetting<boolean>('cover'),
   ])
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     type: ActivityType.Watching,
-    startTimestamp: browsingTimestamp
+    startTimestamp: browsingTimestamp,
   }
 
   if (privacy) {
@@ -65,27 +65,30 @@ presence.on('UpdateData', async () => {
 
               if (tmdbImages.length > 0) {
                 presenceData.largeImageKey = tmdbImages[0]
-              } else {
+              }
+              else {
                 const ogImage = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content
-                if (ogImage) presenceData.largeImageKey = ogImage
+                if (ogImage)
+                  presenceData.largeImageKey = ogImage
               }
             }
 
             presenceData.buttons = [
               {
                 label: 'Watch Episode',
-                url: href
+                url: href,
               },
               {
                 label: 'View Anime',
-                url: `https://toonstream.love/anime/${animeNameWithDashes}`
-              }
+                url: `https://toonstream.love/anime/${animeNameWithDashes}`,
+              },
             ]
           }
         }
       }
     }
-  } else if (pathname.startsWith('/anime/') && pathname.split('/').length >= 3 && showBrowsingActivity) {
+  }
+  else if (pathname.startsWith('/anime/') && pathname.split('/').length >= 3 && showBrowsingActivity) {
     const pathParts = pathname.split('/')
     const animeNameWithDashes = pathParts[2] || ''
 
@@ -105,28 +108,33 @@ presence.on('UpdateData', async () => {
 
         if (tmdbImages.length > 0) {
           presenceData.largeImageKey = tmdbImages[0]
-        } else {
+        }
+        else {
           const ogImage = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content
-          if (ogImage) presenceData.largeImageKey = ogImage
+          if (ogImage)
+            presenceData.largeImageKey = ogImage
         }
       }
 
       presenceData.buttons = [
         {
           label: 'View Anime',
-          url: href
-        }
+          url: href,
+        },
       ]
     }
-  } else if (pathname === '/' && showBrowsingActivity) {
+  }
+  else if (pathname === '/' && showBrowsingActivity) {
     presenceData.details = 'Browsing ToonStream'
     presenceData.state = 'Homepage'
-  } else if (showBrowsingActivity) {
+  }
+  else if (showBrowsingActivity) {
     presenceData.details = 'Browsing ToonStream'
     presenceData.state = 'Exploring content'
   }
 
-  if (!showCover) presenceData.largeImageKey = ActivityAssets.Logo
+  if (!showCover)
+    presenceData.largeImageKey = ActivityAssets.Logo
 
   presence.setActivity(presenceData)
 })
