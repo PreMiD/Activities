@@ -7,7 +7,7 @@
   },
   "service": "ToonStream",
   "description": {
-    "en": "An anime streaming site"
+    "en": "Stream or download anime dubbed in Hindi, Tamil, Telugu, and English on ToonStream."
   },
   "url": "toonstream.love",
   "version": "1.0.0",
