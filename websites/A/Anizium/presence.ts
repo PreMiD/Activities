@@ -129,6 +129,7 @@ class AniziumPresence {
       '/comment-policy': () => RouteHandlers.handleCommentPolicy(presenceData),
       '/tos': () => RouteHandlers.handleTos(presenceData),
       '/app': () => RouteHandlers.handleApp(presenceData),
+      '/partner': () => RouteHandlers.handlePartner(presenceData),
 
       // Dinamik routelar
       '/watch/': () => RouteHandlers.handleWatchPageUpdate(presenceData, settings),
