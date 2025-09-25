@@ -1,30 +1,30 @@
-import { ActivityType, Assets } from 'premid'
+import {
+  ActivityType,
+  Assets,
+  getTimestamps,
+  getTimestampsFromMedia,
+  timestampFromFormat,
+} from 'premid'
+
 import {
   ActivityAssets,
+  checkStringLanguage,
   cropPreset,
   exist,
-  getAdditionnalStrings,
+  fetchCache,
   getChannel,
   getLocalizedAssets,
+  getSetting,
   getThumbnail,
   limitText,
-  stringsMap,
+  presence,
+  strings,
 } from './util.js'
 
-const presence = new Presence({
-  clientId: '1240716875927916616',
-})
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-async function getStrings() {
-  return presence.getStrings(
-    stringsMap,
-
-  )
-}
 const slideshow = presence.createSlideshow()
 
-let oldLang: string | null = null
-let strings: Awaited<ReturnType<typeof getStrings>>
+let localizedAssets = getLocalizedAssets('default')
 let oldPath = document.location.pathname
 
 presence.on('UpdateData', async () => {
@@ -37,7 +37,7 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   } as PresenceData
   const [
-    lang,
+    newLang,
     usePresenceName,
     useChannelName,
     usePrivacyMode,
@@ -45,19 +45,20 @@ presence.on('UpdateData', async () => {
     useButtons,
     usePoster,
   ] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
-    presence.getSetting<boolean>('usePresenceName'),
-    presence.getSetting<boolean>('useChannelName'),
-    presence.getSetting<boolean>('usePrivacyMode'),
-    presence.getSetting<boolean>('useTimestamps'),
-    presence.getSetting<number>('useButtons'),
-    presence.getSetting<boolean>('usePoster'),
+    getSetting<string>('lang', 'en'),
+    getSetting<boolean>('usePresenceName'),
+    getSetting<boolean>('useChannelName'),
+    getSetting<boolean>('usePrivacyMode'),
+    getSetting<boolean>('useTimestamps'),
+    getSetting<number>('useButtons'),
+    getSetting<boolean>('usePoster'),
   ])
 
-  if (oldLang !== lang || !strings) {
-    oldLang = lang
-    strings = getAdditionnalStrings(lang, await getStrings())
-  }
+  // Update strings if user selected another language.
+  if (!checkStringLanguage(newLang))
+    return
+
+  localizedAssets = getLocalizedAssets(newLang)
 
   if (oldPath !== pathname) {
     oldPath = pathname
@@ -67,10 +68,19 @@ presence.on('UpdateData', async () => {
   switch (true) {
     /* MAIN PAGE (Page principale)
 
-    (https://www.rtlplay.be/) */
-    case pathname === '/'
-      || (pathParts[1] === 'rtlplay' && pathParts.length <= 2): {
+    https://www.rtlplay.be/rtlplay
+    https://www.radiocontact.be/
+    https://www.belrtl.be/index-bel-rtl.htm
+    https://mint.be/ (is not added because it's also the media player page)
+    */
+    case (pathname === '/'
+      || (['rtlplay', 'index-bel-rtl.htm'].includes(pathParts[1]!) && !pathParts[2]))
+    && hostname !== 'mint.be': {
+      console.warn(hostname)
       presenceData.details = strings.browsing
+      presenceData.name = getChannel(hostname).name
+      presenceData.largeImageKey = getChannel(hostname).animated
+      presenceData.largeImageText = getChannel(hostname).name
 
       if (usePrivacyMode) {
         presenceData.state = strings.viewAPage
@@ -202,10 +212,16 @@ presence.on('UpdateData', async () => {
 
     /* DIRECT PAGE (Page des chaines en direct)
 
-    (https://www.rtlplay.be/rtlplay/direct/tvi) */
+    https://www.rtlplay.be/rtlplay/direct/tvi
+    https://www.radiocontact.be/live/
+    https://www.radiocontact.be/player/
+    https://www.belrtl.be/player/webradio7
+    https://mint.be/ (exceptionnaly is also the main page)
+    */
     case (hostname === 'www.rtlplay.be' && ['direct'].includes(pathParts[2]!))
       || (['www.radiocontact.be', 'www.belrtl.be'].includes(hostname)
-        && ['player'].includes(pathParts[1]!)): {
+        && ['player', 'live'].includes(pathParts[1]!))
+      || hostname === 'mint.be' : {
       switch (true) {
         case hostname === 'www.rtlplay.be': {
           if (usePrivacyMode) {
@@ -216,7 +232,7 @@ presence.on('UpdateData', async () => {
           }
           else {
             if (exist('div.playerui__adBreakInfo')) {
-              presenceData.smallImageKey = getLocalizedAssets(lang, 'Ad')
+              presenceData.smallImageKey = localizedAssets.Ad
               presenceData.smallImageText = strings.watchingAd
             }
             else if (exist('i.playerui__icon--name-play')) {
@@ -249,7 +265,7 @@ presence.on('UpdateData', async () => {
               )?.textContent || ''
             }
             else {
-              presenceData.name = getChannel(pathParts[3]!).channel
+              presenceData.name = getChannel(pathParts[3]!).name
             }
 
             presenceData.type = getChannel(pathParts[3]!).type
@@ -262,46 +278,43 @@ presence.on('UpdateData', async () => {
               /* Songs played in the livestream are the same as the audio radio ones but with video clips
               Fetch the data from the Radioplayer API. It is used on the official radio contact and bel rtl websites */
               const response = await fetch(
-                getChannel(pathParts[3]!).radioplayerAPI!,
+                getChannel(pathParts[3]!).radioAPI!,
               )
               const dataString = await response.text()
               const media = JSON.parse(dataString)
 
-              if (media.results.now.type === 'PE_E') {
-                // When a song is played
-                presenceData.largeImageKey = await getThumbnail(
-                  media.results.now.songArtURL,
-                )
-                presenceData.state = `${media.results.now.name} - ${media.results.now.artistName}`
-              }
-              else {
-                // When we don't have a song, we simply show the radio name as the show name is already displayed in state
-                presenceData.largeImageKey = getChannel(pathParts[3]!).logo
-                presenceData.state = getChannel(pathParts[3]!).channel
+              presenceData.largeImageKey = await getThumbnail(
+                media.results.now.imageUrl,
+              )
+              presenceData.state = media.results.now.artistName ? `${media.results.now.name} - ${media.results.now.artistName}` : getChannel(pathParts[3]!).name
+
+              if (usePresenceName && !useChannelName) {
+                const detail = media.results.now.programmeName || media.results.now.artistName
+                presenceData.name = strings.on.replace('{0}', detail).replace('{1}', presenceData.name)
               }
 
               presenceData.largeImageText = strings.watchingLiveMusic
 
-              presenceData.smallImageKey = ActivityAssets.VinyleAnimated
+              presenceData.smallImageKey = ActivityAssets.ListeningLive
               presenceData.smallImageText = strings.listeningMusic
             }
             else {
               presenceData.largeImageKey = getChannel(pathParts[3]!).logo
-              presenceData.largeImageText = getChannel(pathParts[3]!).channel
+              presenceData.largeImageText = getChannel(pathParts[3]!).name
             }
 
             if (useTimestamps) {
               if (exist('span.playerui__controls__stat__time')) {
                 // Video method: Uses video viewing statistics near play button if displayed
-                [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-                  presence.timestampFromFormat(
+                [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+                  timestampFromFormat(
                     document
                       .querySelector('span.playerui__controls__stat__time')
                       ?.textContent
                       ?.split('/')[0]
                       ?.trim() ?? '',
                   ),
-                  presence.timestampFromFormat(
+                  timestampFromFormat(
                     document
                       .querySelector('span.playerui__controls__stat__time')
                       ?.textContent
@@ -336,7 +349,7 @@ presence.on('UpdateData', async () => {
             }
             else if (exist('span.playerui__controls__stat__time')) {
               presenceData.largeImageText += ` - ${Math.round(
-                presence.timestampFromFormat(
+                timestampFromFormat(
                   document
                     .querySelector('span.playerui__controls__stat__time')
                     ?.textContent
@@ -356,76 +369,81 @@ presence.on('UpdateData', async () => {
           }
           break
         }
-        case ['www.radiocontact.be', 'www.belrtl.be'].includes(hostname): {
+        // Webradio websites
+        case ['www.radiocontact.be', 'www.belrtl.be', 'mint.be'].includes(hostname): {
+          const webradio = pathParts[2] || hostname
           if (usePrivacyMode) {
             presenceData.details = strings.listeningMusic
 
             presenceData.type = ActivityType.Listening
 
-            presenceData.smallImageKey = ActivityAssets.VinyleAnimated
+            presenceData.smallImageKey = ActivityAssets.ListeningLive
             presenceData.smallImageText = strings.listeningMusic
           }
           else {
-            presenceData.name = getChannel(hostname).channel
-            presenceData.type = getChannel(hostname).type
+            presenceData.name = getChannel(webradio).name
+            presenceData.type = getChannel(webradio).type
 
             if (exist('button[aria-label="stop"]')) {
-              presenceData.smallImageKey = ActivityAssets.VinyleAnimated
+              presenceData.smallImageKey = ActivityAssets.ListeningLive
               presenceData.smallImageText = strings.listeningMusic
             }
             else {
-              presenceData.smallImageKey = ActivityAssets.Vinyle
+              presenceData.smallImageKey = ActivityAssets.ListeningPaused
               presenceData.smallImageText = strings.pause
             }
 
-            try {
-              // Fetch the data from the API
-              const response = await fetch(getChannel(hostname).radioplayerAPI!) // Website backend use radioplayer api
-              const dataString = await response.text()
-              const data = JSON.parse(dataString)
-              switch (data.results.now.type) {
-                // When a song is played
-                case 'PE_E': {
-                  presenceData.details = data.results.now.name
-                  presenceData.state = data.results.now.artistName
-                  presenceData.startTimestamp = data.results.now.startTime || browsingTimestamp
-                  presenceData.endTimestamp = data.results.now.stopTime
-                    || delete presenceData.endTimestamp
-                  presenceData.largeImageKey = await getThumbnail(
-                    data.results.now.songArtURL,
-                  )
-                  break
-                }
-                // When there's no song and only the show (ex: radio host is speaking)
-                case 'PI': {
-                  presenceData.details = data.results.pis[0].programmeName
-                  presenceData.state = data.results.pis[0].programmeDescription
-                  presenceData.startTimestamp = data.results.now.startTime || browsingTimestamp
-                  presenceData.endTimestamp = data.results.now.stopTime
-                    || delete presenceData.endTimestamp
-                  presenceData.largeImageKey = await getThumbnail(
-                    data.results.pis[0].imageUrl,
-                  )
-                  break
-                }
-                // When there's songs but no show (ex: late night)
-                default: {
-                  presenceData.details = getChannel(hostname).channel
-                  presenceData.state = strings.listeningMusic
-                  presenceData.largeImageKey = getChannel(hostname).logo
-                  break
-                }
-              }
+            // Fetch the data from the API using fetchCache
+            let data
 
-              presenceData.largeImageText = limitText(
-                `${getChannel(hostname).channel} - ${
-                  data.results.now.serviceDescription
-                }`,
-              )
+            if (!pathParts[2]) {
+              // Main radio use radioplayer api
+              const apiData = await fetchCache(getChannel(hostname).radioAPI!) as any
+              data = apiData.results.now
             }
-            catch (error) {
-              presence.error(`Error fetching data from the API: ${error}`)
+            else {
+              // Secondary webradio use in house api
+              const playlistData = await fetchCache(getChannel(pathParts[2]).radioAPI!) as any[]
+
+              // Find the currently playing song by comparing timestamps
+              const now = Date.now() / 1000 // Current time in seconds
+              const currentSong = playlistData.find((song: any) => {
+                const startTime = new Date(song.StartTime).getTime() / 1000
+                const endTime = new Date(song.EndTime).getTime() / 1000
+                return startTime <= now && now <= endTime
+              }) || playlistData[0] // Fallback to first song if none found
+
+              data = {
+                name: currentSong.Title,
+                artistName: currentSong.Artist,
+                imageUrl: currentSong.Cover['200'],
+                startTime: new Date(currentSong.StartTime).getTime() / 1000,
+                stopTime: new Date(currentSong.EndTime).getTime() / 1000,
+              }
             }
+
+            presenceData.details = data.name || strings.listeningMusic
+            presenceData.state = data.artistName || data.description || getChannel(webradio).name
+
+            if (usePresenceName && !useChannelName) {
+              const detail = data.programmeName || data.artistName
+              presenceData.name = strings.on.replace('{0}', detail).replace('{1}', presenceData.name)
+            }
+
+            presenceData.startTimestamp = data.startTime || browsingTimestamp
+            presenceData.endTimestamp = data.stopTime
+              || delete presenceData.endTimestamp
+            presenceData.largeImageKey = await getThumbnail(
+              data.imageUrl,
+            )
+
+            presenceData.largeImageText = data.serviceDescription
+              ? limitText(
+                  `${getChannel(webradio).name} - ${
+                    data.serviceDescription
+                  }`,
+                )
+              : getChannel(webradio).name
 
             if (useButtons) {
               presenceData.buttons = [
@@ -446,24 +464,56 @@ presence.on('UpdateData', async () => {
 
     (https://www.rtlplay.be/rtlplay/player/75e9a91b-29d1-4856-be8c-0b3532862404) */
     case ['player'].includes(pathParts[2]!): {
-      const titleText = document.querySelector('h1.lfvp-player__title')?.textContent
-        || 'Unknown Media'
-      const matchResult = titleText.match(
-        /^(?<mediaName>.*?)\sS(?<seasonNumber>\d+)\sE(?<episodeNumber>\d+)\s(?<episodeName>.*)$/,
-      )
-      const {
-        mediaName = titleText,
-        seasonNumber = null,
-        episodeNumber = null,
-        episodeName = null,
-      } = matchResult?.groups || {}
+      let mediaName: string = 'Unknown Media'
+      let seasonNumber: string | null = null
+      let episodeNumber: string | null = null
+      let episodeName: string | null = null
+      let coverArt: string | null = null
+      // TODO can be improve by retrieving the full json using an intercept api
+      const mediaInfos = document.querySelector('script[type="application/ld+json"]')?.textContent
+      if (mediaInfos) {
+        // Retrieve the json in the page
+        const data = JSON.parse(mediaInfos)
+        mediaName = data[0].name
+        const description = data[0].description.match(/S(?<seasonNumber>\d+)\sE(?<episodeNumber>\d+)\s(?<episodeName>.*)/)
+        if (description && description.groups) {
+          seasonNumber = description.groups.seasonNumber || null
+          episodeNumber = description.groups.episodeNumber || null
+          episodeName = description.groups.episodeName || null
+          coverArt = data[0].thumbnailUrl
+        }
+        else {
+          episodeNumber = data[0].episodeNumber
+        }
+      }
+      else {
+        // Fallback method: read the player title
+        const titleText = document.querySelector('h1.lfvp-player__title')?.textContent
+          || 'Unknown Media'
+
+        // Clean the text: remove extra whitespace, newlines, and normalize spaces
+        const cleanTitle = titleText.replace(/\s+/g, ' ').trim()
+
+        const matchResult = cleanTitle.match(
+          /^(?<mediaName>.*?)\sS(?<seasonNumber>\d+)\sE(?<episodeNumber>\d+)\s(?<episodeName>.*)$/,
+        )
+        if (matchResult && matchResult.groups) {
+          mediaName = matchResult.groups.mediaName || cleanTitle
+          seasonNumber = matchResult.groups.seasonNumber || null
+          episodeNumber = matchResult.groups.episodeNumber || null
+          episodeName = matchResult.groups.episodeName || null
+        }
+        else {
+          mediaName = cleanTitle
+        }
+      }
 
       let isPaused = false
-      presenceData.largeImageKey = ActivityAssets.Logo // Intializing default
+      presenceData.largeImageKey = ActivityAssets.Logo // Initializing default
 
       if (usePrivacyMode) {
         presenceData.details = episodeName
-          ? strings.watchingShow
+          ? strings.watchingAProgramOrSeries
           : strings.watchingMovie
 
         presenceData.smallImageKey = ActivityAssets.Privacy
@@ -504,8 +554,8 @@ presence.on('UpdateData', async () => {
               delete presenceData.endTimestamp
             }
             else {
-              presenceData.startTimestamp = presence.getTimestampsfromMedia(video)[0]
-              presenceData.endTimestamp = presence.getTimestampsfromMedia(video)[1]
+              presenceData.startTimestamp = getTimestampsFromMedia(video)[0]
+              presenceData.endTimestamp = getTimestampsFromMedia(video)[1]
             }
           }
           else {
@@ -525,9 +575,9 @@ presence.on('UpdateData', async () => {
                 ?.split('/')
 
               if (formattedTimestamps && formattedTimestamps.length === 2) {
-                [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-                  presence.timestampFromFormat(formattedTimestamps[0]!.trim()),
-                  presence.timestampFromFormat(formattedTimestamps[1]!.trim()),
+                [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+                  timestampFromFormat(formattedTimestamps[0]!.trim()),
+                  timestampFromFormat(formattedTimestamps[1]!.trim()),
                 )
               }
             }
@@ -540,7 +590,7 @@ presence.on('UpdateData', async () => {
 
         // Key Art - Status
         presenceData.smallImageKey = ad
-          ? getLocalizedAssets(lang, 'Ad')
+          ? localizedAssets.Ad
           : isPaused
             ? Assets.Pause
             : Assets.Play
@@ -556,8 +606,32 @@ presence.on('UpdateData', async () => {
             document
               .querySelector('meta[property="og:image"')!
               .getAttribute('content')!,
+            ActivityAssets.Animated,
             cropPreset.horizontal,
           )
+          if (coverArt) {
+            presenceData.largeImageText = `${strings.season} ${seasonNumber}, ${strings.episode} ${episodeNumber}`
+
+            const presenceDataPoster = structuredClone(presenceData)
+            presenceDataPoster.largeImageKey = mediaName
+            presenceDataPoster.largeImageKey = await getThumbnail(
+              coverArt,
+              ActivityAssets.Animated,
+              cropPreset.horizontal,
+            )
+
+            const presenceDataLogo = structuredClone(presenceData)
+            presenceDataLogo.largeImageText = 'RTLplay'
+            presenceDataLogo.largeImageKey = await getThumbnail(
+              ActivityAssets.Logo,
+              ActivityAssets.Animated,
+              cropPreset.squared,
+            )
+
+            slideshow.addSlide('poster-image', presenceDataPoster, 5000)
+            slideshow.addSlide('episode-image', presenceData, 5000)
+            slideshow.addSlide('logo-image', presenceDataLogo, 5000)
+          }
         }
 
         if (useButtons) {
@@ -577,7 +651,7 @@ presence.on('UpdateData', async () => {
     /* MEDIA PAGE (Page de media)
 
     (https://www.rtlplay.be/rtlplay/salvation~2ab30366-51fe-4b29-a720-5e41c9bd6991) */
-    case pathParts[2]!.length > 15: {
+    case (hostname === 'www.rtlplay.be' && pathParts[2]!.length > 15): {
       presenceData.startTimestamp = browsingTimestamp
 
       if (usePrivacyMode) {
@@ -635,10 +709,12 @@ presence.on('UpdateData', async () => {
 
           presenceData.largeImageKey = await getThumbnail(
             document.querySelector('img.detail__poster')?.getAttribute('src') ?? '',
+            ActivityAssets.Animated,
             cropPreset.vertical,
           )
           presenceDataSlide.largeImageKey = await getThumbnail(
             document.querySelector('img.detail__img')?.getAttribute('src') ?? '',
+            ActivityAssets.Animated,
             cropPreset.horizontal,
           )
 
@@ -648,12 +724,18 @@ presence.on('UpdateData', async () => {
       }
       break
     }
+    // TODO Support https://www.rtl.be/podcasts/
     default: {
+      presenceData.name = getChannel(hostname).name
+
       presenceData.details = strings.browsing
       presenceData.state = strings.viewAPage
 
       presenceData.smallImageKey = ActivityAssets.Binoculars
       presenceData.smallImageText = strings.browsing
+
+      presenceData.largeImageKey = getChannel(hostname).animated
+      presenceData.largeImageText = getChannel(hostname).name
 
       if (useTimestamps)
         presenceData.startTimestamp = browsingTimestamp

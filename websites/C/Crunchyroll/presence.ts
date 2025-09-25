@@ -9,31 +9,6 @@ enum ActivityAssets {
   OpenBook = 'https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/0.png',
 }
 
-async function getStrings() {
-  return presence.getStrings(
-    {
-      play: 'general.playing',
-      pause: 'general.paused',
-      browse: 'general.browsing',
-      reading: 'general.reading',
-      viewPage: 'general.viewPage',
-      viewManga: 'general.viewManga',
-      viewSeries: 'general.buttonViewSeries',
-      watchEpisode: 'general.buttonViewEpisode',
-      readingArticle: 'general.readingArticle',
-      readingAnArticle: 'general.readingAnArticle',
-      viewCategory: 'general.viewCategory',
-      chapter: 'general.chapter',
-      search: 'general.search',
-      manga: 'general.manga',
-      page: 'general.page',
-    },
-
-  )
-}
-
-let strings: Awaited<ReturnType<typeof getStrings>>
-let oldLang: string | null = null
 let playback: boolean = false
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -66,24 +41,38 @@ presence.on('iFrameData', (inc: unknown) => {
 })
 
 presence.on('UpdateData', async () => {
+  const strings = await presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    browse: 'general.browsing',
+    reading: 'general.reading',
+    viewPage: 'general.viewPage',
+    viewManga: 'general.viewManga',
+    viewSeries: 'general.buttonViewSeries',
+    watchEpisode: 'general.buttonViewEpisode',
+    watchingAnime: 'general.watchingAnime',
+    readingArticle: 'general.readingArticle',
+    readingAnArticle: 'general.readingAnArticle',
+    viewCategory: 'general.viewCategory',
+    chapter: 'general.chapter',
+    search: 'general.search',
+    manga: 'general.manga',
+    page: 'general.page',
+  })
+
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     type: ActivityType.Watching,
     startTimestamp: browsingTimestamp,
   }
   const { href, pathname } = window.location
-  const [newLang, showCover, showBrowsingActivity, showTitleAsPresence, hideWhenPaused] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
+  const [privacy, showCover, showBrowsingActivity, showTitleAsPresence, hideWhenPaused] = await Promise.all([
+    presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('browsingActivity'),
     presence.getSetting<boolean>('titleAsPresence'),
     presence.getSetting<boolean>('hideWhenPaused'),
   ])
-
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
 
   if (
     iFrameVideo !== false
@@ -92,8 +81,9 @@ presence.on('UpdateData', async () => {
   ) {
     const videoTitle = document.querySelector<HTMLHeadingElement>('a > h4')?.textContent ?? 'Title not found...'
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
-    presenceData.smallImageText = paused ? strings.pause : strings.play;
-    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
+    presenceData.smallImageText = paused ? strings.pause : strings.play
+    if (!privacy)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
 
     let [season, episode] = [-1, -1]
     const infos = document.head?.querySelectorAll('script[type="application/ld+json"]')
@@ -110,20 +100,21 @@ presence.on('UpdateData', async () => {
 
     let episodeName = document.querySelector<HTMLHeadingElement>('h1.title')?.textContent
 
-    if (season !== -1 && episode !== -1) {
+    if (season !== -1 && episode !== -1 && !privacy) {
       presenceData.largeImageText = `Season ${season}, Episode ${episode}`
       episodeName = episodeName?.replace(`E${episode} - `, '')
     }
 
-    if (showTitleAsPresence)
+    if (showTitleAsPresence && !privacy)
       presenceData.name = videoTitle
     else
-      presenceData.details = videoTitle
+      presenceData.details = privacy ? strings.watchingAnime : videoTitle
 
-    presenceData.state = episodeName
-
-    presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
-      ?.content ?? ActivityAssets.Logo
+    if (!privacy) {
+      presenceData.state = episodeName
+      presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
+        ?.content ?? ActivityAssets.Logo
+    }
 
     if (paused) {
       if (hideWhenPaused)
@@ -132,7 +123,7 @@ presence.on('UpdateData', async () => {
       delete presenceData.endTimestamp
     }
 
-    if (videoTitle) {
+    if (videoTitle && !privacy) {
       presenceData.buttons = [
         {
           label: strings.watchEpisode,
@@ -145,7 +136,7 @@ presence.on('UpdateData', async () => {
       ]
     }
   }
-  else if (pathname.includes('/series') && showBrowsingActivity) {
+  else if (pathname.includes('/series') && showBrowsingActivity && !privacy) {
     presenceData.details = strings.viewPage
     presenceData.state = document.querySelector<HTMLHeadingElement>('h1[class^="heading--"]')?.textContent
 
@@ -168,22 +159,22 @@ presence.on('UpdateData', async () => {
       },
     ]
   }
-  else if (pathname.includes('/search') && showBrowsingActivity) {
+  else if (pathname.includes('/search') && showBrowsingActivity && !privacy) {
     presenceData.details = strings.search
     presenceData.state = document.querySelector<HTMLInputElement>('input[class^="search-input"]')?.value
     presenceData.smallImageKey = Assets.Search
   }
-  else if (pathname.includes('/simulcasts') && showBrowsingActivity) {
+  else if (pathname.includes('/simulcasts') && showBrowsingActivity && !privacy) {
     presenceData.details = strings.viewPage
     presenceData.state = `${
       document.querySelector('h1 + div span')?.textContent
     } ${document.querySelector('h1')?.textContent}`
   }
-  else if (pathname.includes('/videos') && showBrowsingActivity) {
+  else if (pathname.includes('/videos') && showBrowsingActivity && !privacy) {
     presenceData.details = strings.viewCategory
     presenceData.state = document.querySelector('h1')?.textContent
   }
-  else if (/\/news\/.*?\/\d{4}\//.test(pathname) && showBrowsingActivity) {
+  else if (/\/news\/.*?\/\d{4}\//.test(pathname) && showBrowsingActivity && !privacy) {
     const headline = document.querySelector<HTMLHeadingElement>('[class^="articleDetail_headline"]')?.textContent
     if (headline) {
       presenceData.details = `${strings.readingArticle} ${document.querySelector<HTMLHeadingElement>('[class^="articleDetail_headline"]')?.textContent}`
@@ -197,7 +188,7 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('[class^="ArticleThumbnail_articleThumbnail"] > div > picture > img')?.src
     }
   }
-  else if (showBrowsingActivity) {
+  else if (showBrowsingActivity || privacy) {
     presenceData.details = strings.browse
     presenceData.startTimestamp = browsingTimestamp
 
