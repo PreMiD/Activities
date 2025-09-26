@@ -155,11 +155,12 @@ presence.on('UpdateData', async () => {
         )
         ?.textContent
         ?.trim()
-    } else {
+    }
+    else {
       // Fallback to other selectors that don't have ticker
-      title =
+      title
         // Popup Chart Idea
-        document
+        = document
           .querySelector(
             '#overlap-manager-root > div > div.tv-dialog__modal-wrap > div > div > div > div:nth-child(1) > div > div > div > div:nth-child(1) > div.tv-chart-view__header > div.tv-chart-view__title.selectable > div > div.tv-chart-view__title-row.tv-chart-view__title-row--symbol.tv-chart-view__symbol.js-chart-view__symbol.js-chart-view__ticker.quote-ticker-inited > a:nth-child(1)',
           )
@@ -175,7 +176,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (title)
-      presenceData.state = tickerTitle ? `${tickerTitle} • ${title}` : title  // e.g. "AAPL • Apple Inc."
+      presenceData.state = tickerTitle ? `${tickerTitle} • ${title}` : title // e.g. "AAPL • Apple Inc."
   }
   else if (window.location.pathname.startsWith('/script')) {
     presenceData.details = 'Viewing Script...'
