@@ -139,7 +139,7 @@ presence.on('UpdateData', async () => {
     // Full Interactive Chart
     const title = document
       .querySelector(
-        'body > div.js-rootresizer__contents > div.layout__area--right > div > div.widgetbar-pages > div.widgetbar-pagescontent > div.widgetbar-page.active > div.widget-1UXejvkz.widgetbar-widget.widgetbar-widget-detail > div.widgetbar-widgetbody > div > div.wrapper-1CeUhfBr > div:nth-child(1) > div:nth-child(1) > span > a > span.text-H5Jbe1VB',
+        'body > div.js-rootresizer__contents > div > div.layout__area--right > div > div.widgetbar-pages > div.widgetbar-pagescontent > div.widgetbar-page.active > div.widget-X9EuSe_t.widgetbar-widget.widgetbar-widget-detail > div.widgetbar-widgetbody > div > div.wrapper-Tv7LSjUz > div:nth-child(1) > div:nth-child(1) > span > a > span.text-eFCYpbUa',
       )
       ?.textContent
       ?.trim()
