@@ -16,13 +16,11 @@
   "color": "#A700FA",
   "category": "anime",
   "tags": ["anime", "streaming", "video"],
-  "iframe": false,
   "settings": [
     {
       "id": "privacy",
       "title": "Privacy Mode",
-      "icon": "fad fa-user-secret",
-      "value": false
+      "icon": "fad fa-user-secret"
     },
     {
       "id": "browsingActivity",
