@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schemas.premid.app/metadata/1.15",
+    "apiVersion": 1,
+    "author": {
+        "id": "979024561389588482",
+        "name": "adior_enigmac"
+    },
+    "service": "AniGo",
+    "description": {
+        "en": "AniGo.to is a premier free anime streaming platform that provides seamless access to high-definition anime with both SUB and DUB"
+    },
+    "url": "anigo.to",
+    "version": "1.0.0",
+    "logo": "https://i.imgur.com/txVvhfI.png",
+    "thumbnail": "https://i.imgur.com/DFXhtgu.png",
+    "color": "#F5FF6C",
+    "category": "anime",
+    "tags": [
+        "anime"
+    ]
+}

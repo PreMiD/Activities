@@ -1,0 +1,23 @@
+{
+    "$schema": "https://schemas.premid.app/metadata/1.15",
+    "apiVersion": 1,
+    "author": {
+        "id": "979024561389588482",
+        "name": "adior_enigmac"
+    },
+    "service": "SFlix",
+    "description": {
+        "en": "Welcome to Sflix, the premier online platform that brings you movies and TV shows in stunning quality, completely free"
+    },
+    "url": "sflix.fi",
+    "version": "1.0.0",
+    "logo": "https://i.imgur.com/npnJUpz.png",
+    "thumbnail": "https://i.imgur.com/HI8OfdY.png",
+    "color": "#15B1BC",
+    "category": "videos",
+    "tags": [
+        "series",
+        "movies",
+        "anime"
+    ]
+}
