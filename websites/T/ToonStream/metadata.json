@@ -20,7 +20,8 @@
     {
       "id": "privacy",
       "title": "Privacy Mode",
-      "icon": "fad fa-user-secret"
+      "icon": "fad fa-user-secret",
+      "value": false
     },
     {
       "id": "browsingActivity",
