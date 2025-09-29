@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "560663841676197910",
+    "name": ".aurellion"
+  },
+  "service": "Ultrabox",
+  "description": {
+    "en": "Shows how long you've been composing a song, and the name of said song"
+  },
+  "url": "ultraabox.github.io",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/zKibaZa.png",
+  "thumbnail": "https://i.imgur.com/bV5dWgF.png",
+  "color": "#AB55ED",
+  "category": "music",
+  "tags": [
+    "music",
+    "beepbox"
+  ]
+}
