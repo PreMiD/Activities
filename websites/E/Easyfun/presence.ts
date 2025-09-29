@@ -23,11 +23,11 @@ presence.on('UpdateData', async () => {
           ? word
           : word.charAt(0).toUpperCase() + word.slice(1),
       )
-      .join(' '),
+      .join(' ')
   }
 
-  const gameIcon: string =
-    document.querySelector('img[data-nimg="1"]')?.getAttribute('src') ?? ActivityAssets.Logo
+  const gameIcon: string
+    = document.querySelector('img[data-nimg="1"]')?.getAttribute('src') ?? ActivityAssets.Logo
 
   const presenceData: PresenceData = {
     largeImageKey: gameIcon,
