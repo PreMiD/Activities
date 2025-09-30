@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '705139844883677224',
@@ -14,6 +14,7 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/logo.png',
   }
+  const usePresenceName = await presence.getSetting<boolean>('usePresenceName')
   presenceData.startTimestamp = browsingTimestamp
   const title = document.querySelector(
     '.webPlayerSDKUiContainer > div > div > div > div:nth-child(2) > div > div:nth-child(4) > div > div:nth-child(2) > div:nth-child(2) > div > div > div > h1',
@@ -26,7 +27,8 @@ presence.on('UpdateData', async () => {
   if (title || title2) {
     let video = document.querySelector<HTMLVideoElement>(
       '.scalingVideoContainer > div.scalingVideoContainerBottom > div > video',
-    )
+    ) || document.querySelector<HTMLVideoElement>('#dv-web-player video')
+
     if (video === null || Number.isNaN(video.duration))
       video = document.querySelector('video')
 
@@ -40,6 +42,10 @@ presence.on('UpdateData', async () => {
 
     if (video && title && !video.className.includes('tst')) {
       presenceData.details = title
+
+      if (usePresenceName)
+        presenceData.name = title
+
       if (
         subtitle
         && subtitle.textContent
@@ -59,10 +65,10 @@ presence.on('UpdateData', async () => {
           ?.textContent
           ?.trim()
           .split(' / ') ?? [];
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-          presence.timestampFromFormat(unformattedCurrentTime ?? ''),
-          presence.timestampFromFormat(unformattedDuration ?? '')
-          + presence.timestampFromFormat(unformattedCurrentTime ?? ''),
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+          timestampFromFormat(unformattedCurrentTime ?? ''),
+          timestampFromFormat(unformattedDuration ?? '')
+          + timestampFromFormat(unformattedCurrentTime ?? ''),
         )
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = (await strings).playing
@@ -71,6 +77,10 @@ presence.on('UpdateData', async () => {
     else if (video && !video.className.includes('tst')) {
       if (title2 !== '')
         presenceData.details = title2
+
+      if (usePresenceName)
+        presenceData.name = title2
+
       if (video.paused) {
         presenceData.smallImageKey = Assets.Pause
         presenceData.smallImageText = (await strings).paused
@@ -82,10 +92,10 @@ presence.on('UpdateData', async () => {
           ?.textContent
           ?.trim()
           .split(' / ') ?? [];
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-          presence.timestampFromFormat(unformattedCurrentTime ?? ''),
-          presence.timestampFromFormat(unformattedDuration ?? '')
-          + presence.timestampFromFormat(unformattedCurrentTime ?? ''),
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+          timestampFromFormat(unformattedCurrentTime ?? ''),
+          timestampFromFormat(unformattedDuration ?? '')
+          + timestampFromFormat(unformattedCurrentTime ?? ''),
         )
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = (await strings).playing
@@ -128,6 +138,9 @@ presence.on('UpdateData', async () => {
       ?.split(/["„]/)[1]
       ?.split(/[”"]/) ?? []
     presenceData.smallImageKey = Assets.Search
+  }
+  else {
+    presenceData.details = 'Browsing a page'
   }
   if (presenceData.details)
     presence.setActivity(presenceData)

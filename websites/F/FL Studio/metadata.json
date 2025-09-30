@@ -1,0 +1,87 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Inkflow",
+    "id": "286179374204583938"
+  },
+  "service": "FL Studio",
+  "description": {
+    "bg": "FL Studio е цифрова аудио работна станция, разработенаа от Image-Line. Програмата разполага с графичен потребителски интерфейс с музикален секвенсор, базиран на модели.",
+    "cs": "FL Studio je digitální audio pracovní stanice vyvinutá společností Image-Line. Program nabízí grafické uživatelské rozhraní s hudebním sekvencerem založeným na vzorcích.",
+    "da": "FL Studio er en digital lydarbejdsstation udviklet af Image-Line. Programmet har en grafisk brugergrænseflade med en mønsterbaseret musiksekvenser.",
+    "de": "FL Studio ist eine von Image-Line entwickelte digitale Audio-Workstation. Das Programm verfügt über eine grafische Benutzeroberfläche mit einem patternbasierten Musiksequencer.",
+    "el": "Το FL Studio είναι ένας ψηφιακός σταθμός εργασίας ήχου που αναπτύχθηκε από την Image-Line. Το πρόγραμμα διαθέτει γραφικό περιβάλλον χρήστη με έναν μουσικό sequencer βασισμένο σε μοτίβα.",
+    "en": "FL Studio is a digital audio workstation developed by Image-Line. The program features a graphical user interface with a pattern-based music sequencer.",
+    "es": "FL Studio es una estación de trabajo de audio digital desarrollada por Image-Line. El programa cuenta con una interfaz gráfica de usuario con un secuenciador musical basado en patrones.",
+    "fi": "FL Studio on Image-Linen kehittämä digitaalinen äänityöasema. Ohjelmassa on graafinen käyttöliittymä, jossa on kuvioihin perustuva musiikkisekvensseri.",
+    "fr": "FL Studio est une station audio numérique développée par Image-Line. Le programme dispose d'une interface utilisateur graphique avec un séquenceur musical basé sur des motifs.",
+    "hu": "Az FL Studio egy digitális audió munkaállomás, amelyet az Image-Line fejlesztett ki. A program grafikus felhasználói felülettel rendelkezik, mintázatalapú zenei szekvenszerrel.",
+    "it": "FL Studio è una workstation audio digitale sviluppata da Image-Line. Il programma presenta un'interfaccia utente grafica con un sequencer musicale basato su pattern.",
+    "ja": "FL StudioはImage-Lineが開発したデジタルオーディオワークステーションです。このプログラムには、パターンベースの音楽シーケンサーを備えたグラフィカルユーザーインターフェイスが特徴です。",
+    "ko": "FL Studio는 Image-Line에서 개발한 디지털 오디오 워크스테이션입니다. 이 프로그램은 패턴 기반 음악 시퀀서가 있는 그래픽 사용자 인터페이스를 특징으로 합니다.",
+    "nl": "FL Studio is een digitale audio workstation ontwikkeld door Image-Line. Het programma beschikt over een grafische gebruikersinterface met een patroon-gebaseerde muzieksequencer.",
+    "no": "FL Studio er en digital lydarbeidsstasjon utviklet av Image-Line. Programmet har et grafisk brukergrensesnitt med en mønsterbasert musikksekvens.",
+    "pl": "FL Studio to cyfrowa stacja robocza audio opracowana przez Image-Line. Program posiada graficzny interfejs użytkownika z sekwencerem muzycznym opartym na wzorcach.",
+    "pt": "FL Studio é uma estação de trabalho de áudio digital desenvolvida pela Image-Line. O programa apresenta uma interface gráfica do usuário com um sequenciador musical baseado em padrões.",
+    "ro": "FL Studio este o stație de lucru audio digitală dezvoltatată de Image-Line. Programul are o interfață grafică cu un secvențiator muzical bazat pe modele.",
+    "ru": "FL Studio - это цифровая аудиостанция, разработанная Image-Line. В программе есть графический интерфейс с основанным на шаблонах музыкальным секвенсором.",
+    "sv": "FL Studio är en digital ljudarbetsstation utvecklad av Image-Line. Programmet har ett grafiskt användargränssnitt med en mönsterbaserad musiksekvenser.",
+    "tr": "FL Studio, Image-Line tarafından geliştirilen bir dijital ses işleme istasyonudur. Program, desen tabanlı bir müzik sekansörü ile grafiksel bir kullanıcı arayüzüne sahiptir.",
+    "uk": "FL Studio - це цифрова аудіостанція, розроблена Image-Line. У програмі є графічний інтерфейс з музичним секвенсором на основі шаблонів.",
+    "vi": "FL Studio là một trạm làm việc âm thanh kỹ thuật số được phát triển bởi Image-Line. Chương trình có giao diện người dùng đồ họa với trình sắp xếp nhạc dựa trên mẫu.",
+    "zh": "FL Studio 是由 Image-Line 开发的数字音频工作站。该程序具有基于模式的音乐序列器的图形用户界面。"
+  },
+  "url": [
+    "www.image-line.com",
+    "image-line.com"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FL%20Studio/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FL%20Studio/assets/thumbnail.png",
+  "color": "#FF8C00",
+  "category": "other",
+  "tags": [
+    "music",
+    "audio",
+    "daw",
+    "production",
+    "sequencer",
+    "studio"
+  ],
+  "settings": [
+    {
+      "icon": "fad fa-user-secret",
+      "title": "Privacy Mode",
+      "id": "privacyMode",
+      "value": false
+    },
+    {
+      "icon": "fas fa-search",
+      "title": "Show Search Query",
+      "id": "searchQuery",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "icon": "fad fa-stopwatch",
+      "title": "Show Timestamps",
+      "id": "timestamp",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    }
+  ]
+}

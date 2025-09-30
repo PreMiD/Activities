@@ -5,8 +5,15 @@
     "name": "theusaf",
     "id": "193714715631812608"
   },
+  "contributors": [
+    {
+      "id": "123890298316128256",
+      "name": "fluttr"
+    }
+  ],
   "service": "WaniKani",
   "description": {
+    "de": "WaniKani ist eine Kanji-Lernplattform von Tofugu. 2.000 kanji. 6.000 Vokabeln. In nur knapp über einem Jahr.",
     "en": "WaniKani is a kanji learning application by Tofugu. 2,000 kanji. 6,000 vocabulary words. In just over a year.",
     "ga": "Is feidhmchlár foghlama kanji le Tofugu é WaniKani. 2,000 kanji. 6,000 focal foclóra. I mbeagán níos mó ná bliain.",
     "nl": "WaniKani is een kanji-leerapplicatie van Tofugu. 2000 kanji. 6000 woordenschatwoorden. Over iets meer dan een jaar."
@@ -16,7 +23,7 @@
     "community.wanikani.com",
     "knowledge.wanikani.com"
   ],
-  "version": "1.3.5",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WaniKani/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WaniKani/assets/thumbnail.png",
   "color": "#1BA0ED",
@@ -28,5 +35,13 @@
     "srs",
     "vocabulary",
     "language"
+  ],
+  "settings": [
+    {
+      "id": "hideOnDone",
+      "title": "Hide dashboard presence when lessons and reviews are done",
+      "icon": "fas fa-eye-slash",
+      "value": false
+    }
   ]
 }

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "526822284694913042",
+    "name": "Mido"
+  },
+  "service": "Google AI Studio",
+  "description": {
+    "en": "Google AI Studio is a developer platform that lets you quickly prototype and build applications using Google's next-generation, multimodal generative AI models, known as Gemini."
+  },
+  "url": [
+    "aistudio.google.com",
+    "www.aistudio.google.com"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20AI%20Studio/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20AI%20Studio/assets/thumbnail.png",
+  "color": "#6ad2f7",
+  "category": "other",
+  "tags": [
+    "ai",
+    "language",
+    "human-like",
+    "conversations",
+    "multi-purpose"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "description": "Hides all information from your presence.",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showChatName",
+      "title": "Show Prompt/Chat Name",
+      "description": "Displays the name of the current prompt or chat you are working on.",
+      "icon": "fas fa-comments",
+      "value": true
+    },
+    {
+      "id": "showModelName",
+      "title": "Show Model Name",
+      "description": "Displays the AI model being used (e.g., Gemini 1.5 Pro).",
+      "icon": "fas fa-microchip-ai",
+      "value": true
+    },
+    {
+      "id": "showVoiceName",
+      "title": "Show Voice Name (Stream / Gemini Live)",
+      "description": "Displays the voice used during a stream or live session.",
+      "icon": "fas fa-waveform-lines",
+      "value": true
+    },
+    {
+      "id": "showTokenCount",
+      "title": "Show Token Count",
+      "description": "Displays the token count of your input/output.",
+      "icon": "fas fa-calculator-simple",
+      "value": true
+    }
+  ]
+}

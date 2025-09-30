@@ -17,7 +17,7 @@
     "status.tradingview.com"
   ],
   "regExp": "([a-z0-9]+)[.]tradingview[.]com",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TradingView/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TradingView/assets/thumbnail.png",
   "color": "#2196f3",

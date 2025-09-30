@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "1123856956780728411",
+    "name": "itz.manish"
+  },
+  "service": "ToonStream",
+  "description": {
+    "en": "Stream or download anime dubbed in Hindi, Tamil, Telugu, and English on ToonStream."
+  },
+  "url": "toonstream.love",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/ToonStream/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/ToonStream/assets/thumbnail.png",
+  "color": "#A700FA",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "video"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "browsingActivity",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Browsing Activity",
+      "icon": "fad fa-book-reader",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    }
+  ]
+}
