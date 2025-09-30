@@ -272,7 +272,7 @@ presence.on('UpdateData', async () => {
       ? (await strings).paused
       : (await strings).watching
 
-    if (!video.paused && video.duration && Number.isFinite(video.duration)) {
+    if (!video.paused && video.duration) {
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     }
   }
