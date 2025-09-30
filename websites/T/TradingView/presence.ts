@@ -136,30 +136,47 @@ presence.on('UpdateData', async () => {
   else if (window.location.pathname.startsWith('/chart')) {
     presenceData.details = 'Viewing Chart...'
 
-    // Full Interactive Chart
-    const title = document
+    // Full Interactive Chart - primary selector
+    const primaryTitle = document
       .querySelector(
-        'body > div.js-rootresizer__contents > div.layout__area--right > div > div.widgetbar-pages > div.widgetbar-pagescontent > div.widgetbar-page.active > div.widget-1UXejvkz.widgetbar-widget.widgetbar-widget-detail > div.widgetbar-widgetbody > div > div.wrapper-1CeUhfBr > div:nth-child(1) > div:nth-child(1) > span > a > span.text-H5Jbe1VB',
+        'body > div.js-rootresizer__contents > div > div.layout__area--right > div > div.widgetbar-pages > div.widgetbar-pagescontent > div.widgetbar-page.active > div.widget-X9EuSe_t.widgetbar-widget.widgetbar-widget-detail > div.widgetbar-widgetbody > div > div.wrapper-Tv7LSjUz > div:nth-child(1) > div:nth-child(1) > span > a > span.text-eFCYpbUa',
       )
       ?.textContent
       ?.trim()
-    // Popup Chart Idea
-      || document
+
+    let title = primaryTitle
+    let tickerTitle: string | undefined
+
+    // Only get tickerTitle if primary selector found a title
+    if (primaryTitle) {
+      tickerTitle = document
         .querySelector(
-          '#overlap-manager-root > div > div.tv-dialog__modal-wrap > div > div > div > div:nth-child(1) > div > div > div > div:nth-child(1) > div.tv-chart-view__header > div.tv-chart-view__title.selectable > div > div.tv-chart-view__title-row.tv-chart-view__title-row--symbol.tv-chart-view__symbol.js-chart-view__symbol.js-chart-view__ticker.quote-ticker-inited > a:nth-child(1)',
+          'body > div.js-rootresizer__contents > div > div.layout__area--right > div > div.widgetbar-pages > div.widgetbar-pagescontent > div.widgetbar-page.active > div.widget-X9EuSe_t.widgetbar-widget.widgetbar-widget-detail > div.widgetHeader-X9EuSe_t > div > span.title-ZJX9Rmzv',
         )
         ?.textContent
         ?.trim()
-    // Full Chart Idea Page
+    }
+    else {
+      // Fallback to other selectors that don't have ticker
+      title
+        // Popup Chart Idea
+        = document
+          .querySelector(
+            '#overlap-manager-root > div > div.tv-dialog__modal-wrap > div > div > div > div:nth-child(1) > div > div > div > div:nth-child(1) > div.tv-chart-view__header > div.tv-chart-view__title.selectable > div > div.tv-chart-view__title-row.tv-chart-view__title-row--symbol.tv-chart-view__symbol.js-chart-view__symbol.js-chart-view__ticker.quote-ticker-inited > a:nth-child(1)',
+          )
+          ?.textContent
+          ?.trim()
+        // Full Chart Idea Page
         || document
           .querySelector(
             'body > div.tv-main > div.tv-content > div > div > div:nth-child(1) > div.tv-chart-view__header > div.tv-chart-view__title.selectable > div > div.tv-chart-view__title-row.tv-chart-view__title-row--symbol.tv-chart-view__symbol.js-chart-view__symbol.js-chart-view__ticker.quote-ticker-inited > a:nth-child(1)',
           )
           ?.textContent
           ?.trim()
+    }
 
     if (title)
-      presenceData.state = title
+      presenceData.state = tickerTitle ? `${tickerTitle} • ${title}` : title // e.g. "AAPL • Apple Inc."
   }
   else if (window.location.pathname.startsWith('/script')) {
     presenceData.details = 'Viewing Script...'
