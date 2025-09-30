@@ -40,10 +40,10 @@ presence.on('UpdateData', async () => {
       || document.querySelector('.episodeContainer h1.anizm_pageTitle span')
       || document.querySelector('html > body > main > #pageContent > div > h2.anizm_pageTitle > span')
 
-  const animeSeries =
-    document.querySelector('h1.anizm_pageTitle a')?.getAttribute('href')
-    || document.querySelector('#pageContent > div > h2 > a')?.getAttribute('href')
-    || document.location.href
+  const animeSeries
+    = document.querySelector('h1.anizm_pageTitle a')?.getAttribute('href')
+      || document.querySelector('#pageContent > div > h2 > a')?.getAttribute('href')
+      || document.location.href
 
   const isAnimeDetailPage = title !== null
   const isAnimePage = isAnimeDetailPage || video !== null
