@@ -25,10 +25,21 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp, // Add timestamp by default for all states
   }
 
-  // Get basic selectors once
-  const title = document.querySelector('html > body > main > #pageContent > div > h2 > a')
-  const episode = document.querySelector('html > body > main > #pageContent > div > h2.anizm_pageTitle > span')
-  const animeSeries = document.querySelector('#pageContent > div > h2 > a')?.getAttribute('href') || document.location.href
+  // Get basic selectors once - Updated for new site structure
+  const title = 
+    document.querySelector('h1.anizm_pageTitle a.anizmTitleLink') || 
+    document.querySelector('h1.anizm_pageTitle a') ||
+    document.querySelector('html > body > main > #pageContent > div > h2 > a')
+    
+  const episode = 
+    document.querySelector('h1.anizm_pageTitle span:last-child') || 
+    document.querySelector('.episodeContainer h1.anizm_pageTitle span') ||
+    document.querySelector('html > body > main > #pageContent > div > h2.anizm_pageTitle > span')
+    
+  const animeSeries = 
+    document.querySelector('h1.anizm_pageTitle a')?.getAttribute('href') || 
+    document.querySelector('#pageContent > div > h2 > a')?.getAttribute('href') || 
+    document.location.href
 
   // Check if this is an anime watching page or anime detail page
   const isAnimeDetailPage = title != null
@@ -45,8 +56,11 @@ presence.on('UpdateData', async () => {
       const imgUrlMatch = blurredCoverElement.style.background.match(/url\(['"]?([^'"]+)['"]?\)/i)
       if (imgUrlMatch?.[1]) {
         const posterPath = imgUrlMatch[1].split('/').pop()?.split('?')[0]
-        if (posterPath)
-          return `https://anizm.net/storage/pcovers/${posterPath}`
+        if (posterPath) {
+          // Use current domain dynamically instead of hardcoded anizm.net
+          const currentDomain = window.location.hostname
+          return `https://${currentDomain}/storage/pcovers/${posterPath}`
+        }
       }
     }
 
@@ -54,9 +68,12 @@ presence.on('UpdateData', async () => {
     const animeImageElement = document.querySelector<HTMLElement>('.anizm_posterThumb.anizm_img')
     if (animeImageElement?.style?.backgroundImage) {
       const imgUrl = animeImageElement.style.backgroundImage.replace(/url\(['"]?([^'"]+)['"]?\)/gi, '$1')
-      if (imgUrl?.trim())
-        return imgUrl
+      if (imgUrl?.trim()) return imgUrl
     }
+
+    // Try to get poster from meta tags as fallback
+    const metaImage = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')
+    if (metaImage?.content) return metaImage.content
 
     return 'https://cdn.rcd.gg/PreMiD/websites/A/AnizmTV/assets/logo.png'
   }
@@ -166,10 +183,20 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [{ label: 'Anizm\'i Ziyaret Et', url: document.location.href }]
   }
 
-  // Episode watching state
+  // Episode watching state - Updated for new episode structure
   if (title && episode) {
     presenceData.details = title.textContent || 'Anime İzliyor'
-    presenceData.state = `İzliyor: ${episode.textContent?.split('/ ').slice(1).join(' ') || ''}`
+    
+    // Updated episode text extraction for new format
+    let episodeText = episode.textContent || ''
+    // Remove leading "/ " if it exists
+    if (episodeText.startsWith('/ ')) {
+      episodeText = episodeText.substring(2)
+    } else if (episodeText.startsWith('/')) {
+      episodeText = episodeText.substring(1)
+    }
+    
+    presenceData.state = `İzliyor: ${episodeText}`
     presenceData.buttons = [
       { label: 'Bölümü İzle', url: document.location.href.split('&')[0] || document.location.href },
       { label: (await strings).anime, url: animeSeries },
