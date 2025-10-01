@@ -176,7 +176,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Viewing artwork:'
       presenceData.smallImageKey = Assets.Viewing
       presenceData.state = `${document.querySelector('h1')?.textContent} (by: ${
-        document.querySelector('section h2')?.textContent
+        document.querySelector('aside section h2')?.textContent
       })`
       presenceData.buttons = [
         {
