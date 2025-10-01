@@ -1,14 +1,19 @@
 import { ActivityType } from 'premid'
 
+// Initialize PreMiD presence
 const presence = new Presence({
   clientId: '1422257981168291940',
 })
+
+// Browsing timestamp for showing elapsed time
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+// Asset constants for images
 enum ActivityAssets {
   Logo = 'https://i.ibb.co/fYPRcCBK/test-2.png',
 }
 
+// Map known paths to friendly activity text
 const pathStates: Record<string, string> = {
   '/': 'Homepage',
   '/ai': 'Exploring AI Section',
@@ -42,16 +47,38 @@ const pathStates: Record<string, string> = {
   '/video': 'Watching Videos Section',
 }
 
+// Update presence on page changes
 presence.on('UpdateData', async () => {
-  const { pathname } = document.location
+  // Normalize pathname: remove query, extra slashes, lowercase
+  let { pathname } = document.location
+  pathname = pathname?.split('?')[0]?.replace(/\/+/g, '/').replace(/\/$/, '').toLowerCase() ?? ''
+  if (pathname === '')
+    pathname = '/'
 
-  const presenceData: PresenceData = {
+  // Determine state from known paths
+  let state = pathStates[pathname]
+
+  // Handle dynamic /other/* pages with friendly wording
+  if (!state && pathname.startsWith('/other/')) {
+    const pagePart = pathname.split('/other/')[1] ?? ''
+    if (pagePart.length > 0) {
+      const words = pagePart.split('-').filter(Boolean)
+      const capitalized = words.map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      const pageName = capitalized.join(' ')
+      if (pageName.length > 0)
+        state = `Looking for ${pageName}`
+    }
+  }
+
+  // Build presence data
+  const presenceData = {
     largeImageKey: ActivityAssets.Logo,
     details: 'Free Media Heck Yeah',
     startTimestamp: browsingTimestamp,
-    state: pathStates[pathname] || 'Browsing fmhy.net',
+    state: state ?? 'Browsing fmhy.net',
     type: ActivityType.Watching,
   }
 
+  // Set the activity
   presence.setActivity(presenceData)
 })
