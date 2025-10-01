@@ -53,7 +53,7 @@ const staticPages: Record<string, PresenceData> = {
 }
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/05FmTQ1.jpeg',
+  Logo = 'https://i.imgur.com/0ZDreiR.jpeg',
 }
 
 let browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -69,8 +69,8 @@ presence.on('UpdateData', async () => {
   const [buttons, privacyMode] = await Promise.all([
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('privacyMode'),
-
   ])
+
   if (lastPath !== pathname) {
     browsingTimestamp = Math.floor(Date.now() / 1000)
     presenceData.startTimestamp = browsingTimestamp
