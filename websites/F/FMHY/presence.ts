@@ -10,7 +10,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 // Asset constants for images
 enum ActivityAssets {
-  Logo = 'https://i.ibb.co/fYPRcCBK/test-2.png',
+  Logo = 'https://i.imgur.com/f9Cw9ril.png',
 }
 
 // Map known paths to friendly activity text
