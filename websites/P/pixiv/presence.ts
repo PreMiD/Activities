@@ -148,7 +148,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = document.querySelector('.current')?.textContent
       break
     case 'discovery':
-      presenceData.details = `Viewing Recommanded ${
+      presenceData.details = `Viewing Recommended ${
         arrPath[1] === 'users' ? 'Users' : 'Works'
       }`
       break
