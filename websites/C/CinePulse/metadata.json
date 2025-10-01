@@ -7,12 +7,12 @@
   },
   "service": "CinePulse",
   "description": {
-    "en": "Watch movies and TV shows on CinePulse.to",
-    "fr": "Regarder des films et séries sur CinePulse.to"
+    "en": "Watch movies and TV shows on CinePulse.cc",
+    "fr": "Regarder des films et séries sur CinePulse.cc"
   },
-  "url": "cinepulse.to",
-  "regExp": "([a-z0-9-]+\\.)*cinepulse\\.to[/]?",
-  "version": "1.0.1",
+  "url": "cinepulse.cc",
+  "regExp": "([a-z0-9-]+\\.)*cinepulse\\.cc[/]?",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CinePulse/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CinePulse/assets/thumbnail.webp",
   "color": "#000000",
