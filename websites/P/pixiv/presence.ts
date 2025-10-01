@@ -15,6 +15,7 @@ const staticPages: Record<string, PresenceData> = {
   'mypixivall.php': { details: 'Browsing my pixiv' },
   'request': { details: 'Viewing pixiv Requests' },
   'collection': { details: 'Viewing collections' },
+  'contest': { details: 'Viewing contests' },
   'group': { details: 'Browsing group' },
   'idea': { details: 'Browsing idea' },
   'howto': { details: 'Browsing how-to' },
