@@ -28,7 +28,7 @@
   },
   "url": "www.disneyplus.com",
   "regExp": "([a-z0-9-]+[.])*disneyplus[.]com[/]|([a-z0-9-]+[.])*hotstar[.]com[/]",
-  "version": "1.8.3",
+  "version": "1.9.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Disney%2B/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Disney%2B/assets/thumbnail.png",
   "color": "#233778",
