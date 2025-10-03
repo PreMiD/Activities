@@ -72,7 +72,7 @@ presence.on('UpdateData', async () => {
         break
       }
       case '/equipment': {
-        presenceData.details = 'Viewing owned equipments'
+        presenceData.details = 'Viewing owned equipment'
         break
       }
       case '/events': {
