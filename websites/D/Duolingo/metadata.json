@@ -39,7 +39,7 @@
   },
   "url": "duolingo.com",
   "regExp": "(www|preview)\\.duolingo\\.(com|cn)",
-  "version": "3.1.9",
+  "version": "3.1.10",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Duolingo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Duolingo/assets/thumbnail.png",
   "color": "#5dcd32",

@@ -15,7 +15,7 @@
     "en.onlinesoccermanager.com"
   ],
   "regExp": "([a-z0-9-]+[.])*onlinesoccermanager[.](com|nl)[/]",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Online%20Soccer%20Manager/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Online%20Soccer%20Manager/assets/thumbnail.png",
   "color": "#FF971B",

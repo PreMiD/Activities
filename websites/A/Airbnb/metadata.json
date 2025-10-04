@@ -11,7 +11,7 @@
   },
   "url": "www.airbnb.com",
   "regExp": "([a-z0-9-]+[.])*airbnb([.][a-z]+)+[/]",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Airbnb/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Airbnb/assets/thumbnail.png",
   "color": "#f9585e",

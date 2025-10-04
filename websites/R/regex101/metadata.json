@@ -10,7 +10,7 @@
     "en": "Regular expression tester with syntax highlighting, explanation, cheat sheet for PHP/PCRE, Python, GO, JavaScript, Java, C#/.NET."
   },
   "url": "regex101.com",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/regex101/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/regex101/assets/thumbnail.png",
   "color": "#1a2c42",

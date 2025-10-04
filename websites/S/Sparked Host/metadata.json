@@ -12,7 +12,7 @@
   },
   "url": "sparkedhost.com",
   "regExp": "([a-z0-9-]+[.])*sparkedhost[.](com|us)[/]|([a-z0-9-]+[.])*altar[.](com|us)|([a-z0-9-]+[.])*cloud852[.](com|us)",
-  "version": "1.1.25",
+  "version": "1.1.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sparked%20Host/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sparked%20Host/assets/thumbnail.png",
   "color": "#FF9F00",

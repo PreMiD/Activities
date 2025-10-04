@@ -12,7 +12,7 @@
   },
   "url": "tomshardware.com",
   "regExp": "([a-z0-9-]+[.])*tomshardware[.]com[/]",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TomsHardware/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TomsHardware/assets/thumbnail.png",
   "color": "#e03c3c",

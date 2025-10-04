@@ -18,7 +18,7 @@
   },
   "url": "www.daum.net",
   "regExp": "(top[.])?([a-z]+)([.]v)?[.]daum[.]([a-z0-9]+)",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Daum/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Daum/assets/thumbnail.png",
   "color": "#f4f7fb",

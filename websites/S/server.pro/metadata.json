@@ -11,7 +11,7 @@
   },
   "url": "server.pro",
   "regExp": "([a-z0-9-]+[.])*server[.]pro[/]",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/server.pro/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/server.pro/assets/thumbnail.png",
   "color": "#418AC9",

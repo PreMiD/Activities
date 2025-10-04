@@ -16,7 +16,7 @@
     "www.rocketleagueesports.com"
   ],
   "regExp": "([a-z0-9-]+[.])*rocketleague[.]com[/]",
-  "version": "1.2.23",
+  "version": "1.2.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rocket%20League/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rocket%20League/assets/thumbnail.jpg",
   "color": "#0055ab",

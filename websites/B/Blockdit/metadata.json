@@ -14,7 +14,7 @@
   },
   "url": "www.blockdit.com",
   "regExp": "([a-z0-9-]+[.])*blockdit[.]com[/]",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Blockdit/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Blockdit/assets/thumbnail.png",
   "color": "#4a7fe0",
