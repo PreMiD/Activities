@@ -103,7 +103,7 @@ presence.on('UpdateData', async () => {
     }
   }
   if (await presence.getSetting('hide')) { // hide using anilife
-    if (!['play', 'h', 'search', 'results'].includes(document.location.pathname.split('/')[1] ?? ' '))
+    if (!['watch', 'h', 'search', 'results'].includes(document.location.pathname.split('/')[1] ?? ' '))
       presenceData.largeImageKey = Assets.Play
     if (['anilife', 'Anilife'].includes(presenceData.name ?? ' '))
       presenceData.name = '애니메이션'
