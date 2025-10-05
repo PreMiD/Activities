@@ -15,7 +15,7 @@
   },
   "url": "myfigurecollection.net",
   "regExp": "^https://(\\w+[.])?myfigurecollection[.]net[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MyFigureCollection.net/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MyFigureCollection.net/assets/thumbnail.jpeg",
   "color": "#57A052",

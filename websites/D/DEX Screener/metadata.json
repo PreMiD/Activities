@@ -10,7 +10,7 @@
     "en": "Realtime price charts and trading history on DEXes across Ethereum, BSC, Polygon, Avalanche, Fantom, Harmony, Cronos, Arbitrum, Optimism and more."
   },
   "url": "dexscreener.com",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DEX%20Screener/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DEX%20Screener/assets/thumbnail.png",
   "color": "#111111",

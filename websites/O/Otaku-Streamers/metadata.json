@@ -12,7 +12,7 @@
   },
   "url": "otaku-streamers.com",
   "regExp": "([a-z0-9-]+[.])*otaku-streamers[.]com[/]",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Otaku-Streamers/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Otaku-Streamers/assets/thumbnail.png",
   "color": "#920121",

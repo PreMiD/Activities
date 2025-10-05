@@ -11,7 +11,7 @@
   },
   "url": "onetouchtv.info",
   "regExp": "(ww(w)?[0-9]?[.])?onetouchtv[.].*",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OneTouchTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OneTouchTV/assets/thumbnail.png",
   "color": "#000000",

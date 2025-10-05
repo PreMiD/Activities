@@ -21,7 +21,7 @@
   },
   "url": "www.primevideo.com",
   "regExp": "(([a-z0-9-]+[.])*amazon([.][a-z]+)+[/]((-[/])?(([a-z0-9]+)[/])?)?Prime-Video|Prime-Instant-Video|Amazon-Video|gp[/]video)|([a-z0-9-]+[.])*primevideo([.][a-z]+)+([/]?)?",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/thumbnail.jpg",
   "color": "#FFFFFF",

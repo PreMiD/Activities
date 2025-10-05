@@ -19,7 +19,7 @@
     "play.openguessr.com"
   ],
   "regExp": "([a-z0-9-]+[.])*openguessr[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OpenGuessr/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OpenGuessr/assets/thumbnail.png",
   "color": "#f23913",

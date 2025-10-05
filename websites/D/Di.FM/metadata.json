@@ -13,7 +13,7 @@
   },
   "url": "di.fm",
   "regExp": "([a-z0-9-]+[.])*di[.]fm[/]",
-  "version": "1.5.10",
+  "version": "1.5.11",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Di.FM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Di.FM/assets/thumbnail.png",
   "color": "#3aa154",

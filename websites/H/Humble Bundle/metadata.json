@@ -12,7 +12,7 @@
   },
   "url": "www.humblebundle.com",
   "regExp": "([a-z0-9-]+[.])*humblebundle[.]com[/]",
-  "version": "1.2.24",
+  "version": "1.2.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Humble%20Bundle/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Humble%20Bundle/assets/thumbnail.png",
   "color": "#cc2929",
