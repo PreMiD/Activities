@@ -223,6 +223,30 @@ presence.on('UpdateData', async () => {
       )?.src || Assets.Question
     }
   }
+  // Games section
+  else if (pathname.startsWith('/games/')) {
+    presenceData.details = 'Playing a game'
+    switch (pathList[1]) {
+      case 'mini-sudoku':
+        presenceData.state = 'Mini Sudoku'
+        break;
+      case 'zip':
+        presenceData.state = 'Zip'
+        break;
+      case 'tango':
+        presenceData.state = 'Tango'
+        break;
+      case 'queens':
+        presenceData.state = 'Queens'
+        break;
+      case 'pinpoint':
+        presenceData.state = 'Pinpoint'
+        break;
+      case 'crossclimb':
+        presenceData.state = 'Crossclimb'
+        break;
+    }
+  }
   // Settings section
   else if (pathname.startsWith('/mypreferences/')) {
     presenceData.details = 'Editing settings'
