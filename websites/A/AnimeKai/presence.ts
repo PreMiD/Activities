@@ -16,6 +16,7 @@ enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeKai/assets/logo.png',
   Settings = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeKai/assets/0.png',
   Notifications = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeKai/assets/1.png',
+  Viewing = 'https://cdn.rcd.gg/PreMiD/resources/viewing.png',
 }
 
 presence.on(
@@ -145,6 +146,18 @@ presence.on('UpdateData', async () => {
       ]
     }
   }
+  else if (/^\/user\/[^/]+\/profile$/.test(pathname)) {
+    presenceData.details = 'Viewing User Profile'
+    presenceData.smallImageKey = ActivityAssets.Viewing
+    if (buttons) {
+      presenceData.buttons = [
+        {
+          label: 'View Profile',
+          url: href,
+        },
+      ]
+    }
+  }
   else {
     switch (pathname) {
       case '/browser': {
@@ -161,13 +174,13 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Contact Us'
         break
       }
-      case '/user/profile': {
-        presenceData.details = 'Checking User Profile'
+      case '/user/settings': {
+        presenceData.details = 'Changing Settings'
         presenceData.smallImageKey = ActivityAssets.Settings
         break
       }
-      case '/user/settings': {
-        presenceData.details = 'Changing Settings'
+      case '/user/profile': {
+        presenceData.details = 'Editing Profile'
         presenceData.smallImageKey = ActivityAssets.Settings
         break
       }
