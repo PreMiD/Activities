@@ -229,22 +229,22 @@ presence.on('UpdateData', async () => {
     switch (pathList[1]) {
       case 'mini-sudoku':
         presenceData.state = 'Mini Sudoku'
-        break;
+        break
       case 'zip':
         presenceData.state = 'Zip'
-        break;
+        break
       case 'tango':
         presenceData.state = 'Tango'
-        break;
+        break
       case 'queens':
         presenceData.state = 'Queens'
-        break;
+        break
       case 'pinpoint':
         presenceData.state = 'Pinpoint'
-        break;
+        break
       case 'crossclimb':
         presenceData.state = 'Crossclimb'
-        break;
+        break
     }
   }
   // Settings section
