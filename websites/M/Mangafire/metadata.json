@@ -11,7 +11,7 @@
   },
   "url": "mangafire.to",
   "regExp": "([a-z0-9-]+[.])*(mangafire)[.]to[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mangafire/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mangafire/assets/thumbnail.png",
   "color": "#5c74e7",

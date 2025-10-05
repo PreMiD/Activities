@@ -13,7 +13,7 @@
   },
   "url": "slither.io",
   "regExp": "([a-z0-9-]+[.])*slither[.]io[/]",
-  "version": "1.6.23",
+  "version": "1.6.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Slither.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Slither.io/assets/thumbnail.png",
   "color": "#319c2c",

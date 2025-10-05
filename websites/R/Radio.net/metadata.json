@@ -14,7 +14,7 @@
   },
   "url": "www.radio.net",
   "regExp": "((www|uk|au|nz|ie|za|ca|co|mx|br|nl|za)[.]radio[.]net|www[.]radio[.](de|dk|at|es|fr|it|pl|pt|se)|corporate[.]radio[.](net|de))[/]",
-  "version": "4.0.15",
+  "version": "4.0.16",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Radio.net/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Radio.net/assets/thumbnail.png",
   "color": "#64e646",

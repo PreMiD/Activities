@@ -12,7 +12,7 @@
   },
   "url": "booth.pm",
   "regExp": "([a-z0-9-]+[.])*booth[.]pm[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BOOTH/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BOOTH/assets/thumbnail.png",
   "color": "#FC4D50",

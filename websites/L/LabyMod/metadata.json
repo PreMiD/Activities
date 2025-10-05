@@ -18,7 +18,7 @@
   },
   "url": "www.labymod.net",
   "regExp": "([a-z0-9-]+[.])*labymod[.]net[/]",
-  "version": "1.2.29",
+  "version": "1.2.30",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LabyMod/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LabyMod/assets/thumbnail.png",
   "color": "#008fe8",

@@ -20,7 +20,7 @@
   },
   "url": "xbox.com",
   "regExp": "([a-z0-9-]+[.])*xbox[.]com[/]",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/X/Xbox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/X/Xbox/assets/thumbnail.png",
   "color": "#107c10",

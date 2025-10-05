@@ -11,7 +11,7 @@
   },
   "url": "www.audible.com",
   "regExp": "www[.]audible([.][a-z]+)",
-  "version": "1.1.14",
+  "version": "1.1.15",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Audible/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Audible/assets/thumbnail.png",
   "color": "#f7991c",

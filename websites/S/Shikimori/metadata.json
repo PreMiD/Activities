@@ -12,7 +12,7 @@
   },
   "url": "shikimori.one",
   "regExp": "shikimori([.][a-z]+)+[/]",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Shikimori/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Shikimori/assets/thumbnail.png",
   "color": "#4f4f4f",

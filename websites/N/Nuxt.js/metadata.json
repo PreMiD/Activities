@@ -18,7 +18,7 @@
   },
   "url": "nuxtjs.org",
   "regExp": "([a-z]{2}[.])?nuxtjs[.]org",
-  "version": "1.3.13",
+  "version": "1.3.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nuxt.js/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nuxt.js/assets/thumbnail.png",
   "color": "#00c58e",

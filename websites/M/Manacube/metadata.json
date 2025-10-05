@@ -11,7 +11,7 @@
   },
   "url": "manacube.com",
   "regExp": "([a-z0-9-]+[.])*manacube[.]com[/]",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Manacube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Manacube/assets/thumbnail.png",
   "color": "#06D1DF",

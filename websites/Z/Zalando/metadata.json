@@ -14,7 +14,7 @@
   },
   "url": "www.zalando.com",
   "regExp": "([a-z0-9-]+[.])*zalando([.][a-z]+)+[/]",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/Zalando/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/Zalando/assets/thumbnail.png",
   "color": "#f47127",

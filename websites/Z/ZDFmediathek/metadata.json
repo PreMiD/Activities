@@ -11,7 +11,7 @@
     "en": "ZDFmediathek is a shared video-on-demand streaming service offered by German public-sector broadcasters of ZDF."
   },
   "url": "www.zdf.de",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZDFmediathek/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZDFmediathek/assets/thumbnail.jpg",
   "color": "#FE7405",
