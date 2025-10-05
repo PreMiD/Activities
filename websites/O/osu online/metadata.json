@@ -18,7 +18,7 @@
     "zh": "这是个非官方的osu!工具。不同于官方版本的计分和判定，某些音乐可能无法完美同步，不支持osu!std以外的模式。"
   },
   "url": "osugame.online",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20online/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20online/assets/thumbnail.png",
   "color": "#B63258",

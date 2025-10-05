@@ -12,7 +12,7 @@
   },
   "url": "vidoza.net",
   "regExp": "(ww(w)?([0-9])?[.])?vidoza[.][a-z]*",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vidoza/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vidoza/assets/thumbnail.png",
   "color": "#43A047",

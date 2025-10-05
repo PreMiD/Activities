@@ -13,7 +13,7 @@
   },
   "url": "discord.js.org",
   "regExp": "([a-z0-9-]+[.])*(discord[.]js.org|old[.]discordjs.dev)[/]",
-  "version": "1.2.27",
+  "version": "1.2.28",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord.js/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord.js/assets/thumbnail.png",
   "color": "#8dd6f1",

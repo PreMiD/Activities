@@ -13,7 +13,7 @@
   },
   "url": "www.pinterest.com",
   "regExp": "([a-z0-9-]+[.])*pinterest([.][a-z]+)+[/]",
-  "version": "1.4.9",
+  "version": "1.4.10",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pinterest/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pinterest/assets/thumbnail.jpg",
   "color": "#cc2127",

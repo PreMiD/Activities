@@ -15,7 +15,7 @@
     "superuser.com"
   ],
   "regExp": "(.*\\.)*(stackexchange\\.com|superuser\\.com|serverfault\\.com)",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stack%20Exchange/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stack%20Exchange/assets/thumbnail.png",
   "color": "#1E5397",

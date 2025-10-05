@@ -23,7 +23,7 @@
   },
   "url": "docs.google.com",
   "regExp": "docs[.]google([.][a-z]+)+[/]",
-  "version": "1.4.36",
+  "version": "1.4.37",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/thumbnail.jpg",
   "color": "#3a404a",

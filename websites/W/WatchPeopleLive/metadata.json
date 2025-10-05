@@ -11,7 +11,7 @@
   },
   "url": "watchpeoplelive.tv",
   "regExp": "([a-z0-9-]+[.])*(watchpeoplelive)[.]tv[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WatchPeopleLive/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WatchPeopleLive/assets/thumbnail.png",
   "color": "#012461",

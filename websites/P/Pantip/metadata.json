@@ -13,7 +13,7 @@
   },
   "url": "www.pantip.com",
   "regExp": "([a-z0-9-]+[.])*pantip[.]com[/]",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pantip/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pantip/assets/thumbnail.png",
   "color": "#9d93f5",
