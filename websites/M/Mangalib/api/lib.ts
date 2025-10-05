@@ -13,13 +13,19 @@ import { SiteId } from './utils.js'
 
 type DataType = AnimeData | UserData | CharacterData | PersonData | PublisherData | TeamData | CollectionData | ReviewData
 
-export interface CachedResponse<T extends DataType = DataType> {
+interface CachedResponse<T extends DataType = DataType> {
   id: string
   data: T
 }
 
+interface CachedCover {
+  url: string
+  blob: Blob
+}
+
 export class Lib {
   private cache?: CachedResponse
+  private cachedCover?: CachedCover
 
   private extractId(string: string) {
     return string.split('/').pop()!.split('-')[0]!
@@ -46,9 +52,16 @@ export class Lib {
     }
   }
 
-  private async fetchCover(url: string, origin: string): Promise<Blob> {
-    const response = await fetch(url, { referrer: origin })
-    return await response.blob()
+  public async fetchCover(url: string, origin: string): Promise<Blob> {
+    if (this.cachedCover?.url !== url) {
+      const response = await fetch(url, { referrer: origin })
+      this.cachedCover = {
+        url,
+        blob: await response.blob(),
+      }
+    }
+
+    return this.cachedCover.blob
   }
 
   public async getTitle<T extends MangaData | RanobeData | AnimeData>(slug: string, siteId: SiteId, origin: string): Promise<CachedResponse<T>> {

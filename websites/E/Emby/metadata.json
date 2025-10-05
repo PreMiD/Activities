@@ -25,7 +25,7 @@
     "app.emby.media"
   ],
   "regExp": ".*[/]web[/]index[.]html",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Emby/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Emby/assets/thumbnail.png",
   "color": "#52B54B",

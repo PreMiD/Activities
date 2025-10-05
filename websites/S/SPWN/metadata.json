@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "586157827400400907",
+    "name": "nekok500"
+  },
+  "service": "SPWN",
+  "description": {
+    "en": "SPWN delivers stages from various venues across the country, including live houses, theaters, movie theaters, and event spaces, to the world.",
+    "ja": "SPWN（スポーン）は、ライブハウスをはじめとする全国の劇場、映画館、イベントスペースなどのあらゆるステージを世界に届けます。"
+  },
+  "url": "spwn.jp",
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SPWN/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SPWN/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "videos",
+  "tags": [
+    "live",
+    "video"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "title": "Show buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}

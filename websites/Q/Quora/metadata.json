@@ -14,7 +14,7 @@
   },
   "url": "quora.com",
   "regExp": "([a-z0-9]+)[.]quora[.]com",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Q/Quora/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Q/Quora/assets/thumbnail.png",
   "color": "#A70000",

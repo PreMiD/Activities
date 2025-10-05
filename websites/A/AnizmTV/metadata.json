@@ -32,6 +32,7 @@
     "onepieceizle.com.tr",
     "puffytr.com",
     "puffytr.com.tr",
+    "test.puffytr.com",
     "tranime.com.tr",
     "tranimeizle.org",
     "tranimeizle.org.tr",
@@ -53,7 +54,7 @@
     "xn--trkeanime-s3a2u.com",
     "xn--trkanimeizle-dlb.com"
   ],
-  "version": "3.0.0",
+  "version": "3.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnizmTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnizmTV/assets/thumbnail.png",
   "color": "#fc9003",

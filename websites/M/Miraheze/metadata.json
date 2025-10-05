@@ -11,7 +11,7 @@
   },
   "url": "www.miraheze.org",
   "regExp": "([a-z0-9-]+[.])?miraheze[.](org|wiki)[/]",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Miraheze/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Miraheze/assets/thumbnail.png",
   "color": "#2F5782",

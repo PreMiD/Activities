@@ -11,7 +11,7 @@
   },
   "url": "gronkh.tv",
   "regExp": "([a-z0-9-]+[.])*(gronkh)[.]tv[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gronkh.tv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gronkh.tv/assets/thumbnail.png",
   "color": "#562BF2",
