@@ -175,7 +175,7 @@ presence.on('UpdateData', async () => {
         break
       }
       case '/user/settings': {
-        presenceData.details = 'Changing Settings'
+        presenceData.details = 'Managing Settings'
         presenceData.smallImageKey = ActivityAssets.Settings
         break
       }
@@ -185,7 +185,7 @@ presence.on('UpdateData', async () => {
         break
       }
       case '/user/watching': {
-        presenceData.details = 'Continue Watching'
+        presenceData.details = 'On Continue Watching'
         presenceData.smallImageKey = Assets.Reading
         break
       }
