@@ -185,8 +185,8 @@ presence.on('UpdateData', async () => {
         break
       }
       case '/user/watching': {
-        presenceData.details = 'On Continue Watching'
-        presenceData.smallImageKey = Assets.Reading
+        presenceData.details = 'Viewing Continue Watching'
+        presenceData.smallImageKey = Assets.Viewing
         break
       }
       case '/user/import': {
