@@ -1,0 +1,38 @@
+{
+  "bilibili.watchingPlaylist": {
+    "description": "Shown when watching a playlist",
+    "message": "Watching a playlist"
+  },
+  "bilibili.viewingTweets": {
+    "description": "Shown when browsing tweet posts",
+    "message": "Viewing tweets"
+  },
+  "bilibili.viewingMessages": {
+    "description": "Shown when viewing messages",
+    "message": "Viewing messages"
+  },
+  "bilibili.viewingSomething": {
+    "description": "Generic placeholder for viewing something (like an article or post)",
+    "message": "Viewing {UserName}'s {TweetOrArticle}"
+  },
+  "bilibili.watchingStream": {
+    "description": "Shown when watching a live stream",
+    "message": "Watching a live stream"
+  },
+  "bilibili.searchingFor": {
+    "description": "Shown when searching for something",
+    "message": "Searching for {Keyword}"
+  },
+  "bilibili.viewingTheHomepage": {
+    "description": "Shown when viewing homepage",
+    "message": "Viewing the homepage"
+  },
+  "bilibili.multiUploaderName": {
+    "description": "Shown when multiple uploaders are present",
+    "message": "{MainUploaderName} + {RemainingNumberOfPersonnel} more"
+  },
+  "bilibili.browsingSearchCategory": {
+    "description": "Shown when browsing a specific search category",
+    "message": "Browsing {CategoryName} category"
+  }
+}

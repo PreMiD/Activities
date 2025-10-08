@@ -31,7 +31,7 @@
     "biligame.com"
   ],
   "regExp": "([a-z0-9-]+[.])*(bilibili|biligame)[.]com[/]",
-  "version": "2.5.12",
+  "version": "2.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/bilibili/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/bilibili/assets/thumbnail.jpg",
   "color": "#05acff",
@@ -43,6 +43,10 @@
   "iframe": true,
   "iFrameRegExp": "live[.]bilibili[.]com",
   "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
     {
       "id": "privacy",
       "title": "Privacy Mode",

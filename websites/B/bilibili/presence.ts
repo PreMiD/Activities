@@ -37,6 +37,26 @@ presence.on('UpdateData', async () => {
       : navigator.mediaSession.metadata?.artwork[0]?.src
         ?? CustomAssets.Logo,
   }
+  const strings = await presence.getStrings({
+    watchingVideo: 'general.watchingVid',
+    watchingPlaylist: 'bilibili.watchingPlaylist',
+    watchingEpisode: 'general.viewEpisode',
+    viewingTweet: 'general.readingAPost',
+    viewingTweets: 'bilibili.viewingTweets',
+    viewingMessages: 'bilibili.viewingMessages',
+    viewingUserSpace: 'general.viewUser',
+    viewingSomething: 'bilibili.viewingSomething',
+    watchingStream: 'bilibili.watchingStream',
+    searchingFor: 'bilibili.searchingFor',
+    watchVideo: 'general.buttonWatchVideo',
+    viewChannel: 'general.buttonViewChannel',
+    viewPlaylist: 'general.buttonViewPlaylist',
+    viewEpisode: 'general.buttonViewEpisode',
+    watchStream: 'general.buttonWatchStream',
+    viewingTheHomepage: 'bilibili.viewingTheHomepage',
+    multiUploaderName: 'bilibili.multiUploaderName',
+    browsingSearchCategory: 'bilibili.browsingSearchCategory',
+  })
 
   async function internalGetTimestamps() {
     let video = document.querySelector<HTMLVideoElement>('bpx-player-container')
@@ -68,7 +88,7 @@ presence.on('UpdateData', async () => {
 
   async function setVideoStatus() {
     if (privacy) {
-      presenceData.details = 'Watching a video'
+      presenceData.details = strings.watchingVideo
       return
     }
 
@@ -77,15 +97,15 @@ presence.on('UpdateData', async () => {
     if (document.querySelector('div.membersinfo-normal')) {
       uploader = document.querySelector('.staff-name')
 
-      uploaderName = `${uploader?.textContent?.trim()} + ${
-        Number.parseInt(
+      uploaderName = strings.multiUploaderName
+        .replace('{MainUploaderName}', uploader?.textContent?.trim() ?? '')
+        .replace('{RemainingNumberOfPersonnel}', String(Number.parseInt(
           document
             .querySelector('.staff-amt')
             ?.textContent
             ?.trim()
             ?.replaceAll('人', '') ?? '',
-        ) - 1
-      } more`
+        ) - 1))
     }
     else {
       uploader = document.querySelector('.up-name')
@@ -112,11 +132,11 @@ presence.on('UpdateData', async () => {
     presenceData.details = title?.getAttribute('title')
     presenceData.buttons = [
       {
-        label: 'Watch Video', // getString() later
+        label: strings.watchVideo,
         url: `https://www.bilibili.com/video/${urlpath[2]}`,
       },
       {
-        label: 'View Space', // getString() later
+        label: strings.viewChannel,
         url: `https:${uploaderLink}`,
       },
     ]
@@ -130,7 +150,7 @@ presence.on('UpdateData', async () => {
         }
         case 'opus': {
           if (privacy) {
-            presenceData.details = 'Viewing a tweet'
+            presenceData.details = strings.viewingTweet
             break
           }
           const type
@@ -141,13 +161,15 @@ presence.on('UpdateData', async () => {
             = type === 'tweet'
               ? null
               : document.querySelector('.opus-module-title')?.textContent?.trim()
-          presenceData.state = `Viewing ${document
-            ?.querySelector('.opus-module-author__name')
-            ?.textContent
-            ?.trim()}'s ${type}`
+          presenceData.state = strings.viewingSomething
+            .replace('{UserName}', document
+              ?.querySelector('.opus-module-author__name')
+              ?.textContent
+              ?.trim() ?? '')
+            ?.replace('{TweetOrArticle}', type)
           presenceData.buttons = [
             {
-              label: `View ${type}`,
+              label: strings.watchVideo,
               url: `https://www.bilibili.com/opus/${urlpath[2]}`,
             },
           ]
@@ -156,7 +178,7 @@ presence.on('UpdateData', async () => {
         }
         case 'list': {
           if (privacy) {
-            presenceData.details = 'Watching a playlist'
+            presenceData.details = strings.watchingPlaylist
             break
           }
           if (urlpath[2] === 'watchlater') {
@@ -174,11 +196,11 @@ presence.on('UpdateData', async () => {
             ?.trim()
           presenceData.buttons = [
             {
-              label: 'View Playlist',
+              label: strings.viewPlaylist,
               url: `https://www.bilibili.com/list/${urlpath[2]}`,
             },
             {
-              label: 'Watch Video',
+              label: strings.watchVideo,
               url: `https:${document
                 ?.querySelector('.video-title-href')
                 ?.getAttribute('href')}`,
@@ -188,7 +210,7 @@ presence.on('UpdateData', async () => {
         }
         case 'bangumi': {
           if (privacy) {
-            presenceData.details = 'Watching an episode'
+            presenceData.details = strings.watchingEpisode
             break
           }
           internalGetTimestamps()
@@ -196,13 +218,13 @@ presence.on('UpdateData', async () => {
             ?.querySelector('.mediainfo_mediaTitle__Zyiqh')
             ?.textContent
             ?.trim()
-          presenceData.state = `Watching Episode ${document
+          presenceData.state = `${strings.watchingEpisode}: ${document
             ?.querySelector('.numberListItem_select__WgCVr')
             ?.getAttribute('title')
-            ?.trim()} now`
+            ?.trim()}`
           presenceData.buttons = [
             {
-              label: 'Watch Episode',
+              label: strings.viewEpisode,
               url: `https://www.bilibili.com/bangumi/play/${urlpath[3]}`,
             },
           ]
@@ -210,7 +232,7 @@ presence.on('UpdateData', async () => {
         }
         default: {
           presenceData.startTimestamp = browsingTimestamp
-          presenceData.details = 'Viewing the homepage'
+          presenceData.details = strings.viewingTheHomepage
           break
         }
       }
@@ -218,29 +240,29 @@ presence.on('UpdateData', async () => {
     }
     case 'space.bilibili.com': {
       uploader = document.querySelector('.nickname')
-      presenceData.details = 'Viewing user\'s space'
+      presenceData.details = strings.viewingUserSpace
       presenceData.state = `${uploader?.textContent} | UID:${urlpath[1]}`
       presenceData.buttons = [
         {
-          label: 'View Space',
+          label: strings.viewChannel,
           url: `https://space.bilibili.com/${urlpath[1]}`,
         },
       ]
       break
     }
     case 't.bilibili.com': {
-      presenceData.details = 'Viewing tweets'
+      presenceData.details = strings.viewingTweets
       presenceData.startTimestamp = browsingTimestamp
       break
     }
     case 'message.bilibili.com': {
-      presenceData.details = 'Viewing messages'
+      presenceData.details = strings.viewingMessages
       presenceData.startTimestamp = browsingTimestamp
       break
     }
     case 'live.bilibili.com': {
       if (privacy) {
-        presenceData.details = 'Watching a live stream'
+        presenceData.details = strings.watchingStream
         break
       }
       const presenceDetails = document.querySelector('.small-title') === null
@@ -269,7 +291,7 @@ presence.on('UpdateData', async () => {
       }
       presenceData.buttons = [
         {
-          label: 'Watch Stream',
+          label: strings.watchStream,
           url: `https://live.bilibili.com/${urlpath[1]}`,
         },
       ]
@@ -277,15 +299,18 @@ presence.on('UpdateData', async () => {
     }
     case 'search.bilibili.com': {
       if (privacy) {
-        presenceData.details = 'Searching for something'
+        presenceData.details = strings.viewingSomething
         break
       }
-      presenceData.details = `Searching for ${document
-        .querySelector('.search-input-el')
-        ?.getAttribute('value')}`
-      presenceData.state = `Browsing ${
-        document.querySelector('.vui_tabs--nav-item-active')?.textContent
-      } Category`
+      presenceData.details = strings.searchingFor
+        .replace('{Keyword}', document
+          .querySelector('.search-input-el')
+          ?.getAttribute('value') ?? '')
+      presenceData.state = strings.browsingSearchCategory
+        .replace('{CategoryName}', document
+          .querySelector('.vui_tabs--nav-item-active')
+          ?.textContent ?? '')
+
       presenceData.startTimestamp = browsingTimestamp
       break
     }
