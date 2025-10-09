@@ -12,7 +12,7 @@
     "vi": "Hai tổ chức mật thám kình địch biết danh tính của 25 đặc vụ. Các đồng đội của họ chỉ biết đến nhau qua biệt danh. Các đội tranh đấu để xem các có thể liên lạc được với tất cả các đặc vụ của họ trước. Các tổ chức mật thám được phép đưa ra một từ gợi ý trên bàn đấu. Các thành viên trong đội phải đoán các từ thuộc đúng màu trong khi tránh các từ của đối phương."
   },
   "url": "codenames.game",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Codenames/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Codenames/assets/thumbnail.jpg",
   "color": "#fcd611",

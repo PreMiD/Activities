@@ -14,7 +14,7 @@
     "lightnovelpub.com"
   ],
   "regExp": "([a-z0-9]+[.])?lightnovelpub[.]com",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Light%20Novel%20Pub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Light%20Novel%20Pub/assets/thumbnail.png",
   "color": "#546573",

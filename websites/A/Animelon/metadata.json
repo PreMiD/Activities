@@ -14,7 +14,7 @@
   },
   "url": "animelon.com",
   "regExp": "([a-z0-9-]+[.])*animelon([.][a-z]+)+[/]",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Animelon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Animelon/assets/thumbnail.jpg",
   "color": "#D34344",

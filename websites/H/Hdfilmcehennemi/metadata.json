@@ -18,7 +18,7 @@
   },
   "url": "hdfilmcehennemi.nl",
   "regExp": "([a-z0-9-]+[.])*(hdfilmcehennemi)[.]nl[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hdfilmcehennemi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hdfilmcehennemi/assets/thumbnail.png",
   "color": "#e95900",

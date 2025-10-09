@@ -15,11 +15,17 @@ presence.on('UpdateData', async () => {
   }
   else if (document.location.pathname.startsWith('/game/')) {
     presenceData.details = 'Clicking cells'
-    presenceData.state = `Difficulty: ${
-      document.querySelector<HTMLSpanElement>(
-        'a.level-select-link.active > span',
-      )?.textContent
-    }`
+    const arenaBlock = document.querySelector('#ArenaPanelBlock strong')
+    if (arenaBlock) {
+      presenceData.state = `In the ${arenaBlock?.textContent}`
+    }
+    else {
+      presenceData.state = `Difficulty: ${
+        document.querySelector<HTMLSpanElement>(
+          'a.level-select-link.active > span',
+        )?.textContent
+      }`
+    }
     presenceData.buttons = [
       {
         label: 'Spectate Game',
@@ -57,12 +63,16 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Viewing the best players'
         break
       }
+      case '/championship': {
+        presenceData.details = 'Viewing championship standings'
+        break
+      }
       case '/chat': {
         presenceData.details = 'Chatting'
         break
       }
       case '/equipment': {
-        presenceData.details = 'Viewing their equipment'
+        presenceData.details = 'Viewing owned equipment'
         break
       }
       case '/events': {
@@ -83,6 +93,10 @@ presence.on('UpdateData', async () => {
       }
       case '/news': {
         presenceData.details = 'Viewing the news'
+        break
+      }
+      case '/past-championships': {
+        presenceData.details = 'Viewing past championships'
         break
       }
       case '/players-online': {
@@ -119,6 +133,10 @@ presence.on('UpdateData', async () => {
       }
       case '/statistics': {
         presenceData.details = 'Viewing statistics'
+        break
+      }
+      case '/talents': {
+        presenceData.details = 'Viewing their talents'
         break
       }
     }

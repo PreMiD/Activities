@@ -16,7 +16,7 @@
   },
   "url": "www.dek-d.com",
   "regExp": "([a-z0-9-]+[.])*dek-d[.]com[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dek-d/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dek-d/assets/thumbnail.jpeg",
   "color": "#F37A01",

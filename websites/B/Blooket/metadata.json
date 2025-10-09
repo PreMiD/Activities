@@ -11,7 +11,7 @@
   },
   "url": "blooket.com",
   "regExp": "([a-z0-9-]+[.])*blooket[.]com[/]?.*",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Blooket/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Blooket/assets/thumbnail.jpeg",
   "color": "#52c2cf",
