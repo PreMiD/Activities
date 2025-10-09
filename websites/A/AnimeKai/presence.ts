@@ -16,7 +16,6 @@ enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeKai/assets/logo.png',
   Settings = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeKai/assets/0.png',
   Notifications = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeKai/assets/1.png',
-  Viewing = 'https://cdn.rcd.gg/PreMiD/resources/viewing.png',
 }
 
 presence.on(
@@ -148,7 +147,7 @@ presence.on('UpdateData', async () => {
   }
   else if (/^\/user\/[^/]+\/profile$/.test(pathname)) {
     presenceData.details = 'Viewing User Profile'
-    presenceData.smallImageKey = ActivityAssets.Viewing
+    presenceData.smallImageKey = Assets.Viewing
     if (buttons) {
       presenceData.buttons = [
         {
