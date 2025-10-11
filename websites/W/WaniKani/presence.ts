@@ -122,12 +122,13 @@ presence.on('UpdateData', async () => {
         case '/':
         case '/dashboard':
         case '/login': {
-          const lessons_widget = document.querySelector(".todays-lessons-widget")
-          const reviews_widget = document.querySelector(".reviews-widget")
+          const lessons_widget = document.querySelector('.todays-lessons-widget')
+          const reviews_widget = document.querySelector('.reviews-widget')
           if (!lessons_widget || !reviews_widget) {
             presenceData.details = 'Browsing'
             presenceData.state = 'Viewing Home Page'
-          } else {
+          } 
+          else {
             const lessonsText = document.querySelector<HTMLSpanElement>('.todays-lessons-widget__count-text')!.textContent!
             let lessons
             if (lessonsText.includes('Done'))
