@@ -177,7 +177,7 @@ presence.on('UpdateData', async () => {
             ? strings.viewSeries
             : strings.viewMovie
           presenceData.state = (iPlayer.episode || iPlayer.header)?.title
-          presenceData.startTimestamp = browsingTimestamp // wrong implementation!
+          presenceData.startTimestamp = browsingTimestamp
         }
       }
       else {
@@ -259,22 +259,20 @@ presence.on('UpdateData', async () => {
     else if (path.includes('/iplayer/live')) {
       if (iPlayerVideo) {
         const channelId = path.split('/').pop()
-        // const channelName = iPlayer.channel?.title || formatChannelName(channelId)
         const channelName = formatChannelName(channelId) || iPlayer.channel?.title
         const programmeName = document.querySelector('.channel-panel-item__link__title')?.textContent?.trim()
           || 'Unknown Programme'
 
         presenceData.details = programmeName
-        presenceData.state = `Live: ${channelName}` // on just ` = programmeName `, it appears on mobile but not desktop?
+        presenceData.state = `Live: ${channelName}`
         presenceData.smallImageKey = Assets.Live
         presenceData.smallImageText = strings.Live
 
         delete presenceData.startTimestamp
         presenceData.startTimestamp = Date.now() // milliseconds
-        presenceData.endTimestamp = undefined
+        delete presenceData.endTimestamp
       }
       else {
-        // Browsing live TV guide without playing
         presenceData.details = strings.viewPage
         presenceData.state = 'Live TV'
         presenceData.smallImageKey = Assets.Reading
