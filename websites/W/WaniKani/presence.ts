@@ -127,7 +127,7 @@ presence.on('UpdateData', async () => {
           if (!lessons_widget || !reviews_widget) {
             presenceData.details = 'Browsing'
             presenceData.state = 'Viewing Home Page'
-          } 
+          }
           else {
             const lessonsText = document.querySelector<HTMLSpanElement>('.todays-lessons-widget__count-text')!.textContent!
             let lessons
