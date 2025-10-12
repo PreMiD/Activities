@@ -37,22 +37,29 @@
   "iFrameRegExp": "https?:\\/\\/x\\.anizium\\.co\\/embed.*",
   "settings": [
     {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "description": "Hides all anime and episode information from your presence.",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
       "id": "showButtons",
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
       "value": true,
-      "description": "Shows/hides the 'View Episode' or 'View Anime' buttons on your Discord status."
+      "description": "Toggles the 'View Episode' and 'View Anime' buttons in your presence."
     },
     {
       "id": "showPosters",
       "title": "Show Posters",
       "icon": "fas fa-image",
       "value": true,
-      "description": "Toggles the display of anime and studio posters on your Discord status. If disabled, the Anizium logo will be shown instead."
+      "description": "Toggles the display of anime posters in your presence. If disabled, the Anizium logo will be shown instead."
     },
     {
       "id": "logoType",
-      "title": "Icon",
+      "title": "Logo Type",
       "icon": "fad fa-images",
       "value": 0,
       "values": [
@@ -69,22 +76,22 @@
       "icon": "fas fa-comment-alt-edit",
       "value": "%anime_title%",
       "placeholder": "Available: %anime_title%, %season%, %episode%",
-      "description": "Customize the first line of text on your Discord status when watching an anime."
+      "description": "Customize the first line of text in your presence while watching."
     },
     {
       "id": "watchingState",
       "title": "Watching Details (Line 2)",
       "icon": "fas fa-comment-alt-edit",
-      "value": "Sezon %season% | Bölüm %episode%",
+      "value": "Season %season% | Episode %episode%",
       "placeholder": "Available: %anime_title%, %season%, %episode%",
-      "description": "Customize the second line of text on your Discord status when watching an anime."
+      "description": "Customize the second line of text in your presence while watching."
     },
     {
       "id": "showTimestamp",
-      "title": "Show Timestamps",
+      "title": "Show Timestamp",
       "icon": "fad fa-stopwatch",
       "value": true,
-      "description": "Shows/hides the elapsed and remaining time on your Discord status when watching an episode."
+      "description": "Toggles the elapsed and remaining time of the episode in your presence."
     }
   ]
 }

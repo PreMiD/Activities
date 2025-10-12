@@ -105,6 +105,13 @@ class AniziumPresence {
     const settings = this.settingsManager.currentSettings!
 
     const presenceData = this.buildBasePresence()
+
+    if (settings?.privacy) {
+      presenceData.details = 'Gizlilik Modu Aktif'
+      presence.setActivity(presenceData)
+      return
+    }
+
     const pathname = document.location.pathname
     const routePattern = Utils.getRoutePattern(pathname)
 

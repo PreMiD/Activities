@@ -6,6 +6,7 @@ const SETTINGS_CONFIG: {
   type: 'boolean' | 'number' | 'string'
   defaultValue: any
 }[] = [
+  { key: 'privacy', type: 'boolean', defaultValue: false },
   { key: 'showButtons', type: 'boolean', defaultValue: true },
   { key: 'showPosters', type: 'boolean', defaultValue: true },
   { key: 'logoType', type: 'number', defaultValue: 0 },
