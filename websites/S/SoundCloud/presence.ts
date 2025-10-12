@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestamps, StatusDisplayType, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '802958833214423081',
@@ -14,9 +14,7 @@ async function getStrings() {
       pause: 'general.paused',
       browse: 'general.browsing',
       search: 'general.searchSomething',
-      listen: 'general.buttonListenAlong',
     },
-
   )
 }
 function getElement(query: string): string | undefined {
@@ -124,9 +122,8 @@ presence.on('UpdateData', async () => {
     hidePaused,
     showTimestamps,
     showCover,
-    showButtons,
-    usePresenceTitle,
-    usePresenceArtist,
+    links,
+    displayType,
     newLang,
   ] = await Promise.all([
     presence.getSetting<boolean>('browse'),
@@ -134,9 +131,8 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('hidePaused'),
     presence.getSetting<boolean>('timestamp'),
     presence.getSetting<boolean>('cover'),
-    presence.getSetting<boolean>('buttons'),
-    presence.getSetting<boolean>('usePresenceTitle'),
-    presence.getSetting<boolean>('usePresenceArtist'),
+    presence.getSetting<boolean>('links'),
+    presence.getSetting<number>('displayType'),
     presence.getSetting<string>('lang').catch(() => 'en'),
   ])
   const playing = Boolean(document.querySelector('.playControls__play.playing'))
@@ -161,25 +157,18 @@ presence.on('UpdateData', async () => {
   }
 
   if ((playing || (!playing && !showBrowsing)) && showSong) {
-    if (!usePresenceTitle && !usePresenceArtist) {
-      presenceData.details = getElement(
-        '.playbackSoundBadge__titleLink > span:nth-child(2)',
-      )
-      presenceData.state = getElement('.playbackSoundBadge__lightLink')
+    presenceData.details = getElement(
+      '.playbackSoundBadge__titleLink > span:nth-child(2)',
+    )
+    presenceData.state = getElement('.playbackSoundBadge__lightLink')
+    switch (displayType) {
+      case 1:
+        presenceData.statusDisplayType = StatusDisplayType.State
+        break
+      case 2:
+        presenceData.statusDisplayType = StatusDisplayType.Details
+        break
     }
-    else if (usePresenceArtist && !usePresenceTitle) {
-      presenceData.name = getElement('.playbackSoundBadge__lightLink')
-      presenceData.details = getElement(
-        '.playbackSoundBadge__titleLink > span:nth-child(2)',
-      )
-    }
-    else {
-      presenceData.name = getElement(
-        '.playbackSoundBadge__titleLink > span:nth-child(2)',
-      )
-      presenceData.details = getElement('.playbackSoundBadge__lightLink')
-    }
-
     const timePassed = document.querySelector(
       'div.playbackTimeline__timePassed > span:nth-child(2)',
     )?.textContent
@@ -200,11 +189,12 @@ presence.on('UpdateData', async () => {
         }
       })(),
     ]
-    const pathLinkSong = document
-      .querySelector(
-        '#app > div.playControls.g-z-index-control-bar.m-visible > section > div > div.playControls__elements > div.playControls__soundBadge > div > div.playbackSoundBadge__titleContextContainer > div > a',
-      )
-      ?.getAttribute('href')
+    const linkSong = document
+      .querySelector<HTMLAnchorElement>('.playbackSoundBadge__titleLink')
+      ?.href
+    const linkArtist = document
+      .querySelector<HTMLAnchorElement>('.playbackSoundBadge__lightLink')
+      ?.href
 
     if (playing) {
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, duration)
@@ -225,13 +215,13 @@ presence.on('UpdateData', async () => {
         ?.replace('-t50x50.jpg', '-t500x500.jpg') ?? ActivityAssets.Logo
     }
 
-    if (showButtons && pathLinkSong) {
-      presenceData.buttons = [
-        {
-          label: strings.listen,
-          url: `https://soundcloud.com${pathLinkSong}`,
-        },
-      ]
+    if (links) {
+      if (linkSong) {
+        presenceData.detailsUrl = linkSong
+        presenceData.largeImageUrl = linkSong
+      }
+      if (linkArtist)
+        presenceData.stateUrl = linkArtist
     }
   }
   else if ((!playing || !showSong) && showBrowsing) {
@@ -320,10 +310,6 @@ presence.on('UpdateData', async () => {
       delete presenceData.startTimestamp
       delete presenceData.endTimestamp
     }
-
     presence.setActivity(presenceData)
-  }
-  else {
-    presence.setActivity()
   }
 })

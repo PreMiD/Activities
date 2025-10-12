@@ -13,7 +13,7 @@
   },
   "url": "sdarot.world",
   "regExp": "([a-z0-9-]+[.])*sdarot([.][a-z]+)+[/]",
-  "version": "1.3.27",
+  "version": "1.3.28",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sdarot.TV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sdarot.TV/assets/thumbnail.png",
   "color": "#f5d80b",

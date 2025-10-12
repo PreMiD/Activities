@@ -10,8 +10,11 @@
     "en": "Keep a virtual backlog of your video game collection, then rate and review the ones you've played to share with your friends!",
     "fr": "Gardez un backlog virtuel de votre collection de jeux vidéo, puis évaluez et passez en revue ceux auxquels vous avez joué pour les partager avec vos amis!"
   },
-  "url": ["backloggd.com", "www.backloggd.com"],
-  "version": "1.0.13",
+  "url": [
+    "backloggd.com",
+    "www.backloggd.com"
+  ],
+  "version": "1.0.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Backloggd/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Backloggd/assets/thumbnail.png",
   "color": "#4a5e8d",

@@ -20,7 +20,7 @@
   },
   "url": "neetcode.io",
   "regExp": "([a-z0-9-]+[.])*neetcode[.]io[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NeetCode/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NeetCode/assets/thumbnail.png",
   "color": "#10B981",

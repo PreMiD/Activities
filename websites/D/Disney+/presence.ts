@@ -85,9 +85,7 @@ presence.on('UpdateData', async () => {
             const { paused } = video
 
             if (!paused) {
-              const sliderEl = document.querySelector(
-                '.progress-bar .slider-container',
-              )
+              const sliderEl = document.querySelector('progress-bar')?.shadowRoot?.querySelector('.progress-bar__thumb')
               const timestamps = getTimestamps(
                 Number.parseInt(sliderEl?.getAttribute('aria-valuenow') ?? '0'),
                 Number.parseInt(sliderEl?.getAttribute('aria-valuemax') ?? '0'),
@@ -221,7 +219,7 @@ presence.on('UpdateData', async () => {
             ? 'Browsing videos'
             : `Viewing ${document.title
               ?.match(
-                /(pixar)|(marvel)|(star wars)|(national geographic)|(star)|(disney)/i,
+                /pixar|marvel|star wars|national geographic|star|disney/i,
               )?.[0]
               ?.toLowerCase()} content`
           break

@@ -13,7 +13,7 @@
   },
   "url": "lexx.app",
   "regExp": "([a-z0-9-]+[.])*lexx[.]app[/]",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LeXx/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LeXx/assets/thumbnail.png",
   "color": "#FF7D00",

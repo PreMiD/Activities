@@ -16,7 +16,7 @@
     "kickassanime.ro"
   ],
   "regExp": "(([a-z0-9-]+[.])*kickassanime([.][a-z]+)+)|(kaas[.].*)|((www[0-9]*[.])?(kickassanime[.][a-z]+))",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KickAssAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KickAssAnime/assets/thumbnail.png",
   "color": "#c7c95b",

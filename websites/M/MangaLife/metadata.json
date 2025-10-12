@@ -17,7 +17,7 @@
     "manga4life.com"
   ],
   "regExp": "([a-z0-9]+[.])?manga4life[.]com",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaLife/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaLife/assets/thumbnail.png",
   "color": "#6cabdf",

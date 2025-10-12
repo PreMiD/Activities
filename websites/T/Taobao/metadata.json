@@ -12,7 +12,7 @@
   },
   "url": "taobao.com",
   "regExp": "([a-z0-9-]+[.])*(taobao|tmall)[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Taobao/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Taobao/assets/thumbnail.jpeg",
   "color": "#FF5000",
