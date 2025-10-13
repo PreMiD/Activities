@@ -25,7 +25,8 @@ presence.on('UpdateData', async () => {
   }
   const pathnameArray = document.location.pathname.split('/')
   const page = pathnameArray[1]
-  const [showCover, showButton] = await Promise.all([
+  const [privacyMode, showCover, showButton] = await Promise.all([
+    presence.getSetting<boolean>('privacyMode'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('buttons'),
   ])
@@ -33,12 +34,15 @@ presence.on('UpdateData', async () => {
 
   switch (page) {
     case 'user': {
-      if (showCover) {
+      if (!privacyMode && showCover) {
         presenceData.largeImageKey = document
           .querySelectorAll('.avatar')[1]
           ?.getAttribute('src')
         presenceData.smallImageKey = ActivityAssets.Logo
       }
+
+      const user = privacyMode ? 'someone' : `${pathnameArray[2]}`
+      presenceData.state = `In ${user}'s profile`
       switch (pathnameArray[3]) {
         case 'mangalist':
           presenceData.details = 'Viewing manga list'
@@ -59,9 +63,8 @@ presence.on('UpdateData', async () => {
           presenceData.details = 'Viewing reviews'
           break
         default:
-          presenceData.details = 'Viewing profile'
+          presenceData.details = 'Viewing profile overview'
       }
-      presenceData.state = `from ${pathnameArray[2]}`
       presenceData.buttons = [
         {
           label: 'View user\'s page',
@@ -78,6 +81,8 @@ presence.on('UpdateData', async () => {
     case 'anime':
     case 'manga':
       presenceData.details = `Viewing ${page === 'anime' ? 'an' : 'a'} ${page}`
+      if (privacyMode)
+        break
       presenceData.state = document
         .querySelector('div.content > h1')
         ?.textContent
@@ -97,6 +102,8 @@ presence.on('UpdateData', async () => {
     case 'character':
     case 'staff':
       presenceData.details = `Viewing a ${page}`
+      if (privacyMode)
+        break
       presenceData.state = document.querySelector('.name')?.textContent?.trim()
       if (showCover) {
         presenceData.largeImageKey = document
@@ -113,12 +120,14 @@ presence.on('UpdateData', async () => {
     case 'forum':
       if (pathnameArray.length > 3) {
         presenceData.details = 'Reading a forum post'
-        presenceData.state = `'${document
-          .querySelector('h1.title')
-          ?.textContent
-          ?.trim()}'`
         presenceData.smallImageKey = Assets.Reading
         presenceData.smallImageText = strings.reading
+        if (!privacyMode) {
+          presenceData.state = `'${document
+            .querySelector('h1.title')
+            ?.textContent
+            ?.trim()}'`
+        }
       }
       else {
         presenceData.details = 'Browsing the forum'
@@ -132,6 +141,13 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Browsing reviews'
       break
     case 'review':
+      presenceData.smallImageKey = Assets.Reading
+      presenceData.smallImageText = strings.reading
+      if (privacyMode) {
+        presenceData.details = 'Reading a review'
+        presenceData.state = 'by someone'
+        break
+      }
       presenceData.details = `Reading a '${document
         .querySelector('a.title')
         ?.textContent
@@ -141,21 +157,31 @@ presence.on('UpdateData', async () => {
         ?.textContent
         ?.trim()
         .replace('a review ', '')}`
-      presenceData.smallImageKey = Assets.Reading
-      presenceData.smallImageText = strings.reading
       break
-    case 'recommendations':
-      presenceData.details = 'Browsing recommendations'
-      presenceData.state = document
-        .querySelector('.option.active')
-        ?.textContent
-        ?.trim()
+    case 'recommendations': {
+      const activeFilters = Array.from(document.querySelectorAll('.switch'))
+        .map(el => el.querySelector('.option.active')
+          ?.textContent
+          ?.trim() ?? null)
+      const [listFilter, sortFilter] = activeFilters
+      presenceData.details = `Browsing ${sortFilter} Recommendations`
+      presenceData.state = listFilter
       break
+    }
     case 'notifications':
       presenceData.details = 'Viewing notifications'
       break
     case 'settings':
       presenceData.details = 'Changing settings'
+      break
+    case 'apps':
+      presenceData.details = 'Viewing community apps'
+      break
+    case 'moderators':
+      presenceData.details = 'Viewing AniList admins and moderators'
+      break
+    case 'site-stats':
+      presenceData.details = 'Viewing site statistics'
       break
     default:
       presenceData.details = strings.browsing
@@ -163,8 +189,8 @@ presence.on('UpdateData', async () => {
       break
   }
 
-  if (!showButton)
+  if (!showButton || privacyMode)
     delete presenceData.buttons
 
-  presence.setActivity(presenceData, true)
+  presence.setActivity(presenceData)
 })
