@@ -13,19 +13,24 @@
     {
       "name": "Bas950",
       "id": "241278257335500811"
+    },
+    {
+      "name": "DiaDuck",
+      "id": "791491962620346420"
     }
   ],
   "service": "BBC",
   "description": {
     "en": "The best of the BBC, with the latest news and sport headlines, weather, TV & radio highlights and much more from across the whole of BBC Online.",
     "nl": "Het beste van de BBC, met het laatste nieuws en sportkoppen, weerberichten, hoogtepunten op tv en radio en nog veel meer uit heel BBC Online.",
-    "vi": "Những tinh tuý vủa BBC, với những bài báo mới nhất và tiêu đề thể thao, thời tiết, truyền hình & radio nổi bật từ tất cả BBC Online."
+    "vi": "Những tinh tuý vủa BBC, với những bài báo mới nhất và tiêu đề thể thao, thời tiết, truyền hình & radio nổi bật từ tất cả BBC Online.",
+    "fr": "Le meilleur de la BBC, avec les dernières actualités et les titres sportifs, la météo, les temps forts de la télé et de la radio et bien plus encore de toute la BBC en ligne."
   },
   "url": [
     "www.bbc.co.uk",
     "www.bbc.com"
   ],
-  "version": "2.2.11",
+  "version": "2.2.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BBC/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BBC/assets/thumbnail.png",
   "color": "#000000",
