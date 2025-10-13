@@ -23,6 +23,9 @@ async function getStrings() {
       editingVid: 'googledocs.editingVid',
       viewingVid: 'googledocs.viewingVid',
       browsingVid: 'googledocs.browsingVid',
+      editingDrawing: 'googledocs.editingDrawing',
+      viewingDrawing: 'googledocs.viewingDrawing',
+      browsingDrawing: 'googledocs.browsingDrawing',
     },
   )
 }
@@ -32,7 +35,8 @@ enum ActivityAssets {
   FormsLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/1.png',
   SheetsLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/2.png',
   SlidesLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/3.png',
-  VidsLogo = 'https://i.imgur.com/Ebv2Xfq.png',
+  VidsLogo = 'https://i.imgur.com/o1MVIhL.png',
+  DrawingsLogo = 'https://i.imgur.com/7PgMU1D.png',
 }
 
 presence.on('UpdateData', async () => {
@@ -49,6 +53,7 @@ presence.on('UpdateData', async () => {
     ?.replace(/(?:- )?Google[\xA0 ]Sheets/, '')
     ?.replace(/(?:- )?Google[\xA0 ]Slides/, '')
     ?.replace(/(?:- )?Google[\xA0 ]Vids/, '')
+    ?.replace(/(?:- )?Google[\xA0 ]Drawings/, '')
     ?.trim()
 
   if (document.location.pathname.includes('/document')) {
@@ -95,6 +100,15 @@ presence.on('UpdateData', async () => {
     else if (document.location.pathname.includes('/videos/u/'))
       presenceData.details = strings.browsingVid
     else presenceData.details = strings.viewingVid
+  }
+  else if (document.location.pathname.includes('/drawings/')) {
+    presenceData.name = 'Google Drawings'
+    presenceData.largeImageKey = ActivityAssets.VidsLogo
+    if (document.location.pathname.includes('/edit'))
+      presenceData.details = strings.editingDrawing
+    else if (document.location.pathname.includes('/drawings/u/'))
+      presenceData.details = strings.browsingDrawing
+    else presenceData.details = strings.viewingDrawing
   }
 
   if (!privacy && title !== '')
