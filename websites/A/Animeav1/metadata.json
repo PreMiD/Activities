@@ -22,9 +22,9 @@
     "url": [
       "animeav1.com"
     ],
-    "version": "1.1.38",
-    "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Animeav1/assets/logo.jp",
-    "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Animeav1/assets/thumbnail.png",
+    "version": "1.0.0",
+    "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeFLV/assets/logo.jpg",
+    "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeFLV/assets/thumbnail.png",
     "color": "#694ba1",
     "category": "anime",
     "tags": [
@@ -32,6 +32,6 @@
       "embedded-links"
     ],
     "iframe": true,
-    "iFrameRegExp": ".*"
+    "iFrameRegExp": ".*\\.(animeav1\\.com|www\\.animeav1\\.com)"
   }
   
