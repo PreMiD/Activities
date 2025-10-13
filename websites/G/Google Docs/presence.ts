@@ -103,7 +103,7 @@ presence.on('UpdateData', async () => {
   }
   else if (document.location.pathname.includes('/drawings/')) {
     presenceData.name = 'Google Drawings'
-    presenceData.largeImageKey = ActivityAssets.VidsLogo
+    presenceData.largeImageKey = ActivityAssets.DrawingsLogo
     if (document.location.pathname.includes('/edit'))
       presenceData.details = strings.editingDrawing
     else if (document.location.pathname.includes('/drawings/u/'))
