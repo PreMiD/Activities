@@ -15,6 +15,10 @@
     "description": "Displayed when the user is browsing their Google Sheets",
     "message": "Browsing spreadsheets"
   },
+  "googledocs.browsingVid": {
+    "description": "Displayed when the user is browsing their Google Vids",
+    "message": "Browsing videos"
+  },
   "googledocs.editingDoc": {
     "description": "Displayed when the user is editing a Google Document",
     "message": "Editing a document"
@@ -31,6 +35,10 @@
     "description": "Displayed when the user is eiditng a Google Sheet",
     "message": "Editing a spreadsheet"
   },
+  "googledocs.editingVid": {
+    "description": "Displayed when the user is eiditng a Google Vids",
+    "message": "Editing a video"
+  },
   "googledocs.viewingDoc": {
     "description": "Displayed when the user is viewing a Google Document",
     "message": "Viewing a document"
@@ -46,5 +54,9 @@
   "googledocs.viewingSheet": {
     "description": "Displayed when the user is viewing a Google Sheet",
     "message": "Viewing a spreadsheet"
+  },
+  "googledocs.viewingVid": {
+    "description": "Displayed when the user is viewing a Google Vids",
+    "message": "Viewing a video"
   }
 }

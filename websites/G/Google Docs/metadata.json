@@ -9,6 +9,10 @@
     {
       "name": "Callum",
       "id": "506899274748133376"
+    },
+    {
+      "name": "Skully",
+      "id": "671037171611729920"
     }
   ],
   "service": "Google Docs",
@@ -23,13 +27,14 @@
   },
   "url": "docs.google.com",
   "regExp": "docs[.]google([.][a-z]+)+[/]",
-  "version": "1.4.37",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/thumbnail.jpg",
   "color": "#3a404a",
   "category": "other",
   "tags": [
     "google",
+    "vids",
     "sheets",
     "slides",
     "forms",
