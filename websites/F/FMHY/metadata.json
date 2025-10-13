@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "858431740242952203",
+    "name": "jbugel"
+  },
+  "service": "FMHY",
+  "altnames": [
+    "Free Media Heck Yeah"
+  ],
+  "description": {
+    "en": "Free Media Heck Yeah, the largest collection of free stuff on the internet!"
+  },
+  "url": [
+    "fmhy.net",
+    "fmhy.pages.dev",
+    "fmhy.lol",
+    "fmhy.xyz",
+    "fmhy.jbugel.xyz"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FMHY/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FMHY/assets/thumbnail.png",
+  "color": "#7BC5E4",
+  "category": "other",
+  "tags": [
+    "movies",
+    "games",
+    "music",
+    "books"
+  ]
+}
