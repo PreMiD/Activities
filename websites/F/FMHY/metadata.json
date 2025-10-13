@@ -6,7 +6,7 @@
     "name": "jbugel"
   },
   "service": "FMHY",
-  "altnames": "Free Media Heck Yeah",
+  "altnames": ["Free Media Heck Yeah"],
   "description": {
     "en": "Free Media Heck Yeah, the largest collection of free stuff on the internet!"
   },
