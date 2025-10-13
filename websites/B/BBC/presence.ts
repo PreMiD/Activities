@@ -50,6 +50,7 @@ function formatChannelName(channelId?: string): string {
     cbbc: 'CBBC',
     cbeebies: 'CBeebies',
     bbcparliament: 'BBC Parliament',
+    bbcscotland: 'BBC Scotland',
     bbcalba: 'BBC Alba',
     s4c: 'S4C',
   }
