@@ -1,5 +1,5 @@
 export enum ActivityAssets {
-  Logo = 'https://i.imgur.com/LXolYc4.png',
+  Logo = 'https://i.ibb.co/zTKBhkRh/Udemy-Logo-1.png',
 }
 
 export const UNKNOWN_COURSE = 'Unknown Course'
