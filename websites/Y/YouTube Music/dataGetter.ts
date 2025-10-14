@@ -13,6 +13,7 @@ export interface MediaDataGetter {
   getRepeatMode: () => string | null
   getVideoElement: () => HTMLMediaElement | null
   getAlbumArtistLink: () => string | undefined
+  getArtistLink: () => string | undefined
   getCurrentAndTotalTime: () => [string, string] | null
   hasValidPlaybackState: () => boolean
   isPlaying: () => boolean
@@ -99,6 +100,10 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
       return links.at(-1)?.href
     }
 
+    return document.querySelector<HTMLAnchorElement>('.byline a')?.href
+  }
+
+  getArtistLink(): string | undefined {
     return document.querySelector<HTMLAnchorElement>('.byline a')?.href
   }
 
