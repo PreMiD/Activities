@@ -41,11 +41,10 @@ presence.on('UpdateData', async () => {
     watchingVideo: 'general.watchingVid',
     watchingPlaylist: 'bilibili.watchingPlaylist',
     watchingEpisode: 'general.viewEpisode',
-    viewingTweet: 'general.readingAPost',
-    viewingTweets: 'bilibili.viewingTweets',
+    readingAPost: 'general.readingAPost',
+    browsingMyFeed: 'bilibili.browsingMyFeed',
     viewingMessages: 'bilibili.viewingMessages',
     viewingUserSpace: 'general.viewUser',
-    viewingSomething: 'bilibili.viewingSomething',
     watchingStream: 'bilibili.watchingStream',
     searchingFor: 'bilibili.searchingFor',
     watchVideo: 'general.buttonWatchVideo',
@@ -56,6 +55,10 @@ presence.on('UpdateData', async () => {
     viewingTheHomepage: 'bilibili.viewingTheHomepage',
     multiUploaderName: 'bilibili.multiUploaderName',
     browsingSearchCategory: 'bilibili.browsingSearchCategory',
+    articleTypePost: 'bilibili.articleTypePost',
+    articleTypeColumn: 'bilibili.articleTypeColumn',
+    viewingArticle: 'bilibili.viewingArticle',
+    searchingForSomething: 'bilibili.searchingForSomething',
   })
 
   async function internalGetTimestamps() {
@@ -150,23 +153,23 @@ presence.on('UpdateData', async () => {
         }
         case 'opus': {
           if (privacy) {
-            presenceData.details = strings.viewingTweet
+            presenceData.details = strings.readingAPost
             break
           }
           const type
             = document.querySelector('.opus-module-title') === null
-              ? 'tweet'
-              : 'article'
+              ? strings.articleTypePost
+              : strings.articleTypeColumn
           presenceData.details
-            = type === 'tweet'
+            = type === strings.articleTypePost
               ? null
               : document.querySelector('.opus-module-title')?.textContent?.trim()
-          presenceData.state = strings.viewingSomething
+          presenceData.state = strings.viewingArticle
             .replace('{UserName}', document
               ?.querySelector('.opus-module-author__name')
               ?.textContent
               ?.trim() ?? '')
-            ?.replace('{TweetOrArticle}', type)
+            ?.replace('{ArticleType}', type)
           presenceData.buttons = [
             {
               label: strings.watchVideo,
@@ -251,7 +254,7 @@ presence.on('UpdateData', async () => {
       break
     }
     case 't.bilibili.com': {
-      presenceData.details = strings.viewingTweets
+      presenceData.details = strings.browsingMyFeed
       presenceData.startTimestamp = browsingTimestamp
       break
     }
@@ -299,7 +302,7 @@ presence.on('UpdateData', async () => {
     }
     case 'search.bilibili.com': {
       if (privacy) {
-        presenceData.details = strings.viewingSomething
+        presenceData.details = strings.searchingForSomething
         break
       }
       presenceData.details = strings.searchingFor

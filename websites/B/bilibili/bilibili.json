@@ -3,17 +3,13 @@
     "description": "Shown when watching a playlist",
     "message": "Watching a playlist"
   },
-  "bilibili.viewingTweets": {
-    "description": "Shown when browsing tweet posts",
-    "message": "Viewing tweets"
+  "bilibili.browsingMyFeed": {
+    "description": "Shown when browsing my feed",
+    "message": "Browsing my feed"
   },
   "bilibili.viewingMessages": {
     "description": "Shown when viewing messages",
     "message": "Viewing messages"
-  },
-  "bilibili.viewingSomething": {
-    "description": "Generic placeholder for viewing something (like an article or post)",
-    "message": "Viewing {UserName}'s {TweetOrArticle}"
   },
   "bilibili.watchingStream": {
     "description": "Shown when watching a live stream",
@@ -34,5 +30,21 @@
   "bilibili.browsingSearchCategory": {
     "description": "Shown when browsing a specific search category",
     "message": "Browsing {CategoryName} category"
+  },
+  "bilibili.viewingArticle": {
+    "description": "Display when viewing image and text content posted by users",
+    "message": "Viewing {UserName}'s {ArticleType}"
+  },
+  "bilibili.articleTypePost": {
+    "description": "User-posted image and text content without a title, originally named \"动态\"",
+    "message": "post"
+  },
+  "bilibili.articleTypeColumn": {
+    "description": "User-generated image and text content with titles, originally named \"专栏\"",
+    "message": "column"
+  },
+  "bilibili.searchingForSomething": {
+    "description": "Displayed when searching in private mode",
+    "message": "Searching for something"
   }
 }
