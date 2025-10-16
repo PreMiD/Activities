@@ -12,7 +12,7 @@
   },
   "url": "www.stoodi.com.br",
   "regExp": "([a-z0-9]+)[.]stoodi[.]com[.]br",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stoodi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stoodi/assets/thumbnail.png",
   "color": "#004EFF",

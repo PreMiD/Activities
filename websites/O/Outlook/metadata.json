@@ -5,10 +5,12 @@
     "name": "Kyrie",
     "id": "368399721494216706"
   },
-  "contributors": [{
-    "name": "Atom Skully",
-    "id": "671037171611729920"
-  }],
+  "contributors": [
+    {
+      "name": "Atom Skully",
+      "id": "671037171611729920"
+    }
+  ],
   "service": "Outlook",
   "description": {
     "en": "Outlook.com is a personal information manager web app from Microsoft consisting of webmail, calendaring, contacts, and tasks services.",
@@ -16,7 +18,7 @@
     "vi": "Outlook.com là ứng dụng quản lý thông tin cá nhân của Microsoft bao gồm thư điện tử, quản lý lịch, danh bạ và các nhiệm vụ."
   },
   "url": "outlook.live.com",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Outlook/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Outlook/assets/thumbnail.png",
   "color": "#0F78D4",

@@ -12,7 +12,7 @@
   },
   "url": "wink.ru",
   "regExp": "wink([.][a-z]+)+[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wink/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wink/assets/thumbnail.png",
   "color": "#ff5a24",

@@ -13,7 +13,7 @@
   },
   "url": "000webhost.com",
   "regExp": "([a-z0-9-]+[.])*000webhost[.]com[\\/]",
-  "version": "1.3.8",
+  "version": "1.3.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/000webhost/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/000webhost/assets/thumbnail.jpg",
   "color": "#ff5c62",

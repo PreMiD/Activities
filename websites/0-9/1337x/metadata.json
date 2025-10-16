@@ -24,7 +24,7 @@
     "1337x.is"
   ],
   "regExp": "([a-z0-9-]+[.])*x?1337x([.][a-z]+)+[/]",
-  "version": "1.5.25",
+  "version": "1.5.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/1337x/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/1337x/assets/thumbnail.png",
   "color": "#d63600",

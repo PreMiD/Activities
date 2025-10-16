@@ -12,7 +12,7 @@
   },
   "url": "openstreetmap.org",
   "regExp": "([a-z0-9]+)[.]openstreetmap[.]org",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OpenStreetMap/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OpenStreetMap/assets/thumbnail.png",
   "color": "#7ebc6f",

@@ -5,12 +5,18 @@
     "id": "150987570715688960",
     "name": "Ninja"
   },
+  "contributors": [
+    {
+      "id": "278821688894947328",
+      "name": "momonnie"
+    }
+  ],
   "service": "Discohook",
   "description": {
     "en": "Discohook is a free tool that allows you to personalise your server to make your server stand out from the crowd."
   },
-  "url": "discohook.org",
-  "version": "1.0.14",
+  "url": "discohook.app",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discohook/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discohook/assets/thumbnail.png",
   "color": "#58b9ff",

@@ -12,7 +12,7 @@ presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
 
   const match = pathname.match(/\/cloud-games\/[a-z0-9-]+\.html/i)
-  let gameName = null
+  let gameName: string | null = null
 
   if (match) {
     const rawName = pathname.split('/').pop()?.replace(/-cloud.*|\.html$/i, '') ?? ''
@@ -26,10 +26,11 @@ presence.on('UpdateData', async () => {
       .join(' ')
   }
 
-  const gameIcon = document.querySelector('img[alt$="-icon"]')?.getAttribute('src')
+  const gameIcon: string
+    = document.querySelector('img[data-nimg="1"]')?.getAttribute('src') ?? ActivityAssets.Logo
 
   const presenceData: PresenceData = {
-    largeImageKey: gameIcon ?? undefined,
+    largeImageKey: gameIcon,
     smallImageKey: ActivityAssets.Logo,
     details: gameName ? `Playing ${gameName}` : 'Exploring EasyFun',
     state: gameName ? 'Cloud Gaming' : 'Browsing on site',

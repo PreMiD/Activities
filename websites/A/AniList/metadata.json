@@ -9,6 +9,10 @@
     {
       "name": "RisingSunLight",
       "id": "240521747852558347"
+    },
+    {
+      "name": "momonnie",
+      "id": "278821688894947328"
     }
   ],
   "service": "AniList",
@@ -24,7 +28,7 @@
     "zh-tw": "AniList：追踪，發掘，分享動漫和漫畫-免費註冊！趕快加入我們！"
   },
   "url": "anilist.co",
-  "version": "2.1.12",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniList/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniList/assets/thumbnail.jpg",
   "color": "#02A9FF",
@@ -36,16 +40,28 @@
   ],
   "settings": [
     {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
       "id": "cover",
       "title": "Show Cover",
       "icon": "fad fa-images",
-      "value": true
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
     },
     {
       "id": "buttons",
       "title": "Show Buttons",
       "icon": "fad fa-compress-arrows-alt",
-      "value": true
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
     }
   ]
 }

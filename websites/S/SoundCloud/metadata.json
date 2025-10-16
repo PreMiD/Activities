@@ -27,7 +27,7 @@
     "zh-tw": "SoundCloud是一個線上音樂分享平臺，它允許人們合作、交流和分享原創音樂錄音。"
   },
   "url": "soundcloud.com",
-  "version": "2.5.8",
+  "version": "2.6.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SoundCloud/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SoundCloud/assets/thumbnail.jpg",
   "color": "#FF7E30",
@@ -72,22 +72,21 @@
       "value": true
     },
     {
-      "id": "buttons",
-      "title": "Show Buttons",
-      "icon": "fas fa-compress-arrows-alt",
+      "id": "links",
+      "title": "Link to Song/Artist",
+      "icon": "fas fa-arrow-up-right-from-square",
       "value": true
     },
     {
-      "id": "usePresenceTitle",
-      "title": "Show Title as Presence",
+      "id": "displayType",
+      "title": "Pick Status Display",
       "icon": "fad fa-user-edit",
-      "value": false
-    },
-    {
-      "id": "usePresenceArtist",
-      "title": "Show Artist as Presence",
-      "icon": "fad fa-user-edit",
-      "value": false
+      "value": 1,
+      "values": [
+        "Activity Name",
+        "Artist Name",
+        "Song Title"
+      ]
     }
   ]
 }

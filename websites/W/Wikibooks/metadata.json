@@ -16,7 +16,7 @@
   },
   "url": "wikibooks.org",
   "regExp": "([a-z0-9-]+[.])+wikibooks[.]org[/]",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikibooks/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikibooks/assets/thumbnail.png",
   "color": "#f9f9f9",
