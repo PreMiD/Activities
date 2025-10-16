@@ -43,3 +43,15 @@ export function switchLogo(siteId: SiteId) {
 export function cleanUrl(href: string) {
   return href.replace(/\/(?:watch|read).*$/, '')
 }
+
+const pdPrefix = '?assurePd='
+
+export function assurePd(src: string | null | undefined, siteId: SiteId): string {
+  if (!src)
+    return switchLogo(siteId)
+
+  // Make sure the src is at least 256 characters long, otherwise pd won't "shorten" it, we need it shortened because of cors issues if discord handles it on their side.
+  if (src.length < 256)
+    src += `${pdPrefix}${'a'.repeat(256 - src.length - pdPrefix.length + 1)}`
+  return src
+}
