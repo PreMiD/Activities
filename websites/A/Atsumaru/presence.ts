@@ -34,12 +34,7 @@ class AtsumaruPresence {
   private buildBasePresence(): PresenceData {
     const settings = this.settingsManager.currentSettings
 
-    const largeImage
-            = !settings?.privacy
-              && settings?.showPosters
-              && this.posterManager.posterUrl
-              ? this.posterManager.posterUrl
-              : Images.Logo
+    const largeImage = !settings?.privacy && settings?.showPosters && this.posterManager.posterUrl ? this.posterManager.posterUrl : Images.Logo
 
     const presenceData: PresenceData = {
       largeImageKey: largeImage,

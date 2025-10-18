@@ -44,8 +44,7 @@ export class SettingsManager {
           break
       }
 
-      const isValueValid
-                = type === 'string' ? isTypeValid && receivedValue : isTypeValid
+      const isValueValid = type === 'string' ? isTypeValid && receivedValue : isTypeValid
 
       acc[key] = isValueValid ? receivedValue : defaultValue
       return acc
