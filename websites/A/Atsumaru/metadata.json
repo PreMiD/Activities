@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 2,
+  "author": {
+    "id": "526822284694913042",
+    "name": "Mido"
+  },
+  "service": "Atsumaru",
+  "description": {
+    "en": "Read Manga, Manwha and Manhua ad-free on Atsumaru"
+  },
+  "url": [
+    "atsu.moe",
+    "www.atsu.moe"
+  ],
+  "version": "1.0.0",
+  "logo": "https://mido.anlayana.com/premid/images/atsumaru/logo.png",
+  "thumbnail": "https://mido.anlayana.com/premid/images/atsumaru/banner.png",
+  "color": "#6ad2f7",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "manga",
+    "manhwa"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "description": "Hides all information from your presence.",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "description": "Shows/hides the buttons"
+    },
+    {
+      "id": "showPosters",
+      "title": "Show Posters",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Shows/hides the manga posters"
+    }
+  ]
+}
