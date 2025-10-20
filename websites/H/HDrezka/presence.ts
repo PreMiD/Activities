@@ -18,7 +18,7 @@ presence.on('UpdateData', async () => {
       : contentType === 'cartoons'
         ? 'мультфильм'
         : contentType === 'animation'
-        ? 'аниме'
+          ? 'аниме'
         : 'чего-то'
 
   if (document.location.pathname === '/')
@@ -31,7 +31,7 @@ presence.on('UpdateData', async () => {
     || document.location.pathname === '/animation'
     || document.location.pathname.match(/\/(films|series|cartoons|animation)\//)
   ) {
-    if (document.location.pathname.match(/\/(films|series|cartoons|animation)\/.+/)) {
+    if (document.location.pathname.match(/\/(?:films|series|cartoons|animation)\/.+/)) {
       presenceData.details = `Смотрит ${currentType}`
       presenceData.state = `${
         document.querySelector('.b-post__title h1')?.textContent
