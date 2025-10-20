@@ -7,12 +7,13 @@
   },
   "service": "HDrezka",
   "description": {
-    "en": "Website for watching movies, cartoons and TV series.",
-    "ru": "Сайт для просмтра фильмов, мультфильмов и сериалов."
+    "en": "Website for watching movies, cartoons, anime and TV series.",
+    "ru": "Сайт для просмтра фильмов, аниме мультфильмов и сериалов."
   },
   "url": [
     "rezka.ag",
-    "hdrezka.ag"
+    "hdrezka.ag",
+    "rezka-ua.org"
   ],
   "version": "1.0.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/logo.png",
@@ -21,6 +22,7 @@
   "category": "videos",
   "tags": [
     "video",
-    "media"
+    "media",
+    "animation"
   ]
 }
