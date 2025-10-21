@@ -1,17 +1,17 @@
 const presence = new Presence({
-  clientId: '1430013369792073810'
+  clientId: "1430013369792073810",
 });
 
 const browsingTimestamp = Math.floor(Date.now() / 1000);
 
 const ActivityAssets = {
-  Logo: 'https://i.imgur.com/uJCrE0J.png'
+  Logo: "https://i.imgur.com/uJCrE0J.png",
 };
 
 const modeTextMap: Record<string, string> = {
-  'Edit Mode': 'Editing lyrics',
-  'Sync Mode': 'Syncing lyrics',
-  'Preview Mode': 'Previewing lyrics'
+  "Edit Mode": "Editing lyrics",
+  "Sync Mode": "Syncing lyrics",
+  "Preview Mode": "Previewing lyrics",
 };
 
 function updatePresence() {
@@ -19,23 +19,28 @@ function updatePresence() {
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
-    details: 'Using AMLL TTML Tool',
-    startTimestamp: browsingTimestamp
+    details: "Using AMLL TTML Tool",
+    startTimestamp: browsingTimestamp,
   };
 
-  if (pathname === '/amll-ttml-tool-english/' || pathname === '/') {
-    const input = document.querySelector<HTMLInputElement>('.rt-TextFieldInput');
-    if (input && input.value.trim() !== '') {
+  if (pathname === "/amll-ttml-tool-english/" || pathname === "/") {
+    const input =
+      document.querySelector<HTMLInputElement>(".rt-TextFieldInput");
+    if (input && input.value.trim() !== "") {
       presenceData.details = `File: ${input.value.trim()}`;
     }
 
-    const activeButton = document.querySelector<HTMLButtonElement>('.rt-SegmentedControlItem[data-state="on"]');
+    const activeButton = document.querySelector<HTMLButtonElement>(
+      '.rt-SegmentedControlItem[data-state="on"]'
+    );
     if (activeButton) {
-      const modeLabel = activeButton.querySelector<HTMLSpanElement>('.rt-SegmentedControlItemLabelActive')?.textContent?.trim();
+      const modeLabel = activeButton
+        .querySelector<HTMLSpanElement>(".rt-SegmentedControlItemLabelActive")
+        ?.textContent?.trim();
       if (modeLabel && modeTextMap[modeLabel]) {
         presenceData.state = modeTextMap[modeLabel];
       } else {
-        presenceData.state = 'On the main page';
+        presenceData.state = "On the main page";
       }
     }
   }
@@ -43,8 +48,8 @@ function updatePresence() {
   presence.setActivity(presenceData);
 }
 
-presence.on('UpdateData', updatePresence);
+presence.on("UpdateData", updatePresence);
 
-document.querySelectorAll('.rt-SegmentedControlItem').forEach(btn => {
-  btn.addEventListener('click', updatePresence);
+document.querySelectorAll(".rt-SegmentedControlItem").forEach((btn) => {
+  btn.addEventListener("click", updatePresence);
 });
