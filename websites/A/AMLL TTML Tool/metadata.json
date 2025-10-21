@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "373870733564313600",
+    "name": "firexdf"
+  },
+  "service": "AMLL TTML Tool",
+  "description": {
+    "en": "A brand-new word-by-word lyrics editor built for the Apple Music-like Lyrics ecosystem!"
+  },
+  "url": "streetlegithub.github.io",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/uJCrE0J.png",
+  "thumbnail": "https://i.imgur.com/oPv6b2x.png",
+  "color": "#000000",
+  "category": "music",
+  "tags": [
+    "music",
+    "spotify",
+    "lyrics",
+    "apple-music",
+    "ttml"
+  ]
+}
