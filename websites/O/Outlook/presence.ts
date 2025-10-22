@@ -22,7 +22,7 @@ async function getStrings() {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/O/Outlook/assets/logo.png',
+    largeImageKey: 'https://i.imgur.com/sxBqCDv.png',
     startTimestamp: browsingTimestamp,
   }
   const path = document.location.pathname
