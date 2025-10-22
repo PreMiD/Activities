@@ -17,7 +17,10 @@
     "fr": "Outlook.com est une application web de gestion des informations personnelles de Microsoft comprenant des services de messagerie Web, de calendrier, de contacts et de tâches.",
     "vi": "Outlook.com là ứng dụng quản lý thông tin cá nhân của Microsoft bao gồm thư điện tử, quản lý lịch, danh bạ và các nhiệm vụ."
   },
-  "url": "outlook.live.com",
+  "url": [
+    "outlook.live.com",
+    "outlook.office.com"
+  ],
   "version": "1.0.20",
   "logo": "https://i.imgur.com/sxBqCDv.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Outlook/assets/thumbnail.png",
