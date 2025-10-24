@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '799629862620758046',
@@ -28,6 +28,7 @@ let oldLang: string | null = null
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/J/Joyn/assets/logo.jpg',
+    type: ActivityType.Watching,
   }
   const newLang = await presence.getSetting<string>('lang').catch(() => 'en')
   const setting = {
