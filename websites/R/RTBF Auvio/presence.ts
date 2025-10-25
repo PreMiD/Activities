@@ -414,13 +414,19 @@ presence.on('UpdateData', async () => {
             slideshow.addSlide('01', subtitleData, 5000)
           }
 
+          if (description) {
+            const descriptionData = structuredClone(presenceData)
+            descriptionData.state = description
+            slideshow.addSlide('02', descriptionData, 5000)
+          }
+
           // SLIDE: Infos
           if (channel || duration || category) {
             const infosData = structuredClone(presenceData)
             infosData.state = [channel, duration, category].filter(Boolean).join(' - ') // "La Une - 51min - Policier"
             if (channel && getChannel(channel).found)
               infosData.largeImageKey = getChannel(channel).logo
-            slideshow.addSlide('02', infosData, 5000)
+            slideshow.addSlide('03', infosData, 5000)
           }
 
           // SLIDE: Livestream Status
@@ -439,7 +445,7 @@ presence.on('UpdateData', async () => {
             else {
               scheduleData.state = strings.liveEnded // "Livestream has ended"
             }
-            slideshow.addSlide('03', scheduleData, 5000)
+            slideshow.addSlide('04', scheduleData, 5000)
           }
         }
         else {
@@ -454,6 +460,27 @@ presence.on('UpdateData', async () => {
           title = document.querySelector('h1[class*=TitleDetails_title]')?.textContent ?? title
           subtitle = document.querySelector('[class*=TitleDetails_subtitle]')?.textContent ?? subtitle
 
+          // Try to extract season from the title (e.g. "Show Name S01" or "Show Name S1")
+          let seasonNumber, episodeNumber, episodeName
+          const seasonMatch = title?.match(/S(?<seasonNumber>\d+)/i)
+          if (seasonMatch?.groups?.seasonNumber) {
+            seasonNumber = seasonMatch.groups.seasonNumber
+            // Remove the season token from the title (e.g. "Show Name S01")
+            title = title.replace(seasonMatch[0], '').trim()
+          }
+          else {
+            seasonNumber = '01'
+          }
+
+          // Try to extract episode number and optional episode name from the subtitle
+          // Examples: "E01 - Episode Name" or "E01 Episode Name" or "01 - Episode Name"
+          const episodeMatch = subtitle?.match(/^E?(?<episodeNumber>\d+)(?:(?:\s*-\s*|\s+)(?<episodeName>\S.*))?$/i)
+          if (episodeMatch?.groups?.episodeNumber) {
+            episodeNumber = episodeMatch.groups.episodeNumber
+            if (episodeMatch.groups.episodeName)
+              episodeName = episodeMatch.groups.episodeName.trim()
+          }
+
           const videoArray = document.querySelectorAll('div.playerWrapper > video')
           const video = videoArray[videoArray.length - 1] as HTMLVideoElement
           const bAdCountdown = exist('.sas-ctrl-countdown.sas-enable')
@@ -462,9 +489,9 @@ presence.on('UpdateData', async () => {
           if (usePresenceName)
             presenceData.name = title
 
-          presenceData.details = usePresenceName ? subtitle : title
+          presenceData.details = usePresenceName ? episodeName ?? subtitle : title
 
-          presenceData.largeImageText = description
+          presenceData.largeImageText = episodeNumber && seasonNumber ? `Season ${seasonNumber}, Episode ${episodeNumber}` : description
           if (usePoster) {
             presenceData.largeImageKey = await getThumbnail(
               image,
@@ -580,7 +607,7 @@ presence.on('UpdateData', async () => {
           // SLIDE: Subtitle
           if (subtitle) {
             const subtitleData = structuredClone(presenceData)
-            subtitleData.state = usePresenceName ? description : subtitle
+            subtitleData.state = usePresenceName ? description : episodeName ?? subtitle
             slideshow.addSlide('01', subtitleData, 5000)
           }
 
