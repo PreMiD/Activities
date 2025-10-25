@@ -33,7 +33,7 @@
     "blog.crowdin.com"
   ],
   "regExp": "[a-z]{2}.crowdin.com",
-  "version": "4.0.16",
+  "version": "4.0.17",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Crowdin/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Crowdin/assets/thumbnail.png",
   "color": "#2e3340",
