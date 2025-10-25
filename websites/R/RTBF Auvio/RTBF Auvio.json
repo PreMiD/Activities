@@ -15,6 +15,10 @@
     "description": "Used as the title for the button in Discord",
     "message": "View Category"
   },
+  "RTBFAuvio.buttonViewProgram": {
+    "description": "Used as the title for the button in Discord. A program is a type of tv show like the daily news show",
+    "message": "View Program"
+  },
   "RTBFAuvio.deferred": {
     "description": "Used when a livestream is no longer live but with a delay. Often because the content has been paused or rewound.",
     "message": "Deferred"

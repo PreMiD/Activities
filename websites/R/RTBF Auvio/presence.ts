@@ -283,13 +283,14 @@ presence.on('UpdateData', async () => {
         const dataString = await response?.text()
         const metadatas = JSON.parse(dataString)
 
-        let mediaType, description, image, channel, duration, category, scheduledFrom, scheduledTo, waitTime, remainingTime
+        let mediaType, mediaSubtype, description, image, channel, duration, category, scheduledFrom, scheduledTo, waitTime, remainingTime
         if (response) {
           // Populating metadatas variables with API method
 
           mediaType = metadatas.data.pageType
             ?? metadatas.data.content?.pageType
             ?? ''
+          mediaSubtype = metadatas.data.content.type ?? ''
 
           title = metadatas.data.content?.title ?? 'Auvio'
           subtitle = metadatas.data.content?.subtitle
@@ -461,7 +462,7 @@ presence.on('UpdateData', async () => {
           if (usePresenceName)
             presenceData.name = title
 
-          presenceData.details = title
+          presenceData.details = usePresenceName ? subtitle : title
 
           presenceData.largeImageText = description
           if (usePoster) {
@@ -532,9 +533,22 @@ presence.on('UpdateData', async () => {
           else {
             // VOD MEDIA PLAYER
             if (useButtons) {
+              let stringMedia
+              if (mediaSubtype === 'SERIE') {
+                stringMedia = strings.buttonWatchSeries
+              }
+              else if (mediaSubtype === 'SHOW') {
+                stringMedia = strings.buttonWatchProgram
+              }
+              else if (mediaSubtype === 'VIDEO') {
+                stringMedia = strings.buttonWatchMovie
+              }
+              else {
+                stringMedia = strings.buttonWatchVideo
+              }
               presenceData.buttons = [
                 {
-                  label: strings.buttonWatchVideo,
+                  label: stringMedia,
                   url: href,
                 },
               ]
@@ -566,7 +580,7 @@ presence.on('UpdateData', async () => {
           // SLIDE: Subtitle
           if (subtitle) {
             const subtitleData = structuredClone(presenceData)
-            subtitleData.state = subtitle
+            subtitleData.state = usePresenceName ? description : subtitle
             slideshow.addSlide('01', subtitleData, 5000)
           }
 
