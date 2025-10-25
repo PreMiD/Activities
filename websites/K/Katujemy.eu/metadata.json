@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "525363740347072552",
+    "name": "moordex"
+  },
+  "service": "Katujemy.eu",
+  "description": {
+    "en": "Katujemy.eu - Polish Counter-Strike Community Forum",
+    "pl": "Katujemy.eu - Polskie Forum Counter-Strike"
+  },
+  "url": "katujemy.eu",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/M9hZA8h.jpeg",
+  "thumbnail": "https://i.imgur.com/lHR7CHE.png",
+  "color": "#FF0000",
+  "category": "socials",
+  "tags": [
+    "forum",
+    "community",
+    "cs",
+    "counter-strike",
+    "gaming"
+  ]
+}
