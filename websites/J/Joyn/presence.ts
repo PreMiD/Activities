@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '799629862620758046',
@@ -137,7 +137,7 @@ presence.on('UpdateData', async () => {
             presenceData.state = 'Movie'
             if (video && !video.paused) {
               if (setting.timeRemaining) {
-                [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+                [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
               }
               presenceData.smallImageKey = Assets.Play
               presenceData.smallImageText = strings.play
@@ -160,7 +160,7 @@ presence.on('UpdateData', async () => {
             presenceData.state = 'Series'
             if (video && !video.paused) {
               if (setting.timeRemaining) {
-                [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+                [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
               }
               presenceData.smallImageKey = Assets.Play
               presenceData.smallImageText = strings.play
@@ -184,7 +184,7 @@ presence.on('UpdateData', async () => {
             presenceData.state = 'Trailer'
             if (video && !video.paused) {
               if (setting.timeRemaining) {
-                [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+                [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
               }
               presenceData.smallImageKey = Assets.Play
               presenceData.smallImageText = strings.play
@@ -217,7 +217,7 @@ presence.on('UpdateData', async () => {
             presenceData.state = 'Compilation'
             if (video && !video.paused) {
               if (setting.timeRemaining) {
-                [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+                [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
               }
               presenceData.smallImageKey = Assets.Play
               presenceData.smallImageText = strings.play
@@ -243,7 +243,7 @@ presence.on('UpdateData', async () => {
             presenceData.state = 'Sport'
             if (video && !video.paused) {
               if (setting.timeRemaining) {
-                [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+                [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
               }
               presenceData.smallImageKey = Assets.Play
               presenceData.smallImageText = strings.play
@@ -325,6 +325,6 @@ presence.on('UpdateData', async () => {
     }
   }
   if (presenceData.details)
-    presence.setActivity(presenceData)
-  else presence.setActivity()
+    await presence.setActivity(presenceData)
+  else await presence.setActivity()
 })
