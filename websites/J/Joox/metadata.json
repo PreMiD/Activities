@@ -13,7 +13,7 @@
   },
   "url": "www.joox.com",
   "regExp": "([a-z0-9-]+[.])*joox[.]com[/]",
-  "version": "1.2.18",
+  "version": "1.2.19",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Joox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Joox/assets/thumbnail.jpg",
   "color": "#5abf77",

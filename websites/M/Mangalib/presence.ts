@@ -4,7 +4,7 @@ import type { MangaData } from './api/models/manga.js'
 import type { RanobeData } from './api/models/ranobe.js'
 import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
 import { Lib } from './api/lib.js'
-import { cleanUrl, getSiteId, SiteId, switchLogo } from './api/utils.js'
+import { assurePd, cleanUrl, getSiteId, SiteId, switchLogo } from './api/utils.js'
 
 const presence = new Presence({
   clientId: '684124119146692619',
@@ -28,26 +28,26 @@ function setPrivacyMode(presenceData: PresenceData) {
   presenceData.state = 'Вам не следует знать лишнего!'
 }
 
-type RouteName =
-  | ''
-  | 'anime'
-  | 'manga'
-  | 'book'
-  | 'characters'
-  | 'people'
-  | 'catalog'
-  | 'user'
-  | 'top-views'
-  | 'collections'
-  | 'reviews'
-  | 'team'
-  | 'franchise'
-  | 'publisher'
-  | 'media'
-  | 'news'
-  | 'faq'
-  | 'messages'
-  | 'downloads'
+type RouteName
+  = | ''
+    | 'anime'
+    | 'manga'
+    | 'book'
+    | 'characters'
+    | 'people'
+    | 'catalog'
+    | 'user'
+    | 'top-views'
+    | 'collections'
+    | 'reviews'
+    | 'team'
+    | 'franchise'
+    | 'publisher'
+    | 'media'
+    | 'news'
+    | 'faq'
+    | 'messages'
+    | 'downloads'
 
 let iFrameVideo: IFrameVideo | null = null
 let currentDub: string
@@ -135,7 +135,7 @@ presence.on('UpdateData', async () => {
 
         presenceData.details = `Читает ${rus_name ?? name}`
         presenceData.state = `Том ${volume} Глава ${chapter}`
-        presenceData.largeImageKey = cover.default
+        presenceData.largeImageKey = cover.adjusted
         presenceData.smallImageKey = switchLogo(siteId)
         presenceData.buttons = [
           {
@@ -154,7 +154,7 @@ presence.on('UpdateData', async () => {
 
         presenceData.details = `Читает ${rus_name ?? name}`
         presenceData.state = `Том ${volume} Глава ${chapter}`
-        presenceData.largeImageKey = cover.default
+        presenceData.largeImageKey = cover.adjusted
         presenceData.smallImageKey = switchLogo(siteId)
         presenceData.buttons = [
           {
@@ -214,7 +214,7 @@ presence.on('UpdateData', async () => {
 
             presenceData.details = 'Страница персонажа'
             presenceData.state = `${rus_name} (${name})`
-            presenceData.largeImageKey = cover.default
+            presenceData.largeImageKey = cover.adjusted
             presenceData.smallImageKey = switchLogo(siteId)
             presenceData.buttons = [
               {
@@ -325,7 +325,7 @@ presence.on('UpdateData', async () => {
 
             presenceData.details = 'Страница человека'
             presenceData.state = `${name} (${mainName})`
-            presenceData.largeImageKey = cover.default
+            presenceData.largeImageKey = cover.adjusted
             presenceData.smallImageKey = switchLogo(siteId)
             presenceData.buttons = [
               {
@@ -374,7 +374,7 @@ presence.on('UpdateData', async () => {
 
             presenceData.details = `Коллекция по ${collectionType}`
             presenceData.state = `${name} от ${user.username}`
-            presenceData.smallImageKey = user.avatar.url
+            presenceData.smallImageKey = user.avatar.adjusted
             presenceData.smallImageText = user.username
             presenceData.buttons = [
               {
@@ -404,7 +404,7 @@ presence.on('UpdateData', async () => {
 
             presenceData.details = 'Страница пользователя'
             presenceData.state = username
-            presenceData.largeImageKey = avatar.url
+            presenceData.largeImageKey = avatar.adjusted
             presenceData.smallImageKey = switchLogo(siteId)
             presenceData.buttons = [
               {
@@ -442,8 +442,8 @@ presence.on('UpdateData', async () => {
 
             presenceData.details = `Отзыв на ${related.rus_name}`
             presenceData.state = `${title} от ${user.username}`
-            presenceData.largeImageKey = related.cover.default
-            presenceData.smallImageKey = user.avatar.url
+            presenceData.largeImageKey = related.cover.adjusted
+            presenceData.smallImageKey = user.avatar.adjusted
             presenceData.smallImageText = user.username
             presenceData.buttons = [
               {
@@ -469,12 +469,12 @@ presence.on('UpdateData', async () => {
           }
           else {
             const name = document.querySelector('.cover__wrap')?.parentElement?.nextSibling?.textContent
-            const cover = document.querySelector<HTMLImageElement>('.cover__img')?.src
+            const coverSrc = document.querySelector<HTMLImageElement>('.cover__img')?.src
 
-            if (name && cover) {
+            if (name && coverSrc) {
               presenceData.details = 'Страница команды'
               presenceData.state = name
-              presenceData.largeImageKey = cover
+              presenceData.largeImageKey = assurePd(coverSrc, siteId)
               presenceData.smallImageKey = switchLogo(siteId)
 
               presenceData.buttons = [
@@ -506,7 +506,7 @@ presence.on('UpdateData', async () => {
 
             presenceData.details = 'Страница издателя'
             presenceData.state = `${rus_name || name} (${name})`
-            presenceData.largeImageKey = cover.default
+            presenceData.largeImageKey = cover.adjusted
             presenceData.buttons = [
               {
                 label: 'Открыть издателя',
@@ -566,15 +566,15 @@ presence.on('UpdateData', async () => {
              */
             if (toast) {
               const title = document.querySelector('h1')?.textContent
-              const cover = document.querySelector<HTMLImageElement>('.cover__img')?.src
+              const coverSrc = document.querySelector<HTMLImageElement>('.cover__img')?.src
 
-              if (title && cover) {
+              if (title && coverSrc) {
                 titleSetting
                   ? (presenceData.name = title)
                   : (presenceData.details = title)
                 presenceData.state = `${episode ? (episode.includes('эпизод') ? episode : 'Фильм') : 'Фильм'
                 } | ${currentDub}`
-                presenceData.largeImageKey = cover
+                presenceData.largeImageKey = assurePd(coverSrc, siteId)
               }
             }
             else {
@@ -585,7 +585,7 @@ presence.on('UpdateData', async () => {
                 : (presenceData.details = title)
               presenceData.state = `${episode ? (episode.includes('эпизод') ? episode : 'Фильм') : 'Фильм'
               } | ${currentDub}`
-              presenceData.largeImageKey = cover.default
+              presenceData.largeImageKey = cover.adjusted
             }
 
             presenceData.buttons = [
@@ -636,13 +636,13 @@ presence.on('UpdateData', async () => {
            * Slighty different behaviour when anime is licensed
            */
           if (toast) {
-            const cover = document.querySelector<HTMLImageElement>('.cover__img')?.src
             const title = document.querySelector('h1')?.textContent
+            const coverSrc = document.querySelector<HTMLImageElement>('.cover__img')?.src
 
-            if (cover && title) {
+            if (title && coverSrc) {
               presenceData.details = 'Страница аниме'
               presenceData.state = `${title}`
-              presenceData.largeImageKey = cover
+              presenceData.largeImageKey = assurePd(coverSrc, siteId)
               presenceData.smallImageKey = switchLogo(siteId)
               presenceData.buttons = [
                 {
@@ -655,7 +655,7 @@ presence.on('UpdateData', async () => {
           else {
             presenceData.details = 'Страница аниме'
             presenceData.state = `${rus_name !== '' ? rus_name : name}`
-            presenceData.largeImageKey = cover.default
+            presenceData.largeImageKey = cover.adjusted
             presenceData.smallImageKey = switchLogo(siteId)
           }
 
@@ -680,7 +680,7 @@ presence.on('UpdateData', async () => {
           else {
             presenceData.details = 'Страница манги'
             presenceData.state = `${data.rus_name !== '' ? data.rus_name : data.name}`
-            presenceData.largeImageKey = data.cover.default
+            presenceData.largeImageKey = data.cover.adjusted
             presenceData.smallImageKey = switchLogo(siteId)
 
             presenceData.buttons = [
@@ -705,7 +705,7 @@ presence.on('UpdateData', async () => {
           else {
             presenceData.details = 'Страница ранобэ'
             presenceData.state = `${data.rus_name !== '' ? data.rus_name : data.name}`
-            presenceData.largeImageKey = data.cover.default
+            presenceData.largeImageKey = data.cover.adjusted
             presenceData.smallImageKey = switchLogo(siteId)
 
             presenceData.buttons = [

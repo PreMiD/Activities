@@ -12,7 +12,7 @@
   },
   "url": "doodstream.com.tr",
   "regExp": "((ww(w)?([0-9])?[.])?dood(s)?[.][a-z]*)|((ww(w)?([0-9])?[.])?doodstream[.][a-z]*([.][a-z]*)?)",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Doodstreams/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Doodstreams/assets/thumbnail.png",
   "color": "#FF9900",

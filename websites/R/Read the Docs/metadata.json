@@ -12,7 +12,7 @@
   },
   "url": "readthedocs.io",
   "regExp": "([a-z0-9-]+[.])*readthedocs[.](io|org)[/]?",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Read%20the%20Docs/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Read%20the%20Docs/assets/thumbnail.png",
   "color": "#404A50",

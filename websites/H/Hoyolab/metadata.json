@@ -11,7 +11,7 @@
   },
   "url": "www.hoyolab.com",
   "regExp": "([a-z0-9-]+[.])*hoyolab[.]com[/]",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hoyolab/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hoyolab/assets/thumbnail.png",
   "color": "#657ef8",

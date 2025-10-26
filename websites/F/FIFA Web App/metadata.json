@@ -12,7 +12,7 @@
   },
   "url": "www.easports.com",
   "regExp": "([a-z0-9-]+[.])*easports[.]com[/]([a-z0-9]+)[/]fifa[/]ultimate-team[/]web-app[/]",
-  "version": "1.2.25",
+  "version": "1.2.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FIFA%20Web%20App/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FIFA%20Web%20App/assets/thumbnail.png",
   "color": "#FFFFFF",

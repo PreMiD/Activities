@@ -1,8 +1,7 @@
-import type { AgeRestriction, CommonData, Cover, Status } from './common.js'
+import type { AgeRestriction, CommonData, Status } from './common.js'
 
 export interface MangaData extends Omit<CommonData, 'stats'> {
   ageRestriction: AgeRestriction
-  cover: Cover
   /**
    * Example: 18 января 1991 г.
    */
@@ -15,10 +14,10 @@ export interface MangaData extends Omit<CommonData, 'stats'> {
   }
 }
 
-type Type =
-  | { id: 1, label: 'Манга' }
-  | { id: 4, label: 'OEL-манга' }
-  | { id: 5, label: 'Манхва' }
-  | { id: 6, label: 'Маньхуа' }
-  | { id: 8, label: 'Руманга' }
-  | { id: 9, label: 'Комикс' }
+type Type
+  = | { id: 1, label: 'Манга' }
+    | { id: 4, label: 'OEL-манга' }
+    | { id: 5, label: 'Манхва' }
+    | { id: 6, label: 'Маньхуа' }
+    | { id: 8, label: 'Руманга' }
+    | { id: 9, label: 'Комикс' }

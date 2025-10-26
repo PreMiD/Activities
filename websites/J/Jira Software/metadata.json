@@ -13,7 +13,7 @@
   },
   "url": "www.atlassian.com",
   "regExp": "[a-z0-9]+[.]atlassian[.]net",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Jira%20Software/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Jira%20Software/assets/thumbnail.png",
   "color": "#2684FF",

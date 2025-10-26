@@ -11,7 +11,7 @@
   },
   "url": "boardgamearena.com",
   "regExp": "[a-z]*[.]?boardgamearena[.]com",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Board%20Game%20Arena/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Board%20Game%20Arena/assets/thumbnail.png",
   "color": "#4871b6",
