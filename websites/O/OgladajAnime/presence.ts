@@ -310,7 +310,12 @@ presence.on('UpdateData', async () => {
           presenceData.state = `Ogląda ${watching} • ${watchedString(watched)}`
       }
       else {
-        const categoryName: string = ListItemStatus[category as ListItemStatus]
+        let categoryName: string
+
+        if (category >= 0 && category <= 5)
+          categoryName = ListItemStatus[category as ListItemStatus]
+        else
+          categoryName = document.querySelector('h5[class="card-title col-12 text-center mb-3"]')?.innerHTML ?? 'N/A'
 
         const count = document.querySelectorAll('td[class="px-0 px-sm-2"]').length / 2
         presenceData.state = `Kategoria '${categoryName}' • ${count} anime`
