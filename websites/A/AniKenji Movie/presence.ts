@@ -116,7 +116,6 @@ async function updatePresence(): Promise<void> {
       presenceData.state = fullTitle
       presenceData.largeImageKey = dynamicBannerUrl
     }
-    
     // Xử lý trang xem phim (isWatchPage)
     if (isWatchPage) {
       // Trường hợp có video element
