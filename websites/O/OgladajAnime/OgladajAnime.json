@@ -1,0 +1,70 @@
+{
+  "ogladajanime.radioAnime": {
+    "description": "Used while the user is listening to 'Radio Anime' on the page",
+    "message": "Radio Anime"
+  },
+  "ogladajanime.lastActivity": {
+    "description": "Page name.",
+    "message": "Last Activity"
+  },
+  "ogladajanime.newestComments": {
+    "description": "Page name.",
+    "message": "Newest Comments"
+  },
+  "ogladajanime.donate": {
+    "description": "Page name.",
+    "message": "Donate"
+  },
+  "ogladajanime.random": {
+    "description": "{0} will be replaced with a new line, but if you leave it out, the string will be in just 1 line.",
+    "message": "Browsing {0} Random Anime"
+  },
+  "ogladajanime.new": {
+    "description": "{0} will be replaced with a new line, but if you leave it out, the string will be in just 1 line.",
+    "message": "Browsing {0} New Anime"
+  },
+  "ogladajanime.topRated": {
+    "description": "{0} will be replaced with a new line, but if you leave it out, the string will be in just 1 line.",
+    "message": "Browsing {0} Top Rated Anime"
+  },
+  "ogladajanime.browsingRooms": {
+    "description": "Used when user is looking for a watch2gether room. {0} will be replaced with a new line, but if you leave it out, the string will be in just 1 line.",
+    "message": "Browsing {0} Watch2Gether Rooms"
+  },
+  "ogladajanime.chatting": {
+    "description": "Used when user is chatting",
+    "message": "Chatting"
+  },
+  "ogladajanime.contact": {
+    "description": "Page name.",
+    "message": "Contact"
+  },
+  "ogladajanime.importList": {
+    "description": "Used when a user is on a page used to transfer data from other services",
+    "message": "Importing anime list from another service"
+  },
+  "ogladajanime.upcomingAnimes": {
+    "description": "Page name.",
+    "message": "Upcoming Animes"
+  },
+  "ogladajanime.upcomingEpisodes": {
+    "description": "Page name.",
+    "message": "Upcoming Episodes Timetable"
+  },
+  "ogladajanime.activeLoginSessions": {
+    "description": "Page name.",
+    "message": "Active Login Sessions"
+  },
+  "ogladajanime.newestEdits": {
+    "description": "Page name.",
+    "message": "Newest Edits"
+  },
+  "ogladajanime.room": {
+    "description": "A session where multiple users watch the same anime, all synced",
+    "message": "Room"
+  },
+  "ogladajanime.animeList": {
+    "description": "A session where multiple users watch the same anime, all synced",
+    "message": "Room"
+  }
+}

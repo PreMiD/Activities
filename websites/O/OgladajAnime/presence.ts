@@ -116,28 +116,71 @@ function getAnimeIcon(id: number | string): string {
   return `https://cdn.ogladajanime.pl/images/anime_new/${id}/2.webp`
 }
 
-const staticBrowsing = {
-  '/watch2gether': 'Przegląda pokoje do oglądania z innymi',
-  '/main2': 'Przegląda stronę główną',
-  '/search/name/': 'Szuka Anime',
-  '/search/custom': 'Szuka Anime',
-  '/search/rand': 'Przegląda losowe anime',
-  '/search/new': 'Przegląda najnowsze anime',
-  '/search/main': 'Przegląda najlepiej oceniane anime',
-  '/chat': 'Rozmawia na chacie',
-  '/user_activity': 'Przegląda swoją ostatnią aktywność',
-  '/last_comments': 'Przegląda ostatnie komentarze',
-  '/active_sessions': 'Przegląda aktywne sesje logowania',
-  '/manage_edits': 'Przegląda ostatnie edycje',
-  '/anime_list_to_load': 'Ładuję listę anime z innej strony',
-  '/discord': 'Sprawdza jak można się skontaktować',
-  '/support': 'Sprawdza jak można wspierać OA',
-  '/radio': 'Słucha Radia Anime',
-  '/rules': 'Czyta regulamin',
-  '/harmonogram': 'Przegląda harmonogram emisji odcinków Anime',
-  '/anime_seasons': 'Przegląda przysłe premiery',
-  '/': 'Przegląda stronę główną', // This MUST stay at the end, otherwise this will always display no matter the page
+async function getStrings() {
+  return presence.getStrings(
+    {
+      playing: 'general.playing',
+      paused: 'general.paused',
+      viewHome: 'general.viewHome',
+      viewUser: 'general.viewUser',
+      searchSomething: 'general.searchSomething',
+      terms: 'general.terms',
+      browsing: 'general.browsing',
+      searchFor: 'general.searchFor',
+      viewPage: 'general.viewPage',
+      listeningTo: 'general.listeningTo',
+      buttonWatchAnime: 'general.buttonWatchAnime',
+      episode: 'general.episode',
+      watching: 'general.watching',
+
+      radioAnime: 'ogladajanime.radioAnime',
+      lastActivity: 'ogladajanime.lastActivity',
+      donate: 'ogladajanime.donate',
+      random: 'ogladajanime.random',
+      new: 'ogladajanime.new',
+      topRated: 'ogladajanime.topRated',
+      browsingRooms: 'ogladajanime.browsingRooms',
+      chatting: 'ogladajanime.chatting',
+      contact: 'ogladajanime.contact',
+      importList: 'ogladajanime.importList',
+      newestComments: 'ogladajanime.newestComments',
+      upcomingAnimes: 'ogladajanime.upcomingAnimes',
+      upcomingEpisodes: 'ogladajanime.upcomingEpisodes',
+      activeLoginSessions: 'ogladajanime.activeLoginSessions',
+      newestEdits: 'ogladajanime.newestEdits',
+      room: 'ogladajanime.room',
+    },
+
+  )
 }
+
+// ! - use localization strings
+// !? - uses the format: Viewing Page {new line} {provided localization string}, example: !?terms
+const staticBrowsing = {
+  '/watch2gether': '!browsingRooms',
+  '/main2': '!viewHome',
+  '/search/name/': '!searchSomething',
+  '/search/custom': '!searchSomething',
+  '/search/rand': '!random',
+  '/search/new': '!new',
+  '/search/main': '!topRated',
+  '/chat': '!chatting',
+  '/user_activity': '!lastActivity',
+  '/last_comments': '!?newestComments',
+  '/active_sessions': '!?activeLoginSessions',
+  '/manage_edits': '!?newestEdits',
+  '/anime_list_to_load': '!importList',
+  '/discord': '!?contact',
+  '/support': '!?donate',
+  '/radio': '!listeningto {0} !radioAnime',
+  '/rules': '!?terms',
+  '/harmonogram': '!?upcomingEpisodes',
+  '/anime_seasons': '!?upcomingAnimes',
+  '/': '!viewHome', // This MUST stay at the end, otherwise this will always display no matter the page
+}
+
+let strings: Awaited<ReturnType<typeof getStrings>>
+let oldLang: string | null = null
 
 presence.on('iFrameData', (data) => {
   const info = data as PlaybackInfo
@@ -149,7 +192,8 @@ presence.on('UpdateData', async () => {
 
   const { pathname } = document.location
 
-  const [browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent, showCover] = await Promise.all([
+  const [newLang, browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent, showCover] = await Promise.all([
+    presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('browsingStatus'),
     presence.getSetting<boolean>('useAltName'),
     presence.getSetting<boolean>('hideWhenPaused'),
@@ -157,6 +201,11 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('showSearchContent'),
     presence.getSetting<boolean>('showCover'),
   ])
+
+  if (oldLang !== newLang || !strings) {
+    oldLang = newLang
+    strings = await getStrings()
+  }
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
@@ -191,7 +240,7 @@ presence.on('UpdateData', async () => {
       else
         presenceData.details = name
 
-      presenceData.state = append(`Odcinek ${epNum}`, epName, ' • ')
+      presenceData.state = append(`${strings.episode} ${epNum}`, epName, ' • ')
     }
     else {
       return presence.clearActivity()
@@ -204,7 +253,7 @@ presence.on('UpdateData', async () => {
         episode: epNum,
       } as Playback
       presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = 'Obecnie ogląda';
+      presenceData.smallImageText = strings.playing;
       [presenceData.startTimestamp, presenceData.endTimestamp] = [timestamp[0], timestamp[1]]
     }
     else if (isPaused && !browsingStatusEnabled && hideWhenPaused) {
@@ -212,11 +261,11 @@ presence.on('UpdateData', async () => {
     }
     else if (isPaused && lastWatched && lastWatched.animeID === animeID && lastWatched.episode === epNum) {
       presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = 'Odtwarzanie anime jest wstrzymane'
+      presenceData.smallImageText = strings.paused
     }
     else {
       presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = 'Przegląda stronę anime'
+      presenceData.smallImageText = strings.browsing
     }
 
     if (rating && voteCount)
@@ -225,7 +274,7 @@ presence.on('UpdateData', async () => {
     if (animeID && showCover)
       presenceData.largeImageKey = getAnimeIcon(animeID)
 
-    presenceData.buttons = await setButton('Obejrzyj Teraz', document.location.href)
+    presenceData.buttons = await setButton(strings.buttonWatchAnime, document.location.href)
   }
   else if (pathname.match(/\/watch2gether\/\d+/)) {
     const name = document.querySelector('h5[class="card-title text-dark"]')
@@ -245,7 +294,7 @@ presence.on('UpdateData', async () => {
       else
         presenceData.details = name.textContent
 
-      presenceData.state = append(`Odcinek ${episode}`, `Pokój '${roomName}'`, ' • ')
+      presenceData.state = append(`${strings.episode} ${episode}`, `${strings.room} '${roomName}'`, ' • ')
     }
     else {
       return presence.clearActivity()
@@ -254,7 +303,7 @@ presence.on('UpdateData', async () => {
     const [isPaused, timestamp] = getPlayerInfo()
     if (!isPaused) {
       presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = 'Obecnie ogląda';
+      presenceData.smallImageText = strings.playing;
       [presenceData.startTimestamp, presenceData.endTimestamp] = [timestamp[0], timestamp[1]]
     }
     else if (isPaused && !browsingStatusEnabled && hideWhenPaused) {
@@ -262,7 +311,7 @@ presence.on('UpdateData', async () => {
     }
     else if (isPaused) {
       presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = 'Odtwarzanie anime jest wstrzymane'
+      presenceData.smallImageText = strings.paused
     }
 
     if (animeIcon && showCover)
@@ -307,7 +356,7 @@ presence.on('UpdateData', async () => {
         if (watching === 0)
           presenceData.state = watchedString(watched)
         else
-          presenceData.state = `Ogląda ${watching} • ${watchedString(watched)}`
+          presenceData.state = `${strings.watching} ${watching} • ${watchedString(watched)}`
       }
       else {
         let categoryName: string
@@ -412,7 +461,9 @@ presence.on('UpdateData', async () => {
       let recognized = false
       for (const [key, value] of Object.entries(staticBrowsing)) {
         if (pathname.includes(key)) {
-          presenceData.details = value
+          const parsed = parseString(value)
+          presenceData.details = parsed[0]
+          presenceData.state = parsed[1]
           const buttons = await profileButton()
           if (buttons)
             presenceData.buttons = buttons
@@ -431,3 +482,33 @@ presence.on('UpdateData', async () => {
 
   presence.setActivity(presenceData)
 })
+
+function parseString(text: string): [string, string] {
+  const keys = Object.keys(strings)
+  const values = Object.values(strings)
+
+  let details = ''
+  let state = ''
+
+  if (text.startsWith('!?')) {
+    let _text = text.replace('!?', '')
+    _text = values[keys.findIndex(x => x === _text)] ?? 'N/A'
+    details = strings.viewPage
+    state = _text
+    return [details, state]
+  }
+  for (let i = 0; i < keys.length; i++) {
+    text = text.replace(`!${keys[i]}`, `${values[i]}`)
+  }
+
+  if (text.includes(' {0} ')) {
+    const split = text.split(' {0} ')
+    details = split[0] ?? 'N/A'
+    state = split[1] ?? 'N/A'
+  }
+  else {
+    details = text
+  }
+
+  return [details, state]
+}
