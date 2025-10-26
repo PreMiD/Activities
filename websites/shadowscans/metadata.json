@@ -1,0 +1,27 @@
+{
+  "author": {
+    "name": "Shadow",
+    "id": "843784503167680512"
+  },
+  "service": "Shadow Scans",
+  "description": {
+    "en": "Shows detailed activity on Shadow Scans — detects Manhwa, Manga, Manhua, or Novel, and displays which chapter or page the user is reading or browsing in real time.",
+    "ar": "يعرض نشاط المستخدم على موقع Shadow Scans بشكل تفصيلي، يكتشف نوع العمل (مانهوَا، مانغا، مانهوا، رواية) ويُظهر الفصل أو الصفحة التي يقرؤها المستخدم لحظيًا."
+  },
+  "url": "https://crimsonscans.site/",
+  "version": "2.0.0",
+  "logo": "https://crimsonscans.site/wp-content/uploads/2025/10/Untitled68_20251024155600.png",
+  "thumbnail": "https://crimsonscans.site/wp-content/uploads/2025/10/Untitled68_20251024155600.png",
+  "color": "#6A0DAD",
+  "category": "anime",
+  "tags": [
+    "manga",
+    "manhwa",
+    "manhua",
+    "novel",
+    "reading",
+    "shadow",
+    "crimsonscans",
+    "scanlation"
+  ]
+}
