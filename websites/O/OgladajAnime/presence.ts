@@ -116,7 +116,6 @@ function getAnimeIcon(id: number | string): string {
   return `https://cdn.ogladajanime.pl/images/anime_new/${id}/2.webp`
 }
 
-// TODO: add support for https://ogladajanime.pl/anime_seasons. Would have done that if I only knew what it was about
 const staticBrowsing = {
   '/watch2gether': 'Przegląda pokoje do oglądania z innymi',
   '/main2': 'Przegląda stronę główną',
@@ -136,6 +135,7 @@ const staticBrowsing = {
   '/radio': 'Słucha Radia Anime',
   '/rules': 'Czyta regulamin',
   '/harmonogram': 'Przegląda harmonogram emisji odcinków Anime',
+  '/anime_seasons': 'Przegląda przysłe premiery',
   '/': 'Przegląda stronę główną', // This MUST stay at the end, otherwise this will always display no matter the page
 }
 
