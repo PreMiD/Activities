@@ -119,7 +119,7 @@ presence.on('UpdateData', async () => {
   }
   else if (curURL.startsWith('/read')) {
     presenceData.smallImageKey = Assets.Reading
-    const titleAnchor = document.querySelector('.head > a')
+    const titleAnchor = document.querySelector('#ctrl-menu > .head > a')
     const mangaTitle = titleAnchor?.textContent?.trim() || ''
     const logoUrl = await getMangaCoverImage()
     presenceData.largeImageKey = logoUrl

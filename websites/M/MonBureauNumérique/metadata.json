@@ -12,7 +12,7 @@
   },
   "url": "www.monbureaunumerique.fr",
   "regExp": "\\b[a-zA-Z0-9.-]+\\.monbureaunumerique\\.fr\\b",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MonBureauNum%C3%A9rique/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MonBureauNum%C3%A9rique/assets/thumbnail.png",
   "color": "#426494",

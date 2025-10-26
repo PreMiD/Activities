@@ -12,7 +12,7 @@
   },
   "url": "kisscartoon.nz",
   "regExp": "([a-z0-9-]+[.])*kisscartoon([.][a-z]+)+[/]",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KissCartoon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KissCartoon/assets/thumbnail.png",
   "color": "#f5d80b",

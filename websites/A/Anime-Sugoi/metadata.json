@@ -15,7 +15,7 @@
   },
   "url": "www.anime-sugoi.com",
   "regExp": "([a-z0-9-]+[.])*anime-sugoi[.]com[/]",
-  "version": "1.0.37",
+  "version": "1.0.38",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime-Sugoi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime-Sugoi/assets/thumbnail.jpg",
   "color": "#ff6666",

@@ -145,6 +145,18 @@ presence.on('UpdateData', async () => {
       ]
     }
   }
+  else if (/^\/user\/[^/]+\/profile$/.test(pathname)) {
+    presenceData.details = 'Viewing User Profile'
+    presenceData.smallImageKey = Assets.Viewing
+    if (buttons) {
+      presenceData.buttons = [
+        {
+          label: 'View Profile',
+          url: href,
+        },
+      ]
+    }
+  }
   else {
     switch (pathname) {
       case '/browser': {
@@ -161,19 +173,19 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Contact Us'
         break
       }
-      case '/user/profile': {
-        presenceData.details = 'Checking User Profile'
+      case '/user/settings': {
+        presenceData.details = 'Managing Settings'
         presenceData.smallImageKey = ActivityAssets.Settings
         break
       }
-      case '/user/settings': {
-        presenceData.details = 'Changing Settings'
+      case '/user/profile': {
+        presenceData.details = 'Editing Profile'
         presenceData.smallImageKey = ActivityAssets.Settings
         break
       }
       case '/user/watching': {
-        presenceData.details = 'Continue Watching'
-        presenceData.smallImageKey = Assets.Reading
+        presenceData.details = 'Viewing Continue Watching'
+        presenceData.smallImageKey = Assets.Viewing
         break
       }
       case '/user/import': {
@@ -188,7 +200,7 @@ presence.on('UpdateData', async () => {
       }
       case '/user/sync': {
         presenceData.details = 'Syncing with AL'
-        presenceData.smallImageKey = Assets.Live
+        presenceData.smallImageKey = Assets.Repeat
         break
       }
       case '/user/notifications': {

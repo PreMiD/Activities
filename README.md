@@ -26,7 +26,7 @@ Want to create your own Activity or modify an existing one? Great! Follow these 
 
 2. **Learn the basics**
 
-   - Read our [documentation](https://docs.premid.app/dev/presence) to understand how Activities work
+   - Read our [documentation](https://docs.premid.app/) to understand how Activities work
    - Browse through existing Activities to see examples and best practices
 
 3. **Start creating/editing**

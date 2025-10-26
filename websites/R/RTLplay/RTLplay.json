@@ -1,0 +1,18 @@
+{
+  "RTLplay.watchingLiveMusic": {
+    "description": "Used when the user is watching a music channel that broadcasts music videos, often a radio station that livestreams at the same time.",
+    "message": "Watching a live music video"
+  },
+  "RTLplay.watchingAProgramOrSeries": {
+    "description": "Used when a user is watching media, which may be a TV series or a program.",
+    "message": "Watch a program or series"
+  },
+  "RTLplay.movie": {
+    "description": "Category of media",
+    "message": "Movie"
+  },
+  "RTLplay.tvshow": {
+    "description": "Category of media",
+    "message": "TV Serie"
+  }
+}

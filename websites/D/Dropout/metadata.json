@@ -9,8 +9,11 @@
   "description": {
     "en": "Independent, ad-free, uncensored original comedies that you won't find anywhere else."
   },
-  "url": "www.dropout.tv",
-  "version": "1.0.12",
+  "url": [
+    "www.dropout.tv",
+    "watch.dropout.tv"
+  ],
+  "version": "1.0.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dropout/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dropout/assets/thumbnail.jpg",
   "color": "#ffe93b",
