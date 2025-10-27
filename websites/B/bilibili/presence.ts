@@ -44,6 +44,7 @@ presence.on('UpdateData', async () => {
     readingAPost: 'general.readingAPost',
     browsingMyFeed: 'bilibili.browsingMyFeed',
     viewingMessages: 'bilibili.viewingMessages',
+    viewingAnUser: 'general.viewAnUser',
     viewingUserSpace: 'general.viewUser',
     watchingStream: 'bilibili.watchingStream',
     searchingFor: 'bilibili.searchingFor',
@@ -246,6 +247,10 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'space.bilibili.com': {
+      if (privacy) {
+        presenceData.details = strings.viewingAnUser
+        break
+      }
       uploader = document.querySelector('.nickname')
       presenceData.details = strings.viewingUserSpace
       presenceData.state = `${uploader?.textContent} | UID:${urlpath[1]}`
