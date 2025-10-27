@@ -177,6 +177,10 @@ presence.on('UpdateData', async () => {
             },
           ]
           presenceData.startTimestamp = browsingTimestamp
+          const uploaderAvatar = document.querySelector('.opus-module-author picture img')
+          if (uploaderAvatar instanceof HTMLImageElement) {
+            presenceData.largeImageKey = uploaderAvatar.src
+          }
           break
         }
         case 'list': {
