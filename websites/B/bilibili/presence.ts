@@ -255,6 +255,10 @@ presence.on('UpdateData', async () => {
           url: `https://space.bilibili.com/${urlpath[1]}`,
         },
       ]
+      const avatarImage = document.querySelector('.avatar img')
+      if (avatarImage instanceof HTMLImageElement) {
+        presenceData.largeImageKey = avatarImage.src
+      }
       break
     }
     case 't.bilibili.com': {
