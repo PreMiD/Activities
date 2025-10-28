@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "name": "Shadow",
+    "id": "843784503167680512"
+  },
+  "service": "Shadow Scans",
+  "description": {
+    "en": "Welcome to Shadow Scans, a leading Arabic platform for reading manhwa, manhua, manga, and novels — featuring fast updates and high-quality translations."
+  },
+  "url": "crimsonscans.site",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/KfVmaRf.png",
+  "thumbnail": "https://i.imgur.com/hkB6CcJ.png",
+  "color": "#8b3de2",
+  "category": "anime",
+  "tags": ["manga", "manhwa", "manhua", "novel", "reading", "arabic", "scanlation", "shadow-scans"]
+}
