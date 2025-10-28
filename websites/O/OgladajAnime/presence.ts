@@ -166,13 +166,15 @@ async function getStrings() {
       buttonViewAnimeList: 'ogladajanime.buttonViewAnimeList',
       viewCharacter: 'ogladajanime.viewCharacter',
       buttonViewCharacter: 'ogladajanime.buttonViewCharacter',
+      allAvailableAnimes: 'ogladajanime.allAvailableAnimes',
+      watchTime: 'ogladajanime.watchTime',
     },
 
   )
 }
 
 // ! - use localization strings
-// !? - uses the format: Viewing Page {new line} {provided localization string}, example: !?terms
+// !? - uses the format: Viewing Page: {new line} {provided localization string}, example: !?terms
 const staticBrowsing = {
   '/watch2gether': '!browsingRooms',
   '/main2': '!viewHome',
@@ -192,6 +194,7 @@ const staticBrowsing = {
   '/rules': '!?terms',
   '/harmonogram': '!?upcomingEpisodes',
   '/anime_seasons': '!?upcomingAnimes',
+  '/all_anime_list': '!?allAvailableAnimes',
   '/': '!viewHome', // This MUST stay at the end, otherwise this will always display no matter the page
 }
 
@@ -388,7 +391,7 @@ presence.on('UpdateData', async () => {
         presenceData.state = `${strings.category} '${categoryName}' • ${count} anime`
       }
 
-      const name = document.querySelector('h4[class="card-title col-12 text-center mb-1"]')?.textContent?.replace(' - Lista anime', '')?.replace(/\s/g, '')
+      const name = document.querySelector('.card-title.col-12.text-center')?.textContent?.replace(' - Lista anime', '')?.replace(/\s/g, '')
 
       presenceData.details = strings.viewAnimeListOf.replace('{0}', name ?? 'N/A')
 
@@ -433,8 +436,30 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = `${strings.viewUser} ${name}`
 
-    if (watchTime)
-      presenceData.state = `Czas oglądania: ${watchTime}`
+    if (watchTime) {
+      let state = strings.watchTime as string
+
+      let days = 0
+      let hours = 0
+      let minutes = 0
+
+      let _watchTime = watchTime as string
+
+      // This part was unfortunately fixed by AI, because I could not get the regex to work.
+      for (const m of _watchTime.matchAll(/(?<value>\d+) *(?<unit>[dgm])/g)) {
+        const val = Number.parseInt(m.groups?.value ?? '0')
+        const unit = m.groups?.unit
+        if (unit === 'd') days = val
+        else if (unit === 'g') hours = val
+        else if (unit === 'm') minutes = val
+      }
+
+      state = replaceTime(state, 0, days)
+      state = replaceTime(state, 1, hours)
+      state = replaceTime(state, 2, minutes)
+
+      presenceData.state = state
+    }
 
     if (showCover)
       presenceData.largeImageKey = getProfilePicture(id)
@@ -453,16 +478,6 @@ presence.on('UpdateData', async () => {
 
     if (image && showCover)
       presenceData.largeImageKey = image
-  }
-  else if (pathname.startsWith('/all_anime_list') && browsingStatusEnabled) {
-    const letter = pathname.replace('/all_anime_list', '')?.replace('/', '')?.toUpperCase()
-
-    presenceData.details = 'Przegląda wszystkie dostępne anime'
-
-    if (letter)
-      presenceData.details = `Przegląda anime na literę: ${letter}`
-    else
-      presenceData.details = 'Przegląda anime nie zaczynające się na literę'
   }
   else if (pathname.startsWith('/search/name/') && browsingStatusEnabled && showSearchContent) {
     const search = document.getElementsByClassName('search-info')?.[0]?.querySelector('div[class="card bg-white"] > div[class="row card-body justify-content-center"] > p[class="col-12 p-0 m-0"]')?.textContent?.replace('Wyszukiwanie: ', '')
@@ -546,4 +561,16 @@ function getStringByName(name: string): string | undefined {
   const keys = Object.keys(strings)
   const values = Object.values(strings)
   return values[keys.findIndex(x => x === name)]
+}
+
+// This part was unfortunately fixed by AI, because I could not get the regex to work.
+function replaceTime(text: string, num: number, value: number): string {
+  const pattern = new RegExp(`\\[(.*?\\{${num}\\}.*?)\\]`)
+
+  if (value === 0)
+    return text.replace(pattern, '')
+
+  return text.replace(pattern, (_match, inner: string) => {
+    return inner.replace(`{${num}}`, value.toString())
+  })
 }
