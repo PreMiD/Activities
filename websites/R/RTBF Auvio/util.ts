@@ -177,7 +177,7 @@ export function getLocalizedAssets(
   lang: string,
   assetName: string,
 ): ActivityAssets {
-  console.warn(lang, assetName)
+  presence.info(`${lang}: ${assetName}`)
   switch (assetName) {
     case 'Ad':
       switch (lang) {
@@ -704,7 +704,7 @@ export async function getThumbnail(
           resolve(tempCanvas.toDataURL('image/png'))
         }
         catch (error) {
-          console.warn('Failed to draw image on canvas:', error)
+          presence.error(`Failed to draw image on canvas: ${error}`)
           resolve(ActivityAssets.Logo)
         }
       }
@@ -717,12 +717,12 @@ export async function getThumbnail(
         // Strategy 2: Try loading the image without CORS.
         const fallbackImg = new Image()
         fallbackImg.onload = () => {
-          console.warn('CORS failed — using original URL fallback (cannot process to canvas)')
+          presence.error('CORS failed — using original URL fallback (cannot process to canvas)')
 
           resolve(src)
         }
         fallbackImg.onerror = () => {
-          console.warn('Both CORS and direct image load failed, returning placeholder')
+          presence.error('Both CORS and direct image load failed, returning placeholder')
           resolve(ActivityAssets.Logo)
         }
         // Do not set crossOrigin here (leave undefined) so the browser performs a normal, non-CORS request.
