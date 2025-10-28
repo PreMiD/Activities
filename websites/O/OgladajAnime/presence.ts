@@ -361,8 +361,8 @@ presence.on('UpdateData', async () => {
             else if (value === ListItemStatus.categoryWatching)
               watching++
           }
-          else if (elem.innerHTML != null) {
-            if (elem.innerHTML?.trim()?.replace(' ', '') === 'Obejrzane')
+          else if (elem.textContent != null) {
+            if (elem.textContent?.trim()?.replace(' ', '') === 'Obejrzane')
               watched++
             else if (elem.textContent?.trim()?.replace(' ', '') === 'Oglądam')
               watching++
@@ -381,7 +381,7 @@ presence.on('UpdateData', async () => {
           categoryName = getStringByName(ListItemStatus[category as ListItemStatus]) ?? 'N/A'
         }
         else {
-          categoryName = document.querySelector('h5[class="card-title col-12 text-center mb-3"]')?.innerHTML ?? 'N/A'
+          categoryName = document.querySelector('h5[class="card-title col-12 text-center mb-3"]')?.textContent ?? 'N/A'
         }
 
         const count = document.querySelectorAll('td[class="px-0 px-sm-2"]').length / 2
