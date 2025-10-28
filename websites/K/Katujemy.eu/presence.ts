@@ -17,22 +17,22 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Przegląda stronę główną'
   }
   else if (document.location.pathname.includes('/topic/')) {
-    const title = document.querySelector('h1')
+    const title = document.querySelector<HTMLHeadingElement>('h1')
     presenceData.details = 'Przegląda temat na forum'
     presenceData.state = title?.textContent || 'Temat forum'
   }
   else if (document.location.pathname.includes('/profile/')) {
-    const user = document.querySelector('h1')
+    const user = document.querySelector<HTMLHeadingElement>('h1')
     presenceData.details = 'Przegląda profil użytkownika'
     presenceData.state = user?.textContent || 'Profil użytkownika'
   }
   else if (document.location.pathname.includes('/forum/')) {
-    const category = document.querySelector('h1')
+    const category = document.querySelector<HTMLHeadingElement>('h1')
     presenceData.details = 'Przegląda kategorię forum'
     presenceData.state = category?.textContent || 'Kategoria forum'
   }
   else if (document.location.pathname.includes('/search')) {
-    const search = document.querySelector('input[type=\"text\"]') as HTMLInputElement
+    const search = document.querySelector<HTMLInputElement>('input[type="text"]')
     presenceData.details = 'Wyszukuje na forum'
     presenceData.state = search?.value || 'Wyszukiwanie'
   }
