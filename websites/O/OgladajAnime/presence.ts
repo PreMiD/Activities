@@ -73,22 +73,6 @@ async function profileButton(): Promise<[ButtonData, undefined] | undefined> {
     return [{ label: 'Mój profil', url: `https://ogladajanime.pl/profile/${userID}` }, undefined]
 }
 
-function watchedString(num: number): string {
-  if (num === 0)
-    return `${num} obejrzanych`
-  else if (num < 5)
-    return `${num} obejrzane`
-  else
-    return `${num} obejrzanych`
-}
-
-function commentsString(num: number): string {
-  if (num === 1)
-    return `${num} wysłany komentarz`
-  else
-    return `${num} wysłanych komentarzy`
-}
-
 function getOAPlayer(): HTMLVideoElement | undefined {
   const { pathname } = document.location
   if (pathname.includes('/anime') || pathname.includes('/watch2gether/')) {
@@ -140,6 +124,8 @@ async function getStrings() {
       categoryPlanning: 'ogladajanime.categoryPlanning',
       categorySuspended: 'ogladajanime.categorySuspended',
       categoryAbandoned: 'ogladajanime.categoryAbandoned',
+      categoryAll: 'ogladajanime.categoryAll',
+      animeListWatched: 'ogladajanime.animeListWatched',
 
       radioAnime: 'ogladajanime.radioAnime',
       lastActivity: 'ogladajanime.lastActivity',
@@ -168,6 +154,10 @@ async function getStrings() {
       buttonViewCharacter: 'ogladajanime.buttonViewCharacter',
       allAvailableAnimes: 'ogladajanime.allAvailableAnimes',
       watchTime: 'ogladajanime.watchTime',
+      viewCommentsOf: 'ogladajanime.viewCommentsOf',
+      viewComments: 'ogladajanime.viewComments',
+      commentCount: 'ogladajanime.commentCount',
+      buttonViewComments: 'ogladajanime.buttonViewComments',
     },
 
   )
@@ -373,9 +363,9 @@ presence.on('UpdateData', async () => {
         })
 
         if (watching === 0)
-          presenceData.state = watchedString(watched)
+          presenceData.state = strings.animeListWatched.replace('{0}', watched.toString())
         else
-          presenceData.state = `${strings.watching} ${watching} • ${watchedString(watched)}`
+          presenceData.state = strings.categoryAll.replace('{0}', strings.animeListWatched.replace('{0}', watched.toString())).replace('{1}', watching.toString())
       }
       else {
         let categoryName: string
@@ -401,17 +391,27 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.startsWith('/user_comments/') && browsingStatusEnabled) {
     const id = pathname.replace('/user_comments/', '')
-    presenceData.buttons = await setButton('Zobacz listę komentarzy', document.location.href)
-    presenceData.details = 'Przegląda komentarze wysłane przez użytkownika'
+    presenceData.buttons = await setButton(strings.buttonViewComments, document.location.href)
+    presenceData.details = strings.viewComments
     if (id != null) {
       const name = document.querySelector('h4[class="card-title col-12 text-center mb-1"]')?.textContent?.replace('Komentarze użytkownika: ', '')?.replace(/\s/g, '')
-      const comments = (document.querySelectorAll('section > .row > div[class="col-12 mb-3"]')?.length ?? 1) - 1
+      const comments = document.querySelectorAll('section > .row > div[class="col-12 mb-3"]')
+
+      let likes = 0
+      let dislikes = 0
+
+      comments.forEach((elem, _, __) => {
+        dislikes += Number.parseInt(elem.getElementsByClassName('fa-thumbs-down').item(0)?.textContent ?? '0')
+        likes += Number.parseInt(elem.getElementsByClassName('fa-thumbs-up').item(0)?.textContent ?? '0')
+      })
+
+      const commentsCount = (comments?.length ?? 1) - 1
 
       if (name) {
-        presenceData.details = `Przegląda komentarze wysłane przez: ${name}`
+        presenceData.details = strings.viewCommentsOf.replace('{0}', name ?? 'N/A')
       }
 
-      presenceData.state = `${commentsString(comments)} przez użytkownika`
+      presenceData.state = strings.commentCount.replace('{0}', commentsCount.toString()).replace('{1}', likes.toString()).replace('{2}', dislikes.toString())
 
       if (showCover)
         presenceData.largeImageKey = getProfilePicture(id)
@@ -443,15 +443,16 @@ presence.on('UpdateData', async () => {
       let hours = 0
       let minutes = 0
 
-      let _watchTime = watchTime as string
-
       // This part was unfortunately fixed by AI, because I could not get the regex to work.
-      for (const m of _watchTime.matchAll(/(?<value>\d+) *(?<unit>[dgm])/g)) {
+      for (const m of state.matchAll(/(?<value>\d+) *(?<unit>[dgm])/g)) {
         const val = Number.parseInt(m.groups?.value ?? '0')
         const unit = m.groups?.unit
-        if (unit === 'd') days = val
-        else if (unit === 'g') hours = val
-        else if (unit === 'm') minutes = val
+        if (unit === 'd')
+          days = val
+        else if (unit === 'g')
+          hours = val
+        else if (unit === 'm')
+          minutes = val
       }
 
       state = replaceTime(state, 0, days)
