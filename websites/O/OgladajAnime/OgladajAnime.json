@@ -17,19 +17,19 @@
   },
   "ogladajanime.random": {
     "description": "{0} will be replaced with a new line, but if you leave it out, the string will be in just 1 line.",
-    "message": "Browsing {0} Random Anime"
+    "message": "Browsing{0}Random Anime"
   },
   "ogladajanime.new": {
     "description": "{0} will be replaced with a new line, but if you leave it out, the string will be in just 1 line.",
-    "message": "Browsing {0} New Anime"
+    "message": "Browsing{0}New Anime"
   },
   "ogladajanime.topRated": {
     "description": "{0} will be replaced with a new line, but if you leave it out, the string will be in just 1 line.",
-    "message": "Browsing {0} Top Rated Anime"
+    "message": "Browsing{0}Top Rated Anime"
   },
   "ogladajanime.browsingRooms": {
     "description": "Used when user is looking for a watch2gether room. {0} will be replaced with a new line, but if you leave it out, the string will be in just 1 line.",
-    "message": "Browsing {0} Watch2Gether Rooms"
+    "message": "Browsing{0}Watch2Gether Rooms"
   },
   "ogladajanime.chatting": {
     "description": "Used when user is chatting",
@@ -66,5 +66,61 @@
   "ogladajanime.animeList": {
     "description": "A session where multiple users watch the same anime, all synced",
     "message": "Room"
+  },
+  "ogladajanime.buttonMyProfile": {
+    "description": "Button that leads to the user's profile",
+    "message": "My profile"
+  },
+  "ogladajanime.votes": {
+    "description": "The amount of people that rated an anime",
+    "message": "{0} votes"
+  },
+  "ogladajanime.category": {
+    "description": "The category in the anime list",
+    "message": "Category"
+  },
+  "ogladajanime.viewAnimeList": {
+    "description": "Displayed when looking at someone's anime list",
+    "message": "Viewing anime list"
+  },
+  "ogladajanime.viewAnimeListOf": {
+    "description": "Displayed when looking at someone's anime list. {0} is the user",
+    "message": "Viewing anime list of: {0}"
+  },
+  "ogladajanime.buttonViewAnimeList": {
+    "description": "Button that leads to a users anime list",
+    "message": "View Anime List"
+  },
+  "ogladajanime.buttonWatchWithMe": {
+    "description": "Button that leads to a watch2gether room",
+    "message": "Watch with me!"
+  },
+  "ogladajanime.viewCharacter": {
+    "description": "Displayed when looking at a character from an anime. {0} is the character's name",
+    "message": "Viewing character: {0}"
+  },
+  "ogladajanime.buttonViewCharacter": {
+    "description": "Button that leads to a character",
+    "message": "View Character"
+  },
+  "ogladajanime.categoryWatched": {
+    "description": "The category for watched animes, used in anime list",
+    "message": "Watched"
+  },
+  "ogladajanime.categoryWatching": {
+    "description": "The category for animes currently being watched, used in anime list",
+    "message": "Watching"
+  },
+  "ogladajanime.categoryPlanning": {
+    "description": "The category for animes that the user is planning to be watch in the future, used in anime list",
+    "message": "Planning"
+  },
+  "ogladajanime.categorySuspended": {
+    "description": "The category for animes that are suspended and the user will most likely watch later, used in anime list",
+    "message": "Suspended"
+  },
+  "ogladajanime.categoryAbandoned": {
+    "description": "The category for animes that are abandoned and the user is not planning to watch, used in anime list",
+    "message": "Abandoned"
   }
 }

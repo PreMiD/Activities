@@ -22,11 +22,11 @@ interface Playback {
 }
 
 enum ListItemStatus {
-  Oglądam = 1,
-  Obejrzane = 2,
-  Planuje = 3,
-  Wstrzymane = 4,
-  Porzucone = 5,
+  categoryWatching = 1,
+  categoryWatched = 2,
+  categoryPlanning = 3,
+  categorySuspended = 4,
+  categoryAbandoned = 5,
 }
 
 enum ActivityAssets {
@@ -132,6 +132,14 @@ async function getStrings() {
       buttonWatchAnime: 'general.buttonWatchAnime',
       episode: 'general.episode',
       watching: 'general.watching',
+      viewAnUser: 'general.viewAnUser',
+      buttonViewProfile: 'general.buttonViewProfile',
+
+      categoryWatched: 'ogladajanime.categoryWatched',
+      categoryWatching: 'ogladajanime.categoryWatching',
+      categoryPlanning: 'ogladajanime.categoryPlanning',
+      categorySuspended: 'ogladajanime.categorySuspended',
+      categoryAbandoned: 'ogladajanime.categoryAbandoned',
 
       radioAnime: 'ogladajanime.radioAnime',
       lastActivity: 'ogladajanime.lastActivity',
@@ -149,6 +157,15 @@ async function getStrings() {
       activeLoginSessions: 'ogladajanime.activeLoginSessions',
       newestEdits: 'ogladajanime.newestEdits',
       room: 'ogladajanime.room',
+      buttonMyProfile: 'ogladajanime.buttonMyProfile',
+      votes: 'ogladajanime.votes',
+      category: 'ogladajanime.category',
+      buttonWatchWithMe: 'ogladajanime.buttonWatchWithMe',
+      viewAnimeList: 'ogladajanime.viewAnimeList',
+      viewAnimeListOf: 'ogladajanime.viewAnimeListOf',
+      buttonViewAnimeList: 'ogladajanime.buttonViewAnimeList',
+      viewCharacter: 'ogladajanime.viewCharacter',
+      buttonViewCharacter: 'ogladajanime.buttonViewCharacter',
     },
 
   )
@@ -172,7 +189,6 @@ const staticBrowsing = {
   '/anime_list_to_load': '!importList',
   '/discord': '!?contact',
   '/support': '!?donate',
-  '/radio': '!listeningto {0} !radioAnime',
   '/rules': '!?terms',
   '/harmonogram': '!?upcomingEpisodes',
   '/anime_seasons': '!?upcomingAnimes',
@@ -229,7 +245,7 @@ presence.on('UpdateData', async () => {
 
     const ratingElement = document.getElementById('my_anime_rate')
     const rating = ratingElement?.parentElement?.querySelector('h4')
-    const voteCount = ratingElement?.parentElement?.querySelector('.text-left')
+    const voteCount = ratingElement?.parentElement?.querySelector('.text-left')?.textContent?.split(' ')[0] ?? '0'
 
     const epNum = activeEpisode?.getAttribute('value') ?? 0
     const epName = activeEpisode?.querySelector('p')?.textContent
@@ -269,7 +285,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (rating && voteCount)
-      presenceData.largeImageText = `${rating.textContent} • ${voteCount.textContent}`
+      presenceData.largeImageText = `${rating.textContent} • ${strings.votes.replace('{0}', voteCount)}`
 
     if (animeID && showCover)
       presenceData.largeImageKey = getAnimeIcon(animeID)
@@ -317,7 +333,7 @@ presence.on('UpdateData', async () => {
     if (animeIcon && showCover)
       presenceData.largeImageKey = animeIcon.getAttribute('src')?.replace('0.webp', '2.webp').replace('1.webp', '2.webp')
 
-    presenceData.buttons = await setButton('Obejrzyj ze mną', document.location.href)
+    presenceData.buttons = await setButton(strings.buttonWatchWithMe, document.location.href)
   }
   else if (pathname.startsWith('/anime_list/') && browsingStatusEnabled) {
     let id = pathname.replace('/anime_list/', '')
@@ -326,11 +342,11 @@ presence.on('UpdateData', async () => {
     if (match) {
       const split = id.split('/')
       category = Number.parseInt(split.at(1) as string)
+      id = split.at(0) as string
     }
-    id = id.replace(/\/\d/, '')
 
-    presenceData.details = 'Przegląda listę Anime'
-    presenceData.buttons = await setButton('Zobacz listę Anime', document.location.href)
+    presenceData.details = strings.viewAnimeList
+    presenceData.buttons = await setButton(strings.buttonViewAnimeList, document.location.href)
     if (id) {
       if (category === 0) {
         const statuses = document.querySelectorAll('td[class="px-1 px-sm-2"]')
@@ -340,15 +356,15 @@ presence.on('UpdateData', async () => {
           const select = elem.querySelector('select')
           if (select != null) {
             const value = Number.parseInt(select.value)
-            if (value === ListItemStatus.Obejrzane)
+            if (value === ListItemStatus.categoryWatched)
               watched++
-            else if (value === ListItemStatus.Oglądam)
+            else if (value === ListItemStatus.categoryWatching)
               watching++
           }
           else if (elem.innerHTML != null) {
-            if (elem.innerHTML?.trim()?.replace(' ', '') === ListItemStatus[ListItemStatus.Obejrzane])
+            if (elem.innerHTML?.trim()?.replace(' ', '') === 'Obejrzane')
               watched++
-            else if (elem.textContent?.trim()?.replace(' ', '') === ListItemStatus[ListItemStatus.Oglądam])
+            else if (elem.textContent?.trim()?.replace(' ', '') === 'Oglądam')
               watching++
           }
         })
@@ -361,18 +377,20 @@ presence.on('UpdateData', async () => {
       else {
         let categoryName: string
 
-        if (category >= 0 && category <= 5)
-          categoryName = ListItemStatus[category as ListItemStatus]
-        else
+        if (category >= 0 && category <= 5) {
+          categoryName = getStringByName(ListItemStatus[category as ListItemStatus]) ?? 'N/A'
+        }
+        else {
           categoryName = document.querySelector('h5[class="card-title col-12 text-center mb-3"]')?.innerHTML ?? 'N/A'
+        }
 
         const count = document.querySelectorAll('td[class="px-0 px-sm-2"]').length / 2
-        presenceData.state = `Kategoria '${categoryName}' • ${count} anime`
+        presenceData.state = `${strings.category} '${categoryName}' • ${count} anime`
       }
 
-      const name = document.querySelector('h4[class="card-title col-12 text-center mb-1"]')?.textContent?.replace('- Lista anime', '')?.replace(/\s/g, '')
+      const name = document.querySelector('h4[class="card-title col-12 text-center mb-1"]')?.textContent?.replace(' - Lista anime', '')?.replace(/\s/g, '')
 
-      presenceData.details = append('Przegląda listę Anime', name)
+      presenceData.details = strings.viewAnimeListOf.replace('{0}', name ?? 'N/A')
 
       if (showCover)
         presenceData.largeImageKey = getProfilePicture(id)
@@ -413,7 +431,7 @@ presence.on('UpdateData', async () => {
       }
     }
 
-    presenceData.details = append('Przegląda profil', name)
+    presenceData.details = `${strings.viewUser} ${name}`
 
     if (watchTime)
       presenceData.state = `Czas oglądania: ${watchTime}`
@@ -424,14 +442,14 @@ presence.on('UpdateData', async () => {
     if (id === userID.toString())
       presenceData.buttons = await profileButton()
     else
-      presenceData.buttons = await setButton('Zobacz Profil', document.location.href)
+      presenceData.buttons = await setButton(strings.buttonViewProfile, document.location.href)
   }
   else if (pathname.startsWith('/character/') && browsingStatusEnabled) {
     const name = document.querySelector('#animemenu_info > div[class="row card-body justify-content-center"] > h4[class="card-title col-12 text-center mb-1"]')
     const image = document.querySelector('img[class="img-fluid lozad rounded text-center"]')?.getAttribute('data-src')?.trim()
 
-    presenceData.buttons = await setButton('Zobacz Postać', document.location.href)
-    presenceData.details = append('Sprawdza postać', name?.textContent)
+    presenceData.buttons = await setButton(strings.buttonViewProfile, document.location.href)
+    presenceData.details = strings.viewCharacter.replace('{0}', name?.textContent ?? 'N/A')
 
     if (image && showCover)
       presenceData.largeImageKey = image
@@ -451,10 +469,21 @@ presence.on('UpdateData', async () => {
     const resultCountElements = document.querySelectorAll('div[class="card bg-white"] > div[class="row card-body justify-content-center"]')
     const resultCount = resultCountElements[resultCountElements.length - 1]?.textContent?.match('Znaleziono: (.*?)\.S')?.[1]
 
-    presenceData.details = append('Szuka Anime', search)
+    presenceData.details = `${strings.searchFor} ${search}`
 
     if (resultCount)
       presenceData.state = resultCount
+  }
+  else if (pathname.startsWith('/radio') && browsingStatusEnabled) {
+    const text = strings.listeningTo.replace('{1}', strings.radioAnime)
+    const split = text.split('{0}')
+    if (split.length > 1) {
+      presenceData.details = split[0]
+      presenceData.state = split[1]
+    }
+    else {
+      presenceData.details = text
+    }
   }
   else {
     if (browsingStatusEnabled) {
@@ -492,7 +521,7 @@ function parseString(text: string): [string, string] {
 
   if (text.startsWith('!?')) {
     let _text = text.replace('!?', '')
-    _text = values[keys.findIndex(x => x === _text)] ?? 'N/A'
+    _text = getStringByName(_text) ?? 'N/A'
     details = strings.viewPage
     state = _text
     return [details, state]
@@ -501,8 +530,8 @@ function parseString(text: string): [string, string] {
     text = text.replace(`!${keys[i]}`, `${values[i]}`)
   }
 
-  if (text.includes(' {0} ')) {
-    const split = text.split(' {0} ')
+  if (text.includes('{0}')) {
+    const split = text.split('{0}')
     details = split[0] ?? 'N/A'
     state = split[1] ?? 'N/A'
   }
@@ -511,4 +540,10 @@ function parseString(text: string): [string, string] {
   }
 
   return [details, state]
+}
+
+function getStringByName(name: string): string | undefined {
+  const keys = Object.keys(strings)
+  const values = Object.values(strings)
+  return values[keys.findIndex(x => x === name)]
 }
