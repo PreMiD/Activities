@@ -33,7 +33,6 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Auvio,
     largeImageText: 'RTBF Auvio',
     smallImageKey: ActivityAssets.Binoculars,
-    smallImageText: '',
     type: ActivityType.Watching,
   }
   const [
