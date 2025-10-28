@@ -44,6 +44,7 @@ presence.on('UpdateData', async () => {
     readingAPost: 'general.readingAPost',
     browsingMyFeed: 'bilibili.browsingMyFeed',
     viewingMessages: 'bilibili.viewingMessages',
+    viewingAnUser: 'general.viewAnUser',
     viewingUserSpace: 'general.viewUser',
     watchingStream: 'bilibili.watchingStream',
     searchingFor: 'bilibili.searchingFor',
@@ -177,6 +178,10 @@ presence.on('UpdateData', async () => {
             },
           ]
           presenceData.startTimestamp = browsingTimestamp
+          const uploaderAvatar = document.querySelector('.opus-module-author picture img')
+          if (uploaderAvatar instanceof HTMLImageElement) {
+            presenceData.largeImageKey = uploaderAvatar.src
+          }
           break
         }
         case 'list': {
@@ -242,6 +247,10 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'space.bilibili.com': {
+      if (privacy) {
+        presenceData.details = strings.viewingAnUser
+        break
+      }
       uploader = document.querySelector('.nickname')
       presenceData.details = strings.viewingUserSpace
       presenceData.state = `${uploader?.textContent} | UID:${urlpath[1]}`
@@ -251,6 +260,10 @@ presence.on('UpdateData', async () => {
           url: `https://space.bilibili.com/${urlpath[1]}`,
         },
       ]
+      const avatarImage = document.querySelector('.avatar img')
+      if (avatarImage instanceof HTMLImageElement) {
+        presenceData.largeImageKey = avatarImage.src
+      }
       break
     }
     case 't.bilibili.com': {
