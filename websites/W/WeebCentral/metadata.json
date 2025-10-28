@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "690680552629469184",
+    "name": "pchaozz"
+  },
+  "service": "WeebCentral",
+  "description": {
+    "en": "Track what manga you're reading on WeebCentral directly on your Discord status with PreMiD!",
+    "es" : "Muestra en Discord qué manga estás leyendo en WeebCentral gracias a PreMiD."
+  },
+  "url": "weebcentral.com",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/UW42RMy.png",
+  "thumbnail": "https://i.imgur.com/UW42RMy.png",
+  "color": "#1E1F22",
+  "category": "anime",
+  "tags": [
+    "manhwa",
+    "manga",
+    "manhua",
+    "reading",
+    "weeb"
+  ],
+  "iframe":false
+}
