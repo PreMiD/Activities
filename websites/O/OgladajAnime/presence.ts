@@ -96,12 +96,15 @@ function getAnimeIcon(id: number | string): string {
 async function getStrings() {
   return presence.getStrings(
     {
+      // Other
+
+      // -> General
+
       playing: 'general.playing', // Playing
       paused: 'general.paused', // Paused
       viewHome: 'general.viewHome', // Viewing home page
       viewUser: 'general.viewUser', // Viewing user:
       searchSomething: 'general.searchSomething', // Searching up something...
-      terms: 'general.terms', // Terms Of Service
       browsing: 'general.browsing', // Browsing...
       searchFor: 'general.searchFor', // Searching for:
       viewPage: 'general.viewPage', // Viewing page:
@@ -110,7 +113,30 @@ async function getStrings() {
       episode: 'general.episode', // Episode
       watching: 'general.watching', // Watching:
       viewAnUser: 'general.viewAnUser', // Viewing an user
-      buttonViewProfile: 'general.buttonViewProfile', // View Profile
+
+      // -> OgladajAnime
+
+      radioAnime: 'ogladajanime.radioAnime', // Radio Anime
+      random: 'ogladajanime.random', // Browsing{0}Random Anime
+      new: 'ogladajanime.new', // Browsing{0}New Anime
+      topRated: 'ogladajanime.topRated', // Browsing{0}Top Rated Anime
+      browsingRooms: 'ogladajanime.browsingRooms', // Browsing{0}Watch2Gether Rooms
+      chatting: 'ogladajanime.chatting', // Chatting
+      importList: 'ogladajanime.importList', // Importing anime list from another service
+      room: 'ogladajanime.room', // Room
+      votes: 'ogladajanime.votes', // votes
+      category: 'ogladajanime.category', // Category
+      viewAnimeList: 'ogladajanime.viewAnimeList', // Viewing anime list
+      viewAnimeListOf: 'ogladajanime.viewAnimeListOf', // Viewing anime list of: {0}
+      viewCharacter: 'ogladajanime.viewCharacter', // Viewing character:{0}{1}
+      allAvailableAnimes: 'ogladajanime.allAvailableAnimes', // All Available Animes
+      watchTime: 'ogladajanime.watchTime', // Watch time: [{0} days] [{1} hours] [{2} minutes]
+      viewCommentsOf: 'ogladajanime.viewCommentsOf', // Viewing comments of: {0}
+      viewComments: 'ogladajanime.viewComments', // Viewing comments of a user
+      commentCount: 'ogladajanime.commentCount', // {0} comments sent ({1} likes, {2} dislikes)
+      searchResults: 'ogladajanime.searchResults', // {0} search results
+
+      // Anime List
 
       categoryWatched: 'ogladajanime.categoryWatched', // Watched
       categoryWatching: 'ogladajanime.categoryWatching', // Watching
@@ -120,38 +146,26 @@ async function getStrings() {
       categoryAll: 'ogladajanime.categoryAll', // {0} • Watching {1}
       animeListWatched: 'ogladajanime.animeListWatched', // {0} watched
 
-      radioAnime: 'ogladajanime.radioAnime', // Radio Anime
+      // Page Names
+
       lastActivity: 'ogladajanime.lastActivity', // Last Activity
       donate: 'ogladajanime.donate', // Donate
-      random: 'ogladajanime.random', // Browsing{0}Random Anime
-      new: 'ogladajanime.new', // Browsing{0}New Anime
-      topRated: 'ogladajanime.topRated', // Browsing{0}Top Rated Anime
-      browsingRooms: 'ogladajanime.browsingRooms', // Browsing{0}Watch2Gether Rooms
-      chatting: 'ogladajanime.chatting', // Chatting
-      contact: 'ogladajanime.contact', // Contact
-      importList: 'ogladajanime.importList', // Importing anime list from another service
       newestComments: 'ogladajanime.newestComments', // Newest Comments
       upcomingAnimes: 'ogladajanime.upcomingAnimes', // Upcoming Animes
       upcomingEpisodes: 'ogladajanime.upcomingEpisodes', // Upcoming Episodes Timetable
       activeLoginSessions: 'ogladajanime.activeLoginSessions', // Active Login Sessions
       newestEdits: 'ogladajanime.newestEdits', // Newest Edits
-      room: 'ogladajanime.room', // Room
-      buttonMyProfile: 'ogladajanime.buttonMyProfile', // My Profile
-      votes: 'ogladajanime.votes', // votes
-      category: 'ogladajanime.category', // Category
+      contact: 'ogladajanime.contact', // Contact
+      terms: 'general.terms', // Terms Of Service
+
+      // Buttons
+
       buttonWatchWithMe: 'ogladajanime.buttonWatchWithMe', // Watch with me
-      viewAnimeList: 'ogladajanime.viewAnimeList', // Viewing anime list
-      viewAnimeListOf: 'ogladajanime.viewAnimeListOf', // Viewing anime list of: {0}
       buttonViewAnimeList: 'ogladajanime.buttonViewAnimeList', // View Anime List
-      viewCharacter: 'ogladajanime.viewCharacter', // Viewing character:{0}{1}
-      buttonViewCharacter: 'ogladajanime.buttonViewCharacter', // View Character
-      allAvailableAnimes: 'ogladajanime.allAvailableAnimes', // All Available Animes
-      watchTime: 'ogladajanime.watchTime', // Watch time: [{0} days] [{1} hours] [{2} minutes]
-      viewCommentsOf: 'ogladajanime.viewCommentsOf', // Viewing comments of: {0}
-      viewComments: 'ogladajanime.viewComments', // Viewing comments of a user
-      commentCount: 'ogladajanime.commentCount', // {0} comments sent ({1} likes, {2} dislikes)
       buttonViewComments: 'ogladajanime.buttonViewComments', // View Comments
-      searchResults: 'ogladajanime.searchResults', // {0} search results
+      buttonViewProfile: 'general.buttonViewProfile', // View Profile
+      buttonViewCharacter: 'ogladajanime.buttonViewCharacter', // View Character
+      buttonMyProfile: 'ogladajanime.buttonMyProfile', // My Profile
     },
 
   )
