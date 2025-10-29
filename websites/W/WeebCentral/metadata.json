@@ -8,7 +8,7 @@
   "service": "WeebCentral",
   "description": {
     "en": "Track what manga you're reading on WeebCentral directly on your Discord status with PreMiD!",
-    "es" : "Muestra en Discord qué manga estás leyendo en WeebCentral gracias a PreMiD."
+    "es": "Muestra en Discord qué manga estás leyendo en WeebCentral gracias a PreMiD."
   },
   "url": "weebcentral.com",
   "version": "1.0.0",
