@@ -13,5 +13,4 @@ export class Utils {
 
     return pathname
   }
-
 }
