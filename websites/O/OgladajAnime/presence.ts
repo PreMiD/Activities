@@ -142,6 +142,7 @@ async function getStrings() {
       viewComments: 'ogladajanime.viewComments', // Viewing comments of a user
       commentCount: 'ogladajanime.commentCount', // {0} comments sent ({1} likes, {2} dislikes)
       buttonViewComments: 'ogladajanime.buttonViewComments', // View Comments
+      searchResults: 'ogladajanime.searchResults', // {0} search results
     },
 
   )
@@ -491,12 +492,12 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/search/name/') && browsingStatusEnabled && showSearchContent) {
     const search = document.getElementsByClassName('search-info')?.[0]?.querySelector('div[class="card bg-white"] > div[class="row card-body justify-content-center"] > p[class="col-12 p-0 m-0"]')?.textContent?.replace('Wyszukiwanie: ', '')
     const resultCountElements = document.querySelectorAll('div[class="card bg-white"] > div[class="row card-body justify-content-center"]')
-    const resultCount = resultCountElements[resultCountElements.length - 1]?.textContent?.match('Znaleziono: (.*?)\.S')?.[1]
+    const resultCount = resultCountElements[resultCountElements.length - 1]?.textContent?.match(/\d+/)?.[0]
 
     presenceData.details = `${strings.searchFor} ${search}`
 
     if (resultCount)
-      presenceData.state = resultCount
+      presenceData.state = strings.searchResults.replace('{0}', resultCount)
   }
   else if (pathname.startsWith('/radio') && browsingStatusEnabled) {
     const text = strings.listeningTo.replace('{1}', strings.radioAnime)

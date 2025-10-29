@@ -154,5 +154,9 @@
   "ogladajanime.categoryAll": {
     "description": "The category for animes that the user is planning to be watch in the future, used in anime list. This will show up as state. {0} is watched string (ogladajanime.animeListWatched), {1} is the amount of watching",
     "message": "{0} • Watching {1}"
+  },
+  "ogladajanime.searchResults": {
+    "description": "The amount of results that came after searching something",
+    "message": "{0} search results"
   }
 }
