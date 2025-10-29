@@ -21,12 +21,12 @@ presence.on('UpdateData', async () => {
 
   if (pathname.startsWith('/series/')) {
     const mangaTitle =
-      document.querySelector('h1.text-2xl')?.textContent?.trim() ||
-      document.querySelector('meta[property="og:title"]')?.getAttribute('content')
+      document.querySelector('h1.text-2xl')?.textContent?.trim()
+      || document.querySelector('meta[property="og:title"]')?.getAttribute('content')
 
     const mangaCover =
-      document.querySelector('picture img')?.getAttribute('src') ||
-      document.querySelector('meta[property="og:image"]')?.getAttribute('content')
+      document.querySelector('picture img')?.getAttribute('src')
+      || document.querySelector('meta[property="og:image"]')?.getAttribute('content')
 
     presenceData.details = `Ready to read: ${mangaTitle}`
     presenceData.state = 'Choosing chapter'
@@ -41,7 +41,8 @@ presence.on('UpdateData', async () => {
         url: window.location.href,
       },
     ]
-  } else if (pathname.startsWith('/chapters/')) {
+  }
+  else if (pathname.startsWith('/chapters/')) {
     const ogTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content')
     const ogImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content')
     const preloadImage = document
@@ -52,7 +53,7 @@ presence.on('UpdateData', async () => {
     let mangaTitle = 'Unknown manga'
 
     if (ogTitle) {
-      const parts = ogTitle.split('|').map((x) => x.trim())
+      const parts = ogTitle.split('|').map(x => x.trim())
       chapterTitle = parts[0] || chapterTitle
       mangaTitle = parts[1] || mangaTitle
     }
@@ -70,10 +71,12 @@ presence.on('UpdateData', async () => {
         url: window.location.href,
       },
     ]
-  } else if (pathname === '/' || pathname.startsWith('/search')) {
+  }
+  else if (pathname === '/' || pathname.startsWith('/search')) {
     presenceData.details = 'Searching something to read...'
     presenceData.state = 'On WeebCentral'
-  } else {
+  }
+  else {
     presenceData.details = 'Browsing WeebCentral'
     presenceData.state = 'Exploring new manga'
   }
