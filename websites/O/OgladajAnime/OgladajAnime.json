@@ -100,8 +100,8 @@
     "message": "Watch with me!"
   },
   "ogladajanime.viewCharacter": {
-    "description": "Displayed when looking at a character from an anime. {0} is the character's name",
-    "message": "Viewing character: {0}"
+    "description": "Displayed when looking at a character from an anime. {0} is a new line. {1} is the character's name",
+    "message": "Viewing character:{0}{1}"
   },
   "ogladajanime.buttonViewCharacter": {
     "description": "Button that leads to a character",

@@ -57,22 +57,6 @@ function getPlayerInfo(): [isPaused: boolean, timestamp: [start: number, end: nu
     return [true, [-1, -1]]
 }
 
-async function setButton(label: string, url: string): Promise<[ButtonData, (ButtonData | undefined)]> {
-  const privacyMode = await presence.getSetting<boolean>('privacyMode')
-  if (privacyMode || userID === 0)
-    return [{ label, url }, undefined]
-  else
-    return [{ label: 'Mój profil', url: `https://ogladajanime.pl/profile/${userID}` }, { label, url }]
-}
-
-async function profileButton(): Promise<[ButtonData, undefined] | undefined> {
-  const privacyMode = await presence.getSetting<boolean>('privacyMode')
-  if (privacyMode || userID === 0)
-    return undefined
-  else
-    return [{ label: 'Mój profil', url: `https://ogladajanime.pl/profile/${userID}` }, undefined]
-}
-
 function getOAPlayer(): HTMLVideoElement | undefined {
   const { pathname } = document.location
   if (pathname.includes('/anime') || pathname.includes('/watch2gether/')) {
@@ -103,61 +87,61 @@ function getAnimeIcon(id: number | string): string {
 async function getStrings() {
   return presence.getStrings(
     {
-      playing: 'general.playing',
-      paused: 'general.paused',
-      viewHome: 'general.viewHome',
-      viewUser: 'general.viewUser',
-      searchSomething: 'general.searchSomething',
-      terms: 'general.terms',
-      browsing: 'general.browsing',
-      searchFor: 'general.searchFor',
-      viewPage: 'general.viewPage',
-      listeningTo: 'general.listeningTo',
-      buttonWatchAnime: 'general.buttonWatchAnime',
-      episode: 'general.episode',
-      watching: 'general.watching',
-      viewAnUser: 'general.viewAnUser',
-      buttonViewProfile: 'general.buttonViewProfile',
+      playing: 'general.playing', // Playing
+      paused: 'general.paused', // Paused
+      viewHome: 'general.viewHome', // Viewing home page
+      viewUser: 'general.viewUser', // Viewing user:
+      searchSomething: 'general.searchSomething', // Searching up something...
+      terms: 'general.terms', // Terms Of Service
+      browsing: 'general.browsing', // Browsing...
+      searchFor: 'general.searchFor', // Searching for:
+      viewPage: 'general.viewPage', // Viewing page:
+      listeningTo: 'general.listeningTo', // Listening to{0}{1}
+      buttonWatchAnime: 'general.buttonWatchAnime', // Watch Anime
+      episode: 'general.episode', // Episode
+      watching: 'general.watching', // Watching:
+      viewAnUser: 'general.viewAnUser', // Viewing an user
+      buttonViewProfile: 'general.buttonViewProfile', // View Profile
 
-      categoryWatched: 'ogladajanime.categoryWatched',
-      categoryWatching: 'ogladajanime.categoryWatching',
-      categoryPlanning: 'ogladajanime.categoryPlanning',
-      categorySuspended: 'ogladajanime.categorySuspended',
-      categoryAbandoned: 'ogladajanime.categoryAbandoned',
-      categoryAll: 'ogladajanime.categoryAll',
-      animeListWatched: 'ogladajanime.animeListWatched',
+      categoryWatched: 'ogladajanime.categoryWatched', // Watched
+      categoryWatching: 'ogladajanime.categoryWatching', // Watching
+      categoryPlanning: 'ogladajanime.categoryPlanning', // Planning
+      categorySuspended: 'ogladajanime.categorySuspended', // Suspended
+      categoryAbandoned: 'ogladajanime.categoryAbandoned', // Abandoned
+      categoryAll: 'ogladajanime.categoryAll', // {0} • Watching {1}
+      animeListWatched: 'ogladajanime.animeListWatched', // {0} watched
 
-      radioAnime: 'ogladajanime.radioAnime',
-      lastActivity: 'ogladajanime.lastActivity',
-      donate: 'ogladajanime.donate',
-      random: 'ogladajanime.random',
-      new: 'ogladajanime.new',
-      topRated: 'ogladajanime.topRated',
-      browsingRooms: 'ogladajanime.browsingRooms',
-      chatting: 'ogladajanime.chatting',
-      contact: 'ogladajanime.contact',
-      importList: 'ogladajanime.importList',
-      newestComments: 'ogladajanime.newestComments',
-      upcomingAnimes: 'ogladajanime.upcomingAnimes',
-      upcomingEpisodes: 'ogladajanime.upcomingEpisodes',
-      activeLoginSessions: 'ogladajanime.activeLoginSessions',
-      newestEdits: 'ogladajanime.newestEdits',
-      room: 'ogladajanime.room',
-      buttonMyProfile: 'ogladajanime.buttonMyProfile',
-      votes: 'ogladajanime.votes',
-      category: 'ogladajanime.category',
-      buttonWatchWithMe: 'ogladajanime.buttonWatchWithMe',
-      viewAnimeList: 'ogladajanime.viewAnimeList',
-      viewAnimeListOf: 'ogladajanime.viewAnimeListOf',
-      buttonViewAnimeList: 'ogladajanime.buttonViewAnimeList',
-      viewCharacter: 'ogladajanime.viewCharacter',
-      buttonViewCharacter: 'ogladajanime.buttonViewCharacter',
-      allAvailableAnimes: 'ogladajanime.allAvailableAnimes',
-      watchTime: 'ogladajanime.watchTime',
-      viewCommentsOf: 'ogladajanime.viewCommentsOf',
-      viewComments: 'ogladajanime.viewComments',
-      commentCount: 'ogladajanime.commentCount',
-      buttonViewComments: 'ogladajanime.buttonViewComments',
+      radioAnime: 'ogladajanime.radioAnime', // Radio Anime
+      lastActivity: 'ogladajanime.lastActivity', // Last Activity
+      donate: 'ogladajanime.donate', // Donate
+      random: 'ogladajanime.random', // Browsing{0}Random Anime
+      new: 'ogladajanime.new', // Browsing{0}New Anime
+      topRated: 'ogladajanime.topRated', // Browsing{0}Top Rated Anime
+      browsingRooms: 'ogladajanime.browsingRooms', // Browsing{0}Watch2Gether Rooms
+      chatting: 'ogladajanime.chatting', // Chatting
+      contact: 'ogladajanime.contact', // Contact
+      importList: 'ogladajanime.importList', // Importing anime list from another service
+      newestComments: 'ogladajanime.newestComments', // Newest Comments
+      upcomingAnimes: 'ogladajanime.upcomingAnimes', // Upcoming Animes
+      upcomingEpisodes: 'ogladajanime.upcomingEpisodes', // Upcoming Episodes Timetable
+      activeLoginSessions: 'ogladajanime.activeLoginSessions', // Active Login Sessions
+      newestEdits: 'ogladajanime.newestEdits', // Newest Edits
+      room: 'ogladajanime.room', // Room
+      buttonMyProfile: 'ogladajanime.buttonMyProfile', // My Profile
+      votes: 'ogladajanime.votes', // votes
+      category: 'ogladajanime.category', // Category
+      buttonWatchWithMe: 'ogladajanime.buttonWatchWithMe', // Watch with me
+      viewAnimeList: 'ogladajanime.viewAnimeList', // Viewing anime list
+      viewAnimeListOf: 'ogladajanime.viewAnimeListOf', // Viewing anime list of: {0}
+      buttonViewAnimeList: 'ogladajanime.buttonViewAnimeList', // View Anime List
+      viewCharacter: 'ogladajanime.viewCharacter', // Viewing character:{0}{1}
+      buttonViewCharacter: 'ogladajanime.buttonViewCharacter', // View Character
+      allAvailableAnimes: 'ogladajanime.allAvailableAnimes', // All Available Animes
+      watchTime: 'ogladajanime.watchTime', // Watch time: [{0} days] [{1} hours] [{2} minutes]
+      viewCommentsOf: 'ogladajanime.viewCommentsOf', // Viewing comments of: {0}
+      viewComments: 'ogladajanime.viewComments', // Viewing comments of a user
+      commentCount: 'ogladajanime.commentCount', // {0} comments sent ({1} likes, {2} dislikes)
+      buttonViewComments: 'ogladajanime.buttonViewComments', // View Comments
     },
 
   )
@@ -190,6 +174,22 @@ const staticBrowsing = {
 
 let strings: Awaited<ReturnType<typeof getStrings>>
 let oldLang: string | null = null
+
+async function setButton(label: string, url: string): Promise<[ButtonData, (ButtonData | undefined)]> {
+  const privacyMode = await presence.getSetting<boolean>('privacyMode')
+  if (privacyMode || userID === 0)
+    return [{ label, url }, undefined]
+  else
+    return [{ label: strings.buttonMyProfile, url: `https://ogladajanime.pl/profile/${userID}` }, { label, url }]
+}
+
+async function profileButton(): Promise<[ButtonData, undefined] | undefined> {
+  const privacyMode = await presence.getSetting<boolean>('privacyMode')
+  if (privacyMode || userID === 0)
+    return undefined
+  else
+    return [{ label: strings.buttonMyProfile, url: `https://ogladajanime.pl/profile/${userID}` }, undefined]
+}
 
 presence.on('iFrameData', (data) => {
   const info = data as PlaybackInfo
@@ -475,7 +475,15 @@ presence.on('UpdateData', async () => {
     const image = document.querySelector('img[class="img-fluid lozad rounded text-center"]')?.getAttribute('data-src')?.trim()
 
     presenceData.buttons = await setButton(strings.buttonViewProfile, document.location.href)
-    presenceData.details = strings.viewCharacter.replace('{0}', name?.textContent ?? 'N/A')
+    const text = strings.viewCharacter.replace('{1}', name?.textContent ?? 'N/A')
+    const split = text.split('{0}')
+    if (split.length > 1) {
+      presenceData.details = split[0]
+      presenceData.state = split[1]
+    }
+    else {
+      presenceData.details = text
+    }
 
     if (image && showCover)
       presenceData.largeImageKey = image
@@ -535,6 +543,9 @@ function parseString(text: string): [string, string] {
   let details = ''
   let state = ''
 
+  const slashB = '(^(?=[\\w!])|(?<=[\\w!])$|(?<=[^\\w!])(?=[\\w!])|(?<=[\\w!])(?=[^\\w!]))'
+  // ^^ Equivalent of \b, but also detects an exclamation mark !
+
   if (text.startsWith('!?')) {
     let _text = text.replace('!?', '')
     _text = getStringByName(_text) ?? 'N/A'
@@ -542,9 +553,9 @@ function parseString(text: string): [string, string] {
     state = _text
     return [details, state]
   }
-  for (let i = 0; i < keys.length; i++) {
-    text = text.replace(`!${keys[i]}`, `${values[i]}`)
-  }
+
+  for (let i = 0; i < keys.length; i++)
+    text = text.replace(new RegExp(`${slashB}!${keys[i]}${slashB}`), `${values[i]}`)
 
   if (text.includes('{0}')) {
     const split = text.split('{0}')
