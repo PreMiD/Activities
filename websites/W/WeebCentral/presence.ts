@@ -20,13 +20,13 @@ presence.on('UpdateData', async () => {
   const { pathname } = window.location
 
   if (pathname.startsWith('/series/')) {
-    const mangaTitle
-      = document.querySelector('h1.text-2xl')?.textContent?.trim()
-      || document.querySelector('meta[property="og:title"]')?.getAttribute('content')
+    const mangaTitle =
+        document.querySelector('h1.text-2xl')?.textContent?.trim()
+        || document.querySelector('meta[property="og:title"]')?.getAttribute('content')
 
-    const mangaCover
-      = document.querySelector('picture img')?.getAttribute('src')
-      || document.querySelector('meta[property="og:image"]')?.getAttribute('content')
+    const mangaCover =
+        document.querySelector('picture img')?.getAttribute('src')
+        || document.querySelector('meta[property="og:image"]')?.getAttribute('content')
 
     presenceData.details = `Ready to read: ${mangaTitle}`
     presenceData.state = 'Choosing chapter'
