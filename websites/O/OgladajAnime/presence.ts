@@ -76,8 +76,17 @@ function append(text: string, append: string | undefined | null, separator: stri
     return text
 }
 
-function getProfilePicture(id: number | string): string {
-  return `https://cdn.ogladajanime.pl/images/user/${id}.webp`
+async function getProfilePicture(id: number | string): Promise<string> {
+  let url = `https://cdn.ogladajanime.pl/images/user/${id}.webp`
+  try {
+    const res = await fetch(new URL(url))
+    if (res.status === 404)
+      url = `https://cdn.ogladajanime.pl/images/user/0.webp`
+  }
+  catch {
+    url = `https://cdn.ogladajanime.pl/images/user/0.webp`
+  }
+  return url
 }
 
 function getAnimeIcon(id: number | string): string {
@@ -387,7 +396,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.viewAnimeListOf.replace('{0}', name ?? 'N/A')
 
       if (showCover)
-        presenceData.largeImageKey = getProfilePicture(id)
+        presenceData.largeImageKey = await getProfilePicture(id)
     }
   }
   else if (pathname.startsWith('/user_comments/') && browsingStatusEnabled) {
@@ -415,7 +424,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = strings.commentCount.replace('{0}', commentsCount.toString()).replace('{1}', likes.toString()).replace('{2}', dislikes.toString())
 
       if (showCover)
-        presenceData.largeImageKey = getProfilePicture(id)
+        presenceData.largeImageKey = await getProfilePicture(id)
     }
   }
   else if (pathname.startsWith('/profile') && browsingStatusEnabled) {
@@ -440,9 +449,9 @@ presence.on('UpdateData', async () => {
     if (watchTime) {
       let state = strings.watchTime as string
 
-      let days = 0
-      let hours = 0
-      let minutes = 0
+      let days = -1
+      let hours = -1
+      let minutes = -1
 
       // This part was unfortunately fixed by AI, because I could not get the regex to work.
       for (const m of watchTime.matchAll(/(?<value>\d+) *(?<unit>[dgm])/g)) {
@@ -460,11 +469,14 @@ presence.on('UpdateData', async () => {
       state = replaceTime(state, 1, hours)
       state = replaceTime(state, 2, minutes)
 
+      if (!state.match(/\d+/))
+        state += watchTime
+
       presenceData.state = state
     }
 
     if (showCover)
-      presenceData.largeImageKey = getProfilePicture(id)
+      presenceData.largeImageKey = await getProfilePicture(id)
 
     if (id === userID.toString())
       presenceData.buttons = await profileButton()
@@ -580,7 +592,7 @@ function getStringByName(name: string): string | undefined {
 function replaceTime(text: string, num: number, value: number): string {
   const pattern = new RegExp(`\\[(.*?\\{${num}\\}.*?)\\]`)
 
-  if (value === 0)
+  if (value === -1)
     return text.replace(pattern, '')
 
   return text.replace(pattern, (_match, inner: string) => {
