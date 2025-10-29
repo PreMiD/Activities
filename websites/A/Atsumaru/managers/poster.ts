@@ -1,5 +1,3 @@
-import { Utils } from '../utils.js'
-
 export class PosterManager {
   private savedPosterUrl: string | null = null
 
@@ -23,9 +21,8 @@ export class PosterManager {
     const imageUrl = posterElement.src
     if (!imageUrl)
       return
-    const WSRVUrl = Utils.convertToWSRVUrl(imageUrl)
 
-    this.savedPosterUrl = WSRVUrl
+    this.savedPosterUrl = imageUrl
   }
 
   private resetPoster(): void {

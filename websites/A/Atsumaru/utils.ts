@@ -14,7 +14,4 @@ export class Utils {
     return pathname
   }
 
-  static convertToWSRVUrl(originalUrl: string): string {
-    return `https://wsrv.nl/?url=${originalUrl}`
-  }
 }
