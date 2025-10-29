@@ -445,7 +445,7 @@ presence.on('UpdateData', async () => {
       let minutes = 0
 
       // This part was unfortunately fixed by AI, because I could not get the regex to work.
-      for (const m of state.matchAll(/(?<value>\d+) *(?<unit>[dgm])/g)) {
+      for (const m of watchTime.matchAll(/(?<value>\d+) *(?<unit>[dgm])/g)) {
         const val = Number.parseInt(m.groups?.value ?? '0')
         const unit = m.groups?.unit
         if (unit === 'd')
