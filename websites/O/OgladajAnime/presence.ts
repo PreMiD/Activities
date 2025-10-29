@@ -31,7 +31,7 @@ enum ListItemStatus {
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png',
-  DefaultProfilePicture = 'https://i.imgur.com/Bqy74jT.png',
+  DefaultProfilePicture = 'https://i.imgur.com/wwU7Fos.png',
 }
 
 function getUserID() {
