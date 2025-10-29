@@ -31,6 +31,7 @@ enum ListItemStatus {
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png',
+  DefaultProfilePicture = 'https://i.imgur.com/Bqy74jT.png',
 }
 
 function getUserID() {
@@ -81,10 +82,10 @@ async function getProfilePicture(id: number | string): Promise<string> {
   try {
     const res = await fetch(new URL(url))
     if (res.status === 404)
-      url = `https://cdn.ogladajanime.pl/images/user/0.webp`
+      url = ActivityAssets.DefaultProfilePicture
   }
   catch {
-    url = `https://cdn.ogladajanime.pl/images/user/0.webp`
+    url = ActivityAssets.DefaultProfilePicture
   }
   return url
 }
