@@ -48,6 +48,12 @@
       "title": "Display Current Game",
       "icon": "fad fa-slot-machine",
       "value": true
+    },
+    {
+      "id": "showGameProvider",
+      "title": "Display Game Provider",
+      "icon": "fad fa-user-circl",
+      "value": false
     }
   ]
 }
