@@ -3,7 +3,6 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-
 presence.on('UpdateData', async () => {
   const [showBal, showTimestamp, showCurrentGame, showGameProvider] = await Promise.all([
     presence.getSetting<boolean>('showBal'),
@@ -11,16 +10,19 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('showCurrentGame'),
     presence.getSetting<boolean>('showGameProvider'),
   ])
+
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/S/Stake.us/assets/0.png',
   }
   presenceData.name = 'Stake.us | Online Casino'
 
   const { pathname, search } = document.location
-  let gameProvider ='unknown provider'
+  let gameProvider = 'unknown provider'
+  let gameName = 'unknown game'
 
-  if (showTimestamp)
+  if (showTimestamp) {
     presenceData.startTimestamp = browsingTimestamp
+  }
 
   // Display the current game being played or browsing state/page
   if (pathname.includes('casino') && !pathname.includes('games')) {
@@ -29,28 +31,25 @@ presence.on('UpdateData', async () => {
         .split('/group/')
         .pop()
         ?.replaceAll('-', ' ')
-        .replace(/(^\w)|(\s+\w)/g, letter => letter.toUpperCase())}...`
+        .replace(/\b\w/g, letter => letter.toUpperCase())}...`
     }
     else {
       presenceData.state = 'Browsing Casino...'
     }
   }
   else if (pathname.includes('games')) {
-    // console.log(gameProvider)
     if (showCurrentGame) {
+      // query game name and provider only when on a games page
+      gameName = document.querySelector('div.title-wrap > h1')?.textContent?.trim() ?? 'unknown game'
       gameProvider = document.querySelector('div.title-wrap > a')?.textContent?.trim() ?? 'unknown provider'
-      console.log(gameProvider)
-      presenceData.state = `Playing "${(document
-        .querySelector('div.title-wrap > h1')
-        ?.textContent
-        ?.trim()) ?? ('unknown game')}" ${showGameProvider ? `by ${gameProvider}` : ''}`
+      presenceData.state = `Playing "${gameName}"${showGameProvider ? ` || ${gameProvider}` : ''}`
     }
   }
   else {
     presenceData.state = 'Browsing...'
   }
 
-  //  Attempt to gather wallet balance
+  // Attempt to gather wallet balance
   if (showBal) {
     const balanceText = document
       .querySelector('div.wrapper > div > button > div > div > span > span')
@@ -62,32 +61,35 @@ presence.on('UpdateData', async () => {
       ?.getAttribute('data-active-currency') === 'sweeps'
     const currency = isSweeps ? 'Stake Cash' : 'Gold Coins'
 
-    //  Conditionals regarding when to display in-play balance
-    if (
-      pathname.includes('games') && gameProvider !== 'Stake Originals'
-    ) {
+    // Conditionals regarding when to display in-play balance
+    if (pathname.includes('games') && gameProvider !== 'Stake Originals') {
       presenceData.details = `Balance: (In Play) (${currency})`
     }
     else {
-      presenceData.details = `Balance: ${
-        isSweeps ? `$${balanceText}` : balanceText
-      } (${currency})`
+      presenceData.details = `Balance: ${isSweeps ? `$${balanceText}` : balanceText} (${currency})`
     }
   }
 
   // Modals and other pages
-  if (search.includes('modal=wallet'))
+  if (search.includes('modal=wallet')) {
     presenceData.state = 'Checking Wallet...'
-  else if (search.includes('modal=vault'))
+  }
+  else if (search.includes('modal=vault')) {
     presenceData.state = 'Checking Vault...'
-  else if (search.includes('modal=vip'))
+  }
+  else if (search.includes('modal=vip')) {
     presenceData.state = 'Checking VIP Progress...'
-  else if (search.includes('modal=user'))
+  }
+  else if (search.includes('modal=user')) {
     presenceData.state = 'Checking Statistics...'
-  else if (pathname.includes('/transactions/'))
+  }
+  else if (pathname.includes('/transactions/')) {
     presenceData.state = 'Viewing Transactions...'
-  else if (pathname.includes('/settings/'))
+  }
+  else if (pathname.includes('/settings/')) {
     presenceData.state = 'Adjusting Settings...'
+  }
+
   presenceData.stateUrl = document.location.href
   presence.setActivity(presenceData)
 })
