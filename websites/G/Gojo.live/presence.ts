@@ -147,7 +147,7 @@ presence.on('UpdateData', async () => {
         ?.src
 
       // Title format: "Episode Title - Anime Name"
-      const titleArray = document.title.split('-')
+      const titleArray = document.title.split(' - ')
       const [episodeTitle, animeName] = [titleArray[0]?.trim(), titleArray[1]?.trim()]
 
       // URL params: ep=5&subType=sub (others are ignored)
@@ -172,7 +172,7 @@ presence.on('UpdateData', async () => {
 
       // Apply censoring if this is a mature anime
       const isMature = animeId && isMatureAnime(animeId)
-      let displayName: string | undefined
+      let displayName = animeName
       if (isMature) {
         if (coverImg)
           coverImg = await applyCensoring(coverImg)
