@@ -172,7 +172,7 @@ presence.on('UpdateData', async () => {
 
       // Apply censoring if this is a mature anime
       const isMature = animeId && isMatureAnime(animeId)
-      let displayName: string | undefined;
+      let displayName: string | undefined
       if (isMature) {
         if (coverImg)
           coverImg = await applyCensoring(coverImg)
@@ -182,7 +182,7 @@ presence.on('UpdateData', async () => {
         }
       }
 
-      presenceData.details = displayName ?? "Streaming anime"
+      presenceData.details = displayName ?? 'Streaming anime'
       presenceData.largeImageKey = coverImg ?? ActivityAssets.Logo
 
       const video = document.querySelector<HTMLVideoElement>('video')
@@ -226,11 +226,11 @@ presence.on('UpdateData', async () => {
 
       // Apply censoring if this is a mature anime
       const isMature = animeId && isMatureAnime(animeId)
-      let displayName = document.title;
+      let displayName = document.title
       if (isMature) {
         if (coverImg)
           coverImg = await applyCensoring(coverImg)
-        
+
         displayName = censorAnimeName(displayName)
       }
 
