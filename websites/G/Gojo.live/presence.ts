@@ -113,10 +113,9 @@ function censorAnimeName(name: string): string {
 }
 
 presence.on('UpdateData', async () => {
-  const [privacyModeEnabled, showVideoTimestamps, matureContentCensoring] = await Promise.all([
+  const [privacyModeEnabled, showVideoTimestamps] = await Promise.all([
     presence.getSetting<boolean>('privacyMode'),
     presence.getSetting<boolean>('showTimestamps'),
-    presence.getSetting<boolean>('matureContentCensoring'),
   ])
 
   const presenceData: PresenceData = {
@@ -173,17 +172,17 @@ presence.on('UpdateData', async () => {
 
       // Apply censoring if this is a mature anime
       const isMature = animeId && isMatureAnime(animeId)
-      if (isMature && coverImg && matureContentCensoring) {
-        coverImg = await applyCensoring(coverImg)
+      let displayName: string | undefined;
+      if (isMature) {
+        if (coverImg)
+          coverImg = await applyCensoring(coverImg)
+
+        if (animeName) {
+          displayName = censorAnimeName(animeName)
+        }
       }
 
-      // Censor anime name if mature content censoring is enabled
-      let displayName = animeName ?? 'Streaming anime'
-      if (isMature && matureContentCensoring) {
-        displayName = censorAnimeName(displayName)
-      }
-
-      presenceData.details = displayName
+      presenceData.details = displayName ?? "Streaming anime"
       presenceData.largeImageKey = coverImg ?? ActivityAssets.Logo
 
       const video = document.querySelector<HTMLVideoElement>('video')
@@ -227,17 +226,15 @@ presence.on('UpdateData', async () => {
 
       // Apply censoring if this is a mature anime
       const isMature = animeId && isMatureAnime(animeId)
-      if (isMature && coverImg && matureContentCensoring) {
-        coverImg = await applyCensoring(coverImg)
+      let displayName = document.title;
+      if (isMature) {
+        if (coverImg)
+          coverImg = await applyCensoring(coverImg)
+        
+        displayName = censorAnimeName(displayName)
       }
 
-      // Censor anime name if mature content censoring is enabled
-      let displayTitle = document.title
-      if (isMature && matureContentCensoring) {
-        displayTitle = censorAnimeName(displayTitle)
-      }
-
-      presenceData.details = `Viewing ${displayTitle}`
+      presenceData.details = `Viewing ${displayName}`
       presenceData.largeImageKey = coverImg ?? ActivityAssets.Logo
       presenceData.smallImageKey = Assets.Viewing
 

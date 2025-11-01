@@ -42,15 +42,6 @@
       "if": {
         "privacyMode": false
       }
-    },
-    {
-      "id": "matureContentCensoring",
-      "title": "Mature Content Censoring",
-      "icon": "fas fa-eye-slash",
-      "value": true,
-      "if": {
-        "privacyMode": false
-      }
     }
   ]
 }
