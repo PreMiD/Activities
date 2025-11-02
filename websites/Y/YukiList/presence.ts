@@ -47,7 +47,8 @@ presence.on('UpdateData', async () => {
       if (privacyMode) {
         presenceData.details = `${strings.viewing} Anime`
         presenceData.state = 'Browsing privately'
-      } else {
+      }
+      else {
         presenceData.details = `${strings.viewing} Anime`
 
         const progressInput = document.querySelector<HTMLInputElement>('input[type="number"].text-center')
@@ -58,10 +59,12 @@ presence.on('UpdateData', async () => {
 
           if (maxEpisodes && maxEpisodes !== '9999') {
             presenceData.state = `${animeTitle} • Ep ${current}/${maxEpisodes}`
-          } else {
+          }
+          else {
             presenceData.state = `${animeTitle} • Ep ${current}`
           }
-        } else {
+        }
+        else {
           presenceData.state = animeTitle
         }
       }
@@ -88,7 +91,8 @@ presence.on('UpdateData', async () => {
           },
         ]
       }
-    } else {
+    }
+    else {
       presenceData.details = `${strings.viewing} Anime`
       presenceData.state = 'Loading...'
     }
@@ -114,7 +118,7 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/user/')) {
     const username = document.querySelector('.text-3xl.font-bold.text-white, h1.text-3xl')?.textContent?.trim()
     presenceData.details = 'Viewing Profile'
-    presenceData.state = privacyMode || !username ? "Someone's profile" : username
+    presenceData.state = privacyMode || !username ? 'Someone\'s profile' : username
 
     if (!privacyMode) {
       const profilePic = document.querySelector<HTMLImageElement>('.w-24.h-24.rounded-2xl img, .rounded-2xl img[alt*="User"]')
