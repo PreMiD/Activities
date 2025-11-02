@@ -8,27 +8,17 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 let lastPath = ''
 let pathTimestamp = browsingTimestamp
 
-async function getStrings() {
-  return presence.getStrings(
-    {
-      browsing: 'general.browsing',
-      viewing: 'general.viewing',
-      searching: 'general.search',
-    },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
-  )
+const strings = {
+  browsing: 'Browsing',
+  viewing: 'Viewing',
+  searching: 'Searching',
 }
-
-let strings: Awaited<ReturnType<typeof getStrings>>
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://i.imgur.com/MdbUxWe.png',
     startTimestamp: browsingTimestamp,
   }
-
-  if (!strings)
-    strings = await getStrings()
 
   const { pathname } = document.location
 
@@ -45,7 +35,7 @@ presence.on('UpdateData', async () => {
   ])
 
   if (pathname === '/') {
-    presenceData.details = 'Browsing YukiList'
+    presenceData.details = `${strings.browsing} YukiList`
     presenceData.state = 'Looking for Anime'
   }
   else if (pathname.startsWith('/anime/')) {
@@ -55,11 +45,10 @@ presence.on('UpdateData', async () => {
 
     if (animeTitle) {
       if (privacyMode) {
-        presenceData.details = 'Viewing Anime'
+        presenceData.details = `${strings.viewing} Anime`
         presenceData.state = 'Browsing privately'
-      }
-      else {
-        presenceData.details = 'Viewing Anime'
+      } else {
+        presenceData.details = `${strings.viewing} Anime`
 
         const progressInput = document.querySelector<HTMLInputElement>('input[type="number"].text-center')
 
@@ -69,12 +58,10 @@ presence.on('UpdateData', async () => {
 
           if (maxEpisodes && maxEpisodes !== '9999') {
             presenceData.state = `${animeTitle} • Ep ${current}/${maxEpisodes}`
-          }
-          else {
+          } else {
             presenceData.state = `${animeTitle} • Ep ${current}`
           }
-        }
-        else {
+        } else {
           presenceData.state = animeTitle
         }
       }
@@ -101,34 +88,33 @@ presence.on('UpdateData', async () => {
           },
         ]
       }
-    }
-    else {
-      presenceData.details = 'Viewing Anime'
+    } else {
+      presenceData.details = `${strings.viewing} Anime`
       presenceData.state = 'Loading...'
     }
   }
   else if (pathname === '/search') {
-    presenceData.details = 'Browsing YukiList'
-    presenceData.state = 'Searching for Anime'
+    presenceData.details = `${strings.browsing} YukiList`
+    presenceData.state = `${strings.searching} for Anime`
     presenceData.smallImageKey = Assets.Search
-    presenceData.smallImageText = 'Searching'
+    presenceData.smallImageText = strings.searching
   }
   else if (pathname === '/upcoming') {
-    presenceData.details = 'Browsing YukiList'
+    presenceData.details = `${strings.browsing} YukiList`
     presenceData.state = 'Viewing Upcoming Anime'
   }
   else if (pathname === '/completed') {
-    presenceData.details = 'Browsing YukiList'
+    presenceData.details = `${strings.browsing} YukiList`
     presenceData.state = 'Viewing Completed Anime'
   }
   else if (pathname.startsWith('/me/profile')) {
-    presenceData.details = 'Browsing YukiList'
+    presenceData.details = `${strings.browsing} YukiList`
     presenceData.state = privacyMode ? 'Viewing Profile' : 'Viewing My Profile'
   }
   else if (pathname.startsWith('/user/')) {
     const username = document.querySelector('.text-3xl.font-bold.text-white, h1.text-3xl')?.textContent?.trim()
     presenceData.details = 'Viewing Profile'
-    presenceData.state = privacyMode || !username ? 'Someone\'s profile' : username
+    presenceData.state = privacyMode || !username ? "Someone's profile" : username
 
     if (!privacyMode) {
       const profilePic = document.querySelector<HTMLImageElement>('.w-24.h-24.rounded-2xl img, .rounded-2xl img[alt*="User"]')
@@ -160,11 +146,11 @@ presence.on('UpdateData', async () => {
     presenceData.state = count ? `${statusLabel} (${count})` : `${statusLabel} List`
   }
   else if (pathname.startsWith('/auth')) {
-    presenceData.details = 'Browsing YukiList'
+    presenceData.details = `${strings.browsing} YukiList`
     presenceData.state = 'Signing In'
   }
   else {
-    presenceData.details = 'Browsing YukiList'
+    presenceData.details = `${strings.browsing} YukiList`
     presenceData.state = 'Exploring'
   }
 
