@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "sora_ich",
+    "id": "836845275703803954"
+  },
+  "service": "YukiList",
+  "description": {
+    "en": "Track and discover your favorite anime easily with YukiList!",
+    "id": "Lacak dan temukan anime favorit Anda dengan mudah menggunakan YukiList!"
+  },
+  "url": "yukilist.vercel.app",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/MdbUxWe.png",
+  "thumbnail": "https://i.imgur.com/4ppCIkK.png",
+  "color": "#3B82F6",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "tracking",
+    "watchlist"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-link",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "showCover",
+      "title": "Show Anime Cover",
+      "icon": "fas fa-image",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    }
+  ]
+}
