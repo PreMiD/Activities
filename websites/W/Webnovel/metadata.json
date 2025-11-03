@@ -11,7 +11,7 @@
   },
   "url": "www.webnovel.com",
   "regExp": "([a-z0-9]+[.])webnovel[.]com",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Webnovel/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Webnovel/assets/thumbnail.jpeg",
   "color": "#3F4DA5",

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "792589695590465567",
+    "name": "h2so4_chan"
+  },
+  "service": "WatchPeopleLive",
+  "description": {
+    "en": "WatchPeopleLive.tv is a user-driven community platform where members share and watch a wide variety of live or recorded videos and engage in discussions. The site covers diverse topics ranging from everyday life, music, and nature to social issues and current events, offering rich and varied content. While some content can be sensitive or controversial, the platform aims to provide an open space for sharing perspectives and experiences. Whether you're looking to browse interesting videos, join conversations, or discover new topics, WatchPeopleLive.tv is an active and inclusive community."
+  },
+  "url": "watchpeoplelive.tv",
+  "regExp": "([a-z0-9-]+[.])*(watchpeoplelive)[.]tv[/]",
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WatchPeopleLive/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WatchPeopleLive/assets/thumbnail.png",
+  "color": "#012461",
+  "category": "socials",
+  "tags": [
+    "lifestyle",
+    "music",
+    "social",
+    "daily",
+    "community",
+    "videos"
+  ]
+}

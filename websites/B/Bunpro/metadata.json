@@ -9,6 +9,10 @@
     {
       "id": "193714715631812608",
       "name": "theusaf"
+    },
+    {
+      "id": "123890298316128256",
+      "name": "fluttr"
     }
   ],
   "service": "Bunpro",
@@ -16,6 +20,7 @@
     "文プロ"
   ],
   "description": {
+    "de": "Bunpro ist eine Lernplattform für japanische Grammatik.",
     "en": "Bunpro is a japanese grammar learning application.",
     "fr": "Bunpro est une application d'apprentissage de la grammaire japonaise.",
     "ja": "Bunproは日本語の文法学ぶアプリ",
@@ -27,7 +32,7 @@
     "bunpro.jp",
     "community.bunpro.jp"
   ],
-  "version": "2.0.13",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bunpro/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bunpro/assets/thumbnail.png",
   "color": "#5e6266",
@@ -38,5 +43,13 @@
     "grammar",
     "srs",
     "language"
+  ],
+  "settings": [
+    {
+      "id": "hideOnDone",
+      "title": "Hide dashboard presence when lessons and reviews are done",
+      "icon": "fas fa-eye-slash",
+      "value": false
+    }
   ]
 }

@@ -44,7 +44,7 @@ presence.on('UpdateData', async () => {
     return
   }
 
-  presenceData.type = ActivityType.Listening
+  (presenceData as PresenceData).type = ActivityType.Listening
   presenceData.name = data.station.name
   presenceData.details = format1
     .replace('%song%', data.title)

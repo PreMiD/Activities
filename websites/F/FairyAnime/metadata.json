@@ -13,7 +13,7 @@
   },
   "url": "fairyanime.com",
   "regExp": "([a-z0-9-]+[.])*fairyanime[.]com[/]",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FairyAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FairyAnime/assets/thumbnail.png",
   "color": "#f7a1f3",

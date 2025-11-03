@@ -12,7 +12,7 @@
   },
   "url": "read.amazon.com",
   "regExp": "(lire|read|leggi|leer|lesen|ler|lezen).amazon.[a-z]{2,3}([.][a-z]{2,3})?",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Amazon%20Kindle/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Amazon%20Kindle/assets/thumbnail.jpg",
   "color": "#FDEE00",

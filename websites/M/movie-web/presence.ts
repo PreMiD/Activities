@@ -67,7 +67,7 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  if (pathname === '' || pathname.startsWith('/search')) {
+  if (pathname === '' || pathname.startsWith('/search') || pathname.startsWith('/discover')) {
     presenceData.startTimestamp = browsingTimestamp
   }
   else if (pathname.startsWith('/media')) {
@@ -100,7 +100,7 @@ presence.on('UpdateData', async () => {
     }
 
     const title = `${meta.title} (${meta.year})`
-    presenceData.name = title
+    presenceData.name = document.title
 
     if (meta.type === 'show' && episode && season)
       presenceData.details = `Season ${season.number}, Episode ${episode.number}`

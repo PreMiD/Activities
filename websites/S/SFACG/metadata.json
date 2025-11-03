@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "792589695590465567",
+    "name": "h2so4_chan"
+  },
+  "service": "SFACG",
+  "description": {
+    "en": "SFACG is a popular Chinese online reading platform offering a vast collection of web novels, comics, and light novels. It features a wide range of genres including fantasy, romance, martial arts, and more, catering to diverse reader preferences. The platform provides an immersive reading experience with regular updates, user-friendly interface, and mobile accessibility.",
+    "zh": "SFACG 是一个受欢迎的中文在线阅读平台，拥有海量的网络小说、漫画和轻小说资源。平台涵盖奇幻、言情、武侠等多种题材，满足不同读者的喜好。SFACG 提供沉浸式的阅读体验，内容定期更新，界面友好且支持移动端访问。"
+  },
+  "url": "book.sfacg.com",
+  "regExp": "([a-z0-9-]+[.])*(sfacg)[.]com[/]",
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SFACG/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SFACG/assets/thumbnail.png",
+  "color": "#E29464",
+  "category": "other",
+  "tags": [
+    "novel"
+  ]
+}

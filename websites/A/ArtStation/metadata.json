@@ -12,7 +12,7 @@
   },
   "url": "www.artstation.com",
   "regExp": "([a-z0-9-_]+)[.]artstation[.]com",
-  "version": "1.2.18",
+  "version": "1.2.19",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/ArtStation/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/ArtStation/assets/thumbnail.jpg",
   "color": "#13AFF0",

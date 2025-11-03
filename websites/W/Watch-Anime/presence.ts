@@ -33,15 +33,15 @@ async function getInformationAnime(
 
   try {
     const response = await fetch(
-      `https://api.watch-anime.fr/getAnime/${nameAnime}`,
+      `https://watch-anime.fr/api/anime/list?search=${nameAnime}`,
     )
     const data = await response.json()
 
     if (data.length > 0) {
       // Store the fetched data in the cache
       const animeInfo = {
-        img: data[0].affiche_anime,
-        name: data[0].nom_anime,
+        img: data[0].afficheAnime,
+        name: data[0].nomAnime,
       }
       animeCache[nameAnime] = animeInfo
       return animeInfo
@@ -61,8 +61,12 @@ async function getEpisodeInfo(
   langue: string,
   saison: string,
   episode: string,
+  lecteur: string,
 ): Promise<EpisodeInfo | null> {
-  const cacheKey = `${nameAnime}-${langue}-${saison}-${episode}`
+
+  const lecteurNb = lecteur.replace('Lecteur-', '')
+
+  const cacheKey = `${nameAnime}-${langue}-${saison}-${episode}-${lecteurNb}`
 
   // Check if the episode info is in cache
   if (cache[cacheKey])
@@ -70,15 +74,15 @@ async function getEpisodeInfo(
 
   try {
     const response = await fetch(
-      `https://api.watch-anime.fr/getEpisodeInfo/${nameAnime}/${langue}/${saison}/${episode}`,
+      `https://watch-anime.fr/api/anime/info?anime=${nameAnime}&lang=${langue}&season=${saison}&episode=${episode}&lecteur=${lecteurNb}`,
     )
     const data = await response.json()
 
-    if (data.length > 0) {
+    if (data) {
       const episodeInfo: EpisodeInfo = {
-        nomLangue: data[0].nom_langue,
-        nomSaison: data[0].nom_saison,
-        nomEpisode: data[0].nom_episode,
+        nomLangue: data.nom_langue,
+        nomSaison: data.nom_saison,
+        nomEpisode: data.nom_episode,
       }
 
       // Store the fetched data in the cache
@@ -107,7 +111,7 @@ presence.on('UpdateData', async () => {
   if (document.location.pathname === '/') {
     details = 'Dans le menu d\'accueil'
   }
-  else if (document.location.pathname.startsWith('/search')) {
+  else if (document.location.pathname.startsWith('/catalogue')) {
     details = 'Recherche un animé dans le catalogue'
   }
   else if (document.location.pathname.startsWith('/settings')) {
@@ -115,6 +119,18 @@ presence.on('UpdateData', async () => {
   }
   else if (document.location.pathname.startsWith('/ublock')) {
     details = 'Cherche à bloquer les publicités'
+  }
+  else if (document.location.pathname.startsWith('/likes')) {
+    details = 'Regarde la liste de ses animés préférés'
+  }
+  else if (document.location.pathname.startsWith('/history')) {
+    details = 'Regarde la liste de ses animés vus'
+  }
+  else if (document.location.pathname.startsWith('/watchlater')) {
+    details = 'Regarde la liste de ses animés à voir plus tard'
+  }
+  else if (document.location.pathname.startsWith('/changelogs')) {
+    details = 'Regarde les derniers changements du site'
   }
   else {
     const pathParts = document.location.pathname.split('/')
@@ -126,6 +142,7 @@ presence.on('UpdateData', async () => {
         decodeURIComponent(pathParts[3]!),
         decodeURIComponent(pathParts[4]!),
         decodeURIComponent(pathParts[5]!),
+        decodeURIComponent(pathParts[6]!),
       )
 
       if (animeInfo) {

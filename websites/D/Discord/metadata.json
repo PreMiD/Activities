@@ -24,7 +24,7 @@
   },
   "url": "discord.com",
   "regExp": "([a-z0-9-]+[.])*(discord[.]com|discord[.]gg|discordapp[.]com|discordmerch[.]com|discordstatus[.]com)[/]",
-  "version": "3.0.39",
+  "version": "3.0.40",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord/assets/thumbnail.png",
   "color": "#7289DA",

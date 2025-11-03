@@ -15,7 +15,7 @@
   },
   "url": "cs.money",
   "regExp": "([a-z0-9]+[.])?cs[.]money",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CS%20Money/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CS%20Money/assets/thumbnail.png",
   "color": "#4214AC",

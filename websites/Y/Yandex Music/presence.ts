@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '745261937092198532',
@@ -6,7 +6,7 @@ const presence = new Presence({
 
 presence.on('UpdateData', async () => {
   if (
-    document.querySelectorAll('.player-controls__btn_pause').length !== 2
+    !document.querySelector('[*|href="/icons/sprite.svg#pause_filled_l"]:not([href])')
     || !navigator.mediaSession.metadata
   ) {
     return presence.clearActivity()
@@ -15,19 +15,20 @@ presence.on('UpdateData', async () => {
   const largeImageKey = navigator.mediaSession.metadata.artwork
     ? navigator.mediaSession.metadata.artwork.at(-1)?.src
     : 'https://cdn.rcd.gg/PreMiD/websites/Y/Yandex%20Music/assets/logo.png'
-  const timePassed = document.querySelector('.progress__left')?.textContent
+  const timePassed = document.querySelector('[class*="Timecode_root_start"]')?.textContent
   const [currentTime, duration] = [
-    presence.timestampFromFormat(timePassed!),
-    presence.timestampFromFormat(
-      document.querySelector('.progress__right')!.textContent!,
-    ) + presence.timestampFromFormat(timePassed!),
+    timestampFromFormat(timePassed!),
+    timestampFromFormat(
+      document.querySelector('[class*="Timecode_root_end"]')!.textContent!,
+    ),
   ]
-  const [startTimestamp, endTimestamp] = presence.getTimestamps(
+  const [startTimestamp, endTimestamp] = getTimestamps(
     currentTime,
     duration,
   )
-  const presenceData = {
+  const presenceData: PresenceData = {
     type: ActivityType.Listening,
+    smallImageKey: Assets.Play,
     largeImageKey,
     details: navigator.mediaSession.metadata.title,
     state: navigator.mediaSession.metadata.artist

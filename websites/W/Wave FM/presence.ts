@@ -25,7 +25,7 @@ presence.on('UpdateData', async () => {
 
   if (document.location.pathname === '/') {
     if (player === true) {
-      presenceData.type = ActivityType.Listening
+      (presenceData as PresenceData).type = ActivityType.Listening
       presenceData.details = musicName
       presenceData.state = artistName
       presenceData.smallImageKey = Assets.Play
@@ -40,7 +40,7 @@ presence.on('UpdateData', async () => {
   }
   else if (document.location.pathname === '/pop/') {
     if (player === true) {
-      presenceData.type = ActivityType.Listening
+      (presenceData as PresenceData).type = ActivityType.Listening
       presenceData.name = 'WavePop'
       presenceData.details = musicName
       presenceData.state = artistName

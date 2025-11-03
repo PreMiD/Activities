@@ -6,25 +6,25 @@
     "name": "jordaar"
   },
   "service": "movie-web",
+  "altnames": [
+    "P-Stream",
+    "pstream"
+  ],
   "description": {
     "en": "The place for your favorite movies & shows"
   },
   "url": [
-    "pstream.org",
-    "beta.pstream.org",
-    "pseudo-flix.pro",
-    "mw.lonelil.com",
-    "mw.lonelil.ru",
-    "movies.levrx.lol",
+    "pstream.mov",
+    "beta.pstream.mov",
+    "mirror.pstream.mov",
     "movies.levrx.de",
     "streamerflix.xyz",
-    "sudo-flix.fmovies0.cc",
     "streamwatch.online",
     "movies.samj.app",
-    "movie-site.tech"
+    "sudo-flix.nl"
   ],
   "regExp": "(dev[.])?(movie-web[.]app)",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
   "color": "#533670",

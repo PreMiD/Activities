@@ -2,9 +2,15 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "name": "Emijor",
-    "id": "466885774621540372"
+    "name": "Vensin",
+    "id": "531896089096486922"
   },
+  "contributors": [
+    {
+      "name": "Emijor",
+      "id": "466885774621540372"
+    }
+  ],
   "service": "AniWorld",
   "description": {
     "de": "Jetzt über 1.000+ Animes als Stream kostenlos bei AniWorld ansehen. Anime Video-On-Demand: ✓ 100% Kostenlos ✓ Sofort online ✓ Exklusive Animes",
@@ -13,7 +19,7 @@
     "vi": "Xem ngay hơn 1,000+ bộ anime tại AniWorld hoàn toàn miễn phí. Anime theo nhu cầu: ✓ 100% miễn phí ✓ Trực tuyến ✓ Những bộ anime độc quyền"
   },
   "url": "aniworld.to",
-  "version": "1.0.21",
+  "version": "2.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/thumbnail.png",
   "color": "#637cf9",
@@ -24,5 +30,44 @@
     "anicloud"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*"
+  "iFrameRegExp": "https:\\/\\/(jilliandescribecompany\\.com\\/e|loadx\\.ws\\/video)\\/[a-zA-Z0-9]+",
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showTitleAsPresence",
+      "title": "Show Anime Title as Presence",
+      "icon": "fad fa-tv",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover Image",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
 }

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "432215088686956565",
+    "name": "xDoritos"
+  },
+  "service": "KOCOWA",
+  "description": {
+    "en": "Watch the best Korean dramas, variety shows, and K-pop content all in one place with KOCOWA!",
+    "es": "¡Disfruta de los mejores dramas coreanos, shows de variedades y contenido K-pop en un solo lugar con KOCOWA!",
+    "pt-br": "Assista aos melhores dramas coreanos, programas de variedades e conteúdos de K-pop tudo em um só lugar com a KOCOWA!"
+  },
+  "url": [
+    "www.kocowa.com",
+    "kocowa.com"
+  ],
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KOCOWA/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KOCOWA/assets/thumbnail.png",
+  "color": "#6a287e",
+  "category": "videos",
+  "tags": [
+    "video",
+    "media",
+    "kpop",
+    "kdrama"
+  ]
+}

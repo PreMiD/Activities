@@ -531,30 +531,58 @@ export class AssetsManager {
     url: string
     method: 'POST' | 'PUT'
   }>) {
-    for (const [url, { url: newUrl, method }] of urls) {
-      core.info(`Uploading ${url} to ${newUrl}, method: ${method}`)
+    //* Process uploads in batches of 50 to reduce the risk of rate limiting
+    const urlsArray = Array.from(urls)
+    const batchSize = 50
+
+    for (let i = 0; i < urlsArray.length; i += batchSize) {
+      const batch = urlsArray.slice(i, i + batchSize)
+
+      await Promise.all(
+        batch.map(async ([url, { url: newUrl, method }]) => {
+          const tempFile = join(tmpdir(), `premid-assetmanager-${Math.random().toString(36).substring(2, 15)}${this.getExtensionFromUrl(url)}`)
+
+          core.info(`Uploading ${url} to ${newUrl}, method: ${method}`)
+
+          await pipeline(got.stream(url, {
+            retry: {
+              limit: 3,
+            },
+            timeout: {
+              connect: 60000,
+            },
+          }), createWriteStream(tempFile))
+
+          const form = new FormData()
+          form.append('file', createReadStream(tempFile), {
+            contentType: this.getMimeTypeFromExtension(this.getExtensionFromUrl(url).slice(1)),
+          })
+
+          await got(newUrl, {
+            method,
+            headers: {
+              Authorization: process.env.CDN_TOKEN,
+              ...form.getHeaders(),
+            },
+            body: form,
+            retry: {
+              limit: 3,
+            },
+            timeout: {
+              connect: 60000,
+              request: 120000, //* 2 minutes for the entire request
+            },
+          })
+        }),
+      )
+
+      if (i + batchSize < urlsArray.length) {
+        core.debug(`Uploaded ${batch.length} assets, waiting 5 seconds...`)
+
+        //* Wait 5 seconds after each batch to reduce the risk of rate limiting
+        await new Promise(resolve => setTimeout(resolve, 5000))
+      }
     }
-    await Promise.all(
-      Array.from(urls).map(async ([url, { url: newUrl, method }]) => {
-        const tempFile = join(tmpdir(), `premid-assetmanager-${Math.random().toString(36).substring(2, 15)}${this.getExtensionFromUrl(url)}`)
-
-        await pipeline(got.stream(url), createWriteStream(tempFile))
-
-        const form = new FormData()
-        form.append('file', createReadStream(tempFile), {
-          contentType: this.getMimeTypeFromExtension(this.getExtensionFromUrl(url).slice(1)),
-        })
-
-        await got(newUrl, {
-          method,
-          headers: {
-            Authorization: process.env.CDN_TOKEN,
-            ...form.getHeaders(),
-          },
-          body: form,
-        })
-      }),
-    )
   }
 
   private async replaceInFiles(assets: Map<string, { url: string }>) {

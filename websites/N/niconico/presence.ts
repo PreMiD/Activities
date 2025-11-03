@@ -145,7 +145,7 @@ presence.on('UpdateData', async () => {
     delete presenceData.startTimestamp
 
   if (playback && !privacy && presenceData.endTimestamp)
-    presenceData.type = ActivityType.Watching
+    (presenceData as PresenceData).type = ActivityType.Watching
   if (presenceData.buttons && (!buttons || privacy))
     delete presenceData.buttons
 
