@@ -64,9 +64,9 @@ let health: any
 let spookyGuessrMode: any
 
 const spookyGuessrMaps: any = {
-  Normal: "66014417ff2366aa9a7504df",
-  Hard: "62a44b22040f04bd36e8a914",
-  Nightmare: "68c7e1f6c44ba050949032c8"
+  Normal: '66014417ff2366aa9a7504df',
+  Hard: '62a44b22040f04bd36e8a914',
+  Nightmare: '68c7e1f6c44ba050949032c8',
 }
 
 async function updateStrings() {
@@ -166,7 +166,7 @@ async function updateStrings() {
     'competitive-streak': {
       largeImageKey: gameModeIcons.city_streaks,
       details: strings.cityStreaks,
-    }
+    },
   }
 }
 
@@ -578,58 +578,64 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = gameModeIcons.halloween
     if (spookyGuessrMode && currentPath[1] === 'game') {
       presenceData.details = `${strings.spookyGuessr} (${spookyGuessrMode})`
-    } else {
+    }
+    else {
       presenceData.details = strings.spookyGuessr
     }
 
-      if (currentPath[1] === 'game') {
-        const isDay1 = document.querySelectorAll('[class^="halloween-game-starting_dayOne__"]')
-        const healthElement = document.querySelectorAll('[id^="halloween-health-bar-label"]')
-        const roundNumberElement = document.querySelectorAll('[class^="next-day-countdown_currentRoundNumber__"]')
-        if (healthElement[0]) {
-          health = healthElement[0].textContent
-        }
-        if (roundNumberElement[0]) {
-          spookyGuessrDay = roundNumberElement[0].textContent
-        } else if (isDay1) {
-          spookyGuessrDay = "1"
-        }
+    if (currentPath[1] === 'game') {
+      const isDay1 = document.querySelectorAll('[class^="halloween-game-starting_dayOne__"]')
+      const healthElement = document.querySelectorAll('[id^="halloween-health-bar-label"]')
+      const roundNumberElement = document.querySelectorAll('[class^="next-day-countdown_currentRoundNumber__"]')
+      if (healthElement[0]) {
+        health = healthElement[0].textContent
+      }
+      if (roundNumberElement[0]) {
+        spookyGuessrDay = roundNumberElement[0].textContent
+      }
+      else if (isDay1) {
+        spookyGuessrDay = '1'
+      }
 
-        if (!cooldowns[currentPath[0]]) {
-          cooldowns[currentPath[0]] = true
-          setTimeout(() => {
-            cooldowns[currentPath[0] as string] = false
-          }, 5000)
-          if (health) {
-            if (spookyGuessrDay) {
-              presenceData.state = `${strings.spookyGuessrDay.replace('{0}', spookyGuessrDay)} | ${strings.health.replace('{0}', health)}`
-            } else {
-              presenceData.state = strings.health.replace('{0}', health)
-            }
-          } else {
-            delete presenceData.state
+      if (!cooldowns[currentPath[0]]) {
+        cooldowns[currentPath[0]] = true
+        setTimeout(() => {
+          cooldowns[currentPath[0] as string] = false
+        }, 5000)
+        if (health) {
+          if (spookyGuessrDay) {
+            presenceData.state = `${strings.spookyGuessrDay.replace('{0}', spookyGuessrDay)} | ${strings.health.replace('{0}', health)}`
           }
+          else {
+            presenceData.state = strings.health.replace('{0}', health)
+          }
+        }
+        else {
+          delete presenceData.state
+        }
 
-          const spookyGuessrMapId = spookyGuessrMaps[spookyGuessrMode ?? "Custom"]
-          if (spookyGuessrMapId) {
-            const mapIconInfo = await getMapIconFromId(spookyGuessrMapId)
-            if (mapIconInfo && mapIconInfo.url) {
-              presenceData.smallImageKey = mapIconInfo.url
-              presenceData.smallImageText = `${mapIconInfo.name} (${spookyGuessrMode})`
-            } else {
-              delete presenceData.smallImageKey
-            }
-          } else {
+        const spookyGuessrMapId = spookyGuessrMaps[spookyGuessrMode ?? 'Custom']
+        if (spookyGuessrMapId) {
+          const mapIconInfo = await getMapIconFromId(spookyGuessrMapId)
+          if (mapIconInfo && mapIconInfo.url) {
+            presenceData.smallImageKey = mapIconInfo.url
+            presenceData.smallImageText = `${mapIconInfo.name} (${spookyGuessrMode})`
+          }
+          else {
             delete presenceData.smallImageKey
           }
         }
-
-      } else {
-        spookyGuessrDay = null
-        health = null
-        delete presenceData.state
-        delete presenceData.smallImageKey
+        else {
+          delete presenceData.smallImageKey
+        }
       }
+    }
+    else {
+      spookyGuessrDay = null
+      health = null
+      delete presenceData.state
+      delete presenceData.smallImageKey
+    }
   }
   else if (currentPath[0] === 'multiplayer') {
     if (!currentPath[1]) {
