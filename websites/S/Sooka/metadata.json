@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "636266172689678336",
+    "name": "alloz14"
+  },
+  "service": "Sooka",
+  "description": {
+    "en": "Malaysian streaming service offering live TV, movies, and sports content."
+  },
+  "url": "sooka.my",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/6r9DaeL.png",
+  "thumbnail": "https://sooka.my/assets/images/png/SOOKA_LOGO.png",
+  "color": "#000000",
+  "category": "videos",
+  "tags": [
+    "tv",
+    "shows",
+    "sports",
+    "movies"
+  ]
+}
+
