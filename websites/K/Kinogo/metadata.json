@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "413359936492404736",
+    "name": "hycosi"
+  },
+  "service": "Kinogo.biz",
+  "description": {
+    "en": "Website for watching movies, cartoons, anime and TV series.",
+    "ru": "Сайт для просмотра фильмов, аниме, мультфильмов и сериалов."
+  },
+  "url": ["kinogo.luxury", "kinogo.mu"],
+  "regExp": "([a-z0-9-]+\\.)?kinogo\\.(luxury|mu|biz)",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/NfCVjvl.png",
+  "thumbnail": "https://i.imgur.com/bkjnMOV.jpeg",
+  "color": "#FF6B00",
+  "category": "videos",
+  "tags": [
+    "video",
+    "media",
+    "animation"
+  ]
+}
