@@ -1,7 +1,7 @@
 import { ActivityType } from 'premid'
 
 const presence = new Presence({
-  clientId: '1381606555710918766',
+  clientId: '1436748641359495189',
 })
 
 enum Assets {
