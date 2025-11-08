@@ -112,5 +112,12 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  presence.setActivity(presenceData)
+if (!presenceData.details || presenceData.details.trim() === "") {
+	presenceData.details = "Browsing Sketchful.io";
+}
+
+// Force 'Playing' activity type
+presenceData.type = 0;
+
+presence.setActivity(presenceData);
 })
