@@ -5,11 +5,11 @@
     "id": "374905512661221377",
     "name": "slowlife."
   },
-  "service": "Cineby",
+  "service": "Cineby (Fixed url)",
   "description": {
     "en": "Watch Free TV Shows Online, Watch Free Movies Online"
   },
-  "url": "www.cineby.app",
+  "url": "https://www.cineby.gd/",
   "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/thumbnail.png",
