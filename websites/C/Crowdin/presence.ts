@@ -170,6 +170,12 @@ presence.on('UpdateData', async () => {
       break
     }
     default:
+      // Detecting if user went on incorrect language subdomain
+      if (document.location.hostname.split('.').shift()?.length === 2 && document.title.includes('Not found')) {
+        presenceData.details = 'Viewing an unsupported page'
+        break
+      }
+
       if (pathname === '/' || !pathname) {
         presenceData.details = 'Website Home'
       }
