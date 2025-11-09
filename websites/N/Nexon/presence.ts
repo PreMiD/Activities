@@ -381,14 +381,14 @@ presence.on('UpdateData', async () => {
         case pathname === '/jobs': {
           const items = {
             menu: document.querySelector('.menu-item.open')?.textContent,
-            submenu: document.querySelector('.menu-item.active')?.textContent 
+            submenu: document.querySelector('.menu-item.active')?.textContent,
           }
           presenceData.details = privacy === 0 || privacy === 1
             ? 'Viewing jobs'
-              : privacy === 2
-                ? 'Viewing a page'
-                : 'Browsing'
-          presenceData.state = items.menu && items.submenu ? `${items.menu} - ${items.submenu}` : items.menu ? `${items.menu}` : items.submenu ? `${items.submenu}` : "Unknown menu"
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          presenceData.state = items.menu && items.submenu ? `${items.menu} - ${items.submenu}` : items.menu ? `${items.menu}` : items.submenu ? `${items.submenu}` : 'Unknown menu'
           break
         }
         case pathname === '/tourbonus': {
