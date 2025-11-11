@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '991933219719086080',
@@ -45,17 +45,17 @@ presence.on('UpdateData', async () => {
       ?.getAttribute('data-title')}`
     presenceData.state = document.querySelector('#cp-Top-chapter-display')?.textContent
 
-    const chapterRemaining = presence.getTimestamps(
-      presence.timestampFromFormat(
+    const chapterRemaining = getTimestamps(
+      timestampFromFormat(
         document.querySelector('#adblMediaBarTimeSpent')?.textContent ?? '',
       ),
-      presence.timestampFromFormat(
+      timestampFromFormat(
         document
           .querySelector('#adblMediaBarTimeLeft')
           ?.textContent
           ?.replace('– ', '') ?? '',
       )
-      + presence.timestampFromFormat(
+      + timestampFromFormat(
         document.querySelector('#adblMediaBarTimeSpent')?.textContent ?? '',
       ),
     );
