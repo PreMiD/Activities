@@ -518,20 +518,9 @@ presence.on('UpdateData', async () => {
           gameMode = strings.movementNmpz
         }
       }
-
-      // Legacy UI was removed from the game - using new UI
-      // const healthOldUI = document.querySelectorAll('[class^="health-bar_livesLabel__"]')
-      // let scoreText: any
-      // if (healthOldUI.length >= 2) {
-      //   const firstLabel = healthOldUI[0] as HTMLElement
-      //   const secondLabel = healthOldUI[1] as HTMLElement
-      //   if (firstLabel && secondLabel && firstLabel.textContent && secondLabel.textContent) {
-      //     scoreText = ` | ${firstLabel.textContent} - ${secondLabel.textContent}`
-      //   }
-      // }
-      // presenceData.details = `${gameMode} ${gameType}${(scoreText && scoreText) || ''}`
       setHealthUI(`${gameMode} ${gameType}`, false)
       delete presenceData.buttons
+
       if (isRanked) {
         presenceData.largeImageKey = (isTeams && gameModeIcons.team_duels) || gameModeIcons.solo_duels
         presenceData.state = strings.inRanked
