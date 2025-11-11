@@ -66,8 +66,8 @@ presence.on('UpdateData', async () => {
     if (
       document.querySelector('.adblPlayButton')?.classList.contains('bc-hidden')
     )
-      presenceData.smallImageKey = Assets.Pause
-    else presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageKey = Assets.Play
+    else presenceData.smallImageKey = Assets.Pause
   }
   else {
     presenceData.details = 'Browsing'
