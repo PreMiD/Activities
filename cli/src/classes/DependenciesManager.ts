@@ -38,30 +38,41 @@ export class DependenciesManager {
       prefix + chalk.yellow(` Installing dependencies for ${this.activity.service}...`),
     ).start()
 
-    //* Run npm install
-    const job = exec('npm install --loglevel error --save-exact', {
-      cwd: this.cwd,
-    })
+    try {
+      //* Run npm install
+      const job = exec('npm install --loglevel error --save-exact', {
+        cwd: this.cwd,
+      })
 
-    let errorChunks: any[] = []
-    job.stderr?.on('data', (data) => {
-      errorChunks = errorChunks.concat(data)
-    })
+      let errorChunks: any[] = []
+      job.stderr?.on('data', (data: any) => {
+        errorChunks = errorChunks.concat(data)
+      })
 
-    await new Promise<void>(resolve =>
-      job.once('exit', (code) => {
-        if (code === 0) {
-          spinner.succeed(prefix + chalk.greenBright(` Installed dependencies for ${this.activity.service}!`))
+      //* Handle exec errors
+      job.on('error', (error: any) => {
+        spinner.fail(`${prefix} ${chalk.red(`Failed to run npm install: ${error.message}`)}`)
+      })
 
-          return resolve()
-        }
+      await new Promise<void>((resolve, reject) =>
+        job.once('exit', (code: any) => {
+          if (code === 0) {
+            spinner.succeed(prefix + chalk.greenBright(` Installed dependencies for ${this.activity.service}!`))
 
-        spinner.fail(`${prefix} ${chalk.red(errorChunks.join(''))}`)
+            return resolve()
+          }
 
-        resolve()
-      }),
-    )
+          spinner.fail(`${prefix} ${chalk.red(errorChunks.join(''))}`)
 
-    process.env.NODE_ENV = prevNodeEnv
+          resolve()
+        }),
+      )
+    }
+    catch (error) {
+      spinner.fail(`${prefix} ${chalk.red(`Unexpected error during npm install: ${error instanceof Error ? error.message : String(error)}`)}`)
+    }
+    finally {
+      process.env.NODE_ENV = prevNodeEnv
+    }
   }
 }

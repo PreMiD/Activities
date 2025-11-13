@@ -66,7 +66,8 @@ if (!cli.matchedCommand && !cli.options.help && !cli.options.version) {
 
 process.on('uncaughtException', (error) => {
   if (error instanceof Error && error.name === 'ExitPromptError') {
-    // Exit gracefully
+    //* Exit gracefully when user cancels a prompt
+    process.exit(0)
   }
   else {
     exit(error.message)

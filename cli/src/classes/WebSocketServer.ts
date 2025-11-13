@@ -40,8 +40,10 @@ export class WebSocketServer {
     this.isSending = true
 
     const distPath = resolve(this.cwd, 'dist')
-    if (!existsSync(distPath))
+    if (!existsSync(distPath)) {
+      this.isSending = false
       return
+    }
 
     const files = await readdir(distPath)
 
@@ -103,13 +105,24 @@ export class WebSocketServer {
       }))
     }
 
-    // eslint-disable-next-line no-unmodified-loop-condition
-    while (receivedCount !== expectedCount) {
+    //* Wait for all clients to acknowledge receipt, with a maximum wait time of 10 seconds
+    const maxWaitTime = 10000
+    const startTime = Date.now()
+    while (receivedCount !== expectedCount && (Date.now() - startTime) < maxWaitTime) {
       await new Promise(resolve => setTimeout(resolve, 100))
     }
 
-    spinner.succeed(prefix + chalk.greenBright(' Activity sent to the extension!'))
+    if (receivedCount === expectedCount) {
+      spinner.succeed(prefix + chalk.greenBright(' Activity sent to the extension!'))
+    }
+    else {
+      spinner.warn(prefix + chalk.yellow(` Activity sent, but only ${receivedCount}/${expectedCount} clients acknowledged receipt`))
+    }
 
     this.isSending = false
+  }
+
+  close() {
+    this.server.close()
   }
 }

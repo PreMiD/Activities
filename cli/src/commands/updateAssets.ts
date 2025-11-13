@@ -140,9 +140,26 @@ export async function updateAssets() {
     if (tsAndJsonFiles.length > 0) {
       core.info('Running ESLint on changed files')
       try {
-        execSync(`npx eslint --fix ${tsAndJsonFiles.map(file => `"${file}"`).join(' ')}`)
+        //* Run eslint on each file individually to avoid command injection
+        for (const file of tsAndJsonFiles) {
+          //* Validate file path to prevent injection
+          if (!file.match(/^[\w\-./]+$/)) {
+            core.warning(`Skipping file with suspicious characters: ${file}`)
+            continue
+          }
+          try {
+            execSync(`npx eslint --fix "${file.replace(/"/g, '\\"')}"`, {
+              stdio: 'ignore',
+            })
+          }
+          catch {
+            //* Individual file failures are not critical
+          }
+        }
       }
-      catch {}
+      catch (error) {
+        core.debug(`ESLint failed: ${error instanceof Error ? error.message : String(error)}`)
+      }
     }
 
     //* Eslint may have changed the files back to the original state, so we need to check again
