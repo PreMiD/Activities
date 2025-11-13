@@ -33,7 +33,7 @@ presence.on('UpdateData', async () => {
 
 // Bad - Missing type annotations, not using enum for assets
 const presence = new Presence({
-  clientId: 'your_client_id'
+  clientId: '1234567890123456789'
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -41,7 +41,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 presence.on('UpdateData', async () => {
   // Missing PresenceData type annotation
   const presenceData = {
-    largeImageKey: 'https://example.com/logo.png',
+    largeImageKey: 'https://i.imgur.com/XXXXXXX.png', // Don't hardcode URLs, use enum!
     details: 'Browsing Example.com',
     state: 'Homepage',
     startTimestamp: browsingTimestamp
@@ -99,7 +99,7 @@ slideshow.addSlide('slide1', {
 slideshow.addSlide('slide1', {
   details: 'Browsing Example.com',
   state: 'Homepage',
-  largeImageKey: 'https://example.com/logo.png'
+  largeImageKey: 'https://i.imgur.com/XXXXXXX.png' // Don't hardcode URLs, use enum!
 }, 5000)
 ```
 

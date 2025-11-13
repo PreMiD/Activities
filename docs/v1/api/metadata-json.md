@@ -366,7 +366,7 @@ Here's a complete example of a `metadata.json` file with all possible fields:
 
 - The `service` name should match the folder name of the activity.
 - The `version` should follow Semantic Versioning (MAJOR.MINOR.PATCH).
-- The `logo` and `thumbnail` must be direct links to images. We recommend using Imgur (`https://i.imgur.com/`) for temporarily hosting your images. When your Pull Request is merged, these images will be automatically transferred to the PreMiD CDN.
+- The `logo` must be 512x512px and the `thumbnail` should be a wide promotional card (16:9 recommended). Both **must** be hosted on Imgur (`https://i.imgur.com/`) during development. When your Pull Request is merged, these images will be automatically transferred to the PreMiD CDN.
 - The `color` must be a valid HEX color code.
 - The `settings` array is optional but allows for user customization of the activity.
 - Boolean fields that are `false` (like `iframe`, `readLogs`, etc.) should be omitted from the metadata.json file rather than explicitly set to false.

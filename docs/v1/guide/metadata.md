@@ -131,14 +131,18 @@ The `logo` and `thumbnail` fields contain links to the service's logo and thumbn
 
 ```json
 {
-  "logo": "https://example.com/logo.png",
-  "thumbnail": "https://example.com/thumbnail.png"
+  "logo": "https://i.imgur.com/XXXXXXX.png",
+  "thumbnail": "https://i.imgur.com/YYYYYYY.png"
 }
 ```
 
-**Logo**: A square image that represents the service. This will be displayed in the Discord Activity small image and in the PreMiD store.
+**Logo**: A square image (512x512px) that represents the service. This will be displayed in the Discord Activity and in the PreMiD store. Must be hosted on Imgur.
 
-**Thumbnail**: A wider image (16:9 recommended) that showcases the service. This will be displayed in the PreMiD store.
+**Thumbnail**: A wider promotional card or screenshot (16:9 recommended) that showcases the service. This will be displayed in the PreMiD store. Must be hosted on Imgur.
+
+::: tip Image Hosting
+**Required**: Logo and thumbnail images **must** be hosted on Imgur (`https://i.imgur.com/`) during development. When your Pull Request is merged, these images will be automatically transferred to the PreMiD CDN.
+:::
 
 **For PreMiD-related activities**: You can use the official PreMiD logo by using this URL:
 
@@ -366,7 +370,7 @@ Here's a complete example of a `metadata.json` file with all possible fields:
 1. **Be descriptive**: Provide clear and concise descriptions of your activity.
 2. **Use appropriate tags**: Choose tags that accurately represent your activity to help users find it.
 3. **Choose the right category**: Select the category that best fits your activity.
-4. **Provide high-quality images**: Use high-resolution images for the logo and thumbnail.
+4. **Provide high-quality images**: Use high-resolution images for the logo (512x512px) and thumbnail. **Must** be hosted on Imgur (`https://i.imgur.com/`).
 5. **Follow semantic versioning**: Use the MAJOR.MINOR.PATCH format for versioning.
 6. **Keep settings simple**: Only add settings that are useful for users.
 7. **Test your regular expressions**: Make sure your regular expressions correctly match the URLs you want to support.

@@ -31,10 +31,14 @@ cd Activities
 Install the required dependencies:
 
 ```bash
-npm clean-install
+npm ci
 ```
 
 This will install all the necessary dependencies, including the PreMiD CLI tool.
+
+::: tip
+`npm ci` (clean install) is recommended for fresh installs as it ensures a clean and reproducible installation based on the `package-lock.json` file. You can also use `npm install` if you prefer.
+:::
 
 ## PreMiD CLI Overview
 

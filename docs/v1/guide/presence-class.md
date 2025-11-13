@@ -4,15 +4,19 @@ The `Presence` class is the main class for creating activities. It provides meth
 
 ## Creating a Presence Instance
 
-To create a new Presence instance, you need to import the `Presence` class and create a new instance with a client ID:
+To create a new Presence instance, you need to import the `Presence` class and create a new instance with a Discord Application ID:
 
 ```typescript
 const presence = new Presence({
-  clientId: 'your_client_id'
+  clientId: '1234567890123456789' // Replace with your Discord Application ID
 })
 ```
 
-The client ID is not automatically generated. You must obtain your own client ID from Discord's Developer Portal and enter it yourself.
+::: warning Important
+The `clientId` is your Discord Application ID, which you must obtain from the [Discord Developer Portal](https://discord.com/developers/applications). Each activity must use its own unique client ID - do not use PreMiD's client ID.
+
+See the [Creating Your First Activity](/v1/guide/first-activity#getting-a-discord-client-id) guide for detailed instructions on how to obtain a Discord Application ID.
+:::
 
 ## The UpdateData Event
 
@@ -32,7 +36,7 @@ To set the activity data, you need to create a `PresenceData` object and pass it
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://example.com/logo.png',
+  Logo = 'https://i.imgur.com/XXXXXXX.png', // Replace with your logo URL
 }
 
 presence.on('UpdateData', async () => {
