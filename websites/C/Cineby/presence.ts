@@ -1,5 +1,5 @@
 import type { MovieDetails, TvDetails } from './api.js'
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 import { CinebyApi } from './api.js'
 
 const presence = new Presence({
@@ -89,9 +89,10 @@ presence.on('UpdateData', async () => {
   }
 
   const video = document.querySelector('video')
+
   if (video) {
     if (!video.paused) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     }
     else {
       presenceData.smallImageKey = Assets.Pause
