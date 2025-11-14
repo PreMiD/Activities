@@ -33,7 +33,13 @@ Do not use `npm run dev` to create a new activity. That command is for developin
    - `tsconfig.json`: TypeScript configuration file
 
 ::: tip Image Assets (Required)
-For `largeImageKey` and `smallImageKey`, we **require** using direct URLs to images (e.g., `https://example.com/logo.png`) rather than asset names. This ensures your images are always accessible and simplifies the development process.
+For `largeImageKey` and `smallImageKey`, we **require** using direct URLs to images rather than asset names.
+
+**During development**: Use Imgur (`https://i.imgur.com/`) to host your logo and thumbnail images temporarily.
+
+**After PR merge**: When your Pull Request is merged, these images will be automatically transferred to the PreMiD CDN.
+
+This ensures your images are always accessible and simplifies the development process.
 :::
 
 ### Developing Your Activity
@@ -47,6 +53,39 @@ npx pmd dev "YourActivityName"
 This will start the development server and automatically reload your activity when you make changes to the code.
 
 ![Development Process with Hot Reload](/tapes/developing-activity.gif)
+
+## Getting a Discord Client ID
+
+Before you start coding your activity, you need to obtain a Discord Client ID. This is a unique identifier that Discord uses to display your activity.
+
+::: warning Important
+Do not use PreMiD's client ID. Each activity should have its own unique Discord application client ID.
+:::
+
+### Steps to Get a Client ID:
+
+1. Go to the [Discord Developer Portal](https://discord.com/developers/applications)
+2. Click the "New Application" button in the top right
+3. Enter a name for your application (this should match your activity name)
+4. Click "Create"
+5. Once created, you'll see your application's page
+6. Copy the **Application ID** - this is your `clientId`
+
+![Discord Application ID Location](https://placehold.co/800x400?text=Discord+Application+ID+Location)
+
+### Using the Client ID
+
+You'll use this client ID in your `presence.ts` file when creating the Presence instance:
+
+```typescript
+const presence = new Presence({
+  clientId: '1234567890123456789' // Replace with your actual client ID
+})
+```
+
+::: tip
+Keep your client ID handy - you'll need it every time you create or update an activity. The client ID is public and safe to include in your code.
+:::
 
 ## Understanding the Files
 
@@ -80,11 +119,11 @@ The `presence.ts` file contains the main code for your activity. Here's a basic 
 
 ```typescript
 const presence = new Presence({
-  clientId: 'your_client_id'
+  clientId: '1234567890123456789' // Replace with your Discord Application ID
 })
 
 enum ActivityAssets {
-  Logo = 'https://example.com/logo.png',
+  Logo = 'https://i.imgur.com/XXXXXXX.png', // Replace with your logo URL
 }
 
 presence.on('UpdateData', async () => {
@@ -108,12 +147,12 @@ Now, let's modify the `presence.ts` file to create a simple activity:
 
 ```typescript
 const presence = new Presence({
-  clientId: 'your_client_id' // You must enter this yourself
+  clientId: '1234567890123456789' // Replace with your Discord Application ID
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000) // Show elapsed time
 
 enum ActivityAssets {
-  Logo = 'https://example.com/logo.png',
+  Logo = 'https://i.imgur.com/XXXXXXX.png', // Replace with your logo URL
 }
 
 presence.on('UpdateData', async () => {
