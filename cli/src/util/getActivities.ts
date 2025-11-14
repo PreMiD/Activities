@@ -165,6 +165,15 @@ async function getChangedFilesCi() {
 async function getChangedFilesLocal() {
   const base = execSync('git merge-base main HEAD').toString().trim()
   const head = execSync('git rev-parse HEAD').toString().trim()
+
+  //* Validate git SHAs to prevent command injection (should be 40 hex characters)
+  if (!base.match(/^[0-9a-f]{40}$/)) {
+    exit(`Invalid git SHA for base: ${base}`)
+  }
+  if (!head.match(/^[0-9a-f]{40}$/)) {
+    exit(`Invalid git SHA for head: ${head}`)
+  }
+
   const diffOutput = execSync(`git diff --name-status ${base} ${head}`).toString().trim()
 
   return diffOutput.split('\n').filter(line => line.length > 0).map((line) => {
