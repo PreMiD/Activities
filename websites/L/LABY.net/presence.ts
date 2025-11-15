@@ -1,101 +1,128 @@
 const presence = new Presence({
-  clientId: '867452106016161822',
-})
-const browsingTimestamp = Math.floor(Date.now() / 1000)
+  clientId: "867452106016161822",
+});
 
-presence.on('UpdateData', () => {
+enum ActivityAssets {
+  Logo = "https://cdn.rcd.gg/PreMiD/websites/L/LABY.net/assets/logo.png",
+}
+
+const BROWSING_TIMESTAMP = Math.floor(Date.now() / 1000);
+const { href, pathname } = window.location;
+
+const SELECTORS = {
+  profileName: "div.col-12>h1",
+  itemName: "div.mb-1>h1",
+  serverName: "div.server-info-wrapper>h1",
+};
+
+const ROUTE_HANDLERS: Record<string, (presenceData: PresenceData) => void> = {
+  "/login": (presenceData) => {
+    presenceData.details = "Logging in...";
+  },
+  "/skins": (presenceData) => {
+    presenceData.details = "Viewing skins";
+  },
+  "/capes": (presenceData) => {
+    presenceData.details = "Viewing Minecraft capes";
+  },
+  "/cloaks": (presenceData) => {
+    presenceData.details = "Viewing LabyMod cloaks";
+  },
+  "/names": (presenceData) => {
+    presenceData.details = "Viewing upcoming available usernames";
+  },
+  "/badges": (presenceData) => {
+    presenceData.details = "Viewing LABY.net badges";
+  },
+  "/settings": (presenceData) => {
+    presenceData.details = "Viewing profile settings";
+  },
+  "/contribute": (presenceData) => {
+    presenceData.details = "Viewing UUID contribution page";
+  },
+  "/accounts": (presenceData) => {
+    presenceData.details = `Viewing all accounts by @${pathname.split("/")[2]}`;
+  },
+  "/@": handleProfileRoute,
+  "/skin": handleSingleItemRoute("Minecraft skin"),
+  "/cape": handleDetailedItemRoute("cape", SELECTORS.itemName),
+  "/cloak": handleSimpleItemRoute("LabyMod cloak"),
+  "/badge": handleDetailedItemRoute("badge", SELECTORS.itemName),
+  "/server": handleServerRoute,
+};
+
+function getElementText(selector: string): string | undefined {
+  return document.querySelector(selector)?.textContent;
+}
+
+function handleProfileRoute(presenceData: PresenceData): void {
+  const profileName = getElementText(SELECTORS.profileName);
+  if (!profileName) return;
+
+  presenceData.details = "Viewing profile";
+  presenceData.state = `@${profileName}`;
+  const possessive = profileName.endsWith("s") ? "'" : "'s";
+  presenceData.buttons = [{
+    label: `View @${profileName}${possessive} profile`,
+    url: href,
+  }];
+}
+
+function handleSingleItemRoute(itemType: string) {
+  return (presenceData: PresenceData): void => {
+    presenceData.details = `Viewing a ${itemType}`;
+    presenceData.buttons = [{
+      label: `View this ${itemType}`,
+      url: href,
+    }];
+  };
+}
+
+function handleDetailedItemRoute(itemType: string, selector: string) {
+  return (presenceData: PresenceData): void => {
+    const itemName = getElementText(selector);
+    if (!itemName) return;
+
+    presenceData.details = `Viewing ${itemType}`;
+    presenceData.state = itemName;
+    presenceData.buttons = [{
+      label: `View ${itemName} ${itemType}`,
+      url: href,
+    }];
+  };
+}
+
+function handleSimpleItemRoute(itemType: string) {
+  return (presenceData: PresenceData): void => {
+    presenceData.details = `Viewing a ${itemType}`;
+    presenceData.buttons = [{
+      label: `View this ${itemType}`,
+      url: href,
+    }];
+  };
+}
+
+function handleServerRoute(presenceData: PresenceData): void {
+  const serverName = getElementText(SELECTORS.serverName);
+  if (!serverName) return;
+  
+  presenceData.details = "Viewing server";
+  presenceData.state = serverName;
+  presenceData.buttons = [{
+    label: `View server ${serverName}`,
+    url: href,
+  }];
+}
+
+presence.on("UpdateData", () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/L/LABY.net/assets/logo.png',
-    details: 'LABY.net',
-    startTimestamp: browsingTimestamp,
-  }
-  if (document.location.pathname.startsWith('/skins')) {
-    presenceData.details = 'Viewing Skins'
-  }
-  else if (document.location.pathname.startsWith('/capes')) {
-    presenceData.details = 'Viewing Minecraft Capes'
-  }
-  else if (document.location.pathname.startsWith('/cloaks')) {
-    presenceData.details = 'Viewing LabyMod Cloaks'
-  }
-  else if (document.location.pathname.startsWith('/badges')) {
-    presenceData.details = 'Viewing LABY.net Badges'
-  }
-  else if (document.location.pathname.startsWith('/settings')) {
-    presenceData.details = 'Viewing Profile Settings'
-  }
-  else if (document.location.pathname.startsWith('/@')) {
-    presenceData.details = 'Viewing Profile of:'
-    presenceData.state = document.querySelector('div.col-12>h1')?.textContent
-      ?? 'an invalid account'
-    presenceData.buttons = [
-      {
-        label: `View ${
-          document.querySelector('div.col-12>h1')?.textContent ?? 'Unknown'
-        }'s profile`,
-        url: window.location.href,
-      },
-    ]
-  }
-  else if (document.location.pathname.startsWith('/skin')) {
-    presenceData.details = 'Viewing a Minecraft Skin'
-    presenceData.buttons = [
-      {
-        label: 'View this Minecraft Skin',
-        url: window.location.href,
-      },
-    ]
-  }
-  else if (document.location.pathname.startsWith('/cape')) {
-    presenceData.details = 'Viewing Cape:'
-    presenceData.state = document.querySelector('div.mb-1>h1')?.textContent ?? 'Unknown'
-    presenceData.buttons = [
-      {
-        label: `View ${
-          document.querySelector('div.mb-1>h1')?.textContent ?? 'Unknown'
-        } cape`,
-        url: window.location.href,
-      },
-    ]
-  }
-  else if (document.location.pathname.startsWith('/cloak')) {
-    presenceData.details = 'Viewing a LabyMod Cloak'
-    presenceData.buttons = [
-      {
-        label: 'View this Cloak',
-        url: window.location.href,
-      },
-    ]
-  }
-  else if (document.location.pathname.startsWith('/badge')) {
-    presenceData.details = 'Viewing badge:'
-    presenceData.state = document.querySelector('div.mb-1>h1')?.textContent ?? 'Unknown Badge'
-    presenceData.buttons = [
-      {
-        label: `View ${
-          document.querySelector('div.mb-1>h1')?.textContent ?? 'Unknown Badge'
-        } badge`,
-        url: window.location.href,
-      },
-    ]
-  }
-  else if (document.location.pathname.startsWith('/server')) {
-    presenceData.details = 'Viewing Server:'
-    presenceData.state = document.querySelector(
-      'div.server-info-wrapper>h1',
-    )?.textContent
-    presenceData.buttons = [
-      {
-        label: `View ${
-          document.querySelector('div.server-info-wrapper>h1')?.textContent
-          ?? 'Unknown Cape'
-        }`,
-        url: window.location.href,
-      },
-    ]
-  }
+    largeImageKey: ActivityAssets.Logo,
+    details: "LABY.net",
+    startTimestamp: BROWSING_TIMESTAMP,
+  };
 
-  if (presenceData.details)
-    presence.setActivity(presenceData)
-  else presence.setActivity()
-})
+  const route = Object.keys(ROUTE_HANDLERS).find((r) => pathname.startsWith(r));
+  route && ROUTE_HANDLERS[route]?.(presenceData);
+
+  presence.setActivity(presenceData.details ? presenceData : undefined);
+});
