@@ -28,6 +28,9 @@ const ROUTE_HANDLERS: Record<string, (presenceData: PresenceData) => void> = {
   '/cloaks': (presenceData) => {
     presenceData.details = 'Viewing LabyMod cloaks'
   },
+  '/bandanas': (presenceData) => {
+    presenceData.details = 'Viewing LabyMod bandanas'
+  },
   '/names': (presenceData) => {
     presenceData.details = 'Viewing upcoming available usernames'
   },
@@ -47,6 +50,7 @@ const ROUTE_HANDLERS: Record<string, (presenceData: PresenceData) => void> = {
   '/skin': handleSingleItemRoute('Minecraft skin'),
   '/cape': handleDetailedItemRoute('cape', SELECTORS.itemName),
   '/cloak': handleSimpleItemRoute('LabyMod cloak'),
+  '/bandana': handleSimpleItemRoute('LabyMod bandana'),
   '/badge': handleDetailedItemRoute('badge', SELECTORS.itemName),
   '/server': handleServerRoute,
 }
