@@ -25,7 +25,7 @@
     "lordflix.club"
   ],
   "regExp": "(dev[.])?(movie-web[.]app)",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
   "color": "#533670",
