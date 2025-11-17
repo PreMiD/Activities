@@ -9,6 +9,10 @@
     {
       "name": "rois2coeurs",
       "id": "234647775621414912"
+    },
+    {
+      "name": "lucialv",
+      "id": "300969054649450496"
     }
   ],
   "service": "Asura Scans",
@@ -28,7 +32,7 @@
     "asuracomic.net"
   ],
   "regExp": "asura.*?[.].*?[/]",
-  "version": "2.0.4",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Asura%20Scans/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Asura%20Scans/assets/thumbnail.png",
   "color": "#6E3CAA",
