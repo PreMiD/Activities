@@ -21,7 +21,8 @@
     "streamerflix.xyz",
     "streamwatch.online",
     "movies.samj.app",
-    "sudo-flix.nl"
+    "sudo-flix.nl",
+    "lordflix.club"
   ],
   "regExp": "(dev[.])?(movie-web[.]app)",
   "version": "1.2.2",
