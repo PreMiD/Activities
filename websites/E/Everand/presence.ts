@@ -114,7 +114,11 @@ presence.on('UpdateData', async () => {
       break
   }
 
-  presence.setActivity(presenceData)
+  if (presenceData.details) {
+    presence.setActivity(presenceData)
+  } else {
+    presence.clearActivity()
+  }
 })
 
 function getFirstText(selectors: string): string | null {
