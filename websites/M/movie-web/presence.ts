@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1120627624377589820',
@@ -127,9 +127,9 @@ presence.on('UpdateData', async () => {
       delete presenceData.endTimestamp
     } else if (controls.isPlaying || (videoElement && !videoElement.paused && videoElement.readyState >= 3)) {
       if (videoElement && progress.time && progress.duration && showTimestamp) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
           Math.floor(progress.time),
-          Math.floor(progress.duration)
+          Math.floor(progress.duration),
         )
       }
       presenceData.smallImageKey = Assets.Play
