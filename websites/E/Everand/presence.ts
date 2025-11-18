@@ -44,7 +44,8 @@ presence.on('UpdateData', async () => {
           details: strings.listeningToPodcast,
           startTimestamp: browsingTimestamp,
         })
-      } else {
+      }
+      else {
         const title = getFirstText('.title > a') ?? strings.unknownPodcast
         const author = getFirstText('.author > a') ?? strings.unknownAuthor
         presence.setActivity(await createAudioPresence('audioplayer', title, author))
@@ -61,7 +62,8 @@ presence.on('UpdateData', async () => {
           details: strings.listeningToAudiobook,
           startTimestamp: browsingTimestamp,
         })
-      } else {
+      }
+      else {
         const title = getFirstText('.title > a') ?? strings.unknownAudiobook
         const author = getFirstText('.author > a') ?? strings.unknownAuthor
         const contentId = pathname.match(/(\d+)/)?.[1]
@@ -78,7 +80,8 @@ presence.on('UpdateData', async () => {
           details: strings.readingBook,
           startTimestamp: browsingTimestamp,
         })
-      } else {
+      }
+      else {
         const title = document.title ?? strings.unknownBook
         presence.setActivity({
           name: 'Everand',
@@ -86,7 +89,7 @@ presence.on('UpdateData', async () => {
           details: `${strings.reading} ${title}`,
           startTimestamp: browsingTimestamp,
         })
-      } 
+      }
       return
     }
   }
@@ -116,7 +119,8 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details) {
     presence.setActivity(presenceData)
-  } else {
+  }
+  else {
     presence.clearActivity()
   }
 })
@@ -141,11 +145,11 @@ async function createAudioPresence(audioElementId: string | undefined, title: st
 
     details: title,
     state: `By: ${author}`,
-    statusDisplayType: 2 // StatusDisplayType.Details
+    statusDisplayType: 2, // StatusDisplayType.Details
   }
 
   const cover = document.querySelector('img.cover')
-  const showCoverArt: boolean = await presence.getSetting("showCover")
+  const showCoverArt: boolean = await presence.getSetting('showCover')
   if (showCoverArt && cover && cover instanceof HTMLImageElement) {
     presenceData.largeImageKey = cover.src
   }
@@ -154,7 +158,8 @@ async function createAudioPresence(audioElementId: string | undefined, title: st
   if (audioElement && audioElement instanceof HTMLAudioElement) {
     if (audioElement.paused) {
       presenceData.smallImageKey = Assets.Pause
-    } else {
+    }
+    else {
       presenceData.smallImageKey = Assets.Play;
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(audioElement)
     }
