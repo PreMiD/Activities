@@ -33,8 +33,9 @@ export default class CendleActivity extends Activity {
         break;
       }
 
-      default:
+      default: {
         break;
+      }
     }
 
     return {
