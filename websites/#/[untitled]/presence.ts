@@ -1,5 +1,5 @@
 import type { LibraryProject } from './types.js'
-import { ActivityType, getTimestamps, timestampFromFormat } from 'premid'
+import { ActivityType, getTimestamps, StatusDisplayType, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1440157128500314122',
@@ -55,11 +55,17 @@ presence.on('UpdateData', async () => {
   const coverArt = document.querySelector<HTMLImageElement>('.bg-playbar img')?.src
 
   const presenceData: PresenceData = {
-    name: title,
+    name: '[untitled].stream',
     details: title,
-    state: subtitle,
+    largeImageText: subtitle,
     type: ActivityType.Listening,
     largeImageKey: coverArt,
+    statusDisplayType: StatusDisplayType.Details,
+  }
+
+  if (libraryData?.project) {
+    presenceData.largeImageUrl = lastProjectRef
+    presenceData.state = `From ${libraryData.project.username}`
   }
 
   if (showLogo) {
@@ -67,12 +73,7 @@ presence.on('UpdateData', async () => {
       smallImageKey: ActivityAssets.Logo,
       smallImageUrl: 'https://untitled.stream',
       smallImageText: '[untitled]',
-      largeImageText: 'Listening on [untitled]',
     })
-  }
-
-  if (libraryData?.project) {
-    presenceData.largeImageText = `By ${libraryData.project.username} at [untitled]`
   }
 
   const timestamp = getElementText('.timestamp').split(' / ')
