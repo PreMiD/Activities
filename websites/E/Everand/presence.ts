@@ -29,14 +29,14 @@ presence.on('UpdateData', async () => {
     unknownAuthor: 'everand.unknownAuthor',
   })
 
-  const privateMode: boolean = await presence.getSetting('privateMode')
+  const privacyMode: boolean = await presence.getSetting('privacyMode')
 
   const { pathname } = document.location
 
   switch (true) {
     // Listening to a podcast
     case pathname.includes('/listen/podcast'): {
-      if (privateMode) {
+      if (privacyMode) {
         presence.setActivity({
           type: ActivityType.Listening,
           name: 'Everand',
@@ -53,7 +53,7 @@ presence.on('UpdateData', async () => {
     }
     // Listening to an audiobook
     case pathname.includes('/listen'): {
-      if (privateMode) {
+      if (privacyMode) {
         presence.setActivity({
           type: ActivityType.Listening,
           name: 'Everand',
@@ -71,7 +71,7 @@ presence.on('UpdateData', async () => {
     }
     // Reading a book
     case pathname.includes('/read'): {
-      if (privateMode) {
+      if (privacyMode) {
         presence.setActivity({
           name: 'Everand',
           largeImageKey: ActivityAssets.Logo,

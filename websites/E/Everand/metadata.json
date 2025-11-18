@@ -24,8 +24,8 @@
   ],
   "settings": [
     {
-      "id": "privateMode",
-      "title": "Private Mode",
+      "id": "privacyMode",
+      "title": "Privacy Mode",
       "description": "Hide details about the book, audiobook, or podcast you're currently reading or listening to.",
       "value": false
     },
