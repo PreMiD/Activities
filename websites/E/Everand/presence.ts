@@ -42,6 +42,7 @@ presence.on('UpdateData', async () => {
           name: 'Everand',
           largeImageKey: ActivityAssets.Logo,
           details: strings.listeningToPodcast,
+          startTimestamp: browsingTimestamp,
         })
       } else {
         const title = getFirstText('.title > a') ?? strings.unknownPodcast
@@ -58,6 +59,7 @@ presence.on('UpdateData', async () => {
           name: 'Everand',
           largeImageKey: ActivityAssets.Logo,
           details: strings.listeningToAudiobook,
+          startTimestamp: browsingTimestamp,
         })
       } else {
         const title = getFirstText('.title > a') ?? strings.unknownAudiobook
@@ -74,6 +76,7 @@ presence.on('UpdateData', async () => {
           name: 'Everand',
           largeImageKey: ActivityAssets.Logo,
           details: strings.readingBook,
+          startTimestamp: browsingTimestamp,
         })
       } else {
         const title = document.title ?? strings.unknownBook
@@ -81,6 +84,7 @@ presence.on('UpdateData', async () => {
           name: 'Everand',
           largeImageKey: ActivityAssets.Logo,
           details: `${strings.reading} ${title}`,
+          startTimestamp: browsingTimestamp,
         })
       } 
       return
