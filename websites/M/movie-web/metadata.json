@@ -5,11 +5,14 @@
     "id": "705490775932403795",
     "name": "jordaar"
   },
-  "service": "movie-web",
-  "altnames": [
-    "P-Stream",
-    "pstream"
+  "contributors": [
+    {
+      "id": "789202151254655017",
+      "name": "fanlim"
+    }
   ],
+  "service": "movie-web",
+  "altnames": ["P-Stream", "pstream"],
   "description": {
     "en": "The place for your favorite movies & shows"
   },
@@ -24,18 +27,13 @@
     "sudo-flix.nl",
     "lordflix.club"
   ],
-  "regExp": "(dev[.])?(movie-web[.]app)",
-  "version": "1.2.3",
+  "regExp": "(pstream|movies\\.levrx\\.de|streamerflix|streamwatch|movies\\.samj\\.app|sudo-flix|lordflix|movie-web)",
+  "version": "1.2.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
   "color": "#533670",
   "category": "videos",
-  "tags": [
-    "movies",
-    "shows",
-    "anime",
-    "streaming"
-  ],
+  "tags": ["movies", "shows", "anime", "streaming"],
   "settings": [
     {
       "id": "watch",
@@ -47,47 +45,6 @@
       "id": "timestamp",
       "title": "Show Timestamp",
       "icon": "fad fa-timer",
-      "value": true
-    },
-    {
-      "id": "progress",
-      "title": "Show Progress Bar",
-      "icon": "fad fa-bars-progress",
-      "value": true
-    },
-    {
-      "id": "barLength",
-      "if": {
-        "progress": true
-      },
-      "title": "Bar Length",
-      "value": "8",
-      "placeholder": "8"
-    },
-    {
-      "id": "barTrack",
-      "if": {
-        "progress": true
-      },
-      "title": "Track Character",
-      "value": "▱",
-      "placeholder": "▱"
-    },
-    {
-      "id": "barFill",
-      "if": {
-        "progress": true
-      },
-      "title": "Fill Character",
-      "value": "▰",
-      "placeholder": "▰"
-    },
-    {
-      "id": "showLabel",
-      "if": {
-        "progress": true
-      },
-      "title": "Show Label",
       "value": true
     }
   ]
