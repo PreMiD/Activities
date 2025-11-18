@@ -63,7 +63,7 @@ presence.on('UpdateData', async () => {
     statusDisplayType: StatusDisplayType.Details,
   }
 
-  if (libraryData?.project) {
+  if (libraryData?.project && lastProjectRef) {
     presenceData.largeImageUrl = lastProjectRef
     presenceData.state = `From ${libraryData.project.username}`
   }
