@@ -43,7 +43,7 @@ presence.on('UpdateData', async () => {
       smallImageKey: ActivityAssets.Logo,
       smallImageUrl: 'https://untitled.stream',
       smallImageText: '[untitled]',
-      largeImageText: 'Listening on [untitled]'
+      largeImageText: 'Listening on [untitled]',
     })
   }
 
