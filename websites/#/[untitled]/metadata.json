@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "610663056925523998",
+    "name": "mzrcos"
+  },
+  "service": "[untitled]",
+  "description": {
+    "en": "A sacred place for your work-in-progress music"
+  },
+  "url": "untitled.stream",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/mQBrqv7.png",
+  "thumbnail": "https://cdn.discordapp.com/app-assets/1440157128500314122/1440157456834494554.png",
+  "color": "#B9ACE3",
+  "category": "music",
+  "tags": ["music", "songs", "streaming"],
+  "settings": [
+    {
+      "id": "show-logo",
+      "title": "Show untitled Logo",
+      "icon": "fad fa-images",
+      "value": true
+    }
+  ]
+}
