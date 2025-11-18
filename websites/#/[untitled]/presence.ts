@@ -28,7 +28,7 @@ presence.on('UpdateData', async () => {
 
   const title = getElementText('.playbar-title')
   const subtitle = getElementText('.playbar-subtitle')
-  const coverArt = document.querySelector<HTMLImageElement>('#playbar img')?.src
+  const coverArt = document.querySelector<HTMLImageElement>('.bg-playbar img')?.src
 
   const presenceData: PresenceData = {
     name: title,
