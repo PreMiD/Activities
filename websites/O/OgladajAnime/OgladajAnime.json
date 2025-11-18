@@ -128,7 +128,7 @@
     "message": "Abandoned"
   },
   "ogladajanime.watchTime": {
-    "description": "The watch time of a user thats being viewed. The syntax for the actual time must be the following, do not remove the square brackets: d[{0} days] h[{1} hours] m[{2} minutes]",
+    "description": "The watch time of a user thats being viewed. The syntax for the actual time must be the following, do not remove the square brackets: [{0} days] [{1} hours] [{2} minutes]",
     "message": "Watch time: [{0} days] [{1} hours] [{2} minutes]"
   },
   "ogladajanime.viewCommentsOf": {
