@@ -9,25 +9,29 @@ export default class CendleActivity extends Activity {
     let state = 'Codzienna gra o zgadywaniu cen';
 
     switch (mode) {
-      case 'guess':
+      case 'guess': {
         details = 'Zgadnij cenę';
         state = 'Próbuje zgadnąć produkt';
         break;
+      }
 
-      case 'promo':
+      case 'promo': {
         details = 'Promocja czy nie';
         state = 'Sprawdza promocję';
         break;
+      }
 
-      case 'compare':
+      case 'compare': {
         details = 'Który produkt droższy?';
         state = 'Porównuje ceny';
         break;
+      }
 
-      case 'sum':
+      case 'sum': {
         details = 'Ile razem?';
         state = 'Liczy wartość koszyka';
         break;
+      }
 
       default:
         break;
