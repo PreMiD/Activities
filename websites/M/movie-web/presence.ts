@@ -43,11 +43,6 @@ interface MWPlayerData {
   progress: MWProgress
 }
 
-let lastPlayerData: MWPlayerData | null = null
-let isActuallyPlaying = false
-let isLoading = false
-let lastUpdateTime = 0
-
 function getCurrentSite(): string {
   const { hostname } = document.location
   const siteMap: { [key: string]: string } = {
@@ -92,19 +87,22 @@ presence.on('UpdateData', async () => {
   let mediaPlayer: MWPlayerData | null = null
   try {
     const { meta } = await presence.getPageVariable<{ meta?: { player?: MWPlayerData } }>('meta')
-    if (meta?.player) mediaPlayer = meta.player
+    if (meta?.player) {
+      mediaPlayer = meta.player
+    }
   } catch {}
 
   if (mediaPlayer) {
     const { meta, progress, episode, season, controls } = mediaPlayer
-    lastPlayerData = mediaPlayer
     presenceData.largeImageKey = meta.poster || presenceData.largeImageKey
     presenceData.buttons = [{ label: `Watch on ${currentSite}`, url: href }]
     presenceData.name = `${currentSite} - ${document.title}`
 
     if (meta.type === 'show' && episode && season) {
       presenceData.details = `${meta.title} - S${season.number}E${episode.number}`
-      if (episode.title) presenceData.details += `: ${episode.title}`
+      if (episode.title) {
+        presenceData.details += `: ${episode.title}`
+      }
       presenceData.smallImageText = 'TV Series'
     } else {
       presenceData.details = `${meta.title} (${meta.year})`
@@ -121,18 +119,13 @@ presence.on('UpdateData', async () => {
     }
 
     const videoElement = document.querySelector('video')
-    const currentTime = Date.now()
 
     if (controls.isLoading || (videoElement && videoElement.readyState < 3)) {
-      isLoading = true
-      isActuallyPlaying = false
       presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/0.gif'
       presenceData.smallImageText = 'Loading...'
       delete presenceData.startTimestamp
       delete presenceData.endTimestamp
     } else if (controls.isPlaying || (videoElement && !videoElement.paused && videoElement.readyState >= 3)) {
-      isLoading = false
-      isActuallyPlaying = true
       if (videoElement && progress.time && progress.duration && showTimestamp) {
         [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
           Math.floor(progress.time),
@@ -141,10 +134,7 @@ presence.on('UpdateData', async () => {
       }
       presenceData.smallImageKey = Assets.Play
       presenceData.smallImageText = 'Playing'
-      lastUpdateTime = currentTime
     } else {
-      isLoading = false
-      isActuallyPlaying = false
       presenceData.smallImageKey = Assets.Pause
       presenceData.smallImageText = 'Paused'
       delete presenceData.startTimestamp
@@ -160,6 +150,7 @@ presence.on('UpdateData', async () => {
   } else if (pathname === '' || pathname === '/' || pathname.startsWith('/search') || pathname.startsWith('/discover')) {
     let state = 'Homepage'
     let details = `Browsing ${currentSite}`
+
     if (pathname.startsWith('/search')) {
       const query = new URLSearchParams(document.location.search).get('q')
       details = `Searching on ${currentSite}`
@@ -168,6 +159,7 @@ presence.on('UpdateData', async () => {
       details = `Discovering on ${currentSite}`
       state = 'Browse content'
     }
+
     presenceData.details = details
     presenceData.state = state
     presenceData.startTimestamp = browsingTimestamp
@@ -204,9 +196,7 @@ function createProgressBar(
     : Number.parseInt(barLengthString, 10)
   const numChars = Math.floor((progress / 100) * barLength)
 
-  return `${barFill.repeat(numChars)}${barTrack.repeat(
-    barLength - numChars,
-  )}  ${showLabel ? `${progress}%` : ''}`.trimEnd()
+  return `${barFill.repeat(numChars)}${barTrack.repeat(barLength - numChars)}${showLabel ? ` ${progress}%` : ''}`.trimEnd()
 }
 
 function capitalize(str: string): string {

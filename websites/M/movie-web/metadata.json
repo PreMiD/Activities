@@ -28,7 +28,7 @@
     "lordflix.club"
   ],
   "regExp": "(pstream|movies\\.levrx\\.de|streamerflix|streamwatch|movies\\.samj\\.app|sudo-flix|lordflix|movie-web)",
-  "version": "1.2.5",
+  "version": "1.2.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
   "color": "#533670",
