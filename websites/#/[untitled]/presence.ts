@@ -1,3 +1,4 @@
+import type { LibraryProject } from './types.js'
 import { ActivityType, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
@@ -13,6 +14,22 @@ function getElementText(selector: string) {
   return element?.textContent?.trim() ?? ''
 }
 
+let lastProjectRef: string | null = null
+let libraryData: LibraryProject | null = null
+
+function getTrackProjectRef() {
+  return document.querySelector<HTMLAnchorElement>('a:has(.playbar-title)')?.href
+}
+
+async function getProjectData(projectUrl: string): Promise<LibraryProject> {
+  const response = await fetch(`${projectUrl}?_data=routes/library.project.$projectSlug`, {
+    credentials: 'include',
+  })
+
+  const data = await response.json()
+  return data?.project ?? null
+}
+
 function isPlaying() {
   const audioTag = document.querySelector<HTMLAudioElement>('body > audio')
 
@@ -22,6 +39,13 @@ function isPlaying() {
 presence.on('UpdateData', async () => {
   if (!isPlaying()) {
     return presence.clearActivity()
+  }
+
+  const currentProjectRef = getTrackProjectRef()
+  if (currentProjectRef && lastProjectRef !== currentProjectRef) {
+    lastProjectRef = currentProjectRef
+
+    libraryData = await getProjectData(currentProjectRef)
   }
 
   const showLogo = await presence.getSetting<boolean>('show-logo')
@@ -45,6 +69,10 @@ presence.on('UpdateData', async () => {
       smallImageText: '[untitled]',
       largeImageText: 'Listening on [untitled]',
     })
+  }
+
+  if (libraryData?.project) {
+    presenceData.largeImageText = `By ${libraryData.project.username} at [untitled]`
   }
 
   const timestamp = getElementText('.timestamp').split(' / ')
