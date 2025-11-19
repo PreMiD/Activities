@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "357461892526243840",
+    "name": "litomore"
+  },
+  "service": "ListenHub",
+  "description": {
+    "en": "Create AI podcasts or Video Storybook from any content. Upload files, paste youtube links or input any topic to generate natural conversations with human-like voice quality. Free AI voice clone.",
+    "zh": "ListenHub 是专业的免费AI播客生成工具，支持中文语音合成。上传文件、输入话题即可生成超真实人声播客。支持PDF、TXT等多种格式，让知识获取更轻松高效。"
+  },
+  "url": "listenhub.ai",
+  "version": "1.0.0",
+  "logo": "https://litomore.me/images/listenhub-favicon.png",
+  "thumbnail": "https://litomore.me/images/listenhub-banner.png",
+  "color": "#000000",
+  "category": "other",
+  "tags": [
+    "ai",
+    "audio",
+    "flowspeech",
+    "podcast",
+    "tts"
+  ]
+}
