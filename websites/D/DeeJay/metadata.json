@@ -1,0 +1,88 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "860122608682795028",
+    "name": "itsmarian.mc"
+  },
+  "service": "DeeJay",
+  "altnames": [
+    "Dee Jay",
+    "DeeJay",
+    "DeeJay TV",
+    "Deejay",
+    "Radio DeeJay",
+    "RadioDeeJay"
+  ],
+  "description": {
+    "ar": "DeeJay هي علامة إعلامية إيطالية نابضة بالحياة معروفة بعروضها الإذاعية النشطة وثقافتها الموسيقية الحديثة ووجودها الرقمي القوي. بمزيج من الترفيه والمحتوى المتعلق بنمط الحياة والأغاني الشائعة، تربط DeeJay الملايين من المستمعين عبر الراديو والبث الصوتي والفعاليات ومنصتها الإلكترونية الديناميكية.",
+    "bg": "DeeJay е динамична италианска медийна марка, известна със своите енергични радио шоута, модерна музикална култура и силно цифрово присъствие. Със смесица от забавление, съдържание за стил на живот и актуални хитове, DeeJay свързва милиони слушатели чрез радио, подкасти, събития и своята динамична онлайн платформа.",
+    "cs": "DeeJay je živá italská mediální značka známá svými energickými rozhlasovými pořady, moderní hudební kulturou a silnou digitální přítomností. Směsí zábavy, lifestylového obsahu a trendových hitů propojuje DeeJay miliony posluchačů prostřednictvím rádia, podcastů, akcí a své dynamické online platformy.",
+    "da": "DeeJay er et vibrant italiensk mediabrand kendt for sine energiske radioprogrammer, moderne musikalske kultur og en stærk digital tilstedeværelse. Med en blanding af underholdning, livsstilsindhold og trendende hits forbinder DeeJay millioner af lyttere gennem radio, podcasts, begivenheder og sin dynamiske online platform.",
+    "de": "DeeJay ist eine dynamische italienische Medienmarke, die für ihre energischen Radiosendungen, ihre moderne Musikkultur und ihre starke digitale Präsenz bekannt ist. Mit einer Mischung aus Unterhaltung, Lifestyle-Inhalten und aktuellen Hits verbindet DeeJay weltweit Millionen von Hörern über Radio, Podcasts, Veranstaltungen und seine Online-Plattform.",
+    "el": "Η DeeJay είναι μια δυναμική ιταλική μάρκα μέσων ενημέρωσης, γνωστή για τις ενεργητικές της ραδιοφωνικές εκπομπές, τη μοντέρνα μουσική κουλτούρα και τη δυνατή ψηφιακή της παρουσία. Με ένα μείγμα ψυχαγωγίας, περιεχομένου τρόπου ζωής και τρεχουσών επιτυχιών, η DeeJay συνδέει εκατομμύρια ακροατές μέσω του ραδιοφώνου, podcasts, εκδηλώσεων και της δυναμικής της διαδικτυακής πλατφόρμας.",
+    "en": "DeeJay is a vibrant Italian media brand known for its energetic radio shows, modern music culture, and a strong digital presence. With a mix of entertainment, lifestyle content, and trending hits, DeeJay connects millions of listeners through radio, podcasts, events, and its dynamic online platform.",
+    "es": "DeeJay es una vibrante marca mediática italiana conocida por sus programas de radio energéticos, cultura musical moderna y una fuerte presencia digital. Con una mezcla de entretenimiento, contenido de estilo de vida y éxitos populares, DeeJay conecta a millones de oyentes a través de la radio, podcasts, eventos y su dinámica plataforma en línea.",
+    "et": "DeeJay on elav Itaalia meediamärk, mis on tuntud oma energiliste raadiosaadete, kaasaegse muusikakultuuri ja tugeva digitaalse kohaloleku poolest. Seguga, mis sisaldab meelelahutust, elustiilisisu ja trendivaid hitte, ühendab DeeJay miljoneid kuulajaid läbi raadio, podcastide, sündmuste ja oma dünaamilise veebiplatvormi.",
+    "fa": "DeeJay یک برند رسانه‌ای پرجنب‌وجوش ایتالیایی است که به خاطر برنامه‌های رادیویی پرانرژی، فرهنگ موسیقی مدرن و حضور قدرتمند دیجیتال شناخته شده است. با ترکیبی از سرگرمی، محتوای سبک زندگی و آهنگ‌های پرطرفدار، DeeJay میلیون‌ها شنونده را از طریق رادیو، پادکست‌ها، رویدادها و پلتفرم پویای آنلاین خود به هم متصل می‌کند.",
+    "fi": "DeeJay on vilkas italialainen mediamerkki, joka on tunnettu energisistä radio-ohjelmistaan, modernista musiikkikulttuuristaan ja vahvasta digitaalisesta läsnäolostaan. Viihdettä, elämäntapasisältöä ja trendikkäitä hittejä sekoittamalla DeeJay yhdistää miljoonia kuulijoita radion, podcastien, tapahtumien ja dynaamisen verkkoplattforminsa kautta.",
+    "fr": "DeeJay est une marque médiatique italienne dynamique, connue pour ses émissions de radio énergiques, sa culture musicale moderne et sa forte présence numérique. Alliant divertissement, contenu lifestyle et tubes tendance, DeeJay connecte des millions d'auditeurs via la radio, des podcasts, des événements et sa plateforme en ligne dynamique.",
+    "ga": "Is branda meán Iodálach bríomhar é DeeJay atá cáiliúil as a seónna raidió fuinniúla, a chultúr ceol nua-aimseartha, agus a láithreacht dhigiteach láidir. Le meascán de siamsaíocht, ábhar stíl mhaireachtála agus amhráin faoi threocht, ceanglaíonn DeeJay na milliúin éisteoirí trí raidió, podchraoltaí, imeachtaí agus a ardán dinimiciúil ar líne.",
+    "he": "DeeJay הוא מותג מדיה איטלקי תוסס הידוע בתוכניות הרדיו האנרגטיות שלו, בתרבות המוזיקה המודרנית ובנוכחות הדיגיטלית החזקה שלו. בשילוב של בידור, תוכן אורח חיים ולהיטים עדכניים, DeeJay מחבר מיליוני מאזינים דרך רדיו, פודקאסטים, אירועים והפלטפורמה המקוונת הדינמית שלו.",
+    "hi": "DeeJay एक जीवंत इतालवी मीडिया ब्रांड है जो अपने ऊर्जावान रेडियो शो, आधुनिक संगीत संस्कृति और मजबूत डिजिटल उपस्थिति के लिए जाना जाता है। मनोरंजन, जीवनशैली सामग्री और ट्रेंडिंग हिट्स के मिश्रण के साथ, DeeJay रेडियो, पॉडकास्ट, इवेंट्स और अपने गतिशील ऑनलाइन प्लेटफॉर्म के माध्यम से लाखों श्रोताओं को जोड़ता है।",
+    "hr": "DeeJay je živahna talijanska medijska marka poznata po svojim energičnim radijskim showovima, modernoj glazbenoj kulturi i snažnoj digitalnoj prisutnosti. Mješavinom zabave, lifestyle sadržaja i trendingskih hitova, DeeJay povezuje milijune slušatelja putem radija, podcasta, događanja i svoje dinamične online platforme.",
+    "hu": "A DeeJay egy vibráló olasz médiamárka, amely energikus rádióműsoraival, modern zenei kultúrájával és erős digitális jelenlétével ismert. Szórakoztatás, életmódtartalom és trendi slágerek keverékével a DeeJay milliós hallgatótábort köt össze a rádió, podcastok, események és dinamikus online platformja révén.",
+    "id": "DeeJay adalah merek media Italia yang dinamis dikenal karena acara radio yang energik, budaya musik modern, dan kehadiran digital yang kuat. Dengan perpaduan hiburan, konten gaya hidup, dan hits tren, DeeJay menghubungkan jutaan pendengar melalui radio, podcast, acara, dan platform online dinamisnya.",
+    "is": "DeeJay er öfgafullt ítalskt miðlamerki þekkt fyrir kraftmiklar útvarpsþáttana sína, nútímatónlistarmenningu og sterka stafræna nærveru. Með blöndu af skemmtunum, lífsstílsefni og vinsælum lögunum tengir DeeJay milljónir hlustenda í gegnum útvarp, hlaðvarp, viðburði og kraftmikla netpallinn sinn.",
+    "it": "DeeJay è un vivace marchio mediatico italiano noto per i suoi energici programmi radiofonici, la moderna cultura musicale e una forte presenza digitale. Con un mix di intrattenimento, contenuti lifestyle e successi di tendenza, DeeJay connette milioni di ascoltatori attraverso la radio, i podcast, gli eventi e la sua dinamica piattaforma online.",
+    "ja": "DeeJayは、エネルギッシュなラジオ番組、現代的な音楽文化、強力なデジタルプレゼンスで知られる活気あるイタリアのメディアブランドです。エンターテイメント、ライフスタイルコンテンツ、流行のヒット曲を組み合わせて、DeeJayはラジオ、ポッドキャスト、イベント、そしてダイナミックなオンラインプラットフォームを通じて数百万人のリスナーをつなげています。",
+    "jv": "DeeJay minangka merek media Italia sing dinamis dikenal amarga acara radione sing energik, budaya musik modern, lan kehadiran digital sing kuat. Kanthi campuran hiburan, konten gaya urip, lan hits tren, DeeJay nyambungake yuta pamireng liwat radio, podcast, acara, lan platform online dinamis.",
+    "ko": "DeeJay는 활기찬 이탈리아 미디어 브랜드로, 에너지 넘치는 라디오 쇼, 현대적인 음악 문화 및 강력한 디지털 프레젠스로 유명합니다. 엔터테인먼트, 라이프스타일 콘텐츠 및 트렌딩 히트를 혼합하여 DeeJay는 라디오, 팟캐스트, 이벤트 및 동적인 온라인 플랫폼을 통해 수백만 명의 청취자를 연결합니다.",
+    "lt": "DeeJay yra gyvas italų žiniasklaidos prekės ženklas, žinomas dėl savo energingų radijo laidų, modernios muzikos kultūros ir stiprios skaitmeninės buvimo. Pramogų, gyvenimo būdo turinio ir populiarų hitų deriniu DeeJay sujungia milijonus klausytojų per radiją, podcastus, renginius ir savo dinaminę internetinę platformą.",
+    "lv": "DeeJay ir dinamiska Itālijas медiju zīmols, kas pazīstams ar enerģiskajiem radio šoviem, moderno mūzikas kultūru un spēcīgo digitālo klātbūtni. Ar izklaides, dzīvesveida satura un tendenču hitu maisījumu DeeJay savieno miljonus klausītāju caur radio, podcastiem, pasākumiem un savu dinamisko tiešsaistes platformu.",
+    "ms": "DeeJay ialah jenama media Itali yang dinamik terkenal dengan rancangan radio bertenaganya, budaya muzik moden, dan kehadiran digital yang kuat. Dengan gabungan hiburan, kandungan gaya hidup, dan hits terkini, DeeJay menghubungkan berjuta-juta pendengar melalui radio, podcast, acara, dan platform dalam talian dinamiknya.",
+    "nl": "DeeJay is een levendig Italiaans mediabedrijf bekend om zijn energieke radioprogramma's, moderne muziekcultuur en een sterke digitale aanwezigheid. Met een mix van entertainment, lifestyle-inhoud en trending hits verbindt DeeJay miljoenen luisteraars via radio, podcasts, evenementen en zijn dynamische online platform.",
+    "no": "DeeJay er et vibrant italiensk mediemerke kjent for sine energiske radioprogrammer, moderne musikkultur og en sterk digital tilstedeværelse. Med en blanding av underholdning, livsstilsinnhold og trendende treff kobler DeeJay millioner av lyttere gjennom radio, podkaster, arrangementer og sin dynamiske online plattform.",
+    "pl": "DeeJay to żywa włoska marka medialna znana z energetycznych programów radiowych, nowoczesnej kultury muzycznej i silnej obecności cyfrowej. Dzięki połączeniu rozrywki, treści lifestylowych i trendujących hitów, DeeJay łączy miliony słuchaczy przez radio, podcasty, wydarzenia i swoją dynamiczną platformę online.",
+    "pt": "DeeJay é uma vibrante marca de mídia italiana conhecida por seus programas de rádio energéticos, cultura musical moderna e forte presença digital. Com uma mistura de entretenimento, conteúdo de estilo de vida e sucessos em alta, a DeeJay conecta milhões de ouvintes através do rádio, podcasts, eventos e sua plataforma online dinâmica.",
+    "ro": "DeeJay este un brand media italian vibrant cunoscut pentru emisiunile sale radio energice, cultura muzicală modernă și o prezență digitală puternică. Cu un amestec de divertisment, conținut de lifestyle și hituri la modă, DeeJay conectează milioane de ascultători prin radio, podcasturi, evenimente și platforma sa dinamică online.",
+    "ru": "DeeJay - это яркий итальянский медиабренд, известный своими энергичными радиошоу, современной музыкальной культурой и сильным цифровым присутствием. Смешивая развлечения, контент о стиле жизни и трендовые хиты, DeeJay соединяет миллионы слушателей через радио, подкасты, мероприятия и свою динамичную онлайн-платформу.",
+    "sk": "DeeJay je živá talianska mediálna značka známa svojimi energickými rádiovými reláciami, modernou hudobnou kultúrou a silnou digitálnou prítomnosťou. So zmesou zábavy, životného štýlu a trendových hitov spája DeeJay milióny posluchateľov prostredníctvom rádia, podcastov, udalostí a svojej dynamickej online platformy.",
+    "sl": "DeeJay je živahen italijanski medijski blagovna znamka, znana po svojih energičnih radijskih oddajah, moderni glasbeni kulturi in močni digitalni prisotnosti. Z mešanico zabave, življenjskega sloga in trendovskih hitov DeeJay povezuje milijone poslušalcev prek radia, podcastov, dogodkov in svoje dinamične spletne platforme.",
+    "sv": "DeeJay är ett vibrant italienskt medieföretag känt för sina energiska radioprogram, moderna musikkultur och en stark digital närvaro. Med en blandning av underhållning, livsstilsinnehåll och trendande hits förbinder DeeJay miljontals lyssnare genom radio, podcasts, evenemang och sin dynamiska onlineplattform.",
+    "th": "DeeJay เป็นแบรนด์สื่อของอิตาลีที่มีชีวิตชีวา เป็นที่รู้จักจากรายการวิทยุที่มีพลัง วัฒนธรรมดนตรีสมัยใหม่ และการมีอยู่ทางดิจิทัลที่แข็งแกร่ง ด้วยส่วนผสมของความบันเทิง เนื้อหาไลฟ์สไตล์ และเพลงฮิตที่เป็นเทรนด์ DeeJay เชื่อมต่อผู้ฟังนับล้านผ่านทางวิทยุ พอดแคสต์ เหตุการณ์ และแพลตฟอร์มออนไลน์แบบไดนามิก",
+    "tr": "DeeJay, enerjik radyo programları, modern müzik kültürü ve güçlü dijital varlığı ile tanınan canlı bir İtalyan medya markasıdır. Eğlence, yaşam tarzı içeriği ve popüler hitlerin bir karışımıyla DeeJay, radyo, podcast'ler, etkinlikler ve dinamik çevrimiçi platformu aracılığıyla milyonlarca dinleyiciyi birbirine bağlar.",
+    "uk": "DeeJay - це яскравий італійський медіабренд, відомий своїми енергійними радіошоу, сучасною музичною культурою та сильною цифровою присутністю. Поєднуючи розваги, контент про стиль життя та трендові хіти, DeeJay об'єднує мільйони слухачів через радіо, подкасти, заходи та свою динамічну онлайн-платформу.",
+    "vi": "DeeJay là một thương hiệu truyền thông Ý sôi động được biết đến với các chương trình phát thanh tràn đầy năng lượng, văn hóa âm nhạc hiện đại và sự hiện diện kỹ thuật số mạnh mẽ. Với sự kết hợp của giải trí, nội dung lối sống và các bản hit thịnh hành, DeeJay kết nối hàng triệu thính giả thông qua đài phát thanh, podcast, sự kiện và nền tảng trực tuyến năng động của mình.",
+    "zh": "DeeJay 是一个充满活力的意大利媒体品牌，以其充满活力的广播节目、现代音乐文化和强大的数字影响力而闻名。通过融合娱乐、生活方式内容和流行热门歌曲，DeeJay 通过广播、播客、活动及其动态在线平台连接了数百万听众。"
+  },
+  "url": [
+    "deejay.it",
+    "www.deejay.it"
+  ],
+  "regExp": "https?://(www\\.)?deejay\\.it/.*",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/Ajr8vQ5.png",
+  "thumbnail": "https://i.imgur.com/BuHhmQy.jpeg",
+  "color": "#C2190A",
+  "category": "music",
+  "tags": [
+    "music",
+    "radio",
+    "streaming",
+    "tv",
+    "video"
+  ],
+  "settings": [
+    {
+      "id": "timestamps",
+      "title": "Show timestamps",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}
