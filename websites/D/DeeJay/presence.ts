@@ -88,7 +88,7 @@ async function getStrings(): Promise<Strings> {
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/Ajr8vQ5.png',
+  Logo = 'https://i.imgur.com/GtIwyQT.png',
 }
 
 presence.on('UpdateData', async () => {
