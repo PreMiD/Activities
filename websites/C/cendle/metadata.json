@@ -1,0 +1,10 @@
+{
+  "author": "Szef",
+  "banner": "banner.png",
+  "description": "Codzienna gra o zgadywaniu cen.",
+  "icon": "icon.png",
+  "matches": ["https://cendle.pl/*"],
+  "name": "Cendle",
+  "version": "1.0.0",
+  "website": "https://cendle.pl"
+}
