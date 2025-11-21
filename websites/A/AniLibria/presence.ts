@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({ clientId: '1165759293576982578' })
 const PATHS = {
@@ -140,9 +140,9 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageText = 'На паузе'
         }
         else {
-          const timestamps = presence.getTimestamps(
+          const timestamps = getTimestamps(
             Math.floor(video.currentTime),
-            Math.floor(video.duration)
+            Math.floor(video.duration),
           )
           presenceData.startTimestamp = timestamps[0]
           presenceData.endTimestamp = timestamps[1]
