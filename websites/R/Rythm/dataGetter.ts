@@ -12,10 +12,9 @@ export interface MediaDataGetter {
 }
 
 export class RythmDataGetter implements MediaDataGetter {
-
   private getPlaybackStateFromUI(): 'playing' | 'paused' | 'none' {
     const button = document.querySelector<HTMLButtonElement>(
-      'button._controlBtn_1to64_65._playPauseBtn_1to64_136',
+      'button[class*="playPauseBtn"]',
     )
 
     if (!button)
@@ -38,7 +37,9 @@ export class RythmDataGetter implements MediaDataGetter {
   }
 
   getCurrentAndTotalTime(): [string, string] | null {
-    const progressBox = document.querySelector<HTMLDivElement>('div._ProgressBarBox_1oh0s_42')
+    const progressBox = document.querySelector<HTMLDivElement>(
+      'div[class*="ProgressBarBox"]',
+    )
 
     if (!progressBox)
       return null
@@ -51,10 +52,9 @@ export class RythmDataGetter implements MediaDataGetter {
     const currentTime = timeElements[0]?.textContent?.trim()
     const totalTime = timeElements[1]?.textContent?.trim()
 
-    if (!currentTime || !totalTime){
+    if (!currentTime || !totalTime) {
       return null
     }
-      
 
     return [currentTime, totalTime]
   }
@@ -66,9 +66,15 @@ export class RythmDataGetter implements MediaDataGetter {
       return { playbackState: 'none' }
     }
 
-    const titleElement = document.querySelector<HTMLElement>('h4._trackTitle_147lj_52')
-    const artistElement = document.querySelector<HTMLElement>('p._artistName_147lj_75')
-    const thumbnailElement = document.querySelector<HTMLImageElement>('img._trackThumbnail_147lj_1')
+    const titleElement = document.querySelector<HTMLElement>(
+      'h4[class*="trackTitle"]',
+    )
+    const artistElement = document.querySelector<HTMLElement>(
+      'p[class*=artistName]',
+    )
+    const thumbnailElement = document.querySelector<HTMLImageElement>(
+      'img[class*=trackThumbnail]',
+    )
 
     return {
       playbackState,
