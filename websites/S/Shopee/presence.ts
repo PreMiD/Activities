@@ -6,7 +6,7 @@ const presence = new Presence({
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/NuZ7h0n.png',
-  LogoSmall = 'https://i.imgur.com/nCKBD0k.png',
+  LogoSmall = 'https://i.imgur.com/GzPPCNB.png',
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
