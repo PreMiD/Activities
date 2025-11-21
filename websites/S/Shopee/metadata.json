@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "786163564205047839",
+    "name": "AdityaLF"
+  },
+  "service": "Shopee",
+  "description": {
+    "en": "Shopee is an e-commerce marketplace platform. This activity displays the product you are viewing, or the current status of your online shopping session."
+  },
+  "url": [
+    "shopee.co.id",
+    "shopee.com.my",
+    "shopee.sg"
+  ],
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/NuZ7h0n.png",
+  "thumbnail": "https://i.imgur.com/6W59Hds.jpeg",
+  "color": "#EA501F",
+  "category": "other",
+  "tags": [
+    "ecommerce",
+    "marketplace",
+    "shopping",
+    "shopee"
+  ]
+}
