@@ -2,24 +2,16 @@ export interface MediaData {
   playbackState: 'playing' | 'paused' | 'none'
   title?: string
   artist?: string
-  album?: string
   artwork?: string
-  duration?: number
 }
 
 export interface MediaDataGetter {
   getMediaData: () => MediaData
-  getAudioElement: () => HTMLMediaElement | null
   isPlaying: () => boolean
   getCurrentAndTotalTime: () => [string, string] | null
 }
 
 export class RythmDataGetter implements MediaDataGetter {
-  private mediaSession: MediaSession | undefined
-
-  constructor() {
-    this.mediaSession = (navigator as any).mediaSession
-  }
 
   private getPlaybackStateFromUI(): 'playing' | 'paused' | 'none' {
     const button = document.querySelector<HTMLButtonElement>(
@@ -59,8 +51,10 @@ export class RythmDataGetter implements MediaDataGetter {
     const currentTime = timeElements[0]?.textContent?.trim()
     const totalTime = timeElements[1]?.textContent?.trim()
 
-    if (!currentTime || !totalTime)
+    if (!currentTime || !totalTime){
       return null
+    }
+      
 
     return [currentTime, totalTime]
   }
@@ -82,10 +76,6 @@ export class RythmDataGetter implements MediaDataGetter {
       artist: artistElement?.textContent?.trim() || undefined,
       artwork: thumbnailElement?.src || undefined,
     }
-  }
-
-  getAudioElement(): HTMLMediaElement | null {
-    return document.querySelector<HTMLMediaElement>('audio')
   }
 
   isPlaying(): boolean {

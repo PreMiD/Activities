@@ -3,13 +3,6 @@ import { ActivityAssets } from './constants.js'
 import { RythmDataGetter } from './dataGetter.js'
 import { updateSongTimesTamps } from './utils.js'
 
-class PlaybackTimesState {
-  lastTrackTimer = ''
-  mediaTimestamps: [number, number] = [0, 0]
-}
-
-const state = new PlaybackTimesState()
-
 const presence = new Presence({
   clientId: '463151177836658699',
 })
@@ -21,8 +14,6 @@ presence.on('UpdateData', () => {
 
   // nada tocando ou sem título → limpa presença
   if (mediaData.playbackState === 'none' || !mediaData.title) {
-    state.mediaTimestamps = [0, 0]
-    state.lastTrackTimer = ''
     return presence.clearActivity()
   }
 
