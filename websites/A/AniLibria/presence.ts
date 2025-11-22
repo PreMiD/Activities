@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({ clientId: '1165759293576982578' })
 const PATHS = {
@@ -14,8 +14,10 @@ const PATHS = {
   TORRENTS: '/anime/torrents/',
   RULES: '/rules',
   SUPPORT: '/support',
-  API_DOCS: '/api/docs/v1',
+  SETTINGS: /^\/app\/settings\//,
+  API_DOCS: /^\/api\/docs\//,
   RGENRES: /\/anime\/genres\/releasesOfGenre\//,
+  FRANCHISE_PAGE: /^\/anime\/franchises\/[a-f0-9-]+$/,
   RELEASE_EPISODES: /\/anime\/releases\/release\/[^/]+\/episodes/,
   RELEASE_FRANCHISES: /\/anime\/releases\/release\/[^/]+\/franchises/,
   RELEASE_MEMBERS: /\/anime\/releases\/release\/[^/]+\/members/,
@@ -24,7 +26,7 @@ const PATHS = {
 }
 
 presence.on('UpdateData', async () => {
-  const { pathname, href } = document.location
+  const { pathname } = document.location
   const ogTitle = document
     .querySelector('meta[property="og:title"]')
     ?.getAttribute('content')
@@ -34,11 +36,14 @@ presence.on('UpdateData', async () => {
   let secondArg = ''
 
   if (ogTitle) {
-    // eslint-disable-next-line regexp/no-super-linear-backtracking
-    const match = ogTitle.match(/(.*)\s*\|\s*(.*)/)
-    if (match && match[2]) {
-      firstArg = match[1] ?? ''
-      secondArg = match[3] || match[2]
+    const parts = ogTitle.split('|').map(part => part.trim())
+    if (parts.length >= 3) {
+      firstArg = parts[1] ?? ''
+      secondArg = parts[2] ?? ''
+    }
+    else if (parts.length === 2) {
+      firstArg = parts[0] ?? ''
+      secondArg = parts[1] ?? ''
     }
     else {
       firstArg = ogTitle
@@ -56,7 +61,6 @@ presence.on('UpdateData', async () => {
       break
     case pathname === PATHS.MAIN_PAGE:
       presenceData.state = 'На главной странице'
-      presenceData.buttons = [{ label: 'Сайт', url: href }]
       break
     case pathname === PATHS.CATALOG:
       presenceData.state = 'Смотрит каталог релизов'
@@ -91,12 +95,25 @@ presence.on('UpdateData', async () => {
     case pathname === PATHS.SUPPORT:
       presenceData.state = 'На странице поддержки проекта'
       break
-    case pathname === PATHS.API_DOCS:
+    case PATHS.SETTINGS.test(pathname):
+      presenceData.state = 'На странице настроек'
+      break
+    case PATHS.API_DOCS.test(pathname):
       presenceData.state = 'Смотрит API-документацию'
       break
     case PATHS.RGENRES.test(pathname):
-      presenceData.details = firstArg
+      if (ogTitle) {
+        const parts = ogTitle.split('|').map(part => part.trim())
+        presenceData.details = parts[0] ?? 'Жанр'
+      }
       presenceData.state = 'Смотрит релизы жанра'
+      break
+    case PATHS.FRANCHISE_PAGE.test(pathname):
+      if (ogTitle) {
+        const parts = ogTitle.split('|').map(part => part.trim())
+        presenceData.details = parts[0] ?? 'Франшиза'
+      }
+      presenceData.state = 'Смотрит франшизу'
       break
     case PATHS.RELEASE_EPISODES.test(pathname):
       presenceData.details = firstArg
@@ -104,7 +121,7 @@ presence.on('UpdateData', async () => {
       break
     case PATHS.RELEASE_FRANCHISES.test(pathname):
       presenceData.details = firstArg
-      presenceData.state = 'Смотрит связанное с релизом'
+      presenceData.state = 'Смотрит франшизу релиза'
       break
     case PATHS.RELEASE_MEMBERS.test(pathname):
       presenceData.details = firstArg
@@ -115,17 +132,23 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Смотрит торренты релиза'
       break
     case PATHS.WATCH_EPISODE.test(pathname):
-      presenceData.details = secondArg
-      presenceData.state = firstArg
-      presenceData.buttons = [{ label: 'Смотреть эпизод', url: href }]
-      if (video) {
-        const { paused, duration } = video
-        const [start, end] = presence.getTimestampsfromMedia(video)
-
-        presenceData.startTimestamp = start
-        presenceData.endTimestamp = end
-        presenceData.smallImageKey = paused || Number.isNaN(duration) ? Assets.Pause : Assets.Play
-        presenceData.smallImageText = paused || Number.isNaN(duration) ? 'На паузе' : 'Воспроизводится'
+      presenceData.details = secondArg || 'AniLibria'
+      presenceData.state = firstArg || 'Смотрит эпизод'
+      if (video && video.duration > 0) {
+        if (video.paused) {
+          presenceData.smallImageKey = Assets.Pause
+          presenceData.smallImageText = 'На паузе'
+        }
+        else {
+          const timestamps = getTimestamps(
+            Math.floor(video.currentTime),
+            Math.floor(video.duration),
+          )
+          presenceData.startTimestamp = timestamps[0]
+          presenceData.endTimestamp = timestamps[1]
+          presenceData.smallImageKey = Assets.Play
+          presenceData.smallImageText = 'Воспроизводится'
+        }
       }
       break
   }
