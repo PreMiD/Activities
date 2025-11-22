@@ -85,3 +85,19 @@ If you'd like to contribute to the documentation, please:
 4. Submit a pull request
 
 Please make sure to follow the existing style and structure of the documentation.
+
+### Placeholder Images
+
+Several documentation pages currently use placeholder images (`placehold.co` URLs) that need to be replaced with actual screenshots. When contributing, please help replace these placeholders with real screenshots of the PreMiD extension and activities in action.
+
+**Files with placeholder images:**
+- `v1/guide/first-activity.md`: Completed Activity in Discord, Discord Application ID Location
+- `v1/guide/metadata.md`: Metadata in PreMiD Store
+- `v1/guide/developer-tools.md`: PreMiD DevTools Panel, Shown Activity Section, Function Callstack Section, Log Controls (4 images)
+- `v1/guide/iframes.md`: iFrame Communication Diagram, iFrame Data Flow (2 images)
+- `v1/guide/loading-activities.md`: Activity Developer Mode
+- `v1/guide/localization.md`: Internationalization Example, Language Setting Example (2 images)
+- `v1/guide/settings.md`: Various settings UI examples (7 images)
+- `v1/guide/slideshows.md`: Slideshow examples (2 images)
+- `v1/api/presence-data.md`: Season and Episode Indicator
+- `v1/examples/media.md`: Season and Episode Indicator Example

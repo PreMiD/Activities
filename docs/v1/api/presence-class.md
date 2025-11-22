@@ -15,16 +15,20 @@ Creates a new Presence instance.
 ### Parameters
 
 - `presenceOptions`: An object containing the following properties:
-  - `clientId`: The Discord application client ID
+  - `clientId` (required): Your Discord Application ID obtained from the [Discord Developer Portal](https://discord.com/developers/applications). Each activity must use its own unique client ID - do not use PreMiD's client ID.
   - `injectOnComplete` (optional): If true, the UpdateData event will only be fired when the page has fully loaded
 
 ### Example
 
 ```typescript
 const presence = new Presence({
-  clientId: '123456789012345678'
+  clientId: '1234567890123456789' // Replace with your Discord Application ID
 })
 ```
+
+::: tip Getting a Client ID
+See the [Creating Your First Activity](/v1/guide/first-activity#getting-a-discord-client-id) guide for detailed instructions on how to obtain a Discord Application ID.
+:::
 
 ## Methods
 
