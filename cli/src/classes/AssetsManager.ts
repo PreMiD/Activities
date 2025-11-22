@@ -88,6 +88,19 @@ export class AssetsManager {
   ) { }
 
   private readonly imageCache = new Map<string, { width: number, height: number, mimeType: string }>()
+  private readonly MAX_CACHE_SIZE = 100
+
+  clearCache() {
+    this.imageCache.clear()
+  }
+
+  private evictOldestCacheEntry() {
+    //* Remove the oldest entry (first entry in the Map)
+    const firstKey = this.imageCache.keys().next().value
+    if (firstKey) {
+      this.imageCache.delete(firstKey)
+    }
+  }
 
   get baseUrl() {
     const service = this.encodeURIComponentAndQuotes(sanitazeFolderName(this.activity.service))
@@ -113,8 +126,10 @@ export class AssetsManager {
   }
 
   private async validateImageMimeType(dimensionAndType: { mimeType: string }, asset: Asset, kill: boolean): Promise<boolean> {
-    if (!IMAGE_EXTENSIONS.some(ext => dimensionAndType.mimeType === ext.extension)) {
-      const message = `Image URL has an invalid MIME type (allowed: ${IMAGE_EXTENSIONS.map(ext => ext.extension).join(', ')}), got ${dimensionAndType.mimeType} for URL: ${asset.url}`
+    //* Sharp returns format names like 'png', 'jpeg', etc. We need to check if it matches our allowed extensions
+    const allowedFormats = IMAGE_EXTENSIONS.map(ext => ext.extension)
+    if (!allowedFormats.includes(dimensionAndType.mimeType)) {
+      const message = `Image URL has an invalid format (allowed: ${allowedFormats.join(', ')}), got ${dimensionAndType.mimeType} for URL: ${asset.url}`
       return this.handleValidationError(message, asset, kill, SarifRuleId.imageMimeTypeCheck)
     }
     return true
@@ -146,12 +161,18 @@ export class AssetsManager {
 
     if (!dimensionAndType) {
       try {
-        const response = await got.get(asset.url.replaceAll(/\\/g, '')).buffer()
+        const response = await got.get(asset.url.replace(/\\/g, '')).buffer()
         const metadata = await sharp(response).metadata()
         if (!metadata.width || !metadata.height || !metadata.format) {
           throw new Error('Could not get image metadata')
         }
         dimensionAndType = { width: metadata.width, height: metadata.height, mimeType: metadata.format }
+
+        //* Evict oldest entry if cache is full
+        if (this.imageCache.size >= this.MAX_CACHE_SIZE) {
+          this.evictOldestCacheEntry()
+        }
+
         this.imageCache.set(asset.url, dimensionAndType)
       }
       catch (err: unknown) {
@@ -171,7 +192,7 @@ export class AssetsManager {
     clientId: ClientId
     kill: boolean
   }): Promise<boolean> {
-    const clientFound = await got.head(`https://discord.com/api/v9/applications/${clientId.clientId}/rpc`).then(response => response.ok).catch(() => false)
+    const clientFound = await got.head(`https://discord.com/api/v9/applications/${clientId.clientId}/rpc`).then((response: any) => response.ok).catch(() => false)
     if (clientFound) {
       return true
     }
@@ -232,26 +253,33 @@ export class AssetsManager {
 
     for (const file of tsFiles) {
       const content = await readFile(file, 'utf-8')
-      const imageUrlRegex = /(?<=["'`])(https?:\/\/.*?\.(?:png|jpg|jpeg|gif|webp)(?:\?[^'"`]+)?)(?=["'`])/g
+      //* Use a capturing group to extract the URL
+      const imageUrlRegex = /["'`](https?:\/\/.*?\.(?:png|jpg|jpeg|gif|webp)(?:\?[^'"`]+)?)["'`]/g
       const matches = content.matchAll(imageUrlRegex)
 
       for (const match of matches) {
+        const url = match[1]
+
         //* If the url contains a template literal, skip it
-        if (match[1].includes('${'))
+        if (url.includes('${'))
           continue
 
+        //* Get the context around the match to check for concatenation
+        const matchStart = match.index!
+        const contextBefore = content.substring(Math.max(0, matchStart - 10), matchStart)
+        const contextAfter = content.substring(matchStart + match[0].length, Math.min(content.length, matchStart + match[0].length + 10))
+
         //* Skip URLs that are concatenated with strings (e.g., "https://" + "example.com/image.png")
-        if (/(?<=\+ )["'`].*?["'`]/.test(match[1]))
+        if (/\+\s*$/.test(contextBefore) || /^\s*\+/.test(contextAfter))
           continue
 
         //* Skip URLs that are followed by string methods (e.g., "https://example.com/image.png").toLowerCase())
-        if (/(?<!\\)["'`]\)?\./.test(match[1])) {
+        if (/^\)?\s*\./.test(contextAfter)) {
           continue
         }
 
-        const url = match[1]
         const line = content.substring(0, match.index).split('\n').length
-        const column = match.index - content.lastIndexOf('\n', match.index) - 1
+        const column = match.index! - content.lastIndexOf('\n', match.index!) - 1
 
         assets.push({
           type: AssetType.ActivityAsset,
@@ -313,7 +341,7 @@ export class AssetsManager {
   }
 
   private async doesAssetExist(url: string): Promise<boolean> {
-    return await got.head(url).then(response => response.ok).catch(() => false)
+    return await got.head(url).then((response: any) => response.ok).catch(() => false)
   }
 
   private async doesExistAnyExtension(url: string): Promise<{
@@ -353,13 +381,14 @@ export class AssetsManager {
   }
 
   private findMissing(numbers: number[]) {
-    numbers.push(-1) // ? Make sure there is at least one number in the array
-    const max = Math.max(...numbers)
-    const min = Math.min(...numbers)
+    //* Work with a copy to avoid mutating the input array
+    const numbersCopy = [...numbers, -1]
+    const max = Math.max(...numbersCopy)
+    const min = Math.min(...numbersCopy)
     const missing = []
 
     for (let i = min; i <= max; i++) {
-      if (!numbers.includes(i))
+      if (!numbersCopy.includes(i))
         missing.push(i)
     }
 

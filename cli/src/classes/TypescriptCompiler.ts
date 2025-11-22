@@ -84,6 +84,7 @@ export class TypescriptCompiler {
   }
 
   private program: ts.WatchOfFilesAndCompilerOptions<ts.SemanticDiagnosticsBuilderProgram> | undefined
+  private isRestarting = false
 
   async watch(onSuccess: () => void) {
     const hasIframe = existsSync(resolve(this.cwd, 'iframe.ts'))
@@ -154,7 +155,18 @@ export class TypescriptCompiler {
   }
 
   async restart(onSuccess: () => void) {
-    await this.stop()
-    await this.watch(onSuccess)
+    //* Prevent concurrent restarts
+    if (this.isRestarting) {
+      return
+    }
+
+    this.isRestarting = true
+    try {
+      await this.stop()
+      await this.watch(onSuccess)
+    }
+    finally {
+      this.isRestarting = false
+    }
   }
 }

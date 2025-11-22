@@ -120,14 +120,16 @@ export class ActivityCompiler {
     watch(this.cwd, {
       depth: 0,
       ignoreInitial: true,
-      ignored: ['**/dist/**'],
+      ignored: ['**/dist/**', '**/node_modules/**', '**/package-lock.json', '**/tsconfig.json'],
       persistent: true,
-    }).on('all', async (event, path) => {
-      if (['add', 'unlink'].includes(event) && basename(path) === 'iframe.ts') {
+    }).on('all', async (event: string, path: string) => {
+      const fileName = basename(path)
+
+      if (['add', 'unlink'].includes(event) && fileName === 'iframe.ts') {
         return this.ts.restart(this.compileAndSend.bind(this, { validate, zip, sarif }))
       }
 
-      if (basename(path) === 'package.json') {
+      if (fileName === 'package.json') {
         if (
           ['add', 'change'].includes(event)
           && !(await this.dependencies.isValidPackageJson())
@@ -149,6 +151,17 @@ export class ActivityCompiler {
         }
 
         await this.ts.restart(this.compileAndSend.bind(this, { validate, zip, sarif }))
+        return
+      }
+
+      //* Handle metadata.json changes
+      if (fileName === 'metadata.json' && ['add', 'change'].includes(event)) {
+        return this.compileAndSend({ validate, zip, sarif })
+      }
+
+      //* Handle i18n files (e.g., ServiceName.json)
+      if (fileName.endsWith('.json') && fileName !== 'package.json' && fileName !== 'metadata.json' && fileName !== 'tsconfig.json' && ['add', 'change', 'unlink'].includes(event)) {
+        return this.compileAndSend({ validate, zip, sarif })
       }
     })
 
@@ -165,7 +178,13 @@ export class ActivityCompiler {
 
   private async validate({ kill }: { kill: boolean }): Promise<boolean> {
     const metadata: ActivityMetadata = JSON.parse(await readFile(resolve(this.cwd, 'metadata.json'), 'utf-8'))
-    const libraryVersion: ActivityMetadata | null = await fetch(`https://api.premid.app/v6/activities${this.versionized ? `/v${metadata.apiVersion}` : ''}/${encodeURIComponent(metadata.service)}/metadata.json`).then(res => res.json()).catch(() => null)
+    const libraryVersion: ActivityMetadata | null = await fetch(`https://api.premid.app/v6/activities${this.versionized ? `/v${metadata.apiVersion}` : ''}/${encodeURIComponent(metadata.service)}/metadata.json`).then(res => res.json()).catch((err) => {
+      //* Log network errors for debugging
+      if (err instanceof Error) {
+        error(`Failed to fetch library version for ${metadata.service}: ${err.message}`)
+      }
+      return null
+    })
 
     let serviceFolder: string
     if (this.versionized) {
