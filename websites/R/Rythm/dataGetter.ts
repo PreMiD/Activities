@@ -38,7 +38,7 @@ export class RythmDataGetter implements MediaDataGetter {
 
   getCurrentAndTotalTime(): [string, string] | null {
     const progressBox = document.querySelector<HTMLDivElement>(
-      'div[class*="ProgressBarBox"]',
+      'div[class*="nowPlayingControllers"] div[class*="ProgressBarBox"]',
     )
 
     if (!progressBox)
@@ -67,13 +67,13 @@ export class RythmDataGetter implements MediaDataGetter {
     }
 
     const titleElement = document.querySelector<HTMLElement>(
-      'h4[class*="trackTitle"]',
+      'div[class*="nowPlayingTrackDetails"] h4[class*="trackTitle"]',
     )
     const artistElement = document.querySelector<HTMLElement>(
-      'p[class*=artistName]',
+      'div[class*="nowPlayingTrackDetails"] p[class*="artistName"]',
     )
     const thumbnailElement = document.querySelector<HTMLImageElement>(
-      'img[class*=trackThumbnail]',
+      'div[class*="nowPlayingTrackDetails"] img[class*="trackThumbnail"]',
     )
 
     return {
