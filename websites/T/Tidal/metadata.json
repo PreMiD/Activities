@@ -19,10 +19,7 @@
     "tr": "Tidal yüksek ses kalitesi ve ucuz fiyatlarla hizmet sağlayan bir müzik sitesidir.",
     "vi": "Tidal là dịch vụ phát nhạc với chất lượng âm thanh rất cao."
   },
-  "url": [
-    "listen.tidal.com",
-    "tidal.com"
-  ],
+  "url": "tidal.com",
   "version": "3.2.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/thumbnail.png",
@@ -35,6 +32,12 @@
     {
       "id": "lang",
       "multiLanguage": true
+    },
+    {
+      "id": "hidePaused",
+      "title": "Hide Paused",
+      "icon": "fas fa-pause-circle",
+      "value": false
     },
     {
       "id": "timestamps",
