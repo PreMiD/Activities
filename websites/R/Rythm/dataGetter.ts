@@ -1,0 +1,90 @@
+export interface MediaData {
+  playbackState: 'playing' | 'paused' | 'none'
+  title?: string
+  artist?: string
+  artwork?: string
+}
+
+export interface MediaDataGetter {
+  getMediaData: () => MediaData
+  isPlaying: () => boolean
+  getCurrentAndTotalTime: () => [string, string] | null
+}
+
+export class RythmDataGetter implements MediaDataGetter {
+  private getPlaybackStateFromUI(): 'playing' | 'paused' | 'none' {
+    const button = document.querySelector<HTMLButtonElement>(
+      'button[class*="playPauseBtn"]',
+    )
+
+    if (!button)
+      return 'none'
+
+    const icon = button.querySelector<HTMLImageElement>('img')
+
+    if (!icon)
+      return 'none'
+
+    const src = icon.src
+
+    if (src.includes('Play.svg'))
+      return 'paused'
+
+    if (src.includes('Pause.svg'))
+      return 'playing'
+
+    return 'none'
+  }
+
+  getCurrentAndTotalTime(): [string, string] | null {
+    const progressBox = document.querySelector<HTMLDivElement>(
+      'div[class*="ProgressBarBox"]',
+    )
+
+    if (!progressBox)
+      return null
+
+    const timeElements = progressBox.querySelectorAll<HTMLParagraphElement>('p')
+
+    if (timeElements.length < 2)
+      return null
+
+    const currentTime = timeElements[0]?.textContent?.trim()
+    const totalTime = timeElements[1]?.textContent?.trim()
+
+    if (!currentTime || !totalTime) {
+      return null
+    }
+
+    return [currentTime, totalTime]
+  }
+
+  getMediaData(): MediaData {
+    const playbackState = this.getPlaybackStateFromUI()
+
+    if (playbackState === 'none') {
+      return { playbackState: 'none' }
+    }
+
+    const titleElement = document.querySelector<HTMLElement>(
+      'h4[class*="trackTitle"]',
+    )
+    const artistElement = document.querySelector<HTMLElement>(
+      'p[class*=artistName]',
+    )
+    const thumbnailElement = document.querySelector<HTMLImageElement>(
+      'img[class*=trackThumbnail]',
+    )
+
+    return {
+      playbackState,
+      title: titleElement?.textContent?.trim() || undefined,
+      artist: artistElement?.textContent?.trim() || undefined,
+      artwork: thumbnailElement?.src || undefined,
+    }
+  }
+
+  isPlaying(): boolean {
+    return this.getPlaybackStateFromUI() === 'playing'
+  }
+}
