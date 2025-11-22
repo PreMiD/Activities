@@ -6,14 +6,20 @@
     "name": "flimixofficial"
   },
   "service": "AniLibria",
-  "altnames": ["AniLiberty"],
+  "altnames": [
+    "AniLiberty"
+  ],
   "description": {
     "en": "AniLibria & AniLiberty is a website for watching anime.",
     "ru": "AniLibria & AniLiberty это вебсайт для просмотра аниме"
   },
-  "url": ["anilibria.top", "anilibria.wtf", "aniliberty.top"],
-  "version": "1.1.0",
-  "logo": "https://i.imgur.com/EFyOIYd.png",
+  "url": [
+    "anilibria.top",
+    "anilibria.wtf",
+    "aniliberty.top"
+  ],
+  "version": "1.1.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniLibria/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniLibria/assets/thumbnail.png",
   "color": "#fe3635",
   "category": "anime",
