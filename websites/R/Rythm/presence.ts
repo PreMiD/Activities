@@ -9,11 +9,17 @@ const presence = new Presence({
 
 const dataGetter = new RythmDataGetter()
 
-presence.on('UpdateData', () => {
+presence.on('UpdateData', async () => {
   const mediaData = dataGetter.getMediaData()
+
+  const hidePaused = await presence.getSetting<boolean>('hidePaused')
 
   // nada tocando ou sem título → limpa presença
   if (mediaData.playbackState === 'none' || !mediaData.title) {
+    return presence.clearActivity()
+  }
+
+  if (hidePaused && mediaData.playbackState === 'paused') {
     return presence.clearActivity()
   }
 

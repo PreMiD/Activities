@@ -18,5 +18,13 @@
   "tags": [
     "music",
     "media"
+  ],
+  "settings": [
+    {
+      "id": "hidePaused",
+      "title": "Hide Paused",
+      "icon": "fad fa-pause-circle",
+      "value": false
+    }
   ]
 }
