@@ -56,9 +56,9 @@ function getStatus(): string {
 
   // TV Series: extract season and episode from URL
   if (url.includes('/watch/tv/')) {
-    const tvMatch = url.match(/\/tv\/(\d+)-(\d+)-(\d+)/)
+    const tvMatch = url.match(/\/tv\/\d+-(\d+)-(\d+)/)
     if (tvMatch) {
-      const [, tmdbId, season, episode] = tvMatch
+      const [, season, episode] = tvMatch
       return `${rawTitle} S${season}E${episode}`
     }
   }
@@ -130,7 +130,7 @@ async function updatePresence() {
   // For TV shows, use the series image
   if (action === 'tv') {
     const url = window.location.href
-    const tvMatch = url.match(/\/tv\/(\d+)-(\d+)-(\d+)/)
+    const tvMatch = url.match(/\/tv\/(\d+)-\d+-\d+/)
     if (tvMatch) {
       const tmdbId = tvMatch[1]
       presenceData.largeImageKey = `https://premid-mapple-series-image-api.vercel.app/api/getImage?tmdb=${tmdbId}`
