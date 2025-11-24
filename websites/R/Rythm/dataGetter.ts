@@ -69,17 +69,28 @@ export class RythmDataGetter implements MediaDataGetter {
     const titleElement = document.querySelector<HTMLElement>(
       'div[class*="nowPlayingTrackDetails"] h4[class*="trackTitle"]',
     )
-    const artistElement = document.querySelector<HTMLElement>(
+    const artistElement = document.querySelectorAll<HTMLElement>(
       'div[class*="nowPlayingTrackDetails"] p[class*="artistName"]',
+
     )
+
     const thumbnailElement = document.querySelector<HTMLImageElement>(
       'div[class*="nowPlayingTrackDetails"] img[class*="trackThumbnail"]',
     )
 
+    const artist
+      = artistElement.length === 0
+        ? undefined
+        : Array.from(artistElement)
+            .map(el => el.textContent?.trim())
+            .filter((name): name is string => !!name && name !== ',') // tira null/undefined e vírgula solta
+            .map(name => name.replace(/,$/, '').trim()) // tira vírgula no final tipo "Ravyn Lenae,"
+            .join(', ')
+
     return {
       playbackState,
       title: titleElement?.textContent?.trim() || undefined,
-      artist: artistElement?.textContent?.trim() || undefined,
+      artist,
       artwork: thumbnailElement?.src || undefined,
     }
   }

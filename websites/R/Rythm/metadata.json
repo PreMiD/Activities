@@ -20,11 +20,67 @@
     "media"
   ],
   "settings": [
+
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-shield-alt",
+      "value": false
+    },
     {
       "id": "hidePaused",
       "title": "Hide Paused",
       "icon": "fad fa-pause-circle",
-      "value": false
+      "value": false,
+      "if": {
+        "privacy": false
+      }
+    },
+
+    {
+      "id": "cover",
+      "title": "Hide Cover",
+      "icon": "fad fa-images",
+      "value": false,
+      "if": {
+        "privacy": false
+      }
+    },
+
+    {
+      "id": "rythmButton",
+      "title": "Show Rythm logo instead of play/pause",
+      "icon": "fad fa-images",
+      "value": false,
+      "if": {
+        "privacy": false
+      }
+    },
+
+    {
+      "id": "timesTamps",
+      "title": "Hide Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": false,
+      "if": {
+        "privacy": false
+      }
+    },
+
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 0,
+      "if": {
+        "privacy": false
+      },
+      "values": [
+        "Song Title",
+        "Artist Name",
+        "Activity Name"
+      ]
     }
+
   ]
 }

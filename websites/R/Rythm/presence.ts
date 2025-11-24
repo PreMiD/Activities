@@ -11,11 +11,23 @@ const dataGetter = new RythmDataGetter()
 
 presence.on('UpdateData', async () => {
   const mediaData = dataGetter.getMediaData()
-
   const hidePaused = await presence.getSetting<boolean>('hidePaused')
+  const privacyMode = await presence.getSetting<boolean>('privacy')
+  const hideCover = await presence.getSetting<boolean>('cover')
+  const rythmButton = await presence.getSetting<boolean>('rythmButton')
+  const hideTimesTamps = await presence.getSetting<boolean>('timesTamps')
+  const displayType = await presence.getSetting<number>('displayType')
+
+  // status text display
+  const stateText
+    = displayType === 0
+      ? StatusDisplayType.Details ?? undefined
+      : displayType === 1
+        ? StatusDisplayType.State ?? undefined
+        : StatusDisplayType.Name
 
   // nada tocando ou sem título → limpa presença
-  if (mediaData.playbackState === 'none' || !mediaData.title) {
+  if (mediaData.playbackState === 'none' || !mediaData.title || privacyMode) {
     return presence.clearActivity()
   }
 
@@ -27,15 +39,15 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     type: ActivityType.Listening,
-    largeImageKey: mediaData.artwork || ActivityAssets.Logo,
-    smallImageKey: isPlaying ? Assets.Play : Assets.Pause,
+    largeImageKey: hideCover ? ActivityAssets.Logo : mediaData.artwork,
+    smallImageKey: rythmButton ? (ActivityAssets.Logo) : (isPlaying ? Assets.Play : Assets.Pause),
     details: mediaData.title,
-    state: mediaData.artist || undefined,
-    statusDisplayType: StatusDisplayType.Details,
+    state: mediaData.artist,
+    statusDisplayType: stateText,
   }
 
-  // controle de tempo
-  if (isPlaying) {
+  // temp cotroller
+  if (isPlaying && !hideTimesTamps) {
     const [start, end] = updateSongTimesTamps(dataGetter)
 
     if (start !== 0 && end !== 0) {
