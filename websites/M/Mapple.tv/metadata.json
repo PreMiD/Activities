@@ -12,9 +12,10 @@
   "url": [
     "mapple.tv",
     "mapple.mov",
-    "mapple.uk"
+    "mapple.uk",
+    "mapple.site"
   ],
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mapple.tv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mapple.tv/assets/thumbnail.jpg",
   "color": "#000000",

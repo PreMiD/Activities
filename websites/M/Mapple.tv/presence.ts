@@ -54,6 +54,15 @@ function getStatus(): string {
     return `${book} by ${author}`
   }
 
+  // TV Series: extract season and episode from URL
+  if (url.includes('/watch/tv/')) {
+    const tvMatch = url.match(/\/tv\/(\d+)-(\d+)-(\d+)/)
+    if (tvMatch) {
+      const [, tmdbId, season, episode] = tvMatch
+      return `${rawTitle} S${season}E${episode}`
+    }
+  }
+
   // Live TV: remove 'Streaming - ' prefix
   if (url.includes('/watch/channel/')) {
     return rawTitle.replace(/^Streaming\s*-\s*/i, '').trim()
@@ -116,6 +125,16 @@ async function updatePresence() {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/M/Mapple.tv/assets/logo.png',
     details: constructAction[action],
+  }
+
+  // For TV shows, use the series image
+  if (action === 'tv') {
+    const url = window.location.href
+    const tvMatch = url.match(/\/tv\/(\d+)-(\d+)-(\d+)/)
+    if (tvMatch) {
+      const tmdbId = tvMatch[1]
+      presenceData.largeImageKey = `https://premid-mapple-series-image-api.vercel.app/api/getImage?tmdb=${tmdbId}`
+    }
   }
 
   // Show 'Browsing' only if it's allowed
