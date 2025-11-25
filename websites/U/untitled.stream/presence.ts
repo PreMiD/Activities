@@ -6,7 +6,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/%23/%5Buntitled%5D/assets/logo.png',
+  Logo = 'https://i.imgur.com/b1SNIG0.png',
 }
 
 function getElementText(selector: string) {
@@ -65,7 +65,7 @@ presence.on('UpdateData', async () => {
 
   if (libraryData?.project && lastProjectRef) {
     presenceData.largeImageUrl = lastProjectRef
-    presenceData.state = `From ${libraryData.project.username}`
+    presenceData.state = `From ${libraryData.project.artist_name ?? libraryData.project.username}`
   }
 
   if (showLogo) {
