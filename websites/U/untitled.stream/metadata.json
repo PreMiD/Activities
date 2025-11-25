@@ -16,12 +16,16 @@
     "en": "A sacred place for your work-in-progress music"
   },
   "url": "untitled.stream",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/b1SNIG0.png",
-  "thumbnail": "https://i.imgur.com/n5ddnHP.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/U/untitled.stream/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/untitled.stream/assets/thumbnail.png",
   "color": "#B9ACE3",
   "category": "music",
-  "tags": ["music", "songs", "streaming"],
+  "tags": [
+    "music",
+    "songs",
+    "streaming"
+  ],
   "settings": [
     {
       "id": "show-logo",

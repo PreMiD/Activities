@@ -6,7 +6,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/b1SNIG0.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/U/untitled.stream/assets/logo.png',
 }
 
 function getElementText(selector: string) {
