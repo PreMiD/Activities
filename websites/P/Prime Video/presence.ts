@@ -32,9 +32,9 @@ presence.on('UpdateData', async () => {
 
   const title2 = document.querySelector('.DVWebNode-detail-atf-wrapper .BaLbyy h1')?.textContent || document.querySelector<HTMLImageElement>('.DVWebNode-detail-atf-wrapper picture img')?.alt
 
-  const bannerImg = document.querySelector<HTMLImageElement>('#main > div.DVWebNode-detail-atf-wrapper > div > div > div > div.BNTHjF > div.om7nme > picture > img')?.src
+  const bannerImg = document.querySelector<HTMLImageElement>('.BNTHjF img')?.src
 
-  const subtitle = document.querySelector<HTMLElement>('.webPlayerSDKUiContainer > div > div > div > div:nth-child(2) > div > div:nth-child(4) > div > div:nth-child(2) > div:nth-child(2) > div > div > div > h2') || document.querySelector<HTMLElement>('.atvwebplayersdk-subtitle-text')
+  const subtitle = document.querySelector<HTMLElement>('.atvwebplayersdk-subtitle-text')
 
   if (video && !video.className.includes('tst') && title) {
     const contentTitle = title
