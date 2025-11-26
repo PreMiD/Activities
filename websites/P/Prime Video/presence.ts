@@ -26,7 +26,9 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  const video = document.querySelector('video') || document.querySelector('video:nth-child(2)')
+  const video = document.querySelector<HTMLVideoElement>('#dv-web-player video')
+    || document.querySelector<HTMLVideoElement>('#dv-web-player .atvwebplayersdk-video-surface video')
+    || document.querySelector<HTMLVideoElement>('video')
 
   const title = document.querySelector('.atvwebplayersdk-player-container .fpqiyer .ffszj3z .f124tp54 h1')?.textContent || document.querySelector<HTMLImageElement>('.DVWebNode-detail-atf-wrapper picture img')?.alt
 
