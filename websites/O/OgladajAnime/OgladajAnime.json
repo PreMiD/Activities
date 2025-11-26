@@ -67,10 +67,6 @@
     "description": "A session where multiple users watch the same anime, all synced",
     "message": "Room"
   },
-  "ogladajanime.animeList": {
-    "description": "A session where multiple users watch the same anime, all synced",
-    "message": "Room"
-  },
   "ogladajanime.buttonMyProfile": {
     "description": "Button that leads to the user's profile",
     "message": "My profile"
