@@ -11,9 +11,9 @@
     "fr": "JetPunk est un site de jeux et de quiz en ligne. Le service propose une variété de quiz sur différents sujets, tels que la géographie, l'histoire, la science, la littérature, la musique et les mathématiques. Le site propose des quiz dans plusieurs langues, telles que l'anglais, le français, l'espagnol, le néerlandais, l'italien, l'allemand, le finnois, le portugais et le polonais."
   },
   "url": "www.jetpunk.com",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/w0UZLGG.png",
-  "thumbnail": "https://i.imgur.com/d6nHk3d.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/J/JetPunk/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/JetPunk/assets/thumbnail.png",
   "color": "#CDD251",
   "category": "games",
   "tags": [
