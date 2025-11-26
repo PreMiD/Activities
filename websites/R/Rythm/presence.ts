@@ -26,7 +26,7 @@ presence.on('UpdateData', async () => {
         ? StatusDisplayType.State ?? undefined
         : StatusDisplayType.Name
 
-  // nada tocando ou sem título → limpa presença
+  // nothing playing or no title → clear presence
   if (mediaData.playbackState === 'none' || !mediaData.title || privacyMode) {
     return presence.clearActivity()
   }

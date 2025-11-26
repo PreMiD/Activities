@@ -89,8 +89,8 @@ export class RythmDataGetter implements MediaDataGetter {
         ? undefined
         : Array.from(artistElement)
             .map(el => el.textContent?.trim())
-            .filter((name): name is string => !!name && name !== ',') // tira null/undefined e vírgula solta
-            .map(name => name.replace(/,$/, '').trim()) // tira vírgula no final tipo "Ravyn Lenae,"
+            .filter((name): name is string => !!name && name !== ',') // remove null/undefined and loose commas
+            .map(name => name.replace(/,$/, '').trim()) // remove trailing comma like "Ravyn Lenae,"
             .join(', ')
 
     return {
