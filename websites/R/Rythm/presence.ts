@@ -13,10 +13,32 @@ presence.on('UpdateData', async () => {
   const mediaData = dataGetter.getMediaData()
   const hidePaused = await presence.getSetting<boolean>('hidePaused')
   const privacyMode = await presence.getSetting<boolean>('privacy')
-  const hideCover = await presence.getSetting<boolean>('cover')
-  const rythmButton = await presence.getSetting<boolean>('rythmButton')
+  const largeImage = await presence.getSetting<number>('largeImage')
   const hideTimesTamps = await presence.getSetting<boolean>('timesTamps')
   const displayType = await presence.getSetting<number>('displayType')
+  const buttonType = await presence.getSetting<number>('buttonType')
+  const isPlaying = dataGetter.isPlaying()
+  const smallImageText = isPlaying ? 'Playing' : 'Paused'
+
+const buttonStyle =
+  buttonType === 0
+    ? (isPlaying ? Assets.Play : Assets.Pause)
+    : buttonType === 1
+      ? (isPlaying ? ActivityAssets.LogoPlaying : ActivityAssets.LogoPaused)
+      : buttonType === 2
+        ? ActivityAssets.LogoPaused
+        : buttonType === 3
+          ? ActivityAssets.LogoPlaying
+          : ActivityAssets.LogoPlaying
+
+const largeImageStyle =
+  largeImage === 0
+    ? mediaData.artwork
+    : largeImage === 1
+      ? ActivityAssets.LogoPlaying
+      : largeImage === 2
+        ? ActivityAssets.LogoPaused
+        : mediaData.artwork
 
   // status text display
   const stateText
@@ -35,29 +57,12 @@ presence.on('UpdateData', async () => {
     return presence.clearActivity()
   }
 
-  const isPlaying = dataGetter.isPlaying()
-
   const presenceData: PresenceData = {
 
     type: ActivityType.Listening,
-
-    largeImageKey:
-    hideCover
-      ? ActivityAssets.Logo
-      : mediaData.artwork,
-
-    smallImageKey:
-    rythmButton
-      ? ActivityAssets.Logo
-      : isPlaying
-        ? Assets.Play
-        : Assets.Pause,
-
-    smallImageText:
-    isPlaying
-      ? 'Playing'
-      : 'Paused',
-
+    largeImageKey: largeImageStyle,
+    smallImageKey: buttonStyle,
+    smallImageText: smallImageText,
     details: mediaData.title,
     detailsUrl: mediaData.trackUrl,
     state: mediaData.artist,

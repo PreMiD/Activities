@@ -11,7 +11,7 @@
   },
   "url": "rythm.fm",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/UnRpxtX.png",
+  "logo": "https://i.imgur.com/g5emgQN.gif",
   "thumbnail": "https://i.imgur.com/q5xxXRR.png",
   "color": "#147AFE",
   "category": "music",
@@ -48,16 +48,6 @@
     },
 
     {
-      "id": "rythmButton",
-      "title": "Show Rythm logo instead of play/pause",
-      "icon": "fad fa-images",
-      "value": false,
-      "if": {
-        "privacy": false
-      }
-    },
-
-    {
       "id": "timesTamps",
       "title": "Hide Timestamps",
       "icon": "fad fa-stopwatch",
@@ -65,6 +55,37 @@
       "if": {
         "privacy": false
       }
+    },
+
+        {
+      "id": "largeImage",
+      "title": "Pick large image style",
+      "icon": "fad fa-user-edit",
+      "value": 0,
+      "if": {
+        "privacy": false
+      },
+      "values": [
+        "Cover music",
+        "Rythm animated logo",
+        "Rythm static logo"
+      ]
+    },
+
+      {
+      "id": "buttonType",
+      "title": "Pick small button style",
+      "icon": "fad fa-user-edit",
+      "value": 0,
+      "if": {
+        "privacy": false
+      },
+      "values": [
+        "Play/Pause logo",
+        "Rythm animated logo",
+        "Rythm static logo",
+        "Rythm aways animated logo"
+      ]
     },
 
     {

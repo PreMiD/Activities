@@ -1,3 +1,5 @@
 export enum ActivityAssets {
-  Logo = 'https://i.imgur.com/UnRpxtX.png',
+
+  LogoPlaying = 'https://i.imgur.com/g5emgQN.gif',
+  LogoPaused = 'https://i.imgur.com/RHsafcu.gif'
 }
