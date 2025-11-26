@@ -3,6 +3,8 @@ export interface MediaData {
   title?: string
   artist?: string
   artwork?: string
+  trackUrl?: string
+  artistUrl?: string
 }
 
 export interface MediaDataGetter {
@@ -65,18 +67,22 @@ export class RythmDataGetter implements MediaDataGetter {
     if (playbackState === 'none') {
       return { playbackState: 'none' }
     }
-
     const titleElement = document.querySelector<HTMLElement>(
       'div[class*="nowPlayingTrackDetails"] h4[class*="trackTitle"]',
     )
     const artistElement = document.querySelectorAll<HTMLElement>(
       'div[class*="nowPlayingTrackDetails"] p[class*="artistName"]',
-
     )
-
-    const thumbnailElement = document.querySelector<HTMLImageElement>(
+    const artworklElement = document.querySelector<HTMLImageElement>(
       'div[class*="nowPlayingTrackDetails"] img[class*="trackThumbnail"]',
     )
+    const trackUrlElement = document.querySelector<HTMLAnchorElement>(
+      'div[class*="nowPlayingTrackDetails"] div[class*="trackDetails"] > a',
+    )?.href ?? null
+
+    const artistUrlElement = document.querySelector<HTMLAnchorElement>(
+      'div[class*="nowPlayingTrackDetails"] div[class*="explicitAndArtistName"] > a',
+    )?.href ?? null
 
     const artist
       = artistElement.length === 0
@@ -91,7 +97,9 @@ export class RythmDataGetter implements MediaDataGetter {
       playbackState,
       title: titleElement?.textContent?.trim() || undefined,
       artist,
-      artwork: thumbnailElement?.src || undefined,
+      artwork: artworklElement?.src || undefined,
+      trackUrl: trackUrlElement || undefined,
+      artistUrl: artistUrlElement || undefined,
     }
   }
 

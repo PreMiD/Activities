@@ -38,11 +38,31 @@ presence.on('UpdateData', async () => {
   const isPlaying = dataGetter.isPlaying()
 
   const presenceData: PresenceData = {
+
     type: ActivityType.Listening,
-    largeImageKey: hideCover ? ActivityAssets.Logo : mediaData.artwork,
-    smallImageKey: rythmButton ? (ActivityAssets.Logo) : (isPlaying ? Assets.Play : Assets.Pause),
+
+    largeImageKey:
+    hideCover
+      ? ActivityAssets.Logo
+      : mediaData.artwork,
+
+    smallImageKey:
+    rythmButton
+      ? ActivityAssets.Logo
+      : isPlaying
+        ? Assets.Play
+        : Assets.Pause,
+
+    smallImageText:
+    isPlaying
+      ? 'Playing'
+      : 'Paused',
+
     details: mediaData.title,
+    detailsUrl: mediaData.trackUrl,
     state: mediaData.artist,
+    stateUrl: mediaData.artistUrl,
+    largeImageUrl: mediaData.trackUrl,
     statusDisplayType: stateText,
   }
 
