@@ -37,7 +37,7 @@ enum ListItemStatus {
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png',
-  DefaultProfilePicture = 'https://i.imgur.com/wwU7Fos.png',
+  DefaultProfilePicture = 'https://cdn.rcd.gg/PreMiD/websites/O/OgladajAnime/assets/0.png',
 }
 
 const cache: PictureCache[] = []
