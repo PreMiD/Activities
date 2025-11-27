@@ -7,20 +7,23 @@
   },
   "service": "HDrezka",
   "description": {
-    "en": "Website for watching movies, cartoons and TV series.",
-    "ru": "Сайт для просмтра фильмов, мультфильмов и сериалов."
+    "en": "Website for watching movies, cartoons, anime and TV series.",
+    "ru": "Сайт для просмтра фильмов, аниме мультфильмов и сериалов."
   },
   "url": [
     "rezka.ag",
-    "hdrezka.ag"
+    "hdrezka.ag",
+    "rezka-ua.org",
+    "standby-rezka.tv"
   ],
-  "version": "1.0.6",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/thumbnail.jpeg",
   "color": "#DA3D36",
   "category": "videos",
   "tags": [
     "video",
-    "media"
+    "media",
+    "animation"
   ]
 }

@@ -4,6 +4,13 @@ iframe.on('UpdateData', async () => {
   // Tìm kiếm thẻ video theo nhiều selector khác nhau
   // Danh sách selector cho các player phổ biến
   const videoSelectors = [
+    '.VideoPlayer',
+    '.Video iframe',
+    '.Video embed',
+    '.Video video',
+    '.Video object',
+    '.Video iframe',
+    '.Video',
     '#dogevideo_html5_api',
     '#video-player',
     '#player_container > div.jw-wrapper.jw-reset > div.jw-media.jw-reset > video',

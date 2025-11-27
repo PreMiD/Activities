@@ -1,4 +1,8 @@
 {
+  "RTBFAuvio.ad": {
+    "description": "Used when a commercial is being played, most of the time before playing a media",
+    "message": "Currently watching an ad"
+  },
   "RTBFAuvio.aPodcast": {
     "description": "Used with general string \"Listening to\" to form \"Listening to a Podcast\" in privacy mode",
     "message": "a Podcast"
@@ -10,6 +14,10 @@
   "RTBFAuvio.buttonViewCategory": {
     "description": "Used as the title for the button in Discord",
     "message": "View Category"
+  },
+  "RTBFAuvio.buttonViewProgram": {
+    "description": "Used as the title for the button in Discord. A program is a type of tv show like the daily news show",
+    "message": "View Program"
   },
   "RTBFAuvio.deferred": {
     "description": "Used when a livestream is no longer live but with a delay. Often because the content has been paused or rewound.",

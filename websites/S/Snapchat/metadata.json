@@ -7,10 +7,11 @@
   },
   "service": "Snapchat",
   "description": {
-    "en": "Snapchat is an American multimedia instant messaging app and service developed by Snap Inc., originally Snapchat Inc. One of the principal features of Snapchat is that pictures and messages are usually only available for a short time before they become inaccessible to their recipients."
+    "en": "Snapchat is an American multimedia instant messaging app and service developed by Snap Inc., originally Snapchat Inc. One of the principal features of Snapchat is that pictures and messages are usually only available for a short time before they become inaccessible to their recipients.",
+    "fr": "Snapchat est une application et un service de messagerie instantanée multimédia américain développé par Snap Inc., à l'origine Snapchat Inc. L'une des principales caractéristiques de Snapchat est que les images et les messages ne sont généralement disponibles que pendant une courte période avant de devenir inaccessibles à leurs destinataires."
   },
-  "url": "web.snapchat.com",
-  "version": "1.0.14",
+  "url": "www.snapchat.com",
+  "version": "1.0.15",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Snapchat/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Snapchat/assets/thumbnail.jpg",
   "color": "#FFFC00",
