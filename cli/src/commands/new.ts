@@ -52,7 +52,7 @@ export async function newActivity(activity?: string) {
   v.addSchema({ definitions: schema.definitions })
 
   const discordUser = await getDiscordUser()
-  let author: { id: string, name: string } | undefined = discordUser ? { id: discordUser.id, name: discordUser.username! } : undefined
+  let author: { id: string, name: string } | undefined = (discordUser && discordUser.username) ? { id: discordUser.id, name: discordUser.username } : undefined
 
   await input({
     message: 'Discord ID of the author',
@@ -66,7 +66,10 @@ export async function newActivity(activity?: string) {
       if (!user)
         return 'User not found.'
 
-      author = { id: input, name: user.username! }
+      if (!user.username)
+        return 'User has no username.'
+
+      author = { id: input, name: user.username }
 
       return true
     },
@@ -116,10 +119,14 @@ export async function newActivity(activity?: string) {
     exit(result.toString())
   }
 
+  if (!author) {
+    exit('Author information is required')
+  }
+
   await mkdir(path, { recursive: true })
   await writeFile(resolve(path, 'metadata.json'), `${JSON.stringify(metadata, null, 2)}\n`)
   await cp(resolve(fileURLToPath(import.meta.url), '../../../templates/tsconfig.json'), resolve(path, 'tsconfig.json'))
-  await cp(resolve(fileURLToPath(import.meta.url), `../../../templates/presence${await isFirstTimeAuthor(author!.id) ? '' : '.min'}.ts`), resolve(path, 'presence.ts'))
+  await cp(resolve(fileURLToPath(import.meta.url), `../../../templates/presence${await isFirstTimeAuthor(author.id) ? '' : '.min'}.ts`), resolve(path, 'presence.ts'))
 
   success(
     `Activity created successfully! ${chalk.grey(chalk.underline(resolve(path, 'metadata.json')))}\n${prefix} ${chalk.white('Please edit the metadata.json file and add the correct information.')}\n${prefix} ${chalk.white(`After that, run ${chalk.cyan(`${prefix} dev "${activity}"`)} to start developing the activity.`)}`,

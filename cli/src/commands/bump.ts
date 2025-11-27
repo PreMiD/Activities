@@ -36,15 +36,30 @@ async function bumpActivity(activity: ActivityMetadataAndFolder, version?: strin
   }
 
   switch (version?.toLowerCase()) {
-    case 'major':
-      activity.metadata.version = inc(activity.metadata.version, 'major')!
+    case 'major': {
+      const newVersion = inc(activity.metadata.version, 'major')
+      if (!newVersion) {
+        exit(`Failed to increment major version for ${activity.metadata.service}`)
+      }
+      activity.metadata.version = newVersion
       break
-    case 'minor':
-      activity.metadata.version = inc(activity.metadata.version, 'minor')!
+    }
+    case 'minor': {
+      const newVersion = inc(activity.metadata.version, 'minor')
+      if (!newVersion) {
+        exit(`Failed to increment minor version for ${activity.metadata.service}`)
+      }
+      activity.metadata.version = newVersion
       break
-    case 'patch':
-      activity.metadata.version = inc(activity.metadata.version, 'patch')!
+    }
+    case 'patch': {
+      const newVersion = inc(activity.metadata.version, 'patch')
+      if (!newVersion) {
+        exit(`Failed to increment patch version for ${activity.metadata.service}`)
+      }
+      activity.metadata.version = newVersion
       break
+    }
     default: {
       if (version) {
         if (valid(version) && compare(activity.metadata.version, version) === -1) {
@@ -55,11 +70,15 @@ async function bumpActivity(activity: ActivityMetadataAndFolder, version?: strin
         info(`Version ${activity.metadata.version} is already greater than ${version}, please choose a different version`)
       }
 
-      const validVersions = [
-        inc(activity.metadata.version, 'patch')!,
-        inc(activity.metadata.version, 'minor')!,
-        inc(activity.metadata.version, 'major')!,
-      ]
+      const patchVersion = inc(activity.metadata.version, 'patch')
+      const minorVersion = inc(activity.metadata.version, 'minor')
+      const majorVersion = inc(activity.metadata.version, 'major')
+
+      if (!patchVersion || !minorVersion || !majorVersion) {
+        exit(`Failed to generate version increments for ${activity.metadata.service}`)
+      }
+
+      const validVersions = [patchVersion, minorVersion, majorVersion]
 
       const selectedVersion = await search({
         message: `Please select a version to bump ${activity.metadata.service} to`,
