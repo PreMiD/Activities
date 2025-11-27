@@ -11,7 +11,7 @@
   },
   "url": "rythm.fm",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/g5emgQN.gif",
+  "logo": "https://i.imgur.com/3qPPbjU.gif",
   "thumbnail": "https://i.imgur.com/q5xxXRR.png",
   "color": "#147AFE",
   "category": "music",
@@ -27,20 +27,11 @@
       "icon": "fad fa-shield-alt",
       "value": false
     },
+
     {
       "id": "hidePaused",
       "title": "Hide Paused",
       "icon": "fad fa-pause-circle",
-      "value": false,
-      "if": {
-        "privacy": false
-      }
-    },
-
-    {
-      "id": "cover",
-      "title": "Hide Cover",
-      "icon": "fad fa-images",
       "value": false,
       "if": {
         "privacy": false
@@ -57,7 +48,7 @@
       }
     },
 
-        {
+    {
       "id": "largeImage",
       "title": "Pick large image style",
       "icon": "fad fa-user-edit",
@@ -72,7 +63,7 @@
       ]
     },
 
-      {
+    {
       "id": "buttonType",
       "title": "Pick small button style",
       "icon": "fad fa-user-edit",

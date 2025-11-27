@@ -20,25 +20,25 @@ presence.on('UpdateData', async () => {
   const isPlaying = dataGetter.isPlaying()
   const smallImageText = isPlaying ? 'Playing' : 'Paused'
 
-const buttonStyle =
-  buttonType === 0
-    ? (isPlaying ? Assets.Play : Assets.Pause)
-    : buttonType === 1
-      ? (isPlaying ? ActivityAssets.LogoPlaying : ActivityAssets.LogoPaused)
-      : buttonType === 2
-        ? ActivityAssets.LogoPaused
-        : buttonType === 3
-          ? ActivityAssets.LogoPlaying
-          : ActivityAssets.LogoPlaying
+  const buttonStyle
+    = buttonType === 0
+      ? (isPlaying ? Assets.Play : Assets.Pause)
+      : buttonType === 1
+        ? (isPlaying ? ActivityAssets.LogoPlaying : ActivityAssets.LogoPaused)
+        : buttonType === 2
+          ? ActivityAssets.LogoPaused
+          : buttonType === 3
+            ? ActivityAssets.LogoPlaying
+            : ActivityAssets.LogoPlaying
 
-const largeImageStyle =
-  largeImage === 0
-    ? mediaData.artwork
-    : largeImage === 1
-      ? ActivityAssets.LogoPlaying
-      : largeImage === 2
-        ? ActivityAssets.LogoPaused
-        : mediaData.artwork
+  const largeImageStyle
+    = largeImage === 0
+      ? mediaData.artwork
+      : largeImage === 1
+        ? ActivityAssets.LogoPlaying
+        : largeImage === 2
+          ? ActivityAssets.LogoPaused
+          : mediaData.artwork
 
   // status text display
   const stateText
@@ -62,7 +62,7 @@ const largeImageStyle =
     type: ActivityType.Listening,
     largeImageKey: largeImageStyle,
     smallImageKey: buttonStyle,
-    smallImageText: smallImageText,
+    smallImageText,
     details: mediaData.title,
     detailsUrl: mediaData.trackUrl,
     state: mediaData.artist,
