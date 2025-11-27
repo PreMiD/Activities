@@ -25,7 +25,7 @@ To create a slideshow, you need to use the `createSlideshow` method of the `Pres
 
 ```typescript
 const presence = new Presence({
-  clientId: 'your_client_id'
+  clientId: '1234567890123456789' // Replace with your Discord Application ID
 })
 
 const slideshow = presence.createSlideshow()
@@ -129,12 +129,12 @@ presence.setActivity(slideshow)
 
 ```typescript
 const presence = new Presence({
-  clientId: 'your_client_id'
+  clientId: '1234567890123456789' // Replace with your Discord Application ID
 })
 
 enum ActivityAssets {
-  Logo = 'https://example.com/logo.png',
-  Clock = 'https://example.com/clock.png'
+  Logo = 'https://i.imgur.com/XXXXXXX.png', // Replace with your logo URL
+  Clock = 'https://i.imgur.com/YYYYYYY.png' // Replace with your clock icon URL
 }
 
 const slideshow = presence.createSlideshow()
@@ -163,16 +163,20 @@ presence.on('UpdateData', async () => {
 
 ```typescript
 const presence = new Presence({
-  clientId: 'your_client_id'
+  clientId: '1234567890123456789' // Replace with your Discord Application ID
 })
 
 const slideshow = presence.createSlideshow()
 const SLIDESHOW_TIMEOUT = 5000 // 5 seconds
 
+enum ActivityAssets {
+  Logo = 'https://i.imgur.com/XXXXXXX.png', // Replace with your logo URL
+}
+
 presence.on('UpdateData', async () => {
   const presenceData = {
     details: 'Viewing gallery',
-    largeImageKey: 'https://example.com/logo.png'
+    largeImageKey: ActivityAssets.Logo
   }
 
   // Get all images on the page
@@ -203,14 +207,14 @@ presence.on('UpdateData', async () => {
 
 ```typescript
 const presence = new Presence({
-  clientId: 'your_client_id'
+  clientId: '1234567890123456789' // Replace with your Discord Application ID
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://example.com/logo.png',
-  User = 'https://example.com/user.png'
+  Logo = 'https://i.imgur.com/XXXXXXX.png', // Replace with your logo URL
+  User = 'https://i.imgur.com/YYYYYYY.png' // Replace with your user icon URL
 }
 
 const slideshow = presence.createSlideshow()
@@ -252,14 +256,14 @@ presence.on('UpdateData', async () => {
 
 ```typescript
 const presence = new Presence({
-  clientId: 'your_client_id'
+  clientId: '1234567890123456789' // Replace with your Discord Application ID
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://example.com/logo.png',
-  Clock = 'https://example.com/clock.png'
+  Logo = 'https://i.imgur.com/XXXXXXX.png', // Replace with your logo URL
+  Clock = 'https://i.imgur.com/YYYYYYY.png' // Replace with your clock icon URL
 }
 
 const slideshow = presence.createSlideshow()
@@ -355,14 +359,14 @@ Here's a complete example of an activity that uses a slideshow to alternate betw
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: 'your_client_id'
+  clientId: '1234567890123456789' // Replace with your Discord Application ID
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://example.com/logo.png',
-  Clock = 'https://example.com/clock.png'
+  Logo = 'https://i.imgur.com/XXXXXXX.png', // Replace with your logo URL
+  Clock = 'https://i.imgur.com/YYYYYYY.png' // Replace with your clock icon URL
 }
 
 // Create a slideshow
