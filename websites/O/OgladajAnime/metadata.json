@@ -34,6 +34,10 @@
   "iFrameRegExp": "^(?!youtube.com|youtu.be).*",
   "settings": [
     {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
       "id": "privacyMode",
       "title": "Privacy Mode",
       "icon": "fad fa-user-secret",
