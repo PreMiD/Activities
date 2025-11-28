@@ -9,6 +9,10 @@
     {
       "name": "Kyrie",
       "id": "368399721494216706"
+    },
+    {
+      "name": "Skye",
+      "id": "694986869204713482"
     }
   ],
   "service": "Tidal",
@@ -20,7 +24,7 @@
     "vi": "Tidal là dịch vụ phát nhạc với chất lượng âm thanh rất cao."
   },
   "url": "tidal.com",
-  "version": "3.2.6",
+  "version": "3.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/thumbnail.png",
   "color": "#000000",
@@ -32,6 +36,12 @@
     {
       "id": "lang",
       "multiLanguage": true
+    },
+    {
+      "id": "hidePaused",
+      "title": "Hide Paused",
+      "icon": "fas fa-pause-circle",
+      "value": false
     },
     {
       "id": "hidePaused",
