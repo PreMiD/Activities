@@ -10,7 +10,7 @@
     "en": "Enjoy every moment with artists on global fandom life platform Weverse."
   },
   "url": "weverse.io",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Weverse/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Weverse/assets/thumbnail.png",
   "color": "#08ccc9",
@@ -19,7 +19,8 @@
     "kpop",
     "live",
     "streaming",
-    "music"
+    "music",
+    "fandom"
   ],
   "settings": [
     {
