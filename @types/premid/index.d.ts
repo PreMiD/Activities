@@ -153,12 +153,12 @@ declare global {
   }
 
   interface MediaPresenceData extends BasePresenceData {
-    type: ActivityType.Listening | ActivityType.Watching
+    type: ActivityType.Listening | ActivityType.Watching | ActivityType.Streaming
     largeImageText?: string | Node | null
   }
 
   interface NonMediaPresenceData extends BasePresenceData {
-    type?: Exclude<ActivityType, ActivityType.Listening | ActivityType.Watching>
+    type?: Exclude<ActivityType, ActivityType.Listening | ActivityType.Watching | ActivityType.Streaming>
     largeImageText?: never
   }
 
