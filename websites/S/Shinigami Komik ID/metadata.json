@@ -1,0 +1,71 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "323265325783056385",
+    "name": "mardovu"
+  },
+  "service": "Shinigami Komik ID",
+  "description": {
+    "en": "Read Comics on Shinigami Komik ID.",
+    "fr": "Lisez des bandes dessinées sur Shinigami Komik ID.",
+    "id": "Baca Komik di Shinigami Komik ID.",
+    "vi": "Đọc truyện tranh tại Shinigami Komik ID."
+  },
+  "url": [
+    "shinigami.id",
+    "www.shinigami.id",
+    "shinigami.bio",
+    "www.shinigami.bio",
+    "shinigami.asia",
+    "www.shinigami.asia"
+  ],
+  "regExp": "(\\d+\\.)?shinigami\\.(id|bio|asia)",
+  "version": "1.0.0",
+  "logo": "https://i.postimg.cc/4ySd7DXp/unnamed.jpg",
+  "thumbnail": "https://i.postimg.cc/J4zZy85z/Screenshot-2025-11-28-125724.png",
+  "color": "#807F81",
+  "category": "other",
+  "tags": [
+    "comic",
+    "manga",
+    "manhwa",
+    "manhua",
+    "scanlation"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fa-solid fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "displayProgress",
+      "title": "Display Progress of Chapter",
+      "icon": "fa-solid fa-book",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "displayReading",
+      "title": "Display Reading details",
+      "icon": "fa-solid fa-book",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover",
+      "icon": "fa-solid fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
