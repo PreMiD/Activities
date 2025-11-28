@@ -118,7 +118,9 @@ presence.on('UpdateData', async () => {
   // Privacy Mode: Hide user activity details
   if (privacyMode) {
     presenceData.details = 'Browsing Shinigami Komik ID'
+    presenceData.detailsUrl = undefined
     presenceData.state = 'Privacy Mode 🕵️'
+    presenceData.stateUrl = undefined
     presence.setActivity(presenceData)
     return
   }
