@@ -39,6 +39,7 @@ presence.on('UpdateData', async () => {
     const video = document.querySelector('video')
     const isReplay = !!document.querySelector('[class*=LiveBadgeView_-replay]')
 
+<<<<<<< HEAD
     if (isReplay) {
       presenceData.smallImageKey = Assets.Play
       presenceData.smallImageText = 'Replay'
@@ -68,6 +69,55 @@ presence.on('UpdateData', async () => {
   if (path.includes('/highlight') || path.includes('/feed')) {
     const nameElement = document.querySelector('h3[class*="about-module-v2-_-title"]') || document.querySelector('[class*=HeaderCommunityDropdownWrapperView_name]')
     let thumbElement = document.querySelector<HTMLImageElement>('.about-module-v2-_-avatar img[class*="avatar-_-image"]') || document.querySelector<HTMLImageElement>('[class*=CommunityAsideWelcomeView_thumbnail] img')
+=======
+	getProfileThumbnailUrl(): string | undefined {
+		return document.querySelector<HTMLImageElement>(
+			"a[class*=CommunityProfileInfoView_link_thumbnail] img"
+		)?.src;
+	}
+
+	getFanPostNickname(): string {
+		const nicknameElement = document.querySelector(
+			"#modal [class*=PostHeaderView_nickname]"
+		);
+		if (nicknameElement) {
+			const tempDiv = document.createElement("div");
+			tempDiv.innerHTML = nicknameElement.innerHTML;
+
+			for (const el of Array.from(tempDiv.querySelectorAll("em, span")))
+				el.remove();
+
+			return tempDiv.textContent?.trim() ?? "Unknown User";
+		}
+		return "Unknown User";
+	}
+
+	getFanPostThumbnailUrl(): string | undefined {
+		return document.querySelector<HTMLImageElement>(
+			"#modal [class*=ProfileThumbnailView_thumbnail] img"
+		)?.src;
+	}
+}
+
+const presence = new Weverse({
+		clientId: "1284048129414402109",
+	}),
+	browsingTimestamp = Math.floor(Date.now() / 1000);
+
+presence.on("UpdateData", async () => {
+	const privacy = await presence.getSetting<boolean>("privacy"),
+		showButtons = await presence.getSetting<boolean>("buttons"),
+		presenceData: PresenceData = {
+			largeImageKey:
+				"https://cdn.rcd.gg/PreMiD/websites/W/Weverse/assets/logo.png",
+			startTimestamp: browsingTimestamp,
+		};
+
+	if (privacy) {
+		presence.setActivity(presenceData);
+		return;
+	}
+>>>>>>> 253495078cdbbe89610fac695a53445d8fc59045
 
     // Cache thumb and name for same community
     if (groupSlug && !thumbElement && cachedThumb) {
@@ -77,6 +127,7 @@ presence.on('UpdateData', async () => {
       localStorage.setItem(`weverse_thumb_${groupSlug}`, thumbElement.src)
     }
 
+<<<<<<< HEAD
     let communityName = nameElement?.textContent?.trim() || 'Unknown Community'
     if (groupSlug && !nameElement && cachedName) {
       communityName = cachedName
@@ -211,3 +262,75 @@ presence.on('UpdateData', async () => {
   presenceData.details = 'Browsing Weverse'
   presence.setActivity(presenceData)
 })
+=======
+		const video = document.querySelector("video");
+		if (document.querySelector("[class*=LiveBadgeView_-replay]") !== null) {
+			presenceData.smallImageKey = Assets.Play;
+			presenceData.smallImageText = "Replay";
+			if (showButtons) {
+				presenceData.buttons = [
+					{
+						label: `Watch ${presence.getArtistName()} Replay`,
+						url: document.location.href,
+					},
+				];
+			}
+		} else if (video) {
+			presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Live;
+			presenceData.smallImageText = video.paused ? "Paused" : "Live";
+			if (showButtons) {
+				presenceData.buttons = [
+					{
+						label: `Visit ${presence.getArtistName()} Live`,
+						url: document.location.href,
+					},
+				];
+			}
+		} else {
+			presenceData.smallImageKey = Assets.Play;
+			presenceData.smallImageText = "Playing";
+			if (showButtons) {
+				presenceData.buttons = [
+					{
+						label: `Watch ${presence.getArtistName()} Replay`,
+						url: document.location.href,
+					},
+				];
+			}
+		}
+
+		if (thumbnailUrl) presenceData.largeImageKey = thumbnailUrl;
+	} else if (document.location.pathname === "/")
+		presenceData.details = "Browsing Weverse";
+	else if (document.location.pathname.includes("/feed")) {
+		presenceData.details = "Viewing Community Feed";
+		presenceData.state = presence.getCommunityName();
+		const communityImageUrl = presence.getCommunityImageUrl();
+		if (communityImageUrl) presenceData.largeImageKey = communityImageUrl;
+	} else if (document.location.pathname.includes("/artist")) {
+		presenceData.details = "Viewing Artist";
+		presenceData.state = presence.getArtistPageName();
+	} else if (document.location.pathname.includes("/moment")) {
+		presenceData.details = "Viewing Moment";
+		presenceData.state = presence.getMomentNickname();
+		const momentThumbnailUrl = presence.getMomentThumbnailUrl();
+		if (momentThumbnailUrl) presenceData.largeImageKey = momentThumbnailUrl;
+	} else if (document.location.pathname.includes("/media")) {
+		presenceData.details = "Viewing Media";
+		presenceData.state = presence.getCommunityName();
+	} else if (document.location.pathname.includes("/profile")) {
+		presenceData.details = `Viewing Profile of ${presence.getProfileName()}`;
+		presenceData.state = `Community: ${presence.getCommunityName()}`;
+		const profileThumbnailUrl = presence.getProfileThumbnailUrl();
+		if (profileThumbnailUrl) presenceData.largeImageKey = profileThumbnailUrl;
+	} else if (document.location.pathname.includes("/fanpost/")) {
+		presenceData.details = "Viewing Fan Post";
+		presenceData.state = presence.getFanPostNickname();
+		const fanPostThumbnailUrl = presence.getFanPostThumbnailUrl();
+		if (fanPostThumbnailUrl) presenceData.largeImageKey = fanPostThumbnailUrl;
+	}
+
+	if (presenceData.details) presence.setActivity(presenceData);
+	else presence.setActivity();
+});
+>>>>>>> 253495078cdbbe89610fac695a53445d8fc59045

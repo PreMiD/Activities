@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
@@ -39,4 +40,46 @@
       "value": true
     }
   ]
+=======
+	"$schema": "https://schemas.premid.app/metadata/1.11",
+	"apiVersion": 1,
+	"author": {
+		"id": "712745906876842025",
+		"name": "hanifhan1f"
+	},
+	"service": "Weverse",
+	"description": {
+		"en": "Enjoy every moment with artists on global fandom life platform Weverse."
+	},
+	"url": "weverse.io",
+	"version": "1.0.3",
+	"logo": "https://cdn.rcd.gg/PreMiD/websites/W/Weverse/assets/logo.png",
+	"thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Weverse/assets/thumbnail.png",
+	"color": "#08ccc9",
+	"category": "music",
+	"tags": [
+		"weverse",
+		"kpop",
+		"live",
+		"streaming",
+		"music"
+	],
+	"settings": [
+		{
+			"id": "privacy",
+			"title": "Privacy Mode",
+			"icon": "fad fa-user-secret",
+			"value": false
+		},
+		{
+			"id": "buttons",
+			"if": {
+				"privacy": false
+			},
+			"title": "Show Buttons",
+			"icon": "fas fa-compress-arrows-alt",
+			"value": true
+		}
+	]
+>>>>>>> 253495078cdbbe89610fac695a53445d8fc59045
 }
