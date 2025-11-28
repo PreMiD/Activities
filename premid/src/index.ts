@@ -21,6 +21,10 @@ export enum ActivityType {
    */
   Playing = 0,
   /**
+   * Streaming {name}
+   */
+  Streaming = 1,
+  /**
    * Listening to {name}
    */
   Listening = 2,

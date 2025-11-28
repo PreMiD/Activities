@@ -1,4 +1,4 @@
-import type { ActivityType } from 'premid'
+import type { ActivityType, StatusDisplayType } from 'premid'
 import type GeneralStrings from '../../websites/general.json'
 
 declare global {
@@ -38,6 +38,7 @@ declare global {
      *
      * @example
      * - ActivityType.Playing: "Playing [name]"
+     * - ActivityType.Streaming: "Streaming [name]"
      * - ActivityType.Listening: "Listening to [name]"
      * - ActivityType.Watching: "Watching [name]"
      * - ActivityType.Competing: "Competing in [name]"
@@ -152,12 +153,12 @@ declare global {
   }
 
   interface MediaPresenceData extends BasePresenceData {
-    type: ActivityType.Listening | ActivityType.Watching
+    type: ActivityType.Listening | ActivityType.Watching | ActivityType.Streaming
     largeImageText?: string | Node | null
   }
 
   interface NonMediaPresenceData extends BasePresenceData {
-    type?: Exclude<ActivityType, ActivityType.Listening | ActivityType.Watching>
+    type?: Exclude<ActivityType, ActivityType.Listening | ActivityType.Watching | ActivityType.Streaming>
     largeImageText?: never
   }
 
