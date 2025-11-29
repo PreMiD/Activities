@@ -27,6 +27,12 @@ interface PictureCache {
   date: Date
 }
 
+interface SeasonResponse {
+  found: boolean
+  name: string
+  season: number
+}
+
 enum ListItemStatus {
   categoryWatching = 1,
   categoryWatched = 2,
@@ -250,6 +256,64 @@ async function profileButton(): Promise<[ButtonData, undefined] | undefined> {
     return [{ label: strings.buttonMyProfile, url: `https://ogladajanime.pl/profile/${userID}` }, undefined]
 }
 
+function determineSeason(preferAltName: boolean): SeasonResponse {
+  const anime = document.querySelector('#anime_name_id')
+  const name = anime?.textContent ?? 'N/A'
+  const alternativeName = anime?.parentElement?.querySelector(
+    'i[class="text-muted text-trim"]',
+  )?.textContent ?? 'N/A'
+  const listItems = document.querySelector('div[class="col-12 col-sm-6 col-lg-5"]')?.childNodes
+  let altNames: string[] = []
+  if (listItems) {
+    for (let index = 0; index < listItems.length; index++) {
+      const element = listItems[index]
+      if (element?.textContent?.startsWith('Synonimy: ')) {
+        const list = element.textContent?.replace('Synonimy: ', '')
+        const names = list.split(', ')
+        if (names && names.length > 0) {
+          altNames = names
+          break
+        }
+      }
+    }
+  }
+
+  return multiTestForSeason(preferAltName ? [alternativeName, ...altNames, name] : [name, alternativeName, ...altNames])
+}
+
+function multiTestForSeason(names: string[]): SeasonResponse {
+  for (let index = 0; index < names.length; index++) {
+    const name = names[index]
+    const res = testForSeason(name)
+    if (res && res.found)
+      return res
+  }
+  return { found: false, name: 'N/A', season: -1 }
+}
+
+function testForSeason(name: string | undefined): SeasonResponse {
+  if (name) {
+    name = name.trim()
+    // False error, there is an "or" in the regex that wont allow for 2 groups of the same name to appear
+    // eslint-disable-next-line regexp/strict
+    const regex = /(?<season>\d+)(?:st|nd|rd|th) Season|Season (?<season>\d+)| (?<!Part )(?<season>\d+)$/
+    const m = name.match(regex)
+    if (m && m.length > 0) {
+      const season = Number.parseInt(m.groups?.season ?? '-1')
+      const string = m[0]
+      const newName = name.replace(string, '')
+      if (season !== -1) {
+        return {
+          found: true,
+          name: newName,
+          season,
+        }
+      }
+    }
+  }
+  return { found: false, name: 'N/A', season: -1 }
+}
+
 presence.on('iFrameData', (data) => {
   const info = data as PlaybackInfo
   playbackInfo = info
@@ -260,7 +324,7 @@ presence.on('UpdateData', async () => {
 
   const { pathname } = document.location
 
-  const [newLang, browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent, showCover] = await Promise.all([
+  const [newLang, browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent, showCover, determineSeasonSetting] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('browsingStatus'),
     presence.getSetting<boolean>('useAltName'),
@@ -268,6 +332,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('titleAsPresence'),
     presence.getSetting<boolean>('showSearchContent'),
     presence.getSetting<boolean>('showCover'),
+    presence.getSetting<boolean>('determineSeason'),
   ])
 
   if (oldLang !== newLang || !strings) {
@@ -302,13 +367,25 @@ presence.on('UpdateData', async () => {
     const epNum = activeEpisode?.getAttribute('value') ?? 0
     const epName = activeEpisode?.querySelector('p')?.textContent
 
+    let season: number = -1
+    if (determineSeasonSetting) {
+      const d = determineSeason(useAltName)
+      if (d && d.found) {
+        name = d.name
+        season = d.season
+      }
+    }
+
     if (name) {
       if (titleAsPresence)
         presenceData.name = name
       else
         presenceData.details = name
 
-      presenceData.state = append(`${strings.episode} ${epNum}`, epName, ' • ')
+      if (season !== -1)
+        presenceData.state = epName
+      else
+        presenceData.state = append(`${strings.episode} ${epNum}`, epName, ' • ')
     }
     else {
       return presence.clearActivity()
@@ -336,7 +413,9 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = strings.browsing
     }
 
-    if (rating && voteCount)
+    if (season !== -1)
+      presenceData.largeImageText = `Season ${season}, Episode ${epNum}`
+    else if (rating && voteCount)
       presenceData.largeImageText = `${rating.textContent} • ${strings.votes.replace('{0}', voteCount)}`
 
     if (animeID && showCover)
