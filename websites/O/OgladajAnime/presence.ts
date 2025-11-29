@@ -1,4 +1,7 @@
+import type { Playback, PlaybackInfo } from './types.js'
 import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
+import { ActivityAssets, ListItemStatus, StaticBrowsing } from './constants.js'
+import { append, determineSeason, getAnimeIcon, getProfilePicture, getUserID } from './utils.js'
 
 const presence = new Presence({ clientId: '1137362720254074972' })
 
@@ -9,97 +12,6 @@ let userID = 0
 let playbackInfo: PlaybackInfo | null
 
 let lastWatched: Playback
-
-interface PlaybackInfo {
-  currTime: number
-  duration: number
-  paused: boolean
-}
-
-interface Playback {
-  animeID: string
-  episode: string
-}
-
-interface PictureCache {
-  id: string
-  url: string
-  date: Date
-}
-
-interface SeasonResponse {
-  found: boolean
-  name: string
-  season: number
-}
-
-enum ListItemStatus {
-  categoryWatching = 1,
-  categoryWatched = 2,
-  categoryPlanning = 3,
-  categorySuspended = 4,
-  categoryAbandoned = 5,
-}
-
-enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png',
-  DefaultProfilePicture = 'https://cdn.rcd.gg/PreMiD/websites/O/OgladajAnime/assets/0.png',
-}
-
-const cache: PictureCache[] = []
-
-function cacheExpired(date: Date): boolean {
-  if (date === null)
-    return true
-
-  return ((new Date().getTime() - date.getTime()) / 1000 / 60) < 5
-}
-
-async function getProfilePicture(id: string): Promise<string | undefined> {
-  const index = cache.findIndex((val, _, __) => val.id === id)
-  const _val = cache[index]
-  if (index === -1) {
-    const _new: PictureCache = { id, url: await internal_getPFP(id), date: new Date() }
-    cache.push(_new)
-    return _new.url
-  }
-  else if (_val !== undefined && cacheExpired(_val.date)) {
-    const url = await internal_getPFP(id)
-    _val.url = url
-    _val.date = new Date()
-    return url
-  }
-  else {
-    return cache[index]?.url
-  }
-}
-
-async function internal_getPFP(id: string) {
-  let url = `https://cdn.ogladajanime.pl/images/user/${id}.webp?${new Date().getTime()}`
-  try {
-    const res = await fetch(new URL(url))
-    if (res.status === 404)
-      url = ActivityAssets.DefaultProfilePicture
-  }
-  catch {
-    url = ActivityAssets.DefaultProfilePicture
-  }
-  return url
-}
-
-function getUserID() {
-  const dropdowns = document.querySelectorAll('a[class="dropdown-item"]')
-  let found = false
-  dropdowns.forEach((elem, _, __) => {
-    const href = elem.getAttribute('href')
-    if (href != null && href.startsWith('/profile/')) {
-      userID = Number.parseInt(href.replace('/profile/', ''))
-      found = true
-    }
-  })
-  if (!found)
-    userID = 0
-}
 
 function getPlayerInfo(): [isPaused: boolean, timestamp: [start: number, end: number]] {
   const player = getOAPlayer()
@@ -121,17 +33,6 @@ function getOAPlayer(): HTMLVideoElement | undefined {
     }
   }
   return undefined
-}
-
-function append(text: string, append: string | undefined | null, separator: string = ': '): string {
-  if (append?.trim()?.replace(' ', ''))
-    return `${text}${separator}${append}`
-  else
-    return text
-}
-
-function getAnimeIcon(id: number | string): string {
-  return `https://cdn.ogladajanime.pl/images/anime_new/${id}/2.webp`
 }
 
 async function getStrings() {
@@ -212,31 +113,6 @@ async function getStrings() {
   )
 }
 
-// ! - use localization strings
-// !? - uses the format: Viewing Page: {new line} {provided localization string}, example: !?terms
-const staticBrowsing = {
-  '/watch2gether': '!browsingRooms',
-  '/main2': '!viewHome',
-  '/search/name/': '!searchSomething',
-  '/search/custom': '!searchSomething',
-  '/search/rand': '!random',
-  '/search/new': '!new',
-  '/search/main': '!topRated',
-  '/chat': '!chatting',
-  '/user_activity': '!lastActivity',
-  '/last_comments': '!?newestComments',
-  '/active_sessions': '!?activeLoginSessions',
-  '/manage_edits': '!?newestEdits',
-  '/anime_list_to_load': '!importList',
-  '/discord': '!?contact',
-  '/support': '!?donate',
-  '/rules': '!?terms',
-  '/harmonogram': '!?upcomingEpisodes',
-  '/anime_seasons': '!?upcomingAnimes',
-  '/all_anime_list': '!?allAvailableAnimes',
-  '/': '!viewHome', // This MUST stay at the end, otherwise this will always display no matter the page
-}
-
 let strings: Awaited<ReturnType<typeof getStrings>>
 let oldLang: string | null = null
 
@@ -256,71 +132,13 @@ async function profileButton(): Promise<[ButtonData, undefined] | undefined> {
     return [{ label: strings.buttonMyProfile, url: `https://ogladajanime.pl/profile/${userID}` }, undefined]
 }
 
-function determineSeason(preferAltName: boolean): SeasonResponse {
-  const anime = document.querySelector('#anime_name_id')
-  const name = anime?.textContent ?? 'N/A'
-  const alternativeName = anime?.parentElement?.querySelector(
-    'i[class="text-muted text-trim"]',
-  )?.textContent ?? 'N/A'
-  const listItems = document.querySelector('div[class="col-12 col-sm-6 col-lg-5"]')?.childNodes
-  let altNames: string[] = []
-  if (listItems) {
-    for (let index = 0; index < listItems.length; index++) {
-      const element = listItems[index]
-      if (element?.textContent?.startsWith('Synonimy: ')) {
-        const list = element.textContent?.replace('Synonimy: ', '')
-        const names = list.split(', ')
-        if (names && names.length > 0) {
-          altNames = names
-          break
-        }
-      }
-    }
-  }
-
-  return multiTestForSeason(preferAltName ? [alternativeName, ...altNames, name] : [name, alternativeName, ...altNames])
-}
-
-function multiTestForSeason(names: string[]): SeasonResponse {
-  for (let index = 0; index < names.length; index++) {
-    const name = names[index]
-    const res = testForSeason(name)
-    if (res && res.found)
-      return res
-  }
-  return { found: false, name: 'N/A', season: -1 }
-}
-
-function testForSeason(name: string | undefined): SeasonResponse {
-  if (name) {
-    name = name.trim()
-    // False error, there is an "or" in the regex that wont allow for 2 groups of the same name to appear
-    // eslint-disable-next-line regexp/strict
-    const regex = /(?<season>\d+)(?:st|nd|rd|th) Season|Season (?<season>\d+)| (?<!Part )(?<season>\d+)$/
-    const m = name.match(regex)
-    if (m && m.length > 0) {
-      const season = Number.parseInt(m.groups?.season ?? '-1')
-      const string = m[0]
-      const newName = name.replace(string, '')
-      if (season !== -1) {
-        return {
-          found: true,
-          name: newName,
-          season,
-        }
-      }
-    }
-  }
-  return { found: false, name: 'N/A', season: -1 }
-}
-
 presence.on('iFrameData', (data) => {
   const info = data as PlaybackInfo
   playbackInfo = info
 })
 
 presence.on('UpdateData', async () => {
-  getUserID()
+  userID = getUserID()
 
   const { pathname } = document.location
 
@@ -653,7 +471,7 @@ presence.on('UpdateData', async () => {
   else {
     if (browsingStatusEnabled) {
       let recognized = false
-      for (const [key, value] of Object.entries(staticBrowsing)) {
+      for (const [key, value] of Object.entries(StaticBrowsing)) {
         if (pathname.includes(key)) {
           const parsed = parseString(value)
           presenceData.details = parsed[0]
