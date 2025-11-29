@@ -4,7 +4,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/H/Hyakanime/assets/logo.png',
+  Logo = 'https://i.imgur.com/ttdd3Q6.jpeg',
 }
 
 const routes = {
@@ -48,10 +48,10 @@ presence.on('UpdateData', async () => {
 
   if (page.startsWith(routes.anime)) {
     presenceData.state = document
-      .querySelector('.anime-title')
+      .querySelector('.media-detail__title')
       ?.textContent
       ?.split('Adulte')[0]
-    presenceData.largeImageKey = document.querySelector('.anime-affiche')?.getAttribute('src')
+    presenceData.largeImageKey = document.querySelector('.anime__poster')?.getAttribute('src')
       || ActivityAssets.Logo
     presenceData.smallImageKey = ActivityAssets.Logo
     presenceData.buttons = [
