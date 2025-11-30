@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "1089505219244728432",
+    "name": "fluffytrace"
+  },
+  "service": "Lotus-Simulator",
+  "description": {
+    "en": "TODO",
+    "de": "TODO"
+  },
+  "url": ["www.lotus-simulator.de", "lotus-simulator.de", "lotus-simulator.dev", "docs.lotus-simulator.dev"],
+  "version": "1.0.0",
+  "logo": "https://www.lotus-simulator.de/images/styleLogo-b96c81edc0cb1a248146b1a0ba23f6cd052f7704.png",
+  "thumbnail": "https://www.lotus-simulator.de/gallery/userImages/2b/2-2b0bbe94-large.png",
+  "color": "#ebd409",
+  "category": "games",
+  "tags": [
+    "simulator",
+    "games"
+  ]
+}
