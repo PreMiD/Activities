@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "432215088686956565",
+    "name": "xDoritos"
+  },
+  "contributors": [
+    {
+      "name": "Sladkaroww",
+      "id": "123123123"
+    }
+  ],
+  "service": "AnimeYY",
+  "description": {
+    "en": "AnimeYY is an online platform where you can stream and browse a wide variety of anime series and movies for free. It offers updated episodes, multiple genres, and an easy-to-use interface for discovering new shows."
+  },
+  "url": [
+    "animeyy.com",
+    "www.animeyy.com"
+  ],
+  "version": "1.0.1",
+  "logo": "https://imgur.com/Hi7H5ee.png",
+  "thumbnail": "https://imgur.com/WpLEGOs.png",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "stream",
+    "video"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "(ayy-[a-z0-9]+\\.[a-z0-9\\.]+|streamtape\\.com|mixdropjmk\\.pw|netuplayer\\.top|dood\\.ws|d-s\\.io|[a-z0-9-]+\\.(com|net|org|ws|pw|top|io|to)|https?:\\/\\/[a-z0-9\\-\\.]+\\/(?:embed\\/)?\\d{4}\\/\\d{2}\\/\\d{2}\\/playlist_\\d+\\.m3u8(?:\\?[^\"' ]+)?)"
+}
