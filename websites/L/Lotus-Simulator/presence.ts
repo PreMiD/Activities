@@ -13,8 +13,10 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    //smallImageKey: Assets.Play,
   }
+
+  const showButtons = await presence.getSetting<boolean>('showButtons')
+  const privacy = await presence.getSetting<boolean>('privacy')
 
   if(document.URL.startsWith("https://docs")) {
     let categorie = "";
@@ -43,71 +45,76 @@ presence.on('UpdateData', async () => {
     if (document.location.pathname.startsWith("/forum")) {
       presenceData.state = 'Forum'
 
-      if(document.location.href.includes("board")) {
-        if(!document.querySelector(
-            'h1.contentTitle',
-          )?.textContent.startsWith("LOTUS-Simulator") || !document.querySelector(
-            'h1.contentTitle',
-          )?.textContent.startsWith("Forum")) {
-            
-            presenceData.details = "Viewing posts in"
-            
-            presenceData.state = document.querySelector(
-                'h1.contentTitle',
-              )?.textContent
+      if(!privacy) {
+        if(document.location.href.includes("board")) {
+          if(!document.querySelector(
+              'h1.contentTitle',
+            )?.textContent.startsWith("LOTUS-Simulator") || !document.querySelector(
+              'h1.contentTitle',
+            )?.textContent.startsWith("Forum")) {
+              
+              presenceData.details = "Viewing posts in"
+              
+              presenceData.state = document.querySelector(
+                  'h1.contentTitle',
+                )?.textContent
+          }
+        }
+        
+        if(document.location.href.includes("thread")) {
+          presenceData.details = "Viewing replies in"
+          
+          presenceData.state = document.querySelector(
+              'h1.contentTitle',
+            )?.textContent
+        }
+
+        if(document.location.href.includes("unread-thread-list")) {
+          presenceData.details = "Checking for unread"
+          presenceData.state = "posts"
         }
       }
-      
-      if(document.location.href.includes("thread")) {
-        presenceData.details = "Viewing replies in"
-        
-        presenceData.state = document.querySelector(
-            'h1.contentTitle',
-          )?.textContent
-      }
-
-      if(document.location.href.includes("unread-thread-list")) {
-        presenceData.details = "Checking for unread"
-        presenceData.state = "posts"
-      }
-
     } else if (document.location.pathname.startsWith("/gallery")) {
       presenceData.state = 'Images'
 
-      if (document.location.pathname.startsWith("/gallery/index.php")) {
-        if(document.location.href.includes("my-image-list")) {
-          presenceData.details = "Checking own"
-          presenceData.state = "images"
-        } else if(document.location.href.includes("image-add")) {
-          presenceData.state = "Upload a photo or gif"
-        } else {
+      if(!privacy) {
+        if (document.location.pathname.startsWith("/gallery/index.php")) {
+          if(document.location.href.includes("my-image-list")) {
+            presenceData.details = "Checking own"
+            presenceData.state = "images"
+          } else if(document.location.href.includes("image-add")) {
+            presenceData.state = "Upload a photo or gif"
+          } else {
 
-          presenceData.details = "Viewing"
+            presenceData.details = "Viewing"
 
-          presenceData.state =  document.querySelector(
-            'h1.contentTitle',
-          )?.textContent + 
+            presenceData.state =  document.querySelector(
+              'h1.contentTitle',
+            )?.textContent + 
 
-          " by " + 
+            " by " + 
 
-          document.querySelector(
-            'a#wcf1.userLink',
-          )?.textContent 
+            document.querySelector(
+              'a#wcf1.userLink',
+            )?.textContent 
 
-          const postHeaderElement = document.querySelector(
-            '.messageGroupContentHeader'
-          );
+            const postHeaderElement = document.querySelector(
+              '.messageGroupContentHeader'
+            );
 
-          presenceData.largeImageKey = postHeaderElement?.querySelector(
-            'img.userAvatarImage',
-          )?.getAttribute('src');
+            presenceData.largeImageKey = postHeaderElement?.querySelector(
+              'img.userAvatarImage',
+            )?.getAttribute('src');
 
-          presenceData.buttons = [
-            {
-              label: "Open Post",
-              url: document.URL
+            if(showButtons) {
+              presenceData.buttons = [
+                {
+                  label: "Open Post",
+                  url: document.URL
+                }
+              ]
             }
-          ]
+          }
         }
       }
     } else if (document.location.pathname.startsWith("/lexikon")) {
@@ -131,49 +138,56 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'Recent Updates'
     } else if (document.location.pathname.startsWith("/blog")) {
         presenceData.details = ""
-        presenceData.state = 'Viewing all Blog posts'
+        presenceData.state = 'Viewing Blog posts'
+        if(!privacy) {
+          presenceData.state = 'Viewing all Blog posts'
 
-        if(!document.querySelector(
-            'h1.contentTitle',
-          )?.textContent.startsWith("Lexikon")) {
-            presenceData.details = "Reading Blog post "
-            
-            presenceData.state = document.querySelector(
-                  'h1.contentTitle',
-                )?.textContent
-            }
+            if(!document.querySelector(
+                'h1.contentTitle',
+              )?.textContent.startsWith("Lexikon")) {
+                presenceData.details = "Reading Blog post "
+                
+                presenceData.state = document.querySelector(
+                      'h1.contentTitle',
+                    )?.textContent
+                }
+        }
     } else if (document.location.pathname.startsWith("/filebase")) {
         presenceData.state = 'Filebase'
 
-        if(document.location.href.includes("?filebase")) {
-            presenceData.details = "Viewing filebase posts in"
-            
-            presenceData.state = document.querySelector(
-                  'h1.contentTitle',
-                )?.textContent
-        }
+        if(!privacy) {
+          if(document.location.href.includes("?filebase")) {
+              presenceData.details = "Viewing filebase posts in"
+              
+              presenceData.state = document.querySelector(
+                    'h1.contentTitle',
+                  )?.textContent
+          }
 
-        if(document.location.href.includes("entry")) {
-            presenceData.details = "Viewing filebase post by " + document.querySelector(
-            'a#wcf1.userLink',
-          )?.textContent + ":"
-            
-            presenceData.state = document.querySelector(
-                  'h1.contentTitle',
-                )?.textContent
+          if(document.location.href.includes("entry")) {
+              presenceData.details = "Viewing filebase post by " + document.querySelector(
+              'a#wcf1.userLink',
+            )?.textContent + ":"
+              
+              presenceData.state = document.querySelector(
+                    'h1.contentTitle',
+                  )?.textContent
 
 
 
-          presenceData.largeImageKey = document.querySelector(
-              '.filebasePreviewImage img'
-          )?.getAttribute('src');
+            presenceData.largeImageKey = document.querySelector(
+                '.filebasePreviewImage img'
+            )?.getAttribute('src');
 
-          presenceData.buttons = [
-            {
-              label: "Open Post",
-              url: document.URL
+            if(showButtons) {
+              presenceData.buttons = [
+                {
+                  label: "Open Post",
+                  url: document.URL
+                }
+              ]
             }
-          ]
+          }
         }
     } else {
       presenceData.state = 'Viewing Home Page'

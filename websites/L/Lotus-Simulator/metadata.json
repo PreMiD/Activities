@@ -7,8 +7,8 @@
   },
   "service": "Lotus-Simulator",
   "description": {
-    "en": "TODO",
-    "de": "TODO"
+    "en": "This allows you to show in Discord where you hang out in the Lotus Simulator forum.",
+    "de": "Damit kannst du in Discord Anzeigen, wo du im Lotus-Simulator Forum rumlungerst."
   },
   "url": ["www.lotus-simulator.de", "lotus-simulator.de", "lotus-simulator.dev", "docs.lotus-simulator.dev"],
   "version": "1.0.0",
@@ -19,5 +19,19 @@
   "tags": [
     "simulator",
     "games"
+  ],
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy",
+      "icon": "fa-solid fa-eye",
+      "value": false
+    }
   ]
 }
