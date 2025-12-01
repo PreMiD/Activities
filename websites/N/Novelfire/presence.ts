@@ -10,7 +10,6 @@ if (!browsingTimestamp) {
   browsingTimestamp = Math.floor(Date.now() / 1000)
   window.sessionStorage.setItem('novelfire_start_time', browsingTimestamp.toString())
 }
-
 async function fetchCover(bookUrl: string): Promise<string | null> {
   if (window.localStorage.getItem(bookUrl))
     return window.localStorage.getItem(bookUrl)
@@ -115,8 +114,8 @@ presence.on('UpdateData', async () => {
 
     if (avatar) {
       const src = avatar?.getAttribute('data-src') || avatar?.getAttribute('src')
-      if (src) { 
-        presenceData.largeImageKey = src 
+      if (src) {
+        presenceData.largeImageKey = src
       }
     }
 
@@ -134,7 +133,9 @@ presence.on('UpdateData', async () => {
 
     if (avatar) {
       const src = avatar?.getAttribute('data-src') || avatar?.getAttribute('src')
-      if (src) { presenceData.largeImageKey = src }
+      if (src) {
+        presenceData.largeImageKey = src
+      }
     }
 
     if (buttons) {
@@ -151,7 +152,9 @@ presence.on('UpdateData', async () => {
 
     if (avatar) {
       const src = avatar?.getAttribute('data-src') || avatar?.getAttribute('src')
-      if (src) { presenceData.largeImageKey = src }
+      if (src) {
+        presenceData.largeImageKey = src
+      }
     }
 
     if (buttons) {
@@ -169,7 +172,9 @@ presence.on('UpdateData', async () => {
 
     if (avatar) {
       const src = avatar?.getAttribute('data-src') || avatar?.getAttribute('src')
-      if (src) { presenceData.largeImageKey = src }
+      if (src) {
+        presenceData.largeImageKey = src
+      }
     }
 
     if (buttons) {
