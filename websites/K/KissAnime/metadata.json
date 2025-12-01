@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "432215088686956565",
+    "name": "_xdoritos"
+  },
+  "service": "KissAnime",
+  "description": {
+    "en": "KissAnime is a popular online platform offering a vast collection of anime series and movies, available for free streaming in various video qualities. Perfect for anime fans looking to watch their favorite titles easily and quickly."
+  },
+  "url": [
+    "kissanime.com.ru",
+    "www.kissanime.com.ru"
+  ],
+  "version": "1.0.0",
+  "logo": "https://imgur.com/riHuhlT.png",
+  "thumbnail": "https://imgur.com/V0A63R9.png",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "stream",
+    "video"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "(https?:\\/\\/(?:[a-z0-9-]+\\.)?(vidstream\\.vip|playhydrax\\.com)(?:\\/[^\"' ]*)?)"
+}
