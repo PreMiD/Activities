@@ -1,10 +1,10 @@
 import { ActivityType } from 'premid';
 
 const presence = new Presence({
-  clientId: '757946349642711080'
+  clientId: '1445066378527772684'
 });
 
-let browsingTimestamp = Number(window.sessionStorage.getItem('novelfire_start_time'));
+let browsingTimestamp = Number(window.sessionStorage.getItem('novelfire_start_time'));  
 
 if (!browsingTimestamp) {
   browsingTimestamp = Math.floor(Date.now() / 1000);
@@ -51,7 +51,7 @@ async function fetchCover(bookUrl: string): Promise<string | null> {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://novelfire.net/apple-touch-icon.png',
+    largeImageKey: 'https://snipboard.io/vogSIZ.jpg',
     startTimestamp: browsingTimestamp,
     name: 'Novelfire',
     type: ActivityType.Watching,
@@ -72,7 +72,7 @@ presence.on('UpdateData', async () => {
       if (searchInput && searchInput.value) {
       presenceData.state = `Query: ${searchInput.value}`;
     }
-      presenceData.largeImageKey = 'https://novelfire.net/apple-touch-icon.png';
+      presenceData.largeImageKey = 'https://snipboard.io/vogSIZ.jpg';
   }
 
   // 2. Homepage
