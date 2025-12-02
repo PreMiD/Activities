@@ -100,13 +100,17 @@ presence.on('UpdateData', async () => {
           presenceData.state = title
         }
       }
-      else if (href.includes('thread') && title) {
-        presenceData.details = 'Reading Thread'
-        presenceData.state = title
-      }
       else if (href.includes('unread-thread-list')) {
         presenceData.details = 'Forum'
         presenceData.state = 'Checking unread posts'
+      }
+      else if (href.includes('thread') && title) {
+        presenceData.details = 'Reading Thread'
+        presenceData.state = title
+
+        if (showButtons) {
+            presenceData.buttons = [{ label: 'View Post', url: href }]
+          }
       }
     }
   }
