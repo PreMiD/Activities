@@ -7,12 +7,12 @@
   },
   "service": "Lotus-Simulator",
   "description": {
-    "en": "This allows you to show in Discord where you hang out in the Lotus Simulator forum.",
-    "de": "Damit kannst du in Discord Anzeigen, wo du im Lotus-Simulator Forum rumlungerst."
+    "de": "Damit kannst du in Discord Anzeigen, wo du im Lotus-Simulator Forum rumlungerst.",
+    "en": "This allows you to show in Discord where you hang out in the Lotus Simulator forum."
   },
   "url": ["www.lotus-simulator.de", "lotus-simulator.de", "lotus-simulator.dev", "docs.lotus-simulator.dev"],
   "version": "1.0.0",
-  "logo": "https://nas.fluffytrace.de/download/33",
+  "logo": "https://www.lotus-simulator.de/images/avatars/b5/3789-b53bfd1b8a2b1bfd3b10bbbe1833289fa90c6640.jpg",
   "thumbnail": "https://www.lotus-simulator.de/gallery/userImages/2b/2-2b0bbe94-large.png",
   "color": "#ebd409",
   "category": "games",
