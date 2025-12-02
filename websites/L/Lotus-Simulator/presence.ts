@@ -109,8 +109,8 @@ presence.on('UpdateData', async () => {
         presenceData.state = title
 
         if (showButtons) {
-            presenceData.buttons = [{ label: 'View Post', url: href }]
-          }
+          presenceData.buttons = [{ label: 'View Post', url: href }]
+        }
       }
     }
   }
