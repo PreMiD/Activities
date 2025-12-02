@@ -2,10 +2,8 @@ const presence = new Presence({
   clientId: '1439639102302453780',
 })
 
-const browsingTimestamp = Math.floor(Date.now() / 1000)
-
 enum ActivityAssets {
-  Logo = 'https://www.lotus-simulator.de/images/styleLogo-b96c81edc0cb1a248146b1a0ba23f6cd052f7704.png',
+  Logo = 'https://cdn.iknow13.de/3672-6fa138b8-large_512x512.png',
 }
 
 // --- HELPER FUNCTIONS ---
@@ -15,7 +13,8 @@ function getTitle(): string | undefined {
 }
 
 function getAuthor(): string | undefined {
-  return (document.querySelector('a#wcf1.userLink') || document.querySelector('.contentHeader .userLink'))?.textContent?.trim()
+  // FIX: Redundanten Selektor zu '#wcf1' vereinfacht
+  return (document.querySelector('#wcf1') || document.querySelector('.contentHeader .userLink'))?.textContent?.trim()
 }
 
 function getAvatar(): string | undefined {
@@ -42,8 +41,8 @@ function getAvatar(): string | undefined {
 
     return src
   }
-  catch (e) {
-    console.error('Error getting avatar:', e)
+  catch (error: unknown) { // FIX: 'unknown' Typisierung für bessere TypeScript Sicherheit
+    console.error('Error getting avatar:', error)
     return undefined
   }
 }
@@ -53,6 +52,9 @@ function getAvatar(): string | undefined {
 presence.on('UpdateData', async () => {
   const showButtons = await presence.getSetting<boolean>('showButtons')
   const privacy = await presence.getSetting<boolean>('privacy')
+
+  // FIX: Timestamp wird bei jedem Update neu berechnet (per-page navigation)
+  const browsingTimestamp = Math.floor(Date.now() / 1000)
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -254,7 +256,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Browsing Members List'
     }
     else if (href.includes('user-search')) {
-      presenceData.details = ''
+      presenceData.details = 'Community' // FIX: Leeren String vermieden
       presenceData.state = 'Searching a Member...'
     }
     else if (href.includes('notification-list')) {
