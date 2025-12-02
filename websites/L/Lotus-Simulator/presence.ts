@@ -112,6 +112,10 @@ presence.on('UpdateData', async () => {
           presenceData.buttons = [{ label: 'View Post', url: href }]
         }
       }
+      else if (href.includes('features-de')) {
+        presenceData.details = 'Forum'
+        presenceData.state = 'Viewing Features Overview'
+      }
     }
   }
 
