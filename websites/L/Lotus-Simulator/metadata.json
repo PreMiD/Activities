@@ -7,8 +7,8 @@
   },
   "service": "Lotus-Simulator",
   "description": {
-    "de": "Damit kannst du in Discord Anzeigen, wo du im Lotus-Simulator Forum rumlungerst.",
-    "en": "This allows you to show in Discord where you hang out in the Lotus Simulator forum."
+    "en": "This allows you to show in Discord where you hang out in the Lotus Simulator forum.",
+    "de": "Damit kannst du in Discord Anzeigen, wo du im Lotus-Simulator Forum rumlungerst."
   },
   "url": ["www.lotus-simulator.de", "lotus-simulator.de", "lotus-simulator.dev", "docs.lotus-simulator.dev"],
   "version": "1.0.0",
