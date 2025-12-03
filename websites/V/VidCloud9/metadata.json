@@ -13,7 +13,7 @@
   },
   "url": "vidcloud9.com",
   "regExp": "([a-z0-9-]+[.])*vidcloud9[.]com[/]",
-  "version": "2.0.37",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VidCloud9/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VidCloud9/assets/thumbnail.png",
   "color": "#00050C",

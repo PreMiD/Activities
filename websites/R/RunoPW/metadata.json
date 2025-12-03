@@ -19,7 +19,7 @@
   },
   "url": "runo.pw",
   "regExp": "([a-z0-9-]+[.])*runo[.]pw[/]",
-  "version": "2.1.25",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RunoPW/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RunoPW/assets/thumbnail.png",
   "color": "#ffff00",

@@ -24,7 +24,7 @@
     "www.electronjs.org"
   ],
   "regExp": "(www[.])?electronjs[.]org[/]",
-  "version": "1.2.26",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Electron/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Electron/assets/thumbnail.png",
   "color": "#74b1be",

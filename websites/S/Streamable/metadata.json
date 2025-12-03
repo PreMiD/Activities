@@ -12,7 +12,7 @@
   },
   "url": "streamable.com",
   "regExp": "([a-z0-9-]+[.])*streamable[.]com[/]",
-  "version": "1.2.27",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Streamable/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Streamable/assets/thumbnail.png",
   "color": "#0f90fa",

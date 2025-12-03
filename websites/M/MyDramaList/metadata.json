@@ -18,7 +18,7 @@
   },
   "url": "mydramalist.com",
   "regExp": "([a-z0-9-]+[.])*mydramalist[.]com[/]",
-  "version": "1.1.20",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MyDramaList/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MyDramaList/assets/thumbnail.jpg",
   "color": "#0006FF",

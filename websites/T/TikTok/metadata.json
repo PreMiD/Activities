@@ -19,7 +19,7 @@
   },
   "url": "www.tiktok.com",
   "regExp": "(www[.])?tiktok[.]com[/]",
-  "version": "2.3.11",
+  "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TikTok/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TikTok/assets/thumbnail.png",
   "color": "#000000",

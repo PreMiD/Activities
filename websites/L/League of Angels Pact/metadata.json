@@ -18,7 +18,7 @@
     "www.gamehollywood.com"
   ],
   "regExp": "(((nsh5api|nsh5apisy|www)[.])?gamehollywood[.]com|(www[.])?r2games[.]com)[/]",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/League%20of%20Angels%20Pact/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/League%20of%20Angels%20Pact/assets/thumbnail.jpg",
   "color": "#2BA2CE",

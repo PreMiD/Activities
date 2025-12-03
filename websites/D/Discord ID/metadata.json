@@ -14,7 +14,7 @@
     "discord.id"
   ],
   "regExp": "(wiki[.])?discord[.]id[/]",
-  "version": "1.1.7",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20ID/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20ID/assets/thumbnail.png",
   "color": "#7289da",

@@ -11,7 +11,7 @@
   },
   "url": "7tv.app",
   "regExp": "([a-z0-9-]+[.])*7tv[.]app[/]",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/7tv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/7tv/assets/thumbnail.png",
   "color": "#4fc2bc",

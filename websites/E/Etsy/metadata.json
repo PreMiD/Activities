@@ -17,7 +17,7 @@
     "help.etsy.com"
   ],
   "regExp": "(www|community|investors|help)[.]etsy[.]com[/]",
-  "version": "1.2.25",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Etsy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Etsy/assets/thumbnail.png",
   "color": "#f27224",

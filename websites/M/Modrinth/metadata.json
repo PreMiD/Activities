@@ -15,7 +15,7 @@
     "blog.modrinth.com"
   ],
   "regExp": "((docs|blog)[.])?modrinth[.]com[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Modrinth/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Modrinth/assets/thumbnail.png",
   "color": "#1bd96a",

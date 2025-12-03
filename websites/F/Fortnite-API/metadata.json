@@ -25,7 +25,7 @@
     "fortnite-api.com"
   ],
   "regExp": "(dash[.])?fortnite-api[.]com[/]",
-  "version": "5.4.28",
+  "version": "5.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fortnite-API/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fortnite-API/assets/thumbnail.png",
   "color": "#8A96E9",

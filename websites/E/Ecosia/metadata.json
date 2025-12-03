@@ -13,7 +13,7 @@
   },
   "url": "www.ecosia.org",
   "regExp": "(www[.])?ecosia[.]org[/]",
-  "version": "1.3.27",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Ecosia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Ecosia/assets/thumbnail.png",
   "color": "#44AEBA",

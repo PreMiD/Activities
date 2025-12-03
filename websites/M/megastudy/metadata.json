@@ -15,7 +15,7 @@
   },
   "url": "www.megastudy.net",
   "regExp": "(www[.])?megastudy[.]net[/]",
-  "version": "1.0.29",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/megastudy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/megastudy/assets/thumbnail.png",
   "color": "#0082ff",

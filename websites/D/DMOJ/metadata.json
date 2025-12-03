@@ -12,7 +12,7 @@
   },
   "url": "dmoj.ca",
   "regExp": "([a-z0-9-]+[.])*dmoj[.]ca[/]",
-  "version": "2.0.26",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DMOJ/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DMOJ/assets/thumbnail.png",
   "color": "#fcdb05",

@@ -15,7 +15,7 @@
     "www.pomofocus.io"
   ],
   "regExp": "(www[.])?pomofocus[.]io[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pomofocus/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pomofocus/assets/thumbnail.png",
   "color": "#dc4c3e",

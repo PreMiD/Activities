@@ -17,7 +17,7 @@
     "forgedev.flocker.tv"
   ],
   "regExp": "((www|files)[.]minecraftforge[.]net|(mcforge)[.]readthedocs[.]io|(forgedev)[.]flocker[.]tv)[/]",
-  "version": "1.2.25",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MinecraftForge/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MinecraftForge/assets/thumbnail.png",
   "color": "#d7a664",

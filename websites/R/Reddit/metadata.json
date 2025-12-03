@@ -41,7 +41,7 @@
     "old.reddit.com"
   ],
   "regExp": "(www|new|old)[.]reddit[.]com[/]",
-  "version": "3.1.19",
+  "version": "3.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Reddit/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Reddit/assets/thumbnail.png",
   "color": "#ff4500",

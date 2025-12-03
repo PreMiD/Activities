@@ -27,7 +27,7 @@
     "myradioenvivo.mx"
   ],
   "regExp": "(myonlineradio[.]hu|myradioonline[.]ro|myonlineradio[.]sk|myonlineradio[.]de|ukradiolive[.]com|myonlineradio[.]at|myradioonline[.]it|myradioonline[.]es|myradioendirect[.]fr|irishradiolive[.]com|myradioonline[.]pl|myonlineradio[.]nl|myradioonline[.]cl|myradioenvivo[.]ar|myradioenvivo[.]mx)[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MyOnlineRadio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MyOnlineRadio/assets/thumbnail.webp",
   "color": "#800080",

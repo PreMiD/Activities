@@ -13,7 +13,7 @@
   },
   "url": "claude.ai",
   "regExp": "([a-z0-9-]+[.])*claude[.]ai[/]",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Claude/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Claude/assets/thumbnail.jpeg",
   "color": "#DA7756",

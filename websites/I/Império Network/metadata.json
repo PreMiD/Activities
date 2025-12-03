@@ -13,7 +13,7 @@
   },
   "url": "imperionetwork.fr",
   "regExp": "([a-z0-9-]+[.])*imperionetwork[.]fr[/]",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Imp%C3%A9rio%20Network/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Imp%C3%A9rio%20Network/assets/thumbnail.png",
   "color": "#dd3333",

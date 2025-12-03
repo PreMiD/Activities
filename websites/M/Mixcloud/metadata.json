@@ -25,7 +25,7 @@
   },
   "url": "www.mixcloud.com",
   "regExp": "(www[.])?mixcloud[.]com[/]",
-  "version": "1.2.29",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mixcloud/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mixcloud/assets/thumbnail.jpg",
   "color": "#5000ff",

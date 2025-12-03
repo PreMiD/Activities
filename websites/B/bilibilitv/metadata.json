@@ -21,7 +21,7 @@
     "studio.bilibili.tv"
   ],
   "regExp": "(www|studio)[.]bilibili[.]tv[/]",
-  "version": "2.0.19",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/bilibilitv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/bilibilitv/assets/thumbnail.png",
   "color": "#2e62ff",

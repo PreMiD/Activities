@@ -12,7 +12,7 @@
   },
   "url": "www.hackerrank.com",
   "regExp": "(www[.])?hackerrank[.]com[/]",
-  "version": "1.0.21",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HackerRank/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HackerRank/assets/thumbnail.png",
   "color": "#23BB5B",

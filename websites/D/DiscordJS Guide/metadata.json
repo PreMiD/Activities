@@ -13,7 +13,7 @@
   },
   "url": "discordjs.guide",
   "regExp": "([a-z0-9-]+[.])*discordjs[.]guide[/]",
-  "version": "1.0.22",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DiscordJS%20Guide/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DiscordJS%20Guide/assets/thumbnail.png",
   "color": "#20f856",

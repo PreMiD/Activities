@@ -24,7 +24,7 @@
     "blog.tm-exchange.com"
   ],
   "regExp": "((www|united|tmnforever|nations|sunrise|original|blog)[.])?tm-exchange[.]com[/]",
-  "version": "1.1.23",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TrackMania%20Exchange/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TrackMania%20Exchange/assets/thumbnail.png",
   "color": "#c8c8c8",

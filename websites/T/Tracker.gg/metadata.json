@@ -16,7 +16,7 @@
     "thetrackernetwork.com"
   ],
   "regExp": "(tracker[.]gg|fortnitetracker[.]com|thetrackernetwork[.]com)[/]",
-  "version": "1.0.18",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tracker.gg/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tracker.gg/assets/thumbnail.png",
   "color": "#e2263c",

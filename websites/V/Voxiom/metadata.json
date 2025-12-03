@@ -11,7 +11,7 @@
   },
   "url": "voxiom.io",
   "regExp": "([a-z0-9-]+[.])*voxiom[.]io[/]",
-  "version": "1.0.19",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Voxiom/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Voxiom/assets/thumbnail.png",
   "color": "#e67e22",

@@ -13,7 +13,7 @@
   },
   "url": "www.codewars.com",
   "regExp": "(www[.])?codewars[.]com[/]",
-  "version": "1.1.7",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Codewars/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Codewars/assets/thumbnail.png",
   "color": "#9c1414",

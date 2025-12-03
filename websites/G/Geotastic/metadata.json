@@ -12,7 +12,7 @@
   },
   "url": "geotastic.net",
   "regExp": "([a-z0-9-]+[.])*geotastic[.]net[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Geotastic/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Geotastic/assets/thumbnail.png",
   "color": "#39bf7a",

@@ -18,7 +18,7 @@
   },
   "url": "www.lesswrong.com",
   "regExp": "(www[.])?lesswrong[.]com[/]",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LessWrong/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LessWrong/assets/thumbnail.png",
   "color": "#FFFFFF",

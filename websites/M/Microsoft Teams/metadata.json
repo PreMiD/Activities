@@ -19,7 +19,7 @@
     "teams.microsoft.com"
   ],
   "regExp": "((teams)[.]live[.]com|(teams)[.]microsoft[.]com)[/]",
-  "version": "1.1.24",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Microsoft%20Teams/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Microsoft%20Teams/assets/thumbnail.png",
   "color": "#4A51BA",

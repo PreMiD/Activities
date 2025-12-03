@@ -12,7 +12,7 @@
   },
   "url": "radio.garden",
   "regExp": "([a-z0-9-]+[.])*radio[.]garden[/]",
-  "version": "3.1.8",
+  "version": "3.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Radio%20Garden/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Radio%20Garden/assets/thumbnail.png",
   "color": "#0DF675",

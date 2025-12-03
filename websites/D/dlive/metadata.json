@@ -16,7 +16,7 @@
   },
   "url": "dlive.tv",
   "regExp": "([a-z0-9-]+[.])*dlive[.]tv[/]",
-  "version": "2.2.25",
+  "version": "2.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/dlive/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/dlive/assets/thumbnail.png",
   "color": "#ffd300",

@@ -20,7 +20,7 @@
   },
   "url": "www.linkedin.com",
   "regExp": "(www[.])?linkedin[.]com[/]",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LinkedIn/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LinkedIn/assets/thumbnail.png",
   "color": "#2867B2",

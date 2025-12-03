@@ -14,7 +14,7 @@
     "www.tod.tv"
   ],
   "regExp": "(www[.])?tod[.]tv[/]",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TOD/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TOD/assets/thumbnail.jpeg",
   "color": "#FEBC11",

@@ -12,7 +12,7 @@
   },
   "url": "unsplash.com",
   "regExp": "([a-z0-9-]+[.])*unsplash[.]com[/]",
-  "version": "1.0.23",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/Unsplash/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/Unsplash/assets/thumbnail.jpg",
   "color": "#ffffff",

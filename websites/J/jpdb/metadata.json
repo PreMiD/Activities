@@ -11,7 +11,7 @@
   },
   "url": "jpdb.io",
   "regExp": "([a-z0-9-]+[.])*jpdb[.]io[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/jpdb/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/jpdb/assets/thumbnail.png",
   "color": "#fe0000",

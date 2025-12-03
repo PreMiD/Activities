@@ -11,7 +11,7 @@
   },
   "url": "tvtropes.org",
   "regExp": "([a-z0-9-]+[.])*tvtropes[.]org[/]",
-  "version": "1.0.21",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TV%20Tropes/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TV%20Tropes/assets/thumbnail.png",
   "color": "#28323C",

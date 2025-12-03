@@ -15,7 +15,7 @@
     "try.brain.fm"
   ],
   "regExp": "(www|my|try)[.]brain[.]fm[/]",
-  "version": "1.0.15",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Brain.fm/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Brain.fm/assets/thumbnail.png",
   "color": "#952fc0",

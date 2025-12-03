@@ -14,7 +14,7 @@
   },
   "url": "anime4up.art",
   "regExp": "([a-z0-9-]+[.])*anime4up[.]art[/]",
-  "version": "2.0.30",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime4up/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime4up/assets/thumbnail.png",
   "color": "#38b5eb",

@@ -11,7 +11,7 @@
   },
   "url": "ameobea.me",
   "regExp": "([a-z0-9-]+[.])*ameobea[.]me[/]",
-  "version": "1.0.25",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20track/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20track/assets/thumbnail.png",
   "color": "#ffffff",

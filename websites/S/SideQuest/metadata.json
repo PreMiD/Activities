@@ -11,7 +11,7 @@
   },
   "url": "sidequestvr.com",
   "regExp": "([a-z0-9-]+[.])*sidequestvr[.]com[/]",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SideQuest/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SideQuest/assets/thumbnail.jpg",
   "color": "#1a1d3c",

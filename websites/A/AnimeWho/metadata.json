@@ -24,7 +24,7 @@
     "animewho.com"
   ],
   "regExp": "(www[.])?animewho[.]com[/]",
-  "version": "1.0.30",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeWho/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeWho/assets/thumbnail.png",
   "color": "#fc0043",

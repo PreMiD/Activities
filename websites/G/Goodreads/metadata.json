@@ -11,7 +11,7 @@
   },
   "url": "www.goodreads.com",
   "regExp": "(www[.])?goodreads[.]com[/]",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Goodreads/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Goodreads/assets/thumbnail.png",
   "color": "#b5ae84",

@@ -11,7 +11,7 @@
   },
   "url": "poolsuite.net",
   "regExp": "([a-z0-9-]+[.])*poolsuite[.]net[/]",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Poolsuite%20FM/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Poolsuite%20FM/assets/thumbnail.png",
   "color": "#03cafc",

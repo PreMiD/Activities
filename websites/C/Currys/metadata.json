@@ -14,7 +14,7 @@
     "www.currys.co.uk"
   ],
   "regExp": "(currys|www[.]currys)[.]co[.]uk[/]",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Currys/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Currys/assets/thumbnail.png",
   "color": "#4b0ba3",

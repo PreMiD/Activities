@@ -11,7 +11,7 @@
   },
   "url": "www.bestbuy.com",
   "regExp": "(www[.])?bestbuy[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Best%20Buy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Best%20Buy/assets/thumbnail.png",
   "color": "#0046be",

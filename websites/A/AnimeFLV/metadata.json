@@ -26,7 +26,7 @@
     "animeflv.ru"
   ],
   "regExp": "((www3)[.]animeflv[.]net|animeflv[.]ac|animeflv[.]ru)[/]",
-  "version": "1.1.38",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeFLV/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeFLV/assets/thumbnail.png",
   "color": "#694ba1",

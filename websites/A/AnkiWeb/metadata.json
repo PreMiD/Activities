@@ -18,7 +18,7 @@
     "forums.ankiweb.net"
   ],
   "regExp": "(((faqs|docs|changes|forums)[.])?ankiweb[.]net|ankiuser[.]net)[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnkiWeb/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnkiWeb/assets/thumbnail.png",
   "color": "#0059b1",

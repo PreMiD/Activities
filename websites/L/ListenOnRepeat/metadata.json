@@ -12,7 +12,7 @@
   },
   "url": "listenonrepeat.com",
   "regExp": "([a-z0-9-]+[.])*listenonrepeat[.]com[/]",
-  "version": "2.0.31",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/ListenOnRepeat/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/ListenOnRepeat/assets/thumbnail.png",
   "color": "#ff0066",

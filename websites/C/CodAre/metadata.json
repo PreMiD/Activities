@@ -14,7 +14,7 @@
   },
   "url": "codare.fun",
   "regExp": "([a-z0-9-]+[.])*codare[.]fun[/]",
-  "version": "1.0.25",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CodAre/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CodAre/assets/thumbnail.png",
   "color": "#3b1b8a",

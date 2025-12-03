@@ -11,7 +11,7 @@
   },
   "url": "atomic.radio",
   "regExp": "([a-z0-9-]+[.])*atomic[.]radio[/]",
-  "version": "1.1.7",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/atomicradio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/atomicradio/assets/thumbnail.jpg",
   "color": "#a9f923",

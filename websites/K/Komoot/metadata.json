@@ -18,7 +18,7 @@
     "www.komoot.nl"
   ],
   "regExp": "www[.]komoot[.](com|de|fr|it|es|nl)[/]",
-  "version": "1.0.23",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Komoot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Komoot/assets/thumbnail.png",
   "color": "#FFFFFF",

@@ -14,7 +14,7 @@
     "e-z.bio"
   ],
   "regExp": "e-z[.](host|bio)[/]",
-  "version": "1.1.12",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/e-z/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/e-z/assets/thumbnail.png",
   "color": "#558dd2",

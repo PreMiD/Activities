@@ -17,7 +17,7 @@
   },
   "url": "doc.rust-lang.org",
   "regExp": "doc[.]rust-lang[.]org[/]",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rust%20Lang%20Book/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rust%20Lang%20Book/assets/thumbnail.png",
   "color": "#A72145",

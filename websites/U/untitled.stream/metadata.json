@@ -17,7 +17,7 @@
   },
   "url": "untitled.stream",
   "regExp": "([a-z0-9-]+[.])*untitled[.]stream[/]",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/untitled.stream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/untitled.stream/assets/thumbnail.png",
   "color": "#B9ACE3",

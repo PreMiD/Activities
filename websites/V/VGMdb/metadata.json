@@ -12,7 +12,7 @@
   },
   "url": "vgmdb.net",
   "regExp": "([a-z0-9-]+[.])*vgmdb[.]net[/]",
-  "version": "1.0.20",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VGMdb/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VGMdb/assets/thumbnail.png",
   "color": "#B90000",

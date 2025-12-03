@@ -22,7 +22,7 @@
   },
   "url": "duelingnexus.com",
   "regExp": "([a-z0-9-]+[.])*duelingnexus[.]com[/]",
-  "version": "1.5.27",
+  "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dueling%20Nexus/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dueling%20Nexus/assets/thumbnail.jpg",
   "color": "#FF4500",

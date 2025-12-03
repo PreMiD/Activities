@@ -11,7 +11,7 @@
   },
   "url": "www.royalroad.com",
   "regExp": "(www[.])?royalroad[.]com[/]",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Royal%20Road/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Royal%20Road/assets/thumbnail.jpeg",
   "color": "#ffffff",

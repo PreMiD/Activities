@@ -96,7 +96,7 @@
     "desciclopedia.ws"
   ],
   "regExp": "((en|de)[.]uncyclopedia[.]co|desencyclopedie[.]org|nonsa[.]pl|nonciclopedia[.]org|eincyclopedia[.]org|(ca|la|fa|mg|yi|th|ast|sl|bg|got|hr|sk|bs|lt|et|lb|su|ro|bn|jv|cy|li|lo|ms|oc|ka|mo|ga|km|hy|sco|nn|simple|tlh|dlm|be|grc|mwl|ie|fy|vls|mn)[.]uncyclopedia[.]info|(uncyclopedia)[.]miraheze[.]org|inciclopedia[.]org|frikipaideia[.]org|absurdopedia[.]net|psyklopedin[.]org|((is|fo)[.])?ikkepedia[.]org|spademanns[.]org|hikipedia[.]org|desciclopedia[.]org|unciklopedia[.]org|uncyclopedia[.]tw|ansaikuropedia[.]org|beidipedia[.]org|((af|zea)[.])?oncyclopedia[.]org|(sr|lv|mk)[.]neciklopedija[.]org|necyklopedie[.]org|yansiklopedi[.]org|(io[.])?neciklopedio[.]org|tolololpedia[.]org|inciklopedia[.]org|(zombie)[.]pedia[.]ws|uncyclopedia[.]kr|pekepedia[.]net|desgalipedia[.]org|(www)[.]stupidedia[.]org|kamelopedia[.]net|uncyclopedia[.]ca|desciclopedia[.]ws)[/]",
-  "version": "1.4.27",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/Uncyclopedia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/Uncyclopedia/assets/thumbnail.png",
   "color": "#A1825C",

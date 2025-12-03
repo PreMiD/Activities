@@ -12,7 +12,7 @@
   },
   "url": "www.snapchat.com",
   "regExp": "(www[.])?snapchat[.]com[/]",
-  "version": "1.0.15",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Snapchat/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Snapchat/assets/thumbnail.jpg",
   "color": "#FFFC00",

@@ -12,7 +12,7 @@
   },
   "url": "www.dumpert.nl",
   "regExp": "(www[.])?dumpert[.]nl[/]",
-  "version": "2.0.10",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dumpert/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dumpert/assets/thumbnail.jpg",
   "color": "#00ff2a",

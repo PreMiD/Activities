@@ -11,7 +11,7 @@
   },
   "url": "listenbrainz.org",
   "regExp": "([a-z0-9-]+[.])*listenbrainz[.]org[/]",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/ListenBrainz/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/ListenBrainz/assets/thumbnail.png",
   "color": "#353070",

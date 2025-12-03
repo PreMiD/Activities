@@ -11,7 +11,7 @@
   },
   "url": "app.daily.dev",
   "regExp": "app[.]daily[.]dev[/]",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/daily.dev/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/daily.dev/assets/thumbnail.png",
   "color": "#0E1217",

@@ -18,7 +18,7 @@
   },
   "url": "pylon.bot",
   "regExp": "([a-z0-9-]+[.])*pylon[.]bot[/]",
-  "version": "2.0.27",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pylon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pylon/assets/thumbnail.png",
   "color": "#3961DD",

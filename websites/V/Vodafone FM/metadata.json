@@ -12,7 +12,7 @@
   },
   "url": "vodafone.fm",
   "regExp": "([a-z0-9-]+[.])*vodafone[.]fm[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vodafone%20FM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vodafone%20FM/assets/thumbnail.png",
   "color": "#e60000",

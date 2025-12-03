@@ -12,7 +12,7 @@
   },
   "url": "docchi.pl",
   "regExp": "([a-z0-9-]+[.])*docchi[.]pl[/]",
-  "version": "1.0.19",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Docchi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Docchi/assets/thumbnail.png",
   "color": "#07BF67",

@@ -12,7 +12,7 @@
   },
   "url": "fnbr.co",
   "regExp": "([a-z0-9-]+[.])*fnbr[.]co[/]",
-  "version": "1.4.23",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/fnbr.co/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/fnbr.co/assets/thumbnail.png",
   "color": "#761FA1",

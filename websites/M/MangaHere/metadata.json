@@ -12,7 +12,7 @@
   },
   "url": "www.mangahere.cc",
   "regExp": "(www[.])?mangahere[.]cc[/]",
-  "version": "1.0.24",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaHere/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaHere/assets/thumbnail.png",
   "color": "#3d6eff",

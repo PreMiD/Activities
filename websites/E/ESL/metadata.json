@@ -28,7 +28,7 @@
     "www.schulmeisterschaft.de"
   ],
   "regExp": "((www|play|pro|tv|shop|fantasy|forum|about|brand|photos|intelgrandslam)[.]eslgaming[.]com|(www)[.]esl-one[.]com|(www)[.]intelextrememasters[.]com|(www)[.]schulmeisterschaft[.]de)[/]",
-  "version": "2.3.25",
+  "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/ESL/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/ESL/assets/thumbnail.png",
   "color": "#46afe4",

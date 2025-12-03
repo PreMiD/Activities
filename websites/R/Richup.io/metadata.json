@@ -11,7 +11,7 @@
   },
   "url": "richup.io",
   "regExp": "([a-z0-9-]+[.])*richup[.]io[/]",
-  "version": "1.0.11",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Richup.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Richup.io/assets/thumbnail.png",
   "color": "#16101D",

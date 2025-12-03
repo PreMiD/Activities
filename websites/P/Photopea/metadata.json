@@ -12,7 +12,7 @@
   },
   "url": "www.photopea.com",
   "regExp": "(www[.])?photopea[.]com[/]",
-  "version": "1.4.25",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Photopea/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Photopea/assets/thumbnail.jpg",
   "color": "#42b3f5",

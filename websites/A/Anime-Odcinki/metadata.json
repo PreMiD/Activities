@@ -12,7 +12,7 @@
   },
   "url": "anime-odcinki.pl",
   "regExp": "([a-z0-9-]+[.])*anime-odcinki[.]pl[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime-Odcinki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime-Odcinki/assets/thumbnail.png",
   "color": "#9b51e0",

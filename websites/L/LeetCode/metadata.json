@@ -12,7 +12,7 @@
   },
   "url": "leetcode.com",
   "regExp": "([a-z0-9-]+[.])*leetcode[.]com[/]",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LeetCode/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LeetCode/assets/thumbnail.png",
   "color": "#f1a21a",

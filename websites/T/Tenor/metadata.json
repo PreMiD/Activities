@@ -20,7 +20,7 @@
   },
   "url": "tenor.com",
   "regExp": "([a-z0-9-]+[.])*tenor[.]com[/]",
-  "version": "1.0.19",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tenor/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tenor/assets/thumbnail.png",
   "color": "#3297E9",

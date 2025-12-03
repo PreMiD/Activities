@@ -19,7 +19,7 @@
   },
   "url": "www.pandora.com",
   "regExp": "(www[.])?pandora[.]com[/]",
-  "version": "2.1.19",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pandora/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pandora/assets/thumbnail.png",
   "color": "#224099",

@@ -11,7 +11,7 @@
   },
   "url": "www.behance.net",
   "regExp": "(www[.])?behance[.]net[/]",
-  "version": "1.0.22",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Behance/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Behance/assets/thumbnail.jpeg",
   "color": "#1769FF",

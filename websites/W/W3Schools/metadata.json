@@ -13,7 +13,7 @@
   },
   "url": "www.w3schools.com",
   "regExp": "(www[.])?w3schools[.]com[/]",
-  "version": "1.2.30",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/W3Schools/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/W3Schools/assets/thumbnail.png",
   "color": "#4CAF50",

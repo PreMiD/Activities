@@ -42,7 +42,7 @@
   },
   "url": "www.crunchyroll.com",
   "regExp": "(www[.])?crunchyroll[.]com[/]",
-  "version": "3.3.1",
+  "version": "3.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/thumbnail.png",
   "color": "#f47521",

@@ -13,7 +13,7 @@
   },
   "url": "lolesports.com",
   "regExp": "([a-z0-9-]+[.])*lolesports[.]com[/]",
-  "version": "1.1.28",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LoL%20Esports/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LoL%20Esports/assets/thumbnail.jpg",
   "color": "#061A25",

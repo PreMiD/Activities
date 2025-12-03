@@ -14,7 +14,7 @@
   },
   "url": "www.coinbase.com",
   "regExp": "(www[.])?coinbase[.]com[/]",
-  "version": "1.0.21",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Coinbase/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Coinbase/assets/thumbnail.jpg",
   "color": "#1751f0",

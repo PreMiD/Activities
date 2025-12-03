@@ -17,7 +17,7 @@
     "www.tmbw.net"
   ],
   "regExp": "(www[.])?tmbw[.]net[/]",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TMBW/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TMBW/assets/thumbnail.png",
   "color": "#d69e2e",

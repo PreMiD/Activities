@@ -16,7 +16,7 @@
     "forum.shinden.pl"
   ],
   "regExp": "(forum[.])?shinden[.]pl[/]",
-  "version": "1.0.30",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Shinden/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Shinden/assets/thumbnail.png",
   "color": "#6a2b8b",

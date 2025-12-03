@@ -21,7 +21,7 @@
     "player.siriusxm.ca"
   ],
   "regExp": "player[.]siriusxm[.](com|ca)[/]",
-  "version": "1.2.21",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SiriusXM/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SiriusXM/assets/thumbnail.png",
   "color": "#0081FF",

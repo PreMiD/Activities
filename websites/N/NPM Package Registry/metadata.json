@@ -13,7 +13,7 @@
   },
   "url": "www.npmjs.com",
   "regExp": "(www[.])?npmjs[.]com[/]",
-  "version": "1.2.22",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NPM%20Package%20Registry/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NPM%20Package%20Registry/assets/thumbnail.png",
   "color": "#C12127",

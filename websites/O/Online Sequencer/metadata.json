@@ -12,7 +12,7 @@
   },
   "url": "onlinesequencer.net",
   "regExp": "([a-z0-9-]+[.])*onlinesequencer[.]net[/]",
-  "version": "1.1.25",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Online%20Sequencer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Online%20Sequencer/assets/thumbnail.png",
   "color": "#2C5AA1",

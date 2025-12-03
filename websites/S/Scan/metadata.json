@@ -12,7 +12,7 @@
   },
   "url": "www.scan.co.uk",
   "regExp": "(www[.])?scan[.]co[.]uk[/]",
-  "version": "1.0.21",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Scan/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Scan/assets/thumbnail.png",
   "color": "#4085bc",

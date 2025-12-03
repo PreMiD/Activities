@@ -12,7 +12,7 @@
   },
   "url": "flyte.moe",
   "regExp": "([a-z0-9-]+[.])*flyte[.]moe[/]",
-  "version": "1.0.26",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/flyte%20scribe/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/flyte%20scribe/assets/thumbnail.png",
   "color": "#A3A3A3",

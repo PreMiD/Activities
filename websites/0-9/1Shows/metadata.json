@@ -11,7 +11,7 @@
   },
   "url": "www.1shows.ru",
   "regExp": "(www[.])?1shows[.]ru[/]",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/thumbnail.png",
   "color": "#121212",

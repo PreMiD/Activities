@@ -24,7 +24,7 @@
   },
   "url": "vk.com",
   "regExp": "([a-z0-9-]+[.])*vk[.]com[/]",
-  "version": "2.3.20",
+  "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VK/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VK/assets/thumbnail.png",
   "color": "#0077FF",

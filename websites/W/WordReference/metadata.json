@@ -12,7 +12,7 @@
   },
   "url": "www.wordreference.com",
   "regExp": "(www[.])?wordreference[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WordReference/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WordReference/assets/thumbnail.png",
   "color": "#5E58C7",

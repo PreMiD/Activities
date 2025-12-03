@@ -18,7 +18,7 @@
     "brainly.ro"
   ],
   "regExp": "(brainly[.]com|(brainly)[.]co[.]id|brainly[.]in|brainly[.]ro)[/]",
-  "version": "1.0.16",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Brainly/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Brainly/assets/thumbnail.png",
   "color": "#000000",

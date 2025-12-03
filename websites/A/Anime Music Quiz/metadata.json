@@ -15,7 +15,7 @@
   },
   "url": "animemusicquiz.com",
   "regExp": "([a-z0-9-]+[.])*animemusicquiz[.]com[/]",
-  "version": "1.0.33",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime%20Music%20Quiz/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime%20Music%20Quiz/assets/thumbnail.png",
   "color": "#DF6975",

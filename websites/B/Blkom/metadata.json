@@ -18,7 +18,7 @@
     "www.animeblkom.net"
   ],
   "regExp": "((www[.])?blkom[.]com|(www[.])?animeblkom[.]net)[/]",
-  "version": "1.0.32",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Blkom/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Blkom/assets/thumbnail.png",
   "color": "#FF6161",

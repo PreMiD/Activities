@@ -12,7 +12,7 @@
   },
   "url": "listenhub.ai",
   "regExp": "([a-z0-9-]+[.])*listenhub[.]ai[/]",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/ListenHub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/ListenHub/assets/thumbnail.png",
   "color": "#000000",

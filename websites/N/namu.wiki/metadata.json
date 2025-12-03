@@ -12,7 +12,7 @@
   },
   "url": "namu.wiki",
   "regExp": "([a-z0-9-]+[.])*namu[.]wiki[/]",
-  "version": "1.0.28",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/namu.wiki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/namu.wiki/assets/thumbnail.png",
   "color": "#00a495",

@@ -13,7 +13,7 @@
   },
   "url": "spiderum.com",
   "regExp": "([a-z0-9-]+[.])*spiderum[.]com[/]",
-  "version": "1.0.22",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Spiderum/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Spiderum/assets/thumbnail.png",
   "color": "#2a9bd5",

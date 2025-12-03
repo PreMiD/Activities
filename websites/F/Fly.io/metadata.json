@@ -15,7 +15,7 @@
     "community.fly.io"
   ],
   "regExp": "((www|community)[.])?fly[.]io[/]",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fly.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fly.io/assets/thumbnail.png",
   "color": "#24185B",

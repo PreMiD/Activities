@@ -14,7 +14,7 @@
   },
   "url": "www.clickjogos.com.br",
   "regExp": "(www[.])?clickjogos[.]com[.]br[/]",
-  "version": "1.1.28",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Click%20Jogos/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Click%20Jogos/assets/thumbnail.png",
   "color": "#FF9902",

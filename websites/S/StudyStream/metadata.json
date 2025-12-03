@@ -11,7 +11,7 @@
   },
   "url": "app.studystream.live",
   "regExp": "app[.]studystream[.]live[/]",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/StudyStream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/StudyStream/assets/thumbnail.png",
   "color": "#2d1ecd",

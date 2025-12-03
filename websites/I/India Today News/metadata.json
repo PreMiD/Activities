@@ -11,7 +11,7 @@
   },
   "url": "www.indiatoday.in",
   "regExp": "(www[.])?indiatoday[.]in[/]",
-  "version": "1.0.19",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/India%20Today%20News/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/India%20Today%20News/assets/thumbnail.png",
   "color": "#fc3b43",

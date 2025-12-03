@@ -13,7 +13,7 @@
   },
   "url": "zerotwo.bot",
   "regExp": "([a-z0-9-]+[.])*zerotwo[.]bot[/]",
-  "version": "2.0.15",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZeroTwo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZeroTwo/assets/thumbnail.png",
   "color": "#ff40ff",

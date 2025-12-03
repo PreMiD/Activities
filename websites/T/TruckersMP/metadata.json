@@ -23,7 +23,7 @@
     "map.truckersmp.com"
   ],
   "regExp": "((forum|stats|map)[.])?truckersmp[.]com[/]",
-  "version": "3.0.20",
+  "version": "3.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersMP/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersMP/assets/thumbnail.png",
   "color": "#B92025",

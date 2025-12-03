@@ -20,7 +20,7 @@
   },
   "url": "7plus.com.au",
   "regExp": "([a-z0-9-]+[.])*7plus[.]com[.]au[/]",
-  "version": "1.2.15",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/7plus/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/7plus/assets/thumbnail.png",
   "color": "#FF0000",

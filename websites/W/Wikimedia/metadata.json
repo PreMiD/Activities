@@ -48,7 +48,7 @@
     "wikispore.wmflabs.org"
   ],
   "regExp": "((www|meta|incubator|wikitech|foundation|outreach|wikimania|wikimania2005|wikimania2006|wikimania2007|wikimania2008|wikimania2009|wikimania2010|wikimania2011|wikimania2012|wikimania2013|wikimania2014|wikimania2015|wikimania2016|wikimania2017|wikimania2018|strategy|usability|login|lists|stats|phabricator|dumps|diff|techblog|donate)[.]wikimedia[.]org|(www)[.]mediawiki[.]org|wikimediafoundation[.]org|(phab|xtools|wikispore)[.]wmflabs[.]org)[/]",
-  "version": "1.0.23",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikimedia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikimedia/assets/thumbnail.png",
   "color": "#000000",

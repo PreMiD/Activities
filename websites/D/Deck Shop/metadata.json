@@ -24,7 +24,7 @@
   },
   "url": "www.deckshop.pro",
   "regExp": "(www[.])?deckshop[.]pro[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deck%20Shop/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deck%20Shop/assets/thumbnail.jpg",
   "color": "#222222",

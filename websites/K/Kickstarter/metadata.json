@@ -16,7 +16,7 @@
   },
   "url": "www.kickstarter.com",
   "regExp": "(www[.])?kickstarter[.]com[/]",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kickstarter/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kickstarter/assets/thumbnail.png",
   "color": "#05ce78",

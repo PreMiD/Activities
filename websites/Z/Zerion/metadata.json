@@ -12,7 +12,7 @@
   },
   "url": "zeriun.cc",
   "regExp": "([a-z0-9-]+[.])*zeriun[.]cc[/]",
-  "version": "1.0.18",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/Zerion/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/Zerion/assets/thumbnail.png",
   "color": "#aa1717",

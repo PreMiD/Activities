@@ -11,7 +11,7 @@
   },
   "url": "videogamemods.com",
   "regExp": "([a-z0-9-]+[.])*videogamemods[.]com[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Video%20Game%20Mods/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Video%20Game%20Mods/assets/thumbnail.jpeg",
   "color": "#5362e8",

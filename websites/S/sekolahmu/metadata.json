@@ -16,7 +16,7 @@
   },
   "url": "www.sekolah.mu",
   "regExp": "(www[.])?sekolah[.]mu[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/sekolahmu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/sekolahmu/assets/thumbnail.png",
   "color": "#ffce2f",

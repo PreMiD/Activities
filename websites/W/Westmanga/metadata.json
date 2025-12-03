@@ -12,7 +12,7 @@
   },
   "url": "westmanga.fun",
   "regExp": "([a-z0-9-]+[.])*westmanga[.]fun[/]",
-  "version": "1.0.22",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Westmanga/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Westmanga/assets/thumbnail.png",
   "color": "#7d1217",

@@ -12,7 +12,7 @@
   },
   "url": "toyhou.se",
   "regExp": "([a-z0-9-]+[.])*toyhou[.]se[/]",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Toyhouse/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Toyhouse/assets/thumbnail.png",
   "color": "#5ab5d1",

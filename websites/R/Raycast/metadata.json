@@ -14,7 +14,7 @@
     "developers.raycast.com"
   ],
   "regExp": "(www|developers)[.]raycast[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Raycast/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Raycast/assets/thumbnail.png",
   "color": "#FF6363",

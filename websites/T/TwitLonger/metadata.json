@@ -12,7 +12,7 @@
   },
   "url": "www.twitlonger.com",
   "regExp": "(www[.])?twitlonger[.]com[/]",
-  "version": "1.0.24",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TwitLonger/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TwitLonger/assets/thumbnail.png",
   "color": "#428BCA",

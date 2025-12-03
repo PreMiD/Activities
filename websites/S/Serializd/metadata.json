@@ -11,7 +11,7 @@
   },
   "url": "www.serializd.com",
   "regExp": "(www[.])?serializd[.]com[/]",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Serializd/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Serializd/assets/thumbnail.png",
   "color": "#102527",

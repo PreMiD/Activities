@@ -13,7 +13,7 @@
   },
   "url": "bonkleagues.io",
   "regExp": "([a-z0-9-]+[.])*bonkleagues[.]io[/]",
-  "version": "1.0.22",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bonk%20Leagues/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bonk%20Leagues/assets/thumbnail.png",
   "color": "#ff0170",

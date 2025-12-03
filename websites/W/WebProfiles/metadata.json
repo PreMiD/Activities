@@ -11,7 +11,7 @@
   },
   "url": "webprofiles.me",
   "regExp": "([a-z0-9-]+[.])*webprofiles[.]me[/]",
-  "version": "1.1.13",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WebProfiles/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WebProfiles/assets/thumbnail.png",
   "color": "#1E1E40",

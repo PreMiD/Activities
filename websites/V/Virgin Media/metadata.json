@@ -16,7 +16,7 @@
     "www.virginmedia.com"
   ],
   "regExp": "(www[.])?virginmedia[.]com[/]",
-  "version": "1.3.27",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Virgin%20Media/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Virgin%20Media/assets/thumbnail.png",
   "color": "#ed0000",

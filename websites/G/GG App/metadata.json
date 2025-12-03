@@ -15,7 +15,7 @@
   },
   "url": "ggapp.io",
   "regExp": "([a-z0-9-]+[.])*ggapp[.]io[/]",
-  "version": "1.0.19",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GG%20App/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GG%20App/assets/thumbnail.png",
   "color": "#071224",

@@ -14,7 +14,7 @@
   },
   "url": "mygamatoto.com",
   "regExp": "([a-z0-9-]+[.])*mygamatoto[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/My%20Gamatoto/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/My%20Gamatoto/assets/thumbnail.png",
   "color": "#ffffff",

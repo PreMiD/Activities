@@ -12,7 +12,7 @@
   },
   "url": "tricksplit.io",
   "regExp": "([a-z0-9-]+[.])*tricksplit[.]io[/]",
-  "version": "1.0.28",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TrickSplit.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TrickSplit.io/assets/thumbnail.png",
   "color": "#ABCF44",

@@ -12,7 +12,7 @@
   },
   "url": "www.jetpunk.com",
   "regExp": "(www[.])?jetpunk[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/JetPunk/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/JetPunk/assets/thumbnail.png",
   "color": "#CDD251",

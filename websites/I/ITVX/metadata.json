@@ -15,7 +15,7 @@
     "itv.com"
   ],
   "regExp": "(www[.])?itv[.]com[/]",
-  "version": "1.0.17",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/ITVX/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/ITVX/assets/thumbnail.jpg",
   "color": "#102C3D",

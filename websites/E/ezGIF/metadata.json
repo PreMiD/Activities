@@ -11,7 +11,7 @@
   },
   "url": "ezgif.com",
   "regExp": "([a-z0-9-]+[.])*ezgif[.]com[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/ezGIF/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/ezGIF/assets/thumbnail.png",
   "color": "#222",

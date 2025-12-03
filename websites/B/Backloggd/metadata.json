@@ -15,7 +15,7 @@
     "www.backloggd.com"
   ],
   "regExp": "(www[.])?backloggd[.]com[/]",
-  "version": "1.0.14",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Backloggd/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Backloggd/assets/thumbnail.png",
   "color": "#4a5e8d",

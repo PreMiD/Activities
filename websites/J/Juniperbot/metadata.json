@@ -17,7 +17,7 @@
     "juniper.bot"
   ],
   "regExp": "((docs|feedback)[.])?juniper[.]bot[/]",
-  "version": "2.0.28",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Juniperbot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Juniperbot/assets/thumbnail.png",
   "color": "#C27C0E",

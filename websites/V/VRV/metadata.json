@@ -20,7 +20,7 @@
   },
   "url": "vrv.co",
   "regExp": "([a-z0-9-]+[.])*vrv[.]co[/]",
-  "version": "2.0.18",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VRV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VRV/assets/thumbnail.png",
   "color": "#fdde0a",

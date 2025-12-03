@@ -17,7 +17,7 @@
     "blog.tailwindcss.com"
   ],
   "regExp": "(((play|blog)[.])?tailwindcss[.]com|tailwindui[.]com)[/]",
-  "version": "1.0.22",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tailwind%20CSS/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tailwind%20CSS/assets/thumbnail.png",
   "color": "#06b6d4",

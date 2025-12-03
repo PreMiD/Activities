@@ -18,7 +18,7 @@
     "bio.signed.host"
   ],
   "regExp": "((www|bio)[.])?signed[.]host[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/signed.host/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/signed.host/assets/thumbnail.png",
   "color": "#37b2eb",

@@ -18,7 +18,7 @@
   },
   "url": "laingame.net",
   "regExp": "([a-z0-9-]+[.])*laingame[.]net[/]",
-  "version": "1.2.26",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/lain%20game/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/lain%20game/assets/thumbnail.png",
   "color": "#000000",

@@ -12,7 +12,7 @@
   },
   "url": "foxford.ru",
   "regExp": "([a-z0-9-]+[.])*foxford[.]ru[/]",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Foxford/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Foxford/assets/thumbnail.jpg",
   "color": "#E89020",

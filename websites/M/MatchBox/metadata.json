@@ -15,7 +15,7 @@
     "www.smashpros.gg"
   ],
   "regExp": "(thematchbox[.]gg|(www[.])?smashpros[.]gg)[/]",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MatchBox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MatchBox/assets/thumbnail.png",
   "color": "#52ff87",

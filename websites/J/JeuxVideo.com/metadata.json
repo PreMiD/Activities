@@ -13,7 +13,7 @@
   },
   "url": "www.jeuxvideo.com",
   "regExp": "(www[.])?jeuxvideo[.]com[/]",
-  "version": "1.2.28",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/JeuxVideo.com/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/JeuxVideo.com/assets/thumbnail.png",
   "color": "#FF582E",

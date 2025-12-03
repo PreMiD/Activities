@@ -13,7 +13,7 @@
   },
   "url": "www.mojevideo.sk",
   "regExp": "(www[.])?mojevideo[.]sk[/]",
-  "version": "1.0.24",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MojeVideo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MojeVideo/assets/thumbnail.png",
   "color": "#2e2e2e",

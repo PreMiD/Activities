@@ -12,7 +12,7 @@
   },
   "url": "monoschinos2.com",
   "regExp": "([a-z0-9-]+[.])*monoschinos2[.]com[/]",
-  "version": "1.0.38",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Monos%20Chinos/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Monos%20Chinos/assets/thumbnail.png",
   "color": "#ff6348",

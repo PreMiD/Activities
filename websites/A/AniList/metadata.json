@@ -29,7 +29,7 @@
   },
   "url": "anilist.co",
   "regExp": "([a-z0-9-]+[.])*anilist[.]co[/]",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniList/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniList/assets/thumbnail.jpg",
   "color": "#02A9FF",

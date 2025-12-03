@@ -31,7 +31,7 @@
     "www.bbc.com"
   ],
   "regExp": "((www[.]bbc)[.]co[.]uk|(www)[.]bbc[.]com)[/]",
-  "version": "2.2.12",
+  "version": "2.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BBC/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BBC/assets/thumbnail.png",
   "color": "#000000",

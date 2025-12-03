@@ -14,7 +14,7 @@
   },
   "url": "limeprogaming.com",
   "regExp": "([a-z0-9-]+[.])*limeprogaming[.]com[/]",
-  "version": "1.0.20",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Lime%20Pro%20Gaming/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Lime%20Pro%20Gaming/assets/thumbnail.png",
   "color": "#9bda45",

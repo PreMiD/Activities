@@ -16,7 +16,7 @@
     "help.figma.com"
   ],
   "regExp": "(www|help)[.]figma[.]com[/]",
-  "version": "1.0.24",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Figma/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Figma/assets/thumbnail.png",
   "color": "#02FF12",

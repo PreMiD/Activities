@@ -17,7 +17,7 @@
     "dev.animi.club"
   ],
   "regExp": "((www|dev)[.])?animi[.]club[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniMi%20Club/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniMi%20Club/assets/thumbnail.png",
   "color": "#e11d48",

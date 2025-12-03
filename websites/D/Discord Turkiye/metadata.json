@@ -12,7 +12,7 @@
   },
   "url": "discordturkiye.com",
   "regExp": "([a-z0-9-]+[.])*discordturkiye[.]com[/]",
-  "version": "1.0.14",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20Turkiye/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20Turkiye/assets/thumbnail.png",
   "color": "#57F287",

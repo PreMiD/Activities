@@ -13,7 +13,7 @@
   },
   "url": "tatsu.gg",
   "regExp": "([a-z0-9-]+[.])*tatsu[.]gg[/]",
-  "version": "1.2.31",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tatsumaki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tatsumaki/assets/thumbnail.png",
   "color": "#3FA549",

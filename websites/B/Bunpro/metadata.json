@@ -33,7 +33,7 @@
     "community.bunpro.jp"
   ],
   "regExp": "((www|community)[.])?bunpro[.]jp[/]",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bunpro/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bunpro/assets/thumbnail.png",
   "color": "#5e6266",

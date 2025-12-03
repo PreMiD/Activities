@@ -12,7 +12,7 @@
   },
   "url": "www.retrocrush.tv",
   "regExp": "(www[.])?retrocrush[.]tv[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RetroCrush/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RetroCrush/assets/thumbnail.png",
   "color": "#000000",

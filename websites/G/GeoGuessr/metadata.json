@@ -20,7 +20,7 @@
     "geoguessr.com"
   ],
   "regExp": "(www[.])?geoguessr[.]com[/]",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/thumbnail.png",
   "color": "#7950e5",

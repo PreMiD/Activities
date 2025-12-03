@@ -12,7 +12,7 @@
   },
   "url": "attackertv.so",
   "regExp": "([a-z0-9-]+[.])*attackertv[.]so[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AttackerTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AttackerTV/assets/thumbnail.png",
   "color": "#000000",

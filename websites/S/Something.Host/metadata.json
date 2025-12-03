@@ -18,7 +18,7 @@
     "files.something.host"
   ],
   "regExp": "((cp|support|content|files)[.])?something[.]host[/]",
-  "version": "1.0.22",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Something.Host/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Something.Host/assets/thumbnail.png",
   "color": "#7A64EF",

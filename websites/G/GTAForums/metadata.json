@@ -12,7 +12,7 @@
   },
   "url": "gtaforums.com",
   "regExp": "([a-z0-9-]+[.])*gtaforums[.]com[/]",
-  "version": "1.0.26",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GTAForums/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GTAForums/assets/thumbnail.png",
   "color": "#244052",

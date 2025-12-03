@@ -21,7 +21,7 @@
   },
   "url": "www.acmicpc.net",
   "regExp": "(www[.])?acmicpc[.]net[/]",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Baekjoon%20Online%20Judge/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Baekjoon%20Online%20Judge/assets/thumbnail.png",
   "color": "#1a75bc",

@@ -21,7 +21,7 @@
     "myaccount.nytimes.com"
   ],
   "regExp": "(www|myaccount)[.]nytimes[.]com[/]",
-  "version": "2.0.18",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/The%20New%20York%20Times/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/The%20New%20York%20Times/assets/thumbnail.png",
   "color": "#ffffff",

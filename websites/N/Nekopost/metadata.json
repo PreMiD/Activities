@@ -12,7 +12,7 @@
   },
   "url": "www.nekopost.net",
   "regExp": "(www[.])?nekopost[.]net[/]",
-  "version": "1.0.21",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nekopost/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nekopost/assets/thumbnail.png",
   "color": "#e7dca5",

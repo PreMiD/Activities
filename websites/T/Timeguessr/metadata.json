@@ -12,7 +12,7 @@
   },
   "url": "timeguessr.com",
   "regExp": "([a-z0-9-]+[.])*timeguessr[.]com[/]",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Timeguessr/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Timeguessr/assets/thumbnail.png",
   "color": "#DB5049",

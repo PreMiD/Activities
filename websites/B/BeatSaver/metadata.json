@@ -13,7 +13,7 @@
   },
   "url": "beatsaver.com",
   "regExp": "([a-z0-9-]+[.])*beatsaver[.]com[/]",
-  "version": "1.1.10",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BeatSaver/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BeatSaver/assets/thumbnail.png",
   "color": "#FF0090",

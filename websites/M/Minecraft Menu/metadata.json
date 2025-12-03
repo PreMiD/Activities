@@ -15,7 +15,7 @@
     "www.minecraft.menu"
   ],
   "regExp": "(www[.])?minecraft[.]menu[/]",
-  "version": "1.0.14",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Minecraft%20Menu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Minecraft%20Menu/assets/thumbnail.jpg",
   "color": "#DD1500",

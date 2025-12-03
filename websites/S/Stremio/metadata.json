@@ -24,7 +24,7 @@
     "stremio.crun.zip"
   ],
   "regExp": "((www|web)[.]stremio[.]com|(app|web)[.]strem[.]io|(stremio)[.]crun[.]zip)[/]",
-  "version": "2.1.5",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stremio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stremio/assets/thumbnail.png",
   "color": "#7b5bf5",

@@ -12,7 +12,7 @@
   },
   "url": "radiooooo.com",
   "regExp": "([a-z0-9-]+[.])*radiooooo[.]com[/]",
-  "version": "1.0.26",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Radiooooo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Radiooooo/assets/thumbnail.jpg",
   "color": "#108cb4",

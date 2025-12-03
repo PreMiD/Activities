@@ -12,7 +12,7 @@
   },
   "url": "abema.tv",
   "regExp": "([a-z0-9-]+[.])*abema[.]tv[/]",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/ABEMA/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/ABEMA/assets/thumbnail.png",
   "color": "#171717",

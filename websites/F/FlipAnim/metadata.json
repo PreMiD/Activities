@@ -12,7 +12,7 @@
   },
   "url": "flipanim.com",
   "regExp": "([a-z0-9-]+[.])*flipanim[.]com[/]",
-  "version": "1.2.24",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FlipAnim/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FlipAnim/assets/thumbnail.png",
   "color": "#f2a012",

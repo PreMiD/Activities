@@ -19,7 +19,7 @@
   },
   "url": "www.messenger.com",
   "regExp": "(www[.])?messenger[.]com[/]",
-  "version": "1.2.20",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Messenger/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Messenger/assets/thumbnail.jpg",
   "color": "#00a3ff",

@@ -12,7 +12,7 @@
   },
   "url": "artfight.net",
   "regExp": "([a-z0-9-]+[.])*artfight[.]net[/]",
-  "version": "1.0.14",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Artfight/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Artfight/assets/thumbnail.jpg",
   "color": "#a65178",

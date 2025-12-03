@@ -18,7 +18,7 @@
   },
   "url": "client.foldingathome.org",
   "regExp": "client[.]foldingathome[.]org[/]",
-  "version": "1.1.27",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Folding%40home/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Folding%40home/assets/thumbnail.png",
   "color": "#581919",

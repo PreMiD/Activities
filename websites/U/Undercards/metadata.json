@@ -12,7 +12,7 @@
   },
   "url": "undercards.net",
   "regExp": "([a-z0-9-]+[.])*undercards[.]net[/]",
-  "version": "1.0.22",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/Undercards/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/Undercards/assets/thumbnail.png",
   "color": "#FF0000",

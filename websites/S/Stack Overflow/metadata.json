@@ -15,7 +15,7 @@
   },
   "url": "stackoverflow.com",
   "regExp": "([a-z0-9-]+[.])*stackoverflow[.]com[/]",
-  "version": "2.4.12",
+  "version": "2.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stack%20Overflow/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stack%20Overflow/assets/thumbnail.png",
   "color": "#f48023",

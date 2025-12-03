@@ -14,7 +14,7 @@
     "forums.liveatc.net"
   ],
   "regExp": "(www|forums)[.]liveatc[.]net[/]",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LiveATC/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LiveATC/assets/thumbnail.png",
   "color": "#FF3333",

@@ -11,7 +11,7 @@
   },
   "url": "neal.fun",
   "regExp": "([a-z0-9-]+[.])*neal[.]fun[/]",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/neal.fun/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/neal.fun/assets/thumbnail.png",
   "color": "#606060",

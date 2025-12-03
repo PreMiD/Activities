@@ -12,7 +12,7 @@
   },
   "url": "gardenmc.fr",
   "regExp": "([a-z0-9-]+[.])*gardenmc[.]fr[/]",
-  "version": "1.1.25",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Garden/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Garden/assets/thumbnail.png",
   "color": "#0f7e49",

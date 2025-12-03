@@ -11,7 +11,7 @@
   },
   "url": "pixlr.com",
   "regExp": "([a-z0-9-]+[.])*pixlr[.]com[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pixlr/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pixlr/assets/thumbnail.png",
   "color": "#2596be",

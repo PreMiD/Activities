@@ -12,7 +12,7 @@
   },
   "url": "www.cdkeys.com",
   "regExp": "(www[.])?cdkeys[.]com[/]",
-  "version": "1.1.14",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CDKeys/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CDKeys/assets/thumbnail.png",
   "color": "#1F143D",

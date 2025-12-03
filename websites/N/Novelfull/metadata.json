@@ -15,7 +15,7 @@
     "www.novelfull.com"
   ],
   "regExp": "(www[.])?novelfull[.]com[/]",
-  "version": "1.1.13",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Novelfull/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Novelfull/assets/thumbnail.jpg",
   "color": "#0093c9",

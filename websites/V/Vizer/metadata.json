@@ -14,7 +14,7 @@
   },
   "url": "novizer.com",
   "regExp": "([a-z0-9-]+[.])*novizer[.]com[/]",
-  "version": "1.0.32",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vizer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vizer/assets/thumbnail.png",
   "color": "#fba0a8",

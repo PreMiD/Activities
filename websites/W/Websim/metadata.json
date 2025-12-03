@@ -11,7 +11,7 @@
   },
   "url": "websim.com",
   "regExp": "([a-z0-9-]+[.])*websim[.]com[/]",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Websim/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Websim/assets/thumbnail.png",
   "color": "#38bdf8",

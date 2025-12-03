@@ -11,7 +11,7 @@
   },
   "url": "zenmarket.jp",
   "regExp": "([a-z0-9-]+[.])*zenmarket[.]jp[/]",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZenMarket/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZenMarket/assets/thumbnail.jpg",
   "color": "#42749A",

@@ -14,7 +14,7 @@
   },
   "url": "www.cda.pl",
   "regExp": "(www[.])?cda[.]pl[/]",
-  "version": "2.0.13",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/cda.pl/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/cda.pl/assets/thumbnail.png",
   "color": "#B22907",

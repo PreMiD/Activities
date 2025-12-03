@@ -12,7 +12,7 @@
   },
   "url": "japari-library.com",
   "regExp": "([a-z0-9-]+[.])*japari-library[.]com[/]",
-  "version": "1.1.28",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Japari%20Library/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Japari%20Library/assets/thumbnail.png",
   "color": "#4CC5FF",

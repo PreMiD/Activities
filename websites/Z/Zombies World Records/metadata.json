@@ -14,7 +14,7 @@
   },
   "url": "zwr.gg",
   "regExp": "([a-z0-9-]+[.])*zwr[.]gg[/]",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/Zombies%20World%20Records/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/Zombies%20World%20Records/assets/thumbnail.png",
   "color": "#c59531",

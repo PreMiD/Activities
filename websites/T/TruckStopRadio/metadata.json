@@ -18,7 +18,7 @@
   },
   "url": "truckstopradio.co.uk",
   "regExp": "([a-z0-9-]+[.])*truckstopradio[.]co[.]uk[/]",
-  "version": "2.0.18",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TruckStopRadio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TruckStopRadio/assets/thumbnail.png",
   "color": "#2056f8",

@@ -18,7 +18,7 @@
     "bukkit.gamepedia.com"
   ],
   "regExp": "(((dl|dev)[.])?bukkit[.]org|(bukkit)[.]gamepedia[.]com)[/]",
-  "version": "1.2.27",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bukkit/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bukkit/assets/thumbnail.png",
   "color": "#2096e1",

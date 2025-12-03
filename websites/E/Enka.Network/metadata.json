@@ -11,7 +11,7 @@
   },
   "url": "enka.network",
   "regExp": "([a-z0-9-]+[.])*enka[.]network[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Enka.Network/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Enka.Network/assets/thumbnail.png",
   "color": "#7a97a4",

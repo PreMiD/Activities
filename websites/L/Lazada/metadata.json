@@ -20,7 +20,7 @@
     "www.lazada.sg"
   ],
   "regExp": "((www[.])?lazada[.]com|(www[.])?lazada[.]co|(www[.])?lazada[.]vn|(www[.])?lazada[.]sg)[/]",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Lazada/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Lazada/assets/thumbnail.jpg",
   "color": "#191fb5",

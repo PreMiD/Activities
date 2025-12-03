@@ -13,7 +13,7 @@
   },
   "url": "ilovemusic.de",
   "regExp": "([a-z0-9-]+[.])*ilovemusic[.]de[/]",
-  "version": "2.0.14",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/I%20Love%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/I%20Love%20Music/assets/thumbnail.png",
   "color": "#F7C516",

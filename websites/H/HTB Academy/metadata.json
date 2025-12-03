@@ -11,7 +11,7 @@
   },
   "url": "academy.hackthebox.com",
   "regExp": "academy[.]hackthebox[.]com[/]",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HTB%20Academy/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HTB%20Academy/assets/thumbnail.png",
   "color": "#40a832",

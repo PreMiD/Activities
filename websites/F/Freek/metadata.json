@@ -12,7 +12,7 @@
   },
   "url": "freeky.to",
   "regExp": "([a-z0-9-]+[.])*freeky[.]to[/]",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Freek/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Freek/assets/thumbnail.png",
   "color": "#121212",

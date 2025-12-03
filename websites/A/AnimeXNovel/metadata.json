@@ -21,7 +21,7 @@
   },
   "url": "www.animexnovel.com",
   "regExp": "(www[.])?animexnovel[.]com[/]",
-  "version": "1.1.27",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeXNovel/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeXNovel/assets/thumbnail.png",
   "color": "#00a896",

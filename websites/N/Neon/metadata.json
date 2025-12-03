@@ -21,7 +21,7 @@
     "neontv.co.nz"
   ],
   "regExp": "(www[.]neontv|neontv)[.]co[.]nz[/]",
-  "version": "1.0.26",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Neon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Neon/assets/thumbnail.png",
   "color": "#000000",

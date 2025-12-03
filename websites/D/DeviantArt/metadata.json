@@ -22,7 +22,7 @@
     "sta.sh"
   ],
   "regExp": "((www|chat|groups|portfolio|shop)[.]deviantart[.]com|(www)[.]deviantartsupport[.]com|deviantartads[.]com|sta[.]sh)[/]",
-  "version": "1.2.29",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DeviantArt/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DeviantArt/assets/thumbnail.png",
   "color": "#05cc47",

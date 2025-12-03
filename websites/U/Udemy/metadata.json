@@ -13,7 +13,7 @@
   },
   "url": "www.udemy.com",
   "regExp": "(www[.])?udemy[.]com[/]",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/Udemy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/Udemy/assets/thumbnail.png",
   "color": "#a435f0",

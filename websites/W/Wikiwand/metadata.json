@@ -13,7 +13,7 @@
   },
   "url": "www.wikiwand.com",
   "regExp": "(www[.])?wikiwand[.]com[/]",
-  "version": "1.0.25",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikiwand/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikiwand/assets/thumbnail.jpg",
   "color": "#F7F6F5",

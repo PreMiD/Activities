@@ -16,7 +16,7 @@
     "www.web.archive.org"
   ],
   "regExp": "((web|www[.]web)[.])?archive[.]org[/]",
-  "version": "1.1.13",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WayBack%20Machine/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WayBack%20Machine/assets/thumbnail.png",
   "color": "#AD2E37",

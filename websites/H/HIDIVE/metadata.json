@@ -12,7 +12,7 @@
   },
   "url": "www.hidive.com",
   "regExp": "(www[.])?hidive[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HIDIVE/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HIDIVE/assets/thumbnail.png",
   "color": "#000000",

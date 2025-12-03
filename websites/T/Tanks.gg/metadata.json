@@ -11,7 +11,7 @@
   },
   "url": "tanks.gg",
   "regExp": "([a-z0-9-]+[.])*tanks[.]gg[/]",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tanks.gg/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tanks.gg/assets/thumbnail.png",
   "color": "#481109",

@@ -18,7 +18,7 @@
   },
   "url": "keymash.io",
   "regExp": "([a-z0-9-]+[.])*keymash[.]io[/]",
-  "version": "2.0.6",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Keymash/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Keymash/assets/thumbnail.png",
   "color": "#FB923C",

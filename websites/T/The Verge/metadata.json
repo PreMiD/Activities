@@ -16,7 +16,7 @@
     "theverge.com"
   ],
   "regExp": "(www[.])?theverge[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Verge/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Verge/assets/thumbnail.png",
   "color": "#5200ff",

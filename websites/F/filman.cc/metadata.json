@@ -12,7 +12,7 @@
   },
   "url": "filman.cc",
   "regExp": "([a-z0-9-]+[.])*filman[.]cc[/]",
-  "version": "1.0.16",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/filman.cc/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/filman.cc/assets/thumbnail.png",
   "color": "#00b3ff",

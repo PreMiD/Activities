@@ -11,7 +11,7 @@
   },
   "url": "www.planetminecraft.com",
   "regExp": "(www[.])?planetminecraft[.]com[/]",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Planet%20Minecraft/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Planet%20Minecraft/assets/thumbnail.jpg",
   "color": "#014E96",

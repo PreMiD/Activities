@@ -14,7 +14,7 @@
   },
   "url": "anime-tube.tv",
   "regExp": "([a-z0-9-]+[.])*anime-tube[.]tv[/]",
-  "version": "1.0.30",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeTube/assets/thumbnail.png",
   "color": "#9b403f",

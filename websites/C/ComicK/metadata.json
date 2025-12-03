@@ -18,7 +18,7 @@
   },
   "url": "comick.io",
   "regExp": "([a-z0-9-]+[.])*comick[.]io[/]",
-  "version": "1.2.15",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/ComicK/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/ComicK/assets/thumbnail.png",
   "color": "#f698c7",

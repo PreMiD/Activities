@@ -11,7 +11,7 @@
   },
   "url": "news.ycombinator.com",
   "regExp": "news[.]ycombinator[.]com[/]",
-  "version": "1.0.11",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hacker%20News/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hacker%20News/assets/thumbnail.png",
   "color": "#ff6600",

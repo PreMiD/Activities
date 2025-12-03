@@ -12,7 +12,7 @@
   },
   "url": "www.buienalarm.nl",
   "regExp": "(www[.])?buienalarm[.]nl[/]",
-  "version": "1.0.14",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Buienalarm/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Buienalarm/assets/thumbnail.png",
   "color": "#2a59b5",

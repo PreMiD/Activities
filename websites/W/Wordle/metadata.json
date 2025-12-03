@@ -14,7 +14,7 @@
     "www.powerlanguage.co.uk"
   ],
   "regExp": "((www)[.]nytimes[.]com|(www[.]powerlanguage)[.]co[.]uk)[/]",
-  "version": "1.1.19",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wordle/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wordle/assets/thumbnail.png",
   "color": "#6AAA64",

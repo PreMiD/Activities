@@ -17,7 +17,7 @@
   },
   "url": "wetv.vip",
   "regExp": "([a-z0-9-]+[.])*wetv[.]vip[/]",
-  "version": "2.0.4",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WeTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WeTV/assets/thumbnail.png",
   "color": "#ffffff",

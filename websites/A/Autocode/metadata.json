@@ -12,7 +12,7 @@
   },
   "url": "autocode.com",
   "regExp": "([a-z0-9-]+[.])*autocode[.]com[/]",
-  "version": "1.1.17",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Autocode/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Autocode/assets/thumbnail.jpg",
   "color": "#ffffff",

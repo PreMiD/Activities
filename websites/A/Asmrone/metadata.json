@@ -13,7 +13,7 @@
   },
   "url": "asmr.one",
   "regExp": "([a-z0-9-]+[.])*asmr[.]one[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Asmrone/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Asmrone/assets/thumbnail.png",
   "color": "#2380cc",

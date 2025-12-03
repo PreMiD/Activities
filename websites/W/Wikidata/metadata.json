@@ -19,7 +19,7 @@
     "test.wikidata.org"
   ],
   "regExp": "(www|test)[.]wikidata[.]org[/]",
-  "version": "1.0.27",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikidata/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikidata/assets/thumbnail.png",
   "color": "#f9f9f9",

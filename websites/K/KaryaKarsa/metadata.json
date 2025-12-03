@@ -12,7 +12,7 @@
   },
   "url": "karyakarsa.com",
   "regExp": "([a-z0-9-]+[.])*karyakarsa[.]com[/]",
-  "version": "1.0.18",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KaryaKarsa/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KaryaKarsa/assets/thumbnail.png",
   "color": "#ff5569",

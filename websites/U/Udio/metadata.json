@@ -11,7 +11,7 @@
   },
   "url": "www.udio.com",
   "regExp": "(www[.])?udio[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/Udio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/Udio/assets/thumbnail.png",
   "color": "#e30b5d",

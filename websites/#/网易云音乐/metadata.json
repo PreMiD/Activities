@@ -15,7 +15,7 @@
   },
   "url": "music.163.com",
   "regExp": "music[.]163[.]com[/]",
-  "version": "1.1.13",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90/assets/thumbnail.png",
   "color": "#E30000",

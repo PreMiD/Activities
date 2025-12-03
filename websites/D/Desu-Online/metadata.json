@@ -12,7 +12,7 @@
   },
   "url": "desu-online.pl",
   "regExp": "([a-z0-9-]+[.])*desu-online[.]pl[/]",
-  "version": "1.0.22",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Desu-Online/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Desu-Online/assets/thumbnail.png",
   "color": "#D9910F",

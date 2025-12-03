@@ -12,7 +12,7 @@
   },
   "url": "flemmix.biz",
   "regExp": "([a-z0-9-]+[.])*flemmix[.]biz[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flemmix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Flemmix/assets/thumbnail.png",
   "color": "#d90000",

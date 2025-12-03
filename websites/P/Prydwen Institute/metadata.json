@@ -20,7 +20,7 @@
     "blog.prydwen.gg"
   ],
   "regExp": "(www|blog)[.]prydwen[.]gg[/]",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/thumbnail.jpg",
   "color": "#161833",

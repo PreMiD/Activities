@@ -12,7 +12,7 @@
   },
   "url": "gartic.com.br",
   "regExp": "([a-z0-9-]+[.])*gartic[.]com[.]br[/]",
-  "version": "1.3.29",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gartic.com.br/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gartic.com.br/assets/thumbnail.png",
   "color": "#FBD981",

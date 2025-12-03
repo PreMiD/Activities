@@ -12,7 +12,7 @@
   },
   "url": "hub.docker.com",
   "regExp": "hub[.]docker[.]com[/]",
-  "version": "1.1.27",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DockerHub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DockerHub/assets/thumbnail.png",
   "color": "#099CEC",

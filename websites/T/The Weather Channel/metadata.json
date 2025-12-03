@@ -14,7 +14,7 @@
     "features.weather.com"
   ],
   "regExp": "(features[.])?weather[.]com[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Weather%20Channel/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Weather%20Channel/assets/thumbnail.png",
   "color": "#014F9D",

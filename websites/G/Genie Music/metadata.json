@@ -15,7 +15,7 @@
   },
   "url": "www.genie.co.kr",
   "regExp": "(www[.])?genie[.]co[.]kr[/]",
-  "version": "1.0.25",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Genie%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Genie%20Music/assets/thumbnail.png",
   "color": "#0096FF",

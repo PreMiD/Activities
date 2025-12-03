@@ -16,7 +16,7 @@
   },
   "url": "woolypooly.com",
   "regExp": "([a-z0-9-]+[.])*woolypooly[.]com[/]",
-  "version": "1.1.26",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WoolyPooly/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WoolyPooly/assets/thumbnail.png",
   "color": "#3d89f5",

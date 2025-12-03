@@ -18,7 +18,7 @@
   },
   "url": "onlyhit.us",
   "regExp": "([a-z0-9-]+[.])*onlyhit[.]us[/]",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OnlyHit/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OnlyHit/assets/thumbnail.png",
   "color": "#C1272D",

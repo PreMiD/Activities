@@ -19,7 +19,7 @@
     "store.steampowered.com"
   ],
   "regExp": "(steamcommunity[.]com|(store)[.]steampowered[.]com)[/]",
-  "version": "2.2.26",
+  "version": "2.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Steam/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Steam/assets/thumbnail.png",
   "color": "#000000",

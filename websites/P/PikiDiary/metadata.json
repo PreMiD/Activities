@@ -11,7 +11,7 @@
   },
   "url": "pikidiary.lol",
   "regExp": "([a-z0-9-]+[.])*pikidiary[.]lol[/]",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PikiDiary/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PikiDiary/assets/thumbnail.png",
   "color": "#ABD022",

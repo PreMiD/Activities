@@ -12,7 +12,7 @@
   },
   "url": "keepitwholesome.com",
   "regExp": "([a-z0-9-]+[.])*keepitwholesome[.]com[/]",
-  "version": "1.0.22",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Keep%20It%20Wholesome/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Keep%20It%20Wholesome/assets/thumbnail.png",
   "color": "#c98b29",

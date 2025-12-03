@@ -26,7 +26,7 @@
   },
   "url": "web.telegram.org",
   "regExp": "web[.]telegram[.]org[/]",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Telegram/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Telegram/assets/thumbnail.png",
   "color": "#33abe0",

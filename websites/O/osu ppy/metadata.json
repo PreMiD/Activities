@@ -35,7 +35,7 @@
   },
   "url": "osu.ppy.sh",
   "regExp": "osu[.]ppy[.]sh[/]",
-  "version": "2.1.9",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20ppy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20ppy/assets/thumbnail.png",
   "color": "#FF66AA",

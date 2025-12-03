@@ -12,7 +12,7 @@
   },
   "url": "cytu.be",
   "regExp": "([a-z0-9-]+[.])*cytu[.]be[/]",
-  "version": "1.1.36",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CyTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CyTube/assets/thumbnail.png",
   "color": "#263144",

@@ -35,7 +35,7 @@
     "gist.github.com"
   ],
   "regExp": "(gist[.])?github[.]com[/]",
-  "version": "2.11.16",
+  "version": "2.12.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GitHub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GitHub/assets/thumbnail.png",
   "color": "#171515",

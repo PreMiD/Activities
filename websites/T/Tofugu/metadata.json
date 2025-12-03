@@ -14,7 +14,7 @@
     "kana-quiz.tofugu.com"
   ],
   "regExp": "(www|kana-quiz)[.]tofugu[.]com[/]",
-  "version": "1.0.14",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tofugu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tofugu/assets/thumbnail.jpg",
   "color": "#EE0144",

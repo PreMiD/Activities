@@ -11,7 +11,7 @@
   },
   "url": "flavibot.xyz",
   "regExp": "([a-z0-9-]+[.])*flavibot[.]xyz[/]",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FlaviBot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FlaviBot/assets/thumbnail.png",
   "color": "#8468E9",

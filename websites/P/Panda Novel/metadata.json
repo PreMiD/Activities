@@ -11,7 +11,7 @@
   },
   "url": "www.panda-novel.com",
   "regExp": "(www[.])?panda-novel[.]com[/]",
-  "version": "1.0.14",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Panda%20Novel/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Panda%20Novel/assets/thumbnail.png",
   "color": "#77d48f",

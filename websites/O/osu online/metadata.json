@@ -19,7 +19,7 @@
   },
   "url": "osugame.online",
   "regExp": "([a-z0-9-]+[.])*osugame[.]online[/]",
-  "version": "1.0.24",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20online/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20online/assets/thumbnail.png",
   "color": "#B63258",

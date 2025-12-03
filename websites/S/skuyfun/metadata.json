@@ -12,7 +12,7 @@
   },
   "url": "skuy.co.id",
   "regExp": "([a-z0-9-]+[.])*skuy[.]co[.]id[/]",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/skuyfun/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/skuyfun/assets/thumbnail.jpg",
   "color": "#000000",

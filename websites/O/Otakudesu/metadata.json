@@ -13,7 +13,7 @@
   },
   "url": "otakudesu.cloud",
   "regExp": "([a-z0-9-]+[.])*otakudesu[.]cloud[/]",
-  "version": "2.0.25",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Otakudesu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Otakudesu/assets/thumbnail.png",
   "color": "#ffffff",

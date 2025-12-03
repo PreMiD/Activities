@@ -14,7 +14,7 @@
   },
   "url": "archiveofourown.org",
   "regExp": "([a-z0-9-]+[.])*archiveofourown[.]org[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Archive%20of%20Our%20Own/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Archive%20of%20Our%20Own/assets/thumbnail.png",
   "color": "#970000",

@@ -13,7 +13,7 @@
   },
   "url": "eksisozluk.com",
   "regExp": "([a-z0-9-]+[.])*eksisozluk[.]com[/]",
-  "version": "1.1.25",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/ek%C5%9Fi%20s%C3%B6zl%C3%BCk/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/ek%C5%9Fi%20s%C3%B6zl%C3%BCk/assets/thumbnail.png",
   "color": "#82c24a",

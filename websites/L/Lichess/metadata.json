@@ -13,7 +13,7 @@
   },
   "url": "lichess.org",
   "regExp": "([a-z0-9-]+[.])*lichess[.]org[/]",
-  "version": "1.2.25",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Lichess/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Lichess/assets/thumbnail.png",
   "color": "#c5c5c5",

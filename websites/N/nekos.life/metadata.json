@@ -17,7 +17,7 @@
   },
   "url": "nekos.life",
   "regExp": "([a-z0-9-]+[.])*nekos[.]life[/]",
-  "version": "1.1.26",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/nekos.life/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/nekos.life/assets/thumbnail.png",
   "color": "#512da8",

@@ -12,7 +12,7 @@
   },
   "url": "www.ryouflashcards.com",
   "regExp": "(www[.])?ryouflashcards[.]com[/]",
-  "version": "1.1.21",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Ryou%20Flashcards/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Ryou%20Flashcards/assets/thumbnail.png",
   "color": "#4C8FFB",

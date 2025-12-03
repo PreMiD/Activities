@@ -11,7 +11,7 @@
   },
   "url": "game8.co",
   "regExp": "([a-z0-9-]+[.])*game8[.]co[/]",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Game8/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Game8/assets/thumbnail.webp",
   "color": "#ffffff",

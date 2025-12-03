@@ -17,7 +17,7 @@
   },
   "url": "paimon.moe",
   "regExp": "([a-z0-9-]+[.])*paimon[.]moe[/]",
-  "version": "1.0.23",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/paimon.moe/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/paimon.moe/assets/thumbnail.png",
   "color": "#25294A",

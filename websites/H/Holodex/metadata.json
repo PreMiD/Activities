@@ -14,7 +14,7 @@
     "holodex.net"
   ],
   "regExp": "(staging[.])?holodex[.]net[/]",
-  "version": "1.0.32",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Holodex/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Holodex/assets/thumbnail.png",
   "color": "#64b5f6",

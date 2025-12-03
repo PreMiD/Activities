@@ -23,7 +23,7 @@
   },
   "url": "skribbl.io",
   "regExp": "([a-z0-9-]+[.])*skribbl[.]io[/]",
-  "version": "1.2.15",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Skribbl.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Skribbl.io/assets/thumbnail.png",
   "color": "#245195",

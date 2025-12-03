@@ -11,7 +11,7 @@
   },
   "url": "www.dndbeyond.com",
   "regExp": "(www[.])?dndbeyond[.]com[/]",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/D%26D%20Beyond/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/D%26D%20Beyond/assets/thumbnail.png",
   "color": "#E40712",

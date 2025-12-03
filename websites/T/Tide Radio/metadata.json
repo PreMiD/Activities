@@ -17,7 +17,7 @@
   },
   "url": "tideradio.uk",
   "regExp": "([a-z0-9-]+[.])*tideradio[.]uk[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tide%20Radio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tide%20Radio/assets/thumbnail.png",
   "color": "#01b0fa",

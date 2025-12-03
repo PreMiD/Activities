@@ -22,7 +22,7 @@
     "animecix.tv"
   ],
   "regExp": "(animecix[.]net|anm[.]cx|animecix[.]tv)[/]",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeciX/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeciX/assets/thumbnail.jpeg",
   "color": "#b6eafd",

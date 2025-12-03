@@ -17,7 +17,7 @@
   },
   "url": "stats.fm",
   "regExp": "([a-z0-9-]+[.])*stats[.]fm[/]",
-  "version": "1.0.14",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stats.fm/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stats.fm/assets/thumbnail.png",
   "color": "#1ed760",

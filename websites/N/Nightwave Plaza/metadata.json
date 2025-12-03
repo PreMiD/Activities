@@ -12,7 +12,7 @@
   },
   "url": "plaza.one",
   "regExp": "([a-z0-9-]+[.])*plaza[.]one[/]",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nightwave%20Plaza/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nightwave%20Plaza/assets/thumbnail.jpg",
   "color": "#f58ea8",

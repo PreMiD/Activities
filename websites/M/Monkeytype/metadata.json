@@ -21,7 +21,7 @@
     "monkeytype.com"
   ],
   "regExp": "(www[.])?monkeytype[.]com[/]",
-  "version": "2.0.26",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Monkeytype/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Monkeytype/assets/thumbnail.png",
   "color": "#383200",

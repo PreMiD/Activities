@@ -17,7 +17,7 @@
     "status.rey.fm"
   ],
   "regExp": "((www|status)[.])?rey[.]fm[/]",
-  "version": "1.4.16",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/REYFM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/REYFM/assets/thumbnail.png",
   "color": "#cd6ef4",

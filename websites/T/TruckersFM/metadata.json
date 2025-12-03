@@ -22,7 +22,7 @@
   },
   "url": "truckers.fm",
   "regExp": "([a-z0-9-]+[.])*truckers[.]fm[/]",
-  "version": "1.4.28",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/thumbnail.png",
   "color": "#C82372",

@@ -13,7 +13,7 @@
   },
   "url": "openclassrooms.com",
   "regExp": "([a-z0-9-]+[.])*openclassrooms[.]com[/]",
-  "version": "1.0.25",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OpenClassrooms/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OpenClassrooms/assets/thumbnail.png",
   "color": "#7451EB",

@@ -18,7 +18,7 @@
   },
   "url": "learnjavascript.online",
   "regExp": "([a-z0-9-]+[.])*learnjavascript[.]online[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Learnjavascript/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Learnjavascript/assets/thumbnail.png",
   "color": "#f7df1e",

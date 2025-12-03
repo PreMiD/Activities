@@ -12,7 +12,7 @@
   },
   "url": "www.myutaku.com",
   "regExp": "(www[.])?myutaku[.]com[/]",
-  "version": "1.0.17",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Myutaku/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Myutaku/assets/thumbnail.png",
   "color": "#6958ff",

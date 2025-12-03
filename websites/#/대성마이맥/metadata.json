@@ -16,7 +16,7 @@
   },
   "url": "www.mimacstudy.com",
   "regExp": "(www[.])?mimacstudy[.]com[/]",
-  "version": "1.0.25",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%EB%8C%80%EC%84%B1%EB%A7%88%EC%9D%B4%EB%A7%A5/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%EB%8C%80%EC%84%B1%EB%A7%88%EC%9D%B4%EB%A7%A5/assets/thumbnail.png",
   "color": "#2581c4",

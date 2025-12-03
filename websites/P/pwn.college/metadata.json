@@ -11,7 +11,7 @@
   },
   "url": "pwn.college",
   "regExp": "([a-z0-9-]+[.])*pwn[.]college[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/pwn.college/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/pwn.college/assets/thumbnail.png",
   "color": "#ffc627",

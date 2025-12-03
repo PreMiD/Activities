@@ -12,7 +12,7 @@
   },
   "url": "spwn.jp",
   "regExp": "([a-z0-9-]+[.])*spwn[.]jp[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SPWN/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SPWN/assets/thumbnail.png",
   "color": "#000000",

@@ -15,7 +15,7 @@
     "mangasee123.com"
   ],
   "regExp": "(www[.])?mangasee123[.]com[/]",
-  "version": "1.0.26",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaSee/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaSee/assets/thumbnail.png",
   "color": "#6488be",

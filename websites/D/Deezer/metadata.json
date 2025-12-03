@@ -25,7 +25,7 @@
   },
   "url": "www.deezer.com",
   "regExp": "(www[.])?deezer[.]com[/]",
-  "version": "2.3.13",
+  "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/thumbnail.png",
   "color": "#a238ff",

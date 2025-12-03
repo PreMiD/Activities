@@ -12,7 +12,7 @@
   },
   "url": "komikcast.com",
   "regExp": "([a-z0-9-]+[.])*komikcast[.]com[/]",
-  "version": "1.0.20",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Komikcast/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Komikcast/assets/thumbnail.png",
   "color": "#3262d1",

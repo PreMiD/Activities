@@ -15,7 +15,7 @@
     "my.wizardingworld.com"
   ],
   "regExp": "(www|my)[.]wizardingworld[.]com[/]",
-  "version": "1.0.24",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wizarding%20World/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wizarding%20World/assets/thumbnail.png",
   "color": "#000",

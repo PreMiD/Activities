@@ -12,7 +12,7 @@
   },
   "url": "skyra.pw",
   "regExp": "([a-z0-9-]+[.])*skyra[.]pw[/]",
-  "version": "1.0.24",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Skyra/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Skyra/assets/thumbnail.png",
   "color": "#7087D8",

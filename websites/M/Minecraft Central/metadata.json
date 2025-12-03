@@ -15,7 +15,7 @@
     "buy.mccentral.org"
   ],
   "regExp": "(buy[.])?mccentral[.]org[/]",
-  "version": "1.0.26",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Minecraft%20Central/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Minecraft%20Central/assets/thumbnail.png",
   "color": "#da8a00",

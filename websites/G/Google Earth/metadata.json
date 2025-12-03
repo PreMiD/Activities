@@ -11,7 +11,7 @@
   },
   "url": "earth.google.com",
   "regExp": "earth[.]google[.]com[/]",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Earth/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Earth/assets/thumbnail.jpg",
   "color": "#255FDB",

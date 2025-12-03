@@ -11,7 +11,7 @@
   },
   "url": "ytyping.net",
   "regExp": "([a-z0-9-]+[.])*ytyping[.]net[/]",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YTyping/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YTyping/assets/thumbnail.png",
   "color": "#3b5a7d",

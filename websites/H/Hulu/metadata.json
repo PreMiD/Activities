@@ -35,7 +35,7 @@
     "www.hulu.com"
   ],
   "regExp": "(www[.])?hulu[.]com[/]",
-  "version": "1.3.37",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hulu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hulu/assets/thumbnail.jpg",
   "color": "#66AA33",

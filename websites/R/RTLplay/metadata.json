@@ -30,7 +30,7 @@
     "mint.be"
   ],
   "regExp": "((www)[.]rtlplay[.]be|(www)[.]radiocontact[.]be|(www)[.]belrtl[.]be|mint[.]be)[/]",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/thumbnail.jpeg",
   "color": "#121726",

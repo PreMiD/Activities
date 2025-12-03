@@ -14,7 +14,7 @@
     "www.necord.org"
   ],
   "regExp": "(www[.])?necord[.]org[/]",
-  "version": "1.0.11",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Necord/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Necord/assets/thumbnail.png",
   "color": "#c12549",

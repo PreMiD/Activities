@@ -12,7 +12,7 @@
   },
   "url": "www.chorki.com",
   "regExp": "(www[.])?chorki[.]com[/]",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Chorki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Chorki/assets/thumbnail.png",
   "color": "#E50914",

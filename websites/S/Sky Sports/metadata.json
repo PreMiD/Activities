@@ -14,7 +14,7 @@
     "www.skysports.com"
   ],
   "regExp": "(www[.])?skysports[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sky%20Sports/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sky%20Sports/assets/thumbnail.jpg",
   "color": "#000000",

@@ -21,7 +21,7 @@
   },
   "url": "coub.com",
   "regExp": "([a-z0-9-]+[.])*coub[.]com[/]",
-  "version": "2.1.13",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Coub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Coub/assets/thumbnail.png",
   "color": "#0084FF",

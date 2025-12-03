@@ -12,7 +12,7 @@
   },
   "url": "tcrf.net",
   "regExp": "([a-z0-9-]+[.])*tcrf[.]net[/]",
-  "version": "1.4.28",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TCRF/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TCRF/assets/thumbnail.png",
   "color": "#D3D3D3",

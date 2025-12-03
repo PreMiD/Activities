@@ -15,7 +15,7 @@
     "tabii.com"
   ],
   "regExp": "(www[.])?tabii[.]com[/]",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tabii/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tabii/assets/thumbnail.png",
   "color": "#00ff99",

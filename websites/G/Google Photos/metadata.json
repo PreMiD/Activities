@@ -19,7 +19,7 @@
   },
   "url": "photos.google.com",
   "regExp": "photos[.]google[.]com[/]",
-  "version": "1.0.18",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Photos/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Photos/assets/thumbnail.jpg",
   "color": "#FFFFFF",

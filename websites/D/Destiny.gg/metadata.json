@@ -12,7 +12,7 @@
   },
   "url": "www.destiny.gg",
   "regExp": "(www[.])?destiny[.]gg[/]",
-  "version": "1.0.26",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Destiny.gg/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Destiny.gg/assets/thumbnail.png",
   "color": "#568FCA",

@@ -11,7 +11,7 @@
   },
   "url": "royaleapi.com",
   "regExp": "([a-z0-9-]+[.])*royaleapi[.]com[/]",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RoyaleAPI/assets/logo.gif",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RoyaleAPI/assets/thumbnail.jpg",
   "color": "#ffffff",

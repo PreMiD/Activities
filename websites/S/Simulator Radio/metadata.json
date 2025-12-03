@@ -18,7 +18,7 @@
   },
   "url": "simulatorradio.com",
   "regExp": "([a-z0-9-]+[.])*simulatorradio[.]com[/]",
-  "version": "1.5.22",
+  "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Simulator%20Radio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Simulator%20Radio/assets/thumbnail.png",
   "color": "#FB352A",

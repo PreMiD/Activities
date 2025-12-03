@@ -22,7 +22,7 @@
   },
   "url": "www.igdb.com",
   "regExp": "(www[.])?igdb[.]com[/]",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/IGDB/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/IGDB/assets/thumbnail.png",
   "color": "#9146FF",

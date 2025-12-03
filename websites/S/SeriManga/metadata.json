@@ -13,7 +13,7 @@
   },
   "url": "serimanga.com",
   "regExp": "([a-z0-9-]+[.])*serimanga[.]com[/]",
-  "version": "1.0.23",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SeriManga/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SeriManga/assets/thumbnail.png",
   "color": "#2d2f33",

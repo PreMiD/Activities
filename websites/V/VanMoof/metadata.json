@@ -11,7 +11,7 @@
   },
   "url": "www.vanmoof.com",
   "regExp": "(www[.])?vanmoof[.]com[/]",
-  "version": "1.0.20",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VanMoof/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VanMoof/assets/thumbnail.png",
   "color": "#FFFF00",
