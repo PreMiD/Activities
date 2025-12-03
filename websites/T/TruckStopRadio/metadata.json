@@ -17,6 +17,7 @@
     "nl": "Truck Stop Radio, is een populair radiostation voor Euro Truck Simulator en American Truck Simulator."
   },
   "url": "truckstopradio.co.uk",
+  "regExp": "([a-z0-9-]+[.])*truckstopradio[.]co[.]uk[/]",
   "version": "2.0.18",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TruckStopRadio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TruckStopRadio/assets/thumbnail.png",

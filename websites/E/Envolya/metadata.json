@@ -10,6 +10,7 @@
     "en": "Send a personalized virtual letter to friends, loved ones, or your partner, making each message truly special."
   },
   "url": "envolya.com",
+  "regExp": "([a-z0-9-]+[.])*envolya[.]com[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Envolya/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Envolya/assets/thumbnail.png",

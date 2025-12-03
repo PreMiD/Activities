@@ -14,6 +14,7 @@
     "peacescans.life",
     "www.peacescans.life"
   ],
+  "regExp": "(www[.])?peacescans[.]life[/]",
   "version": "1.0.7",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PeaceScans/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PeaceScans/assets/thumbnail.png",

@@ -14,6 +14,7 @@
     "kickassfingers.com",
     "www.kickassfingers.com"
   ],
+  "regExp": "(www[.])?kickassfingers[.]com[/]",
   "version": "1.0.21",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KickAssFingers/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KickAssFingers/assets/thumbnail.png",

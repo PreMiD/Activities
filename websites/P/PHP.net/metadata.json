@@ -13,6 +13,7 @@
     "php.net",
     "www.php.net"
   ],
+  "regExp": "(www[.])?php[.]net[/]",
   "version": "1.0.15",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PHP.net/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PHP.net/assets/thumbnail.png",

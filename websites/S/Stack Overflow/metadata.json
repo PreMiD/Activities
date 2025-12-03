@@ -14,6 +14,7 @@
     "uk": "Stack Overflow — це відкрита спільнота для всіх, хто кодує. Це допомагає вам отримати відповіді на ваші найскладніші запитання з кодування, ділитися знаннями з колегами приватно і знайти наступну роботу мрії."
   },
   "url": "stackoverflow.com",
+  "regExp": "([a-z0-9-]+[.])*stackoverflow[.]com[/]",
   "version": "2.4.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stack%20Overflow/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stack%20Overflow/assets/thumbnail.png",

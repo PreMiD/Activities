@@ -12,6 +12,7 @@
     "nl": "Deel anime- en manga-ervaringen, ontvang aanbevelingen en kijk wat vrienden kijken of lezen."
   },
   "url": "kitsu.app",
+  "regExp": "([a-z0-9-]+[.])*kitsu[.]app[/]",
   "version": "1.3.28",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kitsu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kitsu/assets/thumbnail.png",

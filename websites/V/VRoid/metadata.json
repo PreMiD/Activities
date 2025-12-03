@@ -16,6 +16,7 @@
     "hub.vroid.com",
     "developer.vroid.com"
   ],
+  "regExp": "((www|hub|developer)[.])?vroid[.]com[/]",
   "version": "1.0.8",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VRoid/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VRoid/assets/thumbnail.png",

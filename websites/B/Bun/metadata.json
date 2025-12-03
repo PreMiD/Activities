@@ -13,6 +13,7 @@
     "bun.sh",
     "bun.com"
   ],
+  "regExp": "bun[.](sh|com)[/]",
   "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bun/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bun/assets/thumbnail.png",

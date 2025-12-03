@@ -25,6 +25,7 @@
     "www.eurogamer.nl",
     "www.eurogamer.pl"
   ],
+  "regExp": "www[.]eurogamer[.](net|pt|cz|de|es|nl|pl)[/]",
   "version": "1.0.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Eurogamer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Eurogamer/assets/thumbnail.png",

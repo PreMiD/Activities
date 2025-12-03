@@ -13,6 +13,7 @@
     "vi": "Tìm, theo dõi và chia sẽ những bộ phim và chương trình anime sắp tới tại AniChart.net"
   },
   "url": "anichart.net",
+  "regExp": "([a-z0-9-]+[.])*anichart[.]net[/]",
   "version": "1.0.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniChart/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniChart/assets/thumbnail.png",

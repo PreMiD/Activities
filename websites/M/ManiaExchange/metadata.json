@@ -31,6 +31,7 @@
     "trackmania.exchange",
     "blog.mania.exchange"
   ],
+  "regExp": "(((www|tm|sm|item|accounts|tmtube|api)[.])?mania-exchange[.]com|((www|tm|sm|item|accounts|tmtube|api|blog)[.])?mania[.]exchange|item[.]exchange|trackmania[.]exchange)[/]",
   "version": "1.1.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/ManiaExchange/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/ManiaExchange/assets/thumbnail.png",

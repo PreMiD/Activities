@@ -11,6 +11,7 @@
     "nl": "Content Sharing Platform met brede platformondersteuning om tegelijkertijd te genieten van video's/muziek met een live chat en tal van aanpassingstools/moderatietools"
   },
   "url": "cytu.be",
+  "regExp": "([a-z0-9-]+[.])*cytu[.]be[/]",
   "version": "1.1.36",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CyTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CyTube/assets/thumbnail.png",

@@ -16,6 +16,7 @@
     "www.memrise.com",
     "community.memrise.com"
   ],
+  "regExp": "((app|www|community)[.])?memrise[.]com[/]",
   "version": "1.0.8",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Memrise/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Memrise/assets/thumbnail.png",

@@ -13,6 +13,7 @@
     "www.explainxkcd.com",
     "explainxkcd.com"
   ],
+  "regExp": "(www[.])?explainxkcd[.]com[/]",
   "version": "1.0.17",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Explain%20xkcd/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Explain%20xkcd/assets/thumbnail.png",

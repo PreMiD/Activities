@@ -10,6 +10,7 @@
     "en": "Visit the official Tetris® website to play FREE online Tetris, get game and merchandise updates, and read about global Tetris events."
   },
   "url": "tetris.com",
+  "regExp": "([a-z0-9-]+[.])*tetris[.]com[/]",
   "version": "1.0.11",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tetris/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tetris/assets/thumbnail.jpg",

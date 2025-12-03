@@ -11,6 +11,7 @@
     "es": "JKAnime es una plataforma de streaming para Anime en HD. Con subtítulos y libre de publicidad invasiva!"
   },
   "url": "jkanime.net",
+  "regExp": "([a-z0-9-]+[.])*jkanime[.]net[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/JKAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/JKAnime/assets/thumbnail.png",

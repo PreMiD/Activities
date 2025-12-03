@@ -13,6 +13,7 @@
     "territorial.io",
     "www.territorial.io"
   ],
+  "regExp": "(www[.])?territorial[.]io[/]",
   "version": "1.0.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Territorial/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Territorial/assets/thumbnail.jpg",

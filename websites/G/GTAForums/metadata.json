@@ -11,6 +11,7 @@
     "nl": "GTAForums is het grootste en steeds groter wordende fanforum gewijd aan de Grand Theft Auto-serie en Rockstar Games."
   },
   "url": "gtaforums.com",
+  "regExp": "([a-z0-9-]+[.])*gtaforums[.]com[/]",
   "version": "1.0.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GTAForums/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GTAForums/assets/thumbnail.png",

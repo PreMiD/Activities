@@ -16,6 +16,7 @@
     "www.songsterr.com",
     "songsterr.com"
   ],
+  "regExp": "(www[.])?songsterr[.]com[/]",
   "version": "1.0.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Songsterr/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Songsterr/assets/thumbnail.png",

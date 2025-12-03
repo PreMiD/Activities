@@ -10,6 +10,7 @@
     "en": "Desmos Graphing Calculator lets you graph functions, plot data, evaluate equations, explore transformations, and much more— all for free. "
   },
   "url": "www.desmos.com",
+  "regExp": "(www[.])?desmos[.]com[/]",
   "version": "1.0.23",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Desmos/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Desmos/assets/thumbnail.png",

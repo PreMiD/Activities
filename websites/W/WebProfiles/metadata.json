@@ -10,6 +10,7 @@
     "en": "Let people know which social accounts are really you"
   },
   "url": "webprofiles.me",
+  "regExp": "([a-z0-9-]+[.])*webprofiles[.]me[/]",
   "version": "1.1.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WebProfiles/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WebProfiles/assets/thumbnail.png",

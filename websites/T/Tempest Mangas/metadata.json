@@ -11,6 +11,7 @@
     "tr": "Türkiyenin En Üretken Güncel ve Kaliteli, Türkçe Webtoon Manhwa Manhua Manga Okuma Platformu Tempest Fansub'a hoş geldiniz."
   },
   "url": "tempestmangas.com",
+  "regExp": "([a-z0-9-]+[.])*tempestmangas[.]com[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tempest%20Mangas/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tempest%20Mangas/assets/thumbnail.png",

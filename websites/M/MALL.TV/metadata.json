@@ -16,6 +16,7 @@
     "www.fameplay.tv",
     "fameplay.tv"
   ],
+  "regExp": "(www[.])?fameplay[.]tv[/]",
   "version": "1.0.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MALL.TV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MALL.TV/assets/thumbnail.png",

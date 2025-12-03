@@ -12,6 +12,7 @@
     "pt": "Embarca numa jornada de aventura e criatividade! O Hytale combina as possibilidades de um jogo sandbox com a profundidade de um jogo de roleplay, imergindo os jogadores num mundo automaticamente gerado onde torres oscilantes e masmorras profundas prometem recompensas enormes."
   },
   "url": "hytale.com",
+  "regExp": "([a-z0-9-]+[.])*hytale[.]com[/]",
   "version": "1.0.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hytale/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hytale/assets/thumbnail.png",

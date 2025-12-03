@@ -12,6 +12,7 @@
     "sk": "Nové zábavné videá každý deň, zabavte sa, zasmejte sa, alebo nám pošlite vaše videá"
   },
   "url": "www.mojevideo.sk",
+  "regExp": "(www[.])?mojevideo[.]sk[/]",
   "version": "1.0.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MojeVideo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MojeVideo/assets/thumbnail.png",

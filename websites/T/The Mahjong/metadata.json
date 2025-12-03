@@ -10,6 +10,7 @@
     "en": "Amazing free Mahjong that’ll knock your socks off. Play classic and modern Mahjong games in full screen, with lots of layouts and beautiful tiles."
   },
   "url": "themahjong.com",
+  "regExp": "([a-z0-9-]+[.])*themahjong[.]com[/]",
   "version": "1.0.7",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Mahjong/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Mahjong/assets/thumbnail.jpg",

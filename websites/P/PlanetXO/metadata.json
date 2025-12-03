@@ -15,6 +15,7 @@
     "api.planetxo.uk",
     "staff.planetxo.uk"
   ],
+  "regExp": "((panel|api|staff)[.])?planetxo[.]uk[/]",
   "version": "1.0.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PlanetXO/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PlanetXO/assets/thumbnail.jpg",

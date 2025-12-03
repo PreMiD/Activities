@@ -10,6 +10,7 @@
     "en": "AniCrush - Watch anime for free without ads, immersing yourself in the universe of your favorite shows uninterrupted"
   },
   "url": "anicrush.to",
+  "regExp": "([a-z0-9-]+[.])*anicrush[.]to[/]",
   "version": "1.0.17",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniCrush/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniCrush/assets/thumbnail.png",

@@ -13,6 +13,7 @@
     "sofi.gg",
     "gems.sofi.gg"
   ],
+  "regExp": "(gems[.])?sofi[.]gg[/]",
   "version": "1.0.15",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sofi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sofi/assets/thumbnail.png",

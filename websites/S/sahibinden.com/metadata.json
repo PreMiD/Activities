@@ -16,6 +16,7 @@
     "secure.sahibinden.com",
     "banaozel.sahibinden.com"
   ],
+  "regExp": "(www|secure|banaozel)[.]sahibinden[.]com[/]",
   "version": "1.1.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/sahibinden.com/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/sahibinden.com/assets/thumbnail.png",

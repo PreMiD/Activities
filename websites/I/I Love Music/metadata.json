@@ -12,6 +12,7 @@
     "nl": "De beste webradio van Duitsland - de beste muziek voor iedereen!"
   },
   "url": "ilovemusic.de",
+  "regExp": "([a-z0-9-]+[.])*ilovemusic[.]de[/]",
   "version": "2.0.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/I%20Love%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/I%20Love%20Music/assets/thumbnail.png",

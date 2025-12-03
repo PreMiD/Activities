@@ -17,6 +17,7 @@
     "eco.leosight.cz",
     "guard.leosight.cz"
   ],
+  "regExp": "((artic|ctf|eco|guard)[.])?leosight[.]cz[/]",
   "version": "1.1.22",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LeoSight/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LeoSight/assets/thumbnail.png",

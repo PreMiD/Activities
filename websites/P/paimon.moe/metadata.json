@@ -16,6 +16,7 @@
     "zh": "你最好的原神伙伴! 帮助你规划材料消耗与刷本, 追踪你的游戏进度与抽卡结果."
   },
   "url": "paimon.moe",
+  "regExp": "([a-z0-9-]+[.])*paimon[.]moe[/]",
   "version": "1.0.23",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/paimon.moe/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/paimon.moe/assets/thumbnail.png",

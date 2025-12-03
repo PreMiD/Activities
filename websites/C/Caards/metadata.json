@@ -15,6 +15,7 @@
     "help.caards.me",
     "status.caards.me"
   ],
+  "regExp": "(www|help|status)[.]caards[.]me[/]",
   "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Caards/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Caards/assets/thumbnail.jpg",

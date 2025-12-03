@@ -22,6 +22,7 @@
     "pt-br": "A rádio mais moe do Brasil"
   },
   "url": "www.animu.moe",
+  "regExp": "(www[.])?animu[.]moe[/]",
   "version": "1.2.39",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/R%C3%A1dio%20Animu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/R%C3%A1dio%20Animu/assets/thumbnail.png",

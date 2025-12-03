@@ -23,6 +23,7 @@
     "community.wanikani.com",
     "knowledge.wanikani.com"
   ],
+  "regExp": "(www|community|knowledge)[.]wanikani[.]com[/]",
   "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WaniKani/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WaniKani/assets/thumbnail.png",

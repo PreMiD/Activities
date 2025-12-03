@@ -12,6 +12,7 @@
     "pt-br": "A Império Network é o seu portal de notícias de tecnologia, gaming ou animes em português! Tornamos a sua leitura simples."
   },
   "url": "imperionetwork.fr",
+  "regExp": "([a-z0-9-]+[.])*imperionetwork[.]fr[/]",
   "version": "1.0.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Imp%C3%A9rio%20Network/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Imp%C3%A9rio%20Network/assets/thumbnail.png",

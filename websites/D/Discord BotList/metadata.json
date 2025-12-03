@@ -16,6 +16,7 @@
     "docs.discord-botlist.eu",
     "discord-botlist.eu"
   ],
+  "regExp": "(docs[.])?discord-botlist[.]eu[/]",
   "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20BotList/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20BotList/assets/thumbnail.png",

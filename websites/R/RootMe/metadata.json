@@ -17,6 +17,7 @@
     "root-me.org",
     "www.root-me.org"
   ],
+  "regExp": "(www[.])?root-me[.]org[/]",
   "version": "1.2.34",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RootMe/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RootMe/assets/thumbnail.png",

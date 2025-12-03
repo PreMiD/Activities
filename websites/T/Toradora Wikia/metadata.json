@@ -15,6 +15,7 @@
     "tora-dora.fandom.com",
     "toradora.fandom.com"
   ],
+  "regExp": "(tora-dora|toradora)[.]fandom[.]com[/]",
   "version": "1.1.29",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Toradora%20Wikia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Toradora%20Wikia/assets/thumbnail.png",

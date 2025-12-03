@@ -10,6 +10,7 @@
     "en": "The most popular Arabic streaming site for anime and online entertainment"
   },
   "url": "witanime.day",
+  "regExp": "([a-z0-9-]+[.])*witanime[.]day[/]",
   "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WitAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WitAnime/assets/thumbnail.png",

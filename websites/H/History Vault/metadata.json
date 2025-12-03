@@ -13,6 +13,7 @@
     "www.historyvault.com",
     "watch.historyvault.com"
   ],
+  "regExp": "(www|watch)[.]historyvault[.]com[/]",
   "version": "1.0.15",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/History%20Vault/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/History%20Vault/assets/thumbnail.jpg",

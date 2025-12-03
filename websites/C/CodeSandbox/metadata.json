@@ -10,6 +10,7 @@
     "en": "CodeSandbox is an online code editor and prototyping tool that makes creating and sharing web apps faster"
   },
   "url": "codesandbox.io",
+  "regExp": "([a-z0-9-]+[.])*codesandbox[.]io[/]",
   "version": "1.0.16",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CodeSandbox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CodeSandbox/assets/thumbnail.png",

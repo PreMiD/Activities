@@ -15,6 +15,7 @@
     "radiowavefm.com",
     "wavefm.cl"
   ],
+  "regExp": "(radiowavefm[.]com|wavefm[.]cl)[/]",
   "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wave%20FM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wave%20FM/assets/thumbnail.png",

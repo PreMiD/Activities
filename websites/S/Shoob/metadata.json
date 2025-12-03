@@ -28,6 +28,7 @@
     "zh": "外福机器人？ ！动漫灵魂不和谐动漫纸牌游戏！立即与所有动漫社区联系！"
   },
   "url": "shoob.gg",
+  "regExp": "([a-z0-9-]+[.])*shoob[.]gg[/]",
   "version": "1.2.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Shoob/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Shoob/assets/thumbnail.jpeg",

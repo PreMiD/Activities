@@ -13,6 +13,7 @@
     "zarpgaming.com",
     "control.zarpgaming.com"
   ],
+  "regExp": "(control[.])?zarpgaming[.]com[/]",
   "version": "1.0.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZARP%20Gaming/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZARP%20Gaming/assets/thumbnail.png",

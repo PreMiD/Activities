@@ -17,6 +17,7 @@
     "en": "Say more with Threads — Instagram’s text-based conversation app, where communities come together to discuss everything from the topics you care about today to what’ll be trending tomorrow."
   },
   "url": "www.threads.com",
+  "regExp": "([a-z0-9-]+[.])*threads[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Threads/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Threads/assets/thumbnail.jpeg",

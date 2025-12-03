@@ -13,6 +13,7 @@
     "zh": "自由的碧蓝航线英语维基"
   },
   "url": "azurlane.koumakan.jp",
+  "regExp": "azurlane[.]koumakan[.]jp[/]",
   "version": "1.2.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Azur%20Lane%20Wiki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Azur%20Lane%20Wiki/assets/thumbnail.png",

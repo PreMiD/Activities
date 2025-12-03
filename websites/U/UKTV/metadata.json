@@ -13,6 +13,7 @@
     "uktvplay.uktv.co.uk",
     "uktvplay.co.uk"
   ],
+  "regExp": "(uktvplay[.]uktv|uktvplay)[.]co[.]uk[/]",
   "version": "1.0.18",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/UKTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/UKTV/assets/thumbnail.png",

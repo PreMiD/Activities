@@ -12,6 +12,7 @@
     "tr": "OMGUbuntu!, Ubuntu ve ilgili faaliyetleri kapsayan çevrimiçi bir haber sitesidir."
   },
   "url": "www.omgubuntu.co.uk",
+  "regExp": "(www[.])?omgubuntu[.]co[.]uk[/]",
   "version": "1.1.21",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OMG%20Ubuntu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OMG%20Ubuntu/assets/thumbnail.png",

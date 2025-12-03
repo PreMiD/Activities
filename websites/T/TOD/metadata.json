@@ -13,6 +13,7 @@
     "tod.tv",
     "www.tod.tv"
   ],
+  "regExp": "(www[.])?tod[.]tv[/]",
   "version": "1.0.8",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TOD/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TOD/assets/thumbnail.jpeg",

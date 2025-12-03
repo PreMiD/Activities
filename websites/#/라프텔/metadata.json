@@ -14,6 +14,7 @@
     "ko": "한국에서 서비스하는 애니 OTT 스트리밍 서비스"
   },
   "url": "laftel.net",
+  "regExp": "([a-z0-9-]+[.])*laftel[.]net[/]",
   "version": "1.0.8",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%EB%9D%BC%ED%94%84%ED%85%94/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%EB%9D%BC%ED%94%84%ED%85%94/assets/thumbnail.jpg",

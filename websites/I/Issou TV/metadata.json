@@ -15,6 +15,7 @@
     "issoutv.com",
     "www.issoutv.com"
   ],
+  "regExp": "(www[.])?issoutv[.]com[/]",
   "version": "1.0.28",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Issou%20TV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Issou%20TV/assets/thumbnail.png",

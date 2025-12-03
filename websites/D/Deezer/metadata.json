@@ -24,6 +24,7 @@
     "vi": "Nghe tất cả những bài hát bạn yêu thích mọi lúc, mọi nơi."
   },
   "url": "www.deezer.com",
+  "regExp": "(www[.])?deezer[.]com[/]",
   "version": "2.3.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/thumbnail.png",

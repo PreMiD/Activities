@@ -13,6 +13,7 @@
     "channel4.com",
     "www.channel4.com"
   ],
+  "regExp": "(www[.])?channel4[.]com[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Channel%204/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Channel%204/assets/thumbnail.jpg",

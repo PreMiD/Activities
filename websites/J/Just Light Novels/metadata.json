@@ -17,6 +17,7 @@
     "nl": "Gewoon lichte romans! Huis van alle lichte romans"
   },
   "url": "justlightnovels.com",
+  "regExp": "([a-z0-9-]+[.])*justlightnovels[.]com[/]",
   "version": "1.2.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Just%20Light%20Novels/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Just%20Light%20Novels/assets/thumbnail.png",

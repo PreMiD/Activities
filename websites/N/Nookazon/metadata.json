@@ -11,6 +11,7 @@
     "nl": "Nookazon is een fansite waar gebruikers items en dorpelingen kunnen kopen en verkopen in \"Animal Crossing: New Horizons\"."
   },
   "url": "nookazon.com",
+  "regExp": "([a-z0-9-]+[.])*nookazon[.]com[/]",
   "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nookazon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nookazon/assets/thumbnail.png",

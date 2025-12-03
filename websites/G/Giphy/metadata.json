@@ -16,6 +16,7 @@
     "vi": "Giphy là công cụ tìm kiếm và tạo Gif."
   },
   "url": "giphy.com",
+  "regExp": "([a-z0-9-]+[.])*giphy[.]com[/]",
   "version": "1.2.29",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Giphy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Giphy/assets/thumbnail.png",

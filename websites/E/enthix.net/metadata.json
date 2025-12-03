@@ -11,6 +11,7 @@
     "nl": "MultiPlatform Games Netwerk"
   },
   "url": "enthix.net",
+  "regExp": "([a-z0-9-]+[.])*enthix[.]net[/]",
   "version": "1.2.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/enthix.net/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/enthix.net/assets/thumbnail.png",

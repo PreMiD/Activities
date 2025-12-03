@@ -13,6 +13,7 @@
     "sakura.fm",
     "www.sakura.fm"
   ],
+  "regExp": "(www[.])?sakura[.]fm[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sakura%20AI/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sakura%20AI/assets/thumbnail.png",

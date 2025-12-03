@@ -12,6 +12,7 @@
     "zh": "火箭联盟在PC,PS4和XBOX的价格，每小时更新."
   },
   "url": "rl.insider.gg",
+  "regExp": "rl[.]insider[.]gg[/]",
   "version": "1.2.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RL%20Insider/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RL%20Insider/assets/thumbnail.png",

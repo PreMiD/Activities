@@ -12,6 +12,7 @@
     "vi": "CliffsNotes cung cấp hướng dẫn được viết bởi các giáo viên và giáo sư thật, nên không kể bạn đang học gì, CliffsNotes có thể giúp bạn nhẹ đi các cơn đau đầu khi làm bài tập và giúp bạn đạt điểm cao trong các bài kiểm tra."
   },
   "url": "www.cliffsnotes.com",
+  "regExp": "(www[.])?cliffsnotes[.]com[/]",
   "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CliffsNotes/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CliffsNotes/assets/thumbnail.png",

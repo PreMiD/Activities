@@ -14,6 +14,7 @@
     "quizypedia.fr",
     "www.quizypedia.fr"
   ],
+  "regExp": "(www[.])?quizypedia[.]fr[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Q/Quizypedia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Q/Quizypedia/assets/thumbnail.png",

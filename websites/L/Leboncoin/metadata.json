@@ -17,6 +17,7 @@
     "fr": "Leboncoin est un site français de petites annonces où des utilisateurs et des professionnels peuvent vendre ou acheter des produits en ligne et hors ligne."
   },
   "url": "www.leboncoin.fr",
+  "regExp": "(www[.])?leboncoin[.]fr[/]",
   "version": "1.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Leboncoin/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Leboncoin/assets/thumbnail.png",

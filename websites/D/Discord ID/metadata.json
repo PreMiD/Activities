@@ -13,6 +13,7 @@
     "wiki.discord.id",
     "discord.id"
   ],
+  "regExp": "(wiki[.])?discord[.]id[/]",
   "version": "1.1.7",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20ID/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20ID/assets/thumbnail.png",

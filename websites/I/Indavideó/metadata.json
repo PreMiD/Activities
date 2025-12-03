@@ -10,6 +10,7 @@
     "en": "A Hungarian video sharing site, often used to share anime."
   },
   "url": "indavideo.hu",
+  "regExp": "([a-z0-9-]+[.])*indavideo[.]hu[/]",
   "version": "1.0.10",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Indavide%C3%B3/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Indavide%C3%B3/assets/thumbnail.png",

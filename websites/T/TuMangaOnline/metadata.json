@@ -16,6 +16,7 @@
     "visortmo.com",
     "zonatmo.com"
   ],
+  "regExp": "(lectortmo[.]com|tmocommunity[.]com|visortmo[.]com|zonatmo[.]com)[/]",
   "version": "1.2.27",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TuMangaOnline/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TuMangaOnline/assets/thumbnail.png",

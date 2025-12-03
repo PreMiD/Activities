@@ -12,6 +12,7 @@
     "tr": "dizilab, son çıkan, güncel ve bir çok yabancı diziyi izleyebileceğiniz bir yabancı dizi sitesidir."
   },
   "url": "dizilab.de",
+  "regExp": "([a-z0-9-]+[.])*dizilab[.]de[/]",
   "version": "1.4.36",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/dizilab/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/dizilab/assets/thumbnail.png",

@@ -12,6 +12,7 @@
     "nl": "Ecosia gebruikt de advertentie-inkomsten van uw zoekopdrachten om bomen te planten waar ze het meest nodig zijn."
   },
   "url": "www.ecosia.org",
+  "regExp": "(www[.])?ecosia[.]org[/]",
   "version": "1.3.27",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Ecosia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Ecosia/assets/thumbnail.png",

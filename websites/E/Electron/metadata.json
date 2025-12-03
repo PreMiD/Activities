@@ -23,6 +23,7 @@
     "electronjs.org",
     "www.electronjs.org"
   ],
+  "regExp": "(www[.])?electronjs[.]org[/]",
   "version": "1.2.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Electron/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Electron/assets/thumbnail.png",

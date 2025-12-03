@@ -18,6 +18,7 @@
     "travel.koleo.pl",
     "aplikacja.koleo.pl"
   ],
+  "regExp": "((pomoc|sklep|magazyn|travel|aplikacja)[.])?koleo[.]pl[/]",
   "version": "1.0.7",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KOLEO/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KOLEO/assets/thumbnail.png",

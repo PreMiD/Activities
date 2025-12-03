@@ -26,6 +26,7 @@
     "play.kahoot.it",
     "create.kahoot.it"
   ],
+  "regExp": "((play|create)[.])?kahoot[.]it[/]",
   "version": "2.1.20",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kahoot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kahoot/assets/thumbnail.png",

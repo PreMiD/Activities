@@ -15,6 +15,7 @@
     "carl.gg",
     "docs.carl.gg"
   ],
+  "regExp": "(docs[.])?carl[.]gg[/]",
   "version": "1.4.30",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Carl-bot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Carl-bot/assets/thumbnail.png",

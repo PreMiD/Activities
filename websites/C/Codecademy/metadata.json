@@ -15,6 +15,7 @@
     "www.codecademy.com",
     "news.codecademy.com"
   ],
+  "regExp": "(www|news)[.]codecademy[.]com[/]",
   "version": "1.1.35",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Codecademy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Codecademy/assets/thumbnail.png",

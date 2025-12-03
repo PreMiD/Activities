@@ -14,6 +14,7 @@
     "shopee.com.my",
     "shopee.sg"
   ],
+  "regExp": "((shopee)[.]co[.]id|(shopee)[.]com[.]my|shopee[.]sg)[/]",
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Shopee/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Shopee/assets/thumbnail.jpeg",

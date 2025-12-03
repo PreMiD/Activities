@@ -14,6 +14,7 @@
     "vi": "Tìm tất cả các skin, găng tay, hòm, bộ sưu tập, hộp nhạc CS:GO và hơn nữa. Theo dõi giá, giá trị thị trường, xem trước và hơn nữa cho mọi vật phẩm CS:GO"
   },
   "url": "csgostash.com",
+  "regExp": "([a-z0-9-]+[.])*csgostash[.]com[/]",
   "version": "1.2.17",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CSGO%20Stash/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CSGO%20Stash/assets/thumbnail.png",

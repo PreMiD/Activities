@@ -12,6 +12,7 @@
     "vi": "Dịch vụ COSMOTE TV OTT mới nhất nâng cấp trải nghiệm TV của bạn với các tính năng mới, lật mở lượng nội dung không thể địch nổi của COSMOTE TV."
   },
   "url": "www.cosmotetvott.gr",
+  "regExp": "(www[.])?cosmotetvott[.]gr[/]",
   "version": "2.0.16",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Cosmote%20TV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Cosmote%20TV/assets/thumbnail.png",

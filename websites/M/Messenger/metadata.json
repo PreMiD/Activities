@@ -18,6 +18,7 @@
     "vi": "Liên lạc với các người thân của bạn ngay lập tức—miễn phí. Messenger cũng giống như nhắn tin, nhưng bạn không phải trả phí cho từng tin nhắn (mà qua gói dữ liệu bạn có)."
   },
   "url": "www.messenger.com",
+  "regExp": "(www[.])?messenger[.]com[/]",
   "version": "1.2.20",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Messenger/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Messenger/assets/thumbnail.jpg",

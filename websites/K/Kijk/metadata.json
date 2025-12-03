@@ -11,6 +11,7 @@
     "nl": "Kijk opent je ogen"
   },
   "url": "www.kijk.nl",
+  "regExp": "(www[.])?kijk[.]nl[/]",
   "version": "1.2.15",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kijk/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kijk/assets/thumbnail.jpg",

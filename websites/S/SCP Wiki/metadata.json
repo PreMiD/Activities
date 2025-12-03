@@ -36,6 +36,7 @@
     "scp-sandbox-3.wikidot.com",
     "www.scpwiki.com"
   ],
+  "regExp": "((scp-wiki|scp-wiki-cn|scp-cs|fondationscp|scp-wiki-de|scp-int|fondazionescp|scp-pt-br|scp-th|scpclassic|scpexplained|scp-sandbox-3)[.]wikidot[.]com|(ja|ko)[.]scp-wiki[.]net|(scp-wiki)[.]net[.]pl|scpfoundation[.]net|scp-es[.]com|(www)[.]scpwiki[.]com)[/]",
   "version": "1.2.29",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SCP%20Wiki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SCP%20Wiki/assets/thumbnail.png",

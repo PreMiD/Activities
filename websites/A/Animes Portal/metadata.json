@@ -11,6 +11,7 @@
     "en": "Anime, manga and Asian culture"
   },
   "url": "animes-portal.info",
+  "regExp": "([a-z0-9-]+[.])*animes-portal[.]info[/]",
   "version": "1.0.27",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Animes%20Portal/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Animes%20Portal/assets/thumbnail.jpg",

@@ -13,6 +13,7 @@
     "vi": "Coinbase là nền tảng trao đổi và tích trữ tiền ảo bảo mật."
   },
   "url": "www.coinbase.com",
+  "regExp": "(www[.])?coinbase[.]com[/]",
   "version": "1.0.21",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Coinbase/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Coinbase/assets/thumbnail.jpg",

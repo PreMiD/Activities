@@ -15,6 +15,7 @@
     "ja": "Kickstarterは、映画、音楽、アート、シアター、ゲーム、コミック、デザイン、写真など、多種多様なクリエイティブプロジェクトを実現させるための場です。"
   },
   "url": "www.kickstarter.com",
+  "regExp": "(www[.])?kickstarter[.]com[/]",
   "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kickstarter/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kickstarter/assets/thumbnail.png",

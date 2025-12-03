@@ -18,6 +18,7 @@
     "ru": "Jut.su — это русский сайт с аниме"
   },
   "url": "jut.su",
+  "regExp": "([a-z0-9-]+[.])*jut[.]su[/]",
   "version": "3.0.16",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/jut.su/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/jut.su/assets/thumbnail.png",

@@ -10,6 +10,7 @@
     "en": "feds.lol is a freemium biolink service."
   },
   "url": "feds.lol",
+  "regExp": "([a-z0-9-]+[.])*feds[.]lol[/]",
   "version": "1.0.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/feds/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/feds/assets/thumbnail.jpg",

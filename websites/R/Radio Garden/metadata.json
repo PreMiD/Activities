@@ -11,6 +11,7 @@
     "nl": "Door verre stemmen dichtbij te brengen, verbindt radio mensen en plaatsen. Met Radio Garden kunnen luisteraars afstemmen op live-radio over de hele wereld."
   },
   "url": "radio.garden",
+  "regExp": "([a-z0-9-]+[.])*radio[.]garden[/]",
   "version": "3.1.8",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Radio%20Garden/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Radio%20Garden/assets/thumbnail.png",

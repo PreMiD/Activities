@@ -10,6 +10,7 @@
     "en": "Enjoy millions of audiobooks, ebooks and more."
   },
   "url": "www.everand.com",
+  "regExp": "(www[.])?everand[.]com[/]",
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Everand/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Everand/assets/thumbnail.png",

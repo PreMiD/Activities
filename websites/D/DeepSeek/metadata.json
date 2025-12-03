@@ -10,6 +10,7 @@
     "en": "DeepSeek-V3 achieves a significant breakthrough in inference speed over previous models. It tops the leaderboard among open-source models and rivals the most advanced closed-source models globally."
   },
   "url": "chat.deepseek.com",
+  "regExp": "chat[.]deepseek[.]com[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DeepSeek/assets/thumbnail.png",

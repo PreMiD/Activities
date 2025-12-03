@@ -11,6 +11,7 @@
     "nl": "SaltyBet (ook bekend als Salty's Dream Cast Casino) is een goksite waar gebruikers nepgeld kunnen inzetten op de uitkomsten van door A.I. gecontroleerde M.U.G.E.N gevechten."
   },
   "url": "www.saltybet.com",
+  "regExp": "(www[.])?saltybet[.]com[/]",
   "version": "2.1.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Salty%20Bet/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Salty%20Bet/assets/thumbnail.png",

@@ -14,6 +14,7 @@
     "nativshark.com",
     "www.nativshark.com"
   ],
+  "regExp": "(www[.])?nativshark[.]com[/]",
   "version": "1.0.22",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NativShark/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NativShark/assets/thumbnail.png",

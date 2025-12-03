@@ -18,6 +18,7 @@
     "animetsu.to",
     "animetsu.bz"
   ],
+  "regExp": "animetsu[.](to|bz)[/]",
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gojo.live/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gojo.live/assets/thumbnail.png",

@@ -13,6 +13,7 @@
     "www.deconreconstruction.com",
     "deconreconstruction.com"
   ],
+  "regExp": "(www[.])?deconreconstruction[.]com[/]",
   "version": "1.0.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deconreconstruction/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deconreconstruction/assets/thumbnail.png",

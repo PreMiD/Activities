@@ -73,6 +73,7 @@
     "studio.youtube.com",
     "m.youtube.com"
   ],
+  "regExp": "(www|studio|m)[.]youtube[.]com[/]",
   "version": "6.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube/assets/thumbnail.jpg",

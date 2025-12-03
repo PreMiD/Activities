@@ -18,6 +18,7 @@
     "www.animevost.org",
     "v2.vost.pw"
   ],
+  "regExp": "((www[.])?animevost[.]org|(v2)[.]vost[.]pw)[/]",
   "version": "1.0.17",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeVost/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeVost/assets/thumbnail.png",

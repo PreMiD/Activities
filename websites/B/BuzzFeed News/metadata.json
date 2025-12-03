@@ -16,6 +16,7 @@
     "www.buzzfeednews.com",
     "buzzfeednews.com"
   ],
+  "regExp": "(www[.])?buzzfeednews[.]com[/]",
   "version": "1.6.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BuzzFeed%20News/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BuzzFeed%20News/assets/thumbnail.png",

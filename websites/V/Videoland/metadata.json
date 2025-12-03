@@ -16,6 +16,7 @@
     "videoland.com",
     "www.videoland.com"
   ],
+  "regExp": "((v2|www[.]v2|www)[.])?videoland[.]com[/]",
   "version": "1.3.7",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Videoland/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Videoland/assets/thumbnail.png",

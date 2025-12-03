@@ -11,6 +11,7 @@
     "pt-br": "Levando a palavra de Deus para o dia a dia e o coração de pessoas em diversas nações."
   },
   "url": "www.bibliaonline.com.br",
+  "regExp": "(www[.])?bibliaonline[.]com[.]br[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/B%C3%ADblia%20On-line/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/B%C3%ADblia%20On-line/assets/thumbnail.png",

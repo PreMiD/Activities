@@ -11,6 +11,7 @@
     "id": "Westmanga adalah sebuah website scanlation manga berbahasa indonesia dengan banyak genre manga isekai"
   },
   "url": "westmanga.fun",
+  "regExp": "([a-z0-9-]+[.])*westmanga[.]fun[/]",
   "version": "1.0.22",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Westmanga/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Westmanga/assets/thumbnail.png",

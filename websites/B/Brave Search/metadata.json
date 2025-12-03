@@ -10,6 +10,7 @@
     "en": "Search the Web. Privately. Truly useful results, AI-powered answers, & more. All from an independent index. No profiling, no bias, no Big Tech."
   },
   "url": "search.brave.com",
+  "regExp": "search[.]brave[.]com[/]",
   "version": "1.0.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Brave%20Search/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Brave%20Search/assets/thumbnail.png",

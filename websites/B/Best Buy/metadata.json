@@ -10,6 +10,7 @@
     "en": "Shop Best Buy for electronics, computers, appliances, cell phones, video games & more new tech. Store pickup & free 2-day shipping on thousands of items."
   },
   "url": "www.bestbuy.com",
+  "regExp": "(www[.])?bestbuy[.]com[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Best%20Buy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Best%20Buy/assets/thumbnail.png",

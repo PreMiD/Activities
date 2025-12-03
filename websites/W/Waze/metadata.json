@@ -20,6 +20,7 @@
     "www.waze.com",
     "beta.waze.com"
   ],
+  "regExp": "(www|beta)[.]waze[.]com[/]",
   "version": "1.2.15",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Waze/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Waze/assets/thumbnail.png",

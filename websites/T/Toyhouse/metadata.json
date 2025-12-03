@@ -11,6 +11,7 @@
     "fr": "Une communauté pour collaborer dans la création et l'échange de personnages, le worldbuilding et le roleplay."
   },
   "url": "toyhou.se",
+  "regExp": "([a-z0-9-]+[.])*toyhou[.]se[/]",
   "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Toyhouse/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Toyhouse/assets/thumbnail.png",

@@ -11,6 +11,7 @@
     "vi": "Danh sách được chọn lọc bởi cộng đồng để bạn có thể chọn những bộ phim hay."
   },
   "url": "www.animefillerlist.com",
+  "regExp": "(www[.])?animefillerlist[.]com[/]",
   "version": "1.0.22",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeFillerList/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeFillerList/assets/thumbnail.png",

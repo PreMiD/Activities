@@ -12,6 +12,7 @@
     "nl": "De Node Package Manager is een pakketbeheerder voor de JavaScript-runtime-omgeving node.js."
   },
   "url": "www.npmjs.com",
+  "regExp": "(www[.])?npmjs[.]com[/]",
   "version": "1.2.22",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NPM%20Package%20Registry/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NPM%20Package%20Registry/assets/thumbnail.png",

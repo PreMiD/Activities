@@ -17,6 +17,7 @@
     "docs.spongepowered.org",
     "forums.spongepowered.org"
   ],
+  "regExp": "(jd|www|ore|docs|forums)[.]spongepowered[.]org[/]",
   "version": "1.2.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SpongePowered/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SpongePowered/assets/thumbnail.png",

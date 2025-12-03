@@ -15,6 +15,7 @@
     "uk": "DLive.tv — найбільша спільнота потокової трансляції у блокчейні, що працює на базі блокчейна Lino."
   },
   "url": "dlive.tv",
+  "regExp": "([a-z0-9-]+[.])*dlive[.]tv[/]",
   "version": "2.2.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/dlive/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/dlive/assets/thumbnail.png",

@@ -11,6 +11,7 @@
     "nl": "Stan biedt onbeperkte toegang tot duizenden uren amusement, exclusieve primeurs, bekroonde tv-programma's, kaskrakerfilms en inhoud voor kinderen."
   },
   "url": "play.stan.com.au",
+  "regExp": "play[.]stan[.]com[.]au[/]",
   "version": "1.1.21",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stan/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stan/assets/thumbnail.png",

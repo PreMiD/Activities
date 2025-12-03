@@ -11,6 +11,7 @@
     "en": "Clank (Discord-Bot) is the heart of your Discord server: Besides easy use & beautiful menus, it offers you everything you need to protect and grow your own community."
   },
   "url": "clank.dev",
+  "regExp": "([a-z0-9-]+[.])*clank[.]dev[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Clank%20(Discord-Bot)/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Clank%20(Discord-Bot)/assets/thumbnail.jpeg",

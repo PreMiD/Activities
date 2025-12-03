@@ -10,6 +10,7 @@
     "en": "combi.fm is a platform-agnostic music service for listening with friends."
   },
   "url": "combi.fm",
+  "regExp": "([a-z0-9-]+[.])*combi[.]fm[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/combi.fm/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/combi.fm/assets/thumbnail.png",

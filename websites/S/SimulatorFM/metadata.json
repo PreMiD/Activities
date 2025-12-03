@@ -14,6 +14,7 @@
     "simulator.fm",
     "panel.simulator.fm"
   ],
+  "regExp": "(panel[.])?simulator[.]fm[/]",
   "version": "1.0.23",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SimulatorFM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SimulatorFM/assets/thumbnail.png",

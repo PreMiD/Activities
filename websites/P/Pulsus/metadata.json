@@ -10,6 +10,7 @@
     "en": "Play Pulsus, an online rhythm game in which you hit incoming beats on a 3x3 tile board!"
   },
   "url": "pulsus.cc",
+  "regExp": "([a-z0-9-]+[.])*pulsus[.]cc[/]",
   "version": "1.0.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pulsus/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pulsus/assets/thumbnail.png",

@@ -10,6 +10,7 @@
     "en": "MANGA Plus by SHUEISHA is the official manga reader from Shueisha Inc., and is globally available. We publish the greatest manga in the world such as Naruto, Dragon Ball, One Piece, Bleach and more. You can read the latest chapters of the best manga for FREE, DAILY, and SIMULTANEOUSLY with its release in Japan."
   },
   "url": "mangaplus.shueisha.co.jp",
+  "regExp": "mangaplus[.]shueisha[.]co[.]jp[/]",
   "version": "1.1.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Manga%20Plus/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Manga%20Plus/assets/thumbnail.png",

@@ -12,6 +12,7 @@
     "sv": "Se dina favoritprogram när du vill i SVT Play - fri television på nätet."
   },
   "url": "www.svtplay.se",
+  "regExp": "(www[.])?svtplay[.]se[/]",
   "version": "1.2.31",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SVT%20Play/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SVT%20Play/assets/thumbnail.png",

@@ -13,6 +13,7 @@
     "www.fortnite.gg",
     "fortnite.gg"
   ],
+  "regExp": "(www[.])?fortnite[.]gg[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fortnite.GG/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fortnite.GG/assets/thumbnail.jpeg",

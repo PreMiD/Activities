@@ -12,6 +12,7 @@
     "pt-br": "TopFlix - Assistir filmes online grátis HD"
   },
   "url": "topflixlive.vc",
+  "regExp": "([a-z0-9-]+[.])*topflixlive[.]vc[/]",
   "version": "1.0.32",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TopFlix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TopFlix/assets/thumbnail.png",

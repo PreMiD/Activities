@@ -12,6 +12,7 @@
     "tr": "fizy milyonlarca şarkı, video klip, onlarca radyo kanalı ve fazlasına ulaşmanı sağlayan dijital müzik platformudur."
   },
   "url": "play.fizy.com",
+  "regExp": "play[.]fizy[.]com[/]",
   "version": "1.1.29",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/fizy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/fizy/assets/thumbnail.png",

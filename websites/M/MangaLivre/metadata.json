@@ -11,6 +11,7 @@
     "pt": "O Manga Livre é a melhor maneira de ler os mangás e webtoons mais populares de ação, romance, fantasia, isekai e outros!"
   },
   "url": "mangalivre.tv",
+  "regExp": "([a-z0-9-]+[.])*mangalivre[.]tv[/]",
   "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaLivre/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaLivre/assets/thumbnail.png",

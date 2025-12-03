@@ -12,6 +12,7 @@
     "nl": "Uw bron voor de beste wallpapers van hoge kwaliteit op het net!"
   },
   "url": "wallhaven.cc",
+  "regExp": "([a-z0-9-]+[.])*wallhaven[.]cc[/]",
   "version": "1.0.27",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wallhaven/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wallhaven/assets/thumbnail.jpg",

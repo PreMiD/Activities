@@ -11,6 +11,7 @@
     "nl": "Skillshare is een leerplatform met online lessen gegeven door 's werelds best practitioners."
   },
   "url": "www.skillshare.com",
+  "regExp": "(www[.])?skillshare[.]com[/]",
   "version": "1.2.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Skillshare/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Skillshare/assets/thumbnail.png",

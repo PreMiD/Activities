@@ -12,6 +12,7 @@
     "vi": "Trò chơi trực tuyến nơi bạn có thể vẽ, đoán và gửi từ ngữ cho bạn bè của mình đoán."
   },
   "url": "www.brokenpicturephone.com",
+  "regExp": "(www[.])?brokenpicturephone[.]com[/]",
   "version": "1.1.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Broken%20Picturephone/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Broken%20Picturephone/assets/thumbnail.png",

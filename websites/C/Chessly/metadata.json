@@ -13,6 +13,7 @@
     "chessly.com",
     "feedback.chessly.com"
   ],
+  "regExp": "(feedback[.])?chessly[.]com[/]",
   "version": "1.0.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Chessly/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Chessly/assets/thumbnail.png",

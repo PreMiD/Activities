@@ -14,6 +14,7 @@
     "vi": "Khám phá các trò chơi mới, theo dõi những gì bạn muốn chơi, và kết nối với bạn bè."
   },
   "url": "ggapp.io",
+  "regExp": "([a-z0-9-]+[.])*ggapp[.]io[/]",
   "version": "1.0.19",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GG%20App/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GG%20App/assets/thumbnail.png",

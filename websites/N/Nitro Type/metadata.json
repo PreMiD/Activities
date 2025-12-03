@@ -20,6 +20,7 @@
     "nitrotype.com",
     "www.nitrotype.com"
   ],
+  "regExp": "(www[.])?nitrotype[.]com[/]",
   "version": "1.3.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nitro%20Type/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nitro%20Type/assets/thumbnail.png",

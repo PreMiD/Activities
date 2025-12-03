@@ -15,6 +15,7 @@
     "odeoncinemas.ie",
     "www.odeoncinemas.ie"
   ],
+  "regExp": "((www[.]odeon|odeon)[.]co[.]uk|(www[.])?odeoncinemas[.]ie)[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/ODEON/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/ODEON/assets/thumbnail.jpeg",

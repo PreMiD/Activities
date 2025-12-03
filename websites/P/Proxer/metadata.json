@@ -12,6 +12,7 @@
     "nl": "Gratis en open Duitse Anime-community"
   },
   "url": "proxer.me",
+  "regExp": "([a-z0-9-]+[.])*proxer[.]me[/]",
   "version": "1.0.31",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Proxer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Proxer/assets/thumbnail.png",

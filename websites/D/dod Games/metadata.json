@@ -11,6 +11,7 @@
     "en": "dod Games is one of the most famous multiplayer game and chatting community in Greece"
   },
   "url": "www.dod.gr",
+  "regExp": "(www[.])?dod[.]gr[/]",
   "version": "1.1.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/dod%20Games/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/dod%20Games/assets/thumbnail.png",

@@ -10,6 +10,7 @@
     "en": "WINDOWS93 is a website stylised to look and work as an operating system and a parody of the Windows 9x series."
   },
   "url": "www.windows93.net",
+  "regExp": "(www[.])?windows93[.]net[/]",
   "version": "1.0.11",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WINDOWS93/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WINDOWS93/assets/thumbnail.png",

@@ -10,6 +10,7 @@
     "en": "Welcome to Creepypasta.com! Scaring you since 2008 with paranormal stories and creepy original horror fiction. Sleep well..."
   },
   "url": "www.creepypasta.com",
+  "regExp": "(www[.])?creepypasta[.]com[/]",
   "version": "1.0.18",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Creepypasta/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Creepypasta/assets/thumbnail.png",

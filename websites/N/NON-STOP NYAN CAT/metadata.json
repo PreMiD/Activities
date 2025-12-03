@@ -11,6 +11,7 @@
     "nl": "Eigenlijk gewoon een eindeloze Nyan Cat. Dat is alles wat er is."
   },
   "url": "www.nyan.cat",
+  "regExp": "(www[.])?nyan[.]cat[/]",
   "version": "1.1.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NON-STOP%20NYAN%20CAT/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NON-STOP%20NYAN%20CAT/assets/thumbnail.png",

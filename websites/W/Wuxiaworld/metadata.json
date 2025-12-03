@@ -13,6 +13,7 @@
     "www.wuxiaworld.com",
     "wuxiaworld.com"
   ],
+  "regExp": "(www[.])?wuxiaworld[.]com[/]",
   "version": "1.0.21",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wuxiaworld/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wuxiaworld/assets/thumbnail.png",

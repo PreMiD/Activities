@@ -11,6 +11,7 @@
     "ja": "ABEMAは好きな時間に好きな場所で話題の動画を無料で楽しめる新しい未来のテレビ。ニュースや恋愛番組、アニメ、スポーツなど、多彩な番組をお楽しみいただけます。"
   },
   "url": "abema.tv",
+  "regExp": "([a-z0-9-]+[.])*abema[.]tv[/]",
   "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/ABEMA/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/ABEMA/assets/thumbnail.png",

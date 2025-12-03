@@ -13,6 +13,7 @@
     "staging.holodex.net",
     "holodex.net"
   ],
+  "regExp": "(staging[.])?holodex[.]net[/]",
   "version": "1.0.32",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Holodex/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Holodex/assets/thumbnail.png",

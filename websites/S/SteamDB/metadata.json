@@ -17,6 +17,7 @@
     "steamdb.info",
     "steamstat.us"
   ],
+  "regExp": "(steamdb[.]info|steamstat[.]us)[/]",
   "version": "1.1.16",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SteamDB/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SteamDB/assets/thumbnail.png",

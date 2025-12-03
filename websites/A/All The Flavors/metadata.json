@@ -21,6 +21,7 @@
     "zh-tw": "alltheflavors.com是一個DIY食譜教程和調味資訊網站"
   },
   "url": "alltheflavors.com",
+  "regExp": "([a-z0-9-]+[.])*alltheflavors[.]com[/]",
   "version": "1.4.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/All%20The%20Flavors/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/All%20The%20Flavors/assets/thumbnail.png",

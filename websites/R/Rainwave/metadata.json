@@ -12,6 +12,7 @@
     "zh": "电子游戏音乐在线广播，包括混音和原声带！ 为您想听的歌曲投票！"
   },
   "url": "rainwave.cc",
+  "regExp": "([a-z0-9-]+[.])*rainwave[.]cc[/]",
   "version": "1.1.27",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rainwave/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rainwave/assets/thumbnail.png",

@@ -15,6 +15,7 @@
     "www1.animixplayer.top",
     "animixplay.st"
   ],
+  "regExp": "(animixplay[.]fun|animixplay[.]best|(www1)[.]animixplayer[.]top|animixplay[.]st)[/]",
   "version": "1.0.11",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimixPlay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimixPlay/assets/thumbnail.png",

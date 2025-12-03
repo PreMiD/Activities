@@ -13,6 +13,7 @@
     "weather.com",
     "features.weather.com"
   ],
+  "regExp": "(features[.])?weather[.]com[/]",
   "version": "1.0.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Weather%20Channel/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Weather%20Channel/assets/thumbnail.png",

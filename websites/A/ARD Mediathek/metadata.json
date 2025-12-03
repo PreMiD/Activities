@@ -12,6 +12,7 @@
     "vi": "ARD Mediathek là dịch vụ phát video trực tuyến theo nhu cầu của các đài truyền hình công Tiếng Đức của ARD."
   },
   "url": "www.ardmediathek.de",
+  "regExp": "(www[.])?ardmediathek[.]de[/]",
   "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/ARD%20Mediathek/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/ARD%20Mediathek/assets/thumbnail.jpg",

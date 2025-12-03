@@ -18,6 +18,7 @@
     "support.blockchain.com",
     "www.blockchain-status.com"
   ],
+  "regExp": "((www|login|exchange|support)[.]blockchain[.]com|(www)[.]blockchain-status[.]com)[/]",
   "version": "1.0.23",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Blockchain/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Blockchain/assets/thumbnail.png",

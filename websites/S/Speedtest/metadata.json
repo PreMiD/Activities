@@ -21,6 +21,7 @@
     "nl": "De wereldwijde breedbandsnelheidstest"
   },
   "url": "www.speedtest.net",
+  "regExp": "(www[.])?speedtest[.]net[/]",
   "version": "1.0.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Speedtest/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Speedtest/assets/thumbnail.png",

@@ -17,6 +17,7 @@
     "nl": "JUKE is een verzamelingssite voor radiostations. JUKE is een merk van Talpa Network."
   },
   "url": "juke.nl",
+  "regExp": "([a-z0-9-]+[.])*juke[.]nl[/]",
   "version": "2.0.22",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/JUKE/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/JUKE/assets/thumbnail.png",

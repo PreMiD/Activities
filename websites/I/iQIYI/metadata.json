@@ -12,6 +12,7 @@
     "zh-tw": "愛奇藝-全球領先的線上影音視頻網站-正版高清影片影視免費線上看"
   },
   "url": "www.iq.com",
+  "regExp": "(www[.])?iq[.]com[/]",
   "version": "1.2.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/iQIYI/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/iQIYI/assets/thumbnail.png",

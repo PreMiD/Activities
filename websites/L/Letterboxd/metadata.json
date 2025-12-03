@@ -10,6 +10,7 @@
     "en": "The social network for film lovers."
   },
   "url": "letterboxd.com",
+  "regExp": "([a-z0-9-]+[.])*letterboxd[.]com[/]",
   "version": "1.0.21",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Letterboxd/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Letterboxd/assets/thumbnail.png",

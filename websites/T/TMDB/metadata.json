@@ -10,6 +10,7 @@
     "en": "The Movie Database (TMDB) is a popular, user editable database for movies and TV shows."
   },
   "url": "www.themoviedb.org",
+  "regExp": "(www[.])?themoviedb[.]org[/]",
   "version": "1.0.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TMDB/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TMDB/assets/thumbnail.png",

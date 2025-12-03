@@ -13,6 +13,7 @@
     "www.npr.org",
     "text.npr.org"
   ],
+  "regExp": "(www|text)[.]npr[.]org[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NPR/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NPR/assets/thumbnail.png",

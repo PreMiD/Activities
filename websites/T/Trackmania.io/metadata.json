@@ -15,6 +15,7 @@
     "trackmania.io",
     "www.trackmania.io"
   ],
+  "regExp": "(www[.])?trackmania[.]io[/]",
   "version": "1.2.18",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Trackmania.io/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Trackmania.io/assets/thumbnail.jpg",

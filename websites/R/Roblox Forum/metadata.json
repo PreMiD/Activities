@@ -10,6 +10,7 @@
     "en": "Welcome to Roblox Forum. Join the discussion here for the best help available. Scripting, Building, Game Creating, or just for fun. We have it all."
   },
   "url": "www.robloxforum.com",
+  "regExp": "(www[.])?robloxforum[.]com[/]",
   "version": "1.1.15",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Roblox%20Forum/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Roblox%20Forum/assets/thumbnail.png",

@@ -10,6 +10,7 @@
     "en": "Online Multiplayer Typing Test - Improve your typing speed and race your friends. Practice on different texts and learn how to type faster."
   },
   "url": "typer.io",
+  "regExp": "([a-z0-9-]+[.])*typer[.]io[/]",
   "version": "1.0.20",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Typer.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Typer.io/assets/thumbnail.png",

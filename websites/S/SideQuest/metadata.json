@@ -10,6 +10,7 @@
     "en": "SideQuest is the early access layer for Virtual Reality. Get access to the latest Oculus Quest Games, Oculus App Lab games & lots of free apps on applab and sideload."
   },
   "url": "sidequestvr.com",
+  "regExp": "([a-z0-9-]+[.])*sidequestvr[.]com[/]",
   "version": "1.0.7",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SideQuest/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SideQuest/assets/thumbnail.jpg",

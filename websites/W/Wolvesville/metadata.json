@@ -56,6 +56,7 @@
     "voting.wolvesville.com",
     "app.wolvesville.com"
   ],
+  "regExp": "((www|vouchers|blog|legal|heroes|voting|app)[.])?wolvesville[.]com[/]",
   "version": "1.4.15",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/thumbnail.png",

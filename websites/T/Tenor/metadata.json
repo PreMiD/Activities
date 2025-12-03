@@ -19,6 +19,7 @@
     "zh-tw": "跟特諾多說點查找完美的動畫 GIF 和視頻，以準確傳達您在每段對話中的意思。"
   },
   "url": "tenor.com",
+  "regExp": "([a-z0-9-]+[.])*tenor[.]com[/]",
   "version": "1.0.19",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tenor/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tenor/assets/thumbnail.png",

@@ -12,6 +12,7 @@
     "tr": "Discord bots, bütün botları listeleyen bir sistemdir."
   },
   "url": "discord.bots.gg",
+  "regExp": "discord[.]bots[.]gg[/]",
   "version": "1.2.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20Bots/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20Bots/assets/thumbnail.png",

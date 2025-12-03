@@ -16,6 +16,7 @@
     "tss.warthunder.com",
     "wiki.warthunder.com"
   ],
+  "regExp": "((forum|live|tss|wiki)[.])?warthunder[.]com[/]",
   "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/War%20Thunder/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/War%20Thunder/assets/thumbnail.jpg",

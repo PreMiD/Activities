@@ -18,6 +18,7 @@
     "hub.nexonlogistics.com",
     "hub.nexonairlines.com"
   ],
+  "regExp": "(((map|shop|hub)[.])?nexonlogistics[.]com|((map|hub)[.])?nexonairlines[.]com)[/]",
   "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nexon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nexon/assets/thumbnail.png",

@@ -13,6 +13,7 @@
     "www.epal.gg",
     "epal.gg"
   ],
+  "regExp": "(www[.])?epal[.]gg[/]",
   "version": "1.0.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/E-PAL/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/E-PAL/assets/thumbnail.png",

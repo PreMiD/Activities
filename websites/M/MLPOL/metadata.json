@@ -11,6 +11,7 @@
     "nl": "Welkom bij het Mongoolse politieke paardenverluisterforum, ook bekend als /mlpol/"
   },
   "url": "mlpol.net",
+  "regExp": "([a-z0-9-]+[.])*mlpol[.]net[/]",
   "version": "1.0.23",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MLPOL/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MLPOL/assets/thumbnail.png",

@@ -16,6 +16,7 @@
     "translate.erisly.com",
     "wiki.erisly.com"
   ],
+  "regExp": "((giveaways|translate|wiki)[.])?erisly[.]com[/]",
   "version": "1.1.22",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Erisly/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Erisly/assets/thumbnail.png",

@@ -11,6 +11,7 @@
     "nl": "Rust Labs is een betrouwbare database voor het videospel, Rust. Het biedt wekelijkse updates en herziene statistische informatie voor items en spelmechanica."
   },
   "url": "rustlabs.com",
+  "regExp": "([a-z0-9-]+[.])*rustlabs[.]com[/]",
   "version": "1.0.22",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rustlabs/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rustlabs/assets/thumbnail.jpg",

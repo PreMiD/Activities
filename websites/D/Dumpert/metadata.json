@@ -11,6 +11,7 @@
     "nl": "De plek voor je dagelijkse entertainment. Met de leukste filmpjes en foto's voor als je even geen zin hebt in werk, studie of menselijk contact. Hoofdsponsor van Nederlandse zolderkamers."
   },
   "url": "www.dumpert.nl",
+  "regExp": "(www[.])?dumpert[.]nl[/]",
   "version": "2.0.10",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dumpert/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dumpert/assets/thumbnail.jpg",

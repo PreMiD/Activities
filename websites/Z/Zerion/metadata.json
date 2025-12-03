@@ -11,6 +11,7 @@
     "pl": "Zerion.cc zapewnia dostęp do treści online, dzięki czemu możesz oglądać swoje ulubione seriale i programy telewizyjne, gdziekolwiek masz dostęp do Internetu."
   },
   "url": "zeriun.cc",
+  "regExp": "([a-z0-9-]+[.])*zeriun[.]cc[/]",
   "version": "1.0.18",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/Zerion/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/Zerion/assets/thumbnail.png",

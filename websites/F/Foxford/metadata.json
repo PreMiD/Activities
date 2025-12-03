@@ -11,6 +11,7 @@
     "ru": "Фоксфорд — онлайн-школа для учеников 1-11 классов, учителей и родителей."
   },
   "url": "foxford.ru",
+  "regExp": "([a-z0-9-]+[.])*foxford[.]ru[/]",
   "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Foxford/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Foxford/assets/thumbnail.jpg",

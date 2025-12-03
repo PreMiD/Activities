@@ -10,6 +10,7 @@
     "en": "Delivery & takeout from the best local restaurants. Breakfast, lunch, dinner and more, delivered safely to your door."
   },
   "url": "www.doordash.com",
+  "regExp": "(www[.])?doordash[.]com[/]",
   "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Doordash/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Doordash/assets/thumbnail.jpg",

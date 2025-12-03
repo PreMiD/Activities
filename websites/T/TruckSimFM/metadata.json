@@ -11,6 +11,7 @@
     "nl": "TruckSimFM is een online radiostation, gewijd aan de Simulation Community, 24/7 live met niets dan geweldige muziek, online, op mobiel en op je slimme luidspreker."
   },
   "url": "trucksim.fm",
+  "regExp": "([a-z0-9-]+[.])*trucksim[.]fm[/]",
   "version": "1.2.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TruckSimFM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TruckSimFM/assets/thumbnail.png",

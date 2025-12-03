@@ -25,6 +25,7 @@
     "vi": "Telegram là dịch vụ nhắn tin bảo mật và xuyên nền tảng."
   },
   "url": "web.telegram.org",
+  "regExp": "web[.]telegram[.]org[/]",
   "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Telegram/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Telegram/assets/thumbnail.png",

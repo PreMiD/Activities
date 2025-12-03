@@ -11,6 +11,7 @@
     "nl": "Speel Gartic.com.br online en gratis zonder iets te hoeven downloaden!"
   },
   "url": "gartic.com.br",
+  "regExp": "([a-z0-9-]+[.])*gartic[.]com[.]br[/]",
   "version": "1.3.29",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gartic.com.br/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gartic.com.br/assets/thumbnail.png",

@@ -10,6 +10,7 @@
     "en": "100 Player 2D Real-Time Battle Royale game inspired by PUBG and Fortnite"
   },
   "url": "zombsroyale.io",
+  "regExp": "([a-z0-9-]+[.])*zombsroyale[.]io[/]",
   "version": "1.0.21",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZombsRoyale.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZombsRoyale.io/assets/thumbnail.png",

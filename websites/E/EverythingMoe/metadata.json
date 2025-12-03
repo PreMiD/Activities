@@ -14,6 +14,7 @@
     "everythingmoe.com",
     "www.everythingmoe.com"
   ],
+  "regExp": "(www[.])?everythingmoe[.]com[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/EverythingMoe/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/EverythingMoe/assets/thumbnail.png",

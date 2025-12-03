@@ -15,6 +15,7 @@
     "blog.codechef.com",
     "discuss.codechef.com"
   ],
+  "regExp": "(www|blog|discuss)[.]codechef[.]com[/]",
   "version": "1.0.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CodeChef/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CodeChef/assets/thumbnail.png",

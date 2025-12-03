@@ -10,6 +10,7 @@
     "en": "Malaysian streaming service offering live TV, movies, and sports content."
   },
   "url": "sooka.my",
+  "regExp": "([a-z0-9-]+[.])*sooka[.]my[/]",
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sooka/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sooka/assets/thumbnail.png",

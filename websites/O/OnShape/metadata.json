@@ -10,6 +10,7 @@
     "en": "A cloud-native product development platform"
   },
   "url": "cad.onshape.com",
+  "regExp": "cad[.]onshape[.]com[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OnShape/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OnShape/assets/thumbnail.png",

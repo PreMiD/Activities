@@ -19,6 +19,7 @@
     "ram.userbenchmark.com",
     "usb.userbenchmark.com"
   ],
+  "regExp": "(www|cpu|gpu|ssd|hdd|ram|usb)[.]userbenchmark[.]com[/]",
   "version": "1.0.31",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/UserBenchmark/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/UserBenchmark/assets/thumbnail.png",

@@ -11,6 +11,7 @@
     "zh": "遇见更生动的故事"
   },
   "url": "read.douban.com",
+  "regExp": "read[.]douban[.]com[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Douban%20Read/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Douban%20Read/assets/thumbnail.png",

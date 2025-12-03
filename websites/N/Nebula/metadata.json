@@ -10,6 +10,7 @@
     "en": "Nebula is the home of smart, thoughtful videos, podcasts, and classes from your favorite creators."
   },
   "url": "nebula.tv",
+  "regExp": "([a-z0-9-]+[.])*nebula[.]tv[/]",
   "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nebula/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nebula/assets/thumbnail.jpeg",

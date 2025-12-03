@@ -23,6 +23,7 @@
     "www.askubuntu.com",
     "askubuntu.com"
   ],
+  "regExp": "(www[.])?askubuntu[.]com[/]",
   "version": "1.2.27",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AskUbuntu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AskUbuntu/assets/thumbnail.png",

@@ -10,6 +10,7 @@
     "en": "The Top Gaming and App Walkthroughs Straight from Japan! Game8 delivers the latest in gaming news, walkthrough information, and other useful tools so that you can get the most out of your gaming experience! Our pages for popular apps and new games are being updated every minute!"
   },
   "url": "game8.co",
+  "regExp": "([a-z0-9-]+[.])*game8[.]co[/]",
   "version": "1.0.7",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Game8/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Game8/assets/thumbnail.webp",

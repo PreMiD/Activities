@@ -10,6 +10,7 @@
     "en": "The dictionary by Merriam-Webster is America's most trusted online dictionary for English word definitions, meanings, and pronunciation."
   },
   "url": "www.merriam-webster.com",
+  "regExp": "(www[.])?merriam-webster[.]com[/]",
   "version": "1.0.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Merriam-Webster/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Merriam-Webster/assets/thumbnail.jpg",

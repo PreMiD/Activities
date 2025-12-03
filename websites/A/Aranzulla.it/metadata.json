@@ -24,6 +24,7 @@
     "www.aranzulla.it",
     "aranzulla.it"
   ],
+  "regExp": "(www[.])?aranzulla[.]it[/]",
   "version": "1.2.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Aranzulla.it/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Aranzulla.it/assets/thumbnail.png",

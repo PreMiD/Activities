@@ -22,6 +22,7 @@
     "canva.com",
     "www.canva.com"
   ],
+  "regExp": "(www[.])?canva[.]com[/]",
   "version": "1.2.27",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Canva/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Canva/assets/thumbnail.png",

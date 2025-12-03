@@ -20,6 +20,7 @@
     "www.iheart.com",
     "listen.iheart.com"
   ],
+  "regExp": "(www|listen)[.]iheart[.]com[/]",
   "version": "1.2.28",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/iHeartRadio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/iHeartRadio/assets/thumbnail.png",

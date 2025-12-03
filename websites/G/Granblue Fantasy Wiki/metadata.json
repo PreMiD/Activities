@@ -11,6 +11,7 @@
     "vi": "Granblue Fantasy Wiki"
   },
   "url": "gbf.wiki",
+  "regExp": "([a-z0-9-]+[.])*gbf[.]wiki[/]",
   "version": "1.0.23",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Granblue%20Fantasy%20Wiki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Granblue%20Fantasy%20Wiki/assets/thumbnail.png",

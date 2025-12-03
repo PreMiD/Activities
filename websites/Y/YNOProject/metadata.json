@@ -13,6 +13,7 @@
     "ynoproject.net",
     "www.ynoproject.net"
   ],
+  "regExp": "(www[.])?ynoproject[.]net[/]",
   "version": "1.0.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YNOProject/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YNOProject/assets/thumbnail.png",

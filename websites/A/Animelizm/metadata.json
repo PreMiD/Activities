@@ -13,6 +13,7 @@
     "vi": "Xem các bộ Anime phụ đề/thuyết minh Tiếng Thái trực tuyến miễn phí."
   },
   "url": "www.animelizm.com",
+  "regExp": "(www[.])?animelizm[.]com[/]",
   "version": "1.0.32",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Animelizm/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Animelizm/assets/thumbnail.png",

@@ -11,6 +11,7 @@
     "nl": "De grote hit Curve Fever is terug met een nieuw multiplayer browsergame: Curve Fever Pro. Snijd tegenstanders af, wurm door kleine gaatjes en ontgrendel nieuwe krachten."
   },
   "url": "curvefever.pro",
+  "regExp": "([a-z0-9-]+[.])*curvefever[.]pro[/]",
   "version": "1.0.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Curve%20Fever%20Pro/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Curve%20Fever%20Pro/assets/thumbnail.png",

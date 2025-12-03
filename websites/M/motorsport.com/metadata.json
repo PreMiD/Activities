@@ -11,6 +11,7 @@
     "nl": "Motorsport.com is een website die gespecialiseerd is in nieuws over autoraces. Sporten zoals Formule 1, NASCAR, IndyCar, MotoGP en WEC."
   },
   "url": "www.motorsport.com",
+  "regExp": "(www[.])?motorsport[.]com[/]",
   "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/motorsport.com/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/motorsport.com/assets/thumbnail.jpg",

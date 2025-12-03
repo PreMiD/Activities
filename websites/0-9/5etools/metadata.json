@@ -13,6 +13,7 @@
     "5e.tools",
     "2014.5e.tools"
   ],
+  "regExp": "(2014[.])?5e[.]tools[/]",
   "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/5etools/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/5etools/assets/thumbnail.png",

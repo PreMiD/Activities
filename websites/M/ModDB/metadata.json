@@ -10,6 +10,7 @@
     "en": "Mod DB is the world's oldest video game modification community, proudly serving millions of readers monthly who seek creative new gameplay experiences"
   },
   "url": "moddb.com",
+  "regExp": "([a-z0-9-]+[.])*moddb[.]com[/]",
   "version": "1.0.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/ModDB/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/ModDB/assets/thumbnail.png",

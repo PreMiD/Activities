@@ -18,6 +18,7 @@
     "play.qobuz.com",
     "qobuz.com"
   ],
+  "regExp": "(play[.])?qobuz[.]com[/]",
   "version": "1.0.22",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Q/Qobuz/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Q/Qobuz/assets/thumbnail.png",

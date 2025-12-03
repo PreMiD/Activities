@@ -10,6 +10,7 @@
     "en": "Nikke: Goddess of Victory Database, Wiki, Guides, and more"
   },
   "url": "nikke.gg",
+  "regExp": "([a-z0-9-]+[.])*nikke[.]gg[/]",
   "version": "1.0.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NIKKE.GG/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NIKKE.GG/assets/thumbnail.jpeg",

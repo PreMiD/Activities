@@ -17,6 +17,7 @@
     "en": "DALL·E 2 is a new AI system that can create realistic images and art from a description in natural language."
   },
   "url": "labs.openai.com",
+  "regExp": "labs[.]openai[.]com[/]",
   "version": "1.0.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DALL-E/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DALL-E/assets/thumbnail.jpg",

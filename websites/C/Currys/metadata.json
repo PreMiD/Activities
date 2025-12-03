@@ -13,6 +13,7 @@
     "currys.co.uk",
     "www.currys.co.uk"
   ],
+  "regExp": "(currys|www[.]currys)[.]co[.]uk[/]",
   "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Currys/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Currys/assets/thumbnail.png",

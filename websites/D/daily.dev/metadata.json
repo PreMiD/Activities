@@ -10,6 +10,7 @@
     "en": "We know how hard it is to be a developer. It doesn't have to be. Personalized news feed, dev communities and search, much better than what’s out there. Maybe ;)"
   },
   "url": "app.daily.dev",
+  "regExp": "app[.]daily[.]dev[/]",
   "version": "1.0.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/daily.dev/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/daily.dev/assets/thumbnail.png",

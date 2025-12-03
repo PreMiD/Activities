@@ -17,6 +17,7 @@
     "music.douban.com",
     "market.douban.com"
   ],
+  "regExp": "((www|book|movie|music|market)[.])?douban[.]com[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Douban/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Douban/assets/thumbnail.jpg",

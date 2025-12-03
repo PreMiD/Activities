@@ -11,6 +11,7 @@
     "nl": "Een multifunctionele bot met serverbeheer, nivellering, economie, beheertools, leuke opdrachten en meer met een intuïtief dashboard!"
   },
   "url": "maki.gg",
+  "regExp": "([a-z0-9-]+[.])*maki[.]gg[/]",
   "version": "1.3.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Maki.gg/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Maki.gg/assets/thumbnail.jpg",

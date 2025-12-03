@@ -10,6 +10,7 @@
     "en": "A free online alternative to the board game Monopoly. Play with friends, strangers, or bots. No sign up or download is required!"
   },
   "url": "richup.io",
+  "regExp": "([a-z0-9-]+[.])*richup[.]io[/]",
   "version": "1.0.11",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Richup.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Richup.io/assets/thumbnail.png",

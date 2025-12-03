@@ -10,6 +10,7 @@
     "en": "Tsukime.com is a social hub for anime and manga lovers. It allows users to create and share lists of their favorite anime and manga, follow other users, and discover new content."
   },
   "url": "tsukime.com",
+  "regExp": "([a-z0-9-]+[.])*tsukime[.]com[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tsukime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tsukime/assets/thumbnail.png",

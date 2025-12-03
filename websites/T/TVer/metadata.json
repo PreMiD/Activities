@@ -11,6 +11,7 @@
     "ja": "TVer（ティーバー）は国内最大級の見逃し無料配信動画サービスです。ドラマ、バラエティ、アニメ、報道・ドキュメンタリー、スポーツなど人気番組を毎週750番組以上見放題！"
   },
   "url": "tver.jp",
+  "regExp": "([a-z0-9-]+[.])*tver[.]jp[/]",
   "version": "1.0.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TVer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TVer/assets/thumbnail.png",

@@ -14,6 +14,7 @@
     "ko": "티빙 오리지널부터 tvN, JTBC, Mnet, OCN 등 최신 인기 드라마와 예능, 독점 영화까지 지금 스트리밍하세요."
   },
   "url": "www.tving.com",
+  "regExp": "(www[.])?tving[.]com[/]",
   "version": "1.0.19",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TVING/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TVING/assets/thumbnail.png",

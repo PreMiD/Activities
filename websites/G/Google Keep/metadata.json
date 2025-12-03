@@ -18,6 +18,7 @@
     "vi": "Google Keep là dịch vụ ghi chú, nằm trong bộ Google Docs Editors của Google."
   },
   "url": "keep.google.com",
+  "regExp": "keep[.]google[.]com[/]",
   "version": "1.1.18",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Keep/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Keep/assets/thumbnail.png",

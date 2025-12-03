@@ -14,6 +14,7 @@
     "ko": "메가스터디는 대한민국의 온라인 교육 서비스 기업이다. 본사 및 계열사를 통해 초중고 학생과 일반 성인 등을 대상으로 출판 콘텐츠 사업과 온오프라인 교육사업, 단체급식사업 및 투자사업을 영위하고 있다."
   },
   "url": "www.megastudy.net",
+  "regExp": "(www[.])?megastudy[.]net[/]",
   "version": "1.0.29",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/megastudy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/megastudy/assets/thumbnail.png",

@@ -33,6 +33,7 @@
     "podcasters.spotify.com",
     "accounts.spotify.com"
   ],
+  "regExp": "(www|open|newsroom|artists|developer|investors|support|podcasters|accounts)[.]spotify[.]com[/]",
   "version": "2.4.7",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Spotify%20Podcasts/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Spotify%20Podcasts/assets/thumbnail.png",

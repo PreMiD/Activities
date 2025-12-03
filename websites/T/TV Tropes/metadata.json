@@ -10,6 +10,7 @@
     "en": "TV Tropes, the all-devouring pop-culture wiki, catalogs and cross-references recurrent plot devices, archetypes, and tropes in all forms of media."
   },
   "url": "tvtropes.org",
+  "regExp": "([a-z0-9-]+[.])*tvtropes[.]org[/]",
   "version": "1.0.21",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TV%20Tropes/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TV%20Tropes/assets/thumbnail.png",

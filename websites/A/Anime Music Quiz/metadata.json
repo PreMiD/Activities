@@ -14,6 +14,7 @@
     "vi": "Anime Music Quiz là nền tảng game cho phép bạn bè tranh đấu với nhau về kiến thức âm nhạc anime."
   },
   "url": "animemusicquiz.com",
+  "regExp": "([a-z0-9-]+[.])*animemusicquiz[.]com[/]",
   "version": "1.0.33",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime%20Music%20Quiz/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime%20Music%20Quiz/assets/thumbnail.png",

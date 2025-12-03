@@ -16,6 +16,7 @@
     "blutv.com",
     "www.blutv.com"
   ],
+  "regExp": "(www[.])?blutv[.]com[/]",
   "version": "1.1.35",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BluTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BluTV/assets/thumbnail.jpg",

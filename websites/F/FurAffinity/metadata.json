@@ -12,6 +12,7 @@
     "nl": "FurAffinity is een furry kunst- en mediawebsite, waar je je eigen profiel kunt aanmaken en kunst van duizenden gebruikers kunt delen, liken en becommentariëren."
   },
   "url": "www.furaffinity.net",
+  "regExp": "(www[.])?furaffinity[.]net[/]",
   "version": "1.2.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FurAffinity/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FurAffinity/assets/thumbnail.jpg",

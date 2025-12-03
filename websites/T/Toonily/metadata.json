@@ -13,6 +13,7 @@
     "toonily.net",
     "toonily.com"
   ],
+  "regExp": "toonily[.](net|com)[/]",
   "version": "1.1.28",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Toonily/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Toonily/assets/thumbnail.png",

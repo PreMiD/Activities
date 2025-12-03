@@ -11,6 +11,7 @@
     "nl": "Verbeter uw codeervaardigheden en krijg snel een baan. Dit is de beste plek om uw kennis uit te breiden en u voor te bereiden op uw volgende sollicitatiegesprek."
   },
   "url": "leetcode.com",
+  "regExp": "([a-z0-9-]+[.])*leetcode[.]com[/]",
   "version": "1.1.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LeetCode/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LeetCode/assets/thumbnail.png",

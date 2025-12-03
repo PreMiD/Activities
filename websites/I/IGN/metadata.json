@@ -53,6 +53,7 @@
     "es.ign.com",
     "tr.ign.com"
   ],
+  "regExp": "(((www|pt|br|za|adria|nl|cz|fr|de|gr|hu|in|il|it|jp|kr|latam|me|nordic|pl|sea|es|tr)[.])?ign[.]com|(www[.]ign)[.]com[.]cn)[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/IGN/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/IGN/assets/thumbnail.jpeg",

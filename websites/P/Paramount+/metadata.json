@@ -14,6 +14,7 @@
     "www.paramountplus.com",
     "paramountplus.com"
   ],
+  "regExp": "(www[.])?paramountplus[.]com[/]",
   "version": "3.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Paramount%2B/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Paramount%2B/assets/thumbnail.png",

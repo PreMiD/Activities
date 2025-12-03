@@ -21,6 +21,7 @@
     "vi": "IGDB.com là cơ sở dữ liệu game, nhắm tới cả các người chơi và người chuyên nghiệp."
   },
   "url": "www.igdb.com",
+  "regExp": "(www[.])?igdb[.]com[/]",
   "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/IGDB/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/IGDB/assets/thumbnail.png",

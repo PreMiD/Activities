@@ -11,6 +11,7 @@
     "pl": "Polska strona anime z wieloma seriami, najlepsze odtwarzacze wideo, dobra jakość."
   },
   "url": "docchi.pl",
+  "regExp": "([a-z0-9-]+[.])*docchi[.]pl[/]",
   "version": "1.0.19",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Docchi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Docchi/assets/thumbnail.png",

@@ -11,6 +11,7 @@
     "id": "Komikcast adalah platform baca komik dengan daftar komik paling lengkap di Indonesia."
   },
   "url": "komikcast.com",
+  "regExp": "([a-z0-9-]+[.])*komikcast[.]com[/]",
   "version": "1.0.20",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Komikcast/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Komikcast/assets/thumbnail.png",

@@ -15,6 +15,7 @@
     "docln.net",
     "ln.hako.re"
   ],
+  "regExp": "(docln[.]net|(ln)[.]hako[.]re)[/]",
   "version": "1.0.22",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hako/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hako/assets/thumbnail.png",

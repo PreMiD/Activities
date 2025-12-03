@@ -15,6 +15,7 @@
     "senpa.io",
     "forum.senpa.io"
   ],
+  "regExp": "(forum[.])?senpa[.]io[/]",
   "version": "1.4.23",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Senpa.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Senpa.io/assets/thumbnail.png",

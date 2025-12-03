@@ -10,6 +10,7 @@
     "en": "Enjoy every moment with artists on global fandom life platform Weverse."
   },
   "url": "weverse.io",
+  "regExp": "([a-z0-9-]+[.])*weverse[.]io[/]",
   "version": "1.0.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Weverse/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Weverse/assets/thumbnail.png",

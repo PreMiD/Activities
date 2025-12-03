@@ -10,6 +10,7 @@
     "en": "StudyStream provides an ideal space for both students and professionals in search of productivity and connection."
   },
   "url": "app.studystream.live",
+  "regExp": "app[.]studystream[.]live[/]",
   "version": "1.0.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/StudyStream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/StudyStream/assets/thumbnail.png",

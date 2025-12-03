@@ -15,6 +15,7 @@
     "vi": "Digital Daesung là công ty giáo dục hàng đầu Hàn Quốc, cung cấp nội dung giáo dục chất lượng cao. Chúng tôi cung cấp dịch vụ giáo dục toàn vẹn cho bậc tiểu học, trung học, cao đẳng và đại học, từ học trực tuyến đến trực tiếp, luyện viết luận và tư vấn nộp hồ sơ đại học."
   },
   "url": "www.mimacstudy.com",
+  "regExp": "(www[.])?mimacstudy[.]com[/]",
   "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%EB%8C%80%EC%84%B1%EB%A7%88%EC%9D%B4%EB%A7%A5/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%EB%8C%80%EC%84%B1%EB%A7%88%EC%9D%B4%EB%A7%A5/assets/thumbnail.png",

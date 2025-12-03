@@ -17,6 +17,7 @@
     "pl": "Najłatwiejszy sposób nauki i ćwiczenia nowoczesnego Javascript'u. Nauka w interaktywnym środowisku. Czytaj krótkie lekcje, pisz notatki i ukończ zadania bezpośrednio w twojej przeglądarce."
   },
   "url": "learnjavascript.online",
+  "regExp": "([a-z0-9-]+[.])*learnjavascript[.]online[/]",
   "version": "1.0.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Learnjavascript/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Learnjavascript/assets/thumbnail.png",

@@ -13,6 +13,7 @@
     "www.cloudconvert.com",
     "cloudconvert.com"
   ],
+  "regExp": "(www[.])?cloudconvert[.]com[/]",
   "version": "1.0.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CloudConvert/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CloudConvert/assets/thumbnail.png",

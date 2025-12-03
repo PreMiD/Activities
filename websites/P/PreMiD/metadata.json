@@ -44,6 +44,7 @@
     "beta.premid.app",
     "status.premid.app"
   ],
+  "regExp": "((docs|beta|status)[.])?premid[.]app[/]",
   "version": "3.1.20",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PreMiD/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PreMiD/assets/thumbnail.png",

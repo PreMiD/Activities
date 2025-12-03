@@ -17,6 +17,7 @@
     "nl": "StopotS, het stop spel op het internet. Speel dit populaire spel gratis en zonder downloads."
   },
   "url": "stopots.com",
+  "regExp": "([a-z0-9-]+[.])*stopots[.]com[/]",
   "version": "1.2.32",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/StopotS/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/StopotS/assets/thumbnail.png",

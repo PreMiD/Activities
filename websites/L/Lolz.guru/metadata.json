@@ -11,6 +11,7 @@
     "ru": "LZT (lolzteam, лолзтим) - форум об играх, способы заработка и раздачи"
   },
   "url": "lolz.guru",
+  "regExp": "([a-z0-9-]+[.])*lolz[.]guru[/]",
   "version": "1.0.19",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Lolz.guru/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Lolz.guru/assets/thumbnail.jpg",

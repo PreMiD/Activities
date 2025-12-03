@@ -14,6 +14,7 @@
     "sling.com",
     "watch.sling.com"
   ],
+  "regExp": "(watch[.])?sling[.]com[/]",
   "version": "1.0.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sling%20TV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sling%20TV/assets/thumbnail.png",

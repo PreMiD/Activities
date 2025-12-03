@@ -11,6 +11,7 @@
     "pl": "Katujemy.eu - Polskie Forum Counter-Strike"
   },
   "url": "katujemy.eu",
+  "regExp": "([a-z0-9-]+[.])*katujemy[.]eu[/]",
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Katujemy.eu/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Katujemy.eu/assets/thumbnail.png",

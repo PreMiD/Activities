@@ -16,6 +16,7 @@
     "ween.wiki",
     "www.ween.wiki"
   ],
+  "regExp": "(www[.])?ween[.]wiki[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Ween/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Ween/assets/thumbnail.png",

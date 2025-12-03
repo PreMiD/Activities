@@ -18,6 +18,7 @@
     "nl": "Radiko is een Japanse website die livestreaming via de radio in realtime biedt."
   },
   "url": "radiko.jp",
+  "regExp": "([a-z0-9-]+[.])*radiko[.]jp[/]",
   "version": "1.1.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/thumbnail.png",

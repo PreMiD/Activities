@@ -14,6 +14,7 @@
     "www.marktplaats.nl",
     "help.marktplaats.nl"
   ],
+  "regExp": "(www|help)[.]marktplaats[.]nl[/]",
   "version": "1.2.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Marktplaats/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Marktplaats/assets/thumbnail.jpg",

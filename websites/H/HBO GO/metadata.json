@@ -27,6 +27,7 @@
     "www.hbogoasia.id",
     "www.hbogoasia.ph"
   ],
+  "regExp": "(hbogo[.]ro|hbogo[.]com|hbogo[.]pl|hbogo[.]cz|hbogo[.]sk|(www[.]hbogo)[.]co[.]th|(www)[.]hbogoasia[.]my|(www)[.]hbogoasia[.]id|(www)[.]hbogoasia[.]ph)[/]",
   "version": "2.4.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20GO/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20GO/assets/thumbnail.png",

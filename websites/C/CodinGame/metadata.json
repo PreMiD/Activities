@@ -11,6 +11,7 @@
     "fr": "CodinGame est un site pour apprendre la programmation"
   },
   "url": "www.codingame.com",
+  "regExp": "(www[.])?codingame[.]com[/]",
   "version": "1.0.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CodinGame/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CodinGame/assets/thumbnail.png",

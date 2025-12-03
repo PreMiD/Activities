@@ -10,6 +10,7 @@
     "en": "Wolfery is a MUCK-like text-based roleplay website using the Mucklet platform."
   },
   "url": "wolfery.com",
+  "regExp": "([a-z0-9-]+[.])*wolfery[.]com[/]",
   "version": "1.0.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wolfery/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wolfery/assets/thumbnail.png",

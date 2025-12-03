@@ -20,6 +20,7 @@
     "en": "Find discord servers using the most advanced public index."
   },
   "url": "discords.com",
+  "regExp": "([a-z0-9-]+[.])*discords[.]com[/]",
   "version": "1.1.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discords.com/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discords.com/assets/thumbnail.png",

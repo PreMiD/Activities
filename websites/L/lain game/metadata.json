@@ -17,6 +17,7 @@
     "nl": "lain game is een website die probeert de PlayStation-game 'Serial Experiments Lain' uit 1998 in webvorm te reproduceren."
   },
   "url": "laingame.net",
+  "regExp": "([a-z0-9-]+[.])*laingame[.]net[/]",
   "version": "1.2.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/lain%20game/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/lain%20game/assets/thumbnail.png",

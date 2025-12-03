@@ -23,6 +23,7 @@
     "aperturebot.science",
     "dashboard.aperturebot.science"
   ],
+  "regExp": "(dashboard[.])?aperturebot[.]science[/]",
   "version": "1.2.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/ApertureBot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/ApertureBot/assets/thumbnail.png",

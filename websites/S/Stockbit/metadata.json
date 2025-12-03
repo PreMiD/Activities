@@ -17,6 +17,7 @@
     "snips.stockbit.com",
     "emitten-announcement.stockbit.com"
   ],
+  "regExp": "((academy|careers|help|snips|emitten-announcement)[.])?stockbit[.]com[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stockbit/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stockbit/assets/thumbnail.png",

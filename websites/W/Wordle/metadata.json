@@ -13,6 +13,7 @@
     "www.nytimes.com",
     "www.powerlanguage.co.uk"
   ],
+  "regExp": "((www)[.]nytimes[.]com|(www[.]powerlanguage)[.]co[.]uk)[/]",
   "version": "1.1.19",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wordle/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wordle/assets/thumbnail.png",

@@ -13,6 +13,7 @@
     "www.cacax.fr",
     "cacax.fr"
   ],
+  "regExp": "(www[.])?cacax[.]fr[/]",
   "version": "1.0.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CacaX/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CacaX/assets/thumbnail.jpg",

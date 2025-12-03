@@ -10,6 +10,7 @@
     "en": "A chart viewer for Sound Voltex, providing top-down overviews of charts for players to study and practice."
   },
   "url": "sdvxindex.com",
+  "regExp": "([a-z0-9-]+[.])*sdvxindex[.]com[/]",
   "version": "1.0.10",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SDVX%20Index/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SDVX%20Index/assets/thumbnail.png",

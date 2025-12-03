@@ -22,6 +22,7 @@
     "launchpad.binance.com",
     "research.binance.com"
   ],
+  "regExp": "(www|voptions|cloud|pool|academy|launchpad|research)[.]binance[.]com[/]",
   "version": "1.0.28",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Binance/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Binance/assets/thumbnail.jpg",

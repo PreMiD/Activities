@@ -10,6 +10,7 @@
     "en": "Dominion Online, developed by Shuffle iT, is the official platform to play Dominion, the award-winning deckbuilding card game created by Donald X. Vaccarino."
   },
   "url": "dominion.games",
+  "regExp": "([a-z0-9-]+[.])*dominion[.]games[/]",
   "version": "1.0.20",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dominion%20Online/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dominion%20Online/assets/thumbnail.jpg",

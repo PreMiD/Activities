@@ -15,6 +15,7 @@
     "edition.cnn.com",
     "us.cnn.com"
   ],
+  "regExp": "(edition|us)[.]cnn[.]com[/]",
   "version": "1.0.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CNN/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CNN/assets/thumbnail.png",

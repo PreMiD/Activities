@@ -15,6 +15,7 @@
     "zh": "維基物種是分類學物種數據庫，涵蓋動物界，植物界，真菌，細菌，古細菌，原生生物和所有其他形式的生命的生活和化石形態。"
   },
   "url": "species.wikimedia.org",
+  "regExp": "species[.]wikimedia[.]org[/]",
   "version": "1.0.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikispecies/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikispecies/assets/thumbnail.png",

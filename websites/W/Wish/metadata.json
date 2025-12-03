@@ -13,6 +13,7 @@
     "nl": "Koop veel producten met 80% korting."
   },
   "url": "www.wish.com",
+  "regExp": "(www[.])?wish[.]com[/]",
   "version": "1.4.30",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wish/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wish/assets/thumbnail.png",

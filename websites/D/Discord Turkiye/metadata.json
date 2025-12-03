@@ -11,6 +11,7 @@
     "tr": "Discord Turkiye, güncellemeler, haberler, sunucular, botlar, ticaret ve birçok kategoriyi içerisinde barındıran Türkiye'nin en büyük forum/Discord topluluğudur."
   },
   "url": "discordturkiye.com",
+  "regExp": "([a-z0-9-]+[.])*discordturkiye[.]com[/]",
   "version": "1.0.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20Turkiye/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20Turkiye/assets/thumbnail.png",

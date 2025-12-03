@@ -20,6 +20,7 @@
     "anixl.to",
     "www.anixl.to"
   ],
+  "regExp": "(www[.])?anixl[.]to[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anixl/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anixl/assets/thumbnail.png",

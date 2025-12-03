@@ -14,6 +14,7 @@
     "www.tvnz.co.nz",
     "login.tech.tvnz.co.nz"
   ],
+  "regExp": "(www[.]tvnz|login[.]tech[.]tvnz)[.]co[.]nz[/]",
   "version": "1.3.34",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TVNZ%20OnDemand/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TVNZ%20OnDemand/assets/thumbnail.png",

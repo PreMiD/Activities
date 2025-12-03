@@ -12,6 +12,7 @@
     "nl": "Een Amerikaans tijdschrift over wetenschap en technologie en een website."
   },
   "url": "www.wired.com",
+  "regExp": "(www[.])?wired[.]com[/]",
   "version": "1.2.27",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WIRED/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WIRED/assets/thumbnail.png",

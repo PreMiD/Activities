@@ -12,6 +12,7 @@
     "nl": "Een krachtige multifunctionele en configureerbare Discord-bot."
   },
   "url": "koya.gg",
+  "regExp": "([a-z0-9-]+[.])*koya[.]gg[/]",
   "version": "1.2.27",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Koya/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Koya/assets/thumbnail.png",

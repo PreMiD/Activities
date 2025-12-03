@@ -14,6 +14,7 @@
     "www.tokopedia.com",
     "seller.tokopedia.com"
   ],
+  "regExp": "(www|seller)[.]tokopedia[.]com[/]",
   "version": "1.1.13",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tokopedia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tokopedia/assets/thumbnail.png",

@@ -10,6 +10,7 @@
     "en": "Manage hundreds of emotes for your Twitch or YouTube channels with ease."
   },
   "url": "7tv.app",
+  "regExp": "([a-z0-9-]+[.])*7tv[.]app[/]",
   "version": "1.0.8",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/7tv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/7tv/assets/thumbnail.png",

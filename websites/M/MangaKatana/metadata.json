@@ -10,6 +10,7 @@
     "en": "MangaKatana.com is a website that offers free online manga search. Read manga online at MangaKatana, free and updated hourly!"
   },
   "url": "mangakatana.com",
+  "regExp": "([a-z0-9-]+[.])*mangakatana[.]com[/]",
   "version": "1.0.11",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaKatana/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaKatana/assets/thumbnail.png",

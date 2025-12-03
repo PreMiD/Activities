@@ -10,6 +10,7 @@
     "en": "Enka.Network displays real-time Genshin Impact, Honkai: Star Rail and Zenless Zone Zero character data by accessing players public profiles, allowing users to explore builds for in-depth comparison and analysis."
   },
   "url": "enka.network",
+  "regExp": "([a-z0-9-]+[.])*enka[.]network[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Enka.Network/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Enka.Network/assets/thumbnail.png",

@@ -11,6 +11,7 @@
     "nl": "Photopea online afbeeldingseditor is een gratis Photoshop-kloon met geavanceerde tools"
   },
   "url": "www.photopea.com",
+  "regExp": "(www[.])?photopea[.]com[/]",
   "version": "1.4.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Photopea/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Photopea/assets/thumbnail.jpg",

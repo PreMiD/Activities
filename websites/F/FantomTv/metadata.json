@@ -10,6 +10,7 @@
     "en": "FantomTV is your all-in-one binge zone for the latest Movies, TV Shows, and Anime—streamed in style with a sleek UI, smooth navigation, and savage recommendations. 🎥 From trending thrillers to cult anime classics, we got it all. ✨ Watch. Chill. Repeat."
   },
   "url": "fantomtv.netlify.app",
+  "regExp": "fantomtv[.]netlify[.]app[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/thumbnail.png",

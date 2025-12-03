@@ -15,6 +15,7 @@
     "www.teknobuk.com",
     "teknobuk.com"
   ],
+  "regExp": "(www[.])?teknobuk[.]com[/]",
   "version": "1.2.28",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Teknobuk/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Teknobuk/assets/thumbnail.png",

@@ -11,6 +11,7 @@
     "nl": "Bekijk aangepaste Beat Saber levels in je browser"
   },
   "url": "skystudioapps.com",
+  "regExp": "([a-z0-9-]+[.])*skystudioapps[.]com[/]",
   "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rabbit%27s%20BS%20Viewer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rabbit%27s%20BS%20Viewer/assets/thumbnail.png",

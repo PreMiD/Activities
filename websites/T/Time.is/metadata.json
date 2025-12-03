@@ -11,6 +11,7 @@
     "nl": "Exacte tijd, elke tijdzone. 7 miljoen locaties, 46 talen, gesynchroniseerd met atoomkloktijd."
   },
   "url": "time.is",
+  "regExp": "([a-z0-9-]+[.])*time[.]is[/]",
   "version": "2.1.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Time.is/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Time.is/assets/thumbnail.png",

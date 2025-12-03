@@ -11,6 +11,7 @@
     "nl": "Krijg informatie over chemische formules."
   },
   "url": "formuliser.oojmed.com",
+  "regExp": "formuliser[.]oojmed[.]com[/]",
   "version": "1.0.23",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Formuliser/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Formuliser/assets/thumbnail.png",

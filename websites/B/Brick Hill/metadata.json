@@ -16,6 +16,7 @@
     "blog.brick-hill.com",
     "api.brick-hill.com"
   ],
+  "regExp": "(www|blog|api)[.]brick-hill[.]com[/]",
   "version": "1.0.26",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Brick%20Hill/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Brick%20Hill/assets/thumbnail.png",

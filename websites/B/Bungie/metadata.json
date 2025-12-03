@@ -17,6 +17,7 @@
     "comics.bungie.net",
     "bungiestore.com"
   ],
+  "regExp": "(((www|comics)[.])?bungie[.]net|bungiestore[.]com)[/]",
   "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bungie/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bungie/assets/thumbnail.png",

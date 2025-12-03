@@ -11,6 +11,7 @@
     "vi": "Battlefield Portal là nền tảng nơi bạn khám phá các trận đấu bất ngờ và thay đổi luật lệ của chiến tranh. Tham gia các chế độ tuỳ chọn hoặc tự xây dựng trải nghiệm của riêng mình bằng các công cụ đa năng."
   },
   "url": "portal.battlefield.com",
+  "regExp": "portal[.]battlefield[.]com[/]",
   "version": "1.0.19",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Battlefield%20Portal/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Battlefield%20Portal/assets/thumbnail.png",

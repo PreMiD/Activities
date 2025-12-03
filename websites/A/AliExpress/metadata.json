@@ -47,6 +47,7 @@
     "star.aliexpress.com",
     "home.aliexpress.com"
   ],
+  "regExp": "(ru|pt|es|fr|de|it|nl|tr|ja|ko|th|vi|ar|he|pl|www|sale|sell|seller|helppage|report|shoppingcart|my|message|msg|trade|feedback|coupon|ilogisticsaddress|star|home)[.]aliexpress[.]com[/]",
   "version": "1.2.27",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AliExpress/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AliExpress/assets/thumbnail.png",

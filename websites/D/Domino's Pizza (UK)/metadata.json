@@ -14,6 +14,7 @@
     "www.dominos.co.uk",
     "dominos.co.uk"
   ],
+  "regExp": "(www[.]dominos|dominos)[.]co[.]uk[/]",
   "version": "1.3.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Domino%27s%20Pizza%20(UK)/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Domino%27s%20Pizza%20(UK)/assets/thumbnail.png",

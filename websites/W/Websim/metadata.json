@@ -10,6 +10,7 @@
     "en": "Websim.ai is an AI-powered platform that allows users to generate and explore a simulated version of the internet."
   },
   "url": "websim.com",
+  "regExp": "([a-z0-9-]+[.])*websim[.]com[/]",
   "version": "2.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Websim/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Websim/assets/thumbnail.png",

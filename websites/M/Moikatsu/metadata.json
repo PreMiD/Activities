@@ -10,6 +10,7 @@
     "en": "Moikatsu #1 Watch High Quality Anime Online Without Ads. You can watch anime online free in HD without Ads. Best place for free find and one-click anime."
   },
   "url": "moikatsu.in",
+  "regExp": "([a-z0-9-]+[.])*moikatsu[.]in[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Moikatsu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Moikatsu/assets/thumbnail.png",

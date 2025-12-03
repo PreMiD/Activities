@@ -22,6 +22,7 @@
     "nl": "Canal + is een Franse abonnementsaanbieder die is gekoppeld aan het kanaal met dezelfde naam. Het is eigendom van Vivendi met een aandeel van honderd procent."
   },
   "url": "www.canalplus.com",
+  "regExp": "(www[.])?canalplus[.]com[/]",
   "version": "2.0.19",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/myCANAL/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/myCANAL/assets/thumbnail.png",

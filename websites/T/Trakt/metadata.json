@@ -10,6 +10,7 @@
     "en": "Track what you watch and when. Discover what's hot and where you can watch it. Share comments, ratings and recommendations."
   },
   "url": "trakt.tv",
+  "regExp": "([a-z0-9-]+[.])*trakt[.]tv[/]",
   "version": "1.0.15",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Trakt/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Trakt/assets/thumbnail.png",

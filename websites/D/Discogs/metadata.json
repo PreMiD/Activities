@@ -10,6 +10,7 @@
     "en": "Discover music on Discogs, the largest online music database. Buy and sell music with collectors in the Marketplace."
   },
   "url": "www.discogs.com",
+  "regExp": "(www[.])?discogs[.]com[/]",
   "version": "1.0.12",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discogs/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discogs/assets/thumbnail.png",

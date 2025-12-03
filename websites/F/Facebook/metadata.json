@@ -26,6 +26,7 @@
     "www.facebook.com",
     "web.facebook.com"
   ],
+  "regExp": "(www|web)[.]facebook[.]com[/]",
   "version": "3.8.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Facebook/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Facebook/assets/thumbnail.jpg",

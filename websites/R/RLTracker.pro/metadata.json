@@ -12,6 +12,7 @@
     "zh": "与来自世界各地的火箭联盟玩家竞争，并实时跟踪您的统计数据。"
   },
   "url": "rltracker.pro",
+  "regExp": "([a-z0-9-]+[.])*rltracker[.]pro[/]",
   "version": "1.2.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RLTracker.pro/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RLTracker.pro/assets/thumbnail.png",

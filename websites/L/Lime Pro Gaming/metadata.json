@@ -13,6 +13,7 @@
     "en": "Here at LIME, we have some of the best gaming equipment and accessories."
   },
   "url": "limeprogaming.com",
+  "regExp": "([a-z0-9-]+[.])*limeprogaming[.]com[/]",
   "version": "1.0.20",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Lime%20Pro%20Gaming/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Lime%20Pro%20Gaming/assets/thumbnail.png",

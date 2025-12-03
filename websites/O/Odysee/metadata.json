@@ -14,6 +14,7 @@
     "nl": "Web frontend voor LBRY. LBRY doet met publiceren, wat Bitcoin met geld deed."
   },
   "url": "odysee.com",
+  "regExp": "([a-z0-9-]+[.])*odysee[.]com[/]",
   "version": "1.0.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Odysee/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Odysee/assets/thumbnail.jpg",

@@ -12,6 +12,7 @@
     "nl": "Vermillion is een communityforum voor programmering en gaming dat zich toelegt op het bespreken van een reeks onderwerpen, binnen en buiten de programmeerwereld."
   },
   "url": "v3rmillion.net",
+  "regExp": "([a-z0-9-]+[.])*v3rmillion[.]net[/]",
   "version": "1.1.28",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/V3rmillion/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/V3rmillion/assets/thumbnail.png",

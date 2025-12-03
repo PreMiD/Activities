@@ -13,6 +13,7 @@
     "en": "Check whether it is Christmas or not."
   },
   "url": "isitchristmas.com",
+  "regExp": "([a-z0-9-]+[.])*isitchristmas[.]com[/]",
   "version": "1.0.7",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Is%20it%20Christmas/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Is%20it%20Christmas/assets/thumbnail.png",
