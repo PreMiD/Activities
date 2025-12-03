@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "CustomTag", 
+    "id": "484010160981934100"     
+  },
+  "service": "RF Music", 
+  "description": {
+    "en": "Show what you're listening to on RF Music!"
+  },
+  "url": [
+    "music.rfproductions.org",
+    "rfproductions.org",
+    "www.rfproductions.org"
+  ],
+  "version": "1.0.0",
+  "logo": "https://music.rfproductions.org/Logo.png",
+  "thumbnail": "https://music.rfproductions.org/Banner.png",
+  "color": "#8A2BE2",
+  "category": "music",
+  "tags": [
+    "music",
+    "edm",
+    "rfproductions",
+    "rfp"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "showArtistAndSong",
+      "title": "Display Song and Artist",
+      "icon": "fas fa-music",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Display Time Elapsed/Remaining",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showAlbumArt",
+      "title": "Display Album Art",
+      "icon": "fas fa-image",
+      "value": true
+    }
+  ]
+}
