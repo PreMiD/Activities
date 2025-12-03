@@ -56,11 +56,21 @@
       "icon": "fad fa-user-large",
       "value": true
     },
+
+    {
+      "id": "showBrowsing",
+      "title": "Show Browsing Info",
+      "icon": "fas fa-eye",
+      "value": true
+    },
     {
       "id": "browseInfo",
       "title": "Only show browsing info",
       "icon": "fad fa-magnifying-glass",
-      "value": false
+      "value": false,
+      "if": {
+        "showBrowsing": true
+      }
     }
   ]
 }
