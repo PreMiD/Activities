@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "786163564205047839",
+    "name": "AdityaLF"
+  },
+  "service": "Tako",
+  "description": {
+    "en": "Tako is a platform that allows users to send gifts to their favorite creators and display support in real-time. Tako offers features like overlay control and customization options for creators."
+  },
+  "url": [
+    "tako.id",
+    "help.tako.id"
+  ],
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/eva2pp3.jpeg",
+  "thumbnail": "https://i.imgur.com/H8SqO9a.jpeg",
+  "color": "#37a2e8",
+  "category": "socials",
+  "tags": [
+    "donation",
+    "creator",
+    "support"
+  ]
+}
