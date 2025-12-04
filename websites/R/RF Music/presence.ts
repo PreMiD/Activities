@@ -49,8 +49,7 @@ presence.on('UpdateData', async () => {
   const trackArtist = artist || undefined
   const trackAlbumArt = showAlbumArt && albumArtSrc && !albumArtSrc.includes('placehold.co') ? albumArtSrc : undefined
   const presenceName = artistAsTitle && trackArtist ? trackArtist.substring(0, 128) : 'RF Music'
-  const trackId =
-    document.querySelector<HTMLElement>('[data-track-id]')?.dataset.trackId
+  const trackId = document.querySelector<HTMLElement>('[data-track-id]')?.dataset.trackId
     || document.querySelector<HTMLElement>('[data-trackid]')?.dataset.trackid
     || (() => {
       try {
