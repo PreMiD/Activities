@@ -9,21 +9,15 @@
   "description": {
     "en": "Show what you're listening to on RF Music!"
   },
-  "url": [
-    "music.rfproductions.org",
-    "rfproductions.org",
-    "www.rfproductions.org"
-  ],
-  "version": "1.0.0",
+  "url": "music.rfproductions.org",
+  "version": "1.0.2",
   "logo": "https://rfproductions.org/rf_white_512x512.png",
   "thumbnail": "https://music.rfproductions.org/Banner.png",
   "color": "#8A2BE2",
   "category": "music",
   "tags": [
-    "music",
-    "edm",
-    "rfproductions",
-    "rfp"
+    "radio",
+    "music"
   ],
   "settings": [
     {
@@ -31,21 +25,21 @@
       "multiLanguage": true
     },
     {
-      "id": "showArtistAndSong",
-      "title": "Display Song and Artist",
-      "icon": "fas fa-music",
+      "id": "cover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
       "value": true
     },
     {
-      "id": "showTimestamp",
-      "title": "Display Time Elapsed/Remaining",
-      "icon": "fas fa-clock",
+      "id": "artistAsTitle",
+      "title": "Show Artist as Title",
+      "icon": "fad fa-user-large",
       "value": true
     },
     {
-      "id": "showAlbumArt",
-      "title": "Display Album Art",
-      "icon": "fas fa-image",
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-link",
       "value": true
     }
   ]
