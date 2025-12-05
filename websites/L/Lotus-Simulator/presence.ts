@@ -34,7 +34,7 @@ function getAvatar(): string | undefined {
       src = document.location.origin + src
     }
 
-    // WICHTIG: SVGs und Data-URIs filtern, da Discord diese nicht unterstützt
+    // IMPORTANT: Filter SVGs and Data-URIs as Discord doesn't support them
     if (src.includes('.svg') || src.startsWith('data:')) {
       return undefined
     }
