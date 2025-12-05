@@ -49,13 +49,22 @@ function getAvatar(): string | undefined {
 
 // --- MAIN LOGIC ---
 
+// Track last pathname and browsing timestamp
+let lastPathname: string | undefined = undefined;
+let browsingTimestamp: number = Math.floor(Date.now() / 1000);
+
 presence.on('UpdateData', async () => {
   const showButtons = await presence.getSetting<boolean>('showButtons')
   const privacy = await presence.getSetting<boolean>('privacy')
 
-  // FIX: Timestamp wird bei jedem Update neu berechnet (per-page navigation)
-  const browsingTimestamp = Math.floor(Date.now() / 1000)
+  const pathname = document.location.pathname
+  const href = document.location.href
 
+  // Update timestamp only if pathname changes
+  if (lastPathname !== pathname) {
+    lastPathname = pathname;
+    browsingTimestamp = Math.floor(Date.now() / 1000);
+  }
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
