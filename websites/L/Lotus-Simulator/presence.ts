@@ -13,7 +13,7 @@ function getTitle(): string | undefined {
 }
 
 function getAuthor(): string | undefined {
-  // FIX: Redundanten Selektor zu '#wcf1' vereinfacht
+  // FIX: Simplified redundant selector to '#wcf1'
   return (document.querySelector('#wcf1') || document.querySelector('.contentHeader .userLink'))?.textContent?.trim()
 }
 
