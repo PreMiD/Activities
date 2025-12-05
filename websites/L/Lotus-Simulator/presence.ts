@@ -157,7 +157,7 @@ presence.on('UpdateData', async () => {
             presenceData.buttons = [{ label: 'View Image', url: href }]
           }
 
-          // Bild setzen (SVGs werden von der Funktion ignoriert)
+          // Set image (SVGs are filtered by the function)
           const avatarUrl = getAvatar()
           if (avatarUrl) {
             presenceData.largeImageKey = avatarUrl
