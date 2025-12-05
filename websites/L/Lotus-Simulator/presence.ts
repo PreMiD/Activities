@@ -29,7 +29,7 @@ function getAvatar(): string | undefined {
     if (!src)
       return undefined
 
-    // Relative URLs zu absoluten URLs machen
+    // Make relative URLs absolute
     if (src.startsWith('/')) {
       src = document.location.origin + src
     }
