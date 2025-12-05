@@ -144,7 +144,7 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'Uploading an image'
       }
       else {
-        // Prüfen, ob wir ein Bild ansehen (Titel vorhanden)
+        // Check if we are viewing an image (title present)
         const imageTitle = getTitle()
 
         if (imageTitle) {
