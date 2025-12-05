@@ -265,7 +265,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Browsing Members List'
     }
     else if (href.includes('user-search')) {
-      presenceData.details = 'Community' // FIX: Leeren String vermieden
+      presenceData.details = 'Community' // FIX: Avoided empty string
       presenceData.state = 'Searching a Member...'
     }
     else if (href.includes('notification-list')) {
