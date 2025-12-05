@@ -30,7 +30,7 @@
     "adm-zip": "^0.5.16",
     "cac": "^6.7.14",
     "chalk": "^5.6.2",
-    "chokidar": "^4.0.3",
+    "chokidar": "^5.0.0",
     "discord-rpc": "^4.0.1",
     "esbuild": "^0.25.11",
     "form-data": "^4.0.4",
