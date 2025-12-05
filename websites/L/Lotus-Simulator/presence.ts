@@ -41,7 +41,7 @@ function getAvatar(): string | undefined {
 
     return src
   }
-  catch (error: unknown) { // FIX: 'unknown' Typisierung für bessere TypeScript Sicherheit
+  catch (error: unknown) { // FIX: Use 'unknown' typing for better TypeScript safety
     console.error('Error getting avatar:', error)
     return undefined
   }
