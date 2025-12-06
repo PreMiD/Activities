@@ -1,3 +1,5 @@
+import { getSpecificLineInfos } from './functions/getLinesInfos.js'
+
 const presence = new Presence({
   clientId: '1384869884281753680',
 })
@@ -207,7 +209,16 @@ presence.on('UpdateData', async () => {
       else if (/\/plane?s\/(?:plan-dynamique|dynamic-plan|plan-dinamico)(?:\/|$)/.test(completePath)) {
         presenceData.details = strings.viewDynamicPlan
         if (/\/lines(?:\/|$)/.test(completePath)) {
-          presenceData.state = document.querySelector('.plan-dynamic .lc-line-header .lc-direction')?.getAttribute('aria-label') || document.querySelector('.plan-dynamic .lc-board-title')?.textContent
+          const activeLine = document.querySelector('.plan-dynamic .lc-line-header .lc-direction')?.getAttribute('aria-label')
+          const lineCode = document.querySelector('.plan-dynamic .lc-active-line .lc-line img')?.getAttribute('alt')
+          const lineDirection = document.querySelector('.plan-dynamic .lc-line-header .lc-direction > strong')
+          const selectedStop = document.querySelector('.plan-dynamic .lc-stop-opened > span')
+          presenceData.state = selectedStop ? `${strings.stop} ${selectedStop?.textContent} - ${strings.direction} ${lineDirection?.textContent}` : (activeLine ? `${strings.direction} ${lineDirection?.textContent}` : document.querySelector('.plan-dynamic .lc-board-title')?.textContent)
+          if (lineCode && activeLine) {
+            const lineData = await getSpecificLineInfos(lineCode)
+            presenceData.smallImageKey = await svgToPng(lineData!.iconUrl!)
+            presenceData.smallImageText = lineData?.name
+          }
         }
         else if (/\/(?:p\+r|vcub|pointsdevente|velo)(?:\/|$)/.test(completePath)) {
           presenceData.state = document.querySelector('.plan-dynamic .lc-selected > span')?.textContent || document.querySelector('.plan-dynamic .lc-board-title')?.textContent
