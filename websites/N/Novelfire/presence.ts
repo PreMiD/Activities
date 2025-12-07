@@ -52,7 +52,7 @@ presence.on('UpdateData', async () => {
 
   const { pathname, href, origin } = document.location
 
-  const buttons = await presence.getSetting<boolean>('buttons');
+  const buttons = await presence.getSetting<boolean>('buttons')
 
   // --Web Pages--
 
