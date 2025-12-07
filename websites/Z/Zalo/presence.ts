@@ -21,10 +21,6 @@ presence.on('UpdateData', async () => {
   // 1. Vừa mở web, chưa chọn chat
   // 2. Đang mở danh bạ
   if (document.querySelector('main') != null) {
-    // Tên của chat
-    // const currChat = document.querySelector('div-b18')?.textContent
-    // presenceData.state = currChat
-
     // Custom field 1 hoặc set default
     const enableCustomText = await presence.getSetting<boolean>('btnCustomText')
     const customText = await presence.getSetting<string>('customText')
@@ -40,9 +36,7 @@ presence.on('UpdateData', async () => {
     }
 
     else {
-      // const regexNumber = /\d+/
-      // memberCount có dạng "x thành viên"
-      // todo (never): hỗ trợ nhiều ngôn ngữ
+      // memberCount có dạng "x thành viên",
       const memberCount = document.querySelector('.chat-info-general__item--title')?.textContent
       if (currChatType === 'STR_PROFILE_GROUP') {
         presenceData.state = `Nhóm có ${memberCount}`
@@ -55,7 +49,7 @@ presence.on('UpdateData', async () => {
 
   else {
     presenceData.details = `Zalo Web`
-    presenceData.state = ''
+    delete presenceData.state
   }
 
   // Set the activity

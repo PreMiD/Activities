@@ -11,10 +11,10 @@
     "vi": "Zalo là một ứng dụng nhắn tin nhanh đa nền tảng của Việt Nam, được phát triển bởi VNG"
   },
   "url": "chat.zalo.me",
-  "regExp": "//chat[.]zalo[.]me/
+  "regExp": "/chat[.]zalo[.]me/",
   "version": "1.0.0",
   "logo": "https://i.postimg.cc/MGWktXQT/Icon-of-Zalo.png",
-  "thumbnail": "https://i.postimg.cc/fW3rZY7t/vqpd6Mxer-V.png",
+  "thumbnail": "https://i.postimg.cc/HWZgGVMJ/NWm-Ka-BVGpe.png",
   "color": "#0068ff",
   "category": "socials",
   "tags": [
