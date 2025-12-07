@@ -19,6 +19,7 @@
     "animeyy.com",
     "www.animeyy.com"
   ],
+  "regExp": "([a-z0-9-]+[.])*(animeyy)[.]com[/]",
   "version": "1.0.0",
   "logo": "https://imgur.com/Hi7H5ee.png",
   "thumbnail": "https://imgur.com/WpLEGOs.png",
