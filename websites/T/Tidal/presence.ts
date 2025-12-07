@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const LOGO_URL = 'https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/logo.png'
 const presence = new Presence({ clientId: '901591802342150174' })
@@ -10,7 +10,6 @@ async function getStrings() {
       pause: 'general.paused',
       viewSong: 'general.buttonViewSong',
     },
-
   )
 }
 
@@ -21,8 +20,9 @@ presence.on('UpdateData', async () => {
   if (!document.querySelector('#footerPlayer'))
     return presence.setActivity({ largeImageKey: LOGO_URL })
 
-  const [newLang, timestamps, cover, buttons] = await Promise.all([
+  const [newLang, hidePaused, timestamps, cover, buttons] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),
+    presence.getSetting<boolean>('hidePaused'),
     presence.getSetting<boolean>('timestamps'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('buttons'),
@@ -45,6 +45,10 @@ presence.on('UpdateData', async () => {
   const paused = document
     .querySelector('div[data-test="play-controls"] div > button')
     ?.getAttribute('data-test') === 'play'
+  if (paused && hidePaused === true) {
+    return presence.clearActivity()
+  }
+
   const repeatType = document
     .querySelector(
       'div[data-test="play-controls"] > button[data-test="repeat"]',
@@ -58,7 +62,7 @@ presence.on('UpdateData', async () => {
   )
     .map(artist => artist.textContent)
     .join(', ')
-
+  presenceData.name = navigator.mediaSession.metadata?.artist || 'Tidal'
   if (cover) {
     presenceData.largeImageKey = document
       .querySelector(
@@ -71,14 +75,14 @@ presence.on('UpdateData', async () => {
     (Number.parseFloat(currentTime?.[0] ?? '') * 60 + Number.parseFloat(currentTime?.[1] ?? '')) * 1000 > 0
     || !paused
   ) {
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-      presence.timestampFromFormat(currentTime ?? ''),
-      presence.timestampFromFormat(
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+      timestampFromFormat(currentTime ?? ''),
+      timestampFromFormat(
         document.querySelector<HTMLElement>('time[data-test="duration"]')
           ?.textContent ?? '',
       ),
     )
-    presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
+    presenceData.smallImageKey = LOGO_URL
     presenceData.smallImageText = paused ? strings.pause : strings.play
   }
 
@@ -102,7 +106,10 @@ presence.on('UpdateData', async () => {
       },
     ]
   }
-  if (!timestamps)
-    delete presenceData.endTimestamp
-  presence.setActivity(presenceData)
+  if (!timestamps && hidePaused === true) {
+    return presence.clearActivity()
+  }
+  else {
+    presence.setActivity(presenceData)
+  }
 })
