@@ -24,7 +24,7 @@
     "vi": "Nghe tất cả những bài hát bạn yêu thích mọi lúc, mọi nơi."
   },
   "url": "www.deezer.com",
-  "version": "2.3.13",
+  "version": "2.3.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/thumbnail.png",
   "color": "#a238ff",
@@ -56,11 +56,21 @@
       "icon": "fad fa-user-large",
       "value": true
     },
+
+    {
+      "id": "showBrowsing",
+      "title": "Show Browsing Info",
+      "icon": "fas fa-eye",
+      "value": true
+    },
     {
       "id": "browseInfo",
       "title": "Only show browsing info",
       "icon": "fad fa-magnifying-glass",
-      "value": false
+      "value": false,
+      "if": {
+        "showBrowsing": true
+      }
     }
   ]
 }

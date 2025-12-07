@@ -41,12 +41,13 @@ presence.on('UpdateData', async () => {
   let strings = await getStrings()
   let paused = false
 
-  const [buttons, newLang, cover, browseInfo, artistAsTitle] = await Promise.all([
+  const [buttons, newLang, cover, browseInfo, artistAsTitle, showBrowsing] = await Promise.all([
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('browseInfo'),
     presence.getSetting<boolean>('artistAsTitle'),
+    presence.getSetting<boolean>('showBrowsing'),
   ])
   const { pathname, hostname } = document.location
   const remainingTest = document.querySelector(
@@ -93,11 +94,13 @@ presence.on('UpdateData', async () => {
       details: 'Looking at an artist',
     },
   }
-  for (const [path, data] of Object.entries(pages)) {
-    if (pathname.includes(path)) {
-      presenceData = { ...presenceData, ...data } as PresenceData
-      if (browseInfo || !remainingTest || remainingTest === '00:00')
-        return presence.setActivity(presenceData)
+  if (showBrowsing) {
+    for (const [path, data] of Object.entries(pages)) {
+      if (pathname.includes(path)) {
+        presenceData = { ...presenceData, ...data } as PresenceData
+        if (browseInfo || !remainingTest || remainingTest === '00:00')
+          return presence.setActivity(presenceData)
+      }
     }
   }
 
