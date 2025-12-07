@@ -6,7 +6,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://stc-zaloprofile.zdn.vn/favicon.ico',
+  Logo = 'https://i.postimg.cc/MGWktXQT/Icon-of-Zalo.png',
 }
 
 presence.on('UpdateData', async () => {
