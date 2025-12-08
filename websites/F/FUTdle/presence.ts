@@ -1,35 +1,34 @@
 const presence = new Presence({
-    clientId: "1426515515223965846"
-});
+  clientId: '1426515515223965846',
+})
 
-presence.on("UpdateData", async () => {
-    const presenceData: PresenceData = {
-        largeImageKey: "https://futdle.tr/logo.png"
-    };
+presence.on('UpdateData', async () => {
+  const presenceData: PresenceData = {
+    largeImageKey: 'https://futdle.tr/logo.png',
+  }
 
-    const path = window.location.pathname;
+  const path = window.location.pathname
 
-    if (path === "/" || path === "") {
-        presenceData.details = "Ana sayfada";
-    }
-    else if (path.includes("/game") || path.includes("/play")) {
-        presenceData.details = "Soru çözüyor";
-    }
-    else if (path.includes("/leaderboard") || path.includes("/sıralama")) {
-        presenceData.details = "Liderlik tablosuna bakıyor";
-    }
-    else if (path.includes("/tutorial") || path.includes("/tutorial")) {
-        presenceData.details = "Kılavuzda";
-    }
-    else {
-        presenceData.details = "Göz atıyor";
-    }
+  if (path === '/' || path === '') {
+    presenceData.details = 'Ana sayfada'
+  }
+  else if (path.includes('/game') || path.includes('/play')) {
+    presenceData.details = 'Soru çözüyor'
+  }
+  else if (path.includes('/leaderboard') || path.includes('/sıralama')) {
+    presenceData.details = 'Liderlik tablosuna bakıyor'
+  }
+  else if (path.includes('/tutorial') || path.includes('/tutorial')) {
+    presenceData.details = 'Kılavuzda'
+  }
+  else {
+    presenceData.details = 'Göz atıyor'
+  }
 
-    presenceData.startTimestamp = Date.now();
+  presenceData.startTimestamp = Date.now()
 
-    if (presenceData.details) {
-        presence.setActivity(presenceData);
-    } else {
-        presence.setActivity();
-    }
-});
+  if (presenceData.details)
+    presence.setActivity(presenceData)
+  else
+    presence.setActivity()
+})
