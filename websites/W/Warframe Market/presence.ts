@@ -41,7 +41,7 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
 
-  const { pathname } = window.location
+  const { pathname } = document.location
 
   if (/^\/items\/\w+/.test(pathname)) {
     const rawName = pathname.split('/')[2] || ''
@@ -57,7 +57,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = itemName
       presenceData.buttons = [{
         label: 'View Market Prices',
-        url: window.location.href,
+        url: document.location.href,
       }]
     }
   }
@@ -68,7 +68,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = username
     presenceData.buttons = [{
       label: 'View Profile',
-      url: window.location.href,
+      url: document.location.href,
     }]
   }
   else if (pathname.startsWith('/auctions')) {

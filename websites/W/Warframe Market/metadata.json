@@ -10,6 +10,7 @@
     "en": "Warframe Market is the leading Warframe trading platform for tenno, where you can buy and sell vaulted & unvaulted items along with Warframe sets, Parts, Weapons, Mods, and more!"
   },
   "url": "warframe.market",
+  "regExp": "^https?:\\/\\/(www\\.)?warframe\\.market",
   "version": "1.0.0",
   "logo": "https://img.icons8.com/color/512/warframe.png",
   "thumbnail": "https://warframe.market/static/assets/user/background/5c17e096953bc3001392f576.png",
