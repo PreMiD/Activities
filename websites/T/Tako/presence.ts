@@ -33,8 +33,8 @@ presence.on('UpdateData', () => {
   }
 
   // Get creator name and profil pic
-  const creatorNameElement = document.querySelector('body > main > main > main > header > form > section > div.flex.w-full.items-center.gap-2.overflow-hidden > h1')
-  const creatorImageElement = document.querySelector('body > main > main > main > header > form > section > div.flex.w-full.items-center.gap-2.overflow-hidden > img.size-9.rounded-full.object-cover.object-center')
+  const creatorNameElement = document.querySelector('header h1')
+  const creatorImageElement = document.querySelector('header img.rounded-full')
 
   const creatorName = creatorNameElement?.textContent?.trim()
   const creatorImageUrl = creatorImageElement?.getAttribute('src')
