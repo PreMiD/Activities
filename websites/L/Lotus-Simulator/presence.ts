@@ -60,7 +60,7 @@ presence.on('UpdateData', async () => {
     lastPathname = pathname
     browsingTimestamp = Math.floor(Date.now() / 1000)
   }
-  
+
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
