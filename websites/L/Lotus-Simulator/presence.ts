@@ -13,7 +13,6 @@ function getTitle(): string | undefined {
 }
 
 function getAuthor(): string | undefined {
-  // FIX: Simplified redundant selector to '#wcf1'
   return (document.querySelector('#wcf1') || document.querySelector('.contentHeader .userLink'))?.textContent?.trim()
 }
 
@@ -29,19 +28,17 @@ function getAvatar(): string | undefined {
     if (!src)
       return undefined
 
-    // Make relative URLs absolute
     if (src.startsWith('/')) {
       src = document.location.origin + src
     }
 
-    // IMPORTANT: Filter SVGs and Data-URIs as Discord doesn't support them
     if (src.includes('.svg') || src.startsWith('data:')) {
       return undefined
     }
 
     return src
   }
-  catch (error: unknown) { // FIX: Use 'unknown' typing for better TypeScript safety
+  catch (error: unknown) {
     console.error('Error getting avatar:', error)
     return undefined
   }
@@ -49,9 +46,8 @@ function getAvatar(): string | undefined {
 
 // --- MAIN LOGIC ---
 
-// Track last pathname and browsing timestamp
-let lastPathname: string | undefined = undefined;
-let browsingTimestamp: number = Math.floor(Date.now() / 1000);
+let lastPathname: string | undefined
+let browsingTimestamp: number = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
   const showButtons = await presence.getSetting<boolean>('showButtons')
@@ -60,18 +56,15 @@ presence.on('UpdateData', async () => {
   const pathname = document.location.pathname
   const href = document.location.href
 
-  // Update timestamp only if pathname changes
   if (lastPathname !== pathname) {
-    lastPathname = pathname;
-    browsingTimestamp = Math.floor(Date.now() / 1000);
+    lastPathname = pathname
+    browsingTimestamp = Math.floor(Date.now() / 1000)
   }
+  
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
   }
-
-  const pathname = document.location.pathname
-  const href = document.location.href
 
   // --- SEKTION: DOCUMENTATION ---
   if (document.URL.startsWith('https://docs')) {
@@ -95,7 +88,6 @@ presence.on('UpdateData', async () => {
 
   // --- SEKTION: HAUPTSEITE ---
 
-  // Default fallback
   presenceData.details = 'Browsing Website'
 
   // 1. FORUM
@@ -144,7 +136,6 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'Uploading an image'
       }
       else {
-        // Check if we are viewing an image (title present)
         const imageTitle = getTitle()
 
         if (imageTitle) {
@@ -157,7 +148,6 @@ presence.on('UpdateData', async () => {
             presenceData.buttons = [{ label: 'View Image', url: href }]
           }
 
-          // Set image (SVGs are filtered by the function)
           const avatarUrl = getAvatar()
           if (avatarUrl) {
             presenceData.largeImageKey = avatarUrl
@@ -265,7 +255,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Browsing Members List'
     }
     else if (href.includes('user-search')) {
-      presenceData.details = 'Community' // FIX: Avoided empty string
+      presenceData.details = 'Community'
       presenceData.state = 'Searching a Member...'
     }
     else if (href.includes('notification-list')) {
