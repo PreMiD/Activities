@@ -50,7 +50,7 @@
     "devstatus.twitch.tv",
     "status.twitch.tv"
   ],
-  "regExp": "(www|dashboard|brand|blog|help|affiliate|dev|discuss[.]dev|devstatus|status)[.]twitch[.]tv[/]",
+  "regExp": "([a-z0-9-]+[.])*twitch[.]tv[/]",
   "version": "3.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/thumbnail.png",
