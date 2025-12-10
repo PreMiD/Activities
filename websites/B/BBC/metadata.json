@@ -30,7 +30,7 @@
     "www.bbc.co.uk",
     "www.bbc.com"
   ],
-  "regExp": "((www[.]bbc)[.]co[.]uk|(www)[.]bbc[.]com)[/]",
+  "regExp": "(www[.])?bbc[.](com|co[.]uk)[/]",
   "version": "2.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BBC/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BBC/assets/thumbnail.png",
