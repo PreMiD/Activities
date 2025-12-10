@@ -35,7 +35,7 @@
     "www.vinted.sk",
     "www.vinted.co.uk"
   ],
-  "regExp": "((www)[.]vinted[.]com|(www)[.]vinted[.]at|(www)[.]vinted[.]be|(www)[.]vinted[.]cz|(www)[.]vinted[.]de|(www)[.]vinted[.]dk|(www)[.]vinted[.]es|(www)[.]vinted[.]fi|(www)[.]vinted[.]fr|(www)[.]vinted[.]gr|(www)[.]vinted[.]hr|(www)[.]vinted[.]hu|(www)[.]vinted[.]ie|(www)[.]vinted[.]it|(www)[.]vinted[.]lt|(www)[.]vinted[.]lu|(www)[.]vinted[.]nl|(www)[.]vinted[.]pl|(www)[.]vinted[.]pt|(www)[.]vinted[.]ro|(www)[.]vinted[.]se|(www)[.]vinted[.]sk|(www[.]vinted)[.]co[.]uk)[/]",
+  "regExp": "www[.]vinted[.](com|at|be|cz|de|dk|es|fi|fr|gr|hr|hu|ie|it|lt|lu|nl|pl|pt|ro|se|sk|co[.]uk)[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vinted/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vinted/assets/thumbnail.png",
