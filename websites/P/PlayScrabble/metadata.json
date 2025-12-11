@@ -13,7 +13,7 @@
     "www.playscrabble.com",
     "playscrabble.com"
   ],
-  "regExp": "(www[.])?playscrabble[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?playscrabble[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PlayScrabble/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PlayScrabble/assets/thumbnail.png",

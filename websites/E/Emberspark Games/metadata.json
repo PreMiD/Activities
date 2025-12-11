@@ -10,7 +10,7 @@
     "en": "Emberspark Games is a team of passionate gamers with a knack for creating engaging and immersive experiences. With their deep understanding of game design and storytelling, they are committed to delivering top-notch content that resonates with players worldwide."
   },
   "url": "emberspark.games",
-  "regExp": "([a-z0-9-]+[.])*emberspark[.]games[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*emberspark[.]games[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Emberspark%20Games/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Emberspark%20Games/assets/thumbnail.png",

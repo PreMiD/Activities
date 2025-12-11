@@ -13,7 +13,7 @@
     "libraryofbabel.info",
     "www.libraryofbabel.info"
   ],
-  "regExp": "(www[.])?libraryofbabel[.]info[/]",
+  "regExp": "^https?[:][/][/](www[.])?libraryofbabel[.]info[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Library%20of%20Babel/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Library%20of%20Babel/assets/thumbnail.png",

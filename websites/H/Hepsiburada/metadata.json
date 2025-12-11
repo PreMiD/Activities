@@ -15,7 +15,7 @@
     "www.hepsiburada.com",
     "hepsiburada.com"
   ],
-  "regExp": "(www[.])?hepsiburada[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?hepsiburada[.]com[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hepsiburada/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hepsiburada/assets/thumbnail.png",

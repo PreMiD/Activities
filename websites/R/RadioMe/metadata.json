@@ -18,7 +18,7 @@
     "radiome.at",
     "radiome.fr"
   ],
-  "regExp": "radiome[.](de|at|fr)[/]",
+  "regExp": "^https?[:][/][/]radiome[.](de|at|fr)[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RadioMe/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RadioMe/assets/thumbnail.png",

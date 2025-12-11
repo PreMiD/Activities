@@ -11,7 +11,7 @@
     "pl": "Najlepsza strona z anime online pl! Anime z polskimi napisami w doskonałej jakości i bez reklam! Najlepsze odtwarzacze video."
   },
   "url": "desu-online.pl",
-  "regExp": "([a-z0-9-]+[.])*desu-online[.]pl[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*desu-online[.]pl[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Desu-Online/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Desu-Online/assets/thumbnail.png",

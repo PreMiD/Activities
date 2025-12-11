@@ -19,7 +19,7 @@
     "nl": "Met DeepL kunt u teksten naar andere talen vertalen met behulp van kunstmatige intelligentie. Een van de meest bijzondere kenmerken ervan is dat u op een woord kunt klikken om het te vervangen door een ander woord waarvan u denkt dat het beter past. Al met al is DeepL best handig voor het snel vertalen van grote teksten naar een taal die u al kent, maar niet te veel, voor talen die u niet kent."
   },
   "url": "www.deepl.com",
-  "regExp": "(www[.])?deepl[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?deepl[.]com[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DeepL/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DeepL/assets/thumbnail.png",

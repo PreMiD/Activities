@@ -10,7 +10,7 @@
     "en": "ListenBrainz keeps track of music you listen to and provides you with insights into your listening habits."
   },
   "url": "listenbrainz.org",
-  "regExp": "([a-z0-9-]+[.])*listenbrainz[.]org[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*listenbrainz[.]org[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/ListenBrainz/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/ListenBrainz/assets/thumbnail.png",

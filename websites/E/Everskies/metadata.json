@@ -11,7 +11,7 @@
     "nl": "Een community-site voor tieners en jongvolwassenen met focus op creativiteit!"
   },
   "url": "everskies.com",
-  "regExp": "([a-z0-9-]+[.])*everskies[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*everskies[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Everskies/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Everskies/assets/thumbnail.png",

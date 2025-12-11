@@ -14,7 +14,7 @@
     "store.epicgames.com",
     "www.epicgames.com"
   ],
-  "regExp": "(store|www)[.]epicgames[.]com[/]",
+  "regExp": "^https?[:][/][/](store|www)[.]epicgames[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Epic%20Games/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Epic%20Games/assets/thumbnail.png",

@@ -10,7 +10,7 @@
     "en": "Online e-book reader that supports Yomichan."
   },
   "url": "reader.ttsu.app",
-  "regExp": "reader[.]ttsu[.]app[/]",
+  "regExp": "^https?[:][/][/]reader[.]ttsu[.]app[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%E3%83%83%E3%83%84%20Ebook%20Reader/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%E3%83%83%E3%83%84%20Ebook%20Reader/assets/thumbnail.jpg",

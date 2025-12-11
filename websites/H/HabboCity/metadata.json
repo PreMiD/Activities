@@ -17,7 +17,7 @@
     "habbocity.fr",
     "www.habbocity.fr"
   ],
-  "regExp": "((www[.])?habbocity[.]me|(www[.])?habbocity[.]fr)[/]",
+  "regExp": "^https?[:][/][/]((www[.])?habbocity[.]me|(www[.])?habbocity[.]fr)[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HabboCity/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HabboCity/assets/thumbnail.png",

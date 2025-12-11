@@ -35,7 +35,7 @@
     "create.roblox.com",
     "devforum.roblox.com"
   ],
-  "regExp": "((www|web|create|devforum)[.]roblox[.]com|rbx[.]com)[/]",
+  "regExp": "^https?[:][/][/]((www|web|create|devforum)[.]roblox[.]com|rbx[.]com)[/]",
   "version": "3.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Roblox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Roblox/assets/thumbnail.png",

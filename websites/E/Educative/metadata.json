@@ -13,7 +13,7 @@
     "educative.io",
     "www.educative.io"
   ],
-  "regExp": "(www[.])?educative[.]io[/]",
+  "regExp": "^https?[:][/][/](www[.])?educative[.]io[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Educative/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Educative/assets/thumbnail.png",

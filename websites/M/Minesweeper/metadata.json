@@ -16,7 +16,7 @@
     "en": "Play Minesweeper online with over 5 million players from around the world!"
   },
   "url": "minesweeper.online",
-  "regExp": "([a-z0-9-]+[.])*minesweeper[.]online[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*minesweeper[.]online[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Minesweeper/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Minesweeper/assets/thumbnail.png",

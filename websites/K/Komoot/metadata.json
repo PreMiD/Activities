@@ -17,7 +17,7 @@
     "www.komoot.es",
     "www.komoot.nl"
   ],
-  "regExp": "www[.]komoot[.](com|de|fr|it|es|nl)[/]",
+  "regExp": "^https?[:][/][/]www[.]komoot[.](com|de|fr|it|es|nl)[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Komoot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Komoot/assets/thumbnail.png",

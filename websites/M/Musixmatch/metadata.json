@@ -21,7 +21,7 @@
     "www.musixmatch.com",
     "curators.musixmatch.com"
   ],
-  "regExp": "((www|curators)[.])?musixmatch[.]com[/]",
+  "regExp": "^https?[:][/][/]((www|curators)[.])?musixmatch[.]com[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Musixmatch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Musixmatch/assets/thumbnail.png",

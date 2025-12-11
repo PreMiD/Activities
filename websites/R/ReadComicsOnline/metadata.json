@@ -10,7 +10,7 @@
     "en": "Read comics online in high quality. Free download high quality comics."
   },
   "url": "readcomiconline.li",
-  "regExp": "([a-z0-9-]+[.])*readcomiconline[.]li[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*readcomiconline[.]li[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/ReadComicsOnline/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/ReadComicsOnline/assets/thumbnail.png",

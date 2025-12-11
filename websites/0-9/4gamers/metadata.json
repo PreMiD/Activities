@@ -14,7 +14,7 @@
     "zh-tw": "一家台灣電競規劃、執行、行銷和轉播的整合公司。"
   },
   "url": "www.4gamers.com.tw",
-  "regExp": "(www[.])?4gamers[.]com[.]tw[/]",
+  "regExp": "^https?[:][/][/](www[.])?4gamers[.]com[.]tw[/]",
   "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/4gamers/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/4gamers/assets/thumbnail.png",

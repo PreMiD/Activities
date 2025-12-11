@@ -15,7 +15,7 @@
     "kryptonia.fr",
     "forum.kryptonia.fr"
   ],
-  "regExp": "(forum[.])?kryptonia[.]fr[/]",
+  "regExp": "^https?[:][/][/](forum[.])?kryptonia[.]fr[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kryptonia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kryptonia/assets/thumbnail.png",

@@ -12,7 +12,7 @@
     "tr": "Trendyol, Türkiye'de hizmet gösteren en büyük alışveriş sitelerinden birisidir."
   },
   "url": "www.trendyol.com",
-  "regExp": "(www[.])?trendyol[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?trendyol[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Trendyol/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Trendyol/assets/thumbnail.png",

@@ -10,7 +10,7 @@
     "en": "PikiDiary is a microblogging platform where you can record fun memories and share them with everyone!"
   },
   "url": "pikidiary.lol",
-  "regExp": "([a-z0-9-]+[.])*pikidiary[.]lol[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pikidiary[.]lol[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PikiDiary/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PikiDiary/assets/thumbnail.png",

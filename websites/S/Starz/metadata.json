@@ -11,7 +11,7 @@
     "nl": "Starz is een Amerikaans premium kabel- en satelliettelevisienetwerk dat fungeert als vlaggenschip van Starz Inc., dat uiteindelijk eigendom is van Lionsgate. De programmering van Starz omvat speelfilms en originele televisieseries die in de bioscoop worden uitgebracht."
   },
   "url": "www.starz.com",
-  "regExp": "(www[.])?starz[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?starz[.]com[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Starz/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Starz/assets/thumbnail.png",

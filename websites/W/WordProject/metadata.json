@@ -10,7 +10,7 @@
     "en": "The Holy Bible International - in the major languages of the world"
   },
   "url": "www.wordproject.org",
-  "regExp": "(www[.])?wordproject[.]org[/]",
+  "regExp": "^https?[:][/][/](www[.])?wordproject[.]org[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WordProject/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WordProject/assets/thumbnail.png",

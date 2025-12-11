@@ -10,7 +10,7 @@
     "en": "The definitive source for board game and card game content. Find millions of ratings, reviews, videos, photos, and more from our community of experts."
   },
   "url": "boardgamegeek.com",
-  "regExp": "([a-z0-9-]+[.])*boardgamegeek[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*boardgamegeek[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BoardGameGeek/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BoardGameGeek/assets/thumbnail.jpg",

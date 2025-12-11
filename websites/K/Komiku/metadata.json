@@ -11,7 +11,7 @@
     "id": "Komiku adalah platform baca komik dengan daftar komik paling lengkap di Indonesia."
   },
   "url": "komiku.id",
-  "regExp": "([a-z0-9-]+[.])*komiku[.]id[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*komiku[.]id[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Komiku/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Komiku/assets/thumbnail.png",

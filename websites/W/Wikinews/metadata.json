@@ -15,8 +15,8 @@
     "zh": "維基新聞提供商業新聞網站的免費內容替代品。"
   },
   "url": "wikinews.org",
-  "regExp": "([a-z0-9-]+[.])+wikinews[.]org[/]",
-  "version": "1.0.27",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])+wikinews[.]org[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikinews/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikinews/assets/thumbnail.png",
   "color": "#f9f9f9",

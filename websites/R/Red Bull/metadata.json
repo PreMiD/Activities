@@ -10,7 +10,7 @@
     "en": "The official website of RedBull"
   },
   "url": "www.redbull.com",
-  "regExp": "(www[.])?redbull[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?redbull[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Red%20Bull/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Red%20Bull/assets/thumbnail.png",

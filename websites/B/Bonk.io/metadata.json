@@ -12,7 +12,7 @@
     "vi": "Trò chơi nhiều người chơi trên trình duyệt nơi mục tiêu của bạn là nốc tất cả các đối thủ khỏi rìa màn hình và trở thành người duy nhất sống sót."
   },
   "url": "bonk.io",
-  "regExp": "([a-z0-9-]+[.])*bonk[.]io[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*bonk[.]io[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bonk.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bonk.io/assets/thumbnail.png",

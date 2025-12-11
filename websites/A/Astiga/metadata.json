@@ -14,7 +14,7 @@
     "zh": "直接在浏览器或手机上轻松播放存储在云服务中的音乐。"
   },
   "url": "play.asti.ga",
-  "regExp": "play[.]asti[.]ga[/]",
+  "regExp": "^https?[:][/][/]play[.]asti[.]ga[/]",
   "version": "2.7.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Astiga/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Astiga/assets/thumbnail.png",

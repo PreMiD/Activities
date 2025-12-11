@@ -11,8 +11,8 @@
     "fr": "Regarder des films et séries sur CinePulse.cc"
   },
   "url": "cinepulse.cc",
-  "regExp": "([a-z0-9-]+\\.)*cinepulse\\.cc[/]?",
-  "version": "1.0.3",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+\\.)*cinepulse\\.cc[/]?",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CinePulse/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CinePulse/assets/thumbnail.webp",
   "color": "#000000",

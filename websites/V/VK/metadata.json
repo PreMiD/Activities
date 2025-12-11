@@ -23,7 +23,7 @@
     "uk": "Цей статус буде показувати штуки, які ви зазвичай робите у ВК. Оновлює інформацію про музику (якщо ви на сторінкці Музика), інформацію про відео! (коли Ви дивитеся його) та інформацію про групи або профілі, які Ви переглядаєте."
   },
   "url": "vk.com",
-  "regExp": "([a-z0-9-]+[.])*vk[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*vk[.]com[/]",
   "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VK/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VK/assets/thumbnail.png",

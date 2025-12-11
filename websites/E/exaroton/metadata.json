@@ -14,7 +14,7 @@
     "exaroton.com",
     "support.exaroton.com"
   ],
-  "regExp": "(support[.])?exaroton[.]com[/]",
+  "regExp": "^https?[:][/][/](support[.])?exaroton[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/exaroton/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/exaroton/assets/thumbnail.png",

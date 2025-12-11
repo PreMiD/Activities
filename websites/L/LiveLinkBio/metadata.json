@@ -11,7 +11,7 @@
     "nl": "LiveLinkBio is een geavanceerde URL Verkorter Platform, waar je makkelijk links kan verkorten, om jouw gekozen publiek te bereiken op basis van locatie en platform en het bied analytics aan voor de verkorte links."
   },
   "url": "livelinkbio.com",
-  "regExp": "([a-z0-9-]+[.])*livelinkbio[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*livelinkbio[.]com[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LiveLinkBio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LiveLinkBio/assets/thumbnail.png",

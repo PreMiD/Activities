@@ -17,7 +17,7 @@
     "boardgame-online.com",
     "www.boardgame-online.com"
   ],
-  "regExp": "((s1|s2|www)[.])?boardgame-online[.]com[/]",
+  "regExp": "^https?[:][/][/]((s1|s2|www)[.])?boardgame-online[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Board%20Game%20Online/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Board%20Game%20Online/assets/thumbnail.png",

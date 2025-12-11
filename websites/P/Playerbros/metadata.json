@@ -12,7 +12,7 @@
     "tr": "Playerbros, Türkçe espor haberleri ve bu konuda özel videolar oluşturan bir internet sitesidir."
   },
   "url": "playerbros.com",
-  "regExp": "([a-z0-9-]+[.])*playerbros[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*playerbros[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Playerbros/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Playerbros/assets/thumbnail.png",

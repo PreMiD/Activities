@@ -10,7 +10,7 @@
     "en": "Beatport is the world’s largest electronic music platform for DJs, serving both downloads and streaming via web store, mobile app, DJ Web App, and integrations directly into DJ software and hardware."
   },
   "url": "www.beatport.com",
-  "regExp": "(www[.])?beatport[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?beatport[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Beatport/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Beatport/assets/thumbnail.png",

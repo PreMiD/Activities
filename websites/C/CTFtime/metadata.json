@@ -10,7 +10,7 @@
     "en": "CTFtime is a website that tracks cybersecurity competitions known as Capture The Flag (CTF) events. These contests challenge participants to solve a variety of tasks, ranging from scavenger hunts on Wikipedia to basic programming exercises and even hacking into servers to steal data."
   },
   "url": "ctftime.org",
-  "regExp": "([a-z0-9-]+[.])*ctftime[.]org[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*ctftime[.]org[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CTFtime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CTFtime/assets/thumbnail.png",

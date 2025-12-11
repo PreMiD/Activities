@@ -17,8 +17,8 @@
     "nl": "Een alles-in-één Minecraft PvP modificatie om uw ingame-ervaring te verbeteren."
   },
   "url": "www.labymod.net",
-  "regExp": "([a-z0-9-]+[.])*labymod[.]net[/]",
-  "version": "1.2.30",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*labymod[.]net[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LabyMod/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LabyMod/assets/thumbnail.png",
   "color": "#008fe8",

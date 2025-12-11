@@ -21,7 +21,7 @@
     "support.oculus.com",
     "secure.oculus.com"
   ],
-  "regExp": "(www|support|secure)[.]oculus[.]com[/]",
+  "regExp": "^https?[:][/][/](www|support|secure)[.]oculus[.]com[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Oculus/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Oculus/assets/thumbnail.png",

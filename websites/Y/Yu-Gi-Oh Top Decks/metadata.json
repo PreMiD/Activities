@@ -17,7 +17,7 @@
     "zh": "Yu-Gi-Oh Top Decks是一个收集最好的甲板的数据库。"
   },
   "url": "yugiohtopdecks.com",
-  "regExp": "([a-z0-9-]+[.])*yugiohtopdecks[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*yugiohtopdecks[.]com[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Yu-Gi-Oh%20Top%20Decks/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Yu-Gi-Oh%20Top%20Decks/assets/thumbnail.jpg",

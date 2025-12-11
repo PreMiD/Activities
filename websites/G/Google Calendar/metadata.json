@@ -27,7 +27,7 @@
     "calendar.google.com",
     "www.calendar.google.com"
   ],
-  "regExp": "(calendar|www[.]calendar)[.]google[.]com[/]",
+  "regExp": "^https?[:][/][/](calendar|www[.]calendar)[.]google[.]com[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Calendar/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Calendar/assets/thumbnail.png",

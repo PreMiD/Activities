@@ -17,7 +17,7 @@
     "fr": "Visual Studio Code pour le Web n'importe où, n'importe quand, entièrement dans votre navigateur [Paramètres de personnalisation](https://github.com/PreMiD/Presences/blob/master/websites/V/vscode.dev/README.md)"
   },
   "url": "vscode.dev",
-  "regExp": "([a-z0-9-]+[.])*vscode[.]dev[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*vscode[.]dev[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/vscode.dev/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/vscode.dev/assets/thumbnail.png",

@@ -13,7 +13,7 @@
     "aistudio.google.com",
     "www.aistudio.google.com"
   ],
-  "regExp": "(aistudio|www[.]aistudio)[.]google[.]com[/]",
+  "regExp": "^https?[:][/][/](aistudio|www[.]aistudio)[.]google[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20AI%20Studio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20AI%20Studio/assets/thumbnail.png",

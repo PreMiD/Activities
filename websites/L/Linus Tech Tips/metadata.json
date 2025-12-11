@@ -11,7 +11,7 @@
     "nl": "Officieel Linus Tech Tips-forum."
   },
   "url": "linustechtips.com",
-  "regExp": "([a-z0-9-]+[.])*linustechtips[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*linustechtips[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Linus%20Tech%20Tips/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Linus%20Tech%20Tips/assets/thumbnail.png",

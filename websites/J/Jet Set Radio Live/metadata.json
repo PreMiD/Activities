@@ -20,7 +20,7 @@
     "jetsetradio.live",
     "jetsetradiofuture.live"
   ],
-  "regExp": "(jetsetradio[.]live|jetsetradiofuture[.]live)[/]",
+  "regExp": "^https?[:][/][/](jetsetradio[.]live|jetsetradiofuture[.]live)[/]",
   "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Jet%20Set%20Radio%20Live/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Jet%20Set%20Radio%20Live/assets/thumbnail.jpg",

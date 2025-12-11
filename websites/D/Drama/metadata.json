@@ -10,7 +10,7 @@
     "en": "Drama.gg is a community for exposing fraudulent companies and businesses."
   },
   "url": "drama.gg",
-  "regExp": "([a-z0-9-]+[.])*drama[.]gg[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*drama[.]gg[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Drama/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Drama/assets/thumbnail.png",

@@ -10,8 +10,8 @@
     "en": "Powerful game server hosting for serious gamers. Try our free plan before deciding. Up and running in 55 seconds."
   },
   "url": "server.pro",
-  "regExp": "([a-z0-9-]+[.])*server[.]pro[/]",
-  "version": "1.0.20",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*server[.]pro[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/server.pro/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/server.pro/assets/thumbnail.png",
   "color": "#418AC9",

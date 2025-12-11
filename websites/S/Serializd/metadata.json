@@ -10,7 +10,7 @@
     "en": "For fans of TV... all of it. Track, rate, and review your favorite shows. Connect with your friends and other TV fans."
   },
   "url": "www.serializd.com",
-  "regExp": "(www[.])?serializd[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?serializd[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Serializd/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Serializd/assets/thumbnail.png",

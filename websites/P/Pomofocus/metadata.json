@@ -14,7 +14,7 @@
     "pomofocus.io",
     "www.pomofocus.io"
   ],
-  "regExp": "(www[.])?pomofocus[.]io[/]",
+  "regExp": "^https?[:][/][/](www[.])?pomofocus[.]io[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pomofocus/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pomofocus/assets/thumbnail.png",

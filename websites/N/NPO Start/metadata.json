@@ -14,7 +14,7 @@
     "npo.nl",
     "www.npo.nl"
   ],
-  "regExp": "(www[.])?npo[.]nl[/]",
+  "regExp": "^https?[:][/][/](www[.])?npo[.]nl[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NPO%20Start/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NPO%20Start/assets/thumbnail.png",

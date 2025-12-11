@@ -13,7 +13,7 @@
     "vi": "CodAre là nền tảng chia sẻ mã đơn giản dành cho Discord bot và hơn nữa."
   },
   "url": "codare.fun",
-  "regExp": "([a-z0-9-]+[.])*codare[.]fun[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*codare[.]fun[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CodAre/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CodAre/assets/thumbnail.png",

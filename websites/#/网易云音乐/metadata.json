@@ -14,7 +14,7 @@
     "zh": "网易云音乐是一款由网易开发的音乐产品，目前是中国大陆最大的音乐平台之一。"
   },
   "url": "music.163.com",
-  "regExp": "music[.]163[.]com[/]",
+  "regExp": "^https?[:][/][/]music[.]163[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90/assets/thumbnail.png",

@@ -15,7 +15,7 @@
     "pifansubs.club",
     "www.pifansubs.club"
   ],
-  "regExp": "(www[.])?pifansubs[.]club[/]",
+  "regExp": "^https?[:][/][/](www[.])?pifansubs[.]club[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pi%20Fansubs/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pi%20Fansubs/assets/thumbnail.png",

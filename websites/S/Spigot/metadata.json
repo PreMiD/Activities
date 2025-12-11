@@ -15,7 +15,7 @@
     "hub.spigotmc.org",
     "irc.spi.gt"
   ],
-  "regExp": "((www|hub)[.]spigotmc[.]org|(irc)[.]spi[.]gt)[/]",
+  "regExp": "^https?[:][/][/]((www|hub)[.]spigotmc[.]org|(irc)[.]spi[.]gt)[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Spigot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Spigot/assets/thumbnail.png",

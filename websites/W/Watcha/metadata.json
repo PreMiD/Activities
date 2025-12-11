@@ -14,7 +14,7 @@
     "ko": "모든 영화, 드라마, 다큐멘터리, 애니메이션을 언제 어디서나 최고의 화질로 무제한 감상하세요."
   },
   "url": "watcha.com",
-  "regExp": "([a-z0-9-]+[.])*watcha[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*watcha[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Watcha/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Watcha/assets/thumbnail.png",

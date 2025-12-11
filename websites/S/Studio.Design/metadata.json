@@ -14,7 +14,7 @@
     "ja": "Studioは、コードを書かずにWebサイトの構築・公開・運用が完結するノーコードWeb制作プラットフォームです。7,600以上のフォントとデザインエディタによる豊かな表現力。CMS、フォーム、分析機能も提供。思い通りのサイト運用で、あなたの創造性を解放します。"
   },
   "url": "app.studio.design",
-  "regExp": "app[.]studio[.]design[/]",
+  "regExp": "^https?[:][/][/]app[.]studio[.]design[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Studio.Design/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Studio.Design/assets/thumbnail.png",

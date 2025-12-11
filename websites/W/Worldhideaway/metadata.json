@@ -12,7 +12,7 @@
     "nl": "Hotel Hideaway Sociaal Network"
   },
   "url": "worldhideaway.com",
-  "regExp": "([a-z0-9-]+[.])*worldhideaway[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*worldhideaway[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Worldhideaway/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Worldhideaway/assets/thumbnail.jpg",

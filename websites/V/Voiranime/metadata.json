@@ -27,8 +27,8 @@
     "nl": "Voiranime is een streamingwebsite waar je VF- en VOSTFR-anime kunt bekijken."
   },
   "url": "voiranime.com",
-  "regExp": "([a-z0-9-]+[.])*voiranime[.]com[/]",
-  "version": "2.2.8",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*voiranime[.]com[/]",
+  "version": "2.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Voiranime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Voiranime/assets/thumbnail.png",
   "color": "#1a1920",

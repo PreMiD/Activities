@@ -10,7 +10,7 @@
     "en": "Ko-fi lets creators receive support from fans of their content for the price of a coffee!"
   },
   "url": "ko-fi.com",
-  "regExp": "([a-z0-9-]+[.])*ko-fi[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*ko-fi[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Ko-Fi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Ko-Fi/assets/thumbnail.png",

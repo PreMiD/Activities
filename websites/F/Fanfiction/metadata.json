@@ -17,7 +17,7 @@
     "nl": "FanFiction | laat je fantasie de vrije loop"
   },
   "url": "www.fanfiction.net",
-  "regExp": "(www[.])?fanfiction[.]net[/]",
+  "regExp": "^https?[:][/][/](www[.])?fanfiction[.]net[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fanfiction/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fanfiction/assets/thumbnail.png",

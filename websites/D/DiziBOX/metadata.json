@@ -12,7 +12,7 @@
     "tr": "DiziBOX, son çıkan, güncel ve bir çok yabancı diziyi izleyebileceğiniz bir yabancı dizi sitesidir."
   },
   "url": "www.dizibox.plus",
-  "regExp": "(www[.])?dizibox[.]plus[/]",
+  "regExp": "^https?[:][/][/](www[.])?dizibox[.]plus[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DiziBOX/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DiziBOX/assets/thumbnail.png",

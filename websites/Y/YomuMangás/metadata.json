@@ -17,7 +17,7 @@
     "pt-br": "YomuMangás, sua biblioteca virtual de mangás, manhwas, manhuas, novels, doujins e hentais."
   },
   "url": "yomumangas.com",
-  "regExp": "([a-z0-9-]+[.])*yomumangas[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*yomumangas[.]com[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YomuMang%C3%A1s/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YomuMang%C3%A1s/assets/thumbnail.png",

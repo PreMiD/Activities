@@ -10,7 +10,7 @@
     "en": "Le Chat is a conversational entry point to interact with the various models from Mistral AI. It offers a pedagogical and fun way to explore Mistral AI’s technology."
   },
   "url": "chat.mistral.ai",
-  "regExp": "chat[.]mistral[.]ai[/]",
+  "regExp": "^https?[:][/][/]chat[.]mistral[.]ai[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Le%20Chat/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Le%20Chat/assets/thumbnail.png",

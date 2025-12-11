@@ -17,7 +17,7 @@
     "blog.viki.com",
     "support.viki.com"
   ],
-  "regExp": "(www|contribute|blog|support)[.]viki[.]com[/]",
+  "regExp": "^https?[:][/][/](www|contribute|blog|support)[.]viki[.]com[/]",
   "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Viki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Viki/assets/thumbnail.png",

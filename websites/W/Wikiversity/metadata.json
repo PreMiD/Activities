@@ -15,8 +15,8 @@
     "zh": "維基學院致力於學習資源，學習項目和研究，以用於所有級別，類型和教育方式。"
   },
   "url": "wikiversity.org",
-  "regExp": "([a-z0-9-]+[.])+wikiversity[.]org[/]",
-  "version": "1.0.28",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])+wikiversity[.]org[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikiversity/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikiversity/assets/thumbnail.png",
   "color": "#f9f9f9",

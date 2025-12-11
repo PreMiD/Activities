@@ -15,7 +15,7 @@
     "bimbimma.com",
     "mcstacker.bimbimma.com"
   ],
-  "regExp": "(mcstacker[.]net|(mcstacker[.])?bimbimma[.]com)[/]",
+  "regExp": "^https?[:][/][/](mcstacker[.]net|(mcstacker[.])?bimbimma[.]com)[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MCStacker/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MCStacker/assets/thumbnail.png",

@@ -11,7 +11,7 @@
     "fr": "Freeky.to est une application de streaming gratuite de films, d'émissions de télévision et plus encore, prenant en charge des flux de haute qualité et des expériences UI et UX conviviales."
   },
   "url": "freeky.to",
-  "regExp": "([a-z0-9-]+[.])*freeky[.]to[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*freeky[.]to[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Freek/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Freek/assets/thumbnail.png",

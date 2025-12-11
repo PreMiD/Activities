@@ -11,7 +11,7 @@
     "nl": "Een eenvoudig platform waar je kamers kunt aanmaken, rechten kunt beheren en kunt chatten terwijl je samen met je vrienden gesynchroniseerde YouTube-video's bekijkt."
   },
   "url": "sync-tube.de",
-  "regExp": "([a-z0-9-]+[.])*sync-tube[.]de[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sync-tube[.]de[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SyncTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SyncTube/assets/thumbnail.png",

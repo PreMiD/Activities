@@ -17,7 +17,7 @@
     "anilife.live",
     "anilife.app"
   ],
-  "regExp": "anilife[.](live|app)[/]",
+  "regExp": "^https?[:][/][/]anilife[.](live|app)[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/anilife/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/anilife/assets/thumbnail.png",

@@ -12,8 +12,8 @@
     "vi": "GitLab là hệ thống quản lý mã và dự án cũng như là nền tảng mạng xã hội dành cho các nhà phát triển."
   },
   "url": "gitlab.com",
-  "regExp": "([a-z0-9-]+[.])*gitlab[.]com[/]",
-  "version": "1.1.29",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gitlab[.]com[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GitLab/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GitLab/assets/thumbnail.png",
   "color": "#ff4400",

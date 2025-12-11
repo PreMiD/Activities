@@ -19,7 +19,7 @@
     "sflix.mov",
     "sflixgo.is"
   ],
-  "regExp": "(sflix[.]mov|sflixgo[.]is)[/]",
+  "regExp": "^https?[:][/][/](sflix[.]mov|sflixgo[.]is)[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sflix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sflix/assets/thumbnail.jpeg",

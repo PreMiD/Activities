@@ -14,7 +14,7 @@
     "www.peacocktv.com",
     "peacocktv.com"
   ],
-  "regExp": "(www[.])?peacocktv[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?peacocktv[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Peacock/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Peacock/assets/thumbnail.png",

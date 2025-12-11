@@ -11,7 +11,7 @@
     "nl": "Pxls.space is een kloon van het sociale experiment r / place uitgevoerd door het sociale platform Reddit op 1 april 2017. (April Fools Day) Na enkele weken wordt het canvas gereset en krijgt het een nieuwe vorm."
   },
   "url": "pxls.space",
-  "regExp": "([a-z0-9-]+[.])*pxls[.]space[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pxls[.]space[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/pxls.space/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/pxls.space/assets/thumbnail.png",

@@ -13,7 +13,7 @@
     "beta.character.ai",
     "character.ai"
   ],
-  "regExp": "(beta[.])?character[.]ai[/]",
+  "regExp": "^https?[:][/][/](beta[.])?character[.]ai[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Character.AI/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Character.AI/assets/thumbnail.png",

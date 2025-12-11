@@ -15,7 +15,7 @@
     "otakupt.com",
     "www.otakupt.com"
   ],
-  "regExp": "(www[.])?otakupt[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?otakupt[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OtakuPT/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OtakuPT/assets/thumbnail.png",

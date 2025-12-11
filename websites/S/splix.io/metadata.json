@@ -11,7 +11,7 @@
     "nl": "Verover zoveel mogelijk land en probeer de grootste van allemaal te worden."
   },
   "url": "splix.io",
-  "regExp": "([a-z0-9-]+[.])*splix[.]io[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*splix[.]io[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/splix.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/splix.io/assets/thumbnail.png",

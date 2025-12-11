@@ -13,7 +13,7 @@
     "vi": "CHIP Online là cổng trang web độc lập của thương hiệu CHIP."
   },
   "url": "www.chip.com.tr",
-  "regExp": "(www[.])?chip[.]com[.]tr[/]",
+  "regExp": "^https?[:][/][/](www[.])?chip[.]com[.]tr[/]",
   "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CHIP%20Online/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CHIP%20Online/assets/thumbnail.png",

@@ -10,7 +10,7 @@
     "en": "Apple Podcasts is an audio streaming service and media player application developed by Apple for playing podcasts."
   },
   "url": "podcasts.apple.com",
-  "regExp": "podcasts[.]apple[.]com[/]",
+  "regExp": "^https?[:][/][/]podcasts[.]apple[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Apple%20Podcasts/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Apple%20Podcasts/assets/thumbnail.jpeg",

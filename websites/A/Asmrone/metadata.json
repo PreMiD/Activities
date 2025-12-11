@@ -12,7 +12,7 @@
     "zh-tw": "線上聽 ASMR 的網站，包含收藏、下載等功能。"
   },
   "url": "asmr.one",
-  "regExp": "([a-z0-9-]+[.])*asmr[.]one[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*asmr[.]one[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Asmrone/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Asmrone/assets/thumbnail.png",

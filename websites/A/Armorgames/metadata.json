@@ -12,7 +12,7 @@
     "vi": "Chơi các trò chơi trực tuyến miễn phí tại armorgames."
   },
   "url": "armorgames.com",
-  "regExp": "([a-z0-9-]+[.])*armorgames[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*armorgames[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Armorgames/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Armorgames/assets/thumbnail.jpg",

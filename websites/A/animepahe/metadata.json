@@ -19,7 +19,7 @@
     "animepahe.ru",
     "animepahe.org"
   ],
-  "regExp": "animepahe[.](si|com|ru|org)[/]",
+  "regExp": "^https?[:][/][/]animepahe[.](si|com|ru|org)[/]",
   "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/animepahe/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/animepahe/assets/thumbnail.png",

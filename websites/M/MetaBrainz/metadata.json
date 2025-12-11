@@ -14,7 +14,7 @@
     "blog.metabrainz.org",
     "community.metabrainz.org"
   ],
-  "regExp": "((blog|community)[.])?metabrainz[.]org[/]",
+  "regExp": "^https?[:][/][/]((blog|community)[.])?metabrainz[.]org[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MetaBrainz/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MetaBrainz/assets/thumbnail.png",

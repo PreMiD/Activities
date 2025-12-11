@@ -13,8 +13,8 @@
     "en": "Zaiko is a e-Tickets & Live streaming platform."
   },
   "url": "zaiko.io",
-  "regExp": "(.+\\.)?zaiko\\.io",
-  "version": "1.0.9",
+  "regExp": "^https?[:][/][/](.+\\.)?zaiko\\.io",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/Zaiko/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/Zaiko/assets/thumbnail.jpeg",
   "color": "#f4017a",

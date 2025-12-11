@@ -14,7 +14,7 @@
     "www.hexa.watch",
     "hexa.watch"
   ],
-  "regExp": "(www[.])?hexa[.]watch[/]",
+  "regExp": "^https?[:][/][/](www[.])?hexa[.]watch[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hexa%20Watch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hexa%20Watch/assets/thumbnail.png",

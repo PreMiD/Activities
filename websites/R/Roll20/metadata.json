@@ -18,7 +18,7 @@
     "blog.roll20.net",
     "wiki.roll20.net"
   ],
-  "regExp": "((app|marketplace|blog|wiki)[.])?roll20[.]net[/]",
+  "regExp": "^https?[:][/][/]((app|marketplace|blog|wiki)[.])?roll20[.]net[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Roll20/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Roll20/assets/thumbnail.png",

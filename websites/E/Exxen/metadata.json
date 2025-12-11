@@ -15,7 +15,7 @@
     "exxen.com",
     "www.exxen.com"
   ],
-  "regExp": "(www[.])?exxen[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?exxen[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Exxen/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Exxen/assets/thumbnail.png",

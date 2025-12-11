@@ -13,7 +13,7 @@
     "stigstream.com",
     "www.stigstream.com"
   ],
-  "regExp": "(www[.])?stigstream[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?stigstream[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stigstream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stigstream/assets/thumbnail.png",

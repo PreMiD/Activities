@@ -35,7 +35,7 @@
     "www.vinted.sk",
     "www.vinted.co.uk"
   ],
-  "regExp": "www[.]vinted[.](com|at|be|cz|de|dk|es|fi|fr|gr|hr|hu|ie|it|lt|lu|nl|pl|pt|ro|se|sk|co[.]uk)[/]",
+  "regExp": "^https?[:][/][/]www[.]vinted[.](com|at|be|cz|de|dk|es|fi|fr|gr|hr|hu|ie|it|lt|lu|nl|pl|pt|ro|se|sk|co[.]uk)[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vinted/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vinted/assets/thumbnail.png",

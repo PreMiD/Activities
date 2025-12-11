@@ -10,7 +10,7 @@
     "en": "Localizor is an innovative crowd translation platform built to translate your game with the help of your own and our community"
   },
   "url": "www.localizor.com",
-  "regExp": "(www[.])?localizor[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?localizor[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Localizor/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Localizor/assets/thumbnail.png",

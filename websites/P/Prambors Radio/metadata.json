@@ -15,7 +15,7 @@
     "live.pramborsfm.com",
     "streaming.pramborsfm.com"
   ],
-  "regExp": "(www|live|streaming)[.]pramborsfm[.]com[/]",
+  "regExp": "^https?[:][/][/](www|live|streaming)[.]pramborsfm[.]com[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prambors%20Radio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prambors%20Radio/assets/thumbnail.png",

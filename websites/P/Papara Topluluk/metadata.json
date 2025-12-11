@@ -11,7 +11,7 @@
     "tr": "Diğer kullanıcılara soru sorabileceğiniz, anında yanıt alabileceğiniz ve uygulama ile ilgili fikirlerinizi paylaşabileceğiniz Papara Topluluğu, Papara'nın geleceğini şekillendiriyor."
   },
   "url": "topluluk.papara.com",
-  "regExp": "topluluk[.]papara[.]com[/]",
+  "regExp": "^https?[:][/][/]topluluk[.]papara[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Papara%20Topluluk/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Papara%20Topluluk/assets/thumbnail.png",

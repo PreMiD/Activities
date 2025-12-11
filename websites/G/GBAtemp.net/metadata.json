@@ -11,7 +11,7 @@
     "nl": "GBAtemp is een gebruikersvriendelijke onafhankelijke videogame community met miljoenen berichten over 3DS en Nintendo DS, Wii en Wii U, Switch en andere algemene consoles inclusief PC gaming."
   },
   "url": "gbatemp.net",
-  "regExp": "([a-z0-9-]+[.])*gbatemp[.]net[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gbatemp[.]net[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GBAtemp.net/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GBAtemp.net/assets/thumbnail.png",

@@ -15,7 +15,7 @@
     "shinden.pl",
     "forum.shinden.pl"
   ],
-  "regExp": "(forum[.])?shinden[.]pl[/]",
+  "regExp": "^https?[:][/][/](forum[.])?shinden[.]pl[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Shinden/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Shinden/assets/thumbnail.png",

@@ -14,7 +14,7 @@
     "poke.ggtyler.dev",
     "poke.vern.cc"
   ],
-  "regExp": "(poketube[.]fun|(poke)[.]ggtyler[.]dev|(poke)[.]vern[.]cc)[/]",
+  "regExp": "^https?[:][/][/](poketube[.]fun|(poke)[.]ggtyler[.]dev|(poke)[.]vern[.]cc)[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Poke/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Poke/assets/thumbnail.png",

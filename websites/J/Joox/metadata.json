@@ -12,8 +12,8 @@
     "th": "JOOX - music แพล็ตฟอร์มบริการฟังเพลง สตรีมเพลง ที่ให้คุณเข้าถึงเพลงนับล้าน ดาวน์โหลด JOOX ฟรี ฟังเพลงฟรี ฟังวิทยุออนไลน์ ชาร์ตเพลงล่าสุด เพลย์ลิสต์ เพลงออกใหม่"
   },
   "url": "www.joox.com",
-  "regExp": "([a-z0-9-]+[.])*joox[.]com[/]",
-  "version": "1.2.19",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*joox[.]com[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Joox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Joox/assets/thumbnail.jpg",
   "color": "#5abf77",

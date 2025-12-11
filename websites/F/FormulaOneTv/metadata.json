@@ -20,7 +20,7 @@
     "en": "Watch F1 live & on demand. Every F1 race live and on demand. With exclusive access to on-board cameras, team radio and live timing."
   },
   "url": "f1tv.formula1.com",
-  "regExp": "f1tv[.]formula1[.]com[/]",
+  "regExp": "^https?[:][/][/]f1tv[.]formula1[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FormulaOneTv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FormulaOneTv/assets/thumbnail.jpg",

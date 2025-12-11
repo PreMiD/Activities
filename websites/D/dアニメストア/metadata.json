@@ -14,7 +14,7 @@
     "pt-br": "Site número 1 em streaming de animes no Japão! Grátis no primeiro mês! Assista mais de 2,900 animes por 400 ienes por mês (excluindo taxas)! Você pode usar outros dispositivos móveis além de DoCoMo. Melhor qualidade em tablets, PCs, Chromecasts, e Fire TV!"
   },
   "url": "animestore.docomo.ne.jp",
-  "regExp": "animestore[.]docomo[.]ne[.]jp[/]",
+  "regExp": "^https?[:][/][/]animestore[.]docomo[.]ne[.]jp[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/d%E3%82%A2%E3%83%8B%E3%83%A1%E3%82%B9%E3%83%88%E3%82%A2/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/d%E3%82%A2%E3%83%8B%E3%83%A1%E3%82%B9%E3%83%88%E3%82%A2/assets/thumbnail.jpg",

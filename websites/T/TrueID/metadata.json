@@ -15,7 +15,7 @@
     "movie.trueid.net",
     "tv.trueid.net"
   ],
-  "regExp": "(home|movie|tv)[.]trueid[.]net[/]",
+  "regExp": "^https?[:][/][/](home|movie|tv)[.]trueid[.]net[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TrueID/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TrueID/assets/thumbnail.jpg",

@@ -12,8 +12,8 @@
     "tr": "Medium, Twitter kurucuları Evan Williams ve Biz Stone tarafından, 140 karakterle yetinemeyen kullanıcıları için Ağustos 2012'de oluşturulmuş bir çevrimiçi payaşım platformudur."
   },
   "url": "medium.com",
-  "regExp": "([a-z0-9|-]+[.])*medium[.]com[/]",
-  "version": "1.2.20",
+  "regExp": "^https?[:][/][/]([a-z0-9|-]+[.])*medium[.]com[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Medium/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Medium/assets/thumbnail.png",
   "color": "#141210",

@@ -19,7 +19,7 @@
     "www.geoguessr.com",
     "geoguessr.com"
   ],
-  "regExp": "(www[.])?geoguessr[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?geoguessr[.]com[/]",
   "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/thumbnail.png",

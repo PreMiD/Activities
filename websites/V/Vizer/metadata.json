@@ -13,7 +13,7 @@
     "pt-br": "Vizer é um site brasileiro para assistir filmes e séries de graça! O Vizer indexa conteudo encontrado na web automáticamente usando Robots e Inteligência artificial."
   },
   "url": "novizer.com",
-  "regExp": "([a-z0-9-]+[.])*novizer[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*novizer[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vizer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vizer/assets/thumbnail.png",

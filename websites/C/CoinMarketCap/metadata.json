@@ -15,7 +15,7 @@
     "coinmarketcap.com",
     "www.coinmarketcap.com"
   ],
-  "regExp": "(www[.])?coinmarketcap[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?coinmarketcap[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CoinMarketCap/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CoinMarketCap/assets/thumbnail.png",

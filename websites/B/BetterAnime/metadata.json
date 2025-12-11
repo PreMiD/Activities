@@ -13,7 +13,7 @@
     "vi": "Xem các tập anime và phim mới nhất với chất lượng lên tới FullHD! Xem nhiều anime trực tuyến miễn phí trên BetterAnime!"
   },
   "url": "betteranime.net",
-  "regExp": "([a-z0-9-]+[.])*betteranime[.]net[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*betteranime[.]net[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BetterAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BetterAnime/assets/thumbnail.png",

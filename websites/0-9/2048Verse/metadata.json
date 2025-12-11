@@ -10,7 +10,7 @@
     "en": "The website most trusted by 2048 tryhards."
   },
   "url": "2048verse.com",
-  "regExp": "([a-z0-9-]+[.])*2048verse[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*2048verse[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/2048Verse/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/2048Verse/assets/thumbnail.png",

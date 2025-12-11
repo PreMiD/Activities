@@ -16,7 +16,7 @@
     "forum.cfx.re",
     "servers.fivem.net"
   ],
-  "regExp": "(((docs|servers)[.])?fivem[.]net|(forum)[.]cfx[.]re)[/]",
+  "regExp": "^https?[:][/][/](((docs|servers)[.])?fivem[.]net|(forum)[.]cfx[.]re)[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FiveM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FiveM/assets/thumbnail.png",

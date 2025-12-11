@@ -14,7 +14,7 @@
     "slimeread.com",
     "www.slimeread.com"
   ],
-  "regExp": "(www[.])?slimeread[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?slimeread[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SlimeRead/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SlimeRead/assets/thumbnail.png",

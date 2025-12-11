@@ -10,7 +10,7 @@
     "en": "Video Game Mods is bringing modding communities together under a unified network. The original community creator retains control over the content and community for the game."
   },
   "url": "videogamemods.com",
-  "regExp": "([a-z0-9-]+[.])*videogamemods[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*videogamemods[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Video%20Game%20Mods/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Video%20Game%20Mods/assets/thumbnail.jpeg",

@@ -18,7 +18,7 @@
     "nl": "Video game muziek radio van de Sitting on Clouds Soundtrack Collectie."
   },
   "url": "radio.sittingonclouds.net",
-  "regExp": "radio[.]sittingonclouds[.]net[/]",
+  "regExp": "^https?[:][/][/]radio[.]sittingonclouds[.]net[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sitting%20on%20Clouds%20Radio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sitting%20on%20Clouds%20Radio/assets/thumbnail.png",

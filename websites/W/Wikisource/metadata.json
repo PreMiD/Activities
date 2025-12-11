@@ -15,8 +15,8 @@
     "zh": "維基文庫是一個自由許可的源文本和歷史文檔庫，包括詩歌，政府文檔，許多國家的憲法和一般文獻。"
   },
   "url": "wikisource.org",
-  "regExp": "([a-z0-9-]+[.])*wikisource[.]org[/]",
-  "version": "1.0.27",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wikisource[.]org[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikisource/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikisource/assets/thumbnail.png",
   "color": "#f9f9f9",

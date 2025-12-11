@@ -15,7 +15,7 @@
     "websdr.ewi.utwente.nl",
     "etgd1.ewi.utwente.nl"
   ],
-  "regExp": "(websdr[.]ewi|etgd1[.]ewi)[.]utwente[.]nl[/]",
+  "regExp": "^https?[:][/][/](websdr[.]ewi|etgd1[.]ewi)[.]utwente[.]nl[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WebSDR/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WebSDR/assets/thumbnail.png",

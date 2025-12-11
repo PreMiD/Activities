@@ -17,7 +17,7 @@
     "pokemonshowdown.com",
     "play.pokemonshowdown.com"
   ],
-  "regExp": "(play[.])?pokemonshowdown[.]com[/]",
+  "regExp": "^https?[:][/][/](play[.])?pokemonshowdown[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pok%C3%A9mon%20Showdown/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pok%C3%A9mon%20Showdown/assets/thumbnail.png",

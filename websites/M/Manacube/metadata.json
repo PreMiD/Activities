@@ -10,8 +10,8 @@
     "en": "ManaCube is a premium Minecraft network with a range of feature-rich gamemodes."
   },
   "url": "manacube.com",
-  "regExp": "([a-z0-9-]+[.])*manacube[.]com[/]",
-  "version": "1.0.20",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*manacube[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Manacube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Manacube/assets/thumbnail.png",
   "color": "#06D1DF",

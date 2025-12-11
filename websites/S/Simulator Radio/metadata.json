@@ -17,7 +17,7 @@
     "nl": "Simulator Radio: Uw #1 Simulatie Station"
   },
   "url": "simulatorradio.com",
-  "regExp": "([a-z0-9-]+[.])*simulatorradio[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*simulatorradio[.]com[/]",
   "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Simulator%20Radio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Simulator%20Radio/assets/thumbnail.png",

@@ -10,7 +10,7 @@
     "en": "Dribbble is where designers gain inspiration, feedback, community, and jobs and is your best resource to discover and connect with designers worldwide."
   },
   "url": "dribbble.com",
-  "regExp": "([a-z0-9-]+[.])*dribbble[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*dribbble[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dribbble/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dribbble/assets/thumbnail.png",

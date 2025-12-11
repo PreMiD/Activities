@@ -10,7 +10,7 @@
     "en": "With over 11 million players, Fantasy Premier League is the biggest Fantasy Football game in the world."
   },
   "url": "fantasy.premierleague.com",
-  "regExp": "fantasy[.]premierleague[.]com[/]",
+  "regExp": "^https?[:][/][/]fantasy[.]premierleague[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fantasy%20Premier%20League/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fantasy%20Premier%20League/assets/thumbnail.png",

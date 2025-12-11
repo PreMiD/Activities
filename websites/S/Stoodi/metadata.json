@@ -11,8 +11,8 @@
     "pt-br": "Stoodi é uma plataforma para te preparar para provas e ENEM no Brazil"
   },
   "url": "www.stoodi.com.br",
-  "regExp": "([a-z0-9]+)[.]stoodi[.]com[.]br",
-  "version": "1.0.13",
+  "regExp": "^https?[:][/][/]([a-z0-9]+)[.]stoodi[.]com[.]br",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stoodi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stoodi/assets/thumbnail.png",
   "color": "#004EFF",

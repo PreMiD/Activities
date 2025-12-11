@@ -14,7 +14,7 @@
     "www.coupcritique.fr",
     "coupcritique.fr"
   ],
-  "regExp": "(www[.])?coupcritique[.]fr[/]",
+  "regExp": "^https?[:][/][/](www[.])?coupcritique[.]fr[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Coup%20Critique/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Coup%20Critique/assets/thumbnail.png",

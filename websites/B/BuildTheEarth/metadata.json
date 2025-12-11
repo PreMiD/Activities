@@ -12,7 +12,7 @@
     "vi": "Chúng tôi đang xây dựng cả hành tinh trong Minecraft."
   },
   "url": "buildtheearth.net",
-  "regExp": "([a-z0-9-]+[.])*buildtheearth[.]net[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*buildtheearth[.]net[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BuildTheEarth/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BuildTheEarth/assets/thumbnail.png",

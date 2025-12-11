@@ -14,8 +14,8 @@
     "hareshi.net",
     "forum.hareshi.net"
   ],
-  "regExp": "([a-z0-9-]+[.])*hareshi[.]net[/]",
-  "version": "1.0.16",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*hareshi[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hareshi/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hareshi/assets/thumbnail.jpg",
   "color": "#ff6c96",

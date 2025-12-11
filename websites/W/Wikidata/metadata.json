@@ -18,7 +18,7 @@
     "www.wikidata.org",
     "test.wikidata.org"
   ],
-  "regExp": "(www|test)[.]wikidata[.]org[/]",
+  "regExp": "^https?[:][/][/](www|test)[.]wikidata[.]org[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikidata/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikidata/assets/thumbnail.png",

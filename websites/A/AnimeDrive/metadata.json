@@ -14,7 +14,7 @@
     "animedrive.hu",
     "www.animedrive.hu"
   ],
-  "regExp": "(www[.])?animedrive[.]hu[/]",
+  "regExp": "^https?[:][/][/](www[.])?animedrive[.]hu[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeDrive/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeDrive/assets/thumbnail.png",

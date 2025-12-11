@@ -11,7 +11,7 @@
     "vi": "VGMdb là dự án cộng đồng dành riêng cho việc lưu trữ âm nhạc và tranh ảnh của trò chơi điện tử."
   },
   "url": "vgmdb.net",
-  "regExp": "([a-z0-9-]+[.])*vgmdb[.]net[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*vgmdb[.]net[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VGMdb/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VGMdb/assets/thumbnail.png",

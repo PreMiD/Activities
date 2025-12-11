@@ -10,7 +10,7 @@
     "en": "Your All-in-One TV, Anime and Movie Tracking Platform"
   },
   "url": "simkl.com",
-  "regExp": "([a-z0-9-]+[.])*simkl[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*simkl[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Simkl/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Simkl/assets/thumbnail.png",

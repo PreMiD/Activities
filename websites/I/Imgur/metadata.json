@@ -21,7 +21,7 @@
     "apidocs.imgur.com",
     "community.imgur.com"
   ],
-  "regExp": "(((i|blog|help|apidocs|community)[.])?imgur[.]com|imgurinc[.]com|imgurstore[.]com)[/]",
+  "regExp": "^https?[:][/][/](((i|blog|help|apidocs|community)[.])?imgur[.]com|imgurinc[.]com|imgurstore[.]com)[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Imgur/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Imgur/assets/thumbnail.jpg",

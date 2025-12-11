@@ -11,7 +11,7 @@
     "nl": "Overbuff is een website die is bedoeld om Overwatch-spelers te helpen hun spel te verbeteren. Je kunt je voortgang op helden volgen, zien wat je vrienden hebben gespeeld en professionele spelers in de gaten houden."
   },
   "url": "www.overbuff.com",
-  "regExp": "(www[.])?overbuff[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?overbuff[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Overbuff/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Overbuff/assets/thumbnail.png",

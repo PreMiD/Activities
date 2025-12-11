@@ -17,7 +17,7 @@
     "content.something.host",
     "files.something.host"
   ],
-  "regExp": "((cp|support|content|files)[.])?something[.]host[/]",
+  "regExp": "^https?[:][/][/]((cp|support|content|files)[.])?something[.]host[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Something.Host/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Something.Host/assets/thumbnail.png",

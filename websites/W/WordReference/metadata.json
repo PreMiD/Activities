@@ -11,7 +11,7 @@
     "fr": "WordReference est un dictionnaire de traduction en ligne qui permet de trouver des traductions, définitions et conjugaisons dans diverses langues. Il propose également des forums pour discuter des traductions et des subtilités linguistiques, idéal pour les étudiants et traducteurs."
   },
   "url": "www.wordreference.com",
-  "regExp": "(www[.])?wordreference[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?wordreference[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WordReference/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WordReference/assets/thumbnail.png",

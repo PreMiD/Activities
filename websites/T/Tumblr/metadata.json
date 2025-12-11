@@ -11,8 +11,8 @@
     "nl": "Tumblr is een plek om jezelf te uiten, jezelf te ontdekken en een band op te bouwen over dingen waar je van houdt. Het is waar uw interesses u verbinden met uw mensen."
   },
   "url": "www.tumblr.com",
-  "regExp": "([a-z0-9-]+[.])*tumblr[.]com[/]",
-  "version": "1.3.8",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tumblr[.]com[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tumblr/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tumblr/assets/thumbnail.png",
   "color": "#395976",

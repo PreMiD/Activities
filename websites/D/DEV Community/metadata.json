@@ -14,7 +14,7 @@
     "dev.to",
     "shop.dev.to"
   ],
-  "regExp": "(shop[.])?dev[.]to[/]",
+  "regExp": "^https?[:][/][/](shop[.])?dev[.]to[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DEV%20Community/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DEV%20Community/assets/thumbnail.png",

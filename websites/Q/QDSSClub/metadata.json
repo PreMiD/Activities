@@ -22,7 +22,7 @@
     "qdssclub.com",
     "www.qdssclub.com"
   ],
-  "regExp": "(www[.])?qdssclub[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?qdssclub[.]com[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Q/QDSSClub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Q/QDSSClub/assets/thumbnail.png",

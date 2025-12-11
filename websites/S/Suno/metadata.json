@@ -10,7 +10,7 @@
     "en": "Suno is building a future where anyone can make great music."
   },
   "url": "suno.com",
-  "regExp": "([a-z0-9-]+[.])*suno[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*suno[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Suno/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Suno/assets/thumbnail.jpg",

@@ -23,7 +23,7 @@
     "zh": "为所有竞技场打造的最好的卡组。检查您的牌组来发现它的问题和优化建议吧！这里也有给新手和高级玩家准备的指南和提示。"
   },
   "url": "www.deckshop.pro",
-  "regExp": "(www[.])?deckshop[.]pro[/]",
+  "regExp": "^https?[:][/][/](www[.])?deckshop[.]pro[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deck%20Shop/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deck%20Shop/assets/thumbnail.jpg",

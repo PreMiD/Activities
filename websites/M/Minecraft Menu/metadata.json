@@ -14,7 +14,7 @@
     "minecraft.menu",
     "www.minecraft.menu"
   ],
-  "regExp": "(www[.])?minecraft[.]menu[/]",
+  "regExp": "^https?[:][/][/](www[.])?minecraft[.]menu[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Minecraft%20Menu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Minecraft%20Menu/assets/thumbnail.jpg",

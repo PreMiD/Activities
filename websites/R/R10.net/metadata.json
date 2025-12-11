@@ -16,7 +16,7 @@
     "www.r10.net",
     "r10.net"
   ],
-  "regExp": "((analiz|www)[.])?r10[.]net[/]",
+  "regExp": "^https?[:][/][/]((analiz|www)[.])?r10[.]net[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/R10.net/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/R10.net/assets/thumbnail.png",

@@ -15,7 +15,7 @@
     "cloud.masuru.in.th",
     "forum.masuru.in.th"
   ],
-  "regExp": "([a-z0-9-]+[.])*masuru[.]in[.]th[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*masuru[.]in[.]th[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Masuru/assets/logo.webp",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Masuru/assets/thumbnail.webp",

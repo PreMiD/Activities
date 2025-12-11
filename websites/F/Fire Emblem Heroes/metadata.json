@@ -18,8 +18,8 @@
     "events.fire-emblem-heroes.com",
     "support.fire-emblem-heroes.com"
   ],
-  "regExp": "(.*[.])?fire-emblem-heroes[.]com[/]",
-  "version": "1.0.8",
+  "regExp": "^https?[:][/][/](.*[.])?fire-emblem-heroes[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fire%20Emblem%20Heroes/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fire%20Emblem%20Heroes/assets/thumbnail.jpg",
   "color": "#f8d230",

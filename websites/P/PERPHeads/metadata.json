@@ -11,8 +11,8 @@
     "nl": "Een geweldige Garry's Mod-community"
   },
   "url": "perpheads.com",
-  "regExp": "([a-z0-9-]+[.])*perpheads[.]com[/]",
-  "version": "1.0.22",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*perpheads[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PERPHeads/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PERPHeads/assets/thumbnail.png",
   "color": "#FFA500",

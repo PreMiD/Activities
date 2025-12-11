@@ -23,7 +23,7 @@
     "listen.tidal.com",
     "tidal.com"
   ],
-  "regExp": "(listen[.])?tidal[.]com[/]",
+  "regExp": "^https?[:][/][/](listen[.])?tidal[.]com[/]",
   "version": "3.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/thumbnail.png",

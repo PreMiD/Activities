@@ -18,8 +18,8 @@
     "fast.v2ex.com",
     "v2ex.com"
   ],
-  "regExp": "([a-z0-9-]+[.])*v2ex[.]com[/]",
-  "version": "1.0.27",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*v2ex[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/V2EX/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/V2EX/assets/thumbnail.png",
   "color": "#aab0c6",

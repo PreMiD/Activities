@@ -31,7 +31,7 @@
     "v2.animelib.org",
     "v3.animelib.org"
   ],
-  "regExp": "(mangalib[.]me|mangalib[.]org|ranobelib[.]me|(v1)[.]novelslib[.]me|anilib[.]me|((v1|v2|v3)[.])?animelib[.]org)[/]",
+  "regExp": "^https?[:][/][/](mangalib[.]me|mangalib[.]org|ranobelib[.]me|(v1)[.]novelslib[.]me|anilib[.]me|((v1|v2|v3)[.])?animelib[.]org)[/]",
   "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mangalib/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mangalib/assets/thumbnail.jpeg",

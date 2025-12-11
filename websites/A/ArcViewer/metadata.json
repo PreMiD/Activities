@@ -10,7 +10,7 @@
     "en": "View Beat Saber maps and BeatLeader replays directly in your browser, with accurately recreated visuals!"
   },
   "url": "allpoland.github.io",
-  "regExp": "allpoland[.]github[.]io[/]",
+  "regExp": "^https?[:][/][/]allpoland[.]github[.]io[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/ArcViewer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/ArcViewer/assets/thumbnail.png",

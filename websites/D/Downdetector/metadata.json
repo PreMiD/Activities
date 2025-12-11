@@ -11,7 +11,7 @@
     "nl": "Real-time probleem- en uitvalbewaking"
   },
   "url": "downdetector.com",
-  "regExp": "([a-z0-9-]+[.])*downdetector[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*downdetector[.]com[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Downdetector/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Downdetector/assets/thumbnail.png",

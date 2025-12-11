@@ -19,7 +19,7 @@
     "fmhy.xyz",
     "fmhy.jbugel.xyz"
   ],
-  "regExp": "(fmhy[.]net|(fmhy)[.]pages[.]dev|fmhy[.]lol|fmhy[.]xyz|(fmhy)[.]jbugel[.]xyz)[/]",
+  "regExp": "^https?[:][/][/](fmhy[.]net|(fmhy)[.]pages[.]dev|fmhy[.]lol|fmhy[.]xyz|(fmhy)[.]jbugel[.]xyz)[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FMHY/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FMHY/assets/thumbnail.png",

@@ -11,7 +11,7 @@
     "ru": "Русскоязычный веб-сайт в формате системы тематических коллективных блогов с элементами новостного сайта, созданный для публикации новостей, аналитических статей, мыслей, связанных с информационными технологиями, бизнесом и интернетом"
   },
   "url": "habr.com",
-  "regExp": "([a-z0-9-]+[.])*habr[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*habr[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Habr/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Habr/assets/thumbnail.png",

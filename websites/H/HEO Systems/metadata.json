@@ -16,7 +16,7 @@
     "ptero.heo-systems.net",
     "heos-hosting.site"
   ],
-  "regExp": "((www|clients|ptero)[.]heo-systems[.]net|heos-hosting[.]site)[/]",
+  "regExp": "^https?[:][/][/]((www|clients|ptero)[.]heo-systems[.]net|heos-hosting[.]site)[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HEO%20Systems/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HEO%20Systems/assets/thumbnail.png",

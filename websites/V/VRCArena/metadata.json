@@ -12,7 +12,7 @@
     "nl": "Download en upload verschillende assets en tutorials voor verschillende (dier)soorten die te vinden zijn in het VR online multiplayer spel VRChat."
   },
   "url": "www.vrcarena.com",
-  "regExp": "(www[.])?vrcarena[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?vrcarena[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VRCArena/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VRCArena/assets/thumbnail.png",

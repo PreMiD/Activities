@@ -10,7 +10,7 @@
     "en": "KBH Games is a online gaming portal that provide a fast and easy way to play online games for free."
   },
   "url": "kbhgames.com",
-  "regExp": "([a-z0-9-]+[.])*kbhgames[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kbhgames[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KBHGames/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KBHGames/assets/thumbnail.jpeg",

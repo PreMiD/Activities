@@ -19,7 +19,7 @@
     "zh": "掠夺者是一种装配弩的灾厄村民。"
   },
   "url": "minecraft.wiki",
-  "regExp": "([a-z0-9-]+[.])*minecraft[.]wiki[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*minecraft[.]wiki[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Minecraft%20Wiki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Minecraft%20Wiki/assets/thumbnail.png",

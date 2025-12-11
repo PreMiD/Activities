@@ -10,7 +10,7 @@
     "en": "Where to buy products from Japan? Want to buy from Japanese online stores and ship to your country? ZenMarket is the best Japan proxy shopping service for you!"
   },
   "url": "zenmarket.jp",
-  "regExp": "([a-z0-9-]+[.])*zenmarket[.]jp[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*zenmarket[.]jp[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZenMarket/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZenMarket/assets/thumbnail.jpg",

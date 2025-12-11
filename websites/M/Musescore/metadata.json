@@ -15,7 +15,7 @@
     "help.musescore.com",
     "musescore.org"
   ],
-  "regExp": "((help[.])?musescore[.]com|musescore[.]org)[/]",
+  "regExp": "^https?[:][/][/]((help[.])?musescore[.]com|musescore[.]org)[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Musescore/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Musescore/assets/thumbnail.png",

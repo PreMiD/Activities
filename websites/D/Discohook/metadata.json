@@ -16,7 +16,7 @@
     "en": "Discohook is a free tool that allows you to personalise your server to make your server stand out from the crowd."
   },
   "url": "discohook.app",
-  "regExp": "([a-z0-9-]+[.])*discohook[.]app[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*discohook[.]app[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discohook/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discohook/assets/thumbnail.png",

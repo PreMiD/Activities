@@ -17,8 +17,8 @@
     "tr": "HDFilmCehennemi, en yeni filmleri Türkiye'deki film severlere nette ilk olarak ve HD kalitede sunar. 'Film izle', 'HD Film izle' ve 'HD Film Cehennemi' kelimeleriyle arama motorlarında öne çıkan platformumuz, en güncel yabancı filmleri ve yabanı dizileri hızlı bir şekilde sizlere ulaştırır. Telif hakkı ihlali düşündüğünüz içerikler için lütfen iletişim sayfamızdan bizimle iletişime geçin."
   },
   "url": "hdfilmcehennemi.la",
-  "regExp": "([a-z0-9-]+[.])*(hdfilmcehennemi)[.]la[/]",
-  "version": "1.0.3",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(hdfilmcehennemi)[.]la[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hdfilmcehennemi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hdfilmcehennemi/assets/thumbnail.png",
   "color": "#e95900",

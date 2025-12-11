@@ -15,7 +15,7 @@
     "www.catchplay.com",
     "catchplay.com"
   ],
-  "regExp": "(www[.])?catchplay[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?catchplay[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CatchPlay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CatchPlay/assets/thumbnail.png",

@@ -14,7 +14,7 @@
     "pastebin.com",
     "www.pastebin.com"
   ],
-  "regExp": "(www[.])?pastebin[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?pastebin[.]com[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pastebin/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pastebin/assets/thumbnail.png",

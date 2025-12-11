@@ -17,7 +17,7 @@
     "viaplay.no",
     "viaplay.fi"
   ],
-  "regExp": "viaplay[.](se|dk|no|fi)[/]",
+  "regExp": "^https?[:][/][/]viaplay[.](se|dk|no|fi)[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Viaplay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Viaplay/assets/thumbnail.png",

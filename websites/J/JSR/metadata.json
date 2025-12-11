@@ -10,7 +10,7 @@
     "en": "The open-source package registry for modern JavaScript and TypeScript."
   },
   "url": "jsr.io",
-  "regExp": "([a-z0-9-]+[.])*jsr[.]io[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*jsr[.]io[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/JSR/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/JSR/assets/thumbnail.webp",

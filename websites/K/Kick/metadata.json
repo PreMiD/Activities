@@ -13,7 +13,7 @@
     "kick.com",
     "help.kick.com"
   ],
-  "regExp": "(help[.])?kick[.]com[/]",
+  "regExp": "^https?[:][/][/](help[.])?kick[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kick/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kick/assets/thumbnail.png",

@@ -11,7 +11,7 @@
     "nl": "Japari Library is een wiki die is gebaseerd op de multimediafranchise Kemono Friends."
   },
   "url": "japari-library.com",
-  "regExp": "([a-z0-9-]+[.])*japari-library[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*japari-library[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Japari%20Library/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Japari%20Library/assets/thumbnail.png",

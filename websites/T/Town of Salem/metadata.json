@@ -14,7 +14,7 @@
     "townofsalem.io",
     "www.townofsalem.io"
   ],
-  "regExp": "(www[.])?townofsalem[.]io[/]",
+  "regExp": "^https?[:][/][/](www[.])?townofsalem[.]io[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Town%20of%20Salem/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Town%20of%20Salem/assets/thumbnail.jpg",

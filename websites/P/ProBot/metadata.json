@@ -17,7 +17,7 @@
     "nl": "Welkomstafbeeldingen, moderatie, niveaus, reactie rollen, logboeken, muziek van hoge kwaliteit en nog veel meer!"
   },
   "url": "probot.io",
-  "regExp": "([a-z0-9-]+[.])*probot[.]io[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*probot[.]io[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/ProBot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/ProBot/assets/thumbnail.png",

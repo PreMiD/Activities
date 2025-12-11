@@ -12,7 +12,7 @@
     "vi": "Genius là bộ sưu tập lời bài hát và kiến thức âm nhạc lớn nhất thế giới."
   },
   "url": "genius.com",
-  "regExp": "([a-z0-9-]+[.])*genius[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*genius[.]com[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Genius/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Genius/assets/thumbnail.png",

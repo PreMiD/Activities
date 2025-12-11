@@ -12,7 +12,7 @@
     "nl": "Dankzij My Nintendo wordt het spelen van software en de interactie met Nintendo nog leuker. U kunt punten verdienen en beloningen krijgen, zoals kortingen en extra content voor games."
   },
   "url": "my.nintendo.com",
-  "regExp": "my[.]nintendo[.]com[/]",
+  "regExp": "^https?[:][/][/]my[.]nintendo[.]com[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/My%20Nintendo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/My%20Nintendo/assets/thumbnail.png",

@@ -16,8 +16,8 @@
     "www.onepeloton.ca",
     "www.onepeloton.de"
   ],
-  "regExp": "([a-z0-9-]+[.])*onepeloton([.][a-z]+)+[/]",
-  "version": "1.0.33",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*onepeloton([.][a-z]+)+[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Peloton/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Peloton/assets/thumbnail.jpg",
   "color": "#f5f7f9",

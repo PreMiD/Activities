@@ -10,7 +10,7 @@
     "en": "Play various small games on the web"
   },
   "url": "neal.fun",
-  "regExp": "([a-z0-9-]+[.])*neal[.]fun[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*neal[.]fun[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/neal.fun/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/neal.fun/assets/thumbnail.png",

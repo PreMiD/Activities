@@ -16,7 +16,7 @@
     "rezka-ua.org",
     "standby-rezka.tv"
   ],
-  "regExp": "(rezka[.]ag|hdrezka[.]ag|rezka-ua[.]org|standby-rezka[.]tv)[/]",
+  "regExp": "^https?[:][/][/](rezka[.]ag|hdrezka[.]ag|rezka-ua[.]org|standby-rezka[.]tv)[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/thumbnail.jpeg",

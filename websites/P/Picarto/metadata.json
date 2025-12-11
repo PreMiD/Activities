@@ -11,7 +11,7 @@
     "nl": "Picarto is 's werelds toonaangevende live streamingplatform voor creatieve geesten. Doe mee en kijk naar artiesten van over de hele wereld tijdens hun creatieve proces!"
   },
   "url": "picarto.tv",
-  "regExp": "([a-z0-9-]+[.])*picarto[.]tv[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*picarto[.]tv[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Picarto/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Picarto/assets/thumbnail.png",

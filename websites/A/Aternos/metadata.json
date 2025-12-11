@@ -17,7 +17,7 @@
     "support.aternos.org",
     "board.aternos.org"
   ],
-  "regExp": "((support|board)[.])?aternos[.]org[/]",
+  "regExp": "^https?[:][/][/]((support|board)[.])?aternos[.]org[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Aternos/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Aternos/assets/thumbnail.png",

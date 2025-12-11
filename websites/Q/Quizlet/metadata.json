@@ -13,7 +13,7 @@
     "vi": "Quizlet cung cấp các công cụ đơn giản để giúp bạn học tất cả mọi thứ. Hãy bắt đầu học tập từ ngay hôm nay với các thẻ ghi nhớ, trò chơi và công cụ học tập — tất cả đều miễn phí."
   },
   "url": "quizlet.com",
-  "regExp": "([a-z0-9-]+[.])*quizlet[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*quizlet[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Q/Quizlet/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Q/Quizlet/assets/thumbnail.png",

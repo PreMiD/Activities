@@ -11,7 +11,7 @@
     "nl": "De DMOJ is een modern wedstrijdplatform en een archief van programmeringsproblemen."
   },
   "url": "dmoj.ca",
-  "regExp": "([a-z0-9-]+[.])*dmoj[.]ca[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*dmoj[.]ca[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DMOJ/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DMOJ/assets/thumbnail.png",

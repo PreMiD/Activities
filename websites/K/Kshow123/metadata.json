@@ -11,7 +11,7 @@
     "nl": "Bekijk online Koreaanse shows met Engelse ondertiteling in hoge kwaliteit."
   },
   "url": "kshow123.net",
-  "regExp": "([a-z0-9-]+[.])*kshow123[.]net[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kshow123[.]net[/]",
   "version": "2.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kshow123/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kshow123/assets/thumbnail.png",

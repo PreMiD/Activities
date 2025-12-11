@@ -20,7 +20,7 @@
     "www.panais.xyz",
     "panais.xyz"
   ],
-  "regExp": "(www[.])?panais[.]xyz[/]",
+  "regExp": "^https?[:][/][/](www[.])?panais[.]xyz[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Panais/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Panais/assets/thumbnail.png",

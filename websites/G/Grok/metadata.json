@@ -11,7 +11,7 @@
     "ja": "Grok（グロック）は、xAIによって開発された、大規模言語モデル（LLM）に基づいた対話型の生成的人工知能チャットボットである。Xの全投稿データをリアルタイムに学習しており、イラストなどの画像生成機能に加え、最新のトピックに関する質問に回答できる。"
   },
   "url": "grok.com",
-  "regExp": "([a-z0-9-]+[.])*grok[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*grok[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Grok/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Grok/assets/thumbnail.png",

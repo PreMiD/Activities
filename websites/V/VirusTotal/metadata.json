@@ -13,7 +13,7 @@
     "nl": "Controleer elke software op uw veiligheid"
   },
   "url": "www.virustotal.com",
-  "regExp": "(www[.])?virustotal[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?virustotal[.]com[/]",
   "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VirusTotal/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VirusTotal/assets/thumbnail.png",

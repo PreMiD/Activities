@@ -15,7 +15,7 @@
     "www.theverge.com",
     "theverge.com"
   ],
-  "regExp": "(www[.])?theverge[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?theverge[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Verge/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Verge/assets/thumbnail.png",

@@ -29,7 +29,7 @@
     "developer.apple.com",
     "www.icloud.com"
   ],
-  "regExp": "((www|support|getsupport|apps|developer)[.]apple[.]com|(www)[.]icloud[.]com)[/]",
+  "regExp": "^https?[:][/][/]((www|support|getsupport|apps|developer)[.]apple[.]com|(www)[.]icloud[.]com)[/]",
   "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Apple/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Apple/assets/thumbnail.jpg",

@@ -16,7 +16,7 @@
     "feedback.juniper.bot",
     "juniper.bot"
   ],
-  "regExp": "((docs|feedback)[.])?juniper[.]bot[/]",
+  "regExp": "^https?[:][/][/]((docs|feedback)[.])?juniper[.]bot[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Juniperbot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Juniperbot/assets/thumbnail.png",

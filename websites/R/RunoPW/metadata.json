@@ -18,7 +18,7 @@
     "tr": "Müthiş İnsanlarla Dolu İlginç Bir Yer"
   },
   "url": "runo.pw",
-  "regExp": "([a-z0-9-]+[.])*runo[.]pw[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*runo[.]pw[/]",
   "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RunoPW/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RunoPW/assets/thumbnail.png",

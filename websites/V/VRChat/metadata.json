@@ -22,7 +22,7 @@
     "hello.vrchat.com",
     "feedback.vrchat.com"
   ],
-  "regExp": "((hello|feedback)[.])?vrchat[.]com[/]",
+  "regExp": "^https?[:][/][/]((hello|feedback)[.])?vrchat[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VRChat/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VRChat/assets/thumbnail.png",

@@ -10,7 +10,7 @@
     "en": "An open-source web rhythm game"
   },
   "url": "sunniesnow.github.io",
-  "regExp": "sunniesnow[.]github[.]io[/]",
+  "regExp": "^https?[:][/][/]sunniesnow[.]github[.]io[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sunniesnow/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sunniesnow/assets/thumbnail.png",

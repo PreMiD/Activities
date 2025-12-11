@@ -15,7 +15,7 @@
     "zh-tw": "完全免費的動畫平台。"
   },
   "url": "ani.gamer.com.tw",
-  "regExp": "ani[.]gamer[.]com[.]tw[/]",
+  "regExp": "^https?[:][/][/]ani[.]gamer[.]com[.]tw[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%E5%B7%B4%E5%93%88%E5%A7%86%E7%89%B9%E5%8B%95%E7%95%AB%E7%98%8B/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%E5%B7%B4%E5%93%88%E5%A7%86%E7%89%B9%E5%8B%95%E7%95%AB%E7%98%8B/assets/thumbnail.png",

@@ -19,7 +19,7 @@
     "ru": "Загружайте лучшие классические и новые игры на Windows, Mac и Linux. Огромный выбор игр без DRM, с бесплатными дополнениями и 30-дневной гарантией возврата денег."
   },
   "url": "www.gog.com",
-  "regExp": "(www[.])?gog[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?gog[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GOG/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GOG/assets/thumbnail.png",

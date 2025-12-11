@@ -11,7 +11,7 @@
     "vi": "Thông báo người dùng mới. Cảnh báo giao dịch. Các công việc được lên kế hoạch. Bot cộng đồng. Các truy vấn SQL. Công cụ nội bộ. Tạo dựng bất cả những gì bạn muốn với JavaScript và API."
   },
   "url": "autocode.com",
-  "regExp": "([a-z0-9-]+[.])*autocode[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*autocode[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Autocode/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Autocode/assets/thumbnail.jpg",

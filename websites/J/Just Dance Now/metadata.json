@@ -10,7 +10,7 @@
     "en": "UNLEASH YOUR INNER DANCER! · Experience Just Dance's greatest dance routines without a console."
   },
   "url": "justdancenow.com",
-  "regExp": "([a-z0-9-]+[.])*justdancenow[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*justdancenow[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Just%20Dance%20Now/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Just%20Dance%20Now/assets/thumbnail.png",

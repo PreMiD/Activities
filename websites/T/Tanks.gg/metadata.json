@@ -10,7 +10,7 @@
     "en": "World of Tanks tank info and models."
   },
   "url": "tanks.gg",
-  "regExp": "([a-z0-9-]+[.])*tanks[.]gg[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tanks[.]gg[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tanks.gg/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tanks.gg/assets/thumbnail.png",

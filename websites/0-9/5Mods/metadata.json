@@ -21,7 +21,7 @@
     "www.gta5-mods.com",
     "www.forums.gta5-mods.com"
   ],
-  "regExp": "((forums|www|www[.]forums)[.])?gta5-mods[.]com[/]",
+  "regExp": "^https?[:][/][/]((forums|www|www[.]forums)[.])?gta5-mods[.]com[/]",
   "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/5Mods/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/5Mods/assets/thumbnail.jpg",

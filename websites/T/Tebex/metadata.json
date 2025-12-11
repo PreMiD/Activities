@@ -14,8 +14,8 @@
     "tebex.io",
     "docs.tebex.io"
   ],
-  "regExp": "(.*[.]buycraft[.]net)|(.*[.]tebex[.]io)",
-  "version": "1.0.14",
+  "regExp": "^https?[:][/][/](.*[.]buycraft[.]net)|(.*[.]tebex[.]io)",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tebex/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tebex/assets/thumbnail.jpg",
   "color": "#215AA9",

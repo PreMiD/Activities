@@ -10,7 +10,7 @@
     "en": "Hacker News is a social news website focusing on computer science and entrepreneurship."
   },
   "url": "news.ycombinator.com",
-  "regExp": "news[.]ycombinator[.]com[/]",
+  "regExp": "^https?[:][/][/]news[.]ycombinator[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hacker%20News/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hacker%20News/assets/thumbnail.png",

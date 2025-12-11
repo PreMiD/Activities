@@ -20,7 +20,7 @@
     "anihq.to",
     "www.anihq.to"
   ],
-  "regExp": "(www[.])?anihq[.]to[/]",
+  "regExp": "^https?[:][/][/](www[.])?anihq[.]to[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniHQ/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniHQ/assets/thumbnail.png",

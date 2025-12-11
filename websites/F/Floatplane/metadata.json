@@ -10,7 +10,7 @@
     "en": "Floatplane is a streaming service that offers a wide variety of content from shows to reviews and more! All viewable on thousands of internet-connected devices."
   },
   "url": "www.floatplane.com",
-  "regExp": "(www[.])?floatplane[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?floatplane[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Floatplane/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Floatplane/assets/thumbnail.png",

@@ -10,7 +10,7 @@
     "en": "KQM is home to the best Genshin Impact guides and the most reputable theorycrafting community. Learn about your favorite Genshin Impact characters’ builds, artifacts, weapons, teams, and more!"
   },
   "url": "keqingmains.com",
-  "regExp": "([a-z0-9-]+[.])*keqingmains[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*keqingmains[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KQM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KQM/assets/thumbnail.webp",

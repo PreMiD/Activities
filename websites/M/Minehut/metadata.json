@@ -13,7 +13,7 @@
     "minehut.com",
     "shop.minehut.com"
   ],
-  "regExp": "(shop[.])?minehut[.]com[/]",
+  "regExp": "^https?[:][/][/](shop[.])?minehut[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Minehut/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Minehut/assets/thumbnail.png",

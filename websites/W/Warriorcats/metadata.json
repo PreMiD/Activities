@@ -11,7 +11,7 @@
     "en": "Discover the world of the Warrior Cats and learn everything about the fantasy books!"
   },
   "url": "www.warriorcats.de",
-  "regExp": "(www[.])?warriorcats[.]de[/]",
+  "regExp": "^https?[:][/][/](www[.])?warriorcats[.]de[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Warriorcats/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Warriorcats/assets/thumbnail.png",

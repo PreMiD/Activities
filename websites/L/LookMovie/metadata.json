@@ -15,8 +15,8 @@
     "lookmovies.ru",
     "playerwatchlm25.xyz"
   ],
-  "regExp": "(playerwatch[0-9]*.xyz)|(playerwatchlm[0-9]*.xyz)|(lookmovie[0-9]?[.][A-z]{2})",
-  "version": "1.5.16",
+  "regExp": "^https?[:][/][/](playerwatch[0-9]*.xyz)|(playerwatchlm[0-9]*.xyz)|(lookmovie[0-9]?[.][A-z]{2})",
+  "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LookMovie/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LookMovie/assets/thumbnail.png",
   "color": "#ffcc00",

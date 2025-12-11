@@ -11,7 +11,7 @@
     "nl": "Bekijk uw tv-kanalen en films via de browser."
   },
   "url": "www.horizon.tv",
-  "regExp": "(www[.])?horizon[.]tv[/]",
+  "regExp": "^https?[:][/][/](www[.])?horizon[.]tv[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Horizon%20GO/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Horizon%20GO/assets/thumbnail.png",

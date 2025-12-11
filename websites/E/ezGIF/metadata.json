@@ -10,7 +10,7 @@
     "en": "Ezgif.com is a simple online GIF maker and toolset for basic animated GIF editing. Here you can create, resize, crop, reverse, optimize, and apply some effects to GIFs."
   },
   "url": "ezgif.com",
-  "regExp": "([a-z0-9-]+[.])*ezgif[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*ezgif[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/ezGIF/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/ezGIF/assets/thumbnail.png",

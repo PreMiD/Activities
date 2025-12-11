@@ -12,8 +12,8 @@
     "tr": "eggsy.xyz, EGGSY'nin PreMiD ile ve bir çok başka projesiyle alakalı işlerini sergilediği internet sitesidir!"
   },
   "url": "eggsy.xyz",
-  "regExp": "eggsy[.]xyz(?![/]projects[/]premid[/]custom-status)",
-  "version": "1.2.29",
+  "regExp": "^https?[:][/][/]eggsy[.]xyz(?![/]projects[/]premid[/]custom-status)",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/eggsy.codes/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/eggsy.codes/assets/thumbnail.png",
   "color": "#212121",

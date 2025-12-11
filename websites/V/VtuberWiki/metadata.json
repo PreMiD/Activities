@@ -10,7 +10,7 @@
     "en": "Search or browse in depth information about Vtubers or software related to Vtubers"
   },
   "url": "vtubers.wiki",
-  "regExp": "([a-z0-9-]+[.])*vtubers[.]wiki[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*vtubers[.]wiki[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VtuberWiki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VtuberWiki/assets/thumbnail.jpg",

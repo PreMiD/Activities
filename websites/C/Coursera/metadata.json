@@ -10,7 +10,7 @@
     "en": "Coursera is a global online learning platform that offers anyone, anywhere, access to online courses and degrees from leading universities and companies."
   },
   "url": "www.coursera.org",
-  "regExp": "(www[.])?coursera[.]org[/]",
+  "regExp": "^https?[:][/][/](www[.])?coursera[.]org[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Coursera/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Coursera/assets/thumbnail.png",

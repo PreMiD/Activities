@@ -11,7 +11,7 @@
     "nl": "SpinShare is een dienst voor het delen van kaarten voor Spin Rhythm XD."
   },
   "url": "spinsha.re",
-  "regExp": "([a-z0-9-]+[.])*spinsha[.]re[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*spinsha[.]re[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SpinShare/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SpinShare/assets/thumbnail.png",

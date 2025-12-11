@@ -11,7 +11,7 @@
     "nl": "Ontdek de ultieme partner voor al je technologiebehoeften bij Teckie. Wij bieden een breed scala aan oplossingen, waaronder refurbished game computers, prebuilt-systemen en op maat gemaakte computers, allemaal lokaal gecreëerd in het hart van Nederland."
   },
   "url": "teckie.nl",
-  "regExp": "([a-z0-9-]+[.])*teckie[.]nl[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*teckie[.]nl[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Teckie/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Teckie/assets/thumbnail.png",

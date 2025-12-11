@@ -10,7 +10,7 @@
     "en": "EWAIFU: Uniting a worldwide community through common passions and experiences, fostering connections and friendships across borders."
   },
   "url": "www.ewaifu.gg",
-  "regExp": "(www[.])?ewaifu[.]gg[/]",
+  "regExp": "^https?[:][/][/](www[.])?ewaifu[.]gg[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/EWAIFU/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/EWAIFU/assets/thumbnail.png",

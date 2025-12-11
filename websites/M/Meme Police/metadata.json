@@ -12,7 +12,7 @@
     "ru": "Веб-версии популярных настольных игр"
   },
   "url": "meme-police.ru",
-  "regExp": "([a-z0-9-]+[.])*meme-police[.]ru[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*meme-police[.]ru[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Meme%20Police/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Meme%20Police/assets/thumbnail.png",

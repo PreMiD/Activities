@@ -14,7 +14,7 @@
     "relx.site",
     "calmx.site"
   ],
-  "regExp": "(relx[.]site|calmx[.]site)[/]",
+  "regExp": "^https?[:][/][/](relx[.]site|calmx[.]site)[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TheSite/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TheSite/assets/thumbnail.png",

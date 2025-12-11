@@ -12,7 +12,7 @@
     "vi": "IMDb (Internet Movie Database) là cơ sở dữ liệu trực tuyến dành cho phim, các chương trình truyền hình, video nhà làm, trò chơi điện tử, và nội dung được phát trực tuyến – bao gồm dàn diễn viên, đội ngũ sản xuất và tiểu sử, tóm tắt phim, câu đố, đánh giá của người hâm mộ và các nhà phê bình."
   },
   "url": "www.imdb.com",
-  "regExp": "(www[.])?imdb[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?imdb[.]com[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/IMDb/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/IMDb/assets/thumbnail.png",

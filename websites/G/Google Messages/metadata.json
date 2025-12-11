@@ -19,7 +19,7 @@
     "vi": "Google Messages là ứng dụng nhắn tin đơn giản giúp bạn kết nối với những người quan trong nhất. Nhắn tin cho bất kì ai từ mọi nơi xuyên các thiết bị."
   },
   "url": "messages.google.com",
-  "regExp": "messages[.]google[.]com[/]",
+  "regExp": "^https?[:][/][/]messages[.]google[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Messages/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Messages/assets/thumbnail.jpg",

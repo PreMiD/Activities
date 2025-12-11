@@ -10,7 +10,7 @@
     "en": "Create, compose, collaborate, play, and print your sheet music using the world's most simple and intuitive web-based music writing and composition software."
   },
   "url": "flat.io",
-  "regExp": "([a-z0-9-]+[.])*flat[.]io[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flat[.]io[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flat/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Flat/assets/thumbnail.png",

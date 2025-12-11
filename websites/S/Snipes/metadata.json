@@ -12,8 +12,8 @@
     "nl": "SNIPES is een winkel voor kleding van populaire merken."
   },
   "url": "www.snipes.com",
-  "regExp": "www[.]snipes(usa)?[.]([a-z]+)",
-  "version": "1.1.27",
+  "regExp": "^https?[:][/][/]www[.]snipes(usa)?[.]([a-z]+)",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Snipes/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Snipes/assets/thumbnail.png",
   "color": "#DF632F",

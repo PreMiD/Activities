@@ -17,8 +17,8 @@
     "pt-br": "A maior escola online de tecnologia do Brasil."
   },
   "url": "www.alura.com.br",
-  "regExp": "([a-z0-9]+)[.]alura.com.br",
-  "version": "1.1.15",
+  "regExp": "^https?[:][/][/]([a-z0-9]+)[.]alura.com.br",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Alura/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Alura/assets/thumbnail.png",
   "color": "#051932",

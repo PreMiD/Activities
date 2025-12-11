@@ -13,7 +13,7 @@
     "www.dropout.tv",
     "watch.dropout.tv"
   ],
-  "regExp": "(www|watch)[.]dropout[.]tv[/]",
+  "regExp": "^https?[:][/][/](www|watch)[.]dropout[.]tv[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dropout/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dropout/assets/thumbnail.jpg",

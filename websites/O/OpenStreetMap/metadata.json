@@ -11,8 +11,8 @@
     "fr": "OpenStreetMap est un projet de cartographie collaboratif en ligne où chaque utilisateur peut contribuer à la carte."
   },
   "url": "openstreetmap.org",
-  "regExp": "([a-z0-9]+)[.]openstreetmap[.]org",
-  "version": "1.0.14",
+  "regExp": "^https?[:][/][/]([a-z0-9]+)[.]openstreetmap[.]org",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OpenStreetMap/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OpenStreetMap/assets/thumbnail.png",
   "color": "#7ebc6f",

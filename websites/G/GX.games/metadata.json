@@ -10,7 +10,7 @@
     "en": "Discover new games, compete for weekly prizes and share your experience with friends"
   },
   "url": "gx.games",
-  "regExp": "([a-z0-9-]+[.])*gx[.]games[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gx[.]games[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GX.games/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GX.games/assets/thumbnail.png",

@@ -27,7 +27,7 @@
     "s2dfree.is",
     "soap2day.pe"
   ],
-  "regExp": "([a-z0-9-]+[.])*(soap2day|s2dfree)[.][a-z]+[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(soap2day|s2dfree)[.][a-z]+[/]",
   "version": "3.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SOAP2DAY/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SOAP2DAY/assets/thumbnail.png",

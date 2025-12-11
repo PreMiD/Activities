@@ -11,7 +11,7 @@
     "nl": "Grailed is de one-stop-bestemming voor het kopen, verkopen en ontdekken van herenkleding."
   },
   "url": "www.grailed.com",
-  "regExp": "(www[.])?grailed[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?grailed[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Grailed/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Grailed/assets/thumbnail.jpg",

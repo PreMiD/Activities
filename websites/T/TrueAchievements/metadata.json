@@ -11,7 +11,7 @@
     "nl": "TrueAchievements is de plaats voor Xbox nieuws, prestatielijsten en gidsen, recensies, interviews, scoreborden en meer."
   },
   "url": "www.trueachievements.com",
-  "regExp": "(www[.])?trueachievements[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?trueachievements[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TrueAchievements/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TrueAchievements/assets/thumbnail.png",

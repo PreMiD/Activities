@@ -14,7 +14,7 @@
     "mccentral.org",
     "buy.mccentral.org"
   ],
-  "regExp": "(buy[.])?mccentral[.]org[/]",
+  "regExp": "^https?[:][/][/](buy[.])?mccentral[.]org[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Minecraft%20Central/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Minecraft%20Central/assets/thumbnail.png",

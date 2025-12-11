@@ -17,7 +17,7 @@
     "nl": "TV Time is een online dienst die uitsluitend gericht is op televisieseries. Het stelt gebruikers in staat om informatie te krijgen en commentaar te geven op de shows die ze volgen, met verschillende informatie-segmenten die aan hen gerelateerd zijn, zoals releasedatums van nieuwe afleveringen en verschillende opties op basis van de reactie van de gebruiker."
   },
   "url": "www.tvtime.com",
-  "regExp": "(www[.])?tvtime[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?tvtime[.]com[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TV%20Time/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TV%20Time/assets/thumbnail.png",

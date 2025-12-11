@@ -11,7 +11,7 @@
     "nl": "Een Franse Minecraft server gecultiveerd door toegewijde spelers."
   },
   "url": "gardenmc.fr",
-  "regExp": "([a-z0-9-]+[.])*gardenmc[.]fr[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gardenmc[.]fr[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Garden/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Garden/assets/thumbnail.png",

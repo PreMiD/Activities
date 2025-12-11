@@ -41,7 +41,7 @@
     "zh-tw": "Crunchyroll是美國的一家提供東亞相關串流媒體影視服務和國際交流社區的網站。"
   },
   "url": "www.crunchyroll.com",
-  "regExp": "(www[.])?crunchyroll[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?crunchyroll[.]com[/]",
   "version": "3.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/thumbnail.png",

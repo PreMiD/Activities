@@ -16,7 +16,7 @@
     "game.mahjongsoul.com",
     "mahjongsoul.com"
   ],
-  "regExp": "((mahjongsoul[.]game|mahjongsoul)[.]yo-star[.]com|(game)[.]maj-soul[.]com|(game[.])?mahjongsoul[.]com)[/]",
+  "regExp": "^https?[:][/][/]((mahjongsoul[.]game|mahjongsoul)[.]yo-star[.]com|(game)[.]maj-soul[.]com|(game[.])?mahjongsoul[.]com)[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mahjong%20Soul/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mahjong%20Soul/assets/thumbnail.jpg",

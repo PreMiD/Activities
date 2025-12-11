@@ -12,7 +12,7 @@
     "pt-br": "Um site para você rastrear sua leitura e escolher seu próximo livro"
   },
   "url": "app.thestorygraph.com",
-  "regExp": "app[.]thestorygraph[.]com[/]",
+  "regExp": "^https?[:][/][/]app[.]thestorygraph[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/The%20StoryGraph/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/The%20StoryGraph/assets/thumbnail.png",

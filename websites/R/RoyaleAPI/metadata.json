@@ -10,7 +10,7 @@
     "en": "The definitive source about decks, players and teams in Clash Royale. Explore advanced statistics about decks and cards based on millions of games per week."
   },
   "url": "royaleapi.com",
-  "regExp": "([a-z0-9-]+[.])*royaleapi[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*royaleapi[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RoyaleAPI/assets/logo.gif",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RoyaleAPI/assets/thumbnail.jpg",

@@ -11,7 +11,7 @@
     "tr": "Tempest Fansub, türkçe altyazılı anime izleyebileceğiniz ve manga okuyabileceğiniz bir site."
   },
   "url": "tempestscans.net",
-  "regExp": "([a-z0-9-]+[.])*tempestscans[.]net[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tempestscans[.]net[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tempest%20Fansub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tempest%20Fansub/assets/thumbnail.png",

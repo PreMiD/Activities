@@ -10,7 +10,7 @@
     "en": "A modern & fast Minecraft profile search. Find skins, capes, servers, statistics and more on LABY.net"
   },
   "url": "laby.net",
-  "regExp": "([a-z0-9-]+[.])*laby[.]net[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*laby[.]net[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LABY.net/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LABY.net/assets/thumbnail.png",

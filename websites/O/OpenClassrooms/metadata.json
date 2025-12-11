@@ -12,7 +12,7 @@
     "nl": "OpenClassrooms is een educatief platform dat online certificerende cursussen aanbiedt die leiden tot groeiende banen. De inhoud van de website wordt geproduceerd door vrijwilligers, scholen, hogescholen of bedrijven zoals Microsoft of IBM."
   },
   "url": "openclassrooms.com",
-  "regExp": "([a-z0-9-]+[.])*openclassrooms[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*openclassrooms[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OpenClassrooms/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OpenClassrooms/assets/thumbnail.png",

@@ -16,7 +16,7 @@
     "en": "Tide Radio is a dynamic and innovative online Internet radio station, offering listeners around the world a vast selection of the freshest and best hits spanning a multitude of music genres."
   },
   "url": "tideradio.uk",
-  "regExp": "([a-z0-9-]+[.])*tideradio[.]uk[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tideradio[.]uk[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tide%20Radio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tide%20Radio/assets/thumbnail.png",

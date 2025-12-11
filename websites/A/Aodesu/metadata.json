@@ -14,7 +14,7 @@
     "aodesu.com",
     "www.aodesu.com"
   ],
-  "regExp": "(www[.])?aodesu[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?aodesu[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Aodesu/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Aodesu/assets/thumbnail.png",

@@ -14,7 +14,7 @@
     "www.tesla.com",
     "shop.tesla.com"
   ],
-  "regExp": "(www|shop)[.]tesla[.]com[/]",
+  "regExp": "^https?[:][/][/](www|shop)[.]tesla[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tesla/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tesla/assets/thumbnail.png",

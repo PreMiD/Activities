@@ -14,7 +14,7 @@
     "novelfull.com",
     "www.novelfull.com"
   ],
-  "regExp": "(www[.])?novelfull[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?novelfull[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Novelfull/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Novelfull/assets/thumbnail.jpg",

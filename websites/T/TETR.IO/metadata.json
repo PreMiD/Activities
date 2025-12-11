@@ -12,7 +12,7 @@
     "vi": "TETR.IO là trò chơi nhiều người chơi/một người chơi miễn phí trực tuyến"
   },
   "url": "tetr.io",
-  "regExp": "([a-z0-9-]+[.])*tetr[.]io[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tetr[.]io[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TETR.IO/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TETR.IO/assets/thumbnail.jpg",

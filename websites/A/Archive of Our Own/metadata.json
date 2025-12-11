@@ -13,7 +13,7 @@
     "en": "On Archive of Our Own (AO3), users can make profiles, create works and other Content, post comments, give Kudos, create Collections and Bookmarks."
   },
   "url": "archiveofourown.org",
-  "regExp": "([a-z0-9-]+[.])*archiveofourown[.]org[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*archiveofourown[.]org[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Archive%20of%20Our%20Own/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Archive%20of%20Our%20Own/assets/thumbnail.png",

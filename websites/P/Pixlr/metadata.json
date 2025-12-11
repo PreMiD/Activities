@@ -10,7 +10,7 @@
     "en": "Welcome to Pixlr, the No 1 in photo editing and design tools. Edit photos and create stunning designs right in your browser, on your phone or desktop for free. Start from an empty canvas, a photo, a video or select one of our professionally crafted templates."
   },
   "url": "pixlr.com",
-  "regExp": "([a-z0-9-]+[.])*pixlr[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pixlr[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pixlr/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pixlr/assets/thumbnail.png",

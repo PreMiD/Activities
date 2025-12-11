@@ -12,7 +12,7 @@
     "nl": "De beste plek om League of Legends esports te bekijken en beloningen te verdienen!"
   },
   "url": "lolesports.com",
-  "regExp": "([a-z0-9-]+[.])*lolesports[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*lolesports[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LoL%20Esports/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LoL%20Esports/assets/thumbnail.jpg",

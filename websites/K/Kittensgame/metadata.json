@@ -14,7 +14,7 @@
     "forum.kittensgame.com",
     "wiki.kittensgame.com"
   ],
-  "regExp": "((forum|wiki)[.])?kittensgame[.]com[/]",
+  "regExp": "^https?[:][/][/]((forum|wiki)[.])?kittensgame[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kittensgame/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kittensgame/assets/thumbnail.png",

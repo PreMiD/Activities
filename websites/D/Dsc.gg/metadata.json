@@ -14,7 +14,7 @@
     "dsc.gg",
     "docs.dsc.gg"
   ],
-  "regExp": "(docs[.])?dsc[.]gg[/]",
+  "regExp": "^https?[:][/][/](docs[.])?dsc[.]gg[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dsc.gg/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dsc.gg/assets/thumbnail.png",

@@ -11,7 +11,7 @@
     "fr": "Bluesky est un réseau social de microblogging comme Twitter."
   },
   "url": "bsky.app",
-  "regExp": "([a-z0-9-]+[.])*bsky[.]app[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*bsky[.]app[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bluesky/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bluesky/assets/thumbnail.png",

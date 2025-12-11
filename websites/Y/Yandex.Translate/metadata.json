@@ -17,8 +17,8 @@
     "ceviri.yandex.com.tr",
     "translate.yandex.ua"
   ],
-  "regExp": "(translate|ceviri).yandex([.][a-z]+)+[/]",
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/](translate|ceviri).yandex([.][a-z]+)+[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Yandex.Translate/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Yandex.Translate/assets/thumbnail.png",
   "color": "#FF2222",

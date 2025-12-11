@@ -16,7 +16,7 @@
     "blog.trello.com",
     "developers.trello.com"
   ],
-  "regExp": "((help|blog|developers)[.])?trello[.]com[/]",
+  "regExp": "^https?[:][/][/]((help|blog|developers)[.])?trello[.]com[/]",
   "version": "2.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Trello/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Trello/assets/thumbnail.png",

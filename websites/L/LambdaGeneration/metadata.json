@@ -10,8 +10,8 @@
     "en": "The Ultimate Half-Life Community. Sharing Valve news and community content."
   },
   "url": "lambdageneration.com",
-  "regExp": "[a-z0-9.]+lambdageneration.com",
-  "version": "1.0.13",
+  "regExp": "^https?[:][/][/][a-z0-9.]+lambdageneration.com",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LambdaGeneration/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LambdaGeneration/assets/thumbnail.png",
   "color": "#f37b21",

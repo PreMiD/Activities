@@ -13,7 +13,7 @@
     "tr": "Yerli sosyal medya uygulaması Yaay için PreMiD eklentisi."
   },
   "url": "yaay.com.tr",
-  "regExp": "([a-z0-9-]+[.])*yaay[.]com[.]tr[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*yaay[.]com[.]tr[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Yaay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Yaay/assets/thumbnail.png",

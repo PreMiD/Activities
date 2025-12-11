@@ -31,8 +31,8 @@
     "vi": "pixiv là \"dịch vụ giao tiếp qua tranh ảnh\" nơi bạn có thể đăng và xem tác phẩm của mình. Có đa dạng các thể loại được đăng, với các nội dung của người dùng và các cuộc thi từ các nhà sản xuất."
   },
   "url": "www.pixiv.net",
-  "regExp": "([a-z0-9-]+[.])*pixiv[.]net[/]",
-  "version": "2.1.2",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pixiv[.]net[/]",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/pixiv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/pixiv/assets/thumbnail.png",
   "color": "#009cff",

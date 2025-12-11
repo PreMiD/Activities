@@ -11,7 +11,7 @@
     "nl": "Hou je van games zoals Player Unknown's Battlegrounds (PUBG), Fortnite of Apex Legends? Speel dit gratis 2d battle royale io spel in je browser!"
   },
   "url": "surviv.io",
-  "regExp": "([a-z0-9-]+[.])*surviv[.]io[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*surviv[.]io[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/surviv.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/surviv.io/assets/thumbnail.png",

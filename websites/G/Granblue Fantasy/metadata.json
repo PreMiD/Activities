@@ -22,7 +22,7 @@
     "vi": "Trò chơi đóng vai Nhật Bản"
   },
   "url": "game.granbluefantasy.jp",
-  "regExp": "game[.]granbluefantasy[.]jp[/]",
+  "regExp": "^https?[:][/][/]game[.]granbluefantasy[.]jp[/]",
   "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Granblue%20Fantasy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Granblue%20Fantasy/assets/thumbnail.jpg",

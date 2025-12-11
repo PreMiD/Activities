@@ -11,8 +11,8 @@
     "nl": "Deel kennis, verhoog de productiviteit van uw team en maak uw gebruikers blij."
   },
   "url": "app.gitbook.com",
-  "regExp": "([a-z0-9-]+)[.]gitbook[.]io|app[.]gitbook[.]com",
-  "version": "1.0.22",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+)[.]gitbook[.]io|app[.]gitbook[.]com",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gitbook/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gitbook/assets/thumbnail.png",
   "color": "#3884FF",

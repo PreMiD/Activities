@@ -21,7 +21,7 @@
     "www.sho.com",
     "www.showtime.com"
   ],
-  "regExp": "((www)[.]skyshowtime[.]com|(www)[.]sho[.]com|(www)[.]showtime[.]com)[/]",
+  "regExp": "^https?[:][/][/]((www)[.]skyshowtime[.]com|(www)[.]sho[.]com|(www)[.]showtime[.]com)[/]",
   "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Showtime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Showtime/assets/thumbnail.png",

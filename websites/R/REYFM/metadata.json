@@ -16,7 +16,7 @@
     "www.rey.fm",
     "status.rey.fm"
   ],
-  "regExp": "((www|status)[.])?rey[.]fm[/]",
+  "regExp": "^https?[:][/][/]((www|status)[.])?rey[.]fm[/]",
   "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/REYFM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/REYFM/assets/thumbnail.png",

@@ -14,7 +14,7 @@
     "www.honeygain.com",
     "dashboard.honeygain.com"
   ],
-  "regExp": "(www|dashboard)[.]honeygain[.]com[/]",
+  "regExp": "^https?[:][/][/](www|dashboard)[.]honeygain[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Honeygain/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Honeygain/assets/thumbnail.png",

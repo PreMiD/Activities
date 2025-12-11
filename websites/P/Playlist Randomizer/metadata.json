@@ -10,7 +10,7 @@
     "en": "Use playlist-randomizer.com to get the most out of your youtube playlists."
   },
   "url": "playlist-randomizer.com",
-  "regExp": "([a-z0-9-]+[.])*playlist-randomizer[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*playlist-randomizer[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Playlist%20Randomizer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Playlist%20Randomizer/assets/thumbnail.jpg",

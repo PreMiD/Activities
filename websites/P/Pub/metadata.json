@@ -13,7 +13,7 @@
     "en": "Pub is the package manager for the Dart programming language, containing reusable libraries & packages for Flutter and general Dart programs."
   },
   "url": "pub.dev",
-  "regExp": "([a-z0-9-]+[.])*pub[.]dev[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pub[.]dev[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pub/assets/thumbnail.png",

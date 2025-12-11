@@ -14,7 +14,7 @@
     "emojipedia.org",
     "blog.emojipedia.org"
   ],
-  "regExp": "(blog[.])?emojipedia[.]org[/]",
+  "regExp": "^https?[:][/][/](blog[.])?emojipedia[.]org[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Emojipedia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Emojipedia/assets/thumbnail.png",

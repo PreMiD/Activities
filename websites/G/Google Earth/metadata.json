@@ -10,7 +10,7 @@
     "en": "Explore worldwide satellite imagery and 3D buildings and terrain for hundreds of cities. Zoom to your house or anywhere else, then dive in for a 360° perspective with Street View. "
   },
   "url": "earth.google.com",
-  "regExp": "earth[.]google[.]com[/]",
+  "regExp": "^https?[:][/][/]earth[.]google[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Earth/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Earth/assets/thumbnail.jpg",

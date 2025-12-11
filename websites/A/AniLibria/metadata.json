@@ -18,7 +18,7 @@
     "anilibria.wtf",
     "aniliberty.top"
   ],
-  "regExp": "(anilibria[.]top|anilibria[.]wtf|aniliberty[.]top)[/]",
+  "regExp": "^https?[:][/][/](anilibria[.]top|anilibria[.]wtf|aniliberty[.]top)[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniLibria/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniLibria/assets/thumbnail.png",

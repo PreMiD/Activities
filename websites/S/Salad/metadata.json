@@ -14,7 +14,7 @@
     "community.salad.com",
     "support.salad.io"
   ],
-  "regExp": "((community[.])?salad[.]com|(support)[.]salad[.]io)[/]",
+  "regExp": "^https?[:][/][/]((community[.])?salad[.]com|(support)[.]salad[.]io)[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Salad/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Salad/assets/thumbnail.png",

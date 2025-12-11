@@ -10,7 +10,7 @@
     "en": "Design, scale, and publish your website—no code needed. Start for free today."
   },
   "url": "framer.com",
-  "regExp": "([a-z0-9-]+[.])*framer[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*framer[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Framer/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Framer/assets/thumbnail.jpg",

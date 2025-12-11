@@ -14,7 +14,7 @@
     "thearchon.net",
     "shop.thearchon.net"
   ],
-  "regExp": "(shop[.])?thearchon[.]net[/]",
+  "regExp": "^https?[:][/][/](shop[.])?thearchon[.]net[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Archon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Archon/assets/thumbnail.png",

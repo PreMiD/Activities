@@ -27,7 +27,7 @@
     "zh": "世界上最活跃的在线动漫和漫画社区。加入在线社区，创建属于您的动漫和漫画列表！"
   },
   "url": "myanimelist.net",
-  "regExp": "([a-z0-9-]+[.])*myanimelist[.]net[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*myanimelist[.]net[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MyAnimeList/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MyAnimeList/assets/thumbnail.png",

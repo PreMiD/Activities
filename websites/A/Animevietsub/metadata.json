@@ -22,8 +22,8 @@
     "vi": "Xem anime online với phụ đề tiếng việt."
   },
   "url": "animevietsub.dev",
-  "regExp": "animevietsub\\..*",
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/]animevietsub\\..*",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Animevietsub/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Animevietsub/assets/thumbnail.png",
   "color": "#8b0000",

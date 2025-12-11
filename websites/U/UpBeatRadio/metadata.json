@@ -18,7 +18,7 @@
     "nl": "UpBeat is een advertentievrije, community aangedreven online radio."
   },
   "url": "upbeatradio.net",
-  "regExp": "([a-z0-9-]+[.])*upbeatradio[.]net[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*upbeatradio[.]net[/]",
   "version": "3.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/thumbnail.png",

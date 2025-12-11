@@ -11,8 +11,8 @@
     "nl": "TomsHardware is de leidende bestemming voor technologie fans van alle skill levels."
   },
   "url": "tomshardware.com",
-  "regExp": "([a-z0-9-]+[.])*tomshardware[.]com[/]",
-  "version": "1.0.22",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tomshardware[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TomsHardware/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TomsHardware/assets/thumbnail.png",
   "color": "#e03c3c",

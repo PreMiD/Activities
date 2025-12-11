@@ -21,7 +21,7 @@
     "docs.deno.com",
     "denostatus.com"
   ],
-  "regExp": "((docs[.])?deno[.]com|denostatus[.]com)[/]",
+  "regExp": "^https?[:][/][/]((docs[.])?deno[.]com|denostatus[.]com)[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deno/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deno/assets/thumbnail.webp",

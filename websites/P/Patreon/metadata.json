@@ -11,7 +11,7 @@
     "fr": "Patreon est le meilleur endroit pour les créateurs afin de créer de l'adhésion en fournissant des accès exclusifs à leur travail et une connexion plus profonde avec leur communauté."
   },
   "url": "www.patreon.com",
-  "regExp": "(www[.])?patreon[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?patreon[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Patreon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Patreon/assets/thumbnail.png",

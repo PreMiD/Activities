@@ -16,7 +16,7 @@
     "www.animi.club",
     "dev.animi.club"
   ],
-  "regExp": "((www|dev)[.])?animi[.]club[/]",
+  "regExp": "^https?[:][/][/]((www|dev)[.])?animi[.]club[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniMi%20Club/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniMi%20Club/assets/thumbnail.png",

@@ -11,7 +11,7 @@
     "nl": "skindb.co is een database voor fortnite, valorant en fall guys skins/items."
   },
   "url": "skindb.co",
-  "regExp": "([a-z0-9-]+[.])*skindb[.]co[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*skindb[.]co[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/skindb.co/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/skindb.co/assets/thumbnail.png",

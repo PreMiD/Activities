@@ -11,7 +11,7 @@
     "nl": "Direct zien wanneer en hoeveel neerslag er gaat vallen? Stel de gewenste locatie in en volg het in de grafiek, de buien radar en check de weersverwachting."
   },
   "url": "www.buienalarm.nl",
-  "regExp": "(www[.])?buienalarm[.]nl[/]",
+  "regExp": "^https?[:][/][/](www[.])?buienalarm[.]nl[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Buienalarm/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Buienalarm/assets/thumbnail.png",

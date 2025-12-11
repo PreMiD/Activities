@@ -22,7 +22,7 @@
     "www.jackboxgames.com",
     "shop.jackboxgames.com"
   ],
-  "regExp": "((games[.])?jackbox[.]tv|(www|shop)[.]jackboxgames[.]com)[/]",
+  "regExp": "^https?[:][/][/]((games[.])?jackbox[.]tv|(www|shop)[.]jackboxgames[.]com)[/]",
   "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Jackbox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Jackbox/assets/thumbnail.png",

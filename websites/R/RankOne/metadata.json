@@ -15,7 +15,7 @@
     "rankone.global",
     "www.rankone.global"
   ],
-  "regExp": "(www[.])?rankone[.]global[/]",
+  "regExp": "^https?[:][/][/](www[.])?rankone[.]global[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RankOne/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RankOne/assets/thumbnail.png",

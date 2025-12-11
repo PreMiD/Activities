@@ -16,7 +16,7 @@
     "go.discovery.com",
     "www.go.discovery.com"
   ],
-  "regExp": "((www[.])?discoveryplus[.]com|(go|www[.]go)[.]discovery[.]com)[/]",
+  "regExp": "^https?[:][/][/]((www[.])?discoveryplus[.]com|(go|www[.]go)[.]discovery[.]com)[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discovery/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discovery/assets/thumbnail.png",

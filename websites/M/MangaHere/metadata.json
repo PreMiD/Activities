@@ -11,7 +11,7 @@
     "nl": "Lees manga gratis online op MangaHere zonder advertenties, afbeeldingen van hoge kwaliteit!"
   },
   "url": "www.mangahere.cc",
-  "regExp": "(www[.])?mangahere[.]cc[/]",
+  "regExp": "^https?[:][/][/](www[.])?mangahere[.]cc[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaHere/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaHere/assets/thumbnail.png",

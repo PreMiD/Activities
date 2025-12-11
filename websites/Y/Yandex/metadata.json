@@ -14,7 +14,7 @@
     "ya.ru",
     "yandex.ru"
   ],
-  "regExp": "(ya[.]ru|yandex[.]ru)[/]",
+  "regExp": "^https?[:][/][/](ya[.]ru|yandex[.]ru)[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Yandex/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Yandex/assets/thumbnail.png",

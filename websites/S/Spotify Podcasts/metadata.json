@@ -33,7 +33,7 @@
     "podcasters.spotify.com",
     "accounts.spotify.com"
   ],
-  "regExp": "([a-z0-9-]+[.])*spotify[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*spotify[.]com[/]",
   "version": "2.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Spotify%20Podcasts/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Spotify%20Podcasts/assets/thumbnail.png",

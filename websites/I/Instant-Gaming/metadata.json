@@ -12,7 +12,7 @@
     "nl": "Instant-Gaming.com - Al je favoriete games voor Steam-, Origin-, Battle.net-, Uplay- en Indie-games tot 70% korting! Digitale games, directe levering 24/7!"
   },
   "url": "www.instant-gaming.com",
-  "regExp": "(www[.])?instant-gaming[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?instant-gaming[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Instant-Gaming/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Instant-Gaming/assets/thumbnail.jpg",

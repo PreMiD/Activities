@@ -36,7 +36,7 @@
     "www.image-line.com",
     "image-line.com"
   ],
-  "regExp": "(www[.])?image-line[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?image-line[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FL%20Studio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FL%20Studio/assets/thumbnail.png",

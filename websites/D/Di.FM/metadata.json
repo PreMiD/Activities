@@ -12,8 +12,8 @@
     "nl": "Di.FM is een internetradiozender met meer dan 90 kanalen die uitsluitend gewijd zijn aan elektronische muziek, zoals house, trance, techno, drum and bass, en dubstep."
   },
   "url": "di.fm",
-  "regExp": "([a-z0-9-]+[.])*di[.]fm[/]",
-  "version": "1.5.11",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*di[.]fm[/]",
+  "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Di.FM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Di.FM/assets/thumbnail.png",
   "color": "#3aa154",

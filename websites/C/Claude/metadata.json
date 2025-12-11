@@ -12,7 +12,7 @@
     "ja": "Claude（クロード）とは、Anthropic社が開発した大規模言語モデルを用いた対話型生成AIである。2023年3月14日に一般公開され、以降複数のバージョンがリリースされている。\n\n2024年3月に公開されたClaude 3 OpusはメンサのIQテストでIQスコア101を記録した。「フレンドリーで熱心な同僚」をコンセプトの一つとしている。"
   },
   "url": "claude.ai",
-  "regExp": "([a-z0-9-]+[.])*claude[.]ai[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*claude[.]ai[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Claude/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Claude/assets/thumbnail.jpeg",

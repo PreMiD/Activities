@@ -14,7 +14,7 @@
     "www.mc-market.org",
     "status.mc-market.org"
   ],
-  "regExp": "(www|status)[.]mc-market[.]org[/]",
+  "regExp": "^https?[:][/][/](www|status)[.]mc-market[.]org[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MC-Market/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MC-Market/assets/thumbnail.png",

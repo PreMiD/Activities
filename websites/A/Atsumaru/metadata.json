@@ -13,7 +13,7 @@
     "atsu.moe",
     "www.atsu.moe"
   ],
-  "regExp": "(www[.])?atsu[.]moe[/]",
+  "regExp": "^https?[:][/][/](www[.])?atsu[.]moe[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Atsumaru/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Atsumaru/assets/thumbnail.png",

@@ -12,7 +12,7 @@
     "zh": "'世界第一火箭联盟狂热爱好者。"
   },
   "url": "rocket-league.com",
-  "regExp": "([a-z0-9-]+[.])*rocket-league[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*rocket-league[.]com[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rocket%20League%20Garage/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rocket%20League%20Garage/assets/thumbnail.png",

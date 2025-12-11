@@ -11,8 +11,8 @@
     "nl": "Read the Docs vereenvoudigt softwaredocumentatie door de opbouw, versiebeheer en hosting van uw documenten voor u te automatiseren."
   },
   "url": "readthedocs.io",
-  "regExp": "([a-z0-9-]+[.])*readthedocs[.](io|org)[/]?",
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*readthedocs[.](io|org)[/]?",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Read%20the%20Docs/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Read%20the%20Docs/assets/thumbnail.png",
   "color": "#404A50",

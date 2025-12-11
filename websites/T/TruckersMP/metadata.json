@@ -22,7 +22,7 @@
     "stats.truckersmp.com",
     "map.truckersmp.com"
   ],
-  "regExp": "((forum|stats|map)[.])?truckersmp[.]com[/]",
+  "regExp": "^https?[:][/][/]((forum|stats|map)[.])?truckersmp[.]com[/]",
   "version": "3.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersMP/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersMP/assets/thumbnail.png",

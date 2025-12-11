@@ -10,7 +10,7 @@
     "en": "The best series and movies including the latest Originals from Crave, HBO, HBO Max, Showtime, the entire HBO library and the biggest Hollywood blockbusters. Enjoy in English and French."
   },
   "url": "www.crave.ca",
-  "regExp": "(www[.])?crave[.]ca[/]",
+  "regExp": "^https?[:][/][/](www[.])?crave[.]ca[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Crave/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Crave/assets/thumbnail.png",

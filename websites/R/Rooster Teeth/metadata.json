@@ -11,7 +11,7 @@
     "nl": "Rooster Teeth is een baanbrekend media- en entertainmentbedrijf dat verantwoordelijk is voor enkele van de grootste online series in de geschiedenis, zoals de bekroonde en langstlopende webserie, Red vs. Blue"
   },
   "url": "roosterteeth.com",
-  "regExp": "([a-z0-9-]+[.])*roosterteeth[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*roosterteeth[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rooster%20Teeth/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rooster%20Teeth/assets/thumbnail.png",

@@ -11,7 +11,7 @@
     "ko": "\"나무위키, 여러분이 가꾸어 나가는 지식의 나무.\" 나무위키(namuwiki)는 \"the seed\" 엔진 기반의 한국어 위키이다."
   },
   "url": "namu.wiki",
-  "regExp": "([a-z0-9-]+[.])*namu[.]wiki[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*namu[.]wiki[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/namu.wiki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/namu.wiki/assets/thumbnail.png",

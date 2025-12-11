@@ -11,7 +11,7 @@
     "nl": "De ultieme kleurencollectie!"
   },
   "url": "www.htmlcsscolor.com",
-  "regExp": "(www[.])?htmlcsscolor[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?htmlcsscolor[.]com[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/htmlcsscolor/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/htmlcsscolor/assets/thumbnail.png",

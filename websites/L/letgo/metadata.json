@@ -15,7 +15,7 @@
     "www.letgo.com",
     "letgo.com"
   ],
-  "regExp": "(www[.])?letgo[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?letgo[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/letgo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/letgo/assets/thumbnail.png",

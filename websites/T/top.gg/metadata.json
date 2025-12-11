@@ -19,7 +19,7 @@
     "tr": "top.gg, en büyük ve en gelişmiş Discord bot listesidir."
   },
   "url": "top.gg",
-  "regExp": "([a-z0-9-]+[.])*top[.]gg[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*top[.]gg[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/top.gg/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/top.gg/assets/thumbnail.png",

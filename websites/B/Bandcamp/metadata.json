@@ -12,8 +12,8 @@
     "vi": "Khám phá những bản nhạc tuyệt vời và ủng hộ trực tiếp các nghệ sĩ đã làm ra nó."
   },
   "url": "bandcamp.com",
-  "regExp": "([a-z0-9-]+[.])*bandcamp([.][a-z]+)+[/]",
-  "version": "1.3.13",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*bandcamp([.][a-z]+)+[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bandcamp/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bandcamp/assets/thumbnail.png",
   "color": "#61929c",

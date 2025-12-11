@@ -11,7 +11,7 @@
     "nl": "Help ons om tegen 1 januari 2020 wereldwijd 20 miljoen bomen over de hele wereld te planten."
   },
   "url": "teamtrees.org",
-  "regExp": "([a-z0-9-]+[.])*teamtrees[.]org[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*teamtrees[.]org[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TeamTrees/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TeamTrees/assets/thumbnail.jpg",

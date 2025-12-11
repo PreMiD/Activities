@@ -13,7 +13,7 @@
     "nl": "VVVVID is uw gepersonaliseerde online TV helemaal gratis."
   },
   "url": "www.vvvvid.it",
-  "regExp": "(www[.])?vvvvid[.]it[/]",
+  "regExp": "^https?[:][/][/](www[.])?vvvvid[.]it[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VVVVID/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VVVVID/assets/thumbnail.png",

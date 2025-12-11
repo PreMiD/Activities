@@ -13,7 +13,7 @@
     "www.writerduet.com",
     "writerduet.helpscoutdocs.com"
   ],
-  "regExp": "((www)[.]writerduet[.]com|(writerduet)[.]helpscoutdocs[.]com)[/]",
+  "regExp": "^https?[:][/][/]((www)[.]writerduet[.]com|(writerduet)[.]helpscoutdocs[.]com)[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WriterDuet/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WriterDuet/assets/thumbnail.png",

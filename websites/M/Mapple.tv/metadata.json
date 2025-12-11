@@ -14,7 +14,7 @@
     "mapple.mov",
     "mapple.uk"
   ],
-  "regExp": "mapple[.](tv|mov|uk)[/]",
+  "regExp": "^https?[:][/][/]mapple[.](tv|mov|uk)[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mapple.tv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mapple.tv/assets/thumbnail.jpg",

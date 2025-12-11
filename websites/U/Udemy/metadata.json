@@ -12,7 +12,7 @@
     "tr": "Udemy, internetten ders alabileceğiniz oldukça popüler global bir internet sitesidir."
   },
   "url": "www.udemy.com",
-  "regExp": "(www[.])?udemy[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?udemy[.]com[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/Udemy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/Udemy/assets/thumbnail.png",

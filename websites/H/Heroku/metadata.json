@@ -20,7 +20,7 @@
     "help.heroku.com",
     "status.heroku.com"
   ],
-  "regExp": "(www|blog|brand|dashboard|data|devcenter|elements|help|status)[.]heroku[.]com[/]",
+  "regExp": "^https?[:][/][/](www|blog|brand|dashboard|data|devcenter|elements|help|status)[.]heroku[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Heroku/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Heroku/assets/thumbnail.png",

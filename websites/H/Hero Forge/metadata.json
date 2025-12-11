@@ -10,7 +10,7 @@
     "en": "Hero Forge® is an online character design application that lets users create and buy customized tabletop miniatures and statuettes."
   },
   "url": "www.heroforge.com",
-  "regExp": "(www[.])?heroforge[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?heroforge[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hero%20Forge/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hero%20Forge/assets/thumbnail.jpg",

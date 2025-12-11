@@ -11,7 +11,7 @@
     "nl": "JioCinema is een videostreamingdienst aangeboden door Jio waar u films, tv-shows, exclusieve Jio, documentaires en trailers kunt bekijken."
   },
   "url": "www.jiocinema.com",
-  "regExp": "(www[.])?jiocinema[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?jiocinema[.]com[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/JioCinema/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/JioCinema/assets/thumbnail.png",

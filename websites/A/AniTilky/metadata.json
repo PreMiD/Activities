@@ -11,8 +11,8 @@
     "tr": "Türkçe dublajlı ve altyazılı anime izle, ilerlemenizi takip edin ve yeni seriler keşfedin."
   },
   "url": "anitilky.xyz",
-  "regExp": "anitilky\\.xyz",
-  "version": "1.0.4",
+  "regExp": "^https?[:][/][/]anitilky\\.xyz",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniTilky/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniTilky/assets/thumbnail.png",
   "color": "#FF6B6B",

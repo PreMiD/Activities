@@ -11,7 +11,7 @@
     "id": "Skuy adalah platform streaming Anime asal Indonesia yang memanfaatkan Kecerdasan Buatan untuk menyajikan subtitle secara otomatis dan akurat."
   },
   "url": "skuy.co.id",
-  "regExp": "([a-z0-9-]+[.])*skuy[.]co[.]id[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*skuy[.]co[.]id[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/skuyfun/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/skuyfun/assets/thumbnail.jpg",

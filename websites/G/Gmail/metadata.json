@@ -24,7 +24,7 @@
     "zh": "Gmail是Google开发的免费电子邮件服务。"
   },
   "url": "mail.google.com",
-  "regExp": "mail[.]google[.]com[/]",
+  "regExp": "^https?[:][/][/]mail[.]google[.]com[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gmail/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gmail/assets/thumbnail.png",

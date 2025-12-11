@@ -32,7 +32,7 @@
     "bunpro.jp",
     "community.bunpro.jp"
   ],
-  "regExp": "((www|community)[.])?bunpro[.]jp[/]",
+  "regExp": "^https?[:][/][/]((www|community)[.])?bunpro[.]jp[/]",
   "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bunpro/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bunpro/assets/thumbnail.png",

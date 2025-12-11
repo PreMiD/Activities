@@ -11,8 +11,8 @@
     "nl": "Itch.io is een distributieplatform voor indie-games."
   },
   "url": "itch.io",
-  "regExp": "([a-z0-9-]+[.])*itch[.]io[/]",
-  "version": "1.0.23",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*itch[.]io[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Itch.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Itch.io/assets/thumbnail.png",
   "color": "#e22c78",

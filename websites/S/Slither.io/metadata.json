@@ -12,8 +12,8 @@
     "nl": "Slither.io is een massively multiplayer video game beschikbaar voor iOS, Android en web browsers, ontwikkeld door Steve Howse. Spelers besturen een avatar die lijkt op een worm, die veelkleurige pellets consumeert, zowel van andere spelers als van degenen die van nature op de kaart in het spel kuitschieten, om in omvang te groeien."
   },
   "url": "slither.io",
-  "regExp": "([a-z0-9-]+[.])*slither[.]io[/]",
-  "version": "1.6.24",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*slither[.]io[/]",
+  "version": "1.7.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Slither.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Slither.io/assets/thumbnail.png",
   "color": "#319c2c",

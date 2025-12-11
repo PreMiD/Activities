@@ -12,7 +12,7 @@
     "nl": "Vudu distribueert lange films en tv-programma's naar apparaten met internetverbinding in de Verenigde Staten van Amerika."
   },
   "url": "www.vudu.com",
-  "regExp": "(www[.])?vudu[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?vudu[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VUDU/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VUDU/assets/thumbnail.png",

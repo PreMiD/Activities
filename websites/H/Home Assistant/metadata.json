@@ -10,7 +10,7 @@
     "en": "Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts"
   },
   "url": "www.home-assistant.io",
-  "regExp": "(www[.])?home-assistant[.]io[/]",
+  "regExp": "^https?[:][/][/](www[.])?home-assistant[.]io[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Home%20Assistant/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Home%20Assistant/assets/thumbnail.png",

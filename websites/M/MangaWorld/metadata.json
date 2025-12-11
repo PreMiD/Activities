@@ -21,7 +21,7 @@
     "mangaworld.ac",
     "www.mangaworld.ac"
   ],
-  "regExp": "(www[.])?mangaworld[.]ac[/]",
+  "regExp": "^https?[:][/][/](www[.])?mangaworld[.]ac[/]",
   "version": "3.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaWorld/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaWorld/assets/thumbnail.png",

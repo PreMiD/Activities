@@ -12,7 +12,7 @@
     "vi": "Thử và cải thiện tốc độ đánh máy của bạn với các trò chơi đánh máy miễn phí của chúng tôi."
   },
   "url": "10fastfingers.com",
-  "regExp": "([a-z0-9-]+[.])*10fastfingers[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*10fastfingers[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/10fastfingers/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/10fastfingers/assets/thumbnail.png",

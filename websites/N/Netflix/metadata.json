@@ -56,7 +56,7 @@
     "www.netflix.com",
     "netflix.com"
   ],
-  "regExp": "(www[.])?netflix[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?netflix[.]com[/]",
   "version": "6.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Netflix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Netflix/assets/thumbnail.jpg",

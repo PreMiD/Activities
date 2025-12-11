@@ -17,7 +17,7 @@
     "www.nimo.tv",
     "dashboard.nimo.tv"
   ],
-  "regExp": "(www|dashboard)[.]nimo[.]tv[/]",
+  "regExp": "^https?[:][/][/](www|dashboard)[.]nimo[.]tv[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nimo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nimo/assets/thumbnail.jpeg",

@@ -11,7 +11,7 @@
     "fr": "Snapchat est une application et un service de messagerie instantanée multimédia américain développé par Snap Inc., à l'origine Snapchat Inc. L'une des principales caractéristiques de Snapchat est que les images et les messages ne sont généralement disponibles que pendant une courte période avant de devenir inaccessibles à leurs destinataires."
   },
   "url": "www.snapchat.com",
-  "regExp": "(www[.])?snapchat[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?snapchat[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Snapchat/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Snapchat/assets/thumbnail.jpg",

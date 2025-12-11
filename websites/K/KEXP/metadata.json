@@ -14,7 +14,7 @@
     "www.kexp.org",
     "kexp.org"
   ],
-  "regExp": "(www[.])?kexp[.]org[/]",
+  "regExp": "^https?[:][/][/](www[.])?kexp[.]org[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KEXP/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KEXP/assets/thumbnail.png",

@@ -19,7 +19,7 @@
     "pt-br": "No dailymotion, você pode descobrir e assistir novas músicas, noticías, esportes, e trailers dos melhores criadores do dailymotion, marcas e canais"
   },
   "url": "www.dailymotion.com",
-  "regExp": "(www[.])?dailymotion[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?dailymotion[.]com[/]",
   "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/dailymotion/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/dailymotion/assets/thumbnail.png",

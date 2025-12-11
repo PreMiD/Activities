@@ -12,7 +12,7 @@
     "vi": "Codewars là nơi các nhà phát triển làm chủ lập trình qua các thử thách. Luyện tập trong võ đường và phát huy tối đa khả năng của bạn."
   },
   "url": "www.codewars.com",
-  "regExp": "(www[.])?codewars[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?codewars[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Codewars/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Codewars/assets/thumbnail.png",

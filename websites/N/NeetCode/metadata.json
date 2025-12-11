@@ -19,8 +19,8 @@
     "zh": "NeetCode是一个编程面试准备平台，提供精选题目、视频解析和软件工程面试路线图。"
   },
   "url": "neetcode.io",
-  "regExp": "([a-z0-9-]+[.])*neetcode[.]io[/]",
-  "version": "1.0.2",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*neetcode[.]io[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NeetCode/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NeetCode/assets/thumbnail.png",
   "color": "#10B981",

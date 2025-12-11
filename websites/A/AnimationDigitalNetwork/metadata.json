@@ -14,7 +14,7 @@
     "zh": "AnimationDigitalNetwork是最棒的日本在线动漫网站。"
   },
   "url": "animationdigitalnetwork.com",
-  "regExp": "([a-z0-9-]+[.])*animationdigitalnetwork[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animationdigitalnetwork[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimationDigitalNetwork/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimationDigitalNetwork/assets/thumbnail.png",

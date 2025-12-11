@@ -13,7 +13,7 @@
     "dashboard.emanate.live",
     "emanate.live"
   ],
-  "regExp": "(dashboard[.])?emanate[.]live[/]",
+  "regExp": "^https?[:][/][/](dashboard[.])?emanate[.]live[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Emanate/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Emanate/assets/thumbnail.png",

@@ -13,7 +13,7 @@
     "vi": "Giới thiệu những bộ anime và manga mới, đánh giá và hơn nữa! Theo dõi những gì bạn đã xem trong chính danh sách anime và manga của riêng bạn và gặp gỡ những người bạn mới."
   },
   "url": "www.anime-planet.com",
-  "regExp": "(www[.])?anime-planet[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?anime-planet[.]com[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime%20Planet/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime%20Planet/assets/thumbnail.png",

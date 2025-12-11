@@ -95,7 +95,7 @@
     "uncyclopedia.ca",
     "desciclopedia.ws"
   ],
-  "regExp": "([a-z0-9-]+[.])*(uncyclopedia[.](info|co|ca|miraheze[.]org)|(desencyclopedie|nonciclopedia|eincyclopedia|inciclopedia|frikipaideia|psyklopedin|ikkepedia|spademanns|hikipedia|desciclopedia|unciklopedia|ansaikuropedia|beidipedia|oncyclopedia|neciklopedija|necyklopedie|yansiklopedi|neciklopedio|tolololpedia|inciklopedia|desgalipedia|stupidedia)[.]org|nonsa[.]pl|(absurdopedia|pekepedia|kamelopedia)[.]net|uncyclopedia[.]tw|(pedia|desciclopedia)[.]ws|uncyclopedia[.]kr)[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(uncyclopedia[.](info|co|ca|miraheze[.]org)|(desencyclopedie|nonciclopedia|eincyclopedia|inciclopedia|frikipaideia|psyklopedin|ikkepedia|spademanns|hikipedia|desciclopedia|unciklopedia|ansaikuropedia|beidipedia|oncyclopedia|neciklopedija|necyklopedie|yansiklopedi|neciklopedio|tolololpedia|inciklopedia|desgalipedia|stupidedia)[.]org|nonsa[.]pl|(absurdopedia|pekepedia|kamelopedia)[.]net|uncyclopedia[.]tw|(pedia|desciclopedia)[.]ws|uncyclopedia[.]kr)[/]",
   "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/Uncyclopedia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/Uncyclopedia/assets/thumbnail.png",

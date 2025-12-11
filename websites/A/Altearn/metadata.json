@@ -14,7 +14,7 @@
     "vi": "Altearn là hiệp hội phi lợi nhuận nhằm mục đích phát triển và áp dụng các giải pháp và sự kiện dành cho giáo dục, khoa học và nhận thức."
   },
   "url": "altearn.xyz",
-  "regExp": "([a-z0-9-]+[.])*altearn[.]xyz[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*altearn[.]xyz[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Altearn/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Altearn/assets/thumbnail.png",

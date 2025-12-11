@@ -23,8 +23,8 @@
     "movies.samj.app",
     "sudo-flix.nl"
   ],
-  "regExp": "(dev[.])?(movie-web[.]app)",
-  "version": "1.2.2",
+  "regExp": "^https?[:][/][/](dev[.])?(movie-web[.]app)",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
   "color": "#533670",

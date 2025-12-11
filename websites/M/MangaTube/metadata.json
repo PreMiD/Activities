@@ -12,7 +12,7 @@
     "nl": "Uw Duitse mangagemeenschap. Praat met Manga-fans en blader door onze enorme database met meer dan 600 Manga"
   },
   "url": "manga-tube.me",
-  "regExp": "([a-z0-9-]+[.])*manga-tube[.]me[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*manga-tube[.]me[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaTube/assets/thumbnail.png",

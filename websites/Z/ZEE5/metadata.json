@@ -10,7 +10,7 @@
     "en": "ZEE5 is the largest streaming platform where you can watch your favorite TV show before it is aired on ZEE5. Stream blockbuster movies, latest originals, music videos, live TV channels and news in HD quality & in a language of your choice."
   },
   "url": "www.zee5.com",
-  "regExp": "(www[.])?zee5[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?zee5[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZEE5/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZEE5/assets/thumbnail.png",

@@ -12,7 +12,7 @@
     "pt-br": "Loritta é um bot no Discord de utilidade, diversão, entretenimento, moderação e muito mais!"
   },
   "url": "loritta.website",
-  "regExp": "([a-z0-9-]+[.])*loritta[.]website[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*loritta[.]website[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Loritta/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Loritta/assets/thumbnail.png",

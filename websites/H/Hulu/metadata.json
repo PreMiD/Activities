@@ -34,7 +34,7 @@
     "hulu.com",
     "www.hulu.com"
   ],
-  "regExp": "(www[.])?hulu[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?hulu[.]com[/]",
   "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hulu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hulu/assets/thumbnail.jpg",

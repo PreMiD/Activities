@@ -15,8 +15,8 @@
     "sickipedia.net",
     "www.sickipedia.net"
   ],
-  "regExp": "([a-z0-9-]+[.])*(sickipedia[.]net)[/]",
-  "version": "1.0.23",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(sickipedia[.]net)[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sickipedia/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sickipedia/assets/thumbnail.png",
   "color": "#333333",

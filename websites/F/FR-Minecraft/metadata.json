@@ -12,7 +12,7 @@
     "nl": "Nieuws Minecraft, tips, tools en alle hulp die nodig is om Minecraft te spelen!"
   },
   "url": "fr-minecraft.net",
-  "regExp": "([a-z0-9-]+[.])*fr-minecraft[.]net[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*fr-minecraft[.]net[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FR-Minecraft/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FR-Minecraft/assets/thumbnail.png",

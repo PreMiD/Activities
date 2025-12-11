@@ -10,7 +10,7 @@
     "en": "Flowlab is an online game creator. Make your own games to share with friends."
   },
   "url": "flowlab.io",
-  "regExp": "([a-z0-9-]+[.])*flowlab[.]io[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flowlab[.]io[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flowlab/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Flowlab/assets/thumbnail.jpg",

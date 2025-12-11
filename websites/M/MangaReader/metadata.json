@@ -13,7 +13,7 @@
     "mangareader.to",
     "www.mangareader.to"
   ],
-  "regExp": "(www[.])?mangareader[.]to[/]",
+  "regExp": "^https?[:][/][/](www[.])?mangareader[.]to[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaReader/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaReader/assets/thumbnail.png",

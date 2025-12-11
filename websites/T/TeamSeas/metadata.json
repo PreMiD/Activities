@@ -10,7 +10,7 @@
     "en": "Help us remove 30 million pounds of trash by January 1st, 2022."
   },
   "url": "teamseas.org",
-  "regExp": "([a-z0-9-]+[.])*teamseas[.]org[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*teamseas[.]org[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TeamSeas/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TeamSeas/assets/thumbnail.png",

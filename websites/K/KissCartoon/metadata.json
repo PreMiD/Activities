@@ -11,8 +11,8 @@
     "nl": "Bekijk cartoon online gratis in HD. Bekijk cartoon gratis zonder te downloaden."
   },
   "url": "kisscartoon.nz",
-  "regExp": "([a-z0-9-]+[.])*kisscartoon([.][a-z]+)+[/]",
-  "version": "1.0.29",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kisscartoon([.][a-z]+)+[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KissCartoon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KissCartoon/assets/thumbnail.png",
   "color": "#f5d80b",

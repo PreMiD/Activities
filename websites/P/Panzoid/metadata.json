@@ -14,7 +14,7 @@
     "app.panzoid.com",
     "panzoid.com"
   ],
-  "regExp": "(app[.])?panzoid[.]com[/]",
+  "regExp": "^https?[:][/][/](app[.])?panzoid[.]com[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Panzoid/assets/logo.webp",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Panzoid/assets/thumbnail.png",
