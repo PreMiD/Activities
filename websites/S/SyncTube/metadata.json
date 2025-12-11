@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "N0chteil ^^",
@@ -11,7 +11,8 @@
     "nl": "Een eenvoudig platform waar je kamers kunt aanmaken, rechten kunt beheren en kunt chatten terwijl je samen met je vrienden gesynchroniseerde YouTube-video's bekijkt."
   },
   "url": "sync-tube.de",
-  "version": "2.0.24",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sync-tube[.]de[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SyncTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SyncTube/assets/thumbnail.png",
   "color": "#381010",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Callum",
@@ -26,8 +26,8 @@
     "zh-tw": "Google雲端硬碟是Google的一個線上同步儲存服務，同時結合Google文件及Google我的地圖的線上檔案編輯功能。"
   },
   "url": "drive.google.com",
-  "regExp": "drive[.]google([.][a-z]+)+[/]",
-  "version": "1.6.16",
+  "regExp": "^https?[:][/][/]drive[.]google([.][a-z]+)+[/]",
+  "version": "1.7.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Drive/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Drive/assets/thumbnail.png",
   "color": "#3aa154",

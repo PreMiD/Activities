@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "वाह्य",
@@ -11,7 +11,8 @@
     "vi": "BitChute là nền tảng chia sẻ nội dung qua hình thức peer-to-peer."
   },
   "url": "www.bitchute.com",
-  "version": "1.0.26",
+  "regExp": "^https?[:][/][/](www[.])?bitchute[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BitChute/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BitChute/assets/thumbnail.png",
   "color": "#ffa500",

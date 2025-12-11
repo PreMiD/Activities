@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bjarne",
@@ -21,7 +21,8 @@
     "support.oculus.com",
     "secure.oculus.com"
   ],
-  "version": "1.2.20",
+  "regExp": "^https?[:][/][/](www|support|secure)[.]oculus[.]com[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Oculus/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Oculus/assets/thumbnail.png",
   "color": "#ffffff",

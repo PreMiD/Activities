@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "N0chteil ^^",
@@ -29,7 +29,8 @@
     "developer.apple.com",
     "www.icloud.com"
   ],
-  "version": "2.3.25",
+  "regExp": "^https?[:][/][/]((www|support|getsupport|apps|developer)[.]apple[.]com|(www)[.]icloud[.]com)[/]",
+  "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Apple/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Apple/assets/thumbnail.jpg",
   "color": "#606C80",

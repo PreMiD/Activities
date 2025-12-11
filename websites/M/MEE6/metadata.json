@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -14,7 +14,8 @@
     "mee6.xyz",
     "help.mee6.xyz"
   ],
-  "version": "1.3.13",
+  "regExp": "^https?[:][/][/](help[.])?mee6[.]xyz[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MEE6/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MEE6/assets/thumbnail.png",
   "color": "#60d1f6",

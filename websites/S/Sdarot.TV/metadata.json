@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -12,8 +12,8 @@
     "nl": "Serie voor direct bekijken en downloaden met ingebouwde Hebreeuwse vertaling. Honderden Israëlische en buitenlandse series, tienduizenden afleveringen met ingebouwde Hebreeuwse vertaling!"
   },
   "url": "sdarot.world",
-  "regExp": "([a-z0-9-]+[.])*sdarot([.][a-z]+)+[/]",
-  "version": "1.3.28",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sdarot([.][a-z]+)+[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sdarot.TV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sdarot.TV/assets/thumbnail.png",
   "color": "#f5d80b",

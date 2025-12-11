@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "357461892526243840",
@@ -17,7 +17,8 @@
     "music.douban.com",
     "market.douban.com"
   ],
-  "version": "1.0.2",
+  "regExp": "^https?[:][/][/]((www|book|movie|music|market)[.])?douban[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Douban/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Douban/assets/thumbnail.jpg",
   "color": "#2D963D",

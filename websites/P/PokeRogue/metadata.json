@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "503557087041683458",
@@ -9,11 +9,9 @@
   "description": {
     "en": "A Pokémon fangame heavily inspired by the roguelite genre. Battle endlessly while gathering stacking items, exploring many different biomes, and reaching Pokémon stats you never thought possible."
   },
-  "url": [
-    "pokerogue.net",
-    "127.0.0.1"
-  ],
-  "version": "1.0.10",
+  "url": "pokerogue.net",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pokerogue[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PokeRogue/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PokeRogue/assets/thumbnail.png",
   "color": "#6b5a73",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "MrLivixx",
@@ -16,7 +16,8 @@
     "feedback.juniper.bot",
     "juniper.bot"
   ],
-  "version": "2.0.28",
+  "regExp": "^https?[:][/][/]((docs|feedback)[.])?juniper[.]bot[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Juniperbot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Juniperbot/assets/thumbnail.png",
   "color": "#C27C0E",

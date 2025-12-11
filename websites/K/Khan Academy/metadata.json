@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "lolilover",
@@ -12,8 +12,8 @@
     "vi": "Khan Academy cung cấp các bài luyện tập, video hướng dẫn, và một bảng điều khiển được cá nhân hoá để giúp các học viên có thể tự học trong và ngoài lớp."
   },
   "url": "www.khanacademy.org",
-  "regExp": "([a-z]+[.])+khanacademy[.]org[/]",
-  "version": "1.2.1",
+  "regExp": "^https?[:][/][/]([a-z]+[.])+khanacademy[.]org[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Khan%20Academy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Khan%20Academy/assets/thumbnail.png",
   "color": "#4de682",

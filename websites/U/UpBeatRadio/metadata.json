@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -18,7 +18,8 @@
     "nl": "UpBeat is een advertentievrije, community aangedreven online radio."
   },
   "url": "upbeatradio.net",
-  "version": "3.2.36",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*upbeatradio[.]net[/]",
+  "version": "3.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/thumbnail.png",
   "color": "#212121",

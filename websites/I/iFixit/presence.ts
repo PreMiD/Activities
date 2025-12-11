@@ -118,9 +118,9 @@ presence.on('UpdateData', async () => {
                       .replace('{1}', `${steps.length}`)
               }`
               presenceData.largeImageKey
-              = thumbnailType === 1 ? image.standard : stepImage
+                = thumbnailType === 1 ? image.standard : stepImage
               presenceData.smallImageKey
-              = iconType === 1
+                = iconType === 1
                   ? Icons.Time
                   : Icons[
                     `${document
@@ -130,7 +130,7 @@ presence.on('UpdateData', async () => {
                       .toLowerCase()}` as keyof typeof Icons
                   ]
               presenceData.smallImageText
-              = iconType === 1
+                = iconType === 1
                   ? document.querySelector('.guide-time-required')?.textContent
                   : document.querySelector('.guide-difficulty')?.textContent
               presenceData.buttons = [

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "193714715631812608",
@@ -14,7 +14,8 @@
     "www.fly.io",
     "community.fly.io"
   ],
-  "version": "1.0.13",
+  "regExp": "^https?[:][/][/]((www|community)[.])?fly[.]io[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fly.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fly.io/assets/thumbnail.png",
   "color": "#24185B",

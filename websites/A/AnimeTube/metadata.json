@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Drakonir",
@@ -13,7 +13,8 @@
     "vi": "Cộng đồng Anime với hàng trăm bản Anime được phát trực tuyến."
   },
   "url": "anime-tube.tv",
-  "version": "1.0.30",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anime-tube[.]tv[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeTube/assets/thumbnail.png",
   "color": "#9b403f",

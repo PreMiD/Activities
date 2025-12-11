@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "NPC_B",
@@ -11,7 +11,8 @@
     "th": "Nekopost.net ก่อตั้งขึ้นเพื่อส่งเสริมการใช้เวลาว่างไปกับสิ่งที่ชอบ และเกิดประโยชน์ ทั้งแง่ของศิลปะ วัฒนธรรม และภาษา จุดมุ่งหมายสูงสุดของเราคือการพัฒนาวัฒนธรรมที่ตอบสนองความต้องการทางอุดมคติในอนาคต"
   },
   "url": "www.nekopost.net",
-  "version": "1.0.21",
+  "regExp": "^https?[:][/][/](www[.])?nekopost[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nekopost/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nekopost/assets/thumbnail.png",
   "color": "#e7dca5",

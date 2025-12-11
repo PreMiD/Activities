@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Hans5958",
@@ -15,7 +15,8 @@
     "zh": "維基共享資源是世界上最大的免費圖庫，照片，圖畫，視頻和音樂庫。"
   },
   "url": "commons.wikimedia.org",
-  "version": "1.0.28",
+  "regExp": "^https?[:][/][/]commons[.]wikimedia[.]org[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikimedia%20Commons/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikimedia%20Commons/assets/thumbnail.png",
   "color": "#f9f9f9",

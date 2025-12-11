@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "PreMiD",
@@ -11,7 +11,8 @@
     "nl": "e926 is een volwassen imageboardvervanger voor het imageboard Sidechan. Een image board voor algemeen publiek, e926 (voorheen e961) vult deze site aan. E926 draait op het Ouroboros platform, een danbooru-achtige software speciaal ontworpen voor de site."
   },
   "url": "e926.net",
-  "version": "1.1.15",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*e926[.]net[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/e926/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/e926/assets/thumbnail.jpg",
   "color": "#284A81",

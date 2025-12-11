@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "fantomitechno 🦊",
@@ -12,7 +12,8 @@
     "nl": "Nieuws Minecraft, tips, tools en alle hulp die nodig is om Minecraft te spelen!"
   },
   "url": "fr-minecraft.net",
-  "version": "1.1.25",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*fr-minecraft[.]net[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FR-Minecraft/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FR-Minecraft/assets/thumbnail.png",
   "color": "#4AD818",

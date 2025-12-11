@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "1255528657058009088",
@@ -10,7 +10,8 @@
     "en": "Websim.ai is an AI-powered platform that allows users to generate and explore a simulated version of the internet."
   },
   "url": "websim.com",
-  "version": "2.0.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*websim[.]com[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Websim/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Websim/assets/thumbnail.png",
   "color": "#38bdf8",

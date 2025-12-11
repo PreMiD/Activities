@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "1120534568018116669",
@@ -18,7 +18,8 @@
     "anilibria.wtf",
     "aniliberty.top"
   ],
-  "version": "1.1.1",
+  "regExp": "^https?[:][/][/](anilibria[.]top|anilibria[.]wtf|aniliberty[.]top)[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniLibria/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniLibria/assets/thumbnail.png",
   "color": "#fe3635",

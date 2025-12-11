@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Kozou",
@@ -17,8 +17,8 @@
     "fr": "Le service de traduction en ligne gratuit de Reverso qui traduit vos textes de l'anglais vers le français, l'espagnol, l'italien, l'allemand, le russe, le portugais, l'hébreu, le japonais, l'arabe, le néerlandais, le polonais, le roumain, le turc."
   },
   "url": "www.reverso.net",
-  "regExp": "([a-z0-9-_]+)[.]reverso[.]net",
-  "version": "1.0.16",
+  "regExp": "^https?[:][/][/]([a-z0-9-_]+)[.]reverso[.]net",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Reverso/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Reverso/assets/thumbnail.png",
   "color": "#0970ac",

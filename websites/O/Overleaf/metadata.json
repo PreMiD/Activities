@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Enevevet",
@@ -12,8 +12,8 @@
     "nl": "Overleaf is een op samenwerking gebaseerde LaTeX-editor in de cloud die wordt gebruikt voor het schrijven, bewerken en publiceren van wetenschappelijke documenten. Het werkt samen met een breed scala aan wetenschappelijke uitgevers om LaTeX-sjablonen van officiële tijdschriften en directe indieningslinks te bieden."
   },
   "url": "www.overleaf.com",
-  "regExp": "([a-z0-9-]+[.])*overleaf[.]com[/]",
-  "version": "1.0.27",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*overleaf[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Overleaf/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Overleaf/assets/thumbnail.png",
   "color": "#138A07",

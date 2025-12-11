@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "212701689579438080",
@@ -13,7 +13,8 @@
     "www.fortnite.gg",
     "fortnite.gg"
   ],
-  "version": "1.0.2",
+  "regExp": "^https?[:][/][/](www[.])?fortnite[.]gg[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fortnite.GG/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fortnite.GG/assets/thumbnail.jpeg",
   "color": "#000000",

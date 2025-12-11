@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Zen",
@@ -13,7 +13,8 @@
     "vi": "Tìm, theo dõi và chia sẽ những bộ phim và chương trình anime sắp tới tại AniChart.net"
   },
   "url": "anichart.net",
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anichart[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniChart/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniChart/assets/thumbnail.png",
   "color": "#ffffff",

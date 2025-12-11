@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "357461892526243840",
@@ -11,7 +11,8 @@
     "zh": "ListenHub 是专业的免费AI播客生成工具，支持中文语音合成。上传文件、输入话题即可生成超真实人声播客。支持PDF、TXT等多种格式，让知识获取更轻松高效。"
   },
   "url": "listenhub.ai",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*listenhub[.]ai[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/ListenHub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/ListenHub/assets/thumbnail.png",
   "color": "#000000",

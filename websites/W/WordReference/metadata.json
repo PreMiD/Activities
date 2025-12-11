@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "671037171611729920",
@@ -11,7 +11,8 @@
     "fr": "WordReference est un dictionnaire de traduction en ligne qui permet de trouver des traductions, définitions et conjugaisons dans diverses langues. Il propose également des forums pour discuter des traductions et des subtilités linguistiques, idéal pour les étudiants et traducteurs."
   },
   "url": "www.wordreference.com",
-  "version": "1.0.2",
+  "regExp": "^https?[:][/][/](www[.])?wordreference[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WordReference/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WordReference/assets/thumbnail.png",
   "color": "#5E58C7",

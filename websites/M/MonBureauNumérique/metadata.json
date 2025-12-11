@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "902671568856047636",
@@ -11,8 +11,8 @@
     "fr": "MonBureauNumerique est un environnement de travail numérique conçu par Skolengo et utilisé par les élèves de la région Grand-Est de France."
   },
   "url": "www.monbureaunumerique.fr",
-  "regExp": "\\b[a-zA-Z0-9.-]+\\.monbureaunumerique\\.fr\\b",
-  "version": "1.0.7",
+  "regExp": "^https?[:][/][/]\\b[a-zA-Z0-9.-]+\\.monbureaunumerique\\.fr\\b",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MonBureauNum%C3%A9rique/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MonBureauNum%C3%A9rique/assets/thumbnail.png",
   "color": "#426494",

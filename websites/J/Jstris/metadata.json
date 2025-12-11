@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "ayanamy.jy126",
@@ -11,7 +11,8 @@
     "nl": "Jstris is gewoon een standaard competitieve multiplayer Tetris, maar dan gemaakt met JS. LET OP: Om de 'Join'-knop te activeren zodat anderen via Discord aan je spel kunnen deelnemen, typ je' / link 'in de chat van de Jstris-lobby."
   },
   "url": "jstris.jezevec10.com",
-  "version": "1.1.25",
+  "regExp": "^https?[:][/][/]jstris[.]jezevec10[.]com[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Jstris/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Jstris/assets/thumbnail.png",
   "color": "#375a7f",

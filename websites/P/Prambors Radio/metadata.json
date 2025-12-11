@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "allvzx",
@@ -15,7 +15,8 @@
     "live.pramborsfm.com",
     "streaming.pramborsfm.com"
   ],
-  "version": "1.3.24",
+  "regExp": "^https?[:][/][/](www|live|streaming)[.]pramborsfm[.]com[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prambors%20Radio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prambors%20Radio/assets/thumbnail.png",
   "color": "#ffc925",

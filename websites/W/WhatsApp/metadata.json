@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "EGGSY",
@@ -21,7 +21,8 @@
     "zh-tw": "WhatsApp是Facebook公司的旗下一款用於智慧型手機的跨平台加密即時通訊應用程式。"
   },
   "url": "web.whatsapp.com",
-  "version": "2.3.7",
+  "regExp": "^https?[:][/][/]web[.]whatsapp[.]com[/]",
+  "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WhatsApp/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WhatsApp/assets/thumbnail.jpg",
   "color": "#0dc143",

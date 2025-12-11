@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "nFin1ty",
@@ -11,7 +11,8 @@
     "en": "dod Games is one of the most famous multiplayer game and chatting community in Greece"
   },
   "url": "www.dod.gr",
-  "version": "1.1.13",
+  "regExp": "^https?[:][/][/](www[.])?dod[.]gr[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/dod%20Games/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/dod%20Games/assets/thumbnail.png",
   "color": "#008fec",

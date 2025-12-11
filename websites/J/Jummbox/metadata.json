@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "HiddenRealm",
@@ -11,7 +11,8 @@
     "nl": "Hiermee kunnen gebruikers informatie over het maken van muziek en de gebruikte tijd zien"
   },
   "url": "jummb.us",
-  "version": "1.1.27",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*jummb[.]us[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Jummbox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Jummbox/assets/thumbnail.png",
   "color": "#7744FF",

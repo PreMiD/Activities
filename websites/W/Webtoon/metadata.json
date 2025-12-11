@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Viruz",
@@ -13,7 +13,8 @@
     "pt-br": "Obtenha os mais recentes romances originais, comédia, ação, fantasia, horror, e mais dos grandes nomes e dos a serem grandes nomes - apenas pela WEBTOON."
   },
   "url": "www.webtoons.com",
-  "version": "1.2.27",
+  "regExp": "^https?[:][/][/](www[.])?webtoons[.]com[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Webtoon/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Webtoon/assets/thumbnail.jpg",
   "color": "#00d564",

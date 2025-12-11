@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "332840377763758082",
@@ -20,7 +20,8 @@
     "en": "Baekjoon Online Judge is a website that hosts competitive programming contests."
   },
   "url": "www.acmicpc.net",
-  "version": "1.0.3",
+  "regExp": "^https?[:][/][/](www[.])?acmicpc[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Baekjoon%20Online%20Judge/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Baekjoon%20Online%20Judge/assets/thumbnail.png",
   "color": "#1a75bc",

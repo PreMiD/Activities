@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Kabal",
@@ -25,7 +25,8 @@
     "vi": "Telegram là dịch vụ nhắn tin bảo mật và xuyên nền tảng."
   },
   "url": "web.telegram.org",
-  "version": "2.1.1",
+  "regExp": "^https?[:][/][/]web[.]telegram[.]org[/]",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Telegram/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Telegram/assets/thumbnail.png",
   "color": "#33abe0",

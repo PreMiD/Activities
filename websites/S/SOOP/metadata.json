@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "374905512661221377",
@@ -17,7 +17,8 @@
     "play.sooplive.co.kr",
     "vod.sooplive.co.kr"
   ],
-  "version": "1.0.4",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sooplive[.]co[.]kr[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SOOP/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SOOP/assets/thumbnail.png",
   "color": "#0994ff",

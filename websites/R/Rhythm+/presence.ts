@@ -45,10 +45,10 @@ presence.on('UpdateData', async () => {
 
   if (document.querySelector('.profile_card')) {
     presenceData.smallImageKey
-= document.querySelector<HTMLImageElement>('.profile_card img')?.src
-  ?? Assets.Question
+      = document.querySelector<HTMLImageElement>('.profile_card img')?.src
+        ?? Assets.Question
     presenceData.smallImageText
-= document
+      = document
         .querySelector('.profile_card .detail')
         ?.firstChild
         ?.textContent

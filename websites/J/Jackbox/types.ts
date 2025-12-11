@@ -2,7 +2,7 @@ export interface Game {
   name: string
   logo: string
   getPresenceData: (
-    params: GameCallbackParams
+    params: GameCallbackParams,
   ) => Promise<PresenceData> | PresenceData
 }
 

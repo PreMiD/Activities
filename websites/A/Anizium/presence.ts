@@ -43,9 +43,9 @@ class AniziumPresence {
     const settings = this.settingsManager.currentSettings
 
     const largeImage
-            = settings?.showPosters && this.posterManager.posterUrl
-              ? this.posterManager.posterUrl
-              : this.settingsManager.getLogo()
+      = settings?.showPosters && this.posterManager.posterUrl
+        ? this.posterManager.posterUrl
+        : this.settingsManager.getLogo()
 
     const presenceData: PresenceData = {
       largeImageKey: largeImage,
@@ -92,8 +92,8 @@ class AniziumPresence {
     }
     else {
       presenceData.details
-                = document.querySelector('.trailer-content h1')?.textContent
-                  || 'Loading'
+        = document.querySelector('.trailer-content h1')?.textContent
+          || 'Loading'
       presenceData.state = 'Bölümler görüntüleniyor'
     }
 

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "PreMiD",
@@ -11,7 +11,8 @@
     "nl": "Kijk opent je ogen"
   },
   "url": "www.kijk.nl",
-  "version": "1.2.15",
+  "regExp": "^https?[:][/][/](www[.])?kijk[.]nl[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kijk/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kijk/assets/thumbnail.jpg",
   "color": "#ff0000",

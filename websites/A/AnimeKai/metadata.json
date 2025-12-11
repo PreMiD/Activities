@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "357878026429792258",
@@ -9,13 +9,21 @@
   "description": {
     "en": "AnimeKai is the best website to watch anime online for free, watch anime with DUB, SUB in HD."
   },
-  "url": ["animekai.to", "anikai.to", "animekai.cc", "animekai.ac"],
-  "version": "2.0.0",
+  "url": [
+    "animekai.to",
+    "anikai.to",
+    "animekai.cc",
+    "animekai.ac"
+  ],
+  "regExp": "^https?[:][/][/](animekai[.]to|anikai[.]to|animekai[.]cc|animekai[.]ac)[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeKai/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeKai/assets/thumbnail.png",
   "color": "#40b15d",
   "category": "anime",
-  "tags": ["anime"],
+  "tags": [
+    "anime"
+  ],
   "iframe": true,
   "iFrameRegExp": "megaup[.]live",
   "settings": [

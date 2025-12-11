@@ -19,7 +19,7 @@ presence.on('UpdateData', async () => {
         ? 'мультфильм'
         : contentType === 'animation'
           ? 'аниме'
-        : 'чего-то'
+          : 'чего-то'
 
   if (document.location.pathname === '/')
     presenceData.details = 'На главной странице'

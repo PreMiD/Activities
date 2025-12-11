@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "ACertainCoder",
@@ -18,8 +18,8 @@
     "nl": "IFTTT, de eevoudigste manier om meer te doen met jou favorite apps en devices, helemaal gratis! Maak uw huis relaxter. Maak uw werk productiever. Houd uw gegevens privé en veilig."
   },
   "url": "ifttt.com",
-  "regExp": "(ift[.]tt|((help|platform|status)[.]|)ifttt[.]com)[/]",
-  "version": "2.0.17",
+  "regExp": "^https?[:][/][/](ift[.]tt|((help|platform|status)[.]|)ifttt[.]com)[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/IFTTT/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/IFTTT/assets/thumbnail.png",
   "color": "#0d99fd",

@@ -53,7 +53,7 @@ if (document.location.hostname === 'jackbox.tv') {
               )?.[1]
               if (entityKey) {
                 gamePlayerState
-              = parsedLog.result.entities[
+                  = parsedLog.result.entities[
                     entityKey
                   ]?.[1].val ?? parsedLog.result.val
                 updatedMainState = true
@@ -63,7 +63,7 @@ if (document.location.hostname === 'jackbox.tv') {
               const entityKey = latestLog.match(/"key": "(info:\d+)",/)?.[1]
               if (entityKey) {
                 gamePlayerInfoState
-  = parsedLog.result.entities[
+                  = parsedLog.result.entities[
                     entityKey
                   ]?.[1].val ?? parsedLog.result
                 updatedInfoState = true

@@ -6,7 +6,7 @@ interface PageContext {
   exec: (
     context: Presence,
     presenceData: PresenceData,
-    options?: any
+    options?: any,
   ) => Promise<PresenceData | null> | PresenceData | null
 }
 interface ExecutionArguments {

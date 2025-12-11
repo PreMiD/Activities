@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "TheSlowly",
@@ -12,7 +12,8 @@
     "vi": "Brony Radio Germany là radio trực tuyến cho các Brony nói tiếng Đức. Chúng tôi phát nhạc 24/7 và tất cả đều về kỳ lân."
   },
   "url": "www.bronyradiogermany.com",
-  "version": "1.2.27",
+  "regExp": "^https?[:][/][/](www[.])?bronyradiogermany[.]com[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Brony%20Radio%20Germany/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Brony%20Radio%20Germany/assets/thumbnail.png",
   "color": "#FF0000",
