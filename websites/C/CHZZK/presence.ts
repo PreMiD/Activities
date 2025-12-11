@@ -71,7 +71,7 @@ presence.on('UpdateData', async () => {
         else {
           const streamerLogo = new URL(
             document.querySelector<HTMLImageElement>(
-              'img[class^=video_information_image]',
+              '[class^=video_information_thumbnail] img',
             )!.src,
           )
           presenceData.details = document.querySelector(
