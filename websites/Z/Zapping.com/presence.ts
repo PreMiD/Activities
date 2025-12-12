@@ -1,8 +1,8 @@
-import { Presence, PresenceData } from 'premid'
+import Presence, { type PresenceData } from 'premid'
 
 const presence = new Presence({
   clientId: '1449144774949867661',
-} )
+})
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
