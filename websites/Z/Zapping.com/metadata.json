@@ -7,9 +7,9 @@
   },
   "service": "Zapping.com",
   "description": {
+    "en": "Zapping is internet television. Wireless, wherever and however you want.",
     "es": "Zapping es televisión por internet. Sin cables, donde y como quieras.",
-    "pt-br": "Veja televisão sem aparelhos e sem complicação!",
-    "en": "Zapping is internet television. Wireless, wherever and however you want."
+    "pt-br": "Veja televisão sem aparelhos e sem complicação!"
   },
   "url": [
     "www.zapping.com",
