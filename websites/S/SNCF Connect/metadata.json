@@ -11,7 +11,7 @@
     "fr": "Réservez vos Billets de Train au meilleur prix sur SNCF Connect ! Retrouvez aussi notre offre de cartes de réduction, abonnements TER, bus et covoiturage..."
   },
   "url": "www.sncf-connect.com",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sncf-connect[.]com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sncf-connect[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/ubNQ6eP.png",
   "thumbnail": "https://i.imgur.com/KuyFKpb.png",
