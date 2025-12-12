@@ -12,7 +12,7 @@
     "fr": "Facilitez vos déplacements au sein de Bordeaux Métropole. Retrouvez vos prochains passages, itinéraires, infos tarifs, disponibilités Le Vélo et parcs-relais..."
   },
   "url": "www.infotbm.com",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*infotbm[.]com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*infotbm[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/V58nPdz.png",
   "thumbnail": "https://i.imgur.com/z2n9Cq4.png",
