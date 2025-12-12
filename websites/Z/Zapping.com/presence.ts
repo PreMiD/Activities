@@ -1,4 +1,4 @@
-import Presence, { type PresenceData } from 'premid'
+import * as Premid from 'premid'
 
 const presence = new Presence({
   clientId: '1449144774949867661',
