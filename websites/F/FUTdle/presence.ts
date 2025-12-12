@@ -7,7 +7,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://futdle.tr/logo.png',
   }
 
-  const path = window.location.pathname
+  const path = document.location.pathname
 
   if (path === '/' || path === '') {
     presenceData.details = 'Ana sayfada'
@@ -27,8 +27,5 @@ presence.on('UpdateData', async () => {
 
   presenceData.startTimestamp = Date.now()
 
-  if (presenceData.details)
-    presence.setActivity(presenceData)
-  else
-    presence.setActivity()
+  presence.setActivity(presenceData)
 })
