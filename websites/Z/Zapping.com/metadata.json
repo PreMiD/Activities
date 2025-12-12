@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "name": "emiliovision",
+    "id": "751877169885741096"
+  },
+  "service": "Zapping.com",
+  "description": {
+    "es": "Zapping es televisión por internet. Sin cables, donde y como quieras.",
+    "pt-br": "Veja televisão sem aparelhos e sem complicação!",
+    "en": "Zapping is internet television. Wireless, wherever and however you want."
+  },
+  "url": [
+    "www.zapping.com",
+    "app.zapping.com"
+  ],
+  "regExp": "(.*?)[.]?zapping.com",
+  "version": "1.0.0",
+  "logo": "https://us-east-1.tixte.net/uploads/memilio-cdn.tixte.co/zapping.png",
+  "thumbnail": "https://us-east-1.tixte.net/uploads/memilio-cdn.tixte.co/thumbzapping.png",
+  "color": "#ef4270",
+  "category": "videos",
+  "tags": [
+    "zapping",
+    "media",
+    "television",
+    "video"
+  ]
+}
