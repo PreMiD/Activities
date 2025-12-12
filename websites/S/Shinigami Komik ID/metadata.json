@@ -20,7 +20,7 @@
     "shinigami.asia",
     "www.shinigami.asia"
   ],
-  "regExp": "(\\d+\\.)?shinigami\\.(id|bio|asia)",
+  "regExp": "https?:[/][/](\\d+\\.)?shinigami\\.(id|bio|asia)[/]",
   "version": "1.0.0",
   "logo": "https://i.postimg.cc/4ySd7DXp/unnamed.jpg",
   "thumbnail": "https://i.postimg.cc/J4zZy85z/Screenshot-2025-11-28-125724.png",
