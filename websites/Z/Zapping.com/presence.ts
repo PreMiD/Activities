@@ -1,8 +1,8 @@
 import { Presence, PresenceData } from 'premid'
 
 const presence = new Presence({
-  clientId: '1449144774949867661'
-})
+  clientId: '1449144774949867661',
+} )
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -23,7 +23,7 @@ const strings = {
     account: 'Mi cuenta',
     devices: 'Dispositivos',
     channels: 'Canales',
-    browsingZapping: 'Navegando por Zapping'
+    browsingZapping: 'Navegando por Zapping',
   },
   en: {
     watching: 'Watching Zapping',
@@ -38,7 +38,7 @@ const strings = {
     account: 'My account',
     devices: 'Devices',
     channels: 'Channels',
-    browsingZapping: 'Browsing Zapping'
+    browsingZapping: 'Browsing Zapping',
   },
   pt: {
     watching: 'Assistindo Zapping',
@@ -53,13 +53,13 @@ const strings = {
     account: 'Minha conta',
     devices: 'Dispositivos',
     channels: 'Canais',
-    browsingZapping: 'Navegando no Zapping'
-  }
+    browsingZapping: 'Navegando no Zapping',
+  },
 }
 
 // Selección del idioma
-const lang =
-  navigator.language.startsWith('pt')
+const lang
+  = navigator.language.startsWith('pt')
     ? 'pt'
     : navigator.language.startsWith('en')
       ? 'en'
@@ -70,7 +70,7 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     largeImageKey:
-      'https://us-east-1.tixte.net/uploads/memilio-cdn.tixte.co/zapping.png'
+      'https://us-east-1.tixte.net/uploads/memilio-cdn.tixte.co/zapping.png',
   }
 
   const { pathname } = document.location
@@ -89,7 +89,8 @@ presence.on('UpdateData', async () => {
       presenceData.details = t.watching
       presenceData.state = canal
       presenceData.startTimestamp = browsingTimestamp
-    } else {
+    }
+    else {
       presenceData.details = t.inZapping
       presenceData.state = t.browsing
     }
