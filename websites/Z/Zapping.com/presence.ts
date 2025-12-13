@@ -1,8 +1,8 @@
-import * as Premid from 'premid' // Usamos wildcard para forzar el acceso a los miembros
+import Premid, { Presence, PresenceData } from 'premid'
 
 const presence = new Premid.Presence({ // Usamos Premid.Presence
   clientId: '1449144774949867661',
-} )
+})
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
