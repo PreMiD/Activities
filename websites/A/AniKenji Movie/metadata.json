@@ -14,7 +14,6 @@
 
   "url": ["phamhung.xyz", "anikenji.live"],
   "regExp": "(?:phamhung\\.(?:xyz|net)|anikenji\\.live)",
-  "iFrameRegExp": "streamc\\.xyz",
   "version": "1.0.7",
 
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniKenji%20Movie/assets/logo.png",
@@ -25,6 +24,7 @@
     "anime"
   ],
   "iframe": true,
+  "iFrameRegExp": "streamc\\.xyz",
   "settings": [
     {
       "id": "showButtons",
