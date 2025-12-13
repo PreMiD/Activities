@@ -1,14 +1,13 @@
-import { Presence } from 'premid'
-import type { PresenceData } from 'premid'
+import * as Premid from 'premid' // Usamos wildcard para forzar el acceso a los miembros
 
-const presence = new Presence({
+const presence = new Premid.Presence({ // Usamos Premid.Presence
   clientId: '1449144774949867661',
-})
+} )
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 // ------------------------------
-//       DICCIONARIO
+//        DICCIONARIO
 // ------------------------------
 const strings = {
   es: {
@@ -69,7 +68,7 @@ const lang
 presence.on('UpdateData', async () => {
   const t = strings[lang]
 
-  const presenceData: PresenceData = {
+  const presenceData: Premid.PresenceData = { // Usamos Premid.PresenceData
     largeImageKey:
       'https://us-east-1.tixte.net/uploads/memilio-cdn.tixte.co/zapping.png',
   }
@@ -91,7 +90,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = canal
       presenceData.startTimestamp = browsingTimestamp
     }
-    else {
+    else { // Corregido: Estilo de llaves
       presenceData.details = t.inZapping
       presenceData.state = t.browsing
     }
