@@ -67,7 +67,7 @@ presence.on('UpdateData', async () => {
   const t = strings[lang]
 
   // CORREGIDO: Usamos el tipo anidado para resolver los errores de PMD y ESLint de importación de tipos.
-  const presenceData: Presence['PresenceData'] = {
+  const presenceData: PresenceData = {
     largeImageKey:
       'https://us-east-1.tixte.net/uploads/memilio-cdn.tixte.co/zapping.png',
   }
