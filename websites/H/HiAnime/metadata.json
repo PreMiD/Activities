@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "568021861871517716",
+    "name": "itsyashbtw"
+  },
+  "service": "HiAnime",
+  "description": {
+    "en": "HiAnime is a free anime streaming website with a large collection of anime series and movies. It offers high-quality videos with multiple server options and subtitles in various languages."
+  },
+  "url": [
+    "hianime.tv",
+    "hianime.is",
+    "hianime.to",
+    "hianime.nz",
+    "hianime.bz",
+    "hianime.pe",
+    "hianime.cx",
+    "hianime.do"
+  ],
+  "version": "1.0.0",
+  "logo": "https://cdn2.steamgriddb.com/icon_thumb/a0e7be097b3b5eb71d106dd32f2312ac.png",
+  "thumbnail": "https://cdn2.steamgriddb.com/icon_thumb/a0e7be097b3b5eb71d106dd32f2312ac.png",
+  "color": "#201F31",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "videos"
+  ]
+}
