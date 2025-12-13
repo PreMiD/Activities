@@ -1,7 +1,68 @@
 const iframe = new iFrame()
 iframe.on('UpdateData', async () => {
   let video: HTMLVideoElement | null = null
-  // Tìm kiếm thẻ video theo nhiều selector khác nhau
+  let jwPlayerData: { currentTime: number; duration: number; paused: boolean } | null = null
+
+  // === KIỂM TRA JW PLAYER 8.38.2 API ===
+  // JW Player cung cấp API toàn cục jwplayer()
+  try {
+    // @ts-ignore - jwplayer API từ bên thứ 3
+    if (typeof jwplayer !== 'undefined') {
+      // Tìm tất cả các instance của JW Player
+      const jwInstances = []
+      
+      // Thử lấy instance mặc định
+      try {
+        // @ts-ignore
+        const defaultInstance = jwplayer()
+        if (defaultInstance && typeof defaultInstance.getState === 'function') {
+          jwInstances.push(defaultInstance)
+        }
+      } catch (e) {
+        // Không có instance mặc định
+      }
+
+      // Thử tìm instance theo ID phổ biến
+      const commonIds = ['player', 'jwplayer', 'video-player', 'myPlayer', 'playerID']
+      for (const id of commonIds) {
+        try {
+          // @ts-ignore
+          const instance = jwplayer(id)
+          if (instance && typeof instance.getState === 'function') {
+            jwInstances.push(instance)
+            break
+          }
+        } catch (e) {
+          // ID này không tồn tại
+        }
+      }
+
+      // Nếu tìm thấy instance, lấy dữ liệu
+      if (jwInstances.length > 0) {
+        const player = jwInstances[0]
+        try {
+          const state = player.getState()
+          const position = player.getPosition() // Thời gian hiện tại (giây)
+          const duration = player.getDuration() // Tổng thời gian (giây)
+          const isPaused = state === 'paused' || state === 'idle' || state === 'buffering'
+          
+          if (!Number.isNaN(duration) && duration > 0) {
+            jwPlayerData = {
+              currentTime: position || 0,
+              duration: duration,
+              paused: isPaused,
+            }
+          }
+        } catch (e) {
+          console.error('Lỗi khi lấy dữ liệu JW Player:', e)
+        }
+      }
+    }
+  } catch (e) {
+    // jwplayer không khả dụng
+  }
+
+  // === TÌM KIẾM VIDEO ELEMENT ===
   // Danh sách selector cho các player phổ biến
   const videoSelectors = [
     '.VideoPlayer',
@@ -9,7 +70,6 @@ iframe.on('UpdateData', async () => {
     '.Video embed',
     '.Video video',
     '.Video object',
-    '.Video iframe',
     '.Video',
     '#dogevideo_html5_api',
     '#video-player',
@@ -24,10 +84,10 @@ iframe.on('UpdateData', async () => {
     '#mgvideo_html5_api',
     '#player > div.jw-media.jw-reset > video',
     '#vstr > div.jw-wrapper.jw-reset > div.jw-media.jw-reset > video',
-    'player-style-2',
-    'streaming-sv',
-    'embed',
-    'm3u8',
+    '.player-style-2',
+    '.streaming-sv',
+    '.embed',
+    '.m3u8',
     '.jw-video', // JW Player general class
     '#jwplayer > div.jw-wrapper > div.jw-media > video',
     '.jw-video.jw-reset',
@@ -42,7 +102,6 @@ iframe.on('UpdateData', async () => {
     'iframe.vimeo iframe video',
 
     // Youtube Stream
-
     '.video-stream', // Youtube Embed
 
     // Selector Vimeo bổ sung
@@ -94,6 +153,26 @@ iframe.on('UpdateData', async () => {
       video = allVideos[0] as HTMLVideoElement
     }
   }
+
+  // === ƯU TIÊN JW PLAYER DATA NẾU CÓ ===
+  if (jwPlayerData && jwPlayerData.duration > 0) {
+    try {
+      iframe.send({
+        iframeVideo: {
+          iFrameVideo: true,
+          currTime: jwPlayerData.currentTime,
+          dur: jwPlayerData.duration,
+          paused: jwPlayerData.paused,
+        },
+      })
+      return // Đã gửi data từ JW Player, không cần xử lý video element
+    }
+    catch (e) {
+      console.error('Lỗi khi gửi dữ liệu JW Player iframe:', e)
+    }
+  }
+
+  // === XỬ LÝ VIDEO ELEMENT ===
   // Kiểm tra nếu tìm thấy video và có thể truy cập thông tin của nó
   if (video && !Number.isNaN(video.duration)) {
     try {
@@ -151,7 +230,7 @@ iframe.on('UpdateData', async () => {
         })
       })
       video.addEventListener('timeupdate', () => {
-        // Chỉ gửi cập nhật mỗi giây để tránh quá nhiều tin nhắn
+        // Chỉ gửi cập nhật mỗi 5 giây để tránh quá nhiều tin nhắn
         if (Math.floor(video!.currentTime) % 5 === 0) {
           iframe.send({
             iframeVideo: {

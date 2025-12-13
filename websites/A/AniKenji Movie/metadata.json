@@ -14,7 +14,8 @@
 
   "url": ["phamhung.xyz", "anikenji.live"],
   "regExp": "(?:phamhung\\.(?:xyz|net)|anikenji\\.live)",
-  "version": "1.0.6",
+  "iFrameRegExp": "streamc\\.xyz",
+  "version": "1.0.7",
 
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniKenji%20Movie/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniKenji%20Movie/assets/thumbnail.png",
