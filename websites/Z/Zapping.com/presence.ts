@@ -1,6 +1,6 @@
-import Premid, { Presence, PresenceData } from 'premid'
+import Presence from 'premid' // CORREGIDO: Importación por defecto (la más probable para librerías difíciles)
 
-const presence = new Premid.Presence({ // Usamos Premid.Presence
+const presence = new Presence({
   clientId: '1449144774949867661',
 })
 
@@ -68,7 +68,8 @@ const lang
 presence.on('UpdateData', async () => {
   const t = strings[lang]
 
-  const presenceData: Premid.PresenceData = { // Usamos Premid.PresenceData
+  // CORREGIDO: Usamos el tipo anidado para resolver los errores de PMD y ESLint de importación de tipos.
+  const presenceData: Presence['PresenceData'] = { 
     largeImageKey:
       'https://us-east-1.tixte.net/uploads/memilio-cdn.tixte.co/zapping.png',
   }
@@ -90,7 +91,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = canal
       presenceData.startTimestamp = browsingTimestamp
     }
-    else { // Corregido: Estilo de llaves
+    else { // CORREGIDO: Estilo de llaves
       presenceData.details = t.inZapping
       presenceData.state = t.browsing
     }
