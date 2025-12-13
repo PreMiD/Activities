@@ -9,6 +9,10 @@
     {
       "name": "Spinne",
       "id": "363790841636192259"
+    },
+    {
+      "name": "xDoritos",
+      "id": "432215088686956565"
     }
   ],
   "service": "Prime Video",
@@ -21,7 +25,7 @@
   },
   "url": "www.primevideo.com",
   "regExp": "(([a-z0-9-]+[.])*amazon([.][a-z]+)+[/]((-[/])?(([a-z0-9]+)[/])?)?Prime-Video|Prime-Instant-Video|Amazon-Video|gp[/]video)|([a-z0-9-]+[.])*primevideo([.][a-z]+)+([/]?)?",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/thumbnail.jpg",
   "color": "#FFFFFF",

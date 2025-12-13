@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "786163564205047839",
+    "name": "AdityaLF"
+  },
+  "service": "Shopee",
+  "description": {
+    "en": "Shopee is the leading e-commerce platform in Southeast Asia. Launched in 2015, it provides customers with an easy, secure and fast online shopping experience."
+  },
+  "url": [
+    "shopee.co.id",
+    "shopee.com.my",
+    "shopee.sg"
+  ],
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Shopee/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Shopee/assets/thumbnail.jpeg",
+  "color": "#EA501F",
+  "category": "other",
+  "tags": [
+    "ecommerce",
+    "marketplace",
+    "shopping"
+  ]
+}

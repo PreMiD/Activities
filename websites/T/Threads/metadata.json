@@ -5,13 +5,19 @@
     "id": "241929388403195914",
     "name": "Vasilis"
   },
+  "contributors": [
+    {
+      "id": "278821688894947328",
+      "name": "momonnie"
+    }
+  ],
   "service": "Threads",
   "description": {
     "el": "Πείτε περισσότερα με το Threads — την εφαρμογή συνομιλίας με κείμενο του Instagram, όπου οι κοινότητες συγκεντρώνονται για να συζητήσουν τα πάντα, από τα θέματα που σας ενδιαφέρουν σήμερα μέχρι αυτά που θα είναι μοντέρνα αύριο.",
     "en": "Say more with Threads — Instagram’s text-based conversation app, where communities come together to discuss everything from the topics you care about today to what’ll be trending tomorrow."
   },
-  "url": "threads.net",
-  "version": "1.0.6",
+  "url": "www.threads.com",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Threads/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Threads/assets/thumbnail.jpeg",
   "color": "#000",
