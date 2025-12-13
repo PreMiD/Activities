@@ -1,5 +1,3 @@
-import Presence from 'premid' // CORREGIDO: Importación por defecto (la más probable para librerías difíciles)
-
 const presence = new Presence({
   clientId: '1449144774949867661',
 })
@@ -69,7 +67,7 @@ presence.on('UpdateData', async () => {
   const t = strings[lang]
 
   // CORREGIDO: Usamos el tipo anidado para resolver los errores de PMD y ESLint de importación de tipos.
-  const presenceData: Presence['PresenceData'] = { 
+  const presenceData: Presence['PresenceData'] = {
     largeImageKey:
       'https://us-east-1.tixte.net/uploads/memilio-cdn.tixte.co/zapping.png',
   }
