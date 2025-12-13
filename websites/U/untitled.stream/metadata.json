@@ -3,7 +3,7 @@
   "apiVersion": 1,
   "author": {
     "id": "1348527661730889791",
-    "name": "jwih"
+    "name": "___jwih"
   },
   "contributors": [
     {
@@ -11,14 +11,14 @@
       "name": "mzrcos"
     }
   ],
-  "service": "[untitled]",
+  "service": "untitled.stream",
   "description": {
     "en": "A sacred place for your work-in-progress music"
   },
   "url": "untitled.stream",
   "version": "1.0.1",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%5Buntitled%5D/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%5Buntitled%5D/assets/thumbnail.png",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/U/untitled.stream/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/untitled.stream/assets/thumbnail.png",
   "color": "#B9ACE3",
   "category": "music",
   "tags": [
