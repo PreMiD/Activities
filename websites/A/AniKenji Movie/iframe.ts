@@ -1,24 +1,25 @@
 const iframe = new iFrame()
 iframe.on('UpdateData', async () => {
   let video: HTMLVideoElement | null = null
-  let jwPlayerData: { currentTime: number; duration: number; paused: boolean } | null = null
+  let jwPlayerData: { currentTime: number, duration: number, paused: boolean } | null = null
 
   // === KIỂM TRA JW PLAYER 8.38.2 API ===
   // JW Player cung cấp API toàn cục jwplayer()
   try {
-    // @ts-ignore - jwplayer API từ bên thứ 3
+    // @ts-expect-error - jwplayer API từ bên thứ 3
     if (typeof jwplayer !== 'undefined') {
       // Tìm tất cả các instance của JW Player
       const jwInstances = []
       
       // Thử lấy instance mặc định
       try {
-        // @ts-ignore
+        // @ts-expect-error
         const defaultInstance = jwplayer()
         if (defaultInstance && typeof defaultInstance.getState === 'function') {
           jwInstances.push(defaultInstance)
         }
-      } catch (e) {
+      }
+      catch {
         // Không có instance mặc định
       }
 
@@ -26,13 +27,14 @@ iframe.on('UpdateData', async () => {
       const commonIds = ['player', 'jwplayer', 'video-player', 'myPlayer', 'playerID']
       for (const id of commonIds) {
         try {
-          // @ts-ignore
+          // @ts-expect-error
           const instance = jwplayer(id)
           if (instance && typeof instance.getState === 'function') {
             jwInstances.push(instance)
             break
           }
-        } catch (e) {
+        }
+        catch {
           // ID này không tồn tại
         }
       }
@@ -49,16 +51,18 @@ iframe.on('UpdateData', async () => {
           if (!Number.isNaN(duration) && duration > 0) {
             jwPlayerData = {
               currentTime: position || 0,
-              duration: duration,
+              duration,
               paused: isPaused,
             }
           }
-        } catch (e) {
-          console.error('Lỗi khi lấy dữ liệu JW Player:', e)
+        }
+        catch (error) {
+          console.error('Lỗi khi lấy dữ liệu JW Player:', error)
         }
       }
     }
-  } catch (e) {
+  }
+  catch {
     // jwplayer không khả dụng
   }
 
