@@ -61,7 +61,8 @@ async function updatePresence(): Promise<void> {
     const { pathname } = document.location
     const splitPath = pathname.split('/')
 
-    const isHomePage = pathname === '/'
+    const isHomePage = pathname === '/watch'
+    const isProfilePage = pathname === '/profile'
     const isCategoryPage = pathname.includes('/the-loai')
     const isRegion = pathname.includes('/quoc-gia')
     const isDetailsPage = splitPath.length === 3 && splitPath[1] === 'phim' // /phim/ten-phim/tap-X
@@ -98,6 +99,9 @@ async function updatePresence(): Promise<void> {
 
     if (isHomePage) {
       presenceData.details = 'Đang xem trang chủ'
+    }
+    else if (isProfilePage) {
+      presenceData.details = 'Đang xem tài khoản'
     }
     else if (isCategoryPage) {
       presenceData.details = 'Đang xem danh mục'
