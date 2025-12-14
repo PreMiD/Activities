@@ -66,8 +66,8 @@ async function prepare(): Promise<PresenceData> {
   const pageTitle = wgPageName.replace(/_/g, ' ')
   veactionLast = searchParams.get('veaction')
 
-  presenceData.largeImageKey =
-    getComputedStyle(
+  presenceData.largeImageKey
+    = getComputedStyle(
       document.querySelector<HTMLAnchorElement>('.mw-wiki-logo')!,
     ).backgroundImage.match(/url\("(.+)"\)/)?.[1]
     ?? 'https://cdn.rcd.gg/PreMiD/websites/M/Minecraft%20Wiki/assets/logo.png'
@@ -142,7 +142,10 @@ async function prepare(): Promise<PresenceData> {
         presenceData.state = searchParams.get('wpDestFile')
         break
       case 'Contributions':
-        presenceData.details = t(strings.viewContributionsOf, 'Viewing contributions of:')
+        presenceData.details = t(
+          strings.viewContributionsOf,
+          'Viewing contributions of:',
+        )
         presenceData.state = wgRelevantUserName
         break
       default:
@@ -151,7 +154,8 @@ async function prepare(): Promise<PresenceData> {
     }
   }
   else if (wgNamespaceNumber) {
-    presenceData.details = `${t(strings.readingAbout, 'Reading about')} ${pageTitle.split(':')[0]}`
+    presenceData.details
+      = `${t(strings.readingAbout, 'Reading about')} ${pageTitle.split(':')[0]}`
     presenceData.state = wgTitle
     presenceData.buttons = [
       { label: t(strings.buttonViewPage, 'View page'), url: href },
