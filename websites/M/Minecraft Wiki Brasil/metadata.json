@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1109601642443178064",
+    "name": "Dieguinho Fox"
+  },
+  "service": "Minecraft Wiki Brasil",
+  "description": {
+    "de": "Willkommen im umfassendsten Wiki über das Minecraft-Franchise, das seit 2009 von der Community verwaltet wird. Jeder kann mitwirken!",
+    "en": "Welcome to the most comprehensive wiki about the Minecraft franchise, proudly community-run since 2009. Anyone can contribute!",
+    "es": "La comunidad hispana más grande que recopila información acerca de la franquicia de Minecraft, con el contenido más actualizado en español desde el 2011. ¡Cualquiera puede contribuir!",
+    "fr": "Bienvenue sur le wiki le plus complet sur la franchise Minecraft ! Nous sommes un site web géré par la communauté, accessible et éditable par tous.",
+    "it": "Benvenuti nel wiki in italiano più completo sul franchise di Minecraft! Questo sito è gestito dalla comunità e tutti possono contribuire!.",
+    "ja": "Minecraft Wiki 日本語版にようこそ！この Wiki はコミュニティによって運営されている、Minecraft シリーズ に関するさまざまな情報を掲載したウェブサイトです。",
+    "ko": "가장 체계적인 Minecraft 프랜차이즈 위키에 오신 것을 환영합니다! 한국어 기준 2011년부터 운영되고 있습니다. 누구나 기여할 수 있습니다!",
+    "lzh": "歲在重光赤奮若，律中夷則，大典用世。大典集天下礦藝之法，衆庶皆可獻力！",
+    "nl": "Welkom op de Minecraft Wiki. Deze wiki is publiek toegankelijk en bewerkbaar voor informatie gerelateerd aan Minecraft.",
+    "pt": "Bem-vindo(a) à wiki mais completa sobre a franquia do Minecraft, gerida pela comunidade desde 2009. Qualquer um pode contribuir!",
+    "pt-br": "Bem-vindo(a) à wiki mais completa sobre a franquia do Minecraft, gerenciada pela comunidade desde 2009. Qualquer um pode contribuir!",
+    "ru": "Добро пожаловать на самую обширную вики о франшизе Minecraft, доступную на русском языке с 2010 года. Внести свой вклад может каждый!",
+    "th": "ยินดีต้อนรับเข้าสู่วิกิที่มีเนื้อหาครอบคลุมที่สุดเกี่ยวกับแฟรนไชส์ Minecraft โดยวิกิภาษาไทยแห่งนี้ขับเคลื่อนโดยชุมชนมาตั้งแต่ปี 2017 ซึ่งทุกคนสามารถมีส่วนร่วมได้!",
+    "uk": "Ласкаво просимо до найповнішої вікі про франшизу Minecraft, яка з гордістю управляється спільнотою з 25 квітня 2018 року. Будь-хто може зробити свій внесок!",
+    "zh": "欢迎来到这个完全公开、可自由编辑的Wiki，中文Minecraft Wiki。这里致力于收集一切和Minecraft有关的信息。任何人都可以为Wiki作出贡献！"
+  },
+  "url": "pt.minecraft.wiki",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/G7MaLQm.png",
+  "thumbnail": "https://i.imgur.com/gJsL30D.png",
+  "color": "#3776A9",
+  "category": "games",
+  "tags": [
+    "minecraft",
+    "community",
+    "encyclopedia"
+  ],
+  "settings": [
+    {
+      "multiLanguage": true,
+      "id": "lang"
+    }
+  ]
+}
