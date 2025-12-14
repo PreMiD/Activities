@@ -132,6 +132,18 @@ presence.on('UpdateData', async () => {
           presenceData.state = user_searchValue;
         }
       }
+      else if (pathname.startsWith('/series_search/')) {
+        const series_searchValue = decodeURIComponent(pathname.slice('/series_search/'.length));
+
+        presenceData.details = strings.searchSomething;
+        presenceData.smallImageKey = Assets.Search;
+        presenceData.smallImageText = strings.search;
+
+        if (series_searchValue.trim()) {
+          presenceData.details = strings.searchFor;
+          presenceData.state = series_searchValue;
+        }
+      }
       break
     }
 
