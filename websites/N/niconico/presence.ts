@@ -10,6 +10,9 @@ async function getStrings() {
     play: 'general.playing',
     pause: 'general.paused',
     live: 'general.live',
+    searchFor: 'general.searchFor',
+    search: 'general.search',
+    searchSomething: 'general.searchSomething',
     buttonWatchVideo: 'general.buttonWatchVideo',
     buttonWatchStream: 'general.buttonWatchStream',
   },
@@ -80,6 +83,20 @@ presence.on('UpdateData', async () => {
             url: href,
           },
         ]
+      }
+      else if (pathname.startsWith('/search/')) {
+        const searchingElement = document.querySelector(
+          '.message:nth-of-type(1) p:nth-of-type(1) span:nth-of-type(1)'
+        );
+
+        presenceData.details = strings.searchSomething;
+        presenceData.smallImageKey = Assets.Search;
+        presenceData.smallImageText = strings.search;
+        
+        if (searchingElement?.textContent) {
+          presenceData.details = strings.searchFor;
+          presenceData.state = searchingElement!.textContent;
+        }
       }
       break
     }
