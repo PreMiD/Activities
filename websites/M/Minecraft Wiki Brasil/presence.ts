@@ -5,12 +5,13 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 let veactionLast: string | null = null
 
+function t(value: string | undefined, fallback: string): string {
+  return value && !value.includes(':') ? value : fallback
+}
+
 function hasPermissions(): boolean {
   return !document.querySelector('.permissions-errors')
 }
-
-const t = (value: string | undefined, fallback: string) =>
-  value && !value.includes(':') ? value : fallback
 
 async function prepare(): Promise<PresenceData> {
   const presenceData: PresenceData = {
@@ -141,10 +142,7 @@ async function prepare(): Promise<PresenceData> {
         presenceData.state = searchParams.get('wpDestFile')
         break
       case 'Contributions':
-        presenceData.details = t(
-          strings.viewContributionsOf,
-          'Viewing contributions of:',
-        )
+        presenceData.details = t(strings.viewContributionsOf, 'Viewing contributions of:')
         presenceData.state = wgRelevantUserName
         break
       default:
