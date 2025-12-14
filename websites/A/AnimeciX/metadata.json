@@ -19,7 +19,8 @@
   "url": [
     "animecix.net",
     "anm.cx",
-    "animecix.tv"
+    "animecix.tv",
+    "ecchicix.com"
   ],
   "regExp": "^https?[:][/][/](animecix[.]net|anm[.]cx|animecix[.]tv)[/]",
   "version": "1.1.0",
