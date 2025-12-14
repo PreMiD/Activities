@@ -96,6 +96,18 @@ presence.on('UpdateData', async () => {
           presenceData.state = searchValue;
         }
       }
+      else if (pathname.startsWith('/tag/')) {
+        const tagValue = decodeURIComponent(pathname.slice('/tag/'.length));
+
+        presenceData.details = strings.searchSomething;
+        presenceData.smallImageKey = Assets.Search;
+        presenceData.smallImageText = strings.search;
+
+        if (tagValue.trim()) {
+          presenceData.details = strings.searchFor;
+          presenceData.state = tagValue;
+        }
+      }
       break
     }
 
