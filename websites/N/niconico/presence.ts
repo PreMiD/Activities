@@ -120,6 +120,18 @@ presence.on('UpdateData', async () => {
           presenceData.state = mylistValue;
         }
       }
+      else if (pathname.startsWith('/user_search/')) {
+        const user_searchValue = decodeURIComponent(pathname.slice('/user_search/'.length));
+
+        presenceData.details = strings.searchSomething;
+        presenceData.smallImageKey = Assets.Search;
+        presenceData.smallImageText = strings.search;
+
+        if (user_searchValue.trim()) {
+          presenceData.details = strings.searchFor;
+          presenceData.state = user_searchValue;
+        }
+      }
       break
     }
 
