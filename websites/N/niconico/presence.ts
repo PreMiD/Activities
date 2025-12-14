@@ -85,17 +85,15 @@ presence.on('UpdateData', async () => {
         ]
       }
       else if (pathname.startsWith('/search/')) {
-        const searchingElement = document.querySelector(
-          '.message:nth-of-type(1) p:nth-of-type(1) span:nth-of-type(1)'
-        );
+        const searchValue = decodeURIComponent(pathname.slice('/search/'.length));
 
         presenceData.details = strings.searchSomething;
         presenceData.smallImageKey = Assets.Search;
         presenceData.smallImageText = strings.search;
         
-        if (searchingElement?.textContent) {
+        if (searchValue.trim()) {
           presenceData.details = strings.searchFor;
-          presenceData.state = searchingElement!.textContent;
+          presenceData.state = searchValue;
         }
       }
       break
