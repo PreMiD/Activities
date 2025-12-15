@@ -7,7 +7,7 @@ const staticPages: { [name: string]: string } = {
   'planning': 'Regarde le planning des sorties',
   'aide': 'Lit la page d\'aide',
   'profil': 'Visionne son profil',
-  'catalogue': 'Parcourir le catalogue',
+  'catalogue': 'Parcourt le catalogue',
 }
 
 enum ActivityAssets {
@@ -54,13 +54,11 @@ presence.on('UpdateData', async () => {
       'h2.border-slate-500',
     )?.textContent
     presenceData.details = pageTitle === 'Anime'
-      ? 'Regarde la page de l\'anime'
-      : 'Regarde la page du manga'
-    presenceData.state = document
-      .querySelector('#titreOeuvre')
+      ? 'Regarde la page de '  + document.querySelector('#titreOeuvre')
       ?.textContent
       ?.trim()
-    presenceData.buttons = [{ label: 'Voir la Page', url: href }]
+      : 'Regarde la page du manga'
+    presenceData.buttons = [{ label: 'Voir la page', url: href }]
     presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
       ?.content ?? ActivityAssets.Logo
     if (privacyMode) {
@@ -81,11 +79,11 @@ presence.on('UpdateData', async () => {
       video.currentTime,
       video.duration,
     )
-    presenceData.state = `${season ? `${season} - ` : ''}${
+    presenceData.largeImageText = `${season ? `${season}, ` : ''}${
       selectEps?.options[selectEps.selectedIndex]?.value ?? ''
     }`
 
-    presenceData.buttons = [{ label: 'Voir l\'Anime', url: href }]
+    presenceData.buttons = [{ label: 'Regarder', url: href }, { label: 'À propos de l\'anime', url: `${document.location.origin}/catalogue/${pathArr[2]}` }]
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = selectLecteur?.options[selectLecteur.selectedIndex]?.value ?? ''
     presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
@@ -101,6 +99,7 @@ presence.on('UpdateData', async () => {
     if (privacyMode) {
       delete presenceData.state
       delete presenceData.smallImageKey
+      delete presenceData.largeImageText
       presenceData.details = 'Regarde un anime'
     }
   }
@@ -113,7 +112,7 @@ presence.on('UpdateData', async () => {
     const selectLecteur = document.querySelector<HTMLSelectElement>('#selectLecteurs')
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = selectLecteur?.options[selectLecteur.selectedIndex]?.value ?? ''
-    presenceData.buttons = [{ label: 'Voir le Scan', url: href }]
+    presenceData.buttons = [{ label: 'Lire le scan', url: href }]
     presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
       ?.content ?? ActivityAssets.Logo
     if (privacyMode) {
@@ -123,7 +122,7 @@ presence.on('UpdateData', async () => {
     }
   }
   else {
-    presenceData.details = !privacyMode ? 'Page inconnue' : 'Navigue...'
+    presenceData.details = !privacyMode ? 'Page inconnue' : 'Navigue..'
   }
 
   if (!showButtons || privacyMode)
