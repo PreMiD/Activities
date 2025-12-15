@@ -72,7 +72,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = `Titles starting with ${pathname.substring(9) === 'other'
         ? 'Other characters'
         : `${pathname.substring(9)}`
-        }`
+      }`
     }
     presenceData.smallImageKey = Assets.Search
   }
@@ -107,14 +107,13 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (pathname.startsWith('/watch')) {
-
     let title = document.querySelector<HTMLLIElement>(
       'li.breadcrumb-item.active',
     )
 
     if (!title) {
       title = document.querySelector<HTMLHeadingElement>(
-        'h1.title.d-title, h1.d-title, h2.film-name, h1.film-name'
+        'h1.title.d-title, h1.d-title, h2.film-name, h1.film-name',
       ) as any
     }
 
@@ -125,7 +124,8 @@ presence.on('UpdateData', async () => {
       if (epMatch && epMatch[1]) {
         episode = epMatch[1]
       }
-    } else {
+    }
+    else {
       const hashMatch = window.location.hash.match(/#ep=(\d+)/)
       if (hashMatch) {
         episode = hashMatch[1] ?? null
@@ -143,7 +143,8 @@ presence.on('UpdateData', async () => {
       const epElement = document.querySelector('.episode-number, .ep-number, .current-episode')
       if (epElement) {
         const epText = epElement.textContent?.match(/\d+/)
-        if (epText) episode = epText[0]
+        if (epText)
+          episode = epText[0]
       }
     }
 
