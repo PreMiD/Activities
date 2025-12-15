@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "You",
+    "id": "YurkL"
+  },
+  "contributors": [],
+  "service": "nnn.ed.nico",
+  "description": {
+    "en": "ZEN Study - Online learning platform by Kadokawa Group with courses on programming, creative, and exam preparation",
+    "ja": "ZEN Study - カドカワグループのオンライン学習プラットフォーム"
+  },
+  "url": [
+    "nnn.ed.nico",
+    "www.nnn.ed.nico"
+  ],
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/8g7M0MY.png",
+  "thumbnail": "https://i.imgur.com/8g7M0MY.png",
+  "color": "#5E49E0",
+  "tags": [
+    "education",
+    "learning",
+    "programming",
+    "creative"
+  ],
+  "category": "educational",
+  "settings": [
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
+}
