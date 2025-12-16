@@ -2,7 +2,7 @@ import type { GameCallbackParams } from '../../types.js'
 
 export const name = 'The Devils and the Details'
 export const logo
-= 'https://cdn.rcd.gg/PreMiD/websites/J/Jackbox/assets/29.png'
+  = 'https://cdn.rcd.gg/PreMiD/websites/J/Jackbox/assets/29.png'
 
 export function getPresenceData({
   playerState,

@@ -19,9 +19,9 @@ presence.on('UpdateData', async () => {
     'meta[property=\'og:url\']',
   )
     ? document
-      .querySelector<HTMLMetaElement>('meta[property=\'og:url\']')
-      ?.content
-      .slice(18)
+        .querySelector<HTMLMetaElement>('meta[property=\'og:url\']')
+        ?.content
+        .slice(18)
     : null
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Rumble,

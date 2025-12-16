@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Palskie",
@@ -11,7 +11,8 @@
     "vi": "Google's Coding Competitions (Code Jam, Hash Code, and Kick Start) cuốn hút, thử thách lập trình viên khắp thế giới. Hãy thử một, hoặc có thể cả ba."
   },
   "url": "codingcompetitions.withgoogle.com",
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/]codingcompetitions[.]withgoogle[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%27s%20Coding%20Competitions/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%27s%20Coding%20Competitions/assets/thumbnail.png",
   "color": "#ffffff",
