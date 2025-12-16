@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Snowy ✨",
@@ -12,7 +12,8 @@
     "tr": "Ralex, Türkçe bir Discord botudur. Tamamiyle ayarlanabilir ve yönetim paneli ile sunucunuz için harika bir eğlence ve moderasyon botu!"
   },
   "url": "bot.ralex.xyz",
-  "version": "1.0.25",
+  "regExp": "^https?[:][/][/]bot[.]ralex[.]xyz[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Ralex%20Bot/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Ralex%20Bot/assets/thumbnail.png",
   "color": "#FFBA00",

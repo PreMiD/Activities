@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Dominik",
@@ -11,7 +11,8 @@
     "nl": "Guilded is de nieuwe standaard in gamingteammanagement. Met Discord-bots, Overwatch-statistieken, Fortnite-scrims, CS: GO-teamzoeker, Destiny 2 LFG en meer."
   },
   "url": "www.guilded.gg",
-  "version": "1.3.25",
+  "regExp": "^https?[:][/][/](www[.])?guilded[.]gg[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Guilded.gg/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Guilded.gg/assets/thumbnail.jpg",
   "color": "#ffff00",

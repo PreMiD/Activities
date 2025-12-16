@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "TheDrop.",
@@ -32,8 +32,8 @@
     "status.crowdin.com",
     "blog.crowdin.com"
   ],
-  "regExp": "((support|store|status|blog|[a-z]{2})[.])?crowdin[.]com",
-  "version": "4.0.17",
+  "regExp": "^https?[:][/][/]((support|store|status|blog|[a-z]{2})[.])?crowdin[.]com",
+  "version": "4.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Crowdin/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Crowdin/assets/thumbnail.png",
   "color": "#2e3340",

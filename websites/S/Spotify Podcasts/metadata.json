@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -33,7 +33,8 @@
     "podcasters.spotify.com",
     "accounts.spotify.com"
   ],
-  "version": "2.4.7",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*spotify[.]com[/]",
+  "version": "2.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Spotify%20Podcasts/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Spotify%20Podcasts/assets/thumbnail.png",
   "color": "#1ed760",

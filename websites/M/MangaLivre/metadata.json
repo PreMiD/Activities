@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "1220554515149750273",
@@ -11,7 +11,8 @@
     "pt": "O Manga Livre é a melhor maneira de ler os mangás e webtoons mais populares de ação, romance, fantasia, isekai e outros!"
   },
   "url": "mangalivre.tv",
-  "version": "1.0.3",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*mangalivre[.]tv[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaLivre/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaLivre/assets/thumbnail.png",
   "color": "#262626",
