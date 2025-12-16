@@ -24,7 +24,7 @@
     "anime"
   ],
   "iframe": true,
-  "iFrameRegExp": "streamc\\.xyz",
+  "iFrameRegExp": ".+",
   "settings": [
     {
       "id": "showButtons",
