@@ -3,15 +3,12 @@ import { LogoBlackBg, LogoRemovedBg, LogoWhiteBg } from './constants.js'
 import { RythmDataGetter } from './dataGetter.js'
 import { updateSongTimesTamps } from './utils.js'
 
-const presence = new Presence({
-  clientId: '463151177836658699',
-})
-
+const presence = new Presence({ clientId: '463151177836658699' })
 const dataGetter = new RythmDataGetter()
 
-// ----------------------
-// Basic color types
-// ----------------------
+// ======================================================
+// 1) Core types (data flowing through the pipeline)
+// ======================================================
 
 type RGB = [number, number, number]
 type HSL = [number, number, number] // [h, s, l]
@@ -29,6 +26,11 @@ type ColorKey
     | 'green'
     | 'grey'
     | 'white'
+    | 'black'
+
+// ======================================================
+// 2) Background theme selection (metadata setting)
+// ======================================================
 
 type LogoBackground
   = | typeof LogoBlackBg
@@ -44,6 +46,10 @@ const logoBackgroundMap: Record<number, LogoBackground> = {
 function getLogoBackground(bgIdSetting: number): LogoBackground {
   return logoBackgroundMap[bgIdSetting] ?? LogoBlackBg
 }
+
+// ======================================================
+// 3) Theme-based manual palette (indexed list)
+// ======================================================
 
 interface ButtonBgLogo { playing: string, paused: string }
 
@@ -62,14 +68,41 @@ function getButtonBgLogo(background: LogoBackground): readonly ButtonBgLogo[] {
     { playing: background.LogoPlayingGreen, paused: background.LogoPausedGreen },
     { playing: background.LogoPlayingGrey, paused: background.LogoPausedGrey },
     { playing: background.LogoPlayingWhite, paused: background.LogoPausedWhite },
+    { playing: background.LogoPlayingBlack, paused: background.LogoPausedBlack },
   ] as const
 }
 
-// ----------------------
-// Conversions and helpers
-// ----------------------
+// ======================================================
+// 4) CSS color parsing (string -> RGB numbers)
+// ======================================================
 
-// Convert RGB (0-255) to HSL (h 0-360, s/l 0-100)
+function parseCssColorToRgb(color: string): RGB | null {
+  if (!color)
+    return null
+
+  const normalized = color.trim().toLowerCase()
+
+  const rgbMatch = normalized.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/)
+  if (rgbMatch) {
+    return [Number(rgbMatch[1]), Number(rgbMatch[2]), Number(rgbMatch[3])]
+  }
+
+  const hexMatch = normalized.match(/^#([0-9a-f]{6})$/)
+  if (!hexMatch)
+    return null
+
+  const hex = hexMatch[1]!
+  return [
+    Number.parseInt(hex.slice(0, 2), 16),
+    Number.parseInt(hex.slice(2, 4), 16),
+    Number.parseInt(hex.slice(4, 6), 16),
+  ]
+}
+
+// ======================================================
+// 5) RGB -> HSL conversion (for hue/sat/light rules)
+// ======================================================
+
 function rgbToHsl([r, g, b]: RGB): HSL {
   r /= 255
   g /= 255
@@ -83,7 +116,6 @@ function rgbToHsl([r, g, b]: RGB): HSL {
 
   if (max !== min) {
     const d = max - min
-
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
 
     switch (max) {
@@ -104,43 +136,31 @@ function rgbToHsl([r, g, b]: RGB): HSL {
   return [h, s * 100, l * 100]
 }
 
-// ----------------------
-// Color rule HSL
-// ----------------------
+// ======================================================
+// 6) HSL rules (RGB -> ColorKey)
+// ======================================================
 
 function getColorKeyFromHsl(rgb: RGB): ColorKey {
   const [h, s, l] = rgbToHsl(rgb)
 
-  // grey and white
-  if (s < 10) {
+  if (l < 12)
+    return 'black'
+  if (s < 10)
     return l > 80 ? 'white' : 'grey'
-  }
 
-  if (h >= 345 || h < 15) {
+  if (h >= 345 || h < 15)
     return 'red'
-  }
-
-  if (h >= 15 && h < 45) {
+  if (h >= 15 && h < 45)
     return 'orange'
-  }
-
-  if (h >= 45 && h < 75) {
+  if (h >= 45 && h < 75)
     return 'yellow'
-  }
-
-  if (h >= 75 && h < 165) {
+  if (h >= 75 && h < 165)
     return 'green'
-  }
-
-  if (h >= 165 && h < 210) {
+  if (h >= 165 && h < 210)
     return 'cyan'
-  }
-
-  if (h >= 210 && h < 260) {
+  if (h >= 210 && h < 260)
     return 'purple'
-  }
 
-  // 260–300:  (darkPurple / lilac / purple)
   if (h >= 260 && h < 300) {
     if (l < 40)
       return 'darkPurple'
@@ -149,51 +169,16 @@ function getColorKeyFromHsl(rgb: RGB): ColorKey {
     return 'purple'
   }
 
-  // 300–345: (pink / lightPink)
   if (h >= 300 && h < 345) {
-    if (l > 70)
-      return 'lightPink'
-    return 'pink'
+    return l > 70 ? 'lightPink' : 'pink'
   }
 
   return 'red'
 }
 
-// ----------------------
-// Parsing de cor CSS
-// ----------------------
-
-function parseCssColorToRgb(color: string): RGB | null {
-  if (!color)
-    return null
-
-  const normalized = color.trim().toLowerCase()
-
-  const rgbMatch = normalized.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/)
-  if (rgbMatch) {
-    return [
-      Number(rgbMatch[1]),
-      Number(rgbMatch[2]),
-      Number(rgbMatch[3]),
-    ]
-  }
-
-  const hexMatch = normalized.match(/^#([0-9a-f]{6})$/)
-  if (!hexMatch) {
-    return null
-  }
-
-  const hex = hexMatch[1]!
-  return [
-    Number.parseInt(hex.slice(0, 2), 16),
-    Number.parseInt(hex.slice(2, 4), 16),
-    Number.parseInt(hex.slice(4, 6), 16),
-  ]
-}
-
-// ----------------------
-// Auto logo by track color
-// ----------------------
+// ======================================================
+// 7) ColorKey + theme + playing state -> final asset URL
+// ======================================================
 
 function pickLogoFromTheme(
   background: LogoBackground,
@@ -203,45 +188,60 @@ function pickLogoFromTheme(
   switch (key) {
     case 'pink':
       return isPlaying ? background.LogoPlayingPink : background.LogoPausedPink
-
     case 'lightPink':
       return isPlaying ? background.LogoPlayingLightPink : background.LogoPausedLightPink
-
     case 'yellow':
       return isPlaying ? background.LogoPlayingYellow : background.LogoPausedYellow
-
     case 'lilac':
       return isPlaying ? background.LogoPlayingLilac : background.LogoPausedLilac
-
     case 'purple':
       return isPlaying ? background.LogoPlayingPurple : background.LogoPausedPurple
-
     case 'darkPurple':
       return isPlaying ? background.LogoPlayingDarkPurple : background.LogoPausedDarkPurple
-
     case 'red':
       return isPlaying ? background.LogoPlayingRed : background.LogoPausedRed
-
     case 'orange':
       return isPlaying ? background.LogoPlayingOrange : background.LogoPausedOrange
-
     case 'cyan':
       return isPlaying ? background.LogoPlayingCyan : background.LogoPausedCyan
-
     case 'green':
       return isPlaying ? background.LogoPlayingGreen : background.LogoPausedGreen
-
     case 'grey':
       return isPlaying ? background.LogoPlayingGrey : background.LogoPausedGrey
-
     case 'white':
       return isPlaying ? background.LogoPlayingWhite : background.LogoPausedWhite
-
+    case 'black':
+      return isPlaying ? background.LogoPlayingBlack : background.LogoPausedBlack
     default:
-      // fallback paranoico
       return isPlaying ? background.LogoPlaying : background.LogoPaused
   }
 }
+
+// ======================================================
+// 8) Auto RGB: trackColor (CSS string) -> final asset URL
+// ======================================================
+
+function getAutoLogoFromColor(
+  rawColor: string | undefined, // trackColor
+  isPlaying: boolean,
+  background: LogoBackground,
+): string {
+  const fallback = isPlaying ? background.LogoPlaying : background.LogoPaused
+  if (!rawColor)
+    return fallback
+
+  const rgb = parseCssColorToRgb(rawColor)
+  if (!rgb)
+    return fallback
+
+  const key = getColorKeyFromHsl(rgb)
+  return pickLogoFromTheme(background, key, isPlaying)
+}
+
+// ======================================================
+// 9) Manual selection: buttonTypeColor -> palette entry
+//    (supports Auto RGB on id 1)
+// ======================================================
 
 function getLogoByColor(
   buttonTypeColor: number,
@@ -249,9 +249,8 @@ function getLogoByColor(
   autoLogo: string,
   palette: readonly ButtonBgLogo[],
 ): string {
-  if (buttonTypeColor === 1) {
+  if (buttonTypeColor === 1)
     return autoLogo
-  }
 
   const rawIndex
     = buttonTypeColor <= 0
@@ -261,42 +260,15 @@ function getLogoByColor(
         : 0
 
   const maxIndex = palette.length - 1
-  const index
-    = rawIndex < 0 || rawIndex > maxIndex
-      ? 0
-      : rawIndex
+  const index = rawIndex < 0 || rawIndex > maxIndex ? 0 : rawIndex
 
   const color = palette[index] ?? palette[0]!
   return isPlaying ? color.playing : color.paused
 }
 
-// ----------------------
-// Manual color palette for the button
-// ----------------------
-
-function getAutoLogoFromColor(
-  rawColor: string | undefined,
-  isPlaying: boolean,
-  background: LogoBackground,
-): string {
-  const fallback = isPlaying ? background.LogoPlaying : background.LogoPaused
-
-  if (!rawColor) {
-    return fallback
-  }
-
-  const rgb = parseCssColorToRgb(rawColor)
-  if (!rgb) {
-    return fallback
-  }
-
-  const key = getColorKeyFromHsl(rgb)
-  return pickLogoFromTheme(background, key, isPlaying)
-}
-
-// ----------------------
-// Presence main loop
-// ----------------------
+// ======================================================
+// 10) Main presence loop (this is the only runtime flow)
+// ======================================================
 
 presence.on('UpdateData', async () => {
   const mediaData = dataGetter.getMediaData()
@@ -324,10 +296,7 @@ presence.on('UpdateData', async () => {
     repeat: 'general.repeat',
   })
 
-  const showRepeatIcon
-    = !hideRepeat
-      && repeatMode === 'on'
-      && isPlaying
+  const showRepeatIcon = !hideRepeat && repeatMode === 'on' && isPlaying
 
   const smallImageText
     = showRepeatIcon
@@ -336,33 +305,18 @@ presence.on('UpdateData', async () => {
         ? strings.playing
         : strings.paused
 
-  const autoLogo = getAutoLogoFromColor(
-    trackColor,
-    isPlaying,
-    currentLogoBackground,
-  )
+  const autoLogo = getAutoLogoFromColor(trackColor, isPlaying, currentLogoBackground)
 
   const buttonStyle
     = buttonType === 0
-      ? (showRepeatIcon
-          ? Assets.Repeat
-          : isPlaying
-            ? Assets.Play
-            : Assets.Pause)
-      : buttonType === 1
-        ? (showRepeatIcon
-            ? Assets.Repeat
-            : getLogoByColor(buttonTypeColor, isPlaying, autoLogo, buttonBgPalette)
-          )
-        : buttonType === 2
-          ? (showRepeatIcon
-              ? Assets.Repeat
-              : getLogoByColor(buttonTypeColor, false, autoLogo, buttonBgPalette)
-            )
-          : (showRepeatIcon
-              ? Assets.Repeat
-              : getLogoByColor(buttonTypeColor, true, autoLogo, buttonBgPalette)
-            )
+      ? (showRepeatIcon ? Assets.Repeat : (isPlaying ? Assets.Play : Assets.Pause))
+      : showRepeatIcon
+        ? Assets.Repeat
+        : buttonType === 1
+          ? getLogoByColor(buttonTypeColor, isPlaying, autoLogo, buttonBgPalette)
+          : buttonType === 2
+            ? getLogoByColor(buttonTypeColor, false, autoLogo, buttonBgPalette)
+            : getLogoByColor(buttonTypeColor, true, autoLogo, buttonBgPalette)
 
   const largeImageStyle
     = largeImage === 0
@@ -380,7 +334,6 @@ presence.on('UpdateData', async () => {
         ? StatusDisplayType.State ?? undefined
         : StatusDisplayType.Name
 
-  // nothing playing or no title → clear presence
   if (mediaData.playbackState === 'none' || !mediaData.title || privacyMode) {
     return presence.clearActivity()
   }
@@ -404,7 +357,6 @@ presence.on('UpdateData', async () => {
 
   if (isPlaying && !hideTimesTamps) {
     const [start, end] = updateSongTimesTamps(dataGetter)
-
     if (start !== 0 && end !== 0) {
       presenceData.startTimestamp = start
       presenceData.endTimestamp = end

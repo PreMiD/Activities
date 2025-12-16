@@ -31,8 +31,7 @@
 
     {
       "id": "lang",
-      "multiLanguage": true,
-      "value": "en"
+      "multiLanguage": true
     },
 
     {
@@ -103,7 +102,7 @@
       "id": "buttonType",
       "title": "Pick small button style",
       "icon": "fad fa-user-edit",
-      "value": 0,
+      "value": 1,
       "if": {
         "privacy": false
       },
@@ -117,9 +116,9 @@
 
     {
       "id": "buttonTypeColor",
-      "title": "Pick color small button style",
+      "title": "Pick color logos",
       "icon": "fad fa-user-edit",
-      "value": 0,
+      "value": 1,
       "if": {
         "privacy": false
       },
@@ -137,7 +136,8 @@
         "Cyan",
         "Green",
         "Grey",
-        "White"
+        "White",
+        "Black"
       ]
     },
 
@@ -145,7 +145,7 @@
       "id": "buttonBgColor",
       "title": "Logo background theme",
       "icon": "fad fa-user-edit",
-      "value": 0,
+      "value": 2,
       "if": {
         "privacy": false
       },
