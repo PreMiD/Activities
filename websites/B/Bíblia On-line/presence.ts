@@ -355,7 +355,7 @@ presence.on('UpdateData', async () => {
   else if (document.title === 'Recursos Bíblicos - Bíblia Online') {
     presenceData.details = 'Artigos'
     presenceData.state
-    = document.querySelectorAll('.category__title')[0]!.textContent
+      = document.querySelectorAll('.category__title')[0]!.textContent
     presenceData.smallImageKey = Assets.Search
   }
   else if (document.title === 'Explicações - Artigos - Bíblia Online') {

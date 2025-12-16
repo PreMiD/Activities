@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "374905512661221377",
@@ -13,7 +13,8 @@
     "en": "From the excitement of starting the broadcast until viewers and streamers meet and communicate. Every moment is enjoyable. Streaming begins in CHZZK."
   },
   "url": "chzzk.naver.com",
-  "version": "1.0.8",
+  "regExp": "^https?[:][/][/]chzzk[.]naver[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CHZZK/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CHZZK/assets/thumbnail.png",
   "color": "#00ffa3",

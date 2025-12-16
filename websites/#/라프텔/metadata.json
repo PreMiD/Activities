@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "868016688090710067",
@@ -14,7 +14,8 @@
     "ko": "한국에서 서비스하는 애니 OTT 스트리밍 서비스"
   },
   "url": "laftel.net",
-  "version": "1.0.8",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*laftel[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%EB%9D%BC%ED%94%84%ED%85%94/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%EB%9D%BC%ED%94%84%ED%85%94/assets/thumbnail.jpg",
   "color": "#816BFF",
