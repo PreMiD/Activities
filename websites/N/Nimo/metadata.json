@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Kyrie",
@@ -17,7 +17,8 @@
     "www.nimo.tv",
     "dashboard.nimo.tv"
   ],
-  "version": "1.0.19",
+  "regExp": "^https?[:][/][/](www|dashboard)[.]nimo[.]tv[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nimo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nimo/assets/thumbnail.jpeg",
   "color": "#622DF7",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Dem0nx309",
@@ -20,7 +20,8 @@
     "hyakanime.fr",
     "www.hyakanime.fr"
   ],
-  "version": "2.0.4",
+  "regExp": "^https?[:][/][/](www[.])?hyakanime[.]fr[/]",
+  "version": "2.1.1",
   "logo": "https://i.imgur.com/kSomZoz.png",
   "thumbnail": "https://i.imgur.com/nBCtYDW.png",
   "color": "#0085FE",
