@@ -16,6 +16,7 @@ export enum SarifRuleId {
   tagsServiceCheck = 'tags-service-check',
   clientIdExistsCheck = 'client-id-exists-check',
   clientIdCheck = 'client-id-check',
+  dnsCheck = 'dns-check',
 }
 
 const sarifRules: Record<SarifRuleId, ReportingDescriptor> = {
@@ -101,6 +102,13 @@ const sarifRules: Record<SarifRuleId, ReportingDescriptor> = {
     name: 'Client ID Check',
     shortDescription: {
       text: 'Makes sure the `clientId` is an existing Discord Application ID',
+    },
+  },
+  [SarifRuleId.dnsCheck]: {
+    id: SarifRuleId.dnsCheck,
+    name: 'DNS Check',
+    shortDescription: {
+      text: 'Validates that activity URLs have valid DNS records',
     },
   },
 }
