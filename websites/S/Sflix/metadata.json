@@ -15,12 +15,9 @@
   "description": {
     "en": "SFlix is a Free Movies streaming site with zero ads. We let you watch movies online without having to register or paying, with over 10000 movies and TV-Series."
   },
-  "url": [
-    "sflix.mov",
-    "sflixgo.is"
-  ],
+  "url": "sflix.mov",
   "regExp": "^https?[:][/][/](sflix[.]mov|sflixgo[.]is)[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sflix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sflix/assets/thumbnail.jpeg",
   "color": "#03abb8",

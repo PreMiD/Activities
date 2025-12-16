@@ -13,11 +13,10 @@
   },
   "url": [
     "voidbots.net",
-    "beta.voidbots.net",
     "docs.voidbots.net"
   ],
   "regExp": "^https?[:][/][/]((beta|docs)[.])?voidbots[.]net[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Void%20Bots/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Void%20Bots/assets/thumbnail.png",
   "color": "#B04BEC",

@@ -11,12 +11,9 @@
     "ga": "Vanis.io cluiche ilimreora saor in aisce.",
     "nl": "Vanis.io een gratis spel voor meerdere spelers."
   },
-  "url": [
-    "vanis.io",
-    "skins.vanis.io"
-  ],
+  "url": "vanis.io",
   "regExp": "^https?[:][/][/](skins[.])?vanis[.]io[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vanis.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vanis.io/assets/thumbnail.png",
   "color": "#ce3239",
