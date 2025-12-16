@@ -26,12 +26,17 @@ function getChannelURL(): string | undefined {
   )?.href
 }
 
+function isMusic(): boolean {
+  return false
+}
+
 const resolver: Resolver = {
   isActive,
   getTitle,
   getUploader,
   getChannelURL,
   getVideoID,
+  isMusic,
 }
 
 export default resolver

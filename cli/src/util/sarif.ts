@@ -14,6 +14,8 @@ export enum SarifRuleId {
   imageMimeTypeCheck = 'image-mime-type-check',
   tagsCheck = 'tags-check',
   tagsServiceCheck = 'tags-service-check',
+  clientIdExistsCheck = 'client-id-exists-check',
+  clientIdCheck = 'client-id-check',
 }
 
 const sarifRules: Record<SarifRuleId, ReportingDescriptor> = {
@@ -85,6 +87,20 @@ const sarifRules: Record<SarifRuleId, ReportingDescriptor> = {
     name: 'Tags Service Check',
     shortDescription: {
       text: 'Makes sure the `tags` don\'t contain the service name',
+    },
+  },
+  [SarifRuleId.clientIdExistsCheck]: {
+    id: SarifRuleId.clientIdExistsCheck,
+    name: 'Client ID Exists Check',
+    shortDescription: {
+      text: 'Makes sure the `clientId` is set in the `presence.ts` file',
+    },
+  },
+  [SarifRuleId.clientIdCheck]: {
+    id: SarifRuleId.clientIdCheck,
+    name: 'Client ID Check',
+    shortDescription: {
+      text: 'Makes sure the `clientId` is an existing Discord Application ID',
     },
   },
 }

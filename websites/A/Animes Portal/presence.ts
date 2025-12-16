@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '924791712944099389',
+  clientId: '503557087041683458',
 })
 
 enum ActivityAssets {
@@ -11,6 +11,7 @@ enum ActivityAssets {
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
+    name: 'Animes Portal',
   }
   const { pathname, href } = document.location
   const [showThumb, showMessaging] = await Promise.all([

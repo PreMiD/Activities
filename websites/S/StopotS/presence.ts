@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '844108029543972885',
+  clientId: '503557087041683458',
 })
 const elapsed = Math.floor(Date.now() / 1000)
 
@@ -7,6 +7,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/S/StopotS/assets/logo.png',
     startTimestamp: elapsed,
+    name: 'StopotS',
   }
   const path = document.location.pathname
   if (document.querySelector('.ctUsers')) {

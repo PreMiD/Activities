@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '882761234271834142',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -23,6 +23,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    name: 'Império Network',
   }
   const strings = await getStrings()
   const { pathname, href, search } = document.location
@@ -30,12 +31,12 @@ presence.on('UpdateData', async () => {
   switch (pathname.split('/')[1]) {
     case 'categoria': {
       presenceData.details = strings.viewCategory
-      presenceData.state = document.querySelector('#posts-grid > li > a > article > div > div > a')
+      presenceData.state = decodeURI(pathname.split('/')[2] as string)
       break
     }
     case 'post': {
       presenceData.details = strings.read
-      presenceData.state = document.querySelector('h1.flex')
+      presenceData.state = document.querySelector('h1.leading-tight')
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.object-cover') ?? ActivityAssets.Logo
       presenceData.buttons = [
         {
@@ -50,7 +51,7 @@ presence.on('UpdateData', async () => {
     case 'sobre':
     case 'contato': {
       presenceData.details = strings.readingAbout
-      presenceData.state = document.querySelector('h1.text-2xl')
+      presenceData.state = document.querySelector('h1')
       break
     }
     case 'search': {

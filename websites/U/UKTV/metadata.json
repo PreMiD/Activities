@@ -2,8 +2,8 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "name": "Dark_Ville",
-    "id": "638080361179512853"
+    "name": "PreMiD",
+    "id": "503557087041683458"
   },
   "service": "UKTV",
   "description": {
@@ -13,7 +13,7 @@
     "uktvplay.uktv.co.uk",
     "uktvplay.co.uk"
   ],
-  "version": "1.0.16",
+  "version": "1.0.18",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/UKTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/UKTV/assets/thumbnail.png",
   "color": "#00BAC6",

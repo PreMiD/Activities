@@ -67,9 +67,9 @@ presence.on('UpdateData', async () => {
     }
 
     if (media.Type === 'Audio')
-      presenceData.type = ActivityType.Listening
+      (presenceData as PresenceData).type = ActivityType.Listening
     else if (media.Type === 'Video')
-      presenceData.type = ActivityType.Watching
+      (presenceData as PresenceData).type = ActivityType.Watching
 
     if (media.state === 'playing' || media.state === 'paused') {
       const img = document.querySelector<HTMLImageElement>('#albumArt')

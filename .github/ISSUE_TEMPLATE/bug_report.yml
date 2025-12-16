@@ -1,10 +1,12 @@
 name: Bug Report
 description: Create a report to help us improve the PreMiD Store
-labels: [bug, needs repro]
+labels: [bug, needs-repro]
 body:
   - type: markdown
     attributes:
-      value: Before submitting a new issue, ensure your bug hasn't already been reported. If it has, reply to the open issue instead.
+      value: |
+        **Before submitting a new issue, ensure your bug hasn’t already been reported.**
+        If it has, simply reply to the open issue instead.
   - type: textarea
     id: reproduction
     validations:
@@ -15,7 +17,7 @@ body:
       placeholder: |
         1. Go to this link
         2. Click on this
-        3. Observe that
+        3. Observe that…
   - type: input
     id: expected_behavior
     validations:
@@ -37,27 +39,28 @@ body:
     attributes:
       label: Page URL
       description: The URL you were visiting when the bug happens
-  - type: textarea
-    id: screenshots
-    attributes:
-      label: Screenshots
-      description: Optionally, add some screenshots to show the issue
   - type: input
-    id: os
+    id: country
     validations:
       required: true
     attributes:
-      label: Operating System
-      description: E.g. Windows 11, macOS 12, etc
+      label: Country
+      description: The country you are accessing the service from (web content can vary by region)
+      placeholder: e.g., United States, Germany, Japan
   - type: input
     id: browser
     validations:
       required: true
     attributes:
       label: Browser and Version
-      description: Include the type of browser you use AND the browser version
+      description: Include both browser name and version (e.g. Chrome 113.0.5672.63)
   - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Optionally, add one or more screenshots to illustrate the issue
+  - type: input
     id: additional_comments
     attributes:
       label: Additional Comments
-      description: Optionally, add further comments which may enhance the issue
+      description: Anything else you think might help us track down this bug

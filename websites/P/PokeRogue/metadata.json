@@ -2,8 +2,8 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "id": "638080361179512853",
-    "name": "dark_ville"
+    "id": "503557087041683458",
+    "name": "PreMiD"
   },
   "service": "PokeRogue",
   "description": {
@@ -13,7 +13,7 @@
     "pokerogue.net",
     "127.0.0.1"
   ],
-  "version": "1.0.8",
+  "version": "1.0.10",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PokeRogue/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PokeRogue/assets/thumbnail.png",
   "color": "#6b5a73",

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "430729478151602183",
+    "name": "rikunz"
+  },
+  "service": "Microsoft Learn",
+  "description": {
+    "en": "Microsoft Learn is an official platform by Microsoft offering free, interactive training for a wide range of Microsoft products and technologies, from Azure to Power Platform.",
+    "es": "Microsoft Learn es una plataforma oficial de Microsoft que ofrece capacitación interactiva gratuita sobre una amplia gama de productos y tecnologías de Microsoft, desde Azure hasta Power Platform.",
+    "fr": "Microsoft Learn est une plateforme officielle de Microsoft offrant une formation interactive gratuite sur un large éventail de produits et technologies Microsoft, d'Azure à Power Platform."
+  },
+  "url": "learn.microsoft.com",
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Microsoft%20Learn/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Microsoft%20Learn/assets/thumbnail.png",
+  "color": "#FFFFFF",
+  "category": "other",
+  "tags": [
+    "learns",
+    "microsoft"
+  ],
+  "settings": [
+    {
+      "id": "time",
+      "title": "Show timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "show-level",
+      "title": "Show Level",
+      "icon": "fad fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "show-button",
+      "title": "Show Button",
+      "icon": "fad fa-hand-pointer",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}

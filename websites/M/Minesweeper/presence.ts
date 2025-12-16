@@ -15,11 +15,17 @@ presence.on('UpdateData', async () => {
   }
   else if (document.location.pathname.startsWith('/game/')) {
     presenceData.details = 'Clicking cells'
-    presenceData.state = `Difficulty: ${
-      document.querySelector<HTMLSpanElement>(
-        'a.level-select-link.active > span',
-      )?.textContent
-    }`
+    const arenaBlock = document.querySelector('#ArenaPanelBlock strong')
+    if (arenaBlock) {
+      presenceData.state = `In the ${arenaBlock?.textContent}`
+    }
+    else {
+      presenceData.state = `Difficulty: ${
+        document.querySelector<HTMLSpanElement>(
+          'a.level-select-link.active > span',
+        )?.textContent
+      }`
+    }
     presenceData.buttons = [
       {
         label: 'Spectate Game',
@@ -49,68 +55,88 @@ presence.on('UpdateData', async () => {
   }
   else {
     switch (pathname) {
-      case '/ranking': {
-        presenceData.details = 'Viewing the rankings'
-        break
-      }
-      case '/my-games': {
-        presenceData.details = 'Viewing their games history'
+      case '/arena': {
+        presenceData.details = 'In the arena'
         break
       }
       case '/best-players': {
         presenceData.details = 'Viewing the best players'
         break
       }
-      case '/season-leaders': {
-        presenceData.details = 'Viewing this seasons\'s leaders'
-        break
-      }
-      case '/quests': {
-        presenceData.details = 'Viewing their quests'
-        break
-      }
-      case '/arena': {
-        presenceData.details = 'In the arena'
-        break
-      }
-      case '/equipment': {
-        presenceData.details = 'Viewing their equipment'
-        break
-      }
-      case '/marketplace': {
-        presenceData.details = 'Viewing the marketplace'
-        break
-      }
-      case '/events': {
-        presenceData.details = 'Viewing the event'
-        break
-      }
-      case '/players-online': {
-        presenceData.details = 'Viewing players online'
-        break
-      }
-      case '/news': {
-        presenceData.details = 'Viewing the news'
-        break
-      }
-      case '/statistics': {
-        presenceData.details = 'Viewing statistics'
+      case '/championship': {
+        presenceData.details = 'Viewing championship standings'
         break
       }
       case '/chat': {
         presenceData.details = 'Chatting'
         break
       }
+      case '/equipment': {
+        presenceData.details = 'Viewing owned equipment'
+        break
+      }
+      case '/events': {
+        presenceData.details = 'Viewing the event'
+        break
+      }
+      case '/lobby': {
+        presenceData.details = 'In the multiplayer lobby'
+        break
+      }
+      case '/marketplace': {
+        presenceData.details = 'Viewing the marketplace'
+        break
+      }
+      case '/my-games': {
+        presenceData.details = 'Viewing their games history'
+        break
+      }
+      case '/news': {
+        presenceData.details = 'Viewing the news'
+        break
+      }
+      case '/past-championships': {
+        presenceData.details = 'Viewing past championships'
+        break
+      }
+      case '/players-online': {
+        presenceData.details = 'Viewing players online'
+        break
+      }
       case '/premium': {
         presenceData.details = 'Viewing premium perks'
+        break
+      }
+      case '/profile': {
+        presenceData.details = 'Managing their account details'
+        break
+      }
+      case '/pvp': {
+        presenceData.details = 'Playing PvP mode'
+        break
+      }
+      case '/quests': {
+        presenceData.details = 'Viewing their quests'
+        break
+      }
+      case '/ranking': {
+        presenceData.details = 'Viewing the rankings'
+        break
+      }
+      case '/season-leaders': {
+        presenceData.details = 'Viewing this seasons\'s leaders'
         break
       }
       case '/shop': {
         presenceData.details = 'Viewing the shop'
         break
       }
-      case '/profile': {
-        presenceData.details = 'Managing their account details'
+      case '/statistics': {
+        presenceData.details = 'Viewing statistics'
+        break
+      }
+      case '/talents': {
+        presenceData.details = 'Viewing their talents'
         break
       }
     }

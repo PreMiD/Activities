@@ -1,9 +1,10 @@
 import type {
   Resolver,
 } from './util/index.js'
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 import {
   checkStringLanguage,
+  getMobileChapter,
   getQuerySelectors,
   getSetting,
   getThumbnail,
@@ -36,12 +37,19 @@ enum LogoMode {
   Channel = 2,
 }
 
+enum ShowListening {
+  Never = 0,
+  WhenMusic = 1,
+  Always = 2,
+}
+
 const nullResolver: Resolver = {
   isActive: () => true,
   getTitle: () => document.title,
   getUploader: () => '',
   getChannelURL: () => '',
   getVideoID: () => '',
+  isMusic: () => false,
 }
 
 presence.on('UpdateData', async () => {
@@ -58,6 +66,7 @@ presence.on('UpdateData', async () => {
     buttons,
     hideHome,
     hidePaused,
+    showListening,
   ] = [
     getSetting<string>('lang', 'en'),
     getSetting<boolean>('privacy', true),
@@ -71,6 +80,7 @@ presence.on('UpdateData', async () => {
     getSetting<boolean>('buttons', true),
     getSetting<boolean>('hideHome', false),
     getSetting<boolean>('hidePaused', true),
+    getSetting<number>('showListening', 0),
   ]
   const { pathname, hostname, search, href } = document.location
   const isMobile = hostname === 'm.youtube.com'
@@ -138,13 +148,18 @@ presence.on('UpdateData', async () => {
       }
     }
 
+    let chapter = document.querySelector(selectors.chapterTitle)?.textContent
+    if (isMobile && !chapter) {
+      chapter = getMobileChapter(video.currentTime) ?? undefined
+    }
+
     if (logo === LogoMode.Channel) {
       pfp = resolver === youtubeMiniplayerResolver
         ? ''
         : document
-          .querySelector<HTMLImageElement>(selectors.videoChannelImage)
-          ?.src
-          .replace(/=s\d+/, '=s512')
+            .querySelector<HTMLImageElement>(selectors.videoChannelImage)
+            ?.src
+            .replace(/=s\d+/, '=s512')
     }
     const unlistedPathElement = document.querySelector<SVGPathElement>(
       'g#privacy_unlisted > path',
@@ -157,19 +172,25 @@ presence.on('UpdateData', async () => {
       && unlistedPathElement?.getAttribute('d')
       === unlistedBadgeElement?.getAttribute('d')
     const videoId = resolver.getVideoID()!
-    const [startTimestamp, endTimestamp] = presence.getTimestampsfromMedia(video)
+    const [startTimestamp, endTimestamp] = getTimestampsFromMedia(video)
+    const listening = showListening === ShowListening.Always
+      || (showListening === ShowListening.WhenMusic && resolver.isMusic())
     const presenceData: PresenceData = {
-      type: ActivityType.Watching,
+      type: listening
+        ? ActivityType.Listening
+        : ActivityType.Watching,
       details: vidDetail
         .replace('%title%', title.trim())
         .replace('%uploader%', uploaderName.trim())
         .replace('%playlistTitle%', playlistTitle.trim())
-        .replace('%playlistQueue%', playlistQueue?.trim() ?? ''),
+        .replace('%playlistQueue%', playlistQueue?.trim() ?? '')
+        .replace('%chapter%', chapter ?? ''),
       state: vidState
         .replace('%title%', title.trim())
         .replace('%uploader%', uploaderName.trim())
         .replace('%playlistTitle%', playlistTitle.trim())
-        .replace('%playlistQueue%', playlistQueue?.trim() ?? ''),
+        .replace('%playlistQueue%', playlistQueue?.trim() ?? '')
+        .replace('%chapter%', chapter ?? ''),
       largeImageKey: unlistedVideo || logo === LogoMode.YouTubeLogo || pfp === ''
         ? YouTubeAssets.Logo
         : logo === LogoMode.Thumbnail
@@ -331,7 +352,7 @@ presence.on('UpdateData', async () => {
         if (
           documentTitle.includes(
             document.querySelector(selectors.userName)?.textContent?.trim() ?? '',
-          )
+          ) && document.querySelector(selectors.userName)?.textContent
         ) {
           user = document.querySelector(selectors.userName)?.textContent
         }
@@ -346,7 +367,7 @@ presence.on('UpdateData', async () => {
         }
         // Get channel name from website's title
         else if (/\([^)]+\)/.test(documentTitle)) {
-          user = documentTitle.replace(/\(([^)]+)\)/, '')
+          user = documentTitle.replace(/\([^)]+\)/, '')
         }
         else {
           user = documentTitle
@@ -539,7 +560,7 @@ presence.on('UpdateData', async () => {
 
     if (!presenceData.details)
       presence.setActivity()
-    else presence.setActivity(presenceData, true)
+    else presence.setActivity(presenceData)
   }
   else if (hostname === 'studio.youtube.com') {
     const presenceData: PresenceData = {

@@ -2,10 +2,14 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "name": "Tellen",
-    "id": "535214819520020510"
+    "name": "Atom Skully",
+    "id": "671037171611729920"
   },
   "contributors": [
+    {
+      "name": "Tellen",
+      "id": "535214819520020510"
+    },
     {
       "name": "Bas950",
       "id": "241278257335500811"
@@ -14,6 +18,7 @@
   "service": "Google Calendar",
   "description": {
     "en": "Google Calendar is a time-management and scheduling calendar service developed by Google.",
+    "fr": "Google Agenda est un service de gestion du temps et de planification développé par Google.",
     "it": "Google Calendar è un sistema di calendari concepito da Google.",
     "nl": "Google Agenda is een online agenda. Het is een gratis service van Google en kan worden gebruikt met een Google-account.",
     "vi": "Google Calendar là dịch vụ quản lý kế hoạch và thời gian được phát triển bởi Google."
@@ -22,10 +27,10 @@
     "calendar.google.com",
     "www.calendar.google.com"
   ],
-  "version": "1.2.25",
+  "version": "1.3.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Calendar/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Calendar/assets/thumbnail.png",
-  "color": "#4689F4",
+  "color": "#4285F4",
   "category": "other",
   "tags": [
     "calendar",
@@ -33,5 +38,11 @@
     "google",
     "organization",
     "popular"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
   ]
 }

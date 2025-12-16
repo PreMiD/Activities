@@ -2,17 +2,24 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "name": "CRUGG",
-    "id": "228965621478588416"
+    "name": "Atom Skully",
+    "id": "671037171611729920"
   },
+  "contributors": [
+    {
+      "name": "CRUGG",
+      "id": "228965621478588416"
+    }
+  ],
   "service": "DeepL",
   "description": {
     "de": "DeepL ermöglicht es dir, Texte mit Hilfe einer künstlichen Intelligenz in andere Sprachen zu übersetzen. Eine der besonderen Eigenschaften ist, dass du auf ein Wort klicken kannst, um es durch ein anderes Wort zu ersetzen, von welchem du denkst, dass es mehr passen würde. Alles in allem ist DeepL sehr nützlich, um große Texte schnell in eine Sprache zu übersetzen, die man bereits kennt, aber nicht allzu viel, für Sprachen, die man nicht beherrscht.",
     "en": "DeepL lets you translate texts to other languages using an artificial intelligence. One of the most special features of it is, that you're able to click a word to be able to replace it with another word you think would fit more. All in all, DeepL is pretty useful for quickly translating large texts to a language you already know, but not too much, for languages you don't know.",
+    "fr": "DeepL vous permet de traduire des textes dans d'autres langues à l'aide d'une intelligence artificielle. L'une de ses caractéristiques les plus particulières est que vous pouvez cliquer sur un mot pour le remplacer par un autre mot que vous pensez mieux convenir. Dans l'ensemble, DeepL est très utile pour traduire rapidement de longs textes dans une langue que vous connaissez déjà, mais pas trop, pour des langues que vous ne connaissez pas.",
     "nl": "Met DeepL kunt u teksten naar andere talen vertalen met behulp van kunstmatige intelligentie. Een van de meest bijzondere kenmerken ervan is dat u op een woord kunt klikken om het te vervangen door een ander woord waarvan u denkt dat het beter past. Al met al is DeepL best handig voor het snel vertalen van grote teksten naar een taal die u al kent, maar niet te veel, voor talen die u niet kent."
   },
   "url": "www.deepl.com",
-  "version": "1.1.27",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DeepL/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DeepL/assets/thumbnail.png",
   "color": "#042B48",

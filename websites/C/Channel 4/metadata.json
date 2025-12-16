@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "212701689579438080",
+    "name": "bnwkr"
+  },
+  "service": "Channel 4",
+  "description": {
+    "en": "Channel 4 is a publicly-owned free-to-air channel that covers the United Kingdom. It's home to a streaming service, six TV channels and a film production studio."
+  },
+  "url": [
+    "channel4.com",
+    "www.channel4.com"
+  ],
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Channel%204/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Channel%204/assets/thumbnail.jpg",
+  "color": "#a9ff8a",
+  "category": "videos",
+  "tags": [
+    "uk",
+    "tv",
+    "streaming",
+    "live",
+    "all4"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "1097446134852636683",
+    "name": "Al3ss1Am0d"
+  },
+  "service": "Easyfun",
+  "description": {
+    "en": "Enjoy mobile games online for free! Smooth, download-free, lag-free. Just visit EasyFun.gg."
+  },
+  "url": [
+    "www.easyfun.gg",
+    "easyfun.gg"
+  ],
+  "version": "1.0.5",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Easyfun/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Easyfun/assets/thumbnail.jpeg",
+  "color": "#00FF66",
+  "category": "games",
+  "tags": [
+    "games",
+    "anime"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}

@@ -9,15 +9,19 @@
     {
       "name": "Pascal",
       "id": "156560379089125376"
+    },
+    {
+      "name": "JackD",
+      "id": "1311839340816502835"
     }
   ],
   "service": "TruckersFM",
   "description": {
-    "en": "Truckers.FM is the No.1 Hit Music Station as voted by the TruckersMP Community 5 years, providing round the clock entertainment broadcasting a variety of shows, ranging from the Top 40 to the biggest throwbacks.",
-    "nl": "Truckers.FM is de nummer 1 Hit Music Station zoals gestemd door de TruckersMP Community 5 jaar, en biedt 24 uur per dag entertainment met een verscheidenheid aan shows, variërend van de Top 40 tot de grootste erfenis."
+    "en": "TruckersFM is the #1 station for the simulation community, founded in 2015. They provide around the clock entertainment, whether in-cab, or on the go. You can tune in to them anywhere, with a wide variety of shows, including their very own weekly chart show, The Most Played Chart.",
+    "nl": "TruckersFM is het #1 station voor de simulatiegemeenschap, opgericht in 2015. Ze bieden 24/7 entertainment, of je nu in de cabine bent of onderweg. Je kunt overal naar hen luisteren, met een breed scala aan shows, waaronder hun eigen wekelijkse hitlijstshow, The Most Played Chart."
   },
   "url": "truckers.fm",
-  "version": "1.4.21",
+  "version": "1.4.28",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/thumbnail.png",
   "color": "#C82372",

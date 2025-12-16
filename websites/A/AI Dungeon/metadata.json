@@ -14,7 +14,7 @@
   },
   "url": "play.aidungeon.io",
   "regExp": "([a-z0-9-]+[.])*aidungeon[.]io[/]",
-  "version": "1.1.24",
+  "version": "1.1.25",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AI%20Dungeon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AI%20Dungeon/assets/thumbnail.png",
   "color": "#484848",

@@ -9,10 +9,6 @@
     {
       "name": "Sleeyax",
       "id": "226037514954080257"
-    },
-    {
-      "name": "Dark_Ville",
-      "id": "638080361179512853"
     }
   ],
   "service": "Stremio",
@@ -27,7 +23,7 @@
     "web.stremio.com",
     "stremio.crun.zip"
   ],
-  "version": "2.1.3",
+  "version": "2.1.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stremio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stremio/assets/thumbnail.png",
   "color": "#7b5bf5",

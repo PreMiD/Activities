@@ -17,10 +17,6 @@
     {
       "name": "Kyrie",
       "id": "368399721494216706"
-    },
-    {
-      "name": "Dark_Ville",
-      "id": "638080361179512853"
     }
   ],
   "service": "Roblox",
@@ -39,7 +35,7 @@
     "create.roblox.com",
     "devforum.roblox.com"
   ],
-  "version": "3.1.7",
+  "version": "3.1.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Roblox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Roblox/assets/thumbnail.png",
   "color": "#1b1d1e",

@@ -2,8 +2,8 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "name": "Dark_Ville",
-    "id": "638080361179512853"
+    "name": "PreMiD",
+    "id": "503557087041683458"
   },
   "service": "Territorial",
   "description": {
@@ -13,7 +13,7 @@
     "territorial.io",
     "www.territorial.io"
   ],
-  "version": "1.0.12",
+  "version": "1.0.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Territorial/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Territorial/assets/thumbnail.jpg",
   "color": "#07283C",

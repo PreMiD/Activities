@@ -9,6 +9,10 @@
     {
       "name": "Atlassian",
       "id": "191388216509595648"
+    },
+    {
+      "name": "momonnie",
+      "id": "278821688894947328"
     }
   ],
   "service": "Telegram",
@@ -21,7 +25,7 @@
     "vi": "Telegram là dịch vụ nhắn tin bảo mật và xuyên nền tảng."
   },
   "url": "web.telegram.org",
-  "version": "2.0.15",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Telegram/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Telegram/assets/thumbnail.png",
   "color": "#33abe0",
@@ -32,10 +36,10 @@
   ],
   "settings": [
     {
-      "id": "name",
-      "title": "Show name",
-      "icon": "fas fa-user",
-      "value": true
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
     }
   ]
 }

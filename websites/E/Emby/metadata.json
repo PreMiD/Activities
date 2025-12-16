@@ -2,8 +2,8 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "name": "Dark_Ville",
-    "id": "638080361179512853"
+    "name": "PreMiD",
+    "id": "503557087041683458"
   },
   "contributors": [
     {
@@ -20,9 +20,12 @@
     "en": "Your personal media on any device. Bringing all of your home videos, music, and photos together into one place has never been easier. Your personal Emby Server automatically converts and streams your media on-the-fly to play on any device.",
     "nl": "Uw persoonlijke media op elk apparaat. Het was nog nooit zo eenvoudig om al uw video's, muziek en foto's samen te brengen op één plek. Uw persoonlijke Emby-server converteert en streamt uw media automatisch om ze op elk apparaat af te spelen."
   },
-  "url": ["emby.media", "app.emby.media"],
+  "url": [
+    "emby.media",
+    "app.emby.media"
+  ],
   "regExp": ".*[/]web[/]index[.]html",
-  "version": "1.6.2",
+  "version": "1.6.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Emby/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Emby/assets/thumbnail.png",
   "color": "#52B54B",

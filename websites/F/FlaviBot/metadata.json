@@ -2,15 +2,15 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "id": "638080361179512853",
-    "name": "dark_ville"
+    "id": "503557087041683458",
+    "name": "PreMiD"
   },
   "service": "FlaviBot",
   "description": {
     "en": "Play high quality music on discord for free."
   },
   "url": "flavibot.xyz",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FlaviBot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FlaviBot/assets/thumbnail.png",
   "color": "#8468E9",

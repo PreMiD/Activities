@@ -1,3 +1,4 @@
+import type { ActivityMetadata } from './ActivityCompiler.js'
 import type { CdnAsset } from './AssetsManager.js'
 import { Buffer } from 'node:buffer'
 import { ReadStream } from 'node:fs'
@@ -19,15 +20,14 @@ const mocks = vi.hoisted(() => ({
     },
   ),
   sharp: vi.fn(),
-  formData: vi.fn().mockImplementation(() => {
+
+  formData: vi.fn().mockImplementation(function () {
     const appendSpy = vi.fn()
-    return {
-      append: appendSpy,
-      getHeaders: vi.fn().mockReturnValue({ 'content-type': 'multipart/form-data' }),
-      getBuffer: vi.fn().mockReturnValue(Buffer.from('mock-buffer')),
-      //* Track the last appended values for assertions
-      _lastAppended: () => appendSpy.mock.calls[appendSpy.mock.calls.length - 1],
-    }
+    this.append = appendSpy
+    this.getHeaders = vi.fn().mockReturnValue({ 'content-type': 'multipart/form-data' })
+    this.getBuffer = vi.fn().mockReturnValue(Buffer.from('mock-buffer'))
+    //* Track the last appended values for assertions
+    this._lastAppended = () => appendSpy.mock.calls[appendSpy.mock.calls.length - 1]
   }),
 }))
 
@@ -56,7 +56,7 @@ vi.mock('form-data', () => {
   }
 })
 
-const mockActivity = {
+const mockActivity: ActivityMetadata = {
   service: 'TestService',
   apiVersion: 1,
   version: '1.0.0',
@@ -65,6 +65,7 @@ const mockActivity = {
   description: {
     en: 'Test description',
   },
+  tags: ['test', 'activity'],
 }
 
 describe('assetsManager', () => {

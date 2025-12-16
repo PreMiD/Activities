@@ -17,7 +17,7 @@
     "status.glitch.com"
   ],
   "regExp": "([a-z0-9-]+[.])*glitch([.][a-z]+)+[/]",
-  "version": "1.8.26",
+  "version": "1.8.27",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Glitch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Glitch/assets/thumbnail.png",
   "color": "#f003fc",

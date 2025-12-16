@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1136991710291955752',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -37,6 +37,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: logo === 0 ? ActivityAssets.Logo0 : ActivityAssets.Logo1,
     startTimestamp: browsingTimestamp,
+    name: 'Anime-Odcinki',
   }
   const { pathname, href } = document.location
 

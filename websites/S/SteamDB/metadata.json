@@ -5,12 +5,6 @@
     "name": "joerkig",
     "id": "205984221859151873"
   },
-  "contributors": [
-    {
-      "name": "Dark_Ville",
-      "id": "638080361179512853"
-    }
-  ],
   "service": "SteamDB",
   "altnames": [
     "Steam Database"
@@ -23,7 +17,7 @@
     "steamdb.info",
     "steamstat.us"
   ],
-  "version": "1.1.14",
+  "version": "1.1.16",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SteamDB/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SteamDB/assets/thumbnail.png",
   "color": "#3871C8",

@@ -16,39 +16,57 @@ presence.on('UpdateData', () => {
   }
 
   function getAdvertiserName(): string {
-    const name = document.querySelector('.ml-lg > a:nth-child(1)')?.textContent
+    const name = document.querySelector('.ml-lg > a:nth-child(1)')?.textContent ?? ''
     if (name) {
       return name
     }
     else {
-      // Pro seller
+      // Individual seller
       let fallbackName = document.querySelector(
-        '.styles_wrapperBottom__unGZF > div:nth-child(2) > h2:nth-child(1)',
-      )?.textContent
+        '#aside > section:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > a:nth-child(1)',
+      )?.textContent ?? ''
       if (!fallbackName) {
         fallbackName = document.querySelector(
-          '.styles_wrapperBottom__unGZF > div:nth-child(2) > a:nth-child(1)',
-        )?.textContent
+          '.gap-y-md > div:nth-child(2) > a:nth-child(1)',
+        )?.textContent ?? ''
       }
+
+      // Pro seller
+      if (!fallbackName) {
+        fallbackName = document.querySelector(
+          '#aside > div:nth-child(1) > section:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > h2:nth-child(1)',
+        )?.textContent ?? ''
+      }
+      if (!fallbackName) {
+        fallbackName = document.querySelector(
+          '.gap-y-md > div:nth-child(2) > div:nth-child(1) > h2:nth-child(1)',
+        )?.textContent ?? ''
+      }
+
+      // Company
+      if (!fallbackName) {
+        fallbackName = document.querySelector(
+          'a.break-words',
+        )?.textContent ?? ''
+      }
+      if (!fallbackName) {
+        fallbackName = document.querySelector(
+          'a.block:nth-child(1)',
+        )?.textContent ?? ''
+      }
+
       return fallbackName || 'Vendeur inconnu'
     }
   }
 
   function getAdPrice(): string {
-    let price = document
+    const price = document
       .querySelector(
-        'div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > p:nth-child(1)',
+        'p.text-headline-1',
       )
       ?.textContent
       ?.trim()
-    if (!price || !price.includes('€')) {
-      price = document
-        .querySelector(
-          'article > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(1)',
-        )
-        ?.textContent
-        ?.trim()
-    }
+      .replace(/\s+/g, '') ?? ''
     return price || 'Prix inconnu'
   }
 
@@ -58,7 +76,8 @@ presence.on('UpdateData', () => {
   else if (document.location.pathname.includes('/favorites')) {
     presenceData.state = 'Mes annonces sauvegardées'
   }
-  else if (document.location.pathname.includes('/mes-recherches')) {
+  else if (document.location.pathname.includes('/mes-recherches')
+    || document.location.pathname.includes('/my-searches')) {
     presenceData.state = 'Mes recherches sauvegardées'
   }
   else if (document.location.pathname.includes('/mes-annonces')) {
@@ -90,7 +109,7 @@ presence.on('UpdateData', () => {
     || document.location.pathname.includes('/profile/')
   ) {
     presenceData.state = `Profil de ${
-      document.querySelector('h3.mr-lg')?.textContent
+      document.querySelector('h1.mr-lg')?.textContent ?? 'Inconnu'
     }`
     presenceData.buttons = [
       { label: 'Consulter le profil', url: document.location.href },
@@ -98,7 +117,7 @@ presence.on('UpdateData', () => {
   }
   else if (document.location.pathname.includes('/boutique')) {
     presenceData.state = `Boutique ${
-      document.querySelector('h1.mb-md')?.textContent
+      document.querySelector('h1.mb-md')?.textContent ?? 'Inconnue'
     }`
     presenceData.buttons = [
       { label: 'Consulter la boutique', url: document.location.href },
@@ -107,30 +126,40 @@ presence.on('UpdateData', () => {
   else if (document.location.pathname.includes('/recherche')) {
     presenceData.details = 'Dans les résultats de recherche :'
 
-    const searchTitle = document.querySelector('h1')?.textContent?.trim()
-    if (!searchTitle)
+    const searchTitle = document.querySelector('h1.mb-lg')?.textContent?.trim() ?? ''
+    if (!searchTitle) {
+      presenceData.state = 'Recherche en cours'
+      presence.setActivity(presenceData)
       return
-    const searchTitleParts = searchTitle?.split('«') ?? []
-    if (searchTitleParts.length > 1) {
-      const lastPart = searchTitleParts.pop()
-      if (!lastPart)
-        return
-      presenceData.state = `Annonces pour «${lastPart.split('»')[0] ?? ''}»`
     }
+
+    const searchTitleParts = searchTitle.split(':')
+    const lastPart = searchTitleParts.slice(0, -1).join(':').trim()
+    presenceData.state = lastPart
+    presence.setActivity(presenceData)
+    return
   }
-  else if (document.location.pathname.includes('/ad/')) {
-    presenceData.details = `Annonce ${document.title.split('-')[0]?.trim() ?? ''}`
+  else if (
+    document.location.pathname.includes('/ad/')
+    || document.location.pathname.includes('/vi/')
+  ) {
+    const titleParts = document.title?.split('-') ?? []
+    const title = titleParts.length > 0 ? titleParts[0]?.trim() ?? '' : ''
+    presenceData.details = `Annonce ${title}`
+
     const adsPrice = getAdPrice()
     const advertiserName = getAdvertiserName()
-    if (!adsPrice && !advertiserName)
-      return // If both are unknown, don't update the presence
+
+    if (!adsPrice && !advertiserName) {
+      presenceData.state = 'Consulte une annonce'
+      presence.setActivity(presenceData)
+      return
+    }
+
     const finalPrice = document.location.pathname.includes('/offres_d_emploi/')
-      ? `Payé ${adsPrice} ${
-        document.querySelector(
-          'div.py-lg:nth-child(2) > div:nth-child(1) > div:nth-child(1) > p:nth-child(2)',
-        )?.textContent || '?'
-      }`
-      : `Vendu ${adsPrice}`
+      ? `Payé ${adsPrice}` // 'Payé' is used for job offers
+      : `Vendu ${adsPrice}` // 'Vendu' is used for other ads
+
     presenceData.state = `${finalPrice} par ${advertiserName}`
     presenceData.buttons = [
       { label: 'Consulter l\'annonce', url: document.location.href },

@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '844107447933075498',
+  clientId: '503557087041683458',
 })
 
 async function getStrings() {
@@ -56,6 +56,7 @@ presence.on('UpdateData', async () => {
   ])
   const presenceData: PresenceData = {
     largeImageKey: logoCheck(logo),
+    name: 'Showtime',
   }
   const { pathname, hostname, href } = document.location
   const episodeEtc = document

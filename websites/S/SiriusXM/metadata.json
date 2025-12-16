@@ -2,8 +2,8 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "name": "Dark_Ville",
-    "id": "638080361179512853"
+    "name": "PreMiD",
+    "id": "503557087041683458"
   },
   "contributors": [
     {
@@ -20,7 +20,7 @@
     "player.siriusxm.com",
     "player.siriusxm.ca"
   ],
-  "version": "1.2.19",
+  "version": "1.2.21",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SiriusXM/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SiriusXM/assets/thumbnail.png",
   "color": "#0081FF",

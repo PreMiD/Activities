@@ -19,20 +19,24 @@ async function getStrings() {
       browsingSheet: 'googledocs.browsingSheet',
       editingPresentation: 'googledocs.editingPresentation',
       browsingPresentation: 'googledocs.browsingPresentation',
-      vieiwngPresentation: 'googledocs.viewingPresentation',
+      viewingPresentation: 'googledocs.viewingPresentation',
+      editingVid: 'googledocs.editingVid',
+      viewingVid: 'googledocs.viewingVid',
+      browsingVid: 'googledocs.browsingVid',
+      editingDrawing: 'googledocs.editingDrawing',
+      viewingDrawing: 'googledocs.viewingDrawing',
+      browsingDrawing: 'googledocs.browsingDrawing',
     },
-
   )
 }
-
-let strings: Awaited<ReturnType<typeof getStrings>>
-let oldLang: string | null = null
 
 enum ActivityAssets {
   DocsLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/0.png',
   FormsLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/1.png',
   SheetsLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/2.png',
   SlidesLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/3.png',
+  VidsLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/4.png',
+  DrawingsLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/5.png',
 }
 
 presence.on('UpdateData', async () => {
@@ -40,20 +44,20 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
   const privacy = await presence.getSetting<boolean>('privacy')
-  const newLang = await presence.getSetting<string>('lang').catch(() => 'en')
 
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
+  const strings = await getStrings()
 
   title = document.title
-    .replace('- Google Docs', '')
-    .replace('- Google Forms', '')
-    .replace('- Google Sheets', '')
-    .replace('- Google Slides', '')
+    ?.replace(/(?:- )?Google[\xA0 ]Docs/, '')
+    ?.replace(/(?:- )?Google[\xA0 ]Forms/, '')
+    ?.replace(/(?:- )?Google[\xA0 ]Sheets/, '')
+    ?.replace(/(?:- )?Google[\xA0 ]Slides/, '')
+    ?.replace(/(?:- )?Google[\xA0 ]Vids/, '')
+    ?.replace(/(?:- )?Google[\xA0 ]Drawings/, '')
+    ?.trim()
 
   if (document.location.pathname.includes('/document')) {
+    presenceData.name = 'Google Docs'
     presenceData.largeImageKey = ActivityAssets.DocsLogo
     if (document.location.pathname.includes('/edit'))
       presenceData.details = strings.editingDoc
@@ -62,6 +66,7 @@ presence.on('UpdateData', async () => {
     else presenceData.details = strings.viewingDoc
   }
   else if (document.location.pathname.includes('/forms/')) {
+    presenceData.name = 'Google Forms'
     presenceData.largeImageKey = ActivityAssets.FormsLogo
     if (document.location.pathname.includes('/edit'))
       presenceData.details = strings.editingForm
@@ -70,6 +75,7 @@ presence.on('UpdateData', async () => {
     else presenceData.details = strings.viewingForm
   }
   else if (document.location.pathname.includes('/spreadsheets')) {
+    presenceData.name = 'Google Sheets'
     presenceData.largeImageKey = ActivityAssets.SheetsLogo
     if (document.location.pathname.includes('/edit'))
       presenceData.details = strings.editingSheet
@@ -78,15 +84,34 @@ presence.on('UpdateData', async () => {
     else presenceData.details = strings.viewingSheet
   }
   else if (document.location.pathname.includes('/presentation/')) {
+    presenceData.name = 'Google Slides'
     presenceData.largeImageKey = ActivityAssets.SlidesLogo
     if (document.location.pathname.includes('/edit'))
       presenceData.details = strings.editingPresentation
     else if (document.location.pathname.includes('/presentation/u/'))
       presenceData.details = strings.browsingPresentation
-    else presenceData.details = strings.vieiwngPresentation
+    else presenceData.details = strings.viewingPresentation
+  }
+  else if (document.location.pathname.includes('/videos/')) {
+    presenceData.name = 'Google Vids'
+    presenceData.largeImageKey = ActivityAssets.VidsLogo
+    if (document.location.pathname.includes('/edit'))
+      presenceData.details = strings.editingVid
+    else if (document.location.pathname.includes('/videos/u/'))
+      presenceData.details = strings.browsingVid
+    else presenceData.details = strings.viewingVid
+  }
+  else if (document.location.pathname.includes('/drawings/')) {
+    presenceData.name = 'Google Drawings'
+    presenceData.largeImageKey = ActivityAssets.DrawingsLogo
+    if (document.location.pathname.includes('/edit'))
+      presenceData.details = strings.editingDrawing
+    else if (document.location.pathname.includes('/drawings/u/'))
+      presenceData.details = strings.browsingDrawing
+    else presenceData.details = strings.viewingDrawing
   }
 
-  if (!privacy)
+  if (!privacy && title !== '')
     presenceData.state = title
 
   if (presenceData.details)

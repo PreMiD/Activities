@@ -2,8 +2,8 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "name": "Dark_Ville",
-    "id": "638080361179512853"
+    "name": "PreMiD",
+    "id": "503557087041683458"
   },
   "service": "000webhost",
   "description": {
@@ -13,7 +13,7 @@
   },
   "url": "000webhost.com",
   "regExp": "([a-z0-9-]+[.])*000webhost[.]com[\\/]",
-  "version": "1.3.7",
+  "version": "1.3.9",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/000webhost/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/000webhost/assets/thumbnail.jpg",
   "color": "#ff5c62",

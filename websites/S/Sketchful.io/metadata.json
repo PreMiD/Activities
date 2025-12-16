@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "193714715631812608",
+    "name": "theusaf"
+  },
+  "service": "Sketchful.io",
+  "altnames": [
+    "Sketchful"
+  ],
+  "description": {
+    "en": "Sketchful.io is a free online drawing and guessing game. Play pictionary with anyone in the world! Be the fastest to guess and earn the most points to win!"
+  },
+  "url": "sketchful.io",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sketchful.io/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sketchful.io/assets/thumbnail.png",
+  "color": "#0097FF",
+  "category": "games",
+  "tags": [
+    "scribble",
+    "sketch",
+    "skribbl",
+    "draw",
+    "drawing",
+    "online",
+    "guessing",
+    "multiplayer"
+  ],
+  "settings": [
+    {
+      "id": "useJoinButton",
+      "value": true,
+      "icon": "fad fa-right-to-bracket",
+      "title": "Show Join Button"
+    },
+    {
+      "id": "showDrawing",
+      "value": true,
+      "icon": "fad fa-image",
+      "title": "Show Drawing Image"
+    }
+  ]
+}

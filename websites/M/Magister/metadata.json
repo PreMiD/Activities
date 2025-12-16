@@ -12,7 +12,7 @@
   },
   "url": "magister.net",
   "regExp": "([a-z0-9-]+[.])*magister[.]net[/]",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Magister/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Magister/assets/thumbnail.png",
   "color": "#1F97F9",

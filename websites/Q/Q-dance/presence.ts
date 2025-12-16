@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '844107169205190686',
+  clientId: '503557087041683458',
 })
 const elapsed = Math.floor(Date.now() / 1000)
 
@@ -20,6 +20,7 @@ let oldLang: string | null = null
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/Q/Q-dance/assets/logo.png',
+    name: 'Q-dance',
   }
   const [newLang, privacy, buttons, covers] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),

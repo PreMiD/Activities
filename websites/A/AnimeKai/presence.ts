@@ -31,7 +31,7 @@ presence.on(
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    name: 'AnimeKai',
+    name: 'AnimeKAI',
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
   }
@@ -39,7 +39,7 @@ presence.on('UpdateData', async () => {
   const buttons = await presence.getSetting<boolean>('buttons')
 
   if (pathname === '/' || pathname === '/home') {
-    presenceData.details = 'Exploring AnimeKai.to'
+    presenceData.details = 'Exploring AnimeKAI'
   }
   else if (
     /\/(?:ongoing|recent|movie|new-releases|updates|tv|completed|top-upcoming|ona|ova|special|genres\/.*)/.test(
@@ -87,8 +87,8 @@ presence.on('UpdateData', async () => {
       )?.src
 
       presenceData.largeImageKey = thumbnail
-      presenceData.details = 'In a room'
-      presenceData.type = ActivityType.Watching
+      presenceData.details = 'In a room';
+      (presenceData as PresenceData).type = ActivityType.Watching
       if (filmName)
         presenceData.state = `${filmName.textContent}`
       if (data && !data.paused) {
@@ -122,7 +122,7 @@ presence.on('UpdateData', async () => {
     if (episode)
       presenceData.state = `Episode ${episode}`
     if (data) {
-      presenceData.type = ActivityType.Watching
+      (presenceData as PresenceData).type = ActivityType.Watching
       if (!data.paused) {
         [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(data.currTime, data.duration)
         presenceData.smallImageKey = Assets.Play
@@ -145,6 +145,18 @@ presence.on('UpdateData', async () => {
       ]
     }
   }
+  else if (/^\/user\/[^/]+\/profile$/.test(pathname)) {
+    presenceData.details = 'Viewing User Profile'
+    presenceData.smallImageKey = Assets.Viewing
+    if (buttons) {
+      presenceData.buttons = [
+        {
+          label: 'View Profile',
+          url: href,
+        },
+      ]
+    }
+  }
   else {
     switch (pathname) {
       case '/browser': {
@@ -161,29 +173,55 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Contact Us'
         break
       }
-      case '/user/profile': {
-        presenceData.details = 'Checking User Profile'
-        presenceData.smallImageKey = ActivityAssets.Settings
-        break
-      }
       case '/user/settings': {
-        presenceData.details = 'Changing Settings'
+        presenceData.details = 'Managing Settings'
         presenceData.smallImageKey = ActivityAssets.Settings
         break
       }
-      case '/user/notification': {
-        presenceData.details = 'Looking at Notifications'
-        presenceData.smallImageKey = ActivityAssets.Notifications
+      case '/user/profile': {
+        presenceData.details = 'Editing Profile'
+        presenceData.smallImageKey = ActivityAssets.Settings
         break
       }
       case '/user/watching': {
-        presenceData.details = 'Continue Watching'
-        presenceData.smallImageKey = Assets.Reading
+        presenceData.details = 'Viewing Continue Watching'
+        presenceData.smallImageKey = Assets.Viewing
         break
       }
       case '/user/import': {
-        presenceData.details = 'MAL Import/Export'
+        presenceData.details = 'MAL/AL Import'
         presenceData.smallImageKey = Assets.Downloading
+        break
+      }
+      case '/user/export': {
+        presenceData.details = 'MAL/AL Export'
+        presenceData.smallImageKey = Assets.Uploading
+        break
+      }
+      case '/user/sync': {
+        presenceData.details = 'Syncing with AL'
+        presenceData.smallImageKey = Assets.Repeat
+        break
+      }
+      case '/user/notifications': {
+        const type = new URLSearchParams(document.location.search).get('type')
+        if (type === 'community') {
+          presenceData.details = 'Looking at Community Notifications'
+        }
+        else {
+          presenceData.details = 'Looking at Anime Notifications'
+        }
+        presenceData.smallImageKey = Assets.Reading
+        break
+      }
+      case '/user/bookmarks': {
+        presenceData.details = 'Managing Bookmarks'
+        presenceData.smallImageKey = ActivityAssets.Settings
+        break
+      }
+      case '/upcoming': {
+        presenceData.details = 'Looking at Upcoming'
+        presenceData.smallImageKey = Assets.Reading
         break
       }
       default: {

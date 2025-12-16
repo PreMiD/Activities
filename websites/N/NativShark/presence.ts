@@ -1,5 +1,5 @@
 const presence: Presence = new Presence({
-  clientId: '787034842084016158',
+  clientId: '503557087041683458',
 })
 const startTimestamp: number = Math.floor(Date.now() / 1000)
 const pathDescriptors: [string, string][] = [
@@ -24,6 +24,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/N/NativShark/assets/logo.png',
     startTimestamp,
+    name: 'NativShark',
   }
   const { pathname } = window.location
 

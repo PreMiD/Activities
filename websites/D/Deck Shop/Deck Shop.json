@@ -1,0 +1,50 @@
+{
+  "deck-shop.browseGuides": {
+    "description": "Browsing guide articles",
+    "message": "Browsing guides"
+  },
+  "deck-shop.readGuide": {
+    "description": "Reading a guide article",
+    "message": "Reading a guide"
+  },
+  "deck-shop.viewClan": {
+    "description": "Viewing information about a Clan",
+    "message": "Viewing a Clan"
+  },
+  "deck-shop.buttonViewClan": {
+    "description": "Button message for viewing Clan information",
+    "message": "View Clan"
+  },
+  "deck-shop.buildDeck": {
+    "description": "Building a Deck of Cards",
+    "message": "Building a Deck"
+  },
+  "deck-shop.viewDeck": {
+    "description": "Viewing a Deck and its stats",
+    "message": "Viewing a Deck"
+  },
+  "deck-shop.buttonViewDeck": {
+    "description": "Button to view the Deck information",
+    "message": "View Deck"
+  },
+  "deck-shop.buttonUseDeck": {
+    "description": "Button to copy and use the Deck in-game",
+    "message": "Use Deck"
+  },
+  "deck-shop.findDeck": {
+    "description": "Finding decks by criteria",
+    "message": "Finding Decks"
+  },
+  "deck-shop.browseCards": {
+    "description": "Browsing a list of Cards",
+    "message": "Browsing Cards"
+  },
+  "deck-shop.viewCard": {
+    "description": "Viewing details about a Card",
+    "message": "Viewing a Card"
+  },
+  "deck-shop.buttonViewCard": {
+    "description": "Button to view details about a Card",
+    "message": "View Card"
+  }
+}

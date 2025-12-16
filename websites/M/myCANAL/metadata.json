@@ -11,10 +11,6 @@
       "id": "604182077088202784"
     },
     {
-      "name": "Dark_Ville",
-      "id": "638080361179512853"
-    },
-    {
       "name": "Arias800",
       "id": "341235976766488576"
     }
@@ -26,7 +22,7 @@
     "nl": "Canal + is een Franse abonnementsaanbieder die is gekoppeld aan het kanaal met dezelfde naam. Het is eigendom van Vivendi met een aandeel van honderd procent."
   },
   "url": "www.canalplus.com",
-  "version": "2.0.17",
+  "version": "2.0.19",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/myCANAL/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/myCANAL/assets/thumbnail.png",
   "color": "#000",

@@ -12,8 +12,8 @@
     "message": "Searching for a place"
   },
   "googlemaps.searchingForPlace": {
-    "description": "Displayed when the user is searching for a specific place. {0} is the place name. e.g. 'Searching for Paris'",
-    "message": "Searching for {0}"
+    "description": "Displayed when the user is searching for a specific place.",
+    "message": "Searching for:"
   },
   "googlemaps.viewingAPlace": {
     "description": "Displayed when the user is viewing a place.",
@@ -32,7 +32,7 @@
     "message": "Viewing map"
   },
   "googlemaps.viewingPlace": {
-    "description": "Displayed when the user is viewing a place. {0} is the place name. e.g. 'Viewing place Paris'",
-    "message": "Viewing place {0}"
+    "description": "Displayed when the user is viewing a specific place.",
+    "message": "Viewing place:"
   }
 }

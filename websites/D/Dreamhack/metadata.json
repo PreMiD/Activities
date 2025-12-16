@@ -3,7 +3,7 @@
   "apiVersion": 1,
   "author": {
     "id": "837890256744742963",
-    "name": "shimaenaga_0709"
+    "name": "shimaenaga1123"
   },
   "service": "Dreamhack",
   "description": {
@@ -14,7 +14,7 @@
     "dreamhack.io",
     "learn.dreamhack.io"
   ],
-  "version": "1.0.1",
+  "version": "2.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dreamhack/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dreamhack/assets/thumbnail.png",
   "color": "#7d89f7",
@@ -25,5 +25,25 @@
     "technology",
     "coding",
     "programming"
+  ],
+  "settings": [
+    {
+      "id": "hideWargame",
+      "title": "워게임 숨기기",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "hideCTF",
+      "title": "CTF 숨기기",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "hideLecture",
+      "title": "강좌 숨기기",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
   ]
 }

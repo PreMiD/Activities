@@ -37,12 +37,18 @@ function getBaseSection(): HTMLElement | null {
   return document.querySelector('.ytd-page-manager:not([hidden])')
 }
 
+function isMusic(): boolean {
+  const microformat = JSON.parse(document.querySelector('#microformat script[type="application/ld+json"]')?.textContent || '{}')
+  return microformat?.genre === 'Music'
+}
+
 const resolver: Resolver = {
   isActive,
   getTitle,
   getUploader,
   getChannelURL,
   getVideoID,
+  isMusic,
 }
 
 export default resolver

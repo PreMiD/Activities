@@ -1,17 +1,20 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, StatusDisplayType, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '802958833214423081',
 })
+
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/SoundCloud/assets/logo.png',
+}
+
 async function getStrings() {
   return presence.getStrings(
     {
       pause: 'general.paused',
       browse: 'general.browsing',
       search: 'general.searchSomething',
-      listen: 'general.buttonListenAlong',
     },
-
   )
 }
 function getElement(query: string): string | undefined {
@@ -119,8 +122,8 @@ presence.on('UpdateData', async () => {
     hidePaused,
     showTimestamps,
     showCover,
-    showButtons,
-    usePresenceName,
+    links,
+    displayType,
     newLang,
   ] = await Promise.all([
     presence.getSetting<boolean>('browse'),
@@ -128,8 +131,8 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('hidePaused'),
     presence.getSetting<boolean>('timestamp'),
     presence.getSetting<boolean>('cover'),
-    presence.getSetting<boolean>('buttons'),
-    presence.getSetting<boolean>('usePresenceName'),
+    presence.getSetting<boolean>('links'),
+    presence.getSetting<number>('displayType'),
     presence.getSetting<string>('lang').catch(() => 'en'),
   ])
   const playing = Boolean(document.querySelector('.playControls__play.playing'))
@@ -144,7 +147,7 @@ presence.on('UpdateData', async () => {
 
   let presenceData: PresenceData = {
     type: ActivityType.Listening,
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/S/SoundCloud/assets/logo.png',
+    largeImageKey: ActivityAssets.Logo,
     startTimestamp: elapsed,
   }
 
@@ -154,19 +157,18 @@ presence.on('UpdateData', async () => {
   }
 
   if ((playing || (!playing && !showBrowsing)) && showSong) {
-    if (!usePresenceName) {
-      presenceData.details = getElement(
-        '.playbackSoundBadge__titleLink > span:nth-child(2)',
-      )
-      presenceData.state = getElement('.playbackSoundBadge__lightLink')
+    presenceData.details = getElement(
+      '.playbackSoundBadge__titleLink > span:nth-child(2)',
+    )
+    presenceData.state = getElement('.playbackSoundBadge__lightLink')
+    switch (displayType) {
+      case 1:
+        presenceData.statusDisplayType = StatusDisplayType.State
+        break
+      case 2:
+        presenceData.statusDisplayType = StatusDisplayType.Details
+        break
     }
-    else {
-      presenceData.name = getElement(
-        '.playbackSoundBadge__titleLink > span:nth-child(2)',
-      )
-      presenceData.details = getElement('.playbackSoundBadge__lightLink')
-    }
-
     const timePassed = document.querySelector(
       'div.playbackTimeline__timePassed > span:nth-child(2)',
     )?.textContent
@@ -174,27 +176,28 @@ presence.on('UpdateData', async () => {
       'div.playbackTimeline__duration > span:nth-child(2)',
     )?.textContent
     const [currentTime, duration] = [
-      presence.timestampFromFormat(timePassed ?? ''),
+      timestampFromFormat(timePassed ?? ''),
       (() => {
         if (!durationString?.startsWith('-')) {
-          return presence.timestampFromFormat(durationString ?? '')
+          return timestampFromFormat(durationString ?? '')
         }
         else {
           return (
-            presence.timestampFromFormat(durationString.slice(1))
-            + presence.timestampFromFormat(timePassed ?? '')
+            timestampFromFormat(durationString.slice(1))
+            + timestampFromFormat(timePassed ?? '')
           )
         }
       })(),
     ]
-    const pathLinkSong = document
-      .querySelector(
-        '#app > div.playControls.g-z-index-control-bar.m-visible > section > div > div.playControls__elements > div.playControls__soundBadge > div > div.playbackSoundBadge__titleContextContainer > div > a',
-      )
-      ?.getAttribute('href')
+    const linkSong = document
+      .querySelector<HTMLAnchorElement>('.playbackSoundBadge__titleLink')
+      ?.href
+    const linkArtist = document
+      .querySelector<HTMLAnchorElement>('.playbackSoundBadge__lightLink')
+      ?.href
 
     if (playing) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(currentTime, duration)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, duration)
     }
     else {
       presenceData.smallImageKey = Assets.Pause
@@ -209,16 +212,16 @@ presence.on('UpdateData', async () => {
         ?.style
         .backgroundImage
         .match(/"(.*)"/)?.[1]
-        ?.replace('-t50x50.jpg', '-t500x500.jpg') ?? 'soundcloud'
+        ?.replace('-t50x50.jpg', '-t500x500.jpg') ?? ActivityAssets.Logo
     }
 
-    if (showButtons && pathLinkSong) {
-      presenceData.buttons = [
-        {
-          label: strings.listen,
-          url: `https://soundcloud.com${pathLinkSong}`,
-        },
-      ]
+    if (links) {
+      if (linkSong) {
+        presenceData.detailsUrl = linkSong
+        presenceData.largeImageUrl = linkSong
+      }
+      if (linkArtist)
+        presenceData.stateUrl = linkArtist
     }
   }
   else if ((!playing || !showSong) && showBrowsing) {
@@ -307,10 +310,6 @@ presence.on('UpdateData', async () => {
       delete presenceData.startTimestamp
       delete presenceData.endTimestamp
     }
-
     presence.setActivity(presenceData)
-  }
-  else {
-    presence.setActivity()
   }
 })

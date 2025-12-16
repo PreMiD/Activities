@@ -5,10 +5,12 @@
     "name": "Tofuine",
     "id": "734631480541708291"
   },
-  "contributors": [{
-    "name": "Atom Skully",
-    "id": "671037171611729920"
-  }],
+  "contributors": [
+    {
+      "name": "Atom Skully",
+      "id": "671037171611729920"
+    }
+  ],
   "service": "Google Maps",
   "description": {
     "en": "Google Maps is a web mapping platform and consumer application offered by Google. It offers satellite imagery, aerial photography, street maps, 360° interactive panoramic views of streets, real-time traffic conditions, and route planning for traveling by foot, car, bike, air and public transportation.",
@@ -16,7 +18,7 @@
   },
   "url": "maps.google.com",
   "regExp": "www\\.google\\.com\\/maps",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/thumbnail.png",
   "color": "#4e85f2",

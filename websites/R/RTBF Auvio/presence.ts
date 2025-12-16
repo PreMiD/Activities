@@ -33,7 +33,6 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Auvio,
     largeImageText: 'RTBF Auvio',
     smallImageKey: ActivityAssets.Binoculars,
-    smallImageText: strings.browsing,
     type: ActivityType.Watching,
   }
   const [
@@ -55,6 +54,7 @@ presence.on('UpdateData', async () => {
   // Update strings if user selected another language.
   if (!checkStringLanguage(newLang))
     return
+  presenceData.smallImageText = strings.browsing
 
   if (oldPath !== pathname) {
     oldPath = pathname
@@ -65,7 +65,9 @@ presence.on('UpdateData', async () => {
   let useSlideshow = false
 
   switch (true) {
-    case exist('#audioPlayerContainer') && document.querySelector('#PlayerUIAudioPlayPauseButton')?.getAttribute('aria-label') === 'pause': {
+    case exist('#audioPlayerContainer')
+      && (exist('#PlayerUIButtonStop')
+        || document.querySelector('#PlayerUIButtonPlayPause')?.getAttribute('aria-label') === 'pause'): {
       if (!audioPlayer) {
         slideshow.deleteAllSlides() // Clearing previous slides
         audioPlayer = true
@@ -280,13 +282,14 @@ presence.on('UpdateData', async () => {
         const dataString = await response?.text()
         const metadatas = JSON.parse(dataString)
 
-        let mediaType, description, image, channel, duration, category, scheduledFrom, scheduledTo, waitTime, remainingTime
+        let mediaType, mediaSubtype, description, image, channel, duration, category, scheduledFrom, scheduledTo, waitTime, remainingTime
         if (response) {
           // Populating metadatas variables with API method
 
           mediaType = metadatas.data.pageType
             ?? metadatas.data.content?.pageType
             ?? ''
+          mediaSubtype = metadatas.data.content.type ?? ''
 
           title = metadatas.data.content?.title ?? 'Auvio'
           subtitle = metadatas.data.content?.subtitle
@@ -410,13 +413,19 @@ presence.on('UpdateData', async () => {
             slideshow.addSlide('01', subtitleData, 5000)
           }
 
+          if (description) {
+            const descriptionData = structuredClone(presenceData)
+            descriptionData.state = description
+            slideshow.addSlide('02', descriptionData, 5000)
+          }
+
           // SLIDE: Infos
           if (channel || duration || category) {
             const infosData = structuredClone(presenceData)
             infosData.state = [channel, duration, category].filter(Boolean).join(' - ') // "La Une - 51min - Policier"
             if (channel && getChannel(channel).found)
               infosData.largeImageKey = getChannel(channel).logo
-            slideshow.addSlide('02', infosData, 5000)
+            slideshow.addSlide('03', infosData, 5000)
           }
 
           // SLIDE: Livestream Status
@@ -435,7 +444,7 @@ presence.on('UpdateData', async () => {
             else {
               scheduleData.state = strings.liveEnded // "Livestream has ended"
             }
-            slideshow.addSlide('03', scheduleData, 5000)
+            slideshow.addSlide('04', scheduleData, 5000)
           }
         }
         else {
@@ -450,7 +459,28 @@ presence.on('UpdateData', async () => {
           title = document.querySelector('h1[class*=TitleDetails_title]')?.textContent ?? title
           subtitle = document.querySelector('[class*=TitleDetails_subtitle]')?.textContent ?? subtitle
 
-          const videoArray = document.querySelectorAll('div.redbee-player-media-container > video')
+          // Try to extract season from the title (e.g. "Show Name S01" or "Show Name S1")
+          let seasonNumber, episodeNumber, episodeName
+          const seasonMatch = title?.match(/S(?<seasonNumber>\d+)/i)
+          if (seasonMatch?.groups?.seasonNumber) {
+            seasonNumber = seasonMatch.groups.seasonNumber
+            // Remove the season token from the title (e.g. "Show Name S01")
+            title = title.replace(seasonMatch[0], '').trim()
+          }
+          else {
+            seasonNumber = '01'
+          }
+
+          // Try to extract episode number and optional episode name from the subtitle
+          // Examples: "E01 - Episode Name" or "E01 Episode Name" or "01 - Episode Name"
+          const episodeMatch = subtitle?.match(/^E?(?<episodeNumber>\d+)(?:(?:\s*-\s*|\s+)(?<episodeName>\S.*))?$/i)
+          if (episodeMatch?.groups?.episodeNumber) {
+            episodeNumber = episodeMatch.groups.episodeNumber
+            if (episodeMatch.groups.episodeName)
+              episodeName = episodeMatch.groups.episodeName.trim()
+          }
+
+          const videoArray = document.querySelectorAll('div.playerWrapper > video')
           const video = videoArray[videoArray.length - 1] as HTMLVideoElement
           const bAdCountdown = exist('.sas-ctrl-countdown.sas-enable')
 
@@ -458,9 +488,9 @@ presence.on('UpdateData', async () => {
           if (usePresenceName)
             presenceData.name = title
 
-          presenceData.details = title
+          presenceData.details = usePresenceName ? episodeName ?? subtitle : title
 
-          presenceData.largeImageText = description
+          presenceData.largeImageText = episodeNumber && seasonNumber ? `Season ${seasonNumber}, Episode ${episodeNumber}` : description
           if (usePoster) {
             presenceData.largeImageKey = await getThumbnail(
               image,
@@ -473,7 +503,7 @@ presence.on('UpdateData', async () => {
           }
 
           // LIVE MEDIA PLAYER
-          const liveDelay = (Math.abs(Math.floor(new Date().getTime() / 1000 - video.currentTime)))
+          const liveDelay = video ? (Math.abs(Math.floor(new Date().getTime() / 1000 - video.currentTime))) : 0
           if (mediaType === 'LIVE'
             || (liveDelay < 3600) // Sometimes lives don't follow established codes
           ) {
@@ -529,9 +559,22 @@ presence.on('UpdateData', async () => {
           else {
             // VOD MEDIA PLAYER
             if (useButtons) {
+              let stringMedia
+              if (mediaSubtype === 'SERIE') {
+                stringMedia = strings.buttonWatchSeries
+              }
+              else if (mediaSubtype === 'SHOW') {
+                stringMedia = strings.buttonWatchProgram
+              }
+              else if (mediaSubtype === 'VIDEO') {
+                stringMedia = strings.buttonWatchMovie
+              }
+              else {
+                stringMedia = strings.buttonWatchVideo
+              }
               presenceData.buttons = [
                 {
-                  label: strings.buttonWatchVideo,
+                  label: stringMedia,
                   url: href,
                 },
               ]
@@ -563,7 +606,7 @@ presence.on('UpdateData', async () => {
           // SLIDE: Subtitle
           if (subtitle) {
             const subtitleData = structuredClone(presenceData)
-            subtitleData.state = subtitle
+            subtitleData.state = usePresenceName ? description : episodeName ?? subtitle
             slideshow.addSlide('01', subtitleData, 5000)
           }
 

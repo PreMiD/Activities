@@ -2,8 +2,8 @@
   "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "id": "638080361179512853",
-    "name": "Dark_Ville"
+    "id": "503557087041683458",
+    "name": "PreMiD"
   },
   "service": "History Vault",
   "description": {
@@ -13,7 +13,7 @@
     "www.historyvault.com",
     "watch.historyvault.com"
   ],
-  "version": "1.0.13",
+  "version": "1.0.15",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/History%20Vault/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/History%20Vault/assets/thumbnail.jpg",
   "color": "#DC9533",

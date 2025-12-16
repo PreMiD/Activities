@@ -9,11 +9,16 @@
     {
       "name": "Callum",
       "id": "506899274748133376"
+    },
+    {
+      "name": "Skully",
+      "id": "671037171611729920"
     }
   ],
   "service": "Google Docs",
   "description": {
     "en": "Google Docs is a word processor included as part of a free, web-based software office suite offered by Google within its Google Drive service. This service also includes Google Sheets and Google Slides, a spreadsheet and presentation program respectively.",
+    "fr": "Google Docs est un traitement de texte inclus dans une suite bureautique gratuite et basée sur le Web proposée par Google dans le cadre de son service Google Drive. Ce service comprend également Google Sheets et Google Slides, un tableur et un programme de présentation respectivement.",
     "ga": "Is próiseálaí focal é Google Docs atá mar chuid de shraith oifige bogearraí gréasán-bhunaithe saor in aisce a chuireann Google ar fáil laistigh dá sheirbhís Google Drive. Áirítear leis an tseirbhís seo freisin Google Sheets agus Google Slides, clár scarbhileoige agus cur i láthair faoi seach.",
     "nl": "Google Documenten is een gratis webgebaseerde tekstverwerker die deel uitmaakt van een virtueel kantoor aangeboden door Google binnen de Google Drive-service. Deze dienst bevat ook onder andere Google Spreadsheets en Google Presentaties.",
     "vi": "Google Docs là một ứng dụng hỗ trợ soạn thảo văn phòng trực tuyến được cung cấp miễn phí bởi Google. Nó bao gồm ba bộ ứng dụng: soạn thảo văn bản, soạn thảo bản tính và soạn thảo trình chiếu.",
@@ -22,13 +27,15 @@
   },
   "url": "docs.google.com",
   "regExp": "docs[.]google([.][a-z]+)+[/]",
-  "version": "1.4.35",
+  "version": "1.5.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/thumbnail.jpg",
   "color": "#3a404a",
   "category": "other",
   "tags": [
     "google",
+    "drawings",
+    "vids",
     "sheets",
     "slides",
     "forms",

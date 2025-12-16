@@ -107,12 +107,13 @@ function getLessonPresence(): PresenceData {
   return presenceData
 }
 
-presence.on('UpdateData', () => {
+presence.on('UpdateData', async () => {
   const { hostname, pathname } = document.location
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
   }
+  let hideActivity = false
 
   switch (hostname) {
     case 'wanikani.com':
@@ -121,12 +122,20 @@ presence.on('UpdateData', () => {
         case '/':
         case '/dashboard':
         case '/login': {
-          const buttons = document.querySelector(
-            '.lessons-and-reviews',
-          )?.children ?? []
-          if (buttons.length === 2) {
-            const lessons = +buttons[0]!.querySelector<HTMLSpanElement>('[class*=__count]')!.textContent!
-            const reviews = +buttons[1]!.querySelector<HTMLSpanElement>('[class*=__count]')!.textContent!
+          const lessons_widget = document.querySelector('.todays-lessons-widget')
+          const reviews_widget = document.querySelector('.reviews-widget')
+          if (!lessons_widget || !reviews_widget) {
+            presenceData.details = 'Browsing'
+            presenceData.state = 'Viewing Home Page'
+          }
+          else {
+            const lessonsText = document.querySelector<HTMLSpanElement>('.todays-lessons-widget__count-text')!.textContent!
+            let lessons
+            if (lessonsText.includes('Done'))
+              lessons = 0
+            else
+              lessons = +lessonsText
+            const reviews = +document.querySelector<HTMLSpanElement>('.reviews-widget__count-text')!.textContent!
             presenceData.details = 'Viewing Dashboard'
             presenceData.state = `${lessons} lessons | ${reviews} reviews`
             presenceData.smallImageText = document.querySelector<HTMLAnchorElement>(
@@ -166,11 +175,14 @@ presence.on('UpdateData', () => {
             else {
               presenceData.smallImageKey = ActivityAssets.Reviews1000
             }
+            const hideOnDone = await presence.getSetting<boolean>('hideOnDone')
+            if (hideOnDone && lessons === 0 && reviews === 0)
+              hideActivity = true
           }
-          else {
-            presenceData.details = 'Browsing'
-            presenceData.state = 'Viewing Home Page'
-          }
+          break
+        }
+        case '/dashboard-customization': {
+          presenceData.details = 'Customizing Dashboard'
           break
         }
         case '/subject-lessons/picker': {
@@ -268,5 +280,8 @@ presence.on('UpdateData', () => {
     }
   }
 
-  presence.setActivity(presenceData)
+  if (hideActivity)
+    presence.clearActivity()
+  else
+    presence.setActivity(presenceData)
 })

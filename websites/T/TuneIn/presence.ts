@@ -1,7 +1,7 @@
 import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '844108776793178122',
+  clientId: '503557087041683458',
 })
 const startTimestamp = Math.floor(Date.now() / 1000)
 
@@ -23,6 +23,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/T/TuneIn/assets/logo.png',
     type: ActivityType.Listening,
     startTimestamp,
+    name: 'TuneIn',
   }
   const [newLang, timestamps, cover, privacy] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),

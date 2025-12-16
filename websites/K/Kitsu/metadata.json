@@ -8,10 +8,11 @@
   "service": "Kitsu",
   "description": {
     "en": "Share anime and manga experiences, get recommendations and see what friends are watching or reading.",
+    "fr": "Partagez vos expériences d'anime et de manga, obtenez des recommandations et voyez ce que vos amis regardent ou lisent.",
     "nl": "Deel anime- en manga-ervaringen, ontvang aanbevelingen en kijk wat vrienden kijken of lezen."
   },
-  "url": "kitsu.io",
-  "version": "1.3.26",
+  "url": "kitsu.app",
+  "version": "1.3.28",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kitsu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kitsu/assets/thumbnail.png",
   "color": "#FD755C",

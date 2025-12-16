@@ -18,9 +18,10 @@
   },
   "url": [
     "animecix.net",
-    "anm.cx"
+    "anm.cx",
+    "animecix.tv"
   ],
-  "version": "1.0.4",
+  "version": "1.0.7",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeciX/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeciX/assets/thumbnail.jpeg",
   "color": "#b6eafd",

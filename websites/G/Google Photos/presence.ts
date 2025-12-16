@@ -43,7 +43,7 @@ presence.on('UpdateData', async () => {
   else if (path.startsWith('/documents')) {
     presenceData.details = strings.viewingDocuments
     if (path.split('/')[2] != null) {
-      presenceData.state = document.title.replace(' - Google Photos', '')
+      presenceData.state = document.title.replace(/- Google[\xA0 ]Photos/, '').trim()
     }
   }
   else if (path.startsWith('/memory')) {
@@ -71,7 +71,7 @@ presence.on('UpdateData', async () => {
   else if (path.startsWith('/places')) {
     presenceData.details = strings.viewingPlaces
     if (path.split('/')[2] != null) {
-      presenceData.state = document.title.replace(' - Google Photos', '')
+      presenceData.state = document.title.replace(/- Google[\xA0 ]Photos/, '').trim()
     }
   }
   else if (path.startsWith('/lockedfolder')) {

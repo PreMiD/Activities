@@ -1,0 +1,50 @@
+{
+  "RankOne.discover": {
+    "description": "Explore recommendations.",
+    "message": "Discovering Recommendations"
+  },
+  "RankOne.viewFeed": {
+    "description": "Viewing the Feed page",
+    "message": "Viewing Feed"
+  },
+  "RankOne.viewFollowing": {
+    "description": "Viewing the Following Feed page",
+    "message": "Viewing Following Feed"
+  },
+  "RankOne.viewNot": {
+    "description": "Viewing Notifications page",
+    "message": "Viewing Notifications"
+  },
+  "RankOne.viewAbout": {
+    "description": "Viewing About page",
+    "message": "Viewing About"
+  },
+  "RankOne.twitchExtension": {
+    "description": "Viewing Twitch Extension Page",
+    "message": "Viewing Twitch Extension"
+  },
+  "RankOne.viewNews": {
+    "description": "Viewing News page",
+    "message": "Viewing News"
+  },
+  "RankOne.viewFAQ": {
+    "description": "Viewing FAQ page",
+    "message": "Viewing FAQ"
+  },
+  "RankOne.viewPressKit": {
+    "description": "Viewing Press Kit page",
+    "message": "Viewing Press Kit"
+  },
+  "RankOne.viewSuggestions": {
+    "description": "Viewing Suggestions page",
+    "message": "Viewing Suggestions"
+  },
+  "RankOne.viewCommunity": {
+    "description": "Viewing Community page",
+    "message": "Viewing Communities"
+  },
+  "RankOne.viewACommunity": {
+    "description": "Viewing a Community page",
+    "message": "Viewing a Community:"
+  }
+}

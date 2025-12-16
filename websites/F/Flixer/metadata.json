@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.14",
+  "apiVersion": 1,
+  "author": {
+    "id": "644313519147319297",
+    "name": "krex_dll"
+  },
+  "service": "Flixer",
+  "description": {
+    "en": "Watch movies and TV shows online with high quality streaming"
+  },
+  "url": "flixer.sh",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flixer/assets/logo.jpeg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Flixer/assets/thumbnail.jpeg",
+  "color": "#1a1a1a",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "tv",
+    "streaming",
+    "watch",
+    "entertainment",
+    "video"
+  ],
+  "settings": [
+    {
+      "id": "multiLanguage",
+      "multiLanguage": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fa-solid fa-external-link",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fa-solid fa-clock",
+      "value": true
+    }
+  ]
+}

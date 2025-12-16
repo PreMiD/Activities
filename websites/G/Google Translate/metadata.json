@@ -28,7 +28,7 @@
   },
   "url": "translate.google.com",
   "regExp": "translate.google([.][a-z]+)+[/]",
-  "version": "3.0.19",
+  "version": "3.0.20",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Translate/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Translate/assets/thumbnail.png",
   "color": "#4c8bf5",
