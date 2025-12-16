@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Tofuine",
@@ -17,8 +17,8 @@
     "fr": "Google Maps est une plateforme de cartographie web et une application grand public proposée par Google. Il offre des images satellite, des photographies aériennes, des cartes routières, des vues panoramiques interactives à 360° des rues, des conditions de circulation en temps réel et la planification d'itinéraires pour les déplacements à pied, en voiture, à vélo, en avion et en transport en commun."
   },
   "url": "maps.google.com",
-  "regExp": "www\\.google\\.com\\/maps",
-  "version": "1.0.14",
+  "regExp": "^https?[:][/][/]www\\.google\\.com\\/maps",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/thumbnail.png",
   "color": "#4e85f2",

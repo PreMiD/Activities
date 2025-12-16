@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "PreMiD",
@@ -17,7 +17,8 @@
     "nl": "Folding@home is een project gericht op onderzoek naar ziektes. De problemen die we oplossen vereisen zo veel computerberekeningen - en we hebben jouw hulp nodig om de remedies te vinden! Bestrijd ziekten samen met ons."
   },
   "url": "client.foldingathome.org",
-  "version": "1.1.27",
+  "regExp": "^https?[:][/][/]client[.]foldingathome[.]org[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Folding%40home/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Folding%40home/assets/thumbnail.png",
   "color": "#581919",

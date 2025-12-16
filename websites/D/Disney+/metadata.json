@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Tiemen",
@@ -27,7 +27,7 @@
     "sv": "Disney+ är det enda hemmet för dina favoritfilmer och tv-program från Disney, Pixar, Marvel, Star Wars, National Geographic och Star. Börja streama idag."
   },
   "url": "www.disneyplus.com",
-  "regExp": "([a-z0-9-]+[.])*disneyplus[.]com[/]|([a-z0-9-]+[.])*hotstar[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(disneyplus|hotstar)[.]com[/]",
   "version": "1.10.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Disney%2B/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Disney%2B/assets/thumbnail.png",
