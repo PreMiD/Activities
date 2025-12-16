@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -12,8 +12,8 @@
     "nl": "Met Plex kunt u uw persoonlijke media beheren, samenstellen en streamen samen met premium inhoud. Geniet van uw eigen inhoud op al uw apparaten waar u ook bent met Plex."
   },
   "url": "www.plex.tv",
-  "regExp": "(([a-z0-9-]+[.])*plex[.]tv[/])|( *[/]web[/]index[.]html#)",
-  "version": "1.10.10",
+  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*plex[.]tv[/])|( *[/]web[/]index[.]html#)",
+  "version": "1.11.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Plex/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Plex/assets/thumbnail.png",
   "color": "#d78c14",
