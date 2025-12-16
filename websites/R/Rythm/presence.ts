@@ -10,7 +10,7 @@ const presence = new Presence({
 const dataGetter = new RythmDataGetter()
 
 // ----------------------
-// Tipos básicos de cor
+// Basic color types
 // ----------------------
 
 type RGB = [number, number, number]
@@ -66,10 +66,10 @@ function getButtonBgLogo(background: LogoBackground): readonly ButtonBgLogo[] {
 }
 
 // ----------------------
-// Conversões e helpers
+// Conversions and helpers
 // ----------------------
 
-// Converte RGB (0-255) pra HSL (h 0-360, s/l 0-100)
+// Convert RGB (0-255) to HSL (h 0-360, s/l 0-100)
 function rgbToHsl([r, g, b]: RGB): HSL {
   r /= 255
   g /= 255
@@ -105,22 +105,17 @@ function rgbToHsl([r, g, b]: RGB): HSL {
 }
 
 // ----------------------
-// Paleta de cores
-// ----------------------
-
-// ----------------------
-// Regra de cor via HSL
+// Color rule HSL
 // ----------------------
 
 function getColorKeyFromHsl(rgb: RGB): ColorKey {
   const [h, s, l] = rgbToHsl(rgb)
 
-  // pouca saturação => cinza ou branco
+  // grey and white
   if (s < 10) {
     return l > 80 ? 'white' : 'grey'
   }
 
-  // agora a parte de hue
   if (h >= 345 || h < 15) {
     return 'red'
   }
@@ -145,7 +140,7 @@ function getColorKeyFromHsl(rgb: RGB): ColorKey {
     return 'purple'
   }
 
-  // 260–300: roxos (darkPurple / lilac / purple)
+  // 260–300:  (darkPurple / lilac / purple)
   if (h >= 260 && h < 300) {
     if (l < 40)
       return 'darkPurple'
@@ -154,14 +149,13 @@ function getColorKeyFromHsl(rgb: RGB): ColorKey {
     return 'purple'
   }
 
-  // 300–345: rosas (pink / lightPink)
+  // 300–345: (pink / lightPink)
   if (h >= 300 && h < 345) {
     if (l > 70)
       return 'lightPink'
     return 'pink'
   }
 
-  // fallback paranoico
   return 'red'
 }
 
@@ -198,7 +192,7 @@ function parseCssColorToRgb(color: string): RGB | null {
 }
 
 // ----------------------
-// Auto logo pela cor da track
+// Auto logo by track color
 // ----------------------
 
 function pickLogoFromTheme(
@@ -277,7 +271,7 @@ function getLogoByColor(
 }
 
 // ----------------------
-// Paleta manual de cores do botão
+// Manual color palette for the button
 // ----------------------
 
 function getAutoLogoFromColor(
@@ -301,7 +295,7 @@ function getAutoLogoFromColor(
 }
 
 // ----------------------
-// Loop principal da presença
+// Presence main loop
 // ----------------------
 
 presence.on('UpdateData', async () => {
