@@ -1,0 +1,37 @@
+name: DNS Check and Cleanup
+
+on:
+  schedule:
+    # Run every Monday at 2 AM UTC
+    - cron: '0 2 * * 1'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  check-dns:
+    if: github.repository_owner == 'PreMiD'
+    name: Check Activity URLs via DNS
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run DNS check and create PR
+        run: npx pmd check-dns --all --fix --create-pr
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
