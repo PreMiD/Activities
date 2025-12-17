@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Timeraa",
@@ -73,7 +73,8 @@
     "studio.youtube.com",
     "m.youtube.com"
   ],
-  "version": "6.1.3",
+  "regExp": "^https?[:][/][/](www|studio|m)[.]youtube[.]com[/]",
+  "version": "6.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube/assets/thumbnail.jpg",
   "color": "#E40813",

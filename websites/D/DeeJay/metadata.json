@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "860122608682795028",
+    "name": "itsmarian.mc"
+  },
+  "service": "DeeJay",
+  "altnames": [
+    "Dee Jay",
+    "Radio DeeJay",
+    "RadioDeeJay"
+  ],
+  "description": {
+    "de": "DeeJay ist eine dynamische italienische Medienmarke, die für ihre energischen Radiosendungen, ihre moderne Musikkultur und ihre starke digitale Präsenz bekannt ist. Mit einer Mischung aus Unterhaltung, Lifestyle-Inhalten und aktuellen Hits verbindet DeeJay weltweit Millionen von Hörern über Radio, Podcasts, Veranstaltungen und seine Online-Plattform.",
+    "en": "DeeJay is a vibrant Italian media brand known for its energetic radio shows, modern music culture, and a strong digital presence. With a mix of entertainment, lifestyle content, and trending hits, DeeJay connects millions of listeners through radio, podcasts, events, and its dynamic online platform.",
+    "it": "DeeJay è un vivace marchio mediatico italiano noto per i suoi energici programmi radiofonici, la moderna cultura musicale e una forte presenza digitale. Con un mix di intrattenimento, contenuti lifestyle e successi di tendenza, DeeJay connette milioni di ascoltatori attraverso la radio, i podcast, gli eventi e la sua dinamica piattaforma online."
+  },
+  "url": [
+    "deejay.it",
+    "www.deejay.it"
+  ],
+  "regExp": "^https?[:][/][/](www\\.)?deejay[.]it[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DeeJay/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DeeJay/assets/thumbnail.jpeg",
+  "color": "#C2190A",
+  "category": "music",
+  "tags": [
+    "music",
+    "radio",
+    "streaming",
+    "tv",
+    "video"
+  ],
+  "settings": [
+    {
+      "id": "timestamps",
+      "title": "Show timestamps",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}

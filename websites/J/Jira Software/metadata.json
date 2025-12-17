@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "isladot",
@@ -12,8 +12,8 @@
     "nl": "Jira Software is gebouwd zodat elk lid van uw softwareteam geweldige software kan plannen, volgen en vrijgeven. WAARSCHUWING: voorlopig worden alleen projecten ondersteund die worden gehost op atlassian-domeinen."
   },
   "url": "www.atlassian.com",
-  "regExp": "[a-z0-9]+[.]atlassian[.]net",
-  "version": "1.0.22",
+  "regExp": "^https?[:][/][/][a-z0-9]+[.]atlassian[.]net",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Jira%20Software/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Jira%20Software/assets/thumbnail.png",
   "color": "#2684FF",

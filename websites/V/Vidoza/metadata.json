@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "503557087041683458",
@@ -11,8 +11,8 @@
     "nl": "Volledig gratis video's hosten en steamen. Deel jouw video's zonder enige beperkingen via een HTML5 video speler."
   },
   "url": "vidoza.net",
-  "regExp": "(ww(w)?([0-9])?[.])?vidoza[.][a-z]*",
-  "version": "1.0.9",
+  "regExp": "^https?[:][/][/](ww(w)?([0-9])?[.])?vidoza[.][a-z]*",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vidoza/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vidoza/assets/thumbnail.png",
   "color": "#43A047",
