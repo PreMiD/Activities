@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "PreMiD",
@@ -19,7 +19,8 @@
     "vi": "7plus là dịch vụ cung cấp video và truyền hình theo nhu cầu bởi Seven Network. 7plus cũng cung cấp dịch vụ phát trực tuyến cho Channel Seven, 7TWO, 7mate, 7flix và Racing.com."
   },
   "url": "7plus.com.au",
-  "version": "1.2.15",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*7plus[.]com[.]au[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/7plus/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/7plus/assets/thumbnail.png",
   "color": "#FF0000",
