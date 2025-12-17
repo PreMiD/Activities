@@ -116,8 +116,8 @@
     "message": "Viewing their profile"
   },
   "tbm.viewTrafficUpdate": {
-    "description": "Displayed when the user is viewing a traffic update",
-    "message": "Viewing a traffic update:"
+    "description": "Displayed when the user is viewing traffic update",
+    "message": "Viewing traffic update:"
   },
   "tbm.viewTrafficUpdates": {
     "description": "Displayed when the user is viewing traffic updates",
