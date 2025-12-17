@@ -93,7 +93,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: SHINIGAMI_KOMIK_ID_LOGO,
     largeImageText: 'Shinigami Komik ID',
     startTimestamp: browsingTimestamp,
-    smallImageKey: 'https://i.postimg.cc/1t6yFMTV/shinigami-logo.png',
+    smallImageKey: 'https://i.postimg.cc/D0HQNv6q/shinigami-logo.png',
     smallImageText: 'shinigami.bio',
     type: ActivityType.Watching,
     name: 'Shinigami Komik ID',
