@@ -86,7 +86,7 @@ const chapterCacheTimestamps = new Map<string, number>()
  */
 presence.on('UpdateData', async () => {
   // Get current page pathname and full URL
-  const { pathname, href } = window.location
+  const { pathname, href } = document.location
 
   // Initialize default presence data
   const presenceData: PresenceData = {
