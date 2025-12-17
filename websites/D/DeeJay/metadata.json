@@ -20,7 +20,7 @@
     "deejay.it",
     "www.deejay.it"
   ],
-  "regExp": "https?://(www\\.)?deejay\\.it/.*",
+  "regExp": "^https?[:][/][/](www\\.)?deejay[.]it[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/GtIwyQT.png",
   "thumbnail": "https://i.imgur.com/BuHhmQy.jpeg",
