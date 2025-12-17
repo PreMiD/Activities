@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "isladot",
@@ -19,7 +19,8 @@
     "vi": "Quản lý hồ sơ chuyên nghiệp của bạn. Xây dựng và tham gia với mạng lưới chuyên nghiệp của bạn. Tiếp cận kiến thức, các góc nhìn và cơ hội."
   },
   "url": "www.linkedin.com",
-  "version": "2.1.0",
+  "regExp": "^https?[:][/][/](www[.])?linkedin[.]com[/]",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LinkedIn/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LinkedIn/assets/thumbnail.png",
   "color": "#2867B2",

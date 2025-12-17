@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "519174178474295301",
@@ -11,7 +11,8 @@
     "tr": "Anime izleme deneyiminizi geliştirmek için tasarlanmış açık kaynaklı, hızlı ve şık anime platformu."
   },
   "url": "openani.me",
-  "version": "1.0.2",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*openani[.]me[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OpenAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OpenAnime/assets/thumbnail.jpeg",
   "color": "#61cdfd",

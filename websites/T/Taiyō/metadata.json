@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Luscarvalho",
@@ -19,7 +19,8 @@
     "taiyo.moe",
     "www.taiyo.moe"
   ],
-  "version": "1.0.8",
+  "regExp": "^https?[:][/][/](www[.])?taiyo[.]moe[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Taiy%C5%8D/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Taiy%C5%8D/assets/thumbnail.png",
   "color": "#FF4F4F",
