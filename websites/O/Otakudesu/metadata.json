@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Zen",
@@ -12,7 +12,8 @@
     "nl": "Download, bekijk en stream anime met Indonesische ondertiteling en met 240p, 360p, 480p en 720p resolutie met MP4-formaat en MKV samen met de batch."
   },
   "url": "otakudesu.best",
-  "version": "2.0.25",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*otakudesu[.]best[/]",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Otakudesu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Otakudesu/assets/thumbnail.png",
   "color": "#ffffff",

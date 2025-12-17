@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "sks316",
@@ -18,7 +18,8 @@
     "nl": "Video game muziek radio van de Sitting on Clouds Soundtrack Collectie."
   },
   "url": "radio.sittingonclouds.net",
-  "version": "1.2.14",
+  "regExp": "^https?[:][/][/]radio[.]sittingonclouds[.]net[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sitting%20on%20Clouds%20Radio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sitting%20on%20Clouds%20Radio/assets/thumbnail.png",
   "color": "#67bdff",
