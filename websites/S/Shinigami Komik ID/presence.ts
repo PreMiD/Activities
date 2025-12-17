@@ -14,7 +14,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 // Default logo URL for Shinigami Komik ID
-const SHINIGAMI_KOMIK_ID_LOGO = 'https://images.sftcdn.net/images/t_app-icon-m/p/5092ebd3-c59f-4e33-88d7-7f349fd7a05f/4265925706/shinigami-id-logo'
+const SHINIGAMI_KOMIK_ID_LOGO = 'https://i.postimg.cc/4ySd7DXp/unnamed.jpg'
 
 /**
  * Interface for Manga API response from api.shngm.io
@@ -93,7 +93,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: SHINIGAMI_KOMIK_ID_LOGO,
     largeImageText: 'Shinigami Komik ID',
     startTimestamp: browsingTimestamp,
-    smallImageKey: 'https://d1fdloi71mui9q.cloudfront.net/Snj3xqTUQeCNaD0GWb8M_dfk8L4QuZS7rJaAC',
+    smallImageKey: 'https://i.postimg.cc/1t6yFMTV/shinigami-logo.png',
     smallImageText: 'shinigami.bio',
     type: ActivityType.Watching,
     name: 'Shinigami Komik ID',
