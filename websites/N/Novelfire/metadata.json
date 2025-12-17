@@ -15,7 +15,7 @@
     "novelfire.net",
     "www.novelfire.net"
   ],
-  "regExp": "^https?:\\/\\/(www\\.)?novelfire\\.net",
+  "regExp": "^https?:[/][/](www[.])?novelfire[.]net[/]",
   "version": "1.0.0",
   "logo": "https://i.postimg.cc/657F6vxh/Novelfire-logo.png",
   "thumbnail": "https://novelfire.net/banner-home.jpg",
