@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Prenses",
@@ -23,7 +23,8 @@
     "www.animewho.com",
     "animewho.com"
   ],
-  "version": "1.0.30",
+  "regExp": "^https?[:][/][/](www[.])?animewho[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeWho/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeWho/assets/thumbnail.png",
   "color": "#fc0043",

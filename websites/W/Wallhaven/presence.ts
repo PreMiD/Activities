@@ -3,7 +3,7 @@ interface PageContext {
   exec: (
     context: Presence,
     data: PresenceData,
-    options?: any
+    options?: any,
   ) => Promise<PresenceData | null> | PresenceData | null
 }
 function getQuery() {

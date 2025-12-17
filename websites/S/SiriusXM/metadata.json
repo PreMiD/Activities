@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "PreMiD",
@@ -20,7 +20,8 @@
     "player.siriusxm.com",
     "player.siriusxm.ca"
   ],
-  "version": "1.2.21",
+  "regExp": "^https?[:][/][/]player[.]siriusxm[.](com|ca)[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SiriusXM/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SiriusXM/assets/thumbnail.png",
   "color": "#0081FF",
