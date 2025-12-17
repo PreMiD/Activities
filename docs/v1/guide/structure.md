@@ -66,7 +66,6 @@ npx pmd versionize "Example"
 This command will:
 
 1. If the activity is not already versioned:
-
    - Move the current activity files into a `v1` directory
    - Create a new `v2` directory with the necessary files
    - Update the `apiVersion` field to `2` in the new version's `metadata.json` file
