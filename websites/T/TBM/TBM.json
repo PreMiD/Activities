@@ -1,0 +1,126 @@
+{
+  "tbm.deleteAccount": {
+    "description": "Displayed when the user is deleting their account",
+    "message": "Deleting account"
+  },
+  "tbm.direction": {
+    "description": "Displayed when the user is viewing a direction",
+    "message": "Direction:"
+  },
+  "tbm.editTheirPersonalInfo": {
+    "description": "Displayed when the user is editing their personal information",
+    "message": "Editing their personal information"
+  },
+  "tbm.editingAccount": {
+    "description": "Displayed when the user is editing their account",
+    "message": "Editing their account"
+  },
+  "tbm.from": {
+    "description": "Displayed when the user is viewing the 'from' location",
+    "message": "From:"
+  },
+  "tbm.noData": {
+    "description": "Displayed when there is no data available",
+    "message": "No data"
+  },
+  "tbm.searchProduct": {
+    "description": "Displayed when the user is searching a product in TBM shop",
+    "message": "Searching a product"
+  },
+  "tbm.searchRoutes": {
+    "description": "Displayed when the user is searching for routes",
+    "message": "Searching for routes"
+  },
+  "tbm.searchStop": {
+    "description": "Displayed when the user shearch a stop",
+    "message": "Searching for a stop"
+  },
+  "tbm.stop": {
+    "description": "Displayed when the user is viewing a stop",
+    "message": "Stop:"
+  },
+  "tbm.to": {
+    "description": "Displayed when the user is viewing the 'to' location",
+    "message": "To:"
+  },
+  "tbm.unknowPage": {
+    "description": "Displayed when the user is viewing an unknow page",
+    "message": "Unknow Page"
+  },
+  "tbm.viewCategory": {
+    "description": "Displayed when the user is viewing a category in TBM shop",
+    "message": "Viewing category:"
+  },
+  "tbm.viewDashboard": {
+    "description": "Displayed when the user is viewing their dashboard",
+    "message": "Viewing dashboard"
+  },
+  "tbm.viewDocumentation": {
+    "description": "Displayed when the user is viewing the documentation",
+    "message": "Viewing documentation"
+  },
+  "tbm.viewDynamicPlan": {
+    "description": "Displayed when the user is viewing dynamic plan",
+    "message": "Viewing dynamic plan"
+  },
+  "tbm.viewHelpPage": {
+    "description": "Displayed when the user is viewing the help page",
+    "message": "Viewing help page"
+  },
+  "tbm.viewLineInfos": {
+    "description": "Displayed when the user is viewing line informations",
+    "message": "Viewing line informations"
+  },
+  "tbm.viewLines": {
+    "description": "Displayed when the user is viewing lines",
+    "message": "Viewing lines"
+  },
+  "tbm.viewLinesSchedules": {
+    "description": "Displayed when the user is viewing the lines schedules",
+    "message": "Viewing lines schedules"
+  },
+  "tbm.viewOffer": {
+    "description": "Displayed when the user is viewing an offer",
+    "message": "Viewing offer:"
+  },
+  "tbm.viewPointsScale": {
+    "description": "Displayed when the user is viewing the points scale",
+    "message": "Viewing points scale"
+  },
+  "tbm.viewProduct": {
+    "description": "Displayed when the user is viewing a product in TBM shop",
+    "message": "Viewing product:"
+  },
+  "tbm.viewSchedules": {
+    "description": "Displayed when the user is viewing the schedules",
+    "message": "Viewing schedules:"
+  },
+  "tbm.viewShop": {
+    "description": "Displayed when the user is viewing shop",
+    "message": "Viewing shop"
+  },
+  "tbm.viewTBMShop": {
+    "description": "Displayed when the user is viewing the TBM shop",
+    "message": "Viewing TBM shop"
+  },
+  "tbm.viewTheirOrders": {
+    "description": "Displayed when the user is viewing their orders",
+    "message": "Viewing their orders"
+  },
+  "tbm.viewTheirPointsHistory": {
+    "description": "Displayed when the user is viewing their points history",
+    "message": "Viewing their points history"
+  },
+  "tbm.viewTheirProfile": {
+    "description": "Displayed when the user is viewing their profile",
+    "message": "Viewing their profile"
+  },
+  "tbm.viewTrafficInfo": {
+    "description": "Displayed when the user is viewing traffic information",
+    "message": "Viewing traffic information:"
+  },
+  "tbm.viewTrafficInfos": {
+    "description": "Displayed when the user is viewing traffic informations",
+    "message": "Viewing traffic informations"
+  }
+}
