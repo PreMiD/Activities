@@ -18,9 +18,10 @@
   },
   "url": [
     "anihq.to",
-    "www.anihq.to"
+    "www.anihq.to",
+    "anihq.org"
   ],
-  "regExp": "^https?[:][/][/](www[.])?anihq[.]to[/]",
+  "regExp": "^https?[:][/][/](www[.])?anihq[.]org[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniHQ/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniHQ/assets/thumbnail.png",
