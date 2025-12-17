@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "792589695590465567",
@@ -16,9 +16,9 @@
     "en": "HDFilmCehennemi provides the latest movies in high definition for Turkish cinema enthusiasts and is the first online platform of its kind. Our platform holds a prominent position in search results for \"watch movies,\" \"watch HD movies,\" and \"HD Movie Cehennemi,\" offering quick access to the newest foreign films and TV series.",
     "tr": "HDFilmCehennemi, en yeni filmleri Türkiye'deki film severlere nette ilk olarak ve HD kalitede sunar. 'Film izle', 'HD Film izle' ve 'HD Film Cehennemi' kelimeleriyle arama motorlarında öne çıkan platformumuz, en güncel yabancı filmleri ve yabanı dizileri hızlı bir şekilde sizlere ulaştırır. Telif hakkı ihlali düşündüğünüz içerikler için lütfen iletişim sayfamızdan bizimle iletişime geçin."
   },
-  "url": "hdfilmcehennemi.la",
-  "regExp": "([a-z0-9-]+[.])*(hdfilmcehennemi)[.]la[/]",
-  "version": "1.0.3",
+  "url": "hdfilmcehennemi.ws",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(hdfilmcehennemi)[.][a-z]{2,10}[/]",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hdfilmcehennemi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hdfilmcehennemi/assets/thumbnail.png",
   "color": "#e95900",
@@ -28,5 +28,5 @@
     "streaming"
   ],
   "iframe": true,
-  "iFrameRegExp": "(.*\\.)?hdfilmcehennemi\\.la"
+  "iFrameRegExp": "(.*\\.)?hdfilmcehennemi\\.[a-z]{2,10}"
 }

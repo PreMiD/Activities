@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "546262814424170498",
@@ -16,7 +16,8 @@
     "www.animi.club",
     "dev.animi.club"
   ],
-  "version": "1.0.12",
+  "regExp": "^https?[:][/][/]((www|dev)[.])?animi[.]club[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniMi%20Club/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniMi%20Club/assets/thumbnail.png",
   "color": "#e11d48",

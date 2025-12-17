@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "671037171611729920",
+    "name": "atom_skully"
+  },
+  "service": "TBM",
+  "description": {
+    "en": "Make getting around Bordeaux Métropole easier. Find your next trips, itineraries, fare information, availability for Le Vélo bike sharing and park-and-ride facilities, and more.",
+    "es": "Haz que obtener alrededor de Bordeaux Métropole sea más fácil. Encuentra tus próximos viajes, itinerarios, información de tarifas, disponibilidad para Le Vélo bike sharing y parques-relais, y más.",
+    "fr": "Facilitez vos déplacements au sein de Bordeaux Métropole. Retrouvez vos prochains passages, itinéraires, infos tarifs, disponibilités Le Vélo et parcs-relais..."
+  },
+  "url": "www.infotbm.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*infotbm[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TBM/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TBM/assets/thumbnail.png",
+  "color": "#FFFFFF",
+  "category": "other",
+  "tags": [
+    "transport"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "logo",
+      "title": "Icon",
+      "icon": "fad fa-images",
+      "value": 0,
+      "values": [
+        "Original Logo",
+        "Old Logo",
+        "New Logo"
+      ]
+    }
+  ]
+}

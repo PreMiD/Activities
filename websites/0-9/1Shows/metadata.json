@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "1141729666160402565",
@@ -10,7 +10,8 @@
     "en": "Enjoy unlimited streaming of movies, TV shows, and anime in HD & 4K, completely free! 1Shows offers a seamless experience with multi-language support and auto-next playback, ensuring you never miss a moment. Watch your favorite content anytime, anywhere!"
   },
   "url": "www.1shows.ru",
-  "version": "1.0.3",
+  "regExp": "^https?[:][/][/](www[.])?1shows[.]ru[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/thumbnail.png",
   "color": "#121212",
