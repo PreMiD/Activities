@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Nekolen",
@@ -21,8 +21,8 @@
     "zh-tw": "《阿基納多》是個基於20個問題的網路遊戲和手機應用程式，其將會問出不同的問題來猜出玩家正在想的人物或角色。這個遊戲是個能夠找出最適合詢問玩家的問題並學習的人工智慧程序。"
   },
   "url": "en.akinator.com",
-  "regExp": "([a-z0-9-]+[.])*akinator[.]com[/]",
-  "version": "1.4.7",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*akinator[.]com[/]",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Akinator/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Akinator/assets/thumbnail.png",
   "color": "#0000ff",

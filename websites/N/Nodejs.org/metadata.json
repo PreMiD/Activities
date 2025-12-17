@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Dominik",
@@ -11,7 +11,8 @@
     "nl": "Node.js® is een JavaScript-runtime die is gebouwd op de V8 JavaScript-engine van Chrome."
   },
   "url": "nodejs.org",
-  "version": "1.3.25",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*nodejs[.]org[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nodejs.org/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nodejs.org/assets/thumbnail.png",
   "color": "#00ff00",

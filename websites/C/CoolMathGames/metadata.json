@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Striker",
@@ -15,7 +15,8 @@
     "www.coolmathgames.com",
     "coolmathgames.com"
   ],
-  "version": "1.2.31",
+  "regExp": "^https?[:][/][/](www[.])?coolmathgames[.]com[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CoolMathGames/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CoolMathGames/assets/thumbnail.png",
   "color": "#3DB5F9",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Kyrie",
@@ -10,8 +10,8 @@
     "en": "Webnovel - The largest web novels community in the world. Online Reading stories, fiction books, novels and comic books!"
   },
   "url": "www.webnovel.com",
-  "regExp": "([a-z0-9]+[.])webnovel[.]com",
-  "version": "1.0.13",
+  "regExp": "^https?[:][/][/]([a-z0-9]+[.])webnovel[.]com",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Webnovel/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Webnovel/assets/thumbnail.jpeg",
   "color": "#3F4DA5",
