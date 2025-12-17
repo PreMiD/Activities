@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "358402930191106049",
@@ -26,7 +26,8 @@
     "myradioenvivo.ar",
     "myradioenvivo.mx"
   ],
-  "version": "1.0.12",
+  "regExp": "^https?[:][/][/](myonlineradio[.]hu|myradioonline[.]ro|myonlineradio[.]sk|myonlineradio[.]de|ukradiolive[.]com|myonlineradio[.]at|myradioonline[.]it|myradioonline[.]es|myradioendirect[.]fr|irishradiolive[.]com|myradioonline[.]pl|myonlineradio[.]nl|myradioonline[.]cl|myradioenvivo[.]ar|myradioenvivo[.]mx)[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MyOnlineRadio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MyOnlineRadio/assets/thumbnail.webp",
   "color": "#800080",

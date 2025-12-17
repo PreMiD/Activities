@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "The Gamerzs",
@@ -17,7 +17,8 @@
     "ideas.streamlabs.com",
     "support.streamlabs.com"
   ],
-  "version": "1.1.29",
+  "regExp": "^https?[:][/][/]((dev|howto|ideas|support)[.])?streamlabs[.]com[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Streamlabs/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Streamlabs/assets/thumbnail.png",
   "color": "#80F5D2",

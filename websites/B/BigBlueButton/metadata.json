@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Oranż Metylowy",
@@ -15,8 +15,8 @@
     "demo.bigbluebutton.org",
     "demo2.bigbluebutton.org"
   ],
-  "regExp": "[/](b|gl)[/][\\w]{3}-[\\d\\w]{3}-[\\d\\w]{3}|html5client[/]join[?]|client[/]guest-wait[.]html",
-  "version": "1.0.27",
+  "regExp": "^https?[:][/][/][/](b|gl)[/][\\w]{3}-[\\d\\w]{3}-[\\d\\w]{3}|html5client[/]join[?]|client[/]guest-wait[.]html",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BigBlueButton/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BigBlueButton/assets/thumbnail.png",
   "color": "#0F70D7",

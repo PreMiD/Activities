@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "757946349642711080",
+    "name": "silky_panda"
+  },
+  "service": "Novelfire",
+  "description": {
+    "en": "Read Books Online Free",
+    "nl": "Lees Boeken Gratis Online"
+  },
+  "url": [
+    "novelfire.net",
+    "www.novelfire.net"
+  ],
+  "regExp": "^https?:[/][/](www[.])?novelfire[.]net[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Novelfire/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Novelfire/assets/thumbnail.jpg",
+  "color": "#000000",
+  "category": "other",
+  "tags": [
+    "novel",
+    "novels",
+    "read",
+    "reading"
+  ],
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}

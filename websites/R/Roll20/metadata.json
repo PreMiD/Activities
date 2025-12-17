@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "MrBartusek",
@@ -18,7 +18,8 @@
     "blog.roll20.net",
     "wiki.roll20.net"
   ],
-  "version": "1.0.25",
+  "regExp": "^https?[:][/][/]((app|marketplace|blog|wiki)[.])?roll20[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Roll20/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Roll20/assets/thumbnail.png",
   "color": "#af1f8e",
