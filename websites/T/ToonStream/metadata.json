@@ -10,7 +10,7 @@
     "en": "Stream or download anime dubbed in Hindi, Tamil, Telugu, and English on ToonStream."
   },
   "url": "toonstream.one",
-  "regExp": "https?://(www\\.)?toonstream\\.one/.*",
+  "regExp": "^https?:[/][/](www[.])?toonstream[.]one[/]",
   "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/ToonStream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/ToonStream/assets/thumbnail.png",
