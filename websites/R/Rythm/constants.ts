@@ -27,6 +27,8 @@ export enum LogoBlackBg {
   LogoPausedWhite = 'https://i.imgur.com/0zr9gjs.gif',
   LogoPlayingBlack = 'https://i.imgur.com/B65TVu4.gif',
   LogoPausedBlack = 'https://i.imgur.com/V8hlLgN.gif',
+  LogoPlayingBeige = 'https://i.imgur.com/zfLF73V.gif',
+  LogoPausedBeige = 'https://i.imgur.com/phtChNf.gif',
 
 }
 
@@ -59,6 +61,8 @@ export enum LogoWhiteBg {
   LogoPausedWhite = 'https://i.imgur.com/0zr9gjs.gif',
   LogoPlayingBlack = 'https://i.imgur.com/OVVD6Af.gif',
   LogoPausedBlack = 'https://i.imgur.com/Vgdo11d.gif',
+  LogoPlayingBeige = 'https://i.imgur.com/hWvUfCp.gif',
+  LogoPausedBeige = 'https://i.imgur.com/OQeqnmc.gif',
 }
 
 export enum LogoRemovedBg {
@@ -90,5 +94,7 @@ export enum LogoRemovedBg {
   LogoPausedWhite = 'https://i.imgur.com/xlFh2Kh.gif',
   LogoPlayingBlack = 'https://i.imgur.com/NkDR6UG.gif',
   LogoPausedBlack = 'https://i.imgur.com/LzX7iNL.gif',
+  LogoPlayingBeige = 'https://i.imgur.com/kojqjhQ.gif',
+  LogoPausedBeige = 'https://i.imgur.com/Ls6MCWG.gif',
 
 }

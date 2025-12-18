@@ -14,7 +14,8 @@ type RGB = [number, number, number]
 type HSL = [number, number, number] // [h, s, l]
 
 type ColorKey
-  = | 'pink'
+  = | 'blue'
+    | 'pink'
     | 'lightPink'
     | 'yellow'
     | 'lilac'
@@ -24,6 +25,7 @@ type ColorKey
     | 'orange'
     | 'cyan'
     | 'green'
+    | 'beige'
     | 'grey'
     | 'white'
     | 'black'
@@ -66,6 +68,7 @@ function getButtonBgLogo(background: LogoBackground): readonly ButtonBgLogo[] {
     { playing: background.LogoPlayingOrange, paused: background.LogoPausedOrange },
     { playing: background.LogoPlayingCyan, paused: background.LogoPausedCyan },
     { playing: background.LogoPlayingGreen, paused: background.LogoPausedGreen },
+    { playing: background.LogoPlayingBeige, paused: background.LogoPausedBeige },
     { playing: background.LogoPlayingGrey, paused: background.LogoPausedGrey },
     { playing: background.LogoPlayingWhite, paused: background.LogoPausedWhite },
     { playing: background.LogoPlayingBlack, paused: background.LogoPausedBlack },
@@ -143,37 +146,47 @@ function rgbToHsl([r, g, b]: RGB): HSL {
 function getColorKeyFromHsl(rgb: RGB): ColorKey {
   const [h, s, l] = rgbToHsl(rgb)
 
-  if (l < 12)
-    return 'black'
-  if (s < 10)
-    return l > 80 ? 'white' : 'grey'
+  // Beige (warm + bright + medium saturation)
+  if (l >= 70 && l <= 80 && s < 30) {
+    return 'beige'
+  }
+  if (s < 30 && l > 90)
+    return 'white'
 
-  if (h >= 345 || h < 15)
-    return 'red'
-  if (h >= 15 && h < 45)
+  if (s < 30 && l > 80 && l < 90)
+    return 'grey'
+
+  if (h >= 10 && h < 35)
     return 'orange'
-  if (h >= 45 && h < 75)
+  if (h >= 35 && h < 70)
     return 'yellow'
-  if (h >= 75 && h < 165)
+  if (h >= 70 && h < 160)
     return 'green'
-  if (h >= 165 && h < 210)
+  if (h >= 160 && h < 190)
     return 'cyan'
-  if (h >= 210 && h < 260)
-    return 'purple'
+  if (h >= 190 && h < 250)
+    return 'blue'
+  if (h >= 250 && h < 260)
+    return 'darkPurple'
 
-  if (h >= 260 && h < 300) {
-    if (l < 40)
-      return 'darkPurple'
-    if (l > 70)
-      return 'lilac'
-    return 'purple'
+  if (h >= 260 && h < 280) {
+    return (l > 70 && l < 90)
+      ? 'lilac'
+      : (l < 40)
+          ? 'darkPurple'
+          : 'purple'
   }
 
-  if (h >= 300 && h < 345) {
-    return l > 70 ? 'lightPink' : 'pink'
+  if (h >= 280 && h < 350) {
+    return (l > 70 && l < 90)
+      ? 'lightPink'
+      : 'pink'
   }
 
-  return 'red'
+  if (h >= 350 || h < 10)
+    return 'red'
+
+  return 'beige'
 }
 
 // ======================================================
