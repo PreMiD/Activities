@@ -33,7 +33,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     largeImageKey: ActivityAssets.Logo,
-    startTimestamp: browsingTimestamp,
+    // startTimestamp: browsingTimestamp,
   }
   const { pathname, href } = document.location
   const pathArr = pathname.split('/')
@@ -93,7 +93,8 @@ presence.on('UpdateData', async () => {
       endTimestamp,
     ]
     if (video.paused) {
-      delete presenceData.startTimestamp
+      presenceData.state = 'En pause',
+      delete presenceData.startTimestamp,
       delete presenceData.endTimestamp
     }
     if (privacyMode) {
