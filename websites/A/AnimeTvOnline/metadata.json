@@ -11,15 +11,15 @@
     "it": "Guarda anime su AnimeTvOnline"
   },
   "url": "animetvonline.org",
-  "version": "1.0.0",
-  "category": "anime",
-  "color": "#FF4545",
   "logo": "https://animetvonline.org/assets/images/logo_grande.png",
-  "regExp": "^https:\\/\\/animetvonline\\.org\\/.*",
+  "thumbnail": "https://animetvonline.org/assets/images/logo_grande.png",
+  "color": "#FF4545",
   "tags": [
     "anime",
     "ita",
     "streaming"
   ],
-  "thumbnail": "https://animetvonline.org/assets/images/logo_grande.png"
+  "category": "anime",
+  "regExp": "^https:\\/\\/animetvonline\\.org\\/.*",
+  "version": "1.0.0"
 }
