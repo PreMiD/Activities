@@ -54,9 +54,9 @@ presence.on('UpdateData', async () => {
       'h2.border-slate-500',
     )?.textContent
     presenceData.details = pageTitle === 'Anime'
-      ? 'Regarde la page de '  + document.querySelector('#titreOeuvre')
-      ?.textContent
-      ?.trim()
+      ? `Regarde la page de ${document.querySelector('#titreOeuvre')
+        ?.textContent
+        ?.trim()}`
       : 'Regarde la page du manga'
     presenceData.buttons = [{ label: 'Voir la page', url: href }]
     presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
@@ -75,10 +75,9 @@ presence.on('UpdateData', async () => {
     presenceData.details = `Regarde ${
       document.querySelector('#titreOeuvre')?.textContent ?? ''
     }`
-    const [startTimestamp, endTimestamp] = presence.getTimestamps(
-      video.currentTime,
-      video.duration,
-    )
+    const now = Math.floor(Date.now() / 1000)
+    const startTimestamp = now - Math.floor(video.currentTime ?? 0)
+    const endTimestamp = startTimestamp + Math.floor((video.duration ?? 0) - (video.currentTime ?? 0))
     presenceData.largeImageText = `${season ? `${season}, ` : ''}${
       selectEps?.options[selectEps.selectedIndex]?.value ?? ''
     }`
@@ -98,19 +97,19 @@ presence.on('UpdateData', async () => {
       delete presenceData.endTimestamp
     }
     if (video.paused && video.currentTime > 0) {
-      presenceData.state = 'En pause ',
-      delete presenceData.startTimestamp,
+      presenceData.state = 'En pause '
+      delete presenceData.startTimestamp
       delete presenceData.endTimestamp
     }
     if (video.paused && video.currentTime === video.duration) {
-      presenceData.state = 'Visionné',
-      delete presenceData.startTimestamp,
+      presenceData.state = 'Visionné'
+      delete presenceData.startTimestamp
       delete presenceData.endTimestamp
     }
     if (privacyMode) {
-      delete presenceData.state,
-      delete presenceData.smallImageKey,
-      delete presenceData.largeImageText,
+      delete presenceData.state
+      delete presenceData.smallImageKey
+      delete presenceData.largeImageText
       presenceData.details = 'Regarde un anime'
     }
   }
