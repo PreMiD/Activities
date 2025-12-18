@@ -1,6 +1,6 @@
 import * as PreMiD from 'premid'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line
 const presence = new (PreMiD as any).Presence({
   clientId: '1017558325753303102',
 })
