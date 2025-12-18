@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Voknehzyr",
@@ -23,7 +23,8 @@
     "uk": "Цей статус буде показувати штуки, які ви зазвичай робите у ВК. Оновлює інформацію про музику (якщо ви на сторінкці Музика), інформацію про відео! (коли Ви дивитеся його) та інформацію про групи або профілі, які Ви переглядаєте."
   },
   "url": "vk.com",
-  "version": "2.3.20",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*vk[.]com[/]",
+  "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VK/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VK/assets/thumbnail.png",
   "color": "#0077FF",

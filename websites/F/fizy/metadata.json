@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "EGGSY",
@@ -12,7 +12,8 @@
     "tr": "fizy milyonlarca şarkı, video klip, onlarca radyo kanalı ve fazlasına ulaşmanı sağlayan dijital müzik platformudur."
   },
   "url": "play.fizy.com",
-  "version": "1.1.29",
+  "regExp": "^https?[:][/][/]play[.]fizy[.]com[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/fizy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/fizy/assets/thumbnail.png",
   "color": "#fed200",

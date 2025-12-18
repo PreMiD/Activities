@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "193714715631812608",
@@ -13,7 +13,8 @@
     "5e.tools",
     "2014.5e.tools"
   ],
-  "version": "1.1.1",
+  "regExp": "^https?[:][/][/](2014[.])?5e[.]tools[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/5etools/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/5etools/assets/thumbnail.png",
   "color": "#1e90ff",
