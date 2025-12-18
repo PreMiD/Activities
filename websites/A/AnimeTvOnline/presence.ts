@@ -14,20 +14,19 @@ presence.on("UpdateData", async () => {
     const href = document.location.href;
 
     // Impostazioni base (sempre presenti)
-    // Usiamo 'any' per evitare errori di tipo se aggiungiamo campi extra
     const presencePayload: any = {
         largeImageKey: "logo_grande",
         startTimestamp: browsingTimestamp
     };
 
-    // 1. SE SIAMO NEL PLAYER (Guardando un episodio)
-    // Usiamo il div nascosto che abbiamo creato nel sito
+    // 1. SE SIAMO NEL PLAYER (L'utente è loggato e sta guardando)
+    // Il div 'premid-data' esiste solo se il player.js lo ha creato
     if (dataDiv && (path.includes("player") || href.includes("episodio"))) {
-        presencePayload.details = dataDiv.dataset.anime; // Titolo Anime (es. One Piece)
-        presencePayload.state = `Episodio ${dataDiv.dataset.episode}`; // Stato (es. Episodio 100)
+        presencePayload.details = dataDiv.dataset.anime; // Titolo Anime
+        presencePayload.state = `Episodio ${dataDiv.dataset.episode}`; // Numero Episodio
         presencePayload.largeImageText = dataDiv.dataset.anime;
         
-        // Bottoni specifici per il player
+        // Bottoni
         presencePayload.buttons = [
             {
                 label: "Guarda Episodio",
@@ -44,12 +43,12 @@ presence.on("UpdateData", async () => {
 
     // 2. SE SIAMO NELLA SCHEDA DETTAGLI
     if (path.includes("dettagli")) {
-        // Cerchiamo il titolo nella pagina
-        const title = document.querySelector("h1") ? document.querySelector("h1").textContent : document.title;
+        // Cerchiamo il titolo nella pagina (fallback al document.title se h1 non c'è)
+        const titleElement = document.querySelector("h1");
+        const title = titleElement ? titleElement.textContent : document.title;
         
         presencePayload.details = "Sta guardando la scheda di:";
         presencePayload.state = title.replace("AnimeTvOnline - ", "").trim();
-        presencePayload.smallImageKey = "logo_grande"; // Usiamo il logo piccolo come icona
         presencePayload.buttons = [
             {
                 label: "Vedi Scheda",
@@ -67,8 +66,8 @@ presence.on("UpdateData", async () => {
         return presencePayload;
     }
 
-    // 4. SE SIAMO NELLA HOMEPAGE
-    if (path === "/" || path.includes("index") || path === "") {
+    // 4. SE SIAMO NELLA HOMEPAGE (o Login)
+    if (path === "/" || path.includes("index") || path === "" || path.includes("login")) {
         presencePayload.details = "In Homepage";
         presencePayload.state = "Cercando un anime da guardare...";
         presencePayload.buttons = [
@@ -80,7 +79,7 @@ presence.on("UpdateData", async () => {
         return presencePayload;
     }
 
-    // 5. DEFAULT (Qualsiasi altra pagina non prevista)
+    // 5. DEFAULT (Tutte le altre pagine)
     presencePayload.details = "Navigando su AnimeTvOnline";
     presencePayload.state = "Streaming Anime ITA";
     
