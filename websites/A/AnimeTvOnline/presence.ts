@@ -1,8 +1,7 @@
-import * as PreMiD from 'premid'
+import { Presence } from 'premid'
 
-// Usiamo (PreMiD as any) per zittire l'errore tecnico mantenendo la logica funzionante
-const presence = new (PreMiD as any).Presence({
-  clientId: '1017558325753303102'
+const presence = new Presence({
+  clientId: '1017558325753303102',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -12,29 +11,25 @@ presence.on('UpdateData', async () => {
   const path = document.location.pathname
   const href = document.location.href
 
-  const presencePayload: any = {
-    largeImageKey: 'logo_grande',
-    startTimestamp: browsingTimestamp
-  }
-
   // 1. PLAYER
   if (dataDiv && (path.includes('player') || href.includes('episodio'))) {
-    presencePayload.details = dataDiv.dataset.anime
-    presencePayload.state = `Episodio ${dataDiv.dataset.episode}`
-    presencePayload.largeImageText = dataDiv.dataset.anime
-
-    presencePayload.buttons = [
-      {
-        label: 'Guarda Episodio',
-        url: href
-      },
-      {
-        label: 'Scheda Anime',
-        url: `https://animetvonline.org/dettagli.php?slug=${dataDiv.dataset.slug}`
-      }
-    ]
-
-    return presencePayload
+    return {
+      largeImageKey: 'logo_grande',
+      startTimestamp: browsingTimestamp,
+      details: dataDiv.dataset.anime,
+      state: `Episodio ${dataDiv.dataset.episode}`,
+      largeImageText: dataDiv.dataset.anime,
+      buttons: [
+        {
+          label: 'Guarda Episodio',
+          url: href,
+        },
+        {
+          label: 'Scheda Anime',
+          url: `https://animetvonline.org/dettagli.php?slug=${dataDiv.dataset.slug}`,
+        },
+      ],
+    }
   }
 
   // 2. SCHEDA DETTAGLI
@@ -42,41 +37,51 @@ presence.on('UpdateData', async () => {
     const titleElement = document.querySelector('h1')
     const title = titleElement ? titleElement.textContent : document.title
 
-    presencePayload.details = 'Sta guardando la scheda di:'
-    presencePayload.state = title.replace('AnimeTvOnline - ', '').trim()
-    presencePayload.buttons = [
-      {
-        label: 'Vedi Scheda',
-        url: href
-      }
-    ]
-
-    return presencePayload
+    return {
+      largeImageKey: 'logo_grande',
+      startTimestamp: browsingTimestamp,
+      details: 'Sta guardando la scheda di:',
+      state: title.replace('AnimeTvOnline - ', '').trim(),
+      buttons: [
+        {
+          label: 'Vedi Scheda',
+          url: href,
+        },
+      ],
+    }
   }
 
   // 3. PROFILO
   if (path.includes('profilo')) {
-    presencePayload.details = 'Visualizzando un profilo'
-    presencePayload.state = 'Utente AnimeTvOnline'
-    return presencePayload
+    return {
+      largeImageKey: 'logo_grande',
+      startTimestamp: browsingTimestamp,
+      details: 'Visualizzando un profilo',
+      state: 'Utente AnimeTvOnline',
+    }
   }
 
   // 4. HOMEPAGE
   if (path === '/' || path.includes('index') || path === '' || path.includes('login')) {
-    presencePayload.details = 'In Homepage'
-    presencePayload.state = 'Cercando un anime da guardare...'
-    presencePayload.buttons = [
-      {
-        label: 'Visita il sito',
-        url: 'https://animetvonline.org'
-      }
-    ]
-    return presencePayload
+    return {
+      largeImageKey: 'logo_grande',
+      startTimestamp: browsingTimestamp,
+      details: 'In Homepage',
+      state: 'Cercando un anime da guardare...',
+      buttons: [
+        {
+          label: 'Visita il sito',
+          url: 'https://animetvonline.org',
+        },
+      ],
+    }
   }
 
   // 5. DEFAULT
-  presencePayload.details = 'Navigando su AnimeTvOnline'
-  presencePayload.state = 'Streaming Anime ITA'
-
-  return presencePayload
+  return {
+    largeImageKey: 'logo_grande',
+    startTimestamp: browsingTimestamp,
+    details: 'Navigando su AnimeTvOnline',
+    state: 'Streaming Anime ITA',
+  }
 })
