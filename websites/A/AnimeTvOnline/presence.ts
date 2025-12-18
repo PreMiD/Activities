@@ -20,13 +20,11 @@ presence.on("UpdateData", async () => {
     };
 
     // 1. SE SIAMO NEL PLAYER (L'utente è loggato e sta guardando)
-    // Il div 'premid-data' esiste solo se il player.js lo ha creato
     if (dataDiv && (path.includes("player") || href.includes("episodio"))) {
         presencePayload.details = dataDiv.dataset.anime; // Titolo Anime
         presencePayload.state = `Episodio ${dataDiv.dataset.episode}`; // Numero Episodio
         presencePayload.largeImageText = dataDiv.dataset.anime;
         
-        // Bottoni
         presencePayload.buttons = [
             {
                 label: "Guarda Episodio",
@@ -43,7 +41,6 @@ presence.on("UpdateData", async () => {
 
     // 2. SE SIAMO NELLA SCHEDA DETTAGLI
     if (path.includes("dettagli")) {
-        // Cerchiamo il titolo nella pagina (fallback al document.title se h1 non c'è)
         const titleElement = document.querySelector("h1");
         const title = titleElement ? titleElement.textContent : document.title;
         
