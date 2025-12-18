@@ -1,6 +1,7 @@
-import { Presence } from "premid";
+import * as PreMiD from "premid";
 
-const presence = new Presence({
+// Usiamo (PreMiD as any) per zittire l'errore "Property does not exist" senza far crashare il server
+const presence = new (PreMiD as any).Presence({
     clientId: "1017558325753303102"
 });
 
@@ -11,13 +12,12 @@ presence.on("UpdateData", async () => {
     const path = document.location.pathname;
     const href = document.location.href;
 
-    // Definiamo l'oggetto base con un tipo generico per evitare errori
     const presencePayload: any = {
         largeImageKey: "logo_grande",
         startTimestamp: browsingTimestamp
     };
 
-    // 1. PLAYER (L'utente sta guardando un episodio)
+    // 1. PLAYER
     if (dataDiv && (path.includes("player") || href.includes("episodio"))) {
         presencePayload.details = dataDiv.dataset.anime;
         presencePayload.state = `Episodio ${dataDiv.dataset.episode}`;
@@ -37,7 +37,7 @@ presence.on("UpdateData", async () => {
         return presencePayload;
     }
 
-    // 2. SCHEDA DETTAGLI (Uso startsWith come AnimeWorld per precisione)
+    // 2. SCHEDA DETTAGLI
     if (path.includes("dettagli")) {
         const titleElement = document.querySelector("h1");
         const title = titleElement ? titleElement.textContent : document.title;
