@@ -1,6 +1,6 @@
-import * as PreMiD from "premid";
+import { Presence } from "premid";
 
-const presence = new PreMiD.Presence({
+const presence = new Presence({
     clientId: "1017558325753303102"
 });
 
