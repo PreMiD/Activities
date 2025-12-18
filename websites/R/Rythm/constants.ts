@@ -25,7 +25,7 @@ export enum LogoBlackBg {
   LogoPausedGrey = 'https://i.imgur.com/bAkj9Gg.gif',
   LogoPlayingWhite = 'http://i.imgur.com/K4iMdXi.gif',
   LogoPausedWhite = 'https://i.imgur.com/0zr9gjs.gif',
-  LogoPlayingBlack = 'https://i.imgur.com/B65TVu4.gif',
+  LogoPlayingBlack = 'https://i.imgur.com/wb7td4d.gif',
   LogoPausedBlack = 'https://i.imgur.com/V8hlLgN.gif',
   LogoPlayingBeige = 'https://i.imgur.com/zfLF73V.gif',
   LogoPausedBeige = 'https://i.imgur.com/phtChNf.gif',
