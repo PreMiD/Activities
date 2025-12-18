@@ -33,7 +33,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     largeImageKey: ActivityAssets.Logo,
-    // startTimestamp: browsingTimestamp,
+    startTimestamp: browsingTimestamp,
   }
   const { pathname, href } = document.location
   const pathArr = pathname.split('/')
@@ -92,15 +92,25 @@ presence.on('UpdateData', async () => {
       startTimestamp,
       endTimestamp,
     ]
-    if (video.paused) {
-      presenceData.state = 'En pause',
+    if (video.paused && video.currentTime === 0) {
+      presenceData.state = 'Pas encore commencé'
+      delete presenceData.startTimestamp
+      delete presenceData.endTimestamp
+    }
+    if (video.paused && video.currentTime > 0) {
+      presenceData.state = 'En pause ',
+      delete presenceData.startTimestamp,
+      delete presenceData.endTimestamp
+    }
+    if (video.paused && video.currentTime === video.duration) {
+      presenceData.state = 'Visionné',
       delete presenceData.startTimestamp,
       delete presenceData.endTimestamp
     }
     if (privacyMode) {
-      delete presenceData.state
-      delete presenceData.smallImageKey
-      delete presenceData.largeImageText
+      delete presenceData.state,
+      delete presenceData.smallImageKey,
+      delete presenceData.largeImageText,
       presenceData.details = 'Regarde un anime'
     }
   }
@@ -113,7 +123,7 @@ presence.on('UpdateData', async () => {
     const selectLecteur = document.querySelector<HTMLSelectElement>('#selectLecteurs')
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = selectLecteur?.options[selectLecteur.selectedIndex]?.value ?? ''
-    presenceData.buttons = [{ label: 'Lire le scan', url: href }]
+    presenceData.buttons = [{ label: 'Lire le scan', url: href }, { label: 'À propos du manga', url: `${document.location.origin}/catalogue/${pathArr[2]}` }]
     presenceData.largeImageKey = document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
       ?.content ?? ActivityAssets.Logo
     if (privacyMode) {

@@ -29,37 +29,37 @@
   "category": "anime",
   "tags": [
     "anime",
-    "scan",
+    "manga",
     "streaming",
+    "scan",
     "vf",
     "vo",
-    "vostfr",
-    "manga"
+    "vostfr"
   ],
   "iframe": true,
   "iFrameRegExp": ".*",
   "settings": [
     {
       "id": "buttons",
-      "title": "Montrer les boutons",
+      "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
       "value": true
     },
     {
       "id": "privacy",
-      "title": "Mode confidentiel",
+      "title": "Privacy Mode",
       "icon": "fad fa-user-secret",
       "value": false
     },
     {
       "id": "timestamps",
-      "title": "Montrer les timestamps",
+      "title": "Show Timestamps",
       "icon": "fad fa-stopwatch",
       "value": true
     },
     {
       "id": "cover",
-      "title": "Montrer l'image de couverture",
+      "title": "Show Cover",
       "icon": "fad fa-images",
       "value": true
     }
