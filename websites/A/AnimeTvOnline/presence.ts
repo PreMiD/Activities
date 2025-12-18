@@ -1,6 +1,7 @@
-import { Presence } from 'premid'
+import * as PreMiD from 'premid'
 
-const presence = new Presence({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const presence = new (PreMiD as any).Presence({
   clientId: '1017558325753303102',
 })
 
