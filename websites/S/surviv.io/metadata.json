@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "safan41",
@@ -11,7 +11,8 @@
     "nl": "Hou je van games zoals Player Unknown's Battlegrounds (PUBG), Fortnite of Apex Legends? Speel dit gratis 2d battle royale io spel in je browser!"
   },
   "url": "surviv.io",
-  "version": "1.3.30",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*surviv[.]io[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/surviv.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/surviv.io/assets/thumbnail.png",
   "color": "#83AF50",

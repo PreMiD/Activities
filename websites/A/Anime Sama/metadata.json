@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Atom Skully",
@@ -21,7 +21,8 @@
     "fr": "Votre site de streaming préféré pour regarder vos animes et lire vos scans sans pubs."
   },
   "url": "anime-sama.eu",
-  "version": "1.3.0",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anime-sama([.][a-z]+)+[/]",
+  "version": "1.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime%20Sama/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime%20Sama/assets/thumbnail.png",
   "color": "#0063c0",

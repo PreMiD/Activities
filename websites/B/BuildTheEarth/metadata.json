@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "fantomitechno 🦊",
@@ -12,7 +12,8 @@
     "vi": "Chúng tôi đang xây dựng cả hành tinh trong Minecraft."
   },
   "url": "buildtheearth.net",
-  "version": "1.1.27",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*buildtheearth[.]net[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BuildTheEarth/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BuildTheEarth/assets/thumbnail.png",
   "color": "#104D92",

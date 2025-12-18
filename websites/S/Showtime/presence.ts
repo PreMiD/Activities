@@ -277,11 +277,11 @@ presence.on('UpdateData', async () => {
                       ?.toLowerCase()
                       .includes('trailer') // if its a trailer
                       ? document
-                        .querySelector(
-                          '[class="video-metadata__details__title"]',
-                        )
-                        ?.textContent
-                        ?.replace(/Season \d /g, '') // then include trailer info in title
+                          .querySelector(
+                            '[class="video-metadata__details__title"]',
+                          )
+                          ?.textContent
+                          ?.replace(/Season \d /g, '') // then include trailer info in title
                       : title?.[0] // else dont
 
                   presenceData.state = title && title.length > 2

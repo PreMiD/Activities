@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Harry.",
@@ -11,8 +11,8 @@
     "nl": "Uw ideeën tot leven brengen door de krachtigste, betrouwbaarste en meest kwalitatieve hosting aan te bieden tegen de meest betaalbare prijs sinds 2017."
   },
   "url": "sparkedhost.com",
-  "regExp": "([a-z0-9-]+[.])*sparkedhost[.](com|us)[/]|([a-z0-9-]+[.])*altar[.](com|us)|([a-z0-9-]+[.])*cloud852[.](com|us)",
-  "version": "1.1.26",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sparkedhost[.](com|us)[/]|([a-z0-9-]+[.])*altar[.](com|us)|([a-z0-9-]+[.])*cloud852[.](com|us)",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sparked%20Host/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sparked%20Host/assets/thumbnail.png",
   "color": "#FF9F00",

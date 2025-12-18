@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Slowlife",
@@ -16,8 +16,8 @@
     "www.southpark.lat",
     "southpark.cc.com"
   ],
-  "regExp": "([a-z]{2,}[.])?southpark(studios)?([.][a-z]{2,}){1,2}",
-  "version": "1.2.5",
+  "regExp": "^https?[:][/][/]([a-z]{2,}[.])?southpark(studios)?([.][a-z]{2,}){1,2}",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/South%20Park/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/South%20Park/assets/thumbnail.jpg",
   "color": "#b6122a",

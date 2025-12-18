@@ -1,0 +1,146 @@
+{
+  "deejay.viewingHomepage": {
+    "description": "Shown when viewing the homepage",
+    "message": "Viewing the homepage"
+  },
+  "deejay.viewingOnAir": {
+    "description": "Shown when viewing the On Air schedule",
+    "message": "Viewing On Air Schedule"
+  },
+  "deejay.viewingSchedule": {
+    "description": "Shown when browsing the schedule",
+    "message": "Scrolling through the schedule"
+  },
+  "deejay.viewingPrograms": {
+    "description": "Shown when browsing programs",
+    "message": "Scrolling through programs"
+  },
+  "deejay.viewingProgram": {
+    "description": "Shown when viewing a specific program",
+    "message": "Viewing program"
+  },
+  "deejay.hostedBy": {
+    "description": "Shown before the host names",
+    "message": "Hosted by"
+  },
+  "deejay.viewingHighlights": {
+    "description": "Shown when viewing highlights",
+    "message": "Viewing Highlights"
+  },
+  "deejay.viewingEpisodes": {
+    "description": "Shown when viewing episodes",
+    "message": "Viewing Episodes"
+  },
+  "deejay.viewingHosts": {
+    "description": "Shown when viewing the hosts page",
+    "message": "Viewing Hosts in DeeJay Team"
+  },
+  "deejay.viewingHost": {
+    "description": "Shown when viewing a specific host",
+    "message": "Viewing Host"
+  },
+  "deejay.viewingFrequencies": {
+    "description": "Shown when viewing frequencies",
+    "message": "Viewing frequencies"
+  },
+  "deejay.viewingFrequenciesIn": {
+    "description": "Shown when viewing frequencies in a specific region",
+    "message": "Viewing frequencies in"
+  },
+  "deejay.viewingNewsletter": {
+    "description": "Shown when viewing the newsletter menu",
+    "message": "Viewing Newsletter Menu"
+  },
+  "deejay.viewingApp": {
+    "description": "Shown when viewing the DeeJay app page",
+    "message": "Viewing the DeeJay App"
+  },
+  "deejay.viewingContact": {
+    "description": "Shown when viewing the contact page",
+    "message": "Viewing contact page"
+  },
+  "deejay.viewingWebradios": {
+    "description": "Shown when browsing webradios",
+    "message": "Scrolling through webradios"
+  },
+  "deejay.viewingWebradio": {
+    "description": "Shown when viewing a specific webradio",
+    "message": "Viewing webradio"
+  },
+  "deejay.viewingRankings": {
+    "description": "Shown when viewing rankings",
+    "message": "Viewing rankings"
+  },
+  "deejay.viewingTop30": {
+    "description": "Shown when viewing Top 30",
+    "message": "Viewing Top 30"
+  },
+  "deejay.viewingDeejayParade": {
+    "description": "Shown when viewing DeeJay Parade",
+    "message": "Viewing DeeJay Parade"
+  },
+  "deejay.viewingPodcasts": {
+    "description": "Shown when viewing podcasts",
+    "message": "Viewing Podcasts"
+  },
+  "deejay.viewingPodcast": {
+    "description": "Shown when viewing a specific podcast",
+    "message": "Viewing a Podcast"
+  },
+  "deejay.viewingTopics": {
+    "description": "Shown when viewing topics",
+    "message": "Viewing Topics"
+  },
+  "deejay.viewingTopic": {
+    "description": "Shown when viewing a specific topic",
+    "message": "Viewing topic"
+  },
+  "deejay.viewingTag": {
+    "description": "Shown when viewing a tag",
+    "message": "Viewing tag"
+  },
+  "deejay.watchingTV": {
+    "description": "Shown when watching DeeJay TV",
+    "message": "Watching DeeJay TV"
+  },
+  "deejay.liveFrom": {
+    "description": "Shown before the live location",
+    "message": "LIVE from"
+  },
+  "deejay.viewingStore": {
+    "description": "Shown when viewing the DeeJay Store",
+    "message": "Viewing the DeeJay Store"
+  },
+  "deejay.shoppingFor": {
+    "description": "Shown when shopping for merchandise",
+    "message": "Shopping for DeeJay merchandise"
+  },
+  "deejay.viewingLegalNotes": {
+    "description": "Shown when viewing legal notes",
+    "message": "Viewing Legal Notes"
+  },
+  "deejay.viewingRegulations": {
+    "description": "Shown when viewing regulations",
+    "message": "Viewing Regulations"
+  },
+  "deejay.viewingTDM": {
+    "description": "Shown when viewing TDM Reserve",
+    "message": "Viewing TDM Reserve"
+  },
+  "deejay.readingCookiePolicy": {
+    "description": "Shown when reading the cookie policy",
+    "message": "Reading Cookie Policy"
+  },
+  "deejay.readingPrivacyPolicy": {
+    "description": "Shown when reading the privacy policy",
+    "message": "Reading Privacy Policy"
+  },
+  "deejay.readingAccessibility": {
+    "description": "Shown when reading the accessibility statement",
+    "message": "Reading Accessibility Statement"
+  },
+  "deejay.viewingProfile": {
+    "description": "Shown when viewing user profile",
+    "message": "Viewing user profile"
+  }
+}
