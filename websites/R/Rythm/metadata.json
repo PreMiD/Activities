@@ -37,14 +37,14 @@
     {
       "id": "privacy",
       "title": "Privacy Mode",
-      "icon": "fad fa-shield-alt",
+      "icon": "fad fa-user-secret",
       "value": false
     },
 
     {
       "id": "hidePaused",
       "title": "Hide Paused",
-      "icon": "fad fa-pause-circle",
+      "icon": "fa-regular fa-circle-pause",
       "value": false,
       "if": {
         "privacy": false
@@ -54,7 +54,7 @@
     {
       "id": "hideRepeat",
       "title": "Hide Repeat Mode",
-      "icon": "fad fa-pause-circle",
+      "icon": "fa-solid fa-repeat",
       "value": false,
       "if": {
         "privacy": false
@@ -64,7 +64,7 @@
     {
       "id": "timesTamps",
       "title": "Hide Timestamps",
-      "icon": "fad fa-stopwatch",
+      "icon": "fa-regular fa-hourglass",
       "value": false,
       "if": {
         "privacy": false
@@ -74,7 +74,7 @@
     {
       "id": "displayType",
       "title": "Pick Status Display",
-      "icon": "fad fa-user-edit",
+      "icon": "fa-solid fa-wand-magic-sparkles",
       "value": 0,
       "if": {
         "privacy": false
@@ -85,7 +85,7 @@
     {
       "id": "largeImage",
       "title": "Pick large image style",
-      "icon": "fad fa-user-edit",
+      "icon": "fa-solid fa-wand-magic-sparkles",
       "value": 0,
       "if": {
         "privacy": false
@@ -100,8 +100,8 @@
 
     {
       "id": "buttonType",
-      "title": "Pick small button style",
-      "icon": "fad fa-user-edit",
+      "title": "Pick button (small image) style",
+      "icon": "fa-solid fa-wand-magic-sparkles",
       "value": 1,
       "if": {
         "privacy": false
@@ -117,7 +117,7 @@
     {
       "id": "buttonTypeColor",
       "title": "Pick color logos",
-      "icon": "fad fa-user-edit",
+      "icon": "fa-solid fa-wand-magic-sparkles",
       "value": 1,
       "if": {
         "privacy": false
@@ -144,8 +144,8 @@
 
     {
       "id": "buttonBgColor",
-      "title": "Logo background theme",
-      "icon": "fad fa-user-edit",
+      "title": "Pick logo background theme",
+      "icon": "fa-solid fa-wand-magic-sparkles",
       "value": 2,
       "if": {
         "privacy": false
