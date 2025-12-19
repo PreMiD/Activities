@@ -10,6 +10,7 @@
     "en": "Enjoy all of Global’s radio brands, award-winning podcasts, exclusive videos and expertly-curated playlists, all in one place. Just sign in and enjoy!"
   },
   "url": "www.globalplayer.com",
+  "regExp": "^https?[:][/][/]www[.]globalplayer[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/brgxg1I.png",
   "thumbnail": "https://i.imgur.com/YHj4FBj.png",
