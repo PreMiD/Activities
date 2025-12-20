@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1017558325753303102'
+  clientId: '1017558325753303102',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -9,7 +9,6 @@ presence.on('UpdateData', async () => {
   const path = document.location.pathname
   const href = document.location.href
 
-  // Variabile per accumulare i dati (senza spazi alla fine)
   let activityData: any = {}
 
   // 1. PLAYER
@@ -23,13 +22,13 @@ presence.on('UpdateData', async () => {
       buttons: [
         {
           label: 'Guarda Episodio',
-          url: href
+          url: href,
         },
         {
           label: 'Scheda Anime',
-          url: `https://animetvonline.org/dettagli.php?slug=${dataDiv.dataset.slug}`
-        }
-      ]
+          url: `https://animetvonline.org/dettagli.php?slug=${dataDiv.dataset.slug}`,
+        },
+      ],
     }
   }
 
@@ -46,9 +45,9 @@ presence.on('UpdateData', async () => {
       buttons: [
         {
           label: 'Vedi Scheda',
-          url: href
-        }
-      ]
+          url: href,
+        },
+      ],
     }
   }
 
@@ -58,7 +57,7 @@ presence.on('UpdateData', async () => {
       largeImageKey: 'logo_grande',
       startTimestamp: browsingTimestamp,
       details: 'Visualizzando un profilo',
-      state: 'Utente AnimeTvOnline'
+      state: 'Utente AnimeTvOnline',
     }
   }
 
@@ -68,7 +67,7 @@ presence.on('UpdateData', async () => {
       largeImageKey: 'logo_grande',
       startTimestamp: browsingTimestamp,
       details: 'In Homepage',
-      state: 'Cercando un anime da guardare...'
+      state: 'Cercando un anime da guardare...',
     }
   }
 
@@ -78,7 +77,7 @@ presence.on('UpdateData', async () => {
       largeImageKey: 'logo_grande',
       startTimestamp: browsingTimestamp,
       details: 'Navigando su AnimeTvOnline',
-      state: 'Streaming Anime ITA'
+      state: 'Streaming Anime ITA',
     }
   }
 
