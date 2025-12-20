@@ -11,12 +11,9 @@
     "fr": "Gunivers est une communauté autour de minecraft d'origine française, mais à destination d'un public français ou international selon les projets.",
     "nl": "Gunivers is een communautair autour de minecraft d'origine française, met een bestemming van een openbare français of internationale selon les projets."
   },
-  "url": [
-    "gunivers.net",
-    "project.gunivers.net"
-  ],
+  "url": "gunivers.net",
   "regExp": "^https?[:][/][/](project[.])?gunivers[.]net[/]",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gunivers/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gunivers/assets/thumbnail.png",
   "color": "#FF8C39",
