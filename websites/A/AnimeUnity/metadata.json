@@ -9,17 +9,13 @@
     "it": "Mostra la tua attività su AnimeUnity su Discord: navigazione dei titoli, pagine degli anime e visione degli episodi. Rileva la riproduzione anche quando il player video è incorporato in un iframe, mostrando episodio e tempo trascorso quando disponibile."
   },
   "url": "animeunity.so",
-  "version": "1.0.0",
   "regExp": "([a-z0-9-]+[.])*animeunity[.]so[/]?",
-  "iframe": true,
-  "iFrameRegExp": "vixcloud\\.co\\/embed\\/.*",
+  "version": "1.0.0",
   "logo": "https://i.imgur.com/cfWB8O0.png",
   "thumbnail": "https://i.imgur.com/fBfNBQt.png",
   "color": "#FF6B35",
+  "category": "anime",
   "tags": ["anime", "streaming", "italian"],
-  "category": "anime"
+  "iframe": true,
+  "iFrameRegExp": "vixcloud\\.co\\/embed\\/.*"
 }
-
-
-
-

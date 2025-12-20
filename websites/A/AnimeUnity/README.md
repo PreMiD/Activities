@@ -1,6 +1,7 @@
 # AnimeUnity - PreMiD Presence
 
 Una Rich Presence Discord per AnimeUnity che mostra:
+
 - 📺 Il nome dell'anime che stai guardando
 - 📍 L'episodio corrente
 - ⏱️ Il tempo trascorso (Time Elapsed) come Spotify
