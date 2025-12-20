@@ -1,18 +1,18 @@
 const presence = new Presence({
-  clientId: '1017558325753303102',
-});
+  clientId: '1017558325753303102'
+})
 
-const browsingTimestamp = Math.floor(Date.now() / 1000);
+const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
-  const dataDiv = document.getElementById('premid-data');
-  const path = document.location.pathname;
-  const href = document.location.href;
-  
-  // Variabile per accumulare i dati dell'attività
-  let activityData: any = {};
+  const dataDiv = document.getElementById('premid-data')
+  const path = document.location.pathname
+  const href = document.location.href
 
-  // 1. PLAYER (Se c'è il div dati e siamo nel player)
+  // Variabile per accumulare i dati (senza spazi alla fine)
+  let activityData: any = {}
+
+  // 1. PLAYER
   if (dataDiv && (path.includes('player') || href.includes('episodio'))) {
     activityData = {
       largeImageKey: 'logo_grande',
@@ -23,20 +23,20 @@ presence.on('UpdateData', async () => {
       buttons: [
         {
           label: 'Guarda Episodio',
-          url: href,
+          url: href
         },
         {
           label: 'Scheda Anime',
-          url: `https://animetvonline.org/dettagli.php?slug=${dataDiv.dataset.slug}`,
-        },
-      ],
-    };
+          url: `https://animetvonline.org/dettagli.php?slug=${dataDiv.dataset.slug}`
+        }
+      ]
+    }
   }
 
   // 2. SCHEDA DETTAGLI
   else if (path.includes('dettagli') || href.includes('post.php')) {
-    const titleElement = document.querySelector('h1');
-    const title = titleElement ? titleElement.textContent : document.title;
+    const titleElement = document.querySelector('h1')
+    const title = titleElement ? titleElement.textContent : document.title
 
     activityData = {
       largeImageKey: 'logo_grande',
@@ -46,10 +46,10 @@ presence.on('UpdateData', async () => {
       buttons: [
         {
           label: 'Vedi Scheda',
-          url: href,
-        },
-      ],
-    };
+          url: href
+        }
+      ]
+    }
   }
 
   // 3. PROFILO
@@ -58,8 +58,8 @@ presence.on('UpdateData', async () => {
       largeImageKey: 'logo_grande',
       startTimestamp: browsingTimestamp,
       details: 'Visualizzando un profilo',
-      state: 'Utente AnimeTvOnline',
-    };
+      state: 'Utente AnimeTvOnline'
+    }
   }
 
   // 4. HOMEPAGE
@@ -68,8 +68,8 @@ presence.on('UpdateData', async () => {
       largeImageKey: 'logo_grande',
       startTimestamp: browsingTimestamp,
       details: 'In Homepage',
-      state: 'Cercando un anime da guardare...',
-    };
+      state: 'Cercando un anime da guardare...'
+    }
   }
 
   // 5. DEFAULT
@@ -78,9 +78,9 @@ presence.on('UpdateData', async () => {
       largeImageKey: 'logo_grande',
       startTimestamp: browsingTimestamp,
       details: 'Navigando su AnimeTvOnline',
-      state: 'Streaming Anime ITA',
-    };
+      state: 'Streaming Anime ITA'
+    }
   }
 
-  presence.setActivity(activityData);
-});
+  presence.setActivity(activityData)
+})
