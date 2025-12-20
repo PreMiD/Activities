@@ -1,11 +1,8 @@
 import type { ActivityMetadataAndFolder } from '../util/getActivities.js'
-import { execSync } from 'node:child_process'
 import { readFile, rm, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
-import process from 'node:process'
 import { setTimeout } from 'node:timers/promises'
 import * as core from '@actions/core'
-import * as github from '@actions/github'
 import chalk from 'chalk'
 import isCI from 'is-ci'
 import { inc, valid } from 'semver'
@@ -17,7 +14,7 @@ import {
 } from '../util/dnsValidator.js'
 import { getActivities, getChangedActivities } from '../util/getActivities.js'
 import { getSingleActivity } from '../util/getSingleActivity.js'
-import { exit, info, prefix, success } from '../util/log.js'
+import { info, prefix, success } from '../util/log.js'
 
 interface ActivityCheckResult {
   activity: ActivityMetadataAndFolder
@@ -48,18 +45,12 @@ export async function checkDns(
     all = false,
     changed = false,
     fix = false,
-    createPr = false,
   }: {
     all?: boolean
     changed?: boolean
     fix?: boolean
-    createPr?: boolean
   } = {},
 ) {
-  // PR creation is CI-only
-  if (createPr && !isCI) {
-    return exit('PR creation is only available in CI environments')
-  }
 
   let activities: ActivityMetadataAndFolder[] = []
 
@@ -91,19 +82,21 @@ export async function checkDns(
     info('\nApplying fixes...')
     const changes = await applyFixes(results)
 
-    // Create PR if requested
-    if (createPr && (changes.removed.length > 0 || changes.updated.length > 0)) {
-      info('\nCreating pull request...')
-      await createPullRequest(changes)
-      success('Pull request created successfully')
-    }
-    else if (createPr) {
-      success('No changes to commit - all DNS checks passed')
-    }
-    else {
+    if (changes.removed.length > 0 || changes.updated.length > 0) {
+      // In CI, write summary file for the create-pull-request action
+      if (isCI) {
+        const date = new Date().toISOString().split('T')[0]
+        const body = generatePRBody(changes, date)
+        await writeFile('dns-check-summary.md', body)
+        core.setOutput('has_changes', 'true')
+      }
+
       success(
         `Fixed ${changes.removed.length + changes.updated.length} activities`,
       )
+    }
+    else {
+      success('No changes needed - all DNS checks passed')
     }
   }
   else {
@@ -362,47 +355,6 @@ async function updateActivity(
   await writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`)
 
   return metadata.version
-}
-
-async function createPullRequest(changes: ChangesSummary): Promise<void> {
-  if (!process.env.GITHUB_TOKEN) {
-    return exit('GITHUB_TOKEN environment variable is not set')
-  }
-
-  const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
-  const date = new Date().toISOString().split('T')[0]
-  const branch = `dns-check-${date}`
-
-  try {
-    // Create branch
-    info('Creating branch...')
-    execSync(`git checkout -b ${branch}`)
-
-    // Commit changes
-    info('Committing changes...')
-    execSync('git add .')
-    execSync(`git commit -m "chore: remove activities with failed DNS checks"`)
-
-    // Push to remote
-    info('Pushing to remote...')
-    execSync(`git push -u origin ${branch}`)
-
-    // Create PR
-    info('Creating pull request via GitHub API...')
-    const pr = await octokit.rest.pulls.create({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      title: `chore: remove activities with failed DNS checks (${date})`,
-      body: generatePRBody(changes, date),
-      head: branch,
-      base: 'main',
-    })
-
-    core.info(`Pull request created: ${pr.data.html_url}`)
-  }
-  catch (error: any) {
-    exit(`Failed to create pull request: ${error.message}`)
-  }
 }
 
 function generatePRBody(changes: ChangesSummary, date: string): string {
