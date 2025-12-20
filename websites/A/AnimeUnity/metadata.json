@@ -6,7 +6,7 @@
   "service": "AnimeUnity",
   "altnames": ["anime unity", "animeunity"],
   "description": {
-	"en": "AnimeUnity is a streaming and download site for anime with Italian dubbing and subtitles, offering a vast archive and fast streaming.",
+    "en": "AnimeUnity is a streaming and download site for anime with Italian dubbing and subtitles, offering a vast archive and fast streaming.",
     "it": "AnimeUnity è un sito di streaming & download di anime ita/sub ita con un archivio molto vasto e streaming veloce."
   },
   "url": "animeunity.so",
@@ -20,3 +20,4 @@
   "iframe": true,
   "iFrameRegExp": "vixcloud\\.co\\/embed\\/.*"
 }
+
