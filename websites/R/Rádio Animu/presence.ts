@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, StatusDisplayType } from 'premid'
 
 const presence = new Presence({
   clientId: '1159205639852138628',
@@ -8,7 +8,7 @@ const strings = presence.getStrings({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-let artist: string, title: string, artwork: string, playing: boolean
+let artist: string, title: string, anime: string, artwork: string, playing: boolean
 
 presence.on(
   'iFrameData',
@@ -16,11 +16,12 @@ presence.on(
     playing: boolean
     artist: string
     title: string
+    anime: string
     artwork: string
   }) => {
     ({ playing } = data)
     if (playing)
-      ({ artist, title, artwork } = data)
+      ({ artist, title, anime, artwork } = data)
   },
 )
 
@@ -37,6 +38,8 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Play
     presenceData.smallImageText = (await strings).play
     presenceData.largeImageKey = artwork
+    presenceData.largeImageText = anime
+    presenceData.statusDisplayType = StatusDisplayType.Details
   }
   else if (document.location.pathname.includes('/grade/')) {
     presenceData.details = 'Grade de Programação'

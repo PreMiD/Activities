@@ -10,7 +10,7 @@ import jsonAst from 'json-to-ast'
 
 type ValueNode = ObjectNode | ArrayNode | LiteralNode | PropertyNode
 
-export async function getJsonPosition(filePath: string, ...path: string[]): Promise<{ line: number, column: number }> {
+export async function getJsonPosition(filePath: string, ...path: (string | number)[]): Promise<{ line: number, column: number }> {
   const AST = jsonAst(
     await readFile(resolve(filePath), 'utf-8'),
     {
