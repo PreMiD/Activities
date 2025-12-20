@@ -1,15 +1,15 @@
 {
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": { "name": "Red", "id": "294142828399820801" },
   "contributors": [],
   "service": "AnimeUnity",
   "altnames": ["anime unity", "animeunity"],
   "description": {
-    "en": "Displays your AnimeUnity activity on Discord: browsing titles, viewing anime pages, and watching episodes. Detects playback even when the video player runs inside an embedded iframe, showing episode and elapsed time when available.",
-    "it": "Mostra la tua attività su AnimeUnity su Discord: navigazione dei titoli, pagine degli anime e visione degli episodi. Rileva la riproduzione anche quando il player video è incorporato in un iframe, mostrando episodio e tempo trascorso quando disponibile."
+    "it": "AnimeUnity è un sito di streaming & download di anime ita/sub ita con un archivio molto vasto e streaming veloce."
   },
   "url": "animeunity.so",
-  "regExp": "([a-z0-9-]+[.])*animeunity[.]so[/]?",
+  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*animeunity[.]so[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/cfWB8O0.png",
   "thumbnail": "https://i.imgur.com/fBfNBQt.png",
