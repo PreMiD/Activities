@@ -53,7 +53,6 @@ cli
   .option('--all', 'Check all activities')
   .option('--changed', 'Check only changed activities')
   .option('--fix', 'Remove invalid URLs and activities')
-  .option('--create-pr', 'Create a pull request with fixes (CI only, requires --fix)')
   .action(checkDns)
 
 cli

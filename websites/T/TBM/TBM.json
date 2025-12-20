@@ -1,19 +1,19 @@
 {
   "tbm.deleteAccount": {
     "description": "Displayed when the user is deleting their account",
-    "message": "Deleting account"
+    "message": "Deleting their account"
   },
   "tbm.direction": {
     "description": "Displayed when the user is viewing a direction",
     "message": "Direction:"
   },
-  "tbm.editTheirPersonalInfo": {
-    "description": "Displayed when the user is editing their personal information",
-    "message": "Editing their personal information"
-  },
   "tbm.editingAccount": {
     "description": "Displayed when the user is editing their account",
     "message": "Editing their account"
+  },
+  "tbm.editTheirPersonalInfo": {
+    "description": "Displayed when the user is editing their personal information",
+    "message": "Editing their personal information"
   },
   "tbm.from": {
     "description": "Displayed when the user is viewing the 'from' location",
@@ -24,15 +24,15 @@
     "message": "No data"
   },
   "tbm.searchProduct": {
-    "description": "Displayed when the user is searching a product in TBM shop",
-    "message": "Searching a product"
+    "description": "Displayed when the user is searching for a product in TBM shop",
+    "message": "Searching for a product"
   },
   "tbm.searchRoutes": {
     "description": "Displayed when the user is searching for routes",
     "message": "Searching for routes"
   },
   "tbm.searchStop": {
-    "description": "Displayed when the user shearch a stop",
+    "description": "Displayed when the user searches for a stop",
     "message": "Searching for a stop"
   },
   "tbm.stop": {
@@ -43,9 +43,9 @@
     "description": "Displayed when the user is viewing the 'to' location",
     "message": "To:"
   },
-  "tbm.unknowPage": {
-    "description": "Displayed when the user is viewing an unknow page",
-    "message": "Unknow Page"
+  "tbm.unknownPage": {
+    "description": "Displayed when the user is viewing an unknown page",
+    "message": "Unknown Page"
   },
   "tbm.viewCategory": {
     "description": "Displayed when the user is viewing a category in TBM shop",
@@ -55,10 +55,6 @@
     "description": "Displayed when the user is viewing their dashboard",
     "message": "Viewing dashboard"
   },
-  "tbm.viewDocumentation": {
-    "description": "Displayed when the user is viewing the documentation",
-    "message": "Viewing documentation"
-  },
   "tbm.viewDynamicPlan": {
     "description": "Displayed when the user is viewing dynamic plan",
     "message": "Viewing dynamic plan"
@@ -67,9 +63,9 @@
     "description": "Displayed when the user is viewing the help page",
     "message": "Viewing help page"
   },
-  "tbm.viewLineInfos": {
-    "description": "Displayed when the user is viewing line informations",
-    "message": "Viewing line informations"
+  "tbm.viewLineInfo": {
+    "description": "Displayed when the user is viewing line information",
+    "message": "Viewing line information"
   },
   "tbm.viewLines": {
     "description": "Displayed when the user is viewing lines",
@@ -86,6 +82,10 @@
   "tbm.viewPointsScale": {
     "description": "Displayed when the user is viewing the points scale",
     "message": "Viewing points scale"
+  },
+  "tbm.viewPrivacyInfo": {
+    "description": "Displayed when the user is viewing privacy information",
+    "message": "Viewing privacy information"
   },
   "tbm.viewProduct": {
     "description": "Displayed when the user is viewing a product in TBM shop",
@@ -115,12 +115,12 @@
     "description": "Displayed when the user is viewing their profile",
     "message": "Viewing their profile"
   },
-  "tbm.viewTrafficInfo": {
-    "description": "Displayed when the user is viewing traffic information",
-    "message": "Viewing traffic information:"
+  "tbm.viewTrafficUpdate": {
+    "description": "Displayed when the user is viewing traffic update",
+    "message": "Viewing traffic update:"
   },
-  "tbm.viewTrafficInfos": {
-    "description": "Displayed when the user is viewing traffic informations",
-    "message": "Viewing traffic informations"
+  "tbm.viewTrafficUpdates": {
+    "description": "Displayed when the user is viewing traffic updates",
+    "message": "Viewing traffic updates"
   }
 }
