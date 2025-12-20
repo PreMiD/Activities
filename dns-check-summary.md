@@ -1,0 +1,193 @@
+## DNS Check Results
+
+This PR automatically removes activities with URLs that failed DNS resolution checks.
+
+### Activities Removed (23)
+
+The following activities were completely removed because all their URLs failed DNS checks:
+
+- **AminoApps** - URLs: `aminoapps.com`
+- **AniMi Club** - URLs: `animi.club, www.animi.club, dev.animi.club`
+- **AnROLL** - URLs: `www.anroll.net, my.anroll.net`
+- **BetterAnime** - URLs: `betteranime.net`
+- **DALL-E** - URLs: `labs.openai.com`
+- **dizilab** - URLs: `dizilab.de`
+- **EWAIFU** - URLs: `www.ewaifu.gg`
+- **Gfycat** - URLs: `gfycat.com`
+- **Hexa Watch** - URLs: `www.hexa.watch, hexa.watch`
+- **Hypixel Studios** - URLs: `hypixelstudios.com`
+- **Komik Indo** - URLs: `komikindo1.com`
+- **Kryptonia** - URLs: `kryptonia.fr, forum.kryptonia.fr`
+- **ListenOnRepeat** - URLs: `listenonrepeat.com`
+- **LiveLinkBio** - URLs: `livelinkbio.com`
+- **PeaceScans** - URLs: `peacescans.life, www.peacescans.life`
+- **Playerbros** - URLs: `playerbros.com`
+- **Ralex Bot** - URLs: `bot.ralex.xyz`
+- **RLTracker.pro** - URLs: `rltracker.pro`
+- **SeriManga** - URLs: `serimanga.com`
+- **Shard Hosting** - URLs: `shardhosting.co.uk`
+- **signed.host** - URLs: `www.signed.host, signed.host, bio.signed.host`
+- **Sitting on Clouds Radio** - URLs: `radio.sittingonclouds.net`
+- **WebProfiles** - URLs: `webprofiles.me`
+
+### Activities Updated (50)
+
+The following activities had some invalid URLs removed:
+
+- **1337x** (v1.6.0 → v1.6.1)
+  - Removed: `x1337x.se`
+  - Kept: `1337x.to, 1337x.st, x1337x.ws, x1337x.eu, 1337x.is`
+- **4chan** (v1.3.0 → v1.3.1)
+  - Removed: `www.boards.4chan.org`
+  - Kept: `www.4chan.org, 4chan.org, boards.4chan.org`
+- **5Mods** (v1.5.0 → v1.5.1)
+  - Removed: `www.forums.gta5-mods.com`
+  - Kept: `gta5-mods.com, forums.gta5-mods.com, www.gta5-mods.com`
+- **AniHQ** (v1.1.0 → v1.1.1)
+  - Removed: `www.anihq.to`
+  - Kept: `anihq.to`
+- **animepahe** (v1.6.0 → v1.6.1)
+  - Removed: `animepahe.ru`
+  - Kept: `animepahe.si, animepahe.com, animepahe.org`
+- **AnimeWho** (v1.1.0 → v1.1.1)
+  - Removed: `animewho.com`
+  - Kept: `www.animewho.com`
+- **AnimeYY** (v1.0.1 → v1.0.2)
+  - Removed: `www.animeyy.com`
+  - Kept: `animeyy.com`
+- **Anixl** (v1.1.0 → v1.1.1)
+  - Removed: `www.anixl.to`
+  - Kept: `anixl.to`
+- **AnizmTV** (v3.1.0 → v3.1.1)
+  - Removed: `anizm.store, anizm.net.tr, puffytr.com.tr, turkanime.shop`
+  - Kept: `anizm.info, anizm.net, anizm.tv, anizm.pro, anizm.tr, anizm.com.tr, anizle.com, animeizleindir.com, animeizleindir.net, animeizle.org.tr, animetr.fun, dafflix.com.tr, hentaizm.com.tr, onepieceizle.com.tr, puffytr.com, test.puffytr.com, tranime.com.tr, tranimeizle.org, tranimeizle.org.tr, tranimeizle.net.tr, tranimeizle.xyz, turkanime.com.tr, turkanime.fun, turkanime.info, turkanime.net.tr, turkanime.pro, turkanime.store, turkanime.xyz, turkanimeizle.com, turkanimeizle.co, turkceanimeizle.org, xn--trkealtyazizle-ijb74am5a.com, xn--turkcealtyazizle-lqc.com, xn--trkeanime-s3a2u.com, xn--trkanimeizle-dlb.com`
+- **Asura Scans** (v2.2.0 → v2.2.1)
+  - Removed: `asura.nacm.xyz`
+  - Kept: `asurascans.com, www.asurascans.com, asura.gg, asurascanstr.com, asuracomics.com, asuratoon.com, asuracomic.net`
+- **BigBlueButton** (v1.1.0 → v1.1.1)
+  - Removed: `demo2.bigbluebutton.org`
+  - Kept: `demo.bigbluebutton.org`
+- **Chessly** (v1.1.0 → v1.1.1)
+  - Removed: `feedback.chessly.com`
+  - Kept: `chessly.com`
+- **Discord ID** (v1.2.0 → v1.2.1)
+  - Removed: `wiki.discord.id`
+  - Kept: `discord.id`
+- **Discovery** (v1.1.0 → v1.1.1)
+  - Removed: `www.go.discovery.com`
+  - Kept: `discoveryplus.com, www.discoveryplus.com, go.discovery.com`
+- **Dungeon Crawl Stone Soup** (v1.1.0 → v1.1.1)
+  - Removed: `crawl.kelbi.org`
+  - Kept: `crawl.akrasiac.org, crawl.project357.org, cbro.berotato.org, crawl.xtahua.com, underhound.eu, webzook.net, lazy-life.ddo.jp`
+- **Edgenuity** (v1.1.0 → v1.1.1)
+  - Removed: `r24.core.learn.edgenuity.com`
+  - Kept: `auth.edgenuity.com, student.edgenuity.com, r10.core.learn.edgenuity.com, r11.core.learn.edgenuity.com, r12.core.learn.edgenuity.com, r22.core.learn.edgenuity.com, r23.core.learn.edgenuity.com`
+- **Emanate** (v1.1.0 → v1.1.1)
+  - Removed: `dashboard.emanate.live`
+  - Kept: `emanate.live`
+- **Erisly** (v1.2.0 → v1.2.1)
+  - Removed: `giveaways.erisly.com, translate.erisly.com, wiki.erisly.com`
+  - Kept: `erisly.com`
+- **ESL** (v2.4.0 → v2.4.1)
+  - Removed: `tv.eslgaming.com, forum.eslgaming.com`
+  - Kept: `www.eslgaming.com, play.eslgaming.com, pro.eslgaming.com, shop.eslgaming.com, fantasy.eslgaming.com, about.eslgaming.com, brand.eslgaming.com, photos.eslgaming.com, www.esl-one.com, www.intelextrememasters.com, intelgrandslam.eslgaming.com, www.schulmeisterschaft.de`
+- **FlixTor** (v2.4.0 → v2.4.1)
+  - Removed: `flixtor.cz`
+  - Kept: `flixtor.to, flixtor.ch, flixtor.se, flixtor.vc, flixtor.nu, flixtor.sx, flixtor.tk`
+- **FMHY** (v1.1.0 → v1.1.1)
+  - Removed: `fmhy.lol`
+  - Kept: `fmhy.net, fmhy.pages.dev, fmhy.xyz, fmhy.jbugel.xyz`
+- **Google Calendar** (v1.4.0 → v1.4.1)
+  - Removed: `www.calendar.google.com`
+  - Kept: `calendar.google.com`
+- **Google NotebookLM** (v1.1.0 → v1.1.1)
+  - Removed: `www.notebooklm.google.com`
+  - Kept: `notebooklm.google, notebooklm.google.com`
+- **GoPlay** (v2.1.0 → v2.1.1)
+  - Removed: `kdrama.anontpp.com`
+  - Kept: `goplay.ml, goplay.su`
+- **Gunivers** (v1.3.0 → v1.3.1)
+  - Removed: `project.gunivers.net`
+  - Kept: `gunivers.net`
+- **HBO GO** (v2.5.0 → v2.5.1)
+  - Removed: `hbogo.pl, www.hbogo.co.th`
+  - Kept: `hbogo.ro, hbogo.com, hbogo.cz, hbogo.sk, www.hbogoasia.my, www.hbogoasia.id, www.hbogoasia.ph`
+- **Invidious** (v1.1.0 → v1.1.1)
+  - Removed: `id.420129.xyz`
+  - Kept: `iteroni.com, yewtu.be, inv.nadeko.net, invidious.nerdvpn.de, invidious.f5.si`
+- **iQIYIs** (v1.1.0 → v1.1.1)
+  - Removed: `iqiyis.com`
+  - Kept: `indielens.org, tubiii.com`
+- **KickAssAnime** (v1.3.0 → v1.3.1)
+  - Removed: `kickassanime.lol`
+  - Kept: `kickassanime.ro`
+- **Lazada** (v1.1.0 → v1.1.1)
+  - Removed: `www.lazada.co`
+  - Kept: `lazada.com, www.lazada.com, lazada.co, lazada.vn, www.lazada.vn, lazada.sg, www.lazada.sg`
+- **Mastodon** (v1.2.0 → v1.2.1)
+  - Removed: `neovibe.app, allthingstech.social, mastodon.holeyfox.co, mastodon.conquestuniverse.com, zenzone.social, wayne.social, streamerchat.social, cartersville.social, geekdom.social, emacs.ch, toot.site, lgbt.io, anime.kona.moe, sanjuans.life, persia.social`
+  - Kept: `joinmastodon.org, mastodon.social, mastodon.online, mastodon.world, mas.to, infosec.exchange, hachyderm.io, techhub.social, universeodon.com, mastodonapp.uk, mastodon.gamedev.place, social.vivaldi.net, mstdn.ca, c.im, det.social, social.tchncs.de, sfba.social, mstdn.party, mastodon.scot, aus.social, toot.community, ohai.social, ioc.exchange, mastodon.au, nerdculture.de, defcon.social, social.linux.pizza, ieji.de, ravenation.club, toot.io, sciences.social, masto.nu, climatejustice.social, freemasonry.social, mstdn.plus, cyberplace.social, glasgow.social, bark.lgbt, stranger.social, awscommunity.social, graphics.social, fairy.id, mastodon.berlin, flipboard.social, opalstack.social, vmst.io, famichiki.jp, cupoftea.social, expressional.social, convo.casa, veganism.social, toot.funami.tech, pnw.zone, sakurajima.moe, mastodon-uk.net, cr8r.gg, thecanadian.social, archaeo.social, gaygeek.social, mstdn.business, babka.social, mastodon.london, masto.nyc, mastodon.com.pl, ani.work, drupal.community, mast.hpc.social, genealysis.social, qaf.men, beekeeping.ninja, guitar.rodeo, gametoots.de, bookstodon.com, mastodon.education, birdon.social, hear-me.social, arvr.social, social.silicon.moe, wehavecookies.social, gardenstate.social, squawk.mytransponder.com, masto.yttrx.com, musicworld.social, theatl.social, airwaves.social, library.love, jvm.social, drumstodon.net, planetearth.social, mastodon.sg, k8s.social, techtoots.com, mastodon.hosnet.fr, skastodon.com, epsilon.social, cville.online, fairmove.net, mcr.wtf, okla.social, mastodon.ee, mastodon.frl, fpl.social, rap.social, neurodiversity-in.au, xreality.social, mastodon.vanlife.is, enshittification.social, pool.social, social.veraciousnetwork.com, mastodon.sdf.org, kolektiva.social, masto.ai, tech.lgbt, mathstodon.xyz, mastodon.ie, mindly.social, mastodon.green, mastodon.nz, indieweb.social, ruby.social, persiansmastodon.com, noc.social, toot.wales, urbanists.social, phpc.social, metalhead.club, socel.net, mstdn.games, theblower.au, mastodon.me.uk, hostux.social, todon.eu, hcommons.social, toad.social, furry.engineer, mapstodon.space, union.place, lor.sh, discuss.systems, peoplemaking.games, sunny.garden, tilde.zone, blorbo.social, pawb.fun, historians.social, todon.nl, fandom.ink, disabled.social, 4bear.com, retro.pizza, mastodonbooks.net, eupolicy.social, lgbtqia.space, furries.club, libretooth.gr, urusai.social, mastodon.energy, federated.press, corteximplant.com, donphan.social, mograph.social, social.bau-ha.us, is.nota.live, social.seattle.wa.us, norcal.social, musicians.today, mstdn.dk, wargamers.social, hometech.social, dmv.community, seocommunity.social, cyberfurz.social, epicure.social, h-net.social, opencoaster.net, arsenalfc.social, mountains.social, apobangpo.space, esq.social, friendsofdesoto.social, cloud-native.social, datasci.social, linux.social, gamepad.club, musician.social, cosocial.ca, furry.energy, lounge.town, earthstream.social, maly.io, poweredbygay.social, toot.garden, metalverse.social, clj.social, indieauthors.social, mastodon.pirateparty.be, seo.chat, cultur.social, mastodon.cipherbliss.com, raphus.social, toot.pizza, rail.chat, vermont.masto.host, toots.nu, x0r.be, hoosier.social, synapse.cafe, camp.smolnet.org, episcodon.net, mastodon.africa, mastodon.bot, nomanssky.social, frontrange.co, cwb.social, paktodon.asia, pdx.sh, growers.social, mastodon.iow.social, kcmo.social, social.sndevs.com, silversword.online, nutmeg.social, openedtech.social, nfld.me, mastodon.babb.no, toot.works, dariox.club, 23.illuminati.org, kzoo.to, ms.maritime.social, jaxbeach.social, ceilidh.online, technews.social, darticulate.com, publishing.social, finsup.social, computerfairi.es`
+- **MinecraftForge** (v1.3.0 → v1.3.1)
+  - Removed: `forgedev.flocker.tv`
+  - Kept: `www.minecraftforge.net, files.minecraftforge.net, mcforge.readthedocs.io`
+- **OpenGuessr** (v1.1.0 → v1.1.1)
+  - Removed: `play.openguessr.com`
+  - Kept: `openguessr.com, www.openguessr.com`
+- **osu!gatari** (v1.5.0 → v1.5.1)
+  - Removed: `sig.gatari.pw`
+  - Kept: `osu.gatari.pw`
+- **PlanetXO** (v1.1.0 → v1.1.1)
+  - Removed: `panel.planetxo.uk`
+  - Kept: `planetxo.uk, api.planetxo.uk, staff.planetxo.uk`
+- **Prambors Radio** (v1.4.0 → v1.4.1)
+  - Removed: `live.pramborsfm.com, streaming.pramborsfm.com`
+  - Kept: `www.pramborsfm.com`
+- **REYFM** (v1.5.0 → v1.5.1)
+  - Removed: `status.rey.fm`
+  - Kept: `rey.fm, www.rey.fm`
+- **Sflix** (v1.2.0 → v1.2.1)
+  - Removed: `sflixgo.is`
+  - Kept: `sflix.mov`
+- **Shinigami Komik ID** (v1.0.1 → v1.0.2)
+  - Removed: `shinigami.id, www.shinigami.id, www.shinigami.bio, www.shinigami.asia`
+  - Kept: `shinigami.bio, shinigami.asia`
+- **SimulatorHits** (v2.1.0 → v2.1.1)
+  - Removed: `simulatorhits.dev`
+  - Kept: `simulatorhits.com, panel.simulatorhits.com`
+- **SOAP2DAY** (v3.1.0 → v3.1.1)
+  - Removed: `s2dfree.is`
+  - Kept: `soap2day.to, soap2day.ac, soap2day.sh, soap2day.mx, s2dfree.to, s2dfree.cc, s2dfree.de, soap2day.pe`
+- **Spigot** (v1.4.0 → v1.4.1)
+  - Removed: `irc.spi.gt`
+  - Kept: `www.spigotmc.org, hub.spigotmc.org`
+- **Sushi Scan** (v1.1.0 → v1.1.1)
+  - Removed: `www.sushiscan.net`
+  - Kept: `sushiscan.net`
+- **Toonily** (v1.2.0 → v1.2.1)
+  - Removed: `toonily.net`
+  - Kept: `toonily.com`
+- **TuMangaOnline** (v1.3.0 → v1.3.1)
+  - Removed: `visortmo.com`
+  - Kept: `lectortmo.com, tmocommunity.com, zonatmo.com`
+- **Vanis.io** (v1.1.0 → v1.1.1)
+  - Removed: `skins.vanis.io`
+  - Kept: `vanis.io`
+- **Videoland** (v1.4.0 → v1.4.1)
+  - Removed: `www.v2.videoland.com`
+  - Kept: `v2.videoland.com, videoland.com, www.videoland.com`
+- **Void Bots** (v1.1.0 → v1.1.1)
+  - Removed: `beta.voidbots.net`
+  - Kept: `voidbots.net, docs.voidbots.net`
+- **Ween** (v1.1.0 → v1.1.1)
+  - Removed: `ween.wiki`
+  - Kept: `www.ween.wiki`
+- **Yandex.Translate** (v1.1.0 → v1.1.1)
+  - Removed: `translate.yandex.ua`
+  - Kept: `translate.yandex.com, translate.yandex.ru, ceviri.yandex.com.tr`
+
+### Check Details
+
+- **Run Date:** 2025-12-20
+- **Total Activities Checked:** 1307
+- **DNS Check Method:** A/AAAA record resolution
+- **Retry Logic:** 3 attempts with progressive backoff (1s, 3s, 5s)
