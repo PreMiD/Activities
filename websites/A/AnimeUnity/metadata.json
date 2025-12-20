@@ -5,8 +5,8 @@
   "service": "AnimeUnity",
   "altnames": ["anime unity", "animeunity"],
   "description": {
-    "en": "Shows what anime you are watching on AnimeUnity (episode + progress).",
-    "it": "Mostra quale anime stai guardando su AnimeUnity (episodio + avanzamento)."
+    "en": "Displays your AnimeUnity activity on Discord: browsing titles, viewing anime pages, and watching episodes. Detects playback even when the video player runs inside an embedded iframe, showing episode and elapsed time when available.",
+    "it": "Mostra la tua attività su AnimeUnity su Discord: navigazione dei titoli, pagine degli anime e visione degli episodi. Rileva la riproduzione anche quando il player video è incorporato in un iframe, mostrando episodio e tempo trascorso quando disponibile."
   },
   "url": "animeunity.so",
   "version": "1.0.0",
