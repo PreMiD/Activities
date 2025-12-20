@@ -1,0 +1,25 @@
+{
+  "apiVersion": 1,
+  "author": { "name": "Red", "id": "294142828399820801" },
+  "contributors": [],
+  "service": "AnimeUnity",
+  "altnames": ["anime unity", "animeunity"],
+  "description": {
+    "en": "Shows what anime you are watching on AnimeUnity (episode + progress).",
+    "it": "Mostra quale anime stai guardando su AnimeUnity (episodio + avanzamento)."
+  },
+  "url": "animeunity.so",
+  "version": "1.0.0",
+  "regExp": "([a-z0-9-]+[.])*animeunity[.]so[/]?",
+  "iframe": true,
+  "iFrameRegExp": "vixcloud\\.co\\/embed\\/.*",
+  "logo": "https://i.imgur.com/cfWB8O0.png",
+  "thumbnail": "https://i.imgur.com/fBfNBQt.png",
+  "color": "#FF6B35",
+  "tags": ["anime", "streaming", "italian"],
+  "category": "anime"
+}
+
+
+
+
