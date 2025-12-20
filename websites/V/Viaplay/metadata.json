@@ -15,10 +15,11 @@
     "viaplay.se",
     "viaplay.dk",
     "viaplay.no",
-    "viaplay.fi"
+    "viaplay.fi",
+    "viaplay.com"
   ],
-  "regExp": "^https?[:][/][/]viaplay[.](se|dk|no|fi)[/]",
-  "version": "1.4.0",
+  "regExp": "^https?[:][/][/]viaplay[.](se|dk|no|fi|com)[/]",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Viaplay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Viaplay/assets/thumbnail.png",
   "color": "#ec5a7f",

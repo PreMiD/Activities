@@ -12,7 +12,7 @@
   },
   "url": "pluto.tv",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pluto[.]tv[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PlutoTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PlutoTV/assets/thumbnail.png",
   "color": "#ffffff",
