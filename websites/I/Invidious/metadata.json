@@ -18,7 +18,7 @@
     "invidious.nerdvpn.de",
     "invidious.f5.si"
   ],
-  "regExp": "^https?[:][/][/](iteroni[.]com|yewtu[.]be|(inv)[.]nadeko[.]net|(id)[.]420129[.]xyz|(invidious)[.]nerdvpn[.]de|(invidious)[.]f5[.]si)[/]",
+  "regExp": "^https?[:][/][/](iteroni[.]com|yewtu[.]be|inv[.]nadeko[.]net|invidious[.]nerdvpn[.]de|invidious[.]f5[.]si)[/]",
   "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Invidious/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Invidious/assets/thumbnail.jpg",

@@ -20,7 +20,7 @@
     "indielens.org",
     "tubiii.com"
   ],
-  "regExp": "^https?[:][/][/](iqiyis[.]com|indielens[.]org|tubiii[.]com)[/]",
+  "regExp": "^https?[:][/][/](indielens[.]org|tubiii[.]com)[/]",
   "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/iQIYIs/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/iQIYIs/assets/thumbnail.jpg",

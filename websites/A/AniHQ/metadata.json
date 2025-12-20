@@ -17,7 +17,7 @@
     "hi-in": "AniHQ एक आधुनिक एनीमे स्ट्रीमिंग साइट है जहाँ आप English सब्टाइटल के साथ एनीमे देख सकते हैं।"
   },
   "url": "anihq.to",
-  "regExp": "^https?[:][/][/](www[.])?anihq[.]to[/]",
+  "regExp": "^https?[:][/][/]anihq[.]to[/]",
   "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniHQ/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniHQ/assets/thumbnail.png",

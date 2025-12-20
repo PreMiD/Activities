@@ -24,7 +24,7 @@
     "vi": "Google Calendar là dịch vụ quản lý kế hoạch và thời gian được phát triển bởi Google."
   },
   "url": "calendar.google.com",
-  "regExp": "^https?[:][/][/](calendar|www[.]calendar)[.]google[.]com[/]",
+  "regExp": "^https?[:][/][/]calendar[.]google[.]com[/]",
   "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Calendar/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Calendar/assets/thumbnail.png",

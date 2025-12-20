@@ -16,7 +16,7 @@
     "shinigami.bio",
     "shinigami.asia"
   ],
-  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*shinigami[.](id|bio|asia)[/]",
+  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*shinigami[.](bio|asia)[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Shinigami%20Komik%20ID/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Shinigami%20Komik%20ID/assets/thumbnail.png",

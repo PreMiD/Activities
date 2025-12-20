@@ -22,7 +22,7 @@
     "simulatorhits.com",
     "panel.simulatorhits.com"
   ],
-  "regExp": "^https?[:][/][/]((panel[.])?simulatorhits[.]com|simulatorhits[.]dev)[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*simulatorhits[.]com[/]",
   "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SimulatorHits/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SimulatorHits/assets/thumbnail.png",

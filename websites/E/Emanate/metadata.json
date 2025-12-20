@@ -10,7 +10,7 @@
     "en": "Emanate unites musicians and music lovers on a fast and fair collaboration and sharing platform to create and earn more. You’ve always lived for music, now make it a living."
   },
   "url": "emanate.live",
-  "regExp": "^https?[:][/][/](dashboard[.])?emanate[.]live[/]",
+  "regExp": "^https?[:][/][/]emanate[.]live[/]",
   "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Emanate/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Emanate/assets/thumbnail.png",

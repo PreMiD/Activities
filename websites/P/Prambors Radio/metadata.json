@@ -11,7 +11,7 @@
     "nl": "Prambors FM is een commercieel radionetwerk gevestigd in Jakarta, Indonesië. Het station werd gelanceerd op 18 maart 1971 in Jakarta en het doel van het station was om popmuziek te spelen met als doelgroep tieners en jonge volwassenen. Prambors staat in de jaren 80 en 90 bekend als een tienericoon in Indonesië. Het is eigendom van en wordt beheerd door Masima Radio Network"
   },
   "url": "www.pramborsfm.com",
-  "regExp": "^https?[:][/][/](www|live|streaming)[.]pramborsfm[.]com[/]",
+  "regExp": "^https?[:][/][/](www[.])?pramborsfm[.]com[/]",
   "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prambors%20Radio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prambors%20Radio/assets/thumbnail.png",

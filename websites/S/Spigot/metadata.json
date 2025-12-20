@@ -14,7 +14,7 @@
     "www.spigotmc.org",
     "hub.spigotmc.org"
   ],
-  "regExp": "^https?[:][/][/]((www|hub)[.]spigotmc[.]org|(irc)[.]spi[.]gt)[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*spigotmc[.]org[/]",
   "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Spigot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Spigot/assets/thumbnail.png",

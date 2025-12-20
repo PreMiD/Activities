@@ -10,7 +10,7 @@
     "en": "Read your favorite Manhua and Manhwa translated to English for free. Read Manga, Manhua, Manhwa Online, Free webtoon Online, Updated Daily!"
   },
   "url": "toonily.com",
-  "regExp": "^https?[:][/][/]toonily[.](net|com)[/]",
+  "regExp": "^https?[:][/][/]toonily[.]com[/]",
   "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Toonily/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Toonily/assets/thumbnail.png",

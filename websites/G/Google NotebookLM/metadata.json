@@ -13,7 +13,7 @@
     "notebooklm.google",
     "notebooklm.google.com"
   ],
-  "regExp": "^https?[:][/][/](notebooklm[.]google|(notebooklm|www[.]notebooklm)[.]google[.]com)[/]",
+  "regExp": "^https?[:][/][/](notebooklm[.]google|notebooklm[.]google[.]com)[/]",
   "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20NotebookLM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20NotebookLM/assets/thumbnail.png",

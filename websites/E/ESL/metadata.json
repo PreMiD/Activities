@@ -25,7 +25,7 @@
     "intelgrandslam.eslgaming.com",
     "www.schulmeisterschaft.de"
   ],
-  "regExp": "^https?[:][/][/]((www|play|pro|tv|shop|fantasy|forum|about|brand|photos|intelgrandslam)[.]eslgaming[.]com|(www)[.]esl-one[.]com|(www)[.]intelextrememasters[.]com|(www)[.]schulmeisterschaft[.]de)[/]",
+  "regExp": "^https?[:][/][/]((www|play|pro|shop|fantasy|about|brand|photos|intelgrandslam)[.]eslgaming[.]com|(www)[.]esl-one[.]com|(www)[.]intelextrememasters[.]com|(www)[.]schulmeisterschaft[.]de)[/]",
   "version": "2.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/ESL/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/ESL/assets/thumbnail.png",

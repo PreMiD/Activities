@@ -12,7 +12,7 @@
     "zh": "欢迎来到最棒的osu!私服:osu!gatari。"
   },
   "url": "osu.gatari.pw",
-  "regExp": "^https?[:][/][/](osu|sig)[.]gatari[.]pw[/]",
+  "regExp": "^https?[:][/][/]osu[.]gatari[.]pw[/]",
   "version": "1.5.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20gatari/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20gatari/assets/thumbnail.png",

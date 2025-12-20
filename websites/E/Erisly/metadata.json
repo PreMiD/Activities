@@ -11,7 +11,7 @@
     "nl": "Hiya! Mijn naam is Erisly, jullie vriendelijke buurtgodin! Ik gebruik mijn krachten en talenten om als een \"Discord Bot\" te spelen, waar ik jullie een aantal kwaliteitsfuncties en commando's voor jullie Discord Server geef!"
   },
   "url": "erisly.com",
-  "regExp": "^https?[:][/][/]((giveaways|translate|wiki)[.])?erisly[.]com[/]",
+  "regExp": "^https?[:][/][/]erisly[.]com[/]",
   "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Erisly/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Erisly/assets/thumbnail.png",

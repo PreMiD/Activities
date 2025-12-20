@@ -18,7 +18,7 @@
     "webzook.net",
     "lazy-life.ddo.jp"
   ],
-  "regExp": "^https?[:][/][/]((crawl)[.]akrasiac[.]org|(crawl)[.]project357[.]org|(cbro)[.]berotato[.]org|(crawl)[.]xtahua[.]com|underhound[.]eu|webzook[.]net|(lazy-life)[.]ddo[.]jp|(crawl)[.]kelbi[.]org)[/]",
+  "regExp": "^https?[:][/][/]((crawl)[.]akrasiac[.]org|(crawl)[.]project357[.]org|(cbro)[.]berotato[.]org|(crawl)[.]xtahua[.]com|underhound[.]eu|webzook[.]net|(lazy-life)[.]ddo[.]jp)[/]",
   "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dungeon%20Crawl%20Stone%20Soup/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dungeon%20Crawl%20Stone%20Soup/assets/thumbnail.png",

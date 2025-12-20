@@ -16,7 +16,7 @@
     "goplay.ml",
     "goplay.su"
   ],
-  "regExp": "^https?[:][/][/](goplay[.]ml|goplay[.]su|(kdrama)[.]anontpp[.]com)[/]",
+  "regExp": "^https?[:][/][/](goplay[.]ml|goplay[.]su)[/]",
   "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GoPlay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GoPlay/assets/thumbnail.png",
