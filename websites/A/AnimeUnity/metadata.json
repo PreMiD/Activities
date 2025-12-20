@@ -7,6 +7,7 @@
   "altnames": ["anime unity", "animeunity"],
   "description": {
     "it": "AnimeUnity è un sito di streaming & download di anime ita/sub ita con un archivio molto vasto e streaming veloce."
+	"en": "AnimeUnity is a streaming and download site for anime with Italian dubbing and subtitles, offering a vast archive and fast streaming."
   },
   "url": "animeunity.so",
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*animeunity[.]so[/]",
