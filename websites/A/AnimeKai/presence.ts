@@ -34,9 +34,12 @@ presence.on('UpdateData', async () => {
     name: 'AnimeKAI',
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+
   }
-  const { pathname, href } = document.location
+  const { pathname, href, hostname } = document.location
   const buttons = await presence.getSetting<boolean>('buttons')
+
+  const isNewDomain = hostname.includes('animekaitv')
 
   if (pathname === '/' || pathname === '/home') {
     presenceData.details = 'Exploring AnimeKAI'
@@ -66,10 +69,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/az-list')) {
     presenceData.details = 'Looking at Anime list'
     if (pathname !== '/az-list') {
-      presenceData.state = `Titles starting with ${
-        pathname.substring(9) === 'other'
-          ? 'Other characters'
-          : `${pathname.substring(9)}`
+      presenceData.state = `Titles starting with ${pathname.substring(9) === 'other'
+        ? 'Other characters'
+        : `${pathname.substring(9)}`
       }`
     }
     presenceData.smallImageKey = Assets.Search
@@ -105,16 +107,62 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (pathname.startsWith('/watch')) {
-    const title = document.querySelector<HTMLLIElement>(
+    let title = document.querySelector<HTMLLIElement>(
       'li.breadcrumb-item.active',
     )
-    const episodeSpan = document.querySelector<HTMLSpanElement>(
-      '.eplist .range li a.active span',
-    )
-    const episode = episodeSpan?.previousSibling?.nodeValue?.trim() || null
-    const thumbnail = document.querySelector<HTMLImageElement>(
+
+    if (!title) {
+      title = document.querySelector<HTMLHeadingElement>(
+        'h1.title.d-title, h1.d-title, h2.film-name, h1.film-name',
+      ) as any
+    }
+
+    let episode: string | null = null
+
+    if (isNewDomain) {
+      const epMatch = pathname.match(/\/ep-(\d+)/)
+      if (epMatch && epMatch[1]) {
+        episode = epMatch[1]
+      }
+    }
+    else {
+      const hashMatch = window.location.hash.match(/#ep=(\d+)/)
+      if (hashMatch) {
+        episode = hashMatch[1] ?? null
+      }
+
+      const episodeSpan = document.querySelector<HTMLSpanElement>(
+        '.eplist .range li a.active span',
+      )
+      if (!episode && episodeSpan) {
+        episode = episodeSpan?.previousSibling?.nodeValue?.trim() || null
+      }
+    }
+
+    if (!episode) {
+      const epElement = document.querySelector('.episode-number, .ep-number, .current-episode')
+      if (epElement) {
+        const epText = epElement.textContent?.match(/\d+/)
+        if (epText)
+          episode = epText[0]
+      }
+    }
+
+    let thumbnail = document.querySelector<HTMLImageElement>(
       '.poster > div > img',
     )?.src
+
+    if (!thumbnail) {
+      thumbnail = document.querySelector<HTMLImageElement>(
+        'img[itemprop="image"]',
+      )?.src
+    }
+
+    if (!thumbnail) {
+      thumbnail = document.querySelector<HTMLImageElement>(
+        '#ani_detail > div > div > div.anis-content > div.anisc-poster > div > img, .anime-poster img, .video-poster img',
+      )?.src
+    }
 
     presenceData.largeImageKey = thumbnail
     if (title)
@@ -178,7 +226,17 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = ActivityAssets.Settings
         break
       }
+      case '/member/users/settings': {
+        presenceData.details = 'Managing Settings'
+        presenceData.smallImageKey = ActivityAssets.Settings
+        break
+      }
       case '/user/profile': {
+        presenceData.details = 'Editing Profile'
+        presenceData.smallImageKey = ActivityAssets.Settings
+        break
+      }
+      case '/member/users/profile': {
         presenceData.details = 'Editing Profile'
         presenceData.smallImageKey = ActivityAssets.Settings
         break
@@ -189,6 +247,11 @@ presence.on('UpdateData', async () => {
         break
       }
       case '/user/import': {
+        presenceData.details = 'MAL/AL Import'
+        presenceData.smallImageKey = Assets.Downloading
+        break
+      }
+      case '/member/mal': {
         presenceData.details = 'MAL/AL Import'
         presenceData.smallImageKey = Assets.Downloading
         break
@@ -214,12 +277,28 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = Assets.Reading
         break
       }
+      case '/member/notifications': {
+        const type = new URLSearchParams(document.location.search).get('type')
+        if (type === 'community') {
+          presenceData.details = 'Looking at Community Notifications'
+        }
+        else {
+          presenceData.details = 'Looking at Anime Notifications'
+        }
+        presenceData.smallImageKey = Assets.Reading
+        break
+      }
       case '/user/bookmarks': {
         presenceData.details = 'Managing Bookmarks'
         presenceData.smallImageKey = ActivityAssets.Settings
         break
       }
       case '/upcoming': {
+        presenceData.details = 'Looking at Upcoming'
+        presenceData.smallImageKey = Assets.Reading
+        break
+      }
+      case '/status/not-yet-aired': {
         presenceData.details = 'Looking at Upcoming'
         presenceData.smallImageKey = Assets.Reading
         break
