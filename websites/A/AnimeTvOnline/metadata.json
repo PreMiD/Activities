@@ -14,7 +14,7 @@
   "regExp": "^https:\\/\\/animetvonline\\.org\\/.*",
   "version": "1.0.0",
   "logo": "https://animetvonline.org/assets/images/logo_grande.png",
-  "thumbnail": "https://animetvonline.org/assets/images/logo_grande.png",
+  "thumbnail": "https://animetvonline.org/assets/images/banner_premid.png",
   "color": "#FF4545",
   "category": "anime",
   "tags": [
