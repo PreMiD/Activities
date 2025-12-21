@@ -45,15 +45,23 @@ presence.on('UpdateData', async () => {
         ?.textContent
         ?.match(/[1-9]\d*/)?.[0]
 
-      if (usePresenceName) {
-        presenceData.name = title
-        if (episodeNumber) presenceData.details = `Episode ${episodeNumber}`
-        else presenceData.details = 'Watching'
-      } else {
-        presenceData.details = title
-        if (episodeNumber) presenceData.state = `Episode ${episodeNumber}`
-      }
+        if (usePresenceName) {
+          presenceData.name = title
 
+          if (episodeNumber) {
+            presenceData.details = `Episode ${episodeNumber}`
+          }
+          else {
+            presenceData.details = "Watching"
+          }
+        }
+        else {
+          presenceData.details = title
+
+          if (episodeNumber) {
+            presenceData.state = `Episode ${episodeNumber}`
+          }
+        }
       presenceData.largeImageKey = coverArt ?? ActivityAssets.Logo
       presenceData.buttons = [
         {
