@@ -16,8 +16,13 @@
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/9anime/assets/thumbnail.png",
   "color": "#A020F0",
   "category": "anime",
-  "tags": [
-    "anime",
-    "streaming"
+  "tags": ["anime", "streaming"],
+  "settings": [
+    {
+      "id": "usePresenceName",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": true
+    }
   ]
 }
