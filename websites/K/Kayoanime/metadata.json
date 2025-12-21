@@ -5,18 +5,18 @@
     "name": "Aizuu",
     "id": "271576733168173057"
   },
-"contributors": [
-  {
-    "name": "iamhv",
-    "id": "1250340827163529226"
-  }
-],
-"service": "Kayoanime",
+  "contributors": [
+    {
+      "name": "iamhv",
+      "id": "1250340827163529226"
+    }
+  ],
+  "service": "Kayoanime",
   "description": {
     "en": "Kayoanime is a website where you can download anime in dual audio 1080p through Google drive."
   },
   "url": "kayoanime.com",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kayoanime[.]com[/]",
+  "regExp": "^https?://([a-z0-9-]+[.])*kayoanime[.]com/",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kayoanime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kayoanime/assets/thumbnail.png",
