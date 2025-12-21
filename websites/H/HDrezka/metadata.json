@@ -5,6 +5,12 @@
     "id": "648040813250478081",
     "name": "blaze0_0"
   },
+  "contributors": [
+    {
+      "name": "dyrdoom",
+      "id": "427522200774508546"
+    }
+  ],
   "service": "HDrezka",
   "description": {
     "en": "Website for watching movies, cartoons, anime and TV series.",
@@ -14,10 +20,11 @@
     "rezka.ag",
     "hdrezka.ag",
     "rezka-ua.org",
-    "standby-rezka.tv"
+    "standby-rezka.tv",
+    "rezka-ua.co"
   ],
-  "regExp": "^https?[:][/][/](rezka[.]ag|hdrezka[.]ag|rezka-ua[.]org|standby-rezka[.]tv)[/]",
-  "version": "1.2.0",
+  "regExp": "^https?[:][/][/](rezka[.]ag|hdrezka[.]ag|rezka-ua[.]org|standby-rezka[.]tv|rezka-ua[.]co)[/]",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/thumbnail.jpeg",
   "color": "#DA3D36",
