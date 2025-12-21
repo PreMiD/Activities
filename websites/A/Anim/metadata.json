@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "772972258024226816",
+    "name": "menezesss0"
+  },
+  "contributors": [
+    {
+      "name": "nesiforspeed",
+      "id": "476522405725077519"
+    }
+  ],
+  "service": "Anim",
+  "description": {
+    "en": "Anim is a free initiative that aims to bring high-quality anime to its users, without ads.",
+    "pt-br": "O Anim é uma iniciativa gratuita, que visa trazer animes de qualidade sem anúncios para seus usuários."
+  },
+  "url": "anim.lol",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/HyzMYTv.png",
+  "thumbnail": "https://i.imgur.com/n68iApD.png",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "brazil",
+    "community",
+    "portuguese",
+    "watch"
+  ]
+}
