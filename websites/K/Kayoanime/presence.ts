@@ -59,7 +59,7 @@ presence.on('UpdateData', async () => {
     default:
       if (document.querySelector('.entry-header-outer > .entry-header > h1 ')) {
 
-        if (fetch_img){
+        if (fetch_img) {
           presenceData.largeImageKey = fetch_img
         }
 
