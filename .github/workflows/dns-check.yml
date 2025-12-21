@@ -16,6 +16,12 @@ jobs:
       pull-requests: write
 
     steps:
+      - uses: actions/create-github-app-token@v2
+        id: generate-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Checkout repository
         uses: actions/checkout@v5
         with:
@@ -39,14 +45,12 @@ jobs:
         if: steps.dns-check.outputs.has_changes == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
+          token: ${{ steps.generate-token.outputs.token }}
           branch: dns-check-${{ github.run_id }}
           delete-branch: true
           commit-message: 'chore: remove activities with failed DNS checks'
           title: 'chore: remove activities with failed DNS checks'
-          body-path: dns-check-summary.md
+          body-path: ${{ steps.dns-check.outputs.summary_path }}
           committer: PreMiD Automations <contact@premid.app>
           author: PreMiD Automations <contact@premid.app>
-
-      - name: Cleanup summary file
-        if: steps.dns-check.outputs.has_changes == 'true'
-        run: rm -f dns-check-summary.md
+          sign-commits: true
