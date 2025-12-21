@@ -11,11 +11,10 @@
   },
   "url": [
     "notebooklm.google",
-    "notebooklm.google.com",
-    "www.notebooklm.google.com"
+    "notebooklm.google.com"
   ],
-  "regExp": "^https?[:][/][/](notebooklm[.]google|(notebooklm|www[.]notebooklm)[.]google[.]com)[/]",
-  "version": "1.1.0",
+  "regExp": "^https?[:][/][/](notebooklm[.]google|notebooklm[.]google[.]com)[/]",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20NotebookLM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20NotebookLM/assets/thumbnail.png",
   "color": "#6ad2f7",

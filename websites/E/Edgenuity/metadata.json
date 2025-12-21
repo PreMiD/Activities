@@ -17,11 +17,10 @@
     "r11.core.learn.edgenuity.com",
     "r12.core.learn.edgenuity.com",
     "r22.core.learn.edgenuity.com",
-    "r23.core.learn.edgenuity.com",
-    "r24.core.learn.edgenuity.com"
+    "r23.core.learn.edgenuity.com"
   ],
-  "regExp": "^https?[:][/][/](auth|student|r10[.]core[.]learn|r11[.]core[.]learn|r12[.]core[.]learn|r22[.]core[.]learn|r23[.]core[.]learn|r24[.]core[.]learn)[.]edgenuity[.]com[/]",
-  "version": "1.1.0",
+  "regExp": "^https?[:][/][/](auth|student|r[0-9]+[.]core[.]learn)[.]edgenuity[.]com[/]",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Edgenuity/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Edgenuity/assets/thumbnail.png",
   "color": "#FF0000",

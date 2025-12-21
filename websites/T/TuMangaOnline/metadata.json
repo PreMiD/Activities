@@ -13,11 +13,10 @@
   "url": [
     "lectortmo.com",
     "tmocommunity.com",
-    "visortmo.com",
     "zonatmo.com"
   ],
-  "regExp": "^https?[:][/][/](lectortmo[.]com|tmocommunity[.]com|visortmo[.]com|zonatmo[.]com)[/]",
-  "version": "1.3.0",
+  "regExp": "^https?[:][/][/](lectortmo[.]com|tmocommunity[.]com|zonatmo[.]com)[/]",
+  "version": "1.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TuMangaOnline/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TuMangaOnline/assets/thumbnail.png",
   "color": "#3366cc",

@@ -14,11 +14,10 @@
   },
   "url": [
     "goplay.ml",
-    "goplay.su",
-    "kdrama.anontpp.com"
+    "goplay.su"
   ],
-  "regExp": "^https?[:][/][/](goplay[.]ml|goplay[.]su|(kdrama)[.]anontpp[.]com)[/]",
-  "version": "2.1.0",
+  "regExp": "^https?[:][/][/](goplay[.]ml|goplay[.]su)[/]",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GoPlay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GoPlay/assets/thumbnail.png",
   "color": "#F4ADEE",

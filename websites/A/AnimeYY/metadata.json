@@ -15,12 +15,9 @@
   "description": {
     "en": "AnimeYY is an online platform where you can stream and browse a wide variety of anime series and movies for free. It offers updated episodes, multiple genres, and an easy-to-use interface for discovering new shows."
   },
-  "url": [
-    "animeyy.com",
-    "www.animeyy.com"
-  ],
+  "url": "animeyy.com",
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*animeyy[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeYY/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeYY/assets/thumbnail.png",
   "color": "#000000",
