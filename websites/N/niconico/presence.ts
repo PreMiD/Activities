@@ -10,6 +10,9 @@ async function getStrings() {
     play: 'general.playing',
     pause: 'general.paused',
     live: 'general.live',
+    searchFor: 'general.searchFor',
+    search: 'general.search',
+    searchSomething: 'general.searchSomething',
     buttonWatchVideo: 'general.buttonWatchVideo',
     buttonWatchStream: 'general.buttonWatchStream',
   },
@@ -80,6 +83,66 @@ presence.on('UpdateData', async () => {
             url: href,
           },
         ]
+      }
+      else if (pathname.startsWith('/search/')) {
+        const searchValue = decodeURIComponent(pathname.slice('/search/'.length))
+
+        presenceData.details = strings.searchSomething
+        presenceData.smallImageKey = Assets.Search
+        presenceData.smallImageText = strings.search
+
+        if (searchValue.trim()) {
+          presenceData.details = strings.searchFor
+          presenceData.state = searchValue
+        }
+      }
+      else if (pathname.startsWith('/tag/')) {
+        const tagValue = decodeURIComponent(pathname.slice('/tag/'.length))
+
+        presenceData.details = strings.searchSomething
+        presenceData.smallImageKey = Assets.Search
+        presenceData.smallImageText = strings.search
+
+        if (tagValue.trim()) {
+          presenceData.details = strings.searchFor
+          presenceData.state = tagValue
+        }
+      }
+      else if (pathname.startsWith('/mylist_search/')) {
+        const mylistValue = decodeURIComponent(pathname.slice('/mylist_search/'.length))
+
+        presenceData.details = strings.searchSomething
+        presenceData.smallImageKey = Assets.Search
+        presenceData.smallImageText = strings.search
+
+        if (mylistValue.trim()) {
+          presenceData.details = strings.searchFor
+          presenceData.state = mylistValue
+        }
+      }
+      else if (pathname.startsWith('/user_search/')) {
+        const user_searchValue = decodeURIComponent(pathname.slice('/user_search/'.length))
+
+        presenceData.details = strings.searchSomething
+        presenceData.smallImageKey = Assets.Search
+        presenceData.smallImageText = strings.search
+
+        if (user_searchValue.trim()) {
+          presenceData.details = strings.searchFor
+          presenceData.state = user_searchValue
+        }
+      }
+      else if (pathname.startsWith('/series_search/')) {
+        const series_searchValue = decodeURIComponent(pathname.slice('/series_search/'.length))
+
+        presenceData.details = strings.searchSomething
+        presenceData.smallImageKey = Assets.Search
+        presenceData.smallImageText = strings.search
+
+        if (series_searchValue.trim()) {
+          presenceData.details = strings.searchFor
+          presenceData.state = series_searchValue
+        }
       }
       break
     }
