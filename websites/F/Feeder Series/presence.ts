@@ -25,7 +25,7 @@ presence.on('UpdateData', () => {
   }
   // About page
   else if (pathname.includes('/our-team')) {
-    presenceData.details = 'Reading about us'
+    presenceData.details = 'Reading about the team'
   }
   // How we work page
     else if (pathname.includes('/how-we-work')) {
