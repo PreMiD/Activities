@@ -52,7 +52,7 @@ presence.on('UpdateData', async () => {
           presenceData.details = `Episode ${episodeNumber}`
         }
         else {
-          presenceData.details = "Watching"
+          presenceData.details = 'Watching'
         }
       }
       else {
