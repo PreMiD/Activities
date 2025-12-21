@@ -14,6 +14,7 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
     type: ActivityType.Watching,
   }
+  const usePresenceName = await presence.getSetting<boolean>('usePresenceName')
   const { href, pathname, search } = document.location
   switch (true) {
     case pathname === '/':
@@ -30,19 +31,29 @@ presence.on('UpdateData', async () => {
       presenceData.details = `Viewing genre: ${pathname.split('/')[2]}`
       break
     case pathname.includes('/watch/'): {
-      presenceData.details = document.title
+      const title = document.title
         .replace(/^Watch /, '')
         .replace(/ online free on 9anime$/, '')
+
       const coverArt = document
         .querySelector<HTMLImageElement>('[class="anime-poster"]')
         ?.querySelector('img')
         ?.src
+
       const episodeNumber = document
         .querySelector('[class="item ep-item active"]')
         ?.textContent
         ?.match(/[1-9]\d*/)?.[0]
 
-      presenceData.state = `Episode ${episodeNumber}`
+      if (usePresenceName) {
+        presenceData.name = title
+        if (episodeNumber) presenceData.details = `Episode ${episodeNumber}`
+        else presenceData.details = 'Watching'
+      } else {
+        presenceData.details = title
+        if (episodeNumber) presenceData.state = `Episode ${episodeNumber}`
+      }
+
       presenceData.largeImageKey = coverArt ?? ActivityAssets.Logo
       presenceData.buttons = [
         {
