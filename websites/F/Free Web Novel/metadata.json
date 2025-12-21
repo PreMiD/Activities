@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "BigBoi",
@@ -10,7 +10,8 @@
     "en": "We offer free novels to read online! Read novels updated daily: Chinese novels, English novels, Japanese novels, Korean novels, and novels of multiple genres."
   },
   "url": "freewebnovel.com",
-  "version": "1.0.17",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*freewebnovel[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Free%20Web%20Novel/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Free%20Web%20Novel/assets/thumbnail.png",
   "color": "#5a5a5a",
