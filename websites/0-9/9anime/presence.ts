@@ -62,8 +62,6 @@ presence.on('UpdateData', async () => {
           presenceData.state = `Episode ${episodeNumber}`
         }
       }
-
-
       presenceData.largeImageKey = coverArt ?? ActivityAssets.Logo
       presenceData.buttons = [
         {
