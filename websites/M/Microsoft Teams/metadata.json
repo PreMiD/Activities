@@ -17,6 +17,7 @@
   "url": [
     "teams.live.com",
     "teams.microsoft.com"
+    "teams.cloud.microsoft"
   ],
   "regExp": "^https?[:][/][/]((teams)[.]live[.]com|(teams)[.]microsoft[.]com)[/]",
   "version": "1.2.0",
