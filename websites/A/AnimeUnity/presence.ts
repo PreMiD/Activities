@@ -154,7 +154,6 @@ presence.on('UpdateData', async () => {
         details: 'AnimeUnity',
         state: `Viewing ${profileName} profile`,
         largeImageKey: LOGO_URL,
-        smallImageKey: LOGO_URL,
         smallImageText: 'AnimeUnity',
         startTimestamp: pageStartTs,
       })
