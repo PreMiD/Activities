@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -12,8 +12,8 @@
     "nl": "GameStar.de biedt u tests, previews, video's, rapporten en nieuws over pc-games en hardware. Wij leveren gamejournalistiek die u kunt vertrouwen."
   },
   "url": "www.gamestar.de",
-  "regExp": "([a-z0-9-]+[.])*gamestar[.]de[/]",
-  "version": "1.2.25",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gamestar[.]de[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GameStar/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GameStar/assets/thumbnail.png",
   "color": "#162781",

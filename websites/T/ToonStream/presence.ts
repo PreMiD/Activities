@@ -80,7 +80,7 @@ presence.on('UpdateData', async () => {
               },
               {
                 label: 'View Anime',
-                url: `https://toonstream.love/anime/${animeNameWithDashes}`,
+                url: `https://toonstream.one/anime/${animeNameWithDashes}`,
               },
             ]
           }

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "rippledwater",
@@ -13,8 +13,8 @@
     "vi": "Quora nơi để thu nạp và chia sẻ kiến thức. Đây là nền tảng để đặt các câu hỏi và kết nối với những người có góc nhìn và trải nghiệm độc nhất với các câu trả lời chất lượng."
   },
   "url": "quora.com",
-  "regExp": "([a-z0-9]+)[.]quora[.]com",
-  "version": "1.0.25",
+  "regExp": "^https?[:][/][/]([a-z0-9]+)[.]quora[.]com",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Q/Quora/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Q/Quora/assets/thumbnail.png",
   "color": "#A70000",

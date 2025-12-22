@@ -48,10 +48,10 @@ presence.on('UpdateData', async () => {
 
   if (page.startsWith(routes.anime)) {
     presenceData.state = document
-      .querySelector('.anime-title')
+      .querySelector('.media-detail__title')
       ?.textContent
       ?.split('Adulte')[0]
-    presenceData.largeImageKey = document.querySelector('.anime-affiche')?.getAttribute('src')
+    presenceData.largeImageKey = document.querySelector('.anime__poster')?.getAttribute('src')
       || ActivityAssets.Logo
     presenceData.smallImageKey = ActivityAssets.Logo
     presenceData.buttons = [

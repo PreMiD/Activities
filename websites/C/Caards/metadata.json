@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Anaxes",
@@ -15,7 +15,8 @@
     "help.caards.me",
     "status.caards.me"
   ],
-  "version": "1.0.25",
+  "regExp": "^https?[:][/][/](www|help|status)[.]caards[.]me[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Caards/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Caards/assets/thumbnail.jpg",
   "color": "#0F1225",
