@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -18,7 +18,8 @@
     "nl": "Door deel te nemen aan Niantic Wayfarer kun je toekomstige avonturen voor jezelf en anderen helpen vormgeven door interessante locaties over de hele wereld te beoordelen."
   },
   "url": "wayfarer.nianticlabs.com",
-  "version": "1.2.7",
+  "regExp": "^https?[:][/][/]wayfarer[.]nianticlabs[.]com[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Niantic%20Wayfarer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Niantic%20Wayfarer/assets/thumbnail.jpg",
   "color": "#fc4513",

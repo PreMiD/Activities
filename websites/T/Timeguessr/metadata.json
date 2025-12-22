@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "408597063098695692",
@@ -11,7 +11,8 @@
     "nl": "Timeguessr is een interactief spel dat je uitdaagt om het geschatte jaar en de locatie van een historische foto of gebeurtenis te raden."
   },
   "url": "timeguessr.com",
-  "version": "1.0.5",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*timeguessr[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Timeguessr/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Timeguessr/assets/thumbnail.png",
   "color": "#DB5049",

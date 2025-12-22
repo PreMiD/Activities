@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "め Kerem",
@@ -18,7 +18,8 @@
     "tr": "Müthiş İnsanlarla Dolu İlginç Bir Yer"
   },
   "url": "runo.pw",
-  "version": "2.1.25",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*runo[.]pw[/]",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RunoPW/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RunoPW/assets/thumbnail.png",
   "color": "#ffff00",

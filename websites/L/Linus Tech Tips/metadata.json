@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "DubStepMad",
@@ -11,7 +11,8 @@
     "nl": "Officieel Linus Tech Tips-forum."
   },
   "url": "linustechtips.com",
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*linustechtips[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Linus%20Tech%20Tips/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Linus%20Tech%20Tips/assets/thumbnail.png",
   "color": "#db4105",
