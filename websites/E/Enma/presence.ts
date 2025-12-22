@@ -6,7 +6,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/Vc2NDZK.png',
+  Logo = 'https://i.imgur.com/CQHGshu.png',
 }
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
@@ -14,7 +14,7 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
     type: ActivityType.Watching,
   }
-  const { href, pathname, search } = document.location
+  const { pathname, search } = document.location
   switch (true) {
     case pathname === '/':
     case pathname === '/home':
@@ -22,16 +22,16 @@ presence.on('UpdateData', async () => {
       break
     case pathname === '/search':
       presenceData.details = `Searching...`
-      presenceData.state = `Query : ${decodeURIComponent(new URLSearchParams(search).get('keyword') || '').replace(/\b\w/g, c => c.toUpperCase())}`;
+      presenceData.state = `Query : ${decodeURIComponent(new URLSearchParams(search).get('keyword') || '').replace(/\b\w/g, c => c.toUpperCase())}`
       break
     case pathname.includes('/genre/'):
       presenceData.details = `Browsing Genre`
       presenceData.state = `${pathname.split('/')[2]}`
       break
     case pathname.includes('/watch/'): {
-      presenceData.details = document.querySelector('p.text-\\[26px\\]')?.textContent?.trim();
-      const coverArt = document.querySelector<HTMLDivElement>('div.flex.flex-col.gap-y-4.items-start.ml-8')?.querySelector<HTMLImageElement>('img')?.src;
-      const episodeNumber = document.querySelector<HTMLDivElement>('div.bg-\\[\\#1E90FF\\]')?.querySelector('span')?.textContent;
+      presenceData.details = document.querySelector('p.text-\\[26px\\]')?.textContent?.trim()
+      const coverArt = document.querySelector<HTMLDivElement>('div.flex.flex-col.gap-y-4.items-start.ml-8')?.querySelector<HTMLImageElement>('img')?.src
+      const episodeNumber = document.querySelector<HTMLDivElement>('div.bg-\\[\\#1E90FF\\]')?.querySelector('span')?.textContent
       presenceData.state = `Episode ${episodeNumber}`
       presenceData.largeImageKey = coverArt ?? ActivityAssets.Logo
       presenceData.smallImageKey = ActivityAssets.Logo
