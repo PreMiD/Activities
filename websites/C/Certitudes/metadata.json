@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "671037171611729920",
+    "name": "atom_skully"
+  },
+  "service": "Certitudes",
+  "description": {
+    "en": "Certitudes.org hosts two essential daily puzzles: Cemantle, a \"hot-and-cold\" game based on word meanings, and Pedantle, where the objective is to unmask a Wikipedia page word by word.",
+    "fr": "Certitudes.org regroupe deux puzzles quotidiens incontournables : Cémantix, un jeu de \"chaud-froid\" basé sur le sens des mots, et Pédantix, où l'objectif est de démasquer une page Wikipédia mot par mot."
+  },
+  "url": [
+    "www.certitudes.org",
+    "cemantix.certitudes.org",
+    "cemantle.certitudes.org",
+    "pedantix.certitudes.org",
+    "pedantle.certitudes.org"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*certitudes[.]org[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/OFh9Xqh.png",
+  "thumbnail": "https://i.imgur.com/AEg761p.png",
+  "color": "#B7DB91",
+  "category": "games",
+  "tags": [
+    "games",
+    "cémantix",
+    "cemantle",
+    "pédantix",
+    "pedantle"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "(Spoil) Hide Word/Wiki Page of the Day",
+      "icon": "fad fa-user-secret",
+      "value": true
+    }
+  ]
+}
