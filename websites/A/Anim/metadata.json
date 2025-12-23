@@ -28,5 +28,34 @@
     "community",
     "portuguese",
     "watch"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Modo Privacidade",
+      "icon": "fad fa-user-secret",
+      "value": false,
+      "description": "Oculta o que você está fazendo."
+    },
+    {
+      "id": "cover",
+      "if": {
+        "privacy": false
+      },
+      "title": "Mostrar Capa",
+      "icon": "fad fa-images",
+      "value": true,
+      "description": "Exibe a capa do anime ou episódio na presença."
+    },
+    {
+      "id": "titleAsPresence",
+      "if": {
+        "privacy": false
+      },
+      "title": "Mostrar Título como Presença",
+      "description": "Usa o título do anime como o nome da presença em vez do nome padrão.",
+      "icon": "fad fa-user-edit",
+      "value": true
+    }
   ]
 }
