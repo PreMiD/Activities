@@ -15,7 +15,7 @@ presence.on('UpdateData', async () => {
   const settings = {
     privacyMode: await presence.getSetting<boolean>('privacy'),
     showCover: await presence.getSetting<boolean>('cover'),
-    showTitleAsPresence: await presence.getSetting<boolean>('titleAsPresence')
+    showTitleAsPresence: await presence.getSetting<boolean>('titleAsPresence'),
   }
 
   const presenceData: PresenceData = {
@@ -38,7 +38,7 @@ presence.on('UpdateData', async () => {
       ep_preview: document.querySelector('img')?.src,
     }
     const { paused, anime_name, ep, ep_name, ep_preview } = pageDetails
-    //TODO TERMINAR O PRIVACY MODE E O COVER
+
     // Informações
     presenceData.name = settings.showTitleAsPresence ? anime_name : 'Anim'
     presenceData.details = settings.showTitleAsPresence ? ep_name : anime_name
@@ -48,8 +48,9 @@ presence.on('UpdateData', async () => {
     // Imagens
     presenceData.largeImageKey = settings.showCover ? ep_preview ?? ActivityAssets.Logo : ActivityAssets.Logo
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
-    presenceData.smallImageText = paused ? 'Pausado' : 'Reproduzindo';
-  } else {
+    presenceData.smallImageText = paused ? 'Pausado' : 'Reproduzindo'
+  }
+  else {
     const pathnameArray = pathname.split('/')
     const staticPages: Record<string, PresenceData> = {
       '': { details: 'Página Principal', largeImageKey: ActivityAssets.Logo },
