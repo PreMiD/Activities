@@ -5,7 +5,7 @@ const presence = new Presence({
 });
 
 enum ActivityAssets {
-  Logo = "https://i.imgur.com/jbdFZ2C.png",
+  Logo = "https://i.imgur.com/Xk3y6wK.png",
 }
 
 /* ======================
@@ -73,8 +73,7 @@ async function fetchMainAnimePoster(slug: string): Promise<string | null> {
 async function readAnimePage(): Promise<void> {
   const slug = getSlug();
   if (!slug) return;
-  
-  // Obtenemos título solo si estamos en la página principal
+
   if (isMainAnimePage()) {
     const titleEl = document.querySelector("h1, h2");
     cachedTitle = titleEl?.textContent
@@ -82,12 +81,9 @@ async function readAnimePage(): Promise<void> {
       .replace(/ Online Sub Español.*$/i, "")
       .trim() ?? document.title.replace(/\s+-\s+AnimeAV1/i, "").trim();
     
-    // Si estamos en la página principal, intentar obtener el poster directamente
     const img = document.querySelector<HTMLImageElement>('img[src*="/covers/"]');
     if (img?.src) cachedPoster = img.src;
   } else {
-    // Si NO estamos en la página principal Y no tenemos datos en caché
-    // hacemos fetch a la página principal para obtener título y poster
     if (!cachedTitle || !cachedPoster) {
       const mainPageData = await fetchMainAnimeData(slug);
       if (!cachedTitle) cachedTitle = mainPageData.title;
@@ -124,8 +120,7 @@ async function fetchMainAnimeData(slug: string): Promise<{title: string; poster:
 ====================== */
 presence.on("UpdateData", async () => {
   const slug = getSlug();
-  
-  // Si no estamos en ningún anime (página de inicio, búsqueda, etc.)
+
   if (!slug) {
     const presenceData: PresenceData = {
       type: ActivityType.Watching,
@@ -139,14 +134,12 @@ presence.on("UpdateData", async () => {
     };
     presence.setActivity(presenceData);
     
-    // Reset cache
     cachedSlug = null;
     cachedTitle = null;
     cachedPoster = null;
     return;
   }
   
-  // Reset si cambió de anime
   if (cachedSlug !== slug) {
     cachedSlug = slug;
     cachedTitle = null;
@@ -187,15 +180,13 @@ presence.on("UpdateData", async () => {
     smallImageKey: smallIcon,
     smallImageText: smallIconText,
   };
-  
-  // Si hay un video y no está en la página principal, agregar timestamps
+
   if (!isMainAnimePage() && episode && video) {
     const timestamps = getVideoTimestamps();
     if (timestamps && !videoPaused) {
       presenceData.startTimestamp = timestamps.start;
       presenceData.endTimestamp = timestamps.end;
     } else {
-      // Si está pausado, mantener el timestamp inicial sin endTimestamp
       presenceData.startTimestamp = startTimestamp ?? undefined;
     }
   } else {

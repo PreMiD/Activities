@@ -1,68 +1,51 @@
-(function(){
-  function safePost(info: any){ try{ window.parent.postMessage({ premid_embed: info }, '*') }catch(e){} }
+const iframe = new iFrame();
 
-  let lastSent: any = null
+let lastSent: any = null;
 
-  function sanitizeImage(url: string | null){
-    if (!url) return null
-    try{
-      url = String(url)
-      if (/^data:/i.test(url)) return null
-      if (/^https?:\/\//i.test(url)) return url
-    }catch(e){}
-    return null
-  }
+function sanitizeImage(url: string | null) {
+	if (!url) return null;
+	try {
+		url = String(url);
+		if (/^data:/i.test(url)) return null;
+		if (/^https?:\/\//i.test(url)) return url;
+	} catch {
+		return null;
+	}
+	return null;
+}
 
-  function read(){
-    try{
-      const v = document.querySelector('video') as HTMLVideoElement | null
-      const info: any = {
-        title: document.title || 'Video Player',
-        episode: null,
-        image: null,
-        duration: 0,
-        currentTime: 0,
-        isPlaying: false,
-      }
-      if (v){
-        info.duration = Number.isFinite(v.duration) ? v.duration : 0
-        info.currentTime = Number.isFinite(v.currentTime) ? v.currentTime : 0
-        info.isPlaying = !v.paused
-      }
+function shouldSendUpdate(info: any): boolean {
+	if (!lastSent) return true;
+	if (info.paused !== lastSent.paused) return true;
+	if (Math.abs((info.currentTime || 0) - (lastSent.currentTime || 0)) >= 1)
+		return true;
+	if ((info.duration || 0) !== (lastSent.duration || 0)) return true;
 
-      const imgEl = document.querySelector('img') as HTMLImageElement | null
-      if (imgEl && imgEl.src) info.image = sanitizeImage(imgEl.src)
+	return false;
+}
 
-      info.currentTime = Math.round((info.currentTime || 0) * 10) / 10
+iframe.on("UpdateData", async () => {
+	const video = document.querySelector("video");
 
-      let send = false
-      if (!lastSent) send = true
-      else if (info.isPlaying !== lastSent.isPlaying) send = true
-      else if (Math.abs((info.currentTime || 0) - (lastSent.currentTime || 0)) >= 1) send = true
-      else if ((info.duration || 0) !== (lastSent.duration || 0)) send = true
-      else if ((info.image || null) !== (lastSent.image || null)) send = true
-      else if ((info.title || '') !== (lastSent.title || '')) send = true
+	if (!video) {
+		iframe.send({});
+		return;
+	}
 
-      if (send){
-        safePost(info)
-        lastSent = info
-        try{ console.debug && console.debug('iframe -> parent', info) }catch(e){}
-      }
-    }catch(e){
-      try{ console.error && console.error('iframe read error', e) }catch(_){}
-    }
-  }
+	try {
+		const info: any = {
+			duration: video.duration,
+			currentTime: video.currentTime,
+			paused: video.paused,
+		};
 
-  setTimeout(read, 400)
-  try{
-    const v = document.querySelector('video') as HTMLVideoElement | null
-    if (v){
-      v.addEventListener('play', read)
-      v.addEventListener('pause', read)
-      v.addEventListener('seeking', read)
-      v.addEventListener('seeked', read)
-      v.addEventListener('timeupdate', ()=>{ if (v && (Math.round(v.currentTime) % 2 === 0)) read() })
-    }
-  }catch(e){/* ignore */}
-  setInterval(read, 2500)
-})();
+		if (!isNaN(info.duration) && !isNaN(info.currentTime)) {
+			if (shouldSendUpdate(info)) {
+				iframe.send(info);
+				lastSent = info;
+			}
+		} else iframe.send({});
+	} catch {
+		iframe.send({});
+	}
+});
