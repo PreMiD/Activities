@@ -1,4 +1,5 @@
-import { Assets } from 'premid'
+// import { Assets } from 'premid'
+import { Presence, PresenceData, Assets } from 'premid'; // TS hates when you dont define it all.
 
 const presence = new Presence({
   clientId: '612416330003382314',
@@ -37,7 +38,7 @@ presence.on('UpdateData', async () => {
     '#horizontal-tabs li.rbx-tab.active',
   )
   const newUrl = new URL(href)
-  const searchResult = newUrl.searchParams?.get('Keyword') ?? newUrl.searchParams?.get('query')
+  const searchResult = (newUrl.searchParams.get('keyword') ?? newUrl.searchParams.get('query'))?.toLowerCase() ?? null;
   const item = document.querySelector<HTMLHeadingElement>(
     '.item-name-container h2',
   )?.textContent
@@ -92,10 +93,8 @@ presence.on('UpdateData', async () => {
             presenceData.state = profileName?.textContent
           }
 
-          presenceData.largeImageKey = document
-            .querySelector('.avatar-card-link.avatar-image-link')
-            ?.querySelector('img')
-            ?.getAttribute('src') ?? ActivityAssets.Logo
+          const profileImg = document.querySelector<HTMLImageElement>('.avatar-card-link.avatar-image-link img');
+          presenceData.largeImageKey = profileImg?.src ?? ActivityAssets.Logo;
 
           presenceData.buttons = [
             {
@@ -480,7 +479,10 @@ presence.on('UpdateData', async () => {
           break
         }
         case pathname.includes('/u/'): {
+          //const user = document.querySelector('.username')?.textContent
+          // for some reason, the devforum has different classes per user? weird?
           const user = document.querySelector('.username')?.textContent
+            ?? document.querySelector('.user-card-name')?.textContent;
           presenceData.state = `Browsing ${user}'s Profile`
           presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.user-profile-avatar img')
             ?.src ?? ActivityAssets.DeveloperLogo
@@ -596,11 +598,11 @@ presence.on('UpdateData', async () => {
           break
         }
         case pathname.includes('/translator-portal'): {
-          presenceData.details = 'Browsing trough the translator portal'
+          presenceData.details = 'Browsing through the translator portal'
           break
         }
         case pathname.includes('credentials'): {
-          presenceData.details = 'Viewing the credentails manager'
+          presenceData.details = 'Viewing the credentials manager'
           break
         }
         case pathname.includes('/docs'): {
