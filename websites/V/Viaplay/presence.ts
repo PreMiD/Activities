@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence: Presence = new Presence({
   clientId: '632618001824219167',
@@ -23,11 +23,12 @@ presence.on('UpdateData', async () => {
   let presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/V/Viaplay/assets/logo.png',
     startTimestamp,
+    type: ActivityType.Watching,
   }
   const url = window.location.href
   if (url.includes('/player/')) {
     const video = document.querySelector('video')!
-    const timestamps = presence.getTimestamps(
+    const timestamps = getTimestamps(
       Math.floor(video.currentTime),
       Math.floor(video.duration),
     )
@@ -62,5 +63,5 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Browsing'
   }
 
-  presence.setActivity(presenceData, true)
+  presence.setActivity(presenceData)
 })
