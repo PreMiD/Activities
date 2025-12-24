@@ -41,7 +41,8 @@ presence.on('UpdateData', async () => {
     }
     const { paused, anime_name, ep, ep_name, ep_preview } = pageDetails
 
-    if (paused && settings.hideWhenPaused) return presence.clearActivity()
+    if (paused && settings.hideWhenPaused)
+      return presence.clearActivity()
 
     // Informações
     presenceData.name = settings.showTitleAsPresence ? anime_name : 'Anim'
@@ -55,7 +56,8 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = paused ? 'Pausado' : 'Reproduzindo'
   }
   else {
-    if (!settings.browsingActivity) return presence.clearActivity()
+    if (!settings.browsingActivity)
+      return presence.clearActivity()
 
     const pathnameArray = pathname.split('/')
     const staticPages: Record<string, PresenceData> = {
