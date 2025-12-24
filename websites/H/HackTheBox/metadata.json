@@ -16,7 +16,25 @@
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/thumbnail.jpeg",
   "color": "#9fef00",
   "category": "other",
-  "tags": [
-    "hacking"
+  "tags": ["hacking"],
+  "settings": [
+    {
+      "id": "showRank",
+      "title": "Show Rank",
+      "icon": "fas fa-trophy",
+      "value": true
+    },
+    {
+      "id": "showGlobalRanking",
+      "title": "Show Global Ranking",
+      "icon": "fas fa-globe",
+      "value": true
+    },
+    {
+      "id": "showFlags",
+      "title": "Show owned flags",
+      "icon": "fas fa-flag",
+      "value": true
+    }
   ]
 }
