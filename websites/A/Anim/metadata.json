@@ -34,8 +34,16 @@
       "id": "privacy",
       "title": "Modo Privacidade",
       "icon": "fad fa-user-secret",
-      "value": false,
-      "description": "Oculta o que você está fazendo."
+      "value": false
+    },
+    {
+      "id": "browsingActivity",
+      "if": {
+        "privacy": false
+      },
+      "title": "Mostrar Presence ao Navegar",
+      "icon": "fad fa-book-reader",
+      "value": true
     },
     {
       "id": "cover",
@@ -44,18 +52,25 @@
       },
       "title": "Mostrar Capa",
       "icon": "fad fa-images",
-      "value": true,
-      "description": "Exibe a capa do anime ou episódio na presença."
+      "value": true
     },
     {
       "id": "titleAsPresence",
       "if": {
         "privacy": false
       },
-      "title": "Mostrar Título como Presença",
-      "description": "Usa o título do anime como o nome da presença em vez do nome padrão.",
+      "title": "Mostrar Título como Presence",
       "icon": "fad fa-user-edit",
       "value": true
+    },
+    {
+      "id": "hideWhenPaused",
+      "if": {
+        "privacy": false
+      },
+      "title": "Ocultar Presence quando Pausado",
+      "icon": "fas fa-eye-slash",
+      "value": false
     }
   ]
 }

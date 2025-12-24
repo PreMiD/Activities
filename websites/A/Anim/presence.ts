@@ -14,7 +14,9 @@ presence.on('UpdateData', async () => {
 
   const settings = {
     privacyMode: await presence.getSetting<boolean>('privacy'),
+    browsingActivity: await presence.getSetting<boolean>('browsingActivity'),
     showCover: await presence.getSetting<boolean>('cover'),
+    hideWhenPaused: await presence.getSetting<boolean>('hideWhenPaused'),
     showTitleAsPresence: await presence.getSetting<boolean>('titleAsPresence'),
   }
 
@@ -30,14 +32,16 @@ presence.on('UpdateData', async () => {
   if (video) {
     const pageDetails = {
       paused: video.paused,
-      currentTime: video.currentTime,
-      duration: video.duration,
-      anime_name: document.querySelector('title')?.textContent.split(' - ')[2],
-      ep: document.querySelector('title')?.textContent.split(' - ')[0],
-      ep_name: document.querySelector('title')?.textContent.split(' - ')[1],
-      ep_preview: document.querySelector('img')?.src,
+      currentTime: video.currentTime ?? 0,
+      duration: video.duration ?? 0,
+      anime_name: document.querySelector('title')?.textContent.split(' - ')[2] ?? 'Nome do Anime',
+      ep: document.querySelector('title')?.textContent.split(' - ')[0] ?? 'Número do EP',
+      ep_name: document.querySelector('title')?.textContent.split(' - ')[1] ?? 'Nome do EP',
+      ep_preview: document.querySelector('img')?.src ?? ActivityAssets.Logo,
     }
     const { paused, anime_name, ep, ep_name, ep_preview } = pageDetails
+
+    if (paused && settings.hideWhenPaused) return presence.clearActivity()
 
     // Informações
     presenceData.name = settings.showTitleAsPresence ? anime_name : 'Anim'
@@ -51,13 +55,15 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = paused ? 'Pausado' : 'Reproduzindo'
   }
   else {
+    if (!settings.browsingActivity) return presence.clearActivity()
+
     const pathnameArray = pathname.split('/')
     const staticPages: Record<string, PresenceData> = {
-      '': { details: 'Página Principal', largeImageKey: ActivityAssets.Logo },
-      'apoiar': { details: 'Apoiar o Anim' },
-      'sobre': { details: 'Sobre o Anim' },
-      'login': { details: 'Logando no Anim' },
-      'register': { details: 'Cadastrando-se no Anim' },
+      '': { details: 'Navegando', state: 'Procurando o que assistir...', largeImageKey: ActivityAssets.Logo },
+      'apoiar': { details: 'Apoiando', state: 'Na página de apoiar' },
+      'sobre': { details: 'Sobre', state: 'Vendo sobre o Anim' },
+      'login': { details: 'Logando', state: 'Realizando login' },
+      'register': { details: 'Cadastrando-se', state: 'Realizando o cadastro' },
       'watch': { details: document.querySelector('title')?.textContent.split(' - ')[2], state: `${document.querySelector('title')?.textContent.split(' - ')[0]} - Aguardando o player carregar...`, largeImageKey: document.querySelector('img')?.src },
       'config': { details: `Configurações - ${document.querySelector('button[class*=blue] span')?.textContent ?? '...'}` },
       'profile': { details: 'Visualizando Perfil', state: pathnameArray[2], largeImageKey: document.querySelector('img')?.src },
