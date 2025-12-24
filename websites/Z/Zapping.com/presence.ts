@@ -5,7 +5,6 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
-
   const t = await presence.getStrings({
     watching: 'zapping.watching',
     inZapping: 'zapping.inZapping',
