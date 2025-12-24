@@ -1,0 +1,95 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.9",
+  "author": {
+    "name": "RBC Radio",
+    "id": "1137989736544354354"
+  },
+  "contributors": [
+    {
+      "name": "RBC Technology Department",
+      "id": "1137989736544354354"
+    }
+  ],
+  "service": "RBC Radio",
+  "altnames": [
+    "Roblox Broadcasting Corporation",
+    "RBC",
+    "DRBC 98.4 FM"
+  ],
+  "description": {
+    "en": "RBC Radio is Roblox's #1 hit music station with the latest Roblox news, and everything Roblox entertainment.",
+    "es": "RBC Radio es la estación de música número 1 de Roblox con las últimas noticias de Roblox y todo el entretenimiento de Roblox.",
+    "fr": "RBC Radio est la station de musique numéro 1 de Roblox avec les dernières nouvelles de Roblox et tout le divertissement Roblox.",
+    "de": "RBC Radio ist Roblox' #1 Hit-Musiksender mit den neuesten Roblox-Nachrichten und allem rund um Roblox-Entertainment."
+  },
+  "url": [
+    "rbcradio.xyz",
+    "www.rbcradio.xyz",
+    "rbctelevision.org",
+    "rbctelevision.org/radio"
+  ],
+  "regExp": "([a-z0-9-]+[.])*rbcradio[.]xyz[/]?",
+  "version": "1.0.0",
+  "logo": "https://i.typicalmedia.net/stationlogos/rbcradio.webp",
+  "thumbnail": "https://i.imgur.com/RdPcWI3.png",
+  "color": "#DC2626",
+  "tags": [
+    "radio",
+    "music",
+    "streaming",
+    "roblox",
+    "entertainment",
+    "live",
+    "news",
+    "podcasts",
+    "community"
+  ],
+  "category": "music",
+  "iframe": false,
+  "settings": [
+    {
+      "id": "lang",
+      "title": "Language",
+      "icon": "fas fa-language",
+      "value": "en",
+      "values": {
+        "en": "English",
+        "es": "Español",
+        "fr": "Français",
+        "de": "Deutsch"
+      }
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-link",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showCover",
+      "title": "Show Song Cover Art",
+      "icon": "fas fa-image",
+      "value": true
+    },
+    {
+      "id": "details",
+      "title": "Details Text (Playing)",
+      "icon": "fas fa-align-left",
+      "value": "%title%",
+      "placeholder": "Use: %title%, %artist%, %show%, %presenter%"
+    },
+    {
+      "id": "state",
+      "title": "State Text (Playing)",
+      "icon": "fas fa-align-left",
+      "value": " %artist%",
+      "placeholder": "Use: %title%, %artist%, %show%, %presenter%"
+    }
+  ]
+}
