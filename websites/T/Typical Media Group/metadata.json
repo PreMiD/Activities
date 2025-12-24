@@ -12,13 +12,11 @@
   ],
   "service": "Typical Media Group",
   "altnames": ["TMG Radio", "TMG", "Typical Media"],
-  "description": {
-    "en": "Typical Media Group - Stream live radio stations, discover new music, Typical Media Group is a Next Generation Audio Company."
-
-",
-    "es": "Typical Media Group - Transmite estaciones de radio en vivo, descubre nueva música y disfruta del entretenimiento de audio premium con una interfaz hermosa y moderna.",
-    "fr": "Typical Media Group - Diffusez des stations de radio en direct, découvrez de la nouvelle musique et profitez d'un divertissement audio premium avec une interface belle et moderne."
-  },
+ "description": {
+  "en": "Typical Media Group - Stream live radio stations, discover new music, Typical Media Group is a Next Generation Audio Company.",
+  "es": "Typical Media Group - Transmite estaciones de radio en vivo, descubre nueva música y disfruta del entretenimiento de audio premium con una interfaz hermosa y moderna.",
+  "fr": "Typical Media Group - Diffusez des stations de radio en direct, découvrez de la nouvelle musique et profitez d'un divertissement audio premium avec une interface belle et moderne."
+},
   "url": [
     "typicalmedia.net",
     "www.typicalmedia.net"
