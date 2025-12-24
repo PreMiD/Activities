@@ -1,4 +1,3 @@
-
 const presence = new Presence({
   clientId: '1449144774949867661',
 })
@@ -6,7 +5,6 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
-  const userLanguage = await presence.getSetting<string>('lang') || 'en'
 
   const t = await presence.getStrings({
     watching: 'zapping.watching',
@@ -21,7 +19,7 @@ presence.on('UpdateData', async () => {
     account: 'zapping.account',
     devices: 'zapping.devices',
     channels: 'zapping.channels',
-    browsingZapping: 'zapping.browsingZapping'
+    browsingZapping: 'zapping.browsingZapping',
   })
 
   // CORREGIDO: Usamos el tipo anidado para resolver los errores de PMD y ESLint de importación de tipos.
