@@ -12,10 +12,18 @@
   "url": [
     "shopee.co.id",
     "shopee.com.my",
-    "shopee.sg"
+    "shopee.sg",
+    "shopee.com.br",
+    "shopee.ph",
+    "shopee.co.th",
+    "shopee.vn",
+    "shopee.tw",
+    "shopee.com.mx",
+    "shopee.com.co",
+    "shopee.cl"
   ],
   "regExp": "^https?[:][/][/]((shopee)[.]co[.]id|(shopee)[.]com[.]my|shopee[.]sg)[/]",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Shopee/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Shopee/assets/thumbnail.jpeg",
   "color": "#EA501F",
