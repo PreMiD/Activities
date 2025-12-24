@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.7",
+  "author": {
+    "name": "Seehed",
+    "id": "1030394088974991423"
+  },
+  "contributors": [],
+  "service": "City Radio",
+  "description": {
+    "en": "City Radio--Mega Manila's Hit Music Station!"
+  },
+  "url": [
+    "935cityradio.com",
+    "www.935cityradio.com",
+    "cityradio.typicalmedia.net"
+  ],
+  "version": "1.0.0",
+  "logo": "https://i.typicalmedia.net/stationlogos/cityradio.jpg",
+  "thumbnail": "https://i.typicalmedia.net/stationlogos/cityradio.jpg",
+  "color": "#FF1744",
+  "tags": ["radio", "music", "podcast", "media", "entertainment"],
+  "category": "music",
+  "iframe": false,
+  "settings": [
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamps",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-link",
+      "value": true
+    },
+    {
+      "id": "showSongInfo",
+      "title": "Show Song Info When Playing",
+      "icon": "fas fa-music",
+      "value": true
+    }
+  ]
+}
