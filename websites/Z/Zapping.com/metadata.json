@@ -15,7 +15,7 @@
     "www.zapping.com",
     "app.zapping.com"
   ],
-  "regExp": "(.*?)[.]?zapping.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*zapping[.]com[/]",
   "version": "1.0.0",
   "logo": "https://us-east-1.tixte.net/uploads/memilio-cdn.tixte.co/zapping.png",
   "thumbnail": "https://us-east-1.tixte.net/uploads/memilio-cdn.tixte.co/thumbzapping.png",
@@ -26,5 +26,11 @@
     "media",
     "television",
     "video"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
   ]
 }
