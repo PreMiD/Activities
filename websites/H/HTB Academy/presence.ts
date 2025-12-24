@@ -16,9 +16,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.includes('/dashboard')) {
     presenceData.details = 'Browsing the dashboard'
 
-    presenceData.state = `Off: ${document.querySelector('.red .progress')?.textContent} `
-      + `Def: ${document.querySelector('.blue .progress')?.textContent} `
-      + `Gen: ${document.querySelector('.green .progress')?.textContent}`
+    presenceData.state = `Off: ${document.querySelector('.redPercent')?.textContent}% | `
+      + `Def: ${document.querySelector('.bluePercent')?.textContent}% | `
+      + `Gen: ${document.querySelector('.greenPercent')?.textContent}%`
   }
   else if (pathname.includes('/exams')) {
     presenceData.details = 'Browsing the exams'
