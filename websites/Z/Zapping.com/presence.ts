@@ -1,70 +1,28 @@
+
 const presence = new Presence({
   clientId: '1449144774949867661',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-// ------------------------------
-//        DICCIONARIO
-// ------------------------------
-const strings = {
-  es: {
-    watching: 'Viendo Zapping',
-    inZapping: 'En Zapping',
-    browsing: 'Navegando',
-    home: 'En la página principal',
-    login: 'Iniciando sesión',
-    register: 'Creando una cuenta',
-    recovery: 'Recuperando contraseña',
-    dashboard: 'Panel de control',
-    addons: 'Addons',
-    account: 'Mi cuenta',
-    devices: 'Dispositivos',
-    channels: 'Canales',
-    browsingZapping: 'Navegando por Zapping',
-  },
-  en: {
-    watching: 'Watching Zapping',
-    inZapping: 'In Zapping',
-    browsing: 'Browsing',
-    home: 'Home',
-    login: 'Logging in',
-    register: 'Creating an account',
-    recovery: 'Recovering password',
-    dashboard: 'Dashboard',
-    addons: 'Add-ons',
-    account: 'My account',
-    devices: 'Devices',
-    channels: 'Channels',
-    browsingZapping: 'Browsing Zapping',
-  },
-  pt: {
-    watching: 'Assistindo Zapping',
-    inZapping: 'No Zapping',
-    browsing: 'Navegando',
-    home: 'Página inicial',
-    login: 'Entrando',
-    register: 'Criando conta',
-    recovery: 'Recuperar senha',
-    dashboard: 'Painel',
-    addons: 'Add-ons',
-    account: 'Minha conta',
-    devices: 'Dispositivos',
-    channels: 'Canais',
-    browsingZapping: 'Navegando no Zapping',
-  },
-}
-
-// Selección del idioma
-const lang
-  = navigator.language.startsWith('pt')
-    ? 'pt'
-    : navigator.language.startsWith('en')
-      ? 'en'
-      : 'es'
-
 presence.on('UpdateData', async () => {
-  const t = strings[lang]
+  const userLanguage = await presence.getSetting<string>('lang') || 'en'
+
+  const t = await presence.getStrings({
+    watching: 'zapping.watching',
+    inZapping: 'zapping.inZapping',
+    browsing: 'zapping.browsing',
+    home: 'zapping.home',
+    login: 'zapping.login',
+    register: 'zapping.register',
+    recovery: 'zapping.recovery',
+    dashboard: 'zapping.dashboard',
+    addons: 'zapping.dddons',
+    account: 'zapping.account',
+    devices: 'zapping.devices',
+    channels: 'zapping.channels',
+    browsingZapping: 'zapping.browsingZapping'
+  })
 
   // CORREGIDO: Usamos el tipo anidado para resolver los errores de PMD y ESLint de importación de tipos.
   const presenceData: PresenceData = {
