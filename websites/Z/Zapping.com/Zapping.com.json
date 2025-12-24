@@ -1,54 +1,54 @@
 {
-    "zapping.watching": {
-        "description": "Shown when watching a channel in Zapping",
-        "message": "Watching Zapping"
-    },
-    "zapping.inZapping": {
-        "description": "Shown when viewing a another page in Zapping",
-        "message": "In Zapping"
-    },
-    "zapping.browsing": {
-        "description": "Shown when browsing a channel",
-        "message": "Browsing"
-    },
-    "zapping.home": {
-        "description": "Shown when viewing the homepage",
-        "message": "Home"
-    },
-    "zapping.login": {
-        "description": "Shown when Logging in",
-        "message": "Logging in"
-    },
-    "zapping.register": {
-        "description": "Shown when signing up",
-        "message": "Creating an account"
-    },
-    "zapping.recovery": {
-        "description": "Shown when the user is recovering his password",
-        "message": "Recovering password"
-    },
-    "zapping.dashboard": {
-        "description": "Shown when the user is in Dashboard",
-        "message": "Dashboard"
-    },
-    "zapping.addons": {
-        "description": "Shown when the user is watching the available Add-ons",
-        "message": "Add-ons"
-    },
-    "zapping.account": {
-        "description": "Shown when the user is in My account section",
-        "message": "My account"
-    },
-    "zapping.devices": {
-        "description": "Shown when the user is watching the Devices on the account",
-        "message": "Devices"
-    },
-    "zapping.channels": {
-        "description": "Shown when the user wants to make unvisible some channels",
-        "message": "Channels"
-    },
-    "zapping.browsingZapping": {
-        "description": "Shown when viewing a default page in Zapping",
-        "message": "Browsing Zapping"
-    }
+  "zapping.watching": {
+    "description": "Shown when watching a channel in Zapping",
+    "message": "Watching Zapping"
+  },
+  "zapping.inZapping": {
+    "description": "Shown when viewing a another page in Zapping",
+    "message": "In Zapping"
+  },
+  "zapping.browsing": {
+    "description": "Shown when browsing a channel",
+    "message": "Browsing"
+  },
+  "zapping.home": {
+    "description": "Shown when viewing the homepage",
+    "message": "Home"
+  },
+  "zapping.login": {
+    "description": "Shown when Logging in",
+    "message": "Logging in"
+  },
+  "zapping.register": {
+    "description": "Shown when signing up",
+    "message": "Creating an account"
+  },
+  "zapping.recovery": {
+    "description": "Shown when the user is recovering his password",
+    "message": "Recovering password"
+  },
+  "zapping.dashboard": {
+    "description": "Shown when the user is in Dashboard",
+    "message": "Dashboard"
+  },
+  "zapping.addons": {
+    "description": "Shown when the user is watching the available Add-ons",
+    "message": "Add-ons"
+  },
+  "zapping.account": {
+    "description": "Shown when the user is in My account section",
+    "message": "My account"
+  },
+  "zapping.devices": {
+    "description": "Shown when the user is watching the Devices on the account",
+    "message": "Devices"
+  },
+  "zapping.channels": {
+    "description": "Shown when the user wants to make unvisible some channels",
+    "message": "Channels"
+  },
+  "zapping.browsingZapping": {
+    "description": "Shown when viewing a default page in Zapping",
+    "message": "Browsing Zapping"
+  }
 }
