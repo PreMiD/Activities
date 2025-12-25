@@ -20,7 +20,7 @@
     "en": "Your streaming website for animes and scans without ad.",
     "fr": "Votre site de streaming préféré pour regarder vos animes et lire vos scans sans pubs."
   },
-  "url": "anime-sama.eu",
+  "url": "anime-sama.si",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anime-sama([.][a-z]+)+[/]",
   "version": "1.3.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime%20Sama/assets/logo.png",
