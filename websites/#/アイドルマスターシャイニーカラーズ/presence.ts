@@ -28,7 +28,7 @@ presence.on('UpdateData', async () => {
     state: 'シャニマスをプレイ中',
   }
 
-  presenceData.details = 'アイドルマスターシャイニーカラーズ'
+  presenceData.details = 'シャニマス'
 
   const pathMap: Record<string, PresenceData> = {
     '/home': { details: 'ホーム画面' },
@@ -78,6 +78,7 @@ presence.on('UpdateData', async () => {
     '/daifugo': { details: '大富豪をプレイ中' },
     '/characterProfile': { details: 'アイドルプロフィールを閲覧中' },
     '/photo': { details: 'フォトモード' },
+    '/memoryBoost': { details: 'メモリーブースト' },
   }
 
   const pathDetails = pathMap[currentRoute]?.details
