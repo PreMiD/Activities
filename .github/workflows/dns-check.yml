@@ -51,6 +51,4 @@ jobs:
           commit-message: 'chore: remove activities with failed DNS checks'
           title: 'chore: remove activities with failed DNS checks'
           body-path: ${{ steps.dns-check.outputs.summary_path }}
-          committer: PreMiD Automations <contact@premid.app>
-          author: PreMiD Automations <contact@premid.app>
           sign-commits: true
