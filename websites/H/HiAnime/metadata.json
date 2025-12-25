@@ -1,6 +1,6 @@
 {
   "apiVersion": 2,
-  "author": { "name": "YourName" },
+  "author": { "dull": "paintedull" },
   "service": "HiAnime",
   "url": "hianime.to",
   "iframe": [
@@ -9,7 +9,7 @@
     "stape.me"
   ],
   "category": "video",
-  "logo": "https://hianime.to/images/logo.png",
-  "thumbnail": "https://hianime.to/images/logo.png",
+  "logo": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/hi-anime.pngg",
+  "thumbnail": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/hi-anime.png",
   "color": "#ffdd95"
 }
