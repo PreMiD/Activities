@@ -4,33 +4,54 @@ interface DashboardSettings {
   showFlags: boolean
 }
 
-const presences: Record<string, PresenceData> = {
-  '/challenges/{}': {},
-  '/sherlocks/{}': {},
-  '/machines/{}': {},
-  '/prolabs/{}': {},
-  '/users/{}': { details: 'Looking at profile' },
-  '/challenges': {},
-  '/sherlocks': {},
-  '/home': { details: 'Homepage' },
-  '/machines': {},
-  '/login': { details: 'Logging in' },
-  '/register': { details: 'Creating new account' },
-  '/prolabs': { details: 'Browsing Prolabs' },
-  '/fortresses': { details: 'Browsing fortresses' },
-  '/starting-point': { details: 'Starting Point', state: 'Browsing starting points' },
-  '/seasonal': { details: 'Browsing the season' },
-  '/rankings': { details: 'Looking at the rankings' },
-  '/tracks': { details: 'Tracks', state: 'Browsing tracks' },
-}
-
 const presence = new Presence({
   clientId: '1453343201061638175',
 })
 
+const ASSETS = {
+  logo: 'https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/logo.png',
+  machines: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/machines.png',
+  challenges: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/challenges.png',
+  sherlocks: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/sherlocks.png',
+  tracks: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/tracks.png',
+  prolabs: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/prolabs.png',
+  fortress: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/fortress.png',
+  seasonal: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/seasonal.png',
+  homepage: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/homepage.png',
+  rankings: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/rankings.png',
+  starting: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/starting-point.png',
+}
+
+function getUsername(): string {
+  const userElement = document.querySelector('span.htb-text-primary.htb-heading-xl.htb-font-bold')
+  const name = userElement?.textContent?.trim()
+  return name ? `Username: ${name}` : 'Browsing Dashboard'
+}
+
+function getBrowsingState(context: string): string {
+  const params = new URLSearchParams(window.location.search)
+  const tab = params.get('tab')
+
+  const states: Record<string, string> = {
+    retired: 'retired',
+    unreleased: 'unreleased',
+    favorites: 'favorite',
+    active: 'active',
+  }
+
+  const stateType = tab && states[tab] ? states[tab] : 'all'
+  return `Browsing ${stateType} ${context}`
+}
+
+function getResourceName(index: number): string | null {
+  const parts = window.location.pathname.split('/')
+  return parts[index] ? decodeURIComponent(parts[index]) : null
+}
+
 function getDashboardStat(labelText: string): string | null {
-  const label = Array.from(document.querySelectorAll('dt'))
-    .find(el => el.textContent?.includes(labelText))
+  const label = Array.from(document.getElementsByTagName('dt')).find(el =>
+    el.textContent?.includes(labelText),
+  )
   return label?.nextElementSibling?.textContent?.trim() || null
 }
 
@@ -57,105 +78,21 @@ function getHomePageDetails(settings: DashboardSettings) {
 }
 
 function getMachineDetails() {
-  let name = 'Unknown Machine'
-  const parts = window.location.pathname.split('/machines/')
-
-  if (parts.length > 1) {
-    const rawName = parts[1]
-    if (rawName) {
-      name = decodeURIComponent(rawName)
-    }
-  }
-
+  const name = getResourceName(2) || 'Unknown Machine'
   const statusEl = document.querySelector('.htb-status')
-  const statusText = statusEl?.textContent?.trim() || 'Offline'
-  const isOnline = statusText.toLowerCase().includes('online')
-  const serverName = statusEl?.previousElementSibling?.textContent?.trim()
+  const statusText = statusEl?.textContent?.trim().toLowerCase() || 'offline'
+  const machineImg = document.querySelector('.avatar-icon-name-details img')
+  const src = machineImg?.getAttribute('src')
 
-  if (isOnline && serverName) {
-    return {
-      details: `Playing Machine '${name}'`,
-      state: `${serverName} - Online`,
-    }
+  const avatar = (src && src.startsWith('http')) ? src : null
+
+  return {
+    details: statusText.includes('online') ? `Playing Machine '${name}'` : `Looking at '${name}' Machine`,
+    state: statusText.includes('online')
+      ? `${statusEl?.previousElementSibling?.textContent?.trim() || 'Server'} - Online`
+      : 'Status: Offline',
+    avatar,
   }
-  else {
-    return {
-      details: `Looking at '${name}' Machine`,
-      state: 'Status: Offline',
-    }
-  }
-}
-
-function getChallengeDetails() {
-  const parts = window.location.pathname.split('/challenges/')
-
-  if (parts.length > 1) {
-    const rawName = parts[1]
-
-    if (rawName) {
-      const name = decodeURIComponent(rawName)
-      return `Solving Challenge: '${name}'`
-    }
-  }
-
-  return 'Solving Challenge'
-}
-
-function getSherlockDetails() {
-  const parts = window.location.pathname.split('/sherlocks/')
-
-  if (parts.length > 1) {
-    const rawName = parts[1]
-
-    if (rawName) {
-      const name = decodeURIComponent(rawName)
-      return `Solving Sherlock: '${name}'`
-    }
-  }
-
-  return 'Solving Sherlock'
-}
-
-function getChallengeState(): string {
-  const href = window.location.href
-
-  if (href.includes('tab=retired'))
-    return 'Browsing retired challenges'
-  if (href.includes('tab=unreleased'))
-    return 'Browsing unreleased machines'
-  if (href.includes('tab=favorites'))
-    return 'Browsing favorite challenges'
-  if (href.includes('tab=active'))
-    return 'Browsing active challenges'
-
-  return 'Browsing all challenges'
-}
-function getMachineState() {
-  const href = window.location.href
-
-  if (href.includes('tab=retired'))
-    return 'Browsing retired machines'
-  if (href.includes('tab=unreleased'))
-    return 'Browsing unreleased machines'
-  if (href.includes('tab=favorites'))
-    return 'Browsing favorite machines'
-  if (href.includes('tab=active'))
-    return 'Browsing active machines'
-  return 'Browsing all machines'
-}
-function getSherlockState(): string {
-  const href = window.location.href
-
-  if (href.includes('tab=retired'))
-    return 'Browsing retired Sherlocks'
-  if (href.includes('tab=unreleased'))
-    return 'Browsing unreleased Sherlocks'
-  if (href.includes('tab=favorites'))
-    return 'Browsing favorite Sherlocks'
-  if (href.includes('tab=active'))
-    return 'Browsing active Sherlocks'
-
-  return 'Browsing all Sherlocks'
 }
 
 function getProlabDetails() {
@@ -167,57 +104,133 @@ function getProlabDetails() {
 }
 
 presence.on('UpdateData', async () => {
-  let presenceData: PresenceData = {}
-
   const settings: DashboardSettings = {
     showRank: await presence.getSetting<boolean>('showRank'),
     showGlobalRanking: await presence.getSetting<boolean>('showGlobalRanking'),
     showFlags: await presence.getSetting<boolean>('showFlags'),
   }
 
-  for (const [path, data] of Object.entries(presences)) {
-    presenceData = {
-      ...presenceData,
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/logo.png',
-    }
+  const path = window.location.pathname
+  const parts = path.split('/').filter(Boolean)
+  const root = parts[0]
+  const resource = parts[1]
 
-    const isMatch = window.location.pathname.includes(path)
-      || new RegExp(path.replace(/\{\}/g, '.*'), 'g').test(window.location.pathname)
+  const presenceData = {
+    largeImageKey: ASSETS.logo,
+    largeImageText: 'HackTheBox',
+  } as PresenceData
 
-    if (isMatch) {
-      presenceData = { ...presenceData, ...data }
+  switch (`/${root}`) {
+    case '/home':
+      presenceData.details = getUsername()
+      presenceData.state = getHomePageDetails(settings)
+      presenceData.smallImageKey = ASSETS.homepage
+      presenceData.smallImageText = 'Homepage'
+      break
 
-      if (path === '/challenges') {
-        presenceData.state = getChallengeState()
-      }
-      else if (path === '/sherlocks') {
-        presenceData.state = getSherlockState()
-      }
-      else if (path === '/machines') {
-        presenceData.state = getMachineState()
-      }
-      else if (path === '/home') {
-        presenceData.state = getHomePageDetails(settings)
-      }
-      else if (path.includes('{}')) {
-        if (path === '/machines/{}') {
-          const machineData = getMachineDetails()
-          presenceData = { ...presenceData, ...machineData }
+    case '/login':
+      presenceData.details = 'Logging in'
+      break
+
+    case '/register':
+      presenceData.details = 'Creating new account'
+      break
+
+    case '/rankings':
+      presenceData.details = 'Looking at the rankings'
+      presenceData.smallImageKey = ASSETS.rankings
+      presenceData.smallImageText = 'Rankings'
+      break
+
+    case '/seasonal':
+      presenceData.details = 'Browsing the season'
+      presenceData.smallImageKey = ASSETS.seasonal
+      presenceData.smallImageText = 'Seasonal'
+      break
+
+    case '/fortresses':
+      presenceData.details = 'Browsing fortresses'
+      presenceData.smallImageKey = ASSETS.fortress
+      presenceData.smallImageText = 'Fortresses'
+      break
+
+    case '/tracks':
+      presenceData.state = 'Browsing tracks'
+      presenceData.smallImageKey = ASSETS.tracks
+      presenceData.smallImageText = 'Tracks'
+      break
+
+    case '/starting-point':
+      presenceData.state = 'Browsing starting points'
+      presenceData.smallImageKey = ASSETS.starting
+      presenceData.smallImageText = 'Starting Point'
+      break
+
+    case '/machines':
+      // 1. Default State: Assume generic machine icon
+      presenceData.smallImageKey = ASSETS.machines
+      presenceData.smallImageText = 'Machines'
+
+      if (resource) {
+        const machineData = getMachineDetails()
+
+        presenceData.details = machineData.details
+        presenceData.state = machineData.state
+
+        if (machineData.avatar) {
+          presenceData.smallImageKey = machineData.avatar
+          presenceData.smallImageText = decodeURIComponent(resource)
         }
-        if (path === '/prolabs/{}') {
-          presenceData.details = getProlabDetails()
-          delete presenceData.state
-        }
-        if (path === '/challenges/{}')
-          presenceData.state = getChallengeDetails()
-        if (path === '/sherlocks/{}')
-          presenceData.state = getSherlockDetails()
-        if (path === '/users/{}')
-          presenceData.details = 'Looking at profile'
       }
+      else {
+        presenceData.state = getBrowsingState('machines')
+      }
+      break
+
+    case '/challenges':
+      presenceData.smallImageKey = ASSETS.challenges
+      presenceData.smallImageText = 'Challenges'
+      if (resource) {
+        const name = getResourceName(2)
+        presenceData.state = name ? `Solving Challenge: '${name}'` : 'Solving Challenge'
+      }
+      else {
+        presenceData.state = getBrowsingState('challenges')
+      }
+      break
+
+    case '/sherlocks':
+      presenceData.smallImageKey = ASSETS.sherlocks
+      presenceData.smallImageText = 'Sherlocks'
+      if (resource) {
+        const name = getResourceName(2)
+        presenceData.state = name ? `Solving Sherlock: '${name}'` : 'Solving Sherlock'
+      }
+      else {
+        presenceData.state = getBrowsingState('Sherlocks')
+      }
+      break
+
+    case '/prolabs':
+      presenceData.smallImageKey = ASSETS.prolabs
+      presenceData.smallImageText = 'Prolabs'
+      if (resource) {
+        presenceData.details = getProlabDetails()
+      }
+      else {
+        presenceData.details = 'Browsing Prolabs'
+      }
+      break
+
+    case '/users':
+      if (resource) {
+        presenceData.details = 'Looking at profile'
+      }
+      break
+
+    default:
 
       break
-    }
   }
 
   presence.setActivity(presenceData)
