@@ -2,7 +2,7 @@ import { Assets } from 'premid'
 
 const presence = new Presence({
   // The client ID of the Application created at https://discordapp.com/developers/applications
-  clientId: '000000000000000000',
+  clientId: '1453822836467699954',
 })
 // You can use this to get translated strings in their browser language
 const strings = presence.getStrings({

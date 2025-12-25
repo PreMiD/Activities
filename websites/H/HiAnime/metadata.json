@@ -1,0 +1,15 @@
+{
+  "apiVersion": 2,
+  "author": { "dull": "paintedull" },
+  "service": "HiAnime",
+  "url": "hianime.to",
+  "iframe": [
+    "megacloud.tv",
+    "rapid-cloud.co",
+    "stape.me"
+  ],
+  "category": "video",
+  "logo": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/hi-anime.png",
+  "thumbnail": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/hi-anime.png",
+  "color": "#ffdd95"
+}
