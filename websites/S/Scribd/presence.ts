@@ -209,8 +209,8 @@ presence.on('UpdateData', async () => {
           presenceData.details = privacy
             ? 'Reading a book'
             : document
-              .querySelector('[property="og:title"]')
-              ?.getAttribute('content')
+                .querySelector('[property="og:title"]')
+                ?.getAttribute('content')
           presenceData.state = capitalizeFirstLetter(
             document.querySelector('[class="page_counter"]')?.textContent,
           )

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Kyrie",
@@ -11,8 +11,8 @@
     "vi": "ArtStation là cộng đồng được tạo dựng với mục đích thúc đẩy các hoạ sĩ và tạo cơ hội cho thành công. Đây là nơi các hoạ sĩ có thể kết nối với nhau và trưng bày tác phẩm của họ. Với càng nhiều tác phẩm được bạn tạo ra và đăng tải, bạn càng được cộng đồng chú ý nhiều hơn."
   },
   "url": "www.artstation.com",
-  "regExp": "([a-z0-9-_]+)[.]artstation[.]com",
-  "version": "1.2.18",
+  "regExp": "^https?[:][/][/]([a-z0-9-_]+)[.]artstation[.]com",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/ArtStation/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/ArtStation/assets/thumbnail.jpg",
   "color": "#13AFF0",

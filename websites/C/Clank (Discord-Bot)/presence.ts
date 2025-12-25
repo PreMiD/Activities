@@ -36,7 +36,7 @@ window.addEventListener('load', (): void => {
 })
 
 enum ActivityAssets {
-  Logo = 'https://clank.dev/assets/img/logo/android-chrome-512x512.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/C/Clank%20(Discord-Bot)/assets/logo.png',
 }
 
 let currentSubImg: string = Assets.Reading
@@ -68,7 +68,7 @@ presence.on('UpdateData', async () => {
     }
   }
   else {
-    currentLogo = 'https://i.imgur.com/fxYUKmB.png'
+    currentLogo = 'https://cdn.rcd.gg/PreMiD/websites/C/Clank%20(Discord-Bot)/assets/0.png'
     sectionDetails = details
     switch (currentVisibleId) {
       case 'discord-bot':

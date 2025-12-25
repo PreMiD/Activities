@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "193714715631812608",
@@ -10,7 +10,8 @@
     "en": "An official digital toolset for Fifth Edition (5e) Dungeons & Dragons (D&D)."
   },
   "url": "www.dndbeyond.com",
-  "version": "1.0.12",
+  "regExp": "^https?[:][/][/](www[.])?dndbeyond[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/D%26D%20Beyond/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/D%26D%20Beyond/assets/thumbnail.png",
   "color": "#E40712",

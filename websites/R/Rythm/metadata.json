@@ -1,0 +1,91 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "407882734837563392",
+    "name": "flurrycom"
+  },
+  "service": "Rythm",
+  "description": {
+    "en": "Rythm is a Discord music bot with a web dashboard where you can browse tracks, control playback in voice channels, or manage the queue directly from your browser."
+  },
+  "url": "rythm.fm",
+  "version": "1.1.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/logo.gif",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/thumbnail.png",
+  "color": "#147AFE",
+  "category": "music",
+  "tags": [
+    "music",
+    "media"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-shield-alt",
+      "value": false
+    },
+    {
+      "id": "hidePaused",
+      "title": "Hide Paused",
+      "icon": "fad fa-pause-circle",
+      "value": false,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "timesTamps",
+      "title": "Hide Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": false,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "largeImage",
+      "title": "Pick large image style",
+      "icon": "fad fa-user-edit",
+      "value": 0,
+      "if": {
+        "privacy": false
+      },
+      "values": [
+        "Cover music",
+        "Rythm animated logo",
+        "Rythm static logo"
+      ]
+    },
+    {
+      "id": "buttonType",
+      "title": "Pick small button style",
+      "icon": "fad fa-user-edit",
+      "value": 0,
+      "if": {
+        "privacy": false
+      },
+      "values": [
+        "Play/Pause logo",
+        "Rythm animated logo",
+        "Rythm static logo",
+        "Rythm aways animated logo"
+      ]
+    },
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 0,
+      "if": {
+        "privacy": false
+      },
+      "values": [
+        "Song Title",
+        "Artist Name",
+        "Activity Name"
+      ]
+    }
+  ]
+}

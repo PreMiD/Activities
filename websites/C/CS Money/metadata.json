@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Kyrie",
@@ -14,8 +14,8 @@
     "vi": "Cách tốt hơn để trao đổi CS:GO skin. Mua, bán, và trao đổi skin nhanh hơn và dễ dàng hơn. Tất cả các giao dịch đều được bảo mật bằng phương thức cao nhất."
   },
   "url": "cs.money",
-  "regExp": "([a-z0-9]+[.])?cs[.]money",
-  "version": "1.0.19",
+  "regExp": "^https?[:][/][/]([a-z0-9]+[.])?cs[.]money",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CS%20Money/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CS%20Money/assets/thumbnail.png",
   "color": "#4214AC",

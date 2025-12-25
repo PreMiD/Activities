@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "The Gamerzs",
@@ -23,7 +23,8 @@
     "listen.tidal.com",
     "tidal.com"
   ],
-  "version": "3.2.5",
+  "regExp": "^https?[:][/][/](listen[.])?tidal[.]com[/]",
+  "version": "3.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/thumbnail.png",
   "color": "#000000",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Striker",
@@ -24,7 +24,8 @@
     "vi": "Nghe tất cả những bài hát bạn yêu thích mọi lúc, mọi nơi."
   },
   "url": "www.deezer.com",
-  "version": "2.3.11",
+  "regExp": "^https?[:][/][/](www[.])?deezer[.]com[/]",
+  "version": "2.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/thumbnail.png",
   "color": "#a238ff",
@@ -51,10 +52,26 @@
       "value": true
     },
     {
+      "id": "artistAsTitle",
+      "title": "Show Artist as Title",
+      "icon": "fad fa-user-large",
+      "value": true
+    },
+
+    {
+      "id": "showBrowsing",
+      "title": "Show Browsing Info",
+      "icon": "fas fa-eye",
+      "value": true
+    },
+    {
       "id": "browseInfo",
       "title": "Only show browsing info",
       "icon": "fad fa-magnifying-glass",
-      "value": false
+      "value": false,
+      "if": {
+        "showBrowsing": true
+      }
     }
   ]
 }

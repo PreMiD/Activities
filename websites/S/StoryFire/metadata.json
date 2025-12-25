@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Snazzah",
@@ -11,7 +11,8 @@
     "nl": "Kom bij de StoryFire rebellie! Bekijk en maak de verhalen en video's die jij wilt terwijl je een enorme fanbase opbouwt!"
   },
   "url": "storyfire.com",
-  "version": "1.1.24",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*storyfire[.]com[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/StoryFire/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/StoryFire/assets/thumbnail.png",
   "color": "#fc9000",

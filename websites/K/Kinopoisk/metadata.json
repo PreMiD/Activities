@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "257151906038677504",
@@ -14,7 +14,8 @@
     "www.kinopoisk.ru",
     "hd.kinopoisk.ru"
   ],
-  "version": "1.0.17",
+  "regExp": "^https?[:][/][/](www|hd)[.]kinopoisk[.]ru[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kinopoisk/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kinopoisk/assets/thumbnail.png",
   "color": "#ff5900",

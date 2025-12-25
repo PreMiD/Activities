@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "EzzChats",
@@ -11,7 +11,8 @@
     "nl": "flyte scribe is een blog geschreven door edo/flyte, waarin hij op de interwebs vertelt over zijn huidige leven in Tokio, Japan. Voornamelijk praat over fotografie en dergelijke."
   },
   "url": "flyte.moe",
-  "version": "1.0.25",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flyte[.]moe[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/flyte%20scribe/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/flyte%20scribe/assets/thumbnail.png",
   "color": "#A3A3A3",

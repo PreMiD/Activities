@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "112732946774962176",
@@ -13,7 +13,8 @@
     "www.churchofjesuschrist.org",
     "churchofjesuschrist.org"
   ],
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/](www[.])?churchofjesuschrist[.]org[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Church%20of%20Jesus%20Christ%20of%20Latter-day%20Saints/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Church%20of%20Jesus%20Christ%20of%20Latter-day%20Saints/assets/thumbnail.jpeg",
   "color": "#003058",

@@ -15,11 +15,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/create-github-app-token@v2
+        id: generate-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ steps.generate-token.outputs.token }}
 
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -33,7 +39,7 @@ jobs:
       - name: Update assets
         env:
           CDN_TOKEN: ${{ secrets.CDN_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           # Configure git
           git config --local user.email "contact@premid.app"

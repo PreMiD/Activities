@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -23,8 +23,8 @@
     "x1337x.se",
     "1337x.is"
   ],
-  "regExp": "([a-z0-9-]+[.])*x?1337x([.][a-z]+)+[/]",
-  "version": "1.5.25",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*x?1337x([.][a-z]+)+[/]",
+  "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/1337x/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/1337x/assets/thumbnail.png",
   "color": "#d63600",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "193714715631812608",
@@ -14,7 +14,8 @@
     "zh-tw": "《鳴潮》是一款開放世界動作遊戲，主打高自由度的動作戰鬥玩法與豐富多樣的開放世界探索。而你，在這個世界甦醒的漂泊者，將在找回記憶、尋找自我身份的同時結識無數的共鳴者同伴，並和伙伴一起踏上跨越悲鳴的旅途。"
   },
   "url": "wutheringwaves.kurogames.com",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]wutheringwaves[.]kurogames[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wuthering%20Waves/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wuthering%20Waves/assets/thumbnail.png",
   "color": "#000000",

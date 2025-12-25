@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "193714715631812608",
@@ -14,8 +14,8 @@
     "canvas.instructure.com",
     "www.canvas.net"
   ],
-  "regExp": "((learn|www)[.]canvas[.]net|canvas[.]\\w+?([.]\\w+)+)|(\\w+?[.]instructure[.]com)",
-  "version": "1.2.6",
+  "regExp": "^https?[:][/][/]((learn|www)[.]canvas[.]net|canvas[.]\\w+?([.]\\w+)+)|(\\w+?[.]instructure[.]com)",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Canvas/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Canvas/assets/thumbnail.png",
   "color": "#e63d2f",

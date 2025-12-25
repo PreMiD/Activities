@@ -1,10 +1,16 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "isladot",
     "id": "385895205406244865"
   },
+  "contributors": [
+    {
+      "id": "278821688894947328",
+      "name": "momonnie"
+    }
+  ],
   "service": "LinkedIn",
   "description": {
     "en": "Manage your professional identity. Build and engage with your professional network. Access knowledge, insights and opportunities.",
@@ -13,7 +19,8 @@
     "vi": "Quản lý hồ sơ chuyên nghiệp của bạn. Xây dựng và tham gia với mạng lưới chuyên nghiệp của bạn. Tiếp cận kiến thức, các góc nhìn và cơ hội."
   },
   "url": "www.linkedin.com",
-  "version": "1.0.22",
+  "regExp": "^https?[:][/][/](www[.])?linkedin[.]com[/]",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LinkedIn/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LinkedIn/assets/thumbnail.png",
   "color": "#2867B2",
@@ -23,15 +30,9 @@
   ],
   "settings": [
     {
-      "id": "showJobsQuery",
-      "title": "Show jobs searching query.",
-      "icon": "fas fa-briefcase",
-      "value": false
-    },
-    {
-      "id": "showChatUsername",
-      "title": "Show profile name while messaging.",
-      "icon": "fas fa-user",
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
       "value": false
     }
   ]

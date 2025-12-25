@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "936579169842786325",
@@ -20,7 +20,8 @@
     "ogladajanime.pl",
     "www.ogladajanime.pl"
   ],
-  "version": "1.0.3",
+  "regExp": "^https?[:][/][/](www[.])?ogladajanime[.]pl[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OgladajAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OgladajAnime/assets/thumbnail.png",
   "color": "#29C5F6",
@@ -33,6 +34,10 @@
   "iframe": true,
   "iFrameRegExp": "^(?!youtube.com|youtu.be).*",
   "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
     {
       "id": "privacyMode",
       "title": "Privacy Mode",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "82662823523516416",
@@ -10,7 +10,8 @@
     "en": "Where to buy products from Japan? Want to buy from Japanese online stores and ship to your country? ZenMarket is the best Japan proxy shopping service for you!"
   },
   "url": "zenmarket.jp",
-  "version": "1.1.3",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*zenmarket[.]jp[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZenMarket/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZenMarket/assets/thumbnail.jpg",
   "color": "#42749A",

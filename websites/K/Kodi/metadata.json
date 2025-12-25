@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "puppyonline",
@@ -14,7 +14,7 @@
     "localhost",
     "127.0.0.1"
   ],
-  "version": "1.0.31",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kodi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kodi/assets/thumbnail.png",
   "color": "#ff7c00",

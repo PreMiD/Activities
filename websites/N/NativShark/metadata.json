@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Moka",
@@ -14,7 +14,8 @@
     "nativshark.com",
     "www.nativshark.com"
   ],
-  "version": "1.0.21",
+  "regExp": "^https?[:][/][/](www[.])?nativshark[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NativShark/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NativShark/assets/thumbnail.png",
   "color": "#2c2c44",

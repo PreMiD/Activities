@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "MoeKotoki",
@@ -15,7 +15,8 @@
     "osu.gatari.pw",
     "sig.gatari.pw"
   ],
-  "version": "1.4.25",
+  "regExp": "^https?[:][/][/](osu|sig)[.]gatari[.]pw[/]",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20gatari/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20gatari/assets/thumbnail.png",
   "color": "#B21964",

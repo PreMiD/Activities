@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "philanthropistical",
@@ -12,7 +12,8 @@
     "nl": "Vermillion is een communityforum voor programmering en gaming dat zich toelegt op het bespreken van een reeks onderwerpen, binnen en buiten de programmeerwereld."
   },
   "url": "v3rmillion.net",
-  "version": "1.1.27",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*v3rmillion[.]net[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/V3rmillion/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/V3rmillion/assets/thumbnail.png",
   "color": "#CD1818",

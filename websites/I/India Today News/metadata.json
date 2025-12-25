@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Anaxes",
@@ -10,7 +10,8 @@
     "en": "Story by story. Edition by edition."
   },
   "url": "www.indiatoday.in",
-  "version": "1.0.18",
+  "regExp": "^https?[:][/][/](www[.])?indiatoday[.]in[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/India%20Today%20News/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/India%20Today%20News/assets/thumbnail.png",
   "color": "#fc3b43",

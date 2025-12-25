@@ -16,8 +16,10 @@ export const stringMap = {
   viewAccount: 'general.viewAccount',
   viewCategory: 'general.viewCategory',
   viewHome: 'general.viewHome',
+  buttonWatchMovie: 'general.buttonWatchMovie',
   buttonViewPage: 'general.buttonViewPage',
   buttonWatchVideo: 'general.buttonWatchVideo',
+  buttonWatchSeries: 'general.buttonWatchSeries',
   buttonWatchStream: 'general.buttonWatchStream',
   watchingLive: 'general.watchingLive',
   watchingShow: 'general.watchingShow',
@@ -25,11 +27,12 @@ export const stringMap = {
   live: 'general.live',
   listeningTo: 'general.listeningTo',
   waitingLive: 'general.waitingLive',
-  ad: 'youtube.ad',
   // Custom strings
+  ad: 'RTBFAuvio.ad',
   aPodcast: 'RTBFAuvio.aPodcast',
   aRadio: 'RTBFAuvio.aRadio',
   buttonViewCategory: 'RTBFAuvio.buttonViewCategory',
+  buttonWatchProgram: 'RTBFAuvio.buttonWatchProgram',
   deferred: 'RTBFAuvio.deferred',
   endsIn: 'RTBFAuvio.endsIn',
   liveEnded: 'RTBFAuvio.liveEnded',
@@ -48,7 +51,7 @@ export let strings: Awaited<
 let oldLang: string | null = null
 let currentTargetLang: string | null = null
 let fetchingStrings = false
-let stringFetchTimeout: number | null = null
+let stringFetchTimeout: ReturnType<typeof setTimeout> | null = null
 
 function fetchStrings() {
   if (oldLang === currentTargetLang && strings)
@@ -60,6 +63,7 @@ function fetchStrings() {
   stringFetchTimeout = setTimeout(() => {
     presence.error(`Failed to fetch strings for ${targetLang}.`)
     fetchingStrings = false
+    stringFetchTimeout = null
   }, 5e3)
   presence.info(`Fetching strings for ${targetLang}.`)
   presence
@@ -67,14 +71,24 @@ function fetchStrings() {
     .then((result) => {
       if (targetLang !== currentTargetLang)
         return
-      if (stringFetchTimeout)
+      if (stringFetchTimeout) {
         clearTimeout(stringFetchTimeout)
+        stringFetchTimeout = null
+      }
       strings = result
       fetchingStrings = false
       oldLang = targetLang
       presence.info(`Fetched strings for ${targetLang}.`)
     })
-    .catch(() => null)
+    .catch((err) => {
+      // Ensure we always reset state and clear timeout on failure so subsequent attempts can run.
+      if (stringFetchTimeout) {
+        clearTimeout(stringFetchTimeout)
+        stringFetchTimeout = null
+      }
+      fetchingStrings = false
+      presence.error(`Error fetching strings for ${targetLang}: ${err?.message ?? err}`)
+    })
 }
 
 setInterval(fetchStrings, 3000)
@@ -83,7 +97,9 @@ fetchStrings()
 // Sets the current language to fetch strings for and returns whether any strings are loaded.
 export function checkStringLanguage(lang: string): boolean {
   currentTargetLang = lang
-  return !!strings
+  // Trigger an immediate fetch when the language changes so callers don't have to wait for the interval.
+  fetchStrings()
+  return !!strings && oldLang === lang
 }
 
 const settingsFetchStatus: Record<string, number> = {}
@@ -161,10 +177,11 @@ export function getLocalizedAssets(
   lang: string,
   assetName: string,
 ): ActivityAssets {
+  presence.info(`${lang}: ${assetName}`)
   switch (assetName) {
     case 'Ad':
       switch (lang) {
-        case 'fr-FR':
+        case 'fr':
           return ActivityAssets.AdFr
         default:
           return ActivityAssets.AdEn
@@ -553,6 +570,12 @@ export const cropPreset = {
   horizontal: [0.425, 0.025, 0, 0],
 }
 
+// Simple in-memory cache for generated thumbnails to avoid re-fetching the
+// same remote image repeatedly (and to dedupe concurrent requests).
+const thumbnailCache: Map<string, { data: string, timestamp: number }> = new Map()
+const thumbnailInFlight: Map<string, Promise<string>> = new Map()
+const THUMBNAIL_CACHE_TTL = 5 * 60 * 1000 // 5 minutes
+
 export async function getThumbnail(
   src: string = ActivityAssets.Logo,
   cropPercentages: typeof cropPreset.squared = cropPreset.squared, // Left, Right, top, Bottom
@@ -560,35 +583,47 @@ export async function getThumbnail(
   borderWidth = 15,
   progress = 2,
 ): Promise<string> {
+  // Use cache key based on src + crop settings + border/progress so variations
+  // produce different thumbnails.
+  const cacheKey = `${src}|${JSON.stringify(cropPercentages)}|${borderWidth}|${progress}`
+
+  // Return cached thumbnail if still valid
+  const cached = thumbnailCache.get(cacheKey)
+  if (cached && Date.now() - cached.timestamp < THUMBNAIL_CACHE_TTL)
+    return cached.data
+
+  // If a generation is already in-flight for this key, return the same promise
+  const inFlight = thumbnailInFlight.get(cacheKey)
+  if (inFlight)
+    return inFlight
+
   if (!src.match('data:image')) {
-    return new Promise((resolve) => {
+    const generationPromise = new Promise<string>((resolve) => {
       const img = new Image()
       const wh = 320 // Size of the square thumbnail
 
-      img.crossOrigin = 'anonymous'
-      img.src = src
-
-      img.onload = async function () {
+      // Function: Process the image once loaded
+      const processImage = (loadedImg: HTMLImageElement) => {
         let croppedWidth
         let croppedHeight
         let cropX = 0
         let cropY = 0
 
         // Determine if the image is landscape or portrait
-        const isLandscape = img.width > img.height
+        const isLandscape = loadedImg.width > loadedImg.height
 
         if (isLandscape) {
         // Landscape mode: use left and right crop percentages
-          const cropLeft = img.width * cropPercentages[0]!
-          croppedWidth = img.width - cropLeft - img.width * cropPercentages[1]!
-          croppedHeight = img.height
+          const cropLeft = loadedImg.width * cropPercentages[0]!
+          croppedWidth = loadedImg.width - cropLeft - loadedImg.width * cropPercentages[1]!
+          croppedHeight = loadedImg.height
           cropX = cropLeft
         }
         else {
         // Portrait mode: use top and bottom crop percentages
-          const cropTop = img.height * cropPercentages[2]!
-          croppedWidth = img.width
-          croppedHeight = img.height - cropTop - img.height * cropPercentages[3]!
+          const cropTop = loadedImg.height * cropPercentages[2]!
+          croppedWidth = loadedImg.width
+          croppedHeight = loadedImg.height - cropTop - loadedImg.height * cropPercentages[3]!
           cropY = cropTop
         }
 
@@ -654,27 +689,63 @@ export async function getThumbnail(
         }
 
         // 3. Draw the cropped image centered and zoomed out based on the borderWidth
-        ctx.drawImage(
-          img,
-          cropX,
-          cropY,
-          croppedWidth,
-          croppedHeight,
-          offsetX,
-          offsetY,
-          newWidth,
-          newHeight,
-        )
-
-        resolve(tempCanvas.toDataURL('image/png'))
+        try {
+          ctx.drawImage(
+            loadedImg,
+            cropX,
+            cropY,
+            croppedWidth,
+            croppedHeight,
+            offsetX,
+            offsetY,
+            newWidth,
+            newHeight,
+          )
+          resolve(tempCanvas.toDataURL('image/png'))
+        }
+        catch (error) {
+          presence.error(`Failed to draw image on canvas: ${error}`)
+          resolve(ActivityAssets.Logo)
+        }
       }
 
-      img.onerror = function () {
-        resolve(ActivityAssets.Logo)
+      // Strategy 1: Try with CORS first (for ds.static.rtbf.be)
+      img.crossOrigin = 'anonymous'
+      img.onload = () => processImage(img)
+
+      img.onerror = () => {
+        // Strategy 2: Try loading the image without CORS.
+        const fallbackImg = new Image()
+        fallbackImg.onload = () => {
+          presence.error('CORS failed — using original URL fallback (cannot process to canvas)')
+
+          resolve(src)
+        }
+        fallbackImg.onerror = () => {
+          presence.error('Both CORS and direct image load failed, returning placeholder')
+          resolve(ActivityAssets.Logo)
+        }
+        // Do not set crossOrigin here (leave undefined) so the browser performs a normal, non-CORS request.
+        fallbackImg.src = src
       }
+
+      img.src = src
     })
+
+    // Store in-flight promise so concurrent callers reuse it
+    thumbnailInFlight.set(cacheKey, generationPromise)
+
+    // When completed, cache the result and remove in-flight entry
+    generationPromise.then((data) => {
+      thumbnailInFlight.delete(cacheKey)
+      thumbnailCache.set(cacheKey, { data, timestamp: Date.now() })
+    }).catch(() => {
+      thumbnailInFlight.delete(cacheKey)
+    })
+
+    return generationPromise
   }
   else {
-    return ActivityAssets.Logo
+    return src
   }
 }

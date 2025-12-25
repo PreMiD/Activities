@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "456298243618504707",
@@ -10,7 +10,8 @@
     "en": "Nikke: Goddess of Victory Database, Wiki, Guides, and more"
   },
   "url": "nikke.gg",
-  "version": "1.0.5",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*nikke[.]gg[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NIKKE.GG/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NIKKE.GG/assets/thumbnail.jpeg",
   "color": "#3eafff",

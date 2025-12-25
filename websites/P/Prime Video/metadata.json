@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -9,6 +9,10 @@
     {
       "name": "Spinne",
       "id": "363790841636192259"
+    },
+    {
+      "name": "xDoritos",
+      "id": "432215088686956565"
     }
   ],
   "service": "Prime Video",
@@ -20,8 +24,8 @@
     "nl": "Geniet van exclusieve Amazon Originals en populaire films en tv-programma's. Bekijk altijd en overal. Start uw gratis proefperiode."
   },
   "url": "www.primevideo.com",
-  "regExp": "(([a-z0-9-]+[.])*amazon([.][a-z]+)+[/]((-[/])?(([a-z0-9]+)[/])?)?Prime-Video|Prime-Instant-Video|Amazon-Video|gp[/]video)|([a-z0-9-]+[.])*primevideo([.][a-z]+)+([/]?)?",
-  "version": "2.1.34",
+  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*amazon([.][a-z]+)+[/]((-[/])?(([a-z0-9]+)[/])?)?Prime-Video|Prime-Instant-Video|Amazon-Video|gp[/]video)|([a-z0-9-]+[.])*primevideo([.][a-z]+)+([/]?)?",
+  "version": "2.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/thumbnail.jpg",
   "color": "#FFFFFF",
@@ -30,5 +34,13 @@
     "video",
     "amazon",
     "prime"
+  ],
+  "settings": [
+    {
+      "id": "usePresenceName",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": true
+    }
   ]
 }

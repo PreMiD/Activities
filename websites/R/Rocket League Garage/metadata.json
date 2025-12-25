@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -12,7 +12,8 @@
     "zh": "'世界第一火箭联盟狂热爱好者。"
   },
   "url": "rocket-league.com",
-  "version": "1.2.23",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*rocket-league[.]com[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rocket%20League%20Garage/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rocket%20League%20Garage/assets/thumbnail.png",
   "color": "#6963b7",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.14",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "193714715631812608",
@@ -13,7 +13,8 @@
     "en": "Compare all cats from The Battle Cats with My Gamatoto. From ubers to crazed and more, check out all their stats including range, damage, and abilities. Find out which are the best cats today!"
   },
   "url": "mygamatoto.com",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*mygamatoto[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/My%20Gamatoto/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/My%20Gamatoto/assets/thumbnail.png",
   "color": "#ffffff",

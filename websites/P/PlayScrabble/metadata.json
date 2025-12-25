@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "193714715631812608",
@@ -13,7 +13,8 @@
     "www.playscrabble.com",
     "playscrabble.com"
   ],
-  "version": "1.0.6",
+  "regExp": "^https?[:][/][/](www[.])?playscrabble[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PlayScrabble/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PlayScrabble/assets/thumbnail.png",
   "color": "#F04930",

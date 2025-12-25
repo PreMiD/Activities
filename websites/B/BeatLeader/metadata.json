@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "205984221859151873",
@@ -15,8 +15,8 @@
     "replay.beatleader.com",
     "royale.beatleader.com"
   ],
-  "regExp": "beatleader\\.(?:xyz|com|net)",
-  "version": "1.12.1",
+  "regExp": "^https?[:][/][/]beatleader\\.(?:xyz|com|net)",
+  "version": "1.13.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BeatLeader/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BeatLeader/assets/thumbnail.png",
   "color": "#c81c9f",

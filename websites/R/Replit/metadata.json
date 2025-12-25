@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Ashutosh",
@@ -20,7 +20,8 @@
     "nl": "Replit, voorheen Repl.it, is een in San Francisco gevestigde start-up en een online IDE (geïntegreerde ontwikkelomgeving) die 40 programmeertalen ondersteunt, waaronder Python, Lua, JavaScript, Julia, C++, C++11, C, C#, HTML/CSS/JS, Python met turtle en LOLCODE. Replit stelt gebruikers in staat om code te schrijven en apps te bouwen met behulp van een browser, zonder software te hoeven installeren op hun apparaten."
   },
   "url": "replit.com",
-  "version": "1.1.5",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*replit[.]com[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Replit/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Replit/assets/thumbnail.png",
   "color": "#808080",

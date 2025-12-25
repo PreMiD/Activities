@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Gurr",
@@ -12,7 +12,8 @@
     "nl": "VidCloud9 is een geweldige plek om shows te vinden die je hebt gemist of films die je graag wilt zien."
   },
   "url": "vidcloud9.com",
-  "version": "2.0.36",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*vidcloud9[.]com[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VidCloud9/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VidCloud9/assets/thumbnail.png",
   "color": "#00050C",

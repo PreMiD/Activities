@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "432215088686956565",
@@ -11,7 +11,8 @@
     "es": "AttackerTV es una plataforma de streaming gratuita que ofrece películas y series en línea sin necesidad de registro. Cuenta con un amplio catálogo de géneros y países para disfrutar contenido de forma rápida y sencilla"
   },
   "url": "attackertv.so",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*attackertv[.]so[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AttackerTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AttackerTV/assets/thumbnail.png",
   "color": "#000000",

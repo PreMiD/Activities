@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "418760799226429441",
@@ -13,7 +13,8 @@
     "www.cacax.fr",
     "cacax.fr"
   ],
-  "version": "1.0.8",
+  "regExp": "^https?[:][/][/](www[.])?cacax[.]fr[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CacaX/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CacaX/assets/thumbnail.jpg",
   "color": "#78350F",

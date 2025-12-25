@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": " .•` KIΛRΛ `•. ",
@@ -12,7 +12,8 @@
     "vi": "Codewars là nơi các nhà phát triển làm chủ lập trình qua các thử thách. Luyện tập trong võ đường và phát huy tối đa khả năng của bạn."
   },
   "url": "www.codewars.com",
-  "version": "1.1.6",
+  "regExp": "^https?[:][/][/](www[.])?codewars[.]com[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Codewars/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Codewars/assets/thumbnail.png",
   "color": "#9c1414",

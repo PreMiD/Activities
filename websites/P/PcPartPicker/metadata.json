@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "वाह्य",
@@ -10,8 +10,8 @@
     "en": "Pick parts. Build your PC. Compare and Share."
   },
   "url": "pcpartpicker.com",
-  "regExp": "([a-z]{2}.|)pcpartpicker.com",
-  "version": "1.0.20",
+  "regExp": "^https?[:][/][/]([a-z]{2}.|)pcpartpicker.com",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PcPartPicker/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PcPartPicker/assets/thumbnail.png",
   "color": "#c3a041",

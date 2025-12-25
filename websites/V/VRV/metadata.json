@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "RisingSunLight",
@@ -19,7 +19,8 @@
     "nl": "VRV is de thuisbasis van je favoriete kanalen, evenementen en communities die anime, animatie, videogames, strips, science fiction, fantasy en tech vieren."
   },
   "url": "vrv.co",
-  "version": "2.0.17",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*vrv[.]co[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VRV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VRV/assets/thumbnail.png",
   "color": "#fdde0a",

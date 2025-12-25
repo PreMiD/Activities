@@ -1,0 +1,69 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "Nestz",
+    "id": "753271371781374074"
+  },
+  "service": "AnROLL",
+  "altnames": [
+    "AnROLL Brasil",
+    "AnROLL Anime"
+  ],
+  "description": {
+    "en": "AnimesROLL: The best way to watch anime online for free. Just hit play and enjoy your favorite anime in HD, updated daily.",
+    "pt": "AnimesROLL: A melhor forma de assistir animes online gratuitamente. Basta dar play e ver seus animes favoritos em HD, atualizados diariamente."
+  },
+  "url": [
+    "www.anroll.net",
+    "my.anroll.net"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+\\.)*anroll\\.net[/]",
+  "version": "1.1.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnROLL/assets/thumbnail.png",
+  "color": "#FFFFFF",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "brazil",
+    "movies",
+    "community"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Modo Privacidade",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "timestamps",
+      "title": "Mostrar Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Mostrar Capa",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "hideWhenPaused",
+      "title": "Ocultar Presence quando pausado",
+      "icon": "fas fa-eye-slash",
+      "value": false
+    },
+    {
+      "id": "partyPresence",
+      "title": "Mostrar Partyroll",
+      "icon": "fas fa-users",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}

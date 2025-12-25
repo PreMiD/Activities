@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "HuckinB",
@@ -23,7 +23,8 @@
     "panel.simulatorhits.com",
     "simulatorhits.dev"
   ],
-  "version": "2.0.22",
+  "regExp": "^https?[:][/][/]((panel[.])?simulatorhits[.]com|simulatorhits[.]dev)[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SimulatorHits/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SimulatorHits/assets/thumbnail.png",
   "color": "#DC2424",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "allvzx",
@@ -19,7 +19,8 @@
     "vi": "Google Classroom là dịch vụ web miễn phí, được phát triển bởi Google dành cho các trường học, nhằm mục đích đơn giản hoá việc tạo, phân phối, và đánh giá các bài tập một cách không cần giấy bút. Mục đích chính của Google Classroom là sắp xếp gọn gàng quá trình chia sẻ tệp giữa giáo viên và học sinh."
   },
   "url": "classroom.google.com",
-  "version": "1.1.33",
+  "regExp": "^https?[:][/][/]classroom[.]google[.]com[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Classroom/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Classroom/assets/thumbnail.png",
   "color": "#1e8e3e",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -11,8 +11,8 @@
     "nl": "Bekijk de beschikbaarheid van Minecraft namen, bekijk de naam geschiedenis van Minecraft accounts. Bekijk Minecraft skins in 3D, converteer UUIDs, en nog veel meer!"
   },
   "url": "namemc.com",
-  "regExp": "([a-z0-9-]+[.])*namemc[.]com[/]",
-  "version": "2.0.27",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*namemc[.]com[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NameMC/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NameMC/assets/thumbnail.png",
   "color": "#000000",

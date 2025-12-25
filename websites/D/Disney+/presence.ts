@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, StatusDisplayType } from 'premid'
 
 //* I think this is a browser bug because the custom element does not have any properties when accessing it directly...
 
@@ -11,16 +11,17 @@ window.addEventListener('message', (e) => {
 const script = document.createElement('script')
 script.textContent = `
 setInterval(() => {
-const images = document.querySelector("disney-web-player")?.mediaPlayer?.mediaPlaybackCriteria?.metadata?.images_experience?.standard?.tile
-ratios = Object.keys(images),
-goal = 100;
+const images = document.querySelector("disney-web-player")?.mediaPlayer?.mediaPlaybackCriteria?.metadata?.images_experience?.standard?.tile;
+if (!images) return;
+const ratios = Object.keys(images);
+const goal = 100;
 
 const closest = ratios.reduce(function(prev, curr) {
 return (Math.abs((100 / curr) - goal) < Math.abs((100 / prev) - goal) ? curr : prev);
 });
 
 window.postMessage({ type: "pmd-receive-image-id", imageId: images?.[closest]?.imageId }, "*");
-}, 100);
+}, 1000);
 `
 document.head.appendChild(script)
 
@@ -64,7 +65,7 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/D/Disney%2B/assets/logo.png'
       switch (true) {
         case pathname.includes('play'): {
-          const video = document.querySelector<HTMLVideoElement>('video#hivePlayer')
+          const video = document.querySelector<HTMLVideoElement>('video[id^="hivePlayer"]')
 
           //* Wait for elements to load to prevent setactivity spam
           if (!video || !imageId)
@@ -74,20 +75,24 @@ presence.on('UpdateData', async () => {
           if (!privacy) {
             if (presenceData.startTimestamp)
               delete presenceData.startTimestamp
+
+            presenceData.details = document.querySelector(
+              '.title-field.body-copy',
+            )?.textContent
+
+            presenceData.state = document
+              .querySelector('.subtitle-field')
+              ?.textContent
+              ?.replace(/S\d+:E\d+ /, '')
+
             usePresenceName
-              ? presenceData.name = document.querySelector(
-                '.title-field.body-copy',
-              )?.textContent || 'Disney+'
-              : presenceData.details = document.querySelector(
-                '.title-field.body-copy',
-              )?.textContent
+              ? presenceData.statusDisplayType = StatusDisplayType.Details
+              : presenceData.statusDisplayType = StatusDisplayType.Name
 
             const { paused } = video
 
             if (!paused) {
-              const sliderEl = document.querySelector(
-                '.progress-bar .slider-container',
-              )
+              const sliderEl = document.querySelector('progress-bar')?.shadowRoot?.querySelector('.progress-bar__thumb')
               const timestamps = getTimestamps(
                 Number.parseInt(sliderEl?.getAttribute('aria-valuenow') ?? '0'),
                 Number.parseInt(sliderEl?.getAttribute('aria-valuemax') ?? '0'),
@@ -106,19 +111,6 @@ presence.on('UpdateData', async () => {
               ?.match(/S(\d+):E(\d+) /)
             if (parts && parts.length > 2)
               presenceData.largeImageText = `Season ${parts[1]}, Episode ${parts[2]}`
-
-            usePresenceName
-              ? presenceData.details = document
-                .querySelector('.subtitle-field')
-                ?.textContent
-                ?.replace(/S\d+:E\d+ /, '')
-                || document.querySelector(
-                  '.title-field.body-copy',
-                )?.textContent
-              : presenceData.state = document
-                .querySelector('.subtitle-field')
-                ?.textContent
-                ?.replace(/S\d+:E\d+ /, '')
 
             presenceData.buttons = [
               {
@@ -221,7 +213,7 @@ presence.on('UpdateData', async () => {
             ? 'Browsing videos'
             : `Viewing ${document.title
               ?.match(
-                /(pixar)|(marvel)|(star wars)|(national geographic)|(star)|(disney)/i,
+                /pixar|marvel|star wars|national geographic|star|disney/i,
               )?.[0]
               ?.toLowerCase()} content`
           break
@@ -268,8 +260,11 @@ presence.on('UpdateData', async () => {
             : strings.watchingMovie
         }
         else {
-          usePresenceName ? presenceData.name = title || 'Disney+' : presenceData.details = title
-          usePresenceName ? presenceData.details = subtitle || 'Movie' : presenceData.state = subtitle || 'Movie'
+          presenceData.details = title
+          presenceData.state = subtitle || 'Movie'
+          usePresenceName
+            ? presenceData.statusDisplayType = StatusDisplayType.Details
+            : presenceData.statusDisplayType = StatusDisplayType.Name
         }
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused

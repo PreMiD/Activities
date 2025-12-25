@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -12,7 +12,8 @@
     "zh": "与来自世界各地的火箭联盟玩家竞争，并实时跟踪您的统计数据。"
   },
   "url": "rltracker.pro",
-  "version": "1.2.23",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*rltracker[.]pro[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RLTracker.pro/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RLTracker.pro/assets/thumbnail.png",
   "color": "#f16522",

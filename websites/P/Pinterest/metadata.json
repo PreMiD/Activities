@@ -1,10 +1,16 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
     "id": "241278257335500811"
   },
+  "contributors": [
+    {
+      "name": "momonnie",
+      "id": "278821688894947328"
+    }
+  ],
   "service": "Pinterest",
   "description": {
     "en": "Discover recipes, home ideas, style inspiration and other ideas to try.",
@@ -12,8 +18,8 @@
     "vi": "Khám phá các công thức, ý tưởng cải tiến nhà, cảm hứng và các ý tưởng khác."
   },
   "url": "www.pinterest.com",
-  "regExp": "([a-z0-9-]+[.])*pinterest([.][a-z]+)+[/]",
-  "version": "1.4.9",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pinterest([.][a-z]+)+[/]",
+  "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pinterest/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pinterest/assets/thumbnail.jpg",
   "color": "#cc2127",

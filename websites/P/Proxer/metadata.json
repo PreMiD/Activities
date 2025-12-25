@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Paul1365972",
@@ -12,7 +12,8 @@
     "nl": "Gratis en open Duitse Anime-community"
   },
   "url": "proxer.me",
-  "version": "1.0.30",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*proxer[.]me[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Proxer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Proxer/assets/thumbnail.png",
   "color": "#8A0E0E",

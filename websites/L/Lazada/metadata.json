@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "392970361047613441",
@@ -19,7 +19,8 @@
     "lazada.sg",
     "www.lazada.sg"
   ],
-  "version": "1.0.8",
+  "regExp": "^https?[:][/][/](www[.])?lazada[.](com|co|vn|sg)[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Lazada/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Lazada/assets/thumbnail.jpg",
   "color": "#191fb5",

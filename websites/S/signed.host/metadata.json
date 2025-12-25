@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "439084103690616844",
@@ -17,7 +17,8 @@
     "signed.host",
     "bio.signed.host"
   ],
-  "version": "1.0.11",
+  "regExp": "^https?[:][/][/]((www|bio)[.])?signed[.]host[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/signed.host/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/signed.host/assets/thumbnail.png",
   "color": "#37b2eb",

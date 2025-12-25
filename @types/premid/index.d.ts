@@ -1,20 +1,7 @@
-import type { ActivityType } from 'premid'
+import type { ActivityType, StatusDisplayType } from 'premid'
 import type GeneralStrings from '../../websites/general.json'
 
 declare global {
-
-  /**
-   * Status display types for Rich Presence
-   * @since 2.8.0
-   */
-  enum StatusDisplayType {
-    /** Display the activity name - e.g. "Listening to Spotify" */
-    Name = 0,
-    /** Display the state field - e.g. "Listening to Rick Astley" */
-    State = 1,
-    /** Display the details field - e.g. "Listening to Never Gonna Give You Up" */
-    Details = 2,
-  }
 
   /**
    * Interface which holds keys usable for `Presence#getStrings` for type hints.
@@ -51,6 +38,7 @@ declare global {
      *
      * @example
      * - ActivityType.Playing: "Playing [name]"
+     * - ActivityType.Streaming: "Streaming [name]"
      * - ActivityType.Listening: "Listening to [name]"
      * - ActivityType.Watching: "Watching [name]"
      * - ActivityType.Competing: "Competing in [name]"
@@ -165,12 +153,12 @@ declare global {
   }
 
   interface MediaPresenceData extends BasePresenceData {
-    type: ActivityType.Listening | ActivityType.Watching
+    type: ActivityType.Listening | ActivityType.Watching | ActivityType.Streaming
     largeImageText?: string | Node | null
   }
 
   interface NonMediaPresenceData extends BasePresenceData {
-    type?: Exclude<ActivityType, ActivityType.Listening | ActivityType.Watching>
+    type?: Exclude<ActivityType, ActivityType.Listening | ActivityType.Watching | ActivityType.Streaming>
     largeImageText?: never
   }
 
@@ -445,7 +433,7 @@ declare global {
    * Useful tools for developing presences
    * @link https://docs.premid.app/en/dev/presence/class
    */
-  declare class Presence {
+  class Presence {
     private clientId
     private injectOnComplete
     private internalPresence
@@ -701,11 +689,11 @@ declare global {
   /**
    * Minimum amount of time in ms between slide updates
    */
-  declare const MIN_SLIDE_TIME: number
+  const MIN_SLIDE_TIME: number
   /**
    * Represents a slideshow slide
    */
-  declare class SlideshowSlide {
+  class SlideshowSlide {
     id: string
     data: PresenceData
     private _interval
@@ -729,7 +717,7 @@ declare global {
    * Controller for alternating between multiple sets of
    * presence data at specific intervals
    */
-  declare class Slideshow {
+  class Slideshow {
     private index
     private slides
     currentSlide: PresenceData
@@ -781,7 +769,7 @@ declare global {
    * Is used to gather information from iFrames
    * @link https://docs.premid.app/en/dev/presence/iframe
    */
-  declare class iFrame {
+  class iFrame {
     _events: any
     /**
      * Send data from iFrames back to the presence script

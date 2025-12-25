@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "narpi",
@@ -11,7 +11,8 @@
     "nl": "Bekijk uw tv-kanalen en films via de browser."
   },
   "url": "www.horizon.tv",
-  "version": "1.3.24",
+  "regExp": "^https?[:][/][/](www[.])?horizon[.]tv[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Horizon%20GO/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Horizon%20GO/assets/thumbnail.png",
   "color": "#12121E",

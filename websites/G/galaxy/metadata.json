@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "259840591393718274",
@@ -10,7 +10,8 @@
     "en": "Galaxy is a free and open source website for finding and playing incremental games, although not exclusively. It has social features such as chatting, private messaging, and forums. It has no forced ads, no trackers, no paywalls, and it never will."
   },
   "url": "galaxy.click",
-  "version": "1.0.6",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*galaxy[.]click[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/galaxy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/galaxy/assets/thumbnail.png",
   "color": "#481148",

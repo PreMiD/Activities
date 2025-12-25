@@ -1,22 +1,28 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Kyrie",
     "id": "368399721494216706"
   },
-  "contributors": [{
-    "name": "Atom Skully",
-    "id": "671037171611729920"
-  }],
+  "contributors": [
+    {
+      "name": "Atom Skully",
+      "id": "671037171611729920"
+    }
+  ],
   "service": "Outlook",
   "description": {
     "en": "Outlook.com is a personal information manager web app from Microsoft consisting of webmail, calendaring, contacts, and tasks services.",
     "fr": "Outlook.com est une application web de gestion des informations personnelles de Microsoft comprenant des services de messagerie Web, de calendrier, de contacts et de tâches.",
     "vi": "Outlook.com là ứng dụng quản lý thông tin cá nhân của Microsoft bao gồm thư điện tử, quản lý lịch, danh bạ và các nhiệm vụ."
   },
-  "url": "outlook.live.com",
-  "version": "1.0.18",
+  "url": [
+    "outlook.live.com",
+    "outlook.office.com"
+  ],
+  "regExp": "^https?[:][/][/]((outlook)[.]live[.]com|(outlook)[.]office[.]com)[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Outlook/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Outlook/assets/thumbnail.png",
   "color": "#0F78D4",

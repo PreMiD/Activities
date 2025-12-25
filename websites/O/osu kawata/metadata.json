@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "MoeKotoki",
@@ -12,7 +12,8 @@
     "zh": "Kawata是世界上第一个允许作弊的osu!私服"
   },
   "url": "kawata.pw",
-  "version": "1.3.27",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kawata[.]pw[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20kawata/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20kawata/assets/thumbnail.png",
   "color": "#6EFBFE",

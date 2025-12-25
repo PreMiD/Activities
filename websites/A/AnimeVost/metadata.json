@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "296716315547402240",
@@ -18,7 +18,8 @@
     "www.animevost.org",
     "v2.vost.pw"
   ],
-  "version": "1.0.16",
+  "regExp": "^https?[:][/][/]((www[.])?animevost[.]org|(v2)[.]vost[.]pw)[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeVost/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeVost/assets/thumbnail.png",
   "color": "#ffb84d",

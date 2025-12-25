@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "756072844584288316",
@@ -9,8 +9,13 @@
   "description": {
     "en": "Shows what you're watching on mapple.tv"
   },
-  "url": "mapple.tv",
-  "version": "1.0.1",
+  "url": [
+    "mapple.tv",
+    "mapple.mov",
+    "mapple.uk"
+  ],
+  "regExp": "^https?[:][/][/]mapple[.](tv|mov|uk)[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mapple.tv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mapple.tv/assets/thumbnail.jpg",
   "color": "#000000",

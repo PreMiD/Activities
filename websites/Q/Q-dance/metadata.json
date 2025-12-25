@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "PreMiD",
@@ -18,7 +18,8 @@
     "nl": "Q-Dance is een Nederlands bedrijf dat evenementen en festivals organiseert die zich richten op de hardere stijlen van dansmuziek, voornamelijk Hardstyle, Hardcore en Hard Trance. Populaire evenementen en festivals georganiseerd door Q-Dance zijn Defqon.1 Festival, Q-BASE, Qlimax en X-Qlusive."
   },
   "url": "www.q-dance.com",
-  "version": "1.3.16",
+  "regExp": "^https?[:][/][/](www[.])?q-dance[.]com[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Q/Q-dance/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Q/Q-dance/assets/thumbnail.png",
   "color": "#EA580C",

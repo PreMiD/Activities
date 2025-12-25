@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "वाह्य",
@@ -11,7 +11,8 @@
     "vi": "Anitube.vip là trang web Tiếng Bồ Đào nha nơi mọi người có thể xem trực tuyến và tải về anime/drama miễn phí."
   },
   "url": "www.anitube.vip",
-  "version": "1.0.3",
+  "regExp": "^https?[:][/][/](www[.])?anitube[.]vip[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniTube.vip/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniTube.vip/assets/thumbnail.png",
   "color": "#0fa6a9",

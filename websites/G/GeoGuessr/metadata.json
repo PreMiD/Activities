@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "rawblocky",
@@ -19,7 +19,8 @@
     "www.geoguessr.com",
     "geoguessr.com"
   ],
-  "version": "2.0.6",
+  "regExp": "^https?[:][/][/](www[.])?geoguessr[.]com[/]",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GeoGuessr/assets/thumbnail.png",
   "color": "#7950e5",

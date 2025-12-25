@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Anant",
@@ -14,7 +14,8 @@
     "www.hexa.watch",
     "hexa.watch"
   ],
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/](www[.])?hexa[.]watch[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hexa%20Watch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hexa%20Watch/assets/thumbnail.png",
   "color": "#1e1e1e",

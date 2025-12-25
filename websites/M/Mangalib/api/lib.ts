@@ -9,17 +9,23 @@ import type { ReviewData } from './models/reviews.js'
 import type { TeamData } from './models/teams.js'
 import type { UserData } from './models/user.js'
 import { AnimeCdn, CharacterCdn, CollectionsCdn, MangaCdn, PeopleCdn, PublisherCdn, ReviewsCdn, TeamsCdn, UserCdn } from './cdnlibs.js'
-import { SiteId } from './utils.js'
+import { assurePd, SiteId } from './utils.js'
 
 type DataType = AnimeData | UserData | CharacterData | PersonData | PublisherData | TeamData | CollectionData | ReviewData
 
-export interface CachedResponse<T extends DataType = DataType> {
+interface CachedResponse<T extends DataType = DataType> {
   id: string
   data: T
 }
 
+interface CachedCover {
+  url: string
+  blob: Blob
+}
+
 export class Lib {
   private cache?: CachedResponse
+  private cachedCover?: CachedCover
 
   private extractId(string: string) {
     return string.split('/').pop()!.split('-')[0]!
@@ -28,9 +34,21 @@ export class Lib {
   private async fetch<T extends DataType>(url: string, siteId: SiteId): Promise<CachedResponse<T>> {
     const response = await fetch(url, { headers: { 'Site-Id': siteId } })
     const json = await response.json()
+
+    const { data } = json
+
+    if (data.cover)
+      data.cover.adjusted = assurePd(data.cover.default, siteId)
+    if (data.related)
+      data.related.cover.adjusted = assurePd(data.related.cover.default, siteId)
+    if (data.avatar)
+      data.avatar.adjusted = assurePd(data.avatar.url, siteId)
+    if (data.user)
+      data.user.avatar.adjusted = assurePd(data.user.avatar.url, siteId)
+
     return {
       id: this.extractId(url),
-      data: json.data as T,
+      data: data as T,
     }
   }
 

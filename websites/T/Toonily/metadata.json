@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "वाह्य",
@@ -13,7 +13,8 @@
     "toonily.net",
     "toonily.com"
   ],
-  "version": "1.1.27",
+  "regExp": "^https?[:][/][/]toonily[.](net|com)[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Toonily/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Toonily/assets/thumbnail.png",
   "color": "#2f063e",

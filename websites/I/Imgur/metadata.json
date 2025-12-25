@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -21,7 +21,8 @@
     "apidocs.imgur.com",
     "community.imgur.com"
   ],
-  "version": "1.1.25",
+  "regExp": "^https?[:][/][/](((i|blog|help|apidocs|community)[.])?imgur[.]com|imgurinc[.]com|imgurstore[.]com)[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Imgur/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Imgur/assets/thumbnail.jpg",
   "color": "#89c624",

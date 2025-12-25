@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "890325980126789663",
@@ -11,8 +11,8 @@
     "pt-br": "Stoodi é uma plataforma para te preparar para provas e ENEM no Brazil"
   },
   "url": "www.stoodi.com.br",
-  "regExp": "([a-z0-9]+)[.]stoodi[.]com[.]br",
-  "version": "1.0.12",
+  "regExp": "^https?[:][/][/]([a-z0-9]+)[.]stoodi[.]com[.]br",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stoodi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stoodi/assets/thumbnail.png",
   "color": "#004EFF",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "fror",
@@ -19,7 +19,8 @@
     "en": "Make some noise, the world is listening."
   },
   "url": "play.anghami.com",
-  "version": "1.4.1",
+  "regExp": "^https?[:][/][/]play[.]anghami[.]com[/]",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anghami/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anghami/assets/thumbnail.jpg",
   "color": "#FF00FE",

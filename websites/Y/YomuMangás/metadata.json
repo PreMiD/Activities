@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "293913134748401674",
@@ -17,7 +17,8 @@
     "pt-br": "YomuMangás, sua biblioteca virtual de mangás, manhwas, manhuas, novels, doujins e hentais."
   },
   "url": "yomumangas.com",
-  "version": "1.3.5",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*yomumangas[.]com[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YomuMang%C3%A1s/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YomuMang%C3%A1s/assets/thumbnail.png",
   "color": "#121212",

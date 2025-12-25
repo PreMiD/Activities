@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Yusaki",
@@ -12,8 +12,8 @@
     "th": "ร่วมพูดคุยแลกเปลี่ยนความคิดเห็นในทุกประเด็น ทั้งบันเทิง หุ้น ความงาม ท่องเที่ยว รถยนต์ กีฬา โทรศัพท์มือถือ อาหาร การเมือง ครอบครัว บ้าน วิทยาศาสตร์ สุขภาพ ธุรกิจ."
   },
   "url": "www.pantip.com",
-  "regExp": "([a-z0-9-]+[.])*pantip[.]com[/]",
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pantip[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pantip/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pantip/assets/thumbnail.png",
   "color": "#9d93f5",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "393773835620712461",
@@ -20,7 +20,8 @@
     "watch.lonelil.ru",
     "12131989.xyz"
   ],
-  "version": "1.1.9",
+  "regExp": "^https?[:][/][/]((watch)[.]lonelil[.]com|(watch)[.]lonelil[.]ru|12131989[.]xyz)[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/watch.lonelil.com/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/watch.lonelil.com/assets/thumbnail.png",
   "color": "#0A0A0A",

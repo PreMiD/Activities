@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "ACertainCoder",
@@ -17,7 +17,8 @@
     "bombmanual.com",
     "www.bombmanual.com"
   ],
-  "version": "2.0.15",
+  "regExp": "^https?[:][/][/]((www[.])?keeptalkinggame[.]com|(www[.])?bombmanual[.]com)[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Keep%20Talking%20and%20Nobody%20Explodes/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Keep%20Talking%20and%20Nobody%20Explodes/assets/thumbnail.png",
   "color": "#222327",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "124239574951002113",
@@ -10,7 +10,8 @@
     "en": "Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts"
   },
   "url": "www.home-assistant.io",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/](www[.])?home-assistant[.]io[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Home%20Assistant/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Home%20Assistant/assets/thumbnail.png",
   "color": "#03A9F4",

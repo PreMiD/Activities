@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "633779863840489484",
@@ -20,7 +20,8 @@
     "www.panais.xyz",
     "panais.xyz"
   ],
-  "version": "1.1.0",
+  "regExp": "^https?[:][/][/](www[.])?panais[.]xyz[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Panais/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Panais/assets/thumbnail.png",
   "color": "#26b6e1",

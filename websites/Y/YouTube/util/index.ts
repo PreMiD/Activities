@@ -193,9 +193,9 @@ export async function getThumbnail(videoId: string): Promise<string> {
 }
 
 const desktopSelectors = {
-  searchInput: '#search-input > div > div:nth-child(2) > input,#search-input > input',
+  searchInput: '#search-input > div > div:nth-child(2) > input,#search-input > input,.yt-searchbox-input',
   userName: '#author-text.ytd-backstage-post-renderer',
-  userName2: '#text.ytd-channel-name',
+  userName2: '#text.ytd-channel-name,h1.dynamicTextViewModelH1',
   userTab: '[class="style-scope ytd-tabbed-page-header"] [aria-selected="true"]',
   userVideoTab: '[class="style-scope ytd-feed-filter-chip-bar-renderer iron-selected"]',
   postThumbnail: '#post #main img',
@@ -208,6 +208,7 @@ const desktopSelectors = {
   videoLive: '.ytp-live',
   privacyParentBox: '.ytp-chrome-controls .ytp-right-controls',
   chapterTitle: '.ytp-chapter-title-content',
+  newUi: '.ytp-delhi-modern',
 }
 const mobileSelectors: Record<keyof typeof desktopSelectors, string> = {
   searchInput: '.yt-searchbox-input',
@@ -225,6 +226,7 @@ const mobileSelectors: Record<keyof typeof desktopSelectors, string> = {
   videoLive: '.ytwPlayerTimeDisplayContentLiveDot',
   privacyParentBox: '[class*=video-action-bar-actions]',
   chapterTitle: '.ytwPlayerTimeDisplayTimeMacro',
+  newUi: '.ytp-delhi-modern',
 }
 
 export function getQuerySelectors(

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.12",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Deivid",
@@ -12,8 +12,8 @@
     "nl": "Discord.js is een krachtige node.js module die je toelaat om zeer eenvoudig te interageren met de Discord API."
   },
   "url": "discord.js.org",
-  "regExp": "([a-z0-9-]+[.])*(discord[.]js.org|old[.]discordjs.dev)[/]",
-  "version": "1.2.27",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(discord[.]js.org|old[.]discordjs.dev)[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord.js/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord.js/assets/thumbnail.png",
   "color": "#8dd6f1",

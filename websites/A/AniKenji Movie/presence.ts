@@ -61,10 +61,12 @@ async function updatePresence(): Promise<void> {
     const { pathname } = document.location
     const splitPath = pathname.split('/')
 
-    const isHomePage = pathname === '/'
+    const isHomePage = pathname === '/watch'
+    const isProfilePage = pathname === '/profile'
     const isCategoryPage = pathname.includes('/the-loai')
     const isRegion = pathname.includes('/quoc-gia')
-    const isDetailsPage = splitPath.length === 3 && splitPath[1] === 'phim'
+    const isDetailsPage = splitPath.length === 3 && splitPath[1] === 'phim' // /phim/ten-phim/tap-X
+    const isWatchPage = splitPath.length === 4 && splitPath[1] === 'phim' // /phim/ten-phim/tap-X/tap-X
 
     const [
       showButtons,
@@ -91,12 +93,15 @@ async function updatePresence(): Promise<void> {
     }
     // get banner
     let dynamicBannerUrl: string | null = null
-    if (isDetailsPage || iFrameVideo || isPlayback) {
+    if (isDetailsPage || isWatchPage || iFrameVideo || isPlayback) {
       dynamicBannerUrl = getMetaTagImage()
     }
 
     if (isHomePage) {
       presenceData.details = 'Đang xem trang chủ'
+    }
+    else if (isProfilePage) {
+      presenceData.details = 'Đang xem tài khoản'
     }
     else if (isCategoryPage) {
       presenceData.details = 'Đang xem danh mục'
@@ -109,15 +114,16 @@ async function updatePresence(): Promise<void> {
       presenceData.state = `Phim: ${Region}`
     }
     else if (isDetailsPage) {
+      // Trang thông tin phim (chưa vào xem)
       const fullTitle = document.querySelector('head > title')?.textContent?.trim() || ''
-      const titleAfterPrefix = fullTitle.split('Phim')?.[1]?.trim() || fullTitle.split('Xem Phim')?.[1]?.trim() || ''
       presenceData.details = 'Định xem phim...'
-      presenceData.state = titleAfterPrefix
+      presenceData.state = fullTitle
       presenceData.largeImageKey = dynamicBannerUrl
     }
-    if (isPlayback) {
-      // get jwplayer
-      if (video) {
+    // Xử lý trang xem phim (isWatchPage)
+    if (isWatchPage) {
+      // Trường hợp có video element
+      if (isPlayback && video) {
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused ? (await strings).pause : (await strings).play
         if (showTimestamps && !Number.isNaN(video.currentTime) && !Number.isNaN(video.duration) && video.duration > 0) {
@@ -142,35 +148,44 @@ async function updatePresence(): Promise<void> {
           ]
         }
       }
-    }
-    // get iFrame
-    else if (iFrameVideo && showTimestamps && !Number.isNaN(duration)) {
-      presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
-      presenceData.smallImageText = paused ? (await strings).pause : (await strings).play
+      // Trường hợp có iframe
+      else if (iFrameVideo && !Number.isNaN(duration) && duration > 0) {
+        presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
+        presenceData.smallImageText = paused ? (await strings).pause : (await strings).play
 
-      if (!paused && !Number.isNaN(currentTime)) {
-        const [startTimestamp, endTimestamp] = getTimestamps(
-          Math.floor(currentTime),
-          Math.floor(duration),
-        )
-        presenceData.startTimestamp = startTimestamp
-        presenceData.endTimestamp = endTimestamp
+        if (showTimestamps && !paused && !Number.isNaN(currentTime)) {
+          const [startTimestamp, endTimestamp] = getTimestamps(
+            Math.floor(currentTime),
+            Math.floor(duration),
+          )
+          presenceData.startTimestamp = startTimestamp
+          presenceData.endTimestamp = endTimestamp
+        }
+        else {
+          delete presenceData.startTimestamp
+          delete presenceData.endTimestamp
+          presenceData.startTimestamp = browsingTimestamp
+        }
+        presenceData.largeImageKey = dynamicBannerUrl
+        presenceData.details = `${movieName}`
+        presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${Year}`
+        if (showButtons) {
+          presenceData.buttons = [
+            {
+              label: 'Xem Phim',
+              url: document.location.href,
+            },
+          ]
+        }
       }
+      // Không tìm thấy video hoặc iframe - chỉ hiển thị thông tin thuần
       else {
-        delete presenceData.startTimestamp
-        delete presenceData.endTimestamp
-        presenceData.startTimestamp = browsingTimestamp
-      }
-      presenceData.largeImageKey = dynamicBannerUrl
-      presenceData.details = `${movieName}`
-      presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${Year}`
-      if (showButtons) {
-        presenceData.buttons = [
-          {
-            label: 'Xem Phim',
-            url: document.location.href,
-          },
-        ]
+        presenceData.largeImageKey = dynamicBannerUrl
+        presenceData.details = `${movieName}`
+        presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${Year}`
+        // Không có icon play/pause, không có timestamps
+        delete presenceData.smallImageKey
+        delete presenceData.smallImageText
       }
     }
 

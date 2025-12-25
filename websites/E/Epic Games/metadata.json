@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Marino",
@@ -14,7 +14,8 @@
     "store.epicgames.com",
     "www.epicgames.com"
   ],
-  "version": "1.1.14",
+  "regExp": "^https?[:][/][/](store|www)[.]epicgames[.]com[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Epic%20Games/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Epic%20Games/assets/thumbnail.png",
   "color": "#2A2A2A",

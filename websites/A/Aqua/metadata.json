@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Ben",
@@ -13,7 +13,8 @@
     "vi": "Đài radio trực tuyến được dựng bởi cộng đồng và dành cho cộng đồng."
   },
   "url": "itsaqua.net",
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*itsaqua[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Aqua/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Aqua/assets/thumbnail.png",
   "color": "#2980b9",

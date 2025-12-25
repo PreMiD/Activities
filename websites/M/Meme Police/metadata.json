@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "churuya",
@@ -12,7 +12,8 @@
     "ru": "Веб-версии популярных настольных игр"
   },
   "url": "meme-police.ru",
-  "version": "1.0.25",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*meme-police[.]ru[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Meme%20Police/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Meme%20Police/assets/thumbnail.png",
   "color": "#9C27B0",
