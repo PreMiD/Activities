@@ -167,7 +167,6 @@ presence.on('UpdateData', async () => {
       break
 
     case '/machines':
-      // 1. Default State: Assume generic machine icon
       presenceData.smallImageKey = ASSETS.machines
       presenceData.smallImageText = 'Machines'
 
