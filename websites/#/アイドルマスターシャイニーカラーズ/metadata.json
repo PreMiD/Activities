@@ -16,8 +16,6 @@
   "url": "shinycolors.enza.fun",
   "regExp": "^https?[:][/][/]shinycolors[.]enza[.]fun[/]",
   "version": "2.0.0",
-  "iframe": true,
-  "iFrameRegExp": ".*",
   "logo": "https://i.imgur.com/e6Zr6HQ.png",
   "thumbnail": "https://i.imgur.com/jH542Iz.png",
   "color": "#8adfff",
@@ -27,5 +25,7 @@
     "shinymas",
     "imas",
     "shinycolors"
-  ]
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*"
 }
