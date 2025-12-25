@@ -1,0 +1,15 @@
+{
+  "apiVersion": 2,
+  "author": { "name": "YourName" },
+  "service": "HiAnime",
+  "url": "hianime.to",
+  "iframe": [
+    "megacloud.tv",
+    "rapid-cloud.co",
+    "stape.me"
+  ],
+  "category": "video",
+  "logo": "https://hianime.to/images/logo.png",
+  "thumbnail": "https://hianime.to/images/logo.png",
+  "color": "#ffdd95"
+}
