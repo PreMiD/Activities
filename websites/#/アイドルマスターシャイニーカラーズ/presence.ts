@@ -138,7 +138,6 @@ presence.on('UpdateData', async () => {
   }
 
   if (presenceData.details !== lastDetails) {
-    console.log(`[ShinyColors Presence] Update. Route: ${currentRoute}, Details: ${presenceData.details}`)
     lastDetails = presenceData.details as string
   }
 

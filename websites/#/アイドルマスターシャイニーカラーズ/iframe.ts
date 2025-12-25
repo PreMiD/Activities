@@ -6,11 +6,10 @@ iframe.on('UpdateData', async () => {
     const currentUrl = pathname + hash
 
     if (currentUrl !== lastUrl) {
-        console.log(`[ShinyColors Iframe] Path: ${pathname}, Hash: ${hash}`)
         lastUrl = currentUrl
         await iframe.send({
             pathname,
-            hash
+            hash,
         })
     }
 })
