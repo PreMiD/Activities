@@ -88,6 +88,9 @@ function parseTimeFromHTML(timeText: string | null | undefined): [number, number
 }
 
 presence.on('UpdateData', async () => {
+  // Get settings
+  const privacy = await presence.getSetting<boolean>('privacy')
+
   // Get the video element
   const video = document.querySelector<HTMLVideoElement>('video#video')
 
@@ -182,23 +185,33 @@ presence.on('UpdateData', async () => {
     
     const isPlaying = !video.paused
 
-    // Build the state string
-    let state: string
-    if (seasonNumber && episodeNumber && episodeTitle) {
-      state = `S${seasonNumber}:E${episodeNumber} - ${episodeTitle}`
-    } else if (seasonNumber && episodeNumber) {
-      state = `S${seasonNumber}:E${episodeNumber}`
-    } else if (episodeTitle) {
-      state = episodeTitle
+    // Build the state string and details
+    let state: string | undefined
+    let details: string
+    
+    if (privacy) {
+      // Privacy mode: hide specific details
+      details = 'Watching content'
+      state = undefined
     } else {
-      state = `Watching on ${channel}`
+      // Normal mode: show full details
+      details = showTitle
+      if (seasonNumber && episodeNumber && episodeTitle) {
+        state = `S${seasonNumber}:E${episodeNumber} - ${episodeTitle}`
+      } else if (seasonNumber && episodeNumber) {
+        state = `S${seasonNumber}:E${episodeNumber}`
+      } else if (episodeTitle) {
+        state = episodeTitle
+      } else {
+        state = `Watching on ${channel}`
+      }
     }
 
     const presenceData: PresenceData = {
       largeImageKey: channelLogoUrl || ActivityAssets.Logo,
       largeImageText,
       type: ActivityType.Watching,
-      details: showTitle,
+      details,
       state
     }
 
@@ -249,15 +262,29 @@ presence.on('UpdateData', async () => {
       // Set the small image key and text for paused state
       presenceData.smallImageKey = Assets.Pause
       presenceData.smallImageText = 'Paused'
+      
+      // Remove timestamps when paused
+      if (presenceData.startTimestamp) delete presenceData.startTimestamp
+      if (presenceData.endTimestamp) delete presenceData.endTimestamp
     }
 
-    // Add buttons
-    presenceData.buttons = [
-      {
-        label: 'Watch on waipu.tv',
-        url: document.location.href
-      }
-    ]
+    // Add buttons (always show unless privacy mode)
+    if (!privacy) {
+      presenceData.buttons = [
+        {
+          label: 'Watch on waipu.tv',
+          url: document.location.href
+        }
+      ]
+    }
+    
+    // Cleanup: remove state and buttons if privacy is enabled
+    if (privacy && presenceData.state) {
+      delete presenceData.state
+    }
+    if (privacy && presenceData.buttons) {
+      delete presenceData.buttons
+    }
     
     wasWatchingVideo = true
     
@@ -276,8 +303,8 @@ presence.on('UpdateData', async () => {
     const presenceData: PresenceData = {
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'waipu.tv',
-      details: 'Browsing',
-      state: 'Looking for content',
+      details: privacy ? 'Browsing' : 'Browsing',
+      state: privacy ? undefined : 'Looking for content',
       startTimestamp: browsingTimestamp,
       type: ActivityType.Watching
     }

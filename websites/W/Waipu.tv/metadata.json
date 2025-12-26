@@ -14,7 +14,7 @@
     "waipu.tv",
     "play.waipu.tv"
   ],
-  "regExp": "^https?[:][/][/](www[.])?(play[.])?waipu[.]tv[/]",
+  "regExp": "^https?[:][/][/](play[.])?waipu[.]tv[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/nQwZeMX.png",
   "thumbnail": "https://www.waipu.tv/assets/wp/images/logo.svg",
@@ -26,5 +26,13 @@
     "streaming",
     "live-tv",
     "german-tv"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
   ]
 }
