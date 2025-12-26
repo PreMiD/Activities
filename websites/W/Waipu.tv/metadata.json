@@ -33,6 +33,12 @@
       "title": "Privacy Mode",
       "icon": "fad fa-user-secret",
       "value": false
+    },
+    {
+      "id": "showNSFW",
+      "title": "Show NSFW Channels",
+      "icon": "fas fa-exclamation-triangle",
+      "value": false
     }
   ]
 }

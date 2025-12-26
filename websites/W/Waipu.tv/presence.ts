@@ -26,6 +26,38 @@ interface CachedShowData {
 
 let cachedShowData: CachedShowData | null = null
 
+// List of NSFW channel paths
+const NSFW_CHANNELS = [
+  'darkromance',
+  'pridetv',
+  'hotpassion',
+  'obsessiontv',
+  'rtlcrime'
+]
+
+/**
+ * Checks if the current URL is an NSFW channel
+ * @param url The URL to check
+ * @returns true if the URL matches an NSFW channel path
+ */
+function isNSFWChannel(url: string): boolean {
+  try {
+    const urlObj = new URL(url)
+    const pathname = urlObj.pathname.toLowerCase().trim()
+    
+    // Remove leading and trailing slashes, then split by '/'
+    const pathSegments = pathname.split('/').filter(segment => segment.length > 0)
+    
+    // Check if the first path segment matches any NSFW channel
+    if (pathSegments.length === 0) return false
+    
+    const firstSegment = pathSegments[0]
+    return NSFW_CHANNELS.some(channel => firstSegment === channel.toLowerCase())
+  } catch {
+    return false
+  }
+}
+
 /**
  * Parses time information from the HTML to calculate video timestamps
  * Format: "Seit 14:40 Uhr ⋅ noch 9 Min." (Since 14:40 ⋅ still 9 Min.)
@@ -89,7 +121,19 @@ function parseTimeFromHTML(timeText: string | null | undefined): [number, number
 
 presence.on('UpdateData', async () => {
   // Get settings
-  const privacy = await presence.getSetting<boolean>('privacy')
+  const [privacy, showNSFW] = await Promise.all([
+    presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('showNSFW')
+  ])
+
+  // Check if current URL is an NSFW channel
+  const isNSFW = isNSFWChannel(document.location.href)
+  
+  // If it's an NSFW channel and the setting is disabled, don't show any activity
+  if (isNSFW && !showNSFW) {
+    presence.setActivity()
+    return
+  }
 
   // Get the video element
   const video = document.querySelector<HTMLVideoElement>('video#video')
