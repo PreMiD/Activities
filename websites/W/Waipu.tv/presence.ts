@@ -291,14 +291,18 @@ presence.on('UpdateData', async () => {
     // Build the state string and details
     let state: string | undefined
     let details: string
+    let finalLargeImageText: string
     
     if (privacy) {
       // Privacy mode: hide specific details
       details = 'Watching content'
       state = undefined
+      // Don't show episode information in largeImageText when privacy is enabled
+      finalLargeImageText = 'waipu.tv'
     } else {
       // Normal mode: show full details
       details = showTitle
+      finalLargeImageText = largeImageText
       if (seasonNumber && episodeNumber && episodeTitle) {
         state = `S${seasonNumber}:E${episodeNumber} - ${episodeTitle}`
       } else if (seasonNumber && episodeNumber) {
@@ -312,7 +316,7 @@ presence.on('UpdateData', async () => {
 
     const presenceData: PresenceData = {
       largeImageKey: channelLogoUrl || ActivityAssets.Logo,
-      largeImageText,
+      largeImageText: finalLargeImageText,
       type: ActivityType.Watching,
       details,
       state
