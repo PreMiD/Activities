@@ -1,11 +1,11 @@
 import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/nQwZeMX.png'
+  Logo = 'https://i.imgur.com/nQwZeMX.png',
 }
 
 const presence = new Presence({
-  clientId: '1454116232948088954'
+  clientId: '1454116232948088954',
 })
 
 // Create browsing timestamp outside UpdateData to maintain consistent timing
@@ -32,7 +32,7 @@ const DEFAULT_NSFW_CHANNELS = [
   'pridetv',
   'hotpassion',
   'obsessiontv',
-  'rtlcrime'
+  'rtlcrime',
 ]
 
 /**
@@ -44,7 +44,7 @@ function parseNSFWChannels(channelsString: string | null | undefined): string[] 
   if (!channelsString || channelsString.trim().length === 0) {
     return DEFAULT_NSFW_CHANNELS
   }
-  
+
   return channelsString
     .split(',')
     .map(channel => channel.trim().toLowerCase())
@@ -60,7 +60,7 @@ function parseChannelsList(channelsString: string | null | undefined): string[] 
   if (!channelsString || channelsString.trim().length === 0) {
     return []
   }
-  
+
   return channelsString
     .split(',')
     .map(channel => channel.trim().toLowerCase())
@@ -74,21 +74,24 @@ function parseChannelsList(channelsString: string | null | undefined): string[] 
  * @returns true if the URL matches any channel in the list
  */
 function isChannelInList(url: string, channels: string[]): boolean {
-  if (channels.length === 0) return false
-  
+  if (channels.length === 0)
+    return false
+
   try {
     const urlObj = new URL(url)
     const pathname = urlObj.pathname.toLowerCase().trim()
-    
+
     // Remove leading and trailing slashes, then split by '/'
     const pathSegments = pathname.split('/').filter(segment => segment.length > 0)
-    
+
     // Check if the first path segment matches any channel
-    if (pathSegments.length === 0) return false
-    
+    if (pathSegments.length === 0)
+      return false
+
     const firstSegment = pathSegments[0]
     return channels.some(channel => firstSegment === channel.toLowerCase())
-  } catch {
+  }
+  catch {
     return false
   }
 }
@@ -110,22 +113,25 @@ function isNSFWChannel(url: string, nsfwChannels: string[]): boolean {
  * @returns [currentTime, duration] in seconds, or null if parsing fails
  */
 function parseTimeFromHTML(timeText: string | null | undefined): [number, number] | null {
-  if (!timeText) return null
+  if (!timeText)
+    return null
 
   try {
     // Match pattern: "Seit HH:MM Uhr ⋅ noch X Min."
     const match = timeText.match(/Seit\s+(\d{1,2}):(\d{2})\s+Uhr\s+⋅\s+noch\s+(\d+)\s+Min\./i)
-    if (!match || match.length < 4) return null
+    if (!match || match.length < 4)
+      return null
 
     const startHour = match[1]
     const startMinute = match[2]
     const remainingMinutes = match[3]
-    
-    if (!startHour || !startMinute || !remainingMinutes) return null
 
-    const startHourNum = parseInt(startHour, 10)
-    const startMinuteNum = parseInt(startMinute, 10)
-    const remainingMinutesNum = parseInt(remainingMinutes, 10)
+    if (!startHour || !startMinute || !remainingMinutes)
+      return null
+
+    const startHourNum = Number.parseInt(startHour, 10)
+    const startMinuteNum = Number.parseInt(startMinute, 10)
+    const remainingMinutesNum = Number.parseInt(remainingMinutes, 10)
 
     // Get current time
     const now = new Date()
@@ -141,20 +147,21 @@ function parseTimeFromHTML(timeText: string | null | undefined): [number, number
 
     // Calculate elapsed time in seconds
     const elapsedSeconds = Math.floor((now.getTime() - startTime.getTime()) / 1000)
-    
+
     // Calculate total duration: elapsed + remaining
     const totalDurationSeconds = elapsedSeconds + (remainingMinutesNum * 60)
 
     // Validate the calculated times
     if (
-      elapsedSeconds >= 0 &&
-      totalDurationSeconds > 0 &&
-      elapsedSeconds <= totalDurationSeconds &&
-      totalDurationSeconds < 86400 // Less than 24 hours (reasonable for a TV show)
+      elapsedSeconds >= 0
+      && totalDurationSeconds > 0
+      && elapsedSeconds <= totalDurationSeconds
+      && totalDurationSeconds < 86400 // Less than 24 hours (reasonable for a TV show)
     ) {
       return [elapsedSeconds, totalDurationSeconds]
     }
-  } catch (error) {
+  }
+  catch (error) {
     // If parsing fails, return null
   }
 
@@ -167,7 +174,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('showNSFW'),
     presence.getSetting<string>('nsfwChannels'),
-    presence.getSetting<string>('excludedChannels')
+    presence.getSetting<string>('excludedChannels'),
   ])
 
   // Get translations
@@ -180,12 +187,12 @@ presence.on('UpdateData', async () => {
     watchingOn: 'waiputv.watchingOn',
     seasonEpisode: 'waiputv.seasonEpisode',
     unknownShow: 'waiputv.unknownShow',
-    unknownChannel: 'waiputv.unknownChannel'
+    unknownChannel: 'waiputv.unknownChannel',
   })
 
   // Parse excluded channels list (always active, regardless of other settings)
   const excludedChannels = parseChannelsList(excludedChannelsString)
-  
+
   // Check if current URL is in the excluded channels list - if so, block immediately
   if (isChannelInList(document.location.href, excludedChannels)) {
     presence.setActivity()
@@ -194,10 +201,10 @@ presence.on('UpdateData', async () => {
 
   // Parse NSFW channels list from user input
   const nsfwChannels = parseNSFWChannels(nsfwChannelsString)
-  
+
   // Check if current URL is an NSFW channel
   const isNSFW = isNSFWChannel(document.location.href, nsfwChannels)
-  
+
   // If it's an NSFW channel and the setting is disabled, don't show any activity
   if (isNSFW && !showNSFW) {
     presence.setActivity()
@@ -211,7 +218,7 @@ presence.on('UpdateData', async () => {
     // Check if OSD is in cinema-mode (info bar hidden)
     const osdElement = document.querySelector('#media-player-osd')
     const isCinemaMode = osdElement?.classList.contains('cinema-mode') ?? false
-    
+
     let showTitle: string
     let episodeTitle: string | undefined
     let channel: string
@@ -225,35 +232,37 @@ presence.on('UpdateData', async () => {
     if (!isCinemaMode) {
       // Get show information from the OSD (On-Screen Display)
       const osdTitle = document.querySelector('.osd__title')?.textContent?.trim()
-      
+
       // Get detailed information from the program details overlay
-      showTitle = document.querySelector('[data-testid="program-teaser-informations-title"]')?.textContent?.trim() 
-        || osdTitle 
+      showTitle = document.querySelector('[data-testid="program-teaser-informations-title"]')?.textContent?.trim()
+        || osdTitle
         || strings.unknownShow
-      
+
       episodeTitle = document.querySelector('.c-hzayXV.c-dznuqJ.c-kitxqv')?.textContent?.trim()
-      
+
       // Get channel name
-      channel = document.querySelector('.c-knIRGr.c-cZoquc')?.textContent?.trim() 
-        || document.querySelector('.osd__icon--channel-logo img')?.getAttribute('alt') 
+      channel = document.querySelector('.c-knIRGr.c-cZoquc')?.textContent?.trim()
+        || document.querySelector('.osd__icon--channel-logo img')?.getAttribute('alt')
         || strings.unknownChannel
-      
+
       // Get channel logo URL from the OSD channel logo image
       const channelLogoImg = document.querySelector('.osd__icon--channel-logo img[data-testid="osd-channel-logo"]')
       channelLogoUrl = channelLogoImg?.getAttribute('src') || undefined
-      
+
       // Get metadata (contains Season and Episode info for TV series)
       const metaInfo = document.querySelector('.c-hDXjIm.c-idbSSC')?.textContent?.trim()
-      
+
       // Extract season and episode from metadata (format: "... ⋅ Staffel 11 ⋅ Episode 6")
       if (metaInfo) {
         const seasonMatch = metaInfo.match(/Staffel\s+(\d+)/i)
         const episodeMatch = metaInfo.match(/Episode\s+(\d+)/i)
-        
-        if (seasonMatch) seasonNumber = seasonMatch[1]
-        if (episodeMatch) episodeNumber = episodeMatch[1]
+
+        if (seasonMatch)
+          seasonNumber = seasonMatch[1]
+        if (episodeMatch)
+          episodeNumber = episodeMatch[1]
       }
-      
+
       // Get time information from program details overlay
       timeText = document.querySelector('.c-legVgA.c-jvujVL')?.textContent?.trim()
 
@@ -271,9 +280,10 @@ presence.on('UpdateData', async () => {
         seasonNumber,
         episodeNumber,
         largeImageText,
-        timeText
+        timeText,
       }
-    } else {
+    }
+    else {
       // Use cached data when in cinema-mode
       if (cachedShowData) {
         showTitle = cachedShowData.showTitle
@@ -284,7 +294,8 @@ presence.on('UpdateData', async () => {
         episodeNumber = cachedShowData.episodeNumber
         largeImageText = cachedShowData.largeImageText
         timeText = cachedShowData.timeText
-      } else {
+      }
+      else {
         // Fallback if no cached data available
         const osdTitle = document.querySelector('.osd__title')?.textContent?.trim()
         showTitle = osdTitle || strings.unknownShow
@@ -295,28 +306,31 @@ presence.on('UpdateData', async () => {
         channelLogoUrl = channelLogoImg?.getAttribute('src') || undefined
       }
     }
-    
+
     const isPlaying = !video.paused
 
     // Build the state string and details
     let state: string | undefined
     let details: string
     let finalLargeImageText: string
-    
+
     if (privacy) {
       // Privacy mode: hide specific details
       details = strings.watchingShow
       // Don't show episode information in largeImageText when privacy is enabled
       finalLargeImageText = 'waipu.tv'
-    } else {
+    }
+    else {
       // Normal mode: show full details
       details = showTitle
       finalLargeImageText = largeImageText
       if (seasonNumber && episodeNumber && episodeTitle) {
         state = `S${seasonNumber}:E${episodeNumber} - ${episodeTitle}`
-      } else if (seasonNumber && episodeNumber) {
+      }
+      else if (seasonNumber && episodeNumber) {
         state = `S${seasonNumber}:E${episodeNumber}`
-      } else if (episodeTitle) {
+      }
+      else if (episodeTitle) {
         state = episodeTitle
       }
       else {
@@ -329,9 +343,9 @@ presence.on('UpdateData', async () => {
       largeImageKey: channelLogoUrl || ActivityAssets.Logo,
       largeImageText: finalLargeImageText,
       type: ActivityType.Watching,
-      details
+      details,
     }
-    
+
     // Only add state if it's defined (not in privacy mode)
     if (state) {
       presenceData.state = state
@@ -345,32 +359,33 @@ presence.on('UpdateData', async () => {
       // Try to get time information from HTML first (more reliable for live TV)
       // Use cached timeText if in cinema-mode, otherwise get fresh data
       const parsedTime = parseTimeFromHTML(timeText)
-      
+
       if (parsedTime) {
         // Use parsed time from HTML
         const [currentTime, duration] = parsedTime
         const [startTimestamp, endTimestamp] = getTimestamps(currentTime, duration)
-        
+
         if (Number.isFinite(startTimestamp) && Number.isFinite(endTimestamp) && endTimestamp > startTimestamp) {
           presenceData.startTimestamp = startTimestamp
           presenceData.endTimestamp = endTimestamp
         }
-      } else {
+      }
+      else {
         // Fallback to video element if HTML parsing fails
         const duration = video.duration
         const currentTime = video.currentTime
-        
+
         // Only set timestamps if duration is valid (finite, greater than 0, and not NaN)
         if (
-          Number.isFinite(duration) &&
-          duration > 0 &&
-          Number.isFinite(currentTime) &&
-          currentTime >= 0 &&
-          currentTime <= duration
+          Number.isFinite(duration)
+          && duration > 0
+          && Number.isFinite(currentTime)
+          && currentTime >= 0
+          && currentTime <= duration
         ) {
           // Calculate timestamps using getTimestampsFromMedia
           const [startTimestamp, endTimestamp] = getTimestampsFromMedia(video)
-          
+
           // Additional validation: ensure timestamps are valid numbers
           if (Number.isFinite(startTimestamp) && Number.isFinite(endTimestamp) && endTimestamp > startTimestamp) {
             presenceData.startTimestamp = startTimestamp
@@ -380,14 +395,17 @@ presence.on('UpdateData', async () => {
         }
         // If duration is invalid, don't set timestamps (just show "Playing" without progress)
       }
-    } else {
+    }
+    else {
       // Set the small image key and text for paused state
       presenceData.smallImageKey = Assets.Pause
       presenceData.smallImageText = strings.pause
-      
+
       // Remove timestamps when paused
-      if (presenceData.startTimestamp) delete presenceData.startTimestamp
-      if (presenceData.endTimestamp) delete presenceData.endTimestamp
+      if (presenceData.startTimestamp)
+        delete presenceData.startTimestamp
+      if (presenceData.endTimestamp)
+        delete presenceData.endTimestamp
     }
 
     // Add buttons (always show unless privacy mode)
@@ -395,16 +413,17 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = [
         {
           label: strings.watchButton,
-          url: document.location.href
-        }
+          url: document.location.href,
+        },
       ]
     }
-    
+
     wasWatchingVideo = true
-    
+
     // Set the activity
     presence.setActivity(presenceData)
-  } else {
+  }
+  else {
     // User is browsing the website
     // Only update browsing timestamp when changing from watching to browsing
     if (wasWatchingVideo) {
@@ -419,7 +438,7 @@ presence.on('UpdateData', async () => {
       largeImageText: 'waipu.tv',
       details: strings.browse,
       startTimestamp: browsingTimestamp,
-      type: ActivityType.Watching
+      type: ActivityType.Watching,
     }
 
     // Set the activity
