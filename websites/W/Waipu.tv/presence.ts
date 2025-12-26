@@ -17,6 +17,7 @@ interface CachedShowData {
   showTitle: string
   episodeTitle: string | undefined
   channel: string
+  channelLogoUrl: string | undefined
   seasonNumber: string | undefined
   episodeNumber: string | undefined
   largeImageText: string
@@ -98,6 +99,7 @@ presence.on('UpdateData', async () => {
     let showTitle: string
     let episodeTitle: string | undefined
     let channel: string
+    let channelLogoUrl: string | undefined
     let seasonNumber: string | undefined
     let episodeNumber: string | undefined
     let largeImageText: string
@@ -115,9 +117,14 @@ presence.on('UpdateData', async () => {
       
       episodeTitle = document.querySelector('.c-hzayXV.c-dznuqJ.c-kitxqv')?.textContent?.trim()
       
+      // Get channel name
       channel = document.querySelector('.c-knIRGr.c-cZoquc')?.textContent?.trim() 
         || document.querySelector('.osd__icon--channel-logo img')?.getAttribute('alt') 
         || 'Unknown Channel'
+      
+      // Get channel logo URL from the OSD channel logo image
+      const channelLogoImg = document.querySelector('.osd__icon--channel-logo img[data-testid="osd-channel-logo"]')
+      channelLogoUrl = channelLogoImg?.getAttribute('src') || undefined
       
       // Get metadata (contains Season and Episode info for TV series)
       const metaInfo = document.querySelector('.c-hDXjIm.c-idbSSC')?.textContent?.trim()
@@ -144,6 +151,7 @@ presence.on('UpdateData', async () => {
         showTitle,
         episodeTitle,
         channel,
+        channelLogoUrl,
         seasonNumber,
         episodeNumber,
         largeImageText,
@@ -155,6 +163,7 @@ presence.on('UpdateData', async () => {
         showTitle = cachedShowData.showTitle
         episodeTitle = cachedShowData.episodeTitle
         channel = cachedShowData.channel
+        channelLogoUrl = cachedShowData.channelLogoUrl
         seasonNumber = cachedShowData.seasonNumber
         episodeNumber = cachedShowData.episodeNumber
         largeImageText = cachedShowData.largeImageText
@@ -165,6 +174,9 @@ presence.on('UpdateData', async () => {
         showTitle = osdTitle || 'Unknown Show'
         channel = document.querySelector('.osd__icon--channel-logo img')?.getAttribute('alt') || 'Unknown Channel'
         largeImageText = `Watching on ${channel}`
+        // Try to get logo even in fallback
+        const channelLogoImg = document.querySelector('.osd__icon--channel-logo img[data-testid="osd-channel-logo"]')
+        channelLogoUrl = channelLogoImg?.getAttribute('src') || undefined
       }
     }
     
@@ -183,7 +195,7 @@ presence.on('UpdateData', async () => {
     }
 
     const presenceData: PresenceData = {
-      largeImageKey: ActivityAssets.Logo,
+      largeImageKey: channelLogoUrl || ActivityAssets.Logo,
       largeImageText,
       type: ActivityType.Watching,
       details: showTitle,
