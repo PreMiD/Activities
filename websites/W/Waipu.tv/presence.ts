@@ -318,8 +318,10 @@ presence.on('UpdateData', async () => {
         state = `S${seasonNumber}:E${episodeNumber}`
       } else if (episodeTitle) {
         state = episodeTitle
-      } else {
-        state = strings.watchingOn.replace('{0}', channel)
+      }
+      else {
+        // For movies, just show the channel name
+        state = channel
       }
     }
 
