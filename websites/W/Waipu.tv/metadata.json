@@ -39,6 +39,13 @@
       "title": "Show NSFW Channels",
       "icon": "fas fa-exclamation-triangle",
       "value": false
+    },
+    {
+      "id": "nsfwChannels",
+      "title": "NSFW Channel List",
+      "icon": "fas fa-list",
+      "value": "darkromance,pridetv,hotpassion,obsessiontv,rtlcrime",
+      "placeholder": "Comma-separated list of channel names (e.g., darkromance,pridetv)"
     }
   ]
 }

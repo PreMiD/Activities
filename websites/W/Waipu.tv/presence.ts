@@ -26,8 +26,8 @@ interface CachedShowData {
 
 let cachedShowData: CachedShowData | null = null
 
-// List of NSFW channel paths
-const NSFW_CHANNELS = [
+// Default list of NSFW channel paths (used as fallback)
+const DEFAULT_NSFW_CHANNELS = [
   'darkromance',
   'pridetv',
   'hotpassion',
@@ -36,11 +36,28 @@ const NSFW_CHANNELS = [
 ]
 
 /**
+ * Parses the NSFW channels list from a comma-separated string
+ * @param channelsString Comma-separated string of channel names
+ * @returns Array of channel names (trimmed and lowercased)
+ */
+function parseNSFWChannels(channelsString: string | null | undefined): string[] {
+  if (!channelsString || channelsString.trim().length === 0) {
+    return DEFAULT_NSFW_CHANNELS
+  }
+  
+  return channelsString
+    .split(',')
+    .map(channel => channel.trim().toLowerCase())
+    .filter(channel => channel.length > 0)
+}
+
+/**
  * Checks if the current URL is an NSFW channel
  * @param url The URL to check
+ * @param nsfwChannels Array of NSFW channel names to check against
  * @returns true if the URL matches an NSFW channel path
  */
-function isNSFWChannel(url: string): boolean {
+function isNSFWChannel(url: string, nsfwChannels: string[]): boolean {
   try {
     const urlObj = new URL(url)
     const pathname = urlObj.pathname.toLowerCase().trim()
@@ -52,7 +69,7 @@ function isNSFWChannel(url: string): boolean {
     if (pathSegments.length === 0) return false
     
     const firstSegment = pathSegments[0]
-    return NSFW_CHANNELS.some(channel => firstSegment === channel.toLowerCase())
+    return nsfwChannels.some(channel => firstSegment === channel.toLowerCase())
   } catch {
     return false
   }
@@ -121,13 +138,17 @@ function parseTimeFromHTML(timeText: string | null | undefined): [number, number
 
 presence.on('UpdateData', async () => {
   // Get settings
-  const [privacy, showNSFW] = await Promise.all([
+  const [privacy, showNSFW, nsfwChannelsString] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
-    presence.getSetting<boolean>('showNSFW')
+    presence.getSetting<boolean>('showNSFW'),
+    presence.getSetting<string>('nsfwChannels')
   ])
 
+  // Parse NSFW channels list from user input
+  const nsfwChannels = parseNSFWChannels(nsfwChannelsString)
+  
   // Check if current URL is an NSFW channel
-  const isNSFW = isNSFWChannel(document.location.href)
+  const isNSFW = isNSFWChannel(document.location.href, nsfwChannels)
   
   // If it's an NSFW channel and the setting is disabled, don't show any activity
   if (isNSFW && !showNSFW) {
