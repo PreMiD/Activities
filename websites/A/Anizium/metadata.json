@@ -23,7 +23,7 @@
     "www.anizium.co"
   ],
   "regExp": "^https?[:][/][/]((www[.])?anizium[.]com|(www[.])?anizium[.]co)[/]",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anizium/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anizium/assets/thumbnail.png",
   "color": "#b6eafd",
