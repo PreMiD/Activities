@@ -43,7 +43,7 @@ class AniziumPresence {
     const settings = this.settingsManager.currentSettings
 
     const largeImage
-      = settings?.showPosters && this.posterManager.posterUrl
+      = (settings?.showPosters && !settings?.privacy) && this.posterManager.posterUrl
         ? this.posterManager.posterUrl
         : this.settingsManager.getLogo()
 
