@@ -46,6 +46,13 @@
       "icon": "fas fa-list",
       "value": "darkromance,pridetv,hotpassion,obsessiontv,rtlcrime",
       "placeholder": "Comma-separated list of channel names (e.g., darkromance,pridetv)"
+    },
+    {
+      "id": "excludedChannels",
+      "title": "Always Exclude Channels",
+      "icon": "fas fa-ban",
+      "value": "",
+      "placeholder": "Comma-separated list of channel names to always exclude (e.g., channel1,channel2)"
     }
   ]
 }

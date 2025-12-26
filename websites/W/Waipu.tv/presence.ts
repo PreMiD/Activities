@@ -52,12 +52,30 @@ function parseNSFWChannels(channelsString: string | null | undefined): string[] 
 }
 
 /**
- * Checks if the current URL is an NSFW channel
- * @param url The URL to check
- * @param nsfwChannels Array of NSFW channel names to check against
- * @returns true if the URL matches an NSFW channel path
+ * Parses a comma-separated list of channels from a string
+ * @param channelsString Comma-separated string of channel names
+ * @returns Array of channel names (trimmed and lowercased), empty array if input is empty
  */
-function isNSFWChannel(url: string, nsfwChannels: string[]): boolean {
+function parseChannelsList(channelsString: string | null | undefined): string[] {
+  if (!channelsString || channelsString.trim().length === 0) {
+    return []
+  }
+  
+  return channelsString
+    .split(',')
+    .map(channel => channel.trim().toLowerCase())
+    .filter(channel => channel.length > 0)
+}
+
+/**
+ * Checks if the current URL matches any channel in the given list
+ * @param url The URL to check
+ * @param channels Array of channel names to check against
+ * @returns true if the URL matches any channel in the list
+ */
+function isChannelInList(url: string, channels: string[]): boolean {
+  if (channels.length === 0) return false
+  
   try {
     const urlObj = new URL(url)
     const pathname = urlObj.pathname.toLowerCase().trim()
@@ -65,14 +83,24 @@ function isNSFWChannel(url: string, nsfwChannels: string[]): boolean {
     // Remove leading and trailing slashes, then split by '/'
     const pathSegments = pathname.split('/').filter(segment => segment.length > 0)
     
-    // Check if the first path segment matches any NSFW channel
+    // Check if the first path segment matches any channel
     if (pathSegments.length === 0) return false
     
     const firstSegment = pathSegments[0]
-    return nsfwChannels.some(channel => firstSegment === channel.toLowerCase())
+    return channels.some(channel => firstSegment === channel.toLowerCase())
   } catch {
     return false
   }
+}
+
+/**
+ * Checks if the current URL is an NSFW channel
+ * @param url The URL to check
+ * @param nsfwChannels Array of NSFW channel names to check against
+ * @returns true if the URL matches an NSFW channel path
+ */
+function isNSFWChannel(url: string, nsfwChannels: string[]): boolean {
+  return isChannelInList(url, nsfwChannels)
 }
 
 /**
@@ -138,11 +166,21 @@ function parseTimeFromHTML(timeText: string | null | undefined): [number, number
 
 presence.on('UpdateData', async () => {
   // Get settings
-  const [privacy, showNSFW, nsfwChannelsString] = await Promise.all([
+  const [privacy, showNSFW, nsfwChannelsString, excludedChannelsString] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('showNSFW'),
-    presence.getSetting<string>('nsfwChannels')
+    presence.getSetting<string>('nsfwChannels'),
+    presence.getSetting<string>('excludedChannels')
   ])
+
+  // Parse excluded channels list (always active, regardless of other settings)
+  const excludedChannels = parseChannelsList(excludedChannelsString)
+  
+  // Check if current URL is in the excluded channels list - if so, block immediately
+  if (isChannelInList(document.location.href, excludedChannels)) {
+    presence.setActivity()
+    return
+  }
 
   // Parse NSFW channels list from user input
   const nsfwChannels = parseNSFWChannels(nsfwChannelsString)
