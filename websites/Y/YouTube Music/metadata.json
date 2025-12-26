@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Timeraa",
@@ -20,7 +20,8 @@
     "zh-tw": "一個支援 Android，iOS 和 PC 的音樂平台。官方專輯，單曲，視頻，混音，現場表演都在這裡！"
   },
   "url": "music.youtube.com",
-  "version": "3.2.1",
+  "regExp": "^https?[:][/][/]music[.]youtube[.]com[/]",
+  "version": "3.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/thumbnail.png",
   "color": "#E40813",
@@ -41,13 +42,15 @@
       "value": false
     },
     {
-      "id": "showAsListening",
-      "title": "Show song in status",
-      "icon": "fad fa-music",
-      "if": {
-        "privacy": false
-      },
-      "value": false
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 1,
+      "values": [
+        "Activity Name",
+        "Artist Name",
+        "Song Title"
+      ]
     },
     {
       "id": "cover",
@@ -90,6 +93,12 @@
       "if": {
         "privacy": false
       }
+    },
+    {
+      "id": "links",
+      "title": "Link to Song/Album/Artist",
+      "icon": "fas fa-arrow-up-right-from-square",
+      "value": true
     }
   ]
 }

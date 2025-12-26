@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Snazzah",
@@ -12,7 +12,8 @@
     "vi": "Trò chơi nhiều người chơi trên trình duyệt nơi mục tiêu của bạn là nốc tất cả các đối thủ khỏi rìa màn hình và trở thành người duy nhất sống sót."
   },
   "url": "bonk.io",
-  "version": "1.1.31",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*bonk[.]io[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bonk.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bonk.io/assets/thumbnail.png",
   "color": "#151f29",

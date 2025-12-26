@@ -526,17 +526,18 @@ presence.on('UpdateData', async () => {
           presenceData.details = episodeName ?? mediaName // EpisodeName
           if (episodeName)
             presenceData.state = `${strings.season} ${seasonNumber}, ${strings.episode} ${episodeNumber}` // Season 0, Episode 0
+          if (seasonNumber && episodeNumber) {
+            // MediaName on RTLplay
+            presenceData.largeImageText = strings.on.replace('{0}', mediaName).replace('{1}', 'RTLplay')
+          }
         }
         else {
           presenceData.details = mediaName // MediaName
           if (episodeName)
-            presenceData.state = `S${seasonNumber} E${episodeNumber} - ${episodeName}` // S0 - E0 - EpisodeName
-        }
-        if (seasonNumber && episodeNumber) {
-          // MediaName - Season 0 - Episode 0
-          presenceData.largeImageText = ` - ${strings.season} ${seasonNumber} - ${strings.episode} ${episodeNumber}`
-          presenceData.largeImageText = limitText(mediaName, 128 - presenceData.largeImageText.length)
-            + presenceData.largeImageText
+            presenceData.state = episodeName // EpisodeName
+          if (seasonNumber && episodeNumber) {
+            presenceData.largeImageText = `Season ${seasonNumber}, Episode ${episodeNumber}`
+          }
         }
 
         // Progress Bar / Timestamps
@@ -610,8 +611,6 @@ presence.on('UpdateData', async () => {
             cropPreset.horizontal,
           )
           if (coverArt) {
-            presenceData.largeImageText = `${strings.season} ${seasonNumber}, ${strings.episode} ${episodeNumber}`
-
             const presenceDataPoster = structuredClone(presenceData)
             presenceDataPoster.largeImageKey = mediaName
             presenceDataPoster.largeImageKey = await getThumbnail(
@@ -620,17 +619,8 @@ presence.on('UpdateData', async () => {
               cropPreset.horizontal,
             )
 
-            const presenceDataLogo = structuredClone(presenceData)
-            presenceDataLogo.largeImageText = 'RTLplay'
-            presenceDataLogo.largeImageKey = await getThumbnail(
-              ActivityAssets.Logo,
-              ActivityAssets.Animated,
-              cropPreset.squared,
-            )
-
             slideshow.addSlide('poster-image', presenceDataPoster, 5000)
             slideshow.addSlide('episode-image', presenceData, 5000)
-            slideshow.addSlide('logo-image', presenceDataLogo, 5000)
           }
         }
 
@@ -661,35 +651,56 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageText = strings.privacy
       }
       else {
-        const summaryElement = document.querySelector('p.detail__description')
+        let mediaName: string = 'Unknown Media'
+        let mediaType: string = ''
+        let description: string = ''
+        let coverArt: string | null = null
+        let tags: string[] = []
+        // TODO can be improve by retrieving the full json using an intercept api
+        const mediaInfos = document.querySelector('script[type="application/ld+json"]')?.textContent
+        if (mediaInfos) {
+          // Retrieve the json in the page
+          const data = JSON.parse(mediaInfos)
+          mediaName = data.name
+          mediaType = data['@type']
+          description = data.description
+          coverArt = data.image
+          tags = [data.director?.name, data.dateCreated, data.containsSeason?.name, data.containsSeason ? `${data.containsSeason?.numberOfEpisodes} episodes` : '']
+          tags = tags.filter((e) => {
+            return e
+          })
+        }
+        else {
+          mediaName = document.querySelector('h1[class*="detail"][class*="__title"]')?.textContent || 'Unknown Media'
+          mediaType = document.querySelector('meta[property="og:type"]')?.getAttribute('content')?.includes('movie') ? 'Movie' : 'TVSeries'
+          description = document.querySelector('[class*="detail"][class*="__description"]')?.textContent || ''
+          coverArt = document.querySelector('[class*="detail"][class*="__img"]')?.getAttribute('src') ?? ''
+        }
+
         const yearElement = document.querySelector(
-          'dd.detail__meta-label[title="Année de production"]',
+          'dd[class*="detail"][class*="__meta-label"][title="Année de production"]',
         )
         const durationElement = document.querySelector(
-          'dd.detail__meta-label[title="Durée"]',
+          'dd[class*="detail"][class*="__meta-label"][title="Durée"]',
         )
         const seasonElement = document.querySelector(
-          'dd.detail__meta-label:not([title])',
+          'dd[class*="detail"][class*="__meta-label"]:not([title])',
         )
-        const genresArray = document.querySelectorAll('dl:nth-child(1) > dd > a')
-        const isMovie = !!document
-          .querySelector('meta[property="og:type"]')
-          ?.getAttribute('content')
-          ?.includes('movie')
+        const genresArray = document.querySelectorAll('dd[class*="detail"][class*="__meta-label"][title="Genre"]')
 
-        let subtitle = isMovie ? strings.movie : strings.tvshow
+        let subtitle = mediaType === 'Movie' ? strings.movie : strings.tvshow
         subtitle += yearElement ? ` - ${yearElement.textContent}` : '' // Add Release Year
-        subtitle += seasonElement && !isMovie ? ` - ${seasonElement.textContent}` : '' // Add amount of seasons
+        subtitle += seasonElement && mediaType === 'TVSeries' ? ` - ${seasonElement.textContent}` : '' // Add amount of seasons
         subtitle += durationElement ? ` - ${durationElement.textContent}` : '' // Add Duration
 
         for (const element of genresArray) // Add Genres
           subtitle += ` - ${element.textContent}`
 
-        presenceData.details = document.querySelector('h1.detail__title')?.textContent // MediaName
+        presenceData.details = mediaName // MediaName
         presenceData.state = subtitle // MediaType - 2024 - 4 seasons or 50 min - Action - Drame
 
-        presenceData.largeImageText = summaryElement?.textContent
-          ? limitText(summaryElement.textContent) // 128 characters is the limit
+        presenceData.largeImageText = description
+          ? limitText(description) // 128 characters is the limit
           : subtitle // Summary if available
 
         presenceData.smallImageKey = ActivityAssets.Binoculars
@@ -705,18 +716,14 @@ presence.on('UpdateData', async () => {
         }
 
         if (usePoster) {
-          const presenceDataSlide = structuredClone(presenceData) // Deep copy
-
           presenceData.largeImageKey = await getThumbnail(
-            document.querySelector('img.detail__poster')?.getAttribute('src') ?? '',
-            ActivityAssets.Animated,
-            cropPreset.vertical,
-          )
-          presenceDataSlide.largeImageKey = await getThumbnail(
-            document.querySelector('img.detail__img')?.getAttribute('src') ?? '',
+            coverArt ?? '',
             ActivityAssets.Animated,
             cropPreset.horizontal,
           )
+
+          const presenceDataSlide = structuredClone(presenceData) // Deep copy
+          presenceDataSlide.state = tags.join(' - ')
 
           slideshow.addSlide('poster-image', presenceData, 5000)
           slideshow.addSlide('background-image', presenceDataSlide, 5000)

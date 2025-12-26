@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "503557087041683458",
@@ -10,7 +10,8 @@
     "en": "Watch truly great cinema. Wherever you are. With no ads. Ever. From new directors to award-winners. Beautiful, interesting, incredible movies — a new film every single day. Stream Now. Download to watch Offline. Start your free 7 day trial now."
   },
   "url": "mubi.com",
-  "version": "1.0.19",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*mubi[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MUBI/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MUBI/assets/thumbnail.png",
   "color": "#B4CDDB",

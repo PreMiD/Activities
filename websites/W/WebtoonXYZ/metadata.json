@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Harold",
@@ -11,7 +11,8 @@
     "nl": "WEBTOON.XYZ is een plek voor liefhebbers van Webtoon. Als je een liefhebber bent van Koreaanse, Japanse of Chinese strips, en je wilt allerlei soorten strips online lezen manhwa, manga, manhua. Dan is dit de juiste plek voor jou. Je kunt duizenden gratis Koreaanse manhwa van hoge kwaliteit online lezen. We willen dat je weet dat Webtoon.xyz voor jouw is geboren."
   },
   "url": "www.webtoon.xyz",
-  "version": "1.1.5",
+  "regExp": "^https?[:][/][/](www[.])?webtoon[.]xyz[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WebtoonXYZ/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WebtoonXYZ/assets/thumbnail.png",
   "color": "#eb2e73",

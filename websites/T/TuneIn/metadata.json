@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Kaduzzo",
@@ -18,7 +18,8 @@
     "pt-br": "TuneIn Inc. é um serviço de streaming de áudio que oferece notícias ao vivo, rádio, esportes, música e podcasts para mais de setecentos milhões de usuários ativos mensais. TuneIn conta com mais de setecentos e cinco milhões de usuários ativos mensais desde 2019. Sua sede fica localizada em São Francisco, Califórnia."
   },
   "url": "tunein.com",
-  "version": "2.2.7",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tunein[.]com[/]",
+  "version": "2.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TuneIn/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TuneIn/assets/thumbnail.png",
   "color": "#33B6A8",

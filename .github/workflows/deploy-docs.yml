@@ -8,7 +8,7 @@ on:
     paths:
       - 'docs/**'
   # Trigger on pull requests
-  #pull_request:
+  # pull_request:
   #  types: [opened, synchronize, reopened]
   #  paths:
   #    - 'docs/**'

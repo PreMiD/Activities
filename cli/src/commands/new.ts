@@ -95,7 +95,7 @@ export async function newActivity(activity?: string) {
   }).catch(() => exit('Something went wrong.'))
 
   const metadata = {
-    $schema: 'https://schemas.premid.app/metadata/1.15',
+    $schema: 'https://schemas.premid.app/metadata/1.16',
     apiVersion: 1,
     author,
     service: activity,
@@ -103,6 +103,7 @@ export async function newActivity(activity?: string) {
       en: 'TODO',
     },
     url: 'google.com',
+    regExp: '^https?[:][/][/]([a-z0-9-]+[.])*google[.]com[/]',
     version: '1.0.0',
     logo: 'https://i.imgur.com/000000.png',
     thumbnail: 'https://i.imgur.com/000000.png',

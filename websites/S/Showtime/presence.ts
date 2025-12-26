@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -57,6 +57,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: logoCheck(logo),
     name: 'Showtime',
+    type: ActivityType.Watching,
   }
   const { pathname, hostname, href } = document.location
   const episodeEtc = document
@@ -149,7 +150,7 @@ presence.on('UpdateData', async () => {
         }
         case 'playback': {
           if (video && !Number.isNaN(video.duration)) {
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
             presenceData.smallImageKey = video.paused
               ? Assets.Pause
               : Assets.Play
@@ -244,7 +245,7 @@ presence.on('UpdateData', async () => {
                 }
                 case !!pathSplit[2]?.match(/\d{5}/g): {
                   if (video && !Number.isNaN(video.duration)) {
-                    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+                    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
                     presenceData.smallImageKey = video.paused
                       ? Assets.Pause
                       : Assets.Play
@@ -277,11 +278,11 @@ presence.on('UpdateData', async () => {
                       ?.toLowerCase()
                       .includes('trailer') // if its a trailer
                       ? document
-                        .querySelector(
-                          '[class="video-metadata__details__title"]',
-                        )
-                        ?.textContent
-                        ?.replace(/Season \d /g, '') // then include trailer info in title
+                          .querySelector(
+                            '[class="video-metadata__details__title"]',
+                          )
+                          ?.textContent
+                          ?.replace(/Season \d /g, '') // then include trailer info in title
                       : title?.[0] // else dont
 
                   presenceData.state = title && title.length > 2

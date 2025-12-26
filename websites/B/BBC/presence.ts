@@ -37,6 +37,26 @@ function getStrings() {
     },
   )
 }
+
+function formatChannelName(channelId?: string): string {
+  if (!channelId)
+    return 'Live TV'
+  const channelMap: { [key: string]: string } = {
+    bbcone: 'BBC One',
+    bbctwo: 'BBC Two',
+    bbcthree: 'BBC Three',
+    bbcfour: 'BBC Four',
+    bbcnews: 'BBC News',
+    cbbc: 'CBBC',
+    cbeebies: 'CBeebies',
+    bbcparliament: 'BBC Parliament',
+    bbcscotland: 'BBC Scotland',
+    bbcalba: 'BBC Alba',
+    s4c: 'S4C',
+  }
+  return channelMap[channelId.toLowerCase()] || channelId.toUpperCase()
+}
+
 const serviceName = (() => {
   switch (location.pathname.split('/')[1]) {
     case 'iplayer':
@@ -137,7 +157,7 @@ presence.on('UpdateData', async () => {
 
     if (!iPlayerVideo && VideoMedia)
       iPlayerVideo = VideoMedia
-
+    // OD Programming:
     if (iPlayerVideo && path.includes('/iplayer/episode')) {
       if (!iPlayerVideo.duration || iPlayer.episode?.Live) {
         if (iPlayer.channel?.onAir || iPlayer.episode?.Live) {
@@ -234,6 +254,29 @@ presence.on('UpdateData', async () => {
           delete presenceData.startTimestamp
           delete presenceData.endTimestamp
         }
+      }
+    }
+    // Live Programming
+    else if (path.includes('/iplayer/live')) {
+      if (iPlayerVideo) {
+        const channelId = path.split('/').pop()
+        const channelName = formatChannelName(channelId) || iPlayer.channel?.title
+        const programmeName = document.querySelector('.channel-panel-item__link__title')?.textContent?.trim()
+          || 'Unknown Programme'
+
+        presenceData.details = programmeName
+        presenceData.state = `Live: ${channelName}`
+        presenceData.smallImageKey = Assets.Live
+        presenceData.smallImageText = strings.Live
+
+        delete presenceData.startTimestamp
+        presenceData.startTimestamp = Date.now() // milliseconds
+        delete presenceData.endTimestamp
+      }
+      else {
+        presenceData.details = strings.viewPage
+        presenceData.state = 'Live TV'
+        presenceData.smallImageKey = Assets.Reading
       }
     }
   }

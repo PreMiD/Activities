@@ -275,10 +275,10 @@ export class RouteHandlers {
     }
     else {
       const singleEpisodeState
-                = settings.watchingState.includes('%season%')
-                  || settings.watchingState.includes('%episode%')
-                  ? 'Tek Bölüm'
-                  : settings.watchingState
+        = settings.watchingState.includes('%season%')
+          || settings.watchingState.includes('%episode%')
+          ? 'Tek Bölüm'
+          : settings.watchingState
 
       presenceData.details = this.formatString(settings.watchingDetails, placeholders)
       presenceData.state = this.formatString(singleEpisodeState, placeholders)

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "manish",
@@ -15,9 +15,11 @@
     "viaplay.se",
     "viaplay.dk",
     "viaplay.no",
-    "viaplay.fi"
+    "viaplay.fi",
+    "viaplay.com"
   ],
-  "version": "1.3.28",
+  "regExp": "^https?[:][/][/]viaplay[.](se|dk|no|fi|com)[/]",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Viaplay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Viaplay/assets/thumbnail.png",
   "color": "#ec5a7f",

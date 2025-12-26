@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -12,7 +12,8 @@
     "vi": "Genius là bộ sưu tập lời bài hát và kiến thức âm nhạc lớn nhất thế giới."
   },
   "url": "genius.com",
-  "version": "2.0.34",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*genius[.]com[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Genius/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Genius/assets/thumbnail.png",
   "color": "#FFFF64",
