@@ -292,7 +292,7 @@ presence.on('UpdateData', async () => {
     
     if (privacy) {
       // Privacy mode: hide specific details
-      details = 'Watching content'
+      details = 'Watching TV'
       state = undefined
       // Don't show episode information in largeImageText when privacy is enabled
       finalLargeImageText = 'waipu.tv'
