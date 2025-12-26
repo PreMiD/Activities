@@ -1,7 +1,7 @@
 import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
 
 enum ActivityAssets {
-  Logo = 'https://www.waipu.tv/assets/wp/images/logo.svg'
+  Logo = 'https://i.imgur.com/nQwZeMX.png'
 }
 
 const presence = new Presence({
