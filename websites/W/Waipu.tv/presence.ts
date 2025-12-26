@@ -161,7 +161,7 @@ function parseTimeFromHTML(timeText: string | null | undefined): [number, number
       return [elapsedSeconds, totalDurationSeconds]
     }
   }
-  catch (error) {
+  catch {
     // If parsing fails, return null
   }
 
