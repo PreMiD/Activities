@@ -58,14 +58,20 @@
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
       "value": true,
-      "description": "Toggles the 'View Episode' and 'View Anime' buttons in your presence."
+      "description": "Toggles the 'View Episode' and 'View Anime' buttons in your presence.",
+      "if": {
+        "privacy": false
+      }
     },
     {
       "id": "showPosters",
       "title": "Show Posters",
       "icon": "fas fa-image",
       "value": true,
-      "description": "Toggles the display of anime posters in your presence. If disabled, the Anizium logo will be shown instead."
+      "description": "Toggles the display of anime posters in your presence. If disabled, the Anizium logo will be shown instead.",
+      "if": {
+        "privacy": false
+      }
     },
     {
       "id": "logoType",
@@ -86,7 +92,11 @@
       "icon": "fas fa-comment-alt-edit",
       "value": "%anime_title%",
       "placeholder": "Available: %anime_title%, %season%, %episode%",
-      "description": "Customize the first line of text in your presence while watching."
+      "description": "Customize the first line of text in your presence while watching.",
+      "if": {
+        "privacy": false,
+        "usePresenceName": true
+      }
     },
     {
       "id": "watchingState",
@@ -94,14 +104,22 @@
       "icon": "fas fa-comment-alt-edit",
       "value": "Season %season% | Episode %episode%",
       "placeholder": "Available: %anime_title%, %season%, %episode%",
-      "description": "Customize the second line of text in your presence while watching."
+      "description": "Customize the second line of text in your presence while watching.",
+      "if": {
+        "privacy": false,
+        "usePresenceName": true
+
+      }
     },
     {
       "id": "showTimestamp",
       "title": "Show Timestamp",
       "icon": "fad fa-stopwatch",
       "value": true,
-      "description": "Toggles the elapsed and remaining time of the episode in your presence."
+      "description": "Toggles the elapsed and remaining time of the episode in your presence.",
+      "if": {
+        "privacy": false
+      }
     }
   ]
 }
