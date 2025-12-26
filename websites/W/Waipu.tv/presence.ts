@@ -306,7 +306,6 @@ presence.on('UpdateData', async () => {
     if (privacy) {
       // Privacy mode: hide specific details
       details = strings.watchingShow
-      state = undefined
       // Don't show episode information in largeImageText when privacy is enabled
       finalLargeImageText = 'waipu.tv'
     } else {
@@ -328,8 +327,12 @@ presence.on('UpdateData', async () => {
       largeImageKey: channelLogoUrl || ActivityAssets.Logo,
       largeImageText: finalLargeImageText,
       type: ActivityType.Watching,
-      details,
-      state
+      details
+    }
+    
+    // Only add state if it's defined (not in privacy mode)
+    if (state) {
+      presenceData.state = state
     }
 
     if (isPlaying) {
@@ -413,7 +416,6 @@ presence.on('UpdateData', async () => {
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'waipu.tv',
       details: strings.browse,
-      state: privacy ? undefined : undefined,
       startTimestamp: browsingTimestamp,
       type: ActivityType.Watching
     }
