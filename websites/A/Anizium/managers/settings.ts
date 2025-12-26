@@ -7,6 +7,7 @@ const SETTINGS_CONFIG: {
   defaultValue: any
 }[] = [
   { key: 'privacy', type: 'boolean', defaultValue: false },
+  { key: 'usePresenceName', type: 'boolean', defaultValue: true },
   { key: 'showButtons', type: 'boolean', defaultValue: true },
   { key: 'showPosters', type: 'boolean', defaultValue: true },
   { key: 'logoType', type: 'number', defaultValue: 0 },

@@ -8,6 +8,7 @@ export enum Images {
 
 export interface AniziumSettings {
   privacy: boolean
+  usePresenceName: boolean
   showButtons: boolean
   showPosters: boolean
   logoType: number
