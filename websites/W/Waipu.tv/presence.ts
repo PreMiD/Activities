@@ -129,9 +129,6 @@ function parseTimeFromHTML(timeText: string | null | undefined): [number, number
 
     // Get current time
     const now = new Date()
-    const currentHour = now.getHours()
-    const currentMinute = now.getMinutes()
-    const currentSecond = now.getSeconds()
 
     // Calculate start time (today at the parsed hour:minute)
     const startTime = new Date(now)
@@ -385,14 +382,6 @@ presence.on('UpdateData', async () => {
       ]
     }
     
-    // Cleanup: remove state and buttons if privacy is enabled
-    if (privacy && presenceData.state) {
-      delete presenceData.state
-    }
-    if (privacy && presenceData.buttons) {
-      delete presenceData.buttons
-    }
-    
     wasWatchingVideo = true
     
     // Set the activity
@@ -410,7 +399,7 @@ presence.on('UpdateData', async () => {
     const presenceData: PresenceData = {
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'waipu.tv',
-      details: privacy ? 'Browsing' : 'Browsing',
+      details: 'Browsing',
       state: privacy ? undefined : 'Looking for content',
       startTimestamp: browsingTimestamp,
       type: ActivityType.Watching
