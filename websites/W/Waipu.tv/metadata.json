@@ -30,7 +30,7 @@
   "settings": [
     {
       "id": "privacy",
-      "title": "Privacy Mode",
+      "title": "Privacy Mode (show sender logo only)",
       "icon": "fad fa-user-secret",
       "value": false
     },
