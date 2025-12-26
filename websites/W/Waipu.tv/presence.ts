@@ -170,6 +170,19 @@ presence.on('UpdateData', async () => {
     presence.getSetting<string>('excludedChannels')
   ])
 
+  // Get translations
+  const strings = await presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    browse: 'general.browsing',
+    watchingShow: 'general.watchingShow',
+    watchButton: 'general.buttonWatchVideo',
+    watchingOn: 'waiputv.watchingOn',
+    seasonEpisode: 'waiputv.seasonEpisode',
+    unknownShow: 'waiputv.unknownShow',
+    unknownChannel: 'waiputv.unknownChannel'
+  })
+
   // Parse excluded channels list (always active, regardless of other settings)
   const excludedChannels = parseChannelsList(excludedChannelsString)
   
@@ -216,14 +229,14 @@ presence.on('UpdateData', async () => {
       // Get detailed information from the program details overlay
       showTitle = document.querySelector('[data-testid="program-teaser-informations-title"]')?.textContent?.trim() 
         || osdTitle 
-        || 'Unknown Show'
+        || strings.unknownShow
       
       episodeTitle = document.querySelector('.c-hzayXV.c-dznuqJ.c-kitxqv')?.textContent?.trim()
       
       // Get channel name
       channel = document.querySelector('.c-knIRGr.c-cZoquc')?.textContent?.trim() 
         || document.querySelector('.osd__icon--channel-logo img')?.getAttribute('alt') 
-        || 'Unknown Channel'
+        || strings.unknownChannel
       
       // Get channel logo URL from the OSD channel logo image
       const channelLogoImg = document.querySelector('.osd__icon--channel-logo img[data-testid="osd-channel-logo"]')
@@ -246,8 +259,8 @@ presence.on('UpdateData', async () => {
 
       // Calculate large image text
       largeImageText = seasonNumber && episodeNumber
-        ? `${channel} - Season ${seasonNumber}, Episode ${episodeNumber}`
-        : `Watching on ${channel}`
+        ? strings.seasonEpisode.replace('{0}', channel).replace('{1}', seasonNumber).replace('{2}', episodeNumber)
+        : strings.watchingOn.replace('{0}', channel)
 
       // Cache the data
       cachedShowData = {
@@ -274,9 +287,9 @@ presence.on('UpdateData', async () => {
       } else {
         // Fallback if no cached data available
         const osdTitle = document.querySelector('.osd__title')?.textContent?.trim()
-        showTitle = osdTitle || 'Unknown Show'
-        channel = document.querySelector('.osd__icon--channel-logo img')?.getAttribute('alt') || 'Unknown Channel'
-        largeImageText = `Watching on ${channel}`
+        showTitle = osdTitle || strings.unknownShow
+        channel = document.querySelector('.osd__icon--channel-logo img')?.getAttribute('alt') || strings.unknownChannel
+        largeImageText = strings.watchingOn.replace('{0}', channel)
         // Try to get logo even in fallback
         const channelLogoImg = document.querySelector('.osd__icon--channel-logo img[data-testid="osd-channel-logo"]')
         channelLogoUrl = channelLogoImg?.getAttribute('src') || undefined
@@ -292,7 +305,7 @@ presence.on('UpdateData', async () => {
     
     if (privacy) {
       // Privacy mode: hide specific details
-      details = 'Watching TV'
+      details = strings.watchingShow
       state = undefined
       // Don't show episode information in largeImageText when privacy is enabled
       finalLargeImageText = 'waipu.tv'
@@ -307,7 +320,7 @@ presence.on('UpdateData', async () => {
       } else if (episodeTitle) {
         state = episodeTitle
       } else {
-        state = `Watching on ${channel}`
+        state = strings.watchingOn.replace('{0}', channel)
       }
     }
 
@@ -322,7 +335,7 @@ presence.on('UpdateData', async () => {
     if (isPlaying) {
       // Set the small image key and text for playing state
       presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = 'Playing'
+      presenceData.smallImageText = strings.play
 
       // Try to get time information from HTML first (more reliable for live TV)
       // Use cached timeText if in cinema-mode, otherwise get fresh data
@@ -365,7 +378,7 @@ presence.on('UpdateData', async () => {
     } else {
       // Set the small image key and text for paused state
       presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = 'Paused'
+      presenceData.smallImageText = strings.pause
       
       // Remove timestamps when paused
       if (presenceData.startTimestamp) delete presenceData.startTimestamp
@@ -376,7 +389,7 @@ presence.on('UpdateData', async () => {
     if (!privacy) {
       presenceData.buttons = [
         {
-          label: 'Watch on waipu.tv',
+          label: strings.watchButton,
           url: document.location.href
         }
       ]
@@ -399,8 +412,8 @@ presence.on('UpdateData', async () => {
     const presenceData: PresenceData = {
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'waipu.tv',
-      details: 'Browsing',
-      state: privacy ? undefined : 'Looking for content',
+      details: strings.browse,
+      state: privacy ? undefined : undefined,
       startTimestamp: browsingTimestamp,
       type: ActivityType.Watching
     }

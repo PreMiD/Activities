@@ -29,6 +29,10 @@
   ],
   "settings": [
     {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
       "id": "privacy",
       "title": "Privacy Mode (show sender logo only)",
       "icon": "fad fa-user-secret",
