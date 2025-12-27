@@ -17,7 +17,7 @@
   "regExp": "^https?[:][/][/](play[.])?waipu[.]tv[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/nQwZeMX.png",
-  "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Waipu_TV_Logo_2016.svg/1024px-Waipu_TV_Logo_2016.svg.png",
+  "thumbnail": "https://i.imgur.com/otV2fSb.png",
   "color": "#009652",
   "category": "videos",
   "tags": [
