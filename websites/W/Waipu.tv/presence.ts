@@ -32,7 +32,6 @@ const DEFAULT_NSFW_CHANNELS = [
   'pridetv',
   'hotpassion',
   'obsessiontv',
-  'rtlcrime',
 ]
 
 /**
