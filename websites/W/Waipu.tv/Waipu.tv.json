@@ -1,0 +1,18 @@
+{
+  "waiputv.watchingOn": {
+    "description": "Shown when watching on a channel (e.g., Watching on SYFY)",
+    "message": "Watching on {0}"
+  },
+  "waiputv.seasonEpisode": {
+    "description": "Shown in large image text (e.g., SYFY - Season 5, Episode 11)",
+    "message": "{0} - Season {1}, Episode {2}"
+  },
+  "waiputv.unknownShow": {
+    "description": "Fallback when show title cannot be determined",
+    "message": "Unknown Show"
+  },
+  "waiputv.unknownChannel": {
+    "description": "Fallback when channel name cannot be determined",
+    "message": "Unknown Channel"
+  }
+}
