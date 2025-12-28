@@ -6,15 +6,15 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/ipFHHUi.png',
-  Search = 'https://i.imgur.com/CoMlHBn.png',
-  Profile = 'https://i.imgur.com/NEbzVK4.png',
-  Messages = 'https://i.imgur.com/Ubztl28.png',
-  Settings = 'https://i.imgur.com/eSpP3lV.png',
-  Bookmark = 'https://i.imgur.com/B34j58z.png',
-  Edit = 'https://i.imgur.com/4FvGdEl.png',
-  Notifications = 'https://i.imgur.com/OauyVgB.png',
-  Home = 'https://i.imgur.com/8Is16wm.png',
-  Verified = 'https://i.imgur.com/y3pR1Pz.png ',
+  Search = 'https://i.imgur.com/XBf1cGW.png',
+  Profile = 'https://i.imgur.com/ZSiPGqT.png',
+  Messages = 'https://i.imgur.com/GmdAyQk.png',
+  Settings = 'https://i.imgur.com/GASIlZP.png',
+  Bookmark = 'https://i.imgur.com/DzXeiWS.png',
+  Edit = 'https://i.imgur.com/u91zmaE.png',
+  Notifications = 'https://i.imgur.com/PVJdOfm.png',
+  Home = 'https://i.imgur.com/d0u9KBC.png',
+  Verified = 'https://i.imgur.com/Q2gWRtY.png',
 }
 
 const categoryMap: Record<string, string> = {
