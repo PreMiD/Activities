@@ -13,13 +13,20 @@ enum ActivityAssets {
 /**
  * Formats a slug into a readable name.
  * e.g., "66732-stranger-things" -> "Stranger Things"
+ *
+ * @param slug - The slug string to format.
  */
-const formatSlug = (slug: string | undefined): string => {
-  if (!slug) return ''
+function formatSlug(slug: string | undefined): string {
+  if (!slug) {
+    return ''
+  }
+
   return slug
     .split('-')
-    .map(word => {
-      if (/^\d+$/.test(word)) return '' // Skip IDs
+    .map((word) => {
+      if (/^\d+$/.test(word)) {
+        return ''
+      } // Skip IDs
       return word.charAt(0).toUpperCase() + word.slice(1)
     })
     .filter(Boolean)
@@ -29,7 +36,7 @@ const formatSlug = (slug: string | undefined): string => {
 /**
  * Attempts to retrieve a name/title from the DOM if the URL slug is insufficient.
  */
-const getNameFromDOM = (): string | null => {
+function getNameFromDOM(): string | null {
   const selectors = [
     'h1.text-white',
     '.movie-title',
@@ -37,35 +44,43 @@ const getNameFromDOM = (): string | null => {
     'h1',
     'header h1',
     '#Movie\\ Name',
-    '#TV\\ Shows\\ Name'
+    '#TV\\ Shows\\ Name',
   ]
+
   for (const selector of selectors) {
     const el = document.querySelector(selector)
-    if (el && el.textContent) return el.textContent.trim()
+    if (el && el.textContent) {
+      return el.textContent.trim()
+    }
   }
+
   return null
 }
 
 /**
  * Robustly fetches the rating from the page.
  */
-const getRating = (): string => {
-  const ratingEl = document.querySelector('.radial-progress span.text-white') || 
-                   document.querySelector('[class*="radial-progress"] span') ||
-                   document.querySelector('.rating-value')
+function getRating(): string {
+  const ratingEl = document.querySelector('.radial-progress span.text-white')
+    || document.querySelector('[class*="radial-progress"] span')
+    || document.querySelector('.rating-value')
+
   const rating = ratingEl?.textContent?.trim() || 'N/A'
+
   return rating === '0' || rating === '0.0' ? 'N/A' : rating
 }
 
 /**
  * Robustly fetches the release date from the page.
+ *
+ * @param type - The type of content ('movie' or 'tv').
  */
-const getReleaseDate = (type: 'movie' | 'tv'): string => {
+function getReleaseDate(type: 'movie' | 'tv'): string {
   const selector = type === 'movie' ? '#Movie\\ Release\\ Date time p' : '#TV\\ Shows\\ Air\\ Date time'
-  let date = document.querySelector(selector)?.textContent?.trim() || 
-             document.querySelector('time')?.textContent?.trim() || 
-             'N/A'
-  
+  let date = document.querySelector(selector)?.textContent?.trim()
+    || document.querySelector('time')?.textContent?.trim()
+    || 'N/A'
+
   // Format long dates like "Sunday, October 12, 2014" to "October 2014"
   if (date !== 'N/A') {
     const dateParts = date.split(', ')
@@ -75,13 +90,15 @@ const getReleaseDate = (type: 'movie' | 'tv'): string => {
 
     if (dateParts.length === 3 && p1 && p2) {
       date = `${p1} ${p2}`
-    } else if (dateParts.length === 2 && type === 'tv' && p0 && p1) {
+    }
+    else if (dateParts.length === 2 && type === 'tv' && p0 && p1) {
       const monthYear = p0.split(' ')[0]
       if (monthYear) {
         date = `${monthYear} ${p1}`
       }
     }
   }
+
   return date
 }
 
@@ -149,30 +166,34 @@ presence.on('UpdateData', async () => {
   }
 
   // Handle Dynamic Routes
-  
+
   // 1. TV Info Page: /tv/{id}-{slug}
   if (pathname.startsWith('/tv/') && pathname !== '/tv') {
-    const match = pathname.match(/\/tv\/(\d+)(?:-([^/]+))?/)
+    const match = pathname.match(/\/tv\/(?:\d+)(?:-([^/]+))?/)
     if (match) {
-      const showName = formatSlug(match[2]) || getNameFromDOM() || 'Unknown Show'
+      const showName = formatSlug(match[1]) || getNameFromDOM() || 'Unknown Show'
       presenceData.details = `Viewing ${showName} 📺`
       presenceData.type = ActivityType.Watching
       presenceData.smallImageKey = Assets.Viewing
-      
+
       const rating = getRating()
       const releaseDate = getReleaseDate('tv')
-      
+
       const stateParts = []
-      if (rating !== 'N/A') stateParts.push(`⭐ ${rating}`)
-      if (releaseDate !== 'N/A') stateParts.push(`🗓️ ${releaseDate}`)
+      if (rating !== 'N/A') {
+        stateParts.push(`⭐ ${rating}`)
+      }
+      if (releaseDate !== 'N/A') {
+        stateParts.push(`🗓️ ${releaseDate}`)
+      }
       presenceData.state = stateParts.length > 0 ? stateParts.join(' • ') : 'Viewing Details'
-      presenceData.largeImageKey = document.querySelector<HTMLImageElement>('section.md\\:col-\\[1\\/4\\] img')?.src || 
-                                   document.querySelector<HTMLImageElement>('img[alt*="Poster"]')?.src ||
-                                   ActivityAssets.Logo
+      presenceData.largeImageKey = document.querySelector<HTMLImageElement>('section.md\\:col-\\[1\\/4\\] img')?.src
+        || document.querySelector<HTMLImageElement>('img[alt*="Poster"]')?.src
+        || ActivityAssets.Logo
 
       if (showButtons) {
         presenceData.buttons = [
-          { label: 'View Show 📺', url: href }
+          { label: 'View Show 📺', url: href },
         ]
       }
     }
@@ -180,9 +201,9 @@ presence.on('UpdateData', async () => {
 
   // 2. Movie Info Page: /movies/{id}-{slug}
   if (pathname.startsWith('/movies/') && pathname !== '/movies') {
-    const match = pathname.match(/\/movies\/(\d+)(?:-([^/]+))?/)
+    const match = pathname.match(/\/movies\/(?:\d+)(?:-([^/]+))?/)
     if (match) {
-      const movieName = formatSlug(match[2]) || getNameFromDOM() || 'Unknown Movie'
+      const movieName = formatSlug(match[1]) || getNameFromDOM() || 'Unknown Movie'
       presenceData.details = `Viewing ${movieName} 🎬`
       presenceData.type = ActivityType.Watching
       presenceData.smallImageKey = Assets.Viewing
@@ -192,17 +213,23 @@ presence.on('UpdateData', async () => {
       const releaseDate = getReleaseDate('movie')
 
       const stateParts = []
-      if (rating !== 'N/A') stateParts.push(`⭐ ${rating}`)
-      if (runtime !== 'N/A') stateParts.push(`🕒 ${runtime}m`)
-      if (releaseDate !== 'N/A') stateParts.push(`🗓️ ${releaseDate}`)
+      if (rating !== 'N/A') {
+        stateParts.push(`⭐ ${rating}`)
+      }
+      if (runtime !== 'N/A') {
+        stateParts.push(`🕒 ${runtime}m`)
+      }
+      if (releaseDate !== 'N/A') {
+        stateParts.push(`🗓️ ${releaseDate}`)
+      }
       presenceData.state = stateParts.length > 0 ? stateParts.join(' • ') : 'Viewing Details'
-      presenceData.largeImageKey = document.querySelector<HTMLImageElement>('figure img.object-cover')?.src || 
-                                   document.querySelector<HTMLImageElement>('img[alt*="Poster"]')?.src ||
-                                   ActivityAssets.Logo
+      presenceData.largeImageKey = document.querySelector<HTMLImageElement>('figure img.object-cover')?.src
+        || document.querySelector<HTMLImageElement>('img[alt*="Poster"]')?.src
+        || ActivityAssets.Logo
 
       if (showButtons) {
         presenceData.buttons = [
-          { label: 'View Movie 🎬', url: href }
+          { label: 'View Movie 🎬', url: href },
         ]
       }
     }
@@ -217,30 +244,31 @@ presence.on('UpdateData', async () => {
 
       const season = urlParams.get('season')
       const episode = urlParams.get('episode')
-      
+
       let seasonNo = '1'
       let episodeNo = '1'
 
       if (season && episode) {
         seasonNo = season
         episodeNo = episode
-      } else {
+      }
+      else {
         const watchHistory = JSON.parse(localStorage.getItem('watch-history') || '{}')
         const showData = (tmdbId ? watchHistory[tmdbId] : null) || { last_season_watched: '1', last_episode_watched: '1' }
         seasonNo = showData.last_season_watched
         episodeNo = showData.last_episode_watched
       }
-      
+
       presenceData.details = `Watching ${showName} 🍿`
       presenceData.state = `S${seasonNo} E${episodeNo} • Streaming 📺`
       presenceData.type = ActivityType.Watching
       presenceData.smallImageKey = Assets.Play
-      
+
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('img.poster')?.src || ActivityAssets.Logo
 
       if (showButtons) {
         presenceData.buttons = [
-          { label: 'Watch Now 🍿', url: href }
+          { label: 'Watch Now 🍿', url: href },
         ]
       }
     }
@@ -257,7 +285,7 @@ presence.on('UpdateData', async () => {
 
     if (showButtons) {
       presenceData.buttons = [
-        { label: 'Watch Now 🍿', url: href }
+        { label: 'Watch Now 🍿', url: href },
       ]
     }
   }
@@ -266,7 +294,7 @@ presence.on('UpdateData', async () => {
   if (pathname.startsWith('/watch/sports/')) {
     const sportsSlug = pathname.split('/').pop() || ''
     const sportsName = formatSlug(sportsSlug) || 'Live Sports'
-    
+
     presenceData.details = `Watching ${sportsName} 🏆`
     presenceData.type = ActivityType.Watching
     presenceData.smallImageKey = Assets.Play
@@ -274,7 +302,7 @@ presence.on('UpdateData', async () => {
 
     if (showButtons) {
       presenceData.buttons = [
-        { label: 'Watch Live 📶', url: href }
+        { label: 'Watch Live 📶', url: href },
       ]
     }
   }
@@ -282,7 +310,7 @@ presence.on('UpdateData', async () => {
   // 6. Search Page
   if (pathname.includes('/search')) {
     const query = urlParams.get('q') || document.querySelector('input')?.getAttribute('value')
-    
+
     presenceData.details = 'Searching Primeshows 🔎'
     if (query) {
       presenceData.state = `Looking for: ${query} ✨`
@@ -290,8 +318,10 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Search
   }
 
-  if (presenceData.details !== 'Unsupported Page')
+  if (presenceData.details !== 'Unsupported Page') {
     presence.setActivity(presenceData)
-  else 
+  }
+  else {
     presence.setActivity()
+  }
 })
