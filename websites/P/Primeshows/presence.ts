@@ -169,7 +169,7 @@ presence.on('UpdateData', async () => {
 
   // 1. TV Info Page: /tv/{id}-{slug}
   if (pathname.startsWith('/tv/') && pathname !== '/tv') {
-    const match = pathname.match(/\/tv\/(?:\d+)(?:-([^/]+))?/)
+    const match = pathname.match(/\/tv\/\d+(?:-([^/]+))?/)
     if (match) {
       const showName = formatSlug(match[1]) || getNameFromDOM() || 'Unknown Show'
       presenceData.details = `Viewing ${showName} 📺`
@@ -201,7 +201,7 @@ presence.on('UpdateData', async () => {
 
   // 2. Movie Info Page: /movies/{id}-{slug}
   if (pathname.startsWith('/movies/') && pathname !== '/movies') {
-    const match = pathname.match(/\/movies\/(?:\d+)(?:-([^/]+))?/)
+    const match = pathname.match(/\/movies\/\d+(?:-([^/]+))?/)
     if (match) {
       const movieName = formatSlug(match[1]) || getNameFromDOM() || 'Unknown Movie'
       presenceData.details = `Viewing ${movieName} 🎬`
