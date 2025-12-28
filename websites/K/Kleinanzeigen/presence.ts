@@ -18,7 +18,7 @@ enum ActivityAssets {
 }
 
 const categoryMap: Record<string, string> = {
-  'anbieter': 'Anbieter',
+  's-anbieter': 'Anbieter',
   'privat': 'Privat',
   'gewerblich': 'Gewerblich',
   'anzeige': 'Typ',
@@ -49,7 +49,7 @@ const categoryMap: Record<string, string> = {
 }
 
 const strings = {
-  de: { viewingAd: 'Anzeige ansehen', seller: 'Verkäufer', unknown: 'Unbekannt', topSatisfaction: 'TOP Zufriedenheit', veryFriendly: 'Sehr freundlich', reliable: 'Zuverlässig', viewAd: 'Anzeige ansehen', viewSeller: 'Verkäufer ansehen', searchingFor: 'Sucht nach', page: 'Seite', of: 'von', more: 'weitere', noFilters: 'Keine Filter', viewSearch: 'Suche ansehen', managingAds: 'Anzeigen verwalten', myAds: 'Meine Anzeigen', readingMessages: 'Nachrichten lesen', inbox: 'Posteingang', inSettings: 'In den Einstellungen', managingProfileInfo: 'Profilinformationen verwalten', managingAccountSettings: 'Kontoeinstellungen verwalten', managingPaymentMethods: 'Zahlungsmethoden verwalten', managingPur: 'Kleinanzeigen Pur verwalten', activePur: 'Aktives Kleinanzeigen Pur Abo', inactivePur: 'Inaktives Kleinanzeigen Pur Abo', managingDataProtection: 'Datenschutzeinstellungen verwalten', managingEmailSettings: 'E-Mail-Einstellungen verwalten', viewingAbout: 'Informationen über Kleinanzeigen ansehen', viewingHelp: 'Hilfe- und Feedbackseite ansehen', managingAccount: 'Konto verwalten', browsingWatchlist: 'Merkliste durchsuchen', savedAds: 'Gespeicherte Anzeigen', managingUsers: 'Nutzer verwalten', followedSellers: 'Gefolgte Verkäufer', managingSearches: 'Suchen verwalten', savedSearches: 'Gespeicherte Suchen', posting: 'Erstellt Anzeige', in: 'in', creatingAd: 'Anzeige erstellen', chooseCategory: 'Kategorie wählen', viewingSellerProfile: 'Verkäuferprofil ansehen:', sellerProfile: 'Verkäuferprofil', viewProfile: 'Profil ansehen', managingNotifications: 'Benachrichtigungen verwalten', onHomepage: 'Auf der Startseite', browsingOffers: 'Angebote durchsuchen', browsingCategory: 'Kategorie durchsuchen', browsingAds: 'Anzeigen durchsuchen', unknownSearch: 'Unbekannte Suche' },
+  de: { viewingAd: 'Anzeige ansehen', seller: 'Verkäufer', unknown: 'Unbekannt', topSatisfaction: 'TOP Zufriedenheit', veryFriendly: 'Sehr freundlich', reliable: 'Zuverlässig', viewAd: 'Anzeige ansehen', viewSeller: 'Verkäufer ansehen', searchingFor: 'Sucht nach', page: 'Seite', of: 'von', more: 'weitere', noFilters: 'Keine Filter', viewSearch: 'Suche ansehen', managingAds: 'Anzeigen verwalten', myAds: 'Meine Anzeigen', readingMessages: 'Nachrichten lesen', inbox: 'Posteingang', inSettings: 'In den Einstellungen', managingProfileInfo: 'Profilinformationen verwalten', managingAccountSettings: 'Kontoeinstellungen verwalten', managingPaymentMethods: 'Zahlungsmethoden verwalten', managingPur: 'Kleinanzeigen Pur verwalten', activePur: 'Aktives Kleinanzeigen Pur Abo', inactivePur: 'Inaktives Kleinanzeigen Pur Abo', managingDataProtection: 'Datenschutzeinstellungen verwalten', managingEmailSettings: 'E-Mail-Einstellungen verwalten', viewingAbout: 'Informationen über Kleinanzeigen ansehen', viewingHelp: 'Hilfe- und Feedbackseite ansehen', managingAccount: 'Konto verwalten', browsingWatchlist: 'Merkliste durchsuchen', savedAds: 'Gespeicherte Anzeigen', managingUsers: 'Nutzer verwalten', followedSellers: 'Gefolgte Verkäufer', managingSearches: 'Verwaltet Suchaufträge', savedSearches: 'Gespeicherte Suchen', posting: 'Erstellt Anzeige', in: 'in', creatingAd: 'Anzeige erstellen', chooseCategory: 'Kategorie wählen', viewingSellerProfile: 'Verkäuferprofil ansehen:', sellerProfile: 'Verkäuferprofil', viewProfile: 'Profil ansehen', managingNotifications: 'Benachrichtigungen verwalten', onHomepage: 'Auf der Startseite', browsingOffers: 'Angebote durchsuchen', browsingCategory: 'Kategorie durchsuchen', browsingAds: 'Anzeigen durchsuchen', unknownSearch: 'Unbekannte Suche' },
   en: { viewingAd: 'Viewing an ad', seller: 'Seller', unknown: 'Unknown', topSatisfaction: 'TOP Satisfaction', veryFriendly: 'Very Friendly', reliable: 'Reliable', viewAd: 'View Ad', viewSeller: 'View Seller', searchingFor: 'Searching for', page: 'Page', of: 'of', more: 'more', noFilters: 'No Filters', viewSearch: 'View Search', managingAds: 'Managing ads', myAds: 'My Ads', readingMessages: 'Reading messages', inbox: 'Inbox', inSettings: 'In settings', managingProfileInfo: 'Managing profile information', managingAccountSettings: 'Managing account settings', managingPaymentMethods: 'Managing payment methods', managingPur: 'Managing Kleinanzeigen Pur', activePur: 'Active Kleinanzeigen Pur membership', inactivePur: 'Inactive Kleinanzeigen Pur membership', managingDataProtection: 'Managing data protection settings', managingEmailSettings: 'Managing email settings', viewingAbout: 'Viewing information about Kleinanzeigen', viewingHelp: 'Viewing the help and feedback page', managingAccount: 'Managing account', browsingWatchlist: 'Browsing watchlist', savedAds: 'Saved Ads', managingUsers: 'Managing users', followedSellers: 'Followed Sellers', managingSearches: 'Managing searches', savedSearches: 'Saved Searches', posting: 'Posting', in: 'in', creatingAd: 'Creating ad', chooseCategory: 'Choose your category', viewingSellerProfile: 'Viewing a seller:', sellerProfile: 'Seller Profile', viewProfile: 'View Profile', managingNotifications: 'Managing notifications', onHomepage: 'On the homepage', browsingOffers: 'Browsing offers', browsingCategory: 'Browsing category', browsingAds: 'Browsing ads', unknownSearch: 'Unknown search' },
 }
 
@@ -118,36 +118,107 @@ presence.on('UpdateData', async () => {
   }
 
   else if (path.includes('/s-') && !path.includes('/s-anzeige/') && !path.includes('/s-bestandsliste')) {
-    const searchQuery = (document.getElementById('site-search-query') as HTMLInputElement)?.value || t.unknownSearch
+    const searchInput = document.getElementById('site-search-query') as HTMLInputElement
+    let searchQuery = searchInput?.value || t.unknownSearch
 
     const categories: string[] = []
+    const seenFilters = new Set<string>()
 
-    const urlSegments = path.split('/')
-    const filterSegment = urlSegments.find(seg => seg.includes(':')) || ''
+    const urlSegments = path.split('/').filter(seg => seg)
 
-    const filters = filterSegment.split('/').filter(f => f.includes(':') && !f.startsWith('s-'))
-    filters.forEach((filter) => {
-      const [key, value] = filter.split(':')
-      const keyTranslated = categoryMap[key!] || key!.replace('global.', '').replace(/_/g, ' ')
-      const valueTranslated = categoryMap[value!] || value!.replace(/_/g, ' ')
-      categories.push(`${keyTranslated}: ${valueTranslated}`)
-    })
+    let area = ''
+    let region = ''
 
-    const lastSegment = urlSegments[urlSegments.length - 1]
-    if (lastSegment && lastSegment.includes('+')) {
-      const additionalFilters = lastSegment.split('+').filter(f => f.includes('.') && !f.startsWith('k'))
-      additionalFilters.forEach((filter) => {
-        const [key, value] = filter.split(':')
-        const cleanKey = key!.replace('global.', '')
-        const keyTranslated = categoryMap[key!] || categoryMap[cleanKey!] || cleanKey!.replace(/_/g, ' ')
-        const valueTranslated = categoryMap[value!] || value!.replace(/_/g, ' ')
+    const sIndex = urlSegments.findIndex(seg => seg.startsWith('s-'))
+    if (sIndex !== -1) {
+      const sSegment = urlSegments[sIndex]
+      const sContent = sSegment!.replace('s-', '')
 
-        const filterStr = `${keyTranslated}: ${valueTranslated}`
-        if (!categories.includes(filterStr)) {
-          categories.push(filterStr)
+      if (!sSegment!.includes(':')) {
+        if (sIndex + 1 < urlSegments.length) {
+          const nextSegment = urlSegments[sIndex + 1]
+          if (nextSegment && !nextSegment.includes(':') && !nextSegment.includes('+') && !nextSegment.startsWith('k0')) {
+            area = sContent.replace(/-/g, ' ').charAt(0).toUpperCase() + sContent.replace(/-/g, ' ').slice(1)
+            searchQuery = nextSegment.replace(/-/g, ' ')
+
+            if (sIndex + 2 < urlSegments.length) {
+              const regionSegment = urlSegments[sIndex + 2]
+              if (regionSegment && !regionSegment.includes(':') && !regionSegment.includes('+') && !regionSegment.startsWith('k0')) {
+                region = regionSegment.replace(/-/g, ' ').charAt(0).toUpperCase() + regionSegment.replace(/-/g, ' ').slice(1)
+              }
+            }
+          }
+          else {
+            searchQuery = sContent.replace(/-/g, ' ')
+          }
         }
-      })
+        else {
+          searchQuery = sContent.replace(/-/g, ' ')
+        }
+      }
+      else if (searchQuery === t.unknownSearch && sIndex + 1 < urlSegments.length) {
+        const nextSegment = urlSegments[sIndex + 1]
+        if (nextSegment && !nextSegment.includes(':') && !nextSegment.includes('+') && !nextSegment.startsWith('k0')) {
+          searchQuery = nextSegment.replace(/-/g, ' ')
+        }
+      }
     }
+    urlSegments.forEach((segment) => {
+      if (segment.includes(':')) {
+        const filterParts = segment.split('+')
+
+        filterParts.forEach((part) => {
+          if (!part.includes(':')) {
+            return
+          }
+
+          const [key, value] = part.split(':')
+          if (!key || !value || key === 'k0') {
+            return
+          }
+
+          const decodedValue = decodeURIComponent(value)
+
+          const cleanKey = key
+            .replace('k0', '')
+            .replace('global.', '')
+            .replace(/_/g, ' ')
+            .trim()
+
+          if (!cleanKey || cleanKey === 'k0') {
+            return
+          }
+
+          const keyTranslated = categoryMap[cleanKey]
+            || categoryMap[key]
+            || cleanKey.charAt(0).toUpperCase() + cleanKey.slice(1)
+
+          let valueTranslated = ''
+          if (decodedValue.includes(',')) {
+            const values = decodedValue.split(',').map(v => v.trim())
+            const translatedValues = values.map((v) => {
+              return categoryMap[v]
+                || v.replace(/_/g, ' ').charAt(0).toUpperCase()
+                + v.replace(/_/g, ' ').slice(1)
+            })
+            valueTranslated = translatedValues.join(', ')
+          }
+          else {
+            valueTranslated = categoryMap[decodedValue]
+              || decodedValue.replace(/_/g, ' ').charAt(0).toUpperCase()
+              + decodedValue.replace(/_/g, ' ').slice(1)
+          }
+
+          const filterStr = `${keyTranslated}: ${valueTranslated}`
+          const filterStrLower = filterStr.toLowerCase()
+
+          if (!seenFilters.has(filterStrLower)) {
+            seenFilters.add(filterStrLower)
+            categories.push(filterStr)
+          }
+        })
+      }
+    })
 
     const displayCategories = categories.slice(0, 3)
     if (categories.length > 3) {
@@ -167,12 +238,28 @@ presence.on('UpdateData', async () => {
       }
     }
 
-    presenceData.details = displayCategories.length > 0
-      ? `${t.searchingFor}: '${searchQuery}' | ${displayCategories.join(', ')} | ${t.page} ${currentPage} ${t.of} ${totalPages}`
-      : `${t.searchingFor}: '${searchQuery}'`
-    presenceData.state = displayCategories.length > 0
-      ? `${displayCategories.join(', ')}`
-      : `${t.page} ${currentPage} ${t.of} ${totalPages}`
+    const stateParts = []
+
+    if (area && (region || displayCategories.length > 0 || categories.length > 0)) {
+      stateParts.push(area)
+    }
+    if (region && (displayCategories.length > 0 || categories.length > 0)) {
+      stateParts.push(region)
+    }
+
+    if (displayCategories.length > 0) {
+      stateParts.push(...displayCategories)
+    }
+
+    presenceData.details = `${t.searchingFor}: '${searchQuery}'`
+
+    if (stateParts.length > 0) {
+      presenceData.state = `${stateParts.join(' | ')} | ${t.page} ${currentPage} ${t.of} ${totalPages}`
+    }
+    else {
+      presenceData.state = `${t.page} ${currentPage} ${t.of} ${totalPages}`
+    }
+
     presenceData.smallImageKey = ActivityAssets.Search
     presenceData.buttons = [
       {
@@ -181,7 +268,6 @@ presence.on('UpdateData', async () => {
       },
     ]
   }
-
   else if (path.includes('/m-meine-anzeigen.html')) {
     presenceData.details = t.managingAds
     presenceData.state = t.myAds
