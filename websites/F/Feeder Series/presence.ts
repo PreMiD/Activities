@@ -1,5 +1,3 @@
-import { Assets } from 'premid'
-
 const presence = new Presence({
   clientId: '1452251315399819274'
 })
@@ -28,28 +26,29 @@ presence.on('UpdateData', () => {
     presenceData.details = 'Reading about the team'
   }
   // How we work page
-    else if (pathname.includes('/how-we-work')) {
+  else if (pathname.includes('/how-we-work')) {
     presenceData.details = 'Reading how the team works'
   }
   // Join us page
-    else if (pathname.includes('/join-us')) {
+  else if (pathname.includes('/join-us')) {
     presenceData.details = 'Wanting to join the team'
   }
   // Support us page
-    else if (pathname.includes('/support-us')) {
+  else if (pathname.includes('/support-us')) {
     presenceData.details = 'Wanting to support the team'
   }
   // Contact us page
-    else if (pathname.includes('/contact')) {
+  else if (pathname.includes('/contact')) {
     presenceData.details = 'Wanting to contact the team'
   }
   // Calendar page
-    else if (pathname.includes('/feeder-series-calendar')) {
+  else if (pathname.includes('/feeder-series-calendar')) {
     presenceData.details = 'Looking at the feeder series calendar'
   }
   // Article pages
   else if (pathname.includes('/2')) {
-    const articleTitle =
+    const articleTitle 
+    =
       document
         .querySelector<HTMLHeadingElement>('h1.entry-title')
         ?.textContent
@@ -60,7 +59,8 @@ presence.on('UpdateData', () => {
   }
   // Category pages
   else if (pathname.includes('/category/')) {
-    const categoryName =
+    const categoryName 
+    =
       document
         .querySelector<HTMLSpanElement>('h1.page-title span')
         ?.textContent
@@ -71,7 +71,8 @@ presence.on('UpdateData', () => {
   }
   // Tags pages
   else if (pathname.includes('/tag/')) {
-    const tagName =
+    const tagName 
+    =
       document
         .querySelector<HTMLSpanElement>('h1.page-title span')
         ?.textContent
