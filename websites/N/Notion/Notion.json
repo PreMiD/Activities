@@ -1,0 +1,102 @@
+{
+  "notion.aiResponding": {
+    "description": "Displayed when the AI is generating a response.",
+    "message": "Notion AI is responding..."
+  },
+  "notion.browseCategory": {
+    "description": "Displayed when the user browsing template categories",
+    "message": "Browsing categories"
+  },
+  "notion.browsingTemplates": {
+    "description": "Displayed when the user browsing templates",
+    "message": "Browsing templates"
+  },
+  "notion.category": {
+    "description": "Displayed when the user viewing a category",
+    "message": "Category: {0}"
+  },
+  "notion.conversationStats": {
+    "description": "Displayed to show the number of times the user asked a question and total words used, e.g., 'asked 3 times | 150 words'.",
+    "message": "asked {0} times | {1} words"
+  },
+  "notion.editAMeetingNote": {
+    "description": "Displayed when the user editing a meeting note",
+    "message": "Editing a meeting note"
+  },
+  "notion.editMeetingNote": {
+    "description": "Displayed when the user editing a specifig meeting note",
+    "message": "Editing meeting note:"
+  },
+  "notion.editing": {
+    "description": "Displayed when the user editing",
+    "message": "Editing"
+  },
+  "notion.editingAPage": {
+    "description": "Displayed when the user editing a page",
+    "message": "Editing a page"
+  },
+  "notion.editingPage": {
+    "description": "Displayed when the user editing a specific page",
+    "message": "Editing page:"
+  },
+  "notion.reading": {
+    "description": "Displayed when the user reading",
+    "message": "Reading"
+  },
+  "notion.readingAPage": {
+    "description": "Displayed when the user reading a page",
+    "message": "Reading a page"
+  },
+  "notion.readingBlogs": {
+    "description": "Displayed when the user reading a blog",
+    "message": "Reading blogs"
+  },
+  "notion.readingCustomerReview": {
+    "description": "Displayed when the user reading customer reviews",
+    "message": "Reading customer reviews"
+  },
+  "notion.readingPage": {
+    "description": "Displayed when the user reading a specifig page",
+    "message": "Reading page:"
+  },
+  "notion.searchingTemplate": {
+    "description": "Displayed when the user searching a template",
+    "message": "Searching template: {0}"
+  },
+  "notion.startNewConversation": {
+    "description": "Displayed when the user is starting a new conversation.",
+    "message": "Start new conversation"
+  },
+  "notion.talkingWithAI": {
+    "description": "Displayed when the user is engaging in a conversation with the AI.",
+    "message": "Talking with Notion AI about something"
+  },
+  "notion.template": {
+    "description": "Displayed when the user viewing a template",
+    "message": "Template: {0}"
+  },
+  "notion.thinkingOfPrompt": {
+    "description": "Displayed when the user is thinking of a new prompt.",
+    "message": "Thinking of a new prompt..."
+  },
+  "notion.unknown": {
+    "description": "Displayed when the user viewing an unknown page/template/category",
+    "message": "Unknown"
+  },
+  "notion.viewDownloadsPage": {
+    "description": "Displayed when the user viewing a download page",
+    "message": "Viewing Downloads page"
+  },
+  "notion.viewProductsPage": {
+    "description": "Displayed when the user viewing a product page",
+    "message": "Viewing Products page"
+  },
+  "notion.viewPublicWebsite": {
+    "description": "Displayed when the user viewing a public Notion website",
+    "message": "Viewing a public Notion website"
+  },
+  "notion.viewUpcomingMeeting": {
+    "description": "Displayed when the user viewing their upcoming meetings",
+    "message": "Viewing their upcoming meetings"
+  }
+}
