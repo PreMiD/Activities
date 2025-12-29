@@ -13,15 +13,11 @@
     "vi": "Đọc truyện tranh tại Shinigami Komik ID."
   },
   "url": [
-    "shinigami.id",
-    "www.shinigami.id",
     "shinigami.bio",
-    "www.shinigami.bio",
-    "shinigami.asia",
-    "www.shinigami.asia"
+    "shinigami.asia"
   ],
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*shinigami[.](id|bio|asia)[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Shinigami%20Komik%20ID/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Shinigami%20Komik%20ID/assets/thumbnail.png",
   "color": "#807F81",

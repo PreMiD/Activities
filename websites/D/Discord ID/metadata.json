@@ -9,12 +9,9 @@
   "description": {
     "en": "Lookup a Discord User or Bot ID."
   },
-  "url": [
-    "wiki.discord.id",
-    "discord.id"
-  ],
+  "url": "discord.id",
   "regExp": "^https?[:][/][/](wiki[.])?discord[.]id[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20ID/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20ID/assets/thumbnail.png",
   "color": "#7289da",

@@ -13,11 +13,10 @@
   },
   "url": [
     "rey.fm",
-    "www.rey.fm",
-    "status.rey.fm"
+    "www.rey.fm"
   ],
   "regExp": "^https?[:][/][/]((www|status)[.])?rey[.]fm[/]",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/REYFM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/REYFM/assets/thumbnail.png",
   "color": "#cd6ef4",
