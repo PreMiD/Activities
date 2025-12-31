@@ -41,6 +41,8 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
 
+  const showButtons = await presence.getSetting('showButtons')
+
   const { pathname } = document.location
 
   if (/^\/items\/\w+/.test(pathname)) {
@@ -55,10 +57,13 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = 'Looking at Item'
       presenceData.state = itemName
-      presenceData.buttons = [{
-        label: 'View Market Prices',
-        url: document.location.href,
-      }]
+
+      if (showButtons) {
+        presenceData.buttons = [{
+          label: 'View Market Prices',
+          url: document.location.href,
+        }]
+      }
     }
   }
   else if (pathname.startsWith('/profile/')) {
@@ -66,10 +71,13 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = 'Viewing User'
     presenceData.state = username
-    presenceData.buttons = [{
-      label: 'View Profile',
-      url: document.location.href,
-    }]
+
+    if (showButtons) {
+      presenceData.buttons = [{
+        label: 'View Profile',
+        url: document.location.href,
+      }]
+    }
   }
   else if (pathname.startsWith('/auctions')) {
     presenceData.details = 'Browsing Auctions'
