@@ -14,7 +14,8 @@ const presence = new Presence({
   clientId: '1444444337445408869',
 })
 
-const browsingTimestamp = Math.floor(Date.now() / 1000)
+let startTimestamp = Math.floor(Date.now() / 1000)
+let lastPath = ''
 
 function formatItemName(str: string): string {
   if (!str)
@@ -36,12 +37,19 @@ function findImageByLink(keyword: string): string | undefined {
 }
 
 presence.on('UpdateData', async () => {
-  const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/W/Warframe%20Market/assets/logo.png',
-    startTimestamp: browsingTimestamp,
+  const { pathname } = document.location
+
+  if (pathname !== lastPath) {
+    startTimestamp = Math.floor(Date.now() / 1000)
+    lastPath = pathname
   }
 
-  const { pathname } = document.location
+  const presenceData: PresenceData = {
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/W/Warframe%20Market/assets/logo.png',
+    startTimestamp,
+  }
+
+  const showButtons = await presence.getSetting('showButtons')
 
   if (/^\/items\/\w+/.test(pathname)) {
     const rawName = pathname.split('/')[2] || ''
@@ -55,10 +63,13 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = 'Looking at Item'
       presenceData.state = itemName
-      presenceData.buttons = [{
-        label: 'View Market Prices',
-        url: document.location.href,
-      }]
+
+      if (showButtons) {
+        presenceData.buttons = [{
+          label: 'View Market Prices',
+          url: document.location.href,
+        }]
+      }
     }
   }
   else if (pathname.startsWith('/profile/')) {
@@ -66,10 +77,13 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = 'Viewing User'
     presenceData.state = username
-    presenceData.buttons = [{
-      label: 'View Profile',
-      url: document.location.href,
-    }]
+
+    if (showButtons) {
+      presenceData.buttons = [{
+        label: 'View Profile',
+        url: document.location.href,
+      }]
+    }
   }
   else if (pathname.startsWith('/auctions')) {
     presenceData.details = 'Browsing Auctions'

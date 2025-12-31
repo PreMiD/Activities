@@ -11,12 +11,20 @@
   },
   "url": "warframe.market",
   "regExp": "^https?:[/][/](www[.])?warframe[.]market[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Warframe%20Market/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Warframe%20Market/assets/thumbnail.png",
   "color": "#000000",
   "category": "games",
   "tags": [
     "warframe"
+  ],
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-external-link-alt",
+      "value": true
+    }
   ]
 }
