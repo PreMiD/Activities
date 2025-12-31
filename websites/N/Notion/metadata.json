@@ -13,12 +13,14 @@
   ],
   "service": "Notion",
   "description": {
-    "en": "Notion is a notetaking software and project management software that is used for note-taking, task management, project management, knowledge management, and personal knowledge management. The app uses databases and markdown pages for use in personal and collaboration work.",
-    "fr": "Notion est un logiciel de prise de notes et de gestion de projet utilisé pour la prise de notes, la gestion de tâches, la gestion de projet, la gestion des connaissances et la gestion des connaissances personnelles. L'application utilise des bases de données et des pages Markdown pour un usage personnel et collaboratif."
+    "en": "Notion is your connected workspace where documents, projects, and knowledge come together to streamline team collaboration. This ecosystem now extends to Notion Calendar, which seamlessly syncs your schedule with your priorities, and Notion Mail, designed to integrate your conversations directly into your workflow for a truly unified and frictionless experience.",
+    "fr": "Notion est votre espace de travail connecté où les documents, les projets et les connaissances convergent pour simplifier la collaboration d'équipe. Cet écosystème s'appuie désormais sur Notion Calendar pour synchroniser votre temps avec vos priorités et sur Notion Mail pour intégrer vos échanges directement dans vos flux de travail, offrant ainsi une plateforme unique et fluide qui centralise l'intégralité de votre vie professionnelle."
   },
   "url": [
     "www.notion.com",
-    "www.notion.so"
+    "www.notion.so",
+    "calendar.notion.so",
+    "mail.notion.so"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*notion[.](so|com|site)[/]",
   "version": "2.0.0",

@@ -15,9 +15,17 @@
     "description": "Displayed when the user viewing a category",
     "message": "Category: {0}"
   },
+  "notion.composingEmail": {
+    "description": "Displayed when the user is composing an email",
+    "message": "Composing an email"
+  },
   "notion.conversationStats": {
     "description": "Displayed to show the number of times the user asked a question and total words used, e.g., 'asked 3 times | 150 words'.",
     "message": "asked {0} times | {1} words"
+  },
+  "notion.daySchedule": {
+    "description": "Displayed when the user is viewing a calendar with day schedule.",
+    "message": "Viewing the day schedule:"
   },
   "notion.editAMeetingNote": {
     "description": "Displayed when the user editing a meeting note",
@@ -35,9 +43,25 @@
     "description": "Displayed when the user editing a page",
     "message": "Editing a page"
   },
+  "notion.editingAnEvent": {
+    "description": "Displayed when the user is editing an event.",
+    "message": "Editing an event"
+  },
   "notion.editingPage": {
     "description": "Displayed when the user editing a specific page",
     "message": "Editing page:"
+  },
+  "notion.editingTheirSettings": {
+    "description": "Displayed when the user editing their settings",
+    "message": "Editing their settings"
+  },
+  "notion.lookingForEmail": {
+    "description": "Displayed when the user is searching for an email",
+    "message": "Looking for an email"
+  },
+  "notion.monthSchedule": {
+    "description": "Displayed when the user is viewing a calendar with month schedule.",
+    "message": "Viewing the month schedule:"
   },
   "notion.reading": {
     "description": "Displayed when the user reading",
@@ -58,6 +82,10 @@
   "notion.readingPage": {
     "description": "Displayed when the user reading a specifig page",
     "message": "Reading page:"
+  },
+  "notion.schedulingMeetings": {
+    "description": "Displayed when the user scheduling meetings",
+    "message": "Scheduling meetings"
   },
   "notion.searchingTemplate": {
     "description": "Displayed when the user searching a template",
@@ -98,5 +126,45 @@
   "notion.viewUpcomingMeeting": {
     "description": "Displayed when the user viewing their upcoming meetings",
     "message": "Viewing their upcoming meetings"
+  },
+  "notion.viewingAllEmails": {
+    "description": "Displayed when the user is viewing all their emails",
+    "message": "Viewing all emails"
+  },
+  "notion.viewingCalendar": {
+    "description": "Displayed when the user is viewing a calendar.",
+    "message": "Viewing the calendar"
+  },
+  "notion.viewingCategory": {
+    "description": "Displayed when the user viewing a category",
+    "message": "Viewing category"
+  },
+  "notion.viewingDrafts": {
+    "description": "Displayed when the user is viewing their drafts",
+    "message": "Viewing drafts"
+  },
+  "notion.viewingEmail": {
+    "description": "Displayed when the user is viewing an email",
+    "message": "Viewing an email"
+  },
+  "notion.viewingInbox": {
+    "description": "Displayed when the user viewing the inbox",
+    "message": "Viewing inbox"
+  },
+  "notion.viewingSentEmails": {
+    "description": "Displayed when the user is viewing the emails they have sent",
+    "message": "Viewing sent emails"
+  },
+  "notion.viewingSpam": {
+    "description": "Displayed when the user is viewing their spam",
+    "message": "Viewing spam emails"
+  },
+  "notion.viewingTrash": {
+    "description": "Displayed when the user is viewing their trash",
+    "message": "Viewing trash"
+  },
+  "notion.weekSchedule": {
+    "description": "Displayed when the user is viewing a calendar with week schedule.",
+    "message": "Viewing the week schedule:"
   }
 }

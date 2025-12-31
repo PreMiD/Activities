@@ -60,12 +60,18 @@ presence.on('UpdateData', async () => {
     browseCategory: 'notion.browseCategory',
     browsingTemplates: 'notion.browsingTemplates',
     category: 'notion.category',
+    composingEmail: 'notion.composingEmail',
     conversationStats: 'notion.conversationStats',
+    daySchedule: 'notion.daySchedule',
     editAMeetingNote: 'notion.editAMeetingNote',
     editMeetingNote: 'notion.editMeetingNote',
     editing: 'notion.editing',
+    editingAnEvent: 'notion.editingAnEvent',
     editingAPage: 'notion.editingAPage',
     editingPage: 'notion.editingPage',
+    editingTheirSettings: 'notion.editingTheirSettings',
+    lookingForEmail: 'notion.lookingForEmail',
+    monthSchedule: 'notion.monthSchedule',
     reading: 'notion.reading',
     readingAPage: 'notion.readingAPage',
     readingAnArticle: 'general.readingAnArticle',
@@ -73,6 +79,7 @@ presence.on('UpdateData', async () => {
     readingBlogs: 'notion.readingBlogs',
     readingCustomerReview: 'notion.readingCustomerReview',
     readingPage: 'notion.readingPage',
+    schedulingMeetings: 'notion.schedulingMeetings',
     searchingTemplate: 'notion.searchingTemplate',
     startNewConversation: 'notion.startNewConversation',
     talkingWithAI: 'notion.talkingWithAI',
@@ -87,12 +94,22 @@ presence.on('UpdateData', async () => {
     viewProfile: 'general.viewProfile',
     viewPublicWebsite: 'notion.viewPublicWebsite',
     viewUpcomingMeeting: 'notion.viewUpcomingMeeting',
+    viewingAllEmails: 'notion.viewingAllEmails',
+    viewingCalendar: 'notion.viewingCalendar',
+    viewingCategory: 'notion.viewingCategory',
+    viewingDrafts: 'notion.viewingDrafts',
+    viewingEmail: 'notion.viewingEmail',
+    viewingInbox: 'notion.viewingInbox',
+    viewingSentEmails: 'notion.viewingSentEmails',
+    viewingSpam: 'notion.viewingSpam',
+    viewingTrash: 'notion.viewingTrash',
+    weekSchedule: 'notion.weekSchedule',
   })
   const { hostname, pathname, search } = document.location
   const privacy = await presence.getSetting<boolean>('privacy')
 
   switch (true) {
-    case hostname === 'www.notion.com':
+    case hostname === 'www.notion.com': {
       if (/^\/(?:[a-z]{2}(?:-[a-z]{2})?)?$/i.test(pathname) || /^(?:\/[a-zA-Z]{2}(?:-[a-zA-Z]{2})?)?\/product(?:$|\/.*)/.test(pathname)) {
         if (/^\/(?:[a-z]{2}(?:-[a-z]{2})?)?$/i.test(pathname) || /^(?:\/[a-zA-Z]{2}(?:-[a-zA-Z]{2})?)?\/product$/.test(pathname)) {
           presenceData.details = strings.viewHome
@@ -147,6 +164,7 @@ presence.on('UpdateData', async () => {
         presenceData.state = document.title?.split('|')[0]?.trim()
       }
       break
+    }
     case hostname === 'www.notion.so': {
       const isHome = document.querySelector('.layout-home')
       if (isHome) {
@@ -267,14 +285,89 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = privacy ? ActivityAssets.Logo : (websiteLogo.includes('.svg') ? await svgToPng(websiteLogo) || ActivityAssets.Logo : websiteLogo || ActivityAssets.Logo)
       break
     }
-    case hostname === 'calendar.notion.so':
+    case hostname === 'calendar.notion.so': {
       presenceData.name = 'Notion Calendar'
       presenceData.largeImageKey = ActivityAssets.Calendar
+      const date = document.title?.split('·')[0]?.trim()
+      if (pathname === '/') {
+        presenceData.details = strings.viewingCalendar
+      }
+      else {
+        if (pathname.includes('/day')) {
+          presenceData.details = strings.daySchedule
+          presenceData.state = date
+        }
+        else if (pathname.includes('/week')) {
+          presenceData.details = strings.weekSchedule
+          presenceData.state = date
+        }
+        else if (pathname.includes('/month')) {
+          presenceData.details = strings.monthSchedule
+          presenceData.state = date
+        }
+        else if (pathname.includes('/event')) {
+          presenceData.details = strings.editingAnEvent
+          presenceData.state = privacy ? '' : document.querySelector('div[data-floating-context-panel="true"] p')?.textContent?.trim() || document.querySelector('div[data-context-panel-root="true"] p')?.textContent
+        }
+        else if (pathname.includes('/settings')) {
+          presenceData.details = strings.editingTheirSettings
+        }
+        else if (pathname.includes('/scheduling')) {
+          presenceData.details = strings.schedulingMeetings
+          presenceData.state = privacy ? '' : document.querySelector('div[data-floating-context-panel="true"] p')?.textContent?.trim() || document.querySelector('div[data-context-panel-root="true"] p')?.textContent
+        }
+        else {
+          presenceData.details = strings.viewPage
+          presenceData.state = document.title?.split('·')[0]?.trim()
+        }
+      }
       break
-    case hostname === 'mail.notion.so':
+    }
+    case hostname === 'mail.notion.so': {
+      const params = new URLSearchParams(search)
+      const mailTitle = document.querySelector('div[data-floating-ui-inert] div#thread-content-container span')
+      const compose = document.querySelector('div#compose-container')
       presenceData.name = 'Notion Mail'
       presenceData.largeImageKey = ActivityAssets.Mail
+      if (mailTitle) {
+        presenceData.details = strings.viewingEmail
+        presenceData.state = privacy ? '' : mailTitle?.textContent?.trim()
+      }
+      else if (compose) {
+        presenceData.details = strings.composingEmail
+      }
+      else if (params.has('settingLabel')) {
+        presenceData.details = strings.editingTheirSettings
+      }
+      else if (pathname?.includes('/inbox') || pathname === '/') {
+        presenceData.details = strings.viewingInbox
+      }
+      else if (pathname?.includes('/allmail')) {
+        presenceData.details = strings.viewingAllEmails
+      }
+      else if (pathname?.includes('/sent')) {
+        presenceData.details = strings.viewingSentEmails
+      }
+      else if (pathname?.includes('/drafts')) {
+        presenceData.details = strings.viewingDrafts
+      }
+      else if (pathname?.includes('/spam')) {
+        presenceData.details = strings.viewingSpam
+      }
+      else if (pathname?.includes('/trash')) {
+        presenceData.details = strings.viewingTrash
+      }
+      else if (pathname?.includes('/search')) {
+        presenceData.details = strings.lookingForEmail
+        presenceData.state = privacy ? '' : document.querySelector('input#search-input')?.textContent?.trim() || params.get('query') || ''
+      }
+      else {
+        const categoryName = document.title?.split('•')
+        presenceData.details = strings.viewingCategory
+        presenceData.state = privacy || categoryName.length <= 2 ? '' : (categoryName.length === 3 ? categoryName[0] : categoryName[1])
+      }
       break
+    }
     default:
       presenceData.details = strings.viewPage
       presenceData.state = document.title?.split('|')[0]?.trim()
