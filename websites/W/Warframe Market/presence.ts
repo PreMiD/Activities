@@ -14,7 +14,8 @@ const presence = new Presence({
   clientId: '1444444337445408869',
 })
 
-const browsingTimestamp = Math.floor(Date.now() / 1000)
+let startTimestamp = Math.floor(Date.now() / 1000)
+let lastPath = ''
 
 function formatItemName(str: string): string {
   if (!str)
@@ -36,14 +37,19 @@ function findImageByLink(keyword: string): string | undefined {
 }
 
 presence.on('UpdateData', async () => {
+  const { pathname } = document.location
+
+  if (pathname !== lastPath) {
+    startTimestamp = Math.floor(Date.now() / 1000)
+    lastPath = pathname
+  }
+
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/W/Warframe%20Market/assets/logo.png',
-    startTimestamp: browsingTimestamp,
+    startTimestamp,
   }
 
   const showButtons = await presence.getSetting('showButtons')
-
-  const { pathname } = document.location
 
   if (/^\/items\/\w+/.test(pathname)) {
     const rawName = pathname.split('/')[2] || ''

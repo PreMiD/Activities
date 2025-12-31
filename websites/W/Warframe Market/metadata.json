@@ -11,7 +11,7 @@
   },
   "url": "warframe.market",
   "regExp": "^https?:[/][/](www[.])?warframe[.]market[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Warframe%20Market/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Warframe%20Market/assets/thumbnail.png",
   "color": "#000000",
