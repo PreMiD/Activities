@@ -9,7 +9,7 @@ const API_URL = 'https://panel.symphradio.live/api/stats'
 let lastTrackId: string | null = null
 let lastStart = 0
 
-type ApiResponse = {
+interface ApiResponse {
   song?: {
     track?: string
     artist?: string
@@ -40,7 +40,11 @@ type ApiResponse = {
 async function fetchStats(): Promise<ApiResponse | null> {
   try {
     const res = await fetch(API_URL)
-    if (!res.ok) return null
+
+    if (!res.ok) {
+      return null
+    }
+
     return (await res.json()) as ApiResponse
   } catch {
     return null
@@ -61,11 +65,15 @@ presence.on('UpdateData', async () => {
     } else {
       presence.clearActivity()
     }
+
     return
   }
 
   const data = await fetchStats()
-  if (!data) return
+
+  if (!data) {
+    return
+  }
 
   const track = data.song?.track ?? 'Live Radio'
   const artist = data.song?.artist ?? 'Symphony Radio'
