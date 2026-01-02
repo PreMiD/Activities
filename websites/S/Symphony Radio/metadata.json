@@ -1,0 +1,24 @@
+{
+  "author": {
+    "name": "Symphony Radio",
+    "id": "symphonyradio"
+  },
+  "service": "Symphony Radio",
+  "description": {
+    "en": "Listen live to Symphony Radio music, presenters and live shows."
+  },
+  "url": [
+    "symphonyradio.co.uk"
+  ],
+  "version": "1.0.0",
+  "logo": "logo.png",
+  "thumbnail": "cover.png",
+  "color": "#6b4eff",
+  "tags": [
+    "radio",
+    "music",
+    "live",
+    "streaming"
+  ],
+  "category": "music"
+}
