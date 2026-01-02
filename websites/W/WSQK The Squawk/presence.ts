@@ -19,7 +19,7 @@ let hasPlayedBefore = false;
 
 presence.on("UpdateData", async () => {
   const presenceData: PresenceData = {
-    largeImageKey: "https://i.typicalmedia.net/stationlogos/_1767320298.png",
+    largeImageKey: "https://www.wsqkthesquawk.net/favicons/web-app-manifest-512x512.png",
     largeImageText: "WSQK The Squawk",
     type: 2
   };
