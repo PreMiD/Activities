@@ -74,7 +74,7 @@ presence.on('UpdateData', async () => {
   // 5. DEFAULT
   else {
     activityData = {
-      largeImageKey: 'logo_grande',
+      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: 'Navigando su AnimeTvOnline',
       state: 'Streaming Anime ITA',
