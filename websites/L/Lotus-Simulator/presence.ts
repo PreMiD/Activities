@@ -53,8 +53,7 @@ presence.on('UpdateData', async () => {
   const showButtons = await presence.getSetting<boolean>('showButtons')
   const privacy = await presence.getSetting<boolean>('privacy')
 
-  const pathname = document.location.pathname
-  const href = document.location.href
+  const { pathname, href } = document.location
 
   if (lastPathname !== pathname) {
     lastPathname = pathname
