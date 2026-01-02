@@ -14,7 +14,7 @@ presence.on('UpdateData', async () => {
   // 1. PLAYER
   if (dataDiv && (path.includes('player') || href.includes('episodio'))) {
     activityData = {
-      largeImageKey: 'logo_grande',
+      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: dataDiv.dataset.anime || 'Guardando un Anime',
       state: `Episodio ${dataDiv.dataset.episode || '?'}`,
@@ -38,7 +38,7 @@ presence.on('UpdateData', async () => {
     const title = titleElement ? titleElement.textContent : document.title
 
     activityData = {
-      largeImageKey: 'logo_grande',
+      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: 'Sta guardando la scheda di:',
       state: title?.replace('AnimeTvOnline - ', '').trim(),
@@ -54,7 +54,7 @@ presence.on('UpdateData', async () => {
   // 3. PROFILO
   else if (path.includes('profilo')) {
     activityData = {
-      largeImageKey: 'logo_grande',
+      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: 'Visualizzando un profilo',
       state: 'Utente AnimeTvOnline',
@@ -64,7 +64,7 @@ presence.on('UpdateData', async () => {
   // 4. HOMEPAGE
   else if (path === '/' || path.includes('index') || path === '' || path.includes('login')) {
     activityData = {
-      largeImageKey: 'logo_grande',
+      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: 'In Homepage',
       state: 'Cercando un anime da guardare...',
