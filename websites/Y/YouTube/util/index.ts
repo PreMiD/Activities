@@ -208,6 +208,7 @@ const desktopSelectors = {
   videoLive: '.ytp-live',
   privacyParentBox: '.ytp-chrome-controls .ytp-right-controls',
   chapterTitle: '.ytp-chapter-title-content',
+  newUi: '.ytp-delhi-modern',
 }
 const mobileSelectors: Record<keyof typeof desktopSelectors, string> = {
   searchInput: '.yt-searchbox-input',
@@ -225,6 +226,7 @@ const mobileSelectors: Record<keyof typeof desktopSelectors, string> = {
   videoLive: '.ytwPlayerTimeDisplayContentLiveDot',
   privacyParentBox: '[class*=video-action-bar-actions]',
   chapterTitle: '.ytwPlayerTimeDisplayTimeMacro',
+  newUi: '.ytp-delhi-modern',
 }
 
 export function getQuerySelectors(

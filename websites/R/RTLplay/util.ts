@@ -14,9 +14,7 @@ export const stringMap = {
   viewAPage: 'general.viewAPage',
   viewHome: 'general.viewHome',
   viewCategory: 'general.viewCategory',
-  viewList: 'netflix.viewList',
   buttonViewPage: 'general.buttonViewPage',
-  watchingAd: 'youtube.ad',
   watchingLive: 'general.watchingLive',
   watchingShow: 'general.watchingShow',
   watchingMovie: 'general.watchingMovie',
@@ -29,14 +27,15 @@ export const stringMap = {
   season: 'general.season',
   episode: 'general.episode',
 
-  deferred: 'RTBFAuvio.deferred',
-  privacy: 'RTBFAuvio.privatePlay',
-  on: 'RTBFAuvio.on',
-  watchingLiveMusic: 'RTLplay.LiveMusic',
+  deferred: 'RTLplay.deferred',
   movie: 'RTLplay.movie',
+  on: 'RTLplay.on',
+  privacy: 'RTBLplay.privatePlay',
   tvshow: 'RTLplay.tvshow',
-  watchingAProgramOrSeries: 'RTLplay.AProgramOrSeries',
-
+  viewList: 'RTLplay.viewList',
+  watchingAd: 'RTLplay.watchingAd',
+  watchingAProgramOrSeries: 'RTLplay.watchingAProgramOrSeries',
+  watchingLiveMusic: 'RTLplay.watchingLiveMusic',
 }
 
 // eslint-disable-next-line import/no-mutable-exports
@@ -47,7 +46,7 @@ export let strings: Awaited<
 let oldLang: string | null = null
 let currentTargetLang: string | null = null
 let fetchingStrings = false
-let stringFetchTimeout: number | null = null
+let stringFetchTimeout: ReturnType<typeof setTimeout> | null = null
 
 function fetchStrings() {
   if (oldLang === currentTargetLang && strings)
@@ -59,6 +58,7 @@ function fetchStrings() {
   stringFetchTimeout = setTimeout(() => {
     presence.error(`Failed to fetch strings for ${targetLang}.`)
     fetchingStrings = false
+    stringFetchTimeout = null
   }, 5e3)
   presence.info(`Fetching strings for ${targetLang}.`)
   presence
@@ -73,7 +73,15 @@ function fetchStrings() {
       oldLang = targetLang
       presence.info(`Fetched strings for ${targetLang}.`)
     })
-    .catch(() => null)
+    .catch((err) => {
+      // Ensure we always reset state and clear timeout on failure so subsequent attempts can run.
+      if (stringFetchTimeout) {
+        clearTimeout(stringFetchTimeout)
+        stringFetchTimeout = null
+      }
+      fetchingStrings = false
+      presence.error(`Error fetching strings for ${targetLang}: ${err?.message ?? err}`)
+    })
 }
 
 setInterval(fetchStrings, 3000)
@@ -82,7 +90,9 @@ fetchStrings()
 // Sets the current language to fetch strings for and returns whether any strings are loaded.
 export function checkStringLanguage(lang: string): boolean {
   currentTargetLang = lang
-  return !!strings
+  // Trigger an immediate fetch when the language changes so callers don't have to wait for the interval.
+  fetchStrings()
+  return !!strings && oldLang === lang
 }
 
 const settingsFetchStatus: Record<string, number> = {}

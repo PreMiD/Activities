@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "87107972676751360",
@@ -21,7 +21,7 @@
     "de": "Mit RTLplay finden Sie alle Programme unserer Sender RTL TVI, Club RTL, Plug RTL, RTL District, RTL sports, Bel RTL, Radio Contact und Mint Radio als Live- und Replay-Stream sowie exklusive Inhalte.",
     "en": "With RTLplay, you'll find all the programs of our RTL TVI, Club RTL, Plug RTL, RTL District, RTL sports, Bel RTL, Radio Contact and Mint Radio channels live and in replay, as well as exclusive content.",
     "fr": "Avec RTLplay, retrouvez tous les programmes de nos chaînes RTL TVI, Club RTL, Plug RTL, RTL District, RTL sports, Bel RTL, Radio Contact et Mint Radio en direct et en replay ainsi que des contenus exclusifs.",
-    "nl": "Met RTLplay kun je alle programma's op onze zenders RTL TVI, Club RTL, Plug RTL, RTL District, RTL sports, Bel RTL,Radio Contact en Mint Radio live en in replay bekijken, evenals exclusieve content."
+    "nl": "Met RTLplay kun je alle programma's op onze zenders RTL TVI, Club RTL, Plug RTL, RTL District, RTL sports, Bel RTL, Radio Contact en Mint Radio live en in replay bekijken, evenals exclusieve content."
   },
   "url": [
     "www.rtlplay.be",
@@ -29,7 +29,8 @@
     "www.belrtl.be",
     "mint.be"
   ],
-  "version": "2.2.2",
+  "regExp": "^https?[:][/][/]((www)[.]rtlplay[.]be|(www)[.]radiocontact[.]be|(www)[.]belrtl[.]be|mint[.]be)[/]",
+  "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/thumbnail.jpeg",
   "color": "#121726",
@@ -85,7 +86,7 @@
       },
       "title": "Show Live Channel as Presence",
       "icon": "fad fa-signal-stream",
-      "value": true
+      "value": false
     },
     {
       "id": "usePoster",

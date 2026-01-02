@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "283380624687890433",
@@ -10,7 +10,8 @@
     "en": "Planet Minecraft is a family friendly community that shares and respects the creative works and interests of others. They have a variety of entertaining ways to explore and upload content, socialize and find like minded creative members from around the world that love the game of Minecraft."
   },
   "url": "www.planetminecraft.com",
-  "version": "1.0.9",
+  "regExp": "^https?[:][/][/](www[.])?planetminecraft[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Planet%20Minecraft/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Planet%20Minecraft/assets/thumbnail.jpg",
   "color": "#014E96",

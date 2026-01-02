@@ -63,8 +63,8 @@ presence.on('UpdateData', async () => {
     slideshow.addSlide('songInfo', {
       largeImageKey: ActivityAssets.Logo,
       startTimestamp: browsingTimestamp,
-      details: `Title: ${document.querySelector('[aria-label="title"]')?.textContent}`,
-      state: `Author: ${document.querySelector('[aria-label="artist"]')?.textContent}`,
+      details: `Title: ${document.querySelector('#song-ttl')?.textContent || document.querySelector('[aria-label="title"]')?.textContent}`,
+      state: `Author: ${document.querySelector('#song-artist')?.textContent || document.querySelector('[aria-label="artist"]')?.textContent}`,
       buttons: [{ label: 'Play Yourself', url: document.location.href }],
     }, 5000)
 

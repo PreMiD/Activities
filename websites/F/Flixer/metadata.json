@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.14",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "644313519147319297",
@@ -9,8 +9,9 @@
   "description": {
     "en": "Watch movies and TV shows online with high quality streaming"
   },
-  "url": "flixer.su",
-  "version": "1.0.2",
+  "url": "flixer.sh",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flixer[.]sh[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flixer/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Flixer/assets/thumbnail.jpeg",
   "color": "#1a1a1a",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "theusaf",
@@ -9,6 +9,10 @@
     {
       "name": "rois2coeurs",
       "id": "234647775621414912"
+    },
+    {
+      "name": "lucialv",
+      "id": "300969054649450496"
     }
   ],
   "service": "Asura Scans",
@@ -27,8 +31,8 @@
     "asuratoon.com",
     "asuracomic.net"
   ],
-  "regExp": "asura.*?[.].*?[/]",
-  "version": "2.0.4",
+  "regExp": "^https?[:][/][/]asura.*?[.].*?[/]",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Asura%20Scans/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Asura%20Scans/assets/thumbnail.png",
   "color": "#6E3CAA",

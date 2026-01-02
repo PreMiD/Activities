@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "87107972676751360",
@@ -17,7 +17,8 @@
     "nl": "Bekijk en beluister herhalingen van alle RTBF-programma's. Kijk of luister live naar je tv- en radiokanalen. Ontdek exclusieve inhoud."
   },
   "url": "auvio.rtbf.be",
-  "version": "1.0.3",
+  "regExp": "^https?[:][/][/]auvio[.]rtbf[.]be[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RTBF%20Auvio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RTBF%20Auvio/assets/thumbnail.png",
   "color": "#cba10a",
@@ -72,7 +73,7 @@
       },
       "title": "Show Live Channel as Presence",
       "icon": "fad fa-signal-stream",
-      "value": true
+      "value": false
     },
     {
       "id": "usePoster",
