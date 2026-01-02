@@ -43,7 +43,7 @@ const dealResolver: Resolver = {
     if (temp) {
       let emoji = '❄️'
       const val = Number.parseInt(temp)
-      if (!isNaN(val)) {
+      if (!Number.isNaN(val)) {
         if (val > 100)
           emoji = '🔥'
         else if (val > 0)

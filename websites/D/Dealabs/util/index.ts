@@ -7,11 +7,10 @@ export const activityAssets = {
 }
 
 export function formatSlug(slug: string | undefined): string {
-  if (!slug)
-    return 'Dealabs'
-  return slug
-    .replace(/-/g, ' ')
-    .replace(/(^\w)|(\s+\w)/g, letter => letter.toUpperCase())
+    if (!slug) return "Dealabs";
+    return slug
+        .replace(/-/g, " ")
+        .replace(/\b\w/g, letter => letter.toUpperCase());
 }
 
 export function getMainContent(): Element {
