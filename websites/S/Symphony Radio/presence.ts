@@ -18,7 +18,8 @@ async function fetchStats() {
     }
 
     return await res.json()
-  } catch {
+  }
+  catch {
     return null
   }
 }
@@ -34,7 +35,8 @@ presence.on('UpdateData', async () => {
         largeImageKey: 'logo',
         largeImageText: 'Symphony Radio',
       })
-    } else {
+    }
+    else {
       presence.clearActivity()
     }
 
