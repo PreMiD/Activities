@@ -9,7 +9,6 @@ iframe.on('UpdateData', async () => {
     '.Video embed',
     '.Video video',
     '.Video object',
-    '.Video iframe',
     '.Video',
     '#dogevideo_html5_api',
     '#video-player',
@@ -24,10 +23,10 @@ iframe.on('UpdateData', async () => {
     '#mgvideo_html5_api',
     '#player > div.jw-media.jw-reset > video',
     '#vstr > div.jw-wrapper.jw-reset > div.jw-media.jw-reset > video',
-    'player-style-2',
-    'streaming-sv',
-    'embed',
-    'm3u8',
+    '.player-style-2',
+    '.streaming-sv',
+    '.embed',
+    '.m3u8',
     '.jw-video', // JW Player general class
     '#jwplayer > div.jw-wrapper > div.jw-media > video',
     '.jw-video.jw-reset',
@@ -42,7 +41,6 @@ iframe.on('UpdateData', async () => {
     'iframe.vimeo iframe video',
 
     // Youtube Stream
-
     '.video-stream', // Youtube Embed
 
     // Selector Vimeo bổ sung
