@@ -15,8 +15,8 @@
   "logo": "https://www.wsqkthesquawk.net/favicons/web-app-manifest-512x512.png",
   "thumbnail": "https://www.wsqkthesquawk.net/favicons/web-app-manifest-512x512.png",
   "color": "#ff6b35",
-  "category": "music",
   "tags": ["radio", "music", "80s", "streaming", "retro"],
+  "category": "music",
   "iframe": false,
   "settings": [
     {
