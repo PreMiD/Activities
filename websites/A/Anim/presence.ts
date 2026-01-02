@@ -28,7 +28,7 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
 
-  const video = document.querySelector('video') as HTMLVideoElement
+  const video = document.querySelector<HTMLVideoElement>('video')
   if (video) {
     const pageDetails = {
       paused: video.paused,
