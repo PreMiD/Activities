@@ -17,7 +17,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('browsingActivity'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('hideWhenPaused'),
-    presence.getSetting<boolean>('titleAsPresence')
+    presence.getSetting<boolean>('titleAsPresence'),
   ])
 
   const presenceData: PresenceData = {
