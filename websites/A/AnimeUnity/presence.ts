@@ -5,7 +5,6 @@ const presence = new Presence({
   clientId: '1253802090774532176',
 })
 
-// Use a DIRECT image URL (e.g. https://i.imgur.com/xxxx.png), not an Imgur album link. [page:1]
 const LOGO_URL = 'https://i.imgur.com/cfWB8O0.png'
 
 let pageStartTs = Math.floor(Date.now() / 1000)
