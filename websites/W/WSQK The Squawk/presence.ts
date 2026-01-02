@@ -6,11 +6,11 @@ const presence = new Presence({
 
 interface StationData {
   nowPlaying: {
-    artist: string,
-    title: string,
-    artwork: string,
-    timestamp: number,
-  },
+    artist: string
+    title: string
+    artwork: string
+    timestamp: number
+  }
 }
 
 let lastTrack = ''
