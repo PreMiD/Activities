@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.9",
+  "author": {
+    "name": "Seehed",
+    "id": "1030394088974991423"
+  },
+  "contributors": [],
+  "service": "WSQK The Squawk",
+  "description": {
+    "en": "WSQK The Squawk - Hawkins' Hit Maker. Relive the best of the 80s! Stream classic radio from Hawkins, Indiana."
+  },
+  "url": ["wsqkthesquawk.net", "www.wsqkthesquawk.net"],
+  "regExp": "([a-z0-9-]+[.])*wqskthesquawk[.]net[/]?",
+  "version": "1.0.0",
+  "logo": "https://i.typicalmedia.net/stationlogos/_1767320298.png",
+  "thumbnail": "https://i.typicalmedia.net/stationlogos/_1767320298.png",
+  "color": "#ff6b35",
+  "tags": ["radio", "music", "80s", "streaming", "retro"],
+  "category": "music",
+  "iframe": false,
+  "settings": [
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-link",
+      "value": true
+    }
+  ]
+}
