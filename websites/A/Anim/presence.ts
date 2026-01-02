@@ -12,13 +12,13 @@ enum ActivityAssets { // Other default assets can be found at index.d.ts
 presence.on('UpdateData', async () => {
   const { pathname } = document.location
 
-  const settings = {
-    privacyMode: await presence.getSetting<boolean>('privacy'),
-    browsingActivity: await presence.getSetting<boolean>('browsingActivity'),
-    showCover: await presence.getSetting<boolean>('cover'),
-    hideWhenPaused: await presence.getSetting<boolean>('hideWhenPaused'),
-    showTitleAsPresence: await presence.getSetting<boolean>('titleAsPresence'),
-  }
+  const [privacyMode, browsingActivity, showCover, hideWhenPaused, showTitleAsPresence] = await Promise.all([
+    presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('browsingActivity'),
+    presence.getSetting<boolean>('cover'),
+    presence.getSetting<boolean>('hideWhenPaused'),
+    presence.getSetting<boolean>('titleAsPresence')
+  ])
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -41,22 +41,22 @@ presence.on('UpdateData', async () => {
     }
     const { paused, anime_name, ep, ep_name, ep_preview } = pageDetails
 
-    if (paused && settings.hideWhenPaused)
+    if (paused && hideWhenPaused)
       return presence.clearActivity()
 
     // Informações
-    presenceData.name = settings.showTitleAsPresence ? anime_name : 'Anim'
-    presenceData.details = settings.showTitleAsPresence ? ep_name : anime_name
-    presenceData.state = settings.showTitleAsPresence ? ep : `${ep} - ${ep_name}`;
+    presenceData.name = showTitleAsPresence ? anime_name : 'Anim'
+    presenceData.details = showTitleAsPresence ? ep_name : anime_name
+    presenceData.state = showTitleAsPresence ? ep : `${ep} - ${ep_name}`;
     [presenceData.startTimestamp, presenceData.endTimestamp] = paused ? [0, 0] : getTimestampsFromMedia(video)
 
     // Imagens
-    presenceData.largeImageKey = settings.showCover ? ep_preview ?? ActivityAssets.Logo : ActivityAssets.Logo
+    presenceData.largeImageKey = showCover ? ep_preview ?? ActivityAssets.Logo : ActivityAssets.Logo
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? 'Pausado' : 'Reproduzindo'
   }
   else {
-    if (!settings.browsingActivity)
+    if (!browsingActivity)
       return presence.clearActivity()
 
     const pathnameArray = pathname.split('/')
@@ -74,15 +74,15 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = staticPages[pathnameArray[1] as string]?.details
     presenceData.state = staticPages[pathnameArray[1] as string]?.state
-    presenceData.largeImageKey = settings.showCover ? staticPages[pathnameArray[1] as string]?.largeImageKey ?? ActivityAssets.Logo : ActivityAssets.Logo
+    presenceData.largeImageKey = showCover ? staticPages[pathnameArray[1] as string]?.largeImageKey ?? ActivityAssets.Logo : ActivityAssets.Logo
   }
 
-  if (settings.privacyMode) {
+  if (privacyMode) {
     presenceData.details = 'Navegando no Anim'
     presenceData.state = 'No modo privado'
     presenceData.smallImageKey = Assets.Question
     presenceData.largeImageKey = ActivityAssets.Logo
-    presenceData.smallImageText = 'Modo Privado '
+    presenceData.smallImageText = 'Modo Privado'
     if (video) {
       presenceData.name = 'Anim';
       [presenceData.startTimestamp, presenceData.endTimestamp] = [0, 0]
