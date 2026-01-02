@@ -17,7 +17,7 @@
     "pt-br": "O Anim é uma iniciativa gratuita, que visa trazer animes de qualidade sem anúncios para seus usuários."
   },
   "url": "anim.lol",
-  "regExp": "([a-z0-9-]+[.])*anim[.]lol[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anim[.]lol[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/HyzMYTv.png",
   "thumbnail": "https://i.imgur.com/n68iApD.png",
