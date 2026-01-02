@@ -1,24 +1,28 @@
 {
+  "apiVersion": 1,
   "author": {
     "name": "Symphony Radio",
-    "id": "symphonyradio"
+    "id": "1449503984996974745"
   },
   "service": "Symphony Radio",
   "description": {
-    "en": "Listen live to Symphony Radio music, presenters and live shows."
+    "en": "Listen live to Symphony Radio."
   },
   "url": [
     "symphonyradio.co.uk"
   ],
   "version": "1.0.0",
-  "logo": "logo.png",
-  "thumbnail": "cover.png",
-  "color": "#6b4eff",
-  "tags": [
-    "radio",
-    "music",
-    "live",
-    "streaming"
-  ],
-  "category": "music"
+  "logo": "https://cdn.medi-buddy.app/radio/logo.png",
+  "thumbnail": "https://cdn.medi-buddy.app/radio/logo.png",
+  "color": "#7C3AED",
+  "category": "music",
+  "tags": ["radio", "music", "live"],
+  "settings": [
+    {
+      "id": "browsing",
+      "title": "Show browsing status",
+      "icon": "fas fa-globe",
+      "value": true
+    }
+  ]
 }
