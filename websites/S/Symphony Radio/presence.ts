@@ -37,32 +37,42 @@ interface ApiResponse {
   }
 }
 
-async function fetchStats(): Promise<ApiResponse | null> {
-  try {
+async function fetchStats(): Promise<ApiResponse | null>
+{
+  try
+  {
     const res = await fetch(API_URL)
 
-    if (!res.ok) {
+    if (!res.ok)
+    {
       return null
     }
 
     return (await res.json()) as ApiResponse
-  } catch {
+  }
+  catch
+  {
     return null
   }
 }
 
-presence.on('UpdateData', async () => {
+presence.on('UpdateData', async () =>
+{
   const browsing = await presence.getSetting<boolean>('browsing')
 
-  if (!window.location.hostname.includes('symphonyradio.co.uk')) {
-    if (browsing) {
+  if (!window.location.hostname.includes('symphonyradio.co.uk'))
+  {
+    if (browsing)
+    {
       presence.setActivity({
         type: ActivityType.Listening,
         details: 'Browsing Symphony Radio',
         largeImageKey: 'logo',
         largeImageText: 'Symphony Radio',
       })
-    } else {
+    }
+    else
+    {
       presence.clearActivity()
     }
 
@@ -71,7 +81,8 @@ presence.on('UpdateData', async () => {
 
   const data = await fetchStats()
 
-  if (!data) {
+  if (!data)
+  {
     return
   }
 
@@ -88,7 +99,8 @@ presence.on('UpdateData', async () => {
 
   const trackId = `${track}-${artist}`
 
-  if (trackId !== lastTrackId) {
+  if (trackId !== lastTrackId)
+  {
     lastTrackId = trackId
     lastStart = start
   }
