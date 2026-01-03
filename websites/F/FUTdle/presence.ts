@@ -2,6 +2,8 @@ const presence = new Presence({
   clientId: '1426515515223965846',
 })
 
+const startTimestamp = Date.now()
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://futdle.tr/logo.png',
@@ -25,7 +27,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Göz atıyor'
   }
 
-  presenceData.startTimestamp = Date.now()
+  presenceData.startTimestamp = startTimestamp
 
   presence.setActivity(presenceData)
 })
