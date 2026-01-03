@@ -351,7 +351,6 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     details: title || BROWSING_FALLBACK_TITLE,
-    detailsUrl: animeUrl,
     state: stateText,
     largeImageKey: poster || ActivityAssets.Logo,
     largeImageText: title || BROWSING_FALLBACK_TITLE,
