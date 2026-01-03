@@ -37,30 +37,64 @@ interface ApiResponse {
   }
 }
 
-async function fetchStats(): Promise<ApiResponse | null> {
-  try {
-    const res = await fetch(API_URL)
+let statsCache: {
+  data: ApiResponse | null
+  fetchedAt: number
+  promise: Promise<ApiResponse | null> | null
+} = {
+  data: null,
+  fetchedAt: 0,
+  promise: null,
+}
 
-    if (!res.ok) {
+const CACHE_TTL = 5000
+
+async function fetchStats(): Promise<ApiResponse | null> {
+  const now = Date.now()
+
+  if (statsCache.data && now - statsCache.fetchedAt < CACHE_TTL) {
+    return statsCache.data
+  }
+
+  if (statsCache.promise) {
+    return statsCache.promise
+  }
+
+  statsCache.promise = (async () => {
+    try {
+      const res = await fetch(API_URL)
+
+      if (!res.ok) {
+        return null
+      }
+
+      const json = (await res.json()) as ApiResponse
+
+      statsCache.data = json
+      statsCache.fetchedAt = Date.now()
+
+      return json
+    }
+    catch {
       return null
     }
+    finally {
+      statsCache.promise = null
+    }
+  })()
 
-    return (await res.json()) as ApiResponse
-  }
-  catch {
-    return null
-  }
+  return statsCache.promise
 }
 
 presence.on('UpdateData', async () => {
   const browsing = await presence.getSetting<boolean>('browsing')
 
-  if (!window.location.hostname.includes('symphonyradio.co.uk')) {
+  if (!document.location.hostname.includes('symphonyradio.co.uk')) {
     if (browsing) {
       presence.setActivity({
         type: ActivityType.Listening,
         details: 'Browsing Symphony Radio',
-        largeImageKey: 'logo',
+        largeImageKey: 'https://cdn.medi-buddy.app/radio/logo.png',
         largeImageText: 'Symphony Radio',
       })
     }
@@ -99,7 +133,7 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Listening,
     details: track,
     state: `${isLive ? `🎙️ ${djName}` : '🤖 Symphony'} • ${listeners} listening`,
-    largeImageKey: data.nowPlaying?.track?.artwork?.url ?? 'logo',
+    largeImageKey: data.nowPlaying?.track?.artwork?.url ?? 'https://cdn.medi-buddy.app/radio/logo.png',
     largeImageText: artist,
     smallImageKey: presenter?.avatar ?? undefined,
     smallImageText: isLive ? djName : 'Symphony',
