@@ -47,7 +47,7 @@ let statsCache: {
   promise: null,
 }
 
-const CACHE_TTL = 5000
+const CACHE_TTL = 1000
 
 async function fetchStats(): Promise<ApiResponse | null> {
   const now = Date.now()
