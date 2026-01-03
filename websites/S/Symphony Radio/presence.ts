@@ -5,6 +5,7 @@ const presence = new Presence({
 })
 
 const API_URL = 'https://panel.symphradio.live/api/stats'
+const LOGO_512 = 'https://panel.symphradio.live/avatars/logo-premid-512.png'
 
 let lastTrackId: string | null = null
 let lastStart = 0
@@ -25,7 +26,6 @@ interface ApiResponse {
     presenter?: {
       name?: string
       is_live?: boolean
-      avatar?: string
     }
   }
   listeners?: {
@@ -37,7 +37,7 @@ interface ApiResponse {
   }
 }
 
-let statsCache: {
+const statsCache: {
   data: ApiResponse | null
   fetchedAt: number
   promise: Promise<ApiResponse | null> | null
@@ -47,7 +47,7 @@ let statsCache: {
   promise: null,
 }
 
-const CACHE_TTL = 1000
+const CACHE_TTL = 72_000
 
 async function fetchStats(): Promise<ApiResponse | null> {
   const now = Date.now()
@@ -94,7 +94,7 @@ presence.on('UpdateData', async () => {
       presence.setActivity({
         type: ActivityType.Listening,
         details: 'Browsing Symphony Radio',
-        largeImageKey: 'https://panel.symphradio.live/avatars/logo-premid-512.png',
+        largeImageKey: LOGO_512,
         largeImageText: 'Symphony Radio',
       })
     }
@@ -133,10 +133,8 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Listening,
     details: track,
     state: `${isLive ? `🎙️ ${djName}` : '🤖 Symphony'} • ${listeners} listening`,
-    largeImageKey: data.nowPlaying?.track?.artwork?.url ?? 'https://panel.symphradio.live/avatars/logo-premid-512.png',
+    largeImageKey: LOGO_512,
     largeImageText: artist,
-    smallImageKey: presenter?.avatar ?? undefined,
-    smallImageText: isLive ? djName : 'Symphony',
     startTimestamp: lastStart || undefined,
     endTimestamp: end || undefined,
     buttons: [
