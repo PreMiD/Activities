@@ -10,7 +10,7 @@
     "en": "Listen live to Symphony Radio — bringing you great music, live DJs, and feel-good vibes all day long."
   },
   "url": "symphonyradio.co.uk",
-  "regExp": "symphonyradio\\.co\\.uk",
+  "regExp": "^https?://symphonyradio\\.co\\.uk/",
   "version": "1.0.0",
   "logo": "https://panel.symphradio.live/avatars/logo-premid-512.png",
   "thumbnail": "https://panel.symphradio.live/avatars/v1-banner.png",
