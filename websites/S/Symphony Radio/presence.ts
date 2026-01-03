@@ -94,7 +94,7 @@ presence.on('UpdateData', async () => {
       presence.setActivity({
         type: ActivityType.Listening,
         details: 'Browsing Symphony Radio',
-        largeImageKey: 'https://cdn.medi-buddy.app/radio/logo.png',
+        largeImageKey: 'https://panel.symphradio.live/avatars/logo-premid-512.png',
         largeImageText: 'Symphony Radio',
       })
     }
@@ -133,7 +133,7 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Listening,
     details: track,
     state: `${isLive ? `🎙️ ${djName}` : '🤖 Symphony'} • ${listeners} listening`,
-    largeImageKey: data.nowPlaying?.track?.artwork?.url ?? 'https://cdn.medi-buddy.app/radio/logo.png',
+    largeImageKey: data.nowPlaying?.track?.artwork?.url ?? 'https://panel.symphradio.live/avatars/logo-premid-512.png',
     largeImageText: artist,
     smallImageKey: presenter?.avatar ?? undefined,
     smallImageText: isLive ? djName : 'Symphony',
