@@ -14,14 +14,15 @@
   "regExp": "^https?://(www\\.)?dealabs\\.com/.*",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/Bg9ddtg.png",
-  "thumbnail": "https://i.imgur.com/Bg9ddtg.png",
+  "thumbnail": "https://i.imgur.com/1nIb9QZ.png",
   "color": "#36bca1",
   "category": "socials",
   "tags": [
     "deals",
     "shopping",
     "community",
-    "france"
+    "france",
+    "multilanguage"
   ],
   "settings": [
     {

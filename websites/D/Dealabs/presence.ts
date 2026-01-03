@@ -1,74 +1,19 @@
 import type { DealabsSettings, Resolver } from './util/interfaces.js'
+import { ActivityType } from 'premid'
 import dealResolver from './sources/deal.js'
-
 import discussionResolver from './sources/discussion.js'
 import groupResolver from './sources/group.js'
 import listingResolver from './sources/listing.js'
 import merchantResolver from './sources/merchant.js'
-import { activityAssets, presence } from './util/index.js'
+
+const presence = new Presence({
+  clientId: '1456698196767277128',
+})
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-async function getStrings() {
-  const fr = {
-    navigating: 'Navigue sur Dealabs',
-    hunting: 'Chasse les bons plans',
-    viewDeal: 'Regarde un bon plan',
-    onDealabs: 'Sur Dealabs',
-    onForum: 'Sur le forum',
-    readDiscuss: 'Lit une discussion',
-    searchCode: 'Cherche un code promo',
-    viewCodes: 'Voir les codes',
-    browseDiscuss: 'Parcourt les discussions',
-    detail: 'Détail',
-    free: 'GRATUIT',
-    hiddenDeal: 'Un bon plan',
-    hiddenTopic: 'Une discussion',
-    viewPage: 'Voir la page',
-    exploreCat: 'Explore une catégorie',
-    homepage: 'Sur la page d\'accueil',
-    forYou: 'Pour vous',
-    searchDeal: 'Cherche un bon plan',
-    newDeals: 'Nouveaux deals 🕒',
-    hotDeals: 'Hot & Tendance 🔥',
-    topDeals: 'Les plus Hot 🌶️',
-    searching: 'Recherche',
-    searchingEllipsis: 'Recherche...',
-  }
-
-  const en = {
-    navigating: 'Browsing Dealabs',
-    hunting: 'Hunting for deals',
-    viewDeal: 'Viewing a deal',
-    onDealabs: 'On Dealabs',
-    onForum: 'On the Forum',
-    readDiscuss: 'Reading a discussion',
-    searchCode: 'Looking for a promo code',
-    viewCodes: 'View codes',
-    browseDiscuss: 'Browsing discussions',
-    detail: 'Detail',
-    free: 'FREE',
-    hiddenDeal: 'A deal',
-    hiddenTopic: 'A discussion',
-    viewPage: 'View page',
-    exploreCat: 'Browsing a category',
-    homepage: 'On the homepage',
-    forYou: 'For You',
-    searchDeal: 'Searching for a deal',
-    newDeals: 'New Deals 🕒',
-    hotDeals: 'Hot & Trending 🔥',
-    topDeals: 'Hottest Deals 🌶️',
-    searching: 'Searching',
-    searchingEllipsis: 'Searching...',
-  }
-
-  let lang = await presence.getSetting<string>('lang').catch(() => null)
-
-  if (!lang) {
-    lang = navigator.language.startsWith('fr') ? 'fr' : 'en'
-  }
-
-  return lang === 'fr' ? fr : en
+enum ActivityAssets {
+  Logo = 'https://i.imgur.com/Bg9ddtg.png',
 }
 
 presence.on('UpdateData', async () => {
@@ -80,30 +25,56 @@ presence.on('UpdateData', async () => {
     hidePrices: await presence.getSetting('hidePrices'),
   }
 
-  const strings = await getStrings()
+  const strings = await presence.getStrings({
+    navigating: 'dealabs.navigating',
+    hunting: 'dealabs.hunting',
+    viewDeal: 'dealabs.viewDeal',
+    onDealabs: 'dealabs.onDealabs',
+    onForum: 'dealabs.onForum',
+    readDiscuss: 'dealabs.readDiscuss',
+    searchCode: 'dealabs.searchCode',
+    viewCodes: 'dealabs.viewCodes',
+    browseDiscuss: 'dealabs.browseDiscuss',
+    detail: 'dealabs.detail',
+    free: 'dealabs.free',
+    hiddenDeal: 'dealabs.hiddenDeal',
+    hiddenTopic: 'dealabs.hiddenTopic',
+    viewPage: 'dealabs.viewPage',
+    exploreCat: 'dealabs.exploreCat',
+    homepage: 'dealabs.homepage',
+    forYou: 'dealabs.forYou',
+    searchDeal: 'dealabs.searchDeal',
+    newDeals: 'dealabs.newDeals',
+    hotDeals: 'dealabs.hotDeals',
+    topDeals: 'dealabs.topDeals',
+    searching: 'dealabs.searching',
+    searchingEllipsis: 'dealabs.searchingEllipsis',
+  })
+
   const t: any = strings
+
   const presenceData: PresenceData = {
-    largeImageKey: activityAssets.logo,
+    largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    type: 3, // Watching
-    details: strings?.navigating,
-    state: strings?.hunting,
+    type: ActivityType.Watching,
+    details: strings.navigating,
+    state: strings.hunting,
   }
 
   const pathname = document.location.pathname
 
   if (settings.privacyMode) {
     if (pathname.includes('/bons-plans/') || pathname.includes('/codes-promo/')) {
-      presenceData.details = strings?.viewDeal
-      presenceData.state = strings?.onDealabs
+      presenceData.details = strings.viewDeal
+      presenceData.state = strings.onDealabs
     }
     else if (pathname.includes('/discussions/') || pathname.includes('/groupe/')) {
-      presenceData.details = strings?.onForum
-      presenceData.state = strings?.readDiscuss
+      presenceData.details = strings.onForum
+      presenceData.state = strings.readDiscuss
     }
     else {
-      presenceData.details = strings?.navigating
-      presenceData.state = strings?.hunting
+      presenceData.details = strings.navigating
+      presenceData.state = strings.hunting
     }
     presence.setActivity(presenceData)
     return
@@ -138,15 +109,15 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = activeResolver.getButtons(t)
     }
 
-    presenceData.smallImageKey = activityAssets.logo
+    presenceData.smallImageKey = ActivityAssets.Logo
     presenceData.smallImageText = 'Dealabs'
   }
 
   if (!presenceData.state || (typeof presenceData.state === 'string' && presenceData.state.length < 2)) {
-    presenceData.state = strings?.hunting
+    presenceData.state = strings.hunting
   }
   if (!presenceData.details || (typeof presenceData.details === 'string' && presenceData.details.length < 2)) {
-    presenceData.details = strings?.onDealabs
+    presenceData.details = strings.onDealabs
   }
 
   presence.setActivity(presenceData)
