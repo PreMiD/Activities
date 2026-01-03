@@ -92,6 +92,9 @@ export async function checkDns(
         await writeFile(summaryPath, body)
         core.setOutput('has_changes', 'true')
         core.setOutput('summary_path', summaryPath)
+        core.setOutput('has_deletions', changes.removed.length > 0 ? 'true' : 'false')
+        core.setOutput('has_updates', changes.updated.length > 0 ? 'true' : 'false')
+        core.setOutput('has_multiple_activities', (changes.removed.length + changes.updated.length >= 2) ? 'true' : 'false')
       }
 
       success(
