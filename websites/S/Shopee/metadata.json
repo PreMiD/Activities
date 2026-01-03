@@ -22,7 +22,7 @@
     "shopee.com.co",
     "shopee.cl"
   ],
-  "regExp": "^https?[:][/][/]((shopee)[.]co[.]id|(shopee)[.]com[.]my|shopee[.]sg)[/]",
+  "regExp": "^https?://shopee\\.(co\\.id|com\\.my|sg|com\\.br|ph|co\\.th|vn|tw|com\\.mx|com\\.co|cl)/",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Shopee/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Shopee/assets/thumbnail.jpeg",
