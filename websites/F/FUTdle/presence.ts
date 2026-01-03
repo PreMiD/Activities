@@ -14,6 +14,9 @@ presence.on('UpdateData', async () => {
   if (path === '/' || path === '') {
     presenceData.details = 'Ana sayfada'
   }
+  else if (path.includes('/profile') || path.includes('/me')) {
+    presenceData.details = 'Profiline bakıyor'
+  }
   else if (path.includes('/game') || path.includes('/play')) {
     presenceData.details = 'Soru çözüyor'
   }
