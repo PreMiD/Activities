@@ -5,6 +5,8 @@ export interface MediaData {
   artwork?: string
   trackUrl?: string
   artistUrl?: string
+  trackColor?: string
+  repeatMode?: 'on' | 'off' | 'none'
 }
 
 export interface MediaDataGetter {
@@ -38,6 +40,39 @@ export class RythmDataGetter implements MediaDataGetter {
     return 'none'
   }
 
+  getTrackColor(): string | null {
+    const track = document.querySelector<HTMLElement>(
+      'div[class*="nowPlayingControllers"] div[class*="sliderCompletedTrack"]',
+    )
+
+    if (!track)
+      return null
+
+    const styles = window.getComputedStyle(track)
+    const vibrant = styles.getPropertyValue('--vibrant-album-color').trim()
+
+    if (vibrant)
+      return vibrant
+
+    return styles.backgroundColor
+  }
+
+  getRepeatStateFromUi(): 'on' | 'off' | 'none' {
+    const repeatButton = document.querySelector<HTMLButtonElement>(
+      'div[class*="nowPlayingControllers"] button[class*="loopBtn"]',
+    )
+
+    if (!repeatButton) {
+      return 'none'
+    }
+
+    const isActive
+      = repeatButton.getAttribute('aria-pressed') === 'true'
+        || repeatButton.className.includes('active')
+
+    return isActive ? 'on' : 'off'
+  }
+
   getCurrentAndTotalTime(): [string, string] | null {
     const progressBox = document.querySelector<HTMLDivElement>(
       'div[class*="nowPlayingControllers"] div[class*="ProgressBarBox"]',
@@ -63,6 +98,8 @@ export class RythmDataGetter implements MediaDataGetter {
 
   getMediaData(): MediaData {
     const playbackState = this.getPlaybackStateFromUI()
+    const repeatMode = this.getRepeatStateFromUi()
+    const trackColor = this.getTrackColor() || undefined
 
     if (playbackState === 'none') {
       return { playbackState: 'none' }
@@ -70,6 +107,7 @@ export class RythmDataGetter implements MediaDataGetter {
     const titleElement = document.querySelector<HTMLElement>(
       'div[class*="nowPlayingTrackDetails"] h4[class*="trackTitle"]',
     )
+
     const artistElement = document.querySelectorAll<HTMLElement>(
       'div[class*="nowPlayingTrackDetails"] p[class*="artistName"]',
     )
@@ -78,11 +116,16 @@ export class RythmDataGetter implements MediaDataGetter {
     )
     const trackUrlElement = document.querySelector<HTMLAnchorElement>(
       'div[class*="nowPlayingTrackDetails"] div[class*="trackDetails"] > a',
-    )?.href ?? null
+    )
 
     const artistUrlElement = document.querySelector<HTMLAnchorElement>(
       'div[class*="nowPlayingTrackDetails"] div[class*="explicitAndArtistName"] > a',
-    )?.href ?? null
+    )
+
+    const artistUrl = artistUrlElement?.href || undefined
+    const trackUrl = trackUrlElement?.href || undefined
+    const artwork = artworklElement?.src || undefined
+    const title = titleElement?.textContent?.trim() || undefined
 
     const artist
       = artistElement.length === 0
@@ -95,11 +138,14 @@ export class RythmDataGetter implements MediaDataGetter {
 
     return {
       playbackState,
-      title: titleElement?.textContent?.trim() || undefined,
+      title,
       artist,
-      artwork: artworklElement?.src || undefined,
-      trackUrl: trackUrlElement || undefined,
-      artistUrl: artistUrlElement || undefined,
+      artwork,
+      trackUrl,
+      artistUrl,
+      repeatMode,
+      trackColor,
+
     }
   }
 

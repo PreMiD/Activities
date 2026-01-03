@@ -39,7 +39,12 @@ enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AniKenji%20Movie/assets/logo.png',
 }
 
-// --- HÀM TIỆN ÍCH LẤY HÌNH ẢNH ---
+// --- HÀM TIỆN ÍCH LẤY META TAG ---
+function getMetaTagContent(property: string): string | null {
+  const metaElement = document.querySelector<HTMLMetaElement>(`meta[property='${property}']`)
+  return metaElement?.content?.trim() || null
+}
+
 function getMetaTagImage(): string | null {
   const selectors = [
     `meta[property='og:image']`,
@@ -67,6 +72,9 @@ async function updatePresence(): Promise<void> {
     const isRegion = pathname.includes('/quoc-gia')
     const isDetailsPage = splitPath.length === 3 && splitPath[1] === 'phim' // /phim/ten-phim/tap-X
     const isWatchPage = splitPath.length === 4 && splitPath[1] === 'phim' // /phim/ten-phim/tap-X/tap-X
+    const isWatchTogetherListing = pathname === '/xem-chung' // Trang danh sách phòng xem chung
+    const isWatchTogetherRoom = splitPath.length === 3 && splitPath[1] === 'xem-chung' && splitPath[2] // /xem-chung/{ROOM_ID}
+    const isSchedulePage = pathname === '/lich-chieu' // Trang lịch chiếu phim
 
     const [
       showButtons,
@@ -93,7 +101,7 @@ async function updatePresence(): Promise<void> {
     }
     // get banner
     let dynamicBannerUrl: string | null = null
-    if (isDetailsPage || isWatchPage || iFrameVideo || isPlayback) {
+    if (isDetailsPage || isWatchPage || iFrameVideo || isPlayback || isWatchTogetherRoom) {
       dynamicBannerUrl = getMetaTagImage()
     }
 
@@ -112,6 +120,14 @@ async function updatePresence(): Promise<void> {
       presenceData.details = 'Đang xem danh mục'
       const Region = document.querySelector('div.Top > h2.Title')?.textContent?.trim().split('Phim quốc gia')?.[1]?.trim() || ''
       presenceData.state = `Phim: ${Region}`
+    }
+    else if (isWatchTogetherListing) {
+      // Trang danh sách phòng xem chung
+      presenceData.details = 'Đang tìm phòng xem chung'
+      presenceData.state = 'Xem Chung'
+    }
+    else if (isSchedulePage) {
+      presenceData.details = 'Đang xem lịch chiếu phim'
     }
     else if (isDetailsPage) {
       // Trang thông tin phim (chưa vào xem)
@@ -184,6 +200,77 @@ async function updatePresence(): Promise<void> {
         presenceData.details = `${movieName}`
         presenceData.state = `Tập ${episodeNumberStr} - ⭐ ${Rating} - 🗓️ ${Year}`
         // Không có icon play/pause, không có timestamps
+        delete presenceData.smallImageKey
+        delete presenceData.smallImageText
+      }
+    }
+
+    // Xử lý trang room xem chung (isWatchTogetherRoom)
+    if (isWatchTogetherRoom) {
+      // og:title = description (tên phòng), og:description = tên phim
+      const roomHost = getMetaTagContent('og:title') || 'Phòng xem chung'
+      const movieTitle = getMetaTagContent('og:description') || 'Đang xem phim'
+      // Trường hợp có video element
+      if (video) {
+        presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
+        presenceData.smallImageText = video.paused ? (await strings).pause : (await strings).play
+        if (showTimestamps && !Number.isNaN(video.currentTime) && !Number.isNaN(video.duration) && video.duration > 0) {
+          if (!video.paused) {
+            const timestamps = getTimestamps(video.currentTime, video.duration)
+            presenceData.startTimestamp = timestamps[0]
+            presenceData.endTimestamp = timestamps[1]
+          }
+          else {
+            delete presenceData.endTimestamp
+          }
+        }
+        presenceData.largeImageKey = dynamicBannerUrl
+        presenceData.details = roomHost
+        presenceData.state = movieTitle
+        if (showButtons) {
+          presenceData.buttons = [
+            {
+              label: 'Vào Phòng',
+              url: document.location.href,
+            },
+          ]
+        }
+      }
+      // Trường hợp có iframe
+      else if (iFrameVideo && !Number.isNaN(duration) && duration > 0) {
+        presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
+        presenceData.smallImageText = paused ? (await strings).pause : (await strings).play
+
+        if (showTimestamps && !paused && !Number.isNaN(currentTime)) {
+          const [startTimestamp, endTimestamp] = getTimestamps(
+            Math.floor(currentTime),
+            Math.floor(duration),
+          )
+          presenceData.startTimestamp = startTimestamp
+          presenceData.endTimestamp = endTimestamp
+        }
+        else {
+          delete presenceData.startTimestamp
+          delete presenceData.endTimestamp
+          presenceData.startTimestamp = browsingTimestamp
+        }
+        presenceData.largeImageKey = dynamicBannerUrl
+        presenceData.details = movieTitle
+        presenceData.state = roomHost
+        if (showButtons) {
+          presenceData.buttons = [
+            {
+              label: 'Vào Phòng',
+              url: document.location.href,
+            },
+          ]
+        }
+      }
+      // Không tìm thấy video hoặc iframe - hiển thị thông tin thuần
+      else {
+        presenceData.largeImageKey = dynamicBannerUrl
+        presenceData.details = movieTitle
+        presenceData.state = roomHost
         delete presenceData.smallImageKey
         delete presenceData.smallImageText
       }

@@ -6,11 +6,11 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/OFh9Xqh.png',
-  Cemantix = 'https://i.imgur.com/CFFWsaj.png',
-  Cemantle = 'https://i.imgur.com/tAbizTX.png',
-  Pedantix = 'https://i.imgur.com/w8b96Jt.png',
-  Pedantle = 'https://i.imgur.com/JUkpBF5.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/C/Certitudes/assets/logo.png',
+  Cemantix = 'https://cdn.rcd.gg/PreMiD/websites/C/Certitudes/assets/0.png',
+  Cemantle = 'https://cdn.rcd.gg/PreMiD/websites/C/Certitudes/assets/1.png',
+  Pedantix = 'https://cdn.rcd.gg/PreMiD/websites/C/Certitudes/assets/2.png',
+  Pedantle = 'https://cdn.rcd.gg/PreMiD/websites/C/Certitudes/assets/3.png',
 }
 
 presence.on('UpdateData', async () => {

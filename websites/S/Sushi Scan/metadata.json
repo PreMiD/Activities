@@ -10,12 +10,9 @@
     "en": "Read comics on Sushi Scan.",
     "fr": "Lisez des mangas et bandes dessinées sur Sushi Scan."
   },
-  "url": [
-    "sushiscan.net",
-    "www.sushiscan.net"
-  ],
-  "regExp": "^https?[:][/][/](www[.])?sushiscan[.]net[/]",
-  "version": "1.1.0",
+  "url": "sushiscan.net",
+  "regExp": "^https?[:][/][/]sushiscan[.]net[/]",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sushi%20Scan/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sushi%20Scan/assets/thumbnail.png",
   "color": "#f27b6e",

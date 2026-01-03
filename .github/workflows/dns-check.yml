@@ -52,3 +52,8 @@ jobs:
           title: 'chore: remove activities with failed DNS checks'
           body-path: ${{ steps.dns-check.outputs.summary_path }}
           sign-commits: true
+          labels: |
+            repo maintenance
+            ${{ steps.dns-check.outputs.has_deletions == 'true' && 'activity deletion' || '' }}
+            ${{ steps.dns-check.outputs.has_updates == 'true' && 'activity update' || '' }}
+            ${{ steps.dns-check.outputs.has_multiple_activities == 'true' && 'multiple activities' || '' }}
