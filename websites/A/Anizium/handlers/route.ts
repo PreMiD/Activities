@@ -284,13 +284,12 @@ export class RouteHandlers {
 
       if (season && episode) {
         presenceData.details = `Sezon ${season}`
-
         presenceData.state = `Bölüm ${episode}`
       } // If the setting is OFF -> Title "Anime Name"
 
       else {
         presenceData.details = 'Film / Tek Bölüm'
-        presenceData.state = ''
+        delete presenceData.state
       }
     }
 
@@ -332,7 +331,7 @@ export class RouteHandlers {
     else {
       Object.assign(presenceData, { name: cleanTitle })
       presenceData.details = infoText
-      presenceData.state = ''
+      delete presenceData.state
     }
 
     presenceData.smallImageKey = Assets.Viewing
