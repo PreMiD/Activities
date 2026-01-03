@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "498148491462180866",
+    "name": "AnimeTvOnline Staff"
+  },
+  "service": "AnimeTvOnline",
+  "description": {
+    "en": "Watch anime on AnimeTvOnline",
+    "it": "Guarda anime su AnimeTvOnline"
+  },
+  "url": "animetvonline.org",
+  "regExp": "^https?[:][/][/]animetvonline[.]org[/]",
+  "version": "1.0.0",
+  "logo": "https://animetvonline.org/assets/images/logo_grande.png",
+  "thumbnail": "https://animetvonline.org/assets/images/banner_premid.png",
+  "color": "#FF4545",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "ita",
+    "streaming"
+  ]
+}

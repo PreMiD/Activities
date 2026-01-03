@@ -3,89 +3,159 @@
   "apiVersion": 1,
   "author": {
     "id": "407882734837563392",
-    "name": "flurrycom"
+    "name": "FlurryCom"
   },
   "service": "Rythm",
   "description": {
-    "en": "Rythm is a Discord music bot with a web dashboard where you can browse tracks, control playback in voice channels, or manage the queue directly from your browser."
+    "en": "Rythm is a Discord music bot with a web dashboard where you can browse tracks, control playback in voice channels, or manage the queue directly from your browser.",
+    "fr": "Rythm est un bot musical Discord avec un tableau de bord web qui vous permet de parcourir des titres, de contrôler la lecture dans les salons vocaux ou de gérer la file d’attente directement depuis votre navigateur.",
+    "ga": "Is bot ceoil Discord é Rythm le painéal gréasáin inar féidir leat rianta a bhrabhsáil, athsheinm a rialú i gcainéil ghutha, nó an scuaine a bhainistiú go díreach ó do bhrabhsálaí.",
+    "nl": "Rythm is een Discord-muziekbot met een webdashboard waarmee je nummers kunt bekijken, de afspeelbediening in spraakkanalen kunt regelen of de wachtrij rechtstreeks vanuit je browser kunt beheren.",
+    "pt-br": "Rythm é um bot de música do Discord com um painel controlável pela web, onde você pode navegar por faixas, controlar a reprodução em canais de voz ou gerenciar a fila diretamente pelo navegador.",
+    "ro": "Rythm este un bot de muzică pentru Discord cu un panou de control web, unde poți răsfoi piese, controla redarea în canalele vocale sau gestiona coada direct din browser.",
+    "tr": "Rythm, parçalara göz atabileceğiniz, ses kanallarında oynatmayı kontrol edebileceğiniz veya kuyruğu doğrudan tarayıcınızdan yönetebileceğiniz bir web paneline sahip bir Discord müzik botudur.",
+    "uk": "Rythm — це музичний бот для Discord із вебпанеллю, де ви можете переглядати треки, керувати відтворенням у голосових каналах або керувати чергою прямо у браузері.",
+    "vi": "Rythm là bot nhạc cho Discord với bảng điều khiển trên web, cho phép bạn duyệt bài hát, điều khiển phát trong kênh thoại hoặc quản lý hàng đợi ngay trong trình duyệt.",
+    "zh": "Rythm 是款 Discord 音乐机器人，带有网页控制面板，你可以浏览曲目、在语音频道控制播放，或直接在浏览器中管理队列。",
+    "zh-tw": "Rythm 是款 Discord 音樂機器人，提供網頁控制面板，你可以瀏覽曲目、在語音頻道控制播放，或直接在瀏覽器中管理佇列。"
   },
+
   "url": "rythm.fm",
   "version": "1.1.0",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/logo.gif",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/thumbnail.png",
+  "logo": "https://i.imgur.com/3qPPbjU.gif",
+  "thumbnail": "https://i.imgur.com/q5xxXRR.png",
   "color": "#147AFE",
   "category": "music",
-  "tags": [
-    "music",
-    "media"
-  ],
+  "tags": ["music", "media"],
   "settings": [
+
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+
     {
       "id": "privacy",
       "title": "Privacy Mode",
-      "icon": "fad fa-shield-alt",
+      "icon": "fad fa-user-secret",
       "value": false
     },
+
     {
       "id": "hidePaused",
       "title": "Hide Paused",
-      "icon": "fad fa-pause-circle",
+      "icon": "fa-regular fa-circle-pause",
       "value": false,
       "if": {
         "privacy": false
       }
     },
+
+    {
+      "id": "hideRepeat",
+      "title": "Hide Repeat Mode",
+      "icon": "fa-solid fa-repeat",
+      "value": false,
+      "if": {
+        "privacy": false
+      }
+    },
+
     {
       "id": "timesTamps",
       "title": "Hide Timestamps",
-      "icon": "fad fa-stopwatch",
+      "icon": "fa-regular fa-hourglass",
       "value": false,
       "if": {
         "privacy": false
       }
     },
+
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fa-solid fa-wand-magic-sparkles",
+      "value": 0,
+      "if": {
+        "privacy": false
+      },
+      "values": ["Song Title", "Artist Name", "Activity Name"]
+    },
+
     {
       "id": "largeImage",
       "title": "Pick large image style",
-      "icon": "fad fa-user-edit",
+      "icon": "fa-solid fa-wand-magic-sparkles",
       "value": 0,
       "if": {
         "privacy": false
       },
       "values": [
         "Cover music",
-        "Rythm animated logo",
-        "Rythm static logo"
+        "Rythm logo (dynamic)",
+        "Rythm logo (always static)",
+        "Rythm logo (always animated)"
       ]
     },
+
     {
       "id": "buttonType",
-      "title": "Pick small button style",
-      "icon": "fad fa-user-edit",
-      "value": 0,
+      "title": "Pick button (small image) style",
+      "icon": "fa-solid fa-wand-magic-sparkles",
+      "value": 1,
       "if": {
         "privacy": false
       },
       "values": [
-        "Play/Pause logo",
-        "Rythm animated logo",
-        "Rythm static logo",
-        "Rythm aways animated logo"
+        "Playback icons (Play/Pause)",
+        "Rythm logo (dynamic)",
+        "Rythm logo (always static)",
+        "Rythm logo (always animated)"
       ]
     },
+
     {
-      "id": "displayType",
-      "title": "Pick Status Display",
-      "icon": "fad fa-user-edit",
-      "value": 0,
+      "id": "buttonTypeColor",
+      "title": "Pick color logos",
+      "icon": "fa-solid fa-wand-magic-sparkles",
+      "value": 1,
       "if": {
         "privacy": false
       },
       "values": [
-        "Song Title",
-        "Artist Name",
-        "Activity Name"
+        "Blue (default)",
+        "Auto RGB",
+        "Pink",
+        "LightPink",
+        "Yellow",
+        "Lilac",
+        "Purple",
+        "DarkPurple",
+        "Red",
+        "Orange",
+        "Cyan",
+        "Green",
+        "Beige",
+        "Grey",
+        "White",
+        "Black"
+      ]
+    },
+
+    {
+      "id": "buttonBgColor",
+      "title": "Pick logo background theme",
+      "icon": "fa-solid fa-wand-magic-sparkles",
+      "value": 2,
+      "if": {
+        "privacy": false
+      },
+      "values": [
+        "Dark (black)",
+        "Light (white)",
+        "Transparent"
       ]
     }
+
   ]
 }
