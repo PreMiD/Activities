@@ -11,7 +11,7 @@
     "tr": "Pikselli fotoğrafı çöz, emojilerle bul ve soruyu cevapla. Her gün yeni meydan okumalarla puan topla ve sıralamada yüksel!"
   },
   "url": "futdle.tr",
-  "regExp": "https?://futdle[.]tr/",
+  "regExp": "https?[:][/][/]futdle[.]tr[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/owwNpYf.png",
   "thumbnail": "https://i.imgur.com/YYF66vV.png",
