@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "287739388841033729",
+    "name": "Atlantis"
+  },
+  "service": "Feishin",
+  "description": {
+    "en": "Feishin is a Jellyfin-compatible modern self-hosted music player."
+  },
+  "url": "feishin.vercel.app",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*feishin.vercel[.]app[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/jeffvli/feishin/refs/heads/development/assets/icons/icon.png",
+  "thumbnail": "https://raw.githubusercontent.com/jeffvli/feishin/development/media/preview_album_artist_detail.png",
+  "color": "#000000",
+  "category": "music",
+  "tags": [
+    "songs",
+    "music",
+    "jellyfin"
+  ]
+}
