@@ -62,7 +62,7 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
 
-  const path = window.location.pathname
+  const path = document.location.pathname
 
   if (path.includes('/s-anzeige/')) {
     const titleElement = document.querySelector('#viewad-title')
