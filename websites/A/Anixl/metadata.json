@@ -16,12 +16,9 @@
     "en": "Anixl is a modern anime tracker and viewer. Track, review, and organize anime the way you like.",
     "hi-in": "Anixl एक आधुनिक एनीमे ट्रैकर है जहाँ आप आसानी से एनीमे ट्रैक, रिव्यू और मैनेज कर सकते हैं।"
   },
-  "url": [
-    "anixl.to",
-    "www.anixl.to"
-  ],
+  "url": "anixl.to",
   "regExp": "^https?[:][/][/](www[.])?anixl[.]to[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anixl/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anixl/assets/thumbnail.png",
   "color": "#8151ff",

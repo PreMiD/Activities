@@ -8,8 +8,8 @@ async function getStrings() {
   return presence.getStrings({
     deleteAccount: 'tbm.deleteAccount',
     direction: 'tbm.direction',
-    editTheirPersonnalInfo: 'tbm.editTheirPersonnalInfo',
     editingAccount: 'tbm.editingAccount',
+    editTheirPersonalInfo: 'tbm.editTheirPersonalInfo',
     from: 'tbm.from',
     noData: 'tbm.noData',
     searchProduct: 'tbm.searchProduct',
@@ -17,19 +17,19 @@ async function getStrings() {
     searchStop: 'tbm.searchStop',
     stop: 'tbm.stop',
     to: 'tbm.to',
-    unknowPage: 'tbm.unknowPage',
+    unknownPage: 'tbm.unknownPage',
     viewCategory: 'tbm.viewCategory',
     viewDashboard: 'tbm.viewDashboard',
-    viewDocumentation: 'tbm.viewDocumentation',
     viewDynamicPlan: 'tbm.viewDynamicPlan',
     viewHelpPage: 'tbm.viewHelpPage',
     viewHome: 'general.viewHome',
-    viewLineInfos: 'tbm.viewLineInfos',
+    viewLineInfo: 'tbm.viewLineInfo',
     viewLines: 'tbm.viewLines',
     viewLinesSchedules: 'tbm.viewLinesSchedules',
     viewOffer: 'tbm.viewOffer',
     viewPage: 'general.viewPage',
     viewPointsScale: 'tbm.viewPointsScale',
+    viewPrivacyInfo: 'tbm.viewPrivacyInfo',
     viewProduct: 'tbm.viewProduct',
     viewSchedules: 'tbm.viewSchedules',
     viewShop: 'tbm.viewShop',
@@ -37,8 +37,8 @@ async function getStrings() {
     viewTheirOrders: 'tbm.viewTheirOrders',
     viewTheirPointsHistory: 'tbm.viewTheirPointsHistory',
     viewTheirProfile: 'tbm.viewTheirProfile',
-    viewTrafficInfo: 'tbm.viewTrafficInfo',
-    viewTrafficInfos: 'tbm.viewTrafficInfos',
+    viewTrafficUpdate: 'tbm.viewTrafficUpdate',
+    viewTrafficUpdates: 'tbm.viewTrafficUpdates',
   })
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -157,12 +157,12 @@ presence.on('UpdateData', async () => {
         }
       }
       else if (/\/(?:perturbations|traffic-info|perturbaciones)(?:\/|$)/.test(completePath)) {
-        presenceData.details = strings.viewTrafficInfos
+        presenceData.details = strings.viewTrafficUpdates
         presenceData.state = document.querySelector('.tab-wrapper > a.active')?.textContent
         presenceData.smallImageKey = ActivityAssets.Traffic
 
         if (/\/(?:ligne|line|linea)(?:\/|$)/.test(completePath) && isValidUUID(path[path.length - 1]!)) {
-          presenceData.details = strings.viewTrafficInfo
+          presenceData.details = strings.viewTrafficUpdate
           presenceData.state = document.querySelector('.tbm-lines-name-wrapper > span.lh-xbig')?.textContent || document.querySelector('.tbm-lines-name-wrapper > span:nth-of-type(2)')?.textContent
           svgImg = document.querySelector<HTMLImageElement>('.tbm-lines-name-wrapper img')
           if (svgImg) {
@@ -181,7 +181,7 @@ presence.on('UpdateData', async () => {
           }
         }
         else if (/\/(?:stations|estaciones)(?:\/|$)/.test(completePath) && isValidUUID(path[path.length - 1]!)) {
-          presenceData.details = strings.viewTrafficInfo
+          presenceData.details = strings.viewTrafficUpdate
           presenceData.state = document.querySelector('.tbm-lines-name-wrapper span.lh-xbig')?.textContent
           presenceData.smallImageKey = ActivityAssets.Bike
           presenceData.smallImageText = document.querySelector('.tbm-lines-name-wrapper p')?.textContent || ''
@@ -197,7 +197,7 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageText = document.querySelector('div.tbm-block > h2')?.textContent || ''
         }
         else if (/\/(?:parc-relais|park-and-rides|aparcamientos-disuasorios)(?:\/|$)/.test(completePath) && isValidUUID(path[path.length - 1]!)) {
-          presenceData.details = strings.viewTrafficInfo
+          presenceData.details = strings.viewTrafficUpdate
           presenceData.state = document.querySelector('.tbm-lines-name-wrapper > span.lh-xbig')?.textContent || document.querySelector('.tbm-lines-name-wrapper > span:nth-of-type(2)')?.textContent
           svgImg = document.querySelector<HTMLImageElement>('.tbm-lines-name-wrapper img')
           if (svgImg) {
@@ -231,7 +231,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = strings.viewLines
         presenceData.smallImageKey = ActivityAssets.Lines
         if (document.querySelector('.title-line')) {
-          presenceData.details = strings.viewLineInfos
+          presenceData.details = strings.viewLineInfo
           presenceData.state = `${document.querySelector('.lines > h2:nth-of-type(1)')?.textContent} ↔ ${document.querySelector('.lines > h2:nth-of-type(2)')?.textContent}`
           svgImg = document.querySelector<HTMLImageElement>('.tbm-icon-picto > img')
           if (svgImg) {
@@ -245,7 +245,7 @@ presence.on('UpdateData', async () => {
       }
       else {
         presenceData.details = strings.viewPage
-        presenceData.state = document.title?.split(/ ([|\-–]) TBM/)[0]?.trim() || strings.unknowPage
+        presenceData.state = document.title?.split(/ ([|\-–]) TBM/)[0]?.trim() || strings.unknownPage
       }
       break
     }
@@ -269,7 +269,7 @@ presence.on('UpdateData', async () => {
           presenceData.details = strings.viewTheirProfile
           switch (path[3]) {
             case 'update': {
-              presenceData.details = strings.editTheirPersonnalInfo
+              presenceData.details = strings.editTheirPersonalInfo
               break
             }
             case 'history': {
@@ -281,7 +281,7 @@ presence.on('UpdateData', async () => {
               break
             }
             case 'documentation': {
-              presenceData.details = strings.viewDocumentation
+              presenceData.details = strings.viewPrivacyInfo
               if (path[4] === 'deleteAccount') {
                 presenceData.details = strings.deleteAccount
               }
@@ -299,7 +299,7 @@ presence.on('UpdateData', async () => {
       }
       else {
         presenceData.details = strings.viewPage
-        presenceData.state = document.title?.split(/ ([|\-–]) TBM/)[0]?.trim() || strings.unknowPage
+        presenceData.state = document.title?.split(/ ([|\-–]) TBM/)[0]?.trim() || strings.unknownPage
       }
       break
     }
@@ -323,13 +323,13 @@ presence.on('UpdateData', async () => {
       }
       else {
         presenceData.details = strings.viewPage
-        presenceData.state = document.title?.split(/ ([|\-–]) /)[0]?.trim() || strings.unknowPage
+        presenceData.state = document.title?.split(/ ([|\-–]) /)[0]?.trim() || strings.unknownPage
       }
       break
     }
     default:
       presenceData.details = strings.viewPage
-      presenceData.state = document.title?.split(/ ([|\-–]) (TBM)?/)[0]?.trim() || strings.unknowPage
+      presenceData.state = document.title?.split(/ ([|\-–]) (TBM)?/)[0]?.trim() || strings.unknownPage
       break
   }
 
