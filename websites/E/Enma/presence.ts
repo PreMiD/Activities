@@ -31,7 +31,7 @@ presence.on('UpdateData', async () => {
       break
     case pathname.includes('/watch/'): {
       const slug = pathname.split('/watch/')[1]?.split('?')[0]
-      let title = slug
+      const title = slug
         ?.replace(/-\d+$/, '')
         ?.replace(/-/g, ' ')
         ?.replace(/\b\w/g, c => c.toUpperCase())

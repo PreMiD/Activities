@@ -85,12 +85,12 @@ presence.on('UpdateData', async () => {
       const title = document.querySelector('h3.text-white.font-bold')?.textContent?.trim() || 'Unknown Movie'
       const year = document.querySelector('.text-zinc-400 span')?.textContent?.trim() || 'N/A'
       const runtime = document.querySelectorAll('.text-zinc-400 span')[1]?.textContent?.replace('min', '')?.trim() || 'N/A'
-      const rating = document.querySelector('.text-yellow-500 + span')?.textContent?.trim() ||'N/A'
+      const rating = document.querySelector('.text-yellow-500 + span')?.textContent?.trim() || 'N/A'
       const poster = document.querySelector('img.object-cover.rounded-lg')?.getAttribute('src')
       presenceData.name = title
       presenceData.state = `⭐ ${rating} 🕒 ${runtime} mins 🗓️ ${year}`
       if (poster) presenceData.largeImageKey = poster
-      presenceData.smallImageKey = ActivityAssets.Logo
+        presenceData.smallImageKey = ActivityAssets.Logo
   }
     if (type === 'tv') {
       presenceData.type = ActivityType.Watching
@@ -101,7 +101,7 @@ presence.on('UpdateData', async () => {
       const episodeTitle = activeEpisode?.querySelector('.font-semibold')?.textContent?.trim() || `Episode ${episode}`
       let runtime = 'N/A'
       const metaElements = activeEpisode?.querySelectorAll('.text-xs, .text-sm')
-      metaElements?.forEach(el => {
+      metaElements?.forEach((el) => {
         const text = el.textContent || ''
         if (text.includes('min')) { 
           runtime = text.match(/(\d+)\s*min/i)?.[1] || 'N/A'
@@ -114,8 +114,8 @@ presence.on('UpdateData', async () => {
       presenceData.state = `S${season} • E${episode} — ${episodeTitle} (${runtime}m)`
       presenceData.largeImageKey = episodeImage || showPoster
       presenceData.smallImageKey = ActivityAssets.Logo
-      }
     }
+  }
 
   if (pathname.includes('/search')) {
     presenceData.details = `Searching for Content`
