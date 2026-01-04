@@ -4,8 +4,8 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/ubNQ6eP.png',
-  Train = 'https://i.imgur.com/l9Qlmi4.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/SNCF%20Connect/assets/logo.png',
+  Train = 'https://cdn.rcd.gg/PreMiD/websites/S/SNCF%20Connect/assets/0.png',
 }
 
 let origin, originTime, destination, destinationTime
