@@ -8,8 +8,8 @@ presence.on('UpdateData', async () => {
   const t = await presence.getStrings({
     watching: 'zapping.watching',
     inZapping: 'zapping.inZapping',
-    browsing: 'zapping.browsing',
-    home: 'zapping.home',
+    browsing: 'general.browsing',
+    home: 'general.viewHome',
     login: 'zapping.login',
     register: 'zapping.register',
     recovery: 'zapping.recovery',
