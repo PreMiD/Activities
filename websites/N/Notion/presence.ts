@@ -4,6 +4,7 @@ const presence = new Presence({
   clientId: '1455312389837684951',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
+const svgCache = new Map<string, string>()
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/IVQpP2j.png',
@@ -13,6 +14,10 @@ enum ActivityAssets {
 }
 
 async function svgToPng(svgUrl: string): Promise<string | undefined> {
+  if (svgCache.has(svgUrl)) {
+    return svgCache.get(svgUrl)
+  }
+
   if (!svgUrl || !svgUrl.includes('.svg'))
     return
 
@@ -44,6 +49,7 @@ async function svgToPng(svgUrl: string): Promise<string | undefined> {
     ctx.drawImage(img, x, y, img.width, img.height)
 
     png = canvas.toDataURL('image/png')
+    svgCache.set(svgUrl, png)
   }
 
   URL.revokeObjectURL(url)
