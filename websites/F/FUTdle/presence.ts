@@ -24,62 +24,62 @@ presence.on('UpdateData', async () => {
     const tabText = activeTab?.textContent?.trim()
 
     presenceData.details = username ? `Profil: ${username}` : 'Profilinde'
-    if (tabText) {
+    if (tabText)
       presenceData.state = tabText
-    }
+
   }
   else if (pathname === '/game') {
     const gameModeTitle = document.querySelector('h1.text-5xl, h2.text-3xl')
     const modeText = gameModeTitle?.textContent?.trim()
 
-    if (modeText === 'Oyun Modu') {
+    if (modeText === 'Oyun Modu')
       presenceData.details = 'Oyun modu seçiyor'
-    } else if (modeText?.includes('Ben Kimim') || pathname.includes('whoami')) {
+
+    else if (modeText?.includes('Ben Kimim') || pathname.includes('whoami')) {
       presenceData.details = 'Oynuyor: Ben Kimim?'
       presenceData.state = 'Tahmin ediyor'
-    } else if (modeText?.includes('Klasik') || pathname.includes('quiz')) {
+    }
+    else if (modeText?.includes('Klasik') || pathname.includes('quiz')) {
       presenceData.details = 'Oynuyor: Klasik'
       presenceData.state = 'Sorular çözüyor'
-    } else {
-      presenceData.details = 'Oyun oynuyor'
     }
+    else
+      presenceData.details = 'Oyun oynuyor'
   }
   else if (pathname === '/leaderboard') {
     const activeSeasonButton = document.querySelector('button[class*="from-"][class*="to-"]')
     const seasonText = activeSeasonButton?.textContent?.trim()
 
     presenceData.details = 'Liderlik tablosu'
-    if (seasonText) {
+    if (seasonText)
       presenceData.state = seasonText
-    } else {
+
+    else
       presenceData.state = 'Mevcut sezon'
-    }
   }
   else if (pathname === '/tutorial') {
     const tutorialTitle = document.querySelector('h2.text-xl, h2.text-2xl')
     const stepTitle = tutorialTitle?.textContent?.trim()
 
     presenceData.details = 'Kılavuzda'
-    if (stepTitle) {
+    if (stepTitle)
       presenceData.state = stepTitle
-    }
   }
   else if (pathname === '/wrapped') {
     presenceData.details = 'Yıl özeti'
     presenceData.state = 'İstatistiklere göz atıyor'
   }
-  else if (pathname === '/banned') {
+  else if (pathname === '/banned')
     presenceData.details = 'Yasaklı'
-  }
-  else if (pathname === '/privacy-policy') {
+
+  else if (pathname === '/privacy-policy')
     presenceData.details = 'Gizlilik politikası'
-  }
-  else if (pathname === '/terms-of-service') {
+
+  else if (pathname === '/terms-of-service')
     presenceData.details = 'Kullanım koşulları'
-  }
-  else {
+
+  else
     presenceData.details = 'Göz atıyor'
-  }
 
   presence.setActivity(presenceData)
 })
