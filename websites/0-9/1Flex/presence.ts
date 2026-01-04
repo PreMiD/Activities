@@ -89,9 +89,10 @@ presence.on('UpdateData', async () => {
       const poster = document.querySelector('img.object-cover.rounded-lg')?.getAttribute('src')
       presenceData.name = title
       presenceData.state = `⭐ ${rating} 🕒 ${runtime} mins 🗓️ ${year}`
-      if (poster) presenceData.largeImageKey = poster
-        presenceData.smallImageKey = ActivityAssets.Logo
-  }
+      if (poster)
+        presenceData.largeImageKey = poster
+      presenceData.smallImageKey = ActivityAssets.Logo
+    }
     if (type === 'tv') {
       presenceData.type = ActivityType.Watching
       const params = new URLSearchParams(location.search)
@@ -103,7 +104,7 @@ presence.on('UpdateData', async () => {
       const metaElements = activeEpisode?.querySelectorAll('.text-xs, .text-sm')
       metaElements?.forEach((el) => {
         const text = el.textContent || ''
-        if (text.includes('min')) { 
+        if (text.includes('min')) {
           runtime = text.match(/(\d+)\s*min/i)?.[1] || 'N/A'
         }
       })
