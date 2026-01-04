@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "671037171611729920",
+    "name": "atom_skully"
+  },
+  "service": "Microsoft Copilot",
+  "description": {
+    "en": "Microsoft Copilot is your companion to inform, entertain and inspire. Get advice, feedback and straightforward answers.",
+    "fr": "Microsoft Copilot est votre compagnon pour informer, divertir et inspirer. Obtenez des conseils, des commentaires et des réponses simples."
+  },
+  "url": "copilot.microsoft.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*copilot[.]microsoft[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Microsoft%20Copilot/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Microsoft%20Copilot/assets/thumbnail.png",
+  "color": "#E14F9D",
+  "category": "other",
+  "tags": [
+    "ai",
+    "language",
+    "human-like",
+    "conversations",
+    "multi-purpose"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "showTitle",
+      "title": "Show chat title",
+      "icon": "fa-solid fa-message-quote",
+      "value": true,
+      "description": "Only work when sidebar open"
+    }
+  ]
+}

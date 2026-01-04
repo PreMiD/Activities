@@ -16,11 +16,10 @@
   "url": [
     "animepahe.si",
     "animepahe.com",
-    "animepahe.ru",
     "animepahe.org"
   ],
-  "regExp": "^https?[:][/][/]animepahe[.](si|com|ru|org)[/]",
-  "version": "1.6.0",
+  "regExp": "^https?[:][/][/]animepahe[.](si|com|org)[/]",
+  "version": "1.6.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/animepahe/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/animepahe/assets/thumbnail.png",
   "color": "#d5015b",
