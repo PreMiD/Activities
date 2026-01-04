@@ -6,7 +6,7 @@ const startTimestamp = Date.now()
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://futdle.tr/logo.png',
+    largeImageKey: 'https://i.imgur.com/WEvX9g6.png',
   }
 
   const path = document.location.pathname
