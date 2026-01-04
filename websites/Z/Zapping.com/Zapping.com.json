@@ -7,14 +7,6 @@
     "description": "Shown when viewing a another page in Zapping",
     "message": "In Zapping"
   },
-  "zapping.browsing": {
-    "description": "Shown when browsing a channel",
-    "message": "Browsing"
-  },
-  "zapping.home": {
-    "description": "Shown when viewing the homepage",
-    "message": "Home"
-  },
   "zapping.login": {
     "description": "Shown when Logging in",
     "message": "Logging in"
