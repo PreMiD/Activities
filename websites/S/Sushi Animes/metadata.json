@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "706046802108874752",
+    "name": "Sushi Animes"
+  },
+  "service": "Sushi Animes",
+  "description": {
+    "en": "Watch dubbed and subtitled animes online in HD, FHD. Action, adventure and romance animes to watch on mobile or PC, free on Sushi Animes!",
+    "pt": "Assista animes dublados e legendados online em HD, FHD. Animes de ação, aventura e romance para ver no celular ou PC, grátis no Sushi Animes!"
+  },
+  "url": "sushianimes.com.br",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sushianimes[.]com[.]br[/]",
+  "version": "1.1.0",
+  "logo": "https://sushianimes.com.br/public/static/favicon.png",
+  "thumbnail": "https://media.discordapp.net/attachments/1271966512420360294/1457809181565386839/Thumbnail.png",
+  "color": "#ff4500",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "sushianimes",
+    "otaku",
+    "assistiranimes",
+    "brasil",
+    "animeonline"
+  ],
+  "iframe": true,
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacidade",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
+}
