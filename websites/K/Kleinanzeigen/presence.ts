@@ -1,8 +1,8 @@
 const presence = new Presence({
   clientId: '1454616266567323688',
-});
+})
 
-const browsingTimestamp = Math.floor(Date.now() / 1000);
+const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
@@ -84,111 +84,111 @@ presence.on('UpdateData', async () => {
     plastic: 'kleinanzeigen.plastic',
     metal: 'kleinanzeigen.metal',
     wood: 'kleinanzeigen.wood',
-  });
+  })
 
   const presenceData: PresenceData = {
     largeImageKey: 'https://i.imgur.com/ipFHHUi.png',
     startTimestamp: browsingTimestamp,
-  };
+  }
 
-  const path = document.location.pathname;
+  const path = document.location.pathname
 
   if (path.includes('/s-anzeige/')) {
-    const titleElement = document.querySelector('#viewad-title');
-    let title = '';
+    const titleElement = document.querySelector('#viewad-title')
+    let title = ''
     if (titleElement) {
-      const clone = titleElement.cloneNode(true) as HTMLElement;
-      clone.querySelectorAll('.is-hidden').forEach(el => el.remove());
-      title = clone.textContent?.trim() || '';
+      const clone = titleElement.cloneNode(true) as HTMLElement
+      clone.querySelectorAll('.is-hidden').forEach(el => el.remove())
+      title = clone.textContent?.trim() || ''
     }
 
-    const priceElement = document.querySelector('#viewad-price');
-    const price = priceElement?.textContent?.trim();
+    const priceElement = document.querySelector('#viewad-price')
+    const price = priceElement?.textContent?.trim()
 
-    const sellerName = document.querySelector('.text-force-linebreak.userprofile-vip a')?.textContent?.trim();
+    const sellerName = document.querySelector('.text-force-linebreak.userprofile-vip a')?.textContent?.trim()
 
-    const badges: string[] = [];
-    const satisfactionBadge = document.querySelector('.userbadge-tag .icon-rating-tag-2');
-    const friendlinessBadge = document.querySelector('.userbadge-tag .icon-friendliness-tag');
-    const reliabilityBadge = document.querySelector('.userbadge-tag .icon-reliability-tag');
+    const badges: string[] = []
+    const satisfactionBadge = document.querySelector('.userbadge-tag .icon-rating-tag-2')
+    const friendlinessBadge = document.querySelector('.userbadge-tag .icon-friendliness-tag')
+    const reliabilityBadge = document.querySelector('.userbadge-tag .icon-reliability-tag')
 
     if (satisfactionBadge) {
-      badges.push(strings.topSatisfaction);
+      badges.push(strings.topSatisfaction)
     }
     if (friendlinessBadge) {
-      badges.push(strings.veryFriendly);
+      badges.push(strings.veryFriendly)
     }
     if (reliabilityBadge) {
-      badges.push(strings.reliable);
+      badges.push(strings.reliable)
     }
 
-    presenceData.details = title || strings.viewingAd;
-    presenceData.state = price ? `${price} | ${strings.seller}: ${sellerName || strings.unknown}` : `${strings.seller}: ${sellerName || strings.unknown}`;
+    presenceData.details = title || strings.viewingAd
+    presenceData.state = price ? `${price} | ${strings.seller}: ${sellerName || strings.unknown}` : `${strings.seller}: ${sellerName || strings.unknown}`
 
     if (badges.length > 0) {
-      presenceData.smallImageKey = 'https://i.imgur.com/Q2gWRtY.png';
-      presenceData.smallImageText = badges.join(' • ');
+      presenceData.smallImageKey = 'https://i.imgur.com/Q2gWRtY.png'
+      presenceData.smallImageText = badges.join(' • ')
     }
 
-    const sellerLink = document.querySelector('.text-force-linebreak.userprofile-vip a')?.getAttribute('href');
+    const sellerLink = document.querySelector('.text-force-linebreak.userprofile-vip a')?.getAttribute('href')
     presenceData.buttons = [
       {
         label: strings.viewAd,
         url: window.location.href,
       },
-    ];
+    ]
 
     if (sellerLink) {
       presenceData.buttons.push({
         label: strings.viewSeller,
         url: `https://www.kleinanzeigen.de${sellerLink}`,
-      });
+      })
     }
   }
 
   else if (path.includes('/s-') && !path.includes('/s-anzeige/') && !path.includes('/s-bestandsliste')) {
-    const searchInput = document.getElementById('site-search-query') as HTMLInputElement;
-    let searchQuery = searchInput?.value || strings.unknownSearch;
+    const searchInput = document.getElementById('site-search-query') as HTMLInputElement
+    let searchQuery = searchInput?.value || strings.unknownSearch
 
-    const categories: string[] = [];
-    const seenFilters = new Set<string>();
+    const categories: string[] = []
+    const seenFilters = new Set<string>()
 
-    const urlSegments = path.split('/').filter(seg => seg);
+    const urlSegments = path.split('/').filter(seg => seg)
 
-    let area = '';
-    let region = '';
+    let area = ''
+    let region = ''
 
-    const sIndex = urlSegments.findIndex(seg => seg.startsWith('s-'));
+    const sIndex = urlSegments.findIndex(seg => seg.startsWith('s-'))
     if (sIndex !== -1) {
-      const sSegment = urlSegments[sIndex];
-      const sContent = sSegment!.replace('s-', '');
+      const sSegment = urlSegments[sIndex]
+      const sContent = sSegment!.replace('s-', '')
 
       if (!sSegment!.includes(':')) {
         if (sIndex + 1 < urlSegments.length) {
-          const nextSegment = urlSegments[sIndex + 1];
+          const nextSegment = urlSegments[sIndex + 1]
           if (nextSegment && !nextSegment.includes(':') && !nextSegment.includes('+') && !nextSegment.startsWith('k0')) {
-            area = sContent.replace(/-/g, ' ').charAt(0).toUpperCase() + sContent.replace(/-/g, ' ').slice(1);
-            searchQuery = nextSegment.replace(/-/g, ' ');
+            area = sContent.replace(/-/g, ' ').charAt(0).toUpperCase() + sContent.replace(/-/g, ' ').slice(1)
+            searchQuery = nextSegment.replace(/-/g, ' ')
 
             if (sIndex + 2 < urlSegments.length) {
-              const regionSegment = urlSegments[sIndex + 2];
+              const regionSegment = urlSegments[sIndex + 2]
               if (regionSegment && !regionSegment.includes(':') && !regionSegment.includes('+') && !regionSegment.startsWith('k0')) {
-                region = regionSegment.replace(/-/g, ' ').charAt(0).toUpperCase() + regionSegment.replace(/-/g, ' ').slice(1);
+                region = regionSegment.replace(/-/g, ' ').charAt(0).toUpperCase() + regionSegment.replace(/-/g, ' ').slice(1)
               }
             }
           }
           else {
-            searchQuery = sContent.replace(/-/g, ' ');
+            searchQuery = sContent.replace(/-/g, ' ')
           }
         }
         else {
-          searchQuery = sContent.replace(/-/g, ' ');
+          searchQuery = sContent.replace(/-/g, ' ')
         }
       }
       else if (searchQuery === strings.unknownSearch && sIndex + 1 < urlSegments.length) {
-        const nextSegment = urlSegments[sIndex + 1];
+        const nextSegment = urlSegments[sIndex + 1]
         if (nextSegment && !nextSegment.includes(':') && !nextSegment.includes('+') && !nextSegment.startsWith('k0')) {
-          searchQuery = nextSegment.replace(/-/g, ' ');
+          searchQuery = nextSegment.replace(/-/g, ' ')
         }
       }
     }
@@ -222,243 +222,243 @@ presence.on('UpdateData', async () => {
       'plastic': strings.plastic,
       'metal': strings.metal,
       'wood': strings.wood,
-    };
+    }
 
     urlSegments.forEach((segment) => {
       if (segment.includes(':')) {
-        const filterParts = segment.split('+');
+        const filterParts = segment.split('+')
 
         filterParts.forEach((part) => {
           if (!part.includes(':')) {
-            return;
+            return
           }
 
-          const [key, value] = part.split(':');
+          const [key, value] = part.split(':')
           if (!key || !value || key === 'k0') {
-            return;
+            return
           }
 
-          const decodedValue = decodeURIComponent(value);
+          const decodedValue = decodeURIComponent(value)
 
           const cleanKey = key
             .replace('k0', '')
             .replace('global.', '')
             .replace(/_/g, ' ')
-            .trim();
+            .trim()
 
           if (!cleanKey || cleanKey === 'k0') {
-            return;
+            return
           }
 
           const keyTranslated = categoryMap[cleanKey]
             || categoryMap[key]
-            || cleanKey.charAt(0).toUpperCase() + cleanKey.slice(1);
+            || cleanKey.charAt(0).toUpperCase() + cleanKey.slice(1)
 
-          let valueTranslated = '';
+          let valueTranslated = ''
           if (decodedValue.includes(',')) {
-            const values = decodedValue.split(',').map(v => v.trim());
+            const values = decodedValue.split(',').map(v => v.trim())
             const translatedValues = values.map((v) => {
               return categoryMap[v]
                 || v.replace(/_/g, ' ').charAt(0).toUpperCase()
-                + v.replace(/_/g, ' ').slice(1);
-            });
-            valueTranslated = translatedValues.join(', ');
+                + v.replace(/_/g, ' ').slice(1)
+            })
+            valueTranslated = translatedValues.join(', ')
           }
           else {
             valueTranslated = categoryMap[decodedValue]
               || decodedValue.replace(/_/g, ' ').charAt(0).toUpperCase()
-              + decodedValue.replace(/_/g, ' ').slice(1);
+              + decodedValue.replace(/_/g, ' ').slice(1)
           }
 
-          const filterStr = `${keyTranslated}: ${valueTranslated}`;
-          const filterStrLower = filterStr.toLowerCase();
+          const filterStr = `${keyTranslated}: ${valueTranslated}`
+          const filterStrLower = filterStr.toLowerCase()
 
           if (!seenFilters.has(filterStrLower)) {
-            seenFilters.add(filterStrLower);
-            categories.push(filterStr);
+            seenFilters.add(filterStrLower)
+            categories.push(filterStr)
           }
-        });
+        })
       }
-    });
+    })
 
-    const displayCategories = categories.slice(0, 3);
+    const displayCategories = categories.slice(0, 3)
     if (categories.length > 3) {
-      displayCategories.push(`+${categories.length - 3} ${strings.more}`);
+      displayCategories.push(`+${categories.length - 3} ${strings.more}`)
     }
 
-    const currentPage = document.querySelector('.pagination-current')?.textContent?.trim() || '1';
-    const lastPageLink = document.querySelectorAll('.pagination-page');
-    let totalPages = currentPage;
+    const currentPage = document.querySelector('.pagination-current')?.textContent?.trim() || '1'
+    const lastPageLink = document.querySelectorAll('.pagination-page')
+    let totalPages = currentPage
 
     if (lastPageLink.length > 0) {
-      const lastVisible = Array.from(lastPageLink).pop();
-      totalPages = lastVisible?.textContent?.trim() || currentPage;
+      const lastVisible = Array.from(lastPageLink).pop()
+      totalPages = lastVisible?.textContent?.trim() || currentPage
 
       if (document.querySelector('.pagination-pages span:not([class])')) {
-        totalPages += '+';
+        totalPages += '+'
       }
     }
 
-    const stateParts = [];
+    const stateParts = []
 
     if (area && (region || displayCategories.length > 0 || categories.length > 0)) {
-      stateParts.push(area);
+      stateParts.push(area)
     }
     if (region && (displayCategories.length > 0 || categories.length > 0)) {
-      stateParts.push(region);
+      stateParts.push(region)
     }
 
     if (displayCategories.length > 0) {
-      stateParts.push(...displayCategories);
+      stateParts.push(...displayCategories)
     }
 
-    presenceData.details = `${strings.searchingFor}: '${searchQuery}'`;
+    presenceData.details = `${strings.searchingFor}: '${searchQuery}'`
 
     if (stateParts.length > 0) {
-      presenceData.state = `${stateParts.join(' | ')} | ${strings.page} ${currentPage} ${strings.of} ${totalPages}`;
+      presenceData.state = `${stateParts.join(' | ')} | ${strings.page} ${currentPage} ${strings.of} ${totalPages}`
     }
     else {
-      presenceData.state = `${strings.page} ${currentPage} ${strings.of} ${totalPages}`;
+      presenceData.state = `${strings.page} ${currentPage} ${strings.of} ${totalPages}`
     }
 
-    presenceData.smallImageKey = 'https://i.imgur.com/XBf1cGW.png';
+    presenceData.smallImageKey = 'https://i.imgur.com/XBf1cGW.png'
     presenceData.buttons = [
       {
         label: strings.viewSearch,
         url: window.location.href,
       },
-    ];
+    ]
   }
   else if (path.includes('/m-meine-anzeigen.html')) {
-    presenceData.details = strings.managingAds;
-    presenceData.state = strings.myAds;
-    presenceData.smallImageKey = 'https://i.imgur.com/ZSiPGqT.png';
+    presenceData.details = strings.managingAds
+    presenceData.state = strings.myAds
+    presenceData.smallImageKey = 'https://i.imgur.com/ZSiPGqT.png'
   }
   else if (path.includes('/m-nachrichten.html')) {
-    presenceData.details = strings.readingMessages;
-    presenceData.state = strings.inbox;
-    presenceData.smallImageKey = 'https://i.imgur.com/GmdAyQk.png';
+    presenceData.details = strings.readingMessages
+    presenceData.state = strings.inbox
+    presenceData.smallImageKey = 'https://i.imgur.com/GmdAyQk.png'
   }
   else if (path.includes('/m-einstellungen.html')) {
-    presenceData.details = strings.inSettings;
-    presenceData.smallImageKey = 'https://i.imgur.com/GASIlZP.png';
+    presenceData.details = strings.inSettings
+    presenceData.smallImageKey = 'https://i.imgur.com/GASIlZP.png'
     if (window.location.hash.includes('personal-info')) {
-      presenceData.state = strings.managingProfileInfo;
+      presenceData.state = strings.managingProfileInfo
     }
     else if (window.location.hash.includes('account-settings')) {
-      presenceData.state = strings.managingAccountSettings;
+      presenceData.state = strings.managingAccountSettings
     }
     else if (window.location.hash.includes('payment-settings')) {
-      presenceData.state = strings.managingPaymentMethods;
+      presenceData.state = strings.managingPaymentMethods
     }
     else if (window.location.hash.includes('pur-settings')) {
-      const subscriberStatus = document.querySelector('.w-full .inline-flex.flex-nowrap span')?.textContent?.trim() || strings.unknown;
+      const subscriberStatus = document.querySelector('.w-full .inline-flex.flex-nowrap span')?.textContent?.trim() || strings.unknown
       if (subscriberStatus === 'Aktiv') {
-        presenceData.state = strings.activePur;
+        presenceData.state = strings.activePur
       }
       else if (subscriberStatus === 'Inaktiv') {
-        presenceData.state = strings.inactivePur;
+        presenceData.state = strings.inactivePur
       }
       else {
-        presenceData.state = `${strings.managingPur} ${subscriberStatus}`;
+        presenceData.state = `${strings.managingPur} ${subscriberStatus}`
       }
     }
     else if (window.location.hash.includes('data-protection')) {
-      presenceData.state = strings.managingDataProtection;
+      presenceData.state = strings.managingDataProtection
     }
     else if (window.location.hash.includes('notifications')) {
-      presenceData.state = strings.managingEmailSettings;
+      presenceData.state = strings.managingEmailSettings
     }
     else if (window.location.hash.includes('about')) {
-      presenceData.state = strings.viewingAbout;
+      presenceData.state = strings.viewingAbout
     }
     else if (window.location.hash.includes('help-and-feedback')) {
-      presenceData.state = strings.viewingHelp;
+      presenceData.state = strings.viewingHelp
     }
     else {
-      presenceData.state = strings.managingAccount;
+      presenceData.state = strings.managingAccount
     }
   }
   else if (path.includes('/m-merkliste.html')) {
-    const savedArticles = document.querySelectorAll('#wtchlst-msg ~ ul li').length || 0;
-    presenceData.details = strings.browsingWatchlist;
-    presenceData.state = `${savedArticles} ${strings.savedAds}`;
-    presenceData.smallImageKey = 'https://i.imgur.com/DzXeiWS.png';
+    const savedArticles = document.querySelectorAll('#wtchlst-msg ~ ul li').length || 0
+    presenceData.details = strings.browsingWatchlist
+    presenceData.state = `${savedArticles} ${strings.savedAds}`
+    presenceData.smallImageKey = 'https://i.imgur.com/DzXeiWS.png'
   }
   else if (path.includes('/m-meine-nutzer.html')) {
-    presenceData.details = strings.managingUsers;
-    presenceData.state = strings.followedSellers;
-    presenceData.smallImageKey = 'https://i.imgur.com/ZSiPGqT.png';
+    presenceData.details = strings.managingUsers
+    presenceData.state = strings.followedSellers
+    presenceData.smallImageKey = 'https://i.imgur.com/ZSiPGqT.png'
   }
   else if (path.includes('/m-meine-suchen.html')) {
-    presenceData.details = strings.managingSearches;
-    presenceData.state = strings.savedSearches;
-    presenceData.smallImageKey = 'https://i.imgur.com/XBf1cGW.png';
+    presenceData.details = strings.managingSearches
+    presenceData.state = strings.savedSearches
+    presenceData.smallImageKey = 'https://i.imgur.com/XBf1cGW.png'
   }
   else if (path.includes('/p-anzeige-aufgeben') || path.includes('/p-anzeige-abschicken')) {
-    const category = document.querySelector('#postad-category-path')?.textContent?.trim();
-    const price = document.querySelector<HTMLInputElement>('#pstad-price')?.value?.trim();
-    const priceType = document.querySelector<HTMLSelectElement>('#priceType')?.selectedOptions[0]?.textContent?.trim();
+    const category = document.querySelector('#postad-category-path')?.textContent?.trim()
+    const price = document.querySelector<HTMLInputElement>('#pstad-price')?.value?.trim()
+    const priceType = document.querySelector<HTMLSelectElement>('#priceType')?.selectedOptions[0]?.textContent?.trim()
 
-    const statusText = strings.creatingAd;
+    const statusText = strings.creatingAd
 
-    let details = strings.posting;
+    let details = strings.posting
     if (category && category !== strings.chooseCategory) {
-      details += ` ${strings.in} ${category}`;
+      details += ` ${strings.in} ${category}`
     }
 
-    presenceData.details = details;
-    presenceData.state = statusText;
+    presenceData.details = details
+    presenceData.state = statusText
 
     if (price && priceType) {
-      presenceData.smallImageText = `${price} EUR ${priceType}`;
+      presenceData.smallImageText = `${price} EUR ${priceType}`
     }
 
-    presenceData.smallImageKey = 'https://i.imgur.com/u91zmaE.png';
+    presenceData.smallImageKey = 'https://i.imgur.com/u91zmaE.png'
   }
 
   else if (path.includes('/s-bestandsliste.html')) {
-    const sellerNameElement = document.querySelector('.userprofile--name');
-    let sellerName = '';
+    const sellerNameElement = document.querySelector('.userprofile--name')
+    let sellerName = ''
     if (sellerNameElement) {
-      const clone = sellerNameElement.cloneNode(true) as HTMLElement;
-      clone.querySelectorAll('.sr-only').forEach(el => el.remove());
-      sellerName = clone.textContent?.trim() || '';
+      const clone = sellerNameElement.cloneNode(true) as HTMLElement
+      clone.querySelectorAll('.sr-only').forEach(el => el.remove())
+      sellerName = clone.textContent?.trim() || ''
     }
-    presenceData.details = strings.viewingSellerProfile;
-    presenceData.state = sellerName || strings.sellerProfile;
-    presenceData.smallImageKey = 'https://i.imgur.com/ZSiPGqT.png';
+    presenceData.details = strings.viewingSellerProfile
+    presenceData.state = sellerName || strings.sellerProfile
+    presenceData.smallImageKey = 'https://i.imgur.com/ZSiPGqT.png'
     presenceData.buttons = [
       {
         label: strings.viewProfile,
         url: window.location.href,
       },
-    ];
+    ]
   }
   else if (path.includes('/m-benachrichtigungen.html')) {
-    presenceData.details = strings.managingNotifications;
-    presenceData.smallImageKey = 'https://i.imgur.com/PVJdOfm.png';
+    presenceData.details = strings.managingNotifications
+    presenceData.smallImageKey = 'https://i.imgur.com/PVJdOfm.png'
   }
   else if (path === '/' || path === '/index.html') {
-    presenceData.details = strings.onHomepage;
-    presenceData.state = strings.browsingOffers;
-    presenceData.smallImageKey = 'https://i.imgur.com/d0u9KBC.png';
+    presenceData.details = strings.onHomepage
+    presenceData.state = strings.browsingOffers
+    presenceData.smallImageKey = 'https://i.imgur.com/d0u9KBC.png'
   }
   else if (path.includes('/m-abgemeldet.html')) {
-    presenceData.details = strings.loggedOut;
-    presenceData.smallImageKey = 'https://i.imgur.com/FsZPn7h.png';
+    presenceData.details = strings.loggedOut
+    presenceData.smallImageKey = 'https://i.imgur.com/FsZPn7h.png'
   }
   else if (path.match(/^\/s-[^/]+\/c\d+$/)) {
-    const categoryName = document.querySelector('h1')?.textContent?.trim();
-    presenceData.details = strings.browsingCategory;
-    presenceData.state = categoryName || strings.browsingAds;
-    presenceData.smallImageKey = 'https://i.imgur.com/XBf1cGW.png';
+    const categoryName = document.querySelector('h1')?.textContent?.trim()
+    presenceData.details = strings.browsingCategory
+    presenceData.state = categoryName || strings.browsingAds
+    presenceData.smallImageKey = 'https://i.imgur.com/XBf1cGW.png'
   }
-  
+
   if (presenceData.details) {
-    presence.setActivity(presenceData);
+    presence.setActivity(presenceData)
   }
   else {
-    presence.clearActivity();
+    presence.clearActivity()
   }
-});
+})
