@@ -25,6 +25,7 @@ interface ApiResponse {
   onAir?: {
     presenter?: {
       name?: string
+      avatar?: string
       is_live?: boolean
     }
   }
@@ -96,6 +97,8 @@ presence.on('UpdateData', async () => {
         details: 'Browsing Symphony Radio',
         largeImageKey: LOGO_512,
         largeImageText: 'Symphony Radio',
+        smallImageKey: LOGO_512,
+        smallImageText: 'Symphony Radio',
       })
     }
     else {
@@ -111,6 +114,10 @@ presence.on('UpdateData', async () => {
     return
   }
 
+  const getArtwork = (data: ApiResponse, fallback: string): string =>
+    data.nowPlaying?.track?.artwork?.url || fallback
+  const getDjart = (data: ApiResponse, fallback: string): string =>
+    data.onAir?.presenter?.avatar || fallback
   const track = data.song?.track ?? 'Live Radio'
   const artist = data.song?.artist ?? 'Symphony Radio'
 
@@ -133,8 +140,10 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Listening,
     details: track,
     state: `${isLive ? `🎙️ ${djName}` : '🤖 Symphony'} • ${listeners} listening`,
-    largeImageKey: LOGO_512,
+    largeImageKey: getArtwork(data, LOGO_512),
     largeImageText: artist,
+    smallImageKey: getDjart(data, LOGO_512),
+    smallImageText: `${isLive ? `DJ ${djName}` : 'DJ Symphony'}`,
     startTimestamp: lastStart || undefined,
     endTimestamp: end || undefined,
     buttons: [
