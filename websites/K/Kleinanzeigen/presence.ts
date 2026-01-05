@@ -336,8 +336,8 @@ presence.on('UpdateData', async () => {
   }
   else if (path.includes('/p-anzeige-aufgeben') || path.includes('/p-anzeige-abschicken')) {
     const category = document.querySelector('#postad-category-path')?.textContent?.trim()
-    const price = (document.querySelector('#pstad-price') as HTMLInputElement)?.value?.trim()
-    const priceType = (document.querySelector('#priceType') as HTMLSelectElement)?.selectedOptions[0]?.textContent?.trim()
+    const price = document.querySelector<HTMLInputElement>('#pstad-price')?.value?.trim()
+    const priceType = document.querySelector<HTMLSelectElement>('#priceType')?.selectedOptions[0]?.textContent?.trim()
 
     const statusText = t.creatingAd
 
