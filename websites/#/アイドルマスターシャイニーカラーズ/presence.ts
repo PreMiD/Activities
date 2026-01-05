@@ -23,17 +23,18 @@ presence.on('UpdateData', async () => {
   const currentRoute = (cleanHash && cleanHash.length > 1) ? cleanHash.substring(1) : currentPath
 
   const presenceData: PresenceData = {
+    name: 'シャニマス',
     largeImageKey: 'https://i.imgur.com/e6Zr6HQ.png',
+    largeImageUrl: 'https://shinycolors.enza.fun/',
     startTimestamp: browsingTimestamp,
-    state: 'シャニマスをプレイ中',
+    detailsUrl: `https://shinycolors.enza.fun${currentRoute}`,
   }
-
-  presenceData.details = 'シャニマス'
 
   const pathMap: Record<string, PresenceData> = {
     '/home': { details: 'ホーム画面' },
     '/present': { details: 'プレゼント' },
     '/shop': { details: 'ショップ' },
+    '/shop/premium': { details: 'プレミアムショップ' },
     '/shop/skin': { details: '衣装ショップ' },
     '/shop/game_event': { details: 'イベントショップ' },
     '/shop/money': { details: 'マニーショップ' },
