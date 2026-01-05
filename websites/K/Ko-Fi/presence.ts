@@ -52,10 +52,10 @@ presence.on('UpdateData', async () => {
   else if (pathname.toLowerCase().startsWith('/manage')) {
     presenceData.details = 'Managing Ko-Fi'
   }
-  else if (pathname.toLowerCase().startsWith('/settings') || pathname.toLowerCase().startsWith("/discord/settings")) {
+  else if (pathname.toLowerCase().startsWith('/settings') || pathname.toLowerCase().startsWith('/discord/settings')) {
     presenceData.details = 'Adjusting user settings...'
   }
-  else if (pathname.toLowerCase().startsWith('/newsfeed') || pathname.toLowerCase().startsWith("/feed")) {
+  else if (pathname.toLowerCase().startsWith('/newsfeed') || pathname.toLowerCase().startsWith('/feed')) {
     presenceData.details = 'Viewing the newsfeed...'
   }
   else if (pathname.toLowerCase().startsWith('/my-supporters')) {
@@ -91,8 +91,8 @@ presence.on('UpdateData', async () => {
         presenceData.buttons = [
           {
             label: 'View Item',
-            url: href
-          }
+            url: href,
+          },
         ]
       }
     }
@@ -123,7 +123,7 @@ presence.on('UpdateData', async () => {
           {
             label: 'View Post',
             url: href,
-          }
+          },
         ]
       }
     }
@@ -144,7 +144,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Viewing an album.'
     }
   }
-  else if (pathname.toLowerCase().startsWith("/polls")) {
+  else if (pathname.toLowerCase().startsWith('/polls')) {
     try {
       const user = document.querySelector('name')?.textContent?.trim()
       presenceData.details = 'Viewing an poll.'
@@ -154,14 +154,15 @@ presence.on('UpdateData', async () => {
           {
             label: 'View Poll',
             url: href,
-          }
+          },
         ]
       }
       if (user !== 'undefined') {
         presenceData.details = 'Viewing a users poll:'
         presenceData.state = user
       }
-    } catch {
+    }
+    catch {
       presenceData.details = 'Viewing an poll.'
     }
   }
@@ -182,7 +183,7 @@ presence.on('UpdateData', async () => {
             {
               label: 'View Page',
               url: `https://ko-fi.com/${userSplit}`,
-            }
+            },
           ]
         }
       }
