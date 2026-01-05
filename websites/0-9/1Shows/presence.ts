@@ -1,7 +1,7 @@
 import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1349021198943649884',
+  clientId: '1452785817901600890',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)

@@ -11,12 +11,9 @@
     "ga": "Is suíomh Gréasáin sruthaithe é KickAssAnime inar féidir leat féachaint ar Shraith Teilifíse, ar Scannáin & OVA i bhformáidí a bhfuil dubáil agus fo-leagan orthu.",
     "nl": "KickAssAnime is een streamingwebsite waar u tv-series, films en OVA kunt bekijken in nagesynchroniseerde en ondertitelde vorm."
   },
-  "url": [
-    "kickassanime.lol",
-    "kickassanime.ro"
-  ],
+  "url": "kickassanime.ro",
   "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*kickassanime([.][a-z]+)+)|(kaas[.].*)|((www[0-9]*[.])?(kickassanime[.][a-z]+))",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KickAssAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KickAssAnime/assets/thumbnail.png",
   "color": "#c7c95b",
