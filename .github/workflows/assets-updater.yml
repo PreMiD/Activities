@@ -42,8 +42,8 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           # Configure git
-          # git config --local user.email "contact@premid.app"
-          # git config --local user.name "PreMiD Automations"
+          git config --local user.email "250752185+dimerp[bot]@users.noreply.github.com"
+          git config --local user.name "DiMerP[bot]"
 
           # Run PMD update-assets command
           npx pmd update-assets
