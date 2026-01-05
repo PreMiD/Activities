@@ -5,6 +5,12 @@
     "name": "Dzlandis",
     "id": "259708781166985217"
   },
+  "contributors": [
+    {
+      "name": "entraptaa",
+      "id": "153980822670671872"
+    }
+  ],
   "service": "Ko-Fi",
   "description": {
     "en": "Ko-fi lets creators receive support from fans of their content for the price of a coffee!"
@@ -21,5 +27,13 @@
     "donation",
     "support",
     "coffee"
+  ],
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-low-vision",
+      "value": true
+    }
   ]
 }
