@@ -27,5 +27,5 @@
     "shinycolors"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*"
+  "iFrameRegExp": "^https?[:][/][/]shinycolors[.]enza[.]fun[/]"
 }
