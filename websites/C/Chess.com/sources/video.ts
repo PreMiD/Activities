@@ -13,7 +13,7 @@ function getMainVideo(doc: Document): HTMLVideoElement | null {
 
 function isPlaying(doc: Document, video: HTMLVideoElement): boolean {
   if (video.seeking)
-    return true
+    return false
 
   const pauseIcon = doc.querySelector('.video-player-controls .icon-font-chess.pause')
   if (pauseIcon)
