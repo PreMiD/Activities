@@ -33,6 +33,8 @@ export interface Translation {
   topDeals: string
   searching: string
   searchingEllipsis: string
+  unknown: string
+  unknownCategory: string
 }
 
 export interface Resolver {

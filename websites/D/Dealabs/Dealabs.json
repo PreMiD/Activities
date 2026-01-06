@@ -90,5 +90,13 @@
   "dealabs.searchingEllipsis": {
     "description": "Shown when searching (ellipsis)",
     "message": "Searching..."
+  },
+  "dealabs.unknown": {
+    "description": "Generic unknown text",
+    "message": "Unknown"
+  },
+  "dealabs.unknownCategory": {
+    "description": "Text for unknown category",
+    "message": "Unknown"
   }
 }

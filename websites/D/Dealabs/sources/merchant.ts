@@ -4,9 +4,9 @@ import { formatSlug } from '../util/index.js'
 const merchantResolver: Resolver = {
   isActive: (pathname: string) => pathname.includes('/codes-promo/'),
 
-  getState: () => {
+  getState: (t: any) => {
     const parts = document.location.pathname.split('/codes-promo/')
-    const merchantSlug = parts[1] ? parts[1].split('/')[0] : 'Inconnu'
+    const merchantSlug = parts[1] ? parts[1].split('/')[0] : t.unknown
     return formatSlug(merchantSlug)
   },
 

@@ -49,6 +49,8 @@ presence.on('UpdateData', async () => {
     topDeals: 'dealabs.topDeals',
     searching: 'dealabs.searching',
     searchingEllipsis: 'dealabs.searchingEllipsis',
+    unknown: 'dealabs.unknown',
+    unknownCategory: 'dealabs.unknownCategory',
   })
 
   const t: any = strings

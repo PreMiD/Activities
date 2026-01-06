@@ -27,7 +27,7 @@ const dealResolver: Resolver = {
       }
       else {
         const freeLabel = mainContent.querySelector('.text--color-free')
-        if (freeLabel || (mainContent.textContent && mainContent.textContent.includes('Gratuit') && !mainContent.textContent.includes('€'))) {
+        if (freeLabel || (mainContent.textContent && mainContent.textContent.includes(t.free) && !mainContent.textContent.includes('€'))) {
           price = t.free
         }
       }

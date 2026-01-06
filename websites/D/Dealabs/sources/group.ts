@@ -4,7 +4,7 @@ import { formatSlug } from '../util/index.js'
 const groupResolver: Resolver = {
   isActive: (pathname: string) => pathname.includes('/groupe'),
 
-  getState: (_t: any) => {
+  getState: (t: any) => {
     const docTitle = document.title
     const titleMatch = docTitle.match(/Bon plan (.+?) [⇒|:\-]/)
     if (titleMatch && titleMatch[1])
@@ -15,7 +15,7 @@ const groupResolver: Resolver = {
       return h1
 
     const parts = document.location.pathname.split('/groupe/')
-    const slug = (parts[1] ?? '').split('/')[0] || 'Inconnue'
+    const slug = (parts[1] ?? '').split('/')[0] || t.unknownCategory
     return formatSlug(slug)
   },
 
