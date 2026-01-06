@@ -146,11 +146,5 @@ presence.on('UpdateData', async () => {
     smallImageText: `${isLive ? `DJ ${djName}` : 'DJ Symphony'}`,
     startTimestamp: lastStart || undefined,
     endTimestamp: end || undefined,
-    buttons: [
-      {
-        label: 'Listen Live',
-        url: 'https://symphonyradio.co.uk',
-      },
-    ],
   })
 })
