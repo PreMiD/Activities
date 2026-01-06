@@ -21,12 +21,14 @@ let cache: {
   episodio: string
   season: string
   bannerImg: string
+  descAnime: string
 } = {
   text: '',
   nombreAnime: '',
   episodio: '',
   season: '',
   bannerImg: ActivityAssets.Gif,
+  descAnime: '',
 }
 
 async function getEpisodeInfo(text: string) {
@@ -36,13 +38,16 @@ async function getEpisodeInfo(text: string) {
       episodio: cache.episodio,
       season: cache.season,
       bannerImg: cache.bannerImg,
+      descAnime: cache.descAnime,
     }
   }
-  const [episodioParte, tituloCompleto] = text.split(' - ')
-  const episodio = episodioParte?.trim() || ''
-  const seasonMatch = tituloCompleto?.match(/Season\s*(\d+)/i)
-  const nombreAnime = tituloCompleto?.replace(/Season\s*\d+/i, '').trim() || ''
-  const season = seasonMatch ? `Season ${seasonMatch[1]}` : 'Season 1'
+  const currentEpisode = document.querySelector(
+    '#episodes-content li.list-group-item.current',
+  )
+  const episodio = currentEpisode?.querySelector('h5')?.textContent?.trim() || 'Episodio 1'
+  const nombreAnime = document.querySelector('.video_i a')?.textContent?.trim() || ''
+  const season = 'Season 1'
+  const descAnime = document.querySelector('.video_i p')?.textContent?.trim() || ''
 
   const bannerElement = document.querySelector('div.video_t > a > img')
   const bannerImg = bannerElement?.getAttribute('src') || ActivityAssets.Gif
@@ -53,6 +58,7 @@ async function getEpisodeInfo(text: string) {
     episodio,
     season,
     bannerImg,
+    descAnime,
   }
 
   return {
@@ -60,6 +66,7 @@ async function getEpisodeInfo(text: string) {
     episodio,
     season,
     bannerImg,
+    descAnime,
   }
 }
 
@@ -73,11 +80,17 @@ presence.on('iFrameData', (data: any) => {
 })
 
 presence.on('UpdateData', async () => {
+  const [useAnimeCover, usePresenceName, logoType] = await Promise.all([
+    presence.getSetting<boolean>('useAnimeCover'),
+    presence.getSetting<boolean>('usePresenceName'),
+    presence.getSetting<number>('logoType'),
+  ])
+
   const { pathname } = document.location
   const presenceData: PresenceData = {
     details: 'Navegando',
     state: 'Pagina de Inicio',
-    largeImageKey: ActivityAssets.Gif,
+    largeImageKey: [ActivityAssets.Gif, ActivityAssets.Logo][logoType] || ActivityAssets.Logo,
     type: ActivityType.Watching,
     startTimestamp: browsingTimestamp,
     smallImageKey: Assets.Reading,
@@ -89,11 +102,23 @@ presence.on('UpdateData', async () => {
     const textoTest = bc.textContent
     const episodeData = await getEpisodeInfo(textoTest)
 
-    presenceData.name = episodeData?.nombreAnime
-    presenceData.details = `${episodeData?.episodio} - ${episodeData.season}`
-    presenceData.state = 'JKAnime'
-    presenceData.largeImageKey = episodeData?.bannerImg
-    presenceData.largeImageText = `Viendo: ${episodeData?.nombreAnime}`
+    if (usePresenceName) {
+      presenceData.name = episodeData?.nombreAnime
+    }
+    else {
+      presenceData.name = 'JKAnime'
+    }
+
+    if (useAnimeCover) {
+      presenceData.largeImageKey = episodeData?.bannerImg
+    }
+    else {
+      presenceData.largeImageKey = [ActivityAssets.Gif, ActivityAssets.Logo][logoType] || ActivityAssets.Logo
+    }
+
+    presenceData.details = episodeData?.nombreAnime
+    presenceData.state = episodeData?.descAnime
+    presenceData.largeImageText = `${episodeData.season.toString()}, ${episodeData.episodio.toString()}`
 
     if (iframePlayback) {
       presenceData.smallImageKey = isPaused ? Assets.Pause : Assets.Play
