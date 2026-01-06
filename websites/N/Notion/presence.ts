@@ -7,10 +7,10 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 const svgCache = new Map<string, string>()
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/IVQpP2j.png',
-  Calendar = 'https://i.imgur.com/MPUipsT.png',
-  Mail = 'https://i.imgur.com/vIGQhCL.png',
-  Talking = 'https://i.imgur.com/aWWXjuc.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/N/Notion/assets/logo.png',
+  Calendar = 'https://cdn.rcd.gg/PreMiD/websites/N/Notion/assets/0.png',
+  Mail = 'https://cdn.rcd.gg/PreMiD/websites/N/Notion/assets/1.png',
+  Talking = 'https://cdn.rcd.gg/PreMiD/websites/N/Notion/assets/2.png',
 }
 
 async function svgToPng(svgUrl: string): Promise<string | undefined> {
