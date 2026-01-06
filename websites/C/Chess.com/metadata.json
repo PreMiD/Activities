@@ -5,7 +5,13 @@
     "name": "Funeoz",
     "id": "256093420206948352"
   },
-  "service": "Chess",
+  "contributors": [
+    {
+      "name": "Linkredible",
+      "id": "188370726279970816"
+    }
+  ],
+  "service": "Chess.com",
   "description": {
     "en": "Chess.com is the main internet chess server. It is also an Internet forum and a social network dedicated to chess.",
     "es": "Chess.com es el principal servidor web para el ajedrez. Es también un foro web y un red social dedicado al ajedrez.",
@@ -15,11 +21,51 @@
   },
   "url": "www.chess.com",
   "regExp": "^https?[:][/][/](www[.])?chess[.]com[/]",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Chess/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Chess/assets/thumbnail.png",
   "color": "#4d7737",
   "category": "games",
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "hideButtons",
+      "title": "Hide Buttons",
+      "icon": "fas fa-eye-slash",
+      "value": false,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "displayFormat",
+      "title": "Display Format",
+      "icon": "fas fa-paragraph",
+      "value": 0,
+      "values": ["Vs Opponent", "Player vs Opponent", "Player Only"],
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "hideRating",
+      "title": "Hide Rating",
+      "icon": "fas fa-eye-slash",
+      "value": false,
+      "if": {
+        "privacyMode": false
+      }
+    }
+  ],
   "tags": [
     "games"
   ]
