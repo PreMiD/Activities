@@ -1,11 +1,11 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps,timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1458014647193047042',
 })
 
 enum ActivityAssets {
-  Logo = 'https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green-300x300.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/Spotify%20Podcasts/assets/logo.png',
 }
 
 async function getStrings() {
@@ -71,9 +71,9 @@ presence.on('UpdateData', async () => {
     const duration = document.querySelector('[data-testid="playback-duration"]')?.textContent
 
     if (currentTime && duration) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-        presence.timestampFromFormat(currentTime),
-        presence.timestampFromFormat(duration),
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+        timestampFromFormat(currentTime),
+        timestampFromFormat(duration),
       )
     }
   }
