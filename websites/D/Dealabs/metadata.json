@@ -31,7 +31,7 @@
     },
     {
       "id": "privacyMode",
-      "title": "Mode Confidentiel (Global)",
+      "title": "Mode confidentiel (Global)",
       "icon": "fas fa-user-secret",
       "placeholder": "Masquer tous les détails (titres, prix, images)",
       "value": false
@@ -41,28 +41,40 @@
       "title": "Masquer titres (Bons plans)",
       "icon": "fas fa-shopping-bag",
       "placeholder": "Remplace le titre du produit par un texte générique",
-      "value": false
-    },
-    {
-      "id": "hideDiscussionTitles",
-      "title": "Masquer titres (Forum)",
-      "icon": "fas fa-comments",
-      "placeholder": "Remplace le sujet de la discussion par un texte générique",
-      "value": false
+      "value": false,
+      "if": {
+        "privacyMode": false
+      }
     },
     {
       "id": "hideImages",
-      "title": "Images génériques uniquement",
+      "title": "Masquer les images (Bons plans)",
       "icon": "fas fa-image",
       "placeholder": "Affiche toujours le logo Dealabs au lieu des produits",
-      "value": false
+      "value": false,
+      "if": {
+        "privacyMode": false
+      }
     },
     {
       "id": "hidePrices",
       "title": "Masquer les prix",
       "icon": "fas fa-tag",
       "placeholder": "N'affiche pas le prix du deal dans le statut",
-      "value": false
+      "value": false,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "hideDiscussionTitles",
+      "title": "Masquer titres (Forum)",
+      "icon": "fas fa-comments",
+      "placeholder": "Remplace le sujet de la discussion par un texte générique",
+      "value": false,
+      "if": {
+        "privacyMode": false
+      }
     }
   ]
 }
