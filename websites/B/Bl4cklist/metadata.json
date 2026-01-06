@@ -5,22 +5,23 @@
     "id": "327176944640720906",
     "name": "yannicde"
   },
-  "service": "Bl4cklist.de",
+  "service": "Bl4cklist",
   "description": {
     "de": "Unser deutscher Discord-Server für Technik und Gaming ist die perfekte Community für alle, die sich für Programmierung, Coding-Hilfe und aktuelle Gaming-Trends interessieren.",
     "en": "Our German Discord server for technology and gaming is the perfect community for everyone interested in programming, coding help, and current gaming trends."
   },
   "url": "bl4cklist.de",
+  "regExp": "^https?://bl4cklist[.]de[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/z8tetWn.png",
   "thumbnail": "https://i.imgur.com/b4Rccgb.png",
   "color": "#FF7F50",
   "category": "other",
-  "tags": [
-    "discord-server",
-    "portfolio",
-    "general",
-    "coding",
-    "gaming"
+  "tags": ["discord-server", "portfolio", "general", "coding", "gaming"],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
   ]
 }
