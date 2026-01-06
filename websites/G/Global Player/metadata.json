@@ -11,9 +11,9 @@
   },
   "url": "www.globalplayer.com",
   "regExp": "^https?[:][/][/]www[.]globalplayer[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/brgxg1I.png",
-  "thumbnail": "https://i.imgur.com/YHj4FBj.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Global%20Player/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Global%20Player/assets/thumbnail.png",
   "color": "#006efa",
   "category": "music",
   "tags": [

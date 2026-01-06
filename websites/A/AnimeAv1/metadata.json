@@ -1,0 +1,23 @@
+{
+  "apiVersion": 1,
+  "author": {
+    "name": "Dasp",
+    "id": "475378131373654026"
+  },
+  "service": "AnimeAv1",
+  "description": {
+    "en": "AnimeAv1 is an Anime streaming platform offering high-quality content with Spanish subtitles."
+  },
+  "url": "animeav1.com",
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeAv1/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeAv1/assets/thumbnail.png",
+  "color": "#FF66CC",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "video",
+    "stream",
+    "español"
+  ]
+}

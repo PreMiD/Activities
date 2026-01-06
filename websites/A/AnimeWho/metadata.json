@@ -19,12 +19,9 @@
     "tr": "AnimeWho? Türkçe anime & manga izleyip, okuyabileceğiniz bir sitedir.",
     "vi": "AnimeWho? là trang web nơi bạn có thể xem anime phụ đề Thổ Nhĩ Kì & đọc manga."
   },
-  "url": [
-    "www.animewho.com",
-    "animewho.com"
-  ],
+  "url": "www.animewho.com",
   "regExp": "^https?[:][/][/](www[.])?animewho[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeWho/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeWho/assets/thumbnail.png",
   "color": "#fc0043",
