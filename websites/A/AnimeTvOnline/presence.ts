@@ -5,30 +5,56 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
-  const dataDiv = document.getElementById('premid-data')
   const path = document.location.pathname
   const href = document.location.href
+  const searchParams = new URLSearchParams(document.location.search) // Serve per leggere ?slug= o ?id=
 
   let activityData: any = {}
 
-  // 1. PLAYER
-  if (dataDiv && (path.includes('player') || href.includes('episodio'))) {
+  // 1. PLAYER (Modificato per leggere i tag reali di player.php)
+  // Cerchiamo il titolo H1 specifico del player
+  const playerTitleElement = document.querySelector('#episode-title-main')
+  
+  if (playerTitleElement && (path.includes('player') || href.includes('episodio'))) {
+    
+    // Recupera il titolo e rimuove spazi extra
+    const animeTitle = playerTitleElement.textContent.trim()
+    
+    // Recupera l'episodio dallo span nel tab o dal bottone attivo
+    const epSpan = document.querySelector('#current-ep-num-display')
+    const activeEpBtn = document.querySelector('.ep-btn.active')
+    
+    // Logica per trovare il numero: prova lo span, se vuoto prova il bottone, se no '?'
+    let epNumber = '?'
+    if (epSpan && epSpan.textContent.trim()) {
+        epNumber = epSpan.textContent.trim()
+    } else if (activeEpBtn) {
+        epNumber = activeEpBtn.textContent.trim()
+    }
+
+    // Recupera lo slug dall'URL per il bottone "Scheda Anime"
+    const currentSlug = searchParams.get('slug')
+
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
-      details: dataDiv.dataset.anime || 'Guardando un Anime',
-      state: `Episodio ${dataDiv.dataset.episode || '?'}`,
-      largeImageText: dataDiv.dataset.anime,
+      details: animeTitle === 'Caricamento...' ? 'Scegliendo un Anime...' : animeTitle,
+      state: `Episodio ${epNumber}`,
+      largeImageText: animeTitle,
       buttons: [
         {
           label: 'Guarda Episodio',
           url: href,
-        },
-        {
-          label: 'Scheda Anime',
-          url: `https://animetvonline.org/dettagli.php?slug=${dataDiv.dataset.slug}`,
-        },
+        }
       ],
+    }
+
+    // Aggiungi il secondo bottone solo se abbiamo lo slug nell'URL
+    if (currentSlug) {
+        activityData.buttons.push({
+          label: 'Scheda Anime',
+          url: `https://animetvonline.org/dettagli.php?slug=${currentSlug}`,
+        })
     }
   }
 
