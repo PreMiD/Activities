@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps,timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1458014647193047042',
