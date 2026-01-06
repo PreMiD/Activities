@@ -200,9 +200,15 @@ presence.on('UpdateData', async () => {
         presenceData.startTimestamp = times.start
         presenceData.endTimestamp = times.end
       }
-      else if (activeResolver.getType && activeResolver.getType(strings, doc) === ActivityType.Watching) {
+      else if (
+        activeResolver === videoResolver &&
+        activeResolver.getType &&
+        activeResolver.getType(strings, doc) === ActivityType.Watching
+      ) {
         delete presenceData.startTimestamp
-        presenceData.smallImageText = strings.pause
+        if (!presenceData.smallImageText) {
+          presenceData.smallImageText = strings.pause
+        }
       }
     }
   }
