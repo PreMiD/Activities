@@ -11,20 +11,15 @@ presence.on('UpdateData', async () => {
 
   let activityData: any = {}
 
-  // 1. PLAYER (Modificato per leggere i tag reali di player.php)
-  // Cerchiamo il titolo H1 specifico del player
   const playerTitleElement = document.querySelector('#episode-title-main')
   
   if (playerTitleElement && (path.includes('player') || href.includes('episodio'))) {
     
-    // Recupera il titolo e rimuove spazi extra
     const animeTitle = playerTitleElement.textContent.trim()
     
-    // Recupera l'episodio dallo span nel tab o dal bottone attivo
     const epSpan = document.querySelector('#current-ep-num-display')
     const activeEpBtn = document.querySelector('.ep-btn.active')
     
-    // Logica per trovare il numero: prova lo span, se vuoto prova il bottone, se no '?'
     let epNumber = '?'
     if (epSpan && epSpan.textContent.trim()) {
         epNumber = epSpan.textContent.trim()
@@ -32,7 +27,6 @@ presence.on('UpdateData', async () => {
         epNumber = activeEpBtn.textContent.trim()
     }
 
-    // Recupera lo slug dall'URL per il bottone "Scheda Anime"
     const currentSlug = searchParams.get('slug')
 
     activityData = {
@@ -49,7 +43,6 @@ presence.on('UpdateData', async () => {
       ],
     }
 
-    // Aggiungi il secondo bottone solo se abbiamo lo slug nell'URL
     if (currentSlug) {
         activityData.buttons.push({
           label: 'Scheda Anime',

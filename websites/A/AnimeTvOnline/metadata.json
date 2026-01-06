@@ -12,9 +12,9 @@
   },
   "url": "animetvonline.org",
   "regExp": "^https?[:][/][/]animetvonline[.]org[/]",
-  "version": "1.0.0",
-  "logo": "https://animetvonline.org/assets/images/logo_grande.png",
-  "thumbnail": "https://animetvonline.org/assets/images/banner_premid.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/thumbnail.png",
   "color": "#FF4545",
   "category": "anime",
   "tags": [

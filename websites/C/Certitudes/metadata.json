@@ -18,9 +18,9 @@
     "pedantle.certitudes.org"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*certitudes[.]org[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/OFh9Xqh.png",
-  "thumbnail": "https://i.imgur.com/AEg761p.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Certitudes/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Certitudes/assets/thumbnail.png",
   "color": "#B7DB91",
   "category": "games",
   "tags": [
