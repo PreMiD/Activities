@@ -201,9 +201,9 @@ presence.on('UpdateData', async () => {
         presenceData.endTimestamp = times.end
       }
       else if (
-        activeResolver === videoResolver &&
-        activeResolver.getType &&
-        activeResolver.getType(strings, doc) === ActivityType.Watching
+        activeResolver === videoResolver
+        && activeResolver.getType
+        && activeResolver.getType(strings, doc) === ActivityType.Watching
       ) {
         delete presenceData.startTimestamp
         if (!presenceData.smallImageText) {
