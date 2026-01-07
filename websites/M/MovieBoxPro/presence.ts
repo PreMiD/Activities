@@ -25,7 +25,7 @@ presence.on('UpdateData', async () => {
   if (video && rawTitle) {
     presenceData.details = rawTitle
 
-    const coverImg = document.querySelector('img.cover') as HTMLImageElement
+    const coverImg = document.querySelector<HTMLImageElement>('img.cover')
     if (coverImg)
       presenceData.largeImageKey = coverImg.src
 
