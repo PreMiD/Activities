@@ -1,31 +1,25 @@
+// Calculate the timestamp once at page load
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
 const presence = new Presence({
-  clientId: "1432152324163502130",
-});
+  clientId: '1432152324163502130',
+})
 
-enum ActivityAssets {
-  Logo = "logo",
-}
+presence.on('UpdateData', async () => {
+  if (document.location.hostname !== 'psychonautwiki.org') return
 
-presence.on("UpdateData", async () => {
-  const { pathname } = document.location;
+  const pathname = document.location.pathname
 
   const presenceData: PresenceData = {
-    largeImageKey: ActivityAssets.Logo,
-    startTimestamp: Math.floor(Date.now() / 1000),
-    details: "Browsing PsychonautWiki",
-    state: "",
-  };
-
-  if (pathname === "/wiki/Main_Page") {
-    presenceData.state = "Browsing the Main Page";
-  } else if (pathname.startsWith("/wiki/")) {
-    const articleName = decodeURIComponent(
-      pathname.replace("/wiki/", "").replace(/_/g, " ")
-    );
-    presenceData.state = `Browsing the article "${articleName}"`;
-  } else {
-    presenceData.state = "Browsing the Wiki";
+    largeImageKey: 'https://i.imgur.com/GPxHYOV.png',
+    startTimestamp: browsingTimestamp, // only set once
+    details:
+      pathname === '/wiki/Main_Page'
+        ? 'Browsing the Main Page'
+        : pathname.startsWith('/wiki/')
+        ? `Browsing the article "${decodeURIComponent(pathname.replace('/wiki/', '').replace(/_/g, ' '))}"`
+        : 'Browsing the Wiki',
   }
 
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})

@@ -49,7 +49,7 @@
   ],
 
   // Other settings
-  "discord.enabled": false,
+  "discord.enabled": true,
   "yaml.schemas": {
     "https://json.schemastore.org/github-issue-config.json": "../.github/ISSUE_TEMPLATE/config.yml"
   }
