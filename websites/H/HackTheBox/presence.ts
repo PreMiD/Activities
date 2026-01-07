@@ -104,10 +104,16 @@ function getProlabDetails() {
 }
 
 presence.on('UpdateData', async () => {
+  const [showRank, showGlobalRanking, showFlags] = await Promise.all([
+    presence.getSetting<boolean>('showRank'),
+    presence.getSetting<boolean>('showGlobalRanking'),
+    presence.getSetting<boolean>('showFlags'),
+  ])
+
   const settings: DashboardSettings = {
-    showRank: await presence.getSetting<boolean>('showRank'),
-    showGlobalRanking: await presence.getSetting<boolean>('showGlobalRanking'),
-    showFlags: await presence.getSetting<boolean>('showFlags'),
+    showRank,
+    showGlobalRanking,
+    showFlags,
   }
 
   const path = window.location.pathname
@@ -115,7 +121,7 @@ presence.on('UpdateData', async () => {
   const root = parts[0]
   const resource = parts[1]
 
-  const presenceData = {
+  const presenceData: PresenceData = {
     largeImageKey: ASSETS.logo,
     largeImageText: 'HackTheBox',
   } as PresenceData
