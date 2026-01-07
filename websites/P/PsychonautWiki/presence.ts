@@ -11,7 +11,7 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     largeImageKey: 'https://i.imgur.com/GPxHYOV.png',
-    startTimestamp: browsingTimestamp, // only set once
+    startTimestamp: browsingTimestamp,
     details:
       pathname === '/wiki/Main_Page'
         ? 'Browsing the Main Page'
