@@ -7,6 +7,7 @@ const presence = new Presence({
 presence.on('UpdateData', async () => {
   if (document.location.hostname !== 'psychonautwiki.org') return
 
+  
   const pathname = document.location.pathname
 
   const presenceData: PresenceData = {
