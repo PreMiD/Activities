@@ -14,8 +14,8 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
     details:
       pathname === '/wiki/Main_Page'
-          ? 'Browsing the Main Page'
-          : pathname.startsWith('/wiki/')
+        ? 'Browsing the Main Page'
+        : pathname.startsWith('/wiki/')
           ? `Browsing the article "${decodeURIComponent(pathname.replace('/wiki/', '').replace(/_/g, ' '))}"`
           : 'Browsing the Wiki',
   }
