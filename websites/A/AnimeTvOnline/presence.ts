@@ -1,32 +1,32 @@
 const presence = new Presence({
-  clientId: '1017558325753303102',
-});
+  clientId: '1017558325753303102'
+})
 
-const browsingTimestamp = Math.floor(Date.now() / 1000);
+const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
-  const path = document.location.pathname;
-  const href = document.location.href;
-  const searchParams = new URLSearchParams(document.location.search);
+  const path = document.location.pathname
+  const href = document.location.href
+  const searchParams = new URLSearchParams(document.location.search)
 
-  let activityData: any = {};
+  let activityData: any = {}
 
   // 1. PLAYER
-  const playerTitleElement = document.querySelector('#episode-title-main');
+  const playerTitleElement = document.querySelector('#episode-title-main')
 
   if (playerTitleElement && (path.includes('player') || href.includes('episodio'))) {
-    const animeTitle = playerTitleElement.textContent.trim();
-    const epSpan = document.querySelector('#current-ep-num-display');
-    const activeEpBtn = document.querySelector('.ep-btn.active');
+    const animeTitle = playerTitleElement.textContent.trim()
+    const epSpan = document.querySelector('#current-ep-num-display')
+    const activeEpBtn = document.querySelector('.ep-btn.active')
 
-    let epNumber = '?';
+    let epNumber = '?'
     if (epSpan && epSpan.textContent.trim()) {
-      epNumber = epSpan.textContent.trim();
+      epNumber = epSpan.textContent.trim()
     } else if (activeEpBtn) {
-      epNumber = activeEpBtn.textContent.trim();
+      epNumber = activeEpBtn.textContent.trim()
     }
 
-    const currentSlug = searchParams.get('slug');
+    const currentSlug = searchParams.get('slug')
 
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
@@ -37,21 +37,21 @@ presence.on('UpdateData', async () => {
       buttons: [
         {
           label: 'Guarda Episodio',
-          url: href,
-        },
-      ],
-    };
+          url: href
+        }
+      ]
+    }
 
     if (currentSlug) {
       activityData.buttons.push({
         label: 'Scheda Anime',
-        url: `https://animetvonline.org/dettagli.php?slug=${currentSlug}`,
-      });
+        url: `https://animetvonline.org/dettagli.php?slug=${currentSlug}`
+      })
     }
   } else if (path.includes('dettagli') || href.includes('post.php')) {
     // 2. SCHEDA DETTAGLI
-    const titleElement = document.querySelector('h1');
-    const title = titleElement ? titleElement.textContent : document.title;
+    const titleElement = document.querySelector('h1')
+    const title = titleElement ? titleElement.textContent : document.title
 
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
@@ -61,35 +61,35 @@ presence.on('UpdateData', async () => {
       buttons: [
         {
           label: 'Vedi Scheda',
-          url: href,
-        },
-      ],
-    };
+          url: href
+        }
+      ]
+    }
   } else if (path.includes('profilo')) {
     // 3. PROFILO
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: 'Visualizzando un profilo',
-      state: 'Utente AnimeTvOnline',
-    };
+      state: 'Utente AnimeTvOnline'
+    }
   } else if (path === '/' || path.includes('index') || path === '' || path.includes('login')) {
     // 4. HOMEPAGE
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: 'In Homepage',
-      state: 'Cercando un anime da guardare...',
-    };
+      state: 'Cercando un anime da guardare...'
+    }
   } else {
     // 5. DEFAULT
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: 'Navigando su AnimeTvOnline',
-      state: 'Streaming Anime ITA',
-    };
+      state: 'Streaming Anime ITA'
+    }
   }
 
-  presence.setActivity(activityData);
-});
+  presence.setActivity(activityData)
+})
