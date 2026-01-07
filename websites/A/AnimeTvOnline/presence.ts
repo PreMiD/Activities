@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1017558325753303102'
+  clientId: '1017558325753303102',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -22,7 +22,8 @@ presence.on('UpdateData', async () => {
     let epNumber = '?'
     if (epSpan && epSpan.textContent.trim()) {
       epNumber = epSpan.textContent.trim()
-    } else if (activeEpBtn) {
+    }
+    else if (activeEpBtn) {
       epNumber = activeEpBtn.textContent.trim()
     }
 
@@ -37,18 +38,19 @@ presence.on('UpdateData', async () => {
       buttons: [
         {
           label: 'Guarda Episodio',
-          url: href
-        }
-      ]
+          url: href,
+        },
+      ],
     }
 
     if (currentSlug) {
       activityData.buttons.push({
         label: 'Scheda Anime',
-        url: `https://animetvonline.org/dettagli.php?slug=${currentSlug}`
+        url: `https://animetvonline.org/dettagli.php?slug=${currentSlug}`,
       })
     }
-  } else if (path.includes('dettagli') || href.includes('post.php')) {
+  }
+  else if (path.includes('dettagli') || href.includes('post.php')) {
     // 2. SCHEDA DETTAGLI
     const titleElement = document.querySelector('h1')
     const title = titleElement ? titleElement.textContent : document.title
@@ -61,33 +63,36 @@ presence.on('UpdateData', async () => {
       buttons: [
         {
           label: 'Vedi Scheda',
-          url: href
-        }
-      ]
+          url: href,
+        },
+      ],
     }
-  } else if (path.includes('profilo')) {
+  }
+  else if (path.includes('profilo')) {
     // 3. PROFILO
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: 'Visualizzando un profilo',
-      state: 'Utente AnimeTvOnline'
+      state: 'Utente AnimeTvOnline',
     }
-  } else if (path === '/' || path.includes('index') || path === '' || path.includes('login')) {
+  }
+  else if (path === '/' || path.includes('index') || path === '' || path.includes('login')) {
     // 4. HOMEPAGE
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: 'In Homepage',
-      state: 'Cercando un anime da guardare...'
+      state: 'Cercando un anime da guardare...',
     }
-  } else {
+  }
+  else {
     // 5. DEFAULT
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: 'Navigando su AnimeTvOnline',
-      state: 'Streaming Anime ITA'
+      state: 'Streaming Anime ITA',
     }
   }
 
