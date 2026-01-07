@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "538604507064696832",
+    "name": "talon2"
+  },
+  "service": "PsychonautWiki",
+  "description": {
+    "en": "PsychonautWiki is a community-driven encyclopedia documenting Psychonautics with evidence-based sources to promote education, safe practices, and personal autonomy"
+  },
+  "url": "psychonautwiki.org",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/8BOtvbS.jpeg",
+  "thumbnail": "https://i.imgur.com/8BOtvbS.jpeg",
+  "color": "#000000",
+  "category": "other",
+  "tags": [
+    "wiki",
+    "encyclopedia",
+    "psychonaut",
+    "drugs"
+  ]
+}
