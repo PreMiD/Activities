@@ -1,4 +1,3 @@
-// Calculate the timestamp once at page load
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 const presence = new Presence({
