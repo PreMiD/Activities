@@ -13,6 +13,10 @@
     {
       "name": "xDoritos",
       "id": "432215088686956565"
+    },
+    {
+      "name": "Skully",
+      "id": "671037171611729920"
     }
   ],
   "service": "Prime Video",
@@ -23,14 +27,9 @@
     "ja": "ここでしか見れない、先行や独占配信作品が続々追加！まずは30日間無料でお試し",
     "nl": "Geniet van exclusieve Amazon Originals en populaire films en tv-programma's. Bekijk altijd en overal. Start uw gratis proefperiode."
   },
-  "url": [
-    "primevideo.com",
-    "amazon.de",
-    "amazon.co.uk",
-    "amazon.co.jp"
-  ],
+  "url": "primevideo.com",
   "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*amazon([.][a-z]+)+[/]((-[/])?(([a-z0-9]+)[/])?)?(Prime-Video|Prime-Instant-Video|Amazon-Video|gp[/]video))|([a-z0-9-]+[.])*primevideo([.][a-z]+)+([/]?)?",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/thumbnail.jpg",
   "color": "#FFFFFF",
