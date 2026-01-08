@@ -18,6 +18,8 @@
     "@types/node": "^24.9.2",
     "@vitest/coverage-v8": "^4.0.6",
     "@vitest/ui": "^4.0.6",
+    "baseline-browser-mapping": "^2.9.12",
+    "eslint": "^9.38.0",
     "eslint-plugin-format": "^1.0.2",
     "eslint-plugin-json-schema-validator": "^5.4.1",
     "pmd": "file:cli",
