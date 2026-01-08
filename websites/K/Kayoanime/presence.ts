@@ -28,6 +28,7 @@ presence.on(
 )
 presence.on('UpdateData', async () => {
   const fetch_img = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')
+
     ?.content
 
   const presenceData: PresenceData = {
@@ -57,6 +58,7 @@ presence.on('UpdateData', async () => {
 
     default:
       if (document.querySelector('.entry-header-outer > .entry-header > h1 ')) {
+        
         if (fetch_img) {
           presenceData.largeImageKey = fetch_img
         }

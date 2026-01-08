@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.9",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "author": {
     "id": "538604507064696832",
     "name": "talon2"
@@ -15,7 +15,7 @@
   "regExp": "https?://(www\\.)?psychonautwiki\\.org/.*",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/GPxHYOV.png",
-  "thumbnail": "https://i.imgur.com/GPxHYOV.png",
+  "thumbnail": "https://i.imgur.com/QwNGXcq.png",
   "color": "#808080",
   "category": "other",
   "tags": [
