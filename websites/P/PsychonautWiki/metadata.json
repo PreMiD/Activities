@@ -1,5 +1,6 @@
 {
   "$schema": "https://schemas.premid.app/metadata/1.16",
+    "apiVersion": 1,
   "author": {
     "id": "538604507064696832",
     "name": "talon2"
