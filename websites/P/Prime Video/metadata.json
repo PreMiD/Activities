@@ -24,10 +24,10 @@
     "nl": "Geniet van exclusieve Amazon Originals en populaire films en tv-programma's. Bekijk altijd en overal. Start uw gratis proefperiode."
   },
   "url": [
-    "www.primevideo.com",
-    "www.amazon.de",
-    "www.amazon.co.uk",
-    "www.amazon.co.jp"
+    "primevideo.com",
+    "amazon.de",
+    "amazon.co.uk",
+    "amazon.co.jp"
   ],
   "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*amazon([.][a-z]+)+[/]((-[/])?(([a-z0-9]+)[/])?)?Prime-Video|Prime-Instant-Video|Amazon-Video|gp[/]video)|([a-z0-9-]+[.])*primevideo([.][a-z]+)+([/]?)?",
   "version": "2.3.1",
