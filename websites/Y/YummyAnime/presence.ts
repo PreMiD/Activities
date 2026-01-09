@@ -73,7 +73,7 @@ presence.on("UpdateData", async () => {
   let currentEpisode = "";
   if (activeBtn) {
     const text = activeBtn.textContent?.trim();
-    if (text && !isNaN(Number(text))) currentEpisode = text;
+    if (text && !Number.isNaN(Number(text))) currentEpisode = text;
   }
 
   if (videoData.hasData) {

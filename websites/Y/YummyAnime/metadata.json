@@ -11,12 +11,12 @@
   },
   "url": "yummyani.me",
   "regExp": "^https?://(www\\.)?(site\\.)?(en\\.)?yummyani\\.me/.*",
-  "iframe": true,
-  "iFrameRegExp": "kodik",
   "version": "1.0.0",
   "logo": "https://files.catbox.moe/13g54b.jpg",
   "thumbnail": "https://files.catbox.moe/13g54b.jpg",
   "color": "#FF5722",
   "category": "anime",
-  "tags": ["anime", "video"]
+  "tags": ["anime", "video"],
+  "iframe": true,
+  "iFrameRegExp": "kodik"
 }
