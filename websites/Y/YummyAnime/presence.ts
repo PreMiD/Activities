@@ -1,5 +1,3 @@
-// presence.ts
-
 const presence = new Presence({
   clientId: "1045800378228281345",
 });
@@ -24,7 +22,6 @@ presence.on("UpdateData", async () => {
     type: 3,
   };
 
-  // --- 1. ГЛАВНАЯ ---
   if (pathname === "/" || pathname === "/index.html") {
     presenceData.details = "На главной странице";
     presenceData.state = "Выбирает аниме";
@@ -32,25 +29,19 @@ presence.on("UpdateData", async () => {
     return;
   }
 
-  // --- 2. ПРОВЕРКА: ЭТО АНИМЕ? ---
-  // Ищем уникальный элемент страницы аниме (постер слева)
   const isAnimePage = document.querySelector(".poster-block");
 
   if (!isAnimePage) {
-    // ЭТО НЕ АНИМЕ (Профиль, Каталог, Новости и т.д.)
     presenceData.details = "На сайте YummyAnime";
 
-    // Пытаемся найти заголовок (например "Профиль пользователя X")
     const pageTitle = document.querySelector("h1")?.textContent?.trim();
 
     if (pageTitle) {
       presenceData.state = pageTitle;
     } else {
-      // Если заголовка нет, удаляем state, чтобы не было пустой строки или "Читает описание"
       delete presenceData.state;
     }
 
-    // Чистим всё лишнее
     delete presenceData.startTimestamp;
     delete presenceData.endTimestamp;
 
@@ -58,9 +49,6 @@ presence.on("UpdateData", async () => {
     return;
   }
 
-  // --- 3. ЛОГИКА АНИМЕ ---
-
-  // ЗАГОЛОВОК
   const titleHeader = document.querySelector("h1");
   if (titleHeader) {
     presenceData.details = titleHeader.textContent?.trim();
@@ -68,7 +56,6 @@ presence.on("UpdateData", async () => {
     presenceData.details = "Смотрит аниме";
   }
 
-  // ОБЛОЖКА
   const posterImg = document.querySelector(
     "div.poster-block img",
   ) as HTMLImageElement;
@@ -82,7 +69,6 @@ presence.on("UpdateData", async () => {
     }
   }
 
-  // НОМЕР СЕРИИ
   const activeBtn = document.querySelector('div[class*="pQCG"]');
   let currentEpisode = "";
   if (activeBtn) {
@@ -90,7 +76,6 @@ presence.on("UpdateData", async () => {
     if (text && !isNaN(Number(text))) currentEpisode = text;
   }
 
-  // СТАТУС ПЛЕЕРА
   if (videoData.hasData) {
     if (!videoData.paused) {
       // === PLAY ===
@@ -100,18 +85,13 @@ presence.on("UpdateData", async () => {
       presenceData.smallImageKey = "play";
       presenceData.smallImageText = "Воспроизведение";
 
-      // ТАЙМЕР: ТОЛЬКО "ОСТАЛОСЬ"
       const now = Date.now();
       const remainingMs = (videoData.duration - videoData.currentTime) * 1000;
 
-      // Передаем только время окончания.
-      // Discord автоматически покажет "XX:XX left" (или "осталось")
       presenceData.endTimestamp = now + remainingMs;
 
-      // startTimestamp НЕ ПЕРЕДАЕМ (удаляем)
       delete presenceData.startTimestamp;
     } else {
-      // === PAUSE ===
       presenceData.state = currentEpisode
         ? `Серия ${currentEpisode} (Пауза)`
         : "На паузе";
@@ -122,7 +102,6 @@ presence.on("UpdateData", async () => {
       delete presenceData.endTimestamp;
     }
   } else {
-    // === NO PLAYER ACTIVE ===
     const videoElement = document.querySelector("#video");
     let isWatchingBlock = false;
 
