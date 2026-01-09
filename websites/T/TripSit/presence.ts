@@ -14,9 +14,7 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
 
-  /* =========================
-     TripSit main site
-     ========================= */
+  /* TripSit main site */
   if (hostname === 'tripsit.me') {
     if (pathname === '/' && !hash) {
       presenceData.details = 'Browsing TripSit'
@@ -47,9 +45,7 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  /* =========================
-     Subdomains
-     ========================= */
+  /* Subdomains */
   else if (hostname === 'learn.tripsit.me') {
     presenceData.details = 'Using the Learning Portal'
   }
@@ -72,9 +68,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Reading Drug Combinations'
   }
 
-  /* =========================
-     TripSit Wiki
-     ========================= */
+  /* TripSit Wiki */
   else if (hostname === 'wiki.tripsit.me') {
     let articleName: string | null = null
 
