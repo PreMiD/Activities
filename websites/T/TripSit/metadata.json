@@ -23,6 +23,5 @@
     "drugs",
     "harm-reduction",
     "psychonaut"
-  ],
-  "iFrameRegExp": "https?:\\/\\/(.*\\.)?tripsit\\.me\\/.*"
+  ]
 }
