@@ -17,7 +17,7 @@ presence.on("UpdateData", async () => {
   const { pathname } = document.location;
 
   const presenceData: any = {
-    largeImageKey: "https://files.catbox.moe/13g54b.jpg",
+    largeImageKey: "https://i.imgur.com/6XnAGga.jpeg",
     largeImageText: "YummyAnime",
     type: 3,
   };
@@ -82,8 +82,6 @@ presence.on("UpdateData", async () => {
       presenceData.state = currentEpisode
         ? `Смотрит серию: ${currentEpisode}`
         : "Смотрит видео";
-      presenceData.smallImageKey = "play";
-      presenceData.smallImageText = "Воспроизведение";
 
       const now = Date.now();
       const remainingMs = (videoData.duration - videoData.currentTime) * 1000;
@@ -95,8 +93,6 @@ presence.on("UpdateData", async () => {
       presenceData.state = currentEpisode
         ? `Серия ${currentEpisode} (Пауза)`
         : "На паузе";
-      presenceData.smallImageKey = "pause";
-      presenceData.smallImageText = "Пауза";
 
       delete presenceData.startTimestamp;
       delete presenceData.endTimestamp;
