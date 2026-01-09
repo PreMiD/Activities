@@ -22,8 +22,7 @@
   "tags": [
     "drugs",
     "harm-reduction",
-    "psychonaut",
-    "tripsit"
+    "psychonaut"
   ],
   "iFrameRegExp": "https?:\\/\\/(.*\\.)?tripsit\\.me\\/.*"
 }
