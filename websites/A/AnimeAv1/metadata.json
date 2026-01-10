@@ -10,7 +10,7 @@
     "en": "AnimeAv1 is an Anime streaming platform offering high-quality content with Spanish subtitles."
   },
   "url": "animeav1.com",
-  "regExp": "(animeav1\\.com)",
+  "regExp": "^https?://animeav1\\.com/",
   "version": "1.0.3",
   "logo": "https://i.imgur.com/Xk3y6wK.png",
   "thumbnail": "https://i.imgur.com/siQRcFt.png",
