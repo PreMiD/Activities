@@ -45,9 +45,11 @@ presence.on('UpdateData', async () => {
     const title = document.querySelector('.b-post__title h1')?.textContent?.trim()
     const coverImage = document.querySelector<HTMLImageElement>('.b-sidecover a img')?.src
 
-    presenceData.details = title
     if (showTitleAsPresence && !privacyMode) {
       presenceData.name = title
+    }
+    else { 
+      presenceData.details = title
     }
 
     presenceData.largeImageKey = (showCover && coverImage) ? coverImage : 'https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/logo.png'
