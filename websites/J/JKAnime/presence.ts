@@ -230,11 +230,11 @@ presence.on('UpdateData', async () => {
     presence.setActivity(presenceData)
     return
   }
-  else if (pathname.includes('/') && !/\/\d+\/?$/.test(pathname)) {
+  else if (pathname.includes('/') && !/\/\d+\/?$/.test(pathname) && !pathname.includes('/pelicula/')) {
     const animeTitle = pathname.split('/')[1] || ''
 
     if (animeTitle) {
-      const title = document.querySelector('div.anime_info > h3')?.textContent
+      const title = document.querySelector('div.anime_info > h3')?.textContent || 'Comunidad'
 
       presenceData.details = 'Viendo Descripción'
       presenceData.state = `Leyendo sobre: ${title}`
