@@ -67,8 +67,14 @@
     },
     {
       "id": "showSmallImages",
-      "title": "Show Play/Pause Icons",
+      "title": "Show Small Images",
       "icon": "fad fa-pause",
+      "value": true
+    },
+    {
+      "id": "showTitleAsPresence",
+      "title": "Shot Title As Presence",
+      "icon": "fas fa-heading",
       "value": true
     }
   ]
