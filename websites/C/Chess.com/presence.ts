@@ -126,10 +126,12 @@ presence.on('UpdateData', async () => {
     insights_stats: 'chess.com.insightsStats',
   })
 
-  const isPrivacyMode = await presence.getSetting('privacyMode')
-  const hideButtons = await presence.getSetting('hideButtons')
-  const displayFormat = await presence.getSetting('displayFormat')
-  const hideRating = await presence.getSetting('hideRating')
+  const [isPrivacyMode, hideButtons, displayFormat, hideRating] = await Promise.all([
+  presence.getSetting<boolean>('privacyMode'),
+  presence.getSetting<boolean>('hideButtons'),
+  presence.getSetting<number>('displayFormat'),
+  presence.getSetting<boolean>('hideRating'),
+  ])
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -147,7 +149,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (activeResolver.getState) {
-      const state = activeResolver.getState(strings, doc, displayFormat as number, hideRating as boolean)
+      const state = activeResolver.getState(strings, doc, displayFormat, hideRating)
       if (state)
         presenceData.state = state
     }
@@ -217,6 +219,6 @@ presence.on('UpdateData', async () => {
     presence.setActivity(presenceData)
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
   }
 })
