@@ -97,8 +97,6 @@ presence.on('UpdateData', async () => {
         details: 'Browsing Symphony Radio',
         largeImageKey: LOGO_512,
         largeImageText: 'Symphony Radio',
-        smallImageKey: LOGO_512,
-        smallImageText: 'Symphony Radio',
       })
     }
     else {
