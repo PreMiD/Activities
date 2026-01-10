@@ -9,7 +9,7 @@ const startTimestamp = Math.floor(Date.now() / 1000)
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
-    largeImageKey: 'https://i.imgur.com/A6RZY5E.png',
+    largeImageKey: 'https://i.imgur.com/oMApXis.png',
     largeImageText: 'Moodle UTC',
     startTimestamp
   }
