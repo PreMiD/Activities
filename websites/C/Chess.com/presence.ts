@@ -127,10 +127,10 @@ presence.on('UpdateData', async () => {
   })
 
   const [isPrivacyMode, hideButtons, displayFormat, hideRating] = await Promise.all([
-  presence.getSetting<boolean>('privacyMode'),
-  presence.getSetting<boolean>('hideButtons'),
-  presence.getSetting<number>('displayFormat'),
-  presence.getSetting<boolean>('hideRating'),
+    presence.getSetting<boolean>('privacyMode'),
+    presence.getSetting<boolean>('hideButtons'),
+    presence.getSetting<number>('displayFormat'),
+    presence.getSetting<boolean>('hideRating'),
   ])
 
   const presenceData: PresenceData = {
