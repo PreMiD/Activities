@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "348083986989449216",
@@ -10,7 +10,8 @@
     "en": "draw.io or diagrams.net is a configurable diagramming/whiteboarding visualization application"
   },
   "url": "app.diagrams.net",
-  "version": "1.0.7",
+  "regExp": "^https?[:][/][/]app[.]diagrams[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/draw.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/draw.io/assets/thumbnail.png",
   "color": "#d89000",

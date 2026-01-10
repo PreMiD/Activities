@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "TheDrop.",
@@ -164,8 +164,8 @@
     "zh": "维基百科是一种多语言的在线百科全书，包含基于Wiki的内容的协作编辑系统。"
   },
   "url": "wikipedia.org",
-  "regExp": "([a-z0-9-]+[.])*wikipedia[.]([a-z]*)[/]",
-  "version": "2.8.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wikipedia[.]([a-z]*)[/]",
+  "version": "2.9.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikipedia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikipedia/assets/thumbnail.png",
   "color": "#f9f9f9",

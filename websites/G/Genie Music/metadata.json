@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "건유1019",
@@ -14,7 +14,8 @@
     "ko": "국내 최다 음원 보유, FLAC 고음질, 지니차트, 최신음악, 앨범, 뮤직비디오, 오늘의 선곡, TV속음악, 시대별음악, 지니라이프 등 제공."
   },
   "url": "www.genie.co.kr",
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/](www[.])?genie[.]co[.]kr[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Genie%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Genie%20Music/assets/thumbnail.png",
   "color": "#0096FF",

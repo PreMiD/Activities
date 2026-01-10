@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Striker",
@@ -11,8 +11,8 @@
     "nl": "SoloLearn heeft de grootste collectie GRATIS codeerinhoud, van beginner tot professional! Kies uit duizenden programmeeronderwerpen om coderingsconcepten te leren, uw programmeerkennis op te frissen of op de hoogte te blijven van de nieuwste codetrends."
   },
   "url": "www.sololearn.com",
-  "regExp": "([a-z0-9-]+[.])*sololearn[.]com[/]",
-  "version": "2.0.28",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sololearn[.]com[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SoloLearn/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SoloLearn/assets/thumbnail.png",
   "color": "#1ABC9C",

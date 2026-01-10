@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "226622016986415104",
@@ -11,7 +11,8 @@
     "ru": "Фоксфорд — онлайн-школа для учеников 1-11 классов, учителей и родителей."
   },
   "url": "foxford.ru",
-  "version": "1.0.12",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*foxford[.]ru[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Foxford/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Foxford/assets/thumbnail.jpg",
   "color": "#E89020",

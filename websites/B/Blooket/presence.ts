@@ -19,12 +19,14 @@ const codenameToFullName: Record<string, string> = {
   eggs: 'Egg Hunt',
   laser: 'Laser Tag',
   cocoa: 'Cocoa Cottage',
+  coco: 'Coco Cabana',
   goldquest: 'Gold Quest',
   fishingfrenzy: 'Fishing Frenzy',
   cryptohack: 'Crypto Hack',
   pirate: `Pirate's Voyage`,
   towerdefense2: 'Tower Defense 2',
   monsterbrawl: 'Monster Brawl',
+  dinos: 'Deceptive Dinos',
   deceptivedinos: 'Deceptive Dinos',
   battleroyale: 'Battle Royale',
   towerdefense: 'Tower Defense',
@@ -203,17 +205,22 @@ presence.on('UpdateData', async () => {
     }
     case 'eggs.blooket.com':
     case 'laser.blooket.com':
-    case 'cocoa.blooket.com': {
+    case 'dinos.blooket.com':
+    case 'racing.blooket.com':
+    case 'coco.blooket.com': {
       // new blooket modes
       const codename: string = host.split('.')[0] as string
       presenceData.details = `${path.endsWith('/host') ? 'Hosting' : 'Playing'} ${codenameToFullName[codename]}`
 
-      if (path.endsWith('/host')) {
+      if (path.endsWith('/host') && privacyMode !== true) {
         const playerCountText: HTMLDivElement | undefined = getDivFromClass('_playerNumber')
-        if (!playerCountText)
-          return
-        const playerCount: number = Number.parseInt(playerCountText.textContent || '0')
-        presenceData.state = `with ${playerCount} player${playerCount !== 1 ? 's' : ''}`
+        if (playerCountText) {
+          const playerCount: number = Number.parseInt(playerCountText.textContent || '0')
+          presenceData.state = `with ${playerCount} player${playerCount !== 1 ? 's' : ''}`
+        }
+        else {
+          presenceData.state = ''
+        }
       }
       break
     }
@@ -223,12 +230,10 @@ presence.on('UpdateData', async () => {
     case 'pirate.blooket.com':
     case 'towerdefense2.blooket.com':
     case 'monsterbrawl.blooket.com':
-    case 'deceptivedinos.blooket.com':
     case 'battleroyale.blooket.com':
     case 'towerdefense.blooket.com':
     case 'cafe.blooket.com':
     case 'factory.blooket.com':
-    case 'racing.blooket.com':
     case 'blookrush.blooket.com':
     case 'classic.blooket.com': {
       const codename2: string = host.split('.')[0] as string
@@ -238,8 +243,18 @@ presence.on('UpdateData', async () => {
       if (path.startsWith('/landing')) {
         presenceData.state = ''
       }
-      else if (path.startsWith('/host/settings')) {
+      else if (path.startsWith('/host/settings') || path.startsWith('/host/landing')) {
         presenceData.state = 'Configuring host settings'
+      }
+      else if (path.startsWith('/host/join')) {
+        const playerCountText: HTMLDivElement | undefined = getDivFromClass('_playerNumber')
+        if (playerCountText && privacyMode !== true) {
+          const playerCount: number = Number.parseInt(playerCountText.textContent || '0')
+          presenceData.state = `with ${playerCount} player${playerCount !== 1 ? 's' : ''}`
+        }
+        else {
+          presenceData.state = ''
+        }
       }
       else if (path.endsWith('/load') || path.endsWith('/start')) {
         presenceData.state = 'Loading a save'
@@ -255,6 +270,9 @@ presence.on('UpdateData', async () => {
       }
       else if (path.endsWith('/play/final')) {
         presenceData.state = 'Viewing final results'
+      }
+      else if (path.startsWith('/host')) {
+        presenceData.state = 'Presenting leaderboard'
       }
       else if (!privacyMode) {
         // show game data on status
@@ -274,9 +292,6 @@ presence.on('UpdateData', async () => {
           case 'monsterbrawl':
             presenceData.state = `${getDivFromClass('_playerEnergy')?.textContent || '0'} XP`
             break
-          case 'deceptivedinos':
-            presenceData.state = `${getDivFromClass('_playerEnergy')?.textContent || '0'} fossils`
-            break
           case 'battleroyale':
             presenceData.state = `${getDivFromClass('_playerEnergy')?.textContent || '0'} energy`
             break
@@ -291,9 +306,6 @@ presence.on('UpdateData', async () => {
             break
           case 'factory':
             presenceData.state = `${getDivFromClass('_playerEnergy')?.textContent || '$0'}`
-            break
-          case 'racing':
-            presenceData.state = `${getDivFromClass('_rightText')?.textContent || '? Left'}`
             break
           case 'blookrush':
             presenceData.state = `${getDivFromClass('_playerEnergy')?.textContent || '0'} blooks`

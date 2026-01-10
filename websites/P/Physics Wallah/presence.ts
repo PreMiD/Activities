@@ -1,7 +1,7 @@
 import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
-  clientId: '1134044987277975616',
+  clientId: '1077091660443430922',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -36,7 +36,14 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = ActivityAssets.Scrolling
     presenceData.smallImageText = 'Browsing the website'
 
-    if (pathname.endsWith('/my-batches')) {
+    if (href.endsWith('study')) {
+      presenceData.details = 'Studying...'
+      presenceData.state = 'Viewing Dashboard'
+      presenceData.smallImageKey = Assets.Reading
+      presenceData.smallImageText = 'Viewing Dashboard'
+    }
+
+    if (href.endsWith('my-batches')) {
       presenceData.details = 'Studying...'
       presenceData.state = 'My Batches'
       presenceData.smallImageKey = Assets.Reading
@@ -72,17 +79,32 @@ presence.on('UpdateData', async () => {
       }
     }
     else if (href.includes('open-pdf')) {
-      const urlsobj = new URL(jsonobj[3].value, 'https://www.pw.live')
-      presenceData.details = `Solving DPP (PDF) | ${urlsobj.searchParams.get(
-        'subject',
-      )}`
-      if (!privacyMode)
-        presenceData.state = urlsobj.searchParams.get('topic')
-      else presenceData.state = 'Improving skills'
+      const title = JSON.parse(localStorage.getItem('PDF')!).title
+      if (title && title.toLowerCase().includes('dpp')) {
+        const urlsobj = new URL(jsonobj[3].value, 'https://www.pw.live')
+        presenceData.details = `Solving DPP (PDF) | ${urlsobj.searchParams.get(
+          'subject',
+        )}`
+        if (!privacyMode) {
+          presenceData.state = urlsobj.searchParams.get('topic')
+        }
+        else { presenceData.state = 'Improving skills' }
 
-      presenceData.startTimestamp = browsingTimestamp
-      presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = 'Viewing DPP'
+        presenceData.startTimestamp = browsingTimestamp
+        presenceData.smallImageKey = Assets.Reading
+        presenceData.smallImageText = 'Viewing DPP'
+      }
+      else {
+        const urlsobj = new URL(jsonobj[3].value, 'https://www.pw.live')
+        presenceData.details = `Viewing Notes | ${urlsobj.searchParams.get(
+          'subject',
+        )}`
+        presenceData.smallImageKey = Assets.Reading
+        if (!privacyMode) {
+          presenceData.state = urlsobj.searchParams.get('topic')
+        }
+        else { presenceData.state = 'Class Notes' }
+      }
     }
   }
   else if (pathname.startsWith('/watch')) {
@@ -128,7 +150,6 @@ presence.on('UpdateData', async () => {
   }
   presence.setActivity(presenceData)
 })
-
 function updateVideoTimestamps() {
   return getTimestamps(
     timestampFromFormat(

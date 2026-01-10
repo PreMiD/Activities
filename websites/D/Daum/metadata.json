@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "SlowLife",
@@ -17,8 +17,8 @@
     "nl": "Daum (다음) is een Zuid-Koreaans webportaal. Het opende de eerste webmailservice in Korea onder de naam \"Hanmail\" (huidige Daum Mail), en biedt ook online gemeenschapsdienst \"Daum Cafe\" en nieuwsdienst \"Daum News\"."
   },
   "url": "www.daum.net",
-  "regExp": "(top[.])?([a-z]+)([.]v)?[.]daum[.]([a-z0-9]+)",
-  "version": "1.0.31",
+  "regExp": "^https?[:][/][/](top[.])?([a-z]+)([.]v)?[.]daum[.]([a-z0-9]+)",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Daum/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Daum/assets/thumbnail.png",
   "color": "#f4f7fb",

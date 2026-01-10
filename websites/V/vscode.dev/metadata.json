@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Faelayis",
@@ -17,7 +17,8 @@
     "fr": "Visual Studio Code pour le Web n'importe où, n'importe quand, entièrement dans votre navigateur [Paramètres de personnalisation](https://github.com/PreMiD/Presences/blob/master/websites/V/vscode.dev/README.md)"
   },
   "url": "vscode.dev",
-  "version": "1.1.0",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*vscode[.]dev[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/vscode.dev/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/vscode.dev/assets/thumbnail.png",
   "color": "#3eaaf2",

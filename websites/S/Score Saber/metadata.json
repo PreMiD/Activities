@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "joerkig",
@@ -10,7 +10,8 @@
     "en": "Beat Saber's largest leaderboard system for custom songs, earn PP from ranked maps, and compare scores with others."
   },
   "url": "scoresaber.com",
-  "version": "2.3.8",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*scoresaber[.]com[/]",
+  "version": "2.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Score%20Saber/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Score%20Saber/assets/thumbnail.png",
   "color": "#ffde1a",

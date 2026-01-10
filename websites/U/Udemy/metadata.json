@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "EGGSY",
@@ -12,10 +12,11 @@
     "tr": "Udemy, internetten ders alabileceğiniz oldukça popüler global bir internet sitesidir."
   },
   "url": "www.udemy.com",
-  "version": "1.2.26",
+  "regExp": "^https?[:][/][/](www[.])?udemy[.]com[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/Udemy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/Udemy/assets/thumbnail.png",
-  "color": "#ea5252",
+  "color": "#a435f0",
   "category": "videos",
   "tags": [
     "course",

@@ -1,16 +1,29 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
-    "name": "Kyrie",
-    "id": "368399721494216706"
+    "id": "671037171611729920",
+    "name": "atom_skully"
   },
+  "contributors": [
+    {
+      "id": "368399721494216706",
+      "name": "Kyrie"
+    }
+  ],
   "service": "Notion",
   "description": {
-    "en": "Notion is a notetaking software and project management software that is used for note-taking, task management, project management, knowledge management, and personal knowledge management. The app uses databases and markdown pages for use in personal and collaboration work."
+    "en": "Notion is your connected workspace where documents, projects, and knowledge come together to streamline team collaboration. This ecosystem now extends to Notion Calendar, which seamlessly syncs your schedule with your priorities, and Notion Mail, designed to integrate your conversations directly into your workflow for a truly unified and frictionless experience.",
+    "fr": "Notion est votre espace de travail connecté où les documents, les projets et les connaissances convergent pour simplifier la collaboration d'équipe. Cet écosystème s'appuie désormais sur Notion Calendar pour synchroniser votre temps avec vos priorités et sur Notion Mail pour intégrer vos échanges directement dans vos flux de travail, offrant ainsi une plateforme unique et fluide qui centralise l'intégralité de votre vie professionnelle."
   },
-  "url": "www.notion.so",
-  "version": "1.1.15",
+  "url": [
+    "www.notion.com",
+    "www.notion.so",
+    "calendar.notion.so",
+    "mail.notion.so"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*notion[.](so|com|site)[/]",
+  "version": "2.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Notion/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Notion/assets/thumbnail.png",
   "color": "#000000",
@@ -22,19 +35,14 @@
   ],
   "settings": [
     {
-      "id": "title",
-      "title": "Show document name",
-      "icon": "fas fa-file-alt",
-      "value": false
+      "id": "lang",
+      "multiLanguage": true
     },
     {
-      "id": "icon",
-      "title": "Show document icon",
-      "icon": "fas fa-images",
-      "value": false,
-      "if": {
-        "title": true
-      }
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": true
     }
   ]
 }

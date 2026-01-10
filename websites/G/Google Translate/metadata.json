@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -27,8 +27,8 @@
     "vi": "Dịch vụ miễn phí của Google phiên dịch ngay lập tức các từ ngữ, cụm từ, và trang web từ Tiếng Anh và hơn 100 ngôn ngữ khác."
   },
   "url": "translate.google.com",
-  "regExp": "translate.google([.][a-z]+)+[/]",
-  "version": "3.0.19",
+  "regExp": "^https?[:][/][/]translate.google([.][a-z]+)+[/]",
+  "version": "3.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Translate/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Translate/assets/thumbnail.png",
   "color": "#4c8bf5",

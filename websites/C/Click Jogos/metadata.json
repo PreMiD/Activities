@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "fror",
@@ -13,7 +13,8 @@
     "vi": "Thành lập năm 2004, Click Jogos là cổng game lớn nhất Brazil. Tất cả các trò chơi đều miễn phí và không cần đăng nhập. Mục tiêu của chúng tôi là cung cấp trải nghiệm giải trí tuyệt vời."
   },
   "url": "www.clickjogos.com.br",
-  "version": "1.1.27",
+  "regExp": "^https?[:][/][/](www[.])?clickjogos[.]com[.]br[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Click%20Jogos/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Click%20Jogos/assets/thumbnail.png",
   "color": "#FF9902",

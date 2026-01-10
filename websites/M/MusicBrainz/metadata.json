@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "theusaf",
@@ -10,7 +10,8 @@
     "en": "MusicBrainz is an open music encyclopedia that collects music metadata and makes it available to the public."
   },
   "url": "musicbrainz.org",
-  "version": "1.0.11",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*musicbrainz[.]org[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MusicBrainz/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MusicBrainz/assets/thumbnail.png",
   "color": "#BA478F",

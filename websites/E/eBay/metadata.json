@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -17,8 +17,8 @@
     "nl": "Koop en verkoop elektronica, auto's, mode, verzamelobjecten, sportartikelen, digitale camera's, babyartikelen, kortingsbonnen en al het andere op eBay, 's werelds online marktplaats."
   },
   "url": "www.ebay.com",
-  "regExp": "([a-z0-9-]+[.])*ebay([.][a-z]+)+[/]",
-  "version": "1.3.21",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*ebay([.][a-z]+)+[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/eBay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/eBay/assets/thumbnail.png",
   "color": "#e53238",

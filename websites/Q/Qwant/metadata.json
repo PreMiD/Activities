@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Snazzah",
@@ -15,7 +15,8 @@
     "www.qwant.com",
     "www.qwantjunior.com"
   ],
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/]((www)[.]qwant[.]com|(www)[.]qwantjunior[.]com)[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Q/Qwant/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Q/Qwant/assets/thumbnail.png",
   "color": "#4BA2EA",

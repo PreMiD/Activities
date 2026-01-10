@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -23,8 +23,8 @@
     "zh-tw": "Discord是一款專為電子遊戲社區設計的免費網路即時通話軟體與數位發行平台。"
   },
   "url": "discord.com",
-  "regExp": "([a-z0-9-]+[.])*(discord[.]com|discord[.]gg|discordapp[.]com|discordmerch[.]com|discordstatus[.]com)[/]",
-  "version": "3.0.39",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(discord[.]com|discord[.]gg|discordapp[.]com|discordmerch[.]com|discordstatus[.]com)[/]",
+  "version": "3.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord/assets/thumbnail.png",
   "color": "#7289DA",

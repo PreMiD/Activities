@@ -1,7 +1,7 @@
 import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1349021198943649884',
+  clientId: '1452785817901600890',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -42,6 +42,18 @@ presence.on('UpdateData', async () => {
     },
     '/search': {
       details: 'Browsing Search 🔎',
+      smallImageKey: Assets.Viewing,
+    },
+    '/livetv': {
+      details: 'Browsing Live TV 📶',
+      smallImageKey: Assets.Viewing,
+    },
+    '/sports': {
+      details: 'Live Sports ⚽',
+      smallImageKey: Assets.Viewing,
+    },
+    '/games': {
+      details: 'Browsing Games 🎮',
       smallImageKey: Assets.Viewing,
     },
   }

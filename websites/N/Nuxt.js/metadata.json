@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Deleted 7.12i",
@@ -17,8 +17,8 @@
     "nl": "Nuxt is een progressief framework gebaseerd op Vue.js om moderne webapplicaties te maken. Het is gebaseerd op de officiële bibliotheken van Vue.js (vue, vue-router en vuex) en krachtige ontwikkeltools (webpack, Babel en PostCSS). Het doel van Nuxt is om webontwikkeling krachtig en performant te maken met een geweldige ontwikkelaarservaring in gedachten."
   },
   "url": "nuxtjs.org",
-  "regExp": "([a-z]{2}[.])?nuxtjs[.]org",
-  "version": "1.3.13",
+  "regExp": "^https?[:][/][/]([a-z]{2}[.])?nuxtjs[.]org",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nuxt.js/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nuxt.js/assets/thumbnail.png",
   "color": "#00c58e",

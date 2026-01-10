@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "The Gamerzs",
@@ -15,7 +15,8 @@
     "zh": "WoolyPooly是最有利可图的矿池之一。我们专注于PPLNS & SOLO奖励系统的最低佣金费率。"
   },
   "url": "woolypooly.com",
-  "version": "1.1.25",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*woolypooly[.]com[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WoolyPooly/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WoolyPooly/assets/thumbnail.png",
   "color": "#3d89f5",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "969650307464298636",
@@ -10,7 +10,8 @@
     "en": "Create, compose, collaborate, play, and print your sheet music using the world's most simple and intuitive web-based music writing and composition software."
   },
   "url": "flat.io",
-  "version": "1.0.12",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flat[.]io[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flat/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Flat/assets/thumbnail.png",
   "color": "#3981FF",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "PreMiD",
@@ -17,7 +17,8 @@
     "nl": "StopotS, het stop spel op het internet. Speel dit populaire spel gratis en zonder downloads."
   },
   "url": "stopots.com",
-  "version": "1.2.31",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*stopots[.]com[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/StopotS/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/StopotS/assets/thumbnail.png",
   "color": "#FFBE55",

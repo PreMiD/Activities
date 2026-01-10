@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Ninja",
@@ -21,7 +21,8 @@
     "nl": "TruckersFM is het #1 station voor de simulatiegemeenschap, opgericht in 2015. Ze bieden 24/7 entertainment, of je nu in de cabine bent of onderweg. Je kunt overal naar hen luisteren, met een breed scala aan shows, waaronder hun eigen wekelijkse hitlijstshow, The Most Played Chart."
   },
   "url": "truckers.fm",
-  "version": "1.4.24",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*truckers[.]fm[/]",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/thumbnail.png",
   "color": "#C82372",

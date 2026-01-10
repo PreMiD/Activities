@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -13,6 +13,10 @@
     {
       "name": "Hikki",
       "id": "533014724569333770"
+    },
+    {
+      "name": "TsuKiZo",
+      "id": "330333765891129346"
     }
   ],
   "service": "Twitch",
@@ -46,7 +50,8 @@
     "devstatus.twitch.tv",
     "status.twitch.tv"
   ],
-  "version": "3.3.0",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*twitch[.]tv[/]",
+  "version": "3.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/thumbnail.png",
   "color": "#9146FF",

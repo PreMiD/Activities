@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Striker",
@@ -34,7 +34,8 @@
     "zh-tw": "節奏躍然指上！遊戲模式來自「押忍！戰鬥應援團」、「精英節拍特工」、太鼓的以及 osu! 原創的模式。包含一個功能齊全的譜面編輯器。"
   },
   "url": "osu.ppy.sh",
-  "version": "2.1.7",
+  "regExp": "^https?[:][/][/]osu[.]ppy[.]sh[/]",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20ppy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20ppy/assets/thumbnail.png",
   "color": "#FF66AA",

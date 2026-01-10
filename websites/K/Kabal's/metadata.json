@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Eren",
@@ -12,7 +12,8 @@
     "tr": "Kabal's bot Türkiye'de popüler olan bir bot."
   },
   "url": "kabals.app",
-  "version": "1.2.26",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kabals[.]app[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kabal%27s/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kabal%27s/assets/thumbnail.png",
   "color": "#2942BF",

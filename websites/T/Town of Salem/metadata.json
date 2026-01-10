@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "theusaf",
@@ -14,7 +14,8 @@
     "townofsalem.io",
     "www.townofsalem.io"
   ],
-  "version": "1.1.12",
+  "regExp": "^https?[:][/][/](www[.])?townofsalem[.]io[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Town%20of%20Salem/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Town%20of%20Salem/assets/thumbnail.jpg",
   "color": "#F0B450",

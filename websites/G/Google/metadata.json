@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "TheDrop.",
@@ -21,8 +21,8 @@
     "zh": "Google是一个搜索引擎，可用于查找各种信息，例如网站，图片，地图。"
   },
   "url": "www.google.com",
-  "regExp": "www[.]google([.][a-z]+)+[/]",
-  "version": "2.5.1",
+  "regExp": "^https?[:][/][/]www[.]google([.][a-z]+)+[/]",
+  "version": "2.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google/assets/thumbnail.png",
   "color": "#ffffff",

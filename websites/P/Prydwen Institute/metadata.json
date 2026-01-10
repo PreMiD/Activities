@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "nihongojouzu",
@@ -19,7 +19,8 @@
     "www.prydwen.gg",
     "blog.prydwen.gg"
   ],
-  "version": "2.0.1",
+  "regExp": "^https?[:][/][/](www|blog)[.]prydwen[.]gg[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prydwen%20Institute/assets/thumbnail.jpg",
   "color": "#161833",

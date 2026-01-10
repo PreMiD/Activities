@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Arda",
@@ -15,7 +15,8 @@
     "www.log.com.tr",
     "log.com.tr"
   ],
-  "version": "1.2.26",
+  "regExp": "^https?[:][/][/](www[.]log|log)[.]com[.]tr[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Log.com.tr/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Log.com.tr/assets/thumbnail.png",
   "color": "#FFFFFF",

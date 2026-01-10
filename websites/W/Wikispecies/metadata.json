@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Hans5958",
@@ -15,7 +15,8 @@
     "zh": "維基物種是分類學物種數據庫，涵蓋動物界，植物界，真菌，細菌，古細菌，原生生物和所有其他形式的生命的生活和化石形態。"
   },
   "url": "species.wikimedia.org",
-  "version": "1.0.25",
+  "regExp": "^https?[:][/][/]species[.]wikimedia[.]org[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikispecies/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikispecies/assets/thumbnail.png",
   "color": "#f9f9f9",

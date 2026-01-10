@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "272665050672660501",
@@ -11,7 +11,8 @@
     "tr": "Tempest Fansub, türkçe altyazılı anime izleyebileceğiniz ve manga okuyabileceğiniz bir site."
   },
   "url": "tempestscans.net",
-  "version": "1.0.16",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tempestscans[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tempest%20Fansub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tempest%20Fansub/assets/thumbnail.png",
   "color": "#349eeb",

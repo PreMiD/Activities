@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "CRUGG",
@@ -18,10 +18,10 @@
   "url": [
     "gta5-mods.com",
     "forums.gta5-mods.com",
-    "www.gta5-mods.com",
-    "www.forums.gta5-mods.com"
+    "www.gta5-mods.com"
   ],
-  "version": "1.4.11",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gta5-mods[.]com[/]",
+  "version": "1.5.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/5Mods/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/5Mods/assets/thumbnail.jpg",
   "color": "#20ba4e",

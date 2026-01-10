@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Deleted 7.12i",
@@ -23,7 +23,8 @@
     "electronjs.org",
     "www.electronjs.org"
   ],
-  "version": "1.2.25",
+  "regExp": "^https?[:][/][/](www[.])?electronjs[.]org[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Electron/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Electron/assets/thumbnail.png",
   "color": "#74b1be",

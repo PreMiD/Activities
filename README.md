@@ -5,9 +5,9 @@
 
 This repository contains the source code of all Activities that are available in [PreMiD's Store](https://premid.app/store). Activities enhance your Discord presence by showing what you're doing on various websites.
 
-<div align="left">
+<div align="center">
     <a target="_blank" href="https://discord.premid.app/" title="Join our Discord!">
-        <img  src="https://discordapp.com/api/guilds/493130730549805057/widget.png?style=banner2" height="76px" draggable="false" alt="Join our Discord!">
+        <img src="https://img.shields.io/discord/493130730549805057?label=Discord&labelColor=7289da&color=ddd&logo=premid&logoColor=fff&logoSize=auto&style=for-the-badge" alt="Join our Discord!">
     </a>
 </div>
 
@@ -18,15 +18,13 @@ This repository contains the source code of all Activities that are available in
 Want to create your own Activity or modify an existing one? Great! Follow these simple steps:
 
 1. **Set up your development environment**
-
    - Install [Node.js](https://nodejs.org/) (version 20 or higher)
    - Clone this repository: `git clone https://github.com/PreMiD/Activities.git`
    - Navigate to the project directory: `cd Activities`
    - Install dependencies: `npm install`
 
 2. **Learn the basics**
-
-   - Read our [documentation](https://docs.premid.app/dev/presence) to understand how Activities work
+   - Read our [documentation](https://docs.premid.app/) to understand how Activities work
    - Browse through existing Activities to see examples and best practices
 
 3. **Start creating/editing**

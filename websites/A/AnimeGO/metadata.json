@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "SHISEN",
@@ -14,8 +14,8 @@
     "animego.org",
     "animego.me"
   ],
-  "regExp": "([a-z0-9]+[.])animego([.][a-z]+)+[/]",
-  "version": "1.0.20",
+  "regExp": "^https?[:][/][/]([a-z0-9]+[.])animego([.][a-z]+)+[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeGO/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeGO/assets/thumbnail.png",
   "color": "#ff5c57",

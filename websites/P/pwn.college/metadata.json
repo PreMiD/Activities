@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "490936202384506900",
+    "name": "rekka_1165"
+  },
+  "service": "pwn.college",
+  "description": {
+    "en": "pwn.college is an education platform for students (and other interested parties) to learn about, and practice, core cybersecurity concepts in a hands-on fashion. In martial arts terms, it is designed to take a “white belt” in cybersecurity through the journey to becoming a “blue belt”, able to approach (simple) cybersecurity competitions (CTFs) and wargames."
+  },
+  "url": "pwn.college",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pwn[.]college[/]",
+  "version": "1.1.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/P/pwn.college/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/pwn.college/assets/thumbnail.png",
+  "color": "#ffc627",
+  "category": "other",
+  "tags": [
+    "hacking",
+    "education",
+    "pwn"
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "515668127829458945",
@@ -15,7 +15,8 @@
     "radiowavefm.com",
     "wavefm.cl"
   ],
-  "version": "1.0.2",
+  "regExp": "^https?[:][/][/](radiowavefm[.]com|wavefm[.]cl)[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wave%20FM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wave%20FM/assets/thumbnail.png",
   "color": "#3398C3",

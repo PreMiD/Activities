@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "gausie",
@@ -15,8 +15,8 @@
     "nl": "Kingdom of Loathing (afgekort KoL) is een browsergebaseerd rollenspel voor meerdere spelers, ontworpen en beheerd door Asymmetric Publications"
   },
   "url": "kingdomofloathing.com",
-  "regExp": "([a-z0-9]+\\.)*kingdomofloathing.com|(127\\.0\\.0\\.1|localhost):6008\\d",
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/]([a-z0-9]+\\.)*kingdomofloathing.com|(127\\.0\\.0\\.1|localhost):6008\\d",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kingdom%20of%20Loathing/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kingdom%20of%20Loathing/assets/thumbnail.png",
   "color": "#0000ff",

@@ -1,5 +1,5 @@
 import type { IFrameData } from './iframe.js'
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1310622511419101235',
@@ -53,7 +53,7 @@ presence.on('UpdateData', async () => {
       if (data.thumbnail)
         presenceData.largeImageKey = data.thumbnail
       if (!data.paused && !Number.isNaN(data.duration)) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
           Math.floor(data.currentTime),
           Math.floor(data.duration),
         )
@@ -111,7 +111,7 @@ presence.on('UpdateData', async () => {
         presenceData.buttons = [
           {
             label: strings.buttonViewPage,
-            url: document.location.href,
+            url: document.location.href.split('?')[0] || document.location.href,
           },
         ]
       }

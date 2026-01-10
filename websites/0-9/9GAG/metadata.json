@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -15,8 +15,8 @@
     "zh-tw": "9GAG是一個社交媒體網站。使用者們在此上傳並分享「用戶自創」的圖像與影片。"
   },
   "url": "9gag.com",
-  "regExp": "([a-z0-9-]+[.])*9gag[.]com[/]",
-  "version": "1.3.14",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*9gag[.]com[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/9GAG/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/9GAG/assets/thumbnail.png",
   "color": "#ffffff",

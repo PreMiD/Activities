@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "1145729748803272815",
@@ -10,7 +10,8 @@
     "en": "Mod DB is the world's oldest video game modification community, proudly serving millions of readers monthly who seek creative new gameplay experiences"
   },
   "url": "moddb.com",
-  "version": "1.0.11",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*moddb[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/ModDB/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/ModDB/assets/thumbnail.png",
   "color": "#a00e00",

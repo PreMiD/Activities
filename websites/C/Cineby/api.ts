@@ -36,10 +36,10 @@ export interface AnimeDetails {
 const cache: Map<string, TvDetails | MovieDetails | AnimeDetails> = new Map()
 
 export class CinebyApi {
-  private static readonly BASE_URL = 'https://db.cineby.app/3'
+  private static readonly BASE_URL = 'https://jumpfreedom.com/3'
   private static readonly API_KEY = '269890f657dddf4635473cf4cf456576'
 
-  private static readonly ANIME_URL = 'https://api.cineby.app/hianime'
+  private static readonly ANIME_URL = 'https://api.videasy.net/hianime'
 
   public static async getCurrent<T extends TvDetails | MovieDetails>(
     pathname: string,
@@ -49,7 +49,7 @@ export class CinebyApi {
 
     const [type, id] = pathname.split('/').slice(1)
     const response = await fetch(
-      `${this.BASE_URL}/${type}/${id}?language=en&api_key=${this.API_KEY}`,
+      `${this.BASE_URL}/${type}/${id}?language=en`,
     )
 
     if (type === 'tv') {
@@ -81,7 +81,7 @@ export class CinebyApi {
     const response = await fetch(
       `${this.BASE_URL}/tv/${id}/season/${season ?? 1}/episode/${
         episode ?? 1
-      }?language=en&api_key=${this.API_KEY}`,
+      }?language=en`,
     )
 
     return response.json()

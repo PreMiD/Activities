@@ -45,7 +45,7 @@ presence.on('UpdateData', async () => {
               : 'Browsing'
           break
         }
-        case pathname === '/about.html': {
+        case pathname === '/about': {
           presenceData.details = privacy === 0 || privacy === 1
             ? 'Viewing the about section'
             : privacy === 2
@@ -53,7 +53,7 @@ presence.on('UpdateData', async () => {
               : 'Browsing'
           break
         }
-        case pathname === '/team.html': {
+        case pathname === '/team': {
           presenceData.details = privacy === 0 || privacy === 1
             ? 'Viewing the team'
             : privacy === 2
@@ -61,7 +61,118 @@ presence.on('UpdateData', async () => {
               : 'Browsing'
           break
         }
-        case pathname === '/rules.html': {
+        case pathname === '/division': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing all divisions'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          break
+        }
+        case pathname.includes('/division'): {
+          presenceData.details = privacy === 0
+            ? 'Viewing division'
+            : privacy === 1
+              ? 'Viewing a division'
+              : privacy === 2
+                ? 'Viewing a page'
+                : 'Browsing'
+          presenceData.state = document.querySelector('.division-heading')?.textContent?.split(' ')?.[0]
+          break
+        }
+        case pathname === '/contracts': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing all contracts'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          break
+        }
+        case pathname.includes('/contracts'): {
+          presenceData.details = privacy === 0
+            ? 'Viewing contract'
+            : privacy === 1
+              ? 'Viewing a contract'
+              : privacy === 2
+                ? 'Viewing a page'
+                : 'Browsing'
+          presenceData.state = document.querySelector('h2')?.textContent?.split(' ')?.[0]
+          break
+        }
+        case pathname === '/tours': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Exploring all tours'
+            : privacy === 2
+              ? 'Exploring a page'
+              : 'Browsing'
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.buttons = [{ label: 'View Tours', url: href }]
+          break
+        }
+        case pathname === '/bank': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing the bank'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          presenceData.buttons = [{ label: 'View Bank', url: href }]
+          break
+        }
+        case pathname === '/stats': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing the stats'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.buttons = [{ label: 'View Stats', url: href }]
+          break
+        }
+        case pathname === '/ranks': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing the ranks'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.buttons = [{ label: 'View Ranks', url: href }]
+          break
+        }
+        case pathname === '/cargomarket': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing the cargomarket'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          const sortedBy = document.querySelector('[aria-controls="radix-«rbh»"] > span')?.textContent
+          presenceData.state = sortedBy ? `Sorted by: ${sortedBy}` : ''
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.buttons = [{ label: 'View Cargomarket', url: href }]
+          break
+        }
+        case pathname === '/marketplace': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing the cargomarket'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          const sortedBy = document.querySelector('[data-state="active"]')?.textContent
+          presenceData.state = sortedBy !== 'All' ? `Filtered for: ${sortedBy}` : ''
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.buttons = [{ label: 'View Marketplace', url: href }]
+          break
+        }
+        case pathname === '/fleets': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing all fleets'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          presenceData.smallImageKey = Assets.Reading
+          presenceData.buttons = [{ label: 'View Fleets', url: href }]
+          break
+        }
+        case pathname === '/rules': {
           presenceData.details = privacy === 0 || privacy === 1
             ? 'Read the rules'
             : privacy === 2
@@ -71,7 +182,7 @@ presence.on('UpdateData', async () => {
           presenceData.buttons = [{ label: 'Read The Rules', url: href }]
           break
         }
-        case pathname === '/gallery.html': {
+        case pathname === '/gallery': {
           const totalPages = document.querySelectorAll('.btn.log.gray')
           presenceData.details = privacy === 0
             ? `Viewing the gallery - Page ${document.querySelector('.btn.log.active')?.textContent}/${totalPages[totalPages.length - 1]?.textContent}`
@@ -83,7 +194,7 @@ presence.on('UpdateData', async () => {
           presenceData.buttons = [{ label: 'View Images', url: href }]
           break
         }
-        case pathname === '/convoy.html': {
+        case pathname === '/events': {
           presenceData.details = privacy === 0 || privacy === 1
             ? 'Viewing all events'
             : privacy === 2
@@ -100,11 +211,11 @@ presence.on('UpdateData', async () => {
               : privacy === 2
                 ? 'Viewing page'
                 : 'Browsing'
-          presenceData.state = document.querySelector('.wel')?.textContent
+          presenceData.state = document.querySelector('h3')?.textContent
           presenceData.buttons = [{ label: 'View Event', url: href }]
           break
         }
-        case pathname === '/news.html': {
+        case pathname === '/news': {
           presenceData.details = privacy === 0 || privacy === 1
             ? 'Viewing all news'
             : privacy === 2
@@ -124,10 +235,9 @@ presence.on('UpdateData', async () => {
                 ? 'Reading page'
                 : 'Browsing'
 
-          presenceData.state
-= document.querySelector('.text-uppercase')?.textContent
+          presenceData.state = document.querySelectorAll('div.flex.items-center.gap-2')?.[1]?.textContent
           presenceData.smallImageKey = Assets.Reading
-          presenceData.smallImageText = `Published by: ${document.querySelector('strong')?.textContent}`
+          presenceData.smallImageText = 'Reading'
           presenceData.buttons = [{ label: 'Read Article', url: href }]
         }
       }
@@ -136,7 +246,7 @@ presence.on('UpdateData', async () => {
     case 'shop.nexonlogistics.com': {
       presenceData.name = 'Nexon Logistics Shop'
       switch (true) {
-        case pathname === '/index.html':
+        case pathname === '/index':
         case pathname === '':
         case pathname === '/': {
           presenceData.details = privacy === 0 || privacy === 1
@@ -154,7 +264,7 @@ presence.on('UpdateData', async () => {
               : 'Browsing'
           break
         }
-        case pathname === '/contact.html': {
+        case pathname === '/contact': {
           presenceData.details = privacy === 0 || privacy === 1
             ? 'Viewing the contact page'
             : privacy === 2
@@ -171,10 +281,10 @@ presence.on('UpdateData', async () => {
                 ? 'Viewing page'
                 : 'Browsing'
           presenceData.state
-= document.querySelector('.product_section')?.textContent
+            = document.querySelector('.product_section')?.textContent
           presenceData.buttons = [{ label: 'View Product', url: href }]
           presenceData.largeImageKey
-= document.querySelector<HTMLImageElement>('[alt="IMG-PRODUCT"]')
+            = document.querySelector<HTMLImageElement>('[alt="IMG-PRODUCT"]')
               ?.src ?? ActivityAssets.Logo
           break
         }
@@ -201,10 +311,10 @@ presence.on('UpdateData', async () => {
     case 'hub.nexonlogistics.com': {
       presenceData.name = 'Nexon Logistics Drivershub'
       switch (true) {
-        case !!document.querySelector('.menu-item.active'): {
+        case !!document.querySelector('#claimPointsModalLabel') && !document.querySelector('#claimPointsModalLabel')?.ariaHidden: {
           presenceData.state
-= privacy === 0 || privacy === 1
-              ? `Viewing ${document.querySelector('.menu-item.active')?.textContent}`
+            = privacy === 0 || privacy === 1
+              ? 'Claiming their daily rewards'
               : privacy === 2
                 ? 'Viewing a page'
                 : 'Browsing'
@@ -218,32 +328,147 @@ presence.on('UpdateData', async () => {
               : 'Browsing'
           break
         }
-        case pathname.includes('/profile/'): {
-          presenceData.details = privacy === 0
-            ? 'Viewing the profile of'
-            : privacy === 1
-              ? 'Viewing a profile'
+        case pathname === '/leaderboard': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing all leaderboards'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          break
+        }
+        case pathname === '/members': {
+          const memberSearch = document.querySelector<HTMLInputElement>('[type="search"]')?.value
+
+          if (memberSearch) {
+            presenceData.details = privacy === 0
+              ? 'Searching members for:'
+              : privacy === 1
+                ? 'Searching members'
+                : privacy === 2
+                  ? 'Viewing a page'
+                  : 'Browsing'
+            presenceData.state = memberSearch
+            presenceData.smallImageKey = Assets.Search
+          }
+          else {
+            presenceData.details = privacy === 0 || privacy === 1
+              ? 'Viewing all members'
               : privacy === 2
                 ? 'Viewing a page'
                 : 'Browsing'
-          presenceData.state = document.querySelector('.user-info')?.textContent
-          presenceData.largeImageKey = document
-            .querySelector<HTMLImageElement>('.user-avatar-section')
-            ?.querySelector('img')
-            ?.src ?? ActivityAssets.Logo
+          }
           break
         }
-        case pathname.includes('/jobs/'): {
-          presenceData.details = 'Viewing job:'
-          presenceData.state = document
-            .querySelector('title')
-            ?.textContent
-            ?.split(' |')?.[0]
-          presenceData.largeImageKey
-= document
-              .querySelector<HTMLImageElement>('.user-avatar-section')
-              ?.querySelector('img')
-              ?.src ?? ActivityAssets.Logo
+        case pathname === '/': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing the dashboard'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          break
+        }
+        case pathname === '/events': {
+          presenceData.details = privacy === 0
+            ? 'Viewing all events for'
+            : privacy === 1
+              ? 'Viewing all events'
+              : privacy === 2
+                ? 'Viewing a page'
+                : 'Browsing'
+          presenceData.state = document.querySelector('.fc-toolbar-title')?.textContent
+          break
+        }
+        case pathname === '/jobs': {
+          const items = {
+            menu: document.querySelector('.menu-item.open')?.textContent,
+            submenu: document.querySelector('.menu-item.active')?.textContent,
+          }
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing jobs'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          presenceData.state = items.menu && items.submenu ? `${items.menu} - ${items.submenu}` : items.menu ? `${items.menu}` : items.submenu ? `${items.submenu}` : 'Unknown menu'
+          break
+        }
+        case pathname === '/tourbonus': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing the tourbonuses'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          break
+        }
+        case pathname === '/standardtour': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing the standard tour'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          break
+        }
+        case pathname === '/divisiontour': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing the division tour'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          break
+        }
+        case pathname === '/tourstatistics': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing the division tour'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          break
+        }
+        case pathname === '/accepthauls': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing hauls that can be accepted'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          break
+        }
+        case pathname === '/validatetourreport': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing tours that can be validated'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          break
+        }
+        case pathname === '/addaward': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing tours awards that can be added'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          break
+        }
+        case pathname === '/addtour': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing tours awards that can be added'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          break
+        }
+        case pathname === '/addcargo': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing tours cargo that can be added'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
+          break
+        }
+        case pathname === '/xpbonus': {
+          presenceData.details = privacy === 0 || privacy === 1
+            ? 'Viewing tours bonus that can be set'
+            : privacy === 2
+              ? 'Viewing a page'
+              : 'Browsing'
           break
         }
       }
@@ -329,7 +554,7 @@ presence.on('UpdateData', async () => {
               : 'Browsing'
           break
         }
-        case pathname === '/about.html': {
+        case pathname === '/about': {
           presenceData.details = privacy === 0 || privacy === 1
             ? 'Viewing the about section'
             : privacy === 2
@@ -337,7 +562,7 @@ presence.on('UpdateData', async () => {
               : 'Browsing'
           break
         }
-        case pathname === '/register.html': {
+        case pathname === '/register': {
           presenceData.details = privacy === 0 || privacy === 1
             ? 'Viewing the registration form'
             : privacy === 2
@@ -401,7 +626,7 @@ presence.on('UpdateData', async () => {
         }
         case pathname.includes('/profile/'): {
           presenceData.largeImageKey
-= document.querySelector<HTMLImageElement>(
+            = document.querySelector<HTMLImageElement>(
               '.user-avatar-section > div > img',
             )?.src ?? ActivityAssets.AirlinesLogo
 

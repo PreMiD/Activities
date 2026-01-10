@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Dzlandis",
@@ -14,7 +14,8 @@
     "my.brain.fm",
     "try.brain.fm"
   ],
-  "version": "1.0.14",
+  "regExp": "^https?[:][/][/](www|my|try)[.]brain[.]fm[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Brain.fm/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Brain.fm/assets/thumbnail.png",
   "color": "#952fc0",

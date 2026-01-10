@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Toshi",
@@ -10,7 +10,8 @@
     "en": "A website where you can practice typing with YouTube music."
   },
   "url": "ytyping.net",
-  "version": "1.0.2",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*ytyping[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YTyping/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YTyping/assets/thumbnail.png",
   "color": "#3b5a7d",

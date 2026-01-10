@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "MulverineX",
@@ -11,7 +11,8 @@
     "nl": "Content Sharing Platform met brede platformondersteuning om tegelijkertijd te genieten van video's/muziek met een live chat en tal van aanpassingstools/moderatietools"
   },
   "url": "cytu.be",
-  "version": "1.1.35",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*cytu[.]be[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CyTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CyTube/assets/thumbnail.png",
   "color": "#263144",

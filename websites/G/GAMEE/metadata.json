@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "rushia",
@@ -10,7 +10,8 @@
     "en": "Play games, get tickets and WIN $$$. More tickets, more chances to WIN!"
   },
   "url": "www.gamee.com",
-  "version": "1.0.20",
+  "regExp": "^https?[:][/][/](www[.])?gamee[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GAMEE/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GAMEE/assets/thumbnail.png",
   "color": "#afee70",

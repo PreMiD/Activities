@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Marino",
@@ -16,7 +16,8 @@
     "forum.cfx.re",
     "servers.fivem.net"
   ],
-  "version": "1.1.13",
+  "regExp": "^https?[:][/][/](((docs|servers)[.])?fivem[.]net|(forum)[.]cfx[.]re)[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FiveM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FiveM/assets/thumbnail.png",
   "color": "#FF7300",

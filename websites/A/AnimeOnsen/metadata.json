@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Mist8kenGAS",
@@ -11,8 +11,8 @@
     "vi": "AnimeOnsen là nền tảng phát video trực tuyến dành cho chương trình và phim anime."
   },
   "url": "animeonsen.xyz",
-  "regExp": "(www.)?(animeonsen.xyz)",
-  "version": "1.1.16",
+  "regExp": "^https?[:][/][/](www.)?(animeonsen.xyz)",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeOnsen/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeOnsen/assets/thumbnail.png",
   "color": "#1a1a1a",

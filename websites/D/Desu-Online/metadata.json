@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "334411435633541121",
@@ -11,7 +11,8 @@
     "pl": "Najlepsza strona z anime online pl! Anime z polskimi napisami w doskonałej jakości i bez reklam! Najlepsze odtwarzacze video."
   },
   "url": "desu-online.pl",
-  "version": "1.0.21",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*desu-online[.]pl[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Desu-Online/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Desu-Online/assets/thumbnail.png",
   "color": "#D9910F",

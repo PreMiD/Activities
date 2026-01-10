@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "358402930191106049",
@@ -13,7 +13,8 @@
     "www.writerduet.com",
     "writerduet.helpscoutdocs.com"
   ],
-  "version": "1.0.7",
+  "regExp": "^https?[:][/][/]((www)[.]writerduet[.]com|(writerduet)[.]helpscoutdocs[.]com)[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WriterDuet/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WriterDuet/assets/thumbnail.png",
   "color": "#4598d4",

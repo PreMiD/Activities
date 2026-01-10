@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Stringy",
@@ -11,7 +11,8 @@
     "nl": "Bekijk alle online functies van Geometry Dash, direct vanaf deze handige kleine website! Levels, profielen, klassementen, commentaar, en meer!"
   },
   "url": "gdbrowser.com",
-  "version": "1.3.30",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gdbrowser[.]com[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GDBrowser/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GDBrowser/assets/thumbnail.png",
   "color": "#FFFF00",

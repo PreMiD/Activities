@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "BigBoi",
@@ -10,8 +10,8 @@
     "en": "Second only to Sega - Sonic Retro is the Sonic scene's GFDL input and output wiki resource for collecting data about Sonic the Hedgehog that is open to the entire community."
   },
   "url": "sonicretro.org",
-  "regExp": "((info|forums)+[.])*(sonicretro[.]org)[/]",
-  "version": "1.0.14",
+  "regExp": "^https?[:][/][/]((info|forums)+[.])*(sonicretro[.]org)[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sonic%20Retro/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sonic%20Retro/assets/thumbnail.png",
   "color": "#84846a",

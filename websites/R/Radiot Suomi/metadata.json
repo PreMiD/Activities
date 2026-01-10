@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "TehRamsus",
@@ -12,7 +12,8 @@
     "nl": "U kunt op internet naar Finse radiokanalen luisteren!"
   },
   "url": "www.radio-suomi.com",
-  "version": "1.0.20",
+  "regExp": "^https?[:][/][/](www[.])?radio-suomi[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Radiot%20Suomi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Radiot%20Suomi/assets/thumbnail.png",
   "color": "#002F6C",

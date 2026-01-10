@@ -1,0 +1,98 @@
+{
+  "ifixit.followGuide": {
+    "description": "Following a guide",
+    "message": "Following a guide"
+  },
+  "ifixit.aOutOfB": {
+    "description": "{Current Step Number} out of {Total Number of Steps}",
+    "message": "Step {0} out of {1}"
+  },
+  "ifixit.buttonViewGuide": {
+    "description": "Button leading user to view a guide",
+    "message": "View Guide"
+  },
+  "ifixit.buttonViewDevice": {
+    "description": "Button leading user to view a guides for a device",
+    "message": "View Device"
+  },
+  "ifixit.browsingGuides": {
+    "description": "Browsing guides index page",
+    "message": "Browsing guides"
+  },
+  "ifixit.troubleshooting": {
+    "description": "Troubleshooting page",
+    "message": "Troubleshooting"
+  },
+  "ifixit.buttonViewTroubleshooting": {
+    "description": "Button leading user to view a troubleshooting guide",
+    "message": "View Troubleshooting Guide"
+  },
+  "ifixit.viewQuestion": {
+    "description": "Viewing a question",
+    "message": "Viewing a question"
+  },
+  "ifixit.viewQuestionAuthor": {
+    "description": "Viewing a question asked by someone",
+    "message": "Viewing a question by {0}"
+  },
+  "ifixit.noAnswers": {
+    "description": "The question has no answers to it",
+    "message": "No answers"
+  },
+  "ifixit.answered": {
+    "description": "A question is answered",
+    "message": "Answered"
+  },
+  "ifixitt.notAnswered": {
+    "description": "A question has not been answered",
+    "message": "Not answered"
+  },
+  "ifixit.buttonViewQuestion": {
+    "description": "Button leading user to view a question",
+    "message": "View Question"
+  },
+  "ifixit.askQuestion": {
+    "description": "Asking a question",
+    "message": "Asking a question"
+  },
+  "ifixit.buttonViewProduct": {
+    "description": "Button leading user to view a product",
+    "message": "View Product"
+  },
+  "ifixit.devices": {
+    "description": "Devices page",
+    "message": "Devices"
+  },
+  "ifixit.editWiki": {
+    "description": "Editing a wiki article",
+    "message": "Editing a wiki article"
+  },
+  "ifixit.reviewWikiHistory": {
+    "description": "Viewing the contributions for a wiki article",
+    "message": "Reviewing article history"
+  },
+  "ifixit.readWikiArticle": {
+    "description": "Reading a wiki article",
+    "message": "Reading a wiki article"
+  },
+  "ifixit.browseNews": {
+    "description": "Browsing news articles",
+    "message": "Browsing news articles"
+  },
+  "ifixit.browseNewsCategories": {
+    "description": "Browsing list of news categories",
+    "message": "Browsing news categories"
+  },
+  "ifixit.browseNewsCategory": {
+    "description": "Browsing news articles by category",
+    "message": "Browsing news by category"
+  },
+  "ifixit.viewTeam": {
+    "description": "Viewing information about a team of uesrs",
+    "message": "Viewing a team"
+  },
+  "ifixit.buttonViewTeam": {
+    "description": "Button leading user to view a team",
+    "message": "View Team"
+  }
+}
