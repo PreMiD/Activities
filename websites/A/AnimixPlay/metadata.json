@@ -13,7 +13,7 @@
     "animixplay.best",
     "www1.animixplayer.top"
   ],
-  "regExp": "^https?[:][/][/](animixplay[.]fun|animixplay[.]best|(www1)[.]animixplayer[.]top|animixplay[.]st)[/]",
+  "regExp": "^https?[:][/][/](animixplay[.]best|(www1)[.]animixplayer[.]top)[/]",
   "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimixPlay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimixPlay/assets/thumbnail.png",
