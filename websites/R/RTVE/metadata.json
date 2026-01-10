@@ -7,8 +7,8 @@
   },
   "service": "RTVE",
   "description": {
-    "en": "Shows what you're watching, listening or reading on RTVE (TV, radio, news, kids, series, and more).",
-    "es": "Muestra lo que estás viendo, escuchando o leyendo en RTVE (TV, radio, noticias, infantil, series y más)."
+    "en": "News, sports, current affairs, albums, series and programs, and the latest from Spain and the world.",
+    "es": "Noticias, deportes, actualidad, álbumes, series y programas, y la última hora de España y el mundo."
   },
   "url": "rtve.es",
   "regExp": "^https?://(www\\.)?rtve\\.es/.*",
