@@ -48,7 +48,7 @@ presence.on('UpdateData', async () => {
     if (showTitleAsPresence && !privacyMode) {
       presenceData.name = title
     }
-    else { 
+    else {
       presenceData.details = title
     }
 
