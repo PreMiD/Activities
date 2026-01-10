@@ -1,4 +1,4 @@
-import { ActivityType, getTimestampsFromMedia } from 'premid'
+import { ActivityType, getTimestampsFromMedia, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1191450515670843533',
@@ -11,12 +11,14 @@ presence.on('UpdateData', async () => {
     showCover,
     showTimestamp,
     showSmallImages,
+    showTitleAsPresence,
   ] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('showBrowsingStatus'),
     presence.getSetting<boolean>('showCover'),
     presence.getSetting<boolean>('timestamp'),
     presence.getSetting<boolean>('showSmallImages'),
+    presence.getSetting<boolean>('showTitleAsPresence'),
   ])
 
   const presenceData: any = {
@@ -44,6 +46,9 @@ presence.on('UpdateData', async () => {
     const coverImage = document.querySelector<HTMLImageElement>('.b-sidecover a img')?.src
 
     presenceData.details = title
+    if (showTitleAsPresence && !privacyMode) {
+      presenceData.name = title
+    }
 
     presenceData.largeImageKey = (showCover && coverImage) ? coverImage : 'https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/logo.png'
 
@@ -56,9 +61,13 @@ presence.on('UpdateData', async () => {
         presenceData.endTimestamp = endTimestamp
       }
       presenceData.type = ActivityType.Watching
+      if (showSmallImages) {
+        presenceData.smallImageKey = Assets.Play
+        presenceData.smallImageText = 'Watching'
+      }
     }
     else if (showSmallImages) {
-      presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/logo.png'
+      presenceData.smallImageKey = Assets.Pause
       presenceData.smallImageText = 'Paused'
     }
 
@@ -69,7 +78,7 @@ presence.on('UpdateData', async () => {
       const activeEpisode = document.querySelector('.b-simple_episode__item.active')?.textContent?.trim()
 
       if (activeSeason && activeEpisode) {
-        presenceData.state = `Season ${activeSeason}, Episode ${activeEpisode}`
+        presenceData.state = ` ${activeSeason},  ${activeEpisode}`
       }
       else {
         presenceData.state = 'Watching a series'
