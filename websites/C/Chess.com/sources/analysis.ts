@@ -1,4 +1,4 @@
-import type { Resolver } from '../util/interfaces.js'
+import type { ButtonTuple, Resolver } from '../util/interfaces.js'
 import { ActivityType } from 'premid'
 import { ActivityAssets, formatMatch, getPlayerData, getText } from '../util/index.js'
 
@@ -48,7 +48,7 @@ const analysisResolver: Resolver = {
     if (!href)
       return undefined
     const cleanUrl = href.split('?')[0] || href
-    return [{ label: t.button_view_game, url: cleanUrl }]
+    return [{ label: t.button_view_game, url: cleanUrl }] as ButtonTuple
   },
 
   getLargeImageKey: () => ActivityAssets.Logo,

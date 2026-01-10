@@ -2,263 +2,263 @@
   "type": "uploaded file",
   "fileName": "chesscom.json",
   "fullContent": {
-    "chesscom.common.play": {
+    "chess.com.play": {
       "message": "Playing",
       "description": "General playing status"
     },
-    "chesscom.common.pause": {
+    "chess.com.pause": {
       "message": "Paused",
       "description": "Paused status"
     },
-    "chesscom.browsing": {
+    "chess.com.browsing": {
       "message": "Browsing",
       "description": "Default status when browsing the site"
     },
-    "chesscom.common.menu": {
+    "chess.com.menu": {
       "message": "Menu",
       "description": "General menu navigation"
     },
-    "chesscom.common.overview": {
+    "chess.com.overview": {
       "message": "Overview",
       "description": "Viewing overview page"
     },
-    "chesscom.common.library": {
+    "chess.com.library": {
       "message": "Library",
       "description": "Browsing library section"
     },
-    "chesscom.common.vs_separator": {
+    "chess.com.vs_separator": {
       "message": "vs",
       "description": "Short versus separator"
     },
-    "chesscom.common.min": {
+    "chess.com.min": {
       "message": "min",
       "description": "Abbreviation for minutes"
     },
-    "chesscom.common.survival": {
+    "chess.com.survival": {
       "message": "Survival",
       "description": "Survival game mode"
     },
-    "chesscom.home": {
+    "chess.com.home": {
       "message": "Home Page",
       "description": "Viewing the home page"
     },
-    "chesscom.computer.vs": {
+    "chess.com.computerVs": {
       "message": "Playing against a bot",
       "description": "Playing against computer"
     },
-    "chesscom.computer.selecting": {
+    "chess.com.computerSelecting": {
       "message": "Choosing the bot",
       "description": "When on the bot selection screen"
     },
-    "chesscom.computer.ai": {
+    "chess.com.computerAi": {
       "message": "Vs AI",
       "description": "Fallback state when playing computer"
     },
-    "chesscom.computer.name": {
+    "chess.com.computerName": {
       "message": "Computer",
       "description": "Name of the activity"
     },
-    "chesscom.computer.white": {
+    "chess.com.computerWhite": {
       "message": "Playing as White",
       "description": "Playing as white pieces against computer"
     },
-    "chesscom.computer.black": {
+    "chess.com.computerBlack": {
       "message": "Playing as Black",
       "description": "Playing as black pieces against computer"
     },
-    "chesscom.puzzle.solving": {
+    "chess.com.puzzleSolving": {
       "message": "Solving Puzzles",
       "description": "Doing rated puzzles"
     },
-    "chesscom.puzzle.rush": {
+    "chess.com.puzzleRush": {
       "message": "Puzzle Rush",
       "description": "Playing Puzzle Rush mode"
     },
-    "chesscom.puzzle.battle": {
+    "chess.com.puzzleBattle": {
       "message": "Puzzle Battle",
       "description": "Playing Puzzle Battle mode"
     },
-    "chesscom.puzzle.tactics": {
+    "chess.com.puzzleTactics": {
       "message": "Tactics",
       "description": "Small image text for puzzles"
     },
-    "chesscom.puzzle.score": {
+    "chess.com.puzzleScore": {
       "message": "Score",
       "description": "Current puzzle score"
     },
-    "chesscom.puzzle.level": {
+    "chess.com.puzzleLevel": {
       "message": "Level",
       "description": "Current puzzle level"
     },
-    "chesscom.puzzle.rating": {
+    "chess.com.puzzleRating": {
       "message": "Rating",
       "description": "Puzzle rating"
     },
-    "chesscom.play.online": {
+    "chess.com.playOnline": {
       "message": "Playing Online",
       "description": "Generic status for online play"
     },
-    "chesscom.play.daily": {
+    "chess.com.playDaily": {
       "message": "Daily Chess",
       "description": "Playing correspondence chess"
     },
-    "chesscom.play.match": {
+    "chess.com.playMatch": {
       "message": "In Match",
       "description": "State when playing but opponent unknown"
     },
-    "chesscom.play.live": {
+    "chess.com.playLive": {
       "message": "Live",
       "description": "Small image text for live chess"
     },
-    "chesscom.play.lobby": {
+    "chess.com.playLobby": {
       "message": "In Lobby / Matching",
       "description": "Waiting for a game"
     },
-    "chesscom.game.searching": {
+    "chess.com.gameSearching": {
       "message": "Searching",
       "description": "Searching for an opponent"
     },
-    "chesscom.game.finished": {
+    "chess.com.gameFinished": {
       "message": "Game Finished",
       "description": "Game has ended"
     },
-    "chesscom.game.over": {
+    "chess.com.gameOver": {
       "message": "Game Over",
       "description": "Game over status"
     },
-    "chesscom.game.replay": {
+    "chess.com.gameReplay": {
       "message": "Watching Replay",
       "description": "Watching a game replay"
     },
-    "chesscom.game.spectating": {
+    "chess.com.gameSpectating": {
       "message": "Spectating",
       "description": "Spectating a live game"
     },
-    "chesscom.game.waiting": {
+    "chess.com.gameWaiting": {
       "message": "Waiting...",
       "description": "Waiting for game to start"
     },
-    "chesscom.game.progress": {
+    "chess.com.gameProgress": {
       "message": "Match in Progress",
       "description": "Match currently ongoing"
     },
-    "chesscom.game.archive": {
+    "chess.com.gameArchive": {
       "message": "Master Game Archive",
       "description": "Browsing master games archive"
     },
-    "chesscom.game.review": {
+    "chess.com.gameReview": {
       "message": "Game Review",
       "description": "Reviewing a completed game"
     },
-    "chesscom.media.analysis": {
+    "chess.com.mediaAnalysis": {
       "message": "Analyzing a game",
       "description": "Using the analysis board"
     },
-    "chesscom.media.learning": {
+    "chess.com.mediaLearning": {
       "message": "Learning",
       "description": "General learning status"
     },
-    "chesscom.media.lessons": {
+    "chess.com.mediaLessons": {
       "message": "Watching Lessons",
       "description": "Watching a video lesson"
     },
-    "chesscom.media.tv": {
+    "chess.com.mediaTv": {
       "message": "Watching Chess TV",
       "description": "Watching official broadcast"
     },
-    "chesscom.media.video": {
+    "chess.com.mediaVideo": {
       "message": "Watching a video",
       "description": "Watching a recorded video"
     },
-    "chesscom.video.browsing": {
+    "chess.com.videoBrowsing": {
       "message": "Browsing Videos",
       "description": "Looking through video library"
     },
-    "chesscom.friends.list": {
+    "chess.com.friendsList": {
       "message": "Viewing Friends List",
       "description": "Looking at friends page"
     },
-    "chesscom.friends.single": {
+    "chess.com.friendsSingle": {
       "message": "Friend",
       "description": "Singular form for friend"
     },
-    "chesscom.friends.plural": {
+    "chess.com.friendsPlural": {
       "message": "Friends",
       "description": "Plural form for friends"
     },
-    "chesscom.profile.viewing": {
+    "chess.com.profileViewing": {
       "message": "Viewing Profile",
       "description": "Viewing a user profile"
     },
-    "chesscom.profile.general": {
+    "chess.com.profileGeneral": {
       "message": "Profile",
       "description": "General profile page"
     },
-    "chesscom.button.view_game": {
+    "chess.com.buttonViewGame": {
       "message": "View Game",
       "description": "Button label to view the game"
     },
-    "chesscom.button.watch_video": {
+    "chess.com.buttonWatchVideo": {
       "message": "Watch Video",
       "description": "Button label to watch the video"
     },
-    "chesscom.variants.menu": {
+    "chess.com.variantsMenu": {
       "message": "Chess Variants",
       "description": "Playing variants like 4PC etc"
     },
-    "chesscom.classroom.title": {
+    "chess.com.classroomTitle": {
       "message": "Classroom",
       "description": "Classroom section"
     },
-    "chesscom.classroom.session": {
+    "chess.com.classroomSession": {
       "message": "In Session",
       "description": "In a classroom session"
     },
-    "chesscom.practice.title": {
+    "chess.com.practiceTitle": {
       "message": "Practice",
       "description": "Practice mode"
     },
-    "chesscom.learn.openings": {
+    "chess.com.learnOpenings": {
       "message": "Openings",
       "description": "Learning openings"
     },
-    "chesscom.learn.all_lessons": {
+    "chess.com.learnAllLessons": {
       "message": "All Lessons",
       "description": "Viewing all lessons"
     },
-    "chesscom.insights.title": {
+    "chess.com.insightsTitle": {
       "message": "Insights",
       "description": "Insights/statistics section"
     },
-    "chesscom.insights.stats": {
+    "chess.com.insightsStats": {
       "message": "Stats",
       "description": "Statistics label"
     },
-    "chesscom.game.reviewing": {
+    "chess.com.gameReviewing": {
       "message": "Reviewing Game",
       "description": "Reviewing a completed game or variant"
     },
-    "chesscom.game.online": {
+    "chess.com.gameOnline": {
       "message": "Online",
       "description": "Generic online game mode"
     },
-    "chesscom.tv.checking": {
+    "chess.com.tvChecking": {
       "message": "Checking Schedule",
       "description": "Checking TV schedule or loading stream"
     },
-    "chesscom.media.finished": {
+    "chess.com.mediaFinished": {
       "message": "Finished",
       "description": "Game or media finished"
     },
-    "chesscom.profile.general_alt": {
+    "chess.com.profileGeneralAlt": {
       "message": "Profile",
       "description": "Alternative profile label"
     },
-    "chesscom.video.library": {
+    "chess.com.videoLibrary": {
       "message": "Library",
       "description": "Browsing video library"
     },
-    "chesscom.video.watching": {
+    "chess.com.videoWatching": {
       "message": "Video",
       "description": "Watching a video"
     }

@@ -20,7 +20,7 @@ const computerResolver: Resolver = {
   },
 
   getLargeImageKey: (t, doc) => {
-    const img = doc.querySelector('img[data-cy="avatar"]') as HTMLImageElement
+    const img = doc.querySelector<HTMLImageElement>('img[data-cy="avatar"]')
 
     if (img && img.src && !img.src.includes('svg') && !img.src.includes('transparent')) {
       return img.src

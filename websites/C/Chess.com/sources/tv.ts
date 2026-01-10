@@ -23,7 +23,7 @@ const tvResolver: Resolver = {
     }
 
     if (!streamerName) {
-      const iframe = doc.querySelector('iframe.tv-player-iframe') as HTMLIFrameElement
+      const iframe = doc.querySelector<HTMLIFrameElement>('iframe.tv-player-iframe')
       if (iframe && iframe.src) {
         try {
           const url = new URL(iframe.src)

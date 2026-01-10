@@ -29,7 +29,7 @@ const memberResolver: Resolver = {
   },
 
   getLargeImageKey: (_t, doc) => {
-    const avatarImg = doc.querySelector('.profile-header-avatar .cc-avatar-img') as HTMLImageElement
+    const avatarImg = doc.querySelector<HTMLImageElement>('.profile-header-avatar .cc-avatar-img')
 
     if (avatarImg && avatarImg.src) {
       return avatarImg.src

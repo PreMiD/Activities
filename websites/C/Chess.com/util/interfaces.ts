@@ -91,6 +91,13 @@ export interface AppStrings {
   insights_stats: string
 }
 
+export interface Button {
+  label: string
+  url: string
+}
+
+export type ButtonTuple = [Button, (Button | undefined)?]
+
 export interface Resolver {
   isActive: (pathname: string) => boolean
   getDetails?: (t: AppStrings, doc: Document) => string | undefined
@@ -99,6 +106,6 @@ export interface Resolver {
   getSmallImageKey?: (t: AppStrings, doc: Document) => string | undefined
   getSmallImageText?: (t: AppStrings, doc: Document) => string | undefined
   getType?: (t: AppStrings, doc: Document) => number | undefined
-  getButtons?: (t: AppStrings, doc: Document) => { label: string, url: string }[] | undefined
+  getButtons?: (t: AppStrings, doc: Document) => ButtonTuple | undefined
   getTimestamps?: (t: AppStrings, doc: Document) => { start: number, end: number } | undefined
 }
