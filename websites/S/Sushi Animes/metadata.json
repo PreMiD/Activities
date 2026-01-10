@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "706046802108874752",
+    "name": "Baka™"
+  },
+  "contributors": [
+    {
+      "name": "xDoritos",
+      "id": "432215088686956565"
+    }
+  ],
+  "service": "Sushi Animes",
+  "description": {
+    "en": "Watch dubbed and subtitled animes online in HD, FHD. Action, adventure and romance animes to watch on mobile or PC, free on Sushi Animes!",
+    "pt": "Assista animes dublados e legendados online em HD, FHD. Animes de ação, aventura e romance para ver no celular ou PC, grátis no Sushi Animes!"
+  },
+  "url": "sushianimes.com.br",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sushianimes[.]com[.]br[/]",
+  "version": "1.0.0",
+  "logo": "https://imgur.com/AR0tCPd.png",
+  "thumbnail": "https://imgur.com/xfm2oJf.png",
+  "color": "#ff4500",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "sushianimes",
+    "otaku",
+    "assistiranimes",
+    "brasil",
+    "animeonline"
+  ],
+  "settings": [
+    {
+      "id": "useAnimeCover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "usePresenceName",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": true
+    },
+    {
+      "id": "logoType",
+      "title": "Icon",
+      "icon": "fad fa-images",
+      "value": 0,
+      "values": [
+        "Animated",
+        "Still"
+      ]
+    }
+  ]
+}
