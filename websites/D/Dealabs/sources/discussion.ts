@@ -1,11 +1,11 @@
-import type { ButtonArray, DealabsSettings, Resolver } from '../util/interfaces.js'
+import type { ButtonArray, DealabsSettings, Resolver, Translation } from '../util/interfaces.js'
 
 const discussionResolver: Resolver = {
   isActive: (pathname: string) => {
     return pathname === '/discussions' || pathname.includes('/discussions/')
   },
 
-  getState: (t: any, settings: DealabsSettings) => {
+  getState: (t: Translation, settings: DealabsSettings) => {
     if (document.location.pathname === '/discussions')
       return t.browseDiscuss
 
@@ -20,13 +20,13 @@ const discussionResolver: Resolver = {
     return metaTitle ? ((metaTitle.split(' - Dealabs')[0] ?? metaTitle).trim()) : t.detail
   },
 
-  getDetails: (t: any) => {
+  getDetails: (t: Translation) => {
     if (document.location.pathname === '/discussions')
       return t.onForum
     return t.readDiscuss
   },
 
-  getButtons: (t: any) => {
+  getButtons: (t: Translation) => {
     if (document.location.pathname === '/discussions')
       return undefined
     return [{ label: t.viewPage, url: document.location.href }] as ButtonArray

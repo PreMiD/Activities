@@ -1,4 +1,4 @@
-import type { DealabsSettings, Resolver } from '../util/interfaces.js'
+import type { DealabsSettings, Resolver, Translation } from '../util/interfaces.js'
 
 const listingResolver: Resolver = {
   isActive: (pathname: string) => {
@@ -11,7 +11,7 @@ const listingResolver: Resolver = {
       || pathname.includes('/search')
   },
 
-  getState: (t: any, settings: DealabsSettings) => {
+  getState: (t: Translation, settings: DealabsSettings) => {
     const path = document.location.pathname
     if (path === '/' || path === '/pour-vous')
       return t.forYou
@@ -30,7 +30,7 @@ const listingResolver: Resolver = {
     return t.hunting
   },
 
-  getDetails: (t: any) => {
+  getDetails: (t: Translation) => {
     const path = document.location.pathname
     if (path === '/' || path === '/pour-vous')
       return t.homepage

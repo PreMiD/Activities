@@ -1,4 +1,4 @@
-import type { DealabsSettings, Resolver } from './util/interfaces.js'
+import type { DealabsSettings, Resolver, Translation } from './util/interfaces.js'
 import { ActivityType } from 'premid'
 import dealResolver from './sources/deal.js'
 import discussionResolver from './sources/discussion.js'
@@ -53,7 +53,7 @@ presence.on('UpdateData', async () => {
     unknownCategory: 'dealabs.unknownCategory',
   })
 
-  const t: any = strings
+  const t = strings as unknown as Translation
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,

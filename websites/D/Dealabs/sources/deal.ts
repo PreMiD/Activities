@@ -1,10 +1,10 @@
-import type { ButtonArray, DealabsSettings, Resolver } from '../util/interfaces.js'
+import type { ButtonArray, DealabsSettings, Resolver, Translation } from '../util/interfaces.js'
 import { getMainContent } from '../util/index.js'
 
 const dealResolver: Resolver = {
   isActive: (pathname: string) => pathname.includes('/bons-plans/'),
 
-  getState: (t: any, settings: DealabsSettings) => {
+  getState: (t: Translation, settings: DealabsSettings) => {
     if (settings.hideDealTitles)
       return t.hiddenDeal
 
@@ -16,7 +16,7 @@ const dealResolver: Resolver = {
     return title
   },
 
-  getDetails: (t: any, settings: DealabsSettings) => {
+  getDetails: (t: Translation, settings: DealabsSettings) => {
     const mainContent = getMainContent()
 
     let price: string | undefined
@@ -65,7 +65,7 @@ const dealResolver: Resolver = {
     return image || undefined
   },
 
-  getButtons: (t: any) => [{ label: t.viewPage, url: document.location.href }] as ButtonArray,
+  getButtons: (t: Translation) => [{ label: t.viewPage, url: document.location.href }] as ButtonArray,
 }
 
 export default dealResolver

@@ -1,10 +1,10 @@
-import type { Resolver } from '../util/interfaces.js'
+import type { Resolver, Translation } from '../util/interfaces.js'
 import { formatSlug } from '../util/index.js'
 
 const groupResolver: Resolver = {
   isActive: (pathname: string) => pathname.includes('/groupe'),
 
-  getState: (t: any) => {
+  getState: (t: Translation) => {
     const docTitle = document.title
     const titleMatch = docTitle.match(/Bon plan (.+?) [⇒|:\-]/)
     if (titleMatch && titleMatch[1])
@@ -19,7 +19,7 @@ const groupResolver: Resolver = {
     return formatSlug(slug)
   },
 
-  getDetails: (t: any) => t.exploreCat,
+  getDetails: (t: Translation) => t.exploreCat,
 }
 
 export default groupResolver
