@@ -1,4 +1,4 @@
-import { ActivityType, StatusDisplayType } from 'premid'
+import { StatusDisplayType } from 'premid'
 
 const presence = new Presence({
   clientId: '1459578800223420416',
@@ -14,6 +14,11 @@ enum ContentType {
   Book = 'book',
   Wiki = 'wiki',
   Browsing = 'browsing',
+}
+
+enum ActivityStates {
+  Typing = 'Typing on Typersguild',
+  Browsing = 'Browsing',
 }
 
 function getBookName(): string {
@@ -64,40 +69,32 @@ presence.on('UpdateData', async () => {
   const contentType = getContentType(pathname)
 
   const presenceData: PresenceData = {
-    type: ActivityType.Playing,
-    name: 'Typing on Typersguild',
-    statusDisplayType: StatusDisplayType.Details,
+    statusDisplayType: StatusDisplayType.Name,
     largeImageKey: ActivityAssets.Logo,
     largeImageUrl: 'https://typersguild.com/books',
-    detailsUrl: 'https://typersguild.com/books',
+    stateUrl: 'https://typersguild.com/books',
     startTimestamp: browsingTimestamp,
   }
 
   switch (contentType) {
     case ContentType.Book:
     { const bookCover = getBookCover()
-      const bookName = getBookName()
-      if (bookCover) {
+      if (bookCover)
         presenceData.largeImageKey = bookCover
-      }
 
-      presenceData.details = bookName
-      presenceData.state = `by ${getBookAuthor()}`
-
+      presenceData.name = getBookName()
+      presenceData.details = `by ${getBookAuthor()}`
+      presenceData.state = ActivityStates.Typing
       break
     }
-
     case ContentType.Wiki:
-      presenceData.details = getBookName()
-      presenceData.state = 'Typing Wikipedia'
-
+      presenceData.name = getBookName()
+      presenceData.details = 'Wikipedia'
+      presenceData.state = ActivityStates.Typing
       break
-
     case ContentType.Browsing:
-      presenceData.name = 'Browsing Typersguild'
-      presenceData.details = 'Typersguild'
-      presenceData.state = 'Books, Wikis, and more'
-
+      presenceData.details = 'Books, Wikis, and more'
+      presenceData.state = ActivityStates.Browsing
       break
   }
 
