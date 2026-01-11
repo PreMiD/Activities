@@ -1,0 +1,86 @@
+{
+  "itaku.browsingHome": {
+    "description": "Browsing the Itaku home page",
+    "message": "Browsing Home"
+  },
+  "itaku.browsingPosts": {
+    "description": "Browsing posts on Itaku",
+    "message": "Browsing Posts"
+  },
+  "itaku.browsingImages": {
+    "description": "Browsing images on Itaku",
+    "message": "Browsing Images"
+  },
+  "itaku.browsingCommissions": {
+    "description": "Browsing commissions",
+    "message": "Browsing Commissions"
+  },
+  "itaku.browsingUsers": {
+    "description": "Browsing users",
+    "message": "Browsing Users"
+  },
+  "itaku.browsingTags": {
+    "description": "Browsing tags",
+    "message": "Browsing Tags"
+  },
+  "itaku.viewingHelp": {
+    "description": "Viewing help section",
+    "message": "Viewing Help"
+  },
+  "itaku.viewingRules": {
+    "description": "Reading site rules",
+    "message": "Reading Rules"
+  },
+  "itaku.viewingBadges": {
+    "description": "Viewing badges",
+    "message": "Viewing Badges"
+  },
+  "itaku.viewingRoadmap": {
+    "description": "Viewing site roadmap",
+    "message": "Viewing Roadmap"
+  },
+  "itaku.viewingProfile": {
+    "description": "Viewing a profile",
+    "message": "Viewing Profile"
+  },
+  "itaku.viewingGallery": {
+    "description": "Viewing user gallery",
+    "message": "Viewing Gallery"
+  },
+  "itaku.viewingUserPosts": {
+    "description": "Viewing user posts",
+    "message": "Viewing Posts"
+  },
+  "itaku.viewingFollowers": {
+    "description": "Viewing followers",
+    "message": "Viewing Followers"
+  },
+  "itaku.viewingFollowing": {
+    "description": "Viewing following list",
+    "message": "Viewing Following"
+  },
+  "itaku.viewingCommissionPage": {
+    "description": "Viewing user commissions",
+    "message": "Viewing Commissions"
+  },
+  "itaku.viewingDMs": {
+    "description": "Viewing direct messages",
+    "message": "Viewing Messages"
+  },
+  "itaku.viewingCommissionInbox": {
+    "description": "Viewing commission inbox",
+    "message": "Commission Inbox"
+  },
+  "itaku.viewingTagSuggestions": {
+    "description": "Viewing tag suggestions",
+    "message": "Tag Suggestions"
+  },
+  "itaku.viewingSubmissionInbox": {
+    "description": "Viewing submission inbox",
+    "message": "Submission Inbox"
+  },
+  "itaku.viewingSettings": {
+    "description": "Viewing settings",
+    "message": "Settings"
+  }
+}
