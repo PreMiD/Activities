@@ -24,7 +24,8 @@
     "game",
     "shinymas",
     "imas",
-    "shinycolors"
+    "shinycolors",
+    "idolmaster"
   ],
   "iframe": true,
   "iFrameRegExp": "^https?[:][/][/]shinycolors[.]enza[.]fun[/]"
