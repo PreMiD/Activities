@@ -93,7 +93,7 @@ if (presence) {
 
             presence.setActivity(presenceData);
         } else {
-            // Clear activity if no audio player is found
+            // Clear activity if no audio player is found 
             presence.setActivity({});
         }
     });
