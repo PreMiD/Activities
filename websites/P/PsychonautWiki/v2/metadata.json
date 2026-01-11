@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 2,
+  "author": {
+    "id": "538604507064696832",
+    "name": "talon2"
+  },
+  "service": "PsychonautWiki",
+  "altnames": [
+    "Psychonaut Wiki"
+  ],
+  "description": {
+    "en": "PsychonautWiki is an encyclopedia that documents all aspects of psychonautic theory from an evidence-based perspective. It provides education, encourages safe practices, and emphasizes that substances should not be abused. Do not do drugs."
+  },
+  "url": "psychonautwiki.org",
+  "regExp": "https?://(www\\.)?psychonautwiki\\.org/.*",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/GPxHYOV.png",
+  "thumbnail": "https://i.imgur.com/QwNGXcq.png",
+  "color": "#808080",
+  "category": "other",
+  "tags": [
+    "drugs",
+    "harm-reduction",
+    "psychonaut"
+  ]
+}
