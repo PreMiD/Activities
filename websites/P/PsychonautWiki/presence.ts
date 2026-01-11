@@ -24,10 +24,10 @@ presence.on('UpdateData', async () => {
   }
 
   const action = params.get('action')
-  const isEditing =
-    params.has('veaction') ||
-    action === 'edit' ||
-    action === 'submit'
+  const isEditing
+    = params.has('veaction')
+      || action === 'edit'
+      || action === 'submit'
 
   const presenceData: PresenceData = {
     largeImageKey: 'https://i.imgur.com/GPxHYOV.png',
