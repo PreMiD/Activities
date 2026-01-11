@@ -6,7 +6,6 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let oldPath = ''
 let currentTimestamp = browsingTimestamp
-let oldLang = 'en'
 
 async function getStrings() {
   return presence.getStrings({
@@ -35,19 +34,10 @@ async function getStrings() {
   })
 }
 
-let strings: Awaited<ReturnType<typeof getStrings>>
-
 presence.on('UpdateData', async () => {
   const { pathname } = document.location
-  const [showBrowsing, newLang] = await Promise.all([
-    presence.getSetting<boolean>('showBrowsing'),
-    presence.getSetting<string>('lang').catch(() => 'en'),
-  ])
-
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
+  const showBrowsing = await presence.getSetting<boolean>('showBrowsing')
+  const strings = await getStrings()
 
   if (oldPath !== pathname) {
     oldPath = pathname
@@ -141,7 +131,5 @@ presence.on('UpdateData', async () => {
     presenceData.details = strings.browsing
   }
 
-  if (presenceData.details)
-    presence.setActivity(presenceData)
-  else presence.setActivity()
+  presence.setActivity(presenceData)
 })
