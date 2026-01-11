@@ -1,4 +1,3 @@
-// @ts-expect-error - Presence is globally defined
 declare const Presence: any
 
 // Static Asset Configuration
