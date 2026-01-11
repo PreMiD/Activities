@@ -10,16 +10,16 @@ const presence = new Presence({
 
 const ASSETS = {
   logo: 'https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/logo.png',
-  machines: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/machines.png',
-  challenges: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/challenges.png',
-  sherlocks: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/sherlocks.png',
-  tracks: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/tracks.png',
-  prolabs: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/prolabs.png',
-  fortress: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/fortress.png',
-  seasonal: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/seasonal.png',
-  homepage: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/homepage.png',
-  rankings: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/rankings.png',
-  starting: 'https://raw.githubusercontent.com/sirschubert/htb-assets/refs/heads/main/assets/starting-point.png',
+  machines: 'https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/0.png',
+  challenges: 'https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/1.png',
+  sherlocks: 'https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/2.png',
+  tracks: 'https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/3.png',
+  prolabs: 'https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/4.png',
+  fortress: 'https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/5.png',
+  seasonal: 'https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/6.png',
+  homepage: 'https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/7.png',
+  rankings: 'https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/8.png',
+  starting: 'https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/9.png',
 }
 
 function getUsername(): string {
