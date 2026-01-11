@@ -19,7 +19,7 @@ presence.on('UpdateData', async () => {
   const presenceData: any = {
     largeImageKey: 'https://i.imgur.com/6XnAGga.jpeg',
     largeImageText: 'YummyAnime',
-    type: 3,
+    ActivityType.Watching,
   }
 
   if (pathname === '/' || pathname === '/index.html') {
