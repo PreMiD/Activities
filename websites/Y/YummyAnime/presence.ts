@@ -1,3 +1,5 @@
+import { ActivityType } from "discord.js";
+
 const presence = new Presence({
   clientId: "1045800378228281345",
 });
