@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "432215088686956565",
+    "name": "_xdoritos"
+  },
+  "service": "4Anime",
+  "description": {
+    "en": "4Anime is a free anime streaming website that offers a wide selection of anime series and movies in high quality."
+  },
+  "url": "4anime.gg",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*4anime[.]gg[/]",
+  "version": "1.0.0",
+  "logo": "https://imgur.com/cQ3grYp.png",
+  "thumbnail": "https://imgur.com/c78HJR4.png",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "video",
+    "streaming"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https:\\/\\/rapid-cloud\\.co\\/embed-2\\/v2\\/e-1\\/[A-Za-z0-9]+\\?.*$"
+}
