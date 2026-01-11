@@ -5,28 +5,29 @@ const presence = new Presence({
 })
 
 presence.on('UpdateData', async () => {
-  if (document.location.hostname !== 'psychonautwiki.org')
-    return
-
   const { pathname, search } = document.location
   const params = new URLSearchParams(search)
 
   let articleName: string | null = null
 
-  if (pathname.startsWith('/w/index.php') && params.has('title')) {
+  // /w/index.php?title=ArticleName
+  if (params.has('title')) {
     articleName = decodeURIComponent(params.get('title')!)
       .replace(/_/g, ' ')
       .trim()
   }
+  // /wiki/ArticleName
   else if (pathname.startsWith('/wiki/')) {
-    articleName = decodeURIComponent(pathname.replace('/wiki/', ''))
+    articleName = decodeURIComponent(pathname.slice(6))
       .replace(/_/g, ' ')
       .trim()
   }
 
   const action = params.get('action')
-  const isEditing
-    = params.has('veaction') || action === 'edit' || action === 'submit'
+  const isEditing =
+    params.has('veaction') ||
+    action === 'edit' ||
+    action === 'submit'
 
   const presenceData: PresenceData = {
     largeImageKey: 'https://i.imgur.com/GPxHYOV.png',
