@@ -14,7 +14,7 @@
   "regExp": "^https?://(www\\.)?rtve\\.es/.*",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/0begwZJ.png",
-  "thumbnail": "https://i.imgur.com/Ru8b2AX.png",
+  "thumbnail": "https://i.imgur.com/flAGyNL.png",
   "color": "#f56b0d",
   "category": "videos",
   "tags": [
@@ -28,7 +28,6 @@
     "public-broadcaster"
   ],
   "iframe": true,
-  "readLogs": false,
   "settings": [
     {
       "id": "lang",
@@ -50,24 +49,9 @@
       }
     },
     {
-      "id": "time",
-      "title": "Show Timestamps",
-      "icon": "fas fa-stopwatch",
-      "value": true
-    },
-    {
       "id": "cover",
       "title": "Show Cover Images",
       "icon": "fas fa-images",
-      "value": true,
-      "if": {
-        "privacy": false
-      }
-    },
-    {
-      "id": "detailedInfo",
-      "title": "Show Detailed Info",
-      "icon": "fas fa-info-circle",
       "value": true,
       "if": {
         "privacy": false
