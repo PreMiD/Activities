@@ -10,7 +10,7 @@
     "en": "MistWarp is a mod of Turbowarp made by Mistium intended for people who just want to squeeze that little bit more out of scratch."
   },
   "url": "warp.mistium.com",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*warp[.]mistium[.]com[/]?$",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*warp[.]mistium[.]com[/]",
   "version": "1.0.0",
   "logo": "https://raw.githubusercontent.com/MistWarp/.github/refs/heads/main/logo.png",
   "thumbnail": "https://raw.githubusercontent.com/MistWarp/.github/refs/heads/main/thumbnail.png",
