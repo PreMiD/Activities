@@ -1,0 +1,28 @@
+{
+  "apiVersion": 1,
+  "author": {
+    "name": "Fuegoss",
+    "id": "545002922329636865"
+  },
+  "service": "Boosteroid",
+  "description": {
+    "en": "Boosteroid is a cloud gaming service that allows users to stream and play PC games instantly on various devices, without downloads or expensive hardware.",
+    "es": "Boosteroid es un servicio de juegos en la nube que permite transmitir y jugar juegos de PC al instante en varios dispositivos, sin descargas ni hardware costoso."
+  },
+  "url": "https://cloud.boosteroid.com",
+  "regExp": "cloud\\.boosteroid\\.com",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/5cztMTp.png",
+  "thumbnail": "https://i.imgur.com/ngz9JvG.png",
+  "color": "#0055ff",
+  "category": "games",
+  "tags": [
+    "cloud gaming",
+    "streaming",
+    "boosteroid"
+  ],
+  "i18n": {
+    "en": "English",
+    "es": "Español"
+  }
+}
