@@ -53,6 +53,17 @@
       "value": false
     },
     {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 1,
+      "values": [
+        "Activity Name",
+        "Artist Name",
+        "Song Title"
+      ]
+    },
+    {
       "id": "timestamps",
       "title": "Show timestamps",
       "icon": "fad fa-stopwatch",
