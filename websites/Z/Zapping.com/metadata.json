@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "name": "emiliovision",
+    "id": "751877169885741096"
+  },
+  "service": "Zapping.com",
+  "description": {
+    "en": "Zapping is internet television. Wireless, wherever and however you want.",
+    "es": "Zapping es televisión por internet. Sin cables, donde y como quieras.",
+    "pt-br": "Veja televisão sem aparelhos e sem complicação!"
+  },
+  "url": [
+    "www.zapping.com",
+    "app.zapping.com"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*zapping[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/Zapping.com/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/Zapping.com/assets/thumbnail.png",
+  "color": "#ef4270",
+  "category": "videos",
+  "tags": [
+    "zapping",
+    "media",
+    "television",
+    "video"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}

@@ -12,9 +12,9 @@
   },
   "url": "futdle.tr",
   "regExp": "https?[:][/][/]futdle[.]tr[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/owwNpYf.png",
-  "thumbnail": "https://i.imgur.com/YYF66vV.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FUTdle/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FUTdle/assets/thumbnail.png",
   "color": "#ED2040",
   "category": "games",
   "tags": [
