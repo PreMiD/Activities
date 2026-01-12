@@ -12,11 +12,10 @@
   "url": [
     "animixplay.fun",
     "animixplay.best",
-    "www1.animixplayer.top",
-    "animixplay.st"
+    "www1.animixplayer.top"
   ],
   "regExp": "^https?[:][/][/](animixplay[.]fun|animixplay[.]best|(www1)[.]animixplayer[.]top|animixplay[.]st)[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimixPlay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimixPlay/assets/thumbnail.png",
   "color": "#0000FF",
