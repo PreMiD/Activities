@@ -3,157 +3,137 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-presence.on('UpdateData', () => {
+presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/K/Ko-Fi/assets/logo.png',
     startTimestamp: browsingTimestamp,
   }
-  if (document.location.pathname === '/') {
+
+  const { pathname, href } = document.location
+  const buttons = await presence.getSetting<boolean>('buttons')
+
+  if (pathname === '/') {
     presenceData.details = 'Viewing the home page.'
   }
-  else if (document.location.pathname.startsWith('/dashboard/')) {
+  else if (pathname.startsWith('/dashboard/')) {
     presenceData.details = 'Managing the settings of:'
-    presenceData.state = document
-      .querySelector(
-        'body > div.app > header > ul.navbar-nav.ml-auto.d-none.d-sm-inline-block > div > div',
-      )
-      ?.textContent
-      ?.trim()
+    presenceData.state = document.querySelector('body > div.app > header > ul.navbar-nav.ml-auto.d-none.d-sm-inline-block > div > div')?.textContent?.trim()
   }
-  else if (
-    document.location.pathname.toLowerCase().startsWith('/account/register')
-  ) {
+  else if (pathname.toLowerCase().startsWith('/account/register')) {
     presenceData.details = 'Registering...'
   }
-  else if (
-    document.location.pathname.toLowerCase().startsWith('/account/login')
-    || document.location.pathname
-      .toLowerCase()
-      .startsWith('/account/externallogincallback')
-  ) {
+  else if (pathname.toLowerCase().startsWith('/account/login') || pathname.toLowerCase().startsWith('/account/externallogincallback')) {
     presenceData.details = 'Logining in...'
   }
-  else if (document.location.pathname.toLowerCase().startsWith('/account/')) {
+  else if (pathname.toLowerCase().startsWith('/account/')) {
     presenceData.details = 'Setting up account...'
   }
-  else if (document.location.pathname.startsWith('/gold')) {
+  else if (pathname.startsWith('/gold')) {
     presenceData.details = 'Viewing the Gold plan.'
   }
-  else if (document.location.pathname.startsWith('/art')) {
+  else if (pathname.startsWith('/art')) {
     presenceData.details = 'Viewing art creations.'
   }
-  else if (document.location.pathname.startsWith('/cosplay')) {
+  else if (pathname.startsWith('/cosplay')) {
     presenceData.details = 'Viewing cosplay creations.'
   }
-  else if (document.location.pathname.startsWith('/commissionsopen')) {
+  else if (pathname.startsWith('/commissionsopen')) {
     presenceData.details = 'Viewing open commissions.'
   }
-  else if (
-    document.location.pathname.toLowerCase().startsWith('/home/featured')
-  ) {
+  else if (pathname.toLowerCase().startsWith('/home/featured')) {
     presenceData.details = 'Viewing featured creators.'
   }
-  else if (document.location.pathname.toLowerCase() === '/explore') {
+  else if (pathname.toLowerCase() === '/explore') {
     presenceData.details = 'Viewing the explore page.'
   }
-  else if (document.location.pathname.toLowerCase().startsWith('/blog/')) {
+  else if (pathname.toLowerCase().startsWith('/blog/')) {
     presenceData.details = 'Creating a blog post...'
   }
-  else if (document.location.pathname.toLowerCase().startsWith('/manage')) {
+  else if (pathname.toLowerCase().startsWith('/manage')) {
     presenceData.details = 'Managing Ko-Fi'
   }
-  else if (document.location.pathname.toLowerCase().startsWith('/settings')) {
+  else if (pathname.toLowerCase().startsWith('/settings') || pathname.toLowerCase().startsWith('/discord/settings')) {
     presenceData.details = 'Adjusting user settings...'
   }
-  else if (document.location.pathname.toLowerCase().startsWith('/newsfeed')) {
+  else if (pathname.toLowerCase().startsWith('/newsfeed') || pathname.toLowerCase().startsWith('/feed')) {
     presenceData.details = 'Viewing the newsfeed...'
   }
-  else if (
-    document.location.pathname.toLowerCase().startsWith('/my-supporters')
-  ) {
+  else if (pathname.toLowerCase().startsWith('/my-supporters')) {
     presenceData.details = 'Viewing supporters...'
   }
-  else if (document.location.pathname.toLowerCase().startsWith('/streamalerts')) {
+  else if (pathname.toLowerCase().startsWith('/messages')) {
+    presenceData.details = 'Viewing messages...'
+  }
+  else if (pathname.toLowerCase().startsWith('/streamalerts')) {
     presenceData.details = 'Viewing stream alerts.'
   }
-  else if (document.location.pathname.toLowerCase().startsWith('/shop')) {
+  else if (pathname.toLowerCase().startsWith('/promote')) {
+    presenceData.details = 'Viewing promote page.'
+  }
+  else if (pathname.toLowerCase().startsWith('/discount')) {
+    presenceData.details = 'Viewing discounts page.'
+  }
+  else if (pathname.toLowerCase().startsWith('/memberships/settings')) {
+    presenceData.details = 'Adjusting membership settings...'
+  }
+  else if (pathname.toLowerCase().startsWith('/shop')) {
     presenceData.details = 'Viewing shop.'
   }
-  else if (document.location.pathname.toLowerCase() === '/about') {
+  else if (pathname.toLowerCase() === '/about') {
     presenceData.details = 'Viewing Ko-Fi\'s About Page'
   }
-  else if (document.location.pathname.toLowerCase().startsWith('/s/')) {
+  else if (pathname.toLowerCase().startsWith('/s/')) {
     try {
-      presenceData.details = `Viewing ${document
-        .querySelector(
-          '#shop-item-detail > div > div.kfds-lyt-between-algn-top-row-to-col.kfds-c-sticky > div.sidebar.kfds-c-sticky-wrapper.kfds-c-order-2.kfds-c-shop-detail-wrapper > div.kfds-lyt-width-100.kfds-c-lyt-pdg-16-24.kfds-c-shop-detail-column-control > span',
-        )
-        ?.textContent
-        ?.trim()}`
-      presenceData.state = `By ${document
-        .querySelector(
-          '#shop-item-detail > div > div.kfds-lyt-between-algn-top-row-to-col.kfds-c-sticky > div.sidebar.kfds-c-sticky-wrapper.kfds-c-order-2.kfds-c-shop-detail-wrapper > div.kfds-lyt-width-100.kfds-c-lyt-pdg-16-24.kfds-c-shop-detail-column-control > div > a > div > span:nth-child(1)',
-        )
-        ?.textContent
-        ?.trim()}`
-      presenceData.buttons = [
-        {
-          label: 'View Item',
-          url: `https://ko-fi.com/s/${
-            document.location.pathname.split('/')[2]
-          }?ref=premid_discord_presence`,
-        },
-      ]
+      presenceData.details = `Viewing ${document.querySelector('#shop-item-detail > div > div.kfds-lyt-between-algn-top-row-to-col.kfds-c-sticky > div.sidebar.kfds-c-sticky-wrapper.kfds-c-order-2.kfds-c-shop-detail-wrapper > div.kfds-lyt-width-100.kfds-c-lyt-pdg-16-24.kfds-c-shop-detail-column-control > span')?.textContent?.trim()}`
+      presenceData.state = `By ${document.querySelector('#body-content font')?.textContent?.trim()}`
+
+      if (buttons) {
+        presenceData.buttons = [
+          {
+            label: 'View Item',
+            url: href,
+          },
+        ]
+      }
     }
     catch {
       presenceData.details = 'Viewing a shop item.'
     }
   }
-  else if (document.location.pathname.toLowerCase().startsWith('/summary')) {
+  else if (pathname.toLowerCase().startsWith('/summary')) {
     presenceData.details = 'Viewing payment summary.'
   }
-  else if (
-    document.location.pathname.toLowerCase().startsWith('/home/coffeeshop')
-  ) {
+  else if (pathname.toLowerCase().startsWith('/home/coffeeshop')) {
     presenceData.details = 'Just bought someone coffee!'
   }
-  else if (document.location.pathname.toLowerCase().startsWith('/home/about')) {
+  else if (pathname.toLowerCase().startsWith('/home/about')) {
     presenceData.details = 'Viewing Ko-Fi\'s About Page'
   }
-  else if (document.location.pathname.toLowerCase().startsWith('/home')) {
+  else if (pathname.toLowerCase().startsWith('/home')) {
     presenceData.details = 'Viewing the home page.'
   }
-  else if (document.location.pathname.toLowerCase().startsWith('/post')) {
+  else if (pathname.toLowerCase().startsWith('/post')) {
     presenceData.details = 'Viewing a post.'
     try {
       presenceData.details = 'Viewing a post:'
-      presenceData.state = document
-        .querySelector(
-          '#body-content > div > div.wrapper.wrapper-content.article > div > div > div > div > div:nth-child(4) > div > h1',
-        )
-        ?.textContent
-        ?.trim()
-      presenceData.buttons = [
-        {
-          label: 'View Post',
-          url: `https://ko-fi.com/post/${
-            document.location.pathname.split('/')[2]
-          }?ref=premid_discord_presence`,
-        },
-      ]
+      presenceData.state = document.querySelector('h1')?.textContent?.trim()
+
+      if (buttons) {
+        presenceData.buttons = [
+          {
+            label: 'View Post',
+            url: href,
+          },
+        ]
+      }
     }
     catch {
       presenceData.details = 'Viewing a post.'
     }
   }
-  else if (document.location.pathname.toLowerCase().startsWith('/album')) {
+  else if (pathname.toLowerCase().startsWith('/album')) {
     try {
-      const user = document
-        .querySelector(
-          '#body-content > div > div > div:nth-child(2) > div > a > name',
-        )
-        ?.textContent
-        ?.trim()
+      const user = document.querySelector('name')?.textContent?.trim()
       presenceData.details = 'Viewing an album.'
       if (user !== 'undefined') {
         presenceData.details = 'Viewing a users album:'
@@ -164,43 +144,59 @@ presence.on('UpdateData', () => {
       presenceData.details = 'Viewing an album.'
     }
   }
-  else if (document.location.pathname.toLowerCase() === '/404.html') {
+  else if (pathname.toLowerCase().startsWith('/polls')) {
+    try {
+      const user = document.querySelector('name')?.textContent?.trim()
+      presenceData.details = 'Viewing an poll.'
+
+      if (buttons) {
+        presenceData.buttons = [
+          {
+            label: 'View Poll',
+            url: href,
+          },
+        ]
+      }
+      if (user !== 'undefined') {
+        presenceData.details = 'Viewing a users poll:'
+        presenceData.state = user
+      }
+    }
+    catch {
+      presenceData.details = 'Viewing an poll.'
+    }
+  }
+  else if (pathname.toLowerCase() === '/404.html') {
     presenceData.details = 'Oh No! Page Not Found.'
   }
   else {
     try {
-      const user = document
-        .querySelector(
-          '#profile-header-v2 > div > div.kfds-lyt-column.kfds-lyt-width-100.kfds-c-header-showmobile-at-736 > div.kfds-lyt-row-start.kfds-lyt-width-100 > div > div.kfds-font-size-22.kfds-font-bold > span',
-        )
-        ?.textContent
-        ?.trim()
-      const userSplit = document.location.pathname.split('/')
-      // userFixed = user.toLowerCase().split(" ").join("");
-      // console.log(userFixed)
+      const user = document.querySelector('#displayName')?.textContent?.trim()
+      const userSplit = pathname.split('/')[1]
 
       if (user !== 'undefined') {
         presenceData.details = 'Viewing this users page:'
         presenceData.state = user
-        presenceData.buttons = [
-          {
-            label: 'View Page',
-            url: `https://ko-fi.com/${userSplit[1]}?ref=premid_discord_presence`,
-          },
-        ]
+
+        if (buttons) {
+          presenceData.buttons = [
+            {
+              label: 'View Page',
+              url: `https://ko-fi.com/${userSplit}`,
+            },
+          ]
+        }
       }
 
-      if (document.location.pathname.startsWith(`/${userSplit[1]}/gallery`))
+      if (pathname.startsWith(`/${userSplit}/gallery`))
         presenceData.details = 'Viewing this users gallery:'
-      else if (document.location.pathname.startsWith(`/${userSplit[1]}/posts`))
+      else if (pathname.startsWith(`/${userSplit}/posts`))
         presenceData.details = 'Viewing this users posts:'
-      else if (document.location.pathname.startsWith(`/${userSplit[1]}/shop`))
+      else if (pathname.startsWith(`/${userSplit}/shop`))
         presenceData.details = 'Viewing this users shop:'
-      else if (
-        document.location.pathname.startsWith(`/${userSplit[1]}/commissions`)
-      )
+      else if (pathname.startsWith(`/${userSplit}/commissions`))
         presenceData.details = 'Viewing this users commissions:'
-      else if (document.location.pathname.startsWith(`/${userSplit[1]}/tiers`))
+      else if (pathname.startsWith(`/${userSplit}/tiers`))
         presenceData.details = 'Viewing this users tier options:'
     }
     catch {
