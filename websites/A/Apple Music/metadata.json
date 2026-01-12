@@ -54,7 +54,7 @@
     },
     {
       "id": "displayType",
-      "title": "Pick Status Display",
+      "title": "Pick status display",
       "icon": "fad fa-user-edit",
       "value": 1,
       "values": [
