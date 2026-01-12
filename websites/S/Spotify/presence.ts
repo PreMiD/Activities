@@ -16,6 +16,8 @@ async function getStrings() {
     listeningPodcast: 'general.listeningPodcast',
     listenOnSpotify: 'spotify.listenOnSpotify',
     listenToPodcast: 'spotify.listenToPodcast',
+    listeningToSong: 'spotify.listeningToSong',
+    listeningToPodcast: 'spotify.listeningToPodcast',
   })
 }
 
@@ -118,7 +120,7 @@ presence.on('UpdateData', async () => {
 
   // Apply privacy mode
   if (privacy) {
-    presenceData.details = isPodcast ? 'Listening to a podcast' : 'Listening to a song'
+    presenceData.details = isPodcast ? strings.listeningToPodcast : strings.listeningToSong
     delete presenceData.state
     presenceData.largeImageKey = ActivityAssets.Logo
     delete presenceData.smallImageKey
