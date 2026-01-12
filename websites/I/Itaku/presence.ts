@@ -10,27 +10,25 @@ let currentTimestamp = browsingTimestamp
 async function getStrings() {
   return presence.getStrings({
     browsing: 'general.browsing',
-    browsingHome: 'itaku.browsingHome',
+    viewingHome: 'general.viewHome',
     browsingPosts: 'itaku.browsingPosts',
     browsingImages: 'itaku.browsingImages',
     browsingCommissions: 'itaku.browsingCommissions',
     browsingUsers: 'itaku.browsingUsers',
     browsingTags: 'itaku.browsingTags',
-    viewingHelp: 'itaku.viewingHelp',
-    viewingRules: 'itaku.viewingRules',
-    viewingBadges: 'itaku.viewingBadges',
-    viewingRoadmap: 'itaku.viewingRoadmap',
-    viewingProfile: 'itaku.viewingProfile',
+    viewingHelp: 'general.viewAHelpPage',
+    readingRules: 'general.reading',
+    viewingProfile: 'general.viewAProfile',
     viewingGallery: 'itaku.viewingGallery',
     viewingUserPosts: 'itaku.viewingUserPosts',
     viewingFollowers: 'itaku.viewingFollowers',
     viewingFollowing: 'itaku.viewingFollowing',
     viewingCommissionPage: 'itaku.viewingCommissionPage',
-    viewingDMs: 'itaku.viewingDMs',
+    viewingDMs: 'general.readingADM',
     viewingCommissionInbox: 'itaku.viewingCommissionInbox',
     viewingTagSuggestions: 'itaku.viewingTagSuggestions',
     viewingSubmissionInbox: 'itaku.viewingSubmissionInbox',
-    viewingSettings: 'itaku.viewingSettings',
+    viewingSettings: 'general.viewAccount',
   })
 }
 
@@ -55,7 +53,7 @@ presence.on('UpdateData', async () => {
   }
 
   if (pathname === '/' || pathname === '/home' || pathname === '/home/') {
-    presenceData.details = strings.browsingHome
+    presenceData.details = strings.viewingHome
   }
   else if (pathname.startsWith('/home/posts')) {
     presenceData.details = strings.browsingPosts
@@ -76,13 +74,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = strings.viewingHelp
   }
   else if (pathname.startsWith('/help/rules')) {
-    presenceData.details = strings.viewingRules
-  }
-  else if (pathname.startsWith('/help/badges')) {
-    presenceData.details = strings.viewingBadges
-  }
-  else if (pathname.startsWith('/about/roadmap')) {
-    presenceData.details = strings.viewingRoadmap
+    presenceData.details = strings.readingRules
   }
   else if (pathname.startsWith('/profile/')) {
     const pathParts = pathname.split('/').filter(Boolean)

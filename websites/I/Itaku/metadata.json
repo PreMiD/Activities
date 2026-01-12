@@ -13,7 +13,7 @@
     "uk": "Itaku - це соціальна платформа для художників, де вони можуть ділитися своїми роботами, приймати замовлення та спілкуватися з іншими авторами."
   },
   "url": "itaku.ee",
-  "regExp": "^https?:\\/\\/(www\\.)?itaku\\.ee[/]?",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*itaku[.]ee[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/od6sCq6.png",
   "thumbnail": "https://i.imgur.com/UnCwDtS.png",

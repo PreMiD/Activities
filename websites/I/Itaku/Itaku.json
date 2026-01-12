@@ -1,8 +1,4 @@
 {
-  "itaku.browsingHome": {
-    "description": "Browsing the Itaku home page",
-    "message": "Browsing Home"
-  },
   "itaku.browsingPosts": {
     "description": "Browsing posts on Itaku",
     "message": "Browsing Posts"
@@ -23,49 +19,25 @@
     "description": "Browsing tags",
     "message": "Browsing Tags"
   },
-  "itaku.viewingHelp": {
-    "description": "Viewing help section",
-    "message": "Viewing Help"
-  },
-  "itaku.viewingRules": {
-    "description": "Reading site rules",
-    "message": "Reading Rules"
-  },
-  "itaku.viewingBadges": {
-    "description": "Viewing badges",
-    "message": "Viewing Badges"
-  },
-  "itaku.viewingRoadmap": {
-    "description": "Viewing site roadmap",
-    "message": "Viewing Roadmap"
-  },
-  "itaku.viewingProfile": {
-    "description": "Viewing a profile",
-    "message": "Viewing Profile"
-  },
   "itaku.viewingGallery": {
-    "description": "Viewing user gallery",
+    "description": "Viewing user's gallery",
     "message": "Viewing Gallery"
   },
-  "itaku.viewingUserPosts": {
-    "description": "Viewing user posts",
-    "message": "Viewing Posts"
-  },
   "itaku.viewingFollowers": {
-    "description": "Viewing followers",
+    "description": "Viewing user's followers",
     "message": "Viewing Followers"
   },
   "itaku.viewingFollowing": {
-    "description": "Viewing following list",
+    "description": "Viewing user's following list",
     "message": "Viewing Following"
+  },
+  "itaku.viewingUserPosts": {
+    "description": "Viewing user's posts",
+    "message": "Viewing Posts"
   },
   "itaku.viewingCommissionPage": {
     "description": "Viewing user commissions",
     "message": "Viewing Commissions"
-  },
-  "itaku.viewingDMs": {
-    "description": "Viewing direct messages",
-    "message": "Viewing Messages"
   },
   "itaku.viewingCommissionInbox": {
     "description": "Viewing commission inbox",
@@ -78,9 +50,5 @@
   "itaku.viewingSubmissionInbox": {
     "description": "Viewing submission inbox",
     "message": "Submission Inbox"
-  },
-  "itaku.viewingSettings": {
-    "description": "Viewing settings",
-    "message": "Settings"
   }
 }
