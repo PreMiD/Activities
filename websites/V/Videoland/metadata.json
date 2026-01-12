@@ -12,12 +12,11 @@
   },
   "url": [
     "v2.videoland.com",
-    "www.v2.videoland.com",
     "videoland.com",
     "www.videoland.com"
   ],
-  "regExp": "^https?[:][/][/]((v2|www[.]v2|www)[.])?videoland[.]com[/]",
-  "version": "1.4.0",
+  "regExp": "^https?[:][/][/]((v2|www)[.])?videoland[.]com[/]",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Videoland/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Videoland/assets/thumbnail.png",
   "color": "#FF3746",
