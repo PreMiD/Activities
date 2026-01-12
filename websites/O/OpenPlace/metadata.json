@@ -5,7 +5,7 @@
     "id": "1120490012153237544",
     "name": "Katsu"
   },
-  "service": "openplace",
+  "service": "OpenPlace",
   "description": {
     "en": "openplace is a collaborative, real-time pixel canvas layered over the world map, where anyone can paint and create art together."
   },
