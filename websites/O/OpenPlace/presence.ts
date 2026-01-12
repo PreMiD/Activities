@@ -4,7 +4,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/4CeaKxx.png',
+  Logo = 'https://i.imgur.com/POz1IBa.png',
 }
 
 let level: string = 'Unknown'
