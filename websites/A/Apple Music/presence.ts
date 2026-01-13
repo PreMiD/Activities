@@ -13,27 +13,14 @@ interface Attributes {
   url?: string
 }
 
-interface NowPlayingItem {
-  attributes: Attributes
-}
-
 interface AudioPlayer {
-  _nowPlayingItem: NowPlayingItem
+  _nowPlayingItem: {
+    attributes: Attributes
+  }
   _currentPlaybackProgress: number
   _paused: boolean
   _stopped: boolean
   _playbackDidStart: boolean
-}
-
-interface Metadata {
-  name: string
-  artist: string
-  album: string
-  artwork: string
-  paused: boolean
-  elapsedTime: number
-  duration: number
-  url?: string
 }
 
 const presence = new Presence({
@@ -67,62 +54,59 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('listening'),
   ])
 
-  async function getData(): Promise<Metadata | null> {
-    const audio = document.querySelector<HTMLAudioElement>(
-      'audio#apple-music-player',
+  let data
+
+  const audio = document.querySelector<HTMLAudioElement>(
+    'audio#apple-music-player',
+  )
+  const video = document
+    .querySelector('apple-music-video-player')
+    ?.shadowRoot
+    ?.querySelector(
+      'amp-window-takeover > .container > amp-video-player-internal',
     )
-    const video = document
-      .querySelector('apple-music-video-player')
-      ?.shadowRoot
-      ?.querySelector(
-        'amp-window-takeover > .container > amp-video-player-internal',
-      )
-      ?.shadowRoot
-      ?.querySelector('amp-video-player')
-      ?.shadowRoot
-      ?.querySelector('div#video-container')
-      ?.querySelector<HTMLVideoElement>('video#apple-music-video-player')
+    ?.shadowRoot
+    ?.querySelector('amp-video-player')
+    ?.shadowRoot
+    ?.querySelector('div#video-container')
+    ?.querySelector<HTMLVideoElement>('video#apple-music-video-player')
 
-    const audioPlayer = await presence.getPageVariable<{ audioPlayer: AudioPlayer }>('audioPlayer').then(res => res?.audioPlayer)
+  const audioPlayer = await presence.getPageVariable<{ audioPlayer: AudioPlayer }>('audioPlayer').then(res => res?.audioPlayer)
 
-    if (audioPlayer?._nowPlayingItem) {
-      const paused = audioPlayer._paused || audioPlayer._stopped || !audioPlayer._playbackDidStart
-      const { attributes } = audioPlayer._nowPlayingItem
-      const { artwork, name, artistName, albumName, durationInMillis, url } = attributes
-      const duration = durationInMillis / 1000
+  if (audioPlayer?._nowPlayingItem) {
+    const paused = audioPlayer._paused || audioPlayer._stopped || !audioPlayer._playbackDidStart
+    const { attributes } = audioPlayer._nowPlayingItem
+    const { artwork, name, artistName, albumName, durationInMillis, url } = attributes
+    const duration = durationInMillis / 1000
 
-      return {
-        album: albumName,
-        artist: artistName,
-        artwork: artwork.url.replace('{w}', String(artwork.width)).replace('{h}', String(artwork.height)),
-        duration,
-        elapsedTime: audioPlayer._currentPlaybackProgress * duration,
-        name,
-        paused,
-        url,
-      }
+    data = {
+      album: albumName,
+      artist: artistName,
+      artwork: artwork.url.replace('{w}', String(artwork.width)).replace('{h}', String(artwork.height)),
+      duration,
+      elapsedTime: audioPlayer._currentPlaybackProgress * duration,
+      name,
+      paused,
+      url,
     }
-    else if (video?.title || audio?.title) {
-      const media = video || audio
-      const paused = !!media && (media.paused || media.readyState <= 2)
-      const metadata = navigator.mediaSession.metadata
+  }
+  else if (video?.title || audio?.title) {
+    const media = video || audio
+    const paused = !!media && (media.paused || media.readyState <= 2)
+    const metadata = navigator.mediaSession.metadata
 
-      return {
-        album: metadata?.album || '',
-        artist: metadata?.artist || '',
-        artwork: metadata?.artwork[0]?.src.replace(/\d{1,2}x\d{1,2}[a-z]{1,2}/, '1024x1024') || '',
-        duration: media!.duration,
-        elapsedTime: media!.currentTime,
-        name: metadata?.title || '',
-        paused,
-        url: undefined,
-      }
+    data = {
+      album: metadata?.album || '',
+      artist: metadata?.artist || '',
+      artwork: metadata?.artwork[0]?.src.replace(/\d{1,2}x\d{1,2}[a-z]{1,2}/, '1024x1024') || '',
+      duration: media!.duration,
+      elapsedTime: media!.currentTime,
+      name: metadata?.title || '',
+      paused,
+      url: undefined,
     }
-
-    return null
   }
 
-  const data = await getData()
   if (data) {
     presenceData.details = data.name
     presenceData.state = data.artist
