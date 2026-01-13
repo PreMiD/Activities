@@ -13,7 +13,7 @@
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*movieboxpro[.]app[/]",
   "version": "1.0.0",
   "logo": "https://cdn.aptoide.com/imgs/b/c/8/bc87071060372ad5bbd0ee5470c05dda_icon.jpg",
-  "thumbnail": "https://raw.githubusercontent.com/sirschubert/assets/refs/heads/main/assets/unnamed.png",
+  "thumbnail": "https://raw.githubusercontent.com/sirschubert/assets/refs/heads/main/assets/movieboxpro.png",
   "color": "#fcba03",
   "category": "videos",
   "tags": [
