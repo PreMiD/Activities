@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "751077311545081877",
+    "name": "CE-Timmer"
+  },
+  "service": "H!Anime",
+  "description": {
+    "en": "H!Anime is a website for watching anime."
+  },
+  "url": ["hianime.to"],
+  "regExp": "^(https?:\\/\\/)?([a-z0-9-]+\\.)*hianime\\.to\\/?.*$",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/CE-Timmer/PreMid-Extensions/main/Logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/CE-Timmer/PreMid-Extensions/main/logo%20(1).png",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "video"
+  ]
+}
