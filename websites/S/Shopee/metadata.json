@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "786163564205047839",
@@ -12,9 +12,18 @@
   "url": [
     "shopee.co.id",
     "shopee.com.my",
-    "shopee.sg"
+    "shopee.sg",
+    "shopee.com.br",
+    "shopee.ph",
+    "shopee.co.th",
+    "shopee.vn",
+    "shopee.tw",
+    "shopee.com.mx",
+    "shopee.com.co",
+    "shopee.cl"
   ],
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*shopee[.](co[.]id|com[.]my|sg|com[.]br|ph|co[.]th|vn|tw|com[.]mx|com[.]co|cl)[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Shopee/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Shopee/assets/thumbnail.jpeg",
   "color": "#EA501F",

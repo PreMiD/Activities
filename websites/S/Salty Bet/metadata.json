@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Rare Akuma ☆",
@@ -11,7 +11,8 @@
     "nl": "SaltyBet (ook bekend als Salty's Dream Cast Casino) is een goksite waar gebruikers nepgeld kunnen inzetten op de uitkomsten van door A.I. gecontroleerde M.U.G.E.N gevechten."
   },
   "url": "www.saltybet.com",
-  "version": "2.1.25",
+  "regExp": "^https?[:][/][/](www[.])?saltybet[.]com[/]",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Salty%20Bet/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Salty%20Bet/assets/thumbnail.png",
   "color": "#00adef",

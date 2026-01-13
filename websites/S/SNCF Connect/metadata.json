@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "671037171611729920",
+    "name": "atom_skully"
+  },
+  "service": "SNCF Connect",
+  "description": {
+    "en": "Book your Train Tickets at the best price on SNCF Connect! Also find our range of discount cards, TER subscriptions, buses and carpooling...",
+    "fr": "Réservez vos Billets de Train au meilleur prix sur SNCF Connect ! Retrouvez aussi notre offre de cartes de réduction, abonnements TER, bus et covoiturage..."
+  },
+  "url": "www.sncf-connect.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sncf-connect[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SNCF%20Connect/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SNCF%20Connect/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "other",
+  "tags": [
+    "transport",
+    "sncf"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": true
+    }
+  ]
+}

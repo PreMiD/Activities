@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "PreMiD",
@@ -19,15 +19,14 @@
   "url": [
     "hbogo.ro",
     "hbogo.com",
-    "hbogo.pl",
     "hbogo.cz",
     "hbogo.sk",
-    "www.hbogo.co.th",
     "www.hbogoasia.my",
     "www.hbogoasia.id",
     "www.hbogoasia.ph"
   ],
-  "version": "2.4.4",
+  "regExp": "^https?[:][/][/](www[.])?hbogo(asia)?[.](ro|com|cz|sk|my|id|ph)[/]",
+  "version": "2.5.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20GO/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20GO/assets/thumbnail.png",
   "color": "#011921",
