@@ -1,12 +1,4 @@
 {
-  "bl4cklist.homepageDetails": {
-    "description": "Text shown when on the homepage",
-    "message": "👋 On the Homepage"
-  },
-  "bl4cklist.defaultTitle": {
-    "description": "Title shown when browsing subpages",
-    "message": "Browsing the website.."
-  },
   "bl4cklist.defaultState": {
     "description": "Default state when no specific page is matched",
     "message": "I'm a little curious... 🚀"

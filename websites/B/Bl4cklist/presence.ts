@@ -8,8 +8,8 @@ const browsingTimestamp: number = Math.floor(Date.now() / 1000)
 async function getStrings() {
   return await presence.getStrings(
     {
-      homepageDetails: 'bl4cklist.homepageDetails',
-      defaultTitle: 'bl4cklist.defaultTitle',
+      homepageDetails: 'general.viewHome',
+      defaultTitle: 'general.browsing',
       defaultState: 'bl4cklist.defaultState',
       pageCoding: 'bl4cklist.pageCoding',
       pageCommunity: 'bl4cklist.pageCommunity',
