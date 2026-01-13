@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "YurKLYK",
+    "id": "000000000000000000"
+  },
+  "contributors": [],
+  "service": "Zenstudy",
+  "altnames": [
+    "ZEN Study",
+    "ZENStudy",
+    "ZENstudy"
+  ],
+  "description": {
+    "en": "ZEN Study - Online learning platform by Kadokawa Group with courses on programming, creative, and exam preparation",
+    "ja": "ZEN Study - カドカワグループのオンライン学習プラットフォーム"
+  },
+  "url": [
+    "www.nnn.ed.nico",
+    "zen-study.jp",
+    "www.zen-study.jp"
+  ],
+  "regExp": "(.+\\.)?(?:zen-study\\.jp|nnn\\.ed\\.nico)",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/8g7M0MY.png",
+  "thumbnail": "https://i.imgur.com/8g7M0MY.png",
+  "color": "#5E49E0",
+  "category": "other",
+  "tags": [
+    "education",
+    "learning",
+    "programming",
+    "creative"
+  ],
+  "settings": [
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
+}
