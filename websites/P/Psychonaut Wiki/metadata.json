@@ -13,7 +13,7 @@
     "en": "PsychonautWiki is an encyclopedia that documents all aspects of psychonautic theory from an evidence-based perspective. It provides education, encourages safe practices, and emphasizes that substances should not be abused. Do not do drugs."
   },
   "url": "psychonautwiki.org",
-  "regExp": "https?://(www\\.)?psychonautwiki\\.org/.*",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*psychonautwiki[.]org[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/GPxHYOV.png",
   "thumbnail": "https://i.imgur.com/QwNGXcq.png",
