@@ -6,7 +6,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
   const presenceData: any = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/M/medy/assets/thumbnail.png',
+    largeImageKey: 'https://cdn.medy.website/thumbnail.png',
     startTimestamp: browsingTimestamp,
   }
 
@@ -116,7 +116,7 @@ presence.on('UpdateData', async () => {
   }
 
   if (!presenceData.largeImageKey) {
-    presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/M/medy/assets/thumbnail.png'
+    presenceData.largeImageKey = 'https://cdn.medy.website/thumbnail.png'
   }
 
   presence.setActivity(presenceData)
