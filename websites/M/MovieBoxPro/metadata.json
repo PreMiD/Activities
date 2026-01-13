@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "339316517558681610",
+    "name": "firstoften"
+  },
+  "service": "MovieBoxPro",
+  "description": {
+    "en": "MovieBoxPro is for watching movies and TV shows, offering details like posters, cast info, trailers, and trending titles, sourced from The Movie Database"
+  },
+  "url": "google.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*movieboxpro[.]app[/]",
+  "version": "1.0.0",
+  "logo": "https://cdn.aptoide.com/imgs/b/c/8/bc87071060372ad5bbd0ee5470c05dda_icon.jpg",
+  "thumbnail": "https://raw.githubusercontent.com/sirschubert/assets/refs/heads/main/assets/unnamed.png",
+  "color": "#fcba03",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "series",
+    "watch"
+  ]
+}
