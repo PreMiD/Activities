@@ -15,6 +15,7 @@ async function getStrings() {
       pageCommunity: 'bl4cklist.pageCommunity',
       pageBot: 'bl4cklist.pageBot',
       pageContact: 'bl4cklist.pageContact',
+      reading: 'general.readingAbout',
     },
   )
 }
@@ -27,20 +28,26 @@ presence.on('UpdateData', async (): Promise<void> => {
     startTimestamp: browsingTimestamp,
   }
 
-  const { pathname } = document.location
-  if (pathname.includes('/discord/tech-coding/')) {
+  const { href } = document.location
+  // our discord help subdomain
+  if (href.includes('discord.bl4cklist.de/')) {
+    const title_split: string[] = document.title.split(' | ')
+    presenceData.details = `Bl4cklist's ${title_split[1]}` // page name
+    presenceData.state = `${strings.reading} ${title_split[0]} 💬` // article name
+  }
+  else if (href.includes('/discord/tech-coding/')) {
     presenceData.details = strings.defaultTitle
     presenceData.state = strings.pageCoding
   }
-  else if (pathname.includes('/discord/community/')) {
+  else if (href.includes('/discord/community/')) {
     presenceData.details = strings.defaultTitle
     presenceData.state = strings.pageCommunity
   }
-  else if (pathname.includes('/discord/clank-bot/')) {
+  else if (href.includes('/discord/clank-bot/')) {
     presenceData.details = strings.defaultTitle
     presenceData.state = strings.pageBot
   }
-  else if (pathname.includes('/contact/')) {
+  else if (href.includes('/contact/')) {
     presenceData.details = strings.defaultTitle
     presenceData.state = strings.pageContact
   }
