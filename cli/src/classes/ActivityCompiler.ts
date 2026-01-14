@@ -156,6 +156,14 @@ export class ActivityCompiler {
 
         await this.ts.restart(this.compileAndSend.bind(this, { validate, zip, sarif }))
       }
+
+      // Handle string file and metadata.json changes
+      if (
+        event === 'change'
+        && (basename(path) === `${this.activity.service}.json` || basename(path) === 'metadata.json')
+      ) {
+        return this.compileAndSend({ validate, zip, sarif })
+      }
     })
 
     this.ts.watch(this.compileAndSend.bind(this, { validate, zip, sarif }))
