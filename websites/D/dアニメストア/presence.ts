@@ -20,7 +20,6 @@ presence.on('UpdateData', async () => {
   ) {
     const video = document.querySelector<HTMLVideoElement>('#video')
     const isPlaying = video && !video.paused
-    
     const title = document.querySelector('.pauseInfoTxt1')?.textContent
     const epNum = document.querySelector('.pauseInfoTxt2')?.textContent
     const epTitle = document.querySelector('.pauseInfoTxt3')?.textContent
@@ -63,10 +62,12 @@ presence.on('UpdateData', async () => {
     }
 
     presence.setActivity(presenceData)
-  } else if (pathname === '/animestore/tp_pc') {
+  }
+  else if (pathname === '/animestore/tp_pc') {
     presenceData.details = 'ホーム'
     presence.setActivity(presenceData)
-  } else if (pathname === '/animestore/ci_pc') {
+  }
+  else if (pathname === '/animestore/ci_pc') {
     const params = new URLSearchParams(location.search)
 
     if (params.has('workId') && params.has('partId')) {
@@ -77,25 +78,31 @@ presence.on('UpdateData', async () => {
       presenceData.detailsUrl = `https://animestore.docomo.ne.jp/animestore/ci_pc?workId=${params.get('workId')}`
       presenceData.stateUrl = location.href
       presence.setActivity(presenceData)
-    } else if (params.has('workId')) {
+    }
+    else if (params.has('workId')) {
       presenceData.details = document.querySelector('.titleWrap > h1')?.textContent?.trim()
       presenceData.detailsUrl = location.href
       presence.setActivity(presenceData)
-    } else {
+    }
+    else {
       presence.setActivity()
     }
-  } else if (/^\/animestore\/CF\/.*/.test(pathname)) {
+  }
+  else if (/^\/animestore\/CF\/.*/.test(pathname)) {
     presenceData.details = document.querySelector('#breadCrumb_b > a > span')?.textContent?.trim()
     presenceData.detailsUrl = location.href
     presence.setActivity(presenceData)
-  } else if (/^\/animestore\/CP\/.*/.test(pathname)) {
+  }
+  else if (/^\/animestore\/CP\/.*/.test(pathname)) {
     presenceData.details = document.querySelector('#breadCrumb_c > a > span')?.textContent?.trim()
     presenceData.detailsUrl = location.href
     presence.setActivity(presenceData)
-  } else if (/^\/animestore\/mpa?_/.test(pathname)) {
+  }
+  else if (/^\/animestore\/mpa?_/.test(pathname)) {
     presenceData.details = 'マイページ'
     presence.setActivity(presenceData)
-  } else {
+  }
+  else {
     presence.setActivity()
   }
 })
