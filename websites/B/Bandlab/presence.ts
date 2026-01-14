@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
 	clientId: '801743263052726292',
@@ -8,10 +8,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 let studioTimestamp = 0
 
 enum ActivityAssets {
-	Logo = 'https://assets.stickpng.com/images/631205e3b661e15cdf54dede.png',
-	Paused = 'https://cdn.discordapp.com/app-assets/801743263052726292/1406529845537673246.png',
-	Playing = 'https://cdn.discordapp.com/app-assets/801743263052726292/1406529845738995772.png',
-	Search = 'https://cdn.discordapp.com/app-assets/801743263052726292/1406882846286807152.png',
+	Logo = 'https://i.imgur.com/xTXlFCo.png',
 }
 
 presence.on('UpdateData', async () => {
@@ -26,33 +23,31 @@ presence.on('UpdateData', async () => {
 	const strings = await presence.getStrings({
 		play: 'general.playing',
 		pause: 'general.paused',
-		browse: 'general. browsing',
+		browse: 'general.browsing',
 		view: 'general.view',
-		buttonViewSong: 'general. buttonViewSong',
+		buttonViewSong: 'general.buttonViewSong',
 		listening: 'general.listeningTo',
 		listening_unspecified: 'general.listeningMusic',
-		viewUser:  'general.viewUser',
+		viewUser: 'general.viewUser',
 		readingADM: 'general.readingADM',
-		readingDM:  'general.readingDM',
+		readingDM: 'general.readingDM',
 		buttonViewPage: 'general.buttonViewPage',
 		watching: 'general.watching',
-		buttonWatchVideo:  'general.buttonWatchVideo',
+		buttonWatchVideo: 'general.buttonWatchVideo',
 		videoTarget: 'bandlab.videoTarget',
-		searchUnspecified: 'general.searchSomething',
+		searchUnspecified: 'general. searchSomething',
 		search: 'general.searchFor',
 		searchHint: 'general.search',
 	})
 
 	function firstSrcFromSrcsetProvided(e: Element | null): string | undefined {
 		return e === null ? ActivityAssets.Logo : e.getAttribute('srcset')?.split(' ')[0]
-		// Reads the first image in srcset - images on BandLab have multiple src's, we only need one for the scope of the RPC
-		// If e doesn't exist, safely return BandLab logo
 	}
 
 	const { pathname, search, href } = document.location
 
 	const presenceData: PresenceData = {
-		largeImageKey: ActivityAssets.Logo,
+		largeImageKey: ActivityAssets. Logo,
 		startTimestamp: studioTimestamp !== 0 ? studioTimestamp : browsingTimestamp,
 		type: ActivityType.Playing,
 	}
@@ -70,36 +65,34 @@ presence.on('UpdateData', async () => {
 			presenceData.state = 'The For You page'
 
 		else if (pathname. includes('video')) {
-			if (search.trim() === '') {
-				// User is just browsing the video feed
+			if (search.trim() === '')
 				presenceData.state = 'Looking at popular videos'
-			}
-			else if (search. includes('postId')) {
-				// User is watching a specific video
+
+			else if (search.includes('postId')) {
 				presenceData.details = strings.watching
 
-				const videoAuthor: {
+				const videoAuthor:  {
 					element: Element | null
 					target: string
-					username:  string
+					username: string
 				} = {
 					element: null,
-					target:  '',
+					target: '',
 					username: '',
 				}
 
-				const homeElement: Element | null = document.querySelector('post-card-header-content > div > .post-card-header-title > a') // Grabs the link element that points to the originating account in the video player
+				const homeElement: Element | null = document.querySelector('post-card-header-content > div > . post-card-header-title > a')
 
 				if (homeElement) {
 					videoAuthor.element = homeElement
-					videoAuthor.target = homeElement?.getAttribute('href') || '' // The link to the account
-					videoAuthor.username = homeElement?.textContent || 'a BandLab user' // The display name of the account
+					videoAuthor.target = homeElement?. getAttribute('href') || ''
+					videoAuthor.username = homeElement?.textContent || 'a BandLab user'
 				}
 
 				if (showButtons) {
 					presenceData.buttons = [
 						{
-							label:  strings.buttonWatchVideo,
+							label: strings.buttonWatchVideo,
 							url: href,
 						},
 						{
@@ -119,22 +112,22 @@ presence.on('UpdateData', async () => {
 	if (pathname. startsWith('/library/projects/') && !pathname.includes('likes'))
 		presenceData.state = 'Looking at their saved projects'
 
-	if (pathname.startsWith('/track/')) {
-		studioTimestamp = 0 // Reset Studio timestamp here, because people leaving Studio get sent to a /track/ link
+	if (pathname. startsWith('/track/')) {
+		studioTimestamp = 0
 
-		const isPublic: boolean = document. querySelector('post-private-badge') === null // Verifies that the post is public by checking if the 'Private' badge exists
+		const isPublic:  boolean = document.querySelector('post-private-badge') === null
 
-		if (!isPublic && privacyMode) {
+		if (! isPublic && privacyMode) {
 			presenceData.state = strings.listening_unspecified
 		}
 		else {
-			const title: string = document.querySelector('.track-page-player-title-name')?.textContent?.trim() || 'A song'
+			const title: string = document.querySelector('. track-page-player-title-name')?.textContent?. trim() || 'A song'
 			const artist: string = document.querySelector('a.track-card-subtitle-text')?.textContent?.trim() || 'someone'
 
-			presenceData. details = strings.view
-			presenceData.state = titleArtistFormat.replace('%title%', title).replace('%artist%', artist) // Example: tell me - ToxiPlays
+			presenceData.details = strings.view
+			presenceData.state = titleArtistFormat.replace('%title%', title).replace('%artist%', artist)
 
-			presenceData.largeImageKey = firstSrcFromSrcsetProvided(document.querySelector('img.ds-cover')) // Set Discord Activity image to first provided copy of song cover art
+			presenceData.largeImageKey = firstSrcFromSrcsetProvided(document.querySelector('img.ds-cover'))
 			presenceData.smallImageKey = ActivityAssets.Logo
 			presenceData.smallImageText = 'BandLab'
 
@@ -148,14 +141,14 @@ presence.on('UpdateData', async () => {
 			}
 
 			const bottomPlayButton: Element | null = document.querySelector('button.ds-play-button')
-			if (bottomPlayButton) { // Has the audio player on the bottom been engaged?
-				if (bottomPlayButton.className.includes('status-paused')) {
-					presenceData.smallImageKey = ActivityAssets.Paused
+			if (bottomPlayButton) {
+				if (bottomPlayButton.className. includes('status-paused')) {
+					presenceData.smallImageKey = Assets.Pause
 					presenceData.smallImageText = strings.pause
 				}
 				else if (bottomPlayButton.className.includes('status-playing')) {
-					presenceData. details = strings.listening.replace('{0}{1}', ': ') // Listening to:
-					presenceData.smallImageKey = ActivityAssets.Playing
+					presenceData.details = strings.listening. replace('{0}{1}', ':  ')
+					presenceData.smallImageKey = Assets.Play
 					presenceData.smallImageText = strings.play
 				}
 			}
@@ -173,50 +166,47 @@ presence.on('UpdateData', async () => {
 		}
 		else {
 			const inputBox = document.getElementById('studio-project-name-input') as HTMLInputElement
-			const title:  string = inputBox?.value.trim() || 'New Project'
-			presenceData.state = 'Working on project: {0}'. replace('{0}', title)
+			const title:  string = inputBox?.value. trim() || 'New Project'
+			presenceData.state = 'Working on project:  {0}'.replace('{0}', title)
 		}
 	}
 
 	if (pathname.startsWith('/chat')) {
 		if (privacyModeStrict) {
-			presenceData.state = strings. readingADM
+			presenceData.state = strings.readingADM
 		}
-		else if (!privacyModeStrict && document.querySelector('header.conversation-partner')) { // Checking if user info for the DM recipient exists
-			const dmRecipientName: string | null | undefined = document.querySelector('.profile-tile-title > a')?.textContent
-			const dmSubtitleName: string | null | undefined = document.querySelector('.profile-tile-subtitle-wrap > ng-pluralize')?.textContent || document. querySelector('.profile-tile-subtitle-wrap > a')?.textContent || 'a BandLab user' // Checking for band ('X Members') or user ('@username')
+		else if (!privacyModeStrict && document.querySelector('header.conversation-partner')) {
+			const dmRecipientName: string | null | undefined = document.querySelector('. profile-tile-title > a')?.textContent
+			const dmSubtitleName: string | null | undefined = document.querySelector('.profile-tile-subtitle-wrap > ng-pluralize')?.textContent || document.querySelector('.profile-tile-subtitle-wrap > a')?.textContent || 'a BandLab user'
 
 			presenceData.details = strings.readingDM
 			presenceData.state = `${dmRecipientName} (${dmSubtitleName})`
 
-			presenceData.largeImageKey = firstSrcFromSrcsetProvided(document.querySelector('header.profile-tile-header > a > img.profile-tile-picture') || document.querySelector('a. profile-tile-header > img')) // 1: User DMs || 2: Band DMs
+			presenceData.largeImageKey = firstSrcFromSrcsetProvided(document.querySelector('header.profile-tile-header > a > img. profile-tile-picture') || document.querySelector('a.profile-tile-header > img'))
 
 			presenceData.smallImageKey = ActivityAssets.Logo
 			presenceData.smallImageText = 'BandLab'
 		}
 		else {
-			presenceData.state = strings.readingADM
+			presenceData. state = strings.readingADM
 		}
 	}
 
-	if (pathname. startsWith('/search/')) {
-		presenceData.smallImageKey = ActivityAssets.Search
-		presenceData.smallImageText = strings.searchHint
+	if (pathname.startsWith('/search/')) {
+		presenceData.smallImageKey = Assets.Search
+		presenceData. smallImageText = strings.searchHint
 
 		if (privacyModeStrict) {
 			presenceData.state = strings.searchUnspecified
 		}
 		else {
-			presenceData.details = strings.search
-			presenceData. state = new URLSearchParams(document.location.search).get('q') // Get search query from URL parameter
+			presenceData. details = strings.search
+			presenceData.state = new URLSearchParams(document.location.search).get('q')
 		}
 	}
 
 	if (document.querySelector('.profile-card-title')) {
-		// We are on a profile page (we can't test on a specific pathname for these kinds of pages)
-		// Either that, or we are on a band starting with '/band/' - they have similar formats
-
-		presenceData.details = pathname.startsWith('/band/') ? 'Viewing band:' :  strings.viewUser
+		presenceData.details = pathname.startsWith('/band/') ? 'Viewing band: ' : strings.viewUser
 		presenceData.buttons = [
 			{
 				label: strings.buttonViewPage,
@@ -224,22 +214,22 @@ presence.on('UpdateData', async () => {
 			},
 		]
 
-		const pfp: string | undefined = firstSrcFromSrcsetProvided(document.querySelector('.profile-card-picture > a > img')) // Grab first profile picture of user available
+		const pfp: string | undefined = firstSrcFromSrcsetProvided(document.querySelector('.profile-card-picture > a > img'))
 
 		if (pfp !== ActivityAssets.Logo) {
 			presenceData.largeImageKey = pfp
 			presenceData.smallImageKey = ActivityAssets.Logo
-			presenceData.smallImageText = 'BandLab'
+			presenceData. smallImageText = 'BandLab'
 		}
 		else {
-			presenceData.largeImageKey = ActivityAssets.Logo
+			presenceData. largeImageKey = ActivityAssets.Logo
 		}
 
 		presenceData.state = `${document.querySelector('.profile-card-title')?.textContent?.trim()}${
 			pathname.startsWith('/band/')
 				? ''
 				: ` (${document.querySelector('.profile-card-subtitle > a')?.textContent?.trim()})`
-		}` // For users... [display name] {@[username]} | Example:  JoeSchmoe (@j_milbo). For bands... Just shows the band name
+		}`
 	}
 
 	if (presenceData.state)
