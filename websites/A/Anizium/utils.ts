@@ -1,11 +1,4 @@
 export class Utils {
-  static convertToLuiiUrl(originalUrl: string, path: string): string {
-    return originalUrl.replace(
-      `https://x.anizium.co/assets/${path}/`,
-      `https://ani.luii.xyz/assets/${path}/`,
-    )
-  }
-
   static convertToWSRVUrl(originalUrl: string): string {
     return `https://wsrv.nl/?url=${originalUrl}`
   }
@@ -21,17 +14,19 @@ export class Utils {
   }
 
   static getAnimeTitle(): string {
-    const titleElement = document.querySelector('html > head > title')
-    const pageTitle = titleElement?.textContent?.trim() || 'Loading'
+    const pageTitle
+      = document.querySelector('head > title')?.textContent?.trim()
+        ?? 'Loading'
 
     if (pageTitle === 'Anizium - Türkçe Dublaj & 4K İzleme Platformu') {
       return 'Loading'
     }
 
     return pageTitle
-      .replace(/ - Anizium$/, '')
-      .replace(/ İzle$/, '')
-      .replace(/\s+\d+\.\s*Sezon.*$/, '')
+      .replace(/\s*-\s*Anizium\s*$/i, '')
+      .replace(/\s+(?:İzle|Watch)\s*$/i, '')
+      .split(/\s+\d+\.\s*(Sezon|Season)|\s+(Sezon|Season|Episode|Bölüm)/i)[0] ?? ''
+      .replace(/\s*S\d+\s*B\d+$/i, '')
       .trim()
   }
 
