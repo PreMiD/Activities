@@ -47,7 +47,7 @@ presence.on('UpdateData', async () => {
   const { pathname, search, href } = document.location
 
   const presenceData: PresenceData = {
-    largeImageKey: ActivityAssets. Logo,
+    largeImageKey: ActivityAssets.Logo,
     startTimestamp: studioTimestamp !== 0 ? studioTimestamp : browsingTimestamp,
     type: ActivityType.Playing,
   }
@@ -65,7 +65,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'The For You page'
     }
 
-    else if (pathname. includes('video')) {
+    else if (pathname.includes('video')) {
       if (search.trim() === '') {
         presenceData.state = 'Looking at popular videos'
       }
@@ -73,7 +73,7 @@ presence.on('UpdateData', async () => {
       else if (search.includes('postId')) {
         presenceData.details = strings.watching
 
-        const videoAuthor:  {
+        const videoAuthor: {
           element: Element | null
           target: string
           username: string
@@ -87,7 +87,7 @@ presence.on('UpdateData', async () => {
 
         if (homeElement) {
           videoAuthor.element = homeElement
-          videoAuthor.target = homeElement?. getAttribute('href') || ''
+          videoAuthor.target = homeElement?.getAttribute('href') || ''
           videoAuthor.username = homeElement?.textContent || 'a BandLab user'
         }
 
@@ -104,7 +104,7 @@ presence.on('UpdateData', async () => {
           ]
         }
 
-        presenceData.state = 'A video by [1]'.replace('[1]', videoAuthor. username)
+        presenceData.state = 'A video by [1]'.replace('[1]', videoAuthor.username)
       }
     }
     else if (pathname.includes('communities')) {
@@ -112,19 +112,19 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  if (pathname. startsWith('/library/projects/') && !pathname.includes('likes'))
+  if (pathname.startsWith('/library/projects/') && !pathname.includes('likes'))
     presenceData.state = 'Looking at their saved projects'
 
-  if (pathname. startsWith('/track/')) {
+  if (pathname.startsWith('/track/')) {
     studioTimestamp = 0
 
-    const isPublic:  boolean = document.querySelector('post-private-badge') === null
+    const isPublic: boolean = document.querySelector('post-private-badge') === null
 
-    if (! isPublic && privacyMode) {
+    if (!isPublic && privacyMode) {
       presenceData.state = strings.listening_unspecified
     }
     else {
-      const title: string = document.querySelector('. track-page-player-title-name')?.textContent?. trim() || 'A song'
+      const title: string = document.querySelector('. track-page-player-title-name')?.textContent?.trim() || 'A song'
       const artist: string = document.querySelector('a.track-card-subtitle-text')?.textContent?.trim() || 'someone'
 
       presenceData.details = strings.view
@@ -145,12 +145,12 @@ presence.on('UpdateData', async () => {
 
       const bottomPlayButton: Element | null = document.querySelector('button.ds-play-button')
       if (bottomPlayButton) {
-        if (bottomPlayButton.className. includes('status-paused')) {
+        if (bottomPlayButton.className.includes('status-paused')) {
           presenceData.smallImageKey = Assets.Pause
           presenceData.smallImageText = strings.pause
         }
         else if (bottomPlayButton.className.includes('status-playing')) {
-          presenceData.details = strings.listening. replace('{0}{1}', ':  ')
+          presenceData.details = strings.listening.replace('{0}{1}', ':  ')
           presenceData.smallImageKey = Assets.Play
           presenceData.smallImageText = strings.play
         }
@@ -169,7 +169,7 @@ presence.on('UpdateData', async () => {
     }
     else {
       const inputBox = document.getElementById('studio-project-name-input') as HTMLInputElement
-      const title:  string = inputBox?.value. trim() || 'New Project'
+      const title: string = inputBox?.value.trim() || 'New Project'
       presenceData.state = 'Working on project:  {0}'.replace('{0}', title)
     }
   }
@@ -191,19 +191,19 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = 'BandLab'
     }
     else {
-      presenceData. state = strings.readingADM
+      presenceData.state = strings.readingADM
     }
   }
 
   if (pathname.startsWith('/search/')) {
     presenceData.smallImageKey = Assets.Search
-    presenceData. smallImageText = strings.searchHint
+    presenceData.smallImageText = strings.searchHint
 
     if (privacyModeStrict) {
       presenceData.state = strings.searchUnspecified
     }
     else {
-      presenceData. details = strings.search
+      presenceData.details = strings.search
       presenceData.state = new URLSearchParams(document.location.search).get('q')
     }
   }
@@ -222,10 +222,10 @@ presence.on('UpdateData', async () => {
     if (pfp !== ActivityAssets.Logo) {
       presenceData.largeImageKey = pfp
       presenceData.smallImageKey = ActivityAssets.Logo
-      presenceData. smallImageText = 'BandLab'
+      presenceData.smallImageText = 'BandLab'
     }
     else {
-      presenceData. largeImageKey = ActivityAssets.Logo
+      presenceData.largeImageKey = ActivityAssets.Logo
     }
 
     presenceData.state = `${document.querySelector('.profile-card-title')?.textContent?.trim()}${
