@@ -9,7 +9,7 @@
   "description": {
     "en": "H!Anime is a website for watching anime."
   },
-  "url": ["hianime.to"],
+  "url": "hianime.to",
   "regExp": "^(https?:\\/\\/)?([a-z0-9-]+\\.)*hianime\\.to\\/?.*$",
   "version": "1.0.0",
   "logo": "https://raw.githubusercontent.com/CE-Timmer/PreMid-Extensions/main/Logo.png",
