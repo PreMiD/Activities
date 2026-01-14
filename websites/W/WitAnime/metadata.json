@@ -9,8 +9,8 @@
   "description": {
     "en": "The most popular Arabic streaming site for anime and online entertainment"
   },
-  "url": "witanime.day",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*witanime[.]day[/]",
+  "url": "witanime.life",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*witanime[.]life[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WitAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WitAnime/assets/thumbnail.png",
