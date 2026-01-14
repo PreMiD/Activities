@@ -1,48 +1,49 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.16",
-	"apiVersion": 1,
-	"author": {
-		"id": "708455359525945384",
-		"name": "toxisue"
-	},
-	"service": "BandLab",
-	"description": {
-		"en": "BandLab is an all-in-one music production platform, where musicians and music fans make and share music."
-	},
-	"url": ["bandlab.com", "www.bandlab.com", "licensing.bandlab.com", "edu.bandlab.com"],
-	"version": "1.0.0",
-	"logo": "https://i.imgur.com/xTXlFCo.png",
-	"thumbnail": "https://i.imgur.com/xTXlFCo.png",
-	"color": "#f12c18",
-	"category": "music",
-	"tags": [
-		"music"
-	],
-	"settings": [
-		{
-			"id": "showButtons",
-			"title": "Show Buttons",
-			"icon": "fa-solid fa-link",
-			"value": true
-		},
-		{
-			"id": "privacyMode",
-			"title": "Hide Project Names",
-			"icon":  "fa-solid fa-eye-slash",
-			"value": true
-		},
-		{
-			"id": "privacyModeStrict",
-			"title": "Hide Sensitive Info",
-			"icon": "fa-solid fa-lock",
-			"value": true
-		},
-		{
-			"id": "titleArtistFormat",
-			"title": "Song Display Format",
-			"icon": "fa-solid fa-music",
-			"value": "%title% - %artist%",
-			"placeholder": "use %title% and %artist%"
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "708455359525945384",
+    "name": "toxisue"
+  },
+  "service": "BandLab",
+  "description": {
+    "en": "BandLab is an all-in-one music production platform, where musicians and music fans make and share music."
+  },
+  "url": ["bandlab.com", "www.bandlab.com", "licensing.bandlab.com", "edu.bandlab.com"],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*bandlab[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/xTXlFCo.png",
+  "thumbnail": "https://i.imgur.com/xTXlFCo.png",
+  "color": "#f12c18",
+  "category": "music",
+  "tags": [
+    "music"
+  ],
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fa-solid fa-link",
+      "value": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Hide Project Names",
+      "icon": "fa-solid fa-eye-slash",
+      "value": true
+    },
+    {
+      "id": "privacyModeStrict",
+      "title": "Hide Sensitive Info",
+      "icon": "fa-solid fa-lock",
+      "value": true
+    },
+    {
+      "id": "titleArtistFormat",
+      "title": "Song Display Format",
+      "icon": "fa-solid fa-music",
+      "value": "%title% - %artist%",
+      "placeholder": "use %title% and %artist%"
+    }
+  ]
 }
