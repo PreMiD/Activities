@@ -9,6 +9,9 @@ let studioTimestamp = 0
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/xTXlFCo.png',
+  Paused = 'https://i.imgur.com/5NduiGp.png',
+  Playing = 'https://i.imgur.com/uyEA1oc.png',
+  Search = 'https://i.imgur.com/MtruCL0.png',
 }
 
 presence.on('UpdateData', async () => {
@@ -146,12 +149,12 @@ presence.on('UpdateData', async () => {
       const bottomPlayButton: Element | null = document.querySelector('button.ds-play-button')
       if (bottomPlayButton) {
         if (bottomPlayButton.className.includes('status-paused')) {
-          presenceData.smallImageKey = Assets.Pause
+          presenceData.smallImageKey = ActivityAssets.Paused
           presenceData.smallImageText = strings.pause
         }
         else if (bottomPlayButton.className.includes('status-playing')) {
           presenceData.details = strings.listening.replace('{0}{1}', ':  ')
-          presenceData.smallImageKey = Assets.Play
+          presenceData.smallImageKey = ActivityAssets.Playing
           presenceData.smallImageText = strings.play
         }
       }
@@ -196,7 +199,7 @@ presence.on('UpdateData', async () => {
   }
 
   if (pathname.startsWith('/search/')) {
-    presenceData.smallImageKey = Assets.Search
+    presenceData.smallImageKey = ActivityAssets.Search
     presenceData.smallImageText = strings.searchHint
 
     if (privacyModeStrict) {
