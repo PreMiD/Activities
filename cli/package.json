@@ -18,7 +18,7 @@
   "devDependencies": {
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.1",
-    "@inquirer/prompts": "^7.9.0",
+    "@inquirer/prompts": "^8.0.0",
     "@types/adm-zip": "^0.5.7",
     "@types/discord-rpc": "^4.0.9",
     "@types/got": "^9.6.12",
