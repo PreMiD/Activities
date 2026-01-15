@@ -5,19 +5,26 @@
     "id": "648040813250478081",
     "name": "blaze0_0"
   },
+  "contributors": [
+    {
+      "name": "dyrdoom",
+      "id": "427522200774508546"
+    }
+  ],
   "service": "HDrezka",
   "description": {
     "en": "Website for watching movies, cartoons, anime and TV series.",
-    "ru": "Сайт для просмтра фильмов, аниме мультфильмов и сериалов."
+    "ru": "Сайт для просмотра фильмов, аниме, мультфильмов и сериалов."
   },
   "url": [
     "rezka.ag",
     "hdrezka.ag",
     "rezka-ua.org",
-    "standby-rezka.tv"
+    "standby-rezka.tv",
+    "rezka-ua.co"
   ],
-  "regExp": "^https?[:][/][/](rezka[.]ag|hdrezka[.]ag|rezka-ua[.]org|standby-rezka[.]tv)[/]",
-  "version": "1.2.0",
+  "regExp": "^https?[:][/][/](rezka[.]ag|hdrezka[.]ag|rezka-ua[.]org|standby-rezka[.]tv|rezka-ua[.]co)[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/thumbnail.jpeg",
   "color": "#DA3D36",
@@ -26,5 +33,49 @@
     "video",
     "media",
     "animation"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showBrowsingStatus",
+      "title": "Show Browsing Status",
+      "icon": "fad fa-book-reader",
+      "value": true
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Timestamps (Progress Bar)",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showSmallImages",
+      "title": "Show Small Images",
+      "icon": "fad fa-pause",
+      "value": true
+    },
+    {
+      "id": "showTitleAsPresence",
+      "title": "Shot Title As Presence",
+      "icon": "fas fa-heading",
+      "value": true
+    }
   ]
 }

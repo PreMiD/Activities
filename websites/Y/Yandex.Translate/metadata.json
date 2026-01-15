@@ -14,11 +14,10 @@
   "url": [
     "translate.yandex.com",
     "translate.yandex.ru",
-    "ceviri.yandex.com.tr",
-    "translate.yandex.ua"
+    "ceviri.yandex.com.tr"
   ],
   "regExp": "^https?[:][/][/](translate|ceviri).yandex([.][a-z]+)+[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Yandex.Translate/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Yandex.Translate/assets/thumbnail.png",
   "color": "#FF2222",

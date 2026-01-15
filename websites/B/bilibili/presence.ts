@@ -36,6 +36,7 @@ presence.on('UpdateData', async () => {
       ? CustomAssets.Logo
       : navigator.mediaSession.metadata?.artwork[0]?.src
         ?? CustomAssets.Logo,
+    type: ActivityType.Watching,
   }
   const strings = await presence.getStrings({
     watchingVideo: 'general.watchingVid',
