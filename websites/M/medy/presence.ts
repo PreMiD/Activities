@@ -10,7 +10,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://cdn.medy.website/thumbnail.png',
     startTimestamp: browsingTimestamp,
   }
-  
+
   const searchParams = new URLSearchParams(search)
 
   const episodeParam = searchParams.get('episode')
@@ -28,11 +28,11 @@ presence.on('UpdateData', async () => {
     }
 
     if (isPlaying && episodeParam) {
-      presenceData.details = 'Дивлюся аніме'
+      presenceData.details = 'Дивиться аніме'
       presenceData.state = `Епізод ${episodeParam} - ${title}`
     }
     else {
-      presenceData.details = 'На сторінці аніме'
+      presenceData.details = 'Переглядає сторінку аніме'
       presenceData.state = title
     }
 
@@ -66,11 +66,11 @@ presence.on('UpdateData', async () => {
     }
 
     if (isPlaying && chapterParam) {
-      presenceData.details = 'Читаю манґу'
+      presenceData.details = 'Читає манґу'
       presenceData.state = `Розділ ${chapterParam} - ${title}`
     }
     else {
-      presenceData.details = 'На сторінці манґи'
+      presenceData.details = 'Переглядає сторінку манґи'
       presenceData.state = title
     }
 
@@ -94,7 +94,7 @@ presence.on('UpdateData', async () => {
     ]
   }
   else if (pathname === '/' || pathname === '' || pathname === '/catalog') {
-    presenceData.details = ' Блукаю'
+    presenceData.details = 'Блукає по сайту'
 
     presenceData.buttons = [
       {
@@ -104,7 +104,7 @@ presence.on('UpdateData', async () => {
     ]
   }
   else {
-    presenceData.details = ' Блукаю'
+    presenceData.details = 'Блукає по сайту'
 
     presenceData.buttons = [
       {
