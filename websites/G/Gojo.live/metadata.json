@@ -15,11 +15,11 @@
     "en": "Watch your favorite anime online in Dub or Sub format without registration on Gojo"
   },
   "url": [
-    "animetsu.to",
-    "animetsu.bz"
+    "animetsu.bz",
+    "animetsu.net"
   ],
-  "regExp": "^https?[:][/][/]animetsu[.](to|bz)[/]",
-  "version": "1.1.0",
+  "regExp": "^https?[:][/][/]animetsu[.](bz|net)[/]",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gojo.live/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gojo.live/assets/thumbnail.png",
   "color": "#18181d",

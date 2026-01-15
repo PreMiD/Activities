@@ -12,7 +12,7 @@
   },
   "url": "jkanime.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*jkanime[.]net[/]",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/JKAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/JKAnime/assets/thumbnail.png",
   "color": "#000000",
@@ -23,5 +23,29 @@
     "video"
   ],
   "iframe": true,
-  "iFrameRegExp": "(.*\\.)?jkanime\\.net"
+  "iFrameRegExp": "(^|\\.)?(jkanime\\.net|mega\\.nz|sfastwish\\.com|flaswish\\.com|vidhidevip\\.com|callistanise\\.com|mdbekjwqa\\.pw|mp4upload\\.com|streamtape\\.com|dsvplay\\.com|myvidplay\\.com)",
+  "settings": [
+    {
+      "id": "useAnimeCover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "usePresenceName",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": true
+    },
+    {
+      "id": "logoType",
+      "title": "Icon",
+      "icon": "fad fa-images",
+      "value": 0,
+      "values": [
+        "Animated",
+        "Still"
+      ]
+    }
+  ]
 }
