@@ -5,14 +5,13 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
+  const { pathname, href, search } = document.location
   const presenceData: any = {
     largeImageKey: 'https://cdn.medy.website/thumbnail.png',
     startTimestamp: browsingTimestamp,
   }
-
-  const pathname = window.location.pathname
-  const href = window.location.href
-  const searchParams = new URLSearchParams(window.location.search)
+  
+  const searchParams = new URLSearchParams(search)
 
   const episodeParam = searchParams.get('episode')
   const chapterParam = searchParams.get('chapter')
