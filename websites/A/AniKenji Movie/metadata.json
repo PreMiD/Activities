@@ -15,8 +15,8 @@
     "phamhung.xyz",
     "anikenji.live"
   ],
-  "regExp": "^https?[:][/][/](phamhung[.](xyz|net)|anikenj[.]live)[/]",
-  "version": "1.2.0",
+  "regExp": "^https?[:][/][/](phamhung[.](xyz|net)|anikenji[.]live)[/]",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniKenji%20Movie/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniKenji%20Movie/assets/thumbnail.png",
   "color": "#ff71b3",
