@@ -37,11 +37,11 @@ presence.on('UpdateData', async () => {
 
   else if (pathname.includes('/section')) {
     const moduleName = document.querySelector('.page-title.mb-0.font-size-18.letter-spacing-1-2')?.textContent
-    const sectionElement = document.querySelector('.breadcrumb-item.active')
-    const sectionName = sectionElement?.textContent?.trim() || 'Reading Section'
+    const sectionElement = document.querySelector('.training-module > h1')
+    const sectionName = sectionElement?.textContent?.trim()
 
     presenceData.details = `Reading Module: ${moduleName}`
-    presenceData.state = `Section: ${sectionName}`
+    presenceData.state = sectionName ? `Section: ${sectionName}` : ''
   }
 
   else if (pathname.includes('/details')) {
