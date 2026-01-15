@@ -1,6 +1,7 @@
 name: Service Request
 description: Request a new activity to be added to the store
 labels: [activity request]
+type: Feature
 body:
   - type: markdown
     attributes:
