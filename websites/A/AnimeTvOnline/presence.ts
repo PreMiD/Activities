@@ -5,35 +5,53 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
-  const dataDiv = document.getElementById('premid-data')
   const path = document.location.pathname
   const href = document.location.href
+  const searchParams = new URLSearchParams(document.location.search)
 
   let activityData: any = {}
 
   // 1. PLAYER
-  if (dataDiv && (path.includes('player') || href.includes('episodio'))) {
+  const playerTitleElement = document.querySelector('#episode-title-main')
+
+  if (playerTitleElement && (path.includes('player') || href.includes('episodio'))) {
+    const animeTitle = playerTitleElement.textContent.trim()
+    const epSpan = document.querySelector('#current-ep-num-display')
+    const activeEpBtn = document.querySelector('.ep-btn.active')
+
+    let epNumber = '?'
+    if (epSpan && epSpan.textContent.trim()) {
+      epNumber = epSpan.textContent.trim()
+    }
+    else if (activeEpBtn) {
+      epNumber = activeEpBtn.textContent.trim()
+    }
+
+    const currentSlug = searchParams.get('slug')
+
     activityData = {
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
-      details: dataDiv.dataset.anime || 'Guardando un Anime',
-      state: `Episodio ${dataDiv.dataset.episode || '?'}`,
-      largeImageText: dataDiv.dataset.anime,
+      details: animeTitle === 'Caricamento...' ? 'Scegliendo un Anime...' : animeTitle,
+      state: `Episodio ${epNumber}`,
+      largeImageText: animeTitle,
       buttons: [
         {
           label: 'Guarda Episodio',
           url: href,
         },
-        {
-          label: 'Scheda Anime',
-          url: `https://animetvonline.org/dettagli.php?slug=${dataDiv.dataset.slug}`,
-        },
       ],
     }
-  }
 
-  // 2. SCHEDA DETTAGLI
+    if (currentSlug) {
+      activityData.buttons.push({
+        label: 'Scheda Anime',
+        url: `https://animetvonline.org/dettagli.php?slug=${currentSlug}`,
+      })
+    }
+  }
   else if (path.includes('dettagli') || href.includes('post.php')) {
+    // 2. SCHEDA DETTAGLI
     const titleElement = document.querySelector('h1')
     const title = titleElement ? titleElement.textContent : document.title
 
@@ -50,9 +68,8 @@ presence.on('UpdateData', async () => {
       ],
     }
   }
-
-  // 3. PROFILO
   else if (path.includes('profilo')) {
+    // 3. PROFILO
     activityData = {
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
@@ -60,9 +77,8 @@ presence.on('UpdateData', async () => {
       state: 'Utente AnimeTvOnline',
     }
   }
-
-  // 4. HOMEPAGE
   else if (path === '/' || path.includes('index') || path === '' || path.includes('login')) {
+    // 4. HOMEPAGE
     activityData = {
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
@@ -70,9 +86,8 @@ presence.on('UpdateData', async () => {
       state: 'Cercando un anime da guardare...',
     }
   }
-
-  // 5. DEFAULT
   else {
+    // 5. DEFAULT
     activityData = {
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
