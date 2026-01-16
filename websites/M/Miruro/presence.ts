@@ -78,7 +78,8 @@ presence.on('UpdateData', async () => {
             if (wasWatchingVideo) {
               browsingTimestamp = Math.floor(Date.now() / 1000)
             }
-          } else {
+          } 
+          else {
             presenceData.smallImageKey = Assets.Pause
             presenceData.smallImageText = 'Playing'
 
@@ -92,10 +93,12 @@ presence.on('UpdateData', async () => {
           }
 
           wasWatchingVideo = true
-        } else {
+        } 
+        else {
           wasWatchingVideo = false
         }
-      } else {
+      } 
+      else {
         wasWatchingVideo = false
       }
 
