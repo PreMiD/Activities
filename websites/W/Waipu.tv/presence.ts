@@ -187,6 +187,7 @@ presence.on('UpdateData', async () => {
       largeImageKey: ActivityAssets.Logo,
       largeImageText: 'waipu.tv',
       details: strings.watchingShow,
+      startTimestamp: browsingTimestamp,
       type: ActivityType.Watching,
     }
     presence.setActivity(presenceData)
