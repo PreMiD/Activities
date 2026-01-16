@@ -183,10 +183,8 @@ presence.on('UpdateData', async () => {
     browse: 'general.browsing',
     watchingShow: 'general.watchingShow',
     watchButton: 'general.buttonWatchVideo',
-    watchingOn: 'waiputv.watchingOn',
-    seasonEpisode: 'waiputv.seasonEpisode',
-    unknownShow: 'waiputv.unknownShow',
-    unknownChannel: 'waiputv.unknownChannel',
+    season: 'general.season',
+    episode: 'general.episode',
   })
 
   // Parse excluded channels list (always active, regardless of other settings)
@@ -235,14 +233,14 @@ presence.on('UpdateData', async () => {
       // Get detailed information from the program details overlay
       showTitle = document.querySelector('[data-testid="program-teaser-informations-title"]')?.textContent?.trim()
         || osdTitle
-        || strings.unknownShow
+        || 'Unknown Show'
 
       episodeTitle = document.querySelector('.c-hzayXV.c-dznuqJ.c-kitxqv')?.textContent?.trim()
 
       // Get channel name
       channel = document.querySelector('.c-knIRGr.c-cZoquc')?.textContent?.trim()
         || document.querySelector('.osd__icon--channel-logo img')?.getAttribute('alt')
-        || strings.unknownChannel
+        || 'Unknown Channel'
 
       // Get channel logo URL from the OSD channel logo image
       const channelLogoImg = document.querySelector('.osd__icon--channel-logo img[data-testid="osd-channel-logo"]')
@@ -267,8 +265,8 @@ presence.on('UpdateData', async () => {
 
       // Calculate large image text
       largeImageText = seasonNumber && episodeNumber
-        ? strings.seasonEpisode.replace('{0}', channel).replace('{1}', seasonNumber).replace('{2}', episodeNumber)
-        : strings.watchingOn.replace('{0}', channel)
+        ? `${channel} - ${strings.season} ${seasonNumber}, ${strings.episode} ${episodeNumber}`
+        : channel
 
       // Cache the data
       cachedShowData = {
@@ -297,9 +295,9 @@ presence.on('UpdateData', async () => {
       else {
         // Fallback if no cached data available
         const osdTitle = document.querySelector('.osd__title')?.textContent?.trim()
-        showTitle = osdTitle || strings.unknownShow
-        channel = document.querySelector('.osd__icon--channel-logo img')?.getAttribute('alt') || strings.unknownChannel
-        largeImageText = strings.watchingOn.replace('{0}', channel)
+        showTitle = osdTitle || 'Unknown Show'
+        channel = document.querySelector('.osd__icon--channel-logo img')?.getAttribute('alt') || 'Unknown Channel'
+        largeImageText = channel
         // Try to get logo even in fallback
         const channelLogoImg = document.querySelector('.osd__icon--channel-logo img[data-testid="osd-channel-logo"]')
         channelLogoUrl = channelLogoImg?.getAttribute('src') || undefined
