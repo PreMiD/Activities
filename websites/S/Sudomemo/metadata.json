@@ -10,7 +10,7 @@
     "en": "Sudomemo is the place to share flipbook animations - called Flipnotes - created and posted from Flipnote Studio on the Nintendo DSi and 3DS."
   },
   "url": "www.sudomemo.net",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*google[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sudomemo[.]net[/]",
   "version": "1.0.0",
   "logo": "https://raw.githubusercontent.com/sirschubert/assets/refs/heads/main/assets/sudomemo-logo.png",
   "thumbnail": "https://support.sudomemo.net/wp-content/uploads/2024/07/image1.png",
