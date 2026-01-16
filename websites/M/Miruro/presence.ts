@@ -60,7 +60,9 @@ presence.on('UpdateData', async () => {
       presenceData.details = toTitleCase(slug)
 
       const episode = pathname.match(/episode-(\d+)/i)?.[1]
-      if (episode) presenceData.state = `Episode ${episode}`
+      if (episode) {
+        presenceData.state = `Episode ${episode}`
+      }
 
       const video = document.querySelector<HTMLVideoElement>('video')
       if (video) {
@@ -73,7 +75,9 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageText = 'Paused'
 
             // Reset browsing timestamp when returning from video
-            if (wasWatchingVideo) browsingTimestamp = Math.floor(Date.now() / 1000)
+            if (wasWatchingVideo) {
+              browsingTimestamp = Math.floor(Date.now() / 1000)
+            }
           } else {
             presenceData.smallImageKey = Assets.Pause
             presenceData.smallImageText = 'Playing'
@@ -95,10 +99,15 @@ presence.on('UpdateData', async () => {
         wasWatchingVideo = false
       }
 
-      const cover =
-        getCoverFromInfoAnchor() ??
-        document.querySelector<HTMLImageElement>('img[src*="anilist"]')?.src ??
-        ActivityAssets.Logo
+      let cover = getCoverFromInfoAnchor()
+
+      if (!cover) {
+        cover = document.querySelector<HTMLImageElement>('img[src*="anilist"]')?.src
+      }
+
+      if (!cover) {
+        cover = ActivityAssets.Logo
+      }
 
       presenceData.largeImageKey = cover
       break
@@ -107,15 +116,23 @@ presence.on('UpdateData', async () => {
     case pathname.includes('/info'): {
       const slug = pathname.split('/')[3] ?? ''
       presenceData.details = `Checking ${toTitleCase(slug)}`
+      presenceData.smallImageKey = Assets.Search
 
-      const cover =
-        document.querySelector<HTMLImageElement>('img[alt="Cover"]')?.src ??
-        document.querySelector<HTMLImageElement>('img[src*="anilist"]')?.src ??
-        document.querySelector<HTMLImageElement>('img.vds-poster')?.src ??
-        ActivityAssets.Logo
+      let cover = document.querySelector<HTMLImageElement>('img[alt="Cover"]')?.src
+
+      if (!cover) {
+        cover = document.querySelector<HTMLImageElement>('img[src*="anilist"]')?.src
+      }
+
+      if (!cover) {
+        cover = document.querySelector<HTMLImageElement>('img.vds-poster')?.src
+      }
+
+      if (!cover) {
+        cover = ActivityAssets.Logo
+      }
 
       presenceData.largeImageKey = cover
-      presenceData.smallImageKey = Assets.Search
       break
     }
 
