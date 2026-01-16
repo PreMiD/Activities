@@ -36,19 +36,6 @@
       "value": false
     },
     {
-      "id": "showNSFW",
-      "title": "Show NSFW Channels",
-      "icon": "fas fa-exclamation-triangle",
-      "value": false
-    },
-    {
-      "id": "nsfwChannels",
-      "title": "NSFW Channel List",
-      "icon": "fas fa-list",
-      "value": "darkromance,pridetv,hotpassion,obsessiontv",
-      "placeholder": "Comma-separated list of channel names (e.g., darkromance,hotpassion)"
-    },
-    {
       "id": "excludedChannels",
       "title": "Always Exclude Channels",
       "icon": "fas fa-ban",

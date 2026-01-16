@@ -26,29 +26,13 @@ interface CachedShowData {
 
 let cachedShowData: CachedShowData | null = null
 
-// Default list of NSFW channel paths (used as fallback)
-const DEFAULT_NSFW_CHANNELS = [
+// Hardcoded list of NSFW channel paths
+const NSFW_CHANNELS = [
   'darkromance',
   'pridetv',
   'hotpassion',
   'obsessiontv',
 ]
-
-/**
- * Parses the NSFW channels list from a comma-separated string
- * @param channelsString Comma-separated string of channel names
- * @returns Array of channel names (trimmed and lowercased)
- */
-function parseNSFWChannels(channelsString: string | null | undefined): string[] {
-  if (!channelsString || channelsString.trim().length === 0) {
-    return DEFAULT_NSFW_CHANNELS
-  }
-
-  return channelsString
-    .split(',')
-    .map(channel => channel.trim().toLowerCase())
-    .filter(channel => channel.length > 0)
-}
 
 /**
  * Parses a comma-separated list of channels from a string
@@ -169,10 +153,8 @@ function parseTimeFromHTML(timeText: string | null | undefined): [number, number
 
 presence.on('UpdateData', async () => {
   // Get settings
-  const [privacy, showNSFW, nsfwChannelsString, excludedChannelsString] = await Promise.all([
+  const [privacy, excludedChannelsString] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
-    presence.getSetting<boolean>('showNSFW'),
-    presence.getSetting<string>('nsfwChannels'),
     presence.getSetting<string>('excludedChannels'),
   ])
 
@@ -196,15 +178,18 @@ presence.on('UpdateData', async () => {
     return
   }
 
-  // Parse NSFW channels list from user input
-  const nsfwChannels = parseNSFWChannels(nsfwChannelsString)
-
   // Check if current URL is an NSFW channel
-  const isNSFW = isNSFWChannel(document.location.href, nsfwChannels)
+  const isNSFW = isNSFWChannel(document.location.href, NSFW_CHANNELS)
 
-  // If it's an NSFW channel and the setting is disabled, don't show any activity
-  if (isNSFW && !showNSFW) {
-    presence.setActivity()
+  // If it's an NSFW channel, show a generic viewing message
+  if (isNSFW) {
+    const presenceData: PresenceData = {
+      largeImageKey: ActivityAssets.Logo,
+      largeImageText: 'waipu.tv',
+      details: strings.watchingShow,
+      type: ActivityType.Watching,
+    }
+    presence.setActivity(presenceData)
     return
   }
 
