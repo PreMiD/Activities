@@ -10,9 +10,11 @@ iframe.on('UpdateData', async () => {
   const video = document.querySelector<HTMLVideoElement>('video')
   if (!video) return
 
-  iframe.send({
+  const videoData: VideoData = {
     paused: video.paused,
     currentTime: video.currentTime,
     duration: video.duration,
-  })
+  }
+
+  iframe.send(videoData)
 })

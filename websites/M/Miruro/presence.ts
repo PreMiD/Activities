@@ -11,15 +11,6 @@ enum ActivityAssets {
 let browsingTimestamp = Math.floor(Date.now() / 1000)
 let wasWatchingVideo = false
 
-const strings = {
-  browsing: 'Browsing',
-  searching: 'Searching',
-  checking: 'Checking',
-  episode: 'Episode',
-  playing: 'Playing',
-  paused: 'Paused',
-}
-
 function toTitleCase(input: string): string {
   return input
     .split('-')
@@ -40,13 +31,6 @@ function getCoverFromInfoAnchor(): string | undefined {
 }
 
 presence.on('UpdateData', async () => {
-  const [multiLanguage, usePresenceName] = await Promise.all([
-    presence.getSetting<boolean>('multiLanguage'),
-    presence.getSetting<boolean>('usePresenceName'),
-  ])
-
-  void multiLanguage
-
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
@@ -57,27 +41,26 @@ presence.on('UpdateData', async () => {
 
   switch (true) {
     case pathname === '/': {
-      presenceData.details = strings.browsing
+      presenceData.details = 'Browsing'
       break
     }
 
     case pathname === '/search': {
       const params = new URLSearchParams(search)
       const genres = params.get('genres') ?? 'Anime'
-      presenceData.details = `${strings.searching}: ${genres}`
+      presenceData.details = `Searching: ${genres}`
       presenceData.smallImageKey = Assets.Search
       break
     }
 
     case pathname.includes('/watch/'): {
-      const slug = getInfoSlug(pathname)
-      const title = toTitleCase(slug)
+      presenceData.name = 'Miruro'
 
-      if (usePresenceName) presenceData.name = title
-      else presenceData.details = title
+      const slug = getInfoSlug(pathname)
+      presenceData.details = toTitleCase(slug)
 
       const episode = pathname.match(/episode-(\d+)/i)?.[1]
-      if (episode) presenceData.state = `${strings.episode} ${episode}`
+      if (episode) presenceData.state = `Episode ${episode}`
 
       const video = document.querySelector<HTMLVideoElement>('video')
       if (video) {
@@ -87,18 +70,15 @@ presence.on('UpdateData', async () => {
         if (currentTime > 0 || !paused) {
           if (paused) {
             presenceData.smallImageKey = Assets.Play
-            presenceData.smallImageText = strings.paused
-
-            // Clear timestamps while paused so it doesn't look like it's still progressing
-            delete presenceData.endTimestamp
-            presenceData.startTimestamp = browsingTimestamp
+            presenceData.smallImageText = 'Paused'
 
             // Reset browsing timestamp when returning from video
             if (wasWatchingVideo) browsingTimestamp = Math.floor(Date.now() / 1000)
           } else {
             presenceData.smallImageKey = Assets.Pause
-            presenceData.smallImageText = strings.playing
+            presenceData.smallImageText = 'Playing'
 
+            // Add timestamps only when actively playing
             if (duration) {
               ;[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
                 currentTime,
@@ -115,30 +95,32 @@ presence.on('UpdateData', async () => {
         wasWatchingVideo = false
       }
 
-      presenceData.largeImageKey =
+      const cover =
         getCoverFromInfoAnchor() ??
         document.querySelector<HTMLImageElement>('img[src*="anilist"]')?.src ??
         ActivityAssets.Logo
 
+      presenceData.largeImageKey = cover
       break
     }
 
     case pathname.includes('/info'): {
       const slug = pathname.split('/')[3] ?? ''
-      presenceData.details = `${strings.checking} ${toTitleCase(slug)}`
-      presenceData.smallImageKey = Assets.Search
+      presenceData.details = `Checking ${toTitleCase(slug)}`
 
-      presenceData.largeImageKey =
+      const cover =
         document.querySelector<HTMLImageElement>('img[alt="Cover"]')?.src ??
         document.querySelector<HTMLImageElement>('img[src*="anilist"]')?.src ??
         document.querySelector<HTMLImageElement>('img.vds-poster')?.src ??
         ActivityAssets.Logo
 
+      presenceData.largeImageKey = cover
+      presenceData.smallImageKey = Assets.Search
       break
     }
 
     default: {
-      presenceData.details = strings.browsing
+      presenceData.details = 'Browsing'
       break
     }
   }
