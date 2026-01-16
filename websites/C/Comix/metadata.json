@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "339316517558681610",
+    "name": "firstoften"
+  },
+  "service": "Comix",
+  "description": {
+    "en": "Next-Gen Manga Experience."
+  },
+  "url": "comix.to",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*comix[.]to[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/sirschubert/assets/refs/heads/main/assets/communityIcon_p626ghkfd91g1.png",
+  "thumbnail": "https://styles.redditmedia.com/t5_4vwp6n/styles/bannerBackgroundImage_iye1rp7mj91g1.png",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "manga",
+    "comics"
+  ]
+}
