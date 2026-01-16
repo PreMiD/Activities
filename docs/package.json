@@ -11,7 +11,7 @@
   "devDependencies": {
     "vitepress": "^1.6.4",
     "markdown-it": "^14.1.0",
-    "@types/node": "^24.9.2",
+    "@types/node": "^25.0.0",
     "typescript": "^5.9.3"
   }
 }
