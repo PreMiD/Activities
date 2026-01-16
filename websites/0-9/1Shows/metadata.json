@@ -7,7 +7,7 @@
   },
   "service": "1Shows",
   "description": {
-    "en": "Enjoy unlimited streaming of movies, TV shows, and anime in HD & 4K, completely free! 1Shows offers a seamless experience with multi-language support and auto-next playback, ensuring you never miss a moment. Watch your favorite content anytime, anywhere!"
+    "en": "Enjoy unlimited streaming of movies, TV shows, and anime in HD & 4K, completely free! 1Shows offers a seamless experience with multi-language support and auto-next playback, ensuring you never miss a moment. Watch your favorite content anytime, anywhere for free!"
   },
   "url": "www.1shows.nl",
   "regExp": "^https?[:][/][/](www[.])?1shows[.]nl[/]",
