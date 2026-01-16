@@ -24,11 +24,10 @@
     "flixtor.vc",
     "flixtor.nu",
     "flixtor.sx",
-    "flixtor.tk",
-    "flixtor.cz"
+    "flixtor.tk"
   ],
-  "regExp": "^https?[:][/][/]flixtor[.](to|ch|se|vc|nu|sx|tk|cz)",
-  "version": "2.4.0",
+  "regExp": "^https?[:][/][/]flixtor[.](to|ch|se|vc|nu|sx|tk)",
+  "version": "2.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FlixTor/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FlixTor/assets/thumbnail.png",
   "color": "#1d3343",

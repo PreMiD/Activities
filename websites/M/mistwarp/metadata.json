@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "603952506330021898",
+    "name": "mistium"
+  },
+  "service": "mistwarp",
+  "description": {
+    "en": "MistWarp is a mod of Turbowarp made by Mistium intended for people who just want to squeeze that little bit more out of scratch."
+  },
+  "url": "warp.mistium.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*warp[.]mistium[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/mistwarp/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/mistwarp/assets/thumbnail.png",
+  "color": "#d399e5",
+  "category": "other",
+  "tags": [
+    "scratch",
+    "editor",
+    "turbowarp"
+  ]
+}
