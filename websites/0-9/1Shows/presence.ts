@@ -29,31 +29,27 @@ presence.on('UpdateData', async () => {
 
   const pages: Record<string, PresenceData> = {
     '/': {
-      details: 'Viewing HomePage 🏠',
+      details: 'Viewing HomePage',
       smallImageKey: Assets.Viewing,
     },
     '/profile': {
-      details: 'Viewing Profile 👤',
+      details: 'Viewing Profile',
       smallImageKey: Assets.Viewing,
     },
     '/tv': {
-      details: 'Browsing TV Shows 📺',
-      smallImageKey: Assets.Viewing,
-    },
-    '/search': {
-      details: 'Browsing Search 🔎',
+      details: 'Browsing TV Shows',
       smallImageKey: Assets.Viewing,
     },
     '/livetv': {
-      details: 'Browsing Live TV 📶',
+      details: 'Browsing Live TV',
       smallImageKey: Assets.Viewing,
     },
     '/sports': {
-      details: 'Live Sports ⚽',
+      details: 'Browsing Live Sports',
       smallImageKey: Assets.Viewing,
     },
     '/games': {
-      details: 'Browsing Games 🎮',
+      details: 'Playing Games',
       smallImageKey: Assets.Viewing,
     },
   }
@@ -176,7 +172,7 @@ presence.on('UpdateData', async () => {
   }
 
   if (pathname.includes('/search')) {
-    presenceData.details = `Searching for Movies/TvShows 🔎`
+    presenceData.details = `Searching for Content`
     const query = document.querySelector('input')?.getAttribute('value')
     if (query) {
       presenceData.state = `Query: ${query}`
