@@ -1,66 +1,40 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
-
 const presence = new Presence({
   clientId: '1461595509251903662',
 })
 let browsingTimestamp = Math.floor(Date.now() / 1000)
-
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/dmLFCtb.png',
 }
-
 let wasWatchingVideo = false
-
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
     type: ActivityType.Watching,
   }
-  const { href, pathname, search } = document.location
+  const { pathname, search } = document.location
   switch (true) {
     case pathname === '/':
       presenceData.details = 'Browsing'
       break
     case pathname === '/search':
-      const genresMatch = search.match(/genres=([^&]+)/)
-      const genresEncoded = genresMatch?.[1] || ''
-      const genresDecoded = decodeURIComponent(genresEncoded).replace(/\+/g, ' ')
-      presenceData.details = `Searching: ${genresDecoded || 'Anime'}`
+      presenceData.details = `Searching: ${decodeURIComponent(((search.match(/genres=([^&]+)/))?.[1] || '')).replace(/\+/g, ' ') || 'Anime'}`
       presenceData.smallImageKey = Assets.Search
       break
     case pathname.includes('/watch/'): {
-      const infoLink = document.querySelector<HTMLAnchorElement>('a[href^="/info/"]')
-      const infoHref = infoLink?.getAttribute('href') || ''
-      const infoMatch = infoHref.match(/\/info\/\d+\/(.+)/)
-      let animeSlug = infoMatch?.[1] || pathname.split('/')[3] || ''
-      
-      // Clean up the slug
-      const title = animeSlug
+      presenceData.name = 'Miruro'
+      presenceData.details = ((((document.querySelector<HTMLAnchorElement>('a[href^="/info/"]'))?.getAttribute('href') || '').match(/\/info\/\d+\/(.+)/))?.[1] || pathname.split('/')[3] || '')
         .split('-')
         .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
         .join(' ')
-
-      const coverArt = infoLink?.querySelector<HTMLImageElement>('img')?.src || document
-        .querySelector<HTMLImageElement>('img[src*="anilist"]')
-        ?.src
-
-      const episodeMatch = pathname.match(/episode-(\d+)/i)
-      const episodeNumber = episodeMatch?.[1]
-
-      const video = document.querySelector<HTMLVideoElement>('video')
-
-      presenceData.name = 'Miruro'
-      presenceData.details = title
-
-      if (episodeNumber) {
-        presenceData.state = `Episode ${episodeNumber}`
+      if ((pathname.match(/episode-(\d+)/i))?.[1]) {
+        presenceData.state = `Episode ${(pathname.match(/episode-(\d+)/i))?.[1]}`
       }
-
       // Handle video player data
+      const video = document.querySelector<HTMLVideoElement>('video')
       if (video) {
         const { paused, currentTime, duration } = video
-
         // Only show video indicators if user has started watching or is currently playing
         if (currentTime > 0 || !paused) {
           if (paused) {
@@ -70,43 +44,33 @@ presence.on('UpdateData', async () => {
             if (wasWatchingVideo) {
               browsingTimestamp = Math.floor(Date.now() / 1000)
             }
-          } else {
+          }
+          else {
             presenceData.smallImageKey = Assets.Pause
             presenceData.smallImageText = 'Playing'
-
             // Add timestamps only when actively playing
             if (currentTime && duration) {
               [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, duration)
             }
           }
           wasWatchingVideo = true
-        } else {
+        }
+        else {
           wasWatchingVideo = false
         }
-      } else {
+      }
+      else {
         wasWatchingVideo = false
       }
-      presenceData.largeImageKey = coverArt ?? ActivityAssets.Logo
+      presenceData.largeImageKey = ((document.querySelector<HTMLAnchorElement>('a[href^="/info/"]'))?.querySelector<HTMLImageElement>('img')?.src || document
+        .querySelector<HTMLImageElement>('img[src*="anilist"]')?.src) ?? ActivityAssets.Logo
       break
     }
     case pathname.includes('/info'):
-      const infoParts = pathname.split('/')
-      const infoSlug = infoParts[3] || ''
-      const infoTitle = infoSlug
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ')
-      
-      const infoCoverArt = document
-        .querySelector<HTMLImageElement>('img[alt="Cover"]')
-        ?.src || document
-        .querySelector<HTMLImageElement>('img[src*="anilist"]')
-        ?.src || document
-        .querySelector<HTMLImageElement>('img.vds-poster')
-        ?.src
-      
-      presenceData.details = `Checking ${infoTitle}`
-      presenceData.largeImageKey = infoCoverArt ?? ActivityAssets.Logo
+      presenceData.details = `Checking ${((pathname.split('/'))[3] || '').split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}`
+      presenceData.largeImageKey = (document.querySelector<HTMLImageElement>('img[alt="Cover"]')?.src || document
+        .querySelector<HTMLImageElement>('img[src*="anilist"]')?.src || document.querySelector<HTMLImageElement>('img.vds-poster')?.src) ?? ActivityAssets.Logo
       presenceData.smallImageKey = Assets.Search
       break
     default:
