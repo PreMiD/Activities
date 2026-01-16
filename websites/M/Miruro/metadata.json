@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "268458117421989888",
+    "name": "Meti0X7CB"
+  },
+  "service": "Miruro",
+  "description": {
+    "en": "Miruro no Kuon is all about combining simplicity with top-notch tech. Its like having the best of both worlds! Miruro no Kuon literally means Look at Eternity in Japanese, which perfectly captures our vision. This platform is your go-to spot for everything Anime."
+  },
+  "url": "miruro.to",
+  "regExp": "^https?[:][/][/](www[.])?miruro[.]to[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/dmLFCtb.png",
+  "thumbnail": "https://i.imgur.com/86SRCbi.png",
+  "color": "#8B5CF6",
+  "category": "anime",
+  "tags": [
+    "video",
+    "anime",
+    "streaming"
+  ],
+  "iframe": true,
+  "settings": [
+    {
+      "id": "multiLanguage",
+      "title": "Display strings in Discord language",
+      "icon": "fad fa-language",
+      "value": true
+    },
+    {
+      "id": "usePresenceName",
+      "title": "Show title as presence",
+      "icon": "fad fa-user-edit",
+      "value": true
+    }
+  ]
+}
