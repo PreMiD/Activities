@@ -25,7 +25,7 @@
   },
   "url": "www.deezer.com",
   "regExp": "^https?[:][/][/](www[.])?deezer[.]com[/]",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deezer/assets/thumbnail.png",
   "color": "#a238ff",
@@ -57,7 +57,12 @@
       "icon": "fad fa-user-large",
       "value": true
     },
-
+    {
+      "id": "hidePaused",
+      "title": "Hide Paused",
+      "icon": "fad fa-pause-circle",
+      "value": false
+    },
     {
       "id": "showBrowsing",
       "title": "Show Browsing Info",

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "Beftli",
+    "id": "389071682649849868"
+  },
+  "service": "FUTdle",
+  "description": {
+    "en": "Solve the pixelated photo, find with emojis and answer the question. Earn points and climb the leaderboard with new daily challenges!",
+    "tr": "Pikselli fotoğrafı çöz, emojilerle bul ve soruyu cevapla. Her gün yeni meydan okumalarla puan topla ve sıralamada yüksel!"
+  },
+  "url": "futdle.tr",
+  "regExp": "https?[:][/][/]futdle[.]tr[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FUTdle/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FUTdle/assets/thumbnail.png",
+  "color": "#ED2040",
+  "category": "games",
+  "tags": [
+    "games",
+    "esports",
+    "fut",
+    "turkish"
+  ]
+}
