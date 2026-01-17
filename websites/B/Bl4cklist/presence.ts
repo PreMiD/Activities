@@ -1,60 +1,47 @@
 import { Assets } from 'premid'
+import { translations } from './util/translations.js'
 
 const presence = new Presence({
   clientId: '775415193760169995',
 })
 const browsingTimestamp: number = Math.floor(Date.now() / 1000)
 
-async function getStrings() {
-  return await presence.getStrings(
-    {
-      homepageDetails: 'general.viewHome',
-      defaultTitle: 'general.browsing',
-      defaultState: 'bl4cklist.defaultState',
-      pageCoding: 'bl4cklist.pageCoding',
-      pageCommunity: 'bl4cklist.pageCommunity',
-      pageBot: 'bl4cklist.pageBot',
-      pageContact: 'bl4cklist.pageContact',
-      reading: 'general.readingAbout',
-    },
-  )
+function getUserLanguage(): 'de-DE' | 'en-US' {
+  const lang: string = navigator.language.toLowerCase()
+
+  if (lang.startsWith('de'))
+    return 'de-DE'
+  if (lang.startsWith('en'))
+    return 'en-US'
+
+  return 'en-US' // fallback
 }
 
 presence.on('UpdateData', async (): Promise<void> => {
-  const strings = await getStrings()
+  const { href } = document.location
+  const { details, state, title, pages } = translations[getUserLanguage()] || translations['de-DE']
+  const matchedPage: string | undefined = Object.keys(pages).find((key: string): boolean => href.includes(key))
+
   const presenceData: PresenceData = {
     largeImageKey: 'https://i.imgur.com/IlaDOsb.png',
     smallImageKey: Assets.Reading,
     startTimestamp: browsingTimestamp,
   }
 
-  const { href } = document.location
   // our discord help subdomain
   if (href.includes('discord.bl4cklist.de/')) {
     const title_split: string[] = document.title.split(' | ')
     presenceData.details = `Bl4cklist's ${title_split[1]}` // page name
-    presenceData.state = `${strings.reading} ${title_split[0]} 💬` // article name
+    presenceData.state = `💬 ~ ${title_split[0]}..` // article name
   }
-  else if (href.includes('/discord/tech-coding/')) {
-    presenceData.details = strings.defaultTitle
-    presenceData.state = strings.pageCoding
+  // check if translation key is part of the pathname
+  else if (matchedPage) {
+    presenceData.details = title
+    presenceData.state = pages[matchedPage] as string
   }
-  else if (href.includes('/discord/community/')) {
-    presenceData.details = strings.defaultTitle
-    presenceData.state = strings.pageCommunity
-  }
-  else if (href.includes('/discord/clank-bot/')) {
-    presenceData.details = strings.defaultTitle
-    presenceData.state = strings.pageBot
-  }
-  else if (href.includes('/contact/')) {
-    presenceData.details = strings.defaultTitle
-    presenceData.state = strings.pageContact
-  }
-  else {
-    // fallback
-    presenceData.details = strings.homepageDetails
-    presenceData.state = strings.defaultState
+  else { // fallback
+    presenceData.details = details
+    presenceData.state = state
   }
 
   if (presenceData.state)
