@@ -1,0 +1,22 @@
+{
+  "bl4cklist.defaultState": {
+    "description": "Default state when no specific page is matched",
+    "message": "I'm a little curious... 🚀"
+  },
+  "bl4cklist.pageCoding": {
+    "description": "State for the coding features page",
+    "message": "Checking out the coding features.. 🔨"
+  },
+  "bl4cklist.pageCommunity": {
+    "description": "State for the community page",
+    "message": "Finding out more about the community.. 💗"
+  },
+  "bl4cklist.pageBot": {
+    "description": "State for the bot page",
+    "message": "Looking for the best Discord bot.. 🤖"
+  },
+  "bl4cklist.pageContact": {
+    "description": "State for the contact page",
+    "message": "Trying to contact us.. 💬"
+  }
+}
