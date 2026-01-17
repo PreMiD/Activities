@@ -1,4 +1,19 @@
 export class Utils {
+  static convertToAniziumde(originalUrl: string): string {
+    try {
+      const url = new URL(originalUrl)
+
+      if (url.hostname.endsWith('.anizium.co')) {
+        url.hostname = url.hostname.replace('.anizium.co', '.anizium.de')
+      }
+
+      return url.toString()
+    }
+    catch {
+      return originalUrl
+    }
+  }
+
   static convertToWSRVUrl(originalUrl: string): string {
     return `https://wsrv.nl/?url=${originalUrl}`
   }

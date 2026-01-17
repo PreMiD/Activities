@@ -36,7 +36,7 @@ export class PosterManager {
     if (!urlMatch?.[1])
       return
 
-    this.savedPosterUrl = urlMatch[1]
+    this.savedPosterUrl = Utils.convertToAniziumde(urlMatch[1])
     this.seasonModeActive = false
   }
 
@@ -48,7 +48,7 @@ export class PosterManager {
 
     if (!this.seasonModeActive) {
       this.seasonModeActive = true
-      this.savedPosterUrl = animeImg
+      this.savedPosterUrl = Utils.convertToAniziumde(animeImg)
     }
   }
 
