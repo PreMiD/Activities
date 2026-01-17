@@ -17,11 +17,5 @@
   "thumbnail": "https://i.imgur.com/b4Rccgb.png",
   "color": "#FF7F50",
   "category": "other",
-  "tags": ["discord-server", "portfolio", "general", "coding", "gaming"],
-  "settings": [
-    {
-      "id": "lang",
-      "multiLanguage": true
-    }
-  ]
+  "tags": ["discord-server", "portfolio", "general", "coding", "gaming"]
 }
