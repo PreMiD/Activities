@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1449503984996974745',
 })
 
-const API_URL = 'https://panel.symphradio.live/api/stats'
+const API_URL = 'https://staff.symphonyrad.io/api/stats'
 const LOGO_512 = 'https://cdn.rcd.gg/PreMiD/websites/S/Symphony%20Radio/assets/logo.png'
 
 let lastTrackId: string | null = null
@@ -116,7 +116,7 @@ async function fetchProfile(username: string): Promise<UserApiResponse['data'] |
   profileCache.promise[username] = (async () => {
     try {
       const res = await fetch(
-        `https://panel.symphradio.live/api/user?username=${encodeURIComponent(username)}`,
+        `https://staff.symphonyrad.io/api/user?username=${encodeURIComponent(username)}`,
       )
 
       if (!res.ok) {
