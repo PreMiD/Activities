@@ -12,12 +12,13 @@
   },
   "url": [
     "pstream.mov",
+    "beta.pstream.mov",
     "mirror.pstream.mov"
   ],
-  "regExp": "^https?://(?:[^/]*\\.)?(?:pstream\\.mov|mirror\\.pstream\\.mov)",
+  "regExp": "^https?://(?:[^/]*\\.)?(?:pstream\\.mov|beta\\.pstream\\.mov|mirror\\.pstream\\.mov)",
   "version": "1.3.0",
-  "logo": "https://github.com/p-stream/assets/blob/main/Icons/Logo%20Icons/180.png",
-  "thumbnail": "https://github.com/jalywn/assets/blob/main/Meta/title_preview.png",
+  "logo": "https://github.com/p-stream/assets/blob/main/Icons/Logo%20Icons/180.png?raw=true",
+  "thumbnail": "https://github.com/jalywn/assets/blob/main/Meta/title_preview.png?raw=true",
   "color": "#533670",	
   "category": "videos",
   "tags": ["movies", "shows", "streaming"],
