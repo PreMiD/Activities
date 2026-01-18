@@ -2,39 +2,26 @@
   "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
-    "id": "705490775932403795",
-    "name": "jordaar"
+    "id": "1294601384028672000",
+    "name": "XSWY"
   },
-  "service": "movie-web",
-  "altnames": [
-    "P-Stream",
-    "pstream"
-  ],
+  "service": "P-Stream",
+  "altnames": ["P-Stream", "pstream"],
   "description": {
     "en": "The place for your favorite movies & shows"
   },
   "url": [
     "pstream.mov",
     "beta.pstream.mov",
-    "mirror.pstream.mov",
-    "movies.levrx.de",
-    "streamerflix.xyz",
-    "streamwatch.online",
-    "movies.samj.app",
-    "sudo-flix.nl"
+    "mirror.pstream.mov"
   ],
-  "regExp": "^https?[:][/][/](dev[.])?(movie-web[.]app)",
+  "regExp": "^https?://(?:[^/]*\\.)?(?:pstream\\.mov|beta\\.pstream\\.mov|mirror\\.pstream\\.mov)",
   "version": "1.3.0",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
-  "color": "#533670",
+  "logo": "https://github.com/p-stream/assets/blob/main/Icons/Logo%20Icons/180.png",
+  "thumbnail": "https://github.com/jalywn/assets/blob/main/Meta/title_preview.png",
+  "color": "#533670",	
   "category": "videos",
-  "tags": [
-    "movies",
-    "shows",
-    "anime",
-    "streaming"
-  ],
+  "tags": ["movies", "shows", "streaming"],
   "settings": [
     {
       "id": "watch",
@@ -56,36 +43,28 @@
     },
     {
       "id": "barLength",
-      "if": {
-        "progress": true
-      },
+      "if": { "progress": true },
       "title": "Bar Length",
       "value": "8",
       "placeholder": "8"
     },
     {
       "id": "barTrack",
-      "if": {
-        "progress": true
-      },
+      "if": { "progress": true },
       "title": "Track Character",
       "value": "▱",
       "placeholder": "▱"
     },
     {
       "id": "barFill",
-      "if": {
-        "progress": true
-      },
+      "if": { "progress": true },
       "title": "Fill Character",
       "value": "▰",
       "placeholder": "▰"
     },
     {
       "id": "showLabel",
-      "if": {
-        "progress": true
-      },
+      "if": { "progress": true },
       "title": "Show Label",
       "value": true
     }
