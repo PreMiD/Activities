@@ -64,7 +64,7 @@ presence.on('UpdateData', async () => {
   ]);
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/p-stream/assets/logo.png',
+    largeImageKey: 'https://github.com/p-stream/assets/blob/main/Icons/Logo%20Icons/180.png?raw=true',
     type: ActivityType.Watching,
   };
 
@@ -108,7 +108,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (controls.isLoading) {
-      presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/P/p-stream/assets/0.gif';
+      presenceData.smallImageKey = 'https://github.com/p-stream/assets/blob/main/Icons/Logo%20Icons/180.png?raw=true';
       presenceData.smallImageText = 'Loading';
     } else if (controls.isPlaying) {
       const video = document.querySelector('video');
