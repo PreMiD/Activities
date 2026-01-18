@@ -12,10 +12,9 @@
   },
   "url": [
     "pstream.mov",
-    "beta.pstream.mov",
     "mirror.pstream.mov"
   ],
-  "regExp": "^https?://(?:[^/]*\\.)?(?:pstream\\.mov|beta\\.pstream\\.mov|mirror\\.pstream\\.mov)",
+  "regExp": "^https?://(?:[^/]*\\.)?(?:pstream\\.mov|mirror\\.pstream\\.mov)",
   "version": "1.3.0",
   "logo": "https://github.com/p-stream/assets/blob/main/Icons/Logo%20Icons/180.png",
   "thumbnail": "https://github.com/jalywn/assets/blob/main/Meta/title_preview.png",
