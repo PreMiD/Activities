@@ -90,7 +90,7 @@ async function fetchStats(): Promise<ApiResponse | null> {
 presence.on('UpdateData', async () => {
   const browsing = await presence.getSetting<boolean>('browsing')
 
-  if (!document.location.hostname.includes('symphonyradio.co.uk')) {
+  if (!document.location.hostname.includes('symphonyrad.io')) {
     if (browsing) {
       presence.setActivity({
         type: ActivityType.Listening,
