@@ -81,10 +81,16 @@ async function fetchStats(): Promise<ApiResponse | null> {
   statsCache.promise = (async () => {
     try {
       const res = await fetch(API_URL)
-      if (!res.ok) return null
+
+      if (!res.ok) {
+        return null
+      }
+
       const json = (await res.json()) as ApiResponse
+
       statsCache.data = json
       statsCache.fetchedAt = Date.now()
+
       return json
     }
     catch {
@@ -112,10 +118,19 @@ async function fetchProfile(username: string): Promise<UserApiResponse['data'] |
       const res = await fetch(
         `https://panel.symphradio.live/api/user?username=${encodeURIComponent(username)}`,
       )
-      if (!res.ok) return null
+
+      if (!res.ok) {
+        return null
+      }
+
       const json = (await res.json()) as UserApiResponse
-      if (!json.success || !json.data) return null
+
+      if (!json.success || !json.data) {
+        return null
+      }
+
       profileCache.data[username] = json.data
+
       return json.data
     }
     catch {
@@ -135,8 +150,10 @@ presence.on('UpdateData', async () => {
 
   if (hostname.includes('symphonyrad.io') && pathname.startsWith('/profile/')) {
     const username = pathname.split('/profile/')[1]?.trim()
+
     if (username) {
       const profile = await fetchProfile(username)
+
       presence.setActivity({
         type: ActivityType.Watching,
         details: 'Viewing profile',
@@ -144,6 +161,7 @@ presence.on('UpdateData', async () => {
         largeImageKey: profile?.avatar || LOGO_512,
         largeImageText: profile?.username || 'Symphony Radio',
       })
+
       return
     }
   }
@@ -160,16 +178,23 @@ presence.on('UpdateData', async () => {
     else {
       presence.clearActivity()
     }
+
     return
   }
 
   const data = await fetchStats()
-  if (!data) return
 
-  const getArtwork = (data: ApiResponse, fallback: string): string =>
-    data.nowPlaying?.track?.artwork?.url || fallback
-  const getDjart = (data: ApiResponse, fallback: string): string =>
-    data.onAir?.presenter?.avatar || fallback
+  if (!data) {
+    return
+  }
+
+  const getArtwork = (api: ApiResponse, fallback: string): string => {
+    return api.nowPlaying?.track?.artwork?.url || fallback
+  }
+
+  const getDjart = (api: ApiResponse, fallback: string): string => {
+    return api.onAir?.presenter?.avatar || fallback
+  }
 
   const track = data.song?.track ?? 'Live Radio'
   const artist = data.song?.artist ?? 'Symphony Radio'
@@ -196,7 +221,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: getArtwork(data, LOGO_512),
     largeImageText: artist,
     smallImageKey: getDjart(data, LOGO_512),
-    smallImageText: `${isLive ? `DJ ${djName}` : 'DJ Symphony'}`,
+    smallImageText: isLive ? `DJ ${djName}` : 'DJ Symphony',
     startTimestamp: lastStart || undefined,
     endTimestamp: end || undefined,
   })
