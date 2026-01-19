@@ -103,6 +103,7 @@ presence.on('UpdateData', async () => {
     presence.setActivity(presenceData)
   }
   else {
-    presence.clearActivity()
+    presenceData.details = 'ページを閲覧中'
+    presence.setActivity(presenceData)
   }
 })
