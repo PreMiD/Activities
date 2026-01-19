@@ -1,0 +1,18 @@
+{
+  "spotify.listenOnSpotify": {
+    "description": "Button label for listening to a song",
+    "message": "Listen on Spotify"
+  },
+  "spotify.listenToPodcast": {
+    "description": "Button label for listening to a podcast",
+    "message": "Listen to Podcast"
+  },
+  "spotify.listeningToSong": {
+    "description": "Privacy mode text when listening to a song",
+    "message": "Listening to a song"
+  },
+  "spotify.listeningToPodcast": {
+    "description": "Privacy mode text when listening to a podcast",
+    "message": "Listening to a podcast"
+  }
+}
