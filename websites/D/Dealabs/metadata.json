@@ -11,7 +11,7 @@
     "fr": "La plus grande communauté de partage de bons plans et codes promo en France."
   },
   "url": "dealabs.com",
-  "regExp": "^https?://(www\\.)?dealabs\\.com/.*",
+  "regExp": "^https?[:][/][/](www[.])?dealabs[.]com[/]",
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dealabs/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dealabs/assets/thumbnail.png",
