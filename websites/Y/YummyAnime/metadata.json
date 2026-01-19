@@ -19,5 +19,5 @@
   "category": "anime",
   "tags": ["anime", "video"],
   "iframe": true,
-  "iFrameRegExp": "kodik"
+  "iFrameRegExp": "(kodik\\.(info|cc|biz|online)|aniqit\\.com)"
 }
