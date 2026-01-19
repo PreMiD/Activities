@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -135,6 +135,9 @@ export async function getThumbnail(
   })
 }
 
+// Data we need are deleted when player controls disappear, so we cache them
+let cachedTitleTvShows: [string | null, string | null] = [null, null]
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: myCANALAssets.Logo,
@@ -142,7 +145,7 @@ presence.on('UpdateData', async () => {
   }
   const video = document.querySelector<HTMLVideoElement>('.iIZX3IGkM2eBzzWle1QQ')
   const showCover = await presence.getSetting<boolean>('cover')
-  const mainTitle = document.querySelector('.bodyTitle___HwRP2')
+  const mainTitle = document.querySelector('.stickyTitle___HRELo')
 
   switch (document.location.pathname) {
     case '/mes-videos/':
@@ -169,7 +172,13 @@ presence.on('UpdateData', async () => {
   }
 
   if (video && !Number.isNaN(video.duration)) {
-    const titleTvShows = document.querySelectorAll('.MGrm26svmXpUhj6dfbGN')
+    const titleTvShows = document.querySelectorAll('.RbcMSl3qdUyV2kb3rAEg')
+    if (titleTvShows.length >= 2) {
+      cachedTitleTvShows = [
+        titleTvShows[0]?.textContent?.trim() || null,
+        titleTvShows[1]?.textContent?.trim() || null,
+      ]
+    }
     let channelID = new URLSearchParams(window.location.search).get('channel')
     switch (true) {
       case containsTerm('live'):
@@ -179,13 +188,13 @@ presence.on('UpdateData', async () => {
         )?.textContent
         presenceData.state = `sur ${
           document.querySelector<HTMLImageElement>(
-            `#\\3${channelID}_onclick > div > div.card__content_0dae1b.cardContent___DuNAN.ratio--169 > div[class*="cardLogoChannel"] > div > img`,
+            String.raw`#\3${channelID}_onclick > div > div.card__content_0dae1b.cardContent___DuNAN.ratio--169 > div[class*="cardLogoChannel"] > div > img`,
           )?.alt
         }`;
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
         presenceData.largeImageKey = showCover
           ? document.querySelector<HTMLImageElement>(
-            `#\\3${channelID}_onclick > div > div.card__content_0dae1b.cardContent___DuNAN.ratio--169 > div[class*="cardLogoChannel"] > div > img`,
+            String.raw`#\3${channelID}_onclick > div > div.card__content_0dae1b.cardContent___DuNAN.ratio--169 > div[class*="cardLogoChannel"] > div > img`,
           )?.src
           : myCANALAssets.Logo
         presenceData.smallImageKey = Assets.Live
@@ -198,7 +207,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = document.querySelector(
           '.A6AH2oNkXUuOKJN5IYrL',
         )?.textContent;
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
         presenceData.largeImageKey = showCover
           ? (presenceData.largeImageKey = await getThumbnail(
               document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
@@ -212,9 +221,9 @@ presence.on('UpdateData', async () => {
         break
       case containsTerm('series'):
       case containsTerm('jeunesse'):
-        presenceData.details = titleTvShows[0]?.textContent?.trim()
-        presenceData.state = titleTvShows[1]?.textContent?.trim();
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+        presenceData.details = cachedTitleTvShows[0]
+        presenceData.state = cachedTitleTvShows[1];
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
         presenceData.largeImageKey = showCover
           ? (presenceData.largeImageKey = await getThumbnail(
               document.querySelector<HTMLMetaElement>('[property=\'og:image\']')
@@ -240,5 +249,5 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Navigue...'
   }
 
-  presence.setActivity(presenceData)
+  await presence.setActivity(presenceData)
 })
