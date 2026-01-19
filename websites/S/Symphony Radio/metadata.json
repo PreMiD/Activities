@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "Keiran Chippendale",
+    "id": "1274186480050241546"
+  },
+  "service": "Symphony Radio",
+  "description": {
+    "en": "Listen live to Symphony Radio — bringing you great music, live DJs, and feel-good vibes all day long."
+  },
+  "url": "symphonyradio.co.uk",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*symphonyradio[.]co[.]uk[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Symphony%20Radio/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Symphony%20Radio/assets/thumbnail.png",
+  "color": "#7C3AED",
+  "category": "music",
+  "tags": [
+    "radio",
+    "music",
+    "live"
+  ],
+  "settings": [
+    {
+      "id": "browsing",
+      "title": "Show browsing status",
+      "icon": "fas fa-globe",
+      "value": true
+    }
+  ]
+}
