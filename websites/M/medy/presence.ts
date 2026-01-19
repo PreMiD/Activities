@@ -49,10 +49,6 @@ presence.on('UpdateData', async () => {
         label: 'Переглянути',
         url: href,
       },
-      {
-        label: 'medy',
-        url: 'https://medy.website',
-      },
     ]
   }
   else if (pathname.includes('/manga/')) {
@@ -87,31 +83,17 @@ presence.on('UpdateData', async () => {
         label: 'Переглянути',
         url: href,
       },
-      {
-        label: 'medy',
-        url: 'https://medy.website',
-      },
     ]
   }
   else if (pathname === '/' || pathname === '' || pathname === '/catalog') {
     presenceData.details = 'Блукає по сайту'
 
-    presenceData.buttons = [
-      {
-        label: 'medy',
-        url: 'https://medy.website',
-      },
-    ]
+    // No buttons for homepage
   }
   else {
     presenceData.details = 'Блукає по сайту'
 
-    presenceData.buttons = [
-      {
-        label: 'medy',
-        url: 'https://medy.website',
-      },
-    ]
+    // No buttons for other pages
   }
 
   if (!presenceData.largeImageKey) {
