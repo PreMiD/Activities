@@ -85,7 +85,7 @@ presence.on('UpdateData', async () => {
       presence.setActivity(presenceData)
     }
     else {
-      presence.setActivity()
+      presence.clearActivity()
     }
   }
   else if (/^\/animestore\/CF\/.*/.test(pathname)) {
@@ -103,6 +103,6 @@ presence.on('UpdateData', async () => {
     presence.setActivity(presenceData)
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
   }
 })
