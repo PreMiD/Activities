@@ -10,7 +10,7 @@
     "en": "Displays anime you are watching on YummyAnime."
   },
   "url": "yummyani.me",
-  "regExp": "^https?://(www\\.)?(site\\.)?(en\\.)?yummyani\\.me/.*",
+  "regExp": "^https?[:][/][/](www[.])?(site[.])?(en[.])?yummyani[.]me[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/6XnAGga.jpeg",
   "thumbnail": "https://i.imgur.com/Z7z6N5g.png",
