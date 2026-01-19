@@ -6,12 +6,7 @@ const presence = new Presence({
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    details: undefined,
-    state: undefined,
-    largeImageKey: 'https://raw.githubusercontent.com/sirschubert/assets/refs/heads/main/assets/communityIcon_p626ghkfd91g1.png',
-    largeImageText: undefined,
-    smallImageKey: undefined,
-    smallImageText: undefined,
+    largeImageKey: 'https://raw.githubusercontent.com/sirschubert/assets/refs/heads/main/assets/communityIcon_p626ghkfd91g1.png'
   }
 
   const { pathname } = document.location
@@ -24,7 +19,7 @@ presence.on('UpdateData', async () => {
   const getImg = (selector: string) => {
     const el = document.querySelector(selector)
     const src = el?.getAttribute('data-src') || el?.getAttribute('src')
-    return src ? new URL(src, location.href).href : null
+    return src ? new URL(src, document.location.href).href : null
   }
 
   const poster = getImg('.poster div img') || getImg('.poster img')
