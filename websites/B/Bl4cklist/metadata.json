@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "327176944640720906",
+    "name": "yannicde"
+  },
+  "service": "Bl4cklist",
+  "description": {
+    "de": "Unser deutscher Discord-Server für Technik und Gaming ist die perfekte Community für alle, die sich für Programmierung, Coding-Hilfe und aktuelle Gaming-Trends interessieren.",
+    "en": "Our German Discord server for technology and gaming is the perfect community for everyone interested in programming, coding help, and current gaming trends."
+  },
+  "url": [
+    "discord.bl4cklist.de",
+    "bl4cklist.de"
+  ],
+  "regExp": "^https?://([a-z0-9-]+\\.)*bl4cklist[.]de[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bl4cklist/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bl4cklist/assets/thumbnail.png",
+  "color": "#FF7F50",
+  "category": "other",
+  "tags": [
+    "discord-server",
+    "portfolio",
+    "general",
+    "coding",
+    "gaming"
+  ]
+}

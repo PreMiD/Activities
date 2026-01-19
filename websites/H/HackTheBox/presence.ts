@@ -79,16 +79,15 @@ function getHomePageDetails(settings: DashboardSettings) {
 
 function getMachineDetails() {
   const name = getResourceName(2) || 'Unknown Machine'
-  const statusEl = document.querySelector('.htb-status')
-  const statusText = statusEl?.textContent?.trim().toLowerCase() || 'offline'
+  const statusEl = document.querySelector('.htb-status--green')
   const machineImg = document.querySelector('.avatar-icon-name-details img')
   const src = machineImg?.getAttribute('src')
 
   const avatar = (src && src.startsWith('http')) ? src : null
 
   return {
-    details: statusText.includes('online') ? `Playing Machine '${name}'` : `Looking at '${name}' Machine`,
-    state: statusText.includes('online')
+    details: statusEl ? `Playing Machine '${name}'` : `Looking at '${name}' Machine`,
+    state: statusEl
       ? `${statusEl?.previousElementSibling?.textContent?.trim() || 'Server'} - Online`
       : 'Status: Offline',
     avatar,
