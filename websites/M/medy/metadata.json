@@ -11,7 +11,7 @@
     "uk": "medy - український сайт аніме та манги з можливістю перегляду та читання"
   },
   "url": "medy.website",
-  "regExp": "medy\\.website",
+  "regExp": "^https?://medy\\.website/",
   "version": "1.0.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZeroTwo/assets/logo.png",
   "thumbnail": "https://cdn.medy.website/thumbnail.png",
