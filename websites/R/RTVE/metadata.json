@@ -11,7 +11,7 @@
     "es": "Noticias, deportes, actualidad, álbumes, series y programas, y la última hora de España y el mundo."
   },
   "url": "rtve.es",
-  "regExp": "^https?://(www\\.)?rtve\\.es/.*",
+  "regExp": "^https?[:][/][/](www[.])?rtve[.]es[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/0begwZJ.png",
   "thumbnail": "https://i.imgur.com/flAGyNL.png",
