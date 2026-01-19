@@ -100,7 +100,7 @@ export type ButtonTuple = [Button, (Button | undefined)?]
 
 export interface Resolver {
   isActive: (pathname: string) => boolean
-  getDetails?: (t: AppStrings, doc: Document) => string | undefined
+  getDetails?: (t: AppStrings, doc: Document, lang?: string) => string | undefined
   getState?: (t: AppStrings, doc: Document, displayFormat?: number, hideRating?: boolean) => string | undefined
   getLargeImageKey?: (t: AppStrings, doc: Document) => string | undefined
   getSmallImageKey?: (t: AppStrings, doc: Document) => string | undefined

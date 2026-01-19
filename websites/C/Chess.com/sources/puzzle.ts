@@ -4,7 +4,7 @@ import { ActivityAssets, getText } from '../util/index.js'
 const puzzleResolver: Resolver = {
   isActive: pathname => pathname.includes('/puzzles'),
 
-  getDetails: (t, doc) => {
+  getDetails: (t, doc, lang) => {
     if (doc.location.pathname.includes('/rush')) {
       if (doc.querySelector('[data-cy="startSession"]')) {
         return t.puzzle_rush
@@ -13,10 +13,18 @@ const puzzleResolver: Resolver = {
       const icon3Min = doc.querySelector('svg[data-glyph="game-time-blitz"]')
       const icon5Min = doc.querySelector('svg[data-glyph="game-time-rapid"]')
 
+      const getDuration = (minutes: number) => {
+        const IntlAny = Intl as any
+        if (lang && IntlAny.DurationFormat) {
+          return new IntlAny.DurationFormat(lang, { style: 'narrow' }).format({ minutes })
+        }
+        return `${minutes} ${t.min}`
+      }
+
       if (icon3Min)
-        return `${t.puzzle_rush} (3 ${t.min})`
+        return `${t.puzzle_rush} (${getDuration(3)})`
       if (icon5Min)
-        return `${t.puzzle_rush} (5 ${t.min})`
+        return `${t.puzzle_rush} (${getDuration(5)})`
       return `${t.puzzle_rush} (${t.survival})`
     }
 

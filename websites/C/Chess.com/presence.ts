@@ -126,11 +126,12 @@ presence.on('UpdateData', async () => {
     insights_stats: 'chess.com.insightsStats',
   })
 
-  const [isPrivacyMode, hideButtons, displayFormat, hideRating] = await Promise.all([
+  const [isPrivacyMode, hideButtons, displayFormat, hideRating, lang] = await Promise.all([
     presence.getSetting<boolean>('privacyMode'),
     presence.getSetting<boolean>('hideButtons'),
     presence.getSetting<number>('displayFormat'),
     presence.getSetting<boolean>('hideRating'),
+    presence.getSetting<string>('lang'),
   ])
 
   const presenceData: PresenceData = {
@@ -143,7 +144,7 @@ presence.on('UpdateData', async () => {
 
   if (activeResolver) {
     if (activeResolver.getDetails) {
-      const details = activeResolver.getDetails(strings, doc)
+      const details = activeResolver.getDetails(strings, doc, lang)
       if (details)
         presenceData.details = details
     }
