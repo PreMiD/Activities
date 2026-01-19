@@ -38,6 +38,12 @@
       "title": "Show Cover",
       "icon": "fad fa-images",
       "value": true
+    },
+    {
+      "id": "useTitleAsName",
+      "title": "Use Show Title as Activity Name",
+      "icon": "fad fa-heading",
+      "value": true
     }
   ]
 }

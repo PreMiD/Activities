@@ -1,4 +1,4 @@
-import { Assets, getTimestamps } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -142,6 +142,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: myCANALAssets.Logo,
     name: 'myCANAL',
+    type: ActivityType.Watching,
   }
   const video = document.querySelector<HTMLVideoElement>('.iIZX3IGkM2eBzzWle1QQ')
   const showCover = await presence.getSetting<boolean>('cover')
@@ -179,7 +180,8 @@ presence.on('UpdateData', async () => {
         titleTvShows[1]?.textContent?.trim() || null,
       ]
     }
-    let channelID = new URLSearchParams(window.location.search).get('channel')
+    let channelID = new URLSearchParams(globalThis.location.search).get('channel')
+    const showTitleAsActivity = await presence.getSetting<boolean>('useTitleAsName')
     switch (true) {
       case containsTerm('live'):
         channelID = `${channelID?.charAt(0)} ${channelID?.substring(1)}`
@@ -220,9 +222,25 @@ presence.on('UpdateData', async () => {
           : (await strings).play
         break
       case containsTerm('series'):
-      case containsTerm('jeunesse'):
-        presenceData.details = cachedTitleTvShows[0]
-        presenceData.state = cachedTitleTvShows[1];
+      case containsTerm('jeunesse'): {
+        const episodeTitle = cachedTitleTvShows[1]?.substring(cachedTitleTvShows[1]?.indexOf(':') + 1)?.trim()
+        if (showTitleAsActivity && mainTitle) {
+          presenceData.details = episodeTitle
+          let episode: Element | undefined
+          for (const el of document.querySelectorAll('.episode-editorial__editorial-title___b3mHa')) {
+            if (el.textContent === episodeTitle) {
+              episode = el
+              break
+            }
+          }
+          if (episode?.nextSibling?.textContent) {
+            presenceData.state = episode.nextSibling.textContent
+          }
+        }
+        else {
+          presenceData.details = mainTitle?.textContent?.trim()
+          presenceData.state = episodeTitle
+        }
         [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
         presenceData.largeImageKey = showCover
           ? (presenceData.largeImageKey = await getThumbnail(
@@ -235,11 +253,20 @@ presence.on('UpdateData', async () => {
           ? (await strings).pause
           : (await strings).play
         break
+      }
     }
     if (video.paused) {
       delete presenceData.startTimestamp
       delete presenceData.endTimestamp
     }
+
+    if (showTitleAsActivity && mainTitle) {
+      presenceData.name = mainTitle.textContent?.trim()
+    }
+
+    const showSeason = `${cachedTitleTvShows[0]?.split('-').at(-1)?.trim()}`
+    const showEpisode = `${cachedTitleTvShows[1]?.split(':')[0]?.trim()}`
+    presenceData.largeImageText = `${showSeason}, ${showEpisode}`
   }
   else if (mainTitle) {
     presenceData.details = 'Regarde...'
@@ -247,6 +274,7 @@ presence.on('UpdateData', async () => {
   }
   else {
     presenceData.details = 'Navigue...'
+    cachedTitleTvShows = [null, null]
   }
 
   await presence.setActivity(presenceData)
