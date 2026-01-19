@@ -13,7 +13,7 @@
     "en": "TripSit is a website that educates people on the misconceptions about drug use and gives people the tools they need for a safer experience. Do not do drugs."
   },
   "url": "tripsit.me",
-  "regExp": "https?:\\/\\/(.*\\.)?tripsit\\.me\\/.*",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tripsit[.]me[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/tPoRsMr.png",
   "thumbnail": "https://i.imgur.com/ieEcy0K.png",
