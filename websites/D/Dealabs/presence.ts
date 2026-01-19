@@ -17,12 +17,20 @@ enum ActivityAssets {
 }
 
 presence.on('UpdateData', async () => {
+  const [privacyMode, hideDealTitles, hideDiscussionTitles, hideImages, hidePrices] = await Promise.all([
+    presence.getSetting('privacyMode'),
+    presence.getSetting('hideDealTitles'),
+    presence.getSetting('hideDiscussionTitles'),
+    presence.getSetting('hideImages'),
+    presence.getSetting('hidePrices'),
+  ])
+
   const settings: DealabsSettings = {
-    privacyMode: await presence.getSetting('privacyMode'),
-    hideDealTitles: await presence.getSetting('hideDealTitles'),
-    hideDiscussionTitles: await presence.getSetting('hideDiscussionTitles'),
-    hideImages: await presence.getSetting('hideImages'),
-    hidePrices: await presence.getSetting('hidePrices'),
+    privacyMode: Boolean(privacyMode),
+    hideDealTitles: Boolean(hideDealTitles),
+    hideDiscussionTitles: Boolean(hideDiscussionTitles),
+    hideImages: Boolean(hideImages),
+    hidePrices: Boolean(hidePrices),
   }
 
   const strings = await presence.getStrings({
