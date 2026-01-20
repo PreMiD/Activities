@@ -50,12 +50,19 @@ presence.on('UpdateData', async () => {
     const paused = !!media && (media.paused || media.readyState <= 2)
     const metadata = navigator.mediaSession.metadata
 
+    const timestamp = document
+      .querySelector('amp-lcd.lcd.lcd__music')
+      ?.shadowRoot
+      ?.querySelector<HTMLInputElement>(
+        'input#playback-progress[aria-valuenow][aria-valuemax]',
+      )
+
     const data = {
       album: metadata?.album || '',
       artist: metadata?.artist || '',
       artwork: metadata?.artwork[0]?.src.replace(/\d{1,2}x\d{1,2}[a-z]{1,2}/, '1024x1024') || '',
-      duration: media!.duration,
-      elapsedTime: media!.currentTime,
+      duration: timestamp ? Number.parseInt(timestamp.ariaValueMax!) : media!.duration,
+      elapsedTime: timestamp ? Number.parseInt(timestamp.ariaValueNow!) : media!.currentTime,
       name: metadata?.title || '',
       paused,
     }
