@@ -79,16 +79,17 @@ presence.on('UpdateData', async () => {
           presenceData.state = 'Editing Pages...'
         }
         else {
+          // Base Selector
+          // - English: Left panel
+          // - Japanese: 左パネル
+          const leftPanel = document.querySelector('[aria-label="左パネル"], [aria-label="Left panel"]')
+          const tooltipSpans = leftPanel?.querySelectorAll('span.v-popper--has-tooltip')
+
           // Project Name
-          presenceData.details = `${
-            document.querySelector('.HeaderNavProject > div.block > p')
-              ?.textContent
-          } | Design Editor`
+          presenceData.details = `${tooltipSpans?.[0]?.textContent ?? 'Unknown'} | Design Editor`
+
           // Page Title
-          presenceData.state = `Editing: ${
-            document.querySelector('.HeaderNavPage > div.block > p')
-              ?.textContent
-          }`
+          presenceData.state = `Editing: ${tooltipSpans?.[1]?.textContent ?? 'Unknown'}`
         }
       }
   }
