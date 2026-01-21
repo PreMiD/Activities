@@ -49,7 +49,7 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [
       {
         label: 'View Post',
-        url: document.location.href
+        url: document.location.href,
       },
     ]
   }
