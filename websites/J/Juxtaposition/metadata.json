@@ -10,7 +10,7 @@
       "name": "theskywarp",
       "id": "488357912436146179"
     }
-   ],
+  ],
   "service": "Juxtaposition",
   "description": {
     "en": "Juxtaposition is a Miiverse revival by Pretendo Network"
@@ -24,15 +24,14 @@
   "category": "socials",
   "tags": [
     "juxt",
-    "games",
+    "juxtaposition",
     "miiverse",
     "news",
     "forum",
     "friends"
-
   ],
-  "settings" : [
-          { 
+  "settings": [
+    {
       "id": "showButtons",
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
@@ -45,5 +44,4 @@
       "value": false
     }
   ]
-  
 }
