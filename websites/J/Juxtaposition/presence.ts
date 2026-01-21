@@ -20,14 +20,18 @@ presence.on('UpdateData', async () => {
   else if (document.location.pathname.includes('posts/')) {
     presenceData.details = `Viewing ${document.querySelector('.post-user-info-wrapper h3 a')?.textContent?.trim() || 'User'}'s post`
     presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.user-icon')?.src
-    presenceData.smallImageText = '@' + ((document.querySelector('meta[itemprop="name"], meta[property="og:title"], meta[name="twitter:title"]') as HTMLMetaElement | null)?.content.match(/@([A-Za-z0-9_]+)/)?.[1] ?? '')
-    if (showButtons) presenceData.buttons = [{ label: 'View Post', url: document.location.href }]
+    presenceData.smallImageText = `@${((document.querySelector('meta[itemprop="name"], meta[property="og:title"], meta[name="twitter:title"]') as HTMLMetaElement | null)?.content.match(/@(\w+)/)?.[1] ?? '')}`
+    if (showButtons) {
+      presenceData.buttons = [{ label: 'View Post', url: document.location.href }]
+    }
   }
   else if (document.location.pathname.startsWith('/users/')) {
     presenceData.details = `Visiting ${(document.querySelector('meta[property="og:title"]') as HTMLMetaElement | null)?.content.replace(/\s*\(@.*?\)|\s*@\S+/, '').trim() || 'User'}'s profile`
     presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.user-icon')?.src
-    presenceData.smallImageText = '@' + ((document.querySelector('meta[property="og:title"], meta[name="twitter:title"], meta[itemprop="name"]') as HTMLMetaElement | null)?.content.match(/@([A-Za-z0-9_]+)/)?.[1] ?? '')
-    if (showButtons) presenceData.buttons = [{ label: 'View Profile', url: (document.querySelector('meta[property="og:url"]') as HTMLMetaElement | null)?.content ?? document.location.href }]
+    presenceData.smallImageText = `@${((document.querySelector('meta[property="og:title"], meta[name="twitter:title"], meta[itemprop="name"]') as HTMLMetaElement | null)?.content.match(/@(\w+)/)?.[1] ?? '')}`
+    if (showButtons) {
+      presenceData.buttons = [{ label: 'View Profile', url: (document.querySelector('meta[property="og:url"]') as HTMLMetaElement | null)?.content ?? document.location.href }]
+    }
   }
   else if (document.location.pathname === '/friend_messages') {
     presenceData.details = 'Browsing private messages'
