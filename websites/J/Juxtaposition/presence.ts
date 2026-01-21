@@ -51,7 +51,7 @@ presence.on('UpdateData', async () => {
         label: 'View Post',
         url: document.location.href
       },
-    ],
+    ]
   }
   if (privacyMode) {
     presenceData.details = undefined
