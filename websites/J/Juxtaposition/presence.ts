@@ -47,12 +47,12 @@ presence.on('UpdateData', async () => {
   }
   if (showButtons && document.location.pathname.includes('posts/')) {
     presenceData.buttons = [
-    {
+  {
       label: 'View Post',
       url: document.location.href
-    }
-    ]
-}
+  ,}
+    ,]
+  }
   if (privacyMode) {
     presenceData.details = undefined
     presenceData.state = undefined
