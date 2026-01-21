@@ -52,23 +52,19 @@ presence.on('UpdateData', async () => {
         else if (pathname.includes('/cms')) {
           presenceData.state = 'Managing CMS...'
         }
-        // CMS - Forms
+        // Forms
         else if (pathname.includes('/forms')) {
           presenceData.state = 'Viewing Forms...'
         }
-        // CMS - Analytics
+        // Analytics
         else if (pathname.includes('/analytics')) {
           presenceData.state = 'Viewing Analytics...'
         }
-        // CMS - Plan
+        // Plan & Billing
         else if (pathname.includes('/plan')) {
-          presenceData.state = 'Managing Plan...'
+          presenceData.state = 'Managing Plan & Billing...'
         }
-        // Payment
-      }
-      else if (pathname === '/payment') {
-        presenceData.details = 'Managing Payment Settings...'
-      }
+        }
       // Workspace
       else if (pathname.includes('/workspace/')) {
         presenceData.details = 'Managing Workspace...'
