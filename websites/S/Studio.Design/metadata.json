@@ -32,7 +32,8 @@
       "id": "privacy",
       "title": "Privacy Mode",
       "icon": "fad fa-user-secret",
-      "value": false
+      "value": false,
+      "description": "Hide project names and page names"
     }
   ]
 }
