@@ -47,8 +47,8 @@ presence.on('UpdateData', async () => {
           else if (pathname.includes('/showcase'))
             presenceData.state = 'Viewing Showcase...'
           else presenceData.state = ''
-          // CMS
         }
+        // CMS
         else if (pathname.includes('/cms')) {
           presenceData.state = 'Managing CMS...'
         }
@@ -65,9 +65,17 @@ presence.on('UpdateData', async () => {
           presenceData.state = 'Managing Plan & Billing...'
         }
         }
+      // Payment
+      else if (pathname.includes('/payment')) {
+        presenceData.details = 'Managing Payment Settings...'
+      }
       // Workspace
       else if (pathname.includes('/workspace/')) {
         presenceData.details = 'Managing Workspace...'
+      }
+      // Learn
+      else if (pathname.includes('/learn')) {
+        presenceData.details = 'Viewing Learning Resources...'
       }
       // Editor
       else if (
