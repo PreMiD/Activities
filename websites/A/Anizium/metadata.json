@@ -50,7 +50,7 @@
       "id": "usePresenceName",
       "title": "Show Title as Presence",
       "icon": "fad fa-user-edit",
-      "value": true,
+      "value": false,
       "if": {
         "privacy": false
       }
