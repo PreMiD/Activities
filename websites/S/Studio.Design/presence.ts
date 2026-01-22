@@ -29,7 +29,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = privacy
           ? 'Project dashboard'
           : `${document?.title?.replace(
-            / \| Studio(\.Design)?$/, // Global: Studio.Design / Japanese: Studio
+            / \| Studio(?:\.Design)?$/, // Global: Studio.Design / Japanese: Studio
             '',
           )} | Dashboard`
         // Home
@@ -64,7 +64,7 @@ presence.on('UpdateData', async () => {
         else if (pathname.includes('/plan')) {
           presenceData.state = 'Managing Plan & Billing...'
         }
-        }
+      }
       // Payment
       else if (pathname.includes('/payment')) {
         presenceData.details = 'Managing Payment Settings...'
