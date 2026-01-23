@@ -12,8 +12,8 @@
   "url": ["antiraid.bot", "antiraid.xyz"],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*antiraid[.](bot|xyz)[/]",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/R5IR9Bj.png",
-  "thumbnail": "https://i.imgur.com/000000.png",
+  "logo": "https://i.imgur.com/8a23coO.png",
+  "thumbnail": "https://i.imgur.com/8a23coO.png",
   "color": "#000000",
   "category": "other",
   "tags": [
