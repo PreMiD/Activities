@@ -1,5 +1,5 @@
 import type { Playback, PlaybackInfo } from './types.js'
-import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, StatusDisplayType } from 'premid'
 import { ActivityAssets, ListItemStatus, StaticBrowsing } from './constants.js'
 import { append, determineSeason, getAnimeIcon, getProfilePicture, getUserID } from './utils.js'
 
@@ -195,10 +195,11 @@ presence.on('UpdateData', async () => {
     }
 
     if (name) {
+      presenceData.details = name
       if (titleAsPresence)
-        presenceData.name = name
+        presenceData.statusDisplayType = StatusDisplayType.Details
       else
-        presenceData.details = name
+        presenceData.statusDisplayType = StatusDisplayType.Name
 
       if (season !== -1)
         presenceData.state = epName
@@ -254,11 +255,11 @@ presence.on('UpdateData', async () => {
     const roomName = spans[spans.length - 1]?.textContent
 
     if (name && name.textContent) {
+      presenceData.details = name.textContent
       if (titleAsPresence)
-        presenceData.name = name.textContent
+        presenceData.statusDisplayType = StatusDisplayType.Details
       else
-        presenceData.details = name.textContent
-
+        presenceData.statusDisplayType = StatusDisplayType.Name
       presenceData.state = append(`${strings.episode} ${episode}`, `${strings.room} '${roomName}'`, ' • ')
     }
     else {
@@ -363,9 +364,8 @@ presence.on('UpdateData', async () => {
 
       const commentsCount = (comments?.length ?? 1) - 1
 
-      if (name) {
+      if (name)
         presenceData.details = strings.viewCommentsOf.replace('{0}', name ?? 'N/A')
-      }
 
       presenceData.state = strings.commentCount.replace('{0}', commentsCount.toString()).replace('{1}', likes.toString()).replace('{2}', dislikes.toString())
 

@@ -90,7 +90,7 @@
     {
       "id": "determineSeason",
       "title": "Determine Season",
-      "description": "This checks all available names to try and determine the season and show it on the activity. This may not find the season always and might sometimes have false positives.",
+      "description": "This checks all available names to try and determine the season and show it on the activity. This may not find the season always and might sometimes have false positives. This might interfere with the 'Use Alternative Name' setting",
       "icon": "fas fa-film",
       "value": true
     }
