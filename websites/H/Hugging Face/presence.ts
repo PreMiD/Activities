@@ -4,7 +4,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/H/Hugging%20Face/assets/logo.png',
+  Logo = 'https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.png?download=true',
 }
 
 const profileTabs: Record<string, string> = {
@@ -153,19 +153,26 @@ presence.on('UpdateData', async () => {
   else {
     const owner = segments[0]
     const repo = segments[1]
-    const profileTab = profileTabs[repo]
-
-    if (profileTab) {
+    if (!repo) {
       presenceData.details = 'Viewing a profile'
       if (!privacy)
-        presenceData.state = `${owner} - ${profileTab}`
+        presenceData.state = owner
     }
     else {
-      presenceData.details = privacy ? 'Viewing a model' : 'Viewing model'
-      if (!privacy)
-        presenceData.state = `${owner}/${repo}`
-      if (!privacy && showButtons) {
-        presenceData.buttons = [{ label: 'View Model', url: href }]
+      const profileTab = profileTabs[repo]
+
+      if (profileTab) {
+        presenceData.details = 'Viewing a profile'
+        if (!privacy)
+          presenceData.state = `${owner} - ${profileTab}`
+      }
+      else {
+        presenceData.details = privacy ? 'Viewing a model' : 'Viewing model'
+        if (!privacy)
+          presenceData.state = `${owner}/${repo}`
+        if (!privacy && showButtons) {
+          presenceData.buttons = [{ label: 'View Model', url: href }]
+        }
       }
     }
   }

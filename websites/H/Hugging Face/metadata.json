@@ -12,8 +12,8 @@
   "url": "huggingface.co",
   "regExp": "^https?[:][/][/](www[.])?huggingface[.]co[/]",
   "version": "1.0.0",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hugging%20Face/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hugging%20Face/assets/thumbnail.png",
+  "logo": "https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.png?download=true",
+  "thumbnail": "https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo-with-title.png?download=true",
   "color": "#FFD21E",
   "category": "other",
   "tags": [
