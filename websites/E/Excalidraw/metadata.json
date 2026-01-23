@@ -12,8 +12,8 @@
   "url": "excalidraw.com",
   "regExp": "^https?[:][/][/]excalidraw[.]com[/]",
   "version": "1.0.0",
-  "logo": "https://images.seeklogo.com/logo-png/54/2/excalidraw-logo-png_seeklogo-548100.png",
-  "thumbnail": "https://images.seeklogo.com/logo-png/54/2/excalidraw-logo-png_seeklogo-548100.png",
+  "logo": "https://raw.githubusercontent.com/excalidraw/excalidraw/refs/heads/master/public/android-chrome-512x512.png",
+  "thumbnail": "https://raw.githubusercontent.com/excalidraw/excalidraw/refs/heads/master/public/android-chrome-512x512.png",
   "color": "#6965db",
   "category": "other",
   "tags": [

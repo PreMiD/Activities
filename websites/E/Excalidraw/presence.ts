@@ -6,7 +6,7 @@ const presence = new Presence({
 
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://images.seeklogo.com/logo-png/54/2/excalidraw-logo-png_seeklogo-548100.png',
+    largeImageKey: 'https://raw.githubusercontent.com/excalidraw/excalidraw/refs/heads/master/public/android-chrome-512x512.png',
     name: 'Excalidraw',
   }
 
