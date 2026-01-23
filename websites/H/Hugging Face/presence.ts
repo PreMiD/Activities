@@ -97,6 +97,11 @@ presence.on('UpdateData', async () => {
     if (!privacy && segments[1]) {
       presenceData.state = segments[1].replace(/-/g, ' ')
     }
+    if (!privacy) {
+      const title = document.querySelector('h1')?.textContent?.trim()
+      if (title)
+        presenceData.state = title
+    }
   }
   else if (segments[0] === 'learn') {
     presenceData.details = 'Learning with Hugging Face'
