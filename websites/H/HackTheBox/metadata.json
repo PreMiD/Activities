@@ -5,18 +5,44 @@
     "id": "937757295453044806",
     "name": "Atsukoro1"
   },
+  "contributors": [
+    {
+      "name": "firstoften",
+      "id": "339316517558681610"
+    }
+  ],
   "service": "HackTheBox",
   "description": {
     "en": "Hack The Box is a massive, online cybersecurity training platform, allowing individuals, companies, universities and all kinds of organizations around the world to level up their hacking skills."
   },
   "url": "app.hackthebox.com",
   "regExp": "^https?[:][/][/]app[.]hackthebox[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/thumbnail.jpeg",
   "color": "#9fef00",
   "category": "other",
   "tags": [
     "hacking"
+  ],
+  "settings": [
+    {
+      "id": "showRank",
+      "title": "Show Rank",
+      "icon": "fas fa-trophy",
+      "value": true
+    },
+    {
+      "id": "showGlobalRanking",
+      "title": "Show Global Ranking",
+      "icon": "fas fa-globe",
+      "value": true
+    },
+    {
+      "id": "showFlags",
+      "title": "Show owned flags",
+      "icon": "fas fa-flag",
+      "value": true
+    }
   ]
 }

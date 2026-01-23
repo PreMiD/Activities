@@ -12,12 +12,9 @@
   "description": {
     "en": "Ween Wiki is a knowledge base for the band Ween that anyone can edit! This website is intended to be a comprehensive, encyclopedic reference for everything related to Ween."
   },
-  "url": [
-    "ween.wiki",
-    "www.ween.wiki"
-  ],
+  "url": "www.ween.wiki",
   "regExp": "^https?[:][/][/](www[.])?ween[.]wiki[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Ween/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Ween/assets/thumbnail.png",
   "color": "#6f42c1",
