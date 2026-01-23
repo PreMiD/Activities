@@ -17,6 +17,7 @@ async function getStrings() {
     customDays: 'googlecalendar.customDays',
     customizingCalendar: 'googlecalendar.customizingCalendar',
     daySchedule: 'googlecalendar.daySchedule',
+    viewingAnEvent: 'googlecalendar.viewingAnEvent',
     editingAnEvent: 'googlecalendar.editingAnEvent',
     exportingCalendar: 'googlecalendar.exportingCalendar',
     generalSettings: 'googlecalendar.generalSettings',
@@ -36,15 +37,21 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Calendar/assets/logo.png',
     startTimestamp: browsingTimestamp,
   }
+  const privacy = await presence.getSetting<boolean>('privacy')
   const strings = await getStrings()
   // eslint-disable-next-line regexp/no-unused-capturing-group
   const date = document.title?.replace(/Google[\xA0 ](Calendar|Agenda) -/, '')?.replaceAll(',', ' -')?.trim()
+  const eventDialog = document.querySelector('div[role="dialog"]')
 
   if (document.location.pathname === '/') {
     presenceData.details = strings.home
   }
   else if (document.location.pathname.startsWith('/calendar/')) {
-    if (document.location.pathname.includes('/r/day')) {
+    if (eventDialog) {
+      presenceData.details = strings.viewingAnEvent
+      presenceData.state = privacy ? '' : eventDialog?.querySelector('span[role="heading"]')?.textContent || ''
+    }
+    else if (document.location.pathname.includes('/r/day')) {
       presenceData.details = strings.daySchedule
       presenceData.state = date
     }
@@ -69,6 +76,7 @@ presence.on('UpdateData', async () => {
     }
     else if (document.location.pathname.includes('/r/eventedit')) {
       presenceData.details = strings.editingAnEvent
+      presenceData.state = privacy ? '' : document.querySelector<HTMLInputElement>('div[role="main"] input[type="text"]')?.value || ''
     }
     else if (document.location.pathname.includes('/r/search')) {
       presenceData.details = strings.searchingEvent

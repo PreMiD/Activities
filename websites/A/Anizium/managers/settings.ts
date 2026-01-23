@@ -6,6 +6,8 @@ const SETTINGS_CONFIG: {
   type: 'boolean' | 'number' | 'string'
   defaultValue: any
 }[] = [
+  { key: 'privacy', type: 'boolean', defaultValue: false },
+  { key: 'usePresenceName', type: 'boolean', defaultValue: true },
   { key: 'showButtons', type: 'boolean', defaultValue: true },
   { key: 'showPosters', type: 'boolean', defaultValue: true },
   { key: 'logoType', type: 'number', defaultValue: 0 },
@@ -52,9 +54,9 @@ export class SettingsManager {
         }
 
         const isValueValid
-                    = type === 'string'
-                      ? isTypeValid && receivedValue
-                      : isTypeValid
+          = type === 'string'
+            ? isTypeValid && receivedValue
+            : isTypeValid
 
         acc[key] = isValueValid ? receivedValue : defaultValue
         return acc

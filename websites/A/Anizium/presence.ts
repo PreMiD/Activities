@@ -43,9 +43,9 @@ class AniziumPresence {
     const settings = this.settingsManager.currentSettings
 
     const largeImage
-            = settings?.showPosters && this.posterManager.posterUrl
-              ? this.posterManager.posterUrl
-              : this.settingsManager.getLogo()
+      = (settings?.showPosters && !settings?.privacy) && this.posterManager.posterUrl
+        ? this.posterManager.posterUrl
+        : this.settingsManager.getLogo()
 
     const presenceData: PresenceData = {
       largeImageKey: largeImage,
@@ -92,8 +92,8 @@ class AniziumPresence {
     }
     else {
       presenceData.details
-                = document.querySelector('.trailer-content h1')?.textContent
-                  || 'Loading'
+        = document.querySelector('.trailer-content h1')?.textContent
+          || 'Loading'
       presenceData.state = 'Bölümler görüntüleniyor'
     }
 
@@ -105,6 +105,13 @@ class AniziumPresence {
     const settings = this.settingsManager.currentSettings!
 
     const presenceData = this.buildBasePresence()
+
+    if (settings?.privacy) {
+      presenceData.details = 'Gizlilik Modu Aktif'
+      presence.setActivity(presenceData)
+      return
+    }
+
     const pathname = document.location.pathname
     const routePattern = Utils.getRoutePattern(pathname)
 
@@ -124,11 +131,12 @@ class AniziumPresence {
       '/favorite-list': () => RouteHandlers.handleFavoriteList(presenceData),
       '/watch-list': () => RouteHandlers.handleWatchList(presenceData),
       '/watched-list': () => RouteHandlers.handleWatchedList(presenceData),
-      '/studio': () => RouteHandlers.handleStudioPage(presenceData),
+      '/studio': () => RouteHandlers.handleStudioPage(presenceData, settings),
       '/privacy-policy': () => RouteHandlers.handlePrivacyPolicy(presenceData),
       '/comment-policy': () => RouteHandlers.handleCommentPolicy(presenceData),
       '/tos': () => RouteHandlers.handleTos(presenceData),
       '/app': () => RouteHandlers.handleApp(presenceData),
+      '/partner': () => RouteHandlers.handlePartner(presenceData),
 
       // Dinamik routelar
       '/watch/': () => RouteHandlers.handleWatchPageUpdate(presenceData, settings),

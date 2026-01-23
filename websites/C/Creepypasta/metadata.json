@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "joerkig",
@@ -10,7 +10,8 @@
     "en": "Welcome to Creepypasta.com! Scaring you since 2008 with paranormal stories and creepy original horror fiction. Sleep well..."
   },
   "url": "www.creepypasta.com",
-  "version": "1.0.18",
+  "regExp": "^https?[:][/][/](www[.])?creepypasta[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Creepypasta/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Creepypasta/assets/thumbnail.png",
   "color": "#dd3333",

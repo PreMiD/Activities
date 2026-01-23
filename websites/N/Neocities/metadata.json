@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Kyrie",
@@ -10,8 +10,8 @@
     "en": "Neocities is a social network of 428,200 web sites that are bringing back the lost individual creativity of the web. We offer free static web hosting and tools that allow you to create your own web site. Join us! Note: Does not work on custom domains."
   },
   "url": "neocities.org",
-  "regExp": "([a-z0-9-_]+[.])?neocities[.]org",
-  "version": "1.0.17",
+  "regExp": "^https?[:][/][/]([a-z0-9-_]+[.])?neocities[.]org",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Neocities/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Neocities/assets/thumbnail.png",
   "color": "#F59C32",

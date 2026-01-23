@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Atom Skully",
@@ -23,11 +23,9 @@
     "nl": "Google Agenda is een online agenda. Het is een gratis service van Google en kan worden gebruikt met een Google-account.",
     "vi": "Google Calendar là dịch vụ quản lý kế hoạch và thời gian được phát triển bởi Google."
   },
-  "url": [
-    "calendar.google.com",
-    "www.calendar.google.com"
-  ],
-  "version": "1.3.2",
+  "url": "calendar.google.com",
+  "regExp": "^https?[:][/][/]calendar[.]google[.]com[/]",
+  "version": "1.4.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Calendar/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Calendar/assets/thumbnail.png",
   "color": "#4285F4",
@@ -43,6 +41,12 @@
     {
       "id": "lang",
       "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": true
     }
   ]
 }

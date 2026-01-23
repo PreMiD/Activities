@@ -202,13 +202,22 @@ export class RouteHandlers {
     presenceData.state = 'İzlediklerim listesi görüntüleniyor'
   }
 
-  static handleStudioPage(presenceData: PresenceData): void {
+  static handleStudioPage(presenceData: PresenceData, settings: AniziumSettings): void {
     presenceData.smallImageKey = Assets.Reading
     presenceData.details = 'Anizium'
 
     const titleElement = document.querySelector('html > head > title')
     const pageTitle = titleElement?.textContent?.trim()
 
+    if (settings?.showButtons) {
+      presenceData.buttons = [
+        {
+          label: 'Stüdyoyu Görüntüle',
+          url: document.location.href,
+        },
+
+      ]
+    }
     if (pageTitle && pageTitle !== 'Anizium - Türkçe Dublaj & 4K İzleme Platformu') {
       const studioName = pageTitle.replace(/ - Anizium$/, '').trim()
       presenceData.state = `${studioName} stüdyosunu görüntülüyor`
@@ -241,6 +250,11 @@ export class RouteHandlers {
     presenceData.state = 'Uygulamalar bölümünü görüntülüyor'
   }
 
+  static handlePartner(presenceData: PresenceData): void {
+    presenceData.details = 'Anizium'
+    presenceData.state = 'Partnerleri görüntülüyor'
+  }
+
   static handleWatchPageUpdate(presenceData: PresenceData, settings: AniziumSettings): void {
     const params = new URLSearchParams(document.location.search)
     const season = params.get('season')
@@ -255,37 +269,72 @@ export class RouteHandlers {
       episode,
     }
 
-    if (season && episode) {
-      presenceData.details = this.formatString(settings.watchingDetails, placeholders)
-      presenceData.state = this.formatString(settings.watchingState, placeholders)
-    }
-    else {
-      const singleEpisodeState
-                = settings.watchingState.includes('%season%')
-                  || settings.watchingState.includes('%episode%')
-                  ? 'Tek Bölüm'
-                  : settings.watchingState
+    // If the setting is ON -> Title "Anizium"
+
+    if (settings.usePresenceName) {
+      const combinedStateText = (season && episode)
+        ? this.formatString(settings.watchingState, placeholders)
+        : 'Tek Bölüm'
 
       presenceData.details = this.formatString(settings.watchingDetails, placeholders)
-      presenceData.state = this.formatString(singleEpisodeState, placeholders)
+      presenceData.state = combinedStateText
+    }
+    else {
+      Object.assign(presenceData, { name: animeTitle })
+
+      if (season && episode) {
+        presenceData.details = `Sezon ${season}`
+        presenceData.state = `Bölüm ${episode}`
+      } // If the setting is OFF -> Title "Anime Name"
+
+      else {
+        presenceData.details = 'Film / Tek Bölüm'
+        delete presenceData.state
+      }
     }
 
     if (settings?.showButtons) {
-      presenceData.buttons = [
-        {
-          label: 'Bölümü Görüntüle',
-          url: document.location.href,
-        },
-      ]
+      const match = document.location.href.match(/watch\/(\d+)/)
+      const animeId = match ? match[1] : null
+
+      const episodeButton = {
+        label: 'Bölümü Görüntüle',
+        url: document.location.href,
+      }
+
+      if (animeId) {
+        presenceData.buttons = [
+          {
+            label: 'Animeyi Görüntüle',
+            url: `https://anizium.co/anime/${animeId}`,
+          },
+          episodeButton,
+        ]
+      }
+      else {
+        presenceData.buttons = [episodeButton]
+      }
     }
   }
 
   static handleAnimePageUpdate(presenceData: PresenceData, settings: AniziumSettings): void {
     const pageTitle = document.querySelector('html > head > title')?.textContent || 'Loading'
+    const cleanTitle = pageTitle.replace(/ - Anizium$/, '')
+    const infoText = 'Anime detayları ve bölümleri görüntüleniyor'
 
-    presenceData.details = pageTitle.replace(/ - Anizium$/, '')
+    // If the setting is ON -> Title "Anizium"
+    if (settings.usePresenceName) {
+      presenceData.details = cleanTitle
+      presenceData.state = infoText
+    }
+    // If the setting is OFF -> Title "Anime Name"
+    else {
+      Object.assign(presenceData, { name: cleanTitle })
+      presenceData.details = infoText
+      delete presenceData.state
+    }
+
     presenceData.smallImageKey = Assets.Viewing
-    presenceData.state = 'Anime detayları ve bölümleri görüntüleniyor'
 
     if (settings?.showButtons) {
       presenceData.buttons = [

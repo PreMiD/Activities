@@ -7,6 +7,11 @@ import { watch } from 'chokidar'
 import { build } from 'esbuild'
 import ora from 'ora'
 import { inc } from 'semver'
+import {
+  checkDomainDns,
+  isValidDomain,
+  sanitizeDomain,
+} from '../util/dnsValidator.js'
 import { getChangedActivities } from '../util/getActivities.js'
 import { getJsonPosition } from '../util/getJsonPosition.js'
 import { error, exit, prefix } from '../util/log.js'
@@ -23,6 +28,7 @@ export interface ActivityMetadata {
   version: string
   logo: string
   thumbnail: string
+  url: string | string[]
   iframe?: boolean
   iFrameRegExp?: string
   description: Record<string, string>
@@ -149,6 +155,14 @@ export class ActivityCompiler {
         }
 
         await this.ts.restart(this.compileAndSend.bind(this, { validate, zip, sarif }))
+      }
+
+      // Handle string file and metadata.json changes
+      if (
+        event === 'change'
+        && (basename(path) === `${this.activity.service}.json` || basename(path) === 'metadata.json')
+      ) {
+        return this.compileAndSend({ validate, zip, sarif })
       }
     })
 
@@ -367,6 +381,50 @@ export class ActivityCompiler {
         ruleId: SarifRuleId.tagsServiceCheck,
         position: await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'tags'),
       })
+      valid = false
+    }
+
+    // DNS validation for URLs
+    const urls = Array.isArray(metadata.url) ? metadata.url : [metadata.url]
+
+    // Check all URLs in parallel for this activity
+    const urlChecks = await Promise.all(
+      urls
+        .filter((url: any): url is string => typeof url === 'string')
+        .map(async (url: string, index: number) => {
+          const domain = sanitizeDomain(url)
+          if (!isValidDomain(domain))
+            return { url, index, skipped: true }
+
+          const result = await checkDomainDns(domain)
+          return { url, index, result, skipped: false }
+        }),
+    )
+
+    // Process results
+    for (const check of urlChecks) {
+      if (check.skipped || check.result?.valid)
+        continue
+
+      const message = `DNS check failed for URL "${check.url}": ${check.result?.message || check.result?.error}`
+      if (kill) {
+        exit(message)
+      }
+
+      error(message)
+
+      // Get position in metadata.json
+      const position = Array.isArray(metadata.url)
+        ? await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'url', check.index)
+        : await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'url')
+
+      addSarifLog({
+        path: resolve(this.cwd, 'metadata.json'),
+        message,
+        ruleId: SarifRuleId.dnsCheck,
+        position,
+      })
+
       valid = false
     }
 

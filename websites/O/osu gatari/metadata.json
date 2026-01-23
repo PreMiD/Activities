@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "MoeKotoki",
@@ -11,11 +11,9 @@
     "nl": "Welkom bij de beste osu! server osu! gatari.",
     "zh": "欢迎来到最棒的osu!私服:osu!gatari。"
   },
-  "url": [
-    "osu.gatari.pw",
-    "sig.gatari.pw"
-  ],
-  "version": "1.4.26",
+  "url": "osu.gatari.pw",
+  "regExp": "^https?[:][/][/]osu[.]gatari[.]pw[/]",
+  "version": "1.5.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20gatari/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20gatari/assets/thumbnail.png",
   "color": "#B21964",

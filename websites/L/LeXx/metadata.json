@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Tim",
@@ -12,8 +12,8 @@
     "nl": "LeXx biedt een Discord Bot met veel functies en toepassingen"
   },
   "url": "lexx.app",
-  "regExp": "([a-z0-9-]+[.])*lexx[.]app[/]",
-  "version": "1.0.23",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*lexx[.]app[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LeXx/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LeXx/assets/thumbnail.png",
   "color": "#FF7D00",

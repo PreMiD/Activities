@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "526822284694913042",
@@ -11,10 +11,10 @@
   },
   "url": [
     "notebooklm.google",
-    "notebooklm.google.com",
-    "www.notebooklm.google.com"
+    "notebooklm.google.com"
   ],
-  "version": "1.0.2",
+  "regExp": "^https?[:][/][/](notebooklm[.]google|notebooklm[.]google[.]com)[/]",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20NotebookLM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20NotebookLM/assets/thumbnail.png",
   "color": "#6ad2f7",

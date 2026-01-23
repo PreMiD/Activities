@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "PandaNinjas",
@@ -11,7 +11,8 @@
     "nl": "Flickr is een Amerikaanse dienst voor het hosten van foto's en video's, en ook een online community. Het werd opgericht door Ludicorp in 2004 en is populair geworden door het hosten van hoge resolutie foto's door amateur- en professionele fotografen. (Wikipédia: https://nl.wikipedia.org/wiki/Flickr)"
   },
   "url": "www.flickr.com",
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/](www[.])?flickr[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flickr/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Flickr/assets/thumbnail.png",
   "color": "#FF0084",

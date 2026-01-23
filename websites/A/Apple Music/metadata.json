@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "N0chteil ^^",
@@ -13,6 +13,10 @@
     {
       "name": "Vasilis",
       "id": "241929388403195914"
+    },
+    {
+      "name": "Kyrie",
+      "id": "368399721494216706"
     }
   ],
   "service": "Apple Music",
@@ -29,7 +33,8 @@
     "beta.music.apple.com",
     "classical.music.apple.com"
   ],
-  "version": "1.5.22",
+  "regExp": "^https?[:][/][/](music|beta[.]music|classical[.]music)[.]apple[.]com[/]",
+  "version": "1.7.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Apple%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Apple%20Music/assets/thumbnail.png",
   "color": "#FA273F",
@@ -42,6 +47,23 @@
   ],
   "settings": [
     {
+      "id": "hidePaused",
+      "title": "Hide when paused",
+      "icon": "fad fa-pause-circle",
+      "value": false
+    },
+    {
+      "id": "displayType",
+      "title": "Pick status display",
+      "icon": "fad fa-user-edit",
+      "value": 1,
+      "values": [
+        "Activity Name",
+        "Artist Name",
+        "Song Title"
+      ]
+    },
+    {
       "id": "timestamps",
       "title": "Show timestamps",
       "icon": "fad fa-stopwatch",
@@ -51,6 +73,18 @@
       "id": "cover",
       "title": "Show cover",
       "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "playback",
+      "title": "Show playback state",
+      "icon": "fad fa-play-circle",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show buttons",
+      "icon": "fas fa-compress-arrows-alt",
       "value": true
     },
     {

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "543323460194271262",
+    "name": "idontlikephonecalls"
+  },
+  "service": "Waipu.tv",
+  "description": {
+    "de": "waipu.tv ist ein deutscher IPTV-Streaming-Dienst, der Live-TV-Kanäle, On-Demand-Inhalte und Aufnahmen bietet. Schauen Sie Ihre Lieblingssendungen, Filme und Live-Übertragungen von verschiedenen deutschen und internationalen Kanälen.",
+    "en": "waipu.tv is a German IPTV streaming service offering live TV channels, on-demand content, and recordings. Watch your favorite shows, movies, and live broadcasts from various German and international channels."
+  },
+  "url": [
+    "waipu.tv",
+    "play.waipu.tv"
+  ],
+  "regExp": "^https?[:][/][/](play[.])?waipu[.]tv[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Waipu.tv/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Waipu.tv/assets/thumbnail.png",
+  "color": "#009652",
+  "category": "videos",
+  "tags": [
+    "iptv",
+    "streaming"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode (show sender logo only)",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "excludedChannels",
+      "title": "Always Exclude Channels",
+      "icon": "fas fa-ban",
+      "value": "",
+      "placeholder": "Comma-separated list of channel names to always exclude (e.g., channel1,channel2)"
+    }
+  ]
+}
