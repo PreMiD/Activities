@@ -1,0 +1,47 @@
+﻿{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "TheusHen",
+    "id": "646462656408059914"
+  },
+  "service": "Hugging Face",
+  "description": {
+    "en": "Hugging Face is a platform for sharing and exploring machine learning models, datasets, and demos."
+  },
+  "url": "huggingface.co",
+  "regExp": "^https?[:][/][/](www[.])?huggingface[.]co[/]",
+  "version": "1.0.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hugging%20Face/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hugging%20Face/assets/thumbnail.png",
+  "color": "#FFD21E",
+  "category": "other",
+  "tags": [
+    "ai",
+    "machine-learning",
+    "models",
+    "datasets",
+    "spaces",
+    "huggingface"
+  ],
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fad fa-external-link-alt",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
+  ]
+}
