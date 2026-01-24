@@ -5,44 +5,6 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-interface MWMediaMeta {
-  title: string
-  type: 'show' | 'movie'
-  tmdbId: string
-  year: number
-  poster: string
-}
-
-interface MWControls {
-  isPlaying: boolean
-  isLoading: boolean
-}
-
-interface MWSeason {
-  number: number
-  tmdbId: string
-  title: string
-}
-
-interface MWEpisode {
-  number: number
-  tmdbId: string
-  title: string
-}
-
-interface MWProgress {
-  time: number
-  duration: number
-}
-
-interface MWPlayerData {
-  meta: MWMediaMeta
-  controls: MWControls
-  season?: MWSeason
-  episode?: MWEpisode
-  progress: MWProgress
-}
-
 presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
   const [
