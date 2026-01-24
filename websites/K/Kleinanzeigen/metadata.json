@@ -14,7 +14,7 @@
     "www.kleinanzeigen.de",
     "kleinanzeigen.de"
   ],
-  "regExp": "([a-z0-9-]+[.])*kleinanzeigen[.]de",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kleinanzeigen[.]de[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/ipFHHUi.png",
   "thumbnail": "https://i.imgur.com/3Yf9GpP.png",

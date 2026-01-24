@@ -200,115 +200,115 @@
     "message": "Unknown search"
   },
   "kleinanzeigen.sAnbieter": {
-    "description": "Anbieter category",
-    "message": "Anbieter"
+    "description": "Vendor category",
+    "message": "Vendor"
   },
   "kleinanzeigen.privat": {
     "description": "Privat category",
     "message": "Privat"
   },
   "kleinanzeigen.gewerblich": {
-    "description": "Gewerblich category",
-    "message": "Gewerblich"
+    "description": "Commercial category",
+    "message": "Commercial"
   },
   "kleinanzeigen.anzeige": {
-    "description": "Anzeige Typ",
-    "message": "Typ"
+    "description": "Ad Type",
+    "message": "Type"
   },
   "kleinanzeigen.angebote": {
-    "description": "Angebote category",
-    "message": "Angebote"
+    "description": "Offers category",
+    "message": "Offers"
   },
   "kleinanzeigen.gesuche": {
-    "description": "Gesuche category",
-    "message": "Gesuche"
+    "description": "Requests category",
+    "message": "Requests"
   },
   "kleinanzeigen.versand": {
-    "description": "Versand category",
-    "message": "Versand"
+    "description": "Shipping category",
+    "message": "Shipping"
   },
   "kleinanzeigen.ja": {
-    "description": "Ja value",
-    "message": "Ja"
+    "description": "Yes value",
+    "message": "Yes"
   },
   "kleinanzeigen.nein": {
-    "description": "Nein value",
-    "message": "Nein"
+    "description": "No value",
+    "message": "No"
   },
   "kleinanzeigen.globalFarbe": {
-    "description": "Farbe filter",
-    "message": "Farbe"
+    "description": "Color filter",
+    "message": "Color"
   },
   "kleinanzeigen.globalZustand": {
-    "description": "Zustand filter",
-    "message": "Zustand"
+    "description": "Condition filter",
+    "message": "Condition"
   },
   "kleinanzeigen.globalMaterial": {
     "description": "Material filter",
     "message": "Material"
   },
   "kleinanzeigen.new": {
-    "description": "Neu condition",
-    "message": "Neu"
+    "description": "New condition",
+    "message": "New"
   },
   "kleinanzeigen.asNew": {
-    "description": "Wie neu condition",
-    "message": "Wie neu"
+    "description": "As New condition",
+    "message": "As New"
   },
   "kleinanzeigen.likeNew": {
-    "description": "Wie neu condition",
-    "message": "Wie neu"
+    "description": "Like New condition",
+    "message": "Like New"
   },
   "kleinanzeigen.good": {
-    "description": "Gut condition",
-    "message": "Gut"
+    "description": "Good condition",
+    "message": "Good"
   },
   "kleinanzeigen.acceptable": {
-    "description": "Akzeptabel condition",
-    "message": "Akzeptabel"
+    "description": "Acceptable condition",
+    "message": "Acceptable"
   },
   "kleinanzeigen.schwarz": {
-    "description": "Schwarz color",
-    "message": "Schwarz"
+    "description": "Black color",
+    "message": "Black"
   },
   "kleinanzeigen.weiss": {
-    "description": "Weiß color",
-    "message": "Weiß"
+    "description": "White color",
+    "message": "White"
   },
   "kleinanzeigen.gold": {
     "description": "Gold color",
     "message": "Gold"
   },
   "kleinanzeigen.silber": {
-    "description": "Silber color",
-    "message": "Silber"
+    "description": "Silver color",
+    "message": "Silver"
   },
   "kleinanzeigen.blau": {
-    "description": "Blau color",
-    "message": "Blau"
+    "description": "Blue color",
+    "message": "Blue"
   },
   "kleinanzeigen.rot": {
-    "description": "Rot color",
-    "message": "Rot"
+    "description": "Red color",
+    "message": "Red"
   },
   "kleinanzeigen.gruen": {
-    "description": "Grün color",
-    "message": "Grün"
+    "description": "Green color",
+    "message": "Green"
   },
   "kleinanzeigen.rubber": {
-    "description": "Gummi material",
-    "message": "Gummi"
+    "description": "Rubber material",
+    "message": "Rubber"
   },
   "kleinanzeigen.plastic": {
-    "description": "Plastik material",
-    "message": "Plastik"
+    "description": "Plastic material",
+    "message": "Plastic"
   },
   "kleinanzeigen.metal": {
-    "description": "Metall material",
-    "message": "Metall"
+    "description": "Metal material",
+    "message": "Metal"
   },
   "kleinanzeigen.wood": {
-    "description": "Holz material",
-    "message": "Holz"
+    "description": "Wood material",
+    "message": "Wood"
   }
 }
