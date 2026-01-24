@@ -205,7 +205,8 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = 'En direct'
     }
     else if (containsTerm('cinema')) {
-      presenceData.details = document.querySelector('.A6AH2oNkXUuOKJN5IYrL')?.textContent;
+      presenceData.details = document.querySelector('.A6AH2oNkXUuOKJN5IYrL')?.textContent
+      presenceData.state = document.head.querySelector('[name="description"]')?.getAttribute('content')?.trim();
 
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
 
