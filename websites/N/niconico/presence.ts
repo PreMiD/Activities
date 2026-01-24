@@ -161,8 +161,8 @@ presence.on('UpdateData', async () => {
         )?.textContent ?? ''
         presenceData.state = `${
           (
-            document.querySelector('[class^=\'___channel-name-anchor___\']')
-            ?? document.querySelector('[class^=\'___group-name-anchor___\']')
+            document.querySelector('a.label')
+            ?? document.querySelector('a.channel-name-anchor')
           )?.textContent
         } - ${pathname.match(/lv\d+/)?.[0]}`
         presenceData.smallImageKey = Assets.Live
