@@ -31,8 +31,6 @@
     "live",
     "manga"
   ],
-  "iframe": true,
-  "iFrameRegExp": "dc-cdn[.]ads[.]nicovideo[.]jp",
   "settings": [
     {
       "id": "privacy",
