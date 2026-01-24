@@ -7,7 +7,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 presence.on('UpdateData', async () => {
   const { pathname, href, search } = document.location
   const presenceData: any = {
-    largeImageKey: 'https://cdn.medy.website/thumbnail.png',
+    largeImageKey: 'https://cdn.medy.website/logo.png',
     startTimestamp: browsingTimestamp,
   }
 
