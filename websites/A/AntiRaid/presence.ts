@@ -45,14 +45,6 @@ function getPageName(pathname: string): string {
 presence.on('UpdateData', async () => {
   const { pathname, hostname } = document.location
 
-  const validDomains = ['antiraid.bot', 'antiraid.xyz']
-  const isValidDomain = validDomains.some(domain => hostname.includes(domain))
-
-  if (!isValidDomain) {
-    presence.clearActivity()
-    return
-  }
-
   const pageName = getPageName(pathname)
 
   const presenceData: PresenceData = {
