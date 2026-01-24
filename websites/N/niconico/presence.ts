@@ -61,9 +61,9 @@ presence.on('UpdateData', async () => {
           [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
       }
       else if (pathname.startsWith('/watch/')) {
-        const ownerElement = document.querySelector(
+        const ownerElement = document.querySelectorAll(
           'a[data-anchor-area="video_information"]:not(:has(div))',
-        )
+        ).item(1)
         const imageElement = document.querySelector('meta[property="og:image"]')
 
         presenceData.details = document.querySelector('main h1')?.textContent
