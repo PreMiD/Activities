@@ -13,6 +13,10 @@
     {
       "name": "Arias800",
       "id": "341235976766488576"
+    },
+    {
+      "name": "ByZorks",
+      "id": "252147945011544065"
     }
   ],
   "service": "myCANAL",
@@ -23,7 +27,7 @@
   },
   "url": "www.canalplus.com",
   "regExp": "^https?[:][/][/](www[.])?canalplus[.]com[/]",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/myCANAL/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/myCANAL/assets/thumbnail.png",
   "color": "#000",

@@ -1,4 +1,3 @@
-/// <reference path="../../../@types/premid/index.d.ts" />
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
@@ -136,12 +135,27 @@ export async function getThumbnail(
   })
 }
 
-// Data we need are deleted when player controls disappear, so we cache them
+// Data we need is deleted when player controls disappear
 let cachedTitleTvShows: [string | null, string | null] = [null, null]
 let cachedEpisodeTitle: string | null = null
 let cachedSynopsis: string | null = null
 let cachedChannelImg: HTMLImageElement | null = null
 let cachedChannelName: string | null = null
+
+const navigationRoutes: Record<string, string> = {
+  '/mes-videos/': 'Mes Vidéos',
+  '/chaines/': 'Chaînes',
+  '/programme-tv/': 'Programme TV',
+  '/cinema/': 'Films',
+  '/series/': 'Séries',
+  '/jeunesse/': 'Jeunesse',
+  '/live/': 'Chaînes en direct',
+  '/documentaires/': 'Documentaires',
+  '/divertissement/': 'Divertissements',
+  '/info/': 'Infos',
+  '/musique/': 'Musique',
+  '/sport/': 'Sport',
+}
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
@@ -153,106 +167,24 @@ presence.on('UpdateData', async () => {
   const showCover = await presence.getSetting<boolean>('cover')
   const mainTitle = document.querySelector('.stickyTitle___HRELo')
   const currentPathName = document.location.pathname
-  const navigationRoutes: Record<string, string> = {
-    '/mes-videos/': 'Mes Vidéos',
-    '/chaines/': 'Chaînes',
-    '/programme-tv/': 'Programme TV',
-    '/cinema/': 'Films',
-    '/series/': 'Séries',
-    '/jeunesse/': 'Jeunesse',
-    '/live/': 'Chaînes en direct',
-    '/documentaires/': 'Documentaires',
-    '/divertissement/': 'Divertissements',
-    '/info/': 'Infos',
-    '/musique/': 'Musique',
-    '/sport/': 'Sport',
-  }
 
   if (navigationRoutes[currentPathName]) {
     presenceData.state = navigationRoutes[currentPathName]
   }
 
   if (video && !Number.isNaN(video.duration)) {
-    const titleTvShows = document.querySelectorAll('.RbcMSl3qdUyV2kb3rAEg')
-    if (titleTvShows.length >= 2) {
-      cachedTitleTvShows = [
-        titleTvShows[0]?.textContent?.trim() || null,
-        titleTvShows[1]?.textContent?.trim() || null,
-      ]
-    }
+    updateTitleForTvShowsCache()
 
     const showTitleAsActivity = await presence.getSetting<boolean>('useTitleAsName')
 
     if (containsTerm('live')) {
-      presenceData.details = document.querySelector('.A6AH2oNkXUuOKJN5IYrL')?.textContent
-
-      if (showCover) {
-        const channelImg = document.querySelector<HTMLImageElement>('.w4vxo5X8LLEAi6TxyFxu')
-        if (channelImg) {
-          cachedChannelImg = channelImg
-          cachedChannelName = channelImg.alt.split('Logo de la chaîne ')[1] || 'une chaîne'
-          presenceData.largeImageKey = await getThumbnail(channelImg.src)
-        }
-        else if (cachedChannelImg) {
-          presenceData.largeImageKey = await getThumbnail(cachedChannelImg.src)
-        }
-      }
-
-      presenceData.state = `sur ${cachedChannelName || 'une chaîne'}`
-      presenceData.startTimestamp = browsingTimestamp
-
-      presenceData.smallImageKey = Assets.Live
-      presenceData.smallImageText = 'En direct'
+      await handleLiveContent(presenceData, showCover)
     }
     else if (containsTerm('cinema')) {
-      presenceData.details = document.querySelector('.A6AH2oNkXUuOKJN5IYrL')?.textContent
-      presenceData.state = document.head.querySelector('[name="description"]')?.getAttribute('content')?.trim();
-
-      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
-
-      if (showCover) {
-        presenceData.largeImageKey = await getThumbnail(
-          document.querySelector<HTMLMetaElement>('[property=\'og:image\']')?.content,
-        )
-      }
-
-      presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-      presenceData.smallImageText = video.paused ? (await strings).pause : (await strings).play
+      await handleCinemaContent(presenceData, video, showCover)
     }
     else if (containsTerm('series') || containsTerm('jeunesse')) {
-      const episodeTitle = cachedTitleTvShows[1]?.substring(cachedTitleTvShows[1]?.indexOf(':') + 1)?.trim()
-
-      if (showTitleAsActivity && mainTitle) {
-        presenceData.details = episodeTitle
-        if (episodeTitle && episodeTitle !== cachedEpisodeTitle) {
-          cachedEpisodeTitle = episodeTitle
-          cachedSynopsis = null
-          for (const el of document.querySelectorAll('.episode-editorial__editorial-title___b3mHa')) {
-            if (el.textContent === episodeTitle) {
-              cachedSynopsis = el.nextSibling?.textContent?.trim() || null
-              break
-            }
-          }
-        }
-        if (cachedSynopsis) {
-          presenceData.state = cachedSynopsis
-        }
-      }
-      else {
-        presenceData.details = mainTitle?.textContent?.trim()
-        presenceData.state = episodeTitle
-      }
-
-      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
-
-      if (showCover) {
-        presenceData.largeImageKey = await getThumbnail(
-          document.querySelector<HTMLMetaElement>('[property=\'og:image\']')?.content,
-        )
-      }
-
-      presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-      presenceData.smallImageText = video.paused ? (await strings).pause : (await strings).play
+      await handleSeriesContent(presenceData, video, showCover, showTitleAsActivity, mainTitle)
     }
 
     if (video.paused) {
@@ -263,10 +195,6 @@ presence.on('UpdateData', async () => {
     if (showTitleAsActivity && mainTitle) {
       presenceData.name = mainTitle.textContent?.trim()
     }
-
-    const showSeason = `${cachedTitleTvShows[0]?.split('-').at(-1)?.trim()}`
-    const showEpisode = `${cachedTitleTvShows[1]?.split(':')[0]?.trim()}`
-    presenceData.largeImageText = `${showSeason}, ${showEpisode}`
   }
   else if (mainTitle) {
     presenceData.details = 'Regarde...'
@@ -274,8 +202,104 @@ presence.on('UpdateData', async () => {
   }
   else {
     presenceData.details = 'Navigue...'
-    cachedTitleTvShows = [null, null]
+    resetCaches()
   }
 
   await presence.setActivity(presenceData)
 })
+
+function resetCaches() {
+  cachedTitleTvShows = [null, null]
+  cachedEpisodeTitle = null
+  cachedSynopsis = null
+  cachedChannelImg = null
+  cachedChannelName = null
+}
+
+function updateTitleForTvShowsCache() {
+  const titleTvShows = document.querySelectorAll('.RbcMSl3qdUyV2kb3rAEg')
+  if (titleTvShows.length >= 2) {
+    cachedTitleTvShows = [
+      titleTvShows[0]?.textContent?.trim() || null,
+      titleTvShows[1]?.textContent?.trim() || null,
+    ]
+  }
+}
+
+async function handleLiveContent(presenceData: MediaPresenceData | NonMediaPresenceData, showCover: boolean) {
+  presenceData.details = document.querySelector('.A6AH2oNkXUuOKJN5IYrL')?.textContent
+
+  if (showCover) {
+    const channelImg = document.querySelector<HTMLImageElement>('.w4vxo5X8LLEAi6TxyFxu')
+    if (channelImg) {
+      cachedChannelImg = channelImg
+      cachedChannelName = channelImg.alt.split('Logo de la chaîne ')[1] || 'une chaîne'
+      presenceData.largeImageKey = await getThumbnail(channelImg.src)
+    }
+    else if (cachedChannelImg) {
+      presenceData.largeImageKey = await getThumbnail(cachedChannelImg.src)
+    }
+  }
+
+  presenceData.state = `sur ${cachedChannelName || 'une chaîne'}`
+  presenceData.startTimestamp = browsingTimestamp
+
+  presenceData.smallImageKey = Assets.Live
+  presenceData.smallImageText = 'En direct'
+}
+
+async function handleCinemaContent(presenceData: MediaPresenceData | NonMediaPresenceData, video: HTMLVideoElement, showCover: boolean) {
+  presenceData.details = document.querySelector('.A6AH2oNkXUuOKJN5IYrL')?.textContent
+  presenceData.state = document.head.querySelector('[name="description"]')?.getAttribute('content')?.trim();
+
+  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
+
+  if (showCover) {
+    presenceData.largeImageKey = await getThumbnail(
+      document.querySelector<HTMLMetaElement>('[property=\'og:image\']')?.content,
+    )
+  }
+
+  presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
+  presenceData.smallImageText = video.paused ? (await strings).pause : (await strings).play
+}
+
+async function handleSeriesContent(presenceData: PresenceData, video: HTMLVideoElement, showCover: boolean, showTitleAsActivity: boolean, mainTitle: Element | null) {
+  const episodeTitle = cachedTitleTvShows[1]?.substring(cachedTitleTvShows[1]?.indexOf(':') + 1)?.trim()
+
+  if (showTitleAsActivity && mainTitle) {
+    presenceData.details = episodeTitle
+    if (episodeTitle && episodeTitle !== cachedEpisodeTitle) {
+      cachedEpisodeTitle = episodeTitle
+      cachedSynopsis = null
+      for (const el of document.querySelectorAll('.episode-editorial__editorial-title___b3mHa')) {
+        if (el.textContent === episodeTitle) {
+          cachedSynopsis = el.nextSibling?.textContent?.trim() || null
+          break
+        }
+      }
+    }
+    if (cachedSynopsis) {
+      presenceData.state = cachedSynopsis
+    }
+  }
+  else {
+    presenceData.details = mainTitle?.textContent?.trim()
+    presenceData.state = episodeTitle
+  }
+
+  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
+
+  if (showCover) {
+    presenceData.largeImageKey = await getThumbnail(
+      document.querySelector<HTMLMetaElement>('[property=\'og:image\']')?.content,
+    )
+  }
+
+  const showSeason = `${cachedTitleTvShows[0]?.split('-').at(-1)?.trim()}`
+  const showEpisode = `${cachedTitleTvShows[1]?.split(':')[0]?.trim()}`
+  presenceData.largeImageText = `${showSeason}, ${showEpisode}`
+
+  presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
+  presenceData.smallImageText = video.paused ? (await strings).pause : (await strings).play
+}
