@@ -31,17 +31,18 @@ presence.on('UpdateData', async () => {
 
   if (pathname.startsWith('/media')) {
     const video = document.querySelector<HTMLVideoElement>('video#video-element')
-    if (!video) return
+    if (!video)
+      return
 
     const title = document.title
     const isPlaying = !video.paused
     const isLoading = video.readyState < 3
 
-    const titleMatch = title.match(/(.+?)\s*-\s*S(\d+)\s*-\s*E(\d+)/)
+    const titleMatch = title.match(/S(\d+)\s*-\s*E(\d+)/)
 
     presenceData.name = title
     presenceData.details = titleMatch
-      ? `Season ${titleMatch[2]}, Episode ${titleMatch[3]}`
+      ? `Season ${titleMatch[1]}, Episode ${titleMatch[2]}`
       : title
 
     if (video.currentTime && video.duration) {
@@ -114,8 +115,4 @@ function createProgressBar(
   return `${barFill.repeat(numChars)}${barTrack.repeat(
     barLength - numChars,
   )}  ${showLabel ? `${progress}%` : ''}`.trimEnd()
-}
-
-function capitalize(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1)
 }
