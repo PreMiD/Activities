@@ -53,11 +53,13 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.user-icon')?.src
   }
   if (privacyMode) {
-    presenceData.details = delete,
-    presenceData.state = delete,
-    presenceData.largeImageText = delete,
-    presenceData.smallImageKey = delete,
-    presenceData.buttons = delete
+    delete presenceData.details
+    delete presenceData.state
+    delete presenceData.largeImageText
+    delete presenceData.smallImageKey
+    delete presenceData.buttons;
+    
+    
   }
   if (presenceData.details)
     presence.setActivity(presenceData)
