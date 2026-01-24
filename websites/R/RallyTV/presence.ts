@@ -23,7 +23,7 @@
         type: 3,
         details: detailsText,
         state: stateText,
-        largeImageKey: 'logo',
+        largeImageKey: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJT4dg-pIfsTDJ-ZeDHGhr63cJ9BcJFYOpFw&s',
       }
 
       presence.setActivity(presenceData)
