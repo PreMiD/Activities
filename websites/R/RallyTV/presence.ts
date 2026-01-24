@@ -11,8 +11,8 @@
 
     if (fullTitle !== lastTitle) {
       const parts = fullTitle.split('|').map(p => p.trim())
-      let detailsText = parts[0]
-      let stateText = parts[1] || ''
+      let detailsText = parts[1]
+      let stateText = parts[0] || ''
 
       if (parts.length === 1) {
         detailsText = fullTitle
