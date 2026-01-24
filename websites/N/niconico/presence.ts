@@ -27,37 +27,36 @@ presence.on('UpdateData', async () => {
     case 'www.nicovideo.jp': {
       if (pathname.startsWith('/watch/')) {
         const disabledControlElement = document.querySelectorAll<HTMLButtonElement>(
-            'button[id="tooltip:«r8»:trigger"][disabled]',
-        );
+          'button[id="tooltip:«r8»:trigger"][disabled]',
+        )
         if (disabledControlElement.length !== 0 && ads && !privacy) {
-            console.log(ads);
           presenceData.details = 'Watching an ad'
-        } else {
+        }
+        else {
+          const ownerElement = document.querySelectorAll(
+            'a[data-anchor-page="watch"][data-anchor-area="video_information"]',
+          ).item(1)
 
-        const ownerElement = document.querySelectorAll(
-          'a[data-anchor-page="watch"][data-anchor-area="video_information"]',
-        ).item(1)
+          const imageElement = document.querySelector('meta[property="og:image"]')
 
-        const imageElement = document.querySelector('meta[property="og:image"]')
+          presenceData.details = document.querySelector('main h1')?.textContent
+          presenceData.state = `${ownerElement ? ownerElement.textContent : 'Deleted User'
+          } - ${pathname.match(/..\d+$/)?.[0]}`
+          presenceData.largeImageKey = imageElement
+            ? imageElement.attributes.getNamedItem('content')?.value
+            : initialized?.Logo
+          presenceData.smallImageKey = pause ? !video?.paused ? Assets.Play : Assets.Pause : ''
+          presenceData.smallImageText = pause ? !video?.paused ? initialized?.presenceStrings.play : initialized?.presenceStrings.pause : ''
+          if (video && !video?.paused)
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
-        presenceData.details = document.querySelector('main h1')?.textContent
-        presenceData.state = `${ownerElement ? ownerElement.textContent : 'Deleted User'
-        } - ${pathname.match(/..\d+$/)?.[0]}`
-        presenceData.largeImageKey = imageElement
-          ? imageElement.attributes.getNamedItem('content')?.value
-          : initialized?.Logo
-        presenceData.smallImageKey = pause ? !video?.paused ? Assets.Play : Assets.Pause : ''
-        presenceData.smallImageText = pause ? !video?.paused ? initialized?.presenceStrings.play : initialized?.presenceStrings.pause : ''
-        if (video && !video?.paused)
-          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
-
-        presenceData.buttons = [
-          {
-            label: initialized?.presenceStrings.buttonWatchVideo ?? 'Watch Video',
-            url: href,
-          },
-        ]
-    }
+          presenceData.buttons = [
+            {
+              label: initialized?.presenceStrings.buttonWatchVideo ?? 'Watch Video',
+              url: href,
+            },
+          ]
+        }
       }
       else if (pathname.startsWith('/search/')) {
         const searchValue = decodeURIComponent(pathname.slice('/search/'.length))
@@ -135,7 +134,7 @@ presence.on('UpdateData', async () => {
         } - ${pathname.match(/lv\d+/)?.[0]}`
         presenceData.smallImageKey = Assets.Live
         presenceData.smallImageText = initialized?.presenceStrings.live
-        if (video && video?.paused)
+        if (video && !video?.paused)
           [presenceData.startTimestamp] = getTimestampsFromMedia(video)
 
         presenceData.buttons = [
