@@ -140,6 +140,8 @@ export async function getThumbnail(
 let cachedTitleTvShows: [string | null, string | null] = [null, null]
 let cachedEpisodeTitle: string | null = null
 let cachedSynopsis: string | null = null
+let cachedChannelImg: HTMLImageElement | null = null
+let cachedChannelName: string | null = null
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
@@ -182,21 +184,22 @@ presence.on('UpdateData', async () => {
     const showTitleAsActivity = await presence.getSetting<boolean>('useTitleAsName')
 
     if (containsTerm('live')) {
-      let channelID = new URLSearchParams(globalThis.location.search).get('channel')
-      channelID = `${channelID?.charAt(0)} ${channelID?.substring(1)}`
-
       presenceData.details = document.querySelector('.A6AH2oNkXUuOKJN5IYrL')?.textContent
 
-      const channelImg = document.querySelector<HTMLImageElement>(
-        String.raw`#\3${channelID}_onclick > div > div.card__content_0dae1b.cardContent___DuNAN.ratio--169 > div[class*="cardLogoChannel"] > div > img`,
-      )
-      presenceData.state = `sur ${channelImg?.alt}`
+      if (showCover) {
+        const channelImg = document.querySelector<HTMLImageElement>('.w4vxo5X8LLEAi6TxyFxu')
+        if (channelImg) {
+          cachedChannelImg = channelImg
+          cachedChannelName = channelImg.alt.split('Logo de la chaîne ')[1] || 'une chaîne'
+          presenceData.largeImageKey = await getThumbnail(channelImg.src)
+        }
+        else if (cachedChannelImg) {
+          presenceData.largeImageKey = await getThumbnail(cachedChannelImg.src)
+        }
+      }
 
+      presenceData.state = `sur ${cachedChannelName || 'une chaîne'}`
       presenceData.startTimestamp = browsingTimestamp
-
-      presenceData.largeImageKey = showCover && channelImg?.src
-        ? channelImg.src
-        : myCANALAssets.Logo
 
       presenceData.smallImageKey = Assets.Live
       presenceData.smallImageText = 'En direct'
@@ -210,9 +213,6 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = await getThumbnail(
           document.querySelector<HTMLMetaElement>('[property=\'og:image\']')?.content,
         )
-      }
-      else {
-        presenceData.largeImageKey = myCANALAssets.Logo
       }
 
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
@@ -248,9 +248,6 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = await getThumbnail(
           document.querySelector<HTMLMetaElement>('[property=\'og:image\']')?.content,
         )
-      }
-      else {
-        presenceData.largeImageKey = myCANALAssets.Logo
       }
 
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
