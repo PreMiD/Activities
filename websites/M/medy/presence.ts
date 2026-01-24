@@ -93,7 +93,7 @@ presence.on('UpdateData', async () => {
   }
 
   if (!presenceData.largeImageKey) {
-    presenceData.largeImageKey = 'https://cdn.medy.website/thumbnail.png'
+    presenceData.largeImageKey = 'https://cdn.medy.website/logo.png'
   }
 
   presence.setActivity(presenceData)
