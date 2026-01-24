@@ -23,7 +23,7 @@
         type: 3,
         details: detailsText,
         state: stateText,
-        largeImageKey: 'logo'
+        largeImageKey: 'logo',
       }
 
       presence.setActivity(presenceData)
