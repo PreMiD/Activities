@@ -139,8 +139,9 @@ export async function getThumbnail(
 let cachedTitleTvShows: [string | null, string | null] = [null, null]
 let cachedEpisodeTitle: string | null = null
 let cachedSynopsis: string | null = null
-let cachedChannelImg: HTMLImageElement | null = null
 let cachedChannelName: string | null = null
+let cachedThumbnailUrl: string | null = null
+let lastImgSrc: string | null = null
 
 const navigationRoutes: Record<string, string> = {
   '/mes-videos/': 'Mes Vidéos',
@@ -160,6 +161,7 @@ const navigationRoutes: Record<string, string> = {
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: myCANALAssets.Logo,
+    largeImageText: 'myCANAL',
     name: 'myCANAL',
     type: ActivityType.Watching,
   }
@@ -212,7 +214,6 @@ function resetCaches() {
   cachedTitleTvShows = [null, null]
   cachedEpisodeTitle = null
   cachedSynopsis = null
-  cachedChannelImg = null
   cachedChannelName = null
 }
 
@@ -232,13 +233,14 @@ async function handleLiveContent(presenceData: MediaPresenceData | NonMediaPrese
   if (showCover) {
     const channelImg = document.querySelector<HTMLImageElement>('.w4vxo5X8LLEAi6TxyFxu')
     if (channelImg) {
-      cachedChannelImg = channelImg
+      if (channelImg.src !== lastImgSrc) {
+        lastImgSrc = channelImg.src
+        cachedThumbnailUrl = await getThumbnail(channelImg.src)
+      }
       cachedChannelName = channelImg.alt.split('Logo de la chaîne ')[1] || 'une chaîne'
-      presenceData.largeImageKey = await getThumbnail(channelImg.src)
     }
-    else if (cachedChannelImg) {
-      presenceData.largeImageKey = await getThumbnail(cachedChannelImg.src)
-    }
+
+    presenceData.largeImageKey = cachedThumbnailUrl || myCANALAssets.Logo
   }
 
   presenceData.state = `sur ${cachedChannelName || 'une chaîne'}`
