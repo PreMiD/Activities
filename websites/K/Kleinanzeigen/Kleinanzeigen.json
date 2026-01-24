@@ -199,7 +199,7 @@
     "description": "Unknown search term",
     "message": "Unknown search"
   },
-  "kleinanzeigen.sAnbieter": {
+  "kleinanzeigen.vendor": {
     "description": "Vendor category",
     "message": "Vendor"
   },
@@ -207,39 +207,39 @@
     "description": "Privat category",
     "message": "Privat"
   },
-  "kleinanzeigen.gewerblich": {
+  "kleinanzeigen.commercial": {
     "description": "Commercial category",
     "message": "Commercial"
   },
-  "kleinanzeigen.anzeige": {
+  "kleinanzeigen.adType": {
     "description": "Ad Type",
     "message": "Type"
   },
-  "kleinanzeigen.angebote": {
+  "kleinanzeigen.offers": {
     "description": "Offers category",
     "message": "Offers"
   },
-  "kleinanzeigen.gesuche": {
+  "kleinanzeigen.requests": {
     "description": "Requests category",
     "message": "Requests"
   },
-  "kleinanzeigen.versand": {
+  "kleinanzeigen.shipping": {
     "description": "Shipping category",
     "message": "Shipping"
   },
-  "kleinanzeigen.ja": {
+  "kleinanzeigen.yes": {
     "description": "Yes value",
     "message": "Yes"
   },
-  "kleinanzeigen.nein": {
+  "kleinanzeigen.no": {
     "description": "No value",
     "message": "No"
   },
-  "kleinanzeigen.globalFarbe": {
+  "kleinanzeigen.globalColor": {
     "description": "Color filter",
     "message": "Color"
   },
-  "kleinanzeigen.globalZustand": {
+  "kleinanzeigen.globalCondition": {
     "description": "Condition filter",
     "message": "Condition"
   },
@@ -267,11 +267,11 @@
     "description": "Acceptable condition",
     "message": "Acceptable"
   },
-  "kleinanzeigen.schwarz": {
+  "kleinanzeigen.black": {
     "description": "Black color",
     "message": "Black"
   },
-  "kleinanzeigen.weiss": {
+  "kleinanzeigen.white": {
     "description": "White color",
     "message": "White"
   },
@@ -279,19 +279,19 @@
     "description": "Gold color",
     "message": "Gold"
   },
-  "kleinanzeigen.silber": {
+  "kleinanzeigen.silver": {
     "description": "Silver color",
     "message": "Silver"
   },
-  "kleinanzeigen.blau": {
+  "kleinanzeigen.blue": {
     "description": "Blue color",
     "message": "Blue"
   },
-  "kleinanzeigen.rot": {
+  "kleinanzeigen.red": {
     "description": "Red color",
     "message": "Red"
   },
-  "kleinanzeigen.gruen": {
+  "kleinanzeigen.green": {
     "description": "Green color",
     "message": "Green"
   },
