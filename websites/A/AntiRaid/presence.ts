@@ -48,7 +48,7 @@ presence.on('UpdateData', async () => {
   const pageName = getPageName(pathname)
 
   const presenceData: PresenceData = {
-    name: 'AntiRaid Website',
+    name: 'AntiRaid',
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
     smallImageKey: Assets.Viewing,
