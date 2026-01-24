@@ -20,7 +20,7 @@ presence.on('UpdateData', async () => {
   else if (document.location.pathname.includes('posts/')) {
     presenceData.details = `Viewing ${document.querySelector<HTMLAnchorElement>('.post-user-info-wrapper h3 a')?.textContent?.trim() || 'User'}'s post`
     presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.user-icon')?.src
-    presenceData.smallImageText = `@${((document.querySelector<HTMLMetaElement>('meta[itemprop="name"], meta[property="og:title"], meta[name="twitter:title"]')?.content.match(/@(\w+)/)?.[1] ?? '')}`
+    presenceData.smallImageText = `@${((document.querySelector<HTMLMetaElement>('meta[itemprop="name"], meta[property="og:title"], meta[name="twitter:title"]')?.content.match(/@(\w+)/)?.[1] ?? ''))}`
     if (showButtons) {
       presenceData.buttons = [{ label: 'View Post', url: document.location.href }]
     }
