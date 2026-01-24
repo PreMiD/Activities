@@ -18,7 +18,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing Home Page'
   }
   else if (document.location.pathname.includes('posts/')) {
-    presenceData.details = `Viewing ${document.querySelector('.post-user-info-wrapper h3 a')?.textContent?.trim() || 'User'}'s post`
+    presenceData.details = `Viewing ${document.querySelector<HTMLAnchorElement>('.post-user-info-wrapper h3 a')?.textContent?.trim() || 'User'}'s post`
     presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.user-icon')?.src
     presenceData.smallImageText = `@${((document.querySelector('meta[itemprop="name"], meta[property="og:title"], meta[name="twitter:title"]') as HTMLMetaElement | null)?.content.match(/@(\w+)/)?.[1] ?? '')}`
     if (showButtons) {
@@ -57,9 +57,7 @@ presence.on('UpdateData', async () => {
     delete presenceData.state
     delete presenceData.largeImageText
     delete presenceData.smallImageKey
-    delete presenceData.buttons;
-    
-    
+    delete presenceData.buttons
   }
   if (presenceData.details)
     presence.setActivity(presenceData)
