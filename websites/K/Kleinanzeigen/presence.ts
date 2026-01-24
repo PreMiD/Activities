@@ -105,7 +105,10 @@ presence.on('UpdateData', async () => {
     const priceElement = document.querySelector('#viewad-price')
     const price = priceElement?.textContent?.trim()
 
-    const sellerName = document.querySelector('.text-force-linebreak.userprofile-vip a')?.textContent?.trim()
+    let sellerName = document.querySelector('.text-force-linebreak.userprofile-vip a')?.textContent?.trim()
+    if (!sellerName) {
+      sellerName = document.querySelector('.text-body-regular-strong.text-force-linebreak.userprofile-vip')?.textContent?.trim()
+    }
 
     const badges: string[] = []
     const satisfactionBadge = document.querySelector('.userbadge-tag .icon-rating-tag-2')
