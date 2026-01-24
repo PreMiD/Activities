@@ -87,13 +87,9 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname === '/' || pathname === '' || pathname === '/catalog') {
     presenceData.details = 'Блукає по сайту'
-
-    // No buttons for homepage
   }
   else {
     presenceData.details = 'Блукає по сайту'
-
-    // No buttons for other pages
   }
 
   if (!presenceData.largeImageKey) {
