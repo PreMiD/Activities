@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1424064908244422668",
+    "name": "Muffy"
+  },
+  "service": "Vikidia",
+  "description": {
+    "en": "Vikidia is a free online encyclopedia for children aged 8 to 13.",
+    "fr": "Vikidia est une encyclopédie en ligne libre pour les 8-13 ans."
+  },
+  "url": [
+    "vikidia.org",
+    "fr.vikidia.org",
+    "en.vikidia.org",
+    "es.vikidia.org",
+    "it.vikidia.org",
+    "de.vikidia.org",
+    "pt.vikidia.org",
+    "ca.vikidia.org"
+  ],
+  "regExp": "([a-z]{2,3})\\.vikidia\\.org[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/mbTaZ6U.png",
+  "thumbnail": "https://i.imgur.com/mbTaZ6U.png",
+  "color": "#FF6600",
+  "category": "other",
+  "tags": ["wiki", "encyclopedia", "education", "children", "knowledge"]
+}
