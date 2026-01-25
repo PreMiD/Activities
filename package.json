@@ -15,7 +15,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^6.2.0",
     "@total-typescript/tsconfig": "^1.0.4",
-    "@types/node": "^24.9.2",
+    "@types/node": "^25.0.0",
     "@vitest/coverage-v8": "^4.0.6",
     "@vitest/ui": "^4.0.6",
     "eslint": "^9.38.0",
