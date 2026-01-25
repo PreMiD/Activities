@@ -4,7 +4,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/H/Hugging%20Face/assets/logo.png',
+  Logo = 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/huggingface-icon.png',
 }
 
 const profileTabs: Record<string, string> = {
