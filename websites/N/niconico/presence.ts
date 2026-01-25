@@ -1,7 +1,7 @@
 import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
-import getSettings from './utils/getSettings.js'
 import createContext from './utils/createContext.js'
+import getSettings from './utils/getSettings.js'
 
 const presence = new Presence({
   clientId: '609220157910286346',
