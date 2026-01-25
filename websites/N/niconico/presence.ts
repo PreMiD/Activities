@@ -1,15 +1,15 @@
 import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 import getSettings from './utils/getSettings.js'
-import initialize from './utils/initialize.js'
+import createContext from './utils/createContext.js'
 
 const presence = new Presence({
   clientId: '609220157910286346',
 })
 
 presence.on('UpdateData', async () => {
-  // initialize only once
-  const initialized = await initialize(presence)
+  // create context every update
+  const initialized = await createContext(presence)
 
   // set presenceData
   const presenceData: PresenceData = {

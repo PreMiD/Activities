@@ -19,13 +19,7 @@ async function getStrings(presence: Presence) {
   )
 }
 
-let initialized = false
-export default async function initialize(presence: Presence) {
-  // If already initialized, return
-  if (initialized)
-    return
-  initialized = true
-
+export default async function createContext(presence: Presence) {
   // Fetch presence strings
   const returns: {
     firstInit: boolean
