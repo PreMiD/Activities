@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1454616266567323688',
+  clientId: '1465383098437992448',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
