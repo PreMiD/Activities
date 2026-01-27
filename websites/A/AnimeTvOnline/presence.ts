@@ -20,11 +20,21 @@ presence.on('UpdateData', async () => {
     const epEl = document.querySelector('#current-ep-num')
     const video = document.querySelector('video#player') as HTMLVideoElement
 
-    // FIX: Controllo rigoroso su textContent per evitare errori TS
-    const roomTitle = (roomTitleEl && roomTitleEl.textContent) ? roomTitleEl.textContent.trim() : 'Watch Party'
-    const hostRaw = (hostEl && hostEl.textContent) ? hostEl.textContent : 'Sconosciuto'
-    const hostName = hostRaw.replace('👑', '').trim()
-    const epNum = (epEl && epEl.textContent) ? epEl.textContent.trim() : '1'
+    // Controlli sicuri per textContent (Gestione null/undefined)
+    let roomTitle = 'Watch Party'
+    if (roomTitleEl && roomTitleEl.textContent) {
+      roomTitle = roomTitleEl.textContent.trim()
+    }
+
+    let hostName = 'Sconosciuto'
+    if (hostEl && hostEl.textContent) {
+      hostName = hostEl.textContent.replace('👑', '').trim()
+    }
+
+    let epNum = '1'
+    if (epEl && epEl.textContent) {
+      epNum = epEl.textContent.trim()
+    }
 
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
@@ -64,14 +74,21 @@ presence.on('UpdateData', async () => {
     let details = 'Guardando un Anime'
     let statusState = ''
 
-    if (premidData) {
-        // FIX: Uso || per garantire che il valore di fallback sia usato se dataset è undefined
-        animeTitle = premidData.dataset.anime || animeTitle
-        epNumber = premidData.dataset.episode || epNumber
-        cover = premidData.dataset.cover || cover
-        details = animeTitle
+    // FIX TypeScript: Controllo esplicito se dataset esiste e contiene stringhe
+    if (premidData && premidData.dataset) {
+        if (premidData.dataset.anime) {
+            animeTitle = premidData.dataset.anime
+            details = animeTitle
+        }
+        if (premidData.dataset.episode) {
+            epNumber = premidData.dataset.episode
+        }
+        if (premidData.dataset.cover) {
+            cover = premidData.dataset.cover
+        }
         statusState = `Episodio ${epNumber}`
     } else {
+        // Fallback se il div nascosto non è ancora pronto
         const titleEl = document.querySelector('#episode-title-main')
         if (titleEl && titleEl.textContent) {
            details = titleEl.textContent.trim().split('\n')[0]
@@ -107,9 +124,12 @@ presence.on('UpdateData', async () => {
   // =========================================================================
   else if (path.includes('dettagli') || href.includes('post.php')) {
     const titleElement = document.querySelector('h1')
-    // FIX: Garantisco che title sia sempre una stringa valida
-    const title = (titleElement && titleElement.textContent) ? titleElement.textContent : document.title
-    const cleanTitle = title.replace('AnimeTvOnline - ', '').trim()
+    
+    let pageTitle = document.title
+    if (titleElement && titleElement.textContent) {
+        pageTitle = titleElement.textContent
+    }
+    const cleanTitle = pageTitle.replace('AnimeTvOnline - ', '').trim()
 
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
