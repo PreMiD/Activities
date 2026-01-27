@@ -20,9 +20,11 @@ presence.on('UpdateData', async () => {
     const epEl = document.querySelector('#current-ep-num')
     const video = document.querySelector('video#player') as HTMLVideoElement
 
-    const roomTitle = roomTitleEl ? roomTitleEl.textContent.trim() : 'Watch Party'
-    const hostName = hostEl ? hostEl.textContent.replace('👑', '').trim() : 'Sconosciuto'
-    const epNum = epEl ? epEl.textContent.trim() : '1'
+    // FIX: Controllo rigoroso su textContent per evitare errori TS
+    const roomTitle = (roomTitleEl && roomTitleEl.textContent) ? roomTitleEl.textContent.trim() : 'Watch Party'
+    const hostRaw = (hostEl && hostEl.textContent) ? hostEl.textContent : 'Sconosciuto'
+    const hostName = hostRaw.replace('👑', '').trim()
+    const epNum = (epEl && epEl.textContent) ? epEl.textContent.trim() : '1'
 
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
@@ -53,12 +55,9 @@ presence.on('UpdateData', async () => {
   // =========================================================================
   else if (path.includes('player') || href.includes('episodio') || searchParams.get('slug')) {
     
-    // Recuperiamo i dati dal div nascosto generato dal tuo player.js (Riga 538)
-    // Questo garantisce che il titolo sia corretto e non "Caricamento..."
     const premidData = document.getElementById('premid-data')
-    const video = document.querySelector('video') as HTMLVideoElement // Cerca il tag video nativo
+    const video = document.querySelector('video') as HTMLVideoElement 
     
-    // Valori di default
     let animeTitle = 'AnimeTvOnline'
     let epNumber = '1'
     let cover = 'https://i.imgur.com/kAalrFw.png'
@@ -66,45 +65,39 @@ presence.on('UpdateData', async () => {
     let statusState = ''
 
     if (premidData) {
+        // FIX: Uso || per garantire che il valore di fallback sia usato se dataset è undefined
         animeTitle = premidData.dataset.anime || animeTitle
         epNumber = premidData.dataset.episode || epNumber
-        cover = premidData.dataset.cover || cover // Usa la copertina dell'anime se disponibile!
+        cover = premidData.dataset.cover || cover
         details = animeTitle
         statusState = `Episodio ${epNumber}`
     } else {
-        // Fallback visivo se il JS non ha ancora creato il div
         const titleEl = document.querySelector('#episode-title-main')
-        if (titleEl) {
-           // Pulisce il titolo rimuovendo eventuali testi extra
+        if (titleEl && titleEl.textContent) {
            details = titleEl.textContent.trim().split('\n')[0]
            statusState = 'In Streaming'
         }
     }
 
     activityData = {
-      largeImageKey: cover, // Usa la copertina reale dell'anime!
+      largeImageKey: cover,
       largeImageText: animeTitle,
       details: details,
       state: statusState,
       buttons: [{ label: 'Guarda Episodio', url: href }]
     }
 
-    // --- SINCRONIZZAZIONE TEMPO PRECISA ---
-    // Funziona con i video MP4 caricati dal tuo player.js
-    // Nota: Non funzionerà con gli iframe esterni (es. stream.php) per limiti di sicurezza del browser.
+    // SINCRONIZZAZIONE TEMPO PRECISA
     if (video && !isNaN(video.duration)) {
        if (!video.paused) {
          activityData.smallImageKey = 'play'
          activityData.smallImageText = 'Guardando'
-         // Calcola il timestamp di inizio basandosi sulla posizione attuale del video
          activityData.startTimestamp = Date.now() - (video.currentTime * 1000)
        } else {
          activityData.smallImageKey = 'pause'
          activityData.smallImageText = 'In Pausa'
-         // Rimuoviamo il timestamp quando è in pausa per mostrare l'icona pausa fissa
        }
     } else {
-        // Se non trova il video (es. caricamento o iframe esterno), usa il tempo generico
         activityData.startTimestamp = browsingTimestamp
     }
   }
@@ -114,19 +107,21 @@ presence.on('UpdateData', async () => {
   // =========================================================================
   else if (path.includes('dettagli') || href.includes('post.php')) {
     const titleElement = document.querySelector('h1')
-    const title = titleElement ? titleElement.textContent : document.title
+    // FIX: Garantisco che title sia sempre una stringa valida
+    const title = (titleElement && titleElement.textContent) ? titleElement.textContent : document.title
+    const cleanTitle = title.replace('AnimeTvOnline - ', '').trim()
 
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: 'Sta guardando la scheda di:',
-      state: title?.replace('AnimeTvOnline - ', '').trim(),
+      state: cleanTitle,
       buttons: [{ label: 'Vedi Scheda', url: href }],
     }
   }
 
   // =========================================================================
-  // 4. ALTRE PAGINE (Home, Profilo, ecc)
+  // 4. ALTRE PAGINE
   // =========================================================================
   else {
     let stateText = 'Cercando un anime...'
