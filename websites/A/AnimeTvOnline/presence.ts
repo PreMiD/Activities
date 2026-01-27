@@ -20,7 +20,6 @@ presence.on('UpdateData', async () => {
     const epEl = document.querySelector('#current-ep-num')
     const video = document.querySelector('video#player') as HTMLVideoElement
 
-    // Controllo rigoroso per TypeScript (null | string -> string)
     let roomTitle = 'Watch Party'
     if (roomTitleEl && roomTitleEl.textContent) {
       roomTitle = roomTitleEl.textContent.trim()
@@ -68,23 +67,32 @@ presence.on('UpdateData', async () => {
     const premidData = document.getElementById('premid-data')
     const video = document.querySelector('video') as HTMLVideoElement 
     
-    // Valori di default (sicuramente stringhe)
     let animeTitle = 'AnimeTvOnline'
     let epNumber = '1'
     let cover = 'https://i.imgur.com/kAalrFw.png'
     let details = 'Guardando un Anime'
     let statusState = ''
 
-    // FIX TypeScript: Usiamo || per forzare il fallback se dataset.x è undefined
+    // FIX TypeScript TOTALE: Assegnazione sicura con variabili temporanee
     if (premidData && premidData.dataset) {
-        animeTitle = premidData.dataset.anime || animeTitle
-        epNumber = premidData.dataset.episode || epNumber
-        cover = premidData.dataset.cover || cover
+        const dsAnime = premidData.dataset.anime
+        if (dsAnime) {
+            animeTitle = dsAnime
+            details = animeTitle
+        }
+
+        const dsEp = premidData.dataset.episode
+        if (dsEp) {
+            epNumber = dsEp
+        }
+
+        const dsCover = premidData.dataset.cover
+        if (dsCover) {
+            cover = dsCover
+        }
         
-        details = animeTitle
         statusState = `Episodio ${epNumber}`
     } else {
-        // Fallback visivo se il JS non ha ancora creato il div
         const titleEl = document.querySelector('#episode-title-main')
         if (titleEl && titleEl.textContent) {
            details = titleEl.textContent.trim().split('\n')[0]
@@ -121,7 +129,6 @@ presence.on('UpdateData', async () => {
   else if (path.includes('dettagli') || href.includes('post.php')) {
     const titleElement = document.querySelector('h1')
     
-    // Controllo rigoroso textContent
     let pageTitle = document.title
     if (titleElement && titleElement.textContent) {
         pageTitle = titleElement.textContent
