@@ -12,7 +12,7 @@
   },
   "url": "animetvonline.org",
   "regExp": "^https?[:][/][/]animetvonline[.]org[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/thumbnail.png",
   "color": "#FF4545",
