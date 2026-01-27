@@ -20,7 +20,7 @@ presence.on('UpdateData', async () => {
     const epEl = document.querySelector('#current-ep-num')
     const video = document.querySelector('video#player') as HTMLVideoElement
 
-    // Controlli sicuri per textContent (Gestione null/undefined)
+    // Controllo rigoroso per TypeScript (null | string -> string)
     let roomTitle = 'Watch Party'
     if (roomTitleEl && roomTitleEl.textContent) {
       roomTitle = roomTitleEl.textContent.trim()
@@ -68,27 +68,23 @@ presence.on('UpdateData', async () => {
     const premidData = document.getElementById('premid-data')
     const video = document.querySelector('video') as HTMLVideoElement 
     
+    // Valori di default (sicuramente stringhe)
     let animeTitle = 'AnimeTvOnline'
     let epNumber = '1'
     let cover = 'https://i.imgur.com/kAalrFw.png'
     let details = 'Guardando un Anime'
     let statusState = ''
 
-    // FIX TypeScript: Controllo esplicito se dataset esiste e contiene stringhe
+    // FIX TypeScript: Usiamo || per forzare il fallback se dataset.x è undefined
     if (premidData && premidData.dataset) {
-        if (premidData.dataset.anime) {
-            animeTitle = premidData.dataset.anime
-            details = animeTitle
-        }
-        if (premidData.dataset.episode) {
-            epNumber = premidData.dataset.episode
-        }
-        if (premidData.dataset.cover) {
-            cover = premidData.dataset.cover
-        }
+        animeTitle = premidData.dataset.anime || animeTitle
+        epNumber = premidData.dataset.episode || epNumber
+        cover = premidData.dataset.cover || cover
+        
+        details = animeTitle
         statusState = `Episodio ${epNumber}`
     } else {
-        // Fallback se il div nascosto non è ancora pronto
+        // Fallback visivo se il JS non ha ancora creato il div
         const titleEl = document.querySelector('#episode-title-main')
         if (titleEl && titleEl.textContent) {
            details = titleEl.textContent.trim().split('\n')[0]
@@ -125,6 +121,7 @@ presence.on('UpdateData', async () => {
   else if (path.includes('dettagli') || href.includes('post.php')) {
     const titleElement = document.querySelector('h1')
     
+    // Controllo rigoroso textContent
     let pageTitle = document.title
     if (titleElement && titleElement.textContent) {
         pageTitle = titleElement.textContent
