@@ -8,8 +8,8 @@
   "service": "WOW TV",
   "altnames": ["WOW", "WOWTV"],
   "description": {
-    "en": "With WOW you can watch unlimited amounts of TV Shows, Movies and Live Sports anywhere and anytime.",
-    "de": "Mit WOW kannst Du jederzeit und überall unbegrenzt Serien, Filme und Live-Sport schauen."
+    "de": "Mit WOW kannst Du jederzeit und überall unbegrenzt Serien, Filme und Live-Sport schauen.",
+    "en": "With WOW you can watch unlimited amounts of TV Shows, Movies and Live Sports anywhere and anytime."
   },
   "url": "wowtv.de",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wowtv[.]de[/]",

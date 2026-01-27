@@ -34,7 +34,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    type: ActivityType.Watching
+    type: ActivityType.Watching,
   }
 
   const strings = await getStrings()
@@ -42,61 +42,62 @@ presence.on('UpdateData', async () => {
   const { pathname } = window.location
 
   switch (true) {
-    case pathname.includes("home"): {
+    case pathname.includes('home'):
       presenceData.state = strings.browsing
-    }
       break
 
-    case pathname.includes("cinema"): {
-      presenceData.state = "In Filmen stöbern..."
-    }
+    case pathname.includes('cinema'):
+      presenceData.state = 'In Filmen stöbern...'
       break
 
-    case pathname.includes("tv"): {
-      presenceData.state = "In Serien stöbern..."
-    }
+    case pathname.includes('tv'):
+      presenceData.state = 'In Serien stöbern...'
       break
 
-    case pathname.includes("sports"): {
-      presenceData.state = "In Sport stöbern..."
-    }
+    case pathname.includes('sports'):
+      presenceData.state = 'In Sport stöbern...'
       break
 
-    case pathname.includes("my-stuff"): {
-      presenceData.state = "Watchlist durchsuchen..."
-    }
+    case pathname.includes('my-stuff'):
+      presenceData.state = 'Watchlist durchsuchen...'
       break
 
-    case pathname.includes("search"): {
+    case pathname.includes('search'):
       presenceData.state = strings.searchSomething
-    }
       break
 
-    case pathname.includes("asset"): {
-      let titleLogo = document.querySelector('img.program-details__title')?.getAttribute('alt');
-      let titleText = document.querySelector('h1.program-details__title')?.textContent;
+    // Viewing A Movies / Shows Page
+    case pathname.includes('asset'): {
+      const titleLogo = document.querySelector('img.program-details__title')?.getAttribute('alt')
+      const titleText = document.querySelector('h1.program-details__title')?.textContent
 
       if ((titleLogo || titleText) && !privacy) {
-        presenceData.state = titleLogo + " ansehen..." ? titleLogo : titleText + " ansehen..." 
+        presenceData.state = `${titleLogo} ansehen...` ? titleLogo : `${titleText} +  ansehen...`
       }
-      else { presenceData.state = "Etwas ansehen..." }
-
+      else { presenceData.state = 'Etwas ansehen...' }
     }
       break
 
-    case pathname.includes("playback"): {
+    // Main Video Player Site
+    case pathname.includes('playback'): {
       presenceData.statusDisplayType = StatusDisplayType.Details
 
       const video = document.querySelector<HTMLVideoElement>('video')
-      if (!video) return;
+      if (!video) {
+        return
+      }
 
-      let title = document.querySelector('[data-testid="metadata-title"]')?.textContent
-      let episode = document.querySelector('p.contentPrimary')?.textContent
+      const title = document.querySelector('[data-testid="metadata-title"]')?.textContent
+      const episode = document.querySelector('p.contentPrimary')?.textContent
 
+      // If Video Is Part Of A Show
       if (document.querySelector('[data-testid="more-episodes-toggle"]')) {
         privacy ? presenceData.details = strings.watchingSeries : presenceData.details = title
-        if (!privacy) presenceData.state = episode
-      } else {
+        if (!privacy) {
+          presenceData.state = episode
+        }
+      }
+      else {
         privacy ? presenceData.details = strings.watchingMovie : presenceData.details = title
       }
 
@@ -113,7 +114,8 @@ presence.on('UpdateData', async () => {
           presenceData.startTimestamp = timestamps[0]
           presenceData.endTimestamp = timestamps[1]
         }
-      } else {
+      }
+      else {
         presenceData.smallImageKey = Assets.Pause
         presenceData.smallImageText = strings.pause
       }
