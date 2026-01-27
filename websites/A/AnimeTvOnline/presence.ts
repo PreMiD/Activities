@@ -11,17 +11,13 @@ presence.on('UpdateData', async () => {
 
   let activityData: any = {}
 
-  // =========================================================================
-  // 1. WATCH PARTY (NUOVO BLOCCO)
-  // =========================================================================
+  // 1. WATCH PARTY
   if (path.includes('watch_together') || href.includes('watch_together.php')) {
-    // Selettori semplici e sicuri
     const roomTitleEl = document.querySelector('.room-title')
     const hostEl = document.querySelector('.host-badge')
     const epEl = document.querySelector('#current-ep-num')
     const video = document.querySelector('video') as HTMLVideoElement
 
-    // Recupero dati con fallback sicuri (evita l'errore undefined)
     const roomTitle = roomTitleEl && roomTitleEl.textContent ? roomTitleEl.textContent.trim() : 'Watch Party'
     const hostText = hostEl && hostEl.textContent ? hostEl.textContent.replace('👑', '').trim() : 'Host'
     const epNum = epEl && epEl.textContent ? epEl.textContent.trim() : '1'
@@ -34,43 +30,37 @@ presence.on('UpdateData', async () => {
       buttons: [{ label: 'Entra nella Stanza', url: href }],
     }
 
-    // Sincronizzazione Tempo (Se il video esiste ed è in play)
     if (video && !Number.isNaN(video.duration) && !video.paused) {
       activityData.startTimestamp = Date.now() - (video.currentTime * 1000)
       activityData.smallImageKey = 'play'
       activityData.smallImageText = 'In Riproduzione'
-    } else {
+    }
+    else {
       activityData.startTimestamp = browsingTimestamp
       activityData.smallImageKey = 'pause'
       activityData.smallImageText = 'In Pausa / Lobby'
     }
   }
-
-  // =========================================================================
-  // 2. PLAYER STANDARD (BASATO SUL TUO ORIGINALE)
-  // =========================================================================
+  // 2. PLAYER STANDARD
   else if ((path.includes('player') || href.includes('episodio'))) {
-    
-    // Logica originale per recuperare i titoli
     const playerTitleElement = document.querySelector('#episode-title-main')
     const epSpan = document.querySelector('#current-ep-num-display')
     const activeEpBtn = document.querySelector('.ep-btn.active')
     const currentSlug = searchParams.get('slug')
-    
-    // Recupero Dati (come nell'originale)
+
     const animeTitle = playerTitleElement && playerTitleElement.textContent ? playerTitleElement.textContent.trim() : 'AnimeTvOnline'
-    
+
     let epNumber = '?'
     if (epSpan && epSpan.textContent) {
       epNumber = epSpan.textContent.trim()
-    } else if (activeEpBtn && activeEpBtn.textContent) {
+    }
+    else if (activeEpBtn && activeEpBtn.textContent) {
       epNumber = activeEpBtn.textContent.trim()
     }
 
-    // Configurazione Base
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
-      startTimestamp: browsingTimestamp, // Default timestamp
+      startTimestamp: browsingTimestamp,
       details: animeTitle === 'Caricamento...' ? 'Scegliendo un Anime...' : animeTitle,
       state: `Episodio ${epNumber}`,
       largeImageText: animeTitle,
@@ -79,7 +69,6 @@ presence.on('UpdateData', async () => {
       ],
     }
 
-    // AGGIUNTA: Pulsante Scheda (Originale)
     if (currentSlug) {
       activityData.buttons.push({
         label: 'Scheda Anime',
@@ -87,24 +76,19 @@ presence.on('UpdateData', async () => {
       })
     }
 
-    // AGGIUNTA: Sincronizzazione Tempo Precisa (Nuova Feature)
-    // Cerca il video, se c'è sovrascrive il timestamp generico con quello preciso
     const video = document.querySelector('video') as HTMLVideoElement
     if (video && !Number.isNaN(video.duration) && !video.paused) {
-       activityData.startTimestamp = Date.now() - (video.currentTime * 1000)
-       activityData.smallImageKey = 'play'
-       activityData.smallImageText = 'Guardando'
-    } else if (video && video.paused) {
-       // Se è in pausa, togliamo il timestamp per mostrare l'icona pausa
-       delete activityData.startTimestamp
-       activityData.smallImageKey = 'pause'
-       activityData.smallImageText = 'In Pausa'
+      activityData.startTimestamp = Date.now() - (video.currentTime * 1000)
+      activityData.smallImageKey = 'play'
+      activityData.smallImageText = 'Guardando'
+    }
+    else if (video && video.paused) {
+      delete activityData.startTimestamp
+      activityData.smallImageKey = 'pause'
+      activityData.smallImageText = 'In Pausa'
     }
   }
-
-  // =========================================================================
-  // 3. SCHEDA DETTAGLI (ORIGINALE)
-  // =========================================================================
+  // 3. SCHEDA DETTAGLI
   else if (path.includes('dettagli') || href.includes('post.php')) {
     const titleElement = document.querySelector('h1')
     const title = titleElement && titleElement.textContent ? titleElement.textContent : document.title
@@ -119,10 +103,7 @@ presence.on('UpdateData', async () => {
       ],
     }
   }
-
-  // =========================================================================
-  // 4. PROFILO (ORIGINALE)
-  // =========================================================================
+  // 4. PROFILO
   else if (path.includes('profilo')) {
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
@@ -131,10 +112,7 @@ presence.on('UpdateData', async () => {
       state: 'Utente AnimeTvOnline',
     }
   }
-
-  // =========================================================================
-  // 5. HOMEPAGE (ORIGINALE)
-  // =========================================================================
+  // 5. HOMEPAGE
   else if (path === '/' || path.includes('index') || path === '' || path.includes('login')) {
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
@@ -143,10 +121,7 @@ presence.on('UpdateData', async () => {
       state: 'Cercando un anime da guardare...',
     }
   }
-
-  // =========================================================================
-  // 6. DEFAULT (ORIGINALE)
-  // =========================================================================
+  // 6. DEFAULT
   else {
     activityData = {
       largeImageKey: 'https://i.imgur.com/kAalrFw.png',
