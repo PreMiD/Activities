@@ -11,88 +11,133 @@ presence.on('UpdateData', async () => {
 
   let activityData: any = {}
 
-  // 1. PLAYER
-  const playerTitleElement = document.querySelector('#episode-title-main')
+  // =========================================================================
+  // 1. WATCH PARTY (PRIORITÀ MASSIMA)
+  // =========================================================================
+  if (path.includes('watch_together') || href.includes('watch_together.php')) {
+    const roomTitleEl = document.querySelector('.room-title')
+    const hostEl = document.querySelector('.host-badge')
+    const epEl = document.querySelector('#current-ep-num')
+    const video = document.querySelector('video#player') as HTMLVideoElement
 
-  if (playerTitleElement && (path.includes('player') || href.includes('episodio'))) {
-    const animeTitle = playerTitleElement.textContent.trim()
-    const epSpan = document.querySelector('#current-ep-num-display')
-    const activeEpBtn = document.querySelector('.ep-btn.active')
-
-    let epNumber = '?'
-    if (epSpan && epSpan.textContent.trim()) {
-      epNumber = epSpan.textContent.trim()
-    }
-    else if (activeEpBtn) {
-      epNumber = activeEpBtn.textContent.trim()
-    }
-
-    const currentSlug = searchParams.get('slug')
+    const roomTitle = roomTitleEl ? roomTitleEl.textContent.trim() : 'Watch Party'
+    const hostName = hostEl ? hostEl.textContent.replace('👑', '').trim() : 'Sconosciuto'
+    const epNum = epEl ? epEl.textContent.trim() : '1'
 
     activityData = {
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
-      startTimestamp: browsingTimestamp,
-      details: animeTitle === 'Caricamento...' ? 'Scegliendo un Anime...' : animeTitle,
-      state: `Episodio ${epNumber}`,
-      largeImageText: animeTitle,
-      buttons: [
-        {
-          label: 'Guarda Episodio',
-          url: href,
-        },
-      ],
+      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
+      largeImageText: roomTitle,
+      details: `👑 Stanza di ${hostName}`,
+      state: `${roomTitle} (Ep. ${epNum})`,
+      buttons: [{ label: 'Entra nella Stanza', url: href }],
     }
 
-    if (currentSlug) {
-      activityData.buttons.push({
-        label: 'Scheda Anime',
-        url: `https://animetvonline.org/dettagli.php?slug=${currentSlug}`,
-      })
+    // SINCRONIZZAZIONE TEMPO WATCHPARTY
+    if (video && !isNaN(video.duration)) {
+      if (!video.paused) {
+        activityData.startTimestamp = Date.now() - (video.currentTime * 1000)
+        activityData.smallImageKey = 'play'
+        activityData.smallImageText = 'In Riproduzione'
+      } else {
+        activityData.smallImageKey = 'pause'
+        activityData.smallImageText = 'In Pausa'
+      }
+    } else {
+      activityData.startTimestamp = browsingTimestamp
+      activityData.state = 'In attesa nella Lobby...'
     }
   }
+
+  // =========================================================================
+  // 2. PLAYER STANDARD (SOLO / STREAMING CLASSICO)
+  // =========================================================================
+  else if (path.includes('player') || href.includes('episodio') || searchParams.get('slug')) {
+    
+    // Recuperiamo i dati dal div nascosto generato dal tuo player.js (Riga 538)
+    // Questo garantisce che il titolo sia corretto e non "Caricamento..."
+    const premidData = document.getElementById('premid-data')
+    const video = document.querySelector('video') as HTMLVideoElement // Cerca il tag video nativo
+    
+    // Valori di default
+    let animeTitle = 'AnimeTvOnline'
+    let epNumber = '1'
+    let cover = 'https://i.imgur.com/kAalrFw.png'
+    let details = 'Guardando un Anime'
+    let statusState = ''
+
+    if (premidData) {
+        animeTitle = premidData.dataset.anime || animeTitle
+        epNumber = premidData.dataset.episode || epNumber
+        cover = premidData.dataset.cover || cover // Usa la copertina dell'anime se disponibile!
+        details = animeTitle
+        statusState = `Episodio ${epNumber}`
+    } else {
+        // Fallback visivo se il JS non ha ancora creato il div
+        const titleEl = document.querySelector('#episode-title-main')
+        if (titleEl) {
+           // Pulisce il titolo rimuovendo eventuali testi extra
+           details = titleEl.textContent.trim().split('\n')[0]
+           statusState = 'In Streaming'
+        }
+    }
+
+    activityData = {
+      largeImageKey: cover, // Usa la copertina reale dell'anime!
+      largeImageText: animeTitle,
+      details: details,
+      state: statusState,
+      buttons: [{ label: 'Guarda Episodio', url: href }]
+    }
+
+    // --- SINCRONIZZAZIONE TEMPO PRECISA ---
+    // Funziona con i video MP4 caricati dal tuo player.js
+    // Nota: Non funzionerà con gli iframe esterni (es. stream.php) per limiti di sicurezza del browser.
+    if (video && !isNaN(video.duration)) {
+       if (!video.paused) {
+         activityData.smallImageKey = 'play'
+         activityData.smallImageText = 'Guardando'
+         // Calcola il timestamp di inizio basandosi sulla posizione attuale del video
+         activityData.startTimestamp = Date.now() - (video.currentTime * 1000)
+       } else {
+         activityData.smallImageKey = 'pause'
+         activityData.smallImageText = 'In Pausa'
+         // Rimuoviamo il timestamp quando è in pausa per mostrare l'icona pausa fissa
+       }
+    } else {
+        // Se non trova il video (es. caricamento o iframe esterno), usa il tempo generico
+        activityData.startTimestamp = browsingTimestamp
+    }
+  }
+
+  // =========================================================================
+  // 3. SCHEDA DETTAGLI
+  // =========================================================================
   else if (path.includes('dettagli') || href.includes('post.php')) {
-    // 2. SCHEDA DETTAGLI
     const titleElement = document.querySelector('h1')
     const title = titleElement ? titleElement.textContent : document.title
 
     activityData = {
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
+      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: 'Sta guardando la scheda di:',
       state: title?.replace('AnimeTvOnline - ', '').trim(),
-      buttons: [
-        {
-          label: 'Vedi Scheda',
-          url: href,
-        },
-      ],
+      buttons: [{ label: 'Vedi Scheda', url: href }],
     }
   }
-  else if (path.includes('profilo')) {
-    // 3. PROFILO
-    activityData = {
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
-      startTimestamp: browsingTimestamp,
-      details: 'Visualizzando un profilo',
-      state: 'Utente AnimeTvOnline',
-    }
-  }
-  else if (path === '/' || path.includes('index') || path === '' || path.includes('login')) {
-    // 4. HOMEPAGE
-    activityData = {
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
-      startTimestamp: browsingTimestamp,
-      details: 'In Homepage',
-      state: 'Cercando un anime da guardare...',
-    }
-  }
+
+  // =========================================================================
+  // 4. ALTRE PAGINE (Home, Profilo, ecc)
+  // =========================================================================
   else {
-    // 5. DEFAULT
+    let stateText = 'Cercando un anime...'
+    if (path.includes('profilo')) stateText = 'Visualizzando un Profilo'
+    if (path.includes('login')) stateText = 'Effettuando l\'accesso'
+
     activityData = {
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
+      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
       startTimestamp: browsingTimestamp,
       details: 'Navigando su AnimeTvOnline',
-      state: 'Streaming Anime ITA',
+      state: stateText,
     }
   }
 
