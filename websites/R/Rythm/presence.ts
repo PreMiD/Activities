@@ -147,7 +147,7 @@ function getColorKeyFromHsl(rgb: RGB): ColorKey {
   const [h, s, l] = rgbToHsl(rgb)
 
   // Beige (warm + bright + medium saturation)
-  if (l >= 70 && l <= 80 && s < 30) {
+  if ((l >= 50 && l <= 80) && (s <= 30)) {
     return 'beige'
   }
   if (s < 30 && l > 90)
@@ -225,6 +225,8 @@ function pickLogoFromTheme(
       return isPlaying ? background.LogoPlayingWhite : background.LogoPausedWhite
     case 'black':
       return isPlaying ? background.LogoPlayingBlack : background.LogoPausedBlack
+    case 'beige':
+      return isPlaying ? background.LogoPlayingBeige : background.LogoPausedBeige
     default:
       return isPlaying ? background.LogoPlaying : background.LogoPaused
   }

@@ -19,17 +19,21 @@
     "zh": "Rythm 是款 Discord 音乐机器人，带有网页控制面板，你可以浏览曲目、在语音频道控制播放，或直接在浏览器中管理队列。",
     "zh-tw": "Rythm 是款 Discord 音樂機器人，提供網頁控制面板，你可以瀏覽曲目、在語音頻道控制播放，或直接在瀏覽器中管理佇列。"
   },
+
   "url": "rythm.fm",
   "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/logo.gif",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/thumbnail.png",
   "color": "#147AFE",
   "category": "music",
-  "tags": [
-    "music",
-    "media"
-  ],
+  "tags": ["music", "media"],
   "settings": [
+
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+
     {
       "id": "lang",
       "multiLanguage": true
@@ -40,6 +44,7 @@
       "icon": "fad fa-user-secret",
       "value": false
     },
+
     {
       "id": "hidePaused",
       "title": "Hide Paused",
@@ -49,6 +54,7 @@
         "privacy": false
       }
     },
+
     {
       "id": "hideRepeat",
       "title": "Hide Repeat Mode",
@@ -58,6 +64,7 @@
         "privacy": false
       }
     },
+
     {
       "id": "timesTamps",
       "title": "Hide Timestamps",
@@ -67,6 +74,18 @@
         "privacy": false
       }
     },
+
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fa-solid fa-wand-magic-sparkles",
+      "value": 0,
+      "if": {
+        "privacy": false
+      },
+      "values": ["Song Title", "Artist Name", "Activity Name"]
+    },
+
     {
       "id": "displayType",
       "title": "Pick Status Display",
@@ -96,6 +115,7 @@
         "Rythm logo (always animated)"
       ]
     },
+
     {
       "id": "buttonType",
       "title": "Pick button (small image) style",
@@ -111,6 +131,7 @@
         "Rythm logo (always animated)"
       ]
     },
+
     {
       "id": "buttonTypeColor",
       "title": "Pick color logos",
@@ -138,6 +159,7 @@
         "Black"
       ]
     },
+
     {
       "id": "buttonBgColor",
       "title": "Pick logo background theme",
@@ -152,5 +174,6 @@
         "Transparent"
       ]
     }
+
   ]
 }
