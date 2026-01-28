@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "357901042895028226",
+    "name": "revaliiuwu"
+  },
+  "service": "Moodle UTC",
+  "description": {
+    "en": "Affiche l'activité sur le Moodle de l'UTC"
+  },
+  "url": "moodle.utc.fr",
+  "regExp": "moodle\\.utc\\.fr",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/oMApXis.png",
+  "thumbnail": "https://i.imgur.com/45X0M1t.jpeg",
+  "color": "#ffcc00",
+  "category": "other",
+  "tags": [
+    "utc",
+    "education"
+  ]
+}
+
