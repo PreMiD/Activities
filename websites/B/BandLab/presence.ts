@@ -37,8 +37,7 @@ presence.on('UpdateData', async () => {
     buttonViewPage: 'general.buttonViewPage',
     watching: 'general.watching',
     buttonWatchVideo: 'general.buttonWatchVideo',
-    videoTarget: 'bandlab.videoTarget',
-    searchUnspecified: 'general. searchSomething',
+    searchUnspecified: 'general.searchSomething',
     search: 'general.searchFor',
     searchHint: 'general.search',
   })
