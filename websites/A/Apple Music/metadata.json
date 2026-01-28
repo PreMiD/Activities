@@ -15,6 +15,10 @@
       "id": "241929388403195914"
     },
     {
+      "name": "iamhv",
+      "id": "1250340827163529226"
+    },
+    {
       "name": "Kyrie",
       "id": "368399721494216706"
     }
@@ -33,7 +37,7 @@
     "beta.music.apple.com",
     "classical.music.apple.com"
   ],
-  "regExp": "^https?[:][/][/](music|beta[.]music|classical[.]music)[.]apple[.]com[/]",
+  "regExp": "^https?:\\/\\/(music|beta\\.music)\\.apple\\.com\\/|^https?:\\/\\/classical\\.apple\\.com\\/",
   "version": "1.7.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Apple%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Apple%20Music/assets/thumbnail.png",
