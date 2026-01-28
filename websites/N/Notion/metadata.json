@@ -23,9 +23,9 @@
     "mail.notion.so"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*notion[.](so|com|site)[/]",
-  "version": "2.0.2",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Notion/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Notion/assets/thumbnail.png",
+  "version": "2.0.3",
+  "logo": "https://i.imgur.com/IVQpP2j.png",
+  "thumbnail": "https://i.imgur.com/zfnIlqS.png",
   "color": "#000000",
   "category": "other",
   "tags": [
