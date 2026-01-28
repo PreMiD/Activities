@@ -5,44 +5,6 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-interface MWMediaMeta {
-  title: string
-  type: 'show' | 'movie'
-  tmdbId: string
-  year: number
-  poster: string
-}
-
-interface MWControls {
-  isPlaying: boolean
-  isLoading: boolean
-}
-
-interface MWSeason {
-  number: number
-  tmdbId: string
-  title: string
-}
-
-interface MWEpisode {
-  number: number
-  tmdbId: string
-  title: string
-}
-
-interface MWProgress {
-  time: number
-  duration: number
-}
-
-interface MWPlayerData {
-  meta: MWMediaMeta
-  controls: MWControls
-  season?: MWSeason
-  episode?: MWEpisode
-  progress: MWProgress
-}
-
 presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
   const [
@@ -67,22 +29,24 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  if (pathname === '' || pathname.startsWith('/search') || pathname.startsWith('/discover')) {
-    presenceData.startTimestamp = browsingTimestamp
-  }
-  else if (pathname.startsWith('/media')) {
-    const { meta: media } = await presence.getPageVariable<{
-      meta: { player: MWPlayerData }
-    }>('meta')
-    if (!media?.player)
+  if (pathname.startsWith('/media')) {
+    const video = document.querySelector<HTMLVideoElement>('video#video-element')
+    if (!video)
       return
 
-    const { meta, progress, episode, season, controls } = media.player
+    const title = document.title
+    const isPlaying = !video.paused
+    const isLoading = video.readyState < 3
 
-    presenceData.largeImageKey = meta.poster
+    const titleMatch = title.match(/S(\d+)\s*-\s*E(\d+)/)
 
-    if ((progress.time && progress.duration) !== 0) {
-      presenceData.state = createProgressBar(progress.time, progress.duration, {
+    presenceData.name = title
+    presenceData.details = titleMatch
+      ? `Season ${titleMatch[1]}, Episode ${titleMatch[2]}`
+      : title
+
+    if (video.currentTime && video.duration) {
+      presenceData.state = createProgressBar(video.currentTime, video.duration, {
         barLengthString,
         barFill,
         barTrack,
@@ -93,25 +57,22 @@ presence.on('UpdateData', async () => {
     if (showWatchButton) {
       presenceData.buttons = [
         {
-          label: `Watch ${capitalize(meta.type)}`,
+          label: titleMatch ? 'Watch Show' : 'Watch Movie',
           url: href,
         },
       ]
     }
 
-    const title = `${meta.title} (${meta.year})`
-    presenceData.name = document.title
-
-    if (meta.type === 'show' && episode && season)
-      presenceData.details = `Season ${season.number}, Episode ${episode.number}`
-    else presenceData.details = title
-
-    if (controls.isLoading) {
+    if (isLoading) {
       presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/0.gif'
       presenceData.smallImageText = 'Loading'
     }
-    else if (controls.isPlaying) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(document.querySelector('video')!)
+    else if (isPlaying) {
+      const currentTime = Math.floor(Date.now() / 1000)
+      const videoElapsed = Math.floor(video.currentTime)
+      const timeRemaining = Math.floor(video.duration - video.currentTime)
+      presenceData.startTimestamp = currentTime - videoElapsed
+      presenceData.endTimestamp = currentTime + timeRemaining
       presenceData.smallImageKey = Assets.Play
       presenceData.smallImageText = 'Playing'
     }
@@ -119,6 +80,10 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Pause
       presenceData.smallImageText = 'Paused'
     }
+  }
+  else {
+    presenceData.startTimestamp = browsingTimestamp
+    presenceData.name = 'Browsing'
   }
 
   if (!showTimestamp)
@@ -150,8 +115,4 @@ function createProgressBar(
   return `${barFill.repeat(numChars)}${barTrack.repeat(
     barLength - numChars,
   )}  ${showLabel ? `${progress}%` : ''}`.trimEnd()
-}
-
-function capitalize(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1)
 }
