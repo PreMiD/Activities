@@ -1,6 +1,7 @@
 name: Feature Request
 description: Request a new feature for an existing activity
 labels: [feature request]
+type: Feature
 body:
   - type: markdown
     attributes:
