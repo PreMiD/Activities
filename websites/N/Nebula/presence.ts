@@ -92,7 +92,7 @@ function getVideoDetails(
   presenceData.details = document
     .querySelector(videoDescriptionLabel)
     ?.querySelector('h1')
-    ?.textContent ?? "Watching a video"
+    ?.textContent ?? 'Watching a video'
   presenceData.state = document
     .querySelector(videoDescriptionLabel)
     ?.querySelector('h2')
