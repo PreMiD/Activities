@@ -87,7 +87,7 @@ function getVideoDetails(
   href: string,
 ): void {
   const videoElement = document.querySelector('video')
-  const videoDescriptionLabel = '[aria-label=\'video description\']'
+  const videoDescriptionLabel = '[aria-label=\'video details\']'
 
   presenceData.details = document
     .querySelector(videoDescriptionLabel)
