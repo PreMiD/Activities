@@ -21,7 +21,7 @@
     "seiga.nicovideo.jp"
   ],
   "regExp": "^https?[:][/][/](www|live|seiga)[.]nicovideo[.]jp[/]",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/niconico/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/niconico/assets/thumbnail.jpg",
   "color": "#272727",
@@ -31,8 +31,6 @@
     "live",
     "manga"
   ],
-  "iframe": true,
-  "iFrameRegExp": "dc-cdn[.]ads[.]nicovideo[.]jp",
   "settings": [
     {
       "id": "privacy",
