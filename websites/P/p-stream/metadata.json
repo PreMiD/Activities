@@ -1,0 +1,95 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "XSWY",
+    "id": "1294601384028672000"
+  },
+  "contributors": [
+    {
+      "name": "jordaar",
+      "id": "705490775932403795"
+    },
+    {
+      "name": "lechixy",
+      "id": "391511241786654721"
+    }
+  ],
+  "service": "P-Stream",
+  "description": {
+    "en": "Presence for P-Stream movies and series. (Not affiliated with P-Stream)"
+  },
+  "url": [
+    "pstream.mov",
+    "beta.pstream.mov",
+    "mirror.pstream.mov"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pstream[.]mov[/]",
+  "version": "1.0.0",
+  "logo": "https://iili.io/friz2yB.png",
+  "thumbnail": "https://iili.io/frKnt8F.webp",
+  "color": "#6D76DD",
+  "category": "videos",
+  "tags": [
+    "movie",
+    "series",
+    "streaming",
+    "video",
+    "entertainment"
+  ],
+  "settings": [
+    {
+      "id": "showWhileMain",
+      "title": "Show While Main Page",
+      "icon": "fad fa-play-circle",
+      "value": true
+    },
+    {
+      "id": "showWhileWatching",
+      "title": "Show While Watching",
+      "icon": "fad fa-play-circle",
+      "value": true
+    },
+    {
+      "id": "progress",
+      "title": "Show Progress Bar",
+      "icon": "fad fa-bars-progress",
+      "value": true
+    },
+    {
+      "id": "barLength",
+      "if": {
+        "progress": true
+      },
+      "title": "Bar Length",
+      "value": "8",
+      "placeholder": "8"
+    },
+    {
+      "id": "barTrack",
+      "if": {
+        "progress": true
+      },
+      "title": "Track Character",
+      "value": "▱",
+      "placeholder": "▱"
+    },
+    {
+      "id": "barFill",
+      "if": {
+        "progress": true
+      },
+      "title": "Fill Character",
+      "value": "▰",
+      "placeholder": "▰"
+    },
+    {
+      "id": "showLabel",
+      "if": {
+        "progress": true
+      },
+      "title": "Show Label",
+      "value": true
+    }
+  ]
+}
