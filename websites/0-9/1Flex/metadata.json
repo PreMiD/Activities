@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1171471152695214094",
+    "name": "ownernotfound"
+  },
+  "service": "1Flex",
+  "description": {
+    "en": "The 1 Stop of Everything, Discover and watch amazing movies and TV shows"
+  },
+  "url": "www.1flex.nl",
+  "regExp": "^https?[:][/][/](www[.])?1flex[.]nl[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/1Flex/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/1Flex/assets/thumbnail.png",
+  "color": "#E53935",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "anime",
+    "tv",
+    "torrent",
+    "games",
+    "livetv",
+    "sports"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
+}

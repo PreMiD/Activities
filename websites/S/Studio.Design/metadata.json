@@ -15,7 +15,7 @@
   },
   "url": "app.studio.design",
   "regExp": "^https?[:][/][/]app[.]studio[.]design[/]",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Studio.Design/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Studio.Design/assets/thumbnail.png",
   "color": "#222222",
@@ -32,7 +32,8 @@
       "id": "privacy",
       "title": "Privacy Mode",
       "icon": "fad fa-user-secret",
-      "value": false
+      "value": false,
+      "description": "Hide project names and page names"
     }
   ]
 }
