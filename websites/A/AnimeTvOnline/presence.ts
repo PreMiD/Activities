@@ -9,15 +9,14 @@ presence.on('UpdateData', async () => {
   const href = document.location.href
   const searchParams = new URLSearchParams(document.location.search)
 
-  // FIX: Admin request - Change 'any' to 'PresenceData'
-  let activityData: PresenceData = {}
+  // FIX: Usiamo 'Partial<PresenceData>' per poter costruire l'oggetto passo dopo passo senza errori
+  let activityData: Partial<PresenceData> = {}
 
   // 1. WATCH PARTY
   if (path.includes('watch_together') || href.includes('watch_together.php')) {
     const roomTitleEl = document.querySelector('.room-title')
     const hostEl = document.querySelector('.host-badge')
     const epEl = document.querySelector('#current-ep-num')
-    // FIX: Admin request - Use generics instead of 'as HTMLVideoElement'
     const video = document.querySelector<HTMLVideoElement>('video')
 
     const roomTitle = roomTitleEl && roomTitleEl.textContent ? roomTitleEl.textContent.trim() : 'Watch Party'
@@ -25,7 +24,6 @@ presence.on('UpdateData', async () => {
     const epNum = epEl && epEl.textContent ? epEl.textContent.trim() : '1'
 
     activityData = {
-      // FIX: Admin request - Revert to CDN URL instead of Imgur
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       largeImageText: roomTitle,
       details: `👑 Stanza di ${hostText}`,
@@ -60,7 +58,6 @@ presence.on('UpdateData', async () => {
     }
 
     activityData = {
-      // FIX: Admin request - Revert to CDN URL
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
       details: animeTitle === 'Caricamento...' ? 'Scegliendo un Anime...' : animeTitle,
@@ -72,13 +69,15 @@ presence.on('UpdateData', async () => {
     }
 
     if (currentSlug) {
-      activityData.buttons.push({
-        label: 'Scheda Anime',
-        url: `https://animetvonline.org/dettagli.php?slug=${currentSlug}`,
-      })
+      // TypeScript sa che buttons esiste grazie alla definizione sopra, ma per sicurezza verifichiamo o inizializziamo se necessario
+      if (activityData.buttons) {
+          activityData.buttons.push({
+            label: 'Scheda Anime',
+            url: `https://animetvonline.org/dettagli.php?slug=${currentSlug}`,
+          })
+      }
     }
 
-    // FIX: Admin request - Use generics
     const video = document.querySelector<HTMLVideoElement>('video')
 
     if (video && !Number.isNaN(video.duration) && !video.paused) {
@@ -97,7 +96,6 @@ presence.on('UpdateData', async () => {
     const title = titleElement && titleElement.textContent ? titleElement.textContent : document.title
 
     activityData = {
-      // FIX: Admin request - Revert to CDN URL
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
       details: 'Sta guardando la scheda di:',
@@ -110,7 +108,6 @@ presence.on('UpdateData', async () => {
   // 4. PROFILO
   else if (path.includes('profilo')) {
     activityData = {
-      // FIX: Admin request - Revert to CDN URL
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
       details: 'Visualizzando un profilo',
@@ -120,7 +117,6 @@ presence.on('UpdateData', async () => {
   // 5. HOMEPAGE
   else if (path === '/' || path.includes('index') || path === '' || path.includes('login')) {
     activityData = {
-      // FIX: Admin request - Revert to CDN URL
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
       details: 'In Homepage',
@@ -130,13 +126,11 @@ presence.on('UpdateData', async () => {
   // 6. DEFAULT
   else {
     activityData = {
-      // FIX: Admin request - Revert to CDN URL
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
       details: 'Navigando su AnimeTvOnline',
       state: 'Streaming Anime ITA',
     }
   }
-
-  presence.setActivity(activityData)
+  presence.setActivity(activityData as PresenceData)
 })
