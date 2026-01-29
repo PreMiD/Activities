@@ -9,21 +9,24 @@ presence.on('UpdateData', async () => {
   const href = document.location.href
   const searchParams = new URLSearchParams(document.location.search)
 
-  let activityData: any = {}
+  // FIX: Admin request - Change 'any' to 'PresenceData'
+  let activityData: PresenceData = {}
 
   // 1. WATCH PARTY
   if (path.includes('watch_together') || href.includes('watch_together.php')) {
     const roomTitleEl = document.querySelector('.room-title')
     const hostEl = document.querySelector('.host-badge')
     const epEl = document.querySelector('#current-ep-num')
-    const video = document.querySelector('video') as HTMLVideoElement
+    // FIX: Admin request - Use generics instead of 'as HTMLVideoElement'
+    const video = document.querySelector<HTMLVideoElement>('video')
 
     const roomTitle = roomTitleEl && roomTitleEl.textContent ? roomTitleEl.textContent.trim() : 'Watch Party'
     const hostText = hostEl && hostEl.textContent ? hostEl.textContent.replace('👑', '').trim() : 'Host'
     const epNum = epEl && epEl.textContent ? epEl.textContent.trim() : '1'
 
     activityData = {
-      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
+      // FIX: Admin request - Revert to CDN URL instead of Imgur
+      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       largeImageText: roomTitle,
       details: `👑 Stanza di ${hostText}`,
       state: `${roomTitle} (Ep. ${epNum})`,
@@ -34,8 +37,7 @@ presence.on('UpdateData', async () => {
       activityData.startTimestamp = Date.now() - (video.currentTime * 1000)
       activityData.smallImageKey = 'play'
       activityData.smallImageText = 'In Riproduzione'
-    }
-    else {
+    } else {
       activityData.startTimestamp = browsingTimestamp
       activityData.smallImageKey = 'pause'
       activityData.smallImageText = 'In Pausa / Lobby'
@@ -53,13 +55,13 @@ presence.on('UpdateData', async () => {
     let epNumber = '?'
     if (epSpan && epSpan.textContent) {
       epNumber = epSpan.textContent.trim()
-    }
-    else if (activeEpBtn && activeEpBtn.textContent) {
+    } else if (activeEpBtn && activeEpBtn.textContent) {
       epNumber = activeEpBtn.textContent.trim()
     }
 
     activityData = {
-      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
+      // FIX: Admin request - Revert to CDN URL
+      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
       details: animeTitle === 'Caricamento...' ? 'Scegliendo un Anime...' : animeTitle,
       state: `Episodio ${epNumber}`,
@@ -76,13 +78,14 @@ presence.on('UpdateData', async () => {
       })
     }
 
-    const video = document.querySelector('video') as HTMLVideoElement
+    // FIX: Admin request - Use generics
+    const video = document.querySelector<HTMLVideoElement>('video')
+
     if (video && !Number.isNaN(video.duration) && !video.paused) {
       activityData.startTimestamp = Date.now() - (video.currentTime * 1000)
       activityData.smallImageKey = 'play'
       activityData.smallImageText = 'Guardando'
-    }
-    else if (video && video.paused) {
+    } else if (video && video.paused) {
       delete activityData.startTimestamp
       activityData.smallImageKey = 'pause'
       activityData.smallImageText = 'In Pausa'
@@ -94,7 +97,8 @@ presence.on('UpdateData', async () => {
     const title = titleElement && titleElement.textContent ? titleElement.textContent : document.title
 
     activityData = {
-      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
+      // FIX: Admin request - Revert to CDN URL
+      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
       details: 'Sta guardando la scheda di:',
       state: title?.replace('AnimeTvOnline - ', '').trim(),
@@ -106,7 +110,8 @@ presence.on('UpdateData', async () => {
   // 4. PROFILO
   else if (path.includes('profilo')) {
     activityData = {
-      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
+      // FIX: Admin request - Revert to CDN URL
+      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
       details: 'Visualizzando un profilo',
       state: 'Utente AnimeTvOnline',
@@ -115,7 +120,8 @@ presence.on('UpdateData', async () => {
   // 5. HOMEPAGE
   else if (path === '/' || path.includes('index') || path === '' || path.includes('login')) {
     activityData = {
-      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
+      // FIX: Admin request - Revert to CDN URL
+      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
       details: 'In Homepage',
       state: 'Cercando un anime da guardare...',
@@ -124,7 +130,8 @@ presence.on('UpdateData', async () => {
   // 6. DEFAULT
   else {
     activityData = {
-      largeImageKey: 'https://i.imgur.com/kAalrFw.png',
+      // FIX: Admin request - Revert to CDN URL
+      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
       startTimestamp: browsingTimestamp,
       details: 'Navigando su AnimeTvOnline',
       state: 'Streaming Anime ITA',
