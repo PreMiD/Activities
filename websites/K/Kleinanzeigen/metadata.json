@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "apiVersion": 1,
+  "author": {
+    "id": "860122608682795028",
+    "name": "itsmarian.mc"
+  },
+  "service": "Kleinanzeigen",
+  "description": {
+    "de": "Kleinanzeigen.de ist Deutschlands größter Kleinanzeigenmarkt für den Kauf und Verkauf von Artikeln, Dienstleistungen und Immobilien.",
+    "en": "Kleinanzeigen.de is Germany's largest classifieds marketplace for buying and selling items, services and real estate."
+  },
+  "url": [
+    "www.kleinanzeigen.de",
+    "kleinanzeigen.de"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kleinanzeigen[.]de[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kleinanzeigen/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kleinanzeigen/assets/thumbnail.png",
+  "color": "#26A269",
+  "category": "other",
+  "tags": [
+    "shopping",
+    "marketplace",
+    "classifieds",
+    "selling",
+    "buying",
+    "german"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}
