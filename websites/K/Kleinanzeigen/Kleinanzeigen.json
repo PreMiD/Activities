@@ -1,0 +1,314 @@
+{
+  "kleinanzeigen.viewingAd": {
+    "description": "Shown when viewing an ad",
+    "message": "Viewing an ad"
+  },
+  "kleinanzeigen.seller": {
+    "description": "Shown for seller",
+    "message": "Seller"
+  },
+  "kleinanzeigen.unknown": {
+    "description": "Shown when something is unknown",
+    "message": "Unknown"
+  },
+  "kleinanzeigen.topSatisfaction": {
+    "description": "TOP Satisfaction badge",
+    "message": "TOP Satisfaction"
+  },
+  "kleinanzeigen.veryFriendly": {
+    "description": "Very Friendly badge",
+    "message": "Very Friendly"
+  },
+  "kleinanzeigen.reliable": {
+    "description": "Reliable badge",
+    "message": "Reliable"
+  },
+  "kleinanzeigen.viewAd": {
+    "description": "Button to view ad",
+    "message": "View Ad"
+  },
+  "kleinanzeigen.viewSeller": {
+    "description": "Button to view seller",
+    "message": "View Seller"
+  },
+  "kleinanzeigen.searchingFor": {
+    "description": "Shown when searching",
+    "message": "Searching for"
+  },
+  "kleinanzeigen.page": {
+    "description": "Page indicator",
+    "message": "Page"
+  },
+  "kleinanzeigen.of": {
+    "description": "Of separator",
+    "message": "of"
+  },
+  "kleinanzeigen.more": {
+    "description": "More items indicator",
+    "message": "more"
+  },
+  "kleinanzeigen.noFilters": {
+    "description": "No filters applied",
+    "message": "No Filters"
+  },
+  "kleinanzeigen.viewSearch": {
+    "description": "Button to view search",
+    "message": "View Search"
+  },
+  "kleinanzeigen.managingAds": {
+    "description": "Managing ads page",
+    "message": "Managing ads"
+  },
+  "kleinanzeigen.myAds": {
+    "description": "My ads section",
+    "message": "My Ads"
+  },
+  "kleinanzeigen.readingMessages": {
+    "description": "Reading messages",
+    "message": "Reading messages"
+  },
+  "kleinanzeigen.inbox": {
+    "description": "Inbox section",
+    "message": "Inbox"
+  },
+  "kleinanzeigen.inSettings": {
+    "description": "In settings page",
+    "message": "In settings"
+  },
+  "kleinanzeigen.managingProfileInfo": {
+    "description": "Managing profile information",
+    "message": "Managing profile information"
+  },
+  "kleinanzeigen.managingAccountSettings": {
+    "description": "Managing account settings",
+    "message": "Managing account settings"
+  },
+  "kleinanzeigen.managingPaymentMethods": {
+    "description": "Managing payment methods",
+    "message": "Managing payment methods"
+  },
+  "kleinanzeigen.managingPur": {
+    "description": "Managing Kleinanzeigen Pur",
+    "message": "Managing Kleinanzeigen Pur"
+  },
+  "kleinanzeigen.activePur": {
+    "description": "Active Pur membership",
+    "message": "Active Kleinanzeigen Pur membership"
+  },
+  "kleinanzeigen.inactivePur": {
+    "description": "Inactive Pur membership",
+    "message": "Inactive Kleinanzeigen Pur membership"
+  },
+  "kleinanzeigen.managingDataProtection": {
+    "description": "Managing data protection settings",
+    "message": "Managing data protection settings"
+  },
+  "kleinanzeigen.managingEmailSettings": {
+    "description": "Managing email settings",
+    "message": "Managing email settings"
+  },
+  "kleinanzeigen.viewingAbout": {
+    "description": "Viewing about page",
+    "message": "Viewing information about Kleinanzeigen"
+  },
+  "kleinanzeigen.viewingHelp": {
+    "description": "Viewing help page",
+    "message": "Viewing the help and feedback page"
+  },
+  "kleinanzeigen.managingAccount": {
+    "description": "Managing account",
+    "message": "Managing account"
+  },
+  "kleinanzeigen.browsingWatchlist": {
+    "description": "Browsing watchlist",
+    "message": "Browsing watchlist"
+  },
+  "kleinanzeigen.savedAds": {
+    "description": "Saved ads",
+    "message": "Saved Ads"
+  },
+  "kleinanzeigen.managingUsers": {
+    "description": "Managing users",
+    "message": "Managing users"
+  },
+  "kleinanzeigen.followedSellers": {
+    "description": "Followed sellers",
+    "message": "Followed Sellers"
+  },
+  "kleinanzeigen.managingSearches": {
+    "description": "Managing searches",
+    "message": "Managing searches"
+  },
+  "kleinanzeigen.savedSearches": {
+    "description": "Saved searches",
+    "message": "Saved Searches"
+  },
+  "kleinanzeigen.posting": {
+    "description": "Posting an ad",
+    "message": "Posting"
+  },
+  "kleinanzeigen.in": {
+    "description": "In category/location",
+    "message": "in"
+  },
+  "kleinanzeigen.creatingAd": {
+    "description": "Creating an ad",
+    "message": "Creating ad"
+  },
+  "kleinanzeigen.chooseCategory": {
+    "description": "Choosing category",
+    "message": "Choose your category"
+  },
+  "kleinanzeigen.viewingSellerProfile": {
+    "description": "Viewing seller profile",
+    "message": "Viewing a seller:"
+  },
+  "kleinanzeigen.sellerProfile": {
+    "description": "Seller profile",
+    "message": "Seller Profile"
+  },
+  "kleinanzeigen.viewProfile": {
+    "description": "View profile button",
+    "message": "View Profile"
+  },
+  "kleinanzeigen.managingNotifications": {
+    "description": "Managing notifications",
+    "message": "Managing notifications"
+  },
+  "kleinanzeigen.onHomepage": {
+    "description": "On homepage",
+    "message": "On the homepage"
+  },
+  "kleinanzeigen.loggedOut": {
+    "description": "When user is logging out of the account",
+    "message": "Logged out of account"
+  },
+  "kleinanzeigen.browsingOffers": {
+    "description": "Browsing offers",
+    "message": "Browsing offers"
+  },
+  "kleinanzeigen.browsingCategory": {
+    "description": "Browsing category",
+    "message": "Browsing category"
+  },
+  "kleinanzeigen.browsingAds": {
+    "description": "Browsing ads",
+    "message": "Browsing ads"
+  },
+  "kleinanzeigen.unknownSearch": {
+    "description": "Unknown search term",
+    "message": "Unknown search"
+  },
+  "kleinanzeigen.vendor": {
+    "description": "Vendor category",
+    "message": "Vendor"
+  },
+  "kleinanzeigen.privat": {
+    "description": "Privat category",
+    "message": "Privat"
+  },
+  "kleinanzeigen.commercial": {
+    "description": "Commercial category",
+    "message": "Commercial"
+  },
+  "kleinanzeigen.adType": {
+    "description": "Ad Type",
+    "message": "Type"
+  },
+  "kleinanzeigen.offers": {
+    "description": "Offers category",
+    "message": "Offers"
+  },
+  "kleinanzeigen.requests": {
+    "description": "Requests category",
+    "message": "Requests"
+  },
+  "kleinanzeigen.shipping": {
+    "description": "Shipping category",
+    "message": "Shipping"
+  },
+  "kleinanzeigen.yes": {
+    "description": "Yes value",
+    "message": "Yes"
+  },
+  "kleinanzeigen.no": {
+    "description": "No value",
+    "message": "No"
+  },
+  "kleinanzeigen.globalColor": {
+    "description": "Color filter",
+    "message": "Color"
+  },
+  "kleinanzeigen.globalCondition": {
+    "description": "Condition filter",
+    "message": "Condition"
+  },
+  "kleinanzeigen.globalMaterial": {
+    "description": "Material filter",
+    "message": "Material"
+  },
+  "kleinanzeigen.new": {
+    "description": "New condition",
+    "message": "New"
+  },
+  "kleinanzeigen.asNew": {
+    "description": "As New condition",
+    "message": "As New"
+  },
+  "kleinanzeigen.likeNew": {
+    "description": "Like New condition",
+    "message": "Like New"
+  },
+  "kleinanzeigen.good": {
+    "description": "Good condition",
+    "message": "Good"
+  },
+  "kleinanzeigen.acceptable": {
+    "description": "Acceptable condition",
+    "message": "Acceptable"
+  },
+  "kleinanzeigen.black": {
+    "description": "Black color",
+    "message": "Black"
+  },
+  "kleinanzeigen.white": {
+    "description": "White color",
+    "message": "White"
+  },
+  "kleinanzeigen.gold": {
+    "description": "Gold color",
+    "message": "Gold"
+  },
+  "kleinanzeigen.silver": {
+    "description": "Silver color",
+    "message": "Silver"
+  },
+  "kleinanzeigen.blue": {
+    "description": "Blue color",
+    "message": "Blue"
+  },
+  "kleinanzeigen.red": {
+    "description": "Red color",
+    "message": "Red"
+  },
+  "kleinanzeigen.green": {
+    "description": "Green color",
+    "message": "Green"
+  },
+  "kleinanzeigen.rubber": {
+    "description": "Rubber material",
+    "message": "Rubber"
+  },
+  "kleinanzeigen.plastic": {
+    "description": "Plastic material",
+    "message": "Plastic"
+  },
+  "kleinanzeigen.metal": {
+    "description": "Metal material",
+    "message": "Metal"
+  },
+  "kleinanzeigen.wood": {
+    "description": "Wood material",
+    "message": "Wood"
+  }
+}

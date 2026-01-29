@@ -29,7 +29,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = privacy
           ? 'Project dashboard'
           : `${document?.title?.replace(
-            / \| Studio(\.Design)?$/, // Global: Studio.Design / Japanese: Studio
+            / \| Studio(?:\.Design)?$/, // Global: Studio.Design / Japanese: Studio
             '',
           )} | Dashboard`
         // Home
@@ -47,31 +47,35 @@ presence.on('UpdateData', async () => {
           else if (pathname.includes('/showcase'))
             presenceData.state = 'Viewing Showcase...'
           else presenceData.state = ''
-          // CMS
         }
+        // CMS
         else if (pathname.includes('/cms')) {
           presenceData.state = 'Managing CMS...'
         }
-        // CMS - Forms
+        // Forms
         else if (pathname.includes('/forms')) {
           presenceData.state = 'Viewing Forms...'
         }
-        // CMS - Analytics
+        // Analytics
         else if (pathname.includes('/analytics')) {
           presenceData.state = 'Viewing Analytics...'
         }
-        // CMS - Plan
+        // Plan & Billing
         else if (pathname.includes('/plan')) {
-          presenceData.state = 'Managing Plan...'
+          presenceData.state = 'Managing Plan & Billing...'
         }
-        // Payment
       }
-      else if (pathname === '/payment') {
+      // Payment
+      else if (pathname.includes('/payment')) {
         presenceData.details = 'Managing Payment Settings...'
       }
       // Workspace
       else if (pathname.includes('/workspace/')) {
         presenceData.details = 'Managing Workspace...'
+      }
+      // Learn
+      else if (pathname.includes('/learn')) {
+        presenceData.details = 'Viewing Learning Resources...'
       }
       // Editor
       else if (
@@ -83,16 +87,17 @@ presence.on('UpdateData', async () => {
           presenceData.state = 'Editing Pages...'
         }
         else {
+          // Base Selector
+          // - English: Left panel
+          // - Japanese: 左パネル
+          const leftPanel = document.querySelector('[aria-label="左パネル"], [aria-label="Left panel"]')
+          const tooltipSpans = leftPanel?.querySelectorAll('span.v-popper--has-tooltip')
+
           // Project Name
-          presenceData.details = `${
-            document.querySelector('.HeaderNavProject > div.block > p')
-              ?.textContent
-          } | Design Editor`
+          presenceData.details = `${tooltipSpans?.[0]?.textContent ?? 'Unknown'} | Design Editor`
+
           // Page Title
-          presenceData.state = `Editing: ${
-            document.querySelector('.HeaderNavPage > div.block > p')
-              ?.textContent
-          }`
+          presenceData.state = `Editing: ${tooltipSpans?.[1]?.textContent ?? 'Unknown'}`
         }
       }
   }
