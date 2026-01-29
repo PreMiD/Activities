@@ -274,7 +274,7 @@ async function handleSeriesContent(presenceData: PresenceData, video: HTMLVideoE
     if (episodeTitle && episodeTitle !== cachedEpisodeTitle) {
       cachedEpisodeTitle = episodeTitle
       cachedSynopsis = null
-      for (const el of document.querySelectorAll('.episode-editorial__editorial-title___b3mHa')) {
+      for (const el of document.querySelectorAll('[class*="episode-editorial__editorial-title"]')) {
         if (el.textContent === episodeTitle) {
           cachedSynopsis = el.nextSibling?.textContent?.trim() || null
           break
