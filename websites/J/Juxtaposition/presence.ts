@@ -26,11 +26,11 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (document.location.pathname.startsWith('/users/')) {
-    presenceData.details = `Visiting ${(document.querySelector('meta[property="og:title"]') as HTMLMetaElement | null)?.content.replace(/\s*\(@.*?\)|\s*@\S+/, '').trim() || 'User'}'s profile`
+    presenceData.details = `Visiting ${(document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.content.replace(/\s*\(@.*?\)|\s*@\S+/, '').trim() || 'User'}'s profile`
     presenceData.smallImageKey = document.querySelector<HTMLImageElement>('.user-icon')?.src
-    presenceData.smallImageText = `@${((document.querySelector('meta[property="og:title"], meta[name="twitter:title"], meta[itemprop="name"]') as HTMLMetaElement | null)?.content.match(/@(\w+)/)?.[1] ?? '')}`
+    presenceData.smallImageText = `@${((document.querySelector<HTMLMetaElement>('meta[property="og:title"], meta[name="twitter:title"], meta[itemprop="name"]')?.content.match(/@(\w+)/)?.[1] ?? '')}`
     if (showButtons) {
-      presenceData.buttons = [{ label: 'View Profile', url: (document.querySelector('meta[property="og:url"]') as HTMLMetaElement | null)?.content ?? document.location.href }]
+      presenceData.buttons = [{ label: 'View Profile', url: (document.querySelector<HTMLImageElement>('meta[property="og:url"]') ?.content ?? document.location.href }]
     }
   }
   else if (document.location.pathname === '/friend_messages') {
