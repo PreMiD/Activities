@@ -9,7 +9,6 @@ presence.on('UpdateData', async () => {
   const href = document.location.href
   const searchParams = new URLSearchParams(document.location.search)
 
-  // FIX: Usiamo 'Partial<PresenceData>' per poter costruire l'oggetto passo dopo passo senza errori
   let activityData: Partial<PresenceData> = {}
 
   // 1. WATCH PARTY
@@ -35,7 +34,8 @@ presence.on('UpdateData', async () => {
       activityData.startTimestamp = Date.now() - (video.currentTime * 1000)
       activityData.smallImageKey = 'play'
       activityData.smallImageText = 'In Riproduzione'
-    } else {
+    }
+    else {
       activityData.startTimestamp = browsingTimestamp
       activityData.smallImageKey = 'pause'
       activityData.smallImageText = 'In Pausa / Lobby'
@@ -53,7 +53,8 @@ presence.on('UpdateData', async () => {
     let epNumber = '?'
     if (epSpan && epSpan.textContent) {
       epNumber = epSpan.textContent.trim()
-    } else if (activeEpBtn && activeEpBtn.textContent) {
+    }
+    else if (activeEpBtn && activeEpBtn.textContent) {
       epNumber = activeEpBtn.textContent.trim()
     }
 
@@ -69,12 +70,11 @@ presence.on('UpdateData', async () => {
     }
 
     if (currentSlug) {
-      // TypeScript sa che buttons esiste grazie alla definizione sopra, ma per sicurezza verifichiamo o inizializziamo se necessario
       if (activityData.buttons) {
-          activityData.buttons.push({
-            label: 'Scheda Anime',
-            url: `https://animetvonline.org/dettagli.php?slug=${currentSlug}`,
-          })
+        activityData.buttons.push({
+          label: 'Scheda Anime',
+          url: `https://animetvonline.org/dettagli.php?slug=${currentSlug}`,
+        })
       }
     }
 
@@ -84,7 +84,8 @@ presence.on('UpdateData', async () => {
       activityData.startTimestamp = Date.now() - (video.currentTime * 1000)
       activityData.smallImageKey = 'play'
       activityData.smallImageText = 'Guardando'
-    } else if (video && video.paused) {
+    }
+    else if (video && video.paused) {
       delete activityData.startTimestamp
       activityData.smallImageKey = 'pause'
       activityData.smallImageText = 'In Pausa'
@@ -132,5 +133,6 @@ presence.on('UpdateData', async () => {
       state: 'Streaming Anime ITA',
     }
   }
+
   presence.setActivity(activityData as PresenceData)
 })
