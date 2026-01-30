@@ -14,13 +14,11 @@ interface Attributes {
 }
 
 interface AudioPlayer {
-  _nowPlayingItem: {
+  nowPlayingItem: {
     attributes: Attributes
   }
-  _currentPlaybackProgress: number
-  _paused: boolean
-  _stopped: boolean
-  _playbackDidStart: boolean
+  currentPlaybackProgress: number
+  isPlaying: boolean
 }
 
 const presence = new Presence({
@@ -71,11 +69,18 @@ presence.on('UpdateData', async () => {
     ?.querySelector('div#video-container')
     ?.querySelector<HTMLVideoElement>('video#apple-music-video-player')
 
-  const audioPlayer = await presence.getPageVariable<{ audioPlayer: AudioPlayer }>('audioPlayer').then(res => res?.audioPlayer)
+  const audioPlayer = await presence.getPageVariable('audioPlayer.nowPlayingItem.attributes', 'audioPlayer.isPlaying', 'audioPlayer.currentPlaybackProgress').then((res) => {
+    return {
+      nowPlayingItem: {
+        attributes: res['audioPlayer.nowPlayingItem.attributes'],
+      },
+      isPlaying: res['audioPlayer.isPlaying'],
+      currentPlaybackProgress: res['audioPlayer.currentPlaybackProgress'],
+    }
+  }).catch(() => null) as AudioPlayer | null
 
-  if (audioPlayer?._nowPlayingItem) {
-    const paused = audioPlayer._paused || audioPlayer._stopped || !audioPlayer._playbackDidStart
-    const { attributes } = audioPlayer._nowPlayingItem
+  if (audioPlayer?.nowPlayingItem?.attributes) {
+    const { attributes } = audioPlayer.nowPlayingItem
     const { artwork, name, artistName, albumName, durationInMillis, url } = attributes
     const duration = durationInMillis / 1000
 
@@ -84,9 +89,9 @@ presence.on('UpdateData', async () => {
       artist: artistName,
       artwork: artwork.url.replace('{w}', String(artwork.width)).replace('{h}', String(artwork.height)),
       duration,
-      elapsedTime: audioPlayer._currentPlaybackProgress * duration,
+      elapsedTime: audioPlayer.currentPlaybackProgress * duration,
       name,
-      paused,
+      paused: !audioPlayer.isPlaying,
       url,
     }
   }
