@@ -104,7 +104,7 @@ presence.on('UpdateData', async () => {
     = await presence.getPageVariable<{ meta?: { player?: MWPlayerData } }>('meta')
 
   const media = pageMeta?.meta?.player
-  const video = document.querySelector('video') as HTMLVideoElement | null
+  const video = document.querySelector<HTMLVideoElement>('video')
 
   if (!media || !video)
     return
@@ -140,10 +140,7 @@ presence.on('UpdateData', async () => {
       label: `Watch ${capitalize(meta.type)}`,
       url: href,
     },
-    {
-      label: 'Join the P-Stream Community',
-      url: 'https://discord.gg/cYEt84BdXy',
-    },
+
   ]
 
   presenceData.largeImageKey
