@@ -61,9 +61,9 @@ presence.on('UpdateData', async () => {
           [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
       }
       else if (pathname.startsWith('/watch/')) {
-        const ownerElement = document.querySelector(
+        const ownerElement = document.querySelectorAll(
           'a[data-anchor-area="video_information"]:not(:has(div))',
-        )
+        ).item(1)
         const imageElement = document.querySelector('meta[property="og:image"]')
 
         presenceData.details = document.querySelector('main h1')?.textContent
@@ -161,8 +161,8 @@ presence.on('UpdateData', async () => {
         )?.textContent ?? ''
         presenceData.state = `${
           (
-            document.querySelector('[class^=\'___channel-name-anchor___\']')
-            ?? document.querySelector('[class^=\'___group-name-anchor___\']')
+            document.querySelector('a.label')
+            ?? document.querySelector('a.channel-name-anchor')
           )?.textContent
         } - ${pathname.match(/lv\d+/)?.[0]}`
         presenceData.smallImageKey = Assets.Live
