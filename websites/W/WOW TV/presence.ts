@@ -5,8 +5,8 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets { // Other default assets can be found at index.d.ts
-  Logo = '',
+enum ActivityAssets {
+  Logo = 'https://i.imgur.com/a1KWJiO.png',
 }
 
 async function getStrings() {
@@ -39,7 +39,7 @@ presence.on('UpdateData', async () => {
 
   const strings = await getStrings()
 
-  const { pathname } = window.location
+  const { pathname } = document.location
 
   switch (true) {
     case pathname.includes('home'):
