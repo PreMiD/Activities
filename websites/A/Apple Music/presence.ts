@@ -79,7 +79,7 @@ presence.on('UpdateData', async () => {
     }
   }).catch(() => null) as AudioPlayer | null
 
-  if (audioPlayer?.nowPlayingItem) {
+  if (audioPlayer?.nowPlayingItem?.attributes) {
     const { attributes } = audioPlayer.nowPlayingItem
     const { artwork, name, artistName, albumName, durationInMillis, url } = attributes
     const duration = durationInMillis / 1000
