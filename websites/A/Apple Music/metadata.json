@@ -82,6 +82,12 @@
       "value": true
     },
     {
+      "id": "buttons",
+      "title": "Show buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
       "id": "listening",
       "title": "Enable listening",
       "icon": "fad fa-ear",
