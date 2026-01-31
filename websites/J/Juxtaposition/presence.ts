@@ -49,7 +49,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Browsing all Communities'
   }
   else if (document.location.pathname.includes('titles/')) {
-    presenceData.details = `Browsing ${document.querySelector('h2.community-title')?.textContent.trim().replace(/ Community$/i, '')} Community`
+    presenceData.details = `Browsing ${document.querySelector<HTMLHeadingElement>('h2.community-title')?.textContent.trim().replace(/ Community$/i, '')} Community`
     presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.user-icon')?.src
   }
   if (privacyMode) {
