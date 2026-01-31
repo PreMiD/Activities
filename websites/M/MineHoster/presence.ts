@@ -365,7 +365,7 @@ presence.on('UpdateData', async () => {
       const modalElement = document.querySelector('.EditScheduleModal___StyledH-sc-wh9db9-0.fXkIyt')
       const scheduleMatch = pathname.match(/\/schedules\/(\d+)/)
 
-      presenceData.smallImageKey = 'https://i.imgur.com/SZnTpjl.png'
+      presenceData.smallImageKey = 'https://i.imgur.com/JUcDHQD.png'
       presenceData.details = strings.viewingSchedules
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
@@ -387,7 +387,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
         : strings.managingUsers
-      presenceData.smallImageKey = 'https://i.imgur.com/uK18ECO.png'
+      presenceData.smallImageKey = 'https://i.imgur.com/5yGqlXI.png'
 
       const modalElement = document.querySelector('.EditSubuserModal___StyledH-sc-1hon03w-1.josEpU')
       if (modalElement) {
