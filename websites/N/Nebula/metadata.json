@@ -5,13 +5,19 @@
     "id": "189690228292845568",
     "name": "angelolz"
   },
+  "contributors": [
+    {
+      "id": "791491962620346420",
+      "name": "DiaDuckk"
+    }
+  ],
   "service": "Nebula",
   "description": {
     "en": "Nebula is the home of smart, thoughtful videos, podcasts, and classes from your favorite creators."
   },
   "url": "nebula.tv",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*nebula[.]tv[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nebula/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nebula/assets/thumbnail.jpeg",
   "color": "#67bef5",
