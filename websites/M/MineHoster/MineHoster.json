@@ -1,0 +1,382 @@
+{
+  "minehoster.homepage": {
+    "description": "User is on the homepage",
+    "message": "On the Homepage"
+  },
+  "minehoster.scrollingOffers": {
+    "description": "User is scrolling through offers on the homepage",
+    "message": "Scrolling through offers"
+  },
+  "minehoster.rentMinecraftServer": {
+    "description": "User is preparing to rent a Minecraft server",
+    "message": "Preparing to rent a Minecraft server"
+  },
+  "minehoster.selectingBase": {
+    "description": "User is selecting base configuration",
+    "message": "Selecting base configuration"
+  },
+  "minehoster.selectingOptions": {
+    "description": "User is selecting additional options",
+    "message": "Selecting additional options"
+  },
+  "minehoster.confirmingServer": {
+    "description": "User is confirming the server",
+    "message": "Confirming the server"
+  },
+  "minehoster.customizingServer": {
+    "description": "User is customizing the server",
+    "message": "Customizing the server"
+  },
+  "minehoster.onDashboard": {
+    "description": "User is on dashboard",
+    "message": "On dashboard"
+  },
+  "minehoster.lookingDomain": {
+    "description": "User is looking for a domain",
+    "message": "Looking for a domain"
+  },
+  "minehoster.browsingPricing": {
+    "description": "User is browsing pricing options",
+    "message": "Browsing pricing options"
+  },
+  "minehoster.lookingCloudServers": {
+    "description": "User is looking at Cloud Servers",
+    "message": "Looking at Cloud Servers"
+  },
+  "minehoster.lookingTechnology": {
+    "description": "User is looking at the technology",
+    "message": "Looking at the technology"
+  },
+  "minehoster.checkingServers": {
+    "description": "User is checking servers and performance",
+    "message": "Checking servers and performance"
+  },
+  "minehoster.lookingSupport": {
+    "description": "User is looking at support",
+    "message": "Looking at support"
+  },
+  "minehoster.checkingSupportCenter": {
+    "description": "User is checking Support Center",
+    "message": "Checking Support Center"
+  },
+  "minehoster.lookingWebInterface": {
+    "description": "User is looking at the web interface",
+    "message": "Looking at the web interface"
+  },
+  "minehoster.checkingFeatures": {
+    "description": "User is checking features and settings",
+    "message": "Checking features and settings"
+  },
+  "minehoster.redirectedPayment": {
+    "description": "User is being redirected to payment",
+    "message": "Being redirected to payment"
+  },
+  "minehoster.completingPurchase": {
+    "description": "User is completing the purchase",
+    "message": "Completing the purchase"
+  },
+  "minehoster.lookingCompany": {
+    "description": "User is looking at the company",
+    "message": "Looking at the company"
+  },
+  "minehoster.checkingAbout": {
+    "description": "User is checking about us information",
+    "message": "Checking about us information"
+  },
+  "minehoster.readingParents": {
+    "description": "User is reading information for parents",
+    "message": "Reading at information for parents"
+  },
+  "minehoster.readingSafety": {
+    "description": "User is reading safety and security info",
+    "message": "Reading safety and security info"
+  },
+  "minehoster.readingNonProfit": {
+    "description": "User is reading information for non-profit organizations",
+    "message": "Reading the information for non-profit organizations"
+  },
+  "minehoster.readingOffers": {
+    "description": "User is reading non-profit offers",
+    "message": "Reading non-profit offers"
+  },
+  "minehoster.lookingJobs": {
+    "description": "User is looking at job opportunities",
+    "message": "Looking at the job opportunities"
+  },
+  "minehoster.checkingPositions": {
+    "description": "User is checking available positions",
+    "message": "Checking available positions"
+  },
+  "minehoster.readingPartner": {
+    "description": "User is reading the partner program",
+    "message": "Reading the partner program"
+  },
+  "minehoster.scrollingPartners": {
+    "description": "User is scrolling through partners",
+    "message": "Scrolling through partners"
+  },
+  "minehoster.readingImprint": {
+    "description": "User is reading the imprint",
+    "message": "Reading the imprint"
+  },
+  "minehoster.readingPrivacy": {
+    "description": "User is reading the privacy policy",
+    "message": "Reading the privacy policy"
+  },
+  "minehoster.readingTerms": {
+    "description": "User is reading the terms of service",
+    "message": "Reading the terms of service"
+  },
+  "minehoster.readingCancellation": {
+    "description": "User is reading the cancellation policy",
+    "message": "Reading the cancellation policy"
+  },
+  "minehoster.onMineHoster": {
+    "description": "User is on MineHoster",
+    "message": "Auf MineHoster"
+  },
+  "minehoster.browsingWebsite": {
+    "description": "User is browsing the website",
+    "message": "Durchsucht die Website"
+  },
+  "minehoster.serverConsole": {
+    "description": "User is at the server console",
+    "message": "Server Console"
+  },
+  "minehoster.managingServer": {
+    "description": "User is managing a server",
+    "message": "Managing Server"
+  },
+  "minehoster.managingActiveServer": {
+    "description": "User is managing an active server",
+    "message": "Managing Active Server"
+  },
+  "minehoster.running": {
+    "description": "Server is running",
+    "message": "Running"
+  },
+  "minehoster.managingStartingServer": {
+    "description": "User is managing a starting server",
+    "message": "Starting Server"
+  },
+  "minehoster.starting": {
+    "description": "Server is starting",
+    "message": "Starting"
+  },
+  "minehoster.managingStoppingServer": {
+    "description": "User is managing a stopping server",
+    "message": "Stopping Server"
+  },
+  "minehoster.stopping": {
+    "description": "Server is stopping",
+    "message": "Stopping"
+  },
+  "minehoster.managingOfflineServer": {
+    "description": "User is managing an offline server",
+    "message": "Managing Offline Server"
+  },
+  "minehoster.offline": {
+    "description": "Server is offline",
+    "message": "Offline"
+  },
+  "minehoster.viewServer": {
+    "description": "Button label to view server",
+    "message": "View Server"
+  },
+  "minehoster.editing": {
+    "description": "User is editing a file",
+    "message": "Editing"
+  },
+  "minehoster.creating": {
+    "description": "User is creating a file",
+    "message": "Creating a file"
+  },
+  "minehoster.fileManagement": {
+    "description": "User is in file management",
+    "message": "File Management"
+  },
+  "minehoster.databaseManagement": {
+    "description": "User is managing databases",
+    "message": "Database Management"
+  },
+  "minehoster.databases": {
+    "description": "Plural form of databases",
+    "message": "databases"
+  },
+  "minehoster.creatingDatabase": {
+    "description": "User is creating a new database",
+    "message": "Creating a new database"
+  },
+  "minehoster.viewingSchedules": {
+    "description": "User is viewing schedules",
+    "message": "Viewing Schedules"
+  },
+  "minehoster.managingSchedules": {
+    "description": "User is managing schedules",
+    "message": "Managing Schedules"
+  },
+  "minehoster.creatingSchedule": {
+    "description": "User is creating a new schedule",
+    "message": "Creating a new schedule"
+  },
+  "minehoster.managingSchedule": {
+    "description": "User is managing a schedule",
+    "message": "Managing Schedule"
+  },
+  "minehoster.managingPlan": {
+    "description": "User is managing a plan (with number)",
+    "message": "Managing plan"
+  },
+  "minehoster.userManagement": {
+    "description": "User is in user management",
+    "message": "User Management"
+  },
+  "minehoster.managingUsers": {
+    "description": "User is managing users",
+    "message": "Managing Users"
+  },
+  "minehoster.creatingUser": {
+    "description": "User is creating a new user",
+    "message": "Creating a new user"
+  },
+  "minehoster.backupManagement": {
+    "description": "User is managing backups",
+    "message": "Backup Management"
+  },
+  "minehoster.backups": {
+    "description": "Plural form of backups",
+    "message": "backups"
+  },
+  "minehoster.creatingBackup": {
+    "description": "User is creating a new backup",
+    "message": "Creating a new backup"
+  },
+  "minehoster.networkConfig": {
+    "description": "User is configuring network and ports",
+    "message": "Network & Ports Configuration"
+  },
+  "minehoster.configuringNetwork": {
+    "description": "User is configuring network settings",
+    "message": "Configuring Network Settings"
+  },
+  "minehoster.startupConfig": {
+    "description": "User is configuring startup command",
+    "message": "Startup Command Configuration"
+  },
+  "minehoster.editingStartup": {
+    "description": "User is editing startup command",
+    "message": "Editing Startup Command"
+  },
+  "minehoster.pluginManagement": {
+    "description": "User is managing plugins",
+    "message": "Plugin Management"
+  },
+  "minehoster.browsingPlugins": {
+    "description": "User is browsing plugins",
+    "message": "Browsing Plugins"
+  },
+  "minehoster.serverProperties": {
+    "description": "User is viewing server properties",
+    "message": "Server Properties"
+  },
+  "minehoster.editingProperties": {
+    "description": "User is editing server properties",
+    "message": "Editing Server Properties"
+  },
+  "minehoster.worldManagement": {
+    "description": "User is managing worlds",
+    "message": "World Management"
+  },
+  "minehoster.managingWorlds": {
+    "description": "User is managing worlds",
+    "message": "Managing Worlds"
+  },
+  "minehoster.versionManagement": {
+    "description": "User is managing versions",
+    "message": "Version Management"
+  },
+  "minehoster.selectingVersion": {
+    "description": "User is selecting a version",
+    "message": "Selecting Version"
+  },
+  "minehoster.changingVersion": {
+    "description": "User is changing server version",
+    "message": "Changing Server Version"
+  },
+  "minehoster.reinstallingServer": {
+    "description": "User is reinstalling server",
+    "message": "Reinstalling server"
+  },
+  "minehoster.serverSettings": {
+    "description": "User is in server settings",
+    "message": "Server Settings"
+  },
+  "minehoster.configuringServer": {
+    "description": "User is configuring server",
+    "message": "Configuring Server"
+  },
+  "minehoster.activityLogs": {
+    "description": "User is viewing activity logs",
+    "message": "Activity Logs"
+  },
+  "minehoster.edits": {
+    "description": "Number of edits",
+    "message": "edits"
+  },
+  "minehoster.page": {
+    "description": "Singular form of page",
+    "message": "page"
+  },
+  "minehoster.pages": {
+    "description": "Plural form of pages",
+    "message": "pages"
+  },
+  "minehoster.serverOverview": {
+    "description": "User is viewing server overview",
+    "message": "Server Overview"
+  },
+  "minehoster.viewing": {
+    "description": "User is viewing something",
+    "message": "Viewing"
+  },
+  "minehoster.server": {
+    "description": "Singular form of server",
+    "message": "Server"
+  },
+  "minehoster.servers": {
+    "description": "Plural form of servers",
+    "message": "Servers"
+  },
+  "minehoster.searchingServer": {
+    "description": "User is searching for a server",
+    "message": "Searching for a server"
+  },
+  "minehoster.accountSettings": {
+    "description": "User is in account settings",
+    "message": "Account Settings"
+  },
+  "minehoster.editingProfile": {
+    "description": "User is editing their profile",
+    "message": "Editing Profile"
+  },
+  "minehoster.sshManagement": {
+    "description": "User is managing SSH keys",
+    "message": "SSH Keys Management"
+  },
+  "minehoster.viewingActivity": {
+    "description": "User is viewing account activity",
+    "message": "Viewing Account Activity"
+  },
+  "minehoster.updating2FA": {
+    "description": "User is updating Two-Factor Authentication",
+    "message": "Updating Two-Factor Authentication"
+  },
+  "minehoster.searching": {
+    "description": "User is searching",
+    "message": "Searching"
+  },
+  "minehoster.searchingThrough": {
+    "description": "User is searching",
+    "message": "Searching through"
+  }
+}
