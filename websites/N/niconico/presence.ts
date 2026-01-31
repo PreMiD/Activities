@@ -33,9 +33,9 @@ presence.on('UpdateData', async () => {
           presenceData.details = 'Watching an ad'
         }
         else {
-          const ownerElement = document.querySelectorAll(
-            'a[data-anchor-page="watch"][data-anchor-area="video_information"]',
-          ).item(1)
+        const ownerElement = document.querySelectorAll(
+          'a[data-anchor-area="video_information"]:not(:has(div))',
+        ).item(1)
 
           const imageElement = document.querySelector('meta[property="og:image"]')
 
