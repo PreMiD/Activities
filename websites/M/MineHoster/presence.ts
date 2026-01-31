@@ -365,7 +365,7 @@ presence.on('UpdateData', async () => {
       const modalElement = document.querySelector('.EditScheduleModal___StyledH-sc-wh9db9-0.fXkIyt')
       const scheduleMatch = pathname.match(/\/schedules\/(\d+)/)
 
-      presenceData.smallImageKey = 'https://i.imgur.com/JUcDHQD.png'
+      presenceData.smallImageKey = 'https://i.imgur.com/5PiTO2N.png'
       presenceData.details = strings.viewingSchedules
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
