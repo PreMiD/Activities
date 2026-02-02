@@ -4,6 +4,10 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+// URL per le icone Small Image (Play/Pausa)
+const PLAY_ICON = 'https://i.imgur.com/W2c5dJ6.png'
+const PAUSE_ICON = 'https://i.imgur.com/1F8a0fS.png'
+
 presence.on('UpdateData', async () => {
   const path = document.location.pathname
   const href = document.location.href
@@ -32,12 +36,12 @@ presence.on('UpdateData', async () => {
 
     if (video && !Number.isNaN(video.duration) && !video.paused) {
       activityData.startTimestamp = Date.now() - (video.currentTime * 1000)
-      activityData.smallImageKey = 'play'
+      activityData.smallImageKey = PLAY_ICON
       activityData.smallImageText = 'In Riproduzione'
     }
     else {
       activityData.startTimestamp = browsingTimestamp
-      activityData.smallImageKey = 'pause'
+      activityData.smallImageKey = PAUSE_ICON
       activityData.smallImageText = 'In Pausa / Lobby'
     }
   }
@@ -82,12 +86,12 @@ presence.on('UpdateData', async () => {
 
     if (video && !Number.isNaN(video.duration) && !video.paused) {
       activityData.startTimestamp = Date.now() - (video.currentTime * 1000)
-      activityData.smallImageKey = 'play'
+      activityData.smallImageKey = PLAY_ICON
       activityData.smallImageText = 'Guardando'
     }
     else if (video && video.paused) {
       delete activityData.startTimestamp
-      activityData.smallImageKey = 'pause'
+      activityData.smallImageKey = PAUSE_ICON
       activityData.smallImageText = 'In Pausa'
     }
   }
