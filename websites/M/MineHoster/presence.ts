@@ -49,7 +49,7 @@ function formatFilePath(path: string): string {
 async function getStrings() {
   return presence.getStrings(
     {
-      homepage: 'minehoster.homepage',
+      homepage: 'general.viewHome',
       scrollingOffers: 'minehoster.scrollingOffers',
       rentMinecraftServer: 'minehoster.rentMinecraftServer',
       selectingBase: 'minehoster.selectingBase',
@@ -95,7 +95,7 @@ async function getStrings() {
       managingOfflineServer: 'minehoster.managingOfflineServer',
       offline: 'minehoster.offline',
       viewServer: 'minehoster.viewServer',
-      editing: 'minehoster.editing',
+      editing: 'general.editing',
       creating: 'minehoster.creating',
       fileManagement: 'minehoster.fileManagement',
       databaseManagement: 'minehoster.databaseManagement',
@@ -130,10 +130,10 @@ async function getStrings() {
       configuringServer: 'minehoster.configuringServer',
       activityLogs: 'minehoster.activityLogs',
       edits: 'minehoster.edits',
-      page: 'minehoster.page',
+      page: 'general.page',
       pages: 'minehoster.pages',
       serverOverview: 'minehoster.serverOverview',
-      viewing: 'minehoster.viewing',
+      viewing: 'general.view',
       server: 'minehoster.server',
       servers: 'minehoster.servers',
       searchingServer: 'minehoster.searchingServer',
@@ -142,8 +142,8 @@ async function getStrings() {
       sshManagement: 'minehoster.sshManagement',
       viewingActivity: 'minehoster.viewingActivity',
       updating2FA: 'minehoster.updating2FA',
-      searching: 'minehoster.searching',
-      searchingThrough: 'minehoster.searchingThrough',
+      searching: 'general.search',
+      searchingThrough: 'general.searchFor',
     },
   )
 }
@@ -343,7 +343,7 @@ presence.on('UpdateData', async () => {
 
       if (isEditing) {
         const fileName = filePath.split('/').pop() || 'Datei'
-        presenceData.details = `${strings.editing}: ${fileName}`
+        presenceData.details = `${strings.editing} ${fileName}`
         presenceData.state = showServerID && shortServerID
           ? `${strings.server}: ${shortServerID}`
           : formatFilePath(filePath.substring(0, filePath.lastIndexOf('/')))

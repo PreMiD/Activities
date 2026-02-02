@@ -1,8 +1,4 @@
 {
-  "minehoster.homepage": {
-    "description": "User is on the homepage",
-    "message": "On the Homepage"
-  },
   "minehoster.scrollingOffers": {
     "description": "User is scrolling through offers on the homepage",
     "message": "Scrolling through offers"
@@ -183,10 +179,6 @@
     "description": "Button label to view server",
     "message": "View Server"
   },
-  "minehoster.editing": {
-    "description": "User is editing a file",
-    "message": "Editing"
-  },
   "minehoster.creating": {
     "description": "User is creating a file",
     "message": "Creating a file"
@@ -323,10 +315,6 @@
     "description": "Number of edits",
     "message": "edits"
   },
-  "minehoster.page": {
-    "description": "Singular form of page",
-    "message": "page"
-  },
   "minehoster.pages": {
     "description": "Plural form of pages",
     "message": "pages"
@@ -334,10 +322,6 @@
   "minehoster.serverOverview": {
     "description": "User is viewing server overview",
     "message": "Server Overview"
-  },
-  "minehoster.viewing": {
-    "description": "User is viewing something",
-    "message": "Viewing"
   },
   "minehoster.server": {
     "description": "Singular form of server",
@@ -370,13 +354,5 @@
   "minehoster.updating2FA": {
     "description": "User is updating Two-Factor Authentication",
     "message": "Updating Two-Factor Authentication"
-  },
-  "minehoster.searching": {
-    "description": "User is searching",
-    "message": "Searching"
-  },
-  "minehoster.searchingThrough": {
-    "description": "User is searching",
-    "message": "Searching through"
   }
 }
