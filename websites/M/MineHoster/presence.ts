@@ -158,13 +158,21 @@ presence.on('UpdateData', async () => {
 
   const { pathname, href, hostname } = document.location
 
-  const showButtons = await presence.getSetting<boolean>('showButtons')
-  const showTimestamp = await presence.getSetting<boolean>('showTimestamp')
-  const showServerID = await presence.getSetting<boolean>('showServerID')
-  const showSearchActivity = await presence.getSetting<boolean>('showSearchActivity')
-  const showGamepanelName = await presence.getSetting<boolean>('showGamepanelName')
-
-  strings = await getStrings()
+  const [
+    showButtons,
+    showTimestamp,
+    showServerID,
+    showSearchActivity,
+    showGamepanelName,
+    strings
+  ] = await Promise.all([
+    presence.getSetting<boolean>('showButtons'),
+    presence.getSetting<boolean>('showTimestamp'),
+    presence.getSetting<boolean>('showServerID'),
+    presence.getSetting<boolean>('showSearchActivity'),
+    presence.getSetting<boolean>('showGamepanelName'),
+    getStrings()
+  ])
 
   if (!showTimestamp) {
     delete presenceData.startTimestamp
