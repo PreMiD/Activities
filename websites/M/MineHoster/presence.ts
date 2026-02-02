@@ -148,8 +148,6 @@ async function getStrings() {
   )
 }
 
-let strings: Awaited<ReturnType<typeof getStrings>>
-
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://i.imgur.com/eKix94M.png',
@@ -164,14 +162,14 @@ presence.on('UpdateData', async () => {
     showServerID,
     showSearchActivity,
     showGamepanelName,
-    strings
+    strings,
   ] = await Promise.all([
     presence.getSetting<boolean>('showButtons'),
     presence.getSetting<boolean>('showTimestamp'),
     presence.getSetting<boolean>('showServerID'),
     presence.getSetting<boolean>('showSearchActivity'),
     presence.getSetting<boolean>('showGamepanelName'),
-    getStrings()
+    getStrings(),
   ])
 
   if (!showTimestamp) {
