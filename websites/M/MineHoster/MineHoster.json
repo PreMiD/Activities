@@ -133,11 +133,11 @@
   },
   "minehoster.onMineHoster": {
     "description": "User is on MineHoster",
-    "message": "Auf MineHoster"
+    "message": "On MineHoster"
   },
   "minehoster.browsingWebsite": {
     "description": "User is browsing the website",
-    "message": "Durchsucht die Website"
+    "message": "Browsing Website"
   },
   "minehoster.serverConsole": {
     "description": "User is at the server console",

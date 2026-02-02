@@ -4,6 +4,27 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+enum Images {
+  home = 'https://i.imgur.com/d0u9KBC.png',
+  magicPen = 'https://i.imgur.com/u91zmaE.png',
+  eye = 'https://i.imgur.com/YgvuHjf.png',
+  message = 'https://i.imgur.com/GmdAyQk.png',
+  book = 'https://i.imgur.com/S0yvaDs.png',
+  greenDot = 'https://i.imgur.com/B4Bx8nn.png',
+  yellowDot = 'https://i.imgur.com/OIF8Hi0.png',
+  redDot = 'https://i.imgur.com/K1nTKQY.png',
+  pen = 'https://i.imgur.com/WCNCAfF.png',
+  search = 'https://i.imgur.com/XBf1cGW.png',
+  settingsBig = 'https://i.imgur.com/JKIwVXB.png',
+  clock = 'https://i.imgur.com/5PiTO2N.png',
+  group = 'https://i.imgur.com/5yGqlXI.png',
+  cloud = 'https://i.imgur.com/T99PYwE.png',
+  network = 'https://i.imgur.com/he4qHAL.png',
+  settings = 'https://i.imgur.com/GASIlZP.png',
+  arrowUpDown = 'https://i.imgur.com/JAbwLgh.png',
+  user = 'https://i.imgur.com/ZSiPGqT.png',
+}
+
 function getPathFromHash(): string {
   const hash = document.location.hash
 
@@ -151,14 +172,14 @@ presence.on('UpdateData', async () => {
 
   if (hostname === 'mine-hoster.de' || hostname === 'www.mine-hoster.de') {
     if (pathname === '/' || pathname === '/home') {
-      presenceData.smallImageKey = 'https://i.imgur.com/d0u9KBC.png'
+      presenceData.smallImageKey = Images.home
       presenceData.details = strings.homepage
       presenceData.state = strings.scrollingOffers
     }
     else if (pathname.includes('/minecraft-server-mieten')) {
       const activeTab = document.querySelector('.nav-tabs .nav-link.active')
 
-      presenceData.smallImageKey = 'https://i.imgur.com/u91zmaE.png'
+      presenceData.smallImageKey = Images.magicPen
       presenceData.details = strings.rentMinecraftServer
 
       if (activeTab) {
@@ -178,16 +199,16 @@ presence.on('UpdateData', async () => {
       }
     }
     else if (pathname.includes('/dashboard')) {
-      presenceData.smallImageKey = 'https://i.imgur.com/d0u9KBC.png'
+      presenceData.smallImageKey = Images.home
       presenceData.details = strings.onDashboard
     }
     else if (pathname.includes('/domain-mieten')) {
-      presenceData.smallImageKey = 'https://i.imgur.com/u91zmaE.png'
+      presenceData.smallImageKey = Images.magicPen
       presenceData.details = strings.lookingDomain
       presenceData.state = strings.browsingPricing
     }
     else if (pathname.includes('/cloudserver')) {
-      presenceData.smallImageKey = 'https://i.imgur.com/YgvuHjf.png'
+      presenceData.smallImageKey = Images.eye
       presenceData.details = strings.lookingCloudServers
     }
     else if (pathname.includes('/technik')) {
@@ -195,7 +216,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = strings.checkingServers
     }
     else if (pathname.includes('/support')) {
-      presenceData.smallImageKey = 'https://i.imgur.com/GmdAyQk.png'
+      presenceData.smallImageKey = Images.message
       presenceData.details = strings.lookingSupport
       presenceData.state = strings.checkingSupportCenter
     }
@@ -208,54 +229,54 @@ presence.on('UpdateData', async () => {
       presenceData.state = strings.completingPurchase
     }
     else if (pathname.includes('/ueber-uns')) {
-      presenceData.smallImageKey = 'https://i.imgur.com/YgvuHjf.png'
+      presenceData.smallImageKey = Images.eye
       presenceData.details = strings.lookingCompany
       presenceData.state = strings.checkingAbout
     }
     else if (pathname.includes('/information-fuer-eltern')) {
-      presenceData.smallImageKey = 'https://i.imgur.com/S0yvaDs.png'
+      presenceData.smallImageKey = Images.book
       presenceData.details = strings.readingParents
       presenceData.state = strings.readingSafety
     }
     else if (pathname.includes('/non-profit')) {
-      presenceData.smallImageKey = 'https://i.imgur.com/S0yvaDs.png'
+      presenceData.smallImageKey = Images.book
       presenceData.details = strings.readingNonProfit
       presenceData.state = strings.readingOffers
     }
     else if (pathname.includes('/jobs')) {
-      presenceData.smallImageKey = 'https://i.imgur.com/YgvuHjf.png'
+      presenceData.smallImageKey = Images.eye
       presenceData.details = strings.lookingJobs
       presenceData.state = strings.checkingPositions
     }
     else if (pathname.includes('/partner')) {
-      presenceData.smallImageKey = 'https://i.imgur.com/S0yvaDs.png'
+      presenceData.smallImageKey = Images.book
       presenceData.details = strings.readingPartner
       presenceData.state = strings.scrollingPartners
     }
     else if (pathname.includes('/impressum')) {
-      presenceData.smallImageKey = 'https://i.imgur.com/S0yvaDs.png'
+      presenceData.smallImageKey = Images.book
       presenceData.details = strings.readingImprint
     }
     else if (pathname.includes('/datenschutzerklaerung')) {
-      presenceData.smallImageKey = 'https://i.imgur.com/S0yvaDs.png'
+      presenceData.smallImageKey = Images.book
       presenceData.details = strings.readingPrivacy
     }
     else if (pathname.includes('/agb')) {
-      presenceData.smallImageKey = 'https://i.imgur.com/S0yvaDs.png'
+      presenceData.smallImageKey = Images.book
       presenceData.details = strings.readingTerms
     }
     else if (pathname.includes('/widerruf')) {
-      presenceData.smallImageKey = 'https://i.imgur.com/S0yvaDs.png'
+      presenceData.smallImageKey = Images.book
       presenceData.details = strings.readingCancellation
     }
     else {
-      presenceData.smallImageKey = 'https://i.imgur.com/YgvuHjf.png'
+      presenceData.smallImageKey = Images.eye
       presenceData.details = strings.onMineHoster
       presenceData.state = strings.browsingWebsite
     }
   }
   else if (hostname === 'gamepanel.mine-hoster.de' || hostname === 'www.gamepanel.mine-hoster.de') {
-    const searchModalElement = document.querySelector('.InputSpinner__Container-sc-1ynug7t-0.jcyTWx')
+    const searchModalElement = document.querySelector('[class*=InputSpinner__Container]')
     const serverMatch = pathname.match(/\/server\/([a-f0-9]+)/)
     const serverID = serverMatch ? serverMatch[1] : null
     const shortServerID = serverID ? `#${serverID.substring(0, 8)}` : null
@@ -273,28 +294,28 @@ presence.on('UpdateData', async () => {
 
       if (serverStatus === 'running') {
         presenceData.smallImageText = strings.running
-        presenceData.smallImageKey = 'https://i.imgur.com/B4Bx8nn.png'
+        presenceData.smallImageKey = Images.greenDot
         presenceData.state = showServerID && shortServerID
           ? `${strings.server}: ${shortServerID}`
           : strings.managingActiveServer
       }
       else if (serverStatus === 'starting') {
         presenceData.smallImageText = strings.starting
-        presenceData.smallImageKey = 'https://i.imgur.com/OIF8Hi0.png'
+        presenceData.smallImageKey = Images.yellowDot
         presenceData.state = showServerID && shortServerID
           ? `${strings.server}: ${shortServerID}`
           : strings.managingStartingServer
       }
       else if (serverStatus === 'stopping') {
         presenceData.smallImageText = strings.stopping
-        presenceData.smallImageKey = 'https://i.imgur.com/OIF8Hi0.png'
+        presenceData.smallImageKey = Images.yellowDot
         presenceData.state = showServerID && shortServerID
           ? `${strings.server}: ${shortServerID}`
           : strings.managingStoppingServer
       }
       else if (serverStatus === 'offline') {
         presenceData.smallImageText = strings.offline
-        presenceData.smallImageKey = 'https://i.imgur.com/K1nTKQY.png'
+        presenceData.smallImageKey = Images.redDot
         presenceData.state = showServerID && shortServerID
           ? `${strings.server}: ${shortServerID}`
           : strings.managingOfflineServer
@@ -320,21 +341,21 @@ presence.on('UpdateData', async () => {
         presenceData.state = showServerID && shortServerID
           ? `${strings.server}: ${shortServerID}`
           : formatFilePath(filePath.substring(0, filePath.lastIndexOf('/')))
-        presenceData.smallImageKey = 'https://i.imgur.com/WCNCAfF.png'
+        presenceData.smallImageKey = Images.pen
       }
       else if (isCreating) {
         presenceData.details = `${strings.creating}`
         presenceData.state = showServerID && shortServerID
           ? `${strings.server}: ${shortServerID}`
           : formatFilePath(filePath)
-        presenceData.smallImageKey = 'https://i.imgur.com/WCNCAfF.png'
+        presenceData.smallImageKey = Images.pen
       }
       else {
         presenceData.details = strings.fileManagement
         presenceData.state = showServerID && shortServerID
           ? `${strings.server}: ${shortServerID}`
           : formatFilePath(filePath)
-        presenceData.smallImageKey = 'https://i.imgur.com/XBf1cGW.png'
+        presenceData.smallImageKey = Images.search
       }
     }
     else if (serverID && pathname.includes('/databases')) {
@@ -351,7 +372,7 @@ presence.on('UpdateData', async () => {
         }
       }
 
-      presenceData.smallImageKey = 'https://i.imgur.com/JKIwVXB.png'
+      presenceData.smallImageKey = Images.settingsBig
       presenceData.details = strings.databaseManagement
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
@@ -365,7 +386,7 @@ presence.on('UpdateData', async () => {
       const modalElement = document.querySelector('.EditScheduleModal___StyledH-sc-wh9db9-0.fXkIyt')
       const scheduleMatch = pathname.match(/\/schedules\/(\d+)/)
 
-      presenceData.smallImageKey = 'https://i.imgur.com/5PiTO2N.png'
+      presenceData.smallImageKey = Images.clock
       presenceData.details = strings.viewingSchedules
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
@@ -387,7 +408,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
         : strings.managingUsers
-      presenceData.smallImageKey = 'https://i.imgur.com/5yGqlXI.png'
+      presenceData.smallImageKey = Images.group
 
       const modalElement = document.querySelector('.EditSubuserModal___StyledH-sc-1hon03w-1.josEpU')
       if (modalElement) {
@@ -407,7 +428,7 @@ presence.on('UpdateData', async () => {
         }
       }
 
-      presenceData.smallImageKey = 'https://i.imgur.com/T99PYwE.png'
+      presenceData.smallImageKey = Images.cloud
       presenceData.details = strings.backupManagement
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
@@ -423,14 +444,14 @@ presence.on('UpdateData', async () => {
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
         : strings.configuringNetwork
-      presenceData.smallImageKey = 'https://i.imgur.com/he4qHAL.png'
+      presenceData.smallImageKey = Images.network
     }
     else if (serverID && pathname.includes('/startup')) {
       presenceData.details = strings.startupConfig
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
         : strings.editingStartup
-      presenceData.smallImageKey = 'https://i.imgur.com/WCNCAfF.png'
+      presenceData.smallImageKey = Images.pen
     }
     else if (serverID && pathname.includes('/plugins')) {
       const pageNmbr = document.querySelector('.Button__ButtonStyle-sc-1qu1gou-0.dcnbJj.PluginInstallerContainer__Block-sc-1rigcdn-0.bUrjtX > .Button___StyledSpan-sc-1qu1gou-2')?.textContent?.trim() || '1'
@@ -439,27 +460,27 @@ presence.on('UpdateData', async () => {
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID} - ${strings.page} ${pageNmbr}`
         : `${strings.browsingPlugins} - ${strings.page} ${pageNmbr}`
-      presenceData.smallImageKey = 'https://i.imgur.com/YgvuHjf.png'
+      presenceData.smallImageKey = Images.eye
     }
     else if (serverID && pathname.includes('/properties')) {
       presenceData.details = strings.serverProperties
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
         : strings.editingProperties
-      presenceData.smallImageKey = 'https://i.imgur.com/WCNCAfF.png'
+      presenceData.smallImageKey = Images.pen
     }
     else if (serverID && pathname.includes('/worlds')) {
       presenceData.details = strings.worldManagement
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
         : strings.managingWorlds
-      presenceData.smallImageKey = 'https://i.imgur.com/GASIlZP.png'
+      presenceData.smallImageKey = Images.settings
     }
     else if (serverID && pathname.includes('/versions')) {
       const modalElement = document.querySelector('.ConfirmationModal___StyledH-sc-1sxt2cr-0.eEwZdf')
       const isInstallingVersion = document.querySelector('.ConfirmationModal___StyledH-sc-1sxt2cr-0.eEwZdf')?.textContent?.trim().replace(/\s+installieren\?.*/, '')
 
-      presenceData.smallImageKey = 'https://i.imgur.com/JAbwLgh.png'
+      presenceData.smallImageKey = Images.arrowUpDown
       presenceData.details = strings.versionManagement
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
@@ -485,7 +506,7 @@ presence.on('UpdateData', async () => {
           ? `${strings.server}: ${shortServerID}`
           : strings.reinstallingServer
       }
-      presenceData.smallImageKey = 'https://i.imgur.com/JKIwVXB.png'
+      presenceData.smallImageKey = Images.settingsBig
     }
     else if (serverID && pathname.includes('/activity')) {
       const editCount = document.querySelectorAll('.grid.grid-cols-10').length
@@ -499,12 +520,12 @@ presence.on('UpdateData', async () => {
       presenceData.state = showServerID && shortServerID
         ? `${strings.server}: ${shortServerID}`
         : `${editCount} ${strings.edits} / ${totalPages} ${totalPages !== 1 ? strings.pages : strings.page}`
-      presenceData.smallImageKey = 'https://i.imgur.com/S0yvaDs.png'
+      presenceData.smallImageKey = Images.book
     }
     else if (pathname.includes('/account')) {
       const modalElement = document.querySelector('.style-module_Lib9Jbcw')
 
-      presenceData.smallImageKey = 'https://i.imgur.com/ZSiPGqT.png'
+      presenceData.smallImageKey = Images.user
       presenceData.details = strings.accountSettings
       presenceData.state = strings.editingProfile
       if (pathname.includes('/ssh')) {
@@ -521,7 +542,7 @@ presence.on('UpdateData', async () => {
       const serverCount = document.querySelectorAll('.ServerRow__StatusIndicatorBox-sc-1ibsw91-2').length
       const container = document.querySelector('.ContentContainer-sc-x3r2dw-0.PageContentBlock___StyledContentContainer-sc-kbxq2g-0.eFAqlT.jjahje')
 
-      presenceData.smallImageKey = 'https://i.imgur.com/YgvuHjf.png'
+      presenceData.smallImageKey = Images.eye
       presenceData.details = strings.serverOverview
 
       if (container) {
@@ -533,11 +554,11 @@ presence.on('UpdateData', async () => {
       }
     }
     else {
-      presenceData.smallImageKey = 'https://i.imgur.com/d0u9KBC.png'
+      presenceData.smallImageKey = Images.home
       presenceData.details = strings.managingServer
     }
     if (showSearchActivity && searchModalElement) {
-      const currentSearch = (document.querySelector('.Input-sc-19rce1w-0.lbwZzj') as HTMLInputElement).value || ''
+      const currentSearch = document.querySelector<HTMLInputElement>('input[class*="Input-sc"]')?.value || ''
       const serverCount = document.querySelectorAll('.ServerRow__StatusIndicatorBox-sc-1ibsw91-2').length
       const isHomepage = pathname === '/'
 
@@ -561,6 +582,6 @@ presence.on('UpdateData', async () => {
     presence.setActivity(presenceData)
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
   }
 })
