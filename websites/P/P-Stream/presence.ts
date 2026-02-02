@@ -87,8 +87,7 @@ presence.on('UpdateData', async () => {
       || pathname.startsWith('/search')
 
   if (isBrowsing) {
-    presenceData.details = 'P-Stream'
-    presenceData.state = 'Browsing'
+    presenceData.details = 'Browsing'
     presenceData.startTimestamp = browsingTimestamp
     presenceData.largeImageText = 'P-Stream'
 
