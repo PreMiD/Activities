@@ -13,7 +13,7 @@
     "dev": "pmd dev"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^6.2.0",
+    "@antfu/eslint-config": "^7.0.0",
     "@total-typescript/tsconfig": "^1.0.4",
     "@types/node": "^24.9.2",
     "@vitest/coverage-v8": "^4.0.6",
