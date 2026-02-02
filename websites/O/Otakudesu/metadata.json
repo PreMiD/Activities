@@ -13,7 +13,7 @@
   },
   "url": "otakudesu.best",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*otakudesu[.]best[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Otakudesu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Otakudesu/assets/thumbnail.png",
   "color": "#ffffff",
