@@ -4,9 +4,11 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-// URL per le icone Small Image (Play/Pausa)
-const PLAY_ICON = 'https://i.imgur.com/W2c5dJ6.png'
-const PAUSE_ICON = 'https://i.imgur.com/1F8a0fS.png'
+// URL IMMAGINI
+const LOGO_URL = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png'
+// Nuove icone 512x512 fornite dall'utente
+const PLAY_ICON = 'https://i.imgur.com/s9ID1n7.png'
+const PAUSE_ICON = 'https://i.imgur.com/MumA9Gv.png'
 
 presence.on('UpdateData', async () => {
   const path = document.location.pathname
@@ -27,7 +29,7 @@ presence.on('UpdateData', async () => {
     const epNum = epEl && epEl.textContent ? epEl.textContent.trim() : '1'
 
     activityData = {
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
+      largeImageKey: LOGO_URL,
       largeImageText: roomTitle,
       details: `👑 Stanza di ${hostText}`,
       state: `${roomTitle} (Ep. ${epNum})`,
@@ -63,7 +65,7 @@ presence.on('UpdateData', async () => {
     }
 
     activityData = {
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
+      largeImageKey: LOGO_URL,
       startTimestamp: browsingTimestamp,
       details: animeTitle === 'Caricamento...' ? 'Scegliendo un Anime...' : animeTitle,
       state: `Episodio ${epNumber}`,
@@ -101,7 +103,7 @@ presence.on('UpdateData', async () => {
     const title = titleElement && titleElement.textContent ? titleElement.textContent : document.title
 
     activityData = {
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
+      largeImageKey: LOGO_URL,
       startTimestamp: browsingTimestamp,
       details: 'Sta guardando la scheda di:',
       state: title?.replace('AnimeTvOnline - ', '').trim(),
@@ -113,7 +115,7 @@ presence.on('UpdateData', async () => {
   // 4. PROFILO
   else if (path.includes('profilo')) {
     activityData = {
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
+      largeImageKey: LOGO_URL,
       startTimestamp: browsingTimestamp,
       details: 'Visualizzando un profilo',
       state: 'Utente AnimeTvOnline',
@@ -122,7 +124,7 @@ presence.on('UpdateData', async () => {
   // 5. HOMEPAGE
   else if (path === '/' || path.includes('index') || path === '' || path.includes('login')) {
     activityData = {
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
+      largeImageKey: LOGO_URL,
       startTimestamp: browsingTimestamp,
       details: 'In Homepage',
       state: 'Cercando un anime da guardare...',
@@ -131,7 +133,7 @@ presence.on('UpdateData', async () => {
   // 6. DEFAULT
   else {
     activityData = {
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeTvOnline/assets/0.png',
+      largeImageKey: LOGO_URL,
       startTimestamp: browsingTimestamp,
       details: 'Navigando su AnimeTvOnline',
       state: 'Streaming Anime ITA',
