@@ -4,6 +4,9 @@ import { ActivityAssets, ListItemStatus, StaticBrowsing } from './constants.js'
 import { append, determineSeason, getAnimeIcon, getProfilePicture, getUserID } from './utils.js'
 
 const presence = new Presence({ clientId: '1137362720254074972' })
+const crPresence = new Presence({ clientId: '981509069309354054' })
+
+let previousData: MediaPresenceData | null
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -137,12 +140,15 @@ presence.on('iFrameData', (data) => {
   playbackInfo = info
 })
 
+let usingCrunchyroll = false
+
 presence.on('UpdateData', async () => {
   userID = getUserID()
 
   const { pathname } = document.location
+  let useCrunchyRoll = false
 
-  const [newLang, browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent, showCover, determineSeasonSetting] = await Promise.all([
+  const [newLang, browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent, showCover, determineSeasonSetting, usePosterDimensions, defaultOne] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('browsingStatus'),
     presence.getSetting<boolean>('useAltName'),
@@ -151,6 +157,8 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('showSearchContent'),
     presence.getSetting<boolean>('showCover'),
     presence.getSetting<boolean>('determineSeason'),
+    presence.getSetting<boolean>('usePosterDimensions'),
+    presence.getSetting<boolean>('defaultSeasonOne'),
   ])
 
   if (oldLang !== newLang || !strings) {
@@ -159,9 +167,11 @@ presence.on('UpdateData', async () => {
   }
 
   const presenceData: PresenceData = {
+    name: 'OgladajAnime',
     type: ActivityType.Watching,
     startTimestamp: browsingTimestamp,
     largeImageKey: ActivityAssets.Logo,
+    statusDisplayType: StatusDisplayType.Name,
   }
 
   if (pathname.startsWith('/anime/')) {
@@ -191,6 +201,9 @@ presence.on('UpdateData', async () => {
       if (d && d.found) {
         name = d.name
         season = d.season
+      }
+      else if (defaultOne) {
+        season = 1
       }
     }
 
@@ -241,6 +254,7 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = getAnimeIcon(animeID)
 
     presenceData.buttons = await setButton(strings.buttonWatchAnime, document.location.href)
+    useCrunchyRoll = true
   }
   else if (pathname.match(/\/watch2gether\/\d+/)) {
     const name = document.querySelector('h5[class="card-title text-dark"]')
@@ -284,6 +298,7 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = animeIcon.getAttribute('src')?.replace('0.webp', '2.webp').replace('1.webp', '2.webp')
 
     presenceData.buttons = await setButton(strings.buttonWatchWithMe, document.location.href)
+    useCrunchyRoll = true
   }
   else if (pathname.startsWith('/anime_list/') && browsingStatusEnabled) {
     let id = pathname.replace('/anime_list/', '')
@@ -444,8 +459,10 @@ presence.on('UpdateData', async () => {
       presenceData.details = text
     }
 
-    if (image && showCover)
+    if (image && showCover) {
       presenceData.largeImageKey = image
+      useCrunchyRoll = true
+    }
   }
   else if (pathname.startsWith('/search/name/') && browsingStatusEnabled && showSearchContent) {
     const search = document.getElementsByClassName('search-info')?.[0]?.querySelector('div[class="card bg-white"] > div[class="row card-body justify-content-center"] > p[class="col-12 p-0 m-0"]')?.textContent?.replace('Wyszukiwanie: ', '')
@@ -492,8 +509,46 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  presence.setActivity(presenceData)
+  if ((usePosterDimensions && useCrunchyRoll && !usingCrunchyroll)
+    || (!usePosterDimensions && usingCrunchyroll)
+    || (!previousData || !comparePresenceData(previousData, presenceData))) {
+    if (useCrunchyRoll && usePosterDimensions) {
+      crPresence.setActivity(presenceData)
+      usingCrunchyroll = true
+    }
+    else {
+      presence.setActivity(presenceData)
+      usingCrunchyroll = false
+    }
+    previousData = presenceData
+  }
 })
+
+function comparePresenceData(first: PresenceData, second: PresenceData) {
+  if (first.details !== second.details || first.state !== second.state)
+    return false
+  if (first.smallImageKey !== second.smallImageKey || first.smallImageText !== second.smallImageText)
+    return false
+  if (first.largeImageKey !== second.largeImageKey || first.largeImageText !== second.largeImageText)
+    return false
+  if (first.startTimestamp !== second.startTimestamp || first.endTimestamp !== second.endTimestamp)
+    return false
+  if (first.type !== second.type || first.statusDisplayType !== second.statusDisplayType)
+    return false
+
+  if (first.buttons !== second.buttons) {
+    if (!first.buttons || !second.buttons)
+      return false
+    if (first.buttons.length !== second.buttons.length)
+      return false
+    for (let i = 0; i < first.buttons.length; i++) {
+      if (first.buttons[i]?.label !== second.buttons[i]?.label || first.buttons[i]?.url !== second.buttons[i]?.url)
+        return false
+    }
+  }
+
+  return true
+}
 
 function parseString(text: string): [string, string] {
   const keys = Object.keys(strings)
