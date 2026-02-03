@@ -78,31 +78,37 @@ presence.on('UpdateData', async () => {
     largeImageKey: CustomAssets.Logo,
   }
 
-  const isBrowsing =
-    pathname === '' ||
-    pathname === '/' ||
-    pathname.startsWith('/browse') ||
-    pathname.startsWith('/discover') ||
-    pathname.startsWith('/search')
+  const isBrowsing
+    = pathname === ''
+    || pathname === '/'
+    || pathname.startsWith('/browse')
+    || pathname.startsWith('/discover')
+    || pathname.startsWith('/search')
 
   if (isBrowsing) {
     presenceData.details = 'Browsing'
     presenceData.startTimestamp = browsingTimestamp
     presenceData.largeImageText = 'P-Stream'
 
-    return showWhileMain
-      ? presence.setActivity(presenceData)
-      : presence.clearActivity()
+    if (showWhileMain) {
+      return presence.setActivity(presenceData)
+    } else {
+      return presence.clearActivity()
+    }
   }
 
-  if (!pathname.startsWith('/media')) return
+  if (!pathname.startsWith('/media')) {
+    return
+  }
 
   const pageMeta = await presence.getPageVariable<{ meta?: { player?: MWPlayerData } }>('meta')
 
   const media = pageMeta?.meta?.player
   const video = document.querySelector<HTMLVideoElement>('video')
 
-  if (!media || !video) return
+  if (!media || !video) {
+    return
+  }
 
   const { meta, season, episode, progress, controls } = media
 
@@ -111,7 +117,8 @@ presence.on('UpdateData', async () => {
   if (meta.type === 'show' && season && episode) {
     presenceData.details = `${meta.title} - S${season.number} E${episode.number}`
   } else {
-    presenceData.details = `${meta.title} (${meta.year})`  }
+    presenceData.details = `${meta.title} (${meta.year})`
+  }
 
   if (showProgressBar && progress?.time != null && progress.duration > 0) {
     presenceData.state = createProgressBar(progress.time, progress.duration, {
@@ -129,8 +136,8 @@ presence.on('UpdateData', async () => {
     },
   ]
 
-  presenceData.largeImageKey =
-    navigator.mediaSession?.metadata?.artwork?.[0]?.src ?? presenceData.largeImageKey
+  presenceData.largeImageKey
+    = navigator.mediaSession?.metadata?.artwork?.[0]?.src ?? presenceData.largeImageKey
 
   presenceData.smallImageKey = CustomAssets.LogoNoBG
   presenceData.smallImageText = 'P-Stream'
@@ -140,7 +147,7 @@ presence.on('UpdateData', async () => {
   } else if (controls.isPlaying && video.duration) {
     ;[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
       Math.floor(video.currentTime),
-      Math.floor(video.duration)
+      Math.floor(video.duration),
     )
     presenceData.smallImageKey = Assets.Play
     presenceData.smallImageText = 'Playing'
@@ -165,9 +172,11 @@ presence.on('UpdateData', async () => {
     delete presenceData.state
   }
 
-  showWhileWatching
-    ? presence.setActivity(presenceData)
-    : presence.clearActivity()
+  if (showWhileWatching) {
+    presence.setActivity(presenceData)
+  } else {
+    presence.clearActivity()
+  }
 })
 
 function createProgressBar(
@@ -178,7 +187,7 @@ function createProgressBar(
     barTrack: string
     barFill: string
     showLabel: boolean
-  }
+  },
 ): string {
   const { barLengthString, barTrack, barFill, showLabel } = options
   const progress = Math.min(100, Math.floor((time / duration) * 100))
