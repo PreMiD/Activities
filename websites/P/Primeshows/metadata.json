@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1203605618745933880",
+    "name": "friday.su"
+  },
+  "service": "Primeshows",
+  "description": {
+    "en": "Enjoy unlimited streaming of movies, TV shows, and anime in HD & 4K, completely free! Primeshows offers a seamless experience with multi-language support and auto-next playback, ensuring you never miss a moment. Watch your favorite content anytime, anywhere!"
+  },
+  "url": "www.primeshows.live",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*primeshows[.]live[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Primeshows/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Primeshows/assets/thumbnail.png",
+  "color": "#121212",
+  "category": "videos",
+  "tags": [
+    "video",
+    "streaming",
+    "movies",
+    "anime",
+    "tv"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}

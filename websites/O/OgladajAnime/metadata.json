@@ -21,7 +21,7 @@
     "www.ogladajanime.pl"
   ],
   "regExp": "^https?[:][/][/](www[.])?ogladajanime[.]pl[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OgladajAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OgladajAnime/assets/thumbnail.png",
   "color": "#29C5F6",
@@ -86,6 +86,13 @@
       "id": "useAltName",
       "title": "Use Alternative Name",
       "icon": "fas fa-font",
+      "value": true
+    },
+    {
+      "id": "determineSeason",
+      "title": "Determine Season",
+      "description": "This checks all available names to try and determine the season and show it on the activity. This may not find the season always and might sometimes have false positives. This might interfere with the 'Use Alternative Name' setting",
+      "icon": "fas fa-film",
       "value": true
     }
   ]
