@@ -80,10 +80,10 @@ presence.on('UpdateData', async () => {
 
   const isBrowsing
     = pathname === ''
-    || pathname === '/'
-    || pathname.startsWith('/browse')
-    || pathname.startsWith('/discover')
-    || pathname.startsWith('/search')
+      || pathname === '/'
+      || pathname.startsWith('/browse')
+      || pathname.startsWith('/discover')
+      || pathname.startsWith('/search')
 
   if (isBrowsing) {
     presenceData.details = 'Browsing'
@@ -92,7 +92,8 @@ presence.on('UpdateData', async () => {
 
     if (showWhileMain) {
       return presence.setActivity(presenceData)
-    } else {
+    }
+    else {
       return presence.clearActivity()
     }
   }
@@ -116,7 +117,8 @@ presence.on('UpdateData', async () => {
 
   if (meta.type === 'show' && season && episode) {
     presenceData.details = `${meta.title} - S${season.number} E${episode.number}`
-  } else {
+  }
+  else {
     presenceData.details = `${meta.title} (${meta.year})`
   }
 
@@ -137,28 +139,33 @@ presence.on('UpdateData', async () => {
   ]
 
   presenceData.largeImageKey
-    = navigator.mediaSession?.metadata?.artwork?.[0]?.src ?? presenceData.largeImageKey
+    = navigator.mediaSession?.metadata?.artwork?.[0]?.src
+      ?? presenceData.largeImageKey
 
   presenceData.smallImageKey = CustomAssets.LogoNoBG
   presenceData.smallImageText = 'P-Stream'
 
   if (controls.isLoading) {
     presenceData.smallImageText = 'Loading'
-  } else if (controls.isPlaying && video.duration) {
+  }
+  else if (controls.isPlaying && video.duration) {
     ;[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
       Math.floor(video.currentTime),
       Math.floor(video.duration),
     )
+
     presenceData.smallImageKey = Assets.Play
     presenceData.smallImageText = 'Playing'
     pausedTimestamp = null
-  } else {
+  }
+  else {
     presenceData.smallImageKey = Assets.Pause
     presenceData.smallImageText = 'Paused'
 
     if (!pausedTimestamp) {
       pausedTimestamp = Math.floor(Date.now() / 1000)
     }
+
     presenceData.startTimestamp = pausedTimestamp
     delete presenceData.endTimestamp
   }
@@ -174,7 +181,8 @@ presence.on('UpdateData', async () => {
 
   if (showWhileWatching) {
     presence.setActivity(presenceData)
-  } else {
+  }
+  else {
     presence.clearActivity()
   }
 })
