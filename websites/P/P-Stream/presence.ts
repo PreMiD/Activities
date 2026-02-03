@@ -74,17 +74,16 @@ presence.on('UpdateData', async () => {
   ])
 
   const presenceData: PresenceData = {
-    name: 'P-Stream',
     type: ActivityType.Watching,
     largeImageKey: CustomAssets.Logo,
   }
 
-  const isBrowsing
-    = pathname === ''
-      || pathname === '/'
-      || pathname.startsWith('/browse')
-      || pathname.startsWith('/discover')
-      || pathname.startsWith('/search')
+  const isBrowsing =
+    pathname === '' ||
+    pathname === '/' ||
+    pathname.startsWith('/browse') ||
+    pathname.startsWith('/discover') ||
+    pathname.startsWith('/search')
 
   if (isBrowsing) {
     presenceData.details = 'Browsing'
@@ -96,34 +95,23 @@ presence.on('UpdateData', async () => {
       : presence.clearActivity()
   }
 
-  if (!pathname.startsWith('/media'))
-    return
+  if (!pathname.startsWith('/media')) return
 
-  const pageMeta
-    = await presence.getPageVariable<{ meta?: { player?: MWPlayerData } }>('meta')
+  const pageMeta = await presence.getPageVariable<{ meta?: { player?: MWPlayerData } }>('meta')
 
   const media = pageMeta?.meta?.player
   const video = document.querySelector<HTMLVideoElement>('video')
 
-  if (!media || !video)
-    return
+  if (!media || !video) return
 
   const { meta, season, episode, progress, controls } = media
 
-  presenceData.largeImageKey
-    = meta.poster?.trim()
-      || CustomAssets.Logo
-
-  presenceData.details = meta.title
+  presenceData.largeImageKey = meta.poster?.trim() || CustomAssets.Logo
 
   if (meta.type === 'show' && season && episode) {
-    presenceData.state
-      = `S${season.number} · E${episode.number} · ${episode.title}`
-  }
-  else {
-    presenceData.details
-      = `${meta.title} (${meta.year})`
-  }
+    presenceData.details = `${meta.title} - S${season.number} E${episode.number}`
+  } else {
+    presenceData.details = `${meta.title} (${meta.year})`  }
 
   if (showProgressBar && progress?.time != null && progress.duration > 0) {
     presenceData.state = createProgressBar(progress.time, progress.duration, {
@@ -139,37 +127,31 @@ presence.on('UpdateData', async () => {
       label: `Watch ${capitalize(meta.type)}`,
       url: href,
     },
-
   ]
 
-  presenceData.largeImageKey
-    = navigator.mediaSession?.metadata?.artwork?.[0]?.src
-      ?? presenceData.largeImageKey
+  presenceData.largeImageKey =
+    navigator.mediaSession?.metadata?.artwork?.[0]?.src ?? presenceData.largeImageKey
 
   presenceData.smallImageKey = CustomAssets.LogoNoBG
   presenceData.smallImageText = 'P-Stream'
 
   if (controls.isLoading) {
     presenceData.smallImageText = 'Loading'
-  }
-  else if (controls.isPlaying && video.duration) {
-    ;[presenceData.startTimestamp, presenceData.endTimestamp]
-      = getTimestamps(
-        Math.floor(video.currentTime),
-        Math.floor(video.duration),
-      )
-
+  } else if (controls.isPlaying && video.duration) {
+    ;[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+      Math.floor(video.currentTime),
+      Math.floor(video.duration)
+    )
     presenceData.smallImageKey = Assets.Play
     presenceData.smallImageText = 'Playing'
     pausedTimestamp = null
-  }
-  else {
+  } else {
     presenceData.smallImageKey = Assets.Pause
     presenceData.smallImageText = 'Paused'
 
-    if (!pausedTimestamp)
+    if (!pausedTimestamp) {
       pausedTimestamp = Math.floor(Date.now() / 1000)
-
+    }
     presenceData.startTimestamp = pausedTimestamp
     delete presenceData.endTimestamp
   }
@@ -179,8 +161,9 @@ presence.on('UpdateData', async () => {
     delete presenceData.endTimestamp
   }
 
-  if (!showProgressBar && !presenceData.state)
+  if (!presenceData.state) {
     delete presenceData.state
+  }
 
   showWhileWatching
     ? presence.setActivity(presenceData)
@@ -195,15 +178,14 @@ function createProgressBar(
     barTrack: string
     barFill: string
     showLabel: boolean
-  },
+  }
 ): string {
   const { barLengthString, barTrack, barFill, showLabel } = options
   const progress = Math.min(100, Math.floor((time / duration) * 100))
   const barLength = Number.parseInt(barLengthString, 10) || 10
   const filled = Math.floor((progress / 100) * barLength)
 
-  const bar
-    = `${barFill.repeat(filled)}${barTrack.repeat(barLength - filled)}`
+  const bar = `${barFill.repeat(filled)}${barTrack.repeat(barLength - filled)}`
 
   return showLabel ? `${bar} ${progress}%` : bar
 }
