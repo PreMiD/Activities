@@ -1,6 +1,4 @@
-import { ActivityType } from 'premid'
-
-declare const Presence: any
+import { ActivityType } from 'premid';
 
 // Static Asset Configuration
 enum ActivityAssets {
@@ -11,83 +9,81 @@ enum ActivityAssets {
 
 const presence = new Presence({
   clientId: '1459594619972096248',
-})
+});
 
 presence.on('UpdateData', async () => {
   // 1. DYNAMIC IMAGE LOGIC
   // Default to the static logo
-  let currentLargeImage: string = ActivityAssets.Logo
+  let currentLargeImage: string = ActivityAssets.Logo;
 
   // standard mediaSession check for high-res artwork
-  const artwork = navigator.mediaSession?.metadata?.artwork
+  const artwork = navigator.mediaSession?.metadata?.artwork;
 
   if (artwork && artwork.length > 0) {
     // Select the last image in the array (typically the highest resolution)
-    const coverUrl = artwork[artwork.length - 1]?.src
+    const coverUrl = artwork[artwork.length - 1]?.src;
     if (coverUrl) {
-      currentLargeImage = coverUrl
+      currentLargeImage = coverUrl;
     }
   }
 
   // 2. INITIALIZE ACTIVITY DATA
-  const presenceData: any = {
+  // Fix: Use 'PresenceData' (global interface), NOT 'ActivityData' or 'any'
+  const presenceData: PresenceData = {
     type: ActivityType.Listening,
     largeImageKey: currentLargeImage,
     largeImageText: 'Listening on Monochrome',
     // Default small icon (overwritten below if paused)
     smallImageKey: ActivityAssets.Play,
     smallImageText: 'Playing',
-  }
+  };
 
   // 3. TEXT STRATEGY (Browser Tab)
   // Parses "Song - Artist" or "Song • Artist" from the document title
-  const tabTitle = document.title || ''
-  let separator = ''
+  const tabTitle = document.title || '';
+  let separator = '';
 
   if (tabTitle.includes(' - '))
-    separator = ' - '
+    separator = ' - ';
   else if (tabTitle.includes(' • '))
-    separator = ' • '
+    separator = ' • ';
 
   if (separator) {
-    const parts = tabTitle.split(separator)
-    presenceData.details = parts[0]?.trim() || 'Unknown Song'
-    presenceData.state = parts.slice(1).join(separator).trim() || 'Unknown Artist'
-  }
-  else {
+    const parts = tabTitle.split(separator);
+    presenceData.details = parts[0]?.trim() || 'Unknown Song';
+    presenceData.state = parts.slice(1).join(separator).trim() || 'Unknown Artist';
+  } else {
     // Fallback for non-standard titles
-    presenceData.details = 'Monochrome'
-    presenceData.state = 'Listening...'
+    presenceData.details = 'Monochrome';
+    presenceData.state = 'Listening...';
   }
 
   // 4. AUDIO STATUS & TIMESTAMPS
-  const mediaElement = document.querySelector('audio')
+  const mediaElement = document.querySelector('audio');
 
   if (mediaElement) {
     if (!mediaElement.paused) {
       // -- PLAYING STATE --
-      presenceData.smallImageKey = ActivityAssets.Play
-      presenceData.smallImageText = 'Playing'
+      presenceData.smallImageKey = ActivityAssets.Play;
+      presenceData.smallImageText = 'Playing';
 
       // Calculate timestamps using native Date.now() for accuracy
-      const now = Date.now()
-      presenceData.startTimestamp = now - (mediaElement.currentTime * 1000)
+      const now = Date.now();
+      presenceData.startTimestamp = now - (mediaElement.currentTime * 1000);
 
       // Only set endTimestamp if duration is finite and positive
       if (mediaElement.duration && Number.isFinite(mediaElement.duration) && mediaElement.duration > 0) {
-        presenceData.endTimestamp = now + ((mediaElement.duration - mediaElement.currentTime) * 1000)
+        presenceData.endTimestamp = now + ((mediaElement.duration - mediaElement.currentTime) * 1000);
       }
-    }
-    else {
+    } else {
       // -- PAUSED STATE --
-      presenceData.smallImageKey = ActivityAssets.Pause
-      presenceData.smallImageText = 'Paused'
+      presenceData.smallImageKey = ActivityAssets.Pause;
+      presenceData.smallImageText = 'Paused';
       // Note: We do not set timestamps here, effectively hiding the time bar
     }
 
-    presence.setActivity(presenceData)
+    presence.setActivity(presenceData);
+  } else {
+    presence.clearActivity();
   }
-  else {
-    presence.clearActivity()
-  }
-})
+});
