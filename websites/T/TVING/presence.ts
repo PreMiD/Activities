@@ -110,7 +110,6 @@ presence.on('UpdateData', async () => {
         if (output?.largeImageKey)
           presenceData = output
         else presenceData = { ...presenceData, ...output } as PresenceData
-        console.log(presenceData)
       }
       else {
         presenceData = { ...presenceData, ...data } as PresenceData
