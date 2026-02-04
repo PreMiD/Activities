@@ -57,6 +57,9 @@ async function getStrings() {
       confirmingServer: 'minehoster.confirmingServer',
       customizingServer: 'minehoster.customizingServer',
       onDashboard: 'minehoster.onDashboard',
+      onAffiliate: 'minehoster.onAffiliate',
+      affiliateId: 'minehoster.affiliateId',
+      viewAffiliate: "minehoster.viewAffiliate",
       lookingDomain: 'minehoster.lookingDomain',
       browsingPricing: 'minehoster.browsingPricing',
       lookingCloudServers: 'minehoster.lookingCloudServers',
@@ -207,6 +210,23 @@ presence.on('UpdateData', async () => {
     else if (pathname.includes('/dashboard')) {
       presenceData.smallImageKey = Images.home
       presenceData.details = strings.onDashboard
+    }
+    else if (pathname.includes('/affiliate')) {
+      const affiliateLink = document.querySelector<HTMLInputElement>('input[class*="input--grey"]')?.value?.trim() || '';
+      const affiliateId = Number(affiliateLink.replace(/\D/g, '') || null);
+      
+      presenceData.smallImageKey = Images.eye
+      presenceData.details = strings.onAffiliate
+ 
+      if (showButtons && affiliateLink != '') {
+        presenceData.state = `${strings.affiliateId}: ${affiliateId}`
+        presenceData.buttons = [
+          {
+            label: strings.viewAffiliate,
+            url: affiliateLink,
+          },
+        ]
+      }
     }
     else if (pathname.includes('/domain-mieten')) {
       presenceData.smallImageKey = Images.magicPen
