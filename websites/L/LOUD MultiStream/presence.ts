@@ -37,7 +37,7 @@ presence.on('UpdateData', async () => {
                 type: ActivityType.Watching,
                 details: `Watching ${data.count} Streamer${data.count > 1 ? 's' : ''}`,
                 state: `${names} on ${platforms}`,
-                largeImageKey: 'https://logo.clearbit.com/loud.gg',
+                largeImageKey: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/LOUD_logo.svg/512px-LOUD_logo.svg.png',
                 largeImageText: 'LOUD MultiStream',
                 // smallImageKey: 'https://cdn.rcd.gg/PreMiD.png', // Optional: Use a generic icon if needed
                 // PreMiD/Discord expects Seconds, Date.now() is MS
