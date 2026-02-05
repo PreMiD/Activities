@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "author": {
+    "name": "ViictorN",
+    "id": "YOUR_DISCORD_ID"
+  },
+  "service": "LOUD MultiStream",
+  "description": {
+    "en": "Shows what you are watching on LOUD MultiStream",
+    "pt": "Mostra o que você está assistindo na LOUD MultiStream"
+  },
+  "url": [
+    "irl.loud.gg",
+    "localhost",
+    "multi-do-viictorn.vercel.app"
+  ],
+  "regExp": "^https?://(irl\\.loud\\.gg|localhost(:[0-9]+)?|multi-do-viictorn\\.vercel\\.app)/.*",
+  "version": "1.0.0",
+  "logo": "https://logo.clearbit.com/loud.gg",
+  "thumbnail": "https://logo.clearbit.com/loud.gg",
+  "color": "#53FC18",
+  "category": "videos",
+  "tags": [
+    "streaming",
+    "multistream",
+    "loud"
+  ]
+}
