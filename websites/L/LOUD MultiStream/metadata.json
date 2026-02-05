@@ -16,8 +16,8 @@
   ],
   "regExp": "^https?://(irl\\.loud\\.gg|localhost(:[0-9]+)?|multi-do-viictorn\\.vercel\\.app)/.*",
   "version": "1.0.0",
-  "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/LOUD_logo.svg/512px-LOUD_logo.svg.png",
-  "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/LOUD_logo.svg/512px-LOUD_logo.svg.png",
+  "logo": "https://i.imgur.com/sxoxOlW.png",
+  "thumbnail": "https://i.imgur.com/sxoxOlW.png",
   "color": "#53FC18",
   "category": "videos",
   "tags": [
