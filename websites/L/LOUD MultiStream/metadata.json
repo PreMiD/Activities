@@ -1,8 +1,9 @@
 {
   "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
   "author": {
     "name": "ViictorN",
-    "id": "YOUR_DISCORD_ID"
+    "id": "1469090046014525493"
   },
   "service": "LOUD MultiStream",
   "description": {
