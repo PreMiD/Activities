@@ -18,13 +18,11 @@
     "beta.pstream.mov",
     "mirror.pstream.mov",
     "movies.levrx.de",
-    "streamerflix.xyz",
     "streamwatch.online",
-    "movies.samj.app",
-    "sudo-flix.nl"
+    "movies.samj.app"
   ],
-  "regExp": "^https?[:][/][/](dev[.])?(movie-web[.]app)",
-  "version": "1.3.0",
+  "regExp": "^https?[:][/][/](?:(?:beta[.]|mirror[.])?pstream[.]mov|movies[.]levrx[.]de|streamwatch[.]online|movies[.]samj[.]app)[/]?",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
   "color": "#533670",

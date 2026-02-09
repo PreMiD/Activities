@@ -1,0 +1,102 @@
+{
+  "dealabs.navigating": {
+    "description": "Shown when browsing the main site",
+    "message": "Browsing Dealabs"
+  },
+  "dealabs.hunting": {
+    "description": "Shown when looking for deals generically",
+    "message": "Hunting for deals"
+  },
+  "dealabs.viewDeal": {
+    "description": "Shown when viewing a specific deal",
+    "message": "Viewing a deal"
+  },
+  "dealabs.onDealabs": {
+    "description": "State when on the website",
+    "message": "On Dealabs"
+  },
+  "dealabs.onForum": {
+    "description": "State when on the forum section",
+    "message": "On the Forum"
+  },
+  "dealabs.readDiscuss": {
+    "description": "Shown when reading a forum discussion",
+    "message": "Reading a discussion"
+  },
+  "dealabs.searchCode": {
+    "description": "Shown when looking for promo codes",
+    "message": "Looking for a promo code"
+  },
+  "dealabs.viewCodes": {
+    "description": "Button label to view codes",
+    "message": "View codes"
+  },
+  "dealabs.browseDiscuss": {
+    "description": "Shown when browsing the list of discussions",
+    "message": "Browsing discussions"
+  },
+  "dealabs.detail": {
+    "description": "Generic detail text",
+    "message": "Detail"
+  },
+  "dealabs.free": {
+    "description": "Indicates a free item",
+    "message": "FREE"
+  },
+  "dealabs.hiddenDeal": {
+    "description": "Text when deal titles are hidden by privacy mode",
+    "message": "A deal"
+  },
+  "dealabs.hiddenTopic": {
+    "description": "Text when topic titles are hidden by privacy mode",
+    "message": "A discussion"
+  },
+  "dealabs.viewPage": {
+    "description": "Button label to view the page",
+    "message": "View page"
+  },
+  "dealabs.exploreCat": {
+    "description": "Shown when browsing a category",
+    "message": "Browsing a category"
+  },
+  "dealabs.homepage": {
+    "description": "Shown when on the homepage",
+    "message": "On the homepage"
+  },
+  "dealabs.forYou": {
+    "description": "Shown when on the For You page",
+    "message": "For You"
+  },
+  "dealabs.searchDeal": {
+    "description": "Shown when searching",
+    "message": "Searching for a deal"
+  },
+  "dealabs.newDeals": {
+    "description": "Category: New Deals",
+    "message": "New Deals 🕒"
+  },
+  "dealabs.hotDeals": {
+    "description": "Category: Hot & Trending",
+    "message": "Hot & Trending 🔥"
+  },
+  "dealabs.topDeals": {
+    "description": "Category: Hottest Deals",
+    "message": "Hottest Deals 🌶️"
+  },
+  "dealabs.searching": {
+    "description": "Shown when searching",
+    "message": "Searching"
+  },
+  "dealabs.searchingEllipsis": {
+    "description": "Shown when searching (ellipsis)",
+    "message": "Searching..."
+  },
+  "dealabs.unknown": {
+    "description": "Generic unknown text",
+    "message": "Unknown"
+  },
+  "dealabs.unknownCategory": {
+    "description": "Text for unknown category",
+    "message": "Unknown"
+  }
+}

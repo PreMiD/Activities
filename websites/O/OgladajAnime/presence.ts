@@ -1,4 +1,7 @@
-import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
+import type { Playback, PlaybackInfo } from './types.js'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, StatusDisplayType } from 'premid'
+import { ActivityAssets, ListItemStatus, StaticBrowsing } from './constants.js'
+import { append, determineSeason, getAnimeIcon, getProfilePicture, getUserID } from './utils.js'
 
 const presence = new Presence({ clientId: '1137362720254074972' })
 
@@ -9,91 +12,6 @@ let userID = 0
 let playbackInfo: PlaybackInfo | null
 
 let lastWatched: Playback
-
-interface PlaybackInfo {
-  currTime: number
-  duration: number
-  paused: boolean
-}
-
-interface Playback {
-  animeID: string
-  episode: string
-}
-
-interface PictureCache {
-  id: string
-  url: string
-  date: Date
-}
-
-enum ListItemStatus {
-  categoryWatching = 1,
-  categoryWatched = 2,
-  categoryPlanning = 3,
-  categorySuspended = 4,
-  categoryAbandoned = 5,
-}
-
-enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/O/ogladajanime/assets/0.png',
-  DefaultProfilePicture = 'https://cdn.rcd.gg/PreMiD/websites/O/OgladajAnime/assets/0.png',
-}
-
-const cache: PictureCache[] = []
-
-function cacheExpired(date: Date): boolean {
-  if (date === null)
-    return true
-
-  return ((new Date().getTime() - date.getTime()) / 1000 / 60) < 5
-}
-
-async function getProfilePicture(id: string): Promise<string | undefined> {
-  const index = cache.findIndex((val, _, __) => val.id === id)
-  const _val = cache[index]
-  if (index === -1) {
-    const _new: PictureCache = { id, url: await internal_getPFP(id), date: new Date() }
-    cache.push(_new)
-    return _new.url
-  }
-  else if (_val !== undefined && cacheExpired(_val.date)) {
-    const url = await internal_getPFP(id)
-    _val.url = url
-    _val.date = new Date()
-    return url
-  }
-  else {
-    return cache[index]?.url
-  }
-}
-
-async function internal_getPFP(id: string) {
-  let url = `https://cdn.ogladajanime.pl/images/user/${id}.webp?${new Date().getTime()}`
-  try {
-    const res = await fetch(new URL(url))
-    if (res.status === 404)
-      url = ActivityAssets.DefaultProfilePicture
-  }
-  catch {
-    url = ActivityAssets.DefaultProfilePicture
-  }
-  return url
-}
-
-function getUserID() {
-  const dropdowns = document.querySelectorAll('a[class="dropdown-item"]')
-  let found = false
-  dropdowns.forEach((elem, _, __) => {
-    const href = elem.getAttribute('href')
-    if (href != null && href.startsWith('/profile/')) {
-      userID = Number.parseInt(href.replace('/profile/', ''))
-      found = true
-    }
-  })
-  if (!found)
-    userID = 0
-}
 
 function getPlayerInfo(): [isPaused: boolean, timestamp: [start: number, end: number]] {
   const player = getOAPlayer()
@@ -115,17 +33,6 @@ function getOAPlayer(): HTMLVideoElement | undefined {
     }
   }
   return undefined
-}
-
-function append(text: string, append: string | undefined | null, separator: string = ': '): string {
-  if (append?.trim()?.replace(' ', ''))
-    return `${text}${separator}${append}`
-  else
-    return text
-}
-
-function getAnimeIcon(id: number | string): string {
-  return `https://cdn.ogladajanime.pl/images/anime_new/${id}/2.webp`
 }
 
 async function getStrings() {
@@ -206,31 +113,6 @@ async function getStrings() {
   )
 }
 
-// ! - use localization strings
-// !? - uses the format: Viewing Page: {new line} {provided localization string}, example: !?terms
-const staticBrowsing = {
-  '/watch2gether': '!browsingRooms',
-  '/main2': '!viewHome',
-  '/search/name/': '!searchSomething',
-  '/search/custom': '!searchSomething',
-  '/search/rand': '!random',
-  '/search/new': '!new',
-  '/search/main': '!topRated',
-  '/chat': '!chatting',
-  '/user_activity': '!lastActivity',
-  '/last_comments': '!?newestComments',
-  '/active_sessions': '!?activeLoginSessions',
-  '/manage_edits': '!?newestEdits',
-  '/anime_list_to_load': '!importList',
-  '/discord': '!?contact',
-  '/support': '!?donate',
-  '/rules': '!?terms',
-  '/harmonogram': '!?upcomingEpisodes',
-  '/anime_seasons': '!?upcomingAnimes',
-  '/all_anime_list': '!?allAvailableAnimes',
-  '/': '!viewHome', // This MUST stay at the end, otherwise this will always display no matter the page
-}
-
 let strings: Awaited<ReturnType<typeof getStrings>>
 let oldLang: string | null = null
 
@@ -256,11 +138,11 @@ presence.on('iFrameData', (data) => {
 })
 
 presence.on('UpdateData', async () => {
-  getUserID()
+  userID = getUserID()
 
   const { pathname } = document.location
 
-  const [newLang, browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent, showCover] = await Promise.all([
+  const [newLang, browsingStatusEnabled, useAltName, hideWhenPaused, titleAsPresence, showSearchContent, showCover, determineSeasonSetting] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('browsingStatus'),
     presence.getSetting<boolean>('useAltName'),
@@ -268,6 +150,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('titleAsPresence'),
     presence.getSetting<boolean>('showSearchContent'),
     presence.getSetting<boolean>('showCover'),
+    presence.getSetting<boolean>('determineSeason'),
   ])
 
   if (oldLang !== newLang || !strings) {
@@ -302,13 +185,26 @@ presence.on('UpdateData', async () => {
     const epNum = activeEpisode?.getAttribute('value') ?? 0
     const epName = activeEpisode?.querySelector('p')?.textContent
 
-    if (name) {
-      if (titleAsPresence)
-        presenceData.name = name
-      else
-        presenceData.details = name
+    let season: number = -1
+    if (determineSeasonSetting) {
+      const d = determineSeason(useAltName)
+      if (d && d.found) {
+        name = d.name
+        season = d.season
+      }
+    }
 
-      presenceData.state = append(`${strings.episode} ${epNum}`, epName, ' • ')
+    if (name) {
+      presenceData.details = name
+      if (titleAsPresence)
+        presenceData.statusDisplayType = StatusDisplayType.Details
+      else
+        presenceData.statusDisplayType = StatusDisplayType.Name
+
+      if (season !== -1)
+        presenceData.state = epName
+      else
+        presenceData.state = append(`${strings.episode} ${epNum}`, epName, ' • ')
     }
     else {
       return presence.clearActivity()
@@ -336,7 +232,9 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = strings.browsing
     }
 
-    if (rating && voteCount)
+    if (season !== -1)
+      presenceData.largeImageText = `Season ${season}, Episode ${epNum}`
+    else if (rating && voteCount)
       presenceData.largeImageText = `${rating.textContent} • ${strings.votes.replace('{0}', voteCount)}`
 
     if (animeID && showCover)
@@ -357,11 +255,11 @@ presence.on('UpdateData', async () => {
     const roomName = spans[spans.length - 1]?.textContent
 
     if (name && name.textContent) {
+      presenceData.details = name.textContent
       if (titleAsPresence)
-        presenceData.name = name.textContent
+        presenceData.statusDisplayType = StatusDisplayType.Details
       else
-        presenceData.details = name.textContent
-
+        presenceData.statusDisplayType = StatusDisplayType.Name
       presenceData.state = append(`${strings.episode} ${episode}`, `${strings.room} '${roomName}'`, ' • ')
     }
     else {
@@ -466,9 +364,8 @@ presence.on('UpdateData', async () => {
 
       const commentsCount = (comments?.length ?? 1) - 1
 
-      if (name) {
+      if (name)
         presenceData.details = strings.viewCommentsOf.replace('{0}', name ?? 'N/A')
-      }
 
       presenceData.state = strings.commentCount.replace('{0}', commentsCount.toString()).replace('{1}', likes.toString()).replace('{2}', dislikes.toString())
 
@@ -574,7 +471,7 @@ presence.on('UpdateData', async () => {
   else {
     if (browsingStatusEnabled) {
       let recognized = false
-      for (const [key, value] of Object.entries(staticBrowsing)) {
+      for (const [key, value] of Object.entries(StaticBrowsing)) {
         if (pathname.includes(key)) {
           const parsed = parseString(value)
           presenceData.details = parsed[0]
