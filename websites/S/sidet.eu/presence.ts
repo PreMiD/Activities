@@ -3,7 +3,7 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 enum ActivityAssets {
-  Logo = 'https://sidet.eu/images/sideteulogo-white_512.png',
+  Logo = 'https://sidet.eu/images/sideteulogo-white-512.png',
 }
 presence.on('UpdateData', async () => {
   // 1. Získanie dát z DOMu tvojej stránky

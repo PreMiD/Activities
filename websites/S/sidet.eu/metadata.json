@@ -12,7 +12,7 @@
   "url": "sidet.eu",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sidet[.]eu[/]",
   "version": "1.0.0",
-  "logo": "https://sidet.eu/images/sideteulogo-white_512.png",
+  "logo": "https://sidet.eu/images/sideteulogo-white-512.png",
   "thumbnail": "https://sidet.eu/images/sideteulogo-white.png",
   "color": "#000000",
   "category": "socials",
