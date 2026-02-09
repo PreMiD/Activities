@@ -79,7 +79,8 @@ function getHomePageDetails(settings: DashboardSettings) {
 
 function getMachineDetails() {
   const name = getResourceName(2) || 'Unknown Machine'
-  const statusEl = document.querySelector('.htb-status--green')
+  const statusEl = document.querySelector('.htb-avatar.htb-pt-2')
+  const vpnEl = document.querySelector('.common-play-section-vpn-server-section > .htb-gap-8')
   const machineImg = document.querySelector('.avatar-icon-name-details img')
   const src = machineImg?.getAttribute('src')
 
@@ -88,7 +89,7 @@ function getMachineDetails() {
   return {
     details: statusEl ? `Playing Machine '${name}'` : `Looking at '${name}' Machine`,
     state: statusEl
-      ? `${statusEl?.previousElementSibling?.textContent?.trim() || 'Server'} - Online`
+      ? `${vpnEl?.textContent?.trim() || 'Server'} - Online`
       : 'Status: Offline',
     avatar,
   }
