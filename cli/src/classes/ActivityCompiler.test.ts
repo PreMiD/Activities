@@ -146,7 +146,7 @@ describe('activityCompiler DMCA check', () => {
     const { ActivityCompiler } = await import('./ActivityCompiler.js')
     const compiler = new ActivityCompiler('/test/YouTube', safeMetadata, false)
 
-    const result = await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
+    await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
 
     //* Should not have been blocked by DMCA check (may fail for other reasons in test env)
     expect(mocks.isDmcaBlocked).toHaveBeenCalledWith('YouTube', expect.any(Set))
