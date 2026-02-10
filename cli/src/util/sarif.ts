@@ -4,6 +4,7 @@ import process from 'node:process'
 import { getCliPackageJson } from './getPackageJson.js'
 
 export enum SarifRuleId {
+  dmcaCheck = 'dmca-check',
   bumpCheck = 'bump-check',
   typeCheck = 'type-check',
   iframeCheck = 'iframe-check',
@@ -20,6 +21,13 @@ export enum SarifRuleId {
 }
 
 const sarifRules: Record<SarifRuleId, ReportingDescriptor> = {
+  [SarifRuleId.dmcaCheck]: {
+    id: SarifRuleId.dmcaCheck,
+    name: 'DMCA Check',
+    shortDescription: {
+      text: 'Makes sure the activity is not on the DMCA blocklist',
+    },
+  },
   [SarifRuleId.bumpCheck]: {
     id: SarifRuleId.bumpCheck,
     name: 'Bump Check',
