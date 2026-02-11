@@ -147,7 +147,7 @@ function getColorKeyFromHsl(rgb: RGB): ColorKey {
   const [h, s, l] = rgbToHsl(rgb)
 
   // Beige (warm + bright + medium saturation)
-  if ((l >= 50 && l <= 80) && (s <= 30)) {
+  if (l >= 50 && l <= 80 && s <= 30) {
     return 'beige'
   }
   if (s < 30 && l > 90)
