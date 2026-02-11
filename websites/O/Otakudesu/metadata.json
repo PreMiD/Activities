@@ -11,9 +11,9 @@
     "id": "Download, nonton dan streaming anime subtitle Indonesia dengan resolusi 240p, 360p, 480p, & 720p dengan format MP4 & MKV bersama dengan batchnya",
     "nl": "Download, bekijk en stream anime met Indonesische ondertiteling en met 240p, 360p, 480p en 720p resolutie met MP4-formaat en MKV samen met de batch."
   },
-  "url": "otakudesu.cloud",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*otakudesu[.]cloud[/]",
-  "version": "2.1.0",
+  "url": "otakudesu.best",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*otakudesu[.]best[/]",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Otakudesu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Otakudesu/assets/thumbnail.png",
   "color": "#ffffff",
