@@ -11,7 +11,7 @@
     "ja": "LINE MUSICで現在再生しているトラックを表示します。"
   },
   "url": "music.line.me",
-  "regExp": "^https?://music\\.line\\.me/.*",
+  "regExp": "^https?[:][/][/]music[.]line[.]me[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/nzdDKtJ.png",
   "thumbnail": "https://i.imgur.com/qZBsZx2.png",
