@@ -15,10 +15,7 @@
   "description": {
     "en": "Boosteroid is a cloud gaming service that allows users to stream and play PC games instantly on various devices, without downloads or expensive hardware."
   },
-  "url": [
-    "boosteroid.com",
-    "cloud.boosteroid.com"
-  ],
+  "url": "cloud.boosteroid.com",
   "regExp": "^https?[:][/][/]cloud[.]boosteroid[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/5cztMTp.png",
