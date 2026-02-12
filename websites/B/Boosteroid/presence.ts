@@ -8,6 +8,7 @@ const PLATFORM_ICONS: Record<string, string> = {
   'steam': 'https://i.imgur.com/Awri5FL.png',
   'xbox': 'https://i.imgur.com/vNefzIj.png',
   'rockstar-games': 'https://i.imgur.com/eJkcT1L.png',
+  'epic': 'https://i.imgur.com/ihqSLsY.png', // Añadido para compatibilidad
   'epic-games-store': 'https://i.imgur.com/ihqSLsY.png',
   'wargamingnet': 'https://i.imgur.com/B7Xp3AW.png',
   'battlenet': 'https://i.imgur.com/Cx0Mo8j.png',
@@ -60,8 +61,7 @@ presence.on('UpdateData', async () => {
 
       if (cachedId === appId && cachedData) {
         game = JSON.parse(cachedData)
-      }
-      else {
+      } else {
         const response = await fetch(`https://cloud.boosteroid.com/api/v1/boostore/applications/${appId}`)
         const result = await response.json()
         game = result?.data
@@ -72,6 +72,7 @@ presence.on('UpdateData', async () => {
         }
       }
 
+      // ESLint Fix: Bloque con llaves y salto de línea
       if (!game) {
         return
       }
@@ -80,15 +81,20 @@ presence.on('UpdateData', async () => {
       const tiendas = game.stores ? Object.keys(game.stores) : []
       let rawStore = 'default'
 
-      if (tiendas.includes('steam')) {
+      // Prioridad: 1. Nombre con (Xbox) | 2. Steam | 3. Primera tienda disponible
+      if (game.name.includes('(Xbox)')) {
+        rawStore = 'xbox'
+      } else if (tiendas.includes('steam')) {
         rawStore = 'steam'
-      }
-      else if (tiendas.length > 0 && tiendas[0]) {
+      } else if (tiendas.length > 0 && tiendas[0]) {
         rawStore = tiendas[0]
       }
 
       let nombreTienda: string
       switch (rawStore) {
+        case 'xbox':
+          nombreTienda = 'Xbox'
+          break
         case 'steam':
           nombreTienda = 'Steam'
           break
@@ -107,11 +113,12 @@ presence.on('UpdateData', async () => {
         case 'ea-app':
           nombreTienda = 'EA App'
           break
+        case 'epic':
         case 'epic-games-store':
           nombreTienda = 'Epic Games Store'
           break
         default:
-          nombreTienda = rawStore.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+          nombreTienda = rawStore.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
       }
 
       const iconoPequeno = PLATFORM_ICONS[rawStore] ?? PLATFORM_ICONS.default
@@ -126,8 +133,7 @@ presence.on('UpdateData', async () => {
         startTimestamp: getTimestamp(appId),
         type: 0,
       })
-    }
-    catch {
+    } catch {
       const backupData = sessionStorage.getItem('premid_cached_game')
       if (backupData) {
         const game = JSON.parse(backupData)
@@ -138,13 +144,11 @@ presence.on('UpdateData', async () => {
           startTimestamp: getTimestamp(appId),
           type: 0,
         })
-      }
-      else {
+      } else {
         presence.clearActivity()
       }
     }
-  }
-  else {
+  } else {
     presence.clearActivity()
   }
 })
