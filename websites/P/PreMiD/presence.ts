@@ -117,8 +117,8 @@ presence.on('UpdateData', async () => {
           presenceData.details = strings.viewPage
           presenceData.state = strings.dashboard
           break
-        case /^\/library\/.+$/.test(pathname):
-          activityName = pathname.match(/^\/library\/(.+)\/$/)?.[1]
+        case /\/library\/.+/.test(pathname):
+          activityName = pathname.match(/\/library\/(.+)/)?.[1]
           icon = document.querySelector<HTMLMetaElement>('[property="og:image"]')?.content || ActivityAssets.Logo
 
           presenceData.details = strings.viewActivity
