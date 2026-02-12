@@ -1,14 +1,8 @@
 const presence = new Presence({
-  clientId: '1358341885772562553',
+  clientId: '1358341885772562553'
 })
 
 const BOOSTEROID_LOGO = 'https://i.imgur.com/fWwYdQR.png'
-
-interface GameData {
-  name: string
-  icon: string
-  stores?: Record<string, unknown>
-}
 
 const PLATFORM_ICONS: Record<string, string> = {
   'steam': 'https://i.imgur.com/Awri5FL.png',
@@ -23,7 +17,7 @@ const PLATFORM_ICONS: Record<string, string> = {
   'origin': 'https://i.imgur.com/HXOOS65.png',
   'ea-app': 'https://i.imgur.com/HXOOS65.png',
   'fanatical': 'https://i.imgur.com/Awri5FL.png',
-  'default': BOOSTEROID_LOGO,
+  'default': BOOSTEROID_LOGO
 }
 
 function getTimestamp(gameId: string | number): number {
@@ -53,23 +47,23 @@ presence.on('UpdateData', async () => {
     presence.setActivity({
       details: 'Main Page',
       state: 'Browsing Games',
-      largeImageKey: BOOSTEROID_LOGO,
+      largeImageKey: BOOSTEROID_LOGO
     })
     return
   }
 
   if (href.includes('/streaming/') && appId && appId !== 'null') {
     try {
-      let game: GameData | null = null
+      let game: any = null
       const cachedId = sessionStorage.getItem('premid_cached_id')
       const cachedData = sessionStorage.getItem('premid_cached_game')
 
       if (cachedId === appId && cachedData) {
-        game = JSON.parse(cachedData) as GameData
+        game = JSON.parse(cachedData)
       } else {
         const response = await fetch(`https://cloud.boosteroid.com/api/v1/boostore/applications/${appId}`)
         const result = await response.json()
-        game = result?.data as GameData
+        game = result?.data
 
         if (game) {
           sessionStorage.setItem('premid_cached_id', appId)
@@ -77,18 +71,15 @@ presence.on('UpdateData', async () => {
         }
       }
 
-      if (!game)
-        return
+      if (!game) return
 
       const imagenFinal = typeof game.icon === 'string' ? game.icon.split('?')[0] : BOOSTEROID_LOGO
-
       const tiendas = game.stores ? Object.keys(game.stores) : []
       let rawStore = 'default'
 
       if (tiendas.includes('steam')) {
         rawStore = 'steam'
-      }
-      else if (tiendas.length > 0 && tiendas[0]) {
+      } else if (tiendas.length > 0 && tiendas[0]) {
         rawStore = tiendas[0]
       }
 
@@ -123,30 +114,28 @@ presence.on('UpdateData', async () => {
 
       presence.setActivity({
         details: 'Playing',
-        state: game.name,
-        largeImageKey: imagenFinal,
-        largeImageText: game.name,  
-        smallImageKey: iconoPequeno,
-        smallImageText: nombreTienda,
-        startTimestamp: getTimestamp(appId),
+        state: String(game.name),
+        largeImageKey: String(imagenFinal),
+        largeImageText: String(game.name),
+        smallImageKey: String(iconoPequeno),
+        smallImageText: String(nombreTienda),
+        startTimestamp: getTimestamp(appId)
       })
-    }
-    catch {
+    } catch {
       const backupData = sessionStorage.getItem('premid_cached_game')
       if (backupData) {
-        const game = JSON.parse(backupData) as GameData
+        const game = JSON.parse(backupData)
         presence.setActivity({
           details: 'Playing',
-          state: game.name,
-          largeImageKey: game.icon?.split('?')[0] ?? BOOSTEROID_LOGO,
-          startTimestamp: getTimestamp(appId),
+          state: String(game.name),
+          largeImageKey: String(game.icon?.split('?')[0] ?? BOOSTEROID_LOGO),
+          startTimestamp: getTimestamp(appId)
         })
       } else {
         presence.clearActivity()
       }
     }
-  }
-  else {
+  } else {
     presence.clearActivity()
   }
 })
