@@ -74,7 +74,7 @@ presence.on('UpdateData', async () => {
 
       if (!game) {
         return
-      } 
+      }
 
       const imagenFinal = typeof game.icon === 'string' ? game.icon.split('?')[0] : BOOSTEROID_LOGO
       const tiendas = game.stores ? Object.keys(game.stores) : []
