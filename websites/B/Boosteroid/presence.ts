@@ -60,7 +60,7 @@ presence.on('UpdateData', async () => {
 
       if (cachedId === appId && cachedData) {
         game = JSON.parse(cachedData)
-      } 
+      }
       else {
         const response = await fetch(`https://cloud.boosteroid.com/api/v1/boostore/applications/${appId}`)
         const result = await response.json()
@@ -80,7 +80,7 @@ presence.on('UpdateData', async () => {
 
       if (tiendas.includes('steam')) {
         rawStore = 'steam'
-      } 
+      }
       else if (tiendas.length > 0 && tiendas[0]) {
         rawStore = tiendas[0]
       }
@@ -122,9 +122,9 @@ presence.on('UpdateData', async () => {
         smallImageKey: iconoPequeno,
         smallImageText: nombreTienda,
         startTimestamp: getTimestamp(appId),
-        type: 'PLAYING',
+        type: 0,
       })
-    } 
+    }
     catch {
       const backupData = sessionStorage.getItem('premid_cached_game')
       if (backupData) {
@@ -134,14 +134,14 @@ presence.on('UpdateData', async () => {
           state: game.name,
           largeImageKey: game.icon?.split('?')[0] ?? BOOSTEROID_LOGO,
           startTimestamp: getTimestamp(appId),
-          type: 'PLAYING',
+          type: 0,
         })
-      } 
+      }
       else {
         presence.clearActivity()
       }
     }
-  } 
+  }
   else {
     presence.clearActivity()
   }
