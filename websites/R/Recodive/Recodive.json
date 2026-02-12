@@ -1,0 +1,50 @@
+{
+  "recodive.branding": {
+    "description": "A page name",
+    "message": "Branding"
+  },
+  "recodive.jobs": {
+    "description": "A page name",
+    "message": "Jobs"
+  },
+  "recodive.imprint": {
+    "description": "A page name",
+    "message": "Imprint"
+  },
+  "recodive.terms": {
+    "description": "A page name",
+    "message": "Terms of Service"
+  },
+  "recodive.privacy": {
+    "description": "A page name",
+    "message": "Privacy Policy"
+  },
+  "recodive.cookies": {
+    "description": "A page name",
+    "message": "Cookie Policy"
+  },
+  "recodive.withdrawal": {
+    "description": "A page name",
+    "message": "Withdrawal Rights"
+  },
+  "recodive.legal": {
+    "description": "A page name",
+    "message": "Legal Information"
+  },
+  "recodive.projects": {
+    "description": "A page name",
+    "message": "Projects"
+  },
+  "recodive.about": {
+    "description": "A page name",
+    "message": "About"
+  },
+  "recodive.team": {
+    "description": "A page name",
+    "message": "Team"
+  },
+  "recodive.contact": {
+    "description": "A page name",
+    "message": "Contact"
+  }
+}
