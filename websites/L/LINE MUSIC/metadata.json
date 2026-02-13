@@ -7,8 +7,8 @@
   },
   "service": "LINE MUSIC",
   "description": {
-    "en": "Displays your current track from LINE MUSIC.",
-    "ja": "LINE MUSICで現在再生しているトラックを表示します。"
+    "en": "LINE MUSIC is Japanese subscription-based music streaming service provided from LY Corporation (LINE), since 2015.",
+    "ja": "LINE MUSICは、LINEが2015年から提供している日本の定額制音楽ストリーミングサービスです。"
   },
   "url": "music.line.me",
   "regExp": "^https?[:][/][/]music[.]line[.]me[/]",
