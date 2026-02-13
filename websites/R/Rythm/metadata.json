@@ -20,8 +20,7 @@
     "zh-tw": "Rythm 是款 Discord 音樂機器人，提供網頁控制面板，你可以瀏覽曲目、在語音頻道控制播放，或直接在瀏覽器中管理佇列。"
   },
   "url": "rythm.fm",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*rythm[.]fm[/]",
-  "version": "1.1.2",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/logo.gif",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/thumbnail.png",
   "color": "#147AFE",
