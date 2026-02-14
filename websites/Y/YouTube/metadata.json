@@ -74,7 +74,7 @@
     "m.youtube.com"
   ],
   "regExp": "^https?[:][/][/](www|studio|m)[.]youtube[.]com[/]",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube/assets/thumbnail.jpg",
   "color": "#E40813",
