@@ -9,7 +9,7 @@ PreMiD's Activity Forwarding feature allows you to send your current activity da
 3. Toggle on "Activity Forwarding"
 4. Enter the URL where you want to forward your activity data
 
-![Activity Forwarding Setting](./images/activity-forwarding-setting.png)
+![Activity Forwarding Setting](../../images/activity-forwarding-setting.png)
 
 _The Activity Forwarding setting can be found in the extension's settings page._
 

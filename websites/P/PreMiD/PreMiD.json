@@ -7,41 +7,45 @@
     "description": "A page name",
     "message": "About PreMiD"
   },
-  "premid.pageApi": {
+  "premid.pageApiReference": {
     "description": "A page name",
-    "message": "API"
-  },
-  "premid.pageApiVersion": {
-    "description": "A page name // {0} will be replaced with the version number.",
-    "message": "Understanding the v{0} API"
+    "message": "API Reference"
   },
   "premid.pageContributors": {
     "description": "A page name",
     "message": "Contributors"
   },
+  "premid.pageDashboard": {
+    "description": "A page name",
+    "message": "Dashboard"
+  },
   "premid.pageDownloads": {
     "description": "A page name",
     "message": "Downloads"
+  },
+  "premid.pageFaq": {
+    "description": "A page name",
+    "message": "FAQ"
   },
   "premid.pageHome": {
     "description": "A page name",
     "message": "Homepage"
   },
-  "premid.pageIframe": {
+  "premid.pageIframes": {
     "description": "A page name",
-    "message": "Understanding iframe"
+    "message": "IFrames"
   },
   "premid.pageInstall": {
     "description": "A page name",
     "message": "Installation"
   },
-  "premid.pageInstallFor": {
-    "description": "A page name // {0} will be replaced with Windows, Linux, Chrome etc.",
-    "message": "Installation for {0}"
-  },
   "premid.pageMetadata": {
     "description": "A page name",
-    "message": "Configuring metadata.json"
+    "message": "Metadata"
+  },
+  "premid.pagePlans": {
+    "description": "A page name",
+    "message": "Plans"
   },
   "premid.pagePresenceClass": {
     "description": "A page name",
@@ -63,32 +67,124 @@
     "description": "A page name",
     "message": "Getting Started"
   },
-  "premid.pageStore": {
+  "premid.pageActivityLibrary": {
     "description": "A page name",
-    "message": "Store"
-  },
-  "premid.pageSysReq": {
-    "description": "A page name",
-    "message": "System Requirements"
-  },
-  "premid.pageTroubleshooting": {
-    "description": "A page name",
-    "message": "Troubleshooting"
+    "message": "Activity Library"
   },
   "premid.pageTs": {
     "description": "A page name",
     "message": "Configuring TypeScript"
   },
-  "premid.partners": {
-    "description": "A page name",
-    "message": "Partners"
-  },
   "premid.viewPage": {
     "description": "",
     "message": "Viewing page:"
   },
-  "premid.viewPresence": {
+  "premid.viewActivity": {
     "description": "",
-    "message": "Viewing presence:"
+    "message": "Viewing activity:"
+  },
+  "premid.pageGuide": {
+    "description": "A page name",
+    "message": "Guide"
+  },
+  "premid.pageExamples": {
+    "description": "A page name",
+    "message": "Examples"
+  },
+  "premid.pageFirstActivity": {
+    "description": "A page name",
+    "message": "Creating Your First Activity"
+  },
+  "premid.pageIntroduction": {
+    "description": "A page name",
+    "message": "Introduction"
+  },
+  "premid.pageStructure": {
+    "description": "A page name",
+    "message": "Activity Structure"
+  },
+  "premid.pageSettings": {
+    "description": "A page name",
+    "message": "Settings"
+  },
+  "premid.pageDependencies": {
+    "description": "A page name",
+    "message": "Dependencies"
+  },
+  "premid.pageLoadingActivities": {
+    "description": "A page name",
+    "message": "Loading Activities"
+  },
+  "premid.pageDeveloperTools": {
+    "description": "A page name",
+    "message": "Developer Tools"
+  },
+  "premid.pageSlideshows": {
+    "description": "A page name",
+    "message": "Slideshows"
+  },
+  "premid.pageLocalization": {
+    "description": "A page name",
+    "message": "Localization"
+  },
+  "premid.pageBestPractices": {
+    "description": "A page name",
+    "message": "Best Practices"
+  },
+  "premid.pageGuidelines": {
+    "description": "A page name",
+    "message": "Guidelines"
+  },
+  "premid.pageActivityForwarding": {
+    "description": "A page name",
+    "message": "Activity Forwarding"
+  },
+  "premid.pagePresenceData": {
+    "description": "A page name",
+    "message": "PresenceData Interface"
+  },
+  "premid.pageMetadataStructure": {
+    "description": "A page name",
+    "message": "metadata.json Structure"
+  },
+  "premid.pageIframeClass": {
+    "description": "A page name",
+    "message": "IFrame Class"
+  },
+  "premid.pageUtilityFunctions": {
+    "description": "A page name",
+    "message": "Utility Functions"
+  },
+  "premid.pageApiOverview": {
+    "description": "A page name",
+    "message": "Overview"
+  },
+  "premid.pageMediaExample": {
+    "description": "A page name",
+    "message": "Media Activity"
+  },
+  "premid.pageSettingsExample": {
+    "description": "A page name",
+    "message": "Activity with Settings"
+  },
+  "premid.pageIframesExample": {
+    "description": "A page name",
+    "message": "Activity with iFrames"
+  },
+  "premid.pageSlideshowsExample": {
+    "description": "A page name",
+    "message": "Activity with Slideshow"
+  },
+  "premid.pageBasicExample": {
+    "description": "A page name",
+    "message": "Basic Activity"
+  },
+  "premid.pageStatus": {
+    "description": "A page name",
+    "message": "Status"
+  },
+  "premid.pageFeedback": {
+    "description": "A page name",
+    "message": "Feedback"
   }
 }
