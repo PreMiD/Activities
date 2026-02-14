@@ -12,7 +12,7 @@ export interface Playback {
 export interface PictureCache {
   id: string
   url: string
-  date: Date
+  date: number
 }
 
 export interface SeasonResponse {
