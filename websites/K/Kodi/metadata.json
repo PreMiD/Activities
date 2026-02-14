@@ -14,7 +14,8 @@
     "localhost",
     "127.0.0.1"
   ],
-  "version": "1.1.0",
+  "regExp": "^https?[:][/][/](localhost|127[.]0[.]0[.]1):8080[/]",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kodi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kodi/assets/thumbnail.png",
   "color": "#ff7c00",
