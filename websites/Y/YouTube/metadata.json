@@ -204,6 +204,17 @@
         "When Music Playing",
         "Always"
       ]
+    },
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 2,
+      "values": [
+        "Activity Name",
+        "Details",
+        "State"
+      ]
     }
   ],
   "mobile": true
