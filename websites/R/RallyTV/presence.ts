@@ -1,4 +1,6 @@
-const presence = new Presence('1464394386170446077')
+const presence = new Presence({
+  clientId: '1464394386170446077',
+})
 let lastTitle = ''
 
 presence.on('UpdateData', () => {
@@ -9,12 +11,12 @@ presence.on('UpdateData', () => {
   let fullTitle = ''
   let isReplay = false
 
-  if (h4Element && docTitle.includes(h4Element.innerText.trim())) {
-    fullTitle = h4Element.innerText.trim()
+  if (h4Element && docTitle.includes(h4Element.textContent?.trim() || '')) {
+    fullTitle = h4Element.textContent?.trim() || ''
     isReplay = true
   } else if (liveContainer) {
     const liveTitleElement = liveContainer.querySelector('p span')
-    fullTitle = liveTitleElement ? (liveTitleElement as HTMLElement).innerText.trim() : ''
+    fullTitle = liveTitleElement?.textContent?.trim() || ''
   }
 
   if (!fullTitle || fullTitle === '') {
@@ -24,23 +26,23 @@ presence.on('UpdateData', () => {
   fullTitle = fullTitle.replace(/^['"]+|['"]+$/g, '')
 
   if (fullTitle !== lastTitle) {
-    const parts = fullTitle.split('|').map((p) => p.trim())
+    const parts = fullTitle.split('|').map(p => p.trim())
     let detailsText = ''
     let stateText = ''
 
     if (isReplay) {
-      detailsText = parts[0]
+      detailsText = parts[0] || ''
       stateText = parts[1] || 'Replay'
     } else {
-      detailsText = parts[1] || parts[0]
-      stateText = parts[0]
+      detailsText = parts[1] || parts[0] || ''
+      stateText = parts[0] || ''
     }
 
     const presenceData: PresenceData = {
-      type: Presence.ActivityType.Watching,
+      type: ActivityType.Watching,
       details: detailsText,
       state: stateText,
-      largeImageKey: 'logo'
+      largeImageKey: 'logo',
     }
 
     presence.setActivity(presenceData)
