@@ -1,36 +1,49 @@
-(async () => {
-  const presence = new Presence('1464394386170446077')
-  let lastTitle = ''
+const presence = new Presence('1464394386170446077')
+let lastTitle = ''
 
-  const updatePresence = () => {
-    const liveContainer = document.querySelector('.live')
-    const titleElement = liveContainer?.querySelector('p span')
+presence.on('UpdateData', () => {
+  const h4Element = document.querySelector('main h4')
+  const liveContainer = document.querySelector('.live')
+  const docTitle = document.title
 
-    let fullTitle = titleElement ? titleElement.textContent.trim() : 'Browsing Events'
-    fullTitle = fullTitle.replace(/^['"]+|['"]+$/g, '')
+  let fullTitle = ''
+  let isReplay = false
 
-    if (fullTitle !== lastTitle) {
-      const parts = fullTitle.split('|').map(p => p.trim())
-      let detailsText = parts[1]
-      let stateText = parts[0] || ''
-
-      if (parts.length === 1) {
-        detailsText = fullTitle
-        stateText = ''
-      }
-
-      const presenceData = {
-        type: 3,
-        details: detailsText,
-        state: stateText,
-        largeImageKey: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJT4dg-pIfsTDJ-ZeDHGhr63cJ9BcJFYOpFw&s',
-      }
-
-      presence.setActivity(presenceData)
-      lastTitle = fullTitle
-    }
+  if (h4Element && docTitle.includes(h4Element.innerText.trim())) {
+    fullTitle = h4Element.innerText.trim()
+    isReplay = true
+  } else if (liveContainer) {
+    const liveTitleElement = liveContainer.querySelector('p span')
+    fullTitle = liveTitleElement ? (liveTitleElement as HTMLElement).innerText.trim() : ''
   }
 
-  updatePresence()
-  setInterval(updatePresence, 10000)
-})()
+  if (!fullTitle || fullTitle === '') {
+    fullTitle = 'Browsing Events'
+  }
+
+  fullTitle = fullTitle.replace(/^['"]+|['"]+$/g, '')
+
+  if (fullTitle !== lastTitle) {
+    const parts = fullTitle.split('|').map((p) => p.trim())
+    let detailsText = ''
+    let stateText = ''
+
+    if (isReplay) {
+      detailsText = parts[0]
+      stateText = parts[1] || 'Replay'
+    } else {
+      detailsText = parts[1] || parts[0]
+      stateText = parts[0]
+    }
+
+    const presenceData: PresenceData = {
+      type: Presence.ActivityType.Watching,
+      details: detailsText,
+      state: stateText,
+      largeImageKey: 'logo'
+    }
+
+    presence.setActivity(presenceData)
+    lastTitle = fullTitle
+  }
+})
