@@ -11,8 +11,8 @@
   "url": "rally.tv",
   "regExp": "^https?:\\/\\/(?:www\\.|app\\.)?rally\\.tv",
   "version": "1.0.0",
-  "logo": "https://play-lh.googleusercontent.com/yGC9brvzJBdkj8D2iyr1FmtE2FOM4myhn83rWR1DsJR4jXBwpQSHa7OkS9Q1_XVqQGl-=s256-rw",
-  "thumbnail": "https://resources.redbull.tv/07f960dc-fd36-466c-971f-64a597518b83/rbtv_display_art_landscape/im:i:c_fill,w_1280,ar_1.7777777777777777,q_auto,g_auto,f_auto?namespace=rallytv&refresh=true",
+  "logo": "https://media.discordapp.net/attachments/960887054273769474/1472581570391969965/logo.png?ex=699317f5&is=6991c675&hm=6728347af8d2eefcc77bc5de0ccfa9e4f8d0b448d0d274b6d11c3f789d6c2f58&=&format=webp&quality=lossless&width=563&height=563",
+  "thumbnail": "https://media.discordapp.net/attachments/960887054273769474/1472581570777976993/thumbnail.png?ex=699317f5&is=6991c675&hm=bad4de40413ef5cbfdf165defd9086332efe0598fa2fa2b33a678904ccec9c7e&=&format=webp&quality=lossless&width=563&height=563",
   "color": "#e30613",
   "category": "videos",
   "tags": [
@@ -21,5 +21,6 @@
     "racing"
   ]
 }
+
 
 
