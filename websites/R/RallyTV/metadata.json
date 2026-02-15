@@ -15,6 +15,9 @@
   "thumbnail": "thumbnail.png",
   "color": "#e30613",
   "category": "videos",
-  "tags": ["rally", "wrc", "racing"],
-  "clientId": "1464394386170446077"
+  "tags": [
+    "rally",
+    "wrc",
+    "racing"
+  ]
 }
