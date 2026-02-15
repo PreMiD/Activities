@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1464394386170446077'
+  clientId: '1464394386170446077',
 })
 let lastTitle = ''
 
@@ -41,10 +41,10 @@ presence.on('UpdateData', () => {
     }
 
     const presenceData: PresenceData = {
-      type: Presence.ActivityType.Watching,
+      type: ActivityType.Watching,
       details: detailsText,
       state: stateText,
-      largeImageKey: 'logo'
+      largeImageKey: 'logo',
     }
 
     presence.setActivity(presenceData)
