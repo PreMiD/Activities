@@ -31,10 +31,6 @@
     "description": "User is on affiliate site",
     "message": "On Affiliate Area"
   },
-  "minehoster.viewAffiliate": {
-    "description": "Button to view affiliate link",
-    "message": "Visit Affiliate Link"
-  },
   "minehoster.affiliateId": {
     "description": "Affiliate ID of the user",
     "message": "Affiliate ID"
