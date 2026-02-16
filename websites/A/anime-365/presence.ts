@@ -1,7 +1,7 @@
 import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '1103003257795793018', // Замените на ваш Client ID
+  clientId: '1103003257795793018',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -9,9 +9,8 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 enum ActivityAssets {
   Logo = 'https://i.ibb.co/W4j6Q3Tf/favicon-0.png',
   DefaultCover = 'https://anime-365.ru/images/no-image.jpg',
-  // Добавляем кастомные иконки как прямые ссылки
-  Home = 'https://anime-365.ru/favicon.ico', // временно используем favicon
-  Catalog = 'https://anime-365.ru/favicon.ico', // временно
+  Home = 'https://anime-365.ru/favicon.ico',
+  Catalog = 'https://anime-365.ru/favicon.ico',
 }
 
 interface VideoData {

@@ -6,11 +6,11 @@
     "name": "potma13"
   },
   "contributors": [],
-  "service": "anime-365",
-  "altnames": ["Anime 365", "smotret-anime.org"],
+  "service": "anime-365.ru",
+  "altnames": ["anime-365.ru", "smotret-anime.org"],
   "description": {
-    "en": "Watch anime online in high quality on Anime 365",
-    "ru": "Смотрите аниме онлайн в высоком качестве на Anime 365"
+    "en": "Watch anime online in high quality on anime-365.ru",
+    "ru": "Смотрите аниме онлайн в высоком качестве на anime-365.ru"
   },
   "url": "anime-365.ru",
   "regExp": "([a-z0-9-]+[.])*(anime-365[.]ru|smotret-anime[.]org)[/]",
