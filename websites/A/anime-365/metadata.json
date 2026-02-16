@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "416596242370658314",
+    "name": "potma13"
+  },
+  "contributors": [],
+  "service": "anime-365",
+  "altnames": ["Anime 365", "smotret-anime.org"],
+  "description": {
+    "en": "Watch anime online in high quality on Anime 365",
+    "ru": "Смотрите аниме онлайн в высоком качестве на Anime 365"
+  },
+  "url": "anime-365.ru",
+  "regExp": "([a-z0-9-]+[.])*(anime-365[.]ru|smotret-anime[.]org)[/]",
+  "version": "1.0.0",
+  "logo": "https://anime-365.ru/favicon.ico",
+  "thumbnail": "https://anime-365.ru/favicon.ico",
+  "color": "#1B5E20",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "video",
+    "russian",
+    "anime-365",
+    "smotret-anime"
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*",
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "description": "Display buttons in the Discord Activity"
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Show elapsed time since the activity started"
+    },
+    {
+      "id": "showCover",
+      "title": "Show Anime Cover",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Display anime cover as large image"
+    }
+  ]
+}
