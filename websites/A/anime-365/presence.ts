@@ -32,31 +32,31 @@ interface PageData {
   searchQuery?: string
 }
 
-// Переменная для хранения данных из iframe
+// Variable to store data from iframe
 let iframeVideo: VideoData = { exists: false }
 
-// Слушаем данные из iframe
+// Listen for data from iframe
 presence.on('iFrameData', (data: VideoData) => {
   iframeVideo = data
 })
 
 /**
- * Парсит информацию о текущей странице на основе URL и содержимого
+ * Parses page information based on URL and content
  */
 function getPageData(): PageData {
   const url = document.location.pathname
   const data: PageData = { type: 'other' }
   
-  // Анализируем URL для определения типа страницы
+  // Analyze URL to determine page type
   if (url === '/' || url === '/index') {
     data.type = 'home'
   }
   else if (url.includes('/catalog/')) {
-    // Проверяем, является ли это страницей просмотра (содержит /1-seriya/ в URL)
+    // Check if this is a video watching page (contains /1-seriya/ in URL)
     if (url.match(/\/\d+-seriya-\d+\//)) {
       data.type = 'watching'
       
-      // Извлекаем ID из URL
+      // Extract IDs from URL
       const seriesMatch = url.match(/\/catalog\/([^/]+)/)
       const episodeMatch = url.match(/\/(\d+-seriya-\d+)\//)
       const translationMatch = url.match(/\/ozvuchka-(\d+)/)
@@ -65,7 +65,7 @@ function getPageData(): PageData {
       if (episodeMatch) data.episodeId = episodeMatch[1]
       if (translationMatch) data.translationId = translationMatch[1]
       
-      // Получаем название аниме из заголовка страницы
+      // Get anime title from page header
       const titleElementRu = document.querySelector('h2.line-1 a')
       const titleElementEn = document.querySelector('h2.line-2 a')
       
@@ -76,30 +76,30 @@ function getPageData(): PageData {
         data.animeNameEn = titleElementEn.textContent.trim()
       }
       
-      // Получаем номер серии из заголовка
+      // Get episode number from title
       const episodeTitle = document.querySelector('.m-translation-view-title h2')
       if (episodeTitle?.textContent) {
         const episodeMatch = episodeTitle.textContent.match(/(\d+)/)
         if (episodeMatch) data.episode = episodeMatch[1]
       }
       
-      // Получаем обложку из meta-тега og:image
+      // Get cover image from og:image meta tag
       const ogImage = document.querySelector('meta[property="og:image"]')
       if (ogImage instanceof HTMLMetaElement) {
         data.coverUrl = ogImage.content
       }
     }
     else {
-      // Это страница информации об аниме (не просмотр)
+      // This is an anime information page (not watching)
       data.type = 'anime'
       
-      // Получаем название аниме
+      // Get anime title
       const titleElementRu = document.querySelector('h2.line-1 a')
       if (titleElementRu?.textContent) {
         data.animeName = titleElementRu.textContent.trim()
       }
       
-      // Получаем обложку
+      // Get cover image
       const poster = document.querySelector('.m-catalog-item__poster img')
       if (poster instanceof HTMLImageElement) {
         data.coverUrl = poster.src
@@ -109,7 +109,7 @@ function getPageData(): PageData {
   else if (url.includes('/catalog/search')) {
     data.type = 'search'
     
-    // Пытаемся найти поисковый запрос
+    // Try to find search query
     const searchInput = document.querySelector('input[name="q"]') as HTMLInputElement
     if (searchInput?.value) {
       data.searchQuery = searchInput.value
@@ -123,7 +123,7 @@ function getPageData(): PageData {
 }
 
 presence.on('UpdateData', async () => {
-  // Получаем настройки пользователя
+  // Get user settings
   const [showButtons, showTimestamp, showCover] = await Promise.all([
     presence.getSetting<boolean>('showButtons').catch(() => true),
     presence.getSetting<boolean>('showTimestamp').catch(() => true),
@@ -133,39 +133,40 @@ presence.on('UpdateData', async () => {
   const pageData = getPageData()
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
-    type: 3, // Watching
+    type: 3, // ActivityType.Watching
   }
   
-  // Логика для разных типов страниц
+  // Logic for different page types
   switch (pageData.type) {
     case 'home':
-      presenceData.details = 'На главной странице'
-      presenceData.largeImageKey = ActivityAssets.Logo // Добавляем логотип
+      presenceData.details = 'Homepage'
+      presenceData.state = 'Looking for anime'
+      presenceData.largeImageKey = ActivityAssets.Logo
       presenceData.smallImageKey = Assets.Search
-      presenceData.smallImageText = 'Главная'
+      presenceData.smallImageText = 'Homepage'
       if (showTimestamp) presenceData.startTimestamp = browsingTimestamp
       break
       
     case 'catalog':
-      presenceData.details = 'Просматривает каталог'
-      presenceData.state = 'Ищет аниме'
-      presenceData.smallImageKey = Assets.Search // Search есть в Assets
-      presenceData.smallImageText = 'Каталог'
+      presenceData.details = 'Browsing catalog'
+      presenceData.state = 'Looking for anime'
+      presenceData.smallImageKey = Assets.Search
+      presenceData.smallImageText = 'Catalog'
       if (showTimestamp) {
         presenceData.startTimestamp = browsingTimestamp
       }
       break
       
     case 'anime':
-      presenceData.details = pageData.animeName || 'Страница аниме'
-      presenceData.state = 'Читает описание'
+      presenceData.details = pageData.animeName || 'Anime page'
+      presenceData.state = 'Reading description'
       
       if (showCover && pageData.coverUrl) {
         presenceData.largeImageKey = pageData.coverUrl
       }
       
-      presenceData.smallImageKey = Assets.Reading // Reading есть в Assets
-      presenceData.smallImageText = 'Читает описание'
+      presenceData.smallImageKey = Assets.Reading
+      presenceData.smallImageText = 'Reading description'
       
       if (showTimestamp) {
         presenceData.startTimestamp = browsingTimestamp
@@ -173,37 +174,37 @@ presence.on('UpdateData', async () => {
       
       if (showButtons) {
         presenceData.buttons = [{
-          label: 'Смотреть серии',
+          label: 'Watch episodes',
           url: document.location.href
         }]
       }
       break
       
     case 'watching':
-      // Основная информация
-      presenceData.details = pageData.animeName || pageData.animeNameEn || 'Смотрит аниме'
+      // Main information
+      presenceData.details = pageData.animeName || pageData.animeNameEn || 'Watching anime'
       
       if (pageData.episode) {
-        presenceData.state = `Серия ${pageData.episode}`
+        presenceData.state = `Episode ${pageData.episode}`
       }
       
       if (showCover && pageData.coverUrl) {
         presenceData.largeImageKey = pageData.coverUrl
       }
       
-      // Используем данные из iframe для видео
+      // Use data from iframe for video
       if (iframeVideo.exists) {
         if (iframeVideo.paused) {
-          presenceData.smallImageKey = Assets.Pause // Pause есть в Assets
-          presenceData.smallImageText = 'На паузе'
-          // Убираем таймер на паузе
+          presenceData.smallImageKey = Assets.Pause
+          presenceData.smallImageText = 'Paused'
+          // Remove timer on pause
           delete presenceData.startTimestamp
           delete presenceData.endTimestamp
         } else {
-          presenceData.smallImageKey = Assets.Play // Play есть в Assets
-          presenceData.smallImageText = 'Смотрит'
+          presenceData.smallImageKey = Assets.Play
+          presenceData.smallImageText = 'Watching'
           
-          // Добавляем таймер просмотра, если включено в настройках
+          // Add timer if enabled in settings
           if (showTimestamp && iframeVideo.currentTime && iframeVideo.duration) {
             [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
               Math.floor(iframeVideo.currentTime),
@@ -212,56 +213,57 @@ presence.on('UpdateData', async () => {
           }
         }
       } else {
-        // Если iframe не дал данных, показываем статику
-        presenceData.smallImageKey = Assets.Play // Play есть в Assets
-        presenceData.smallImageText = 'Смотрит'
-        // Убираем таймер, так как нет данных
+        // If no iframe data, show static
+        presenceData.smallImageKey = Assets.Play
+        presenceData.smallImageText = 'Watching'
+        // Remove timer as no data
         delete presenceData.startTimestamp
         delete presenceData.endTimestamp
       }
       
-      // Кнопка для просмотра
+      // Watch button
       if (showButtons) {
         presenceData.buttons = [{
-          label: 'Смотреть',
+          label: 'Watch',
           url: document.location.href
         }]
       }
       break
       
     case 'search':
-      presenceData.details = 'Ищет аниме'
+      presenceData.details = 'Searching for anime'
       if (pageData.searchQuery) {
         presenceData.state = `"${pageData.searchQuery}"`
       } else {
-        presenceData.state = 'Вводит запрос'
+        presenceData.state = 'Entering query'
       }
-      presenceData.smallImageKey = Assets.Search // Search есть в Assets
-      presenceData.smallImageText = 'Поиск'
+      presenceData.smallImageKey = Assets.Search
+      presenceData.smallImageText = 'Search'
       if (showTimestamp) {
         presenceData.startTimestamp = browsingTimestamp
       }
       break
       
     case 'profile':
-      presenceData.details = 'Просматривает профиль'
-      presenceData.state = 'Свой список аниме'
-      presenceData.smallImageKey = Assets.Reading // Reading есть в Assets
-      presenceData.smallImageText = 'Список'
+      presenceData.details = 'Viewing profile'
+      presenceData.state = 'Their anime list'
+      presenceData.smallImageKey = Assets.Reading
+      presenceData.smallImageText = 'List'
       if (showTimestamp) {
         presenceData.startTimestamp = browsingTimestamp
       }
       break
       
     default:
-      presenceData.details = 'На сайте anime-365'
-      presenceData.smallImageKey = ActivityAssets.Logo // используем логотип
-      presenceData.smallImageText = 'На сайте'
+      presenceData.details = 'On anime-365.ru'
+      presenceData.state = 'Exploring content'
+      presenceData.smallImageKey = ActivityAssets.Logo
+      presenceData.smallImageText = 'On website'
       if (showTimestamp) {
         presenceData.startTimestamp = browsingTimestamp
       }
   }
   
-  // Устанавливаем активность
+  // Set activity
   presence.setActivity(presenceData)
 })
