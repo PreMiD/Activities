@@ -34,7 +34,7 @@
     "classical.music.apple.com"
   ],
   "regExp": "^https?[:][/][/](music|beta[.]music|classical[.]music)[.]apple[.]com[/]",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Apple%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Apple%20Music/assets/thumbnail.png",
   "color": "#FA273F",
