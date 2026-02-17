@@ -1,4 +1,4 @@
-import { Assets, getTimestamps } from 'premid'
+import { Assets, getTimestamps, ActivityType } from 'premid'
 
 const presence = new Presence({
   clientId: '1103003257795793018',
@@ -8,10 +8,6 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
   Logo = 'https://ltdfoto.ru/images/2026/02/17/anime-365.png',
-}
-
-enum ActivityType {
-  Watching = 3,
 }
 
 interface VideoData {

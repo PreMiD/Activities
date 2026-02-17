@@ -15,7 +15,7 @@
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(anime-365[.]ru|smotret-anime[.]org)[/]",
   "version": "1.0.0",
   "logo": "https://ltdfoto.ru/images/2026/02/17/anime-365.png",
-  "thumbnail": "https://ltdfoto.ru/images/2026/02/17/anime-365.png",
+  "thumbnail": "https://ltdfoto.ru/images/2026/02/17/anime-365-thumbnail.png",
   "color": "#1B5E20",
   "category": "anime",
   "tags": ["anime", "streaming", "video", "russian"],
