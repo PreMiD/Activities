@@ -8,7 +8,6 @@ interface VideoData {
 }
 
 iframe.on('UpdateData', async () => {
-  // Try to find video in various players
   const video = document.querySelector('video')
   const videoData: VideoData = { exists: false }
 
@@ -18,10 +17,9 @@ iframe.on('UpdateData', async () => {
     videoData.currentTime = video.currentTime
     videoData.paused = video.paused
 
-    // Send data to main script
     iframe.send(videoData)
-  } else {
-    // No video found
+  }
+  else {
     iframe.send({ exists: false })
   }
 })

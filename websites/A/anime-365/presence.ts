@@ -33,96 +33,84 @@ interface PageData {
   searchQuery?: string
 }
 
-// Variable to store data from iframe
 let iframeVideo: VideoData = { exists: false }
 
-// Listen for data from iframe
 presence.on('iFrameData', (data: VideoData) => {
   iframeVideo = data
 })
 
-/**
- * Gets clean anime title without "watch online" text
- */
 function getCleanAnimeTitle(): string | undefined {
   const titleElement = document.querySelector('h2.line-1')
-  if (!titleElement) return undefined
+  if (!titleElement)
+    return undefined
 
-  // Clone to avoid modifying the actual DOM
   const clone = titleElement.cloneNode(true) as HTMLElement
-  // Remove all elements with class 'online-h'
   clone.querySelectorAll('.online-h').forEach(el => el.remove())
 
   return clone.textContent?.trim() || undefined
 }
 
-/**
- * Parses page information based on URL and content
- */
 function getPageData(): PageData {
   const url = document.location.pathname
   const data: PageData = { type: 'other' }
 
-  // Analyze URL to determine page type
   if (url === '/' || url === '/index') {
     data.type = 'home'
-  } else if (url.includes('/catalog/')) {
-    // Check if this is a video watching page (contains /1-seriya/ in URL)
+  }
+  else if (url.includes('/catalog/')) {
     if (url.match(/\/\d+-seriya-\d+\//)) {
       data.type = 'watching'
 
-      // Extract IDs from URL
       const seriesMatch = url.match(/\/catalog\/([^/]+)/)
       const episodeMatch = url.match(/\/(\d+-seriya-\d+)\//)
       const translationMatch = url.match(/\/ozvuchka-(\d+)/)
 
-      if (seriesMatch) data.seriesId = seriesMatch[1]
-      if (episodeMatch) data.episodeId = episodeMatch[1]
-      if (translationMatch) data.translationId = translationMatch[1]
+      if (seriesMatch)
+        data.seriesId = seriesMatch[1]
+      if (episodeMatch)
+        data.episodeId = episodeMatch[1]
+      if (translationMatch)
+        data.translationId = translationMatch[1]
 
-      // Get clean anime title
       data.animeName = getCleanAnimeTitle()
 
-      // Get English title if available
       const titleElementEn = document.querySelector<HTMLAnchorElement>('h2.line-2 a')
       if (titleElementEn?.textContent) {
         data.animeNameEn = titleElementEn.textContent.trim()
       }
 
-      // Get episode number from title
       const episodeTitle = document.querySelector<HTMLHeadingElement>('.m-translation-view-title h2')
       if (episodeTitle?.textContent) {
         const episodeMatch = episodeTitle.textContent.match(/(\d+)/)
-        if (episodeMatch) data.episode = episodeMatch[1]
+        if (episodeMatch)
+          data.episode = episodeMatch[1]
       }
 
-      // Get cover image from og:image meta tag
       const ogImage = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')
       if (ogImage) {
         data.coverUrl = ogImage.content
       }
-    } else {
-      // This is an anime information page (not watching)
+    }
+    else {
       data.type = 'anime'
 
-      // Get clean anime title
       data.animeName = getCleanAnimeTitle()
 
-      // Get cover image
       const poster = document.querySelector<HTMLImageElement>('.m-catalog-item__poster img')
       if (poster) {
         data.coverUrl = poster.src
       }
     }
-  } else if (url.includes('/catalog/search')) {
+  }
+  else if (url.includes('/catalog/search')) {
     data.type = 'search'
 
-    // Try to find search query
     const searchInput = document.querySelector<HTMLInputElement>('input[name="q"]')
     if (searchInput?.value) {
       data.searchQuery = searchInput.value
     }
-  } else if (url.includes('/users/') && url.includes('/list')) {
+  }
+  else if (url.includes('/users/') && url.includes('/list')) {
     data.type = 'profile'
   }
 
@@ -130,7 +118,6 @@ function getPageData(): PageData {
 }
 
 presence.on('UpdateData', async () => {
-  // Get user settings
   const [showButtons, showTimestamp, showCover] = await Promise.all([
     presence.getSetting<boolean>('showButtons').catch(() => true),
     presence.getSetting<boolean>('showTimestamp').catch(() => true),
@@ -143,7 +130,6 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  // Logic for different page types
   switch (pageData.type) {
     case 'home':
       presenceData.details = 'On the homepage'
@@ -151,7 +137,8 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = ActivityAssets.Logo
       presenceData.smallImageKey = Assets.Search
       presenceData.smallImageText = 'Homepage'
-      if (showTimestamp) presenceData.startTimestamp = browsingTimestamp
+      if (showTimestamp)
+        presenceData.startTimestamp = browsingTimestamp
       break
 
     case 'catalog':
@@ -159,9 +146,8 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Looking for anime'
       presenceData.smallImageKey = Assets.Search
       presenceData.smallImageText = 'Catalog'
-      if (showTimestamp) {
+      if (showTimestamp)
         presenceData.startTimestamp = browsingTimestamp
-      }
       break
 
     case 'anime':
@@ -175,9 +161,8 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Reading
       presenceData.smallImageText = 'Reading description'
 
-      if (showTimestamp) {
+      if (showTimestamp)
         presenceData.startTimestamp = browsingTimestamp
-      }
 
       if (showButtons) {
         presenceData.buttons = [{
@@ -188,7 +173,6 @@ presence.on('UpdateData', async () => {
       break
 
     case 'watching':
-      // Main information
       presenceData.details = pageData.animeName || pageData.animeNameEn || 'Watching anime'
 
       if (pageData.episode) {
@@ -199,19 +183,17 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = pageData.coverUrl
       }
 
-      // Use data from iframe for video
       if (iframeVideo.exists) {
         if (iframeVideo.paused) {
           presenceData.smallImageKey = Assets.Pause
           presenceData.smallImageText = 'Paused'
-          // Remove timer on pause
           delete presenceData.startTimestamp
           delete presenceData.endTimestamp
-        } else {
+        }
+        else {
           presenceData.smallImageKey = Assets.Play
           presenceData.smallImageText = 'Watching'
 
-          // Add timer if enabled in settings
           if (showTimestamp && iframeVideo.currentTime && iframeVideo.duration) {
             [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
               Math.floor(iframeVideo.currentTime),
@@ -219,16 +201,14 @@ presence.on('UpdateData', async () => {
             )
           }
         }
-      } else {
-        // If no iframe data, show static
+      }
+      else {
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = 'Watching'
-        // Remove timer as no data
         delete presenceData.startTimestamp
         delete presenceData.endTimestamp
       }
 
-      // Watch button
       if (showButtons) {
         presenceData.buttons = [{
           label: 'Watch',
@@ -241,14 +221,14 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Searching for anime'
       if (pageData.searchQuery) {
         presenceData.state = `"${pageData.searchQuery}"`
-      } else {
+      }
+      else {
         presenceData.state = 'Entering query'
       }
       presenceData.smallImageKey = Assets.Search
       presenceData.smallImageText = 'Search'
-      if (showTimestamp) {
+      if (showTimestamp)
         presenceData.startTimestamp = browsingTimestamp
-      }
       break
 
     case 'profile':
@@ -256,9 +236,8 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Their anime list'
       presenceData.smallImageKey = Assets.Reading
       presenceData.smallImageText = 'List'
-      if (showTimestamp) {
+      if (showTimestamp)
         presenceData.startTimestamp = browsingTimestamp
-      }
       break
 
     default:
@@ -266,11 +245,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Exploring content'
       presenceData.smallImageKey = ActivityAssets.Logo
       presenceData.smallImageText = 'On website'
-      if (showTimestamp) {
+      if (showTimestamp)
         presenceData.startTimestamp = browsingTimestamp
-      }
   }
 
-  // Set activity
   presence.setActivity(presenceData)
 })
