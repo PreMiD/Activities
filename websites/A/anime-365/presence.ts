@@ -4,12 +4,14 @@ const presence = new Presence({
   clientId: '1103003257795793018',
 })
 
+// Timestamp when user started browsing (used for non-video pages)
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
   Logo = 'https://ltdfoto.ru/images/2026/02/17/anime-365.png',
 }
 
+// Video data received from iframe (embedded player)
 interface VideoData {
   exists: boolean
   duration?: number
@@ -17,6 +19,7 @@ interface VideoData {
   paused?: boolean
 }
 
+// Page data parsed from URL and DOM
 interface PageData {
   type: 'home' | 'catalog' | 'anime' | 'watching' | 'search' | 'profile' | 'other'
   animeName?: string
@@ -29,34 +32,49 @@ interface PageData {
   searchQuery?: string
 }
 
+// Store latest video data from iframe
 let iframeVideo: VideoData = { exists: false }
 
+// Listen for data from iframe.ts (video player)
 presence.on('iFrameData', (data: VideoData) => {
   iframeVideo = data
 })
 
+/**
+ * Removes "watch online" span from anime title
+ * Site adds <span class="online-h">смотреть онлайн</span> to titles
+ */
 function getCleanAnimeTitle(): string | undefined {
   const titleElement = document.querySelector('h2.line-1')
   if (!titleElement)
     return undefined
 
+  // Clone to avoid modifying actual DOM
   const clone = titleElement.cloneNode(true) as HTMLElement
+  // Remove all "watch online" spans
   clone.querySelectorAll('.online-h').forEach(el => el.remove())
 
   return clone.textContent?.trim() || undefined
 }
 
+/**
+ * Determines page type and extracts relevant data from URL and DOM
+ */
 function getPageData(): PageData {
   const url = document.location.pathname
   const data: PageData = { type: 'other' }
 
+  // Homepage
   if (url === '/' || url === '/index') {
     data.type = 'home'
   }
+  // All anime-related pages are under /catalog/
   else if (url.includes('/catalog/')) {
+    // Check if this is a video watching page (contains pattern like /1-seriya-9604/)
     if (url.match(/\/\d+-seriya-\d+\//)) {
       data.type = 'watching'
 
+      // Extract IDs from URL for potential future use
       const seriesMatch = url.match(/\/catalog\/([^/]+)/)
       const episodeMatch = url.match(/\/(\d+-seriya-\d+)\//)
       const translationMatch = url.match(/\/ozvuchka-(\d+)/)
@@ -68,13 +86,16 @@ function getPageData(): PageData {
       if (translationMatch)
         data.translationId = translationMatch[1]
 
+      // Get clean anime title (without "watch online")
       data.animeName = getCleanAnimeTitle()
 
+      // Get English/original title if available
       const titleElementEn = document.querySelector<HTMLAnchorElement>('h2.line-2 a')
       if (titleElementEn?.textContent) {
         data.animeNameEn = titleElementEn.textContent.trim()
       }
 
+      // Extract episode number from episode title
       const episodeTitle = document.querySelector<HTMLHeadingElement>('.m-translation-view-title h2')
       if (episodeTitle?.textContent) {
         const episodeMatch = episodeTitle.textContent.match(/(\d+)/)
@@ -82,30 +103,37 @@ function getPageData(): PageData {
           data.episode = episodeMatch[1]
       }
 
+      // Get cover image from Open Graph meta tag
       const ogImage = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')
       if (ogImage) {
         data.coverUrl = ogImage.content
       }
     }
     else {
+      // This is an anime information page (not watching)
       data.type = 'anime'
 
+      // Get anime title
       data.animeName = getCleanAnimeTitle()
 
+      // Get cover image from poster element
       const poster = document.querySelector<HTMLImageElement>('.m-catalog-item__poster img')
       if (poster) {
         data.coverUrl = poster.src
       }
     }
   }
+  // Search page
   else if (url.includes('/catalog/search')) {
     data.type = 'search'
 
+    // Get current search query from input field
     const searchInput = document.querySelector<HTMLInputElement>('input[name="q"]')
     if (searchInput?.value) {
       data.searchQuery = searchInput.value
     }
   }
+  // User profile page with anime list
   else if (url.includes('/users/') && url.includes('/list')) {
     data.type = 'profile'
   }
@@ -113,7 +141,9 @@ function getPageData(): PageData {
   return data
 }
 
+// Main update loop - runs every few seconds
 presence.on('UpdateData', async () => {
+  // Get user settings from metadata.json
   const [showButtons, showTimestamp, showCover] = await Promise.all([
     presence.getSetting<boolean>('showButtons').catch(() => true),
     presence.getSetting<boolean>('showTimestamp').catch(() => true),
@@ -122,10 +152,11 @@ presence.on('UpdateData', async () => {
 
   const pageData = getPageData()
   const presenceData: PresenceData = {
-    largeImageKey: ActivityAssets.Logo,
+    largeImageKey: ActivityAssets.Logo, // Default to logo
     type: ActivityType.Watching,
   }
 
+  // Set presence data based on page type
   switch (pageData.type) {
     case 'home':
       presenceData.details = 'On the homepage'
@@ -150,6 +181,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = pageData.animeName || 'Anime page'
       presenceData.state = 'Reading description'
 
+      // Use anime cover if enabled and available
       if (showCover && pageData.coverUrl && pageData.coverUrl !== ActivityAssets.Logo) {
         presenceData.largeImageKey = pageData.coverUrl
       }
@@ -169,6 +201,7 @@ presence.on('UpdateData', async () => {
       break
 
     case 'watching':
+      // Main video watching page
       presenceData.details = pageData.animeName || pageData.animeNameEn || 'Watching anime'
 
       if (pageData.episode) {
@@ -179,10 +212,12 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = pageData.coverUrl
       }
 
+      // Use iframe data for play/pause and timestamps
       if (iframeVideo.exists) {
         if (iframeVideo.paused) {
           presenceData.smallImageKey = Assets.Pause
           presenceData.smallImageText = 'Paused'
+          // Remove timestamps when paused
           delete presenceData.startTimestamp
           delete presenceData.endTimestamp
         }
@@ -190,6 +225,7 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageKey = Assets.Play
           presenceData.smallImageText = 'Watching'
 
+          // Add timestamps if enabled
           if (showTimestamp && iframeVideo.currentTime && iframeVideo.duration) {
             [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
               Math.floor(iframeVideo.currentTime),
@@ -199,6 +235,7 @@ presence.on('UpdateData', async () => {
         }
       }
       else {
+        // Fallback if iframe data not available
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = 'Watching'
         delete presenceData.startTimestamp
@@ -237,6 +274,7 @@ presence.on('UpdateData', async () => {
       break
 
     default:
+      // Unknown/other pages
       presenceData.details = 'On anime-365 website'
       presenceData.state = 'Exploring content'
       presenceData.smallImageKey = ActivityAssets.Logo
