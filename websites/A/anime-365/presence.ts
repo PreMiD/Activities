@@ -7,10 +7,12 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.ibb.co/W4j6Q3Tf/favicon-0.png',
-  DefaultCover = 'https://anime-365.ru/images/no-image.jpg',
-  Home = 'https://anime-365.ru/favicon.ico',
-  Catalog = 'https://anime-365.ru/favicon.ico',
+  Logo = 'https://ltdfoto.ru/images/2026/02/17/anime-365.png',
+  DefaultCover = 'https://ltdfoto.ru/images/2026/02/17/anime-365.png',
+}
+
+enum ActivityType {
+  Watching = 3,
 }
 
 interface VideoData {
@@ -41,6 +43,21 @@ presence.on('iFrameData', (data: VideoData) => {
 })
 
 /**
+ * Gets clean anime title without "watch online" text
+ */
+function getCleanAnimeTitle(): string | undefined {
+  const titleElement = document.querySelector('h2.line-1')
+  if (!titleElement) return undefined
+  
+  // Clone to avoid modifying the actual DOM
+  const clone = titleElement.cloneNode(true) as HTMLElement
+  // Remove all elements with class 'online-h'
+  clone.querySelectorAll('.online-h').forEach(el => el.remove())
+  
+  return clone.textContent?.trim() || undefined
+}
+
+/**
  * Parses page information based on URL and content
  */
 function getPageData(): PageData {
@@ -65,27 +82,25 @@ function getPageData(): PageData {
       if (episodeMatch) data.episodeId = episodeMatch[1]
       if (translationMatch) data.translationId = translationMatch[1]
       
-      // Get anime title from page header
-      const titleElementRu = document.querySelector('h2.line-1 a')
-      const titleElementEn = document.querySelector('h2.line-2 a')
+      // Get clean anime title
+      data.animeName = getCleanAnimeTitle()
       
-      if (titleElementRu?.textContent) {
-        data.animeName = titleElementRu.textContent.trim()
-      }
+      // Get English title if available
+      const titleElementEn = document.querySelector<HTMLAnchorElement>('h2.line-2 a')
       if (titleElementEn?.textContent) {
         data.animeNameEn = titleElementEn.textContent.trim()
       }
       
       // Get episode number from title
-      const episodeTitle = document.querySelector('.m-translation-view-title h2')
+      const episodeTitle = document.querySelector<HTMLHeadingElement>('.m-translation-view-title h2')
       if (episodeTitle?.textContent) {
         const episodeMatch = episodeTitle.textContent.match(/(\d+)/)
         if (episodeMatch) data.episode = episodeMatch[1]
       }
       
       // Get cover image from og:image meta tag
-      const ogImage = document.querySelector('meta[property="og:image"]')
-      if (ogImage instanceof HTMLMetaElement) {
+      const ogImage = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')
+      if (ogImage) {
         data.coverUrl = ogImage.content
       }
     }
@@ -93,15 +108,12 @@ function getPageData(): PageData {
       // This is an anime information page (not watching)
       data.type = 'anime'
       
-      // Get anime title
-      const titleElementRu = document.querySelector('h2.line-1 a')
-      if (titleElementRu?.textContent) {
-        data.animeName = titleElementRu.textContent.trim()
-      }
+      // Get clean anime title
+      data.animeName = getCleanAnimeTitle()
       
       // Get cover image
-      const poster = document.querySelector('.m-catalog-item__poster img')
-      if (poster instanceof HTMLImageElement) {
+      const poster = document.querySelector<HTMLImageElement>('.m-catalog-item__poster img')
+      if (poster) {
         data.coverUrl = poster.src
       }
     }
@@ -110,7 +122,7 @@ function getPageData(): PageData {
     data.type = 'search'
     
     // Try to find search query
-    const searchInput = document.querySelector('input[name="q"]') as HTMLInputElement
+    const searchInput = document.querySelector<HTMLInputElement>('input[name="q"]')
     if (searchInput?.value) {
       data.searchQuery = searchInput.value
     }
@@ -133,14 +145,14 @@ presence.on('UpdateData', async () => {
   const pageData = getPageData()
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
-    type: 3, // ActivityType.Watching
+    type: ActivityType.Watching,
   }
   
   // Logic for different page types
   switch (pageData.type) {
     case 'home':
-      presenceData.details = 'Homepage'
-      presenceData.state = 'Looking for anime'
+      presenceData.details = 'On the homepage'
+      presenceData.state = 'Browsing new releases'
       presenceData.largeImageKey = ActivityAssets.Logo
       presenceData.smallImageKey = Assets.Search
       presenceData.smallImageText = 'Homepage'
@@ -161,7 +173,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = pageData.animeName || 'Anime page'
       presenceData.state = 'Reading description'
       
-      if (showCover && pageData.coverUrl) {
+      if (showCover && pageData.coverUrl && pageData.coverUrl !== ActivityAssets.DefaultCover) {
         presenceData.largeImageKey = pageData.coverUrl
       }
       
@@ -188,7 +200,7 @@ presence.on('UpdateData', async () => {
         presenceData.state = `Episode ${pageData.episode}`
       }
       
-      if (showCover && pageData.coverUrl) {
+      if (showCover && pageData.coverUrl && pageData.coverUrl !== ActivityAssets.DefaultCover) {
         presenceData.largeImageKey = pageData.coverUrl
       }
       
@@ -255,7 +267,7 @@ presence.on('UpdateData', async () => {
       break
       
     default:
-      presenceData.details = 'On anime-365.ru'
+      presenceData.details = 'On anime-365 website'
       presenceData.state = 'Exploring content'
       presenceData.smallImageKey = ActivityAssets.Logo
       presenceData.smallImageText = 'On website'

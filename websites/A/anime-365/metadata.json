@@ -5,30 +5,27 @@
     "id": "416596242370658314",
     "name": "potma13"
   },
-  "contributors": [],
-  "service": "anime-365.ru",
-  "altnames": ["anime-365.ru", "smotret-anime.org"],
+  "service": "anime-365",
+  "altnames": ["Anime 365", "smotret-anime.org"],
   "description": {
-    "en": "Watch anime online in high quality on anime-365.ru",
-    "ru": "Смотрите аниме онлайн в высоком качестве на anime-365.ru"
+    "en": "Watch anime online in high quality on Anime 365",
+    "ru": "Смотрите аниме онлайн в высоком качестве на Anime 365"
   },
   "url": "anime-365.ru",
-  "regExp": "([a-z0-9-]+[.])*(anime-365[.]ru|smotret-anime[.]org)[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(anime-365[.]ru|smotret-anime[.]org)[/]",
   "version": "1.0.0",
-  "logo": "https://anime-365.ru/favicon.ico",
-  "thumbnail": "https://anime-365.ru/favicon.ico",
+  "logo": "https://ltdfoto.ru/images/2026/02/17/anime-365.png",
+  "thumbnail": "https://ltdfoto.ru/images/2026/02/17/anime-365.png",
   "color": "#1B5E20",
   "category": "anime",
   "tags": [
     "anime",
     "streaming",
     "video",
-    "russian",
-    "anime-365",
-    "smotret-anime"
+    "russian"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*",
+  "iFrameRegExp": "anime-365[.]ru|smotret-anime[.]org",
   "settings": [
     {
       "id": "showButtons",
