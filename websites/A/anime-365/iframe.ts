@@ -8,20 +8,20 @@ interface VideoData {
 }
 
 iframe.on('UpdateData', async () => {
-  // Пробуем найти видео в разных плеерах
+  // Try to find video in various players
   const video = document.querySelector('video')
   const videoData: VideoData = { exists: false }
-  
+
   if (video && video.readyState >= 1) {
     videoData.exists = true
     videoData.duration = video.duration
     videoData.currentTime = video.currentTime
     videoData.paused = video.paused
-    
-    // Отправляем данные в основной скрипт
+
+    // Send data to main script
     iframe.send(videoData)
   } else {
-    // Если видео нет, отправляем пустые данные
+    // No video found
     iframe.send({ exists: false })
   }
 })

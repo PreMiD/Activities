@@ -18,12 +18,7 @@
   "thumbnail": "https://ltdfoto.ru/images/2026/02/17/anime-365.png",
   "color": "#1B5E20",
   "category": "anime",
-  "tags": [
-    "anime",
-    "streaming",
-    "video",
-    "russian"
-  ],
+  "tags": ["anime", "streaming", "video", "russian"],
   "iframe": true,
   "iFrameRegExp": "anime-365[.]ru|smotret-anime[.]org",
   "settings": [
@@ -31,22 +26,19 @@
       "id": "showButtons",
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
-      "value": true,
-      "description": "Display buttons in the Discord Activity"
+      "value": true
     },
     {
       "id": "showTimestamp",
       "title": "Show Timestamp",
       "icon": "fas fa-clock",
-      "value": true,
-      "description": "Show elapsed time since the activity started"
+      "value": true
     },
     {
       "id": "showCover",
       "title": "Show Anime Cover",
       "icon": "fas fa-image",
-      "value": true,
-      "description": "Display anime cover as large image"
+      "value": true
     }
   ]
 }
