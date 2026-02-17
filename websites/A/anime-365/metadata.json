@@ -12,7 +12,7 @@
     "ru": "Смотрите аниме онлайн в высоком качестве на Anime 365"
   },
   "url": "anime-365.ru",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(anime-365[.]ru|smotret-anime[.]org)[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(anime-365[.]ru|smotret-anime[.]org|smotret-anime[.]app)[/]",
   "version": "1.0.0",
   "logo": "https://ltdfoto.ru/images/2026/02/17/anime-365.png",
   "thumbnail": "https://ltdfoto.ru/images/2026/02/17/anime-365-thumbnail.png",
@@ -20,7 +20,7 @@
   "category": "anime",
   "tags": ["anime", "streaming", "video", "russian"],
   "iframe": true,
-  "iFrameRegExp": "anime-365[.]ru|smotret-anime[.]org",
+  "iFrameRegExp": "anime-365[.]ru|smotret-anime[.]org|smotret-anime[.]app",
   "settings": [
     {
       "id": "showButtons",
