@@ -20,7 +20,7 @@
   "category": "anime",
   "tags": ["anime", "streaming", "video", "russian"],
   "iframe": true,
-  "iFrameRegExp": ".*",
+  "iFrameRegExp": "anime-365[.]ru|smotret-anime[.]org|smotret-anime[.]app",
   "settings": [
     {
       "id": "showButtons",
