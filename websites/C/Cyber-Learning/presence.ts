@@ -1,7 +1,7 @@
 import { ActivityType } from 'premid'
 
 const presence = new Presence({
-  clientId: '1472950006267908096',
+  clientId: '1473745467081756703',
 })
 
 // ─────────────────────────────────────────────────────────────
