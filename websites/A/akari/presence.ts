@@ -1,4 +1,4 @@
-import { Assets, ActivityType, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1474040762185547939',
@@ -36,21 +36,26 @@ presence.on('UpdateData', async () => {
     }
 
     presence.setActivity(presenceData)
-  } else {
+  }
+  else {
     let details = 'Browsing'
     let state: string
 
     if (path.startsWith('/s/') || path.startsWith('/ss/')) {
       state = isHomePage ? 'a series' : pageTitle
-    } else if (path.startsWith('/u/')) {
+    }
+    else if (path.startsWith('/u/')) {
       const username = path.split('/')[2]
       details = 'Viewing a profile'
       state = username ? `@${username}` : 'a profile'
-    } else if (path.startsWith('/genre') || path.startsWith('/tag')) {
+    }
+    else if (path.startsWith('/genre') || path.startsWith('/tag')) {
       state = isHomePage ? 'a category' : pageTitle
-    } else if (path === '/v' || path.startsWith('/v?')) {
+    }
+    else if (path === '/v' || path.startsWith('/v?')) {
       state = 'Videos'
-    } else {
+    }
+    else {
       state = isHomePage ? 'Home' : pageTitle
     }
 
