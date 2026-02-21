@@ -70,10 +70,11 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Reading the Holy Quran'
         const surahName = getElementByXpath('/html/body/div[1]/div/div[2]/div/div[1]/div/p')?.textContent
         const surahNumber = getElementByXpath('/html/body/div[1]/div/div[2]/div/div[2]/div/p[2]/span[2]')?.textContent ?? getElementByXpath('/html/body/div[1]/div/div[2]/div/div[2]/div/p[2]/span')?.textContent
-        
+
         if (surahName && surahNumber) {
           presenceData.state = `Surah: Surat ${surahName} (${surahNumber})`
-        } else if (surahName) {
+        }
+        else if (surahName) {
           presenceData.state = `Surah: Surat ${surahName}`
         }
       }
