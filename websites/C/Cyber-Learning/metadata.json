@@ -1,5 +1,6 @@
 {
   "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 3,
   "author": {
     "name": "fan2rocky",
     "id": "1342178238306324531"
