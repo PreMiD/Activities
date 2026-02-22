@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "205984221859151873",
@@ -11,7 +11,7 @@
   },
   "url": "www.globalplayer.com",
   "regExp": "^https?[:][/][/]www[.]globalplayer[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Global%20Player/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Global%20Player/assets/thumbnail.png",
   "color": "#006efa",
