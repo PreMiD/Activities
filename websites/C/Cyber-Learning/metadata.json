@@ -29,18 +29,4 @@
     "hacking",
     "challenges"
   ],
-  "settings": [
-    {
-      "id": "showPoints",
-      "title": "Show Challenge Points",
-      "icon": "fad fa-coins",
-      "value": true
-    },
-    {
-      "id": "showCategory",
-      "title": "Show Challenge Category",
-      "icon": "fad fa-folder",
-      "value": true
-    }
-  ]
 }
