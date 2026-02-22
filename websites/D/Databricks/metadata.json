@@ -9,7 +9,7 @@
   "description": {
     "en": "Service for Data Engineers"
   },
-  "url": "azure.microsoft.com/en-us/products/databricks",
+  "url": "databricks.com",
   "regExp": "^https?://.*\\.azuredatabricks\\.net/.*",
   "version": "1.0.0",
   "logo": "https://s3.us-east-1.amazonaws.com/accredible_temp_credential_images/16002836894132567677717491881160.png",
