@@ -64,7 +64,7 @@ function getPageContext(): PageInfo {
   const info: PageInfo = {
     details: 'Parcourt les challenges',
     state: '💻 Cyber-Learning.fr',
-    largeImageKey: 'logo',
+    largeImageKey: 'https://cyber-learning.fr/wp-content/uploads/avatars/cropped-user-1-1728625950.png',
     challenge_id: null,
   }
 
