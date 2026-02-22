@@ -7,8 +7,7 @@
   },
   "service": "Portify",
   "description": {
-    "en": "Adds a presence for Portify (portify.netlify.app), an unofficial Porter Robinson 
-fan site featuring a full music player, community posts, and much more."
+    "en": "Adds a presence for Portify (portifybeta.netlify.app), an unofficial Porter Robinson fan site featuring a full music player, community posts, and much more."
   },
   "url": "portifybeta.netlify.app",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*portifybeta[.]netlify[.]app[/]",
