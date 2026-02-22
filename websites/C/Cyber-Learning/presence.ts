@@ -47,7 +47,9 @@ let lastDetails = ''
 let lastState = ''
 
 function cleanTitle(raw: string | null | undefined): string | null {
-  if (!raw) return null
+  if (!raw)
+    return null
+
   return raw.trim().replace(/\(\d+\s*points?\)/i, '').trim() || null
 }
 
@@ -60,7 +62,7 @@ function getPageContext(): PageInfo {
     state: '💻 Cyber-Learning.fr',
     largeImageKey: 'https://cyber-learning.fr/wp-content/uploads/avatars/cropped-user-1-1728625950.png',
     challenge_id: null,
-    pageType: 'home'
+    pageType: 'home',
   }
 
   if (path.includes('/test-cybersecurite/')) {
@@ -116,18 +118,19 @@ async function updatePresence() {
 
       if (data.active && data.title) {
         info.details = `⚔️ ${data.title}`
-        if (typeof data.points === 'number') {
+        if (typeof data.points === 'number')
           info.state = `💻 ${data.points} pts - ${info.category}`
-        }
       }
       else {
         const domTitle = cleanTitle(document.querySelector('h2')?.textContent)
-        if (domTitle) info.details = `⚔️ ${domTitle}`
+        if (domTitle)
+          info.details = `⚔️ ${domTitle}`
       }
     }
     catch {
       const domTitle = cleanTitle(document.querySelector('h2')?.textContent)
-      if (domTitle) info.details = `⚔️ ${domTitle}`
+      if (domTitle)
+        info.details = `⚔️ ${domTitle}`
     }
   }
 
@@ -142,7 +145,6 @@ async function updatePresence() {
     state: finalState,
   }
 
-  
   switch (info.pageType) {
     case 'challenge':
       activity.buttons = [{ label: '⚔️ Faire ce challenge', url: window.location.href }]
@@ -154,15 +156,14 @@ async function updatePresence() {
       activity.buttons = [{ label: '👤 Voir le profil', url: window.location.href }]
       break
     case 'list':
-      if (info.category && info.category !== 'les challenges') {
+      if (info.category && info.category !== 'les challenges')
         activity.buttons = [{ label: `📋 Voir ${info.category}`, url: window.location.href }]
-      }
+
       break
   }
 
-  if (finalDetails === lastDetails && finalState === lastState && window.location.href === lastUrl) {
+  if (finalDetails === lastDetails && finalState === lastState && window.location.href === lastUrl)
     return
-  }
 
   lastDetails = finalDetails
   lastState = finalState
@@ -178,9 +179,8 @@ window.addEventListener('popstate', updatePresence)
 window.addEventListener('pushstate', updatePresence)
 
 new MutationObserver(() => {
-  if (window.location.href !== lastUrl) {
+  if (window.location.href !== lastUrl)
     updatePresence()
-  }
 }).observe(document.querySelector('title') || document.body, {
   subtree: true,
   characterData: true,
