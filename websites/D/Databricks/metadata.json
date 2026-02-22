@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "750598776682446898",
+    "name": "squ1et"
+  },
+  "service": "Databricks",
+  "description": {
+    "en": "Service for Data Engineers"
+  },
+  "url": "azure.microsoft.com/en-us/products/databricks",
+  "regExp": "^https?://.*\\.azuredatabricks\\.net/.*",
+  "version": "1.0.0",
+  "logo": "https://s3.us-east-1.amazonaws.com/accredible_temp_credential_images/16002836894132567677717491881160.png",
+  "thumbnail": "https://s3.us-east-1.amazonaws.com/accredible_temp_credential_images/16002836894132567677717491881160.png",
+  "color": "#000000",
+  "category": "other",
+  "tags": ["coding", "data-engineering"]
+}
