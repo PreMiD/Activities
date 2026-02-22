@@ -7,7 +7,7 @@
   },
   "service": "Databricks",
   "description": {
-    "en": "Service for Data Engineers"
+    "en": "Databricks offers a unified platform for data, analytics and AI. Build better AI with a data-centric approach. Simplify ETL, data warehousing, governance and AI on the Data Intelligence Platform."
   },
   "url": "databricks.com",
   "regExp": "^https?://.*\\.azuredatabricks\\.net/.*",
