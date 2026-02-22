@@ -142,6 +142,7 @@ async function updatePresence() {
     state: finalState,
   }
 
+  
   switch (info.pageType) {
     case 'challenge':
       activity.buttons = [{ label: '⚔️ Faire ce challenge', url: window.location.href }]
