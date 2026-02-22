@@ -20,7 +20,6 @@ interface PageInfo {
   details: string
   state: string
   largeImageKey: string
-  // On a supprimé smallImageKey pour éviter le "?"
   challenge_id: string | null
   category?: string
 }
@@ -64,7 +63,7 @@ function getPageContext(): PageInfo {
 
   const info: PageInfo = {
     details: 'Parcourt les challenges',
-    state: '💻 Cyber-Learning.fr', // Emoji par défaut
+    state: '💻 Cyber-Learning.fr',
     largeImageKey: 'logo',
     challenge_id: null,
   }
