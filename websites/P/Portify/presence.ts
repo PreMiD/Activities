@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1474148693207941130'
+  clientId: '1474148693207941130',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -15,7 +15,7 @@ function parseTime(str: string): number {
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
     play: 'general.playing',
-    pause: 'general.paused'
+    pause: 'general.paused',
   })
 
   const trackTitle = document.getElementById('player-name')?.textContent?.trim()
@@ -33,8 +33,8 @@ presence.on('UpdateData', async () => {
 
   const presenceData: Record<string, unknown> = {
     largeImageKey: coverArt || 'https://i.imgur.com/s4RjTnw.png',
-    largeImageText: 'Portify — Porter Robinson Fan Site',
-    type: 2
+    largeImageText: 'Portify — PR Community Project',
+    type: 2,
   }
 
   const hasTrack = trackTitle && trackTitle !== 'Select a song to play'
@@ -47,16 +47,19 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = strings.play
     presenceData.startTimestamp = now - curSecs
     presenceData.endTimestamp = now - curSecs + totSecs
-  } else if (hasTrack && !isPlaying) {
+  }
+  else if (hasTrack && !isPlaying) {
     presenceData.details = trackTitle
     presenceData.state = `by ${trackArtist || 'Porter Robinson'} — Paused`
     presenceData.smallImageKey = Assets.Pause
     presenceData.smallImageText = strings.pause
-  } else if (isProfile && profileName) {
+  }
+  else if (isProfile && profileName) {
     presenceData.details = 'Checking a profile'
     presenceData.state = `Viewing @${profileName}`
     presenceData.startTimestamp = browsingTimestamp
-  } else {
+  }
+  else {
     presenceData.details = 'Browsing the Feed'
     presenceData.state = 'Connecting with the community'
     presenceData.startTimestamp = browsingTimestamp
