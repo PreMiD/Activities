@@ -5,70 +5,73 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-// checkmate javascript
-function pathIncludes(string: string): boolean {
-  return document.location.pathname.toLowerCase().includes(string)
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/P/PreMiD/assets/logo.png',
 }
 
 async function getStrings() {
-  return presence.getStrings(
-    {
-      browsing: 'general.browsing',
-      reading: 'general.reading',
-      viewPage: 'general.viewPage',
-      viewUser: 'general.viewUser',
-      viewPresence: 'premid.viewPresence',
-      docs: 'premid.docs',
-      home: 'premid.pageHome',
-      contributors: 'premid.pageContributors',
-      downloads: 'premid.pageDownloads',
-      store: 'premid.pageStore',
-      cookies: 'general.cookie',
-      privacy: 'general.privacy',
-      terms: 'general.terms',
-      about: 'premid.pageAbout',
-      sysreq: 'premid.pageSysReq',
-      install: 'premid.pageInstall',
-      installFor: 'premid.pageInstallFor',
-      yikes: 'premid.pageTroubleshooting',
-      start: 'premid.pageStart',
-      api: 'premid.pageApi',
-      apiPage: 'premid.pageApiVersion',
-      presenceDev: 'premid.pagePresenceDev',
-      presenceGuide: 'premid.pagePresenceGuide',
-      partners: 'premid.partners',
-      view: 'general.view',
-      incident: 'general.incidentHistory',
-      uptime: 'general.uptimeHistory',
-      class: 'premid.pagePresenceClass',
-      slideshow: 'premid.pageSlideshowClass',
-      iframe: 'premid.pageIframe',
-      metadata: 'premid.pageMetadata',
-      ts: 'premid.pageTs',
-      btnViewPage: 'general.buttonViewPage',
-    },
-
-  )
+  return presence.getStrings({
+    browsing: 'general.browsing',
+    reading: 'general.reading',
+    viewPage: 'general.viewPage',
+    viewActivity: 'premid.viewActivity',
+    docs: 'premid.docs',
+    home: 'premid.pageHome',
+    contributors: 'premid.pageContributors',
+    downloads: 'premid.pageDownloads',
+    activityLibrary: 'premid.pageActivityLibrary',
+    install: 'premid.pageInstall',
+    apiReference: 'premid.pageApiReference',
+    view: 'general.view',
+    incident: 'general.incidentHistory',
+    uptime: 'general.uptimeHistory',
+    class: 'premid.pagePresenceClass',
+    slideshowClass: 'premid.pageSlideshowClass',
+    iframes: 'premid.pageIframes',
+    metadata: 'premid.pageMetadata',
+    btnViewPage: 'general.buttonViewPage',
+    plans: 'premid.pagePlans',
+    faq: 'premid.pageFaq',
+    dashboard: 'premid.pageDashboard',
+    guide: 'premid.pageGuide',
+    examples: 'premid.pageExamples',
+    firstActivity: 'premid.pageFirstActivity',
+    introduction: 'premid.pageIntroduction',
+    structure: 'premid.pageStructure',
+    settings: 'premid.pageSettings',
+    dependencies: 'premid.pageDependencies',
+    loadingActivities: 'premid.pageLoadingActivities',
+    developerTools: 'premid.pageDeveloperTools',
+    slideshows: 'premid.pageSlideshows',
+    localization: 'premid.pageLocalization',
+    bestPractices: 'premid.pageBestPractices',
+    guidelines: 'premid.pageGuidelines',
+    activityForwarding: 'premid.pageActivityForwarding',
+    presenceData: 'premid.pagePresenceData',
+    metadataStructure: 'premid.pageMetadataStructure',
+    iframeClass: 'premid.pageIframeClass',
+    utilityFunctions: 'premid.pageUtilityFunctions',
+    overview: 'premid.pageApiOverview',
+    mediaExample: 'premid.pageMediaExample',
+    settingsExample: 'premid.pageSettingsExample',
+    iframesExample: 'premid.pageIframesExample',
+    slideshowsExample: 'premid.pageSlideshowsExample',
+    basicExample: 'premid.pageBasicExample',
+    status: 'premid.pageStatus',
+    feedback: 'premid.pageFeedback',
+  })
 }
-
-let strings: Awaited<ReturnType<typeof getStrings>>
-let oldLang: string | null = null
-let host: string
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/PreMiD/assets/logo.png',
+    largeImageKey: ActivityAssets.Logo,
   }
-  const [newLang, time, showButtons] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
+  const [time, showButtons] = await Promise.all([
     presence.getSetting<string>('time'),
     presence.getSetting<string>('showButtons'),
   ])
-
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
+  const strings = await getStrings()
+  const { hostname, pathname } = document.location
 
   if (showButtons) {
     presenceData.buttons = [
@@ -82,88 +85,53 @@ presence.on('UpdateData', async () => {
   if (time)
     presenceData.startTimestamp = browsingTimestamp
 
-  host = document.location.hostname
-
-  switch (host) {
+  switch (hostname) {
     case 'premid.app':
     case 'beta.premid.app': {
-      host.includes('beta')
+      hostname.includes('beta')
         ? (presenceData.smallImageText = `BETA | ${strings.browsing}`)
         : (presenceData.smallImageText = strings.browsing)
       presenceData.smallImageKey = Assets.Search
 
       let icon
+      let activityName
 
       switch (true) {
-        case pathIncludes('/downloads'):
+        case pathname.includes('/downloads'):
           presenceData.details = strings.viewPage
           presenceData.state = strings.downloads
           break
-        case pathIncludes('/contributors'):
+        case pathname.includes('/contributors'):
           presenceData.details = strings.viewPage
           presenceData.state = strings.contributors
           break
-        case pathIncludes('/beta'):
+        case pathname.includes('/plans'):
           presenceData.details = strings.viewPage
-          presenceData.state = 'BETA'
+          presenceData.state = strings.plans
           break
-        case pathIncludes('/partner'):
+        case pathname.includes('/faq'):
           presenceData.details = strings.viewPage
-          presenceData.state = strings.partners
+          presenceData.state = strings.faq
           break
-        case pathIncludes('/cookies'):
+        case pathname.includes('/dashboard'):
           presenceData.details = strings.viewPage
-          presenceData.state = strings.cookies
+          presenceData.state = strings.dashboard
           break
-        case pathIncludes('/privacy'):
-          presenceData.details = strings.viewPage
-          presenceData.state = strings.privacy
-          break
-        case pathIncludes('/tos'):
-          presenceData.details = strings.viewPage
-          presenceData.state = strings.terms
-          break
-        case pathIncludes('/users/'):
-          icon = document.querySelector<HTMLImageElement>(
-            'div.user-avatar img',
-          )?.src
+        case /\/library\/.+/.test(pathname):
+          activityName = pathname.match(/\/library\/(.+)/)?.[1]
+          icon = document.querySelector<HTMLMetaElement>('[property="og:image"]')?.content || ActivityAssets.Logo
 
-          presenceData.details = strings.viewUser
-          presenceData.state = document.querySelector('div.user-data p')
-            ? document
-                .querySelector('div.user-data p')
-                ?.textContent
-                ?.replace(/\s+/g, '')
-            : 'USER NOT FOUND...'
+          presenceData.details = strings.viewActivity
+          presenceData.state = document.querySelector('h2')?.textContent?.trim() || activityName || strings.activityLibrary
 
           if (icon) {
             presenceData.largeImageKey = icon
-            presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/P/PreMiD/assets/logo.png'
+            presenceData.smallImageKey = ActivityAssets.Logo
           }
           break
-        case pathIncludes('/store/presences/'):
-          icon = document.querySelector<HTMLImageElement>(
-            'div.header__title div.section img',
-          )?.src
-
-          presenceData.details = strings.viewPresence
-          presenceData.state = document.querySelector(
-            '.header__title > div > h1',
-          )
-            ? document
-                .querySelector('.header__title > div > h1')
-                ?.textContent
-                ?.replace(/^\s+|\s+$/g, '')
-            : strings.store
-
-          if (icon) {
-            presenceData.largeImageKey = icon
-            presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/P/PreMiD/assets/logo.png'
-          }
-          break
-        case pathIncludes('/store'):
+        case pathname.includes('/library'):
           presenceData.details = strings.viewPage
-          presenceData.state = strings.store
+          presenceData.state = strings.activityLibrary
           break
         default:
           presenceData.details = strings.viewPage
@@ -177,74 +145,104 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Reading
       presenceData.smallImageText = strings.reading
 
+      if (pathname.includes('/guide')) {
+        presenceData.state = `${strings.guide} - `
+      }
+      else if (pathname.includes('/api')) {
+        presenceData.state = `${strings.apiReference} - `
+      }
+      else if (pathname.includes('/examples')) {
+        presenceData.state = `${strings.examples} - `
+      }
+      else {
+        presenceData.state = ''
+      }
+
       switch (true) {
-        case pathIncludes('/troubleshooting'):
-          presenceData.state = strings.yikes
+        case pathname.includes('/guide/installation'):
+          presenceData.state += strings.install
           break
-        case pathIncludes('/install/requirements'):
-          presenceData.state = strings.sysreq
+        case pathname.includes('/guide/first-activity'):
+          presenceData.state += strings.firstActivity
           break
-        case pathIncludes('/install/windows'):
-          presenceData.state = strings.installFor.replace('{0}', 'Windows')
+        case pathname.includes('/guide/structure'):
+          presenceData.state += strings.structure
           break
-        case pathIncludes('/install/macos'):
-          presenceData.state = strings.installFor.replace('{0}', 'MacOS')
+        case pathname.includes('/guide/metadata'):
+          presenceData.state += strings.metadata
           break
-        case pathIncludes('/install/linux'):
-          presenceData.state = strings.installFor.replace('{0}', 'Linux')
+        case pathname.includes('/guide/presence-class'):
+          presenceData.state += strings.class
           break
-        case pathIncludes('/install/firefox'):
-          presenceData.state = strings.installFor.replace('{0}', 'Firefox')
+        case pathname.includes('/guide/settings'):
+          presenceData.state += strings.settings
           break
-        case pathIncludes('/install/chromium'):
-          presenceData.state = strings.installFor.replace(
-            '{0}',
-            'Chromium-based browsers',
-          )
+        case pathname.includes('/guide/dependencies'):
+          presenceData.state += strings.dependencies
           break
-        case pathIncludes('/install'):
-          presenceData.state = strings.install
+        case pathname.includes('/guide/loading-activities'):
+          presenceData.state += strings.loadingActivities
           break
-        case pathIncludes('/dev/presence/guidelines'):
-          presenceData.state = strings.presenceGuide
+        case pathname.includes('/guide/developer-tools'):
+          presenceData.state += strings.developerTools
           break
-        case pathIncludes('/dev/presence/tsconfig'):
-          presenceData.state = strings.ts
+        case pathname.includes('/guide/iframes'):
+          presenceData.state += strings.iframes
           break
-        case pathIncludes('/dev/presence/metadata'):
-          presenceData.state = strings.metadata
+        case pathname.includes('/guide/slideshows'):
+          presenceData.state += strings.slideshows
           break
-        case pathIncludes('/dev/presence/iframe'):
-          presenceData.state = strings.iframe
+        case pathname.includes('/guide/localization'):
+          presenceData.state += strings.localization
           break
-        case pathIncludes('/dev/presence/class'):
-          presenceData.state = strings.class
+        case pathname.includes('/guide/best-practices'):
+          presenceData.state += strings.bestPractices
           break
-        case pathIncludes('/dev/presence/slideshow'):
-          presenceData.state = strings.slideshow
+        case pathname.includes('/guide/guidelines'):
+          presenceData.state += strings.guidelines
           break
-        case pathIncludes('/dev/presence'):
-          presenceData.state = strings.presenceDev
+        case pathname.includes('/guide/activity-forwarding'):
+          presenceData.state += strings.activityForwarding
           break
-        case pathIncludes('/dev/api/v3'):
-          presenceData.state = strings.apiPage.replace('{0}', '3')
+        case pathname.includes('/guide'):
+          presenceData.state += strings.introduction
           break
-        case pathIncludes('/dev/api/v2'):
-          presenceData.state = strings.apiPage.replace('{0}', '2')
+        case pathname.includes('/api/presence-class'):
+          presenceData.state += strings.class
           break
-        case pathIncludes('/dev/api/v1'):
-          presenceData.state = strings.apiPage.replace('{0}', '1')
+        case pathname.includes('/api/presence-data'):
+          presenceData.state += strings.presenceData
           break
-        case pathIncludes('/dev/api'):
-          presenceData.state = strings.api
+        case pathname.includes('/api/metadata-json'):
+          presenceData.state += strings.metadataStructure
           break
-        case pathIncludes('/dev'):
-          presenceData.state = strings.start
+        case pathname.includes('/api/slideshow'):
+          presenceData.state += strings.slideshowClass
           break
-        case pathIncludes('/about'):
-          presenceData.state = strings.about
+        case pathname.includes('/api/iframe'):
+          presenceData.state += strings.iframeClass
           break
-        case pathIncludes('/home'):
+        case pathname.includes('/api/utility-functions'):
+          presenceData.state += strings.utilityFunctions
+          break
+        case pathname.includes('/api'):
+          presenceData.state += strings.overview
+          break
+        case pathname.includes('/examples/media'):
+          presenceData.state += strings.mediaExample
+          break
+        case pathname.includes('/examples/settings'):
+          presenceData.state += strings.settingsExample
+          break
+        case pathname.includes('/examples/iframes'):
+          presenceData.state += strings.iframesExample
+          break
+        case pathname.includes('/examples/slideshow'):
+          presenceData.state += strings.slideshowsExample
+          break
+        case pathname.includes('/examples'):
+          presenceData.state += strings.basicExample
+          break
         default:
           presenceData.state = strings.home
       }
@@ -252,27 +250,41 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'status.premid.app': {
-      presenceData.details = `Status page | ${strings.view}`
+      presenceData.details = `${strings.status} | ${strings.viewPage}`
       presenceData.smallImageKey = Assets.Search
       presenceData.smallImageText = strings.browsing
 
       switch (true) {
-        case pathIncludes('/incidents'):
+        case pathname.includes('/incidents'):
           presenceData.details = `${strings.view} ${document.title.replace(
             'PreMiD Status - ',
             '',
           )}`
           break
-        case pathIncludes('/history'):
+        case pathname.includes('/history'):
           presenceData.state = strings.incident
           break
-        case pathIncludes('/uptime'):
+        case pathname.includes('/uptime'):
           presenceData.state = strings.uptime
           break
         default:
           presenceData.state = strings.home
       }
 
+      break
+    }
+    case 'feedback.premid.app': {
+      presenceData.details = `${strings.feedback} | ${strings.viewPage}`
+      presenceData.smallImageKey = Assets.Search
+      presenceData.smallImageText = strings.browsing
+
+      switch (true) {
+        case pathname.includes('/posts'):
+          presenceData.details = `${strings.view} ${document.title.split(' · ')[0]?.trim()}`
+          break
+        default:
+          presenceData.state = strings.home
+      }
       break
     }
   }
