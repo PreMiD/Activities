@@ -34,8 +34,8 @@ presence.on('UpdateData', async () => {
     : null
 
 const presenceData: Record<string, any> = {
-  largeImageKey:  coverArt || 'https://i.imgur.com/Z2tD08U.png',
-  largeImageText: 'Portify — Porter Robinson Fan Site',
+  largeImageKey:  coverArt || 'https://i.imgur.com/s4RjTnw.png',
+  largeImageText: 'Portify — Fan Project Web',
   type: 2,
 }
   const hasTrack = trackTitle && trackTitle !== 'Select a song to play'
