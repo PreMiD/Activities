@@ -11,17 +11,13 @@ interface ChallengeData {
   category?: string
 }
 
-interface PresenceButton {
-  label: string
-  url: string
-}
-
 interface PageInfo {
   details: string
   state: string
   largeImageKey: string
   challenge_id: string | null
   category?: string
+  pageType?: string
 }
 
 const categoriesById: Record<string, string> = {
@@ -50,10 +46,8 @@ let lastUrl = window.location.href
 let lastDetails = ''
 let lastState = ''
 
-
 function cleanTitle(raw: string | null | undefined): string | null {
-  if (!raw)
-    return null
+  if (!raw) return null
   return raw.trim().replace(/\(\d+\s*points?\)/i, '').trim() || null
 }
 
@@ -66,6 +60,7 @@ function getPageContext(): PageInfo {
     state: '💻 Cyber-Learning.fr',
     largeImageKey: 'https://cyber-learning.fr/wp-content/uploads/avatars/cropped-user-1-1728625950.png',
     challenge_id: null,
+    pageType: 'home'
   }
 
   if (path.includes('/test-cybersecurite/')) {
@@ -77,32 +72,34 @@ function getPageContext(): PageInfo {
     info.state = `💻 ${cat}`
     info.challenge_id = id
     info.category = cat
+    info.pageType = 'challenge'
   }
-
   else if (path.includes('/exercices-cybersecurite/')) {
     const mat = params.get('a') || ''
     const cat = categoriesBySlug[mat] || 'les challenges'
     info.details = `📋 Liste : ${cat}`
     info.state = '🔍 Cherche un exercice'
+    info.category = cat
+    info.pageType = 'list'
   }
-
   else if (path.includes('/qcm-cyber-securite/')) {
     const quiz = params.get('quiz')
     info.details = quiz ? `📚 QCM : ${quiz}` : '📚 Fait un QCM'
     info.state = '🎓 En formation'
+    info.pageType = quiz ? 'qcm' : 'qcm-list'
   }
-
   else if (path.includes('/hacker-stats/')) {
     const nom = document.querySelector('h1')?.textContent?.trim()
     const scoreEl = Array.from(document.querySelectorAll('strong, b')).find(e => e.textContent?.includes('pts'))
 
     info.details = nom ? `🏆 Profil : ${nom}` : '🏆 Regarde un profil'
     info.state = scoreEl?.textContent?.trim() || '📊 Statistiques'
+    info.pageType = 'profile'
   }
-
   else if (path.includes('/profile/')) {
     info.details = '👤 Mon profil'
     info.state = '⚙️ Gestion du compte'
+    info.pageType = 'myprofile'
   }
 
   return info
@@ -125,35 +122,41 @@ async function updatePresence() {
       }
       else {
         const domTitle = cleanTitle(document.querySelector('h2')?.textContent)
-        if (domTitle)
-          info.details = `⚔️ ${domTitle}`
+        if (domTitle) info.details = `⚔️ ${domTitle}`
       }
-
     }
     catch {
       const domTitle = cleanTitle(document.querySelector('h2')?.textContent)
-      if (domTitle)
-        info.details = `⚔️ ${domTitle}`
+      if (domTitle) info.details = `⚔️ ${domTitle}`
     }
   }
 
   const finalDetails = `${info.details}`
   const finalState = `${info.state}`
 
-  const buttons: [PresenceButton, PresenceButton?] = [
-    { label: '🌐 Cyber-Learning.fr', url: 'https://cyber-learning.fr' },
-    { label: '🔗 Ouvrir la page', url: window.location.href },
-  ]
-
-  const activity: any = {
+  const activity: PresenceData = {
     type: ActivityType.Playing,
     startTimestamp,
     largeImageKey: info.largeImageKey,
-    largeImageText: 'Cyber-Learning.fr',
     details: finalDetails,
     state: finalState,
-    buttons,
+  }
 
+  switch (info.pageType) {
+    case 'challenge':
+      activity.buttons = [{ label: '⚔️ Faire ce challenge', url: window.location.href }]
+      break
+    case 'qcm':
+      activity.buttons = [{ label: '📚 Faire ce QCM', url: window.location.href }]
+      break
+    case 'profile':
+      activity.buttons = [{ label: '👤 Voir le profil', url: window.location.href }]
+      break
+    case 'list':
+      if (info.category && info.category !== 'les challenges') {
+        activity.buttons = [{ label: `📋 Voir ${info.category}`, url: window.location.href }]
+      }
+      break
   }
 
   if (finalDetails === lastDetails && finalState === lastState && window.location.href === lastUrl) {
@@ -166,7 +169,6 @@ async function updatePresence() {
 
   presence.setActivity(activity)
 }
-
 
 updatePresence()
 setInterval(updatePresence, 5000)
