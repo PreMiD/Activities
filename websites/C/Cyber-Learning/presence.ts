@@ -4,10 +4,6 @@ const presence = new Presence({
   clientId: '1473745467081756703',
 })
 
-// ─────────────────────────────────────────────────────────────
-// 1. Interfaces & Types
-// ─────────────────────────────────────────────────────────────
-
 interface ChallengeData {
   active: boolean
   title?: string
@@ -29,10 +25,6 @@ interface PageInfo {
   category?: string
 }
 
-// ─────────────────────────────────────────────────────────────
-// 2. Données de Mapping
-// ─────────────────────────────────────────────────────────────
-
 const categoriesById: Record<string, string> = {
   1: 'Cryptanalyse',
   2: 'Stéganographie',
@@ -53,19 +45,12 @@ const categoriesBySlug: Record<string, string> = {
   'steganographie': 'Stéganographie',
 }
 
-// ─────────────────────────────────────────────────────────────
-// 3. Gestion de l'état (Global)
-// ─────────────────────────────────────────────────────────────
-
 const startTimestamp = Math.floor(Date.now() / 1000)
 
 let lastUrl = window.location.href
 let lastDetails = ''
 let lastState = ''
 
-// ─────────────────────────────────────────────────────────────
-// 4. Fonctions Utilitaires
-// ─────────────────────────────────────────────────────────────
 
 function cleanTitle(raw: string | null | undefined): string | null {
   if (!raw)
@@ -77,7 +62,6 @@ function getPageContext(): PageInfo {
   const path = window.location.pathname
   const params = new URLSearchParams(window.location.search)
 
-  // Valeurs par défaut
   const info: PageInfo = {
     details: 'Parcourt les challenges',
     state: '💻 Cyber-Learning.fr', // Emoji par défaut
@@ -85,20 +69,17 @@ function getPageContext(): PageInfo {
     challenge_id: null,
   }
 
-  // --- A. PAGE CHALLENGE ---
   if (path.includes('/test-cybersecurite/')) {
     const id = params.get('id_sujet')
     const mat = params.get('matiere') || ''
     const cat = categoriesById[mat] || 'Challenge'
 
     info.details = '⚔️ Se prépare...'
-    // ICI : On met l'emoji ordi au lieu du cadenas
     info.state = `💻 ${cat}`
     info.challenge_id = id
     info.category = cat
   }
 
-  // --- B. LISTE DES CHALLENGES ---
   else if (path.includes('/exercices-cybersecurite/')) {
     const mat = params.get('a') || ''
     const cat = categoriesBySlug[mat] || 'les challenges'
@@ -106,14 +87,12 @@ function getPageContext(): PageInfo {
     info.state = '🔍 Cherche un exercice'
   }
 
-  // --- C. QCM ---
   else if (path.includes('/qcm-cyber-securite/')) {
     const quiz = params.get('quiz')
     info.details = quiz ? `📚 QCM : ${quiz}` : '📚 Fait un QCM'
     info.state = '🎓 En formation'
   }
 
-  // --- D. PROFILS ---
   else if (path.includes('/hacker-stats/')) {
     const nom = document.querySelector('h1')?.textContent?.trim()
     const scoreEl = Array.from(document.querySelectorAll('strong, b')).find(e => e.textContent?.includes('pts'))
@@ -122,7 +101,6 @@ function getPageContext(): PageInfo {
     info.state = scoreEl?.textContent?.trim() || '📊 Statistiques'
   }
 
-  // --- E. MON PROFIL ---
   else if (path.includes('/profile/')) {
     info.details = '👤 Mon profil'
     info.state = '⚙️ Gestion du compte'
@@ -131,14 +109,9 @@ function getPageContext(): PageInfo {
   return info
 }
 
-// ─────────────────────────────────────────────────────────────
-// 5. Boucle Principale
-// ─────────────────────────────────────────────────────────────
-
 async function updatePresence() {
   const info = getPageContext()
 
-  // Appel API si on est sur un challenge
   if (info.challenge_id) {
     try {
       const apiUrl = `https://cyber-learning.fr/wp-content/plugins/bts-cyber/discord-presence.php?challenge_id=${info.challenge_id}`
@@ -148,7 +121,6 @@ async function updatePresence() {
       if (data.active && data.title) {
         info.details = `⚔️ ${data.title}`
         if (typeof data.points === 'number') {
-          // ICI : On garde l'emoji ordi même quand on a les points
           info.state = `💻 ${data.points} pts - ${info.category}`
         }
       }
@@ -158,7 +130,6 @@ async function updatePresence() {
           info.details = `⚔️ ${domTitle}`
       }
 
-    // ✅ APRÈS (Correction)
     }
     catch {
       const domTitle = cleanTitle(document.querySelector('h2')?.textContent)
@@ -175,7 +146,6 @@ async function updatePresence() {
     { label: '🔗 Ouvrir la page', url: window.location.href },
   ]
 
-  // Construction de l'objet Presence
   const activity: any = {
     type: ActivityType.Playing,
     startTimestamp,
@@ -184,8 +154,7 @@ async function updatePresence() {
     details: finalDetails,
     state: finalState,
     buttons,
-    // Note : On a SUPPRIMÉ 'smallImageKey' ici.
-    // C'est ça qui enlève le point d'interrogation.
+
   }
 
   if (finalDetails === lastDetails && finalState === lastState && window.location.href === lastUrl) {
@@ -199,9 +168,6 @@ async function updatePresence() {
   presence.setActivity(activity)
 }
 
-// ─────────────────────────────────────────────────────────────
-// 6. Initialisation
-// ─────────────────────────────────────────────────────────────
 
 updatePresence()
 setInterval(updatePresence, 5000)
