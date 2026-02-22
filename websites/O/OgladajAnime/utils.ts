@@ -3,25 +3,25 @@ import { ActivityAssets } from './constants.js'
 
 const cache: PictureCache[] = []
 
-function cacheExpired(date: Date): boolean {
+function cacheExpired(date: number): boolean {
   if (date === null)
     return true
 
-  return ((new Date().getTime() - date.getTime()) / 1000 / 60) < 5
+  return ((Date.now() - date) / 1000 / 60) > 5
 }
 
 export async function getProfilePicture(id: string): Promise<string | undefined> {
   const index = cache.findIndex((val, _, __) => val.id === id)
   const _val = cache[index]
   if (index === -1) {
-    const _new: PictureCache = { id, url: await internal_getPFP(id), date: new Date() }
+    const _new: PictureCache = { id, url: await internal_getPFP(id), date: Date.now() }
     cache.push(_new)
     return _new.url
   }
   else if (_val !== undefined && cacheExpired(_val.date)) {
     const url = await internal_getPFP(id)
     _val.url = url
-    _val.date = new Date()
+    _val.date = Date.now()
     return url
   }
   else {
@@ -30,7 +30,7 @@ export async function getProfilePicture(id: string): Promise<string | undefined>
 }
 
 async function internal_getPFP(id: string) {
-  let url = `https://cdn.ogladajanime.pl/images/user/${id}.webp?${new Date().getTime()}`
+  let url = `https://cdn.ogladajanime.pl/images/user/${id}.webp?${Date.now()}`
   try {
     const res = await fetch(new URL(url))
     if (res.status === 404)
