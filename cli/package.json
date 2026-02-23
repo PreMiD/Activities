@@ -35,7 +35,7 @@
     "esbuild": "^0.25.11",
     "form-data": "^4.0.4",
     "gitdiff-parser": "^0.3.1",
-    "globby": "^15.0.0",
+    "globby": "^16.0.0",
     "got": "^14.6.1",
     "is-ci": "^4.1.0",
     "json-to-ast": "^2.1.0",
