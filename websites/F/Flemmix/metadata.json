@@ -12,7 +12,7 @@
   },
   "url": "flemmix.surf",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flemmix[.]surf[/]",
-  "version": "1.2.2",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flemmix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Flemmix/assets/thumbnail.png",
   "color": "#d90000",
