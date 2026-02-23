@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "416596242370658314",
+    "name": "potma13"
+  },
+  "service": "Anime365",
+  "altnames": [
+    "Anime 365",
+    "smotret-anime.org",
+    "smotret-anime.app"
+  ],
+  "description": {
+    "en": "Watch anime online in high quality on Anime 365",
+    "ru": "Смотрите аниме онлайн в высоком качестве на Anime 365"
+  },
+  "url": [
+    "anime-365.ru",
+    "smotret-anime.org",
+    "smotret-anime.app"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(anime-365[.]ru|smotret-anime[.]org|smotret-anime[.]app)[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime365/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime365/assets/thumbnail.png",
+  "color": "#1B5E20",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "video",
+    "russian"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "anime-365[.]ru|smotret-anime[.]org|smotret-anime[.]app",
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showCover",
+      "title": "Show Anime Cover",
+      "icon": "fas fa-image",
+      "value": true
+    }
+  ]
+}
