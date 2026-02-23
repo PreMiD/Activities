@@ -58,11 +58,32 @@ function getCleanAnimeTitle(): string | undefined {
 }
 
 /**
+ * Gets the anime cover URL from the poster element
+ */
+function getAnimeCoverUrl(): string | undefined {
+  const poster = document.querySelector<HTMLImageElement>('.m-catalog-item__poster img')
+  if (poster?.src)
+    return poster.src
+
+  // Fallback to og:image if poster not found
+  const ogImage = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')
+  if (ogImage?.content)
+    return ogImage.content
+
+  return undefined
+}
+
+/**
  * Determines page type and extracts relevant data from URL and DOM
  */
 function getPageData(): PageData {
   const url = document.location.pathname
   const data: PageData = { type: 'other' }
+
+  // Try to get anime cover (same for all anime pages)
+  const coverUrl = getAnimeCoverUrl()
+  if (coverUrl)
+    data.coverUrl = coverUrl
 
   // Homepage
   if (url === '/' || url === '/index') {
@@ -102,12 +123,6 @@ function getPageData(): PageData {
         if (episodeMatch)
           data.episode = episodeMatch[1]
       }
-
-      // Get cover image from Open Graph meta tag
-      const ogImage = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')
-      if (ogImage) {
-        data.coverUrl = ogImage.content
-      }
     }
     else {
       // This is an anime information page (not watching)
@@ -115,12 +130,6 @@ function getPageData(): PageData {
 
       // Get anime title
       data.animeName = getCleanAnimeTitle()
-
-      // Get cover image from poster element
-      const poster = document.querySelector<HTMLImageElement>('.m-catalog-item__poster img')
-      if (poster) {
-        data.coverUrl = poster.src
-      }
     }
   }
   // Search page
@@ -156,12 +165,16 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
+  // Use anime cover if enabled and available
+  if (showCover && pageData.coverUrl && pageData.coverUrl !== ActivityAssets.Logo) {
+    presenceData.largeImageKey = pageData.coverUrl
+  }
+
   // Set presence data based on page type
   switch (pageData.type) {
     case 'home':
       presenceData.details = 'On the homepage'
       presenceData.state = 'Browsing new releases'
-      presenceData.largeImageKey = ActivityAssets.Logo
       presenceData.smallImageKey = Assets.Search
       presenceData.smallImageText = 'Homepage'
       if (showTimestamp)
@@ -180,11 +193,6 @@ presence.on('UpdateData', async () => {
     case 'anime':
       presenceData.details = pageData.animeName || 'Anime page'
       presenceData.state = 'Reading description'
-
-      // Use anime cover if enabled and available
-      if (showCover && pageData.coverUrl && pageData.coverUrl !== ActivityAssets.Logo) {
-        presenceData.largeImageKey = pageData.coverUrl
-      }
 
       presenceData.smallImageKey = Assets.Reading
       presenceData.smallImageText = 'Reading description'
@@ -206,10 +214,6 @@ presence.on('UpdateData', async () => {
 
       if (pageData.episode) {
         presenceData.state = `Episode ${pageData.episode}`
-      }
-
-      if (showCover && pageData.coverUrl && pageData.coverUrl !== ActivityAssets.Logo) {
-        presenceData.largeImageKey = pageData.coverUrl
       }
 
       // Use iframe data for play/pause and timestamps
@@ -275,7 +279,7 @@ presence.on('UpdateData', async () => {
 
     default:
       // Unknown/other pages
-      presenceData.details = 'On anime-365 website'
+      presenceData.details = 'On website'
       presenceData.state = 'Exploring content'
       presenceData.smallImageKey = ActivityAssets.Logo
       presenceData.smallImageText = 'On website'
