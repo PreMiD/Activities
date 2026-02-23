@@ -23,7 +23,7 @@
     "video"
   ],
   "iframe": true,
-  "iFrameRegExp": "(^|\\.)?(jkanime\\.net|mega\\.nz|sfastwish\\.com|flaswish\\.com|vidhidevip\\.com|callistanise\\.com|mdbekjwqa\\.pw|mp4upload\\.com|streamtape\\.com|dsvplay\\.com|myvidplay\\.com)",
+  "iFrameRegExp": "(^|\\.)?(jkanime\\.net|mega\\.nz|sfastwish\\.com|flaswish\\.com|vidhidevip\\.com|callistanise\\.com|mdbekjwqa\\.pw|mp4upload\\.com|streamtape\\.com|dsvplay\\.com|myvidplay\\.com|m1xdrop\\.bz|mxdrop\\.to|f75s\\.com|bysekoze\\.com|mxcontent\\.net|voe\\.sx|lancewhosedifficult\\.com)",
   "settings": [
     {
       "id": "useAnimeCover",
