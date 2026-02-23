@@ -288,7 +288,6 @@ presence.on('UpdateData', async () => {
       // Unknown/other pages
       presenceData.details = 'On website'
       presenceData.state = 'Exploring content'
-      presenceData.smallImageKey = ActivityAssets.Logo
       presenceData.smallImageText = 'On website'
       if (showTimestamp)
         presenceData.startTimestamp = browsingTimestamp
