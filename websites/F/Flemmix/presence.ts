@@ -1,6 +1,6 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
-const presence = new Presence({ clientId: '1399867497750069389' })
+const presence = new Presence({ clientId: '1468374748152074506' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 const ActivityAssets = {
@@ -41,7 +41,6 @@ presence.on('UpdateData', async () => {
   const categoryTitleElement = document.querySelector('.main-title h2')
   const profileTitleElement = document.querySelector('.user-prof h1.nowrap')
 
-  // Cas 1 : Visionnage d'un film ou d'une série
   if (titleElement) {
     const title = titleElement.textContent?.trim() ?? ''
     presenceData.details = `Regarde ${title}`
@@ -62,7 +61,7 @@ presence.on('UpdateData', async () => {
 
     const coverImageSrc = document.querySelector<HTMLImageElement>('img[itemprop="thumbnailUrl"]')?.getAttribute('src')
     if (coverImageSrc && showCover) {
-      presenceData.largeImageKey = `https://flemmix.stream${coverImageSrc}`
+      presenceData.largeImageKey = `https://flemmix.surf${coverImageSrc}`
     }
 
     const [startTimestamp, endTimestamp] = getTimestamps(video.currentTime, video.duration)
@@ -84,7 +83,6 @@ presence.on('UpdateData', async () => {
       delete presenceData.smallImageKey
     }
   }
-  // Cas 2 : Page de recherche
   else if (searchPageElement) {
     const searchInput = document.querySelector<HTMLInputElement>('#searchinput')
     const searchTerm = searchInput?.value
@@ -97,7 +95,6 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = 'Recherche'
   }
-  // Cas 3 : Messagerie Privée
   else if (urlParams.get('do') === 'pm') {
     presenceData.details = 'Gère ses messages privés'
 
@@ -119,7 +116,6 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = 'Messagerie'
   }
-  // Cas 4 : Page de contact / Demande
   else if (urlParams.get('do') === 'feedback') {
     presenceData.details = 'Contacte le site'
     presenceData.state = 'Écrit une demande'
@@ -127,19 +123,15 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = 'Contact'
   }
-  // Cas 5 : Page des favoris
   else if (urlParams.get('do') === 'favorites') {
     presenceData.details = 'Consulte ses favoris'
   }
-  // Cas 6 : Page des commentaires récents
   else if (urlParams.get('do') === 'lastcomments') {
     presenceData.details = 'Consulte les commentaires récents'
   }
-  // Cas 7 : Page des publications non lues
   else if (pathname.includes('/newposts/')) {
     presenceData.details = 'Consulte les publications non lues'
   }
-  // Cas 8 : Page des acteurs
   else if (pathname.includes('/xfsearch/acteurs/')) {
     const titleParts = document.title.split(' - ')
     presenceData.details = 'Consulte la page d\'un acteur'
@@ -149,11 +141,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = actorName
     }
   }
-  // Cas 9 : Page des statistiques
   else if (pathname.includes('/statistics.html')) {
     presenceData.details = 'Consulte les statistiques du site'
   }
-  // Cas 10 : Page de profil
   else if (pathname.includes('/user/') && profileTitleElement) {
     const username = profileTitleElement.textContent?.replace('Utilisateur:', '').trim()
     presenceData.details = 'Consulte un profil'
@@ -161,11 +151,9 @@ presence.on('UpdateData', async () => {
       presenceData.state = `Profil de ${username}`
     }
   }
-  // Cas 11 : Page d'accueil (VÉRIFIÉ EN PREMIER)
   else if (pathname === '/') {
     presenceData.details = 'Parcourt la page d\'accueil'
   }
-  // Cas 12 : Page de catégorie (vérifié après la page d'accueil)
   else if (categoryTitleElement) {
     let categoryName = categoryTitleElement.textContent || ''
     categoryName = categoryName.replace('Voir ', '').replace('en Streaming Gratuit :', '').trim()
@@ -179,12 +167,10 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = 'Navigation'
   }
-  // Cas 13 : Toutes les autres pages
   else {
     presenceData.details = privacyMode ? 'Navigue...' : 'Navigue sur le site'
   }
 
-  // Application des paramètres
   if (!showButtons || privacyMode)
     delete presenceData.buttons
   if (!showTimestamps || video.paused) {
@@ -198,7 +184,6 @@ presence.on('UpdateData', async () => {
     delete presenceData.smallImageKey
   }
 
-  // Envoi des données
   if (presenceData.details) {
     presence.setActivity(presenceData)
   }
