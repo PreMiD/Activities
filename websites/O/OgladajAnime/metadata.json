@@ -21,7 +21,7 @@
     "www.ogladajanime.pl"
   ],
   "regExp": "^https?[:][/][/](www[.])?ogladajanime[.]pl[/]",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OgladajAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OgladajAnime/assets/thumbnail.png",
   "color": "#29C5F6",
@@ -89,11 +89,28 @@
       "value": true
     },
     {
+      "id": "usePosterDimensions",
+      "title": "Use Poster Dimensions",
+      "description": "This uses the dimensions that the anime images typically use when required. This may break some features, such as the small images or making the status show 'Showing character:' instead of just OgladajAnime.",
+      "value": false,
+      "icon": "fas fa-image-portrait"
+    },
+    {
       "id": "determineSeason",
       "title": "Determine Season",
       "description": "This checks all available names to try and determine the season and show it on the activity. This may not find the season always and might sometimes have false positives. This might interfere with the 'Use Alternative Name' setting",
       "icon": "fas fa-film",
       "value": true
+    },
+    {
+      "id": "defaultSeasonOne",
+      "title": "Default To Season One",
+      "description": "If a season was not found, make it appear as season 1",
+      "icon": "fas fa-1",
+      "value": true,
+      "if": {
+        "determineSeason": true
+      }
     }
   ]
 }

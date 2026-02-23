@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '831432191120375829',
@@ -35,47 +35,37 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('cover'),
   ])
+  const imageUrl = 'https://image.tving.com'
   const pages: Record<
     string,
     | PresenceData
     | ((video?: HTMLVideoElement) => PresenceData | undefined | Promise<PresenceData | undefined>)
   > = {
-    '/(vod|movie)/player/': async (video) => {
+    '/(vod/|movie/|)player/': async (video) => {
       const data: PresenceData = {
         largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/T/TVING/assets/logo.png',
       }
 
       if (video) {
-        const title = [
-          document.querySelector('.program-detail > h3')?.textContent?.trim(),
-          document.querySelector('.title')?.textContent?.trim(),
-        ]
-        const coverUrl = (
-          document.querySelector('.tags')
-            ?.nextElementSibling as HTMLImageElement
-        )?.src
+        const streamData = JSON.parse(document.querySelector('[id=__NEXT_DATA__]')?.textContent ?? '{}').props.pageProps.streamData
 
-        data.details = title[1]
-        data.state = !location.pathname.includes('/movie/') && title[0]
-          ? title[0].replace(title[1] ?? '', '').trim()
-          : '영화'
+        data.details = streamData.body.content.program_name
+        data.state = streamData.body.content.episode_name
 
         data.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         data.smallImageText = video.paused ? 'Paused' : 'Playing'
 
-        if (cover && coverUrl) {
-          data.largeImageKey = await getShortURL(coverUrl)
-          data.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-        }
+        if (cover)
+          data.largeImageKey = await getShortURL(imageUrl + streamData.body.content.info.episode.image[0].url)
 
         if (!video.paused) {
-          [data.startTimestamp, data.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [data.startTimestamp, data.endTimestamp] = getTimestampsFromMedia(video)
         }
 
         data.buttons = [
           {
             label: !location.pathname.includes('/movie/')
-              ? '시리즈 보기'
+              ? '에피소드 보기'
               : '영화 보기',
             url: document.URL,
           },
@@ -92,7 +82,7 @@ presence.on('UpdateData', async () => {
       smallImageText: video && video.paused ? '일시 정지' : '재생 중',
       endTimestamp: (() => {
         if (video && !video.paused)
-          return presence.getTimestampsfromMedia(video).pop()
+          return getTimestampsFromMedia(video).pop()
       })(),
       buttons: [
         {
