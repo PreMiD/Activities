@@ -58,16 +58,21 @@ function getCleanAnimeTitle(): string | undefined {
 }
 
 /**
- * Gets the anime cover URL from the poster element
+ * Gets the anime cover URL from the poster element - ONLY for anime pages
  */
 function getAnimeCoverUrl(): string | undefined {
+  // Only try to get cover if we're on an anime-related page
+  const url = document.location.pathname
+  if (!url.includes('/catalog/'))
+    return undefined
+
   const poster = document.querySelector<HTMLImageElement>('.m-catalog-item__poster img')
   if (poster?.src)
     return poster.src
 
-  // Fallback to og:image if poster not found
+  // Fallback to og:image if poster not found (only on anime pages)
   const ogImage = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')
-  if (ogImage?.content)
+  if (ogImage?.content && url.includes('/catalog/'))
     return ogImage.content
 
   return undefined
@@ -80,17 +85,17 @@ function getPageData(): PageData {
   const url = document.location.pathname
   const data: PageData = { type: 'other' }
 
-  // Try to get anime cover (same for all anime pages)
-  const coverUrl = getAnimeCoverUrl()
-  if (coverUrl)
-    data.coverUrl = coverUrl
-
   // Homepage
   if (url === '/' || url === '/index') {
     data.type = 'home'
   }
   // All anime-related pages are under /catalog/
   else if (url.includes('/catalog/')) {
+    // Try to get anime cover (only for anime pages)
+    const coverUrl = getAnimeCoverUrl()
+    if (coverUrl)
+      data.coverUrl = coverUrl
+
     // Check if this is a video watching page (contains pattern like /1-seriya-9604/)
     if (url.match(/\/\d+-seriya-\d+\//)) {
       data.type = 'watching'
@@ -165,9 +170,11 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  // Use anime cover if enabled and available
-  if (showCover && pageData.coverUrl && pageData.coverUrl !== ActivityAssets.Logo) {
-    presenceData.largeImageKey = pageData.coverUrl
+  // Use anime cover ONLY on anime-related pages and if enabled
+  if (showCover && (pageData.type === 'anime' || pageData.type === 'watching')) {
+    if (pageData.coverUrl && pageData.coverUrl !== ActivityAssets.Logo) {
+      presenceData.largeImageKey = pageData.coverUrl
+    }
   }
 
   // Set presence data based on page type
