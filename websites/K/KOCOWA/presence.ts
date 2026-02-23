@@ -46,100 +46,96 @@ async function getStrings() {
   })
 }
 
-let cacheSeason = {
+let cacheSeason: {
+  text: string
+  title: string
+  episodeDesc: string
+  banner: string
+} = {
+  text: '',
   title: '',
-  description: '',
-  bannerUrl: '',
-  seasonId: '',
+  episodeDesc: '',
+  banner: ActivityAssets.Logo,
 }
 
-function extractSeasonId(urlStr: string): string | null | undefined {
-  try {
-    const pathname = new URL(urlStr).pathname
-    const parts = pathname.split('/')
-
-    if (parts.length >= 4 && parts[2] === 'season') {
-      return parts[3]
-    }
-    return null
-  }
-  catch {
-    return null
-  }
-}
-
-async function getSeasonInfo(seasonId: string) {
-  const titleSeason = document.querySelector('h2')?.textContent?.trim() || document.querySelector('[class*="media-title"]')?.textContent?.trim() || document.querySelector('h1')?.textContent?.trim() || ''
-  const descSeason = document.querySelector('[class*="media-summary"]')?.textContent?.trim() || document.querySelector('[class*="description"]')?.textContent?.trim() || ''
-  const heroImageElement = document.querySelector<HTMLElement>('.hero-image-wrapper')
-  const imageUrl = heroImageElement?.style.backgroundImage.match(/url\("(.*?)"\)/)?.[1] || ''
-
-  const seasonInfo = {
-    title: titleSeason,
-    description: descSeason,
-    bannerUrl: imageUrl,
-    seasonId,
-  }
-  if (titleSeason !== '' && descSeason !== '') {
-    cacheSeason = seasonInfo
-  }
-  return cacheSeason
-}
-
-let cacheEpisode = {
+let cacheEpisode: {
+  text: string
+  title: string
+  episode: string
+  banner: string
+  season: string
+} = {
+  text: '',
   title: '',
   episode: '',
-  banner: '',
-  isPlaying: false,
-  episodeId: '',
+  banner: ActivityAssets.Logo,
+  season: '',
 }
 
-function extractEpisodeId(urlStr: string): string | null | undefined {
-  try {
-    const pathname = new URL(urlStr).pathname
-    const parts = pathname.split('/')
-
-    if (parts.length >= 5 && parts[2] === 'media') {
-      return parts[3]
-    }
-    return null
-  }
-  catch {
-    return null
-  }
-};
-
-async function getEpisodeInfo(episodeId: string) {
-  if (cacheEpisode.episodeId === episodeId && cacheEpisode.title !== '' && cacheEpisode.episode !== '') {
-    return cacheEpisode
-  }
-  const bannerUrl = document.querySelector(`span.card-img-holder[id='${episodeId}']`)?.querySelector('img')?.getAttribute('src')
-  const titleEpisode = document.querySelector('.vjs-dock-title')?.textContent || ''
-  const numberEpisode = document.querySelector('.vjs-dock-description')?.textContent || ''
-  const tooltipText = document.querySelector('#kcp-player-328 > div.vjs-control-bar-wrapper > div > button.vjs-play-control.vjs-control.vjs-button.vjs-custom-play-control.vjs-playing > span.vjs-control-text')?.textContent?.trim()
-  const isPlaying = tooltipText === 'Pause'
-  if (titleEpisode && numberEpisode) {
-    cacheEpisode = {
-      title: titleEpisode,
-      episode: numberEpisode,
-      banner: bannerUrl || ActivityAssets.Logo,
-      isPlaying,
-      episodeId,
+async function getSeasonInfo(text: string) {
+  if (text === cacheSeason.text && cacheSeason.title !== '') {
+    return {
+      nameSerie: cacheSeason.title,
+      episodeDesc: cacheSeason.episodeDesc,
+      bannerImg: cacheSeason.banner,
     }
   }
-  return cacheEpisode
+  const bannerImg = document.querySelector('meta[property=\'og:image\']')?.getAttribute('content') || ActivityAssets.Logo
+  const nameSerie = document.querySelector('h1')?.textContent || ''
+  const episodeDesc = document.querySelector('.desc')?.textContent || 'Viewing Serie'
+
+  cacheSeason = {
+    banner: bannerImg,
+    title: nameSerie,
+    episodeDesc,
+    text,
+  }
+
+  return {
+    nameSerie,
+    episodeDesc,
+    bannerImg,
+  }
+}
+
+async function getEpisodeInfo(text: string) {
+  if (text === cacheEpisode.text) {
+    return {
+      nameSerie: cacheEpisode.title,
+      numberEpisode: cacheEpisode.episode,
+      seasonSerie: cacheEpisode.season,
+      bannerImg: cacheEpisode.banner,
+    }
+  }
+  const bannerImg = document.querySelector('meta[property=\'og:image\']')?.getAttribute('content') || ActivityAssets.Logo
+  const nameSerie = document.querySelector('.vjs-dock-title')?.textContent || ''
+  const numberEpisode = document.querySelector('.vjs-dock-description')?.textContent || 'Episode 1'
+  const seasonSerie = 'Season 1'
+
+  cacheEpisode = {
+    banner: bannerImg,
+    title: nameSerie,
+    episode: numberEpisode,
+    season: seasonSerie,
+    text,
+  }
+
+  return {
+    nameSerie,
+    numberEpisode,
+    seasonSerie,
+    bannerImg,
+  }
 }
 
 presence.on('UpdateData', async () => {
-  const { pathname, href } = document.location
+  const { pathname } = document.location
 
   const currentLang = navigator.language.toLowerCase().startsWith('es') ? 'es' : 'en'
   if (!strings || oldLang !== currentLang) {
     strings = await getStrings()
     oldLang = currentLang
   }
-  const pathSegments = pathname.toLowerCase().split('/')
-  const lastSegment = pathSegments[pathSegments.length - 1]
 
   const presenceData: PresenceData = {
     details: strings.NAV_ROOT_DETAILS,
@@ -151,93 +147,22 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
     startTimestamp: browsingTimestamp,
   }
-  if (lastSegment === 'main') {
-    const presenceData: PresenceData = {
-      details: strings.NAV_HOME_DETAILS,
-      state: strings.NAV_HOME_STATE,
-      largeImageKey: ActivityAssets.Logo,
-      largeImageText: 'KOCOWA',
-      smallImageKey: Assets.Reading,
-      smallImageText: strings.NAV_HOME_STATE,
-      type: ActivityType.Watching,
-      startTimestamp: browsingTimestamp,
-    }
-    presence.setActivity(presenceData)
-    return
-  }
-  else if (pathname.includes('search')) {
-    presenceData.details = strings.NAV_SEARCH_DETAILS
-    presenceData.state = `${strings.NAV_SEARCH_STATE} KDramas!`
-    presenceData.smallImageText = `${strings.NAV_SEARCH_STATE} KDramas!`
-    presence.setActivity(presenceData)
-    return
-  }
-  else if (pathname.includes('/catalog/119')) {
-    presenceData.details = strings.NAV_NOW_DETAILS
-    presenceData.state = strings.NAV_NOW_STATE
-    presenceData.smallImageText = strings.NAV_NOW_STATE
-    presence.setActivity(presenceData)
-    return
-  }
-  else if (pathname.includes('/catalog/120')) {
-    const genereName = document.querySelector('#app > div > div:nth-child(2) > div > div:nth-child(5) > div > div > div.list-utils-wrapper.genre-filter > ol > li:nth-child(2) > div > button > span')?.textContent?.trim() || ''
-    presenceData.details = `${strings.NAV_DRAMA_DETAILS} KDramas`
-    presenceData.state = `${strings.NAV_DRAMA_STATE} ${genereName}`
-    presenceData.smallImageText = `${strings.NAV_DRAMA_STATE} ${genereName}`
-    presence.setActivity(presenceData)
-    return
-  }
-  else if (pathname.includes('/catalog/121')) {
-    const orderView = document.querySelector('#app > div > div:nth-child(2) > div > div:nth-child(5) > div > div > div.list-utils-wrapper > div > div > button')?.textContent?.trim() || ''
-    presenceData.details = strings.NAV_VARIETY_DETAILS
-    presenceData.state = `${strings.NAV_VARIETY_STATE} ${orderView}`
-    presenceData.smallImageText = `${strings.NAV_VARIETY_STATE} ${orderView}`
-    presence.setActivity(presenceData)
-    return
-  }
-  else if (pathname.includes('/catalog/122')) {
-    const orderView = document.querySelector('#app > div > div:nth-child(2) > div > div:nth-child(5) > div > div > div.list-utils-wrapper > div > div > button')?.textContent?.trim() || ''
-    presenceData.details = strings.NAV_KPOP_DETAILS
-    presenceData.state = `${strings.NAV_KPOP_STATE} ${orderView}`
-    presenceData.smallImageText = `${strings.NAV_KPOP_STATE} ${orderView}`
-    presence.setActivity(presenceData)
-    return
-  }
-  else if (pathname.includes('live')) {
-    presenceData.details = strings.NAV_LIVE_DETAILS
-    presenceData.state = strings.NAV_LIVE_STATE
-    presenceData.smallImageText = strings.NAV_LIVE_STATE
-    presence.setActivity(presenceData)
-    return
-  }
-  else if (pathname.includes('season')) {
-    const seasonId = extractSeasonId(href)
-    if (seasonId) {
-      const seasonInfo = await getSeasonInfo(seasonId)
-      if (seasonInfo && seasonInfo.title) {
-        presenceData.details = `${strings.NAV_SEASON_DETAILS} ${seasonInfo.title}`
-        presenceData.state = seasonInfo.description
-        presenceData.smallImageText = `${strings.NAV_SEASON_DETAILS} ${seasonInfo.title}`
-        presenceData.largeImageKey = seasonInfo.bannerUrl || ActivityAssets.Logo
-      }
-      presence.setActivity(presenceData)
-      return
-    }
-  }
-  else if (document.querySelector('#play-container')) {
-    const episodeId = extractEpisodeId(href)
-    if (episodeId) {
-      const episodeInfo = await getEpisodeInfo(episodeId)
-      if (episodeInfo && episodeInfo.title) {
-        presenceData.name = episodeInfo.title
-        presenceData.details = episodeInfo.episode
-        presenceData.state = 'KOCOWA'
-        presenceData.largeImageKey = episodeInfo.banner || ActivityAssets.Logo
-        const videoEl = document.querySelector<HTMLVideoElement>('video.vjs-tech')
+  if (pathname.includes('/video/')) {
+    const videoPage = document.querySelector('#play-container')
 
+    if (videoPage) {
+      const episodeInfo = await getEpisodeInfo(pathname)
+      if (episodeInfo) {
+        presenceData.name = episodeInfo.nameSerie
+        presenceData.details = episodeInfo.nameSerie
+        presenceData.state = 'Watching on Kocowa'
+        presenceData.largeImageKey = episodeInfo.bannerImg
+        presenceData.largeImageText = `${episodeInfo.seasonSerie.toString()}, ${episodeInfo.numberEpisode.toString()}`
+
+        const videoEl = document.querySelector<HTMLVideoElement>('video.vjs-tech')
         if (videoEl && !Number.isNaN(videoEl.duration)) {
           const [startTs, endTs] = getTimestampsFromMedia(videoEl)
-          if (!videoEl.paused && !videoEl.ended) {
+          if (!videoEl.paused) {
             presenceData.smallImageKey = Assets.Play
             presenceData.smallImageText = strings.NAV_PLAYED_STATE
             presenceData.startTimestamp = startTs
@@ -254,6 +179,62 @@ presence.on('UpdateData', async () => {
         return
       }
     }
+  }
+  else if (pathname.includes('search')) {
+    presenceData.details = strings.NAV_SEARCH_DETAILS
+    presenceData.state = `${strings.NAV_SEARCH_STATE} KDramas!`
+    presenceData.smallImageText = `${strings.NAV_SEARCH_STATE} KDramas!`
+    presence.setActivity(presenceData)
+    return
+  }
+  else if (pathname.includes('/catalog/119')) {
+    presenceData.details = strings.NAV_NOW_DETAILS
+    presenceData.state = strings.NAV_NOW_STATE
+    presenceData.smallImageText = strings.NAV_NOW_STATE
+    presence.setActivity(presenceData)
+    return
+  }
+  else if (pathname.includes('/catalog/120')) {
+    const genereName = document.querySelector('.dropdown-item.active')?.textContent?.trim() || ''
+    presenceData.details = `${strings.NAV_DRAMA_DETAILS} KDramas`
+    presenceData.state = `${strings.NAV_DRAMA_STATE} ${genereName}`
+    presenceData.smallImageText = `${strings.NAV_DRAMA_STATE} ${genereName}`
+    presence.setActivity(presenceData)
+    return
+  }
+  else if (pathname.includes('/catalog/121')) {
+    const orderView = 'Variety'
+    presenceData.details = strings.NAV_VARIETY_DETAILS
+    presenceData.state = `${strings.NAV_VARIETY_STATE} ${orderView}`
+    presenceData.smallImageText = `${strings.NAV_VARIETY_STATE} ${orderView}`
+    presence.setActivity(presenceData)
+    return
+  }
+  else if (pathname.includes('/catalog/122')) {
+    const orderView = 'KPOP'
+    presenceData.details = strings.NAV_KPOP_DETAILS
+    presenceData.state = `${strings.NAV_KPOP_STATE} ${orderView}`
+    presenceData.smallImageText = `${strings.NAV_KPOP_STATE} ${orderView}`
+    presence.setActivity(presenceData)
+    return
+  }
+  else if (pathname.includes('live')) {
+    presenceData.details = strings.NAV_LIVE_DETAILS
+    presenceData.state = strings.NAV_LIVE_STATE
+    presenceData.smallImageText = strings.NAV_LIVE_STATE
+    presence.setActivity(presenceData)
+    return
+  }
+  else if (pathname.includes('/season/')) {
+    const seasonInfo = await getSeasonInfo(pathname)
+    if (seasonInfo) {
+      presenceData.details = `${strings.NAV_SEASON_DETAILS} ${seasonInfo.nameSerie}`
+      presenceData.state = seasonInfo.episodeDesc
+      presenceData.smallImageText = `${strings.NAV_SEASON_DETAILS} ${seasonInfo.nameSerie}`
+      presenceData.largeImageKey = seasonInfo.bannerImg
+    }
+    presence.setActivity(presenceData)
+    return
   }
   presence.setActivity(presenceData)
 })
