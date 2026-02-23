@@ -13,6 +13,7 @@
     "www.easyfun.gg",
     "easyfun.gg"
   ],
+  "regExp": "^https?[:][/][/](www[.])?easyfun[.]gg[/]",
   "version": "2.0.0",
   "logo": "https://i.imgur.com/Vc51Wzs.png",
   "thumbnail": "https://i.imgur.com/UD6ZY9j.png",
