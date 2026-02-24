@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1161544315105976342',
+  clientId: '1475915807660707990',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 enum ActivityAssets {
