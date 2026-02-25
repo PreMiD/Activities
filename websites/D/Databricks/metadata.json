@@ -10,7 +10,7 @@
     "en": "Databricks offers a unified platform for data, analytics and AI. Build better AI with a data-centric approach. Simplify ETL, data warehousing, governance and AI on the Data Intelligence Platform."
   },
   "url": "databricks.com",
-  "regExp": "^https?://.*\\.azuredatabricks\\.net/.*",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*azuredatabricks[.]net[/]",
   "version": "1.0.0",
   "logo": "https://s3.us-east-1.amazonaws.com/accredible_temp_credential_images/16002836894132567677717491881160.png",
   "thumbnail": "https://www.databricks.com/sites/default/files/2023-04/db-613-blog-og-img.png",
