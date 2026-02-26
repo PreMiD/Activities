@@ -46,7 +46,7 @@ presence.on('UpdateData', () => {
       type: ActivityType.Watching,
       details: detailsText,
       state: stateText,
-      largeImageKey: 'logo',
+      largeImageKey: 'https://i.ibb.co/C5n7tX9h/logo.png',
     }
 
     presence.setActivity(presenceData)
