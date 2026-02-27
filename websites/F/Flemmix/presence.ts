@@ -61,7 +61,7 @@ presence.on('UpdateData', async () => {
 
     const coverImageSrc = document.querySelector<HTMLImageElement>('img[itemprop="thumbnailUrl"]')?.getAttribute('src')
     if (coverImageSrc && showCover) {
-      presenceData.largeImageKey = `https://flemmix.surf${coverImageSrc}`
+      presenceData.largeImageKey = `https://flemmix.rent${coverImageSrc}`
     }
 
     const [startTimestamp, endTimestamp] = getTimestamps(video.currentTime, video.duration)
