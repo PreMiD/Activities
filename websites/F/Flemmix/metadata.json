@@ -11,7 +11,7 @@
     "fr": "Regardez vos films et séries préférés en streaming."
   },
   "url": "flemmix.rent",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flemmix[.]rent[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flemmix([.][a-z]+)+[/]",
   "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flemmix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Flemmix/assets/thumbnail.png",
