@@ -62,7 +62,7 @@ presence.on('UpdateData', async () => {
   if (url) {
     presenceData.buttons = [
       {
-        label: 'Listen on LINE MUSIC',
+        label: 'Listen Along',
         url: `https://music.line.me${url}`,
       },
     ]
