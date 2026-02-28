@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "1113849467695792140",
+    "name": "senkuthegreat"
+  },
+  "contributors": [
+    {
+      "id": "629851641579044874",
+      "name": "Anant"
+    }
+  ],
+  "service": "AnimeDekho",
+  "description": {
+    "en": "Watch anime online with English, Hindi and Other Indian Languages"
+  },
+  "url": "animedekho.app",
+  "regExp": "([a-z0-9-]+[.])*animedekho[.]app[/]",
+  "version": "1.0.0",
+  "logo": "https://i.pinimg.com/736x/d2/22/6f/d2226f61410df21c007f4bb4b4528745.jpg",
+  "thumbnail": "https://i.postimg.cc/J0KFnpck/image.png",
+  "color": "#23272A",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "video",
+    "streaming"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "([a-z0-9-]+[.])*raretoonsindia[.]co[/]|([a-z0-9-]+[.])*vidcloud[.].*[/]|([a-z0-9-]+[.])*hydrax[.].*[/]|([a-z0-9-]+[.])*vidstream[.].*[/]|([a-z0-9-]+[.])*sruby[.].*[/]|([a-z0-9-]+[.])*vidmoly[.].*[/]|([a-z0-9-]+[.])*animedekho[.]app[/]|([a-z0-9-]+[.])*abysscdn[.]com[/]|([a-z0-9-]+[.])*short[.]icu[/]",
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "timestamps",
+      "title": "Show Timestamps",
+      "icon": "fas fa-clock",
+      "value": true
+    }
+  ]
+}
