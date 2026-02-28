@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1289844718943076362",
+    "name": "AmaseCocoa"
+  },
+  "service": "LINE MUSIC",
+  "description": {
+    "en": "LINE MUSIC is Japanese subscription-based music streaming service provided from LY Corporation (LINE), since 2015.",
+    "ja": "LINE MUSICは、LINEが2015年から提供している日本の定額制音楽ストリーミングサービスです。"
+  },
+  "url": "music.line.me",
+  "regExp": "^https?[:][/][/]music[.]line[.]me[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/nzdDKtJ.png",
+  "thumbnail": "https://i.imgur.com/qZBsZx2.png",
+  "color": "#00C300",
+  "category": "music",
+  "tags": [
+    "music",
+    "line"
+  ]
+}
