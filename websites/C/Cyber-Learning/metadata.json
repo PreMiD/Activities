@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 2,
+  "author": {
+    "name": "fan2rocky",
+    "id": "1342178238306324531"
+  },
+  "contributors": [
+    {
+      "name": "Yann (Cyber-Learning)",
+      "id": "507936895758761985"
+    }
+  ],
+  "service": "Cyber-Learning",
+  "description": {
+    "en": "Learn cybersecurity through challenges and CTFs on Cyber-Learning.fr",
+    "fr": "Apprenez la cybersécurité avec des challenges et CTF sur Cyber-Learning.fr"
+  },
+  "url": "cyber-learning.fr",
+  "regExp": "([a-z0-9-]+[.])*cyber-learning[.]fr",
+  "version": "1.0.0",
+  "logo": "https://cyber-learning.fr/wp-content/uploads/avatars/cropped-user-1-1728625950.png",
+  "thumbnail": "https://cyber-learning.fr/wp-content/uploads/cyber-learning_logo-3.png",
+  "color": "#00ff41",
+  "category": "other",
+  "tags": [
+    "education",
+    "cybersecurity",
+    "ctf",
+    "hacking",
+    "challenges"
+  ]
+}
