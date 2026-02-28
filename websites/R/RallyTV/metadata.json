@@ -1,0 +1,23 @@
+{
+  "apiVersion": 1,
+  "author": {
+    "name": "entorge",
+    "id": "585838582715908114"
+  },
+  "service": "RallyTV",
+  "description": {
+    "en": "Watch WRC, ERC, and World RX live on Rally.TV"
+  },
+  "url": "rally.tv",
+  "regExp": "^https?:\\/\\/(?:www\\.|app\\.)?rally\\.tv",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/C5n7tX9h/logo.png",
+  "thumbnail": "https://i.ibb.co/JwBpMWp9/thumbnail.png",
+  "color": "#e30613",
+  "category": "videos",
+  "tags": [
+    "rally",
+    "wrc",
+    "racing"
+  ]
+}
