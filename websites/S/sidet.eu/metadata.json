@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1335248197467242519",
+    "name": "macaktimur"
+  },
+  "service": "sidet.eu",
+  "description": {
+    "en": "Pre-Mid integration for sidet.eu. This integration provides Discord Presence for users visiting any of the sub-sites under sidet.eu, allowing them to share their activity and presence on Discord while browsing the various sections of the website."
+  },
+  "url": "sidet.eu",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sidet[.]eu[/]",
+  "version": "1.0.0",
+  "logo": "https://sidet.eu/images/sideteulogo-white-512.png",
+  "thumbnail": "https://sidet.eu/images/sideteulogo-white.png",
+  "color": "#000000",
+  "category": "socials",
+  "tags": [
+    "social"
+  ]
+}
