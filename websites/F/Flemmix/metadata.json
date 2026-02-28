@@ -10,9 +10,9 @@
     "en": "Watch your favorite movies and series in streaming.",
     "fr": "Regardez vos films et séries préférés en streaming."
   },
-  "url": "flemmix.biz",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flemmix[.]biz[/]",
-  "version": "1.1.0",
+  "url": "flemmix.rent",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flemmix([.][a-z]+)+[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flemmix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Flemmix/assets/thumbnail.png",
   "color": "#d90000",
@@ -24,7 +24,7 @@
     "vf"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*(d-s\\.io|jilliandescribecompany\\.com|uqload\\.cx|vidhidevip\\.com|vudeo\\.ws|waaw1\\.tv|streamtape\\.(to|com)|upstream\\.to|embedwish\\.com|ups2up\\.fun|luluvdoo\\.com|tipfly\\.xyz|vidmoly\\.net|Mivalyo\\.com|hglink\\.to).*",
+  "iFrameRegExp": ".*(d-s\\.io|jilliandescribecompany\\.com|uqload\\.(cx|is)|vidhidevip\\.com|vudeo\\.ws|waaw1?\\.(tv|to)|streamtape\\.(to|com)|upstream\\.to|embedwish\\.com|ups2up\\.fun|luluvdoo\\.com|tipfly\\.xyz|vidmoly\\.net|[Mm]ivalyo\\.com|hg(link|cloud)\\.to|christopheruntilpoint\\.com|upns\\.pro|luluvid\\.com|savefiles\\.com|dsvplay\\.com|minochinos\\.com|lancewhosedifficult\\.com|up4fun\\.top|myvidplay\\.com).*",
   "settings": [
     {
       "id": "buttons",
