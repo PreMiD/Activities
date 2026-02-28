@@ -35,5 +35,6 @@
       "icon": "fad fa-user-edit",
       "value": false
     }
-  ]
+  ],
+  "allowURLOverrides": true
 }

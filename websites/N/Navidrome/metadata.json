@@ -14,7 +14,7 @@
     "www.navidrome.org"
   ],
   "regExp": "^https?[:][/][/]navidrome[.]([a-z0-9]+)[.]([a-z0-9]+)",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Navidrome/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Navidrome/assets/thumbnail.png",
   "color": "#2979ff",
@@ -36,5 +36,6 @@
       "icon": "fad fa-images",
       "value": true
     }
-  ]
+  ],
+  "allowURLOverrides": true
 }

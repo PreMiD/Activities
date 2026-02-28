@@ -13,7 +13,7 @@
   },
   "url": "gitea.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gitea[.]com[/]",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gitea/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gitea/assets/thumbnail.png",
   "color": "#5aa509",
@@ -24,5 +24,6 @@
     "development",
     "sharing",
     "coding"
-  ]
+  ],
+  "allowURLOverrides": true
 }
