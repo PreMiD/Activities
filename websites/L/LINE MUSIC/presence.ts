@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1470135877656252619',
@@ -13,24 +13,6 @@ const strings = presence.getStrings({
   play: 'general.playing',
   pause: 'general.paused',
 })
-
-function timeToSeconds(timeStr: string): number {
-  if (!timeStr) {
-    return 0
-  }
-
-  const cleanStr = timeStr.replace(/[^\d:]/g, '')
-  const parts = cleanStr.split(':')
-
-  if (parts.length < 2) {
-    return 0
-  }
-
-  const minutes = Number.parseInt(parts[0] || '0', 10)
-  const seconds = Number.parseInt(parts[1] || '0', 10)
-
-  return minutes * 60 + seconds
-}
 
 presence.on('UpdateData', async () => {
   const songInfo = document.querySelector('.song_info')
@@ -89,8 +71,8 @@ presence.on('UpdateData', async () => {
   if (isPlaying) {
     const nowStr = playerCtrl?.querySelector('.playtime .now')?.textContent ?? ''
     const totalStr = playerCtrl?.querySelector('.playtime .remain')?.textContent ?? ''
-    const nowSeconds = timeToSeconds(nowStr)
-    const totalSeconds = timeToSeconds(totalStr)
+    const nowSeconds = timestampFromFormat(nowStr)
+    const totalSeconds = timestampFromFormat(totalStr)
 
     presenceData.startTimestamp = Math.floor(Date.now() / 1000) - nowSeconds
     presenceData.endTimestamp = Math.floor(Date.now() / 1000) + (totalSeconds - nowSeconds)
