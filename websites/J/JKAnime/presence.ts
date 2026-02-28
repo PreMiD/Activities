@@ -32,7 +32,7 @@ let cache: {
 }
 
 async function getEpisodeInfo(text: string) {
-  if (text === cache.text) {
+  if (text === cache.text && cache.episodio !== '') {
     return {
       nombreAnime: cache.nombreAnime,
       episodio: cache.episodio,
@@ -44,7 +44,7 @@ async function getEpisodeInfo(text: string) {
   const currentEpisode = document.querySelector(
     '#episodes-content li.list-group-item.current',
   )
-  const episodio = currentEpisode?.querySelector('h5')?.textContent?.trim() || 'Episodio 1'
+  const episodio = currentEpisode?.querySelector('h5')?.textContent?.trim() || ''
   const nombreAnime = document.querySelector('.video_i a')?.textContent?.trim() || ''
   const season = 'Season 1'
   const descAnime = document.querySelector('.video_i p')?.textContent?.trim() || ''

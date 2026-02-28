@@ -12,7 +12,7 @@
   },
   "url": "jkanime.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*jkanime[.]net[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/JKAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/JKAnime/assets/thumbnail.png",
   "color": "#000000",
@@ -23,7 +23,7 @@
     "video"
   ],
   "iframe": true,
-  "iFrameRegExp": "(^|\\.)?(jkanime\\.net|mega\\.nz|sfastwish\\.com|flaswish\\.com|vidhidevip\\.com|callistanise\\.com|mdbekjwqa\\.pw|mp4upload\\.com|streamtape\\.com|dsvplay\\.com|myvidplay\\.com)",
+  "iFrameRegExp": "(^|\\.)?(jkanime\\.net|mega\\.nz|sfastwish\\.com|flaswish\\.com|vidhidevip\\.com|callistanise\\.com|mdbekjwqa\\.pw|mp4upload\\.com|streamtape\\.com|dsvplay\\.com|myvidplay\\.com|m1xdrop\\.bz|mxdrop\\.to|f75s\\.com|bysekoze\\.com|mxcontent\\.net|voe\\.sx|lancewhosedifficult\\.com)",
   "settings": [
     {
       "id": "useAnimeCover",
