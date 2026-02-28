@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "860122608682795028",
+    "name": "itsmarian.mc"
+  },
+  "service": "MineHoster",
+  "description": {
+    "de": "MineHoster ist ein deutscher Minecraft-Server-Hosting-Anbieter mit leistungsstarken Gameservern und erweitertem Verwaltungspanel.",
+    "en": "MineHoster is a German Minecraft server hosting provider offering high-performance game servers with an advanced management panel."
+  },
+  "url": [
+    "mine-hoster.de",
+    "gamepanel.mine-hoster.de"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?((gamepanel[.])?mine-hoster[.]de)[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MineHoster/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MineHoster/assets/thumbnail.png",
+  "color": "#3B82F6",
+  "category": "other",
+  "tags": [
+    "minecraft",
+    "hosting",
+    "server",
+    "german",
+    "gameserver"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "showGamepanelName",
+      "title": "Show Gamepanel in Activity Name",
+      "icon": "fas fa-terminal",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "showSearchActivity",
+      "title": "Show Search Activity",
+      "icon": "fas fa-search",
+      "value": true
+    },
+    {
+      "id": "showServerID",
+      "title": "Show Server ID",
+      "icon": "fas fa-hashtag",
+      "value": false
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true
+    }
+  ]
+}
