@@ -2,48 +2,52 @@
   "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
-    "id": "705490775932403795",
-    "name": "jordaar"
+    "name": "XSWY",
+    "id": "1294601384028672000"
   },
-  "service": "movie-web",
-  "altnames": [
-    "P-Stream",
-    "pstream"
+  "contributors": [
+    {
+      "name": "jordaar",
+      "id": "705490775932403795"
+    },
+    {
+      "name": "lechixy",
+      "id": "391511241786654721"
+    }
   ],
+  "service": "P-Stream",
   "description": {
     "en": "The place for your favorite movies & shows"
   },
   "url": [
     "pstream.mov",
     "beta.pstream.mov",
-    "mirror.pstream.mov",
-    "movies.levrx.de",
-    "streamwatch.online",
-    "movies.samj.app"
+    "mirror.pstream.mov"
   ],
-  "regExp": "^https?[:][/][/](?:(?:beta[.]|mirror[.])?pstream[.]mov|movies[.]levrx[.]de|streamwatch[.]online|movies[.]samj[.]app)[/]?",
-  "version": "1.4.0",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
-  "color": "#533670",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pstream[.]mov[/]",
+  "version": "1.0.0",
+  "logo": "https://iili.io/friz2yB.png",
+  "thumbnail": "https://iili.io/frKnt8F.webp",
+  "color": "#6D76DD",
   "category": "videos",
   "tags": [
-    "movies",
-    "shows",
-    "anime",
-    "streaming"
+    "movie",
+    "series",
+    "streaming",
+    "video",
+    "entertainment"
   ],
   "settings": [
     {
-      "id": "watch",
-      "title": "Show Watch Button",
-      "icon": "fad fa-eye",
+      "id": "showWhileMain",
+      "title": "Show While Main Page",
+      "icon": "fad fa-play-circle",
       "value": true
     },
     {
-      "id": "timestamp",
-      "title": "Show Timestamp",
-      "icon": "fad fa-timer",
+      "id": "showWhileWatching",
+      "title": "Show While Watching",
+      "icon": "fad fa-play-circle",
       "value": true
     },
     {
