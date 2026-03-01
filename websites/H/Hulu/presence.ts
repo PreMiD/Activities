@@ -134,10 +134,12 @@ presence.on('UpdateData', async () => {
       const category = document.querySelector(
         '[class*="LiveGuideFilters_LiveGuideFilterItemSelected__"]',
       )
-      title = document.querySelector('.LiveGuideProgram--is-playing div.LiveGuideProgram__title')
+      const title = document.querySelector(
+        '[class*="LiveGuideChannelKyber_isPlaying__"] img[class*="LiveGuideChannelKyber_logo__"]',
+      ) as HTMLImageElement | null
       presenceData.details = (await strings).watchingLive
       if (category && title)
-        presenceData.state = `${capitalize(category.textContent!)} (${title.textContent})`
+        presenceData.state = `${capitalize(category.textContent!)} (${title.alt})`
       else if (category && !title)
         presenceData.state = capitalize(category.textContent!)
       break
@@ -206,7 +208,7 @@ presence.on('UpdateData', async () => {
           presenceData.startTimestamp = Math.floor(Date.now() / 1000)
           presenceData.endTimestamp = null
         }
-        else if (!isPaused && durationSeconds > 0) {
+        else if (!isPaused && !live) {
           const timestamps = getTimestamps(currentSeconds, durationSeconds)
           ;[presenceData.startTimestamp, presenceData.endTimestamp] = timestamps
         }
