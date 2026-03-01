@@ -17,7 +17,7 @@
     "fr": "Apprenez la cybersécurité avec des challenges et CTF sur Cyber-Learning.fr"
   },
   "url": "cyber-learning.fr",
-  "regExp": "([a-z0-9-]+[.])*cyber-learning[.]fr",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*cyber-learning[.]fr[/]",
   "version": "1.0.0",
   "logo": "https://cyber-learning.fr/wp-content/uploads/avatars/cropped-user-1-1728625950.png",
   "thumbnail": "https://cyber-learning.fr/wp-content/uploads/cyber-learning_logo-3.png",
