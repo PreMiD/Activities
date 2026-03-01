@@ -13,7 +13,7 @@
   },
   "url": "gitlab.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gitlab[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GitLab/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GitLab/assets/thumbnail.png",
   "color": "#ff4400",
@@ -30,5 +30,6 @@
       "title": "Hide Private",
       "value": true
     }
-  ]
+  ],
+  "allowURLOverrides": true
 }

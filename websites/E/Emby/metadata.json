@@ -25,7 +25,7 @@
     "app.emby.media"
   ],
   "regExp": "^https?[:][/][/].*[/]web[/]index[.]html",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Emby/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Emby/assets/thumbnail.png",
   "color": "#52B54B",
@@ -69,5 +69,6 @@
       "value": "By: %artist%",
       "placeholder": "Use %title%, %artist%, %albumartist%, %releasedate%, {0}"
     }
-  ]
+  ],
+  "allowURLOverrides": true
 }

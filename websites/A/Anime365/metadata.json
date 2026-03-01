@@ -8,8 +8,7 @@
   "service": "Anime365",
   "altnames": [
     "Anime 365",
-    "smotret-anime.org",
-    "smotret-anime.app"
+    "smotret-anime"
   ],
   "description": {
     "en": "Watch anime online in high quality on Anime 365",
@@ -18,10 +17,11 @@
   "url": [
     "anime-365.ru",
     "smotret-anime.org",
-    "smotret-anime.app"
+    "smotret-anime.app",
+    "smotret-anime.online"
   ],
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(anime-365[.]ru|smotret-anime[.]org|smotret-anime[.]app)[/]",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(anime-365[.]ru|smotret-anime[.]org|smotret-anime[.]app|smotret-anime[.]online)[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime365/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime365/assets/thumbnail.png",
   "color": "#1B5E20",
@@ -33,7 +33,7 @@
     "russian"
   ],
   "iframe": true,
-  "iFrameRegExp": "anime-365[.]ru|smotret-anime[.]org|smotret-anime[.]app",
+  "iFrameRegExp": "anime-365[.]ru|smotret-anime[.]org|smotret-anime[.]app|smotret-anime[.]online",
   "settings": [
     {
       "id": "showButtons",
