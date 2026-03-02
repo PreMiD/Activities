@@ -11,14 +11,13 @@
     "fr": "NovaStream propose une vaste bibliothèque de films et de séries sans publicité depuis diverses sources de streaming."
   },
   "url": [
-    "novastream.top",
     "novastream.vercel.app",
     "novastream-alt.netlify.app",
     "novastream.onrender.com",
     "nova-2bn.pages.dev"
   ],
   "regExp": "^https?[:][/][/](novastream[.]top|(novastream)[.]vercel[.]app|(novastream-alt)[.]netlify[.]app|(novastream)[.]onrender[.]com|(nova-2bn)[.]pages[.]dev)[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NovaStream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NovaStream/assets/thumbnail.png",
   "color": "#5e24b8",
