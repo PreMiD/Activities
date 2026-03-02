@@ -16,7 +16,7 @@
     "en": "Watch anime online with English, Hindi and Other Indian Languages"
   },
   "url": "animedekho.app",
-  "regExp": "([a-z0-9-]+[.])*animedekho[.]app[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animedekho[.]app[/]",
   "version": "1.0.0",
   "logo": "https://i.pinimg.com/736x/d2/22/6f/d2226f61410df21c007f4bb4b4528745.jpg",
   "thumbnail": "https://i.postimg.cc/J0KFnpck/image.png",
