@@ -14,7 +14,7 @@
     "lookmovie2.to",
     "playerwatchlm25.xyz"
   ],
-  "regExp": "^https?[:][/][/]((lookmovie2[.]to)|(playerwatchlm[0-9]+[.]xyz))[/]",
+  "regExp": "^https?[:][/][/]((lookmovie2[.]to)|(playerwatch(lm)?[0-9]+[.]xyz))",
   "version": "1.6.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LookMovie/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LookMovie/assets/thumbnail.png",
