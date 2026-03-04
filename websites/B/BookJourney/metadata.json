@@ -12,8 +12,8 @@
   "url": "bookreading.space",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*bookreading[.]space[/]",
   "version": "1.0.0",
-  "logo": "https://raw.githubusercontent.com/quetrea/Activities/add-bookjourney-activity/websites/B/BookJourney/assets/logo.png",
-  "thumbnail": "https://raw.githubusercontent.com/quetrea/Activities/add-bookjourney-activity/websites/B/BookJourney/assets/thumbnail.png",
+  "logo": "https://raw.githubusercontent.com/quetrea/Activities/add-bookjourney-activity/websites/B/BookJourney/assets/logo.png?v=2",
+  "thumbnail": "https://raw.githubusercontent.com/quetrea/Activities/add-bookjourney-activity/websites/B/BookJourney/assets/thumbnail.png?v=2",
   "color": "#5865F2",
   "category": "other",
   "tags": [
