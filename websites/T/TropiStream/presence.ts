@@ -1,7 +1,7 @@
 declare const Presence: any
 
 const presence = new Presence({
-  clientId: '1478440957774008471'
+  clientId: '1478440957774008471',
 })
 
 const browsingTimestamp: number = Math.floor(Date.now() / 1000)
@@ -75,9 +75,9 @@ function setNavigationActivity(pathname: string): void {
     state,
     buttons: [
       { label: 'Visiter le site', url: window.location.origin || 'https://tropistream.fr' },
-      { label: 'Discord', url: 'https://discord.gg/tropi' }
+      { label: 'Discord', url: 'https://discord.gg/tropi' },
     ],
-    startTimestamp: browsingTimestamp
+    startTimestamp: browsingTimestamp,
   })
 }
 
@@ -174,9 +174,9 @@ function updateActivity(): void {
       : `Regarde ${finalTitle}`,
     buttons: [
       { label: 'Regarder', url: window.location.href },
-      { label: 'Discord', url: 'https://discord.gg/tropi' }
+      { label: 'Discord', url: 'https://discord.gg/tropi' },
     ],
-    startTimestamp: browsingTimestamp
+    startTimestamp: browsingTimestamp,
   })
 }
 
@@ -212,7 +212,7 @@ function handleRouteChange(): void {
     checkInterval = setInterval(() => {
       attempts++
       const titleEl = document.querySelector<HTMLElement>(
-        '.info-title-premium, h1.video-title, h1.title, .player-info h1'
+        '.info-title-premium, h1.video-title, h1.title, .player-info h1',
       )
 
       const hasTitleInfo
