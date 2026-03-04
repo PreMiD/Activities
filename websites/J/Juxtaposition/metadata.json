@@ -16,7 +16,7 @@
     "en": "Juxtaposition is a Miiverse revival by Pretendo Network"
   },
   "url": "juxt.pretendo.network",
-  "regExp": "^https?[:][/][/]juxt[.]*pretendo[.]network[/]",
+  "regExp": "^https?[:][/][/]juxt[.]pretendo[.]network[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/cJPMbNG.png",
   "thumbnail": "https://i.imgur.com/6oW5ybb.png",
