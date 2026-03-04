@@ -159,8 +159,8 @@ function updateActivity(): void {
 
   const isSerie
     = isSerieText(seasonText)
-    || isSerieText(episodeText)
-    || !!document.querySelector('.fa-tv, .queue-item, .series-queue')
+      || isSerieText(episodeText)
+      || !!document.querySelector('.fa-tv, .queue-item, .series-queue')
 
   presence.setActivity({
     largeImageKey: finalPoster,
@@ -217,8 +217,8 @@ function handleRouteChange(): void {
 
       const hasTitleInfo
         = titleEl
-        && titleEl.textContent
-        && titleEl.textContent.trim().length > 2
+          && titleEl.textContent
+          && titleEl.textContent.trim().length > 2
 
       if (hasTitleInfo || attempts >= 10) {
         if (checkInterval) {
