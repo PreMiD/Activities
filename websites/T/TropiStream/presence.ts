@@ -131,7 +131,7 @@ function updateActivity(): void {
 
   document.querySelectorAll<HTMLElement>('.season-header').forEach((header) => {
     const potential = Array.from(header.querySelectorAll('div'))
-      .find((d) => d.textContent?.includes('Saison'))
+      .find(d => d.textContent?.includes('Saison'))
 
     if (potential?.textContent) {
       const match = potential.textContent.trim().match(/Saison\s*\d+/i)
