@@ -9,7 +9,7 @@
     "en": "Watch WRC, ERC, and World RX live on Rally.TV"
   },
   "url": "rally.tv",
-  "regExp": "^https?:\\/\\/(?:www\\.|app\\.)?rally\\.tv",
+  "regExp": "^https?[:][/][/](www[.]|app[.])?rally[.]tv[/]",
   "version": "1.0.0",
   "logo": "https://i.ibb.co/C5n7tX9h/logo.png",
   "thumbnail": "https://i.ibb.co/JwBpMWp9/thumbnail.png",
