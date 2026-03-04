@@ -17,7 +17,7 @@ type PremidViewerRole
 
 type PremidQueueStatus = 'reading' | 'waiting' | 'done' | 'not_in_queue'
 
-type PremidSessionState = {
+interface PremidSessionState {
   stateVersion: 1
   routePath: string
   sessionId: string
