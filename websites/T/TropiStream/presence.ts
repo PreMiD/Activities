@@ -1,7 +1,7 @@
 declare const Presence: any
 
 const presence = new Presence({
-  clientId: '1478440957774008471'
+  clientId: '1478440957774008471',
 })
 
 const browsingTimestamp: number = Math.floor(Date.now() / 1000)
@@ -29,31 +29,40 @@ function setNavigationActivity(pathname: string): void {
   if (pathname === '/' || pathname === '/home') {
     details = '🏠 Accueil'
     state = 'Découvre des nouveautés...'
-  } else if (pathname.includes('films-premium')) {
+  }
+  else if (pathname.includes('films-premium')) {
     details = '💎 Catalogue Films Premium'
     state = 'Parcourt la liste...'
-  } else if (pathname.includes('series-premium')) {
+  }
+  else if (pathname.includes('series-premium')) {
     details = '💎 Catalogue Séries Premium'
     state = 'Parcourt la liste...'
-  } else if (pathname.includes('/film')) {
+  }
+  else if (pathname.includes('/film')) {
     details = '🎬 Catalogue Films'
     state = 'Parcourt la liste...'
-  } else if (pathname.includes('/serie')) {
+  }
+  else if (pathname.includes('/serie')) {
     details = '📺 Catalogue Séries'
     state = 'Parcourt la liste...'
-  } else if (pathname.includes('/anime')) {
+  }
+  else if (pathname.includes('/anime')) {
     details = '⭐ Catalogue Animes'
     state = 'Parcourt la liste...'
-  } else if (pathname === '/dashboard') {
+  }
+  else if (pathname === '/dashboard') {
     details = '📊 Dashboard'
     state = 'Consulte le dashboard'
-  } else if (pathname === '/team') {
+  }
+  else if (pathname === '/team') {
     details = '👥 Équipe'
-    state = "Consulte l'équipe"
-  } else if (pathname === '/tropiwave') {
+    state = 'Consulte l\'équipe'
+  }
+  else if (pathname === '/tropiwave') {
     details = '🌊 TropiWave'
     state = 'Écoute de la musique'
-  } else if (pathname === '/boutique') {
+  }
+  else if (pathname === '/boutique') {
     details = '💰 Boutique'
     state = 'Consulte la boutique'
   }
@@ -66,9 +75,9 @@ function setNavigationActivity(pathname: string): void {
     state,
     buttons: [
       { label: 'Visiter le site', url: window.location.origin || 'https://tropistream.fr' },
-      { label: 'Discord', url: 'https://discord.gg/tropi' }
+      { label: 'Discord', url: 'https://discord.gg/tropi' },
     ],
-    startTimestamp: browsingTimestamp
+    startTimestamp: browsingTimestamp,
   })
 }
 
@@ -120,9 +129,9 @@ function updateActivity(): void {
 
   const activeEp = document.querySelector<HTMLElement>('.queue-item.active')
 
-  document.querySelectorAll<HTMLElement>('.season-header').forEach(header => {
+  document.querySelectorAll<HTMLElement>('.season-header').forEach((header) => {
     const potential = Array.from(header.querySelectorAll('div'))
-      .find(d => d.textContent?.includes('Saison'))
+      .find((d) => d.textContent?.includes('Saison'))
 
     if (potential?.textContent) {
       const match = potential.textContent.trim().match(/Saison\s*\d+/i)
@@ -134,7 +143,7 @@ function updateActivity(): void {
 
   if (activeEp) {
     const spans = activeEp.querySelectorAll<HTMLSpanElement>('span')
-    spans.forEach(s => {
+    spans.forEach((s) => {
       if (s.textContent?.toLowerCase().includes('épisode')) {
         episodeText = s.textContent.trim()
       }
@@ -148,10 +157,10 @@ function updateActivity(): void {
   const isSerieText = (t: string): boolean =>
     /saison|épisode|episode|s\d+|e\d+/i.test(t) || t.includes('•')
 
-  const isSerie =
-    isSerieText(seasonText) ||
-    isSerieText(episodeText) ||
-    !!document.querySelector('.fa-tv, .queue-item, .series-queue')
+  const isSerie
+    = isSerieText(seasonText)
+    || isSerieText(episodeText)
+    || !!document.querySelector('.fa-tv, .queue-item, .series-queue')
 
   presence.setActivity({
     largeImageKey: finalPoster,
@@ -165,9 +174,9 @@ function updateActivity(): void {
       : `Regarde ${finalTitle}`,
     buttons: [
       { label: 'Regarder', url: window.location.href },
-      { label: 'Discord', url: 'https://discord.gg/tropi' }
+      { label: 'Discord', url: 'https://discord.gg/tropi' },
     ],
-    startTimestamp: browsingTimestamp
+    startTimestamp: browsingTimestamp,
   })
 }
 
@@ -197,18 +206,19 @@ function handleRouteChange(): void {
     lastValidTitle = ''
     lastValidPoster = ''
     updateActivity()
-  } else {
+  }
+  else {
     let attempts = 0
     checkInterval = setInterval(() => {
       attempts++
       const titleEl = document.querySelector<HTMLElement>(
-        '.info-title-premium, h1.video-title, h1.title, .player-info h1'
+        '.info-title-premium, h1.video-title, h1.title, .player-info h1',
       )
 
-      const hasTitleInfo =
-        titleEl &&
-        titleEl.textContent &&
-        titleEl.textContent.trim().length > 2
+      const hasTitleInfo
+        = titleEl
+        && titleEl.textContent
+        && titleEl.textContent.trim().length > 2
 
       if (hasTitleInfo || attempts >= 10) {
         if (checkInterval) {
