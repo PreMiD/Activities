@@ -48,7 +48,7 @@ const presence = new Presence({
 
 const sessionPrefix = '/s/'
 const stateScriptId = 'bookjourney-premid-state'
-const logoUrl = 'https://raw.githubusercontent.com/quetrea/Activities/add-bookjourney-activity/websites/B/BookJourney/assets/logo.png?v=2'
+const logoUrl = 'https://raw.githubusercontent.com/quetrea/Activities/add-bookjourney-activity/websites/B/BookJourney/assets/logo-v2.png'
 
 function readState(): PremidSessionState | null {
   const node = document.getElementById(stateScriptId)
