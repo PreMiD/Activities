@@ -5,7 +5,7 @@
     "name": "CRUGG",
     "id": "228965621478588416"
   },
-  "service": "NPM Package Registry",
+  "service": "npm",
   "description": {
     "de": "Der Node Package Manager ist ein Paketmanager für die JavaScript-Laufzeitumgebung node.js.",
     "en": "The Node Package Manager is a package manager for the JavaScript runtime environment node.js.",
