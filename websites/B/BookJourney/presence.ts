@@ -49,6 +49,20 @@ const presence = new Presence({
 const sessionPrefix = '/s/'
 const stateScriptId = 'bookjourney-premid-state'
 const logoUrl = 'https://raw.githubusercontent.com/quetrea/Activities/add-bookjourney-activity/websites/B/BookJourney/assets/logo-v2.png'
+const siteUrl = 'https://bookreading.space'
+
+function buildButtons(sessionId: string): PresenceData['buttons'] {
+  return [
+    {
+      label: 'Join Session',
+      url: `${siteUrl}/s/${sessionId}`,
+    },
+    {
+      label: 'Open BookJourney',
+      url: siteUrl,
+    },
+  ]
+}
 
 function readState(): PremidSessionState | null {
   const node = document.getElementById(stateScriptId)
@@ -81,6 +95,7 @@ function toUnixSeconds(timestampMs: number | undefined): number | undefined {
 
 function buildActivity(state: PremidSessionState): PresenceData | null {
   const startedAt = toUnixSeconds(state.sessionStartedAt)
+  const buttons = buildButtons(state.sessionId)
 
   if (state.privacyMode === 'private_hidden') {
     return {
@@ -88,6 +103,7 @@ function buildActivity(state: PremidSessionState): PresenceData | null {
       state: 'BookJourney',
       startTimestamp: startedAt,
       largeImageKey: logoUrl,
+      buttons,
     }
   }
 
@@ -96,6 +112,7 @@ function buildActivity(state: PremidSessionState): PresenceData | null {
       details: 'Joining a reading session',
       state: 'BookJourney',
       largeImageKey: logoUrl,
+      buttons,
     }
   }
 
@@ -104,6 +121,7 @@ function buildActivity(state: PremidSessionState): PresenceData | null {
       details: 'Loading session',
       state: 'BookJourney',
       largeImageKey: logoUrl,
+      buttons,
     }
   }
 
@@ -116,6 +134,7 @@ function buildActivity(state: PremidSessionState): PresenceData | null {
       state: state.bookTitle ? `Book: ${state.bookTitle}` : 'BookJourney',
       startTimestamp: startedAt,
       largeImageKey: logoUrl,
+      buttons,
     }
   }
 
@@ -144,6 +163,7 @@ function buildActivity(state: PremidSessionState): PresenceData | null {
     state: stateLine,
     startTimestamp: startedAt,
     largeImageKey: logoUrl,
+    buttons,
   }
 }
 
