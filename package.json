@@ -20,7 +20,7 @@
     "@vitest/ui": "^4.0.6",
     "eslint": "^9.38.0",
     "eslint-plugin-format": "^1.0.2",
-    "eslint-plugin-json-schema-validator": "^5.4.1",
+    "eslint-plugin-json-schema-validator": "^6.0.0",
     "pmd": "file:cli",
     "premid": "file:premid",
     "typescript": "^5.9.3",
