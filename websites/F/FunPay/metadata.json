@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "toop",
+    "id": "868807712874582096"
+  },
+  "service": "FunPay",
+  "description": {
+    "en": "Marketplace for buying and selling game accounts, items, currency and services.",
+    "ru": "Маркетплейс для покупки и продажи игровых аккаунтов, предметов, валюты и услуг."
+  },
+  "url": "funpay.com",
+  "version": "1.0.0",
+  "logo": "https://images2.imgbox.com/65/bf/v01xw9QY_o.png",
+  "thumbnail": "https://images2.imgbox.com/ee/68/6pZ9xTdR_o.jpg",
+  "color": "#4054b2",
+  "category": "other",
+  "tags": ["marketplace", "gaming", "trading"],
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}
