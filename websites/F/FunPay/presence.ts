@@ -7,7 +7,7 @@ function stripLang(path: string) {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://images2.imgbox.com/65/bf/v01xw9QY_o.png',
+    largeImageKey: 'https://images2.imgbox.com/03/52/AEdt03Sg_o.jpg',
     startTimestamp: browsingTimestamp,
   }
 
