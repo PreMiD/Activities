@@ -2,10 +2,14 @@
   "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
-    "id": "1145729748803272815",
-    "name": "mallusrgreat"
+    "id": "671037171611729920",
+    "name": "Skully"
   },
   "contributors": [
+    {
+      "id": "1145729748803272815",
+      "name": "mallusrgreat"
+    },
     {
       "name": "Kaktuswerk",
       "id": "1167417152664522764"
@@ -13,11 +17,12 @@
   ],
   "service": "Gemini",
   "description": {
-    "en": "Gemini gives you direct access to Google AI. Get help with writing, planning, learning, and more."
+    "en": "Gemini gives you direct access to Google AI. Get help with writing, planning, learning, and more.",
+    "fr": "Gemini vous donne un accès direct à Google AI. Obtenez de l'aide pour l'écriture, la planification, l'apprentissage et plus encore."
   },
   "url": "gemini.google.com",
   "regExp": "^https?[:][/][/]gemini[.]google[.]com[/]",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gemini/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gemini/assets/thumbnail.png",
   "color": "#5286d2",
@@ -30,10 +35,23 @@
   ],
   "settings": [
     {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
       "id": "showTitle",
       "title": "Show chat title",
       "icon": "fa-solid fa-message-quote",
-      "value": true
+      "value": true,
+      "if": {
+        "privacy": false
+      }
     }
   ]
 }
