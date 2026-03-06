@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1023108830760009768",
+    "name": "colourfulplanets"
+  },
+  "service": "Pulse",
+  "description": {
+    "en": "Official Discord Presence for Pulse Radio."
+  },
+  "url": "pulse-radio-kappa.vercel.app",
+  "regExp": "^https?[:][/][/]pulse-radio-kappa[.]vercel[.]app",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/YbAX77N.png",
+  "thumbnail": "https://i.imgur.com/YbAX77N.png",
+  "color": "#6366f1",
+  "category": "music",
+  "tags": [
+    "music",
+    "radio",
+    "streaming",
+    "entertainment"
+  ]
+}
