@@ -11,6 +11,7 @@
     "ru": "Маркетплейс для покупки и продажи игровых аккаунтов, предметов, валюты и услуг."
   },
   "url": "funpay.com",
+  "regExp": "^https?[:][/][/](?:www[.])?funpay[.]com",
   "version": "1.0.0",
   "logo": "https://images2.imgbox.com/03/52/AEdt03Sg_o.jpg",
   "thumbnail": "https://images2.imgbox.com/ee/68/6pZ9xTdR_o.jpg",

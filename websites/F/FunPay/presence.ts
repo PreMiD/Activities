@@ -2,7 +2,7 @@ const presence = new Presence({ clientId: '1410684519866044537' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 function stripLang(path: string) {
-  return path.replace(/^\/(en|ru)\b/, '')
+  return path.replace(/^\/(?:en|ru)\b/, '')
 }
 
 presence.on('UpdateData', async () => {
