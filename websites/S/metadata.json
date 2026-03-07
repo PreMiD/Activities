@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1324897630391763006",
+    "name": "sleepysnz"
+  },
+  "service": "Sleepy Clash",
+  "description": {
+    "en": "Build the best Clash Royale decks with our meta deck builder, card tier lists, and matchup analyzer. Dominate ladder and tournaments with proven strategies!"
+  },
+  "url": "https://sleepyclash.com",
+  "regExp": "^(https?:\\/\\/localhost(:[0-9]+)?\\/|https?:\\/\\/([a-z0-9-]+\\.)*sleepyclash\\.com\\/)",
+  "version": "1.0.0",
+  "logo": "https://www.sleepyclash.com/static/uploads/Untitled.png",
+  "thumbnail": "https://www.sleepyclash.com/static/uploads/banner.png",
+  "color": "#E6E6FA",
+  "category": "games",
+  "tags": [
+    "clash-royale",
+    "stats",
+    "analytics",
+    "decks",
+    "builder",
+    "rater"
+  ]
+}
