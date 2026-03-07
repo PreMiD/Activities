@@ -144,7 +144,7 @@ function getNameFromDOM(): string | null {
   const activeLink = document.querySelector('a[href*="/tv/"], a[href*="/movies/"]')
   if (activeLink && activeLink.textContent) {
     const linkText = activeLink.textContent.trim()
-    if (linkText.length > 2 && !ignored.some(i => linkText.toUpperCase() === i)) {
+    if (linkText.length > 2 && !ignored.includes(linkText.toUpperCase())) {
       return linkText
     }
   }
@@ -153,7 +153,7 @@ function getNameFromDOM(): string | null {
   const ogTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content')
   if (ogTitle && ogTitle.includes('Primeshows')) {
     const cleaned = ogTitle.split(' - ')[0]?.replace('Watch ', '')?.trim()
-    if (cleaned && cleaned.length > 1 && !ignored.some(i => cleaned.toUpperCase() === i)) {
+    if (cleaned && cleaned.length > 1 && !ignored.includes(cleaned.toUpperCase())) {
       return cleaned
     }
   }
