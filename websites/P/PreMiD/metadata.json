@@ -25,6 +25,10 @@
     {
       "name": "EGGSY",
       "id": "162969778699501569"
+    },
+    {
+      "name": "Skully",
+      "id": "671037171611729920"
     }
   ],
   "service": "PreMiD",
@@ -42,10 +46,11 @@
     "premid.app",
     "docs.premid.app",
     "beta.premid.app",
-    "status.premid.app"
+    "status.premid.app",
+    "feedback.premid.app"
   ],
-  "regExp": "^https?[:][/][/]((docs|beta|status)[.])?premid[.]app[/]",
-  "version": "3.2.0",
+  "regExp": "^https?[:][/][/]((docs|beta|status|feedback)[.])?premid[.]app[/]",
+  "version": "3.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PreMiD/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PreMiD/assets/thumbnail.png",
   "color": "#7289DA",

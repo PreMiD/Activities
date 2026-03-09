@@ -47,7 +47,11 @@ presence.on('UpdateData', async () => {
     presenceData.details = strings.home
   }
   else if (document.location.pathname.startsWith('/calendar/')) {
-    if (document.location.pathname.includes('/r/day')) {
+    if (eventDialog) {
+      presenceData.details = strings.viewingAnEvent
+      presenceData.state = privacy ? '' : eventDialog?.querySelector('span[role="heading"]')?.textContent || ''
+    }
+    else if (document.location.pathname.includes('/r/day')) {
       presenceData.details = strings.daySchedule
       presenceData.state = date
     }
@@ -69,10 +73,6 @@ presence.on('UpdateData', async () => {
     else if (document.location.pathname.includes('/r/customday')) {
       presenceData.details = strings.viewingScheduleOf
       presenceData.state = strings.customDays
-    }
-    else if (eventDialog) {
-      presenceData.details = strings.viewingAnEvent
-      presenceData.state = privacy ? '' : eventDialog?.querySelector('span[role="heading"]')?.textContent || ''
     }
     else if (document.location.pathname.includes('/r/eventedit')) {
       presenceData.details = strings.editingAnEvent

@@ -39,7 +39,7 @@ presence.on('UpdateData', async () => {
     const sectionName = document.querySelector('.text-4xl.text-primary.font-bold.mb-4')?.textContent || 'Section'
 
     presenceData.details = `Reading Module: ${moduleName}`
-    presenceData.state = `Section: ${sectionName}`
+    presenceData.state = sectionName ? `Section: ${sectionName}` : ''
   }
 
   else if (pathname.includes('/module')) {

@@ -16,9 +16,9 @@
     "en": "AniHQ is a modern anime streaming site with English subbed content.",
     "hi-in": "AniHQ एक आधुनिक एनीमे स्ट्रीमिंग साइट है जहाँ आप English सब्टाइटल के साथ एनीमे देख सकते हैं।"
   },
-  "url": "anihq.to",
-  "regExp": "^https?[:][/][/]anihq[.]to[/]",
-  "version": "1.1.1",
+  "url": "anihq.org",
+  "regExp": "^https?[:][/][/](www[.])?anihq[.]org[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniHQ/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniHQ/assets/thumbnail.png",
   "color": "#8151ff",
@@ -30,5 +30,5 @@
     "watch"
   ],
   "iframe": true,
-  "iFrameRegExp": "https://animestream\\.playerp2p\\.com/.*"
+  "iFrameRegExp": "https://(animestream\\.playerp2p\\.com|9ivihskdhwqv\\.playerp2p\\.com|hnexehfik2jq\\.playerp2p\\.com|byseqekaho\\.com|hglink\\.to|voe\\.sx|lauradaydo\\.com|mp4upload\\.com|hexload\\.com|mxdrop\\.to|listeamed\\.net|rubyvidhub\\.com|oneupload\\.to)/.*"
 }

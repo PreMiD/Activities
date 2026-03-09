@@ -13,7 +13,7 @@ function getTitle(): string | undefined {
 
 function getUploader(): string | undefined {
   return getBaseSection()
-    ?.querySelector('ytd-video-owner-renderer .ytd-channel-name a')
+    ?.querySelector('a.ytd-video-description-infocards-section-renderer #title')
     ?.textContent
     ?.trim()
 }
@@ -29,7 +29,7 @@ export function getVideoID(): string | undefined {
 
 export function getChannelURL(): string | undefined {
   return getBaseSection()?.querySelector<HTMLAnchorElement>(
-    '#upload-info #channel-name a',
+    'a.ytd-video-description-infocards-section-renderer',
   )?.href
 }
 

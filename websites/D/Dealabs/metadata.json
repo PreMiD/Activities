@@ -1,0 +1,80 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "188370726279970816",
+    "name": "linkredible"
+  },
+  "service": "Dealabs",
+  "description": {
+    "en": "The largest community for sharing deals and coupons in France.",
+    "fr": "La plus grande communauté de partage de bons plans et codes promo en France."
+  },
+  "url": "dealabs.com",
+  "regExp": "^https?://(www\\.)?dealabs\\.com/.*",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dealabs/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dealabs/assets/thumbnail.png",
+  "color": "#36bca1",
+  "category": "socials",
+  "tags": [
+    "deals",
+    "shopping",
+    "community",
+    "france",
+    "multilanguage"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Mode confidentiel (Global)",
+      "icon": "fas fa-user-secret",
+      "placeholder": "Masquer tous les détails (titres, prix, images)",
+      "value": false
+    },
+    {
+      "id": "hideDealTitles",
+      "title": "Masquer titres (Bons plans)",
+      "icon": "fas fa-shopping-bag",
+      "placeholder": "Remplace le titre du produit par un texte générique",
+      "value": false,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "hideImages",
+      "title": "Masquer les images (Bons plans)",
+      "icon": "fas fa-image",
+      "placeholder": "Affiche toujours le logo Dealabs au lieu des produits",
+      "value": false,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "hidePrices",
+      "title": "Masquer les prix",
+      "icon": "fas fa-tag",
+      "placeholder": "N'affiche pas le prix du deal dans le statut",
+      "value": false,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "hideDiscussionTitles",
+      "title": "Masquer titres (Forum)",
+      "icon": "fas fa-comments",
+      "placeholder": "Remplace le sujet de la discussion par un texte générique",
+      "value": false,
+      "if": {
+        "privacyMode": false
+      }
+    }
+  ]
+}

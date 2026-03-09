@@ -38,10 +38,28 @@ function applyItemDetails(presenceData: PresenceData) {
 }
 
 function applyReviewDetails(presenceData: PresenceData) {
-  const details = document.querySelector<HTMLDivElement>(
+  const details = document.querySelector(
     '#js-tour-quiz-info',
-  )?.firstChild?.childNodes
-  presenceData.state = `${details?.[1]?.textContent} correct | ${details?.[2]?.textContent} remaining`
+  )
+  const correctElement = details?.querySelector('li:has(> svg[data-name="CHECK"])')
+  const remainingElement = details?.querySelector('li:has(> svg[data-name="INBOX"])')
+  const wrapUpElement = details?.querySelector('li:has(> svg[data-name="WRAPUP"])')
+
+  const stateDetails = []
+  if (correctElement) {
+    stateDetails.push(`${correctElement?.textContent} correct`)
+  }
+
+  if (remainingElement) {
+    stateDetails.push(`${remainingElement.textContent} remaining`)
+  }
+  else if (wrapUpElement) {
+    presenceData.details = `${presenceData.details} (Wrapping up)`
+
+    stateDetails.push(wrapUpElement.textContent)
+  }
+
+  presenceData.state = stateDetails.filter(x => !!x).join(' | ')
 }
 
 function removeRubyCharacters(element: HTMLElement) {

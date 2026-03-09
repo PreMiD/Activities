@@ -5,6 +5,12 @@
     "name": "Eai",
     "id": "132779412771962880"
   },
+  "contributors": [
+    {
+      "name": "sino",
+      "id": "258380809172418570"
+    }
+  ],
   "service": "dアニメストア",
   "description": {
     "de": "No.1 anime streaming website in Japan! Free for the first month! Unlimited viewing of over 2,900 anime works for 400 yen per month (excluding taxes)! You can use other than DoCoMo mobile devices. Even better quality on tablets, PCs, Chromecasts, and Fire TV!",
@@ -15,7 +21,7 @@
   },
   "url": "animestore.docomo.ne.jp",
   "regExp": "^https?[:][/][/]animestore[.]docomo[.]ne[.]jp[/]",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/d%E3%82%A2%E3%83%8B%E3%83%A1%E3%82%B9%E3%83%88%E3%82%A2/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/d%E3%82%A2%E3%83%8B%E3%83%A1%E3%82%B9%E3%83%88%E3%82%A2/assets/thumbnail.jpg",
   "color": "#ea552a",
@@ -23,5 +29,13 @@
   "tags": [
     "video",
     "anime"
+  ],
+  "settings": [
+    {
+      "id": "thumbnail",
+      "title": "Show Thumbnail",
+      "icon": "fad fa-images",
+      "value": true
+    }
   ]
 }

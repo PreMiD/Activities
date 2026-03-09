@@ -7,6 +7,7 @@ import { watch } from 'chokidar'
 import { build } from 'esbuild'
 import ora from 'ora'
 import { inc } from 'semver'
+import { getDmcaServices, isDmcaBlocked } from '../util/dmca.js'
 import {
   checkDomainDns,
   isValidDomain,
@@ -156,6 +157,14 @@ export class ActivityCompiler {
 
         await this.ts.restart(this.compileAndSend.bind(this, { validate, zip, sarif }))
       }
+
+      // Handle string file and metadata.json changes
+      if (
+        event === 'change'
+        && (basename(path) === `${this.activity.service}.json` || basename(path) === 'metadata.json')
+      ) {
+        return this.compileAndSend({ validate, zip, sarif })
+      }
     })
 
     this.ts.watch(this.compileAndSend.bind(this, { validate, zip, sarif }))
@@ -171,6 +180,24 @@ export class ActivityCompiler {
 
   private async validate({ kill }: { kill: boolean }): Promise<boolean> {
     const metadata: ActivityMetadata = JSON.parse(await readFile(resolve(this.cwd, 'metadata.json'), 'utf-8'))
+
+    const dmcaServices = await getDmcaServices()
+    if (isDmcaBlocked(metadata.service, dmcaServices)) {
+      const message = `Activity "${metadata.service}" is on the DMCA blocklist and cannot be added or modified`
+      if (kill) {
+        exit(message)
+      }
+
+      error(message)
+      addSarifLog({
+        path: resolve(this.cwd, 'metadata.json'),
+        message,
+        ruleId: SarifRuleId.dmcaCheck,
+        position: await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'service'),
+      })
+      return false
+    }
+
     const libraryVersion: ActivityMetadata | null = await fetch(`https://api.premid.app/v6/activities${this.versionized ? `/v${metadata.apiVersion}` : ''}/${encodeURIComponent(metadata.service)}/metadata.json`).then(res => res.json()).catch(() => null)
 
     let serviceFolder: string

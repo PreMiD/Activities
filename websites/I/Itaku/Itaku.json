@@ -1,0 +1,54 @@
+{
+  "itaku.browsingPosts": {
+    "description": "Browsing posts on Itaku",
+    "message": "Browsing Posts"
+  },
+  "itaku.browsingImages": {
+    "description": "Browsing images on Itaku",
+    "message": "Browsing Images"
+  },
+  "itaku.browsingCommissions": {
+    "description": "Browsing commissions",
+    "message": "Browsing Commissions"
+  },
+  "itaku.browsingUsers": {
+    "description": "Browsing users",
+    "message": "Browsing Users"
+  },
+  "itaku.browsingTags": {
+    "description": "Browsing tags",
+    "message": "Browsing Tags"
+  },
+  "itaku.viewingGallery": {
+    "description": "Viewing user's gallery",
+    "message": "Viewing Gallery"
+  },
+  "itaku.viewingFollowers": {
+    "description": "Viewing user's followers",
+    "message": "Viewing Followers"
+  },
+  "itaku.viewingFollowing": {
+    "description": "Viewing user's following list",
+    "message": "Viewing Following"
+  },
+  "itaku.viewingUserPosts": {
+    "description": "Viewing user's posts",
+    "message": "Viewing Posts"
+  },
+  "itaku.viewingCommissionPage": {
+    "description": "Viewing user commissions",
+    "message": "Viewing Commissions"
+  },
+  "itaku.viewingCommissionInbox": {
+    "description": "Viewing commission inbox",
+    "message": "Commission Inbox"
+  },
+  "itaku.viewingTagSuggestions": {
+    "description": "Viewing tag suggestions",
+    "message": "Tag Suggestions"
+  },
+  "itaku.viewingSubmissionInbox": {
+    "description": "Viewing submission inbox",
+    "message": "Submission Inbox"
+  }
+}

@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { confirm, input, search } from '@inquirer/prompts'
 import chalk from 'chalk'
 import { Validator } from 'jsonschema'
+import { getDmcaServices, isDmcaBlocked } from '../util/dmca.js'
 import { getDiscordUser, getDiscordUserById } from '../util/getDiscordUser.js'
 import { getFolderLetter } from '../util/getFolderLetter.js'
 import { getSchema } from '../util/getSchema.js'
@@ -23,6 +24,11 @@ export async function newActivity(activity?: string) {
 
   if (!activity) {
     exit('Activity name is required')
+  }
+
+  const dmcaServices = await getDmcaServices()
+  if (isDmcaBlocked(activity, dmcaServices)) {
+    exit(`Activity "${activity}" is on the DMCA blocklist and cannot be created`)
   }
 
   const folderLetter = getFolderLetter(activity)
