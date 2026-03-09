@@ -36,8 +36,8 @@
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(bilibili|biligame)[.]com[/]",
   "version": "3.0.0",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/bilibili/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/bilibili/assets/thumbnail.jpg",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bilibili/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bilibili/assets/thumbnail.jpg",
   "color": "#05acff",
   "category": "anime",
   "tags": [
