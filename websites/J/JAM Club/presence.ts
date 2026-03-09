@@ -4,7 +4,7 @@ const presence = new Presence({ clientId: '1480496528480272434' })
 const started = Math.floor(Date.now() / 1000)
 const logo = 'https://images2.imgbox.com/61/3e/k60NIdDv_o.jpg'
 
-let vid: { duration: number; currentTime: number; paused: boolean } | null = null
+let vid: { duration: number, currentTime: number, paused: boolean } | null = null
 
 presence.on('iFrameData', (data: typeof vid) => {
   vid = data
