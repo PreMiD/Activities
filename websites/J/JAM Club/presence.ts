@@ -2,7 +2,7 @@ import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({ clientId: '1480496528480272434' })
 const started = Math.floor(Date.now() / 1000)
-const logo = 'https://images2.imgbox.com/60/e0/f04G1UNN_o.jpg'
+const logo = 'https://images2.imgbox.com/61/3e/k60NIdDv_o.jpg'
 
 let vid: { duration: number; currentTime: number; paused: boolean } | null = null
 
@@ -12,8 +12,7 @@ presence.on('iFrameData', (data: typeof vid) => {
 
 presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
-  const pd: any = {
-    type: ActivityType.Watching,
+  const pd: PresenceData = {
     largeImageKey: logo,
     startTimestamp: started,
   }
@@ -21,6 +20,7 @@ presence.on('UpdateData', async () => {
   const h1 = document.querySelector('h1')?.textContent?.trim()
 
   if (/^\/\d+-/.test(pathname)) {
+    ;(pd as any).type = ActivityType.Watching
     pd.details = h1 || 'Смотрит аниме'
 
     const poster = document.querySelector<HTMLImageElement>('img[alt*="Постер"]')
