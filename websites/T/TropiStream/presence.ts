@@ -1,4 +1,4 @@
-declare const Presence: any
+import { ActivityType } from 'premid'
 
 const presence = new Presence({
   clientId: '1478440957774008471',
@@ -70,12 +70,11 @@ function setNavigationActivity(pathname: string): void {
   presence.setActivity({
     largeImageKey: DEFAULT_LOGO,
     largeImageText: 'TropiStream 🌴',
-    type: 3,
+    type: ActivityType.Watching,
     details,
     state,
     buttons: [
       { label: 'Visiter le site', url: window.location.origin || 'https://tropistream.fr' },
-      { label: 'Discord', url: 'https://discord.gg/tropi' },
     ],
     startTimestamp: browsingTimestamp,
   })
@@ -165,7 +164,7 @@ function updateActivity(): void {
   presence.setActivity({
     largeImageKey: finalPoster,
     largeImageText: finalTitle,
-    type: 3,
+    type: ActivityType.Watching,
     details: isSerie ? `📺 ${finalTitle}` : `🎬 ${finalTitle}`,
     state: isSerie
       ? seasonText && episodeText
@@ -174,7 +173,6 @@ function updateActivity(): void {
       : `Regarde ${finalTitle}`,
     buttons: [
       { label: 'Regarder', url: window.location.href },
-      { label: 'Discord', url: 'https://discord.gg/tropi' },
     ],
     startTimestamp: browsingTimestamp,
   })

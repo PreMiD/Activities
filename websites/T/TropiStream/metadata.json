@@ -7,14 +7,14 @@
   },
   "service": "TropiStream",
   "description": {
-    "en": "The best streaming site",
-    "fr": "Le meilleur site de streaming"
+    "en": "Streaming platform to watch movies and TV series on TropiStream.",
+    "fr": "Plateforme de streaming pour regarder des films et séries sur TropiStream."
   },
   "url": "tropistream.fr",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tropistream[.]fr[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/Vh6elpJ.png",
-  "thumbnail": "https://i.imgur.com/Vh6elpJ.png",
+  "thumbnail": "https://i.imgur.com/hYmIe5F.png",
   "color": "#000000",
   "category": "videos",
   "tags": [
