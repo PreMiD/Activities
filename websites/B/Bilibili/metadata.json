@@ -20,9 +20,7 @@
     }
   ],
   "service": "Bilibili",
-  "altnames": [
-    "哔哩哔哩"
-  ],
+  "altnames": ["哔哩哔哩"],
   "description": {
     "en": "Bilibili is a well-known video barrage website in China. Here is the most timely animation new fan, the best ACG atmosphere, the most creative Up master. Everyone can find a lot of joy here.",
     "nl": "Bilibili is een bekende videowerversite in China. Hier is de meest actuele animatie nieuwe fan, de beste ACG-sfeer, de meest creatieve Up-meester. Iedereen kan hier veel plezier beleven.",
@@ -30,20 +28,14 @@
     "zh": "Bilibili 是国内知名的视频弹幕网站，这里有最及时的动漫新番，最棒的ACG氛围，最有创意的 Up 主。大家可以在这里找到许多欢乐。",
     "zh-tw": "Bilibili 是大陸知名的具有彈幕功能的影片串流網站，這裡有最即時的動漫新番，最棒的 ACG 氛圍，最有創意的實況主。大家可以在這裡找到許多歡樂。"
   },
-  "url": [
-    "bilibili.com",
-    "biligame.com"
-  ],
+  "url": ["bilibili.com", "biligame.com"],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(bilibili|biligame)[.]com[/]",
-  "version": "3.0.0",
+  "version": "1.0.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bilibili/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bilibili/assets/thumbnail.jpg",
   "color": "#05acff",
   "category": "anime",
-  "tags": [
-    "video",
-    "anime"
-  ],
+  "tags": ["video", "anime"],
   "iframe": true,
   "iFrameRegExp": "live[.]bilibili[.]com",
   "settings": [
