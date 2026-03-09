@@ -18,7 +18,7 @@
     "streamwatch.online",
     "movies.samj.app"
   ],
-  "regExp": "^https?[:][/][/](?:(?:beta[.]|mirror[.])?pstream[.]mov|movies[.]levrx[.]de|streamwatch[.]online|movies[.]samj[.]app)[/]?",
+  "regExp": "^https?[:][/][/](?:movies[.]levrx[.]de|streamwatch[.]online|movies[.]samj[.]app)[/]?",
   "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
