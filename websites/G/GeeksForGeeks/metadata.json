@@ -5,7 +5,7 @@
     "id": "973156162793005117",
     "name": "beast_sk"
   },
-  "service": "GeeksforGeeks",
+  "service": "GeeksForGeeks",
   "description": {
     "en": "GeeksforGeeks is a computer science portal offering tutorials, coding problems, interview preparation, and courses on programming languages and data structures."
   },
@@ -19,7 +19,7 @@
   "tags": [
     "education",
     "technology",
-        "coding"
+    "coding"
   ],
   "settings": [
     {
