@@ -48,7 +48,7 @@ const presence = new Presence({
 
 const sessionPrefix = '/s/'
 const stateScriptId = 'bookjourney-premid-state'
-const logoUrl = 'https://raw.githubusercontent.com/quetrea/Activities/add-bookjourney-activity/websites/B/BookJourney/assets/logo-v2.png'
+const logoUrl = 'https://raw.githubusercontent.com/quetrea/Activities/821ae5755/websites/B/BookJourney/assets/logo-v2.png'
 const siteUrl = 'https://bookreading.space'
 
 function buildButtons(sessionId: string): PresenceData['buttons'] {
@@ -56,10 +56,6 @@ function buildButtons(sessionId: string): PresenceData['buttons'] {
     {
       label: 'Join Session',
       url: `${siteUrl}/s/${sessionId}`,
-    },
-    {
-      label: 'Open BookJourney',
-      url: siteUrl,
     },
   ]
 }
@@ -169,19 +165,19 @@ function buildActivity(state: PremidSessionState): PresenceData | null {
 
 presence.on('UpdateData', () => {
   if (!document.location.pathname.startsWith(sessionPrefix)) {
-    presence.setActivity()
+    presence.clearActivity()
     return
   }
 
   const state = readState()
   if (!state) {
-    presence.setActivity()
+    presence.clearActivity()
     return
   }
 
   const activity = buildActivity(state)
   if (!activity) {
-    presence.setActivity()
+    presence.clearActivity()
     return
   }
 
