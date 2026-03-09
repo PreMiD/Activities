@@ -11,10 +11,6 @@
     "description": "Displayed when the user is browsing existing gems.",
     "message": "Browsing existing Gems"
   },
-  "gemini.browseWebsite": {
-    "description": "Displayed when the user is browsing the Gemini website without doing any specific action.",
-    "message": "Browsing website"
-  },
   "gemini.conversationStats": {
     "description": "Displayed to show the number of words the user used and total words used, e.g., 'asked 3 times | 150 words'.",
     "message": "Asked {0} words | answered with {1} words."

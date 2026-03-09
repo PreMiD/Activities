@@ -13,7 +13,7 @@ presence.on('UpdateData', async () => {
     aiResponding: 'gemini.aiResponding',
     askQuestions: 'gemini.askQuestions',
     browseGems: 'gemini.browseGems',
-    browseWebsite: 'gemini.browseWebsite',
+    browsing: 'general.browsing',
     conversationStats: 'gemini.conversationStats',
     createGem: 'gemini.createGem',
     editGem: 'gemini.editGem',
@@ -138,7 +138,7 @@ presence.on('UpdateData', async () => {
       break
     }
     default:
-      presenceData.details = strings.browseWebsite
+      presenceData.details = strings.browsing
       break
   }
 
