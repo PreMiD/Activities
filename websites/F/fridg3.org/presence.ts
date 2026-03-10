@@ -12,7 +12,7 @@ interface PresenceData {
 }
 
 const presence = new Presence({
-  clientId: '1477950736951279666', // You must enter this yourself
+  clientId: '1477950736951279666',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000) // Show elapsed time
 
