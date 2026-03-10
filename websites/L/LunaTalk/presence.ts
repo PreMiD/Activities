@@ -6,7 +6,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000);
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://lunatalk.ai/static/logo.png',
+    largeImageKey: 'https://i.urusai.cc/9daCG.png',
     startTimestamp: browsingTimestamp,
   };
 
@@ -30,7 +30,7 @@ presence.on('UpdateData', async () => {
       const avatarUrl = avatarImg.getAttribute('src');
       if (avatarUrl) {
         presenceData.largeImageKey = avatarUrl;
-        presenceData.smallImageKey = 'https://lunatalk.ai/static/logo.png';
+        presenceData.smallImageKey = 'https://i.urusai.cc/9daCG.png';
         presenceData.smallImageText = 'LunaTalk';
       }
     }
@@ -41,4 +41,5 @@ presence.on('UpdateData', async () => {
   }
 
   presence.setActivity(presenceData);
+
 });
