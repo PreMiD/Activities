@@ -10,7 +10,11 @@
     "en": "Shows your current exploring activity on draw.web.tr.",
     "tr": "draw.web.tr üzerindeki gezinme aktivitenizi gösterir."
   },
-  "url": "draw.web.tr",
+  "url": [
+    "www.draw.web.tr",
+    "draw.web.tr",
+    "demo.draw.web.tr"
+  ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*draw[.]web[.]tr[/]",
   "version": "1.0.0",
   "logo": "https://draw.web.tr/logo.png",
