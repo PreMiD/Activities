@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1480793340931735552',
+  clientId: '1480793340931735552'
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -7,7 +7,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://i.urusai.cc/9daCG.png',
-    startTimestamp: browsingTimestamp,
+    startTimestamp: browsingTimestamp
   }
 
   const path = document.location.pathname
@@ -20,8 +20,7 @@ presence.on('UpdateData', async () => {
     if (roleNameElement && roleNameElement.textContent) {
       const roleName = roleNameElement.textContent.trim()
       presenceData.state = `Chatting with ${roleName}`
-    } else 
-    {
+    } else {
       presenceData.state = 'Chatting with AI'
     }
 
@@ -34,12 +33,10 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageText = 'LunaTalk'
       }
     }
-  } else 
-  {
+  } else {
     presenceData.details = 'Browsing the website'
     presenceData.state = 'Looking for a character on the home page'
   }
 
   presence.setActivity(presenceData)
 })
-
