@@ -15,11 +15,11 @@ presence.on('UpdateData', async () => {
   const sayfaBasligi = document.title || 'Ana Sayfa'
 
   const presenceData = {
-    details: 'Sitede geziniyor',           // Üst satırda yazacak sabit metin
-    state: sayfaBasligi,                   // Alt satırda yazacak sayfa adı
-    largeImageKey: ActivityAssets.Logo,    // Logonun adresi
-    largeImageText: 'draw.web.tr',         // Logonun üstüne gelince çıkacak yazı
-    startTimestamp: browsingTimestamp,     // Geçen süreyi gösteren sayaç
+    details: 'Sitede geziniyor',
+    state: sayfaBasligi,
+    largeImageKey: ActivityAssets.Logo,
+    largeImageText: 'draw.web.tr',
+    startTimestamp: browsingTimestamp,
     // smallImageKey: ActivityAssets.Logo,
     // smallImageText: 'draw.web.tr'
   }
