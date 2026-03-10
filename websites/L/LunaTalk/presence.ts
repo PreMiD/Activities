@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1480793340931735552'
+  clientId: '1480793340931735552',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -7,7 +7,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://i.urusai.cc/9daCG.png',
-    startTimestamp: browsingTimestamp
+    startTimestamp: browsingTimestamp,
   }
 
   const path = document.location.pathname
