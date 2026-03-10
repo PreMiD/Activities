@@ -76,7 +76,7 @@ function cleanSiteTitle(value: string | null | undefined): string {
 }
 
 function getDocumentHeadingText(): string {
-  const heading = document.querySelector('#content h1, h1') as HTMLElement | null
+  const heading = document.querySelector<HTMLElement>('#content h1, h1')
   return cleanText(heading?.textContent)
 }
 
@@ -85,7 +85,7 @@ function getJournalPostTitle(): string {
   if (articleTitle)
     return articleTitle
 
-  const metaOg = cleanText((document.querySelector('meta[property="og:title"]') as HTMLMetaElement | null)?.content)
+  const metaOg = cleanText(document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.content)
   if (metaOg)
     return cleanSiteTitle(metaOg)
 
@@ -95,7 +95,7 @@ function getJournalPostTitle(): string {
 function getNewsletterReleaseTitle(): string {
   const releaseRoot = document.getElementById('newsletter-release-html')
   if (releaseRoot) {
-    const scopedHeading = releaseRoot.querySelector('h1, h2, .newsletter-title, .title') as HTMLElement | null
+    const scopedHeading = releaseRoot.querySelector<HTMLElement>('h1, h2, .newsletter-title, .title')
     const scopedHeadingText = cleanText(scopedHeading?.textContent)
     if (scopedHeadingText)
       return scopedHeadingText
