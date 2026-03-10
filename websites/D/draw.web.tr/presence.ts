@@ -15,11 +15,17 @@ presence.on('UpdateData', async () => {
   const sayfaBasligi = document.title || 'Ana Sayfa'
 
   const presenceData = {
-    details: 'Sitede geziniyor',
+    details: 'Browsing the site',
     state: sayfaBasligi,
     largeImageKey: ActivityAssets.Logo,
     largeImageText: 'draw.web.tr',
     startTimestamp: browsingTimestamp,
+    buttons: [
+      {
+        label: 'Visit Website',
+        url: document.location.href,
+      },
+    ],
     // smallImageKey: ActivityAssets.Logo,
     // smallImageText: 'draw.web.tr'
   }

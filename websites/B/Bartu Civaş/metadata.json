@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "bahd",
+    "id": "654434860357648414"
+  },
+  "service": "Bartu Civaş",
+  "description": {
+    "en": "Rap artist and software developer Bartu Civas's website.",
+    "nl": "Website van rapartiest en softwareontwikkelaar Bartu Civas.",
+    "tr": "Rap sanatçısı, yazılımcı Bartu Civaş'ın websitesi."
+  },
+  "url": [
+    "www.bartucivas.com.tr",
+    "bartucivas.com.tr"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?bartucivas[.]com[.]tr[/]",
+  "version": "1.0.0",
+  "logo": "https://bartucivas.com.tr/img/bartu-civas.png",
+  "thumbnail": "https://bartucivas.com.tr/img/bartu-civas.png",
+  "color": "#f01c25",
+  "category": "other",
+  "tags": [
+    "rap-artist",
+    "sowtware-developer",
+    "bartucivas"
+  ]
+}
