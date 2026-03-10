@@ -4,6 +4,10 @@ const presence = new Presence({
 
 presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
+  const [privacy, cover] = await Promise.all([
+    presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('cover'),
+  ])
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/M/MyAnimeList/assets/logo.png',
   }
@@ -24,17 +28,37 @@ presence.on('UpdateData', async () => {
   ) {
     presenceData.details = 'Looking for manga'
   }
+  else if (pathname.startsWith('/reviews.php')) {
+    presenceData.details = 'Viewing Reviews'
+  }
+  else if (pathname.startsWith('/watch/episode')) {
+    presenceData.details = 'Viewing Episode Videos'
+  }
+  else if (pathname.startsWith('/recommendations.php')) {
+    presenceData.details = 'Viewing Recommendations'
+    const type = new URLSearchParams(document.location.search).get('t')
+    if (type) {
+      presenceData.state = `For ${type.charAt(0).toUpperCase() + type.slice(1)}`
+    }
+  }
+  else if (pathname.startsWith('/stacks')) {
+    presenceData.details = 'Browsing Interest Stacks'
+  }
   else if (pathname.startsWith('/forum')) {
     presenceData.details = 'Viewing the forums'
-    presenceData.state = document
-      .querySelector('meta[property=\'og:title\']')
-      ?.getAttribute('content')
+    if (!privacy) {
+      presenceData.state = document
+        .querySelector('meta[property=\'og:title\']')
+        ?.getAttribute('content')
+    }
   }
   else if (pathname.startsWith('/clubs.php')) {
     if (document.querySelectorAll('.normal_header')[1]) {
       presenceData.details = 'Viewing a club'
-      presenceData.state = document.querySelector('.h1')?.textContent
-      presenceData.buttons = [{ label: 'View Club', url: href }]
+      if (!privacy) {
+        presenceData.state = document.querySelector('.h1')?.textContent
+        presenceData.buttons = [{ label: 'View Club', url: href }]
+      }
     }
     else if (
       document.querySelector('.h1-title')?.textContent === 'Invitations'
@@ -68,8 +92,10 @@ presence.on('UpdateData', async () => {
     }
     else {
       presenceData.details = 'Viewing an article'
-      presenceData.state = document.querySelector('.title')?.textContent
-      presenceData.buttons = [{ label: 'Read Article', url: href }]
+      if (!privacy) {
+        presenceData.state = document.querySelector('.title')?.textContent
+        presenceData.buttons = [{ label: 'Read Article', url: href }]
+      }
     }
   }
   else if (pathname.startsWith('/people')) {
@@ -78,11 +104,13 @@ presence.on('UpdateData', async () => {
     }
     else {
       presenceData.details = 'Viewing a person'
-      presenceData.state = document
-        .querySelector('.title-name')
-        ?.textContent
-        ?.replace(/(<([^>]+)>)/g, '')
-      presenceData.buttons = [{ label: 'View Person', url: href }]
+      if (!privacy) {
+        presenceData.state = document
+          .querySelector('.title-name')
+          ?.textContent
+          ?.replace(/<[^>]+>/g, '')
+        presenceData.buttons = [{ label: 'View Person', url: href }]
+      }
     }
   }
   else if (pathname.startsWith('/character')) {
@@ -91,37 +119,60 @@ presence.on('UpdateData', async () => {
     }
     else {
       presenceData.details = 'Viewing a character'
-      presenceData.state = document
-        .querySelectorAll('.normal_header')[2]
-        ?.textContent
-        ?.replace(/(<([^>]+)>)/g, '')
-      presenceData.buttons = [{ label: 'View Character', url: href }]
+      if (!privacy) {
+        presenceData.state = document
+          .querySelectorAll('.normal_header')[2]
+          ?.textContent
+          ?.replace(/<[^>]+>/g, '')
+        presenceData.buttons = [{ label: 'View Character', url: href }]
+      }
     }
   }
   else if (pathname.startsWith('/profile')) {
     presenceData.details = 'Viewing a profile'
-    presenceData.state = pathname.split('/')[2]
-    presenceData.buttons = [{ label: 'View Profile', url: href }]
+    if (!privacy) {
+      presenceData.state = pathname.split('/')[2]
+      presenceData.buttons = [{ label: 'View Profile', url: href }]
+
+      if (cover) {
+        const userImage = document.querySelector<HTMLImageElement>('.user-image img')
+        const imgSrc = userImage?.src || userImage?.getAttribute('data-src')
+        if (imgSrc)
+          presenceData.largeImageKey = imgSrc
+      }
+    }
   }
   else if (pathname.startsWith('/animelist')) {
     presenceData.details = 'Viewing an anime list'
-    presenceData.state = pathname.split('/')[2]
-    presenceData.buttons = [{ label: 'View List', url: href }]
+    if (!privacy) {
+      presenceData.state = pathname.split('/')[2]
+      presenceData.buttons = [{ label: 'View List', url: href }]
+    }
   }
   else if (pathname.startsWith('/mangalist')) {
     presenceData.details = 'Viewing a manga list'
-    presenceData.state = pathname.split('/')[2]
-    presenceData.buttons = [{ label: 'View List', url: href }]
+    if (!privacy) {
+      presenceData.state = pathname.split('/')[2]
+      presenceData.buttons = [{ label: 'View List', url: href }]
+    }
   }
   else if (pathname.startsWith('/anime')) {
     // TODO: The if loop to check if the user is really on the page of an anime is currently always true for some reason which results in the presence going away when the user is for example in the anime directory
     if (document.querySelector('.js-anime-edit-info-button')) {
-      const englishTitle = document.querySelector('.title-english')?.textContent
       presenceData.details = 'Viewing an anime'
-      presenceData.state = `${
-        document.querySelector('.title-name')?.textContent
-      } ${englishTitle ? `| ${englishTitle}` : ''}`.trim()
-      presenceData.buttons = [{ label: 'View Anime', url: href }]
+      if (!privacy) {
+        const englishTitle = document.querySelector('.title-english')?.textContent
+        presenceData.state = `${
+          document.querySelector('.title-name')?.textContent
+        } ${englishTitle ? `| ${englishTitle}` : ''}`.trim()
+        presenceData.buttons = [{ label: 'View Anime', url: href }]
+
+        if (cover) {
+          const coverImg = document.querySelector<HTMLImageElement>('img[itemprop="image"]')?.src
+          if (coverImg)
+            presenceData.largeImageKey = coverImg
+        }
+      }
     }
     else {
       presenceData.details = 'Looking for anime'
@@ -130,12 +181,20 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/manga')) {
     // TODO: The if loop to check if the user is really on the page of an anime is currently always true for some reason which results in the presence going away when the user is for example in the anime directory
     if (document.querySelector('.js-manga-edit-info-button')) {
-      const englishTitle = document.querySelector('.title-english')?.textContent
       presenceData.details = 'Viewing a manga'
-      presenceData.state = `${
-        document.querySelector('.title-name')?.textContent
-      } ${englishTitle ? ` | ${englishTitle}` : ''}`.trim()
-      presenceData.buttons = [{ label: 'View Mange', url: href }]
+      if (!privacy) {
+        const englishTitle = document.querySelector('.title-english')?.textContent
+        presenceData.state = `${
+          document.querySelector('span[itemprop="name"]')?.firstChild?.textContent
+        } ${englishTitle ? ` | ${englishTitle}` : ''}`.trim()
+        presenceData.buttons = [{ label: 'View Manga', url: href }]
+
+        if (cover) {
+          const coverImg = document.querySelector<HTMLImageElement>('img[itemprop="image"]')?.src
+          if (coverImg)
+            presenceData.largeImageKey = coverImg
+        }
+      }
     }
     else {
       presenceData.details = 'Looking for manga'
