@@ -20,7 +20,6 @@ presence.on('UpdateData', async () => {
   }
   else if (path.startsWith('/home')) {
     presenceData.details = 'Ana Sayfa'
-    presenceData.state = 'İmamoğlu ve Muhtarlar'
   }
   else if (path.startsWith('/konu')) {
     presenceData.details = 'Bir yazı okuyor:'
