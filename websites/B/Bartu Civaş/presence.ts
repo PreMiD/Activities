@@ -7,7 +7,7 @@ presence.on('UpdateData', async () => {
     startTimestamp: Date.now(),
   }
   const baslik = document.querySelector('a.item-title')
-  const sayfaBasligi = document.title || "Ana Sayfa"
+  const sayfaBasligi = document.title || 'Ana Sayfa'
 
   if (path === '/') {
     presenceData.details = 'Ana Sayfa'
