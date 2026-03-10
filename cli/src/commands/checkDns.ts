@@ -52,6 +52,7 @@ export async function checkDns(
     fix?: boolean
   } = {},
 ) {
+
   let activities: ActivityMetadataAndFolder[] = []
 
   if (all) {
