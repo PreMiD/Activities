@@ -8,19 +8,18 @@
   "service": "LunaTalk",
   "description": {
     "en": "User Guide:https://sites.google.com/view/lunatalk/lunatalk/english-home",
-    "zh-TW": "新手教學：https://sites.google.com/view/lunatalk"
+    "zh": "新手教學：https://sites.google.com/view/lunatalk"
   },
   "url": "lunatalk.ai",
   "regExp": "^https?[:][/][/](www[.])?lunatalk[.](ai|pro)",
   "version": "1.0.0",
-  "logo": "https://lunatalk.ai/static/logo.png",
-  "thumbnail": "https://lunatalk.ai/static/logo.png",
+  "logo": "https://i.urusai.cc/9daCG.png",
+  "thumbnail": "https://i.urusai.cc/9daCG.png",
   "color": "#6B46C1",
   "category": "social",
   "tags": [
     "ai",
     "chat",
-    "lunatalk",
     "roleplay"
   ]
 }
