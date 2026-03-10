@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "318751511863754752",
+    "name": "ataliasloami"
+  },
+  "service": "GranCursos",
+  "description": {
+    "en": "Shows your study progress on Gran Cursos Online.",
+    "pt": "Mostra o seu progresso de estudos no Gran Cursos Online."
+  },
+  "url": "https://www.grancursosonline.com.br/",
+  "regExp": "^https?://([a-z0-9-]+\\.)?grancursosonline\\.com\\.br",
+  "version": "1.0.0",
+  "logo": "assets/logo.png",
+  "thumbnail": "assets/logo.png",
+  "color": "#004a99",
+  "category": "education",
+  "tags": [
+    "concurso",
+    "estudos",
+    "videoaula"
+  ]
+}
