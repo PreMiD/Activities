@@ -20,7 +20,8 @@ presence.on('UpdateData', async () => {
     if (roleNameElement && roleNameElement.textContent) {
       const roleName = roleNameElement.textContent.trim()
       presenceData.state = `Chatting with ${roleName}`
-    } else {
+    }
+    else {
       presenceData.state = 'Chatting with AI'
     }
 
@@ -33,7 +34,8 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageText = 'LunaTalk'
       }
     }
-  } else {
+  }
+  else {
     presenceData.details = 'Browsing the website'
     presenceData.state = 'Looking for a character on the home page'
   }
