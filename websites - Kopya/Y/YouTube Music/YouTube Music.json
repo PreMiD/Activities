@@ -1,0 +1,110 @@
+{
+  "youtubeMusic.browsingHome": {
+    "description": "Browsing the YouTube Music home page",
+    "message": "Browsing Home"
+  },
+  "youtubeMusic.browsingExplore": {
+    "description": "Browsing the YouTube Music explore page",
+    "message": "Browsing Explore"
+  },
+  "youtubeMusic.browsingLibrary": {
+    "description": "Browsing the user's library",
+    "message": "Browsing Library"
+  },
+  "youtubeMusic.browsingPlaylist": {
+    "description": "Browsing a playlist",
+    "message": "Browsing Playlist"
+  },
+  "youtubeMusic.browsingAlbum": {
+    "description": "Browsing an album",
+    "message": "Browsing Album"
+  },
+  "youtubeMusic.likedMusic": {
+    "description": "User's liked music playlist",
+    "message": "Liked Music"
+  },
+  "youtubeMusic.browsingChannel": {
+    "description": "Browsing an artist/channel page",
+    "message": "Browsing Channel"
+  },
+  "youtubeMusic.browsingNewReleases": {
+    "description": "Browsing new releases",
+    "message": "Browsing New Releases"
+  },
+  "youtubeMusic.browsingCharts": {
+    "description": "Browsing music charts",
+    "message": "Browsing Charts"
+  },
+  "youtubeMusic.browsingMoodsGenres": {
+    "description": "Browsing moods and genres",
+    "message": "Browsing Moods & Genres"
+  },
+  "youtubeMusic.searching": {
+    "description": "Searching for music",
+    "message": "Searching"
+  },
+  "youtubeMusic.listenAlong": {
+    "description": "Button to listen along",
+    "message": "Listen Along"
+  },
+  "youtubeMusic.viewAlbum": {
+    "description": "Button to view album",
+    "message": "View Album"
+  },
+  "youtubeMusic.viewArtist": {
+    "description": "Button to view artist",
+    "message": "View Artist"
+  },
+  "youtubeMusic.showPlaylist": {
+    "description": "Button to show playlist",
+    "message": "Show Playlist"
+  },
+  "youtubeMusic.viewSearch": {
+    "description": "Button to view search results",
+    "message": "View Search"
+  },
+  "youtubeMusic.showChannel": {
+    "description": "Button to show channel",
+    "message": "Show Channel"
+  },
+  "youtubeMusic.showNewReleases": {
+    "description": "Button to show new releases",
+    "message": "Show New Releases"
+  },
+  "youtubeMusic.showCharts": {
+    "description": "Button to show charts",
+    "message": "Show Charts"
+  },
+  "youtubeMusic.showMoodsGenres": {
+    "description": "Button to show moods and genres",
+    "message": "Show Moods & Genres"
+  },
+  "youtubeMusic.onLoop": {
+    "description": "Song is on repeat",
+    "message": "On loop"
+  },
+  "youtubeMusic.playlistOnLoop": {
+    "description": "Playlist is on repeat",
+    "message": "Playlist on loop"
+  },
+  "youtubeMusic.privacyMode": {
+    "description": "Privacy mode active, minimal info shown",
+    "message": "Browsing YouTube Music"
+  },
+  "youtubeMusic.listeningToSong": {
+    "description": "Privacy mode - listening to a song",
+    "message": "Listening to a song"
+  },
+  "youtubeMusic.browsingAPlaylist": {
+    "description": "Privacy mode - browsing a playlist",
+    "message": "Browsing a playlist"
+  },
+  "youtubeMusic.browsingAChannel": {
+    "description": "Privacy mode - browsing a channel",
+    "message": "Browsing a channel"
+  },
+  "youtubeMusic.searchingMusic": {
+    "description": "Privacy mode - searching for music",
+    "message": "Searching for music"
+  }
+}
