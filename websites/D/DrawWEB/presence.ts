@@ -21,8 +21,8 @@ presence.on('UpdateData', async () => {
       {
         label: 'Visit Website',
         url: document.location.href,
-      }
-    ]
+      },
+    ],
   }
 
   presence.setActivity(presenceData)
