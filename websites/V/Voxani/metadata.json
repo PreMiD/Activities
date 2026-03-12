@@ -18,7 +18,7 @@
   "url": "voxani.live",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*voxani[.]live[/]",
   "version": "1.0.1",
-  "logo": "https://i.ibb.co/fVbb6Rpf/voxani-logo.png",
+  "logo": "https://cdn.imgchest.com/files/768ba0ac0c7a.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Voxani/assets/thumbnail.png",
   "color": "#000000",
   "category": "anime",
@@ -27,14 +27,13 @@
     "video",
     "streaming"
   ],
+  "iframe": false,
   "settings": [
     {
       "id": "showButtons",
       "title": "Show Buttons",
       "icon": "fas fa-mouse-pointer",
-      "type": "boolean",
       "value": true
     }
-  ],
-  "iframe": false
+  ]
 }
