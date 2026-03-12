@@ -16,8 +16,8 @@
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*videovitrini[.]com[/](watch|shorts)",
   "version": "1.0.0",
-  "logo": "https://videovitrini.com/themes/videovitrini/img/icon.png",
-  "thumbnail": "https://videovitrini.com/themes/videovitrini/img/icon.png",
+  "logo": "https://i.ibb.co/hRQP8jH6/videovitrini.png",
+  "thumbnail": "https://i.ibb.co/hRQP8jH6/videovitrini.png",
   "color": "#FF0000",
   "category": "videos",
   "tags": [
