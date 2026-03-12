@@ -16,14 +16,13 @@ presence.on('UpdateData', async () => {
     details: 'Browsing the site',
     state: sayfaBasligi,
     largeImageKey: ActivityAssets.Logo,
-    largeImageText: 'draw.web.tr',
     startTimestamp: browsingTimestamp,
     buttons: [
       {
         label: 'Visit Website',
         url: document.location.href,
-      },
-    ],
+      }
+    ]
   }
 
   presence.setActivity(presenceData)
