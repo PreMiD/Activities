@@ -1,0 +1,42 @@
+{
+  "googleclassroom.assignment": {
+    "description": "Displayed when the user is viewing an assignment. Following this line, it will display the name of their class",
+    "message": "Viewing an assignment in:"
+  },
+  "googleclassroom.assignmentPrivate": {
+    "description": "Displayed when the user is viewing an assignment and their privacy mode is on (privacy mode is a setting within the presence to hide the class name which could be sensitive)",
+    "message": "Viewing an assignment"
+  },
+  "googleclassroom.calendar": {
+    "description": "Displayed when the user viewing their calendar",
+    "message": "Viewing their calendar"
+  },
+  "googleclassroom.class": {
+    "description": "Displayed when a user is viewing a class",
+    "message": "Viewing class"
+  },
+  "googleclassroom.classmembers": {
+    "description": "Displayed when a user is viewing class members. Following this line, it will display the name of their class",
+    "message": "Viewing class members of:"
+  },
+  "googleclassroom.classmembersPrivate": {
+    "description": "Displayed when the user is viewing their class' members and their privacy mode is on (privacy mode is a setting within the presence to hide the class name which could be sensitive)",
+    "message": "Viewing class members"
+  },
+  "googleclassroom.classwork": {
+    "description": "Displayed when a user is viewing classwork. Following this line, it will display the name of their class",
+    "message": "Viewing classwork of:"
+  },
+  "googleclassroom.classworkPrivate": {
+    "description": "Displayed when the user is viewing their classwork and their privacy mode is on (privacy mode is a setting within the presence to hide the class name which could be sensitive)",
+    "message": "Viewing classwork"
+  },
+  "googleclassroom.settings": {
+    "description": "Displayed when a user is viewing their Google Classroom settings",
+    "message": "Configuring settings"
+  },
+  "googleclassroom.todo": {
+    "description": "Displayed when the user is viewing their to-do list",
+    "message": "Viewing their to-do list"
+  }
+}

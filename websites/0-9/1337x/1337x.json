@@ -1,0 +1,78 @@
+{
+  "1337x.about": {
+    "description": "",
+    "message": "Reading about 1337x"
+  },
+  "1337x.animeTorrents": {
+    "description": "",
+    "message": "Viewing Anime Torrents"
+  },
+  "1337x.appTorrents": {
+    "description": "",
+    "message": "Viewing Apps Torrents"
+  },
+  "1337x.docTorrents": {
+    "description": "",
+    "message": "Viewing Documentaries Torrents"
+  },
+  "1337x.gamesTorrents": {
+    "description": "",
+    "message": "Viewing Games Torrents"
+  },
+  "1337x.latestEpisode": {
+    "description": "",
+    "message": "Viewing the latest episodes"
+  },
+  "1337x.movieLibrary": {
+    "description": "",
+    "message": "Viewing the movie library"
+  },
+  "1337x.moviesTorrents": {
+    "description": "",
+    "message": "Viewing Movies Torrents"
+  },
+  "1337x.musicTorrents": {
+    "description": "",
+    "message": "Viewing Music Torrents"
+  },
+  "1337x.otherTorrents": {
+    "description": "",
+    "message": "Viewing Other Torrents"
+  },
+  "1337x.rules": {
+    "description": "",
+    "message": "Reading the rules"
+  },
+  "1337x.seriesLibrary": {
+    "description": "",
+    "message": "Viewing the series library"
+  },
+  "1337x.top": {
+    "description": "",
+    "message": "Viewing the top 100"
+  },
+  "1337x.trending": {
+    "description": "",
+    "message": "Viewing what's trending"
+  },
+  "1337x.tvTorrents": {
+    "description": "",
+    "message": "Viewing TV Torrents"
+  },
+  "1337x.upload": {
+    "description": "",
+    "message": "Uploading something..."
+  },
+  "1337x.viewTorrent": {
+    "description": "",
+    "message": "Viewing torrent:"
+  },
+  "1337x.writing": {
+    "description": "",
+    "message": "Writing to 1337x"
+  },
+  "1337x.xxxTorrents": {
+    "description": "XXX as in NSFW",
+    "message": "Viewing XXX Torrents"
+  }
+}

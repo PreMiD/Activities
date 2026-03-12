@@ -1,0 +1,42 @@
+{
+  "juniperbot.commands": {
+    "description": "Page with the list of bot's commands",
+    "message": "Looking at the list of commands"
+  },
+  "juniperbot.cookies": {
+    "description": "Reading about the site's cookies",
+    "message": "Reading about the site's cookies"
+  },
+  "juniperbot.donate": {
+    "description": "Page with information about donation plans",
+    "message": "Reading information about the donation plans"
+  },
+  "juniperbot.leaderboard": {
+    "description": "Guild leaderboard page",
+    "message": "Watching server's leaderboard:"
+  },
+  "juniperbot.mainpage": {
+    "description": "Home page of the site",
+    "message": "Main page"
+  },
+  "juniperbot.serverdash": {
+    "description": "Server configuration page",
+    "message": "In dashboard"
+  },
+  "juniperbot.serverdashname": {
+    "description": "Guild name",
+    "message": "Guild: {0}"
+  },
+  "juniperbot.servers": {
+    "description": "Server selection page",
+    "message": "Selecting server"
+  },
+  "juniperbot.stats": {
+    "description": "Page with bot's statistics",
+    "message": "Looking at bot's statistics"
+  },
+  "juniperbot.usercard": {
+    "description": "Rating card customization page",
+    "message": "Customizing rank card"
+  }
+}

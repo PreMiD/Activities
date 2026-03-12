@@ -1,0 +1,186 @@
+{
+  "kahoot.buttonJoinGame": {
+    "description": "Used as the title for the button in Discord. {0} is the Game ID",
+    "message": "Join Game: {0}"
+  },
+  "kahoot.correctAnswer": {
+    "description": "Used when the user anwered correct on a question",
+    "message": "Correct Answer"
+  },
+  "kahoot.createHome": {
+    "description": "Used when the user is viewing the create.kahoot.it home page",
+    "message": "Viewing the home page"
+  },
+  "kahoot.discover": {
+    "description": "Used when the user is viewing the discover page",
+    "message": "Viewing the \"Discover\" page"
+  },
+  "kahoot.drumRoll": {
+    "description": "Used when a player is waiting to receive their final ranking",
+    "message": "Waiting for final ranking..."
+  },
+  "kahoot.editingCourse": {
+    "description": "Used when the user is editing a course. The name of the course will be displayed below.",
+    "message": "Editing course:"
+  },
+  "kahoot.editingKahoot": {
+    "description": "Used when the user is editing a Kahoot. The name of the Kahoot will be displayed below.",
+    "message": "Editing Kahoot:"
+  },
+  "kahoot.feedback": {
+    "description": "Used when a player is providing feedback about the quiz to the host",
+    "message": "Providing feedback"
+  },
+  "kahoot.firstPlace": {
+    "description": "Used to display who was first place in a game. {0} is a player name",
+    "message": "First Place: {0}"
+  },
+  "kahoot.gameCreate": {
+    "description": "Used when a Kahoot Host is creating a Game",
+    "message": "Creating a Game..."
+  },
+  "kahoot.gameOver": {
+    "description": "Used when the Game is finished",
+    "message": "Game Over"
+  },
+  "kahoot.gameStarting": {
+    "description": "Used when a Kahoot Game is starting",
+    "message": "Game Starting!"
+  },
+  "kahoot.gameSummary": {
+    "description": "Used when the host is viewing the summary of a game",
+    "message": "Looking at game summary"
+  },
+  "kahoot.incorrectAnswer": {
+    "description": "Used when the user answered incorrectly on a question",
+    "message": "Incorrect Answer"
+  },
+  "kahoot.joiningGame": {
+    "description": "Used when a user is joining a Kahoot Game.",
+    "message": "Joining Game..."
+  },
+  "kahoot.kahootDetails": {
+    "description": "Used when the user is viewing the details of a Kahoot. The name of the Kahoot will be displayed below.",
+    "message": "Viewing details of Kahoot:"
+  },
+  "kahoot.kahootProfile": {
+    "description": "Used when the user is viewing the profile of a Kahoot user or group. The name of the Kahoot user/group will be displayed below.",
+    "message": "Viewing Kahoot profile:"
+  },
+  "kahoot.liveCourse": {
+    "description": "Used when the user is conducting a live course. A live course is a collection of activities that users interact with in real time.",
+    "message": "Conducting a live course"
+  },
+  "kahoot.liveCourseActivity": {
+    "description": "Used to display the activity being conducted. {0} is the activity number and {1} is the activity name.",
+    "message": "Activity #{0}: {1}"
+  },
+  "kahoot.loadingPage": {
+    "description": "Used when a page is loading",
+    "message": "Loading Page..."
+  },
+  "kahoot.login": {
+    "description": "Used when a user is logging in",
+    "message": "Logging in"
+  },
+  "kahoot.myCourses": {
+    "description": "Used when the user is viewing their own courses. A course is a collection of Kahoots and other activities.",
+    "message": "Viewing their courses"
+  },
+  "kahoot.myKahoots": {
+    "description": "Used when the user is viewing their own kahoots",
+    "message": "Viewing their Kahoots"
+  },
+  "kahoot.ndPlace": {
+    "description": "Used in the context of 2nd place",
+    "message": "2nd place"
+  },
+  "kahoot.of": {
+    "description": "Used in the context of questions (i.e 1 of 3). {0} is the current question and {1} is the total amount of questions",
+    "message": "{0} of {1}"
+  },
+  "kahoot.onPodium": {
+    "description": "Used in the context of a player/team being withing the top 3",
+    "message": "On the Podium"
+  },
+  "kahoot.playing": {
+    "description": "Used as the first line when a user is answering a question",
+    "message": "Playing..."
+  },
+  "kahoot.points": {
+    "description": "Used to display how many points a user has. {0} is the number of points",
+    "message": "Points: {0}"
+  },
+  "kahoot.position": {
+    "description": "Used to display the position (ranking) of a player. For example, \"Position: 2\"",
+    "message": "Position: {0}"
+  },
+  "kahoot.previewingKahoot": {
+    "description": "Used when the user is previewing a Kahoot. The name of the Kahoot will be displayed below.",
+    "message": "Previewing Kahoot:"
+  },
+  "kahoot.questionLoading": {
+    "description": "Used when the next question is loading",
+    "message": "Next Question Loading..."
+  },
+  "kahoot.questionNumber": {
+    "description": "Used to show what question is currently showing (both host and user). {0} will be replaced with the string kahoot.of",
+    "message": "Question: {0}"
+  },
+  "kahoot.questionShowing": {
+    "description": "Used when the host is showing a question",
+    "message": "Showing Question:"
+  },
+  "kahoot.questionsCorrect": {
+    "description": "Used to display how many questions a user got correct",
+    "message": "Questions Correct: {0}"
+  },
+  "kahoot.rdPlace": {
+    "description": "Used in the context of 3rd place",
+    "message": "3rd place"
+  },
+  "kahoot.resultsQuestion": {
+    "description": "Used when a user is looking at the results of the question they just answered",
+    "message": "Looking at Results:"
+  },
+  "kahoot.searchKahoots": {
+    "description": "Used when the user is searching for Kahoots. The search query will be displayed below.",
+    "message": "Searching for Kahoots:"
+  },
+  "kahoot.slideShowing": {
+    "description": "Used when the host is showing a slide from a Kahoot with content instead of a quiz",
+    "message": "Showing Slide with Content"
+  },
+  "kahoot.slideViewing": {
+    "description": "Used when a user is looking at a slide with content in a Kahoot",
+    "message": "Looking at Slide with Content"
+  },
+  "kahoot.stPlace": {
+    "description": "Used in the context of 1st place",
+    "message": "1st place"
+  },
+  "kahoot.teamTalk": {
+    "description": "Used when a player is talking to their team during team talk time",
+    "message": "Discussing with team"
+  },
+  "kahoot.topX": {
+    "description": "Used in the context of Top 5",
+    "message": "Top {0}"
+  },
+  "kahoot.userReports": {
+    "description": "Used when the user is viewing their own game reports",
+    "message": "Viewing their game reports"
+  },
+  "kahoot.viewingCourse": {
+    "description": "Used when the user is viewing a course. The name of the course will be displayed below.",
+    "message": "Viewing course:"
+  },
+  "kahoot.waiting": {
+    "description": "Used when the user is waiting for a Kahoot Game to start",
+    "message": "Waiting to Start..."
+  },
+  "kahoot.waitingAnswer": {
+    "description": "Used when a player is waiting for the question results",
+    "message": "Waiting for results..."
+  }
+}

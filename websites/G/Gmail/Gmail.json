@@ -1,0 +1,122 @@
+{
+  "gmail.accountSetting": {
+    "description": "Displayed when the user is modifying their account's settings",
+    "message": "Configuring Account and Import settings"
+  },
+  "gmail.addonsSettings": {
+    "description": "Displayed when the user is modifying their add-ons",
+    "message": "Configuring Add-ons"
+  },
+  "gmail.advancedSettings": {
+    "description": "Displayed when the user is modifying their advanced settings",
+    "message": "Configuring Advanced settings"
+  },
+  "gmail.categoryForum": {
+    "description": "Displayed when viewing emails in the forums category.",
+    "message": "Viewing the Forums category"
+  },
+  "gmail.categoryPrimary": {
+    "description": "Displayed when viewing emails in the primary category.",
+    "message": "Viewing the Primary category"
+  },
+  "gmail.categoryPromotions": {
+    "description": "Displayed when viewing emails in the promotions category.",
+    "message": "Viewing the Promotions category"
+  },
+  "gmail.categorySocial": {
+    "description": "Displayed when viewing emails in the social category.",
+    "message": "Viewing the Social category"
+  },
+  "gmail.categoryUpdates": {
+    "description": "Displayed when viewing emails in the updates category.",
+    "message": "Viewing the Updates category"
+  },
+  "gmail.chatSettings": {
+    "description": "Displayed when the user is modifying their chat settings",
+    "message": "Configuring Chat and Meet settings"
+  },
+  "gmail.composingEmail": {
+    "description": "Displayed when the user is composing an email",
+    "message": "Composing an email"
+  },
+  "gmail.filterSettings": {
+    "description": "Displayed when the user is modifying their filters and blocked addresses",
+    "message": "Configuring Filters and Blocked Addresses"
+  },
+  "gmail.fwdAndPOPSettings": {
+    "description": "Displayed when the user is modifying their forwarding, POP and IMAP settings",
+    "message": "Configuring Forwarding and POP/IMAP settings"
+  },
+  "gmail.generalSettings": {
+    "description": "Displayed when the user is modifying their settings",
+    "message": "Configuring General settings"
+  },
+  "gmail.inLabel": {
+    "description": "Displayed when a user is browsing emails in a certain label. The name of the label will appear below.",
+    "message": "Viewing label"
+  },
+  "gmail.inboxSettings": {
+    "description": "Displayed when the user is modifying their inbox settings",
+    "message": "Configuring Inbox settings"
+  },
+  "gmail.labelSettings": {
+    "description": "Displayed when the user is modifying their labels",
+    "message": "Configuring Label settings"
+  },
+  "gmail.lookingForEmail": {
+    "description": "Displayed when the user is searching for an email",
+    "message": "Looking for an email"
+  },
+  "gmail.offlineSettings": {
+    "description": "Displayed when the user is modifying their offline settings",
+    "message": "Configuring Offline settings"
+  },
+  "gmail.themesSettings": {
+    "description": "Displayed when the user is modifying their theme in the settings",
+    "message": "Picking a theme"
+  },
+  "gmail.viewingAllEmails": {
+    "description": "Displayed when the user is viewing all their emails",
+    "message": "Viewing all emails"
+  },
+  "gmail.viewingChats": {
+    "description": "Displayed when the user is viewing their chats",
+    "message": "Viewing chats"
+  },
+  "gmail.viewingDrafts": {
+    "description": "Displayed when the user is viewing their drafts",
+    "message": "Viewing drafts"
+  },
+  "gmail.viewingEmail": {
+    "description": "Displayed when the user is viewing an email",
+    "message": "Viewing an email"
+  },
+  "gmail.viewingImportantEmails": {
+    "description": "Displayed when the user is viewing emails marked as important",
+    "message": "Viewing important emails"
+  },
+  "gmail.viewingScheduled": {
+    "description": "Displayed when the user is viewing their scheduled emails",
+    "message": "Viewing scheduled emails"
+  },
+  "gmail.viewingSentEmails": {
+    "description": "Displayed when the user is viewing the emails they have sent",
+    "message": "Viewing sent emails"
+  },
+  "gmail.viewingSnoozedEmails": {
+    "description": "Displayed when the user is viewing their snoozed emails",
+    "message": "Viewing snoozed emails"
+  },
+  "gmail.viewingSpam": {
+    "description": "Displayed when the user is viewing their spam",
+    "message": "Viewing spam emails"
+  },
+  "gmail.viewingStarredEmails": {
+    "description": "Displayed when the user is viewing emails marked with a star",
+    "message": "Viewing starred emails"
+  },
+  "gmail.viewingTrash": {
+    "description": "Displayed when the user is viewing their trash",
+    "message": "Viewing trash"
+  }
+}

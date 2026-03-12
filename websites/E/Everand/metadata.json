@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "308720929893253120",
+    "name": "appleflavored"
+  },
+  "service": "Everand",
+  "description": {
+    "en": "Enjoy millions of audiobooks, ebooks and more."
+  },
+  "url": "www.everand.com",
+  "regExp": "^https?[:][/][/](www[.])?everand[.]com[/]",
+  "version": "1.1.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Everand/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Everand/assets/thumbnail.png",
+  "color": "#f2fd53",
+  "category": "other",
+  "tags": [
+    "read",
+    "novels",
+    "audiobooks",
+    "ebooks",
+    "podcasts"
+  ],
+  "settings": [
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "description": "Hide details about the book, audiobook, or podcast you're currently reading or listening to.",
+      "value": false
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover Art",
+      "description": "Show the cover art of the book, audiobook, or podcast you're currently reading or listening to.",
+      "value": true
+    }
+  ]
+}

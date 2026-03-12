@@ -1,0 +1,18 @@
+{
+  "u-next.seriesDisplay.full": {
+    "description": "Shown when watching a series with 'watching seriesname' status, example: Season 6, Episode 2",
+    "message": "Episode {0}"
+  },
+  "u-next.seriesDisplay.short": {
+    "description": "Shown when watching a series with 'watching U-NEXT' status, example: S6 E2 - Episode title",
+    "message": "E{0} - {1}"
+  },
+  "u-next.movieDisplay": {
+    "description": "Shown when watching a movie, example: 2024 • 120 minutes",
+    "message": "{0} • {1} minutes"
+  },
+  "u-next.liveDisplay": {
+    "description": "Shown when watching a livestream, example: 2024 • 120 minutes",
+    "message": "{0} • {1} minutes"
+  }
+}

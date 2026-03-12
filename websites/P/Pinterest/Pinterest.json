@@ -1,0 +1,18 @@
+{
+  "pinterest.board": {
+    "description": "",
+    "message": "Viewing board:"
+  },
+  "pinterest.follow": {
+    "description": "",
+    "message": "Viewing their following"
+  },
+  "pinterest.home": {
+    "description": "",
+    "message": "Editing their homepage"
+  },
+  "pinterest.pin": {
+    "description": "",
+    "message": "Viewing a pin"
+  }
+}

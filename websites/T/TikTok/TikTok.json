@@ -1,0 +1,26 @@
+{
+  "tiktok.browseThrough": {
+    "description": "",
+    "message": "Browsing through TikTok"
+  },
+  "tiktok.buttonViewTikTok": {
+    "description": "Used as the title for the button in Discord.",
+    "message": "View TikTok"
+  },
+  "tiktok.exploringWithTag": {
+    "description": "",
+    "message": "Exploring TikToks with tags:"
+  },
+  "tiktok.following": {
+    "description": "{0} will be replaced with a new line, but if you leave it out, the string will be in just 1 line.",
+    "message": "Viewing their{0}following page"
+  },
+  "tiktok.forYou": {
+    "description": "{0} will be replaced with a new line, but if you leave it out, the string will be in just 1 line.",
+    "message": "Viewing their{0}For You page"
+  },
+  "tiktok.viewing": {
+    "description": "Name of the user will be after the \":\"",
+    "message": "Viewing a TikTok of:"
+  }
+}

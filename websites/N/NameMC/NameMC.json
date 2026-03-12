@@ -1,0 +1,74 @@
+{
+  "namemc.buttonViewServer": {
+    "description": "Used as the title for the button in Discord.",
+    "message": "View Server"
+  },
+  "namemc.capes": {
+    "description": "",
+    "message": "Viewing Capes"
+  },
+  "namemc.claim": {
+    "description": "",
+    "message": "Viewing How To Claim Your Profile"
+  },
+  "namemc.profileEdit": {
+    "description": "{0} will be replaced with a new line, but if you leave it out, the string will be in just 1 line.",
+    "message": "Editing their{0}profile info"
+  },
+  "namemc.servers": {
+    "description": "",
+    "message": "Viewing Servers"
+  },
+  "namemc.skinsNew": {
+    "description": "Skins is how you appear in the game.",
+    "message": "Viewing New Skins"
+  },
+  "namemc.skinsRandom": {
+    "description": "Skins is how you appear in the game.",
+    "message": "Viewing Random Skins"
+  },
+  "namemc.skinsTag": {
+    "description": "Skins is how you appear in the game. {0} will be replaced with the name of the tag.",
+    "message": "Viewing Skins with {0} Tag"
+  },
+  "namemc.skinsTagged": {
+    "description": "Skins is how you appear in the game.",
+    "message": "Viewing Tagged Skins"
+  },
+  "namemc.skinsTop": {
+    "description": "Skins is how you appear in the game.",
+    "message": "Viewing Top Skins"
+  },
+  "namemc.skinsTrending": {
+    "description": "Skins is how you appear in the game.",
+    "message": "Viewing Trending Skins"
+  },
+  "namemc.upcomingNames": {
+    "description": "Names are Minecraft Usernames. Upcoming as in they are getting unlocked.",
+    "message": "Viewing Upcoming Names"
+  },
+  "namemc.viewCape": {
+    "description": "",
+    "message": "Viewing Cape:"
+  },
+  "namemc.viewEmojis": {
+    "description": "You can have an emoji next to your name, you select it here.",
+    "message": "Viewing their profile emojis"
+  },
+  "namemc.viewFriends": {
+    "description": "",
+    "message": "Viewing their friends"
+  },
+  "namemc.viewServer": {
+    "description": "",
+    "message": "Viewing Server:"
+  },
+  "namemc.viewSkin": {
+    "description": "Skins is how you appear in the game.",
+    "message": "Viewing a Skin"
+  },
+  "namemc.viewSkins": {
+    "description": "",
+    "message": "Viewing their skins"
+  }
+}

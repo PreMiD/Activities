@@ -1,0 +1,66 @@
+{
+  "aliexpress.address": {
+    "description": "",
+    "message": "Viewing their address"
+  },
+  "aliexpress.coupons": {
+    "description": "",
+    "message": "Viewing their coupons"
+  },
+  "aliexpress.deletedOrders": {
+    "description": "Part 2 of \"Viewing their\"",
+    "message": "deleted orders"
+  },
+  "aliexpress.feedback": {
+    "description": "",
+    "message": "AliExpress Feedback"
+  },
+  "aliexpress.helpCenter": {
+    "description": "",
+    "message": "AliExpress Help Center"
+  },
+  "aliexpress.message": {
+    "description": "Meaning Direct messages",
+    "message": "Message Center"
+  },
+  "aliexpress.orders": {
+    "description": "",
+    "message": "Viewing their orders"
+  },
+  "aliexpress.recentlyViewProducts1": {
+    "description": "Part 1 of 2",
+    "message": "Viewing their recently"
+  },
+  "aliexpress.recentlyViewProducts2": {
+    "description": "Part 2 of 2",
+    "message": "viewed products"
+  },
+  "aliexpress.refunds": {
+    "description": "Part 2 of \"Viewing their\"",
+    "message": "Refunds & Disputes"
+  },
+  "aliexpress.sale": {
+    "description": "",
+    "message": "Browsing through the sale"
+  },
+  "aliexpress.sellCenter": {
+    "description": "",
+    "message": "AliExpress Sell Center"
+  },
+  "aliexpress.store": {
+    "description": "",
+    "message": "Viewing store:"
+  },
+  "aliexpress.theirAli": {
+    "description": "",
+    "message": "Viewing their AliExpress"
+  },
+  "aliexpress.trade": {
+    "description": "",
+    "message": "AliExpress Trade Center"
+  },
+  "aliexpress.viewTheir": {
+    "description": "Part 1 ",
+    "message": "Viewing their"
+  }
+}

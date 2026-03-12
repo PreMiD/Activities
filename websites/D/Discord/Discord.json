@@ -1,0 +1,186 @@
+{
+  "discord.blog": {
+    "description": "",
+    "message": "Discord Blog"
+  },
+  "discord.branding": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the Branding page"
+  },
+  "discord.browseThrough": {
+    "description": "The first part of the next 17 strings",
+    "message": "Browsing through"
+  },
+  "discord.buttonInvite": {
+    "description": "Used as the title for the button in Discord.",
+    "message": "View Invite Link"
+  },
+  "discord.channelReading": {
+    "description": "{0} will be replaced with an enter (splitting the text to 2 rows), your translation must have this! {1} will be replaced with the name of the channel. {2} will be replaced with the name of the server.",
+    "message": "Reading in channel:{0}{1} (Server: {2})"
+  },
+  "discord.channelTyping": {
+    "description": "{0} will be replaced with an enter (splitting the text to 2 rows), your translation must have this! {1} will be replaced with the name of the channel. {2} will be replaced with the name of the server.",
+    "message": "Typing in channel:{0}{1} (Server: {2})"
+  },
+  "discord.college": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the College page"
+  },
+  "discord.company": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the About page"
+  },
+  "discord.devs.appsBrowse": {
+    "description": "",
+    "message": "Browsing through their apps"
+  },
+  "discord.devs.appsEdit": {
+    "description": "{0} will be replaced with the name of the app.",
+    "message": "Editing app: {0}"
+  },
+  "discord.devs.docs": {
+    "description": "",
+    "message": "Reading the documentation"
+  },
+  "discord.devs.portal": {
+    "description": "",
+    "message": "Developer Portal"
+  },
+  "discord.devs.serversBrowse": {
+    "description": "",
+    "message": "Browsing through their servers"
+  },
+  "discord.devs.serversEdit": {
+    "description": "{0} will be replaced with the name of the server.",
+    "message": "Viewing insights of server: {0}"
+  },
+  "discord.devs.teamsBrowse": {
+    "description": "",
+    "message": "Browsing through their teams"
+  },
+  "discord.devs.teamsEdit": {
+    "description": "{0} will be replaced with the name of the team.",
+    "message": "Editing team: {0}"
+  },
+  "discord.dmGroupReading": {
+    "description": "{0} will be replaced with an enter (splitting the text to 2 rows), your translation must have this! {1} will be replaced with the name of the group.",
+    "message": "Reading in group DM:{0}{1}"
+  },
+  "discord.dmGroupTyping": {
+    "description": "{0} will be replaced with an enter (splitting the text to 2 rows), your translation must have this! {1} will be replaced with the name of the group.",
+    "message": "Typing in group DM:{0}{1}"
+  },
+  "discord.dmReading": {
+    "description": "{0} will be replaced with an enter (splitting the text to 2 rows), your translation must have this! {1} will be replaced with the name of the user.",
+    "message": "Reading DMs from:{0}{1}"
+  },
+  "discord.dmTyping": {
+    "description": "{0} will be replaced with an enter (splitting the text to 2 rows), your translation must have this! {1} will be replaced with the name of the user.",
+    "message": "Typing in DMs to:{0}{1}"
+  },
+  "discord.download": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the Downloads page"
+  },
+  "discord.friends": {
+    "description": "",
+    "message": "Viewing their friends..."
+  },
+  "discord.inspiration": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the Inspiration page"
+  },
+  "discord.invite": {
+    "description": "{0} will be replaced with an enter (splitting the text to 2 rows), your translation must have this! {1} will be replaced with the id of the invite. {2} will be replaced with the name of the server.",
+    "message": "Viewing invite link:{0}{1} (Server: {2})"
+  },
+  "discord.inviteServer": {
+    "description": "{0} will be replaced with an enter (splitting the text to 2 rows), your translation must have this! {1} will be replaced with the name of the server.",
+    "message": "Viewing invite link{0}of server: {1}"
+  },
+  "discord.jobs": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the Jobs page"
+  },
+  "discord.merch": {
+    "description": "",
+    "message": "Discord Merch"
+  },
+  "discord.merch.collection": {
+    "description": "",
+    "message": "Viewing collection:"
+  },
+  "discord.moderation": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the Moderation page"
+  },
+  "discord.newsroom": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the Newsroom page"
+  },
+  "discord.nitro": {
+    "description": "",
+    "message": "Reading about Nitro..."
+  },
+  "discord.opensource": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the Open Source page"
+  },
+  "discord.partner": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the Partner page"
+  },
+  "discord.policies": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the policies"
+  },
+  "discord.rpc": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the Rich Presence page"
+  },
+  "discord.safety": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the Safety Center"
+  },
+  "discord.security": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the Security page"
+  },
+  "discord.serverSettings": {
+    "description": "{0} will be replaced with an enter (splitting the text to 2 rows), your translation must have this! {1} will be replaced with the name of the server.",
+    "message": "Viewing the settings{0}of server: {1}"
+  },
+  "discord.settings": {
+    "description": "",
+    "message": "Viewing their settings..."
+  },
+  "discord.status": {
+    "description": "",
+    "message": "Discord Status"
+  },
+  "discord.streamkit": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the StreamKit page"
+  },
+  "discord.support": {
+    "description": "",
+    "message": "Help Center"
+  },
+  "discord.verification": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the Verification page"
+  },
+  "discord.voiceConnectedTo": {
+    "description": "{0} will be replaced with an enter (splitting the text to 2 rows), your translation must have this! {1} will be replaced with the name of the channel. {2} will be replaced with the name of the server.",
+    "message": "Voice connected to:{0}{1} (Server: {2})"
+  },
+  "discord.voiceConnectedWith": {
+    "description": "{0} will be replaced with an enter (splitting the text to 2 rows), your translation must have this! {1} will be replaced with the name of the user or group.",
+    "message": "Voice connected with:{0}{1}"
+  },
+  "discord.why": {
+    "description": "Second part of the \"Browsing through\" string",
+    "message": "the \"Why Discord?\" page"
+  }
+}

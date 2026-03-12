@@ -1,0 +1,50 @@
+{
+  "everand.browsingBooks": {
+    "description": "",
+    "message": "Browsing books"
+  },
+  "everand.browsingAudiobooks": {
+    "description": "",
+    "message": "Browsing audiobooks"
+  },
+  "everand.browsingPodcasts": {
+    "description": "",
+    "message": "Browsing podcasts"
+  },
+  "everand.listeningToAudiobook": {
+    "description": "Listening to an audiobook on private mode",
+    "message": "Listening to an audiobook"
+  },
+  "everand.listeningToPodcast": {
+    "description": "Listening to a podcast on private mode",
+    "message": "Listening to a podcast"
+  },
+  "everand.readingBook": {
+    "description": "Reading a book on private mode",
+    "message": "Reading a book"
+  },
+  "everand.reading": {
+    "description": "For the title of the book",
+    "message": "Reading:"
+  },
+  "everand.by": {
+    "description": "For the author of the book, podcast, or audiobook",
+    "message": "By:"
+  },
+  "everand.unknownAudiobook": {
+    "description": "When the title of the audiobook is unknown",
+    "message": "Unknown audiobook"
+  },
+  "everand.unknownPodcast": {
+    "description": "When the title of the podcast is unknown",
+    "message": "Unknown podcast"
+  },
+  "everand.unknownBook": {
+    "description": "When the title of the book is unknown",
+    "message": "Unknown book"
+  },
+  "everand.unknownAuthor": {
+    "description": "When the author of the book, podcast, or audiobook is unknown",
+    "message": "Unknown author"
+  }
+}

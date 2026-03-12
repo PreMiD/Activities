@@ -1,0 +1,74 @@
+{
+  "amazon.address": {
+    "description": "",
+    "message": "Viewing their addresses"
+  },
+  "amazon.adprefs": {
+    "description": "",
+    "message": "Viewing their adprefs"
+  },
+  "amazon.balance": {
+    "description": "",
+    "message": "Viewing their balance"
+  },
+  "amazon.cart": {
+    "description": "Part 2 of the string: \"Viewing their\"",
+    "message": "shopping cart"
+  },
+  "amazon.catergoriesAll": {
+    "description": "",
+    "message": "Viewing all categories"
+  },
+  "amazon.giftcards": {
+    "description": "Part 2 of the string: \"Viewing their\"",
+    "message": "giftcards"
+  },
+  "amazon.history": {
+    "description": "",
+    "message": "Viewing their history"
+  },
+  "amazon.orderDetails": {
+    "description": "Part 2 of the string: \"Viewing their\"",
+    "message": "order details"
+  },
+  "amazon.orderHistory": {
+    "description": "Part 2 of the string: \"Viewing their\"",
+    "message": "order history"
+  },
+  "amazon.payment": {
+    "description": "",
+    "message": "Viewing payment methods"
+  },
+  "amazon.pets": {
+    "description": "",
+    "message": "Viewing their pets"
+  },
+  "amazon.prime": {
+    "description": "",
+    "message": "Viewing Amazon Prime"
+  },
+  "amazon.primeVid": {
+    "description": "",
+    "message": "Viewing Prime Video:"
+  },
+  "amazon.recommended": {
+    "description": "",
+    "message": "Viewing recommended"
+  },
+  "amazon.store": {
+    "description": "",
+    "message": "Viewing store:"
+  },
+  "amazon.subscriptions": {
+    "description": "",
+    "message": "Viewing their subscriptions"
+  },
+  "amazon.viewTheir": {
+    "description": "Part 1 of the next 5 strings",
+    "message": "Viewing their"
+  },
+  "amazon.wishlist": {
+    "description": "Part 2 of the string: \"Viewing their\"",
+    "message": "wishlist"
+  }
+}

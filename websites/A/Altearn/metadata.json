@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "fantomitechno 🦊",
+    "id": "563749920683720709"
+  },
+  "service": "Altearn",
+  "description": {
+    "en": "Altearn is a non-profit association which aims to develop and implement solutions and events for educational, scientific or awareness purposes.",
+    "fr": "Altearn est une association à but non-lucratif qui vise à déveloper et mettre en place des solutions et événements dans un but pédagogique, scientifique ou de sensibilisation.",
+    "ga": "Is cumann neamhbhrabúis é Altearn a bhfuil sé mar aidhm aige réitigh agus imeachtaí a fhorbairt agus a chur i bhfeidhm chun críocha oideachais, eolaíochta nó feasachta.",
+    "nl": "Altearn is een vereniging zonder winstoogmerk die tot doel heeft oplossingen en evenementen te ontwikkelen en te implementeren voor educatieve, wetenschappelijke of bewustmakingsdoeleinden.",
+    "vi": "Altearn là hiệp hội phi lợi nhuận nhằm mục đích phát triển và áp dụng các giải pháp và sự kiện dành cho giáo dục, khoa học và nhận thức."
+  },
+  "url": "altearn.xyz",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*altearn[.]xyz[/]",
+  "version": "1.2.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Altearn/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Altearn/assets/thumbnail.png",
+  "color": "#888888",
+  "category": "other",
+  "tags": [
+    "community"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "button",
+      "if": {
+        "privacy": false
+      },
+      "title": "Add Button",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}
