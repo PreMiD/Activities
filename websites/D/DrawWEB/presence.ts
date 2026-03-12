@@ -14,7 +14,7 @@ presence.on('UpdateData', async () => {
   // Sayfa başlığını çeker. Eğer boşsa varsayılan bir isim atar.
   const sayfaBasligi = document.title || 'Ana Sayfa'
 
-  const presenceData = {
+  const presenceData: PresenceData = {
     details: 'Browsing the site',
     state: sayfaBasligi,
     largeImageKey: ActivityAssets.Logo,
@@ -26,10 +26,7 @@ presence.on('UpdateData', async () => {
         url: document.location.href,
       },
     ],
-    // smallImageKey: ActivityAssets.Logo,
-    // smallImageText: 'draw.web.tr'
   }
 
-  // TypeScript'in (TS2322) tip hatasına takılmasını engellemek için "as any" ile gönderiyoruz.
-  presence.setActivity(presenceData as any)
+  presence.setActivity(presenceData)
 })

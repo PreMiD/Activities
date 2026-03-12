@@ -1,0 +1,22 @@
+{
+  "animepahe.latestRelease": {
+    "description": "Recently released content, can be new or old anime, its just new to the site",
+    "message": "Latest Releases"
+  },
+  "animepahe.season": {
+    "description": "TV show/series season eg. Season 5 of The Flash",
+    "message": "Season"
+  },
+  "animepahe.special": {
+    "description": "A type of related content; a special release episode not included in the original release often with differing style",
+    "message": "Special"
+  },
+  "animepahe.timeSeason": {
+    "description": "Time Season eg. The season is now Winter",
+    "message": "Season"
+  },
+  "animepahe.view": {
+    "description": "{0} will be replaced by \"Pahe\" or \"AniList\"",
+    "message": "View on {0}"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "watch.lonelil.com.loading": {
+    "description": "Used when a page is loading",
+    "message": "Loading..."
+  }
+}

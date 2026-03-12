@@ -1,0 +1,26 @@
+{
+  "twitcasting.viewTheir": {
+    "description": "Part 1 of the next string",
+    "message": "Viewing their"
+  },
+  "twitcasting.followList": {
+    "description": "Part 2 of the string: \"Viewing their\"",
+    "message": "Followers List"
+  },
+  "twitcasting.dashboardManage": {
+    "description": "",
+    "message": "Managing their stream..."
+  },
+  "twitcasting.subs": {
+    "description": "",
+    "message": "Viewing their subscriptions..."
+  },
+  "twitcasting.browsingVideos": {
+    "description": "Second part of this string = \"of channel:\" (that part will be displayed below it in discord)",
+    "message": "Browsing through videos"
+  },
+  "twitcasting.ofChannel": {
+    "description": "Second part of previous string",
+    "message": "of channel:"
+  }
+}
