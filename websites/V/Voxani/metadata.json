@@ -5,6 +5,12 @@
     "id": "432215088686956565",
     "name": "_xdoritos"
   },
+  "contributors": [
+    {
+      "id": "1372994444589150209",
+      "name": "Sinhoney"
+    }
+  ],
   "service": "Voxani",
   "description": {
     "en": "Voxani is a streaming platform for anime and other video content."
@@ -12,7 +18,7 @@
   "url": "voxani.live",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*voxani[.]live[/]",
   "version": "1.0.1",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Voxani/assets/logo.png",
+  "logo": "https://i.ibb.co/fVbb6Rpf/voxani-logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Voxani/assets/thumbnail.png",
   "color": "#000000",
   "category": "anime",
@@ -21,6 +27,14 @@
     "video",
     "streaming"
   ],
-  "iframe": true,
-  "iFrameRegExp": "(^|\\.)?(megaplay\\.buzz|rapid-cloud\\.co|vidwish\\.live)"
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-mouse-pointer",
+      "type": "boolean",
+      "value": true
+    }
+  ],
+  "iframe": false
 }
