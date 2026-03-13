@@ -73,9 +73,6 @@ function setNavigationActivity(pathname: string): void {
     type: ActivityType.Watching,
     details,
     state,
-    buttons: [
-      { label: 'Visiter le site', url: window.location.origin || 'https://tropistream.fr' },
-    ],
     startTimestamp: browsingTimestamp,
   })
 }
@@ -128,17 +125,45 @@ function updateActivity(): void {
 
   const activeEp = document.querySelector<HTMLElement>('.queue-item.active')
 
-  document.querySelectorAll<HTMLElement>('.season-header').forEach((header) => {
-    const potential = Array.from(header.querySelectorAll('div'))
-      .find(d => d.textContent?.includes('Saison'))
+  const urlParams = new URLSearchParams(window.location.search)
+  const sParam = urlParams.get('s')
+  if (sParam) {
+    seasonText = `Saison ${sParam}`
+  }
 
-    if (potential?.textContent) {
-      const match = potential.textContent.trim().match(/Saison\s*\d+/i)
-      if (match) {
-        seasonText = match[0]
+  if (activeEp) {
+    let prev = activeEp.previousElementSibling
+    while (prev) {
+      if (prev.classList.contains('season-header')) {
+        const potential = Array.from(prev.querySelectorAll('div'))
+          .find(d => d.textContent?.includes('Saison'))
+
+        if (potential?.textContent) {
+          const match = potential.textContent.trim().match(/Saison\s*\d+/i)
+          if (match) {
+            seasonText = match[0]
+            break
+          }
+        }
+      }
+      prev = prev.previousElementSibling
+    }
+  }
+
+  if (!seasonText) {
+    const firstHeader = document.querySelector<HTMLElement>('.season-header')
+    if (firstHeader) {
+      const potential = Array.from(firstHeader.querySelectorAll('div'))
+        .find(d => d.textContent?.includes('Saison'))
+
+      if (potential?.textContent) {
+        const match = potential.textContent.trim().match(/Saison\s*\d+/i)
+        if (match) {
+          seasonText = match[0]
+        }
       }
     }
-  })
+  }
 
   if (activeEp) {
     const spans = activeEp.querySelectorAll<HTMLSpanElement>('span')
@@ -158,8 +183,8 @@ function updateActivity(): void {
 
   const isSerie
     = isSerieText(seasonText)
-      || isSerieText(episodeText)
-      || !!document.querySelector('.fa-tv, .queue-item, .series-queue')
+    || isSerieText(episodeText)
+    || !!document.querySelector('.fa-tv, .queue-item, .series-queue')
 
   presence.setActivity({
     largeImageKey: finalPoster,
@@ -180,20 +205,20 @@ function updateActivity(): void {
 
 window.addEventListener('tropistream:navigate', handleRouteChange)
 
-let lastPathname: string = window.location.pathname.toLowerCase()
+let lastUrl: string = window.location.href.toLowerCase()
 let checkInterval: ReturnType<typeof setInterval> | null = null
 
 setInterval(() => {
-  const currentPathname = window.location.pathname.toLowerCase()
-  if (currentPathname !== lastPathname) {
-    lastPathname = currentPathname
+  const currentUrl = window.location.href.toLowerCase()
+  if (currentUrl !== lastUrl) {
+    lastUrl = currentUrl
     handleRouteChange()
   }
 }, 500)
 
 function handleRouteChange(): void {
   const pathname = window.location.pathname.toLowerCase()
-  lastPathname = pathname
+  lastUrl = window.location.href.toLowerCase()
 
   if (checkInterval) {
     clearInterval(checkInterval)
@@ -215,8 +240,8 @@ function handleRouteChange(): void {
 
       const hasTitleInfo
         = titleEl
-          && titleEl.textContent
-          && titleEl.textContent.trim().length > 2
+        && titleEl.textContent
+        && titleEl.textContent.trim().length > 2
 
       if (hasTitleInfo || attempts >= 10) {
         if (checkInterval) {
@@ -230,6 +255,6 @@ function handleRouteChange(): void {
 }
 
 presence.on('UpdateData', () => {
-  lastPathname = window.location.pathname.toLowerCase()
+  lastUrl = window.location.href.toLowerCase()
   updateActivity()
 })

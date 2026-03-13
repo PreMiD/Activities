@@ -18,6 +18,7 @@
     "@types/node": "^25.2.3",
     "@vitest/coverage-v8": "^4.0.18",
     "@vitest/ui": "^4.0.18",
+    "baseline-browser-mapping": "^2.10.0",
     "eslint": "^9.39.2",
     "eslint-plugin-format": "^1.4.0",
     "eslint-plugin-json-schema-validator": "^6.0.3",
