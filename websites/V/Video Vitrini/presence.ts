@@ -41,7 +41,7 @@ presence.on('UpdateData', async () => {
   // Sayfa türüne göre buton yazısını belirliyoruz
   const butonMetni = isShorts ? 'Kısa Videoyu İzle' : 'Videoyu İzle'
 
-  const presenceData: any = {
+  const presenceData: PresenceData = {
     details: sayfaBasligi,
     state: 'Sitede geziniyor',
     largeImageKey: 'https://i.ibb.co/hRQP8jH6/videovitrini.png',
