@@ -3,12 +3,12 @@
   "apiVersion": 1,
   "author": {
     "id": "654434860357648414",
-    "name": "bahd"
+    "name": "BAHD"
   },
   "service": "DrawWEB",
   "description": {
-    "en": "Shows your current exploring activity on draw.web.tr.",
-    "tr": "draw.web.tr üzerindeki gezinme aktivitenizi gösterir."
+    "en": "A budget-friendly, next-generation website script designed for Minecraft servers.",
+    "tr": "Minecraft sunucuları için hazırlanmış bütçe dostu yeni nesil site scripti."
   },
   "url": [
     "www.draw.web.tr",
@@ -18,15 +18,13 @@
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*draw[.]web[.]tr[/]",
   "version": "1.0.0",
   "logo": "https://draw.web.tr/logo.png",
-  "thumbnail": "https://draw.web.tr/banner.png",
-  "color": "#FF5733",
+  "thumbnail": "https://draw.web.tr/logo.png",
+  "color": "#007BFF",
   "category": "other",
   "tags": [
     "minecraft",
     "webscript",
-    "draw-web",
-    "automation",
-    "minecraft-webscript",
-    "minecraft-web-script"
+    "drawweb",
+    "automation"
   ]
 }
