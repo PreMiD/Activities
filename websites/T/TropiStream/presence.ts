@@ -73,7 +73,7 @@ function setNavigationActivity(pathname: string): void {
     type: ActivityType.Watching,
     details,
     state,
-    startTimestamp: browsingTimestamp,
+    startTimestamp: browsingTimestamp
   })
 }
 
