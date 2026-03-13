@@ -10,19 +10,13 @@ enum ActivityAssets {
 
 presence.on('UpdateData', async () => {
   // Sayfa başlığını çeker. Eğer boşsa varsayılan bir isim atar.
-  const sayfaBasligi = document.title || 'Ana Sayfa'
+  const sayfaBasligi = document.title || 'Homepage'
 
   const presenceData: PresenceData = {
     details: 'Browsing the site',
     state: sayfaBasligi,
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    buttons: [
-      {
-        label: 'Visit Website',
-        url: document.location.href,
-      },
-    ],
   }
 
   presence.setActivity(presenceData)
