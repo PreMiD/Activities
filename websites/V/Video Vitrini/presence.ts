@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, ActivityType } from 'premid'
 
 const presence = new Presence({
   clientId: '1481304927690293258',
@@ -46,7 +46,7 @@ presence.on('UpdateData', async () => {
     state: 'Sitede geziniyor',
     largeImageKey: 'https://i.ibb.co/hRQP8jH6/videovitrini.png',
     largeImageText: 'Video Vitrini',
-    type: 3,
+    type: ActivityType.Watching,
     // Discord durumuna buton ekleme kısmı
     buttons: [
       {
