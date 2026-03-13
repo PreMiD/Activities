@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://i.ibb.co/fVbb6Rpf/voxani-logo.png',
+  Logo = 'https://cdn.imgchest.com/files/768ba0ac0c7a.png',
 }
 
 function normalizeWatchSlug(raw: string): string {
