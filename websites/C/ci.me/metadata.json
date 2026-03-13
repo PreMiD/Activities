@@ -10,7 +10,8 @@
     "씨미"
   ],
   "description": {
-    "en": "TODO"
+    "en": "Virtual/Game Live Streaming Platform, CIME",
+    "ko": "버추얼/게임 라이브 스트리밍 플랫폼, 씨미"
   },
   "url": "ci.me",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*ci[.]me[/]",
@@ -32,12 +33,6 @@
       "title": "Show Streamer Logo",
       "icon": "fad fa-images",
       "value": true
-    },
-    {
-      "id": "time",
-      "title": "Show Stream Elapsed Time",
-      "icon": "fad fa-stopwatch",
-      "value": false
     }
   ]
 }
