@@ -24,7 +24,9 @@
   "tags": [
     "minecraft",
     "webscript",
-    "drawweb",
+    "web-script",
+    "minecraft-webscript",
+    "minecraft-server-webscript",
     "automation"
   ]
 }
