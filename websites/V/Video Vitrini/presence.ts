@@ -1,4 +1,4 @@
-import { Assets, ActivityType } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1481304927690293258',

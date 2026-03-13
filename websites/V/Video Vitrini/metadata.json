@@ -7,8 +7,8 @@
   },
   "service": "Video Vitrini",
   "description": {
-    "en": "Shows your current video watching activity on videovitrini.com.",
-    "tr": "videovitrini.com üzerindeki video izleme aktivitenizi gösterir."
+    "en": "Video Vitrini is a video sharing platform where you can discover, watch and share the most entertaining videos.",
+    "tr": "Video Vitrini; en eğlenceli videoları keşfedebileceğiniz, izleyebileceğiniz ve paylaşabileceğiniz video platformudur."
   },
   "url": [
     "videovitrini.com",
