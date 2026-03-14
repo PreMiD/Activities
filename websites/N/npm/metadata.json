@@ -14,8 +14,8 @@
   "url": "www.npmjs.com",
   "regExp": "^https?[:][/][/](www[.])?npmjs[.]com[/]",
   "version": "1.0.0",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/npm/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/npm/assets/thumbnail.png",
+  "logo": "https://litomore.me/premid/npm-logo.png",
+  "thumbnail": "https://litomore.me/premid/npm-thumbnail.png",
   "color": "#C12127",
   "category": "other",
   "tags": [
