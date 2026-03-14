@@ -5,14 +5,12 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-let oldLang: string = ''
 async function getStrings() {
   return presence.getStrings({
     play: 'general.playing',
     pause: 'general.paused',
     live: 'general.live',
     browse: 'general.browsing',
-    ad: 'youtube.ad',
     watchingLive: 'general.watchingLive',
     watchingVid: 'general.watchingVid',
     watchStream: 'general.buttonWatchStream',
@@ -46,15 +44,8 @@ enum ActivityAssets {
 let strings: Awaited<ReturnType<typeof getStrings>>
 
 presence.on('UpdateData', async () => {
-  const [newLang, showStreamerLogo] = await Promise.all([
-    presence.getSetting<string>('lang'),
-    presence.getSetting<boolean>('logo'),
-  ])
-
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
+  const showStreamerLogo = await presence.getSetting<boolean>('logo')
+  strings = await getStrings()
   const presenceData: PresenceData = {
     details: strings.browse,
     largeImageKey: ActivityAssets.Logo,
