@@ -5,7 +5,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 const urlpath = document.location.pathname.split('/')
 
 enum CustomAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/B/Bilibili/assets/logo.png',
+  Logo = 'http://litomore.me/premid/bilibili-logo.png',
 }
 
 let uploader: HTMLElement | null,
