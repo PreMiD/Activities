@@ -13,8 +13,8 @@
   "url": "tv.free.fr",
   "regExp": "^https?://tv\\.free\\.fr",
   "version": "1.0.0",
-  "logo": "https://play-lh.googleusercontent.com/wd2r5AdhoPLcU9IOEa8ivWPvTWPdwQkONmzf0Vjs8P_nZl4q0h9gdVMBz47O6_y4xM6jzTXZbzaCLW8wQABbMg",
-  "thumbnail": "https://play-lh.googleusercontent.com/wd2r5AdhoPLcU9IOEa8ivWPvTWPdwQkONmzf0Vjs8P_nZl4q0h9gdVMBz47O6_y4xM6jzTXZbzaCLW8wQABbMg",
+  "logo": "https://cacavision.site/assets/freetv.png",
+  "thumbnail": "https://cacavision.site/assets/freetv.png",
   "color": "#cc0000",
   "category": "videos",
   "tags": [
