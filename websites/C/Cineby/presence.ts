@@ -106,7 +106,7 @@ presence.on('UpdateData', async () => {
       const { title, thumbnail, episodes } = details
       const epNum
         = Number.parseInt(episodeNum ?? pathname.split('/').pop() ?? '0', 10)
-        || 1
+          || 1
       const current = episodes.find(e => e.episode === epNum)
       const episodeTitle = current?.title?.replace(/E\d+:\s*/i, '').trim()
 
