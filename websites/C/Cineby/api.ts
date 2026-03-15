@@ -1,98 +1,100 @@
 export interface Details {
-  poster_path?: string;
+  poster_path?: string,
 }
 
 export interface TvDetails extends Details {
-  name?: string;
-  season_poster?: string;
-  episode_title?: string;
-  episode_number?: number;
-  season_number?: number;
+  name?: string,
+  season_poster?: string,
+  episode_title?: string,
+  episode_number?: number,
+  season_number?: number,
 }
 
 export interface EpisodeDetails {
-  name: string;
-  episode_number: number;
-  season_number: number;
+  name: string,
+  episode_number: number,
+  season_number: number,
 }
 
 export interface MovieDetails extends Details {
-  title?: string;
-  release_date?: string;
-  runtime?: number;
+  title?: string,
+  release_date?: string,
+  runtime?: number,
 }
 
 export interface AnimeDetails {
   details: {
-    title: string;
-    thumbnail: string;
+    title: string,
+    thumbnail: string,
     episodes: {
-      episode: number;
-      title: string;
-    }[];
-  };
+      episode: number,
+      title: string,
+    }[],
+  },
 }
 
-const cache: Map<string, unknown> = new Map();
+const cache: Map<string, unknown> = new Map()
 
 export class CinebyApi {
-  private static readonly BASE_URL = "https://jumpfreedom.com/3";
-  private static readonly ANIME_URL = "https://api.videasy.net/hianime";
+  private static readonly BASE_URL = 'https://jumpfreedom.com/3'
+  private static readonly ANIME_URL = 'https://api.videasy.net/hianime'
 
   public static async getCurrent<T>(pathname: string): Promise<T> {
-    if (cache.has(pathname)) return cache.get(pathname) as T;
+    if (cache.has(pathname))
+      return cache.get(pathname) as T
 
-    const [type, id] = pathname.split("/").slice(1);
+    const [type, id] = pathname.split('/').slice(1)
     const response = await fetch(
-      `${this.BASE_URL}/${type}/${id}?language=en`
-    );
+      `${this.BASE_URL}/${type}/${id}?language=en`,
+    )
 
-    if (type === "tv") {
-      const json = await response.json();
-      const episode = await this.getCurrentEpisode(pathname);
+    if (type === 'tv') {
+      const json = await response.json()
+      const episode = await this.getCurrentEpisode(pathname)
       const returnData = {
         ...json,
         season_poster: json.seasons[episode.season_number - 1].poster_path,
         episode_title: episode.name,
         episode_number: episode.episode_number,
-        season_number: episode.season_number
-      } as T;
+        season_number: episode.season_number,
+      } as T
 
-      cache.set(pathname, returnData);
-      return returnData;
+      cache.set(pathname, returnData)
+      return returnData
     }
 
-    const json = await response.json();
-    cache.set(pathname, json);
-    return json;
+    const json = await response.json()
+    cache.set(pathname, json)
+    return json
   }
 
   private static async getCurrentEpisode(
-    pathname: string
+    pathname: string,
   ): Promise<EpisodeDetails> {
-    const [, , id, season, episode] = pathname.split("/");
+    const [, , id, season, episode] = pathname.split('/')
     const response = await fetch(
       `${this.BASE_URL}/tv/${id}/season/${season ?? 1}/episode/${
         episode ?? 1
-      }?language=en`
-    );
+      }?language=en`,
+    )
 
-    return response.json();
+    return response.json()
   }
 
   public static async getCurrentAnime(pathname: string): Promise<AnimeDetails> {
-    if (cache.has(pathname)) return cache.get(pathname) as AnimeDetails;
+    if (cache.has(pathname))
+      return cache.get(pathname) as AnimeDetails
 
-    const { search } = document.location;
-    const id = pathname.split("/")[2];
+    const { search } = document.location
+    const id = pathname.split('/')[2]
     const response = await fetch(
       `${this.ANIME_URL}/sources-with-id?providerId=${id}&dub=${new URLSearchParams(
-        search
-      ).get("dub")}`
-    );
+        search,
+      ).get('dub')}`,
+    )
 
-    const data = await response.json();
-    cache.set(pathname, data);
-    return data;
+    const data = await response.json()
+    cache.set(pathname, data)
+    return data
   }
 }
