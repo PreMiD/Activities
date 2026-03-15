@@ -6,8 +6,8 @@ const presence = new Presence({
   clientId: '1325115346696273993',
 })
 
-const LOGO_URL =
-  'https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/logo.png'
+const LOGO_URL
+  = 'https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/logo.png'
 const BASE_URL = 'https://cineby.gd'
 const TMDB_IMG = 'https://image.tmdb.org/t/p/original'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -60,10 +60,12 @@ presence.on('UpdateData', async () => {
       const stateStr = [year, runtime != null ? `${runtime} min` : null]
         .filter(Boolean)
         .join(' • ')
-      if (stateStr)
+      if (stateStr) {
         presenceData.state = stateStr
-      if (showCover && posterPath)
+      }
+      if (showCover && posterPath) {
         presenceData.largeImageKey = `${TMDB_IMG}${posterPath}`
+      }
     }
     catch {
       presenceData.details = 'Browsing'
@@ -78,8 +80,9 @@ presence.on('UpdateData', async () => {
       const seasonNumber = data.season_number
       const episodeNumber = data.episode_number
 
-      if (useActivityName)
+      if (useActivityName) {
         presenceData.name = title
+      }
 
       presenceData.details = useActivityName ? episodeTitle ?? title : title
       if (showEpisodeInfo && seasonNumber != null && episodeNumber != null) {
@@ -89,8 +92,9 @@ presence.on('UpdateData', async () => {
       else if (episodeTitle && !useActivityName && seasonNumber != null && episodeNumber != null) {
         presenceData.state = `S${seasonNumber}:E${episodeNumber} ${episodeTitle}`
       }
-      if (showCover && seasonPoster)
+      if (showCover && seasonPoster) {
         presenceData.largeImageKey = `${TMDB_IMG}${seasonPoster}`
+      }
     }
     catch {
       presenceData.details = 'Browsing'
@@ -100,19 +104,21 @@ presence.on('UpdateData', async () => {
     try {
       const { details } = await CinebyApi.getCurrentAnime(pathname)
       const { title, thumbnail, episodes } = details
-      const epNum =
-        Number.parseInt(episodeNum ?? pathname.split('/').pop() ?? '0', 10)
+      const epNum
+        = Number.parseInt(episodeNum ?? pathname.split('/').pop() ?? '0', 10)
         || 1
       const current = episodes.find(e => e.episode === epNum)
       const episodeTitle = current?.title?.replace(/E\d+:\s*/i, '').trim()
 
-      if (useActivityName)
+      if (useActivityName) {
         presenceData.name = title
+      }
 
       presenceData.details = useActivityName ? episodeTitle ?? title : title
       presenceData.state = `Episode ${epNum}`
-      if (showCover && thumbnail)
+      if (showCover && thumbnail) {
         presenceData.largeImageKey = thumbnail
+      }
     }
     catch {
       presenceData.details = 'Browsing'
@@ -142,22 +148,26 @@ presence.on('UpdateData', async () => {
 
   const buttons: { label: string, url: string }[] = []
   if (showWatchEpisodeButton && type && contentId) {
-    if (type === 'movie')
+    if (type === 'movie') {
       buttons.push({ label: 'Watch Movie', url: `${BASE_URL}/movie/${contentId}` })
+    }
     else if (type === 'tv') {
-      const episodeUrl =
-        seasonNum && episodeNum
+      const episodeUrl
+        = seasonNum && episodeNum
           ? `${BASE_URL}/tv/${contentId}/${seasonNum}/${episodeNum}`
           : `${BASE_URL}/tv/${contentId}`
       buttons.push({ label: 'Watch Episode', url: episodeUrl })
     }
-    else if (type === 'anime')
+    else if (type === 'anime') {
       buttons.push({ label: 'Watch Episode', url: `${BASE_URL}${pathname}` })
+    }
   }
-  if (showWatchOnCinebyButton)
+  if (showWatchOnCinebyButton) {
     buttons.push({ label: 'Watch on Cineby', url: BASE_URL })
-  if (buttons.length > 0)
+  }
+  if (buttons.length > 0) {
     presenceData.buttons = buttons.slice(0, 2) as NonNullable<PresenceData['buttons']>
+  }
 
   presence.setActivity(presenceData)
 })

@@ -1,36 +1,36 @@
 export interface Details {
-  poster_path?: string,
+  poster_path?: string
 }
 
 export interface TvDetails extends Details {
-  name?: string,
-  season_poster?: string,
-  episode_title?: string,
-  episode_number?: number,
-  season_number?: number,
+  name?: string
+  season_poster?: string
+  episode_title?: string
+  episode_number?: number
+  season_number?: number
 }
 
 export interface EpisodeDetails {
-  name: string,
-  episode_number: number,
-  season_number: number,
+  name: string
+  episode_number: number
+  season_number: number
 }
 
 export interface MovieDetails extends Details {
-  title?: string,
-  release_date?: string,
-  runtime?: number,
+  title?: string
+  release_date?: string
+  runtime?: number
 }
 
 export interface AnimeDetails {
   details: {
-    title: string,
-    thumbnail: string,
+    title: string
+    thumbnail: string
     episodes: {
-      episode: number,
-      title: string,
-    }[],
-  },
+      episode: number
+      title: string
+    }[]
+  }
 }
 
 const cache: Map<string, unknown> = new Map()
