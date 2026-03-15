@@ -12,15 +12,15 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 presence.on('UpdateData', async () => {
   let details = 'Browsing FreeTV'
   let state = 'Looking for a channel'
-  let largeImageKey = defaultLogo
-  let largeImageText = 'FreeTV'
+  const largeImageKey = defaultLogo
+  const largeImageText = 'FreeTV'
   let smallImageKey = ''
   let smallImageText = ''
-  let startTimestamp = browsingTimestamp
-  let endTimestamp = 0
+  const startTimestamp = browsingTimestamp
+  const endTimestamp = 0
 
   const playerContainer = document.querySelector('.player-container')
-  
+
   // Look for the currently active channel. The profile/home page has a different structure than the player.
   if (playerContainer || document.location.pathname.includes('/play')) {
     const channelNameElement = document.querySelector('.ChannelTitle') || document.querySelector('.ChannelGridItemTitlesContainer .title') || document.querySelector('.PlayerUIControls .title') || document.querySelector('.ProgramInfoHeaderTitles .title')
@@ -35,7 +35,8 @@ presence.on('UpdateData', async () => {
       if (titleParts.length >= 2) {
         channelName = titleParts[0] // Assume first part is Channel for now, could be inverse
         programTitle = titleParts[1]
-      } else {
+      }
+      else {
         channelName = document.title
       }
     }
@@ -46,7 +47,7 @@ presence.on('UpdateData', async () => {
       // Fetch the img tag that is a sibling or near .circleBackground
       const channelIconElement = document.querySelector('.CircularProgress.small.showProgress img') as HTMLImageElement
       let iconSrc = channelIconElement?.src
-      
+
       // FreeTV channel logos are rectangular. Discord expects a square and will crop the edges.
       // We route the image through wsrv.nl to force a 512x512 square canvas with transparent padding.
       if (iconSrc && iconSrc.includes('oqee.net')) {
@@ -54,7 +55,7 @@ presence.on('UpdateData', async () => {
         const highResSrc = iconSrc.replace(/\/w\d+$/, '')
         iconSrc = `https://wsrv.nl/?url=${encodeURIComponent(highResSrc)}&w=512&h=512&fit=contain&cbg=transparent`
       }
-      
+
       // Fallback: Check if the image is a background-image on the class itself
       if (!iconSrc) {
         const bgContainer = document.querySelector('.circleBackground') || document.querySelector('.ChannelGridItemThumbnailImage')
@@ -69,13 +70,15 @@ presence.on('UpdateData', async () => {
       if (iconSrc) {
         smallImageKey = iconSrc
         smallImageText = channelName || 'Channel'
-      } else {
+      }
+      else {
         const videoElement = document.querySelector('video')
         if (videoElement) {
           if (!videoElement.paused) {
             smallImageKey = defaultLogo // Play state fallback
             smallImageText = 'Playing'
-          } else {
+          }
+          else {
             smallImageKey = defaultLogo // Pause state fallback
             smallImageText = 'Paused'
           }
@@ -85,8 +88,10 @@ presence.on('UpdateData', async () => {
   }
 
   // PreMiD strongly recommends keeping strings below 128 characters to avoid Discord RPC errors
-  if (details.length > 128) details = details.substring(0, 125) + '...'
-  if (state.length > 128) state = state.substring(0, 125) + '...'
+  if (details.length > 128)
+    details = `${details.substring(0, 125)}...`
+  if (state.length > 128)
+    state = `${state.substring(0, 125)}...`
 
   presence.setActivity({
     type: ActivityType.Watching,
