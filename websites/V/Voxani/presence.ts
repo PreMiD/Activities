@@ -70,7 +70,7 @@ presence.on('UpdateData', async () => {
 
   // watch page
   if (pathname.startsWith('/watch/')) {
-    const video = document.querySelector('video') as HTMLVideoElement | null
+    const video = document.querySelector<HTMLVideoElement>('video')
     delete presenceData.smallImageKey
     delete presenceData.smallImageText
 
