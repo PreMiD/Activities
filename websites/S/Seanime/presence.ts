@@ -2,7 +2,7 @@ const presence = new Presence({
   clientId: '1483241564619669546',
 })
 
-const IMAGE = 'https://i.imgur.com/e3lBwoS.png'
+const IMAGE = 'https://imgur.com/e3lBwoS'
 
 function findChapter(): string | null {
   const nodes = document.querySelectorAll('div, span')
