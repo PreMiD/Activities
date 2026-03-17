@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "Dynnx",
+    "id": "0"
+  },
+  "service": "Seanime",
+  "description": {
+    "en": "Discord Rich Presence for Seanime, a self-hosted anime streaming app."
+  },
+  "url": "localhost",
+  "regExp": "^https?:\\/\\/.*:43211\\/",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/2rvCMXs.png",
+  "thumbnail": "https://i.imgur.com/2rvCMXs.png",
+  "color": "#ff4c4c",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "video",
+    "media",
+    "player"
+  ]
+}
