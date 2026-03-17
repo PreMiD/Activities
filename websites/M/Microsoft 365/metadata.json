@@ -9,9 +9,13 @@
   "description": {
     "en": "Microsoft 365 is a product family of productivity software, collaboration and cloud-based services owned by Microsoft."
   },
-  "url": "-my.sharepoint.com",
+  "url": [
+    "www.office.com",
+    "-my.sharepoint.com",
+    "onedrive.live.com"
+  ],
   "regExp": "^https?[:][/][/]www[.]office[.]com|([a-z0-9-_]+)[-]my[.]sharepoint[.]com|onedrive[.]live[.]com",
-  "version": "1.1.1",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Microsoft%20365/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Microsoft%20365/assets/thumbnail.png",
   "color": "#DE5001",

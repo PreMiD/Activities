@@ -10,9 +10,13 @@
     "en": "Minecraft command generator.",
     "nl": "Minecraft command generator."
   },
-  "url": "mcstacker.bimbimma.com",
+  "url": [
+    "mcstacker.net",
+    "bimbimma.com",
+    "mcstacker.bimbimma.com"
+  ],
   "regExp": "^https?[:][/][/](mcstacker[.]net|(mcstacker[.])?bimbimma[.]com)[/]",
-  "version": "1.4.1",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MCStacker/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MCStacker/assets/thumbnail.png",
   "color": "#fe5f10",
