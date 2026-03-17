@@ -2,9 +2,15 @@
   "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
-    "id": "711329563715698760",
-    "name": "Algerization"
+    "id": "374905512661221377",
+    "name": "slowlife."
   },
+  "contributors": [
+    {
+      "id": "711329563715698760",
+      "name": "Algerization"
+    }
+  ],
   "service": "Cineby",
   "description": {
     "en": "Watch free TV shows and movies online"
@@ -59,13 +65,6 @@
       "icon": "fas fa-external-link-alt",
       "value": true,
       "description": "Show button linking to the current movie or episode."
-    },
-    {
-      "id": "showWatchOnCinebyButton",
-      "title": "Enable \"Watch on Cineby\" Button",
-      "icon": "fas fa-home",
-      "value": true,
-      "description": "Show button linking to Cineby homepage."
     }
   ]
 }

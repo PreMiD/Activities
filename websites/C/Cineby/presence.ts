@@ -20,7 +20,6 @@ presence.on('UpdateData', async () => {
     showPlaybackTimer,
     showEpisodeInfo,
     showWatchEpisodeButton,
-    showWatchOnCinebyButton,
   ] = await Promise.all([
     presence.getSetting<boolean>('showBrowsing'),
     presence.getSetting<boolean>('useActivityName'),
@@ -28,7 +27,6 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('showPlaybackTimer'),
     presence.getSetting<boolean>('showEpisodeInfo'),
     presence.getSetting<boolean>('showWatchEpisodeButton'),
-    presence.getSetting<boolean>('showWatchOnCinebyButton'),
   ])
 
   const { pathname } = document.location
@@ -161,9 +159,6 @@ presence.on('UpdateData', async () => {
     else if (type === 'anime') {
       buttons.push({ label: 'Watch Episode', url: `${BASE_URL}${pathname}` })
     }
-  }
-  if (showWatchOnCinebyButton) {
-    buttons.push({ label: 'Watch on Cineby', url: BASE_URL })
   }
   if (buttons.length > 0) {
     presenceData.buttons = buttons.slice(0, 2) as NonNullable<PresenceData['buttons']>
