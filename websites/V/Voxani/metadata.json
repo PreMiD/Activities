@@ -27,7 +27,6 @@
     "video",
     "streaming"
   ],
-  "iframe": false,
   "settings": [
     {
       "id": "showPresenceButtons",
