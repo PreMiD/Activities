@@ -5,8 +5,8 @@ const presence = new Presence({
   clientId: '1482841271625318530',
 })
 
-// Use the provided FreeTV logo from Google Play Store
-const defaultLogo = 'https://play-lh.googleusercontent.com/wd2r5AdhoPLcU9IOEa8ivWPvTWPdwQkONmzf0Vjs8P_nZl4q0h9gdVMBz47O6_y4xM6jzTXZbzaCLW8wQABbMg'
+// Use the provided FreeTV logo URL from metadata
+const defaultLogo = 'https://cacavision.site/assets/freetv.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
@@ -19,12 +19,12 @@ presence.on('UpdateData', async () => {
   const startTimestamp = browsingTimestamp
   const endTimestamp = 0
 
-  const playerContainer = document.querySelector('.player-container')
+  const playerContainer = document.querySelector<HTMLElement>('.player-container')
 
   // Look for the currently active channel. The profile/home page has a different structure than the player.
   if (playerContainer || document.location.pathname.includes('/play')) {
-    const channelNameElement = document.querySelector('.ChannelTitle') || document.querySelector('.ChannelGridItemTitlesContainer .title') || document.querySelector('.PlayerUIControls .title') || document.querySelector('.ProgramInfoHeaderTitles .title')
-    const programTitleElement = document.querySelector('.ProgramInfoHeaderTitles .Typography.bold.h3') || document.querySelector('.ProgramTitle') || document.querySelector('.ProgramSubtitle') || document.querySelector('.PlayerUIControls .subtitle') || document.querySelector('.ProgramInfoHeaderTitles .subtitle')
+    const channelNameElement = document.querySelector<HTMLElement>('.ChannelTitle') || document.querySelector<HTMLElement>('.ChannelGridItemTitlesContainer .title') || document.querySelector<HTMLElement>('.PlayerUIControls .title') || document.querySelector<HTMLElement>('.ProgramInfoHeaderTitles .title')
+    const programTitleElement = document.querySelector<HTMLElement>('.ProgramInfoHeaderTitles .Typography.bold.h3') || document.querySelector<HTMLElement>('.ProgramTitle') || document.querySelector<HTMLElement>('.ProgramSubtitle') || document.querySelector<HTMLElement>('.PlayerUIControls .subtitle') || document.querySelector<HTMLElement>('.ProgramInfoHeaderTitles .subtitle')
 
     let channelName = channelNameElement?.textContent?.trim()
     let programTitle = programTitleElement?.textContent?.trim()
@@ -45,7 +45,7 @@ presence.on('UpdateData', async () => {
       details = channelName ? `Watching ${channelName}` : 'Watching FreeTV'
       state = programTitle || 'Live Broadcast'
       // Fetch the img tag that is a sibling or near .circleBackground
-      const channelIconElement = document.querySelector('.CircularProgress.small.showProgress img') as HTMLImageElement
+      const channelIconElement = document.querySelector<HTMLImageElement>('.CircularProgress.small.showProgress img')
       let iconSrc = channelIconElement?.src
 
       // FreeTV channel logos are rectangular. Discord expects a square and will crop the edges.
@@ -58,7 +58,7 @@ presence.on('UpdateData', async () => {
 
       // Fallback: Check if the image is a background-image on the class itself
       if (!iconSrc) {
-        const bgContainer = document.querySelector('.circleBackground') || document.querySelector('.ChannelGridItemThumbnailImage')
+        const bgContainer = document.querySelector<HTMLElement>('.circleBackground') || document.querySelector<HTMLElement>('.ChannelGridItemThumbnailImage')
         if (bgContainer) {
           const bg = window.getComputedStyle(bgContainer).backgroundImage
           if (bg && bg !== 'none') {
@@ -72,7 +72,7 @@ presence.on('UpdateData', async () => {
         smallImageText = channelName || 'Channel'
       }
       else {
-        const videoElement = document.querySelector('video')
+        const videoElement = document.querySelector<HTMLVideoElement>('video')
         if (videoElement) {
           if (!videoElement.paused) {
             smallImageKey = defaultLogo // Play state fallback
