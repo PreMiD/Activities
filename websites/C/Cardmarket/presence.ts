@@ -81,9 +81,9 @@ presence.on('UpdateData', async () => {
 
     case 'product': {
       const productNameElem = document.querySelector('h1')
-      const actualProductName = productNameElem ? productNameElem.textContent?.trim() : formatString(product)
+      const actualProductName = productNameElem?.textContent?.trim() ?? formatString(product)
 
-      presenceData.details = strings.viewing.replace('{0}', actualProductName || '')
+      presenceData.details = strings.viewing.replace('{0}', actualProductName)
       presenceData.state = `${formatString(game)} - ${formatString(category)}`
 
       if (showButtons) {
