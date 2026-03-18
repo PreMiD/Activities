@@ -1,0 +1,22 @@
+{
+  "cardmarket.browsing": {
+    "description": "Shown when browsing Cardmarket homepage",
+    "message": "Browsing Cardmarket"
+  },
+  "cardmarket.homepage": {
+    "description": "Shown when viewing a game's homepage",
+    "message": "Homepage"
+  },
+  "cardmarket.game": {
+    "description": "Shown with the game name (e.g., 'Game: Pokemon')",
+    "message": "Game: {0}"
+  },
+  "cardmarket.browsing_category": {
+    "description": "Shown when browsing a category (e.g., 'Browsing Singles')",
+    "message": "Browsing {0}"
+  },
+  "cardmarket.viewing": {
+    "description": "Shown when viewing a product (e.g., 'Viewing Pikachu')",
+    "message": "Viewing {0}"
+  }
+}
