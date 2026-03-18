@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "Dynnx",
+    "id": "984604642015051776"
+  },
+  "service": "Seanime",
+  "description": {
+    "en": "Seanime is a media server with a web interface and desktop app for managing your local library, streaming anime and reading manga."
+  },
+
+  "url": "http://localhost:43211",
+  "regExp": "^https?:\\/\\/(localhost|(?:\\d{1,3}\\.){3}\\d{1,3}):43211(\\/|$)",
+
+  "version": "1.0.0",
+
+  "logo": "https://i.imgur.com/e3lBwoS.png",
+  "thumbnail": "https://i.imgur.com/QJK0e6q.png",
+
+  "color": "#ff4c4c",
+  "category": "anime",
+
+  "tags": [
+    "anime",
+    "streaming",
+    "video",
+    "media",
+    "player"
+  ],
+
+  "main": "presence.ts"
+}
