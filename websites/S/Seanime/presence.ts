@@ -7,41 +7,51 @@ const presence = new Presence({
 const LOGO = 'https://i.imgur.com/D2pn7EL.png'
 
 // ICON URLS (use direct + cache safe)
-const PLAY_ICON = 'https://i.imgur.com/CusNjny.png'
-const PAUSE_ICON = 'https://i.imgur.com/xxz0cwV.png'
+const PLAY_ICON = 'https://i.imgur.com/Fi1hHy2.png'
+const PAUSE_ICON = 'https://i.imgur.com/OnySmVp.png'
 
 // =========================
 // HELPERS
 // =========================
 function findEpisode(): string | null {
   const el = document.querySelector(
-    '[data-vc-element="top-playback-info-episode"] p.font-bold'
+    '[data-vc-element="top-playback-info-episode"] p.font-bold',
   )
   return el?.textContent?.trim() || null
 }
 
 function findEpisodeTitle(): string | null {
   const el = document.querySelector(
-    '[data-vc-element="top-playback-info-episode"] p:not(.font-bold)'
+    '[data-vc-element="top-playback-info-episode"] p:not(.font-bold)',
   )
   return el?.textContent?.trim() || null
 }
 
 function findChapter(): string | null {
   const nodes = document.querySelectorAll('div, span')
+
   for (const n of nodes) {
     const text = n.textContent?.trim()
-    if (text && /^chapter\s*\d+/i.test(text)) return text
+
+    if (text && /^chapter\s*\d+/i.test(text)) {
+      return text
+    }
   }
+
   return null
 }
 
 function findPageCounter(): string | null {
   const nodes = document.querySelectorAll('div, span')
+
   for (const n of nodes) {
     const text = n.textContent?.trim()
-    if (text && /^\d+\s*\/\s*\d+$/.test(text)) return text
+
+    if (text && /^\d+\s*\/\s*\d+$/.test(text)) {
+      return text
+    }
   }
+
   return null
 }
 
@@ -94,21 +104,15 @@ presence.on('UpdateData', async () => {
     const cleanTitle =
       document
         .querySelector('[data-vc-element="top-playback-info-title"]')
-        ?.textContent?.trim() || rawTitle
+        ?.textContent?.trim()
+      || rawTitle
 
-    // extract episode number
     const epNumber = episode?.match(/\d+/)?.[0]
     const epShort = epNumber ? `Ep ${epNumber}` : null
 
-    // =========================
-    // CLEAN VISUAL STRUCTURE
-    // =========================
     const mainLine = epShort
     const subLine = episodeTitle
 
-    // =========================
-    // TIME
-    // =========================
     const current = Math.floor(video.currentTime)
     const total = Math.floor(video.duration || 0)
 
@@ -119,23 +123,14 @@ presence.on('UpdateData', async () => {
 
     presence.setActivity({
       type: ActivityType.Watching,
-
       name: 'Anime',
-
-      // BIG TITLE
       details: cleanTitle,
-
-      // cleaner “2-line feel”
       state: paused
         ? `Paused • ${mainLine}\n${subLine ?? ''}`.trim()
         : `${mainLine}\n${subLine ?? ''}`.trim(),
-
       largeImageKey: LOGO,
-
       startTimestamp: paused ? undefined : startTimestamp,
       endTimestamp: paused ? undefined : endTimestamp,
-
-      // icons (URL)
       smallImageKey: paused ? PAUSE_ICON : PLAY_ICON,
       smallImageText: paused ? 'Paused' : 'Playing',
     })
