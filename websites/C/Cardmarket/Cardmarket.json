@@ -3,20 +3,60 @@
     "description": "Shown when browsing Cardmarket homepage",
     "message": "Browsing Cardmarket"
   },
+  "cardmarket.browsing_fr": {
+    "description": "Shown when browsing Cardmarket homepage (French)",
+    "message": "Navigation sur Cardmarket"
+  },
+  "cardmarket.browsing_es": {
+    "description": "Shown when browsing Cardmarket homepage (Spanish)",
+    "message": "Navegando por Cardmarket"
+  },
   "cardmarket.homepage": {
     "description": "Shown when viewing a game's homepage",
     "message": "Homepage"
+  },
+  "cardmarket.homepage_fr": {
+    "description": "Shown when viewing a game's homepage (French)",
+    "message": "Page d'accueil"
+  },
+  "cardmarket.homepage_es": {
+    "description": "Shown when viewing a game's homepage (Spanish)",
+    "message": "Página de inicio"
   },
   "cardmarket.game": {
     "description": "Shown with the game name (e.g., 'Game: Pokemon')",
     "message": "Game: {0}"
   },
+  "cardmarket.game_fr": {
+    "description": "Shown with the game name (French)",
+    "message": "Jeu : {0}"
+  },
+  "cardmarket.game_es": {
+    "description": "Shown with the game name (Spanish)",
+    "message": "Juego: {0}"
+  },
   "cardmarket.browsing_category": {
     "description": "Shown when browsing a category (e.g., 'Browsing Singles')",
     "message": "Browsing {0}"
   },
+  "cardmarket.browsing_category_fr": {
+    "description": "Shown when browsing a category (French)",
+    "message": "Parcours de {0}"
+  },
+  "cardmarket.browsing_category_es": {
+    "description": "Shown when browsing a category (Spanish)",
+    "message": "Navegando {0}"
+  },
   "cardmarket.viewing": {
     "description": "Shown when viewing a product (e.g., 'Viewing Pikachu')",
     "message": "Viewing {0}"
+  },
+  "cardmarket.viewing_fr": {
+    "description": "Shown when viewing a product (French)",
+    "message": "Consultation de {0}"
+  },
+  "cardmarket.viewing_es": {
+    "description": "Shown when viewing a product (Spanish)",
+    "message": "Viendo {0}"
   }
 }
