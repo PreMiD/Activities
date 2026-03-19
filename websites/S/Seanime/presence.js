@@ -1,107 +1,74 @@
-import { ActivityType } from 'premid'
-
 const presence = new Presence({
   clientId: '1483241564619669546',
 })
 
 const LOGO = 'https://i.imgur.com/D2pn7EL.png'
-
-// ICON URLS
 const PLAY_ICON = 'https://i.imgur.com/Fi1hHy2.png'
 const PAUSE_ICON = 'https://i.imgur.com/OnySmVp.png'
 
-// =========================
-// HELPERS
-// =========================
-function findEpisode(): string | null {
+function findEpisode() {
   const el = document.querySelector(
-    '[data-vc-element="top-playback-info-episode"] p.font-bold',
+    '[data-vc-element="top-playback-info-episode"] p.font-bold'
   )
-
-  return el?.textContent?.trim() || null
+  return el ? el.textContent.trim() : null
 }
 
-function findEpisodeTitle(): string | null {
+function findEpisodeTitle() {
   const el = document.querySelector(
-    '[data-vc-element="top-playback-info-episode"] p:not(.font-bold)',
+    '[data-vc-element="top-playback-info-episode"] p:not(.font-bold)'
   )
-
-  return el?.textContent?.trim() || null
+  return el ? el.textContent.trim() : null
 }
 
-function findChapter(): string | null {
+function findChapter() {
   const nodes = document.querySelectorAll('div, span')
-
   for (const n of nodes) {
-    const text = n.textContent?.trim()
-
-    if (text && /^chapter\s*\d+/i.test(text)) {
-      return text
-    }
+    const text = n.textContent ? n.textContent.trim() : ''
+    if (text && /^chapter\s*\d+/i.test(text)) return text
   }
-
   return null
 }
 
-function findPageCounter(): string | null {
+function findPageCounter() {
   const nodes = document.querySelectorAll('div, span')
-
   for (const n of nodes) {
-    const text = n.textContent?.trim()
-
-    if (text && /^\d+\s*\/\s*\d+$/.test(text)) {
-      return text
-    }
+    const text = n.textContent ? n.textContent.trim() : ''
+    if (text && /^\d+\s*\/\s*\d+$/.test(text)) return text
   }
-
   return null
 }
 
-// =========================
-// MAIN
-// =========================
 presence.on('UpdateData', async () => {
+  console.log('Presence running')
+
   const path = window.location.pathname
   const rawTitle = document.title.replace(' | Seanime', '')
 
-  // =========================
-  // 🏠 HOME
-  // =========================
-  if (path === '/' || path === '') {
+  if (!path || path === '/' || path.length <= 1) {
     presence.setActivity({
-      type: ActivityType.Playing,
+      type: 0,
       details: 'Browsing Library',
       state: 'Looking for something to watch',
       largeImageKey: LOGO,
     })
-
     return
   }
 
-  // =========================
-  // 📖 MANGA
-  // =========================
   if (path.includes('/manga/entry')) {
     const chapter = findChapter()
     const page = findPageCounter()
 
     presence.setActivity({
-      type: ActivityType.Playing,
+      type: 0,
       name: 'Reading Manga',
       details: rawTitle,
-      state: [chapter, page]
-        .filter(Boolean)
-        .join(' • '),
+      state: [chapter, page].filter(Boolean).join(' • '),
       largeImageKey: LOGO,
     })
-
     return
   }
 
-  // =========================
-  // 🎬 ANIME
-  // =========================
-  const video = document.querySelector<HTMLVideoElement>('video')
+  const video = document.querySelector('video')
 
   if (video) {
     const episode = findEpisode()
@@ -110,48 +77,40 @@ presence.on('UpdateData', async () => {
     const cleanTitle =
       document
         .querySelector('[data-vc-element="top-playback-info-title"]')
-        ?.textContent?.trim()
-      || rawTitle
+        ?.textContent?.trim() || rawTitle
 
-    const epNumber = episode?.match(/\d+/)?.[0]
-    const epShort = epNumber
-      ? `Ep ${epNumber}`
-      : null
+    const epNumber = episode ? episode.match(/\d+/) : null
+    const epShort = epNumber ? `Ep ${epNumber[0]}` : null
 
-    const mainLine = epShort
-    const subLine = episodeTitle
-
-    const current = Math.floor(video.currentTime)
+    const current = Math.floor(video.currentTime || 0)
     const total = Math.floor(video.duration || 0)
 
-    const startTimestamp =
-      Math.floor(Date.now() / 1000) - current
-
-    const endTimestamp =
-      startTimestamp + total
+    const startTimestamp = Math.floor(Date.now() / 1000) - current
+    const endTimestamp = startTimestamp + total
 
     const paused = video.paused
 
     presence.setActivity({
-      type: ActivityType.Watching,
+      type: 3,
       name: 'Anime',
       details: cleanTitle,
       state: paused
-        ? `Paused • ${mainLine}\n${subLine ?? ''}`.trim()
-        : `${mainLine}\n${subLine ?? ''}`.trim(),
+        ? `Paused • ${epShort || ''}\n${episodeTitle || ''}`.trim()
+        : `${epShort || ''}\n${episodeTitle || ''}`.trim(),
       largeImageKey: LOGO,
-      startTimestamp: paused
-        ? undefined
-        : startTimestamp,
-      endTimestamp: paused
-        ? undefined
-        : endTimestamp,
-      smallImageKey: paused
-        ? PAUSE_ICON
-        : PLAY_ICON,
-      smallImageText: paused
-        ? 'Paused'
-        : 'Playing',
+      startTimestamp: paused ? undefined : startTimestamp,
+      endTimestamp: paused ? undefined : endTimestamp,
+      smallImageKey: paused ? PAUSE_ICON : PLAY_ICON,
+      smallImageText: paused ? 'Paused' : 'Playing',
     })
+
+    return
   }
+
+  presence.setActivity({
+    type: 0,
+    details: rawTitle,
+    state: 'Browsing',
+    largeImageKey: LOGO,
+  })
 })
