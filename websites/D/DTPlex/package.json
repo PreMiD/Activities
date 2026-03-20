@@ -1,0 +1,13 @@
+{
+  "name": "dtplex-premid-presence",
+  "description": "PreMiD presence for DTPlex streaming platform",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "@premid/types": "^1.0.0",
+    "typescript": "^5.0.0"
+  }
+}
