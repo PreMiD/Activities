@@ -56,8 +56,7 @@ presence.on('UpdateData', async () => {
           else {
             const tag = document
               .querySelector('div.tags')!
-              .textContent!
-              .split(' ')[6]
+              .textContent!.split(' ')[6]
             presenceData.details = `${tag} 분야의 워게임 푸는 중`
             presenceData.state = document.querySelector(
               '#challenge-info > h1',
