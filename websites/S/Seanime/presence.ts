@@ -1,10 +1,10 @@
+import { Assets, ActivityType } from 'premid'
+
 const presence = new Presence({
   clientId: '1483241564619669546',
 })
 
 const LOGO = 'https://i.imgur.com/D2pn7EL.png'
-const PLAY_ICON = 'https://i.imgur.com/Fi1hHy2.png'
-const PAUSE_ICON = 'https://i.imgur.com/OnySmVp.png'
 
 function findEpisode() {
   const el = document.querySelector(
@@ -39,14 +39,13 @@ function findPageCounter() {
 }
 
 presence.on('UpdateData', async () => {
-  console.log('Presence running')
-
   const path = window.location.pathname
   const rawTitle = document.title.replace(' | Seanime', '')
 
+  // Home / browsing
   if (!path || path === '/' || path.length <= 1) {
     presence.setActivity({
-      type: 0,
+      type: ActivityType.Playing,
       details: 'Browsing Library',
       state: 'Looking for something to watch',
       largeImageKey: LOGO,
@@ -54,12 +53,13 @@ presence.on('UpdateData', async () => {
     return
   }
 
+  // Manga reading
   if (path.includes('/manga/entry')) {
     const chapter = findChapter()
     const page = findPageCounter()
 
     presence.setActivity({
-      type: 0,
+      type: ActivityType.Watching,
       name: 'Reading Manga',
       details: rawTitle,
       state: [chapter, page].filter(Boolean).join(' • '),
@@ -70,6 +70,7 @@ presence.on('UpdateData', async () => {
 
   const video = document.querySelector('video')
 
+  // Watching anime
   if (video) {
     const episode = findEpisode()
     const episodeTitle = findEpisodeTitle()
@@ -91,7 +92,7 @@ presence.on('UpdateData', async () => {
     const paused = video.paused
 
     presence.setActivity({
-      type: 3,
+      type: ActivityType.Watching,
       name: 'Anime',
       details: cleanTitle,
       state: paused
@@ -100,15 +101,16 @@ presence.on('UpdateData', async () => {
       largeImageKey: LOGO,
       startTimestamp: paused ? undefined : startTimestamp,
       endTimestamp: paused ? undefined : endTimestamp,
-      smallImageKey: paused ? PAUSE_ICON : PLAY_ICON,
+      smallImageKey: paused ? Assets.Pause : Assets.Play,
       smallImageText: paused ? 'Paused' : 'Playing',
     })
 
     return
   }
 
+  // Fallback
   presence.setActivity({
-    type: 0,
+    type: ActivityType.Playing,
     details: rawTitle,
     state: 'Browsing',
     largeImageKey: LOGO,
