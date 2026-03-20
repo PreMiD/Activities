@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "toop",
+    "id": "868807712874582096"
+  },
+  "service": "JAM Club",
+  "description": {
+    "en": "Anime streaming site with Russian dubbing.",
+    "ru": "Сайт для просмотра аниме в русской озвучке."
+  },
+  "url": "jam-club.tv",
+  "regExp": "^https?[:][/][/](www[.])?jam-club[.]tv[/]",
+  "version": "1.0.0",
+  "logo": "https://images2.imgbox.com/61/3e/k60NIdDv_o.jpg",
+  "thumbnail": "https://images2.imgbox.com/27/ea/BMH0FITx_o.jpg",
+  "color": "#1a1a2e",
+  "category": "anime",
+  "tags": ["anime", "jam", "russian-dub"],
+  "iframe": true,
+  "iFrameRegExp": "(kodik[.](info|cc|biz|online)|aniqit[.]com)",
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}
