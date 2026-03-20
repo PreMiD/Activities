@@ -703,9 +703,12 @@ presence.on('UpdateData', async () => {
                       ?.textContent
                       ?.match(/(Running|Elapsed)/i)?.[1]
                     const [, years, months, days, hours, minutes, seconds] = document
-                      .querySelector<HTMLDivElement>('.time_running')!.textContent!.match(
-                      /(?:([\d,]+) Years?, )?(?:(\d+) Months?, )?(?:(\d+) Days?, )?(?:(\d+) Hours?, )?(?:(\d+) Minutes?, )?(\d+) Seconds?/,
-                    )!.map(x => (x ? +x.replaceAll(',', '') : 0)) as [number, number, number, number, number, number, number]
+                      .querySelector<HTMLDivElement>('.time_running')!
+                      .textContent!
+                      .match(
+                        /(?:([\d,]+) Years?, )?(?:(\d+) Months?, )?(?:(\d+) Days?, )?(?:(\d+) Hours?, )?(?:(\d+) Minutes?, )?(\d+) Seconds?/,
+                      )!
+                      .map(x => (x ? +x.replaceAll(',', '') : 0)) as [number, number, number, number, number, number, number]
                     const timeElapsed = new Date()
                     const daySeconds = seconds + minutes * 60 + hours * 3600 + days * 86400
                     if (timeElapsedType === 'Running') {
