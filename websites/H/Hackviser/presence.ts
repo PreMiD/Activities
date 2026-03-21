@@ -255,11 +255,10 @@ presence.on("UpdateData", async () => {
     lastPage = pageData.page;
   }
 
-  const presenceData: PresenceData = {
-    largeImageKey: "hackviser_logo",
-    largeImageText: "Hackviser - Cyber Security Platform",
+   const presenceData = {
     startTimestamp,
   };
+
 
   // Sensitive pages: only show "Logging In", hide details
   if (pageData.sensitive) {
