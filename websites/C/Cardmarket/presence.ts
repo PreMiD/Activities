@@ -52,11 +52,10 @@ presence.on('UpdateData', async () => {
 
   const strings = await presence.getStrings({
     browsing: 'general.browsing',
-    cardmarketBrowsing: 'cardmarket.browsing',
+    view: 'general.view',
     homepage: 'cardmarket.homepage',
     gameLabel: 'cardmarket.game',
-    browsingCategory: 'cardmarket.browsing_category',
-    viewing: 'cardmarket.viewing',
+    browsingCategory: 'cardmarket.browsingCategory',
   })
 
   const presenceData: PresenceData = {
@@ -66,7 +65,7 @@ presence.on('UpdateData', async () => {
 
   switch (pageType) {
     case 'homepage_all':
-      presenceData.details = strings.cardmarketBrowsing
+      presenceData.details = strings.browsing
       break
 
     case 'homepage_game':
@@ -83,7 +82,7 @@ presence.on('UpdateData', async () => {
       const productNameElem = document.querySelector('h1')
       const actualProductName = productNameElem?.textContent?.trim() ?? formatString(product)
 
-      presenceData.details = strings.viewing.replace('{0}', actualProductName)
+      presenceData.details = strings.view.replace('{0}', actualProductName)
       presenceData.state = `${formatString(game)} - ${formatString(category)}`
 
       if (showButtons) {
@@ -98,7 +97,7 @@ presence.on('UpdateData', async () => {
     }
 
     default:
-      presenceData.details = strings.cardmarketBrowsing
+      presenceData.details = strings.browsing
       if (game) {
         presenceData.state = strings.gameLabel.replace('{0}', formatString(game))
       }
