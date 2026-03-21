@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1476565376513999030'
+  clientId: '1476565376513999030',
 })
 
 let startTimestamp = Math.floor(Date.now() / 1000)
@@ -10,12 +10,12 @@ let lastPage = ''
  * e.g. "my-cool-lab" → "My Cool Lab"
  */
 function extractPageTitle(pathname: string): string | null {
-  const parts = pathname.split('/').filter(p => p.length > 0)
+  const parts = pathname.split('/').filter((p) => p.length > 0)
   if (parts.length >= 2) {
     const slug = parts[parts.length - 1] || ''
     return slug
       .replace(/[-_]/g, ' ')
-      .replace(/\b\w/g, l => l.toUpperCase())
+      .replace(/\b\w/g, (l) => l.toUpperCase())
   }
   return null
 }
@@ -25,19 +25,24 @@ function extractPageTitle(pathname: string): string | null {
  * Ported from the Chrome extension's parseHackviserUrl() logic.
  */
 function getPageData(pathname: string): {
-  page: string
-  details: string
-  state: string
-  sensitive: boolean
+  page: string,
+  details: string,
+  state: string,
+  sensitive: boolean,
 } {
   // ── Auth pages (sensitive) ──────────────────────────────────
   if (
-    pathname.startsWith('/login') ||
-    pathname.startsWith('/register') ||
-    pathname.startsWith('/forgot') ||
-    pathname.startsWith('/reset')
+    pathname.startsWith('/login')
+    || pathname.startsWith('/register')
+    || pathname.startsWith('/forgot')
+    || pathname.startsWith('/reset')
   ) {
-    return { page: 'login', details: 'Logging In', state: '', sensitive: true }
+    return {
+      page: 'login',
+      details: 'Logging In',
+      state: '',
+      sensitive: true,
+    }
   }
 
   // ── Home ────────────────────────────────────────────────────
@@ -46,7 +51,7 @@ function getPageData(pathname: string): {
       page: 'home',
       details: 'Home Page',
       state: 'Viewing Home Page',
-      sensitive: false
+      sensitive: false,
     }
   }
 
@@ -56,7 +61,7 @@ function getPageData(pathname: string): {
       page: 'dashboard',
       details: 'Dashboard',
       state: 'Viewing Stats',
-      sensitive: false
+      sensitive: false,
     }
   }
 
@@ -67,69 +72,78 @@ function getPageData(pathname: string): {
       page: 'academy',
       details: 'Academy',
       state: subPage || 'Browsing Categories',
-      sensitive: false
+      sensitive: false,
     }
   }
 
   // ── Warmups ─────────────────────────────────────────────────
-  if (pathname.startsWith('/warmups') || pathname.startsWith('/warmup')) {
+  if (
+    pathname.startsWith('/warmups')
+    || pathname.startsWith('/warmup')
+  ) {
     const name = extractPageTitle(pathname)
     return {
       page: 'warmups',
       details: 'Warmups',
       state: name || 'Warming Up...',
-      sensitive: false
+      sensitive: false,
     }
   }
 
   // ── Scenarios ───────────────────────────────────────────────
-  if (pathname.startsWith('/scenarios') || pathname.startsWith('/scenario')) {
+  if (
+    pathname.startsWith('/scenarios')
+    || pathname.startsWith('/scenario')
+  ) {
     const name = extractPageTitle(pathname)
     return {
       page: 'scenarios',
       details: 'Scenarios',
       state: name || 'Running Scenario',
-      sensitive: false
+      sensitive: false,
     }
   }
 
   // ── Missions ────────────────────────────────────────────────
-  if (pathname.startsWith('/missions') || pathname.startsWith('/mission')) {
+  if (
+    pathname.startsWith('/missions')
+    || pathname.startsWith('/mission')
+  ) {
     const name = extractPageTitle(pathname)
     return {
       page: 'missions',
       details: 'Missions',
       state: name || 'On a Mission',
-      sensitive: false
+      sensitive: false,
     }
   }
 
   // ── Certifications ──────────────────────────────────────────
   if (
-    pathname.startsWith('/certifications') ||
-    pathname.startsWith('/certification')
+    pathname.startsWith('/certifications')
+    || pathname.startsWith('/certification')
   ) {
     const name = extractPageTitle(pathname)
     return {
       page: 'certifications',
       details: 'Certifications',
       state: name || 'Viewing Certifications',
-      sensitive: false
+      sensitive: false,
     }
   }
 
   // ── Labs / Machines ─────────────────────────────────────────
   if (
-    pathname.startsWith('/labs') ||
-    pathname.startsWith('/lab') ||
-    pathname.startsWith('/machines')
+    pathname.startsWith('/labs')
+    || pathname.startsWith('/lab')
+    || pathname.startsWith('/machines')
   ) {
     const labName = extractPageTitle(pathname)
     return {
       page: 'labs',
       details: 'Solving Labs',
       state: labName || 'Hacking in Progress...',
-      sensitive: false
+      sensitive: false,
     }
   }
 
@@ -139,31 +153,34 @@ function getPageData(pathname: string): {
       page: 'support',
       details: 'Support',
       state: 'Getting Support',
-      sensitive: false
+      sensitive: false,
     }
   }
 
   // ── Learning Paths / Courses ────────────────────────────────
   if (
-    pathname.startsWith('/learning') ||
-    pathname.startsWith('/paths') ||
-    pathname.startsWith('/courses')
+    pathname.startsWith('/learning')
+    || pathname.startsWith('/paths')
+    || pathname.startsWith('/courses')
   ) {
     return {
       page: 'learning',
       details: 'Learning Paths',
       state: 'Studying Cyber Security',
-      sensitive: false
+      sensitive: false,
     }
   }
 
   // ── CTF / Challenges ────────────────────────────────────────
-  if (pathname.startsWith('/ctf') || pathname.startsWith('/challenges')) {
+  if (
+    pathname.startsWith('/ctf')
+    || pathname.startsWith('/challenges')
+  ) {
     return {
       page: 'ctf',
       details: 'CTF Challenge',
       state: 'Capturing Flags',
-      sensitive: false
+      sensitive: false,
     }
   }
 
@@ -173,7 +190,7 @@ function getPageData(pathname: string): {
       page: 'settings',
       details: 'Settings',
       state: 'A few changes',
-      sensitive: false
+      sensitive: false,
     }
   }
 
@@ -183,7 +200,7 @@ function getPageData(pathname: string): {
       page: 'pricing',
       details: 'Pricing Plans',
       state: 'Looking Pricing Plans',
-      sensitive: false
+      sensitive: false,
     }
   }
 
@@ -193,35 +210,35 @@ function getPageData(pathname: string): {
       page: 'faq',
       details: 'Frequently Asked Questions',
       state: 'Is looking for answers to the questions on his mind',
-      sensitive: false
+      sensitive: false,
     }
   }
 
   // ── Profile / User ──────────────────────────────────────────
   if (
-    pathname.startsWith('/profile') ||
-    pathname.startsWith('/user') ||
-    pathname.startsWith('/settings')
+    pathname.startsWith('/profile')
+    || pathname.startsWith('/user')
+    || pathname.startsWith('/settings')
   ) {
     return {
       page: 'profile',
       details: 'Profile',
       state: 'Viewing Profile',
-      sensitive: false
+      sensitive: false,
     }
   }
 
   // ── Leaderboard / Rankings ──────────────────────────────────
   if (
-    pathname.startsWith('/leaderboard') ||
-    pathname.startsWith('/scoreboard') ||
-    pathname.startsWith('/ranking')
+    pathname.startsWith('/leaderboard')
+    || pathname.startsWith('/scoreboard')
+    || pathname.startsWith('/ranking')
   ) {
     return {
       page: 'leaderboard',
       details: 'Leaderboard',
       state: 'Checking Rankings',
-      sensitive: false
+      sensitive: false,
     }
   }
 
@@ -231,7 +248,7 @@ function getPageData(pathname: string): {
       page: 'ticket',
       details: 'Ticket',
       state: 'Viewing Ticket',
-      sensitive: false
+      sensitive: false,
     }
   }
 
@@ -240,7 +257,7 @@ function getPageData(pathname: string): {
     page: 'browsing',
     details: 'Browsing Platform',
     state: '',
-    sensitive: false
+    sensitive: false,
   }
 }
 
@@ -255,16 +272,15 @@ presence.on('UpdateData', async () => {
     lastPage = pageData.page
   }
 
-   const presenceData: PresenceData = {
-    startTimestamp
+  const presenceData: PresenceData = {
+    startTimestamp,
   }
-
-
 
   // Sensitive pages: only show "Logging In", hide details
   if (pageData.sensitive) {
     presenceData.details = pageData.details
-  } else {
+  }
+  else {
     if (pageData.details) {
       presenceData.details = pageData.details
     }
@@ -277,8 +293,8 @@ presence.on('UpdateData', async () => {
   presenceData.buttons = [
     {
       label: 'Learn Cybersecurity',
-      url: 'https://hackviser.com/'
-    }
+      url: 'https://hackviser.com/',
+    },
   ]
 
   presence.setActivity(presenceData)
