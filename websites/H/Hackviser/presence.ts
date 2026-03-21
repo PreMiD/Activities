@@ -255,14 +255,10 @@ presence.on('UpdateData', async () => {
     lastPage = pageData.page
   }
 
-   const presenceData: {
-    startTimestamp: number
-    details?: string
-    state?: string
-    buttons?: { label: string; url: string }[]
-  } = {
+   const presenceData: PresenceData = {
     startTimestamp
   }
+
 
 
   // Sensitive pages: only show "Logging In", hide details
