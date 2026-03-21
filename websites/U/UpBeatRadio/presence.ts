@@ -203,14 +203,6 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Sending in a partner enquiry'
       presenceData.smallImageKey = Assets.Writing
     }
-    else if (document.location.pathname.includes('/content.new')) {
-      presenceData.details = 'Writing an article...'
-      presenceData.smallImageKey = Assets.Writing
-    }
-    else if (document.location.pathname.includes('/station.dashboard')) {
-      presenceData.details = 'Presenting a show...'
-      presenceData.smallImageKey = Assets.PremiereLive
-    }
   }
   else {
     if (document.querySelector('.stats-djName')?.textContent === 'UpBeat')
