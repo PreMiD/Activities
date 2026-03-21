@@ -10,12 +10,12 @@ let lastPage = ''
  * e.g. "my-cool-lab" → "My Cool Lab"
  */
 function extractPageTitle(pathname: string): string | null {
-  const parts = pathname.split('/').filter((p) => p.length > 0)
+  const parts = pathname.split('/').filter(p => p.length > 0)
   if (parts.length >= 2) {
     const slug = parts[parts.length - 1] || ''
     return slug
       .replace(/[-_]/g, ' ')
-      .replace(/\b\w/g, (l) => l.toUpperCase())
+      .replace(/\b\w/g, l => l.toUpperCase())
   }
   return null
 }
@@ -25,10 +25,10 @@ function extractPageTitle(pathname: string): string | null {
  * Ported from the Chrome extension's parseHackviserUrl() logic.
  */
 function getPageData(pathname: string): {
-  page: string,
-  details: string,
-  state: string,
-  sensitive: boolean,
+  page: string
+  details: string
+  state: string
+  sensitive: boolean
 } {
   // ── Auth pages (sensitive) ──────────────────────────────────
   if (
