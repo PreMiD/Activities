@@ -15,6 +15,8 @@
   "version": "1.0.0",
   "color": "#00ff00",
   "category": "other",
+  "logo": "icon.png",
+  "thumbnail": "bg.jpg",
   "tags": [
     "cybersecurity",
     "hacking",
