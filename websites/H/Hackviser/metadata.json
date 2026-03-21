@@ -13,10 +13,10 @@
   "url": "hackviser.com",
   "regExp": "([a-zA-Z0-9-]+\\.)*hackviser\\.com",
   "version": "1.0.0",
+  "logo": "https://github.com/user-attachments/assets/609306cf-204f-4916-8940-28e9f789b7ac?.png",
+  "thumbnail": "https://github.com/user-attachments/assets/cf58a97e-0865-4b5e-a363-c709a019150f?.png",
   "color": "#00ff00",
   "category": "other",
-  "logo": "https://github.com/user-attachments/assets/609306cf-204f-4916-8940-28e9f789b7ac",
-  "thumbnail": "https://github.com/user-attachments/assets/cf58a97e-0865-4b5e-a363-c709a019150f",
   "tags": [
     "cybersecurity",
     "hacking",
