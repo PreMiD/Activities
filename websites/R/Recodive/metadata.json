@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "671037171611729920",
+    "name": "Skully"
+  },
+  "service": "Recodive",
+  "description": {
+    "en": "Recodive is the development studio behind PreMiD, an open-source tool that seamlessly integrates your live web activity into your Discord Rich Presence. They focus on building community-driven utilities that enhance how users share their digital experiences.",
+    "fr": "Recodive est le studio de développement à l'origine de PreMiD, une solution open-source permettant d'afficher votre activité web en temps réel sur votre statut Discord. L'organisation se concentre sur la création d'outils communautaires innovants pour enrichir la présence numérique des utilisateurs."
+  },
+  "url": "recodive.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*recodive[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Recodive/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Recodive/assets/thumbnail.png",
+  "color": "#3BA4A5",
+  "category": "other",
+  "tags": [
+    "discord",
+    "technology",
+    "innovation"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "time",
+      "title": "Show timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    }
+  ]
+}

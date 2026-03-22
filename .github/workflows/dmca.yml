@@ -1,0 +1,133 @@
+name: DMCA Enforcement
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+  pull_request_target:
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  dmca-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sparse checkout dmca.json
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: dmca.json
+          sparse-checkout-cone-mode: false
+
+      - name: Check for DMCA violations
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            const dmca = JSON.parse(fs.readFileSync('dmca.json', 'utf-8'));
+            const blockedServices = dmca.services;
+            const blockedLower = blockedServices.map(s => s.toLowerCase());
+
+            const isPR = !!context.payload.pull_request;
+            let matched = [];
+
+            if (isPR) {
+              // Check changed file paths for DMCA'd activity folders
+              const { data: files } = await github.rest.pulls.listFiles({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+                per_page: 100,
+              });
+
+              for (const file of files) {
+                const match = file.filename.match(/^websites\/[A-Z#]\/([^/]+)\//);
+                if (match) {
+                  const folderName = match[1].toLowerCase();
+                  const idx = blockedLower.indexOf(folderName);
+                  if (idx !== -1) {
+                    matched.push(blockedServices[idx]);
+                  }
+                }
+              }
+              matched = [...new Set(matched)];
+            } else {
+              // Check issue title and body for DMCA'd service names
+              const title = (context.payload.issue.title || '').toLowerCase();
+              const body = (context.payload.issue.body || '').toLowerCase();
+              const text = `${title} ${body}`;
+
+              for (let i = 0; i < blockedLower.length; i++) {
+                if (text.includes(blockedLower[i])) {
+                  matched.push(blockedServices[i]);
+                }
+              }
+            }
+
+            if (matched.length === 0) {
+              console.log('No DMCA violations found.');
+              return;
+            }
+
+            const serviceList = matched.map(s => `- ${s}`).join('\n');
+            const comment = [
+              `This ${isPR ? 'pull request' : 'issue'} references activities that have been removed due to a DMCA takedown:`,
+              '',
+              serviceList,
+              '',
+              `These activities cannot be re-added or modified. This ${isPR ? 'pull request' : 'issue'} has been automatically closed.`,
+            ].join('\n');
+
+            if (isPR) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: comment,
+              });
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+                state: 'closed',
+              });
+              try {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.payload.pull_request.number,
+                  labels: ['dmca'],
+                });
+              } catch (e) {
+                console.log('Could not add label:', e.message);
+              }
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                body: comment,
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                state: 'closed',
+                state_reason: 'not_planned',
+              });
+              try {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.payload.issue.number,
+                  labels: ['dmca'],
+                });
+              } catch (e) {
+                console.log('Could not add label:', e.message);
+              }
+            }
+
+            console.log(`Closed ${isPR ? 'PR' : 'issue'} for DMCA violation: ${matched.join(', ')}`);

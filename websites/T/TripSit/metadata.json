@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "538604507064696832",
+    "name": "talon2"
+  },
+  "service": "TripSit",
+  "altnames": [
+    "Trip Sit"
+  ],
+  "description": {
+    "en": "TripSit is a website that educates people on the misconceptions about drug use and gives people the tools they need for a safer experience. Do not do drugs."
+  },
+  "url": "tripsit.me",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tripsit[.]me[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TripSit/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TripSit/assets/thumbnail.png",
+  "color": "#808080",
+  "category": "other",
+  "tags": [
+    "drugs",
+    "harm-reduction",
+    "psychonaut"
+  ]
+}

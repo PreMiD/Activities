@@ -1,4 +1,5 @@
 {
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Dasp",
@@ -9,7 +10,8 @@
     "en": "AnimeAv1 is an Anime streaming platform offering high-quality content with Spanish subtitles."
   },
   "url": "animeav1.com",
-  "version": "1.0.2",
+  "regExp": "^https?://animeav1\\.com/",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeAv1/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeAv1/assets/thumbnail.png",
   "color": "#FF66CC",
@@ -18,6 +20,35 @@
     "anime",
     "video",
     "stream",
-    "español"
+    "espanol"
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*(?:animeav1\\.com|animeav1\\.uns\\.bio|pixeldrain\\.com|zilla-networks\\.com|solariaarchitecture\\.cyou).*(?:/.*)?$",
+  "settings": [
+    {
+      "id": "showProgress",
+      "title": "Show episode progress",
+      "icon": "fa-solid fa-stopwatch",
+      "value": true,
+      "description": "Shows playback progress when available (Discord progress bar + time text)."
+    },
+    {
+      "id": "cacheMode",
+      "title": "Cache mode",
+      "icon": "fa-solid fa-database",
+      "value": "session",
+      "values": [
+        "off",
+        "session",
+        "persistent"
+      ]
+    },
+    {
+      "id": "cacheTtlMinutes",
+      "title": "Cache TTL (minutes)",
+      "icon": "fa-solid fa-clock",
+      "value": 360,
+      "placeholder": "360"
+    }
   ]
 }

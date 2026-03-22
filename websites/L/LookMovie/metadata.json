@@ -12,11 +12,10 @@
   },
   "url": [
     "lookmovie2.to",
-    "lookmovies.ru",
     "playerwatchlm25.xyz"
   ],
-  "regExp": "^https?[:][/][/](playerwatch[0-9]*.xyz)|(playerwatchlm[0-9]*.xyz)|(lookmovie[0-9]?[.][A-z]{2})",
-  "version": "1.6.0",
+  "regExp": "^https?[:][/][/]((lookmovie[0-9]*[.][a-z]{2})|(playerwatch(lm)?[0-9]+[.]xyz))",
+  "version": "1.6.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LookMovie/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LookMovie/assets/thumbnail.png",
   "color": "#ffcc00",

@@ -87,18 +87,14 @@ function getVideoDetails(
   href: string,
 ): void {
   const videoElement = document.querySelector('video')
-  const videoDescriptionLabel = '[aria-label=\'video description\']'
 
-  presenceData.details = document
-    .querySelector(videoDescriptionLabel)
-    ?.querySelector('h1')
-    ?.textContent
-  presenceData.state = document
-    .querySelector(videoDescriptionLabel)
-    ?.querySelector('h2')
-    ?.textContent
+  presenceData.details = document.querySelector('main h1')?.textContent
+  presenceData.state = document.querySelector('main h2')?.textContent
 
   if (showButtons) {
+    const channelLink = document.querySelector('main h2')?.closest('a')?.getAttribute('href')
+      ?? document.querySelector('main h2')?.parentElement?.querySelector('a')?.getAttribute('href')
+
     presenceData.buttons = [
       {
         label: 'Watch Video',
@@ -106,11 +102,7 @@ function getVideoDetails(
       },
       {
         label: 'View Channel',
-        url: getRootUrl()
-          + document
-            .querySelector(videoDescriptionLabel)
-            ?.querySelector('a')
-            ?.getAttribute('href'),
+        url: getRootUrl() + channelLink,
       },
     ]
   }

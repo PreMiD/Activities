@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "671037171611729920",
@@ -13,7 +13,7 @@
   },
   "url": "www.infotbm.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*infotbm[.]com[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TBM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TBM/assets/thumbnail.png",
   "color": "#FFFFFF",

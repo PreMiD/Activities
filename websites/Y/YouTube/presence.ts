@@ -1,7 +1,7 @@
 import type {
   Resolver,
 } from './util/index.js'
-import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia, StatusDisplayType } from 'premid'
 import {
   checkStringLanguage,
   getMobileChapter,
@@ -67,6 +67,7 @@ presence.on('UpdateData', async () => {
     hideHome,
     hidePaused,
     showListening,
+    displayType,
   ] = [
     getSetting<string>('lang', 'en'),
     getSetting<boolean>('privacy', true),
@@ -81,6 +82,7 @@ presence.on('UpdateData', async () => {
     getSetting<boolean>('hideHome', false),
     getSetting<boolean>('hidePaused', true),
     getSetting<number>('showListening', 0),
+    getSetting<number>('displayType', 2),
   ]
   const { pathname, hostname, search, href } = document.location
   const isMobile = hostname === 'm.youtube.com'
@@ -286,6 +288,21 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = YouTubeAssets.Shorts
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = video.paused ? strings.pause : strings.play
+    }
+
+    switch (displayType) {
+      case 0: {
+        presenceData.statusDisplayType = StatusDisplayType.Name
+        break
+      }
+      case 1: {
+        presenceData.statusDisplayType = StatusDisplayType.Details
+        break
+      }
+      case 2: {
+        presenceData.statusDisplayType = StatusDisplayType.State
+        break
+      }
     }
 
     if (!presenceData.details)

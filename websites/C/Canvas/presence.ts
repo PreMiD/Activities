@@ -252,7 +252,7 @@ function applyPrivacy(input: string, detail: string, isPrivate: boolean) {
 }
 
 function getNavigationPath(): string[] {
-  return [...(document.querySelector('#breadcrumbs > ul')?.children ?? [])]
+  return [...(document.querySelector('#breadcrumbs > ol')?.children ?? [])]
     .slice(1)
     .map((li) => {
       return li?.textContent ?? ''

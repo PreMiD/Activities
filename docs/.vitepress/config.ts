@@ -73,7 +73,7 @@ export default defineConfig({
         {
           text: 'Extension Features',
           items: [
-            { text: 'Activity Forwarding', link: '/activity-forwarding' },
+            { text: 'Activity Forwarding', link: '/v1/guide/activity-forwarding' },
           ],
         },
       ],
