@@ -1,51 +1,72 @@
-import { Assets, ActivityType } from 'premid'
-
 const presence = new Presence({
   clientId: '1483241564619669546',
 })
 
 const LOGO = 'https://i.imgur.com/D2pn7EL.png'
+const PLAY_ICON = 'https://i.imgur.com/Fi1hHy2.png'
+const PAUSE_ICON = 'https://i.imgur.com/OnySmVp.png'
 
 function findEpisode() {
   const el = document.querySelector(
-    '[data-vc-element="top-playback-info-episode"] p.font-bold'
+    '[data-vc-element="top-playback-info-episode"] p.font-bold',
   )
-  return el ? el.textContent.trim() : null
+
+  return el
+    ? el.textContent.trim()
+    : null
 }
 
 function findEpisodeTitle() {
   const el = document.querySelector(
-    '[data-vc-element="top-playback-info-episode"] p:not(.font-bold)'
+    '[data-vc-element="top-playback-info-episode"] p:not(.font-bold)',
   )
-  return el ? el.textContent.trim() : null
+
+  return el
+    ? el.textContent.trim()
+    : null
 }
 
 function findChapter() {
   const nodes = document.querySelectorAll('div, span')
+
   for (const n of nodes) {
-    const text = n.textContent ? n.textContent.trim() : ''
-    if (text && /^chapter\s*\d+/i.test(text)) return text
+    const text = n.textContent
+      ? n.textContent.trim()
+      : ''
+
+    if (text && /^chapter\s*\d+/i.test(text)) {
+      return text
+    }
   }
+
   return null
 }
 
 function findPageCounter() {
   const nodes = document.querySelectorAll('div, span')
+
   for (const n of nodes) {
-    const text = n.textContent ? n.textContent.trim() : ''
-    if (text && /^\d+\s*\/\s*\d+$/.test(text)) return text
+    const text = n.textContent
+      ? n.textContent.trim()
+      : ''
+
+    if (text && /^\d+\s*\/\s*\d+$/.test(text)) {
+      return text
+    }
   }
+
   return null
 }
 
 presence.on('UpdateData', async () => {
+  console.log('Presence running')
+
   const path = window.location.pathname
   const rawTitle = document.title.replace(' | Seanime', '')
 
-  // Home / browsing
   if (!path || path === '/' || path.length <= 1) {
     presence.setActivity({
-      type: ActivityType.Playing,
+      type: 0,
       details: 'Browsing Library',
       state: 'Looking for something to watch',
       largeImageKey: LOGO,
@@ -53,13 +74,12 @@ presence.on('UpdateData', async () => {
     return
   }
 
-  // Manga reading
   if (path.includes('/manga/entry')) {
     const chapter = findChapter()
     const page = findPageCounter()
 
     presence.setActivity({
-      type: ActivityType.Watching,
+      type: 0,
       name: 'Reading Manga',
       details: rawTitle,
       state: [chapter, page].filter(Boolean).join(' • '),
@@ -70,7 +90,6 @@ presence.on('UpdateData', async () => {
 
   const video = document.querySelector('video')
 
-  // Watching anime
   if (video) {
     const episode = findEpisode()
     const episodeTitle = findEpisodeTitle()
@@ -78,10 +97,17 @@ presence.on('UpdateData', async () => {
     const cleanTitle =
       document
         .querySelector('[data-vc-element="top-playback-info-title"]')
-        ?.textContent?.trim() || rawTitle
+        ?.textContent
+        ?.trim()
+      || rawTitle
 
-    const epNumber = episode ? episode.match(/\d+/) : null
-    const epShort = epNumber ? `Ep ${epNumber[0]}` : null
+    const epNumber = episode
+      ? episode.match(/\d+/)
+      : null
+
+    const epShort = epNumber
+      ? `Ep ${epNumber[0]}`
+      : null
 
     const current = Math.floor(video.currentTime || 0)
     const total = Math.floor(video.duration || 0)
@@ -91,26 +117,35 @@ presence.on('UpdateData', async () => {
 
     const paused = video.paused
 
+    const stateText = paused
+      ? `Paused • ${epShort || ''}\n${episodeTitle || ''}`.trim()
+      : `${epShort || ''}\n${episodeTitle || ''}`.trim()
+
     presence.setActivity({
-      type: ActivityType.Watching,
+      type: 3,
       name: 'Anime',
       details: cleanTitle,
-      state: paused
-        ? `Paused • ${epShort || ''}\n${episodeTitle || ''}`.trim()
-        : `${epShort || ''}\n${episodeTitle || ''}`.trim(),
+      state: stateText,
       largeImageKey: LOGO,
-      startTimestamp: paused ? undefined : startTimestamp,
-      endTimestamp: paused ? undefined : endTimestamp,
-      smallImageKey: paused ? Assets.Pause : Assets.Play,
-      smallImageText: paused ? 'Paused' : 'Playing',
+      startTimestamp: paused
+        ? undefined
+        : startTimestamp,
+      endTimestamp: paused
+        ? undefined
+        : endTimestamp,
+      smallImageKey: paused
+        ? PAUSE_ICON
+        : PLAY_ICON,
+      smallImageText: paused
+        ? 'Paused'
+        : 'Playing',
     })
 
     return
   }
 
-  // Fallback
   presence.setActivity({
-    type: ActivityType.Playing,
+    type: 0,
     details: rawTitle,
     state: 'Browsing',
     largeImageKey: LOGO,
