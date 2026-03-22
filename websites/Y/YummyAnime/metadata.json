@@ -12,12 +12,12 @@
   },
   "url": "yummyani.me",
   "regExp": "^https?[:][/][/](www[.])?(site[.])?(en[.])?(ru[.])?yummyani[.]me[/]",
-  "version": "1.0.11",
+  "version": "1.0.2",
   "logo": "https://i.imgur.com/6XnAGga.jpeg",
   "thumbnail": "https://i.imgur.com/Z7z6N5g.png",
   "color": "#FF5722",
   "category": "anime",
   "tags": ["anime", "video"],
   "iframe": true,
-  "iFrameRegExp": ".*"
+  "iFrameRegExp": "(kodik\\.(info|cc|biz|online)|aniqit\\.com|alloha\\.yani\\.tv|player\\.cdnvideohub\\.com|iframeCVH\\.html|vkuker\\.net)"
 }
