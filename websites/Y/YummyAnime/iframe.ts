@@ -75,8 +75,15 @@ function pickBestVideo(): HTMLVideoElement | null {
 function sendVideoState(): void {
   try {
     const video = pickBestVideo()
-    if (!video)
+    if (!video) {
+      iframe.send({
+        duration: 0,
+        currentTime: 0,
+        paused: true,
+        referrer: document.referrer,
+      })
       return
+    }
 
     const duration = getKnownDuration(video)
     const isFiniteDuration = Number.isFinite(duration) && duration > 0
