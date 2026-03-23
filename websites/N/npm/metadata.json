@@ -5,7 +5,7 @@
     "name": "CRUGG",
     "id": "228965621478588416"
   },
-  "service": "NPM Package Registry",
+  "service": "npm",
   "description": {
     "de": "Der Node Package Manager ist ein Paketmanager für die JavaScript-Laufzeitumgebung node.js.",
     "en": "The Node Package Manager is a package manager for the JavaScript runtime environment node.js.",
@@ -13,9 +13,9 @@
   },
   "url": "www.npmjs.com",
   "regExp": "^https?[:][/][/](www[.])?npmjs[.]com[/]",
-  "version": "1.3.0",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NPM%20Package%20Registry/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NPM%20Package%20Registry/assets/thumbnail.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/npm/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/npm/assets/thumbnail.png",
   "color": "#C12127",
   "category": "other",
   "tags": [
