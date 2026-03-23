@@ -288,7 +288,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = pageData.state
     }
   }
-]
+
 
   presence.setActivity(presenceData)
 })
