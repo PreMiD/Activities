@@ -7,7 +7,6 @@ let lastPage = ''
 
 /**
  * Converts a URL slug into a human-readable title.
- * e.g. "my-cool-lab" → "My Cool Lab"
  */
 function extractPageTitle(pathname: string): string | null {
   const parts = pathname.split('/').filter(p => p.length > 0)
@@ -271,15 +270,15 @@ presence.on('UpdateData', async () => {
     lastPage = pageData.page
   }
 
-  // PresenceData tipini esnek tutmak için any kullandık
   const presenceData: any = {
     startTimestamp,
   }
 
-  // Sensitive pages: only show "Logging In", hide details
+  // 265. Satır: ESLint Brace Style Düzeltmesi
   if (pageData.sensitive) {
     presenceData.details = pageData.details
-  } else {
+  }
+  else {
     if (pageData.details) {
       presenceData.details = pageData.details
     }
