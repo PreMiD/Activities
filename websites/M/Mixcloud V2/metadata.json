@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1189288634692685854",
+    "name": "412"
+  },
+  "service": "Mixcloud V2",
+  "description": {
+    "en": "Listen to the best DJs and radio presenters in the world for free.",
+    "th": "เว็บรวม DJs, เพลงรีมิกซ์ และสถานีวิทยุจากทั่วทุกมุมโลกไว้แบบฟรีๆในที่เดียว"
+  },
+  "url": "www.mixcloud.com",
+  "regExp": "^https?[:][/][/](www[.])?mixcloud[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mixcloud/assets/logo.png",
+  "thumbnail": "https://img1.pic.in.th/images/Screenshot-2026-03-23-020508.png",
+  "color": "#5000ff",
+  "category": "music",
+  "tags": [
+    "mixcloud"
+  ]
+}
