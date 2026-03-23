@@ -1,4 +1,4 @@
-import { Assets, ActivityType, StatusDisplayType } from 'premid'
+import { ActivityType, Assets, StatusDisplayType } from 'premid'
 
 const presence = new Presence({
   clientId: '1485354695961743402',
@@ -18,10 +18,16 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 // ฟังก์ชันแปลงเวลา 01:06:25 ให้กลายเป็นวินาที
 function getSeconds(timeStr: string | null | undefined): number {
-  if (!timeStr) return 0
+  if (!timeStr) {
+    return 0
+  }
   const parts = timeStr.split(':').map(Number)
-  if (parts.length === 3) return (parts[0] || 0) * 3600 + (parts[1] || 0) * 60 + (parts[2] || 0)
-  if (parts.length === 2) return (parts[0] || 0) * 60 + (parts[1] || 0)
+  if (parts.length === 3) {
+    return (parts[0] || 0) * 3600 + (parts[1] || 0) * 60 + (parts[2] || 0)
+  }
+  if (parts.length === 2) {
+    return (parts[0] || 0) * 60 + (parts[1] || 0)
+  }
   return 0
 }
 
@@ -68,7 +74,7 @@ presence.on('UpdateData', async () => {
         type: ActivityType.Watching,
         details: 'Browsing Mixcloud',
         largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/M/Mixcloud/assets/logo.png',
-        startTimestamp: browsingTimestamp
+        startTimestamp: browsingTimestamp,
       })
       return
     }
@@ -82,11 +88,13 @@ presence.on('UpdateData', async () => {
       smallImageText: isLive ? (await strings).live : (isPlaying ? (await strings).play : (await strings).pause),
     }
 
-    if (author) presenceData.state = author
+    if (author) {
+      presenceData.state = author
+    }
 
     // สร้างปุ่ม (Buttons)
     if (url && openUrlText) {
-      presenceData.buttons = [{ label: openUrlText, url: url }]
+      presenceData.buttons = [{ label: openUrlText, url }]
     }
 
     // จับเวลา (Timestamps)
@@ -104,13 +112,14 @@ presence.on('UpdateData', async () => {
     }
 
     presence.setActivity(presenceData)
-  } else {
-    // ถ้าไม่มี player เลย แสดงว่าแค่เปิดดูเว็บเฉยๆ 
+  }
+  else {
+    // ถ้าไม่มี player เลย แสดงว่าแค่เปิดดูเว็บเฉยๆ
     presence.setActivity({
       type: ActivityType.Watching,
       details: 'Browsing Mixcloud',
       largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/M/Mixcloud/assets/logo.png',
-      startTimestamp: browsingTimestamp
+      startTimestamp: browsingTimestamp,
     })
   }
 })
