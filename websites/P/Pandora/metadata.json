@@ -19,7 +19,7 @@
   },
   "url": "www.pandora.com",
   "regExp": "^https?[:][/][/](www[.])?pandora[.]com[/]",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pandora/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pandora/assets/thumbnail.png",
   "color": "#224099",
@@ -27,5 +27,18 @@
   "tags": [
     "music",
     "audio"
+  ],
+  "settings": [
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 1,
+      "values": [
+        "Activity Name",
+        "Artist Name",
+        "Song Title"
+      ]
+    }
   ]
 }
