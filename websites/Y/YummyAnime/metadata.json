@@ -5,6 +5,12 @@
     "id": "1045800378228281345",
     "name": "harryys"
   },
+  "contributors": [
+    {
+      "name": "ch1ka",
+      "id": "636569298936004608"
+    }
+  ],
   "service": "YummyAnime",
   "description": {
     "en": "Free anime streaming site with user lists and community features.",
