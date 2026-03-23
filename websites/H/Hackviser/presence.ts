@@ -22,7 +22,6 @@ function extractPageTitle(pathname: string): string | null {
 
 /**
  * Determines page info from the current pathname.
- * Ported from the Chrome extension's parseHackviserUrl() logic.
  */
 function getPageData(pathname: string): {
   page: string
@@ -209,7 +208,7 @@ function getPageData(pathname: string): {
     return {
       page: 'faq',
       details: 'Frequently Asked Questions',
-      state: 'Is looking for answers to the questions on his mind',
+      state: 'Looking for answers',
       sensitive: false,
     }
   }
@@ -272,15 +271,15 @@ presence.on('UpdateData', async () => {
     lastPage = pageData.page
   }
 
-  const presenceData: PresenceData = {
+  // PresenceData tipini esnek tutmak için any kullandık
+  const presenceData: any = {
     startTimestamp,
   }
 
   // Sensitive pages: only show "Logging In", hide details
   if (pageData.sensitive) {
     presenceData.details = pageData.details
-  }
-  else {
+  } else {
     if (pageData.details) {
       presenceData.details = pageData.details
     }
@@ -288,7 +287,6 @@ presence.on('UpdateData', async () => {
       presenceData.state = pageData.state
     }
   }
-
 
   presence.setActivity(presenceData)
 })
