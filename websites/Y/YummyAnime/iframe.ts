@@ -1,7 +1,3 @@
-declare class iFrame {
-  send(data: any): void
-  on(event: string, callback: (data: any) => void): void
-}
 const iframe = new iFrame()
 
 function getKnownDuration(video: HTMLVideoElement): number {

@@ -1,12 +1,5 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
-declare class Presence {
-  constructor(options: { clientId: string })
-  on(event: string, callback: (data: any) => void): void
-  setActivity(activity: any): void
-  getSetting<T>(key: string): Promise<T>
-}
-
 const presence = new Presence({
   clientId: '1045800378228281345',
 })
@@ -315,13 +308,10 @@ function applyPosterImage(presenceData: Record<string, unknown>): void {
   }
 
   if (
-    tryAssign(
-      document.querySelector('div.poster-block img') as HTMLImageElement,
-    )
+    tryAssign(document.querySelector<HTMLImageElement>('div.poster-block img'))
   ) {
     return
   }
-
   const posterish = document.querySelectorAll<HTMLImageElement>(
     'img[src*="imgproxy.yani.tv/posters"], img[data-src*="imgproxy.yani.tv/posters"]',
   )
