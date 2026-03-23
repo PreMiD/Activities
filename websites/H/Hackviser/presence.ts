@@ -288,14 +288,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = pageData.state
     }
   }
-
-  // Buttons
-  presenceData.buttons = [
-    {
-      label: 'Learn Cybersecurity',
-      url: 'https://hackviser.com/',
-    },
-  ]
+]
 
   presence.setActivity(presenceData)
 })
