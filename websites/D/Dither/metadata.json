@@ -12,11 +12,54 @@
   "url": "dither.pw",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*dither[.]pw[/]",
   "version": "1.0.0",
-  "logo": "https://dither.pw/uploads/internal/logo_black.png",
-  "thumbnail": "https://dither.pw/uploads/internal/logo_black.png",
+  "logo": "https://i.imgur.com/pFPLJ8y.png",
+  "thumbnail": "https://i.imgur.com/eBt7dnk.png",
   "color": "#000000",
   "category": "music",
   "tags": [
     "music"
+  ],
+  "settings": [
+    {
+      "id": "browse",
+      "title": "Show Browsing Activity",
+      "icon": "fas fa-eye",
+      "value": true
+    },
+    {
+      "id": "song",
+      "title": "Show Current Song",
+      "icon": "fas fa-music",
+      "value": true
+    },
+    {
+      "id": "hidePaused",
+      "title": "Hide when Paused",
+      "icon": "fas fa-eye-slash",
+      "value": false
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Timestamps",
+      "icon": "fas fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover Image",
+      "icon": "fas fa-image",
+      "value": true
+    },
+    {
+      "id": "displayType",
+      "title": "Presence Display Type",
+      "icon": "fas fa-list",
+      "value": 0,
+      "values": [
+        "Activity Name",
+        "Artist Name",
+        "Song Title"
+      ]
+    }
   ]
 }
