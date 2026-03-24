@@ -1,65 +1,5 @@
-const presence = new Presence({
-  clientId: '1483241564619669546',
-})
-
-const LOGO = 'https://i.imgur.com/D2pn7EL.png'
-const PLAY_ICON = 'https://i.imgur.com/Fi1hHy2.png'
-const PAUSE_ICON = 'https://i.imgur.com/OnySmVp.png'
-
-function findEpisode() {
-  const el = document.querySelector(
-    '[data-vc-element="top-playback-info-episode"] p.font-bold',
-  )
-
-  return el
-    ? el.textContent.trim()
-    : null
-}
-
-function findEpisodeTitle() {
-  const el = document.querySelector(
-    '[data-vc-element="top-playback-info-episode"] p:not(.font-bold)',
-  )
-
-  return el
-    ? el.textContent.trim()
-    : null
-}
-
-function findChapter() {
-  const nodes = document.querySelectorAll('div, span')
-
-  for (const n of nodes) {
-    const text = n.textContent
-      ? n.textContent.trim()
-      : ''
-
-    if (text && /^chapter\s*\d+/i.test(text)) {
-      return text
-    }
-  }
-
-  return null
-}
-
-function findPageCounter() {
-  const nodes = document.querySelectorAll('div, span')
-
-  for (const n of nodes) {
-    const text = n.textContent
-      ? n.textContent.trim()
-      : ''
-
-    if (text && /^\d+\s*\/\s*\d+$/.test(text)) {
-      return text
-    }
-  }
-
-  return null
-}
-
 presence.on('UpdateData', async () => {
-  console.log('Presence running')
+  console.warn('Presence running')
 
   const path = window.location.pathname
   const rawTitle = document.title.replace(' | Seanime', '')
@@ -94,20 +34,22 @@ presence.on('UpdateData', async () => {
     const episode = findEpisode()
     const episodeTitle = findEpisodeTitle()
 
-    const cleanTitle =
-      document
-        .querySelector('[data-vc-element="top-playback-info-title"]')
-        ?.textContent
-        ?.trim()
-      || rawTitle
+    const cleanTitle
+        = document
+            .querySelector('[data-vc-element="top-playback-info-title"]')
+            ?.textContent
+            ?.trim()
+        || rawTitle
 
-    const epNumber = episode
-      ? episode.match(/\d+/)
-      : null
+    const epNumber
+        = episode
+            ? episode.match(/\d+/)
+            : null
 
-    const epShort = epNumber
-      ? `Ep ${epNumber[0]}`
-      : null
+    const epShort
+        = epNumber
+            ? `Ep ${epNumber[0]}`
+            : null
 
     const current = Math.floor(video.currentTime || 0)
     const total = Math.floor(video.duration || 0)
@@ -117,9 +59,10 @@ presence.on('UpdateData', async () => {
 
     const paused = video.paused
 
-    const stateText = paused
-      ? `Paused • ${epShort || ''}\n${episodeTitle || ''}`.trim()
-      : `${epShort || ''}\n${episodeTitle || ''}`.trim()
+    const stateText
+        = paused
+            ? `Paused • ${epShort || ''}\n${episodeTitle || ''}`.trim()
+            : `${epShort || ''}\n${episodeTitle || ''}`.trim()
 
     presence.setActivity({
       type: 3,
