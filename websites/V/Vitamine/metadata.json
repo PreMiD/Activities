@@ -10,7 +10,7 @@
     "en": "Presence for Vitamine",
     "fr": "Plateforme de QCM / TAM"
   },
-  "url": "www.vitamine.tutorat-marseille.fr",
+  "url": "vitamine.tutorat-marseille.fr",
   "regExp": "^https?[:][/][/]vitamine[.]tutorat-marseille[.]fr[/](.*)$",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/A6FNvRr.png",
