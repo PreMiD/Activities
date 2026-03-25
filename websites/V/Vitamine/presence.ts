@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1486144929213321357'
+  clientId: '1486144929213321357',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -24,13 +24,13 @@ function buildPresenceData(): PresenceData {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.discordapp.com/app-assets/1486144929213321357/1486145329777610903.png',
     details: 'Vitamine',
-    startTimestamp: browsingTimestamp
+    startTimestamp: browsingTimestamp,
   }
 
   switch (true) {
     case pathname === '/':
       presenceData.details = 'Menu principal'
-      presenceData.state = "Page d'accueil"
+      presenceData.state = 'Page d\'accueil'
       break
 
     case pathname === '/anchoring/' || pathname.startsWith('/anchoring'):
@@ -54,14 +54,14 @@ function buildPresenceData(): PresenceData {
       break
 
     case pathname === '/course/' || pathname.startsWith('/course'): {
-      const ueTitle =
-        getText('h1.h3') ||
-        pageTitle ||
-        'Cours'
+      const ueTitle
+        = getText('h1.h3')
+          || pageTitle
+          || 'Cours'
 
-      const activeCourse =
-        getText('#courses-nav .nav-link.active') ||
-        getText('.pdf-file:not(.d-none) h4')
+      const activeCourse
+        = getText('#courses-nav .nav-link.active')
+          || getText('.pdf-file:not(.d-none) h4')
 
       presenceData.details = ueTitle
       presenceData.state = activeCourse || 'Consultation du cours'
@@ -75,10 +75,10 @@ function buildPresenceData(): PresenceData {
 
     case pathname.startsWith('/comment/'): {
       const commentId = pathname.match(/\/comment\/(\d+)/)?.[1]
-      const commentTitle =
-        getText('h1') ||
-        getText('.card h4') ||
-        getText('.card-title')
+      const commentTitle
+        = getText('h1')
+          || getText('.card h4')
+          || getText('.card-title')
 
       presenceData.details = 'Commentaires'
       presenceData.state = commentTitle || (commentId ? `Commentaire #${commentId}` : 'Lecture des commentaires')
@@ -91,7 +91,7 @@ function buildPresenceData(): PresenceData {
       break
 
     case pathname === '/settings/card' || pathname.startsWith('/settings/card'):
-      presenceData.details = "Carte d'adhérent"
+      presenceData.details = 'Carte d\'adhérent'
       presenceData.state = 'Consultation de la carte'
       break
 
@@ -107,98 +107,104 @@ function buildPresenceData(): PresenceData {
 
     case pathname === '/cgu' || pathname.startsWith('/cgu'):
       presenceData.details = 'CGU'
-      presenceData.state = "Lecture des conditions d'utilisation"
+      presenceData.state = 'Lecture des conditions d\'utilisation'
       break
 
-case pathname.startsWith('/session/'): {
-  const sessionTitle =
-    getText('h1') ||
-    getText('.anchoring-title') ||
-    pageTitle ||
-    'Session'
+    case pathname.startsWith('/session/'): {
+      const sessionTitle
+        = getText('h1')
+          || getText('.anchoring-title')
+          || pageTitle
+          || 'Session'
 
-  const courseInfo =
-    document.querySelector('.card .text-muted.text-end u')?.parentElement?.textContent?.trim() ||
-    getText('.text-muted.px-2.fst-italic.py-1.text-end') ||
-    ''
+      const courseInfo
+        = document.querySelector('.card .text-muted.text-end u')?.parentElement?.textContent?.trim()
+          || getText('.text-muted.px-2.fst-italic.py-1.text-end')
+          || ''
 
-  const cleanedCourseInfo = courseInfo.replace(/\s+/g, ' ').trim()
+      const cleanedCourseInfo = courseInfo.replace(/\s+/g, ' ').trim()
 
-  const remainingMatch = pageText.match(/(\d+)\s+questions?\s+restantes/i)
-  const cleanCountdown = extractCountdown()
-  const questionNumber = getText('.card-header strong')
+      const remainingMatch = pageText.match(/(\d+)\s+questions?\s+restantes/i)
+      const cleanCountdown = extractCountdown()
+      const questionNumber = getText('.card-header strong')
 
-  const questionCards = Array.from(document.querySelectorAll('[id^="mcq-"], .card[id^="mcq-"]'))
-  const visibleQuestionCards = questionCards.filter((el) => {
-    const htmlEl = el as HTMLElement
-    return !!(htmlEl.offsetParent !== null)
-  })
+      const questionCards = Array.from(document.querySelectorAll('[id^="mcq-"], .card[id^="mcq-"]'))
+      const visibleQuestionCards = questionCards.filter((el) => {
+        const htmlEl = el as HTMLElement
+        return htmlEl.offsetParent !== null
+      })
 
-  const questionCount = visibleQuestionCards.length
+      const questionCount = visibleQuestionCards.length
 
-  const hasSubmitButton =
-    Array.from(document.querySelectorAll('button, input[type="submit"]')).some((el) =>
-      /valider la réponse|valider|terminer/i.test(el.textContent || '')
-    )
+      const hasSubmitButton
+        = Array.from(document.querySelectorAll('button, input[type="submit"]')).some((el) => {
+          return /valider la réponse|valider|terminer/i.test(el.textContent || '')
+        })
 
-  const looksLikeExamTitle =
-    /séance|seance|épreuve|epreuve|qcm n°|qcm n|pass\s*-|ue\d+/i.test(sessionTitle)
+      const looksLikeExamTitle
+        = /séance|seance|épreuve|epreuve|qcm n°|qcm n|pass\s*-|ue\d+/i.test(sessionTitle)
 
-  const looksLikeExamByPage =
-    !!cleanCountdown &&
-    (questionCount >= 2 || looksLikeExamTitle || hasSubmitButton)
+      const looksLikeExamByPage
+        = !!cleanCountdown
+          && (questionCount >= 2 || looksLikeExamTitle || hasSubmitButton)
 
-  const isExam = looksLikeExamTitle || looksLikeExamByPage
-  const isAnchoring = /ancrage/i.test(sessionTitle) || /questions?\s+restantes/i.test(pageText)
-  const isBank = /banque/i.test(sessionTitle)
+      const isExam = looksLikeExamTitle || looksLikeExamByPage
+      const isAnchoring = /ancrage/i.test(sessionTitle) || /questions?\s+restantes/i.test(pageText)
+      const isBank = /banque/i.test(sessionTitle)
 
-  switch (true) {
-    case isExam: {
-      presenceData.details = sessionTitle
+      switch (true) {
+        case isExam: {
+          presenceData.details = sessionTitle
 
-      if (questionCount >= 2) {
-        presenceData.state = cleanCountdown
-          ? `${questionCount} questions • ${cleanCountdown}`
-          : `${questionCount} questions en cours`
-      } else if (questionNumber) {
-        presenceData.state = cleanCountdown
-          ? `${questionNumber} • ${cleanCountdown}`
-          : questionNumber
-      } else {
-        presenceData.state = cleanCountdown
-          ? `Temps restant : ${cleanCountdown}`
-          : 'Épreuve en cours'
+          if (questionCount >= 2) {
+            presenceData.state = cleanCountdown
+              ? `${questionCount} questions • ${cleanCountdown}`
+              : `${questionCount} questions en cours`
+          }
+          else if (questionNumber) {
+            presenceData.state = cleanCountdown
+              ? `${questionNumber} • ${cleanCountdown}`
+              : questionNumber
+          }
+          else {
+            presenceData.state = cleanCountdown
+              ? `Temps restant : ${cleanCountdown}`
+              : 'Épreuve en cours'
+          }
+          break
+        }
+
+        case isAnchoring:
+          presenceData.details = cleanedCourseInfo || 'Ancrage'
+          presenceData.state = remainingMatch
+            ? (
+                cleanCountdown
+                  ? `${remainingMatch[1]} QCM restants • ${cleanCountdown}`
+                  : `${remainingMatch[1]} QCM restants`
+              )
+            : (
+                cleanCountdown
+                  ? `${questionNumber || 'Session ancrage'} • ${cleanCountdown}`
+                  : questionNumber || 'Session ancrage en cours'
+              )
+          break
+
+        case isBank:
+          presenceData.details = cleanedCourseInfo || 'Banque'
+          presenceData.state = cleanCountdown
+            ? `${questionNumber || 'Session banque'} • ${cleanCountdown}`
+            : questionNumber || 'Session banque en cours'
+          break
+
+        default:
+          presenceData.details = cleanedCourseInfo || sessionTitle || 'Session'
+          presenceData.state = cleanCountdown
+            ? `${questionNumber || 'Session en cours'} • ${cleanCountdown}`
+            : questionNumber || 'Session en cours'
+          break
       }
       break
     }
-
-    case isAnchoring:
-      presenceData.details = cleanedCourseInfo || 'Ancrage'
-      presenceData.state = remainingMatch
-        ? cleanCountdown
-          ? `${remainingMatch[1]} QCM restants • ${cleanCountdown}`
-          : `${remainingMatch[1]} QCM restants`
-        : cleanCountdown
-          ? `${questionNumber || 'Session ancrage'} • ${cleanCountdown}`
-          : questionNumber || 'Session ancrage en cours'
-      break
-
-    case isBank:
-      presenceData.details = cleanedCourseInfo || 'Banque'
-      presenceData.state = cleanCountdown
-        ? `${questionNumber || 'Session banque'} • ${cleanCountdown}`
-        : questionNumber || 'Session banque en cours'
-      break
-
-    default:
-      presenceData.details = cleanedCourseInfo || sessionTitle || 'Session'
-      presenceData.state = cleanCountdown
-        ? `${questionNumber || 'Session en cours'} • ${cleanCountdown}`
-        : questionNumber || 'Session en cours'
-      break
-  }
-  break
-}
 
     case pathname.startsWith('/files/course/'): {
       const filename = pathname.split('/').pop() || 'Fichier'
@@ -224,15 +230,19 @@ function updatePresence(force = false): void {
     path: location.pathname,
     title: document.title,
     details: data.details,
-    state: data.state
+    state: data.state,
   })
 
-  if (!force && signature === lastSignature) return
+  if (!force && signature === lastSignature) {
+    return
+  }
+
   lastSignature = signature
 
   if (data.state || data.details) {
     presence.setActivity(data)
-  } else {
+  }
+  else {
     presence.clearActivity()
   }
 }
@@ -268,7 +278,7 @@ const observer = new MutationObserver(() => {
 observer.observe(document.body, {
   childList: true,
   subtree: true,
-  characterData: true
+  characterData: true,
 })
 
 setInterval(() => {

@@ -7,9 +7,10 @@
   },
   "service": "Vitamine",
   "description": {
+    "en": "Presence for Vitamine",
     "fr": "Plateforme de QCM / TAM"
   },
-  "url": "https://vitamine.tutorat-marseille.fr",
+  "url": "www.vitamine.tutorat-marseille.fr",
   "regExp": "^https?[:][/][/]vitamine[.]tutorat-marseille[.]fr[/](.*)$",
   "version": "1.0.0",
   "logo": "https://cdn.discordapp.com/app-assets/1486144929213321357/1486145329777610903.png",
