@@ -8,7 +8,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 let lastKnownTitle = "";
 
 enum ActivityAssets {
-    Logo = 'https://cdn.abacus.ai/chatllm/favicon.ico',
+    Logo = 'https://play-lh.googleusercontent.com/O35u7LcmgKHsRpEQvHmT9ACfvDvP5S6HRIVmz-x-spUhojXIcnk0wbMEqaBSWPUJYQ?.png',
 }
 
 presence.on("UpdateData", async () => {
