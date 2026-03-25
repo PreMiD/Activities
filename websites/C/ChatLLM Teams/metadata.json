@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "621775934382669894",
+    "name": "Clover Y5 Network"
+  },
+  "service": "ChatLLM Teams",
+  "altnames": ["Abacus AI", "ChatLLM"],
+  "description": {
+    "en": "ChatLLM Teams by Abacus.AI - An AI super assistant powered by large language models with access to multiple AI models including GPT-4, Claude, Gemini and more.",
+    "es": "ChatLLM Teams de Abacus.AI - Un super asistente de IA con acceso a multiples modelos de lenguaje como GPT-4, Claude, Gemini y mas."
+  },
+  "url": "apps.abacus.ai",
+  "regExp": "^https?[:][/][/]apps[.]abacus[.]ai[/]chatllm.*",
+  "version": "1.0.0",
+  "logo": "https://play-lh.googleusercontent.com/O35u7LcmgKHsRpEQvHmT9ACfvDvP5S6HRIVmz-x-spUhojXIcnk0wbMEqaBSWPUJYQ",
+  "thumbnail": "https://www.hrkatha.com/wp-content/uploads/2022/01/Abacus.png",
+  "color": "#4F46E5",
+  "category": "other",
+  "tags": [
+    "ai",
+    "chat",
+    "assistant",
+    "llm",
+    "abacus",
+    "productivity"
+  ],
+  "settings": [
+    {
+      "id": "title",
+      "title": "Show Chat Title",
+      "icon": "fad fa-user-secret",
+      "value": true
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Timestamp",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    }
+  ]
+}
