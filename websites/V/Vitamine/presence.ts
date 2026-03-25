@@ -22,7 +22,7 @@ function buildPresenceData(): PresenceData {
   const pageTitle = document.title?.replace(/^Vitamine\s*·\s*/i, '').trim() || 'Vitamine'
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.discordapp.com/app-assets/1486144929213321357/1486145329777610903.png',
+    largeImageKey: 'https://i.imgur.com/A6FNvRr.png',
     details: 'Vitamine',
     startTimestamp: browsingTimestamp,
   }
