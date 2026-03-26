@@ -25,5 +25,5 @@
   "category": "anime",
   "tags": ["anime", "video"],
   "iframe": true,
-  "iFrameRegExp": "(kodik\\.(info|cc|biz|online)|aniqit\\.com|alloha\\.yani\\.tv|player\\.cdnvideohub\\.com|iframeCVH\\.html|vkuker\\.net)"
+  "iFrameRegExp": "(kodik\\.(info|cc|biz|online)|kodikplayer\\.com|aniqit\\.com|alloha\\.yani\\.tv|player\\.cdnvideohub\\.com|iframeCVH\\.html|vkuker\\.net)"
 }
