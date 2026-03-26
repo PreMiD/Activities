@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.7",
+  "author": {
+    "name": "ashenpath",
+    "id": "854246268157820929"
+  },
+  "contributors": [],
+  "service": "DTPlex",
+  "altnames": ["dtplex"],
+  "description": {
+    "en": "Watch movies, TV shows, and anime on DTPlex — your personal streaming platform."
+  },
+  "url": "dtplex.netlify.app",
+  "regExp": "dtplex\\.netlify\\.app",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/5pyGibd.png",
+  "thumbnail": "https://i.imgur.com/5pyGibd.png",
+  "color": "#e50914",
+  "category": "videos",
+  "tags": ["movies", "tv", "anime", "streaming"],
+  "iframe": false,
+  "settings": [
+    {
+      "id": "showTitle",
+      "title": "Show title",
+      "icon": "fas fa-film",
+      "value": true
+    },
+    {
+      "id": "showEpisode",
+      "title": "Show episode info",
+      "icon": "fas fa-list",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show elapsed time",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show buttons",
+      "icon": "fas fa-mouse-pointer",
+      "value": true
+    }
+  ]
+}
