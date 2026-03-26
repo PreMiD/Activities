@@ -8,7 +8,7 @@ const presence = new Presence({
 
 const LOGO_URL
   = 'https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/logo.png'
-const BASE_URL = 'https://cineby.gd'
+const BASE_URL = 'https://www.cineby.sc'
 const TMDB_IMG = 'https://image.tmdb.org/t/p/original'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
