@@ -36,7 +36,7 @@ export interface AnimeDetails {
 const cache: Map<string, unknown> = new Map()
 
 export class CinebyApi {
-  private static readonly BASE_URL = 'https://www.cineby.sc/3'
+  private static readonly BASE_URL = 'https://jumpfreedom.com/3'
   private static readonly ANIME_URL = 'https://api.videasy.net/hianime'
 
   public static async getCurrent<T>(pathname: string): Promise<T> {
