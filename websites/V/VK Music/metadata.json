@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "potma13",
+    "id": "416596242370658314"
+  },
+  "service": "VK Music",
+  "description": {
+    "en": "Listen to music from VKontakte.",
+    "ru": "Слушайте музыку ВКонтакте."
+  },
+  "url": "vk.com",
+  "regExp": ".*[.]?vk[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VK/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VK/assets/thumbnail.png",
+  "color": "#2787F5",
+  "category": "music",
+  "tags": ["music", "audio", "streaming"],
+  "settings": [
+    {
+      "id": "timestamp",
+      "title": "Show Timestamps",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Show Album Cover",
+      "icon": "fas fa-images",
+      "value": true
+    },
+    {
+      "id": "hidePaused",
+      "title": "Hide while paused",
+      "icon": "fas fa-pause",
+      "value": false
+    }
+  ]
+}
