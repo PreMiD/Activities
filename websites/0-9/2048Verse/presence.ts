@@ -17,58 +17,59 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
   const { pathname, href } = document.location
-  const gridSize = `${document.querySelectorAll('.grid-row').length.toString()}x${(
-    document.querySelectorAll('.grid-cell').length
-    / document.querySelectorAll('.grid-row').length
-  ).toString()}`
-
+  const board = document.querySelector('.board')
+  let gridSize = ''
+  if (board) {
+    const computedStyle = window.getComputedStyle(board)
+    gridSize = `${computedStyle.getPropertyValue('--board-height')}x${
+      computedStyle.getPropertyValue('--board-width')}`
+  }
   if (pathname.split('/')[1] === 'leaderboard') {
     let leaderboardType
-    switch (document.querySelector<HTMLDivElement>('#marker')?.style.left) {
-      case '-280px': {
+    const variant = pathname.split('/')[2]
+    switch (pathname.split('/')[3]) {
+      case 'all': {
         leaderboardType = 'All Time'
         break
       }
-      case '-157px': {
+      case 'day': {
         leaderboardType = 'Today'
         break
       }
-      case '-44px': {
+      case 'week': {
         leaderboardType = 'Week'
         break
       }
     }
     presenceData.details = 'Viewing leaderboard'
-    presenceData.state = `${
-      document.querySelector<HTMLSelectElement>('#variant')?.value
-    } ${leaderboardType}`
+    presenceData.state = `${variant} ${leaderboardType}`
   }
   else if (pathname.split('/')[1] === 'user') {
     presenceData.details = 'Viewing profile'
-    presenceData.state = document.querySelector('h1.title')?.firstChild?.textContent
+    presenceData.state = pathname.split('/')[2]
     presenceData.buttons = [{ label: 'View Profile', url: href }]
   }
   else if (pathname.split('/')[1] === 'replay') {
     presenceData.details = `Watching replay ${gridSize}`
     presenceData.state = `Score ${
-      document.querySelector('.score-container')?.firstChild?.textContent
+      document.querySelector('#SCORE .info-value')?.textContent
     }`
   }
   else if (pathname.split('/')[1] === 'p') {
-    presenceData.details = `Practising ${gridSize}`
-    presenceData.state = `Score ${
-      document.querySelector('.score-container')?.firstChild?.textContent
-    } Best ${document.querySelector('.best-container')?.textContent}`
+    presenceData.details = `Practicing ${gridSize}`
   }
   else if (pathname.split('/')[1] === 'lessons') {
     presenceData.details = 'Browsing lessons'
   }
-  else if (document.querySelectorAll('.grid-row').length) {
+  else if (pathname.split('/')[1] === 'settings') {
+    presenceData.details = 'Changing settings'
+  }
+  else if (board) {
     presenceData.details = `Playing ${gridSize}`
 
     presenceData.state = `Score ${
-      document.querySelector('.score-container')?.firstChild?.textContent
-    } Best ${document.querySelector('.best-container')?.textContent}`
+      document.querySelector('#SCORE .info-value')?.textContent
+    } Best ${document.querySelector('#BEST .info-value')?.textContent}`
   }
 
   if (!time)

@@ -1,0 +1,70 @@
+{
+  "gemini.aiResponding": {
+    "description": "Displayed when the AI is generating a response.",
+    "message": "Gemini is responding..."
+  },
+  "gemini.askQuestions": {
+    "description": "Displayed when the user is asking questions to the AI.",
+    "message": "Asking questions"
+  },
+  "gemini.browseGems": {
+    "description": "Displayed when the user is browsing existing gems.",
+    "message": "Browsing existing Gems"
+  },
+  "gemini.conversationStats": {
+    "description": "Displayed to show the number of words the user used and total words used, e.g., 'asked 3 times | 150 words'.",
+    "message": "Asked {0} words | answered with {1} words."
+  },
+  "gemini.createGem": {
+    "description": "Displayed when the user is creating a gem.",
+    "message": "Creating a new Gem"
+  },
+  "gemini.editGem": {
+    "description": "Displayed when the user is editing a gem.",
+    "message": "Editing a Gem"
+  },
+  "gemini.editingInstructions": {
+    "description": "Displayed when the user is editing instructions for Gemini.",
+    "message": "Editing instructions for Gemini"
+  },
+  "gemini.manageConnectedApps": {
+    "description": "Displayed when the user is managing their connected apps.",
+    "message": "Managing Connected Apps"
+  },
+  "gemini.managePublicLinks": {
+    "description": "Displayed when the user is managing their public links.",
+    "message": "Managing their public links"
+  },
+  "gemini.manageScheduledActions": {
+    "description": "Displayed when the user is managing their scheduled actions.",
+    "message": "Managing Scheduled Actions"
+  },
+  "gemini.readSharedChat": {
+    "description": "Displayed when the user is reading a shared chat.",
+    "message": "Reading a shared chat"
+  },
+  "gemini.searchChat": {
+    "description": "Displayed when the user is searching a chat.",
+    "message": "Searching a chat"
+  },
+  "gemini.startNewConversation": {
+    "description": "Displayed when the user is starting a new conversation.",
+    "message": "Start new conversation"
+  },
+  "gemini.talkingInTemporaryChat": {
+    "description": "Displayed when the user is talking in temporary chat.",
+    "message": "Talking in temporary chat"
+  },
+  "gemini.talkingWithAI": {
+    "description": "Displayed when the user is engaging in a conversation with the AI.",
+    "message": "Talking with Gemini about something"
+  },
+  "gemini.thinkingOfPrompt": {
+    "description": "Displayed when the user is thinking of a new prompt.",
+    "message": "Thinking of a new prompt..."
+  },
+  "gemini.viewTheirGeneratedStuff": {
+    "description": "Displayed when the user is viewing their generated content.",
+    "message": "Viewing their generated stuff"
+  }
+}

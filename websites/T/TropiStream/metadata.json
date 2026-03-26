@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "505270457109315585",
+    "name": "ext4zy_omega"
+  },
+  "service": "TropiStream",
+  "description": {
+    "en": "Streaming platform to watch movies and TV series on TropiStream.",
+    "fr": "Plateforme de streaming pour regarder des films et séries sur TropiStream."
+  },
+  "url": "tropistream.fr",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tropistream[.]fr[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TropiStream/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TropiStream/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "videos",
+  "tags": [
+    "streaming",
+    "movies",
+    "series"
+  ]
+}

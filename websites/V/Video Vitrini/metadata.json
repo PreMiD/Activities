@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1474886151092568244",
+    "name": "bartucivas39"
+  },
+  "service": "Video Vitrini",
+  "description": {
+    "en": "Video Vitrini is a video sharing platform where you can discover, watch and share the most entertaining videos.",
+    "tr": "Video Vitrini; en eğlenceli videoları keşfedebileceğiniz, izleyebileceğiniz ve paylaşabileceğiniz video platformudur."
+  },
+  "url": [
+    "videovitrini.com",
+    "www.videovitrini.com"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*videovitrini[.]com[/](watch|shorts)",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Video%20Vitrini/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Video%20Vitrini/assets/thumbnail.png",
+  "color": "#FF0000",
+  "category": "videos",
+  "tags": [
+    "video",
+    "videos",
+    "watch",
+    "entertainment",
+    "youtube-alternative"
+  ]
+}
