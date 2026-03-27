@@ -87,7 +87,9 @@ presence.on('UpdateData', async () => {
     presenceData.endTimestamp = Date.now() / 1000
       + presence.timestampFromFormat(
         document
-          .querySelector('div.sXaGQzYs9WqImj2uxDCBs > span:nth-child(2)')!.textContent!.match(/[0-9:]+/)![0],
+          .querySelector('div.sXaGQzYs9WqImj2uxDCBs > span:nth-child(2)')!
+          .textContent!
+          .match(/[0-9:]+/)![0],
       )
 
     if (cover) {

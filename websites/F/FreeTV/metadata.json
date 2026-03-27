@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "199902444442877952",
+    "name": "igatx"
+  },
+  "service": "FreeTV",
+  "description": {
+    "en": "Watch FreeTV channels online on tv.free.fr.",
+    "fr": "Regardez les chaînes FreeTV en ligne sur tv.free.fr."
+  },
+  "url": "tv.free.fr",
+  "regExp": "^https?://tv\\.free\\.fr",
+  "version": "1.0.0",
+  "logo": "https://cacavision.site/assets/freetv.png",
+  "thumbnail": "https://play-lh.googleusercontent.com/3lbjENQv8f9WfjbYq-V9yfzKTVNVmwIW9bib1OYm-oYs2dQf-gmo3fek0NdbACY3mcbwhyZmJgl9YN9xA_RXsw=w2560-h1440-rw#.png",
+  "color": "#cc0000",
+  "category": "videos",
+  "tags": [
+    "tv",
+    "video",
+    "streaming",
+    "french",
+    "freebox"
+  ]
+}
