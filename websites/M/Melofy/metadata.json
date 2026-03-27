@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "694480378769178645",
+    "name": "lazy_shrey"
+  },
+  "service": "Melofy",
+  "description": {
+    "en": "Melofy is a music streaming app built with Next.js and Node.js. It offers a seamless and intuitive user experience, allowing users to discover and enjoy their favorite music on the go. With a vast library of songs, personalized playlists, and offline listening capabilities, Melofy is the ultimate companion for music lovers everywhere."
+  },
+  "url": "melofy.jene.in",
+  "regExp": "^https?[:][/][/]melofy[.]jene[.]in[/]",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/HpfVk6KN/melofy.png",
+  "thumbnail": "https://i.ibb.co/HpfVk6KN/melofy.png",
+  "color": "#000000",
+  "category": "music",
+  "tags": [
+    "music",
+    "songs",
+    "spotify"
+  ],
+  "settings": [
+    {
+      "id": "showJam",
+      "title": "Show Jam",
+      "icon": "fas fa-music",
+      "value": true
+    }
+  ]
+}
