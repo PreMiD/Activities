@@ -831,39 +831,39 @@ declare global {
   }
 
   interface AutoVideoHandle {
-    detach(): void
-    onSyncCommand(handler: (cmd: SyncScriptSyncCommand) => void): () => void
-    reportAd(isInAd: boolean): void
-    reportBuffering(isBuffering: boolean): void
+    detach: () => void
+    onSyncCommand: (handler: (cmd: SyncScriptSyncCommand) => void) => () => void
+    reportAd: (isInAd: boolean) => void
+    reportBuffering: (isBuffering: boolean) => void
   }
 
   interface ManualVideoHandle {
-    reportPlayback(status: SyncScriptPlaybackReport): void
-    onSyncCommand(handler: (cmd: SyncScriptSyncCommand) => void): () => void
-    reportAd(isInAd: boolean): void
-    reportBuffering(isBuffering: boolean): void
-    release(): void
+    reportPlayback: (status: SyncScriptPlaybackReport) => void
+    onSyncCommand: (handler: (cmd: SyncScriptSyncCommand) => void) => () => void
+    reportAd: (isInAd: boolean) => void
+    reportBuffering: (isBuffering: boolean) => void
+    release: () => void
   }
 
   interface SyncScriptVideoAPI {
-    attach(element: HTMLMediaElement | string): AutoVideoHandle
-    takeControl(options: SyncScriptTakeControlOptions): ManualVideoHandle
-    reportAd(isInAd: boolean): void
-    reportBuffering(isBuffering: boolean): void
+    attach: (element: HTMLMediaElement | string) => AutoVideoHandle
+    takeControl: (options: SyncScriptTakeControlOptions) => ManualVideoHandle
+    reportAd: (isInAd: boolean) => void
+    reportBuffering: (isBuffering: boolean) => void
   }
 
   interface MessagingNamespace {
-    send(key: string, data: unknown): void
-    request(key: string, data: unknown): Promise<unknown>
-    onMessage(key: string, handler: (data: unknown) => void): () => void
-    onRequest(key: string, handler: (data: unknown) => unknown | Promise<unknown>): () => void
+    send: (key: string, data: unknown) => void
+    request: (key: string, data: unknown) => Promise<unknown>
+    onMessage: (key: string, handler: (data: unknown) => void) => () => void
+    onRequest: (key: string, handler: (data: unknown) => unknown | Promise<unknown>) => () => void
   }
 
   interface IframeMessaging {
-    send(frameId: number, key: string, data: unknown): void
-    request(frameId: number, key: string, data: unknown): Promise<unknown>
-    onMessage(key: string, handler: (data: unknown, frameId: number) => void): () => void
-    onRequest(key: string, handler: (data: unknown, frameId: number) => unknown | Promise<unknown>): () => void
+    send: (frameId: number, key: string, data: unknown) => void
+    request: (frameId: number, key: string, data: unknown) => Promise<unknown>
+    onMessage: (key: string, handler: (data: unknown, frameId: number) => void) => () => void
+    onRequest: (key: string, handler: (data: unknown, frameId: number) => unknown | Promise<unknown>) => () => void
   }
 
   interface PartyState {
@@ -871,20 +871,20 @@ declare global {
     readonly paused: boolean
     readonly active: boolean
     readonly isHost: boolean
-    onRoleChange(handler: (role: 'controller' | 'follower') => void): () => void
-    onPauseChange(handler: (paused: boolean) => void): () => void
-    onActiveChange(handler: (active: boolean) => void): () => void
+    onRoleChange: (handler: (role: 'controller' | 'follower') => void) => () => void
+    onPauseChange: (handler: (paused: boolean) => void) => () => void
+    onActiveChange: (handler: (active: boolean) => void) => () => void
   }
 
   interface SyncScriptContext {
-    features(features: { video?: boolean, cursor?: boolean, scroll?: boolean }): void
+    features: (features: { video?: boolean, cursor?: boolean, scroll?: boolean }) => void
 
     video: SyncScriptVideoAPI
 
-    setPageInfo(info: SyncScriptPageInfo): void
+    setPageInfo: (info: SyncScriptPageInfo) => void
 
-    sendCustomData(key: string, data: unknown): void
-    onCustomData(key: string, handler: (data: unknown) => void): () => void
+    sendCustomData: (key: string, data: unknown) => void
+    onCustomData: (key: string, handler: (data: unknown) => void) => () => void
 
     iframe: IframeMessaging
     mainworld: MessagingNamespace
@@ -893,30 +893,30 @@ declare global {
   }
 
   interface SyncScriptDefinition {
-    setup(ctx: SyncScriptContext): (() => void) | void
-    onNavigate?(ctx: SyncScriptContext, url: string): void
+    setup: (ctx: SyncScriptContext) => (() => void) | void
+    onNavigate?: (ctx: SyncScriptContext, url: string) => void
   }
 
   interface SyncScriptHandle {
-    destroy(): void
+    destroy: () => void
   }
 
   interface SyncIframeVideoAPI {
-    attach(element: HTMLMediaElement | string): AutoVideoHandle
-    onSyncCommand(handler: (cmd: SyncScriptSyncCommand) => void): () => void
+    attach: (element: HTMLMediaElement | string) => AutoVideoHandle
+    onSyncCommand: (handler: (cmd: SyncScriptSyncCommand) => void) => () => void
   }
 
   interface SyncIframeContext {
     video: SyncIframeVideoAPI
 
-    sendCustomData(key: string, data: unknown): void
-    onCustomData(key: string, handler: (data: unknown) => void): () => void
+    sendCustomData: (key: string, data: unknown) => void
+    onCustomData: (key: string, handler: (data: unknown) => void) => () => void
 
     content: MessagingNamespace
   }
 
   interface SyncIframeScriptDefinition {
-    setup(ctx: SyncIframeContext): (() => void) | void
+    setup: (ctx: SyncIframeContext) => (() => void) | void
   }
 
   interface SyncMainworldContext {
@@ -924,19 +924,19 @@ declare global {
   }
 
   interface SyncMainworldScriptDefinition {
-    setup(ctx: SyncMainworldContext): (() => void) | void
+    setup: (ctx: SyncMainworldContext) => (() => void) | void
   }
 
   const SyncScript: {
-    register(definition: SyncScriptDefinition): SyncScriptHandle
+    register: (definition: SyncScriptDefinition) => SyncScriptHandle
   }
 
   const SyncIframeScript: {
-    register(definition: SyncIframeScriptDefinition): SyncScriptHandle
+    register: (definition: SyncIframeScriptDefinition) => SyncScriptHandle
   }
 
   const SyncMainworldScript: {
-    register(definition: SyncMainworldScriptDefinition): SyncScriptHandle
+    register: (definition: SyncMainworldScriptDefinition) => SyncScriptHandle
   }
 
 }
