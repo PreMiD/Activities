@@ -48,7 +48,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = title ? `"${title}"` : 'Unknown Module'
   }
 
-  else if (pathname.includes('/my-certificates')) {
+  else if (pathname.includes('/certificates')) {
     presenceData.details = 'Looking at certificates'
     presenceData.state = 'Admiration Mode'
   }
