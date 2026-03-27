@@ -5,12 +5,6 @@
     "name": "Bas950",
     "id": "241278257335500811"
   },
-  "contributors": [
-    {
-      "name": "Ollie",
-      "id": "1337437594228883569"
-    }
-  ],
   "service": "UpBeatRadio",
   "description": {
     "en": "UpBeat is an ad-free, community powered online radio.",
@@ -19,9 +13,9 @@
   },
   "url": "upbeatradio.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*upbeatradio[.]net[/]",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/UpBeatRadio/assets/thumbnail.png",
+  "thumbnail": "https://i.imgur.com/UJWFFkq.png",
   "color": "#212121",
   "category": "music",
   "tags": [
