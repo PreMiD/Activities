@@ -272,7 +272,7 @@ presence.on('UpdateData', async () => {
 
   const presenceData: any = {
     startTimestamp,
-    largeImageKey: "https://i.ibb.co/ns57qq7g/512x512.jpg",
+    largeImageKey: 'https://i.ibb.co/ns57qq7g/512x512.jpg',
   }
 
   // 265. Satır: ESLint Brace Style Düzeltmesi
