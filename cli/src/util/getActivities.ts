@@ -59,6 +59,7 @@ export async function getChangedActivities(): Promise<{
     '/',
     process.cwd(),
     resolve(process.cwd(), 'websites'),
+    resolve(process.cwd(), 'syncScripts'),
   ]
 
   const modifiedAddedFiles = changedFiles.filter(file => !file.deleted)
