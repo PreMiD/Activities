@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.7",
+  "author": {
+    "name": "devuandoru",
+    "id": "1478224736298471566"
+  },
+  "contributors": [],
+  "service": "CreamSodaBoys",
+  "altnames": ["CSB", "creamsodaboys"],
+  "description": {
+    "en": "CreamSodaBoys — a community built around music, vibes, and real ones."
+  },
+  "url": "creamsodaboys.org",
+  "version": "1.0.0",
+  "logo": "https://creamsodaboys.org/images/og-default.png",
+  "thumbnail": "https://creamsodaboys.org/images/og-default.png",
+  "color": "#60cdff",
+  "tags": ["music", "community", "social"],
+  "category": "socials",
+  "settings": [
+    {
+      "id": "showPage",
+      "title": "Show current page",
+      "icon": "fas fa-file",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show elapsed time",
+      "icon": "fas fa-clock",
+      "value": true
+    }
+  ]
+}
