@@ -272,6 +272,8 @@ presence.on('UpdateData', async () => {
 
   const presenceData: any = {
     startTimestamp,
+    largeImageKey: "https://delivery.pixelbin.io/predictions/outputs/1d/sr/upscaleRestricted/019d2fcb-015d-744f-8b62-42257627de31/result_0.jpeg",
+    largeImageText: "Hackviser"
   }
 
   // 265. Satır: ESLint Brace Style Düzeltmesi
