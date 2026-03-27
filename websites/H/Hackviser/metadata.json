@@ -11,7 +11,7 @@
     "tr": "Hackviser, laboratuvarlar, CTF yarışmaları, öğrenme yolları ve gerçek dünya senaryoları aracılığıyla siber güvenlik becerilerinizi geliştirebileceğiniz çevrimiçi bir eğitim platformudur."
   },
   "url": "hackviser.com",
-  "regExp": "([a-zA-Z0-9-]+\\.)*hackviser\\.com",
+  "regExp": "^https?[:][/][/]([a-zA-Z0-9-]+[.])*hackviser[.]com[/]",
   "version": "1.0.0",
   "logo": "https://github.com/user-attachments/assets/609306cf-204f-4916-8940-28e9f789b7ac?v=.png",
   "thumbnail": "https://github.com/user-attachments/assets/bf3d8382-4789-494e-802a-244f571bf676?v=.png",
