@@ -5,14 +5,20 @@
     "id": "1045800378228281345",
     "name": "harryys"
   },
+  "contributors": [
+    {
+      "name": "ch1ka",
+      "id": "636569298936004608"
+    }
+  ],
   "service": "YummyAnime",
   "description": {
     "en": "Free anime streaming site with user lists and community features.",
     "ru": "Сайт для бесплатного просмотра аниме, ведения списков и общения."
   },
   "url": "yummyani.me",
-  "regExp": "^https?[:][/][/](www[.])?(site[.])?(en[.])?yummyani[.]me[/]",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/](www[.])?(site[.])?(en[.])?(ru[.])?yummyani[.]me[/]",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/thumbnail.png",
   "color": "#FF5722",
@@ -22,5 +28,5 @@
     "video"
   ],
   "iframe": true,
-  "iFrameRegExp": "(kodik\\.(info|cc|biz|online)|aniqit\\.com)"
+  "iFrameRegExp": "(kodik\\.(info|cc|biz|online)|aniqit\\.com|alloha\\.yani\\.tv|player\\.cdnvideohub\\.com|iframeCVH\\.html|vkuker\\.net)"
 }
