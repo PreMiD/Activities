@@ -21,6 +21,7 @@ setup(ctx) {
 ```
 
 Auto mode automatically:
+
 - Listens to `play`, `pause`, `seeked`, `ratechange` events
 - Reports playback status to the party
 - Applies sync commands (play/pause/seek) from the party controller
@@ -30,21 +31,21 @@ Auto mode automatically:
 
 The handle returned by `attach()` provides:
 
-| Method | Description |
-|--------|-------------|
-| `detach()` | Stop managing the element |
-| `onSyncCommand(handler)` | Listen to incoming sync commands (returns unsubscribe) |
-| `reportAd(isInAd)` | Report ad playback state |
-| `reportBuffering(isBuffering)` | Report buffering state |
+| Method                         | Description                                            |
+| ------------------------------ | ------------------------------------------------------ |
+| `detach()`                     | Stop managing the element                              |
+| `onSyncCommand(handler)`       | Listen to incoming sync commands (returns unsubscribe) |
+| `reportAd(isInAd)`             | Report ad playback state                               |
+| `reportBuffering(isBuffering)` | Report buffering state                                 |
 
 In auto mode, `onSyncCommand` fires **after** the command has already been applied to the element. This is useful for reacting to sync events (e.g., updating UI) without needing to apply them yourself. The commands that fire are:
 
-| Command | When it fires |
-|---------|--------------|
-| `play` | The controller started playback — element was seeked and played |
-| `pause` | The controller paused — element was paused and seeked |
-| `seek` | The controller seeked to a new position |
-| `rate` | The controller changed playback rate |
+| Command                         | When it fires                                                               |
+| ------------------------------- | --------------------------------------------------------------------------- |
+| `play`                          | The controller started playback — element was seeked and played             |
+| `pause`                         | The controller paused — element was paused and seeked                       |
+| `seek`                          | The controller seeked to a new position                                     |
+| `rate`                          | The controller changed playback rate                                        |
 | Heartbeat (`isHeartbeat: true`) | Periodic position update from the controller — drift correction was applied |
 
 ### Re-attaching After SPA Navigation
@@ -119,21 +120,21 @@ setup(ctx) {
 
 ### ManualVideoHandle
 
-| Method | Description |
-|--------|-------------|
-| `reportPlayback(status)` | Report current playback state to the party |
-| `onSyncCommand(handler)` | Listen to raw sync commands (returns unsubscribe) |
-| `reportAd(isInAd)` | Report ad playback state |
-| `reportBuffering(isBuffering)` | Report buffering state |
-| `release()` | Stop manual control |
+| Method                         | Description                                       |
+| ------------------------------ | ------------------------------------------------- |
+| `reportPlayback(status)`       | Report current playback state to the party        |
+| `onSyncCommand(handler)`       | Listen to raw sync commands (returns unsubscribe) |
+| `reportAd(isInAd)`             | Report ad playback state                          |
+| `reportBuffering(isBuffering)` | Report buffering state                            |
+| `release()`                    | Stop manual control                               |
 
 In manual mode, the `TakeControlOptions` callbacks fire **instead of** automatic element control:
 
-| Callback | When it fires |
-|----------|--------------|
-| `onPlay(timeSeconds)` | The controller started playback. Seek to `timeSeconds` and play. |
-| `onPause(timeSeconds)` | The controller paused. Pause and seek to `timeSeconds`. |
-| `onSeek(timeSeconds)` | The controller seeked. Seek to `timeSeconds`. |
+| Callback               | When it fires                                                                          |
+| ---------------------- | -------------------------------------------------------------------------------------- |
+| `onPlay(timeSeconds)`  | The controller started playback. Seek to `timeSeconds` and play.                       |
+| `onPause(timeSeconds)` | The controller paused. Pause and seek to `timeSeconds`.                                |
+| `onSeek(timeSeconds)`  | The controller seeked. Seek to `timeSeconds`.                                          |
 | `onRate(playbackRate)` | The controller changed playback rate. Set the rate. Optional — only fires if provided. |
 
 These callbacks fire for **followers only**. The controller doesn't receive its own commands back.

@@ -1,6 +1,7 @@
 import { existsSync } from 'node:fs'
 import { cp, rm } from 'node:fs/promises'
 import { basename, dirname, resolve } from 'node:path'
+import process from 'node:process'
 import chalk from 'chalk'
 import { watch } from 'chokidar'
 import { build } from 'esbuild'

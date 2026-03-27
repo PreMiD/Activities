@@ -38,11 +38,11 @@ The sync script's `metadata.json` defines which URLs the script should run on:
 }
 ```
 
-| Property | Type | Required | Description |
-|----------|------|----------|-------------|
-| `service` | `string` | Yes | A unique identifier for the service. Used for [regional domain matching](/v1/guide/watch-party-behavior#desync-detection). |
-| `regExp` | `string` | Yes | A regular expression pattern that matches the URLs where the content script should activate. |
-| `iframeRegExp` | `string` | No | A regular expression pattern for iframes where the iframe script should be injected. Only needed if the site embeds video in iframes. |
+| Property       | Type     | Required | Description                                                                                                                           |
+| -------------- | -------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `service`      | `string` | Yes      | A unique identifier for the service. Used for [regional domain matching](/v1/guide/watch-party-behavior#desync-detection).            |
+| `regExp`       | `string` | Yes      | A regular expression pattern that matches the URLs where the content script should activate.                                          |
+| `iframeRegExp` | `string` | No       | A regular expression pattern for iframes where the iframe script should be injected. Only needed if the site embeds video in iframes. |
 
 ::: tip
 The `service` field is important for regional domain matching during desync detection. If a site has multiple regional domains (e.g., `anime-site.jp` and `anime-site.com`), use the same `service` value for both so the extension knows they're the same site.
@@ -50,11 +50,11 @@ The `service` field is important for regional domain matching during desync dete
 
 ### Script Files
 
-| File | Context | Purpose |
-|------|---------|---------|
-| `content.ts` | Content script (page DOM access) | Main sync script — registers via `SyncScriptV1.register()` |
-| `iframe.ts` | iFrame content script | Runs inside matched iframes — registers via `SyncIframeScriptV1.register()` |
-| `mainworld.ts` | Page's JavaScript context | Access page globals (e.g., `window.player`) — registers via `SyncMainworldScriptV1.register()` |
+| File           | Context                          | Purpose                                                                                        |
+| -------------- | -------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `content.ts`   | Content script (page DOM access) | Main sync script — registers via `SyncScriptV1.register()`                                     |
+| `iframe.ts`    | iFrame content script            | Runs inside matched iframes — registers via `SyncIframeScriptV1.register()`                    |
+| `mainworld.ts` | Page's JavaScript context        | Access page globals (e.g., `window.player`) — registers via `SyncMainworldScriptV1.register()` |
 
 ## Quick Start
 
@@ -137,6 +137,7 @@ The cleanup function (returned from `setup`) runs when:
 2. **The call happens after the tab has navigated** — By the time `onNavigate` fires, the DOM has already changed. Use it to find and attach to the new video element.
 
 `onNavigate` does **not** fire for:
+
 - The controller's own navigation (the controller drives navigation, it doesn't receive it)
 - Full page loads (the entire script re-initializes via `setup` instead)
 - Hash-only changes (e.g., `#section` anchors)

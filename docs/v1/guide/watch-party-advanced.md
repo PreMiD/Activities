@@ -48,6 +48,7 @@ The iframe script has access to `ctx.video.attach()` for managing video elements
 ### When to Use iFrame Scripts
 
 Use an iframe script when:
+
 - The site embeds its video player in an iframe (common for third-party players)
 - You need to access DOM elements inside the iframe
 - The iframe has a different origin than the main page
@@ -102,6 +103,7 @@ Mainworld scripts run in the page's JavaScript context, not the extension's. The
 ### When to Use Mainworld Scripts
 
 Use a mainworld script when:
+
 - The site exposes a player API on `window` that isn't accessible from the content script
 - You need to intercept or call page-level JavaScript functions
 - The site uses a custom player that can only be controlled through its JS API
@@ -168,11 +170,11 @@ All subscription methods return an unsubscribe function. Always call these in yo
 
 ### When Do State Changes Fire?
 
-| Event | Fires when |
-|-------|-----------|
-| `onRoleChange` | The host transfers control to this user, or reclaims it. Also fires if the current controller leaves and control is reassigned. |
-| `onPauseChange` | The host pauses or resumes the party (party-wide pause, not individual video pause). |
-| `onActiveChange` | The Watch Party starts or ends. Note: when the party ends, the cleanup function also runs, so this is rarely needed. |
+| Event            | Fires when                                                                                                                      |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `onRoleChange`   | The host transfers control to this user, or reclaims it. Also fires if the current controller leaves and control is reassigned. |
+| `onPauseChange`  | The host pauses or resumes the party (party-wide pause, not individual video pause).                                            |
+| `onActiveChange` | The Watch Party starts or ends. Note: when the party ends, the cleanup function also runs, so this is rarely needed.            |
 
 ::: tip
 `ctx.party.role`, `ctx.party.paused`, etc. are always up-to-date — they can be read at any time, not just in callbacks. The callbacks are for reacting to changes, not for initial state.

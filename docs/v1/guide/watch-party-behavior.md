@@ -6,10 +6,10 @@ This page explains how the Watch Party synchronization system works under the ho
 
 Every Watch Party has two roles:
 
-| Role | Description |
-|------|-------------|
+| Role           | Description                                                                                                                          |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | **Controller** | The participant whose playback is the source of truth. When the controller plays, pauses, or seeks, all followers mirror the action. |
-| **Follower** | Receives sync commands from the controller and applies them locally. |
+| **Follower**   | Receives sync commands from the controller and applies them locally.                                                                 |
 
 The **host** (party creator) starts as the controller but can transfer control to another participant. The host can also reclaim control at any time.
 
@@ -27,17 +27,18 @@ Even with synchronized commands, network latency causes playback positions to dr
 
 The corrector compares the follower's local playback position against the controller's reported position (adjusted for latency) and applies one of three actions:
 
-| Drift | Action | What Happens |
-|-------|--------|------------|
-| < ~0.15s | Ignore | Within acceptable tolerance, no correction needed |
+| Drift          | Action     | What Happens                                                    |
+| -------------- | ---------- | --------------------------------------------------------------- |
+| < ~0.15s       | Ignore     | Within acceptable tolerance, no correction needed               |
 | ~0.15s - ~3.0s | Rate nudge | Slightly speeds up or slows down playback to gradually converge |
-| > ~3.0s | Hard seek | Jumps directly to the correct position |
+| > ~3.0s        | Hard seek  | Jumps directly to the correct position                          |
 
 Rate nudging adjusts the follower's playback rate by a small amount (up to ±0.03x) to catch up or slow down. Once the drift falls below the tolerance threshold, the original playback rate is restored.
 
 ### Latency Estimation
 
 The extension estimates network latency using two methods:
+
 1. **Server timestamps + clock offset** — The WebSocket server attaches a timestamp, and periodic clock synchronization establishes the offset between client and server clocks.
 2. **Capture timestamps** — When the controller captures a playback event, it records the local timestamp. The follower uses the difference between now and that timestamp as a rough latency estimate.
 
@@ -63,11 +64,11 @@ When a participant encounters an ad, the party can coordinate to prevent desynch
 
 The party host configures how ads are handled:
 
-| Setting | Behavior |
-|---------|----------|
-| **Wait for everyone** | All participants pause when anyone is in an ad |
-| **Wait for host** | Participants only pause when the controller is in an ad |
-| **Ignore** | Ads don't affect synchronization — participants continue playing |
+| Setting               | Behavior                                                         |
+| --------------------- | ---------------------------------------------------------------- |
+| **Wait for everyone** | All participants pause when anyone is in an ad                   |
+| **Wait for host**     | Participants only pause when the controller is in an ad          |
+| **Ignore**            | Ads don't affect synchronization — participants continue playing |
 
 ### Debouncing
 
@@ -102,6 +103,7 @@ The extension detects navigation from the controller's active tab, including bot
 ### Follower Side
 
 When a follower receives a navigation command:
+
 1. The extension navigates the follower's tab to the new URL
 2. If the follower already has an active party tab, it updates that tab
 3. If no party tab exists yet (first navigation after joining), it creates a new tab
@@ -116,6 +118,7 @@ The sync script's `onNavigate` callback fires on SPA navigations so you can re-a
 ### Navigation Settling Window
 
 After a follower navigates, there's a **5-second settling window** where URL changes from the follower's tab are not treated as desyncs. This prevents false desync detection from:
+
 - Server-side redirects (e.g., locale redirects like `/en-us/title/123`)
 - Authentication redirects
 - CDN routing
@@ -136,6 +139,7 @@ When a follower's URL changes outside of a sync-initiated navigation, the extens
 ### What Triggers Desync
 
 A desync is reported when:
+
 - The follower manually navigates to a different site
 - The follower's URL doesn't match after locale and canonical normalization
 - A URL fails to parse entirely
@@ -152,16 +156,16 @@ When desync is detected, the follower sends a `desynced` status with the current
 
 The extension tracks each participant's status:
 
-| Status | Meaning |
-|--------|---------|
-| `ready` | Synchronized and watching normally |
-| `waiting` | Waiting for initial sync or reconnection |
-| `navigating` | Currently navigating to a new page |
-| `in-ad` | Watching an advertisement |
-| `buffering` | Player is buffering content |
-| `not-buffering` | Buffering has ended (transient — resolves to `ready`) |
-| `desynced` | On a different page than the controller |
-| `blocked` | Cannot access the content (login wall, geo-restriction) |
+| Status          | Meaning                                                 |
+| --------------- | ------------------------------------------------------- |
+| `ready`         | Synchronized and watching normally                      |
+| `waiting`       | Waiting for initial sync or reconnection                |
+| `navigating`    | Currently navigating to a new page                      |
+| `in-ad`         | Watching an advertisement                               |
+| `buffering`     | Player is buffering content                             |
+| `not-buffering` | Buffering has ended (transient — resolves to `ready`)   |
+| `desynced`      | On a different page than the controller                 |
+| `blocked`       | Cannot access the content (login wall, geo-restriction) |
 
 Status messages are deduplicated — sending the same status twice in a row is suppressed to reduce WebSocket traffic.
 

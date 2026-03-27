@@ -21,10 +21,10 @@ Registers a sync script with the PreMiD extension. The `setup` function is calle
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `options.setup` | `(ctx: SyncScriptContext) => (() => void) \| void` | Called once on initialization. Receives the context object. May return a cleanup function. |
-| `options.onNavigate` | `(ctx: SyncScriptContext, url: string) => void` | Called when the user navigates to a new page within the same site. |
+| Parameter            | Type                                               | Description                                                                                |
+| -------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `options.setup`      | `(ctx: SyncScriptContext) => (() => void) \| void` | Called once on initialization. Receives the context object. May return a cleanup function. |
+| `options.onNavigate` | `(ctx: SyncScriptContext, url: string) => void`    | Called when the user navigates to a new page within the same site.                         |
 
 #### Returns
 
@@ -71,9 +71,9 @@ Declares which sync features this script supports. Must be called before using a
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `features.video` | `boolean` | Enable video synchronization. |
+| Parameter         | Type      | Description                    |
+| ----------------- | --------- | ------------------------------ |
+| `features.video`  | `boolean` | Enable video synchronization.  |
 | `features.cursor` | `boolean` | Enable cursor synchronization. |
 | `features.scroll` | `boolean` | Enable scroll synchronization. |
 
@@ -103,8 +103,8 @@ Attaches to a standard HTML media element for automatic video synchronization. P
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
+| Parameter | Type                         | Description                                                                             |
+| --------- | ---------------------------- | --------------------------------------------------------------------------------------- |
 | `element` | `HTMLMediaElement \| string` | A direct reference to the media element, or a CSS selector string that resolves to one. |
 
 #### Returns
@@ -143,13 +143,13 @@ Takes manual control of video synchronization for custom players that do not use
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `options.onPlay` | `() => void` | Called when the party requests playback to start. |
-| `options.onPause` | `() => void` | Called when the party requests playback to pause. |
-| `options.onSeek` | `(time: number) => void` | Called when the party requests a seek to a specific time in seconds. |
-| `options.onRate` | `(rate: number) => void` | Called when the party requests a playback rate change. |
-| `options.pauseAfterSeek` | `boolean \| number` | If `true`, pauses after seeking. If a number, pauses after a delay of that many milliseconds. |
+| Parameter                | Type                     | Description                                                                                   |
+| ------------------------ | ------------------------ | --------------------------------------------------------------------------------------------- |
+| `options.onPlay`         | `() => void`             | Called when the party requests playback to start.                                             |
+| `options.onPause`        | `() => void`             | Called when the party requests playback to pause.                                             |
+| `options.onSeek`         | `(time: number) => void` | Called when the party requests a seek to a specific time in seconds.                          |
+| `options.onRate`         | `(rate: number) => void` | Called when the party requests a playback rate change.                                        |
+| `options.pauseAfterSeek` | `boolean \| number`      | If `true`, pauses after seeking. If a number, pauses after a delay of that many milliseconds. |
 
 #### Returns
 
@@ -200,9 +200,9 @@ video.reportAd(isInAd: boolean): void
 
 Convenience shortcut for reporting ad state directly from the context. Notifies the party that the user is viewing an ad so synchronization can be paused.
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `isInAd` | `boolean` | Whether an ad is currently playing. |
+| Parameter | Type      | Description                         |
+| --------- | --------- | ----------------------------------- |
+| `isInAd`  | `boolean` | Whether an ad is currently playing. |
 
 ::: tip
 Ad-exit transitions (`false`) have a 500ms debounce to prevent flickering when ads change rapidly between segments.
@@ -227,8 +227,8 @@ video.reportBuffering(isBuffering: boolean): void
 
 Convenience shortcut for reporting buffering state directly from the context. Notifies the party that the video is buffering so synchronization can account for it.
 
-| Parameter | Type | Description |
-| --- | --- | --- |
+| Parameter     | Type      | Description                               |
+| ------------- | --------- | ----------------------------------------- |
 | `isBuffering` | `boolean` | Whether the video is currently buffering. |
 
 ::: tip
@@ -258,11 +258,11 @@ Sets metadata about the current page that is displayed to other party members.
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `info.title` | `string` | The title of the content being viewed. |
-| `info.subtitle` | `string` | A subtitle or secondary description. |
-| `info.thumbnail` | `string` | A URL to a thumbnail image. |
+| Parameter        | Type     | Description                            |
+| ---------------- | -------- | -------------------------------------- |
+| `info.title`     | `string` | The title of the content being viewed. |
+| `info.subtitle`  | `string` | A subtitle or secondary description.   |
+| `info.thumbnail` | `string` | A URL to a thumbnail image.            |
 
 #### Example
 
@@ -290,9 +290,9 @@ Reports that the user is blocked from viewing the content. Use this for login wa
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `reason` | `string` | A human-readable description of why access is blocked. |
+| Parameter | Type     | Description                                            |
+| --------- | -------- | ------------------------------------------------------ |
+| `reason`  | `string` | A human-readable description of why access is blocked. |
 
 #### Example
 
@@ -338,10 +338,10 @@ Sends arbitrary data to other party members. Useful for syncing application-spec
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `key` | `string` | A unique key identifying the data type. Must be 1-32 characters, alphanumeric with hyphens and underscores only. |
-| `data` | `unknown` | The data to send. Must be serializable. |
+| Parameter | Type      | Description                                                                                                      |
+| --------- | --------- | ---------------------------------------------------------------------------------------------------------------- |
+| `key`     | `string`  | A unique key identifying the data type. Must be 1-32 characters, alphanumeric with hyphens and underscores only. |
+| `data`    | `unknown` | The data to send. Must be serializable.                                                                          |
 
 #### Example
 
@@ -363,10 +363,10 @@ Subscribes to custom data sent by other party members for the given key.
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `key` | `string` | The key to listen for. Must be 1-32 characters, alphanumeric with hyphens and underscores only. |
-| `handler` | `(data: unknown) => void` | Called when data is received for this key. |
+| Parameter | Type                      | Description                                                                                     |
+| --------- | ------------------------- | ----------------------------------------------------------------------------------------------- |
+| `key`     | `string`                  | The key to listen for. Must be 1-32 characters, alphanumeric with hyphens and underscores only. |
+| `handler` | `(data: unknown) => void` | Called when data is received for this key.                                                      |
 
 #### Returns
 
@@ -406,11 +406,11 @@ Sends a one-way message to a specific iframe.
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `frameId` | `string` | The identifier of the target iframe. |
-| `key` | `string` | The message key. |
-| `data` | `unknown` | Optional data payload. |
+| Parameter | Type      | Description                          |
+| --------- | --------- | ------------------------------------ |
+| `frameId` | `string`  | The identifier of the target iframe. |
+| `key`     | `string`  | The message key.                     |
+| `data`    | `unknown` | Optional data payload.               |
 
 #### Example
 
@@ -432,11 +432,11 @@ Sends a request to an iframe and waits for a response.
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `frameId` | `string` | The identifier of the target iframe. |
-| `key` | `string` | The request key. |
-| `data` | `unknown` | Optional request payload. |
+| Parameter | Type      | Description                          |
+| --------- | --------- | ------------------------------------ |
+| `frameId` | `string`  | The identifier of the target iframe. |
+| `key`     | `string`  | The request key.                     |
+| `data`    | `unknown` | Optional request payload.            |
 
 #### Returns
 
@@ -466,9 +466,9 @@ Listens for one-way messages from iframes.
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `key` | `string` | The message key to listen for. |
+| Parameter | Type                      | Description                                           |
+| --------- | ------------------------- | ----------------------------------------------------- |
+| `key`     | `string`                  | The message key to listen for.                        |
 | `handler` | `(data: unknown) => void` | Called when a message with the given key is received. |
 
 #### Returns
@@ -497,9 +497,9 @@ Listens for requests from iframes and provides a response.
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `key` | `string` | The request key to listen for. |
+| Parameter | Type                         | Description                                                                       |
+| --------- | ---------------------------- | --------------------------------------------------------------------------------- |
+| `key`     | `string`                     | The request key to listen for.                                                    |
 | `handler` | `(data: unknown) => unknown` | Called when a request is received. The return value is sent back as the response. |
 
 #### Returns
@@ -532,10 +532,10 @@ Sends a one-way message to the main world.
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `key` | `string` | The message key. |
-| `data` | `unknown` | Optional data payload. |
+| Parameter | Type      | Description            |
+| --------- | --------- | ---------------------- |
+| `key`     | `string`  | The message key.       |
+| `data`    | `unknown` | Optional data payload. |
 
 #### Example
 
@@ -557,10 +557,10 @@ Sends a request to the main world and waits for a response.
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `key` | `string` | The request key. |
-| `data` | `unknown` | Optional request payload. |
+| Parameter | Type      | Description               |
+| --------- | --------- | ------------------------- |
+| `key`     | `string`  | The request key.          |
+| `data`    | `unknown` | Optional request payload. |
 
 #### Returns
 
@@ -590,9 +590,9 @@ Listens for one-way messages from the main world.
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `key` | `string` | The message key to listen for. |
+| Parameter | Type                      | Description                                           |
+| --------- | ------------------------- | ----------------------------------------------------- |
+| `key`     | `string`                  | The message key to listen for.                        |
 | `handler` | `(data: unknown) => void` | Called when a message with the given key is received. |
 
 #### Returns
@@ -611,9 +611,9 @@ Listens for requests from the main world and provides a response.
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `key` | `string` | The request key to listen for. |
+| Parameter | Type                         | Description                                                                       |
+| --------- | ---------------------------- | --------------------------------------------------------------------------------- |
+| `key`     | `string`                     | The request key to listen for.                                                    |
 | `handler` | `(data: unknown) => unknown` | Called when a request is received. The return value is sent back as the response. |
 
 #### Returns
@@ -676,8 +676,8 @@ Subscribes to role changes.
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
+| Parameter | Type                     | Description                          |
+| --------- | ------------------------ | ------------------------------------ |
 | `handler` | `(role: string) => void` | Called when the user's role changes. |
 
 #### Returns
@@ -696,8 +696,8 @@ Subscribes to pause state changes.
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
+| Parameter | Type                        | Description                                |
+| --------- | --------------------------- | ------------------------------------------ |
 | `handler` | `(paused: boolean) => void` | Called when the party pause state changes. |
 
 #### Returns
@@ -716,8 +716,8 @@ Subscribes to active state changes.
 
 #### Parameters
 
-| Parameter | Type | Description |
-| --- | --- | --- |
+| Parameter | Type                        | Description                                 |
+| --------- | --------------------------- | ------------------------------------------- |
 | `handler` | `(active: boolean) => void` | Called when the party active state changes. |
 
 #### Returns
