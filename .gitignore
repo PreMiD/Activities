@@ -4,6 +4,8 @@
 !*.config.*js
 websites/**/dist
 websites/**/tsconfig.json
+syncScripts/**/dist
+syncScripts/**/tsconfig.json
 node_modules
 
 # MacOS-generated files

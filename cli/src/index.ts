@@ -7,6 +7,7 @@ import { bump } from './commands/bump.js'
 import { checkDns } from './commands/checkDns.js'
 import { newActivity } from './commands/new.js'
 import { release } from './commands/release.js'
+import { syncBuild, syncDev, syncNew } from './commands/sync.js'
 import { updateAssets } from './commands/updateAssets.js'
 import { getCliPackageJson, getPackageJson } from './util/getPackageJson.js'
 import { exit } from './util/log.js'
@@ -54,6 +55,20 @@ cli
   .option('--changed', 'Check only changed activities')
   .option('--fix', 'Remove invalid URLs and activities')
   .action(checkDns)
+
+cli
+  .command('sync-new [script]', 'Create a new sync script')
+  .action(syncNew)
+
+cli
+  .command('sync-dev [script]', 'Develop a sync script with hot-reload')
+  .action(syncDev)
+
+cli
+  .command('sync-build [script]', 'Build a sync script')
+  .option('--all', 'Build all sync scripts')
+  .option('--kill', 'Kill on error', { default: true })
+  .action(syncBuild)
 
 cli
   .command('update-assets', 'Update assets for all activities in CI')
