@@ -62,8 +62,12 @@ export async function getChangedActivities(): Promise<{
     resolve(process.cwd(), 'syncScripts'),
   ]
 
+  const syncScriptsDir = resolve(process.cwd(), 'syncScripts')
   const modifiedAddedFiles = changedFiles.filter(file => !file.deleted)
   for (const file of modifiedAddedFiles) {
+    if (file.path.startsWith(syncScriptsDir))
+      continue
+
     let path = file.path
     while (!existsSync(resolve(path, 'metadata.json'))) {
       path = dirname(path)
