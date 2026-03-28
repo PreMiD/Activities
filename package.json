@@ -19,7 +19,7 @@
     "@vitest/coverage-v8": "^4.0.18",
     "@vitest/ui": "^4.0.18",
     "eslint": "^9.39.2",
-    "eslint-plugin-format": "^1.4.0",
+    "eslint-plugin-format": "^2.0.0",
     "eslint-plugin-json-schema-validator": "^6.0.3",
     "pmd": "file:cli",
     "premid": "file:premid",
