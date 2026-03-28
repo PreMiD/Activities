@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1062197137749852290",
+    "name": "Abdalla"
+  },
+  "service": "WatchIt",
+  "description": {
+    "en": "Watch movies and series"
+  },
+  "url": "watchit.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*watchit[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/8LF7HY6g/Watchit-1.jpg",
+  "thumbnail": "https://img.youm7.com/large/201912190228152815.jpg",
+  "color": "#fedb02",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "media"
+  ]
+}
