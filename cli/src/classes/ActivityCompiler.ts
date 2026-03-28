@@ -1,7 +1,6 @@
 import { existsSync } from 'node:fs'
-import { cp, readdir, readFile, rm } from 'node:fs/promises'
-import { basename, dirname, join, resolve } from 'node:path'
-import AdmZip from 'adm-zip'
+import { cp, readFile, rm } from 'node:fs/promises'
+import { basename, dirname, resolve } from 'node:path'
 import chalk from 'chalk'
 import { watch } from 'chokidar'
 import { build } from 'esbuild'
@@ -18,6 +17,7 @@ import { getJsonPosition } from '../util/getJsonPosition.js'
 import { error, exit, prefix } from '../util/log.js'
 import { sanitazeFolderName } from '../util/sanitazeFolderName.js'
 import { addSarifLog, SarifRuleId, writeSarifLog } from '../util/sarif.js'
+import { zipDir } from '../util/zipDir.js'
 import { AssetsManager } from './AssetsManager.js'
 import { DependenciesManager } from './DependenciesManager.js'
 import { TypescriptCompiler } from './TypescriptCompiler.js'
@@ -449,19 +449,4 @@ export class ActivityCompiler {
 
     return valid
   }
-}
-
-async function zipDir(dir: string, filename: string) {
-  const zip = new AdmZip()
-  const zipPathInDir = resolve(dir, filename)
-
-  //* Read all files in the directory and add them to the zip
-  const files = await readdir(dir, { recursive: true })
-
-  for (const file of files) {
-    const filePath = join(dir, file)
-    zip.addLocalFile(filePath)
-  }
-
-  zip.writeZip(zipPathInDir)
 }

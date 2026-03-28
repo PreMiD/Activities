@@ -1,5 +1,5 @@
 import { existsSync } from 'node:fs'
-import { cp, mkdir, writeFile } from 'node:fs/promises'
+import { cp, mkdir, readFile, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
@@ -22,7 +22,7 @@ export async function syncDev(service?: string) {
   await compiler.watch()
 }
 
-export async function syncBuild(service?: string, { all = false, kill = true }: { all?: boolean, kill?: boolean } = {}) {
+export async function syncBuild(service?: string, { all = false, kill = true, zip = false }: { all?: boolean, kill?: boolean, zip?: boolean } = {}) {
   if (all) {
     const scripts = await getSyncScripts()
 
@@ -39,7 +39,7 @@ export async function syncBuild(service?: string, { all = false, kill = true }: 
       )
 
       const compiler = new SyncScriptCompiler(script.folder, script.metadata)
-      const isSuccess = await compiler.compile({ kill })
+      const isSuccess = await compiler.compile({ kill, zip })
       allSuccess = allSuccess && isSuccess
     }
 
@@ -55,8 +55,59 @@ export async function syncBuild(service?: string, { all = false, kill = true }: 
   )
 
   const compiler = new SyncScriptCompiler(folder, metadata)
-  const isSuccess = await compiler.compile({ kill })
+  const isSuccess = await compiler.compile({ kill, zip })
   process.exit(isSuccess ? 0 : 1)
+}
+
+export async function syncRelease(service?: string) {
+  const apiKey = process.env.ADMIN_API_KEY
+  if (!apiKey)
+    exit('ADMIN_API_KEY environment variable is required')
+
+  const apiUrl = process.env.API_URL || 'https://api.premid.app/v6'
+
+  const { metadata, folder } = await getSingleSyncScript('Select a sync script to release', service)
+
+  await cp(
+    resolve(process.cwd(), 'cli/templates/sync-tsconfig.json'),
+    resolve(folder, 'tsconfig.json'),
+  )
+
+  const compiler = new SyncScriptCompiler(folder, metadata)
+  const built = await compiler.compile({ kill: false, zip: false })
+  if (!built)
+    exit(`Failed to build ${metadata.service}`)
+
+  const contentJs = await readFile(resolve(folder, 'dist', 'content.js'), 'utf8')
+  const iframeJs = existsSync(resolve(folder, 'dist', 'iframe.js'))
+    ? await readFile(resolve(folder, 'dist', 'iframe.js'), 'utf8')
+    : undefined
+  const mainworldJs = existsSync(resolve(folder, 'dist', 'mainworld.js'))
+    ? await readFile(resolve(folder, 'dist', 'mainworld.js'), 'utf8')
+    : undefined
+
+  info(`Releasing ${metadata.service}...`)
+
+  const response = await fetch(`${apiUrl}/sync-scripts/v1`, {
+    method: 'POST',
+    headers: {
+      'Authorization': apiKey,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      service: metadata.service,
+      contentJs,
+      iframeJs,
+      mainworldJs,
+      regExp: metadata.regExp,
+      iframeRegExp: metadata.iframeRegExp,
+    }),
+  })
+
+  if (response.ok)
+    success(`Released sync script: ${metadata.service}`)
+  else
+    exit(`Failed to release ${metadata.service}: ${response.statusText} — ${await response.text()}`)
 }
 
 export async function syncNew(service?: string) {

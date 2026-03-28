@@ -7,7 +7,7 @@ import { bump } from './commands/bump.js'
 import { checkDns } from './commands/checkDns.js'
 import { newActivity } from './commands/new.js'
 import { release } from './commands/release.js'
-import { syncBuild, syncDev, syncNew } from './commands/sync.js'
+import { syncBuild, syncDev, syncNew, syncRelease } from './commands/sync.js'
 import { updateAssets } from './commands/updateAssets.js'
 import { getCliPackageJson, getPackageJson } from './util/getPackageJson.js'
 import { exit } from './util/log.js'
@@ -68,7 +68,12 @@ cli
   .command('sync-build [script]', 'Build a sync script')
   .option('--all', 'Build all sync scripts')
   .option('--kill', 'Kill on error', { default: true })
+  .option('--zip', 'Zip the sync script')
   .action(syncBuild)
+
+cli
+  .command('sync-release [script]', 'Build and release a sync script to the API')
+  .action(syncRelease)
 
 cli
   .command('update-assets', 'Update assets for all activities in CI')

@@ -8,6 +8,7 @@ import { build } from 'esbuild'
 import ora from 'ora'
 import ts from 'typescript'
 import { error, exit, info, prefix } from '../util/log.js'
+import { zipDir } from '../util/zipDir.js'
 import { WebSocketServer } from './WebSocketServer.js'
 
 export interface SyncScriptMetadata {
@@ -24,7 +25,7 @@ export class SyncScriptCompiler {
     public readonly metadata: SyncScriptMetadata,
   ) {}
 
-  async compile({ kill }: { kill: boolean }): Promise<boolean> {
+  async compile({ kill, zip = false }: { kill: boolean, zip?: boolean }): Promise<boolean> {
     const success = await this.typecheck(kill)
     if (!success)
       return false
@@ -54,6 +55,11 @@ export class SyncScriptCompiler {
     await cp(resolve(this.cwd, 'metadata.json'), resolve(this.cwd, 'dist', 'metadata.json'))
 
     spinner.succeed(prefix + chalk.greenBright(` Compiled ${this.metadata.service}!`))
+
+    if (zip) {
+      await zipDir(resolve(this.cwd, 'dist'), `${this.metadata.service}.zip`)
+    }
+
     return true
   }
 
