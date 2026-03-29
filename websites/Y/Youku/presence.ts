@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid';
 
 const presence = new Presence({
   clientId: '1487705643983835156',
@@ -54,9 +54,9 @@ presence.on('UpdateData', async () => {
       // Try to find a good breaking point
       const breakPoint = cleanTitle.lastIndexOf(' ', 50);
       if (breakPoint > 20)
-        cleanTitle = cleanTitle.substring(0, breakPoint) + '...';
+        cleanTitle = `${cleanTitle.substring(0, breakPoint)}...`;
       else
-        cleanTitle = cleanTitle.substring(0, 50) + '...';
+        cleanTitle = `${cleanTitle.substring(0, 50)}...`;
     }
 
     // Combine title and episode info
@@ -74,18 +74,17 @@ presence.on('UpdateData', async () => {
 
   // Get episode/season info if available
   const episodeInfo = document.querySelector('.episode-info, .season-info, [data-episode]')?.textContent?.trim();
-  const currentEpisode = document.querySelector('.current-episode, .episode-number')?.textContent?.trim();
 
   const data: PresenceData = {
     type: ActivityType.Watching,
-    largeImageKey: posterImage || 'https://i.imgur.com/8B7k1t7.png', // 512x512 Youku logo
+    largeImageKey: posterImage || 'https://cdn-icons-png.flaticon.com/512/2111/2111710.png', // 512x512 Youku logo
     largeImageText: 'Youku',
   };
 
   // Enhanced video validation with more flexible checks
   const isValidVideo = video
     && (video.src || video.currentSrc) // Check both src and currentSrc
-    && !isNaN(video.duration)
+    && Number.isNaN(video.duration) === false
     && video.duration && video.duration > 0
     && video.readyState >= 2 // HAVE_CURRENT_DATA or higher
     && !video.ended
@@ -221,7 +220,7 @@ function formatTime(current: number, total: number): string {
 
 // Helper function to truncate title
 function truncateTitle(title: string, maxLength: number): string {
-  return title.length > maxLength ? title.substring(0, maxLength - 3) + '...' : title;
+  return title.length > maxLength ? `${title.substring(0, maxLength - 3)}...` : title;
 }
 
 // Helper function to get video quality
@@ -264,7 +263,7 @@ function getPlaybackSpeed(): string | null {
     const element = document.querySelector(selector);
     if (element?.textContent) {
       const speed = element.textContent.trim();
-      if (/\d+(\.\d+)?x/i.test(speed))
+      if (/\d+(?:\.\d+)?x/i.test(speed))
         return speed;
     }
   }
@@ -273,7 +272,7 @@ function getPlaybackSpeed(): string | null {
   const allElements = document.querySelectorAll('*');
   for (const element of allElements) {
     const text = element.textContent?.trim();
-    if (text && /\d+(\.\d+)?x/i.test(text) && text.length < 10)
+    if (text && /\d+(?:\.\d+)?x/i.test(text) && text.length < 10)
       return text;
   }
 
