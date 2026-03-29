@@ -6,7 +6,7 @@ const presence = new Presence({
 
 let browsingTimestamp = Date.now()
 let wasWatchingVideo = false
-let lastVideoState: { paused: boolean; currentTime: number } | null = null
+let lastVideoState: { paused: boolean, currentTime: number } | null = null
 
 presence.on('UpdateData', async () => {
   const [privacy, showTimestamp, showButtons, showProgress, , showVideoDetails, compactMode] = await Promise.all([
@@ -21,24 +21,24 @@ presence.on('UpdateData', async () => {
 
   // Enhanced video detection with multiple Youku-specific selectors
   const video = document.querySelector<HTMLVideoElement>('video')
-                || document.querySelector<HTMLVideoElement>('.video-player video')
-                || document.querySelector<HTMLVideoElement>('[data-testid="video-player"] video')
-                || document.querySelector<HTMLVideoElement>('.youku-player video')
-                || document.querySelector<HTMLVideoElement>('#player video')
-                || document.querySelector<HTMLVideoElement>('.vjs-tech video') // Video.js player
-                || document.querySelector<HTMLVideoElement>('.prism-player video') // Aliplayer
+    || document.querySelector<HTMLVideoElement>('.video-player video')
+    || document.querySelector<HTMLVideoElement>('[data-testid="video-player"] video')
+    || document.querySelector<HTMLVideoElement>('.youku-player video')
+    || document.querySelector<HTMLVideoElement>('#player video')
+    || document.querySelector<HTMLVideoElement>('.vjs-tech video') // Video.js player
+    || document.querySelector<HTMLVideoElement>('.prism-player video') // Aliplayer
 
   // Enhanced title extraction and formatting
   const metaTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content')
-                   || document.querySelector('meta[name="title"]')?.getAttribute('content')
-                   || document.querySelector('h1')?.textContent
+    || document.querySelector('meta[name="title"]')?.getAttribute('content')
+    || document.querySelector('h1')?.textContent
 
-  let cleanTitle = metaTitle?.trim() || document.title.replace(/ - (YOUKU|优酷).*/i, '').trim()
+  let cleanTitle = metaTitle?.trim() || document.title.replace(/ - (?:YOUKU|优酷).*/i, '').trim()
 
   // Better title formatting for mixed languages
   if (cleanTitle) {
     // Extract episode number if present
-    const episodeMatch = cleanTitle.match(/第(?:\d+)集/)
+    const episodeMatch = cleanTitle.match(/第(\d+)集/)
     const episodeNumber = episodeMatch ? `Episode ${episodeMatch[1]}` : null
 
     // Remove episode number from title for cleaner display
@@ -65,12 +65,12 @@ presence.on('UpdateData', async () => {
   }
   // Prioritize show cover art over video frames
   const posterImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content')
-                      || document.querySelector('meta[itemprop="image"]')?.getAttribute('content')
-                      || document.querySelector('link[rel="image_src"]')?.getAttribute('content')
-                      || document.querySelector('.show-poster img, .series-poster img, .drama-poster img')?.getAttribute('src')
-                      || document.querySelector('img[src*="oss-process=image/resize"]')?.getAttribute('src')
-                      || document.querySelector('.poster img, .cover img')?.getAttribute('src')
-                      || document.querySelector('video')?.getAttribute('poster')
+    || document.querySelector('meta[itemprop="image"]')?.getAttribute('content')
+    || document.querySelector('link[rel="image_src"]')?.getAttribute('content')
+    || document.querySelector('.show-poster img, .series-poster img, .drama-poster img')?.getAttribute('src')
+    || document.querySelector('img[src*="oss-process=image/resize"]')?.getAttribute('src')
+    || document.querySelector('.poster img, .cover img')?.getAttribute('src')
+    || document.querySelector('video')?.getAttribute('poster')
 
   // Get episode/season info if available
   const episodeInfo = document.querySelector('.episode-info, .season-info, [data-episode]')?.textContent?.trim()
@@ -152,9 +152,9 @@ presence.on('UpdateData', async () => {
     const currentUrl = window.location.href
     const isHomePage = window.location.pathname === '/' || window.location.pathname === ''
     const isSearchPage = currentUrl.includes('/search')
-                || currentUrl.includes('/search?')
+      || currentUrl.includes('/search?')
     const isCategoryPage = currentUrl.includes('/category')
-                    || currentUrl.includes('/show/')
+      || currentUrl.includes('/show/')
 
     if (isHomePage) {
       data.details = compactMode ? 'Youku' : 'Browsing Youku'
@@ -179,7 +179,7 @@ presence.on('UpdateData', async () => {
 
   // Enhanced buttons with better labels
   if (showButtons && !privacy) {
-    const buttons: { label: string; url: string }[] = [
+    const buttons: { label: string, url: string }[] = [
       {
         label: isValidVideo ? 'Watch Now' : 'View Page',
         url: window.location.href,
