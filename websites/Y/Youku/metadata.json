@@ -1,0 +1,65 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "noconversation_",
+    "id": "1244664905974681803"
+  },
+  "service": "Youku",
+  "description": {
+    "en": "Show your favorite Chinese dramas from Youku on Discord.",
+    "th": "แสดงซีรีส์จีนจาก Youku บน Discord ของคุณ"
+  },
+  "url": "www.youku.tv",
+  "regExp": "([a-z0-9-]+[.])*youku[.]tv[/]",
+  "version": "1.0.0",
+  "logo": "https://img.alicdn.com/tfs/TB1_uT8nRr0gK0jSZFnXXbRRXXa-256-256.png",
+  "thumbnail": "https://img.alicdn.com/tfs/TB1_uT8nRr0gK0jSZFnXXbRRXXa-256-256.png",
+  "color": "#2fb3ff",
+  "category": "videos",
+  "tags": ["video", "streaming", "chinese-drama"],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Watch Button",
+      "icon": "fas fa-external-link-alt",
+      "value": true
+    },
+    {
+      "id": "showProgress",
+      "title": "Show Progress Percentage",
+      "icon": "fas fa-percentage",
+      "value": false
+    },
+    {
+      "id": "use24HourTime",
+      "title": "Use 24-Hour Time Format",
+      "icon": "fas fa-clock",
+      "value": false
+    },
+    {
+      "id": "showVideoDetails",
+      "title": "Show Video Quality & Speed",
+      "icon": "fas fa-cog",
+      "value": true
+    },
+    {
+      "id": "compactMode",
+      "title": "Compact Mode",
+      "icon": "fas fa-compress",
+      "value": false
+    }
+  ]
+}
