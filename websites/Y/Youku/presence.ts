@@ -90,7 +90,7 @@ presence.on('UpdateData', async () => {
 
   const data: PresenceData = {
     type: ActivityType.Watching,
-    largeImageKey: posterImage || 'https://img.alicdn.com/tfs/TB1_uT8nRr0gK0jSZFnXXbRRXXa-256-256.png',
+    largeImageKey: posterImage || 'https://cdn.rcd.gg/PreMiD/websites/Y/Youku/logo.png',
     largeImageText: 'Youku'
   };
 
