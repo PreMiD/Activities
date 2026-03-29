@@ -1,7 +1,7 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '1487705643983835156'
+  clientId: '1487705643983835156',
 })
 
 let browsingTimestamp = Date.now()
@@ -16,7 +16,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('showProgress'),
     presence.getSetting<boolean>('use24HourTime'),
     presence.getSetting<boolean>('showVideoDetails'),
-    presence.getSetting<boolean>('compactMode')
+    presence.getSetting<boolean>('compactMode'),
   ])
 
   // Enhanced video detection with multiple Youku-specific selectors
@@ -38,7 +38,7 @@ presence.on('UpdateData', async () => {
   // Better title formatting for mixed languages
   if (cleanTitle) {
     // Extract episode number if present
-    const episodeMatch = cleanTitle.match(/第(\d+)集/)
+    const episodeMatch = cleanTitle.match(/第(?:\d+)集/)
     const episodeNumber = episodeMatch ? `Episode ${episodeMatch[1]}` : null
 
     // Remove episode number from title for cleaner display
@@ -78,7 +78,7 @@ presence.on('UpdateData', async () => {
   const data: PresenceData = {
     type: ActivityType.Watching,
     largeImageKey: posterImage || 'https://cdn-icons-png.flaticon.com/512/2111/2111710.png', // 512x512 Youku logo
-    largeImageText: 'Youku'
+    largeImageText: 'Youku',
   }
 
   // Enhanced video validation with more flexible checks
@@ -135,8 +135,7 @@ presence.on('UpdateData', async () => {
     }
     else {
       data.smallImageKey = Assets.Pause
-      data.smallImageText = `Paused • ${formatTime(currentTime, duration)}`
-      // Keep timestamps when paused to show current position
+      data.smallImageText = `Paused • ${formatTime(currentTime, duration)}` // Keep timestamps when paused to show current position
     }
 
     wasWatchingVideo = true
@@ -152,8 +151,10 @@ presence.on('UpdateData', async () => {
     // Enhanced browsing detection
     const currentUrl = window.location.href
     const isHomePage = window.location.pathname === '/' || window.location.pathname === ''
-    const isSearchPage = currentUrl.includes('/search') || currentUrl.includes('/search?')
-    const isCategoryPage = currentUrl.includes('/category') || currentUrl.includes('/show/')
+    const isSearchPage = currentUrl.includes('/search')
+                || currentUrl.includes('/search?')
+    const isCategoryPage = currentUrl.includes('/category')
+                    || currentUrl.includes('/show/')
 
     if (isHomePage) {
       data.details = compactMode ? 'Youku' : 'Browsing Youku'
@@ -181,8 +182,8 @@ presence.on('UpdateData', async () => {
     const buttons: { label: string; url: string }[] = [
       {
         label: isValidVideo ? 'Watch Now' : 'View Page',
-        url: window.location.href
-      }
+        url: window.location.href,
+      },
     ]
 
     // Add series button if on a show page
@@ -191,7 +192,7 @@ presence.on('UpdateData', async () => {
     if (seriesLink && !currentUrl2.includes(seriesLink)) {
       buttons.push({
         label: 'View Series',
-        url: seriesLink.startsWith('http') ? seriesLink : `https://www.youku.tv${seriesLink}`
+        url: seriesLink.startsWith('http') ? seriesLink : `https://www.youku.tv${seriesLink}`,
       })
     }
 
@@ -228,7 +229,7 @@ function getVideoQuality(): string | null {
   const qualitySelectors = [
     '.quality-selector .active',
     '[data-quality]',
-    '.video-quality .selected'
+    '.video-quality .selected',
   ]
 
   for (const selector of qualitySelectors) {
@@ -256,7 +257,7 @@ function getPlaybackSpeed(): string | null {
   const speedSelectors = [
     '.speed-selector .active',
     '[data-speed]',
-    '.playback-speed .selected'
+    '.playback-speed .selected',
   ]
 
   for (const selector of speedSelectors) {
