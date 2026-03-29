@@ -84,7 +84,7 @@ presence.on('UpdateData', async () => {
   // Enhanced video validation with more flexible checks
   const isValidVideo = video
     && (video.src || video.currentSrc) // Check both src and currentSrc
-    && Number.isNaN(video.duration) === false
+    && !Number.isNaN(video.duration)
     && video.duration && video.duration > 0
     && video.readyState >= 2 // HAVE_CURRENT_DATA or higher
     && !video.ended
