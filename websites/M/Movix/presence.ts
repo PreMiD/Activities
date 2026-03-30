@@ -858,7 +858,9 @@ function findTitleAttribute(predicate: (title: string) => boolean): string {
 }
 
 function getCurrentVideoElement(): HTMLVideoElement | null {
-  const videos = Array.from(document.querySelectorAll("video")) as HTMLVideoElement[];
+  const videos = Array.from(
+    document.querySelectorAll("video"),
+  ) as HTMLVideoElement[];
   let bestVideo: HTMLVideoElement | null = null;
   let bestScore = Number.NEGATIVE_INFINITY;
 
@@ -1363,7 +1365,10 @@ async function getCinegraphContext(pageTitle: string, pageImage: string) {
   let image = toAbsoluteUrl(selectedImage);
 
   if (!title && (queryType === "movie" || queryType === "tv") && queryId) {
-    const summary = await fetchTmdbMediaSummary(queryType as TmdbMediaType, queryId);
+    const summary = await fetchTmdbMediaSummary(
+      queryType as TmdbMediaType,
+      queryId,
+    );
     title = normalizeText(summary?.title);
     image = firstNonEmpty(image, toAbsoluteUrl(summary?.image || ""));
   }
@@ -1383,7 +1388,10 @@ async function getCinegraphContext(pageTitle: string, pageImage: string) {
   };
 }
 
-async function buildRoutePresence(showTimestamp: boolean, showButtons: boolean) {
+async function buildRoutePresence(
+  showTimestamp: boolean,
+  showButtons: boolean,
+) {
   const { pathname } = document.location;
   const pageTitle = getPageTitle();
   const pageImage = getPageImage("logo");
@@ -1547,7 +1555,6 @@ async function buildRoutePresence(showTimestamp: boolean, showButtons: boolean) 
       { showTimestamp, showButtons, pathname },
     );
   }
-
   if ((match = pathname.match(/^\/genre\/([^/]+)\/([^/]+)$/i))) {
     const mediaType = getMatchPart(match, 1);
     const mediaLabel = mediaType === "movie" ? "Films" : "Séries";
