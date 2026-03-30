@@ -2,20 +2,26 @@
   "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
-    "id": "266634965620359179",
-    "name": "guibsslol"
+    "name": "guisarriba",
+    "id": "266634965620359179"
   },
   "service": "Cifra Club",
   "description": {
     "en": "Cifra Club is the largest music teaching website in Brazil.",
-    "pt-BR": "O Cifra Club é o maior site de ensino de música do Brasil."
+    "pt": "O Cifra Club é o maior site de ensino de música do Brasil."
   },
-  "url": ["www.cifraclub.com.br", "cifraclub.com.br"],
+  "url": "cifraclub.com.br",
   "regExp": "^https?[:][/][/](www[.])?cifraclub[.]com[.]br[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/CwNKdGJ.png",
-  "thumbnail": "https://i.imgur.com/BuHgVvR.jpeg",
+  "thumbnail": "https://i.imgur.com/BuHgVvR.jpg",
   "color": "#F25E1C",
   "category": "music",
-  "tags": ["guitar", "chords", "cifras", "violao", "music"]
+  "tags": [
+    "guitar",
+    "chords",
+    "cifras",
+    "violao",
+    "music"
+  ]
 }
