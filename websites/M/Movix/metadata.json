@@ -1,0 +1,37 @@
+{
+  "apiVersion": 1,
+  "author": {
+    "name": "Movix",
+    "id": "1259926474174238741"
+  },
+  "service": "Movix",
+  "description": {
+    "fr": "Affiche une présence Discord détaillée et un peu absurde pendant la navigation sur Movix.",
+    "en": "Shows a detailed and slightly absurd Discord presence while browsing Movix."
+  },
+  "url": ["movix.rodeo", "movix.website", "movix.blog"],
+  "version": "1.1.0",
+  "logo": "https://movix.rodeo/movix.png",
+  "thumbnail": "https://movix.rodeo/movix.png",
+  "color": "#dc2626",
+  "category": "videos",
+  "tags": ["movies", "series", "anime", "watchparty", "streaming"],
+  "regExp": "([a-z0-9-]+[.])*(movix[.](?:rodeo|website|blog))[/]?",
+  "allowURLOverrides": true,
+  "settings": [
+    {
+      "id": "showTimestamp",
+      "title": "Afficher le temps",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Affiche le temps passé sur une page ou la durée média quand elle est disponible."
+    },
+    {
+      "id": "showButtons",
+      "title": "Afficher le bouton",
+      "icon": "fas fa-link",
+      "value": false,
+      "description": "Ajoute un bouton vers certaines pages profondes quand l'URL est en HTTPS."
+    }
+  ]
+}
