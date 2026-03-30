@@ -49,7 +49,7 @@ const ActivityType = {
 
 const SITE_NAME = "Movix";
 const FALLBACK_SITE_URL = "https://movix.rodeo";
-const FALLBACK_LOGO = `${FALLBACK_SITE_URL}/movix.png`;
+const FALLBACK_LOGO = `${FALLBACK_SITE_URL}/movix512.png`;
 const TMDB_API_BASE = "https://api.themoviedb.org/3";
 const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p";
 const TMDB_API_KEY = "f3d757824f08ea2cff45eb8f47ca3a1e";
