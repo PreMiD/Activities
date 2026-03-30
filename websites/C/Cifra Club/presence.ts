@@ -4,7 +4,7 @@
  * @see https://github.com/premidlibrary/discordjs-premid#usage
  */
 const presence = new Presence({
-  clientId: '1486470685994913873'
+  clientId: '1486470685994913873',
 })
 
 /**
@@ -30,7 +30,7 @@ presence.on('UpdateData', async (): Promise<void> => {
      */
     const presenceData: PresenceData = {
       largeImageKey: 'https://i.imgur.com/CwNKdGJ.png',
-      startTimestamp: browsingTimestamp
+      startTimestamp: browsingTimestamp,
     }
 
     /**
@@ -68,14 +68,15 @@ presence.on('UpdateData', async (): Promise<void> => {
      * Updates the presence payload with the extracted metadata.
      */
     presence.setActivity(presenceData)
-  } catch (error) {
+  }
+  catch (error) {
     /**
      * Logs any errors encountered while updating the presence payload.
      * @param {Error} error - The error object.
      */
     console.error(
       '[PreMiD - Cifra Club] Error updating presence payload:',
-      error
+      error,
     )
   }
 })
