@@ -36,6 +36,16 @@ interface TmdbMediaSummary {
   image?: string;
 }
 
+interface WatchContext {
+  title: string;
+  mediaType: string;
+  season: string;
+  episode: string;
+  episodeTitle: string;
+  sourceLabel: string;
+  sourceDetail: string;
+}
+
 const presence = new Presence({
   clientId: "1259926474174238741",
 });
@@ -1098,46 +1108,83 @@ function createPagePresence(
 
 function createWatchingPresence(options: {
   title: string;
+  displayTitle?: string;
   playingText: VariantText;
   pausedText: VariantText;
   waitingText: VariantText;
+  embedText?: VariantText;
   endedText?: VariantText;
   season?: string;
   episode?: string;
   image?: string;
+  statePrefix?: string;
 }) {
   const presenceData = buildBasePresence(options.image);
   const video = getCurrentVideoElement();
   const season = normalizeText(options.season);
   const episode = normalizeText(options.episode);
-  const prefix = season && episode ? `S${season}E${episode} - ` : "";
-  const seed = `${document.location.pathname}:${options.title}:${season}:${episode}`;
-  const waitingText = resolveVariantText(
-    Array.isArray(options.waitingText)
+  const routeWatchMediaType = getWatchMediaTypeForPath(document.location.pathname);
+  const useSimpleWatchRoute = Boolean(routeWatchMediaType);
+  const details = normalizeText(
+    options.displayTitle ||
+      (routeWatchMediaType
+        ? getFormattedWatchTitle(
+            options.title,
+            routeWatchMediaType,
+            season,
+            episode,
+          )
+        : options.title),
+  );
+  const prefix =
+    options.statePrefix !== undefined
+      ? options.statePrefix
+      : useSimpleWatchRoute
+        ? ""
+        : season && episode
+        ? `S${season}E${episode} - `
+        : "";
+  const seed = `${document.location.pathname}:${details}:${season}:${episode}`;
+  const waitingVariant = useSimpleWatchRoute
+    ? "Selection de la source"
+    : Array.isArray(options.waitingText)
       ? options.waitingText
-      : findVariantsForPath(
-          document.location.pathname,
-          WATCH_WAITING_VARIANTS,
-        ) || options.waitingText,
+      : findVariantsForPath(document.location.pathname, WATCH_WAITING_VARIANTS) ||
+        options.waitingText;
+  const playingVariant = useSimpleWatchRoute
+    ? "Lecture en cours"
+    : Array.isArray(options.playingText)
+      ? options.playingText
+      : findVariantsForPath(document.location.pathname, WATCH_PLAYING_VARIANTS) ||
+        options.playingText;
+  const pausedVariant = useSimpleWatchRoute
+    ? "En pause"
+    : Array.isArray(options.pausedText)
+      ? options.pausedText
+      : findVariantsForPath(document.location.pathname, WATCH_PAUSED_VARIANTS) ||
+        options.pausedText;
+  const endedVariant = useSimpleWatchRoute
+    ? "Lecture terminee"
+    : Array.isArray(options.endedText)
+      ? options.endedText
+      : findVariantsForPath(document.location.pathname, WATCH_ENDED_VARIANTS) ||
+        options.endedText ||
+        "Le generique approche, personne ne bouge";
+  const waitingText = resolveVariantText(
+    waitingVariant,
     `${seed}:waiting`,
   );
   const playingText = resolveVariantText(
-    Array.isArray(options.playingText)
-      ? options.playingText
-      : findVariantsForPath(
-          document.location.pathname,
-          WATCH_PLAYING_VARIANTS,
-        ) || options.playingText,
+    playingVariant,
     `${seed}:playing`,
   );
   const pausedText = resolveVariantText(
-    Array.isArray(options.pausedText)
-      ? options.pausedText
-      : findVariantsForPath(
-          document.location.pathname,
-          WATCH_PAUSED_VARIANTS,
-        ) || options.pausedText,
+    pausedVariant,
     `${seed}:paused`,
+  );
+  const embedText = resolveVariantText(
+    options.embedText || "Lecteur embed actif",
+    `${seed}:embed`,
   );
   const endedText = resolveVariantText(
     Array.isArray(options.endedText)
@@ -1148,58 +1195,428 @@ function createWatchingPresence(options: {
     `${seed}:ended`,
   );
 
+  const watchEndedText = useSimpleWatchRoute
+    ? resolveVariantText(endedVariant, `${seed}:ended:simple`)
+    : endedText;
+  const watchContext = getWatchContext();
+  const activeEmbedFrame = getActiveEmbedFrame();
+  const embedSourceLabel = getActiveEmbedSourceLabel(activeEmbedFrame);
+  const selectedSourceLabel = formatWatchSourceLabel(watchContext.sourceLabel);
+  const embedSourceDisplay = formatWatchSourceDisplay(
+    embedSourceLabel,
+    watchContext.sourceDetail,
+  );
+  const selectedSourceDisplay = formatWatchSourceDisplay(
+    watchContext.sourceLabel,
+    watchContext.sourceDetail,
+  );
+  const embedSourceState = formatWatchSourceState(
+    embedSourceLabel,
+    watchContext.sourceDetail,
+  );
+  const selectedSourceState = formatWatchSourceState(
+    watchContext.sourceLabel,
+    watchContext.sourceDetail,
+  );
+  const hoverEpisodeLabel = getWatchEpisodeHoverLabel(season, episode);
+
   presenceData.type = ActivityType.Watching;
-  presenceData.details = options.title;
+  presenceData.details = details || options.title;
   presenceData.state = `${prefix}${waitingText}`;
 
-  if (season && episode) {
-    presenceData.largeImageText = `Season ${season}, Episode ${episode}`;
+  if (hoverEpisodeLabel) {
+    presenceData.largeImageText = hoverEpisodeLabel;
   } else {
     presenceData.largeImageText = "Lecture en cours";
   }
 
   if (video && Number.isFinite(video.duration) && video.duration > 0) {
     if (video.ended) {
-      presenceData.state = `${prefix}${endedText}`;
+      presenceData.state = `${prefix}${watchEndedText}`;
     } else if (video.paused) {
-      presenceData.state = `${prefix}${pausedText}`;
+      presenceData.state = selectedSourceDisplay
+        ? `En pause - ${selectedSourceDisplay}`
+        : `${prefix}${pausedText}`;
     } else {
-      presenceData.state = `${prefix}${playingText}`;
+      presenceData.state = selectedSourceDisplay || `${prefix}${playingText}`;
       presenceData.startTimestamp =
         Date.now() - Math.floor(video.currentTime * 1000);
       presenceData.endTimestamp =
         Date.now() +
         Math.max(0, Math.floor((video.duration - video.currentTime) * 1000));
     }
+  } else if (activeEmbedFrame || embedSourceLabel) {
+    presenceData.state = embedSourceLabel
+      ? embedSourceState
+      : embedSourceDisplay || embedText;
+  } else if (useSimpleWatchRoute && selectedSourceLabel) {
+    presenceData.state = selectedSourceState;
   }
 
   return presenceData;
 }
 
+const WATCH_EMBED_SOURCE_LABELS = new Set([
+  "coflix",
+  "custom",
+  "dood",
+  "doodstream",
+  "dropload",
+  "emmmmbed",
+  "frembed",
+  "fstream",
+  "lecteur6",
+  "mixdrop",
+  "omega",
+  "oneupload",
+  "sibnet",
+  "supervideo",
+  "uqload",
+  "videasy",
+  "vidmoly",
+  "viper",
+  "voe",
+  "vostfr",
+  "vox",
+  "wiflix",
+]);
+
+const WATCH_SOURCE_LABEL_MAP: Record<string, string> = {
+  coflix: "Coflix",
+  custom: "Custom",
+  darkino: "Nightflix",
+  dood: "Doodstream",
+  doodstream: "Doodstream",
+  dropload: "Dropload",
+  emmmmbed: "Emmmmbed",
+  frembed: "Frembed",
+  fstream: "FStream",
+  lecteur6: "Lecteur6",
+  mixdrop: "Mixdrop",
+  mp4: "MP4",
+  nexus_file: "Nexus File",
+  nexus_hls: "Nexus HLS",
+  omega: "Omega",
+  oneupload: "OneUpload",
+  rivestream: "Rivestream",
+  rivestream_hls: "Rivestream",
+  sibnet: "Sibnet",
+  supervideo: "Supervideo",
+  uqload: "Uqload",
+  videasy: "Videasy",
+  vidmoly: "Vidmoly",
+  viper: "Viper",
+  voe: "VOE",
+  vostfr: "VOSTFR",
+  vox: "Vox",
+  wiflix: "Wiflix",
+};
+
+const WATCH_EMBED_PROVIDER_PATTERNS: Array<{ pattern: RegExp; label: string }> =
+  [
+    { pattern: /frembed/i, label: "Frembed" },
+    { pattern: /videasy/i, label: "Videasy" },
+    { pattern: /vidmoly/i, label: "Vidmoly" },
+    { pattern: /sibnet/i, label: "Sibnet" },
+    { pattern: /oneupload/i, label: "OneUpload" },
+    { pattern: /mixdrop/i, label: "Mixdrop" },
+    { pattern: /dood/i, label: "Doodstream" },
+    { pattern: /dropload/i, label: "Dropload" },
+    { pattern: /supervideo/i, label: "Supervideo" },
+    { pattern: /uqload/i, label: "Uqload" },
+    { pattern: /voe/i, label: "VOE" },
+    { pattern: /emmmmbed/i, label: "Emmmmbed" },
+    { pattern: /lecteur6/i, label: "Lecteur6" },
+    { pattern: /coflix/i, label: "Coflix" },
+    { pattern: /omega/i, label: "Omega" },
+    { pattern: /wiflix/i, label: "Wiflix" },
+    { pattern: /viper/i, label: "Viper" },
+    { pattern: /vox/i, label: "Vox" },
+  ];
+
+const WATCH_TITLE_BLOCKLIST = [
+  /^d[ée]velopp[ée] avec$/i,
+  /^changer de source$/i,
+  /^episodes?$/i,
+  /^lecture en cours$/i,
+  /^copier$/i,
+  /^param(?:Ã¨|e)tres?$/i,
+  /^param/i,
+  /^settings?$/i,
+  /^saison \d+\s*[,-]\s*[ée]pisode \d+$/i,
+];
+
+function getWatchContext(): WatchContext {
+  const element = document.querySelector("[data-premid-watch-context]");
+
+  if (!(element instanceof HTMLElement)) {
+    return {
+      title: "",
+      mediaType: "",
+      season: "",
+      episode: "",
+      episodeTitle: "",
+      sourceLabel: "",
+      sourceDetail: "",
+    };
+  }
+
+  return {
+    title: normalizeText(element.getAttribute("data-premid-title")),
+    mediaType: normalizeText(element.getAttribute("data-premid-media-type")),
+    season: normalizeText(element.getAttribute("data-premid-season")),
+    episode: normalizeText(element.getAttribute("data-premid-episode")),
+    episodeTitle: normalizeText(
+      element.getAttribute("data-premid-episode-title"),
+    ),
+    sourceLabel: normalizeText(
+      element.getAttribute("data-premid-source-label"),
+    ),
+    sourceDetail: normalizeText(
+      element.getAttribute("data-premid-source-detail"),
+    ),
+  };
+}
+
+function formatWatchSourceLabel(value: unknown): string {
+  const normalized = normalizeText(value);
+  if (!normalized) {
+    return "";
+  }
+
+  const lowered = normalized.toLowerCase().replace(/\s+/g, "_");
+  if (WATCH_SOURCE_LABEL_MAP[lowered]) {
+    return WATCH_SOURCE_LABEL_MAP[lowered];
+  }
+
+  return lowered
+    .replace(/[_-]+/g, " ")
+    .replace(/\b\w/g, (character) => character.toUpperCase());
+}
+
+function formatWatchSourceDisplay(label: unknown, detail: unknown): string {
+  const sourceLabel = formatWatchSourceLabel(label);
+  if (!sourceLabel) {
+    return "";
+  }
+
+  const sourceDetail = normalizeText(detail);
+  if (!sourceDetail) {
+    return `Via ${sourceLabel}`;
+  }
+
+  const normalizedLabel = sourceLabel
+    .toLowerCase()
+    .replace(/[_-]+/g, " ")
+    .trim();
+  const cleanedDetail = sourceDetail
+    .replace(
+      new RegExp(
+        `^${sourceLabel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?:\\s*[:-]\\s*|\\s+)`,
+        "i",
+      ),
+      "",
+    )
+    .trim();
+  const normalizedDetail = cleanedDetail
+    .toLowerCase()
+    .replace(/[_-]+/g, " ")
+    .trim();
+
+  if (!cleanedDetail || normalizedDetail === normalizedLabel) {
+    return sourceLabel;
+  }
+
+  return `${sourceLabel} - ${cleanedDetail}`;
+}
+
+function formatWatchSourceState(label: unknown, detail: unknown): string {
+  const sourceDisplay = formatWatchSourceDisplay(label, detail);
+  return sourceDisplay ? `Via ${sourceDisplay}` : "";
+}
+
+function isLikelyEmbedSource(value: unknown): boolean {
+  const normalized = normalizeText(value).toLowerCase().replace(/\s+/g, "_");
+  return WATCH_EMBED_SOURCE_LABELS.has(normalized);
+}
+
+function getActiveEmbedFrame(): HTMLIFrameElement | null {
+  const frames = Array.from(
+    document.querySelectorAll("iframe"),
+  ) as HTMLIFrameElement[];
+
+  for (let index = frames.length - 1; index >= 0; index -= 1) {
+    const frame = frames[index];
+    const src = normalizeText(frame?.src || frame?.getAttribute("src"));
+
+    if (frame && src && isRelevantDomElement(frame)) {
+      return frame;
+    }
+  }
+
+  return null;
+}
+
+function getEmbedSourceLabelFromUrl(value: unknown): string {
+  const normalized = normalizeText(value);
+  if (!normalized) {
+    return "";
+  }
+
+  for (const entry of WATCH_EMBED_PROVIDER_PATTERNS) {
+    if (entry.pattern.test(normalized)) {
+      return entry.label;
+    }
+  }
+
+  try {
+    const hostname = new URL(normalized).hostname.replace(/^www\./i, "");
+    const root = hostname.split(".")[0] || "";
+    return formatWatchSourceLabel(root);
+  } catch {
+    return "";
+  }
+}
+
+function getActiveEmbedSourceLabel(frame?: HTMLIFrameElement | null): string {
+  const activeFrame = frame || getActiveEmbedFrame();
+  const frameLabel = getEmbedSourceLabelFromUrl(
+    activeFrame?.src || activeFrame?.getAttribute("src"),
+  );
+
+  if (frameLabel) {
+    return frameLabel;
+  }
+
+  const contextSourceLabel = formatWatchSourceLabel(getWatchContext().sourceLabel);
+  if (contextSourceLabel && isLikelyEmbedSource(contextSourceLabel)) {
+    return contextSourceLabel;
+  }
+
+  return "";
+}
+
+function sanitizeWatchTitle(value: unknown): string {
+  const normalized = normalizeText(value);
+  if (!normalized) {
+    return "";
+  }
+
+  const stripped = stripSiteName(stripReleaseTag(normalized));
+  if (!stripped) {
+    return "";
+  }
+
+  if (WATCH_TITLE_BLOCKLIST.some((pattern) => pattern.test(stripped))) {
+    return "";
+  }
+
+  return stripped;
+}
+
+function sanitizeWatchEpisodeTitle(value: unknown): string {
+  const normalized = normalizeText(value)
+    .replace(/^\d+\.\s*/, "")
+    .replace(/^episode\s+\d+\s*[:-]?\s*/i, "")
+    .trim();
+
+  if (!normalized || /^episode\s+\d+$/i.test(normalized)) {
+    return "";
+  }
+
+  return normalized;
+}
+
 function getWatchTitle(fallback: string): string {
+  const routeWatchMediaType = getWatchMediaTypeForPath(document.location.pathname);
   const titleFromAttributes = findTitleAttribute((title) => {
     if (title.length < 4) return false;
     if (/ouvrir dans une nouvelle page/i.test(title)) return false;
     if (/trailer background/i.test(title)) return false;
     if (/^[-+]\d+s$/i.test(title)) return false;
     if (/^zoom [+-]$/i.test(title)) return false;
-    return true;
+    return Boolean(sanitizeWatchTitle(title));
   });
 
-  const title = firstNonEmpty(
+  const contextTitle = sanitizeWatchTitle(getWatchContext().title);
+  if (contextTitle) {
+    return contextTitle;
+  }
+
+  if (routeWatchMediaType) {
+    return fallback;
+  }
+
+  const candidates = [
     titleFromAttributes,
+    getText("main h2.text-white.text-3xl"),
+    getText("h2.text-white.text-3xl"),
+    getText("main h3.text-sm.font-bold"),
+    getText("main h3.text-lg.font-semibold"),
     getText("main h1"),
     getText("h3.text-lg"),
     getText("h3"),
     getText("h1"),
     document.title,
     getMetaContent('meta[property="og:title"]'),
-    fallback,
-  );
+  ];
 
-  const sanitized = stripReleaseTag(title);
-  const stripped = stripSiteName(sanitized);
-  return stripped || fallback;
+  for (const candidate of candidates) {
+    const sanitized = sanitizeWatchTitle(candidate);
+    if (sanitized) {
+      return sanitized;
+    }
+  }
+
+  return fallback;
+}
+
+function getFormattedWatchTitle(
+  fallbackTitle: string,
+  mediaTypeFallback: "movie" | "tv" | "anime",
+  seasonFallback = "",
+  episodeFallback = "",
+): string {
+  const context = getWatchContext();
+  const mediaType =
+    normalizeText(context.mediaType).toLowerCase() || mediaTypeFallback;
+  const title = sanitizeWatchTitle(context.title) || fallbackTitle;
+
+  if (mediaType === "tv" || mediaType === "anime") {
+    const season = normalizeText(context.season) || seasonFallback;
+    const episode = normalizeText(context.episode) || episodeFallback;
+    const episodeCode = season && episode ? `S${season}E${episode}` : "";
+    const episodeTitle = sanitizeWatchEpisodeTitle(context.episodeTitle);
+
+    return [title, episodeCode, episodeTitle].filter(Boolean).join(" - ");
+  }
+
+  return title;
+}
+
+function getWatchEpisodeHoverLabel(season: string, episode: string): string {
+  const episodeCode = season && episode ? `S${season}E${episode}` : "";
+  const episodeTitle = sanitizeWatchEpisodeTitle(getWatchContext().episodeTitle);
+
+  return [episodeCode, episodeTitle].filter(Boolean).join(" - ");
+}
+
+function getWatchMediaTypeForPath(
+  pathname: string,
+): "movie" | "tv" | "anime" | "" {
+  if (/^\/watch\/movie\/[^/]+$/i.test(pathname)) {
+    return "movie";
+  }
+
+  if (/^\/watch\/tv\/[^/]+\/s\/[^/]+\/e\/[^/]+$/i.test(pathname)) {
+    return "tv";
+  }
+
+  if (/^\/watch\/anime\/[^/]+\/season\/[^/]+\/episode\/[^/]+$/i.test(pathname)) {
+    return "anime";
+  }
+
+  return "";
 }
 
 function getProviderName(providerId: string): string {
