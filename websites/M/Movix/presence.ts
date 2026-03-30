@@ -6,6 +6,7 @@ interface PresenceButton {
 }
 
 type VariantText = string | readonly string[];
+type TmdbMediaType = "movie" | "tv";
 
 interface PresenceDataLike {
   name?: string;
@@ -30,6 +31,11 @@ interface PresenceInstance {
 
 declare const Presence: new (options: { clientId: string }) => PresenceInstance;
 
+interface TmdbMediaSummary {
+  title: string;
+  image?: string;
+}
+
 const presence = new Presence({
   clientId: "1259926474174238741",
 });
@@ -44,6 +50,11 @@ const ActivityType = {
 const SITE_NAME = "Movix";
 const FALLBACK_SITE_URL = "https://movix.rodeo";
 const FALLBACK_LOGO = `${FALLBACK_SITE_URL}/movix.png`;
+const TMDB_API_BASE = "https://api.themoviedb.org/3";
+const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p";
+const TMDB_API_KEY = "f3d757824f08ea2cff45eb8f47ca3a1e";
+
+const tmdbMediaCache = new Map<string, Promise<TmdbMediaSummary | null>>();
 
 const PROVIDER_NAMES: Record<string, string> = {
   "8": "Netflix",
@@ -662,6 +673,12 @@ function stripSiteName(value: unknown): string {
     .trim();
 }
 
+const RELEASE_TAG_PATTERN = /\s*\bSORTI(?:E|ES|S)?\b[.!]*$/i;
+
+function stripReleaseTag(value: string): string {
+  return value.replace(RELEASE_TAG_PATTERN, "").trim();
+}
+
 function firstNonEmpty<T>(...values: T[]): T | "" {
   for (const value of values) {
     if (normalizeText(value)) {
@@ -696,6 +713,11 @@ function toAbsoluteUrl(value: string): string {
   }
 }
 
+function toTmdbImageUrl(path: unknown, size = "w500"): string {
+  const text = normalizeText(path);
+  return text ? `${TMDB_IMAGE_BASE}/${size}${text}` : "";
+}
+
 function isImageUrlAllowed(value: string): boolean {
   return (
     /^https:\/\//i.test(value) ||
@@ -708,16 +730,17 @@ function isButtonUrlAllowed(value: string): boolean {
   return /^https:\/\//i.test(value);
 }
 
-function getMetaContent(selector: string): string {
-  const element = document.querySelector(selector) as HTMLMetaElement | null;
-  return normalizeText(element?.content);
-}
+function findLatestValue<T extends Element>(
+  elements: readonly T[],
+  resolveValue: (element: T) => string,
+): string {
+  for (let index = elements.length - 1; index >= 0; index -= 1) {
+    const element = elements[index];
+    if (!element) {
+      continue;
+    }
 
-function getAttribute(selector: string, attribute: string): string {
-  const elements = Array.from(document.querySelectorAll(selector));
-
-  for (const element of elements) {
-    const value = normalizeText(element.getAttribute(attribute));
+    const value = resolveValue(element);
     if (value) {
       return value;
     }
@@ -726,32 +749,162 @@ function getAttribute(selector: string, attribute: string): string {
   return "";
 }
 
+function isRelevantDomElement(element: Element | null): element is HTMLElement {
+  if (!(element instanceof HTMLElement)) {
+    return false;
+  }
+
+  if (
+    !element.isConnected ||
+    element.hidden ||
+    element.closest("[hidden], [inert], [aria-hidden='true']")
+  ) {
+    return false;
+  }
+
+  const style = window.getComputedStyle(element);
+  if (
+    style.display === "none" ||
+    style.visibility === "hidden" ||
+    style.visibility === "collapse" ||
+    Number.parseFloat(style.opacity || "1") === 0
+  ) {
+    return false;
+  }
+
+  return (
+    element.getClientRects().length > 0 ||
+    element.offsetWidth > 0 ||
+    element.offsetHeight > 0
+  );
+}
+
+function getMetaContent(selector: string): string {
+  const elements = Array.from(
+    document.querySelectorAll(selector),
+  ) as HTMLMetaElement[];
+
+  const latestManagedMeta = findLatestValue(elements, (element) =>
+    element.getAttribute("data-rh") === "true"
+      ? normalizeText(element.content)
+      : "",
+  );
+
+  if (latestManagedMeta) {
+    return latestManagedMeta;
+  }
+
+  return findLatestValue(elements, (element) => normalizeText(element.content));
+}
+
+function getAttribute(selector: string, attribute: string): string {
+  const elements = Array.from(document.querySelectorAll(selector));
+
+  const visibleValue = findLatestValue(elements, (element) =>
+    isRelevantDomElement(element)
+      ? normalizeText(element.getAttribute(attribute))
+      : "",
+  );
+
+  if (visibleValue) {
+    return visibleValue;
+  }
+
+  return findLatestValue(elements, (element) =>
+    normalizeText(element.getAttribute(attribute)),
+  );
+}
+
 function getText(selector: string): string {
   const elements = Array.from(document.querySelectorAll(selector));
 
-  for (const element of elements) {
-    const text = normalizeText(
-      (element as HTMLElement).innerText || element.textContent,
-    );
-    if (text) {
-      return text;
-    }
+  const visibleText = findLatestValue(elements, (element) =>
+    isRelevantDomElement(element)
+      ? normalizeText(element.innerText || element.textContent)
+      : "",
+  );
+
+  if (visibleText) {
+    return visibleText;
   }
 
-  return "";
+  return findLatestValue(elements, (element) =>
+    element instanceof HTMLElement
+      ? normalizeText(element.innerText || element.textContent)
+      : "",
+  );
 }
 
 function findTitleAttribute(predicate: (title: string) => boolean): string {
   const elements = Array.from(document.querySelectorAll("[title]"));
 
-  for (const element of elements) {
+  const visibleTitle = findLatestValue(elements, (element) => {
+    if (!isRelevantDomElement(element)) {
+      return "";
+    }
+
     const title = normalizeText(element.getAttribute("title"));
-    if (title && predicate(title)) {
-      return title;
+    return title && predicate(title) ? title : "";
+  });
+
+  if (visibleTitle) {
+    return visibleTitle;
+  }
+
+  return findLatestValue(elements, (element) => {
+    const title = normalizeText(element.getAttribute("title"));
+    return title && predicate(title) ? title : "";
+  });
+}
+
+function getCurrentVideoElement(): HTMLVideoElement | null {
+  const videos = Array.from(document.querySelectorAll("video")) as HTMLVideoElement[];
+  let bestVideo: HTMLVideoElement | null = null;
+  let bestScore = Number.NEGATIVE_INFINITY;
+
+  for (const video of videos) {
+    if (!video.isConnected) {
+      continue;
+    }
+
+    const isVisible = isRelevantDomElement(video);
+    const rect = isVisible ? video.getBoundingClientRect() : null;
+    const area = rect ? rect.width * rect.height : 0;
+
+    let score = 0;
+    if (isVisible) {
+      score += 100;
+    }
+
+    score += Math.min(40, Math.floor(area / 20000));
+
+    if (video.currentSrc || video.src) {
+      score += 20;
+    }
+
+    if (video.readyState >= 2) {
+      score += 15;
+    }
+
+    if (Number.isFinite(video.duration) && video.duration > 0) {
+      score += 20;
+    }
+
+    if (!video.paused) {
+      score += 25;
+    }
+
+    if (!video.ended) {
+      score += 5;
+    }
+
+    if (score >= bestScore) {
+      bestScore = score;
+      bestVideo = video;
     }
   }
 
-  return "";
+  return bestVideo;
 }
 
 function getSearchParam(name: string): string {
@@ -809,22 +962,28 @@ function resolveVariantText(value: VariantText, seed: string): string {
 
 function getPageTitle(): string {
   const title = firstNonEmpty(
-    getMetaContent('meta[property="og:title"]'),
     getText("main h1"),
     getText("h1"),
+    document.title,
     getText("main h2"),
     getText("h2"),
-    document.title,
+    getMetaContent('meta[property="og:title"]'),
   );
 
-  return stripSiteName(title);
+  return stripSiteName(stripReleaseTag(title));
 }
 
 function getPageImage(mode: "logo" | "content" = "logo"): string {
+  if (mode === "logo") {
+    return FALLBACK_LOGO;
+  }
+
   const candidates =
     mode === "content"
       ? [
           getAttribute("video[poster]", "poster"),
+          getAttribute(".cinegraph-detail-backdrop img", "src"),
+          getAttribute(".cinegraph-tooltip-poster", "src"),
           getMetaContent('meta[property="og:image"]'),
           getAttribute('img[alt="Poster"]', "src"),
           getAttribute('img[alt*="poster" i]', "src"),
@@ -832,7 +991,7 @@ function getPageImage(mode: "logo" | "content" = "logo"): string {
           getAttribute('img[src*="tmdb.org"][src*="/original"]', "src"),
           FALLBACK_LOGO,
         ]
-      : [getMetaContent('meta[property="og:image"]'), FALLBACK_LOGO];
+      : [FALLBACK_LOGO];
 
   for (const candidate of candidates) {
     const absolute = toAbsoluteUrl(candidate);
@@ -946,7 +1105,7 @@ function createWatchingPresence(options: {
   image?: string;
 }) {
   const presenceData = buildBasePresence(options.image);
-  const video = document.querySelector("video") as HTMLVideoElement | null;
+  const video = getCurrentVideoElement();
   const season = normalizeText(options.season);
   const episode = normalizeText(options.episode);
   const prefix = season && episode ? `S${season}E${episode} - ` : "";
@@ -1026,23 +1185,205 @@ function getWatchTitle(fallback: string): string {
   });
 
   const title = firstNonEmpty(
-    getMetaContent('meta[property="og:title"]'),
     titleFromAttributes,
+    getText("main h1"),
     getText("h3.text-lg"),
     getText("h3"),
     getText("h1"),
     document.title,
+    getMetaContent('meta[property="og:title"]'),
     fallback,
   );
 
-  return stripSiteName(title) || fallback;
+  const sanitized = stripReleaseTag(title);
+  const stripped = stripSiteName(sanitized);
+  return stripped || fallback;
 }
 
 function getProviderName(providerId: string): string {
   return PROVIDER_NAMES[providerId] || `Provider ${providerId}`;
 }
 
-function buildRoutePresence(showTimestamp: boolean, showButtons: boolean) {
+function extractQuotedText(value: unknown): string {
+  const text = normalizeText(value);
+  if (!text) return "";
+
+  const patterns = [
+    /«\s*([^«»]+?)\s*»/,
+    /“\s*([^“”]+?)\s*”/,
+    /"\s*([^"]+?)\s*"/,
+    /'\s*([^']+?)\s*'/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    const extracted = normalizeText(match?.[1]);
+    if (extracted) {
+      return extracted;
+    }
+  }
+
+  return "";
+}
+
+function createSpecificPagePresence(
+  details: string,
+  state: VariantText,
+  image?: string,
+  seedSuffix?: string,
+) {
+  const subject = normalizeText(details);
+  if (!subject) {
+    return null;
+  }
+
+  const presenceData = buildBasePresence(image);
+  const seed = `${document.location.pathname}${document.location.search}:${normalizeText(seedSuffix) || subject}`;
+
+  presenceData.details = subject;
+  presenceData.state = resolveVariantText(state, `${seed}:state`);
+  return presenceData;
+}
+
+async function fetchTmdbMediaSummary(
+  type: TmdbMediaType,
+  id: string,
+): Promise<TmdbMediaSummary | null> {
+  const mediaId = normalizeText(id);
+  if (!TMDB_API_KEY || !mediaId) {
+    return null;
+  }
+
+  const cacheKey = `${type}:${mediaId}`;
+  const cachedPromise = tmdbMediaCache.get(cacheKey);
+  if (cachedPromise) {
+    return cachedPromise;
+  }
+
+  const request = (async () => {
+    try {
+      const url = new URL(`${TMDB_API_BASE}/${type}/${mediaId}`);
+      url.searchParams.set("api_key", TMDB_API_KEY);
+      url.searchParams.set("language", "fr-FR");
+
+      const response = await fetch(url.toString());
+      if (!response.ok) {
+        return null;
+      }
+
+      const data = (await response.json()) as {
+        title?: string;
+        name?: string;
+        poster_path?: string;
+        backdrop_path?: string;
+      };
+
+      const title = stripSiteName(firstNonEmpty(data.title, data.name));
+      if (!title) {
+        return null;
+      }
+
+      return {
+        title,
+        image: firstNonEmpty(
+          toTmdbImageUrl(data.poster_path),
+          toTmdbImageUrl(data.backdrop_path, "w780"),
+        ),
+      };
+    } catch {
+      return null;
+    }
+  })();
+
+  tmdbMediaCache.set(cacheKey, request);
+  return request;
+}
+
+function getCinegraphVariants(type: string): readonly string[] {
+  if (type === "movie") {
+    return [
+      "Connexions d'un film passées au scanner 🕸️",
+      "Univers d'un film disséqué dans CinéGraph 🎬",
+      "Réseau d'un film analysé comme un dossier secret 🧠",
+    ];
+  }
+
+  if (type === "tv") {
+    return [
+      "Connexions d'une série passées au scanner 🕸️",
+      "Univers d'une série disséqué dans CinéGraph 📺",
+      "Réseau d'une série analysé comme un complot premium 🧠",
+    ];
+  }
+
+  if (type === "person") {
+    return [
+      "Connexions d'une personne passées au scanner 👤",
+      "Carrière disséquée dans CinéGraph 🎭",
+      "Réseau créatif observé comme un tableau d'enquête 🕵️",
+    ];
+  }
+
+  return [
+    "Cartographie ciné en cours dans CinéGraph 🧠",
+    "Connexions ciné passées au scanner 🕸️",
+    "Univers Movix disséqué comme un dossier top secret 🧪",
+  ];
+}
+
+async function getCinegraphContext(pageTitle: string, pageImage: string) {
+  const selectedTitle = firstNonEmpty(
+    getText("h2.cinegraph-detail-title"),
+    getText(".cinegraph-tooltip-title"),
+  );
+  const selectedImage = firstNonEmpty(
+    getAttribute(".cinegraph-detail-backdrop img", "src"),
+    getAttribute(".cinegraph-tooltip-poster", "src"),
+  );
+  const selectedBadge = normalizeText(
+    firstNonEmpty(
+      getText(".cinegraph-detail-meta .cinegraph-type-badge"),
+      getText(".cinegraph-tooltip-meta .cinegraph-type-badge"),
+    ),
+  ).toLowerCase();
+
+  const queryType = normalizeText(getSearchParam("type")).toLowerCase();
+  const queryId = getSearchParam("id");
+
+  let graphType = queryType;
+  if (/film|movie/i.test(selectedBadge)) {
+    graphType = "movie";
+  } else if (/série|serie|tv/i.test(selectedBadge)) {
+    graphType = "tv";
+  } else if (/personne|artist|artiste|person/i.test(selectedBadge)) {
+    graphType = "person";
+  }
+
+  let title = normalizeText(selectedTitle);
+  let image = toAbsoluteUrl(selectedImage);
+
+  if (!title && (queryType === "movie" || queryType === "tv") && queryId) {
+    const summary = await fetchTmdbMediaSummary(queryType as TmdbMediaType, queryId);
+    title = normalizeText(summary?.title);
+    image = firstNonEmpty(image, toAbsoluteUrl(summary?.image || ""));
+  }
+
+  if (!title) {
+    title = firstNonEmpty(
+      extractQuotedText(getText(".cinegraph-subtitle")),
+      pageTitle,
+      "CinéGraph",
+    );
+  }
+
+  return {
+    title: String(title),
+    image: firstNonEmpty(image, pageImage),
+    variants: getCinegraphVariants(graphType),
+  };
+}
+
+async function buildRoutePresence(showTimestamp: boolean, showButtons: boolean) {
   const { pathname } = document.location;
   const pageTitle = getPageTitle();
   const pageImage = getPageImage("logo");
@@ -1109,11 +1450,17 @@ function buildRoutePresence(showTimestamp: boolean, showButtons: boolean) {
 
   if ((match = pathname.match(/^\/collection\/([^/]+)$/i))) {
     const collectionId = getMatchPart(match, 1);
+    const collectionTitle =
+      pageTitle || `Collection ${shortenId(collectionId)}`;
 
     return finalizePresence(
-      createPagePresence(
-        "Inspecte une collection avec un sérieux disproportionné",
-        pageTitle || `Collection ${shortenId(collectionId)}`,
+      createSpecificPagePresence(
+        collectionTitle,
+        [
+          "Collection passée au scanner 🗂️",
+          "Saga observée avec un sérieux disproportionné 🎞️",
+          "Collection inspectée comme un trésor du canapé 📚",
+        ],
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
@@ -1122,11 +1469,16 @@ function buildRoutePresence(showTimestamp: boolean, showButtons: boolean) {
 
   if ((match = pathname.match(/^\/movie\/([^/]+)$/i))) {
     const movieId = getMatchPart(match, 1);
+    const movieTitle = pageTitle || `Film ${shortenId(movieId)}`;
 
     return finalizePresence(
-      createPagePresence(
-        "Épluche une fiche film avant le grand clic",
-        pageTitle || `Film ${shortenId(movieId)}`,
+      createSpecificPagePresence(
+        movieTitle,
+        [
+          "Fiche film sous la loupe 🎬",
+          "Film inspecté comme un dossier brûlant 🍿",
+          "Autopsie ciné en cours sur Movix 🎞️",
+        ],
         contentImage,
       ),
       { showTimestamp, showButtons, pathname },
@@ -1135,11 +1487,16 @@ function buildRoutePresence(showTimestamp: boolean, showButtons: boolean) {
 
   if ((match = pathname.match(/^\/tv\/([^/]+)$/i))) {
     const showId = getMatchPart(match, 1);
+    const showTitle = pageTitle || `Série ${shortenId(showId)}`;
 
     return finalizePresence(
-      createPagePresence(
-        "Analyse une série comme un comité de binge-watching",
-        pageTitle || `Série ${shortenId(showId)}`,
+      createSpecificPagePresence(
+        showTitle,
+        [
+          "Fiche série sous surveillance 📺",
+          "Série inspectée comme un complot à cliffhangers 🍿",
+          "Binge en préparation devant la fiche série 🎞️",
+        ],
         contentImage,
       ),
       { showTimestamp, showButtons, pathname },
@@ -1156,9 +1513,19 @@ function buildRoutePresence(showTimestamp: boolean, showButtons: boolean) {
     );
 
     return finalizePresence(
-      createPagePresence(
-        "Prépare un plan B avec une assurance très théâtrale",
+      createSpecificPagePresence(
         String(title),
+        contentType === "movie"
+          ? [
+              "Téléchargement film en préparation ⬇️",
+              "Plan B cinéma armé jusqu'aux dents 📦",
+              "Mode furtif: aucun spoiler autorisé 🕶️",
+            ]
+          : [
+              "Téléchargement série en préparation ⬇️",
+              "Plan B binge prêt à décoller 📺",
+              "Rechargement stratégique des buffers 🔄",
+            ],
         contentImage,
       ),
       { showTimestamp, showButtons, pathname },
@@ -1272,11 +1639,16 @@ function buildRoutePresence(showTimestamp: boolean, showButtons: boolean) {
 
   if ((match = pathname.match(/^\/person\/([^/]+)$/i))) {
     const personId = getMatchPart(match, 1);
+    const personTitle = pageTitle || `Personne ${shortenId(personId)}`;
 
     return finalizePresence(
-      createPagePresence(
-        "Épluche une filmo comme un détective du générique",
-        pageTitle || `Personne ${shortenId(personId)}`,
+      createSpecificPagePresence(
+        personTitle,
+        [
+          "Filmo disséquée comme un détective du générique 🎭",
+          "Carrière passée au scanner plan par plan 🎬",
+          "Profil ciné observé comme une archive sacrée 📚",
+        ],
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
@@ -1413,10 +1785,14 @@ function buildRoutePresence(showTimestamp: boolean, showButtons: boolean) {
     );
 
     return finalizePresence(
-      createPagePresence(
-        "Coordonne une WatchParty pendant que le chat dérape",
+      createSpecificPagePresence(
         String(roomTitle),
-        pageImage,
+        [
+          "Salon WatchParty en ébullition 💬",
+          "WatchParty pilotée comme un chaos organisé 🎉",
+          "Salle commune tenue d'une main très popcorn 🍿",
+        ],
+        contentImage === FALLBACK_LOGO ? pageImage : contentImage,
       ),
       { showTimestamp, showButtons, pathname },
     );
@@ -1479,11 +1855,16 @@ function buildRoutePresence(showTimestamp: boolean, showButtons: boolean) {
 
   if ((match = pathname.match(/^\/list\/([^/]+)$/i))) {
     const listId = getMatchPart(match, 1);
+    const listTitle = pageTitle || `Liste ${shortenId(listId)}`;
 
     return finalizePresence(
-      createPagePresence(
-        "Explore une liste partagée avec un jugement silencieux",
-        pageTitle || `Liste ${shortenId(listId)}`,
+      createSpecificPagePresence(
+        listTitle,
+        [
+          "Liste publique inspectée avec gravité 📋",
+          "Sélection passée au peigne fin 🍽️",
+          "Compilation ciné dégustée comme un menu secret 🗃️",
+        ],
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
@@ -1673,17 +2054,13 @@ function buildRoutePresence(showTimestamp: boolean, showButtons: boolean) {
   }
 
   if (pathname === "/cinegraph") {
-    const graphFocus = firstNonEmpty(
-      getText("h2.cinegraph-detail-title"),
-      pageTitle,
-      "CineGraph",
-    );
+    const graphContext = await getCinegraphContext(pageTitle, pageImage);
 
     return finalizePresence(
-      createPagePresence(
-        "Cartographie ses obsessions ciné comme un savant fou",
-        String(graphFocus),
-        pageImage,
+      createSpecificPagePresence(
+        graphContext.title,
+        graphContext.variants,
+        graphContext.image,
       ),
       { showTimestamp, showButtons, pathname },
     );
@@ -1724,17 +2101,22 @@ function buildRoutePresence(showTimestamp: boolean, showButtons: boolean) {
 
   if ((match = pathname.match(/^\/ftv\/info\/([^/]+)$/i))) {
     const programId = getMatchPart(match, 1);
+    const programTitle = String(
+      firstNonEmpty(
+        getText("h1"),
+        pageTitle,
+        `Programme ${shortenId(programId)}`,
+      ),
+    );
 
     return finalizePresence(
-      createPagePresence(
-        "Inspecte une fiche France.tv avant le clic fatal",
-        String(
-          firstNonEmpty(
-            getText("h1"),
-            pageTitle,
-            `Programme ${shortenId(programId)}`,
-          ),
-        ),
+      createSpecificPagePresence(
+        programTitle,
+        [
+          "Fiche France.tv sous inspection 🇫🇷",
+          "Programme France.tv étudié avec un sérieux républicain 📺",
+          "France.tv passé au microscope télévisuel 🎬",
+        ],
         contentImage,
       ),
       { showTimestamp, showButtons, pathname },
@@ -1812,7 +2194,7 @@ presence.on("UpdateData", async () => {
     getBooleanSetting("showButtons", false),
   ]);
 
-  const presenceData = buildRoutePresence(showTimestamp, showButtons);
+  const presenceData = await buildRoutePresence(showTimestamp, showButtons);
 
   if (presenceData) {
     presence.setActivity(presenceData);
