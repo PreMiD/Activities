@@ -467,7 +467,7 @@ presence.on('UpdateData', async () => {
           streamerinfo = getElement('.stream-info-card p > a')
         }
         
-        presenceData.name = Twitch
+        presenceData.name = "Twitch"
         presenceData.state = streamerinfo
 
         if (getElement('.modview-dock-widget p') !== 'Offline') {
