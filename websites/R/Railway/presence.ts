@@ -4,7 +4,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://images2.imgbox.com/11/df/OKXNN5nV_o.png',
+  Logo = 'https://images2.imgbox.com/6e/77/ycpeme8m_o.png',
 }
 
 let elapsed = browsingTimestamp
@@ -77,16 +77,16 @@ presence.on('UpdateData', async () => {
     }
     case pathname.startsWith('/workspace/'): {
       const workspaceTabs: Record<string, string> = {
-        usage: 'Viewing usage & billing',
-        templates: 'Browsing workspace templates',
-        members: 'Viewing team members',
-        settings: 'Viewing workspace settings',
-        general: 'Viewing workspace settings',
-        environments: 'Viewing environments',
-        integrations: 'Viewing integrations',
-        billing: 'Viewing billing',
+        'usage': 'Viewing usage & billing',
+        'templates': 'Browsing workspace templates',
+        'members': 'Viewing team members',
+        'settings': 'Viewing workspace settings',
+        'general': 'Viewing workspace settings',
+        'environments': 'Viewing environments',
+        'integrations': 'Viewing integrations',
+        'billing': 'Viewing billing',
         'audit-logs': 'Viewing audit logs',
-        referrals: 'Viewing referrals',
+        'referrals': 'Viewing referrals',
       }
       const parts = pathname.split('/').filter(Boolean)
       const tab = workspaceTabs[parts[1] ?? ''] ? parts[1] : parts[2]
