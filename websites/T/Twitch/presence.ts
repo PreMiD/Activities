@@ -143,8 +143,7 @@ presence.on('UpdateData', async () => {
     pfp,
     logo,
     devLogo,
-    buttons,
-    streamerTitle,
+    buttons
   ] = await Promise.all([
     presence.getSetting<boolean>('browse'),
     presence.getSetting<boolean>('live'),
@@ -160,7 +159,6 @@ presence.on('UpdateData', async () => {
     presence.getSetting<number>('logo'),
     presence.getSetting<number>('devLogo'),
     presence.getSetting<boolean>('buttons'),
-    presence.getSetting<boolean>('streamerTitle'),
   ])
 
   if (oldLang !== newLang || !strings) {
@@ -467,7 +465,6 @@ presence.on('UpdateData', async () => {
           streamerinfo = getElement('.stream-info-card p > a')
         }
 
-        presenceData.name = 'Twitch'
         presenceData.state = streamerinfo
 
         if (getElement('.modview-dock-widget p') !== 'Offline') {
@@ -963,10 +960,9 @@ presence.on('UpdateData', async () => {
   }
   if (privacy || !buttons)
     delete presenceData.buttons
-
-  if (privacy)
-    delete presenceData.name
-
+  if (privacy) {
+    delete presenceData.state
+  }
   if (presenceData.details)
     presence.setActivity(presenceData)
   else presence.clearActivity()
