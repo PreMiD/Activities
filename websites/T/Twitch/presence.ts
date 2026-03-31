@@ -466,7 +466,8 @@ presence.on('UpdateData', async () => {
         if (!streamerinfo) {
           streamerinfo = getElement('.stream-info-card p > a')
         }
-
+        
+        presenceData.name = Twitch
         presenceData.state = streamerinfo
 
         if (getElement('.modview-dock-widget p') !== 'Offline') {
@@ -500,9 +501,6 @@ presence.on('UpdateData', async () => {
             ?.src
             ?.replace(/-\d{1,2}x\d{1,2}/, '-600x600')
             ?? (logoArr[logo] || ActivityAssets.Logo)
-          if (streamer && streamerTitle && !privacy) {
-            presenceData.name = streamer
-          }
           presenceData.details = streamDetail
             .replace('%title%', title ?? '')
             .replace('%streamer%', streamer ?? '')
