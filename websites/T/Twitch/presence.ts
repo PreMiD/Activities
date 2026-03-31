@@ -143,7 +143,7 @@ presence.on('UpdateData', async () => {
     pfp,
     logo,
     devLogo,
-    buttons
+    buttons,
   ] = await Promise.all([
     presence.getSetting<boolean>('browse'),
     presence.getSetting<boolean>('live'),
