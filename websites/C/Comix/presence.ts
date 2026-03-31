@@ -53,7 +53,7 @@ presence.on('UpdateData', async () => {
   }
   else if (normalizedPathname === '/user') {
     presenceData.details = 'Editing profile...'
-    presenceData.smallImageKey = ActivityAssets.Settings
+    presenceData.smallImageKey = Assets.Writing
   }
   else if (normalizedPathname === '/user/notifications') {
     if (tab === 'chapter') {
