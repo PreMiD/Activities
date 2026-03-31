@@ -9,15 +9,19 @@
     {
       "name": "entraptaa",
       "id": "153980822670671872"
+    },
+    {
+      "name": "colourfulplanets",
+      "id": "1023108830760009768"
     }
   ],
   "service": "HBO Max",
   "description": {
-    "en": "The streaming platform with a personalized user experience that brings unique and unexpected stories ranging from the highest quality in scripted programming to the best of unscripted, family-friendly content, the HBO service, HBO Max Originals and more."
+    "en": "The streaming platform with a personalized user experience that brings unique and unexpected stories ranging from the highest quality in scripted programming to the best of unscripted, family-friendly content, the HBO service, Max Originals and more."
   },
   "url": "play.hbomax.com",
   "regExp": "^https?[:][/][/]play[.]hbomax[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20Max/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20Max/assets/thumbnail.jpeg",
   "color": "#0014a4",
@@ -25,19 +29,46 @@
   "tags": [
     "originals",
     "streaming-platform",
-    "hulu-bundle"
+    "hbo"
   ],
   "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
     {
       "id": "cover",
       "title": "Show Cover",
       "icon": "fad fa-images",
-      "value": true
+      "value": true,
+      "if": {
+        "privacy": false
+      }
     },
     {
       "id": "usePresenceName",
       "title": "Show Title as Presence",
       "icon": "fad fa-user-edit",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showBrowsingStatus",
+      "title": "Show Browsing Status",
+      "icon": "fad fa-book-reader",
       "value": true
     }
   ]
