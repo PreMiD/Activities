@@ -31,7 +31,7 @@ function getCoverArt(item: ReturnType<typeof findByAlternateId>): string | undef
     .map(ref => findById(ref.id))
     .filter(Boolean)
 
-  const boxart = allImages.find(img => {
+  const boxart = allImages.find((img) => {
     const kind = (img?.attributes as any)?.kind as string | undefined
     return kind && (kind.includes('box') || kind.includes('tile') || kind.includes('poster'))
   })
