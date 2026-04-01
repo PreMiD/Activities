@@ -10,7 +10,7 @@
     "en": "Sofi is a fun card collecting game on discord. Play with millions of users globally. Collect, trade and battle in guilds. One of the most exciting ways to pass time on discord and engage your users. It has characters from all your favorite anime, kpop, game, webtoons and more."
   },
   "url": "sofi.gg",
-  "regExp": "^https?[:][/][/](gems[.])?sofi[.]gg[/]",
+  "regExp": "^https?[:][/][/]sofi[.]gg[/]",
   "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sofi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sofi/assets/thumbnail.png",
