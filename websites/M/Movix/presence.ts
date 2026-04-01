@@ -1,82 +1,82 @@
-type ActivityTypeValue = 0 | 2 | 3 | 5;
+type ActivityTypeValue = 0 | 2 | 3 | 5
 
 interface PresenceButton {
-  label: string;
-  url: string;
+  label: string
+  url: string
 }
 
-type VariantText = string | readonly string[];
-type TmdbMediaType = "movie" | "tv";
+type VariantText = string | readonly string[]
+type TmdbMediaType = 'movie' | 'tv'
 
 interface PresenceDataLike {
-  name?: string;
-  type?: ActivityTypeValue;
-  details?: string;
-  state?: string;
-  startTimestamp?: number;
-  endTimestamp?: number;
-  largeImageKey?: string;
-  largeImageText?: string;
-  buttons?: PresenceButton[];
+  name?: string
+  type?: ActivityTypeValue
+  details?: string
+  state?: string
+  startTimestamp?: number
+  endTimestamp?: number
+  largeImageKey?: string
+  largeImageText?: string
+  buttons?: PresenceButton[]
 }
 
 interface PresenceInstance {
-  on(event: "UpdateData", callback: () => void | Promise<void>): void;
-  setActivity(data: PresenceDataLike): void;
-  clearActivity(): void;
-  getSetting<T extends string | boolean | number>(
+  on: (event: 'UpdateData', callback: () => void | Promise<void>) => void
+  setActivity: (data: PresenceDataLike) => void
+  clearActivity: () => void
+  getSetting: <T extends string | boolean | number>(
     settingId: string,
-  ): Promise<T>;
+  ) => Promise<T>
 }
 
-declare const Presence: new (options: { clientId: string }) => PresenceInstance;
+declare const Presence: new (options: { clientId: string }) => PresenceInstance
 
 interface TmdbMediaSummary {
-  title: string;
-  image?: string;
+  title: string
+  image?: string
 }
 
 interface WatchContext {
-  title: string;
-  mediaType: string;
-  season: string;
-  episode: string;
-  episodeTitle: string;
-  sourceLabel: string;
-  sourceDetail: string;
+  title: string
+  mediaType: string
+  season: string
+  episode: string
+  episodeTitle: string
+  sourceLabel: string
+  sourceDetail: string
 }
 
 const presence = new Presence({
-  clientId: "1259926474174238741",
-});
+  clientId: '1259926474174238741',
+})
 
 const ActivityType = {
   Playing: 0,
   Listening: 2,
   Watching: 3,
   Competing: 5,
-} as const;
+} as const
 
-const SITE_NAME = "Movix";
-const FALLBACK_SITE_URL = "https://movix.rodeo";
-const FALLBACK_LOGO = `${FALLBACK_SITE_URL}/movix512.png`;
-const TMDB_API_BASE = "https://api.themoviedb.org/3";
-const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p";
-const TMDB_API_KEY = "f3d757824f08ea2cff45eb8f47ca3a1e";
+const SITE_NAME = 'Movix'
+const FALLBACK_SITE_URL = 'https://movix.rodeo'
+const FALLBACK_LOGO = `${FALLBACK_SITE_URL}/movix512.png`
+const TMDB_API_BASE = 'https://api.themoviedb.org/3'
+const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p'
+const TMDB_API_KEY = 'f3d757824f08ea2cff45eb8f47ca3a1e'
 
-const tmdbMediaCache = new Map<string, Promise<TmdbMediaSummary | null>>();
+const tmdbMediaCache = new Map<string, Promise<TmdbMediaSummary | null>>()
 
 const PROVIDER_NAMES: Record<string, string> = {
-  "8": "Netflix",
-  "119": "Prime Video",
-  "337": "Disney+",
-  "338": "Marvel Studios",
-  "350": "Apple TV+",
-  "355": "Warner Bros",
-  "356": "DC Comics",
-  "384": "HBO MAX",
-  "531": "Paramount+",
-};
+  8: 'Netflix',
+  119: 'Prime Video',
+  337: 'Disney+',
+  338: 'Marvel Studios',
+  350: 'Apple TV+',
+  355: 'Warner Bros',
+  356: 'DC Comics',
+  384: 'HBO MAX',
+  531: 'Paramount+',
+}
 
 const SAFE_BUTTON_PATTERNS = [
   /^\/collection\/[^/]+$/i,
@@ -92,652 +92,698 @@ const SAFE_BUTTON_PATTERNS = [
   /^\/vip\/cadeau\/[^/]+$/i,
   /^\/ftv\/info\/[^/]+$/i,
   /^\/wrapped(?:\/[^/]+)?$/i,
-];
+]
+
+const NON_BREAKING_SPACE_PATTERN = /\u00A0/g
+const WHITESPACE_PATTERN = /\s+/g
+const STRIP_SITE_NAME_PATTERN = /\s*(?:[-:]\s*)?Movix$/i
+const HTTPS_URL_PATTERN = /^https:\/\//i
+const WORD_SEPARATOR_PATTERN = /[_-]+/g
+const WORD_INITIAL_PATTERN = /\b\w/g
+const WWW_PREFIX_PATTERN = /^www\./i
+const LEADING_EPISODE_NUMBER_PATTERN = /^\d+\.\s*/
+const LEADING_EPISODE_LABEL_PATTERN = /^episode\s+\d+\s*[:-]?\s*/i
+const ONLY_EPISODE_NUMBER_PATTERN = /^episode\s+\d+$/i
+const WATCH_TITLE_NEW_PAGE_PATTERN = /ouvrir dans une nouvelle page/i
+const WATCH_TITLE_TRAILER_PATTERN = /trailer background/i
+const WATCH_TITLE_SKIP_PATTERN = /^[-+]\d+s$/i
+const WATCH_TITLE_ZOOM_PATTERN = /^zoom [+-]$/i
+const SOURCE_LABEL_SEPARATOR_PATTERN = /^[:\s-]+/
+const RELEASE_TAG_PATTERN = /\s*SORTI(?:E|ES|S)?[.!]*$/i
+const QUOTED_TEXT_PATTERNS = [
+  /\u00AB([^\u00AB\u00BB]+)\u00BB/,
+  /\u201C([^\u201C\u201D]+)\u201D/,
+  /"([^"]+)"/,
+  /'([^']+)'/,
+]
+const WATCH_MOVIE_PATH_PATTERN = /^\/watch\/movie\/[^/]+$/i
+const WATCH_TV_PATH_PATTERN = /^\/watch\/tv\/[^/]+\/s\/[^/]+\/e\/[^/]+$/i
+const WATCH_ANIME_PATH_PATTERN = /^\/watch\/anime\/[^/]+\/season\/[^/]+\/episode\/[^/]+$/i
+const ROUTE_COLLECTION_PATTERN = /^\/collection\/([^/]+)$/i
+const ROUTE_MOVIE_PATTERN = /^\/movie\/([^/]+)$/i
+const ROUTE_TV_PATTERN = /^\/tv\/([^/]+)$/i
+const ROUTE_DOWNLOAD_PATTERN = /^\/download\/(movie|tv)\/([^/]+)$/i
+const ROUTE_GENRE_PATTERN = /^\/genre\/([^/]+)\/([^/]+)$/i
+const ROUTE_PROVIDER_CATALOG_PATTERN = /^\/provider\/([^/]+)\/([^/]+)(?:\/([^/]+))?$/i
+const ROUTE_PROVIDER_PATTERN = /^\/provider\/([^/]+)$/i
+const ROUTE_PERSON_PATTERN = /^\/person\/([^/]+)$/i
+const ROUTE_WATCHPARTY_ROOM_PATTERN = /^\/watchparty\/room\/([^/]+)$/i
+const ROUTE_WATCHPARTY_JOIN_PATTERN = /^\/watchparty\/join(?:\/([^/]+))?$/i
+const ROUTE_LIST_PATTERN = /^\/list\/([^/]+)$/i
+const ROUTE_VIP_INVOICE_PATTERN = /^\/vip\/invoice\/([^/]+)$/i
+const ROUTE_VIP_GIFT_PATTERN = /^\/vip\/cadeau\/([^/]+)$/i
+const ROUTE_FTV_INFO_PATTERN = /^\/ftv\/info\/([^/]+)$/i
+const ROUTE_FTV_WATCH_PATTERN = /^\/ftv\/watch\/[^/]+$/i
+const ROUTE_WRAPPED_PATTERN = /^\/wrapped(?:\/([^/]+))?$/i
+const EPISODE_CODE_SUFFIX_PATTERN = /\s*-\s*S\d+E\d+$/i
 
 const PAGE_DETAIL_VARIANTS: Array<{
-  pattern: RegExp;
-  variants: readonly string[];
+  pattern: RegExp
+  variants: readonly string[]
 }> = [
   {
     pattern: /^\/$/,
     variants: [
-      "Patrouille sur l'accueil comme un critique payé en popcorn 🍿",
-      "Scrolle l'accueil avec l'assurance d'un jury imaginaire 🎬",
-      "Fouille l'accueil comme un détective du canapé 🛋️",
+      'Patrouille sur l\'accueil comme un critique payé en popcorn 🍿',
+      'Scrolle l\'accueil avec l\'assurance d\'un jury imaginaire 🎬',
+      'Fouille l\'accueil comme un détective du canapé 🛋️',
     ],
   },
   {
     pattern: /^\/search$/i,
     variants: [
-      "Traque une pépite avec un calme purement décoratif 🔎",
-      "Interroge la recherche comme un enquêteur du streaming 🕵️",
-      "Lance des mots-clés avec l'énergie d'un génie fatigué 🔍",
+      'Traque une pépite avec un calme purement décoratif 🔎',
+      'Interroge la recherche comme un enquêteur du streaming 🕵️',
+      'Lance des mots-clés avec l\'énergie d\'un génie fatigué 🔍',
     ],
   },
   {
     pattern: /^\/movies$/i,
     variants: [
-      "Passe le catalogue films au rayon X sans diplôme officiel 🎬",
-      "Inspecte les films comme un sommelier du popcorn 🍿",
-      "Fouille les films avec un sérieux beaucoup trop cinématographique 🎞️",
+      'Passe le catalogue films au rayon X sans diplôme officiel 🎬',
+      'Inspecte les films comme un sommelier du popcorn 🍿',
+      'Fouille les films avec un sérieux beaucoup trop cinématographique 🎞️',
     ],
   },
   {
     pattern: /^\/tv-shows$/i,
     variants: [
-      "Collectionne les séries comme si dormir était facultatif 📺",
-      "Parcourt les séries avec des ambitions de binge incontrôlables 🍿",
-      "Évalue les séries comme un comité secret du canapé 📡",
+      'Collectionne les séries comme si dormir était facultatif 📺',
+      'Parcourt les séries avec des ambitions de binge incontrôlables 🍿',
+      'Évalue les séries comme un comité secret du canapé 📡',
     ],
   },
   {
     pattern: /^\/collections$/i,
     variants: [
-      "Fouille les collections comme un archiviste sous café ☕",
-      "Visite les collections avec le respect d'un conservateur dramatique 🗂️",
-      "Classe des sagas dans sa tête comme si c'était son métier 📚",
+      'Fouille les collections comme un archiviste sous café ☕',
+      'Visite les collections avec le respect d\'un conservateur dramatique 🗂️',
+      'Classe des sagas dans sa tête comme si c\'était son métier 📚',
     ],
   },
   {
     pattern: /^\/collection\/[^/]+$/i,
     variants: [
-      "Inspecte une collection avec un sérieux presque gouvernemental 🗂️",
-      "Retourne une collection comme un brocanteur du streaming 📦",
-      "Examine une saga avec une passion très peu discrète 🎞️",
+      'Inspecte une collection avec un sérieux presque gouvernemental 🗂️',
+      'Retourne une collection comme un brocanteur du streaming 📦',
+      'Examine une saga avec une passion très peu discrète 🎞️',
     ],
   },
   {
     pattern: /^\/movie\/[^/]+$/i,
     variants: [
-      "Épluche une fiche film comme un jury de festival en retard 🎬",
-      "Analyse un film avant le clic fatal avec beaucoup trop d'émotion 🍿",
-      "Observe une fiche film comme si le réalisateur regardait 👀",
+      'Épluche une fiche film comme un jury de festival en retard 🎬',
+      'Analyse un film avant le clic fatal avec beaucoup trop d\'émotion 🍿',
+      'Observe une fiche film comme si le réalisateur regardait 👀',
     ],
   },
   {
     pattern: /^\/tv\/[^/]+$/i,
     variants: [
-      "Dissèque une fiche série comme si le binge était un sport olympique 📺",
-      "Examine une série avec l'énergie d'un fan qui ne dort pas 😵",
-      "Observe une fiche série comme un comité de cliffhangers 🍿",
+      'Dissèque une fiche série comme si le binge était un sport olympique 📺',
+      'Examine une série avec l\'énergie d\'un fan qui ne dort pas 😵',
+      'Observe une fiche série comme un comité de cliffhangers 🍿',
     ],
   },
   {
     pattern: /^\/download\/(movie|tv)\/[^/]+$/i,
     variants: [
-      "Prépare un plan B avec l'élégance d'un pirate en costume ⬇️",
-      "Monte un plan secours comme si Internet était en grève 📦",
-      "Sécurise une sortie de secours ciné avec un calme douteux 🧳",
+      'Prépare un plan B avec l\'élégance d\'un pirate en costume ⬇️',
+      'Monte un plan secours comme si Internet était en grève 📦',
+      'Sécurise une sortie de secours ciné avec un calme douteux 🧳',
     ],
   },
   {
     pattern: /^\/debrid$/i,
     variants: [
-      "Dompte des liens capricieux avec la grâce d'un sorcier réseau 🪄",
-      "Répare des liens comme un mécano du streaming 🧰",
-      "Négocie avec des hosters récalcitrants à mains nues 🔧",
+      'Dompte des liens capricieux avec la grâce d\'un sorcier réseau 🪄',
+      'Répare des liens comme un mécano du streaming 🧰',
+      'Négocie avec des hosters récalcitrants à mains nues 🔧',
     ],
   },
   {
     pattern: /^\/genre\/[^/]+\/[^/]+$/i,
     variants: [
-      "Trie le chaos par genre avec une autorité totalement inventée 🗂️",
-      "Range les goûts du monde dans de petites cases très pratiques 🎭",
-      "Organise le catalogue comme un bibliothécaire du binge 📚",
+      'Trie le chaos par genre avec une autorité totalement inventée 🗂️',
+      'Range les goûts du monde dans de petites cases très pratiques 🎭',
+      'Organise le catalogue comme un bibliothécaire du binge 📚',
     ],
   },
   {
     pattern: /^\/roulette$/i,
     variants: [
-      "Laisse le destin choisir à sa place, aveu courageux 🎲",
-      "Confie sa soirée à une roulette manifestement instable 🎰",
-      "Demande au hasard de prendre les commandes avec panache 🎯",
+      'Laisse le destin choisir à sa place, aveu courageux 🎲',
+      'Confie sa soirée à une roulette manifestement instable 🎰',
+      'Demande au hasard de prendre les commandes avec panache 🎯',
     ],
   },
   {
     pattern: /^\/provider\/[^/]+\/[^/]+(?:\/[^/]+)?$/i,
     variants: [
-      "Retourne un catalogue provider comme un inspecteur trop motivé 📦",
-      "Épluche un provider avec l'enthousiasme d'un auditeur secret 🕵️",
-      "Passe un provider au scanner ciné sans autorisation officielle 📺",
+      'Retourne un catalogue provider comme un inspecteur trop motivé 📦',
+      'Épluche un provider avec l\'enthousiasme d\'un auditeur secret 🕵️',
+      'Passe un provider au scanner ciné sans autorisation officielle 📺',
     ],
   },
   {
     pattern: /^\/provider\/[^/]+$/i,
     variants: [
-      "Espionne un provider avec une curiosité très assumée 👀",
-      "Observe un provider comme si un abonnement était en jeu 💳",
-      "Fait l'inventaire d'un provider avec une dignité variable 📋",
+      'Espionne un provider avec une curiosité très assumée 👀',
+      'Observe un provider comme si un abonnement était en jeu 💳',
+      'Fait l\'inventaire d\'un provider avec une dignité variable 📋',
     ],
   },
   {
     pattern: /^\/auth(?:\/google)?$/i,
     variants: [
-      "Négocie avec la connexion comme un diplomate en sueur 🔐",
-      "Affronte l'authentification avec un courage administratif 🪪",
-      "Tente de se connecter sans vexer les serveurs 🤝",
+      'Négocie avec la connexion comme un diplomate en sueur 🔐',
+      'Affronte l\'authentification avec un courage administratif 🪪',
+      'Tente de se connecter sans vexer les serveurs 🤝',
     ],
   },
   {
     pattern: /^\/(?:create-account|link-bip39\/create)$/i,
     variants: [
-      "Forge un compte comme un druide numérique très appliqué ✨",
-      "Crée un compte avec le sérieux d'un mage du mot de passe 🔮",
-      "Ouvre un nouveau chapitre administratif en grand style 📝",
+      'Forge un compte comme un druide numérique très appliqué ✨',
+      'Crée un compte avec le sérieux d\'un mage du mot de passe 🔮',
+      'Ouvre un nouveau chapitre administratif en grand style 📝',
     ],
   },
   {
     pattern: /^\/(?:login-bip39|link-bip39)$/i,
     variants: [
-      "Récite sa formule secrète sans éternuer 🔑",
-      "Murmure une phrase magique avec un calme discutable 🧠",
-      "Déverrouille son accès comme un sorcier sous pression ✨",
+      'Récite sa formule secrète sans éternuer 🔑',
+      'Murmure une phrase magique avec un calme discutable 🧠',
+      'Déverrouille son accès comme un sorcier sous pression ✨',
     ],
   },
   {
     pattern: /^\/person\/[^/]+$/i,
     variants: [
-      "Épluche une filmo comme un détective du générique 🕵️",
-      "Remonte une carrière plan par plan avec passion 🎭",
-      "Inspecte une star comme si Cannes avait appelé 📸",
+      'Épluche une filmo comme un détective du générique 🕵️',
+      'Remonte une carrière plan par plan avec passion 🎭',
+      'Inspecte une star comme si Cannes avait appelé 📸',
     ],
   },
   {
     pattern: /^\/profile$/i,
     variants: [
-      "Range son profil puis le rerange pour le principe 👤",
-      "Contemple son profil comme un PDG du canapé 🪞",
-      "Ajuste son profil avec une minutie ridiculement noble ✍️",
+      'Range son profil puis le rerange pour le principe 👤',
+      'Contemple son profil comme un PDG du canapé 🪞',
+      'Ajuste son profil avec une minutie ridiculement noble ✍️',
     ],
   },
   {
     pattern: /^\/alerts$/i,
     variants: [
-      "Surveille ses alertes comme une tour de contrôle du binge 🔔",
-      "Attend ses alertes avec le sang-froid d'une casserole 🌡️",
-      "Écoute les signaux du catalogue comme un radar humain 📡",
+      'Surveille ses alertes comme une tour de contrôle du binge 🔔',
+      'Attend ses alertes avec le sang-froid d\'une casserole 🌡️',
+      'Écoute les signaux du catalogue comme un radar humain 📡',
     ],
   },
   {
     pattern: /^\/live-tv$/i,
     variants: [
-      "Zappe plus vite que la télécommande ne peut protester 📡",
-      "Navigue en direct avec les réflexes d'un ninja du canapé 📺",
-      "Fait du slalom entre les chaînes sans prévenir personne 🎛️",
+      'Zappe plus vite que la télécommande ne peut protester 📡',
+      'Navigue en direct avec les réflexes d\'un ninja du canapé 📺',
+      'Fait du slalom entre les chaînes sans prévenir personne 🎛️',
     ],
   },
   {
     pattern: /^\/watchparty\/create$/i,
     variants: [
-      "Prépare une WatchParty comme un wedding planner du popcorn 🍿",
-      "Monte une WatchParty avec la sérénité d'un chef de gare 👥",
-      "Assemble une soirée visionnage comme un maître de cérémonie chaotique 🎉",
+      'Prépare une WatchParty comme un wedding planner du popcorn 🍿',
+      'Monte une WatchParty avec la sérénité d\'un chef de gare 👥',
+      'Assemble une soirée visionnage comme un maître de cérémonie chaotique 🎉',
     ],
   },
   {
     pattern: /^\/watchparty\/room\/[^/]+$/i,
     variants: [
-      "Coordonne une WatchParty pendant que le chat part en freestyle 💬",
-      "Gère une WatchParty avec l'autorité d'un roi du canapé 👑",
-      "Tient une salle WatchParty comme un DJ des cliffhangers 🎚️",
+      'Coordonne une WatchParty pendant que le chat part en freestyle 💬',
+      'Gère une WatchParty avec l\'autorité d\'un roi du canapé 👑',
+      'Tient une salle WatchParty comme un DJ des cliffhangers 🎚️',
     ],
   },
   {
     pattern: /^\/watchparty\/join(?:\/[^/]+)?$/i,
     variants: [
-      "Essaie d'entrer dans une WatchParty sans rater le code 🚪",
-      "Tente une infiltration sociale très popcorn 🍿",
-      "Rejoint une WatchParty avec la discrétion d'une fanfare 🥁",
+      'Essaie d\'entrer dans une WatchParty sans rater le code 🚪',
+      'Tente une infiltration sociale très popcorn 🍿',
+      'Rejoint une WatchParty avec la discrétion d\'une fanfare 🥁',
     ],
   },
   {
     pattern: /^\/watchparty\/list$/i,
     variants: [
-      "Fouille les salons WatchParty comme un videur curieux 👀",
-      "Parcourt les salons comme un agent immobilier du binge 🏠",
-      "Cherche une WatchParty où poser son popcorn 🍿",
+      'Fouille les salons WatchParty comme un videur curieux 👀',
+      'Parcourt les salons comme un agent immobilier du binge 🏠',
+      'Cherche une WatchParty où poser son popcorn 🍿',
     ],
   },
   {
     pattern: /^\/suggestion$/i,
     variants: [
-      "Demande au site de penser à sa place, aveu très honnête 🧠",
-      "Réclame une idée brillante avec le panache d'un indécis 🎯",
-      "Confie sa soirée à l'algorithme avec un courage rare 🤖",
+      'Demande au site de penser à sa place, aveu très honnête 🧠',
+      'Réclame une idée brillante avec le panache d\'un indécis 🎯',
+      'Confie sa soirée à l\'algorithme avec un courage rare 🤖',
     ],
   },
   {
     pattern: /^\/extension$/i,
     variants: [
-      "Arme son navigateur comme un chevalier anti-hoster 🧩",
-      "Équipe le navigateur pour boxer les pubs et les caprices 🥊",
-      "Installe des renforts techniques avec une joie suspecte 🛠️",
+      'Arme son navigateur comme un chevalier anti-hoster 🧩',
+      'Équipe le navigateur pour boxer les pubs et les caprices 🥊',
+      'Installe des renforts techniques avec une joie suspecte 🛠️',
     ],
   },
   {
     pattern: /^\/list\/[^/]+$/i,
     variants: [
-      "Explore une liste partagée avec un jugement délicatement silencieux 📋",
-      "Déguste une liste publique comme un critique bénévole 🍽️",
-      "Parcourt une sélection avec la ferveur d'un collectionneur 🗃️",
+      'Explore une liste partagée avec un jugement délicatement silencieux 📋',
+      'Déguste une liste publique comme un critique bénévole 🍽️',
+      'Parcourt une sélection avec la ferveur d\'un collectionneur 🗃️',
     ],
   },
   {
     pattern: /^\/list-catalog$/i,
     variants: [
-      "Parcourt les listes publiques comme un brocanteur du streaming 📚",
-      "Inspecte des listes comme un curateur de canapé 🛋️",
-      "Feuillette le catalogue des listes avec des ambitions très nobles 📖",
+      'Parcourt les listes publiques comme un brocanteur du streaming 📚',
+      'Inspecte des listes comme un curateur de canapé 🛋️',
+      'Feuillette le catalogue des listes avec des ambitions très nobles 📖',
     ],
   },
   {
     pattern: /^\/dmca$/i,
     variants: [
-      "Lit la DMCA, oui ça arrive vraiment ⚖️",
-      "Affronte la paperasse juridique comme un héros discret 📜",
-      "Traverse la zone légale avec un courage franchement admirable 🧾",
+      'Lit la DMCA, oui ça arrive vraiment ⚖️',
+      'Affronte la paperasse juridique comme un héros discret 📜',
+      'Traverse la zone légale avec un courage franchement admirable 🧾',
     ],
   },
   {
     pattern: /^\/admin$/i,
     variants: [
-      "Traîne dans l'admin avec beaucoup trop de boutons 🛠️",
-      "Pilote l'admin comme un capitaine légèrement dangereux 🚨",
-      "Regarde l'admin droit dans les permissions 👮",
+      'Traîne dans l\'admin avec beaucoup trop de boutons 🛠️',
+      'Pilote l\'admin comme un capitaine légèrement dangereux 🚨',
+      'Regarde l\'admin droit dans les permissions 👮',
     ],
   },
   {
     pattern: /^\/profile-selection$/i,
     variants: [
-      "Choisit un profil comme si toute la famille observait 👥",
-      "Sélectionne un profil avec le sérieux d'un casting 🎭",
-      "Hésite entre les profils comme devant un buffet 👀",
+      'Choisit un profil comme si toute la famille observait 👥',
+      'Sélectionne un profil avec le sérieux d\'un casting 🎭',
+      'Hésite entre les profils comme devant un buffet 👀',
     ],
   },
   {
     pattern: /^\/profile-management$/i,
     variants: [
-      "Bidouille les profils avec une autorité discutable 🧰",
-      "Réorganise les profils comme un DRH du canapé 📁",
-      "Jongle avec les profils en mode administrateur de salon 🛋️",
+      'Bidouille les profils avec une autorité discutable 🧰',
+      'Réorganise les profils comme un DRH du canapé 📁',
+      'Jongle avec les profils en mode administrateur de salon 🛋️',
     ],
   },
   {
     pattern: /^\/wishboard$/i,
     variants: [
-      "Vote sur le Wishboard comme un ministre du catalogue 🗳️",
-      "Fait campagne pour ses envies avec aplomb 📣",
-      "Milite pour de nouveaux contenus avec une ferveur électorale 🎤",
+      'Vote sur le Wishboard comme un ministre du catalogue 🗳️',
+      'Fait campagne pour ses envies avec aplomb 📣',
+      'Milite pour de nouveaux contenus avec une ferveur électorale 🎤',
     ],
   },
   {
     pattern: /^\/wishboard\/new$/i,
     variants: [
-      "Dépose une requête avec l'espoir d'être exaucé 🙏",
-      "Rédige une demande comme un citoyen du binge modèle ✍️",
-      "Soumet un souhait avec la gravité d'un traité international 📬",
+      'Dépose une requête avec l\'espoir d\'être exaucé 🙏',
+      'Rédige une demande comme un citoyen du binge modèle ✍️',
+      'Soumet un souhait avec la gravité d\'un traité international 📬',
     ],
   },
   {
     pattern: /^\/wishboard\/my-requests$/i,
     variants: [
-      "Surveille ses requêtes comme des actions en bourse 📈",
-      "Observe ses demandes avec un stress très rentable 👀",
-      "Suit ses requêtes comme un trader du catalogue 💹",
+      'Surveille ses requêtes comme des actions en bourse 📈',
+      'Observe ses demandes avec un stress très rentable 👀',
+      'Suit ses requêtes comme un trader du catalogue 💹',
     ],
   },
   {
     pattern: /^\/wishboard\/submit-link$/i,
     variants: [
-      "Soumet un lien pour sauver le catalogue à mains nues 🔗",
-      "Apporte du renfort au catalogue avec panache 🧷",
-      "Lance un lien de secours comme un héros logistique 📡",
+      'Soumet un lien pour sauver le catalogue à mains nues 🔗',
+      'Apporte du renfort au catalogue avec panache 🧷',
+      'Lance un lien de secours comme un héros logistique 📡',
     ],
   },
   {
     pattern: /^\/vip$/i,
     variants: [
-      "Examine le VIP avec un regard de mécène stratégique 💎",
-      "Observe l'espace VIP comme un investisseur du popcorn 💸",
-      "Évalue le club VIP avec un sérieux de milliardaire du canapé 🪙",
+      'Examine le VIP avec un regard de mécène stratégique 💎',
+      'Observe l\'espace VIP comme un investisseur du popcorn 💸',
+      'Évalue le club VIP avec un sérieux de milliardaire du canapé 🪙',
     ],
   },
   {
     pattern: /^\/vip\/don$/i,
     variants: [
-      "Sort la carte bleue avec un panache douteux 💳",
-      "S'avance vers le don VIP comme un noble du streaming 👑",
-      "Finance le chaos audiovisuel avec élégance 💸",
+      'Sort la carte bleue avec un panache douteux 💳',
+      'S\'avance vers le don VIP comme un noble du streaming 👑',
+      'Finance le chaos audiovisuel avec élégance 💸',
     ],
   },
   {
     pattern: /^\/vip\/invoice\/[^/]+$/i,
     variants: [
-      "Contemple une facture VIP, romance moderne 🧾",
-      "Observe une facture comme si c'était un poème fiscal 💼",
-      "Vérifie une facture VIP avec le calme d'un comptable du luxe 💎",
+      'Contemple une facture VIP, romance moderne 🧾',
+      'Observe une facture comme si c\'était un poème fiscal 💼',
+      'Vérifie une facture VIP avec le calme d\'un comptable du luxe 💎',
     ],
   },
   {
     pattern: /^\/vip\/cadeau\/[^/]+$/i,
     variants: [
-      "Déballe un cadeau VIP sans papier brillant 🎁",
-      "Examine un cadeau VIP avec les yeux d'un enfant premium ✨",
-      "Ouvre une surprise VIP avec une noblesse discutable 🎀",
+      'Déballe un cadeau VIP sans papier brillant 🎁',
+      'Examine un cadeau VIP avec les yeux d\'un enfant premium ✨',
+      'Ouvre une surprise VIP avec une noblesse discutable 🎀',
     ],
   },
   {
     pattern: /^\/about$/i,
     variants: [
-      "Raconte l'histoire de Movix comme une légende locale 📖",
-      "Explore les origines de Movix comme un archéologue du streaming 🏺",
-      "Lit le lore de Movix avec des étoiles dans les yeux ✨",
+      'Raconte l\'histoire de Movix comme une légende locale 📖',
+      'Explore les origines de Movix comme un archéologue du streaming 🏺',
+      'Lit le lore de Movix avec des étoiles dans les yeux ✨',
     ],
   },
   {
     pattern: /^\/privacy$/i,
     variants: [
-      "Lit la politique de confidentialité avec un courage rare 🕶️",
-      "Affronte la confidentialité ligne par ligne sans trembler 🔐",
-      "Traverse les règles de vie privée comme un juriste du dimanche 📜",
+      'Lit la politique de confidentialité avec un courage rare 🕶️',
+      'Affronte la confidentialité ligne par ligne sans trembler 🔐',
+      'Traverse les règles de vie privée comme un juriste du dimanche 📜',
     ],
   },
   {
     pattern: /^\/(?:terms-of-service|terms)$/i,
     variants: [
-      "Traverse les CGU armé d'un café très serré ☕",
-      "Lit les conditions avec le courage d'un gladiateur du clic ⚖️",
-      "Affronte la prose légale sans quitter le canapé 📜",
+      'Traverse les CGU armé d\'un café très serré ☕',
+      'Lit les conditions avec le courage d\'un gladiateur du clic ⚖️',
+      'Affronte la prose légale sans quitter le canapé 📜',
     ],
   },
   {
     pattern: /^\/cinegraph$/i,
     variants: [
-      "Cartographie ses obsessions ciné comme un savant fou 🧠",
-      "Trace des connexions ciné avec une énergie très conspirationniste 🕸️",
-      "Dessine son cerveau cinéma en mode laboratoire secret 🧪",
+      'Cartographie ses obsessions ciné comme un savant fou 🧠',
+      'Trace des connexions ciné avec une énergie très conspirationniste 🕸️',
+      'Dessine son cerveau cinéma en mode laboratoire secret 🧪',
     ],
   },
   {
     pattern: /^\/settings$/i,
     variants: [
-      "Tripatouille les réglages jusqu'à friser la perfection ⚙️",
-      "Ajuste les paramètres comme un horloger du binge 🛠️",
-      "Cherche le réglage parfait avec une obstination admirable 🎛️",
+      'Tripatouille les réglages jusqu\'à friser la perfection ⚙️',
+      'Ajuste les paramètres comme un horloger du binge 🛠️',
+      'Cherche le réglage parfait avec une obstination admirable 🎛️',
     ],
   },
   {
     pattern: /^\/top10$/i,
     variants: [
-      "Scrute le top 10 comme un analyste de canapé 🏆",
-      "Observe le classement avec l'autorité d'un jury auto-proclamé 🎖️",
-      "Compare les tendances comme un stratège du popcorn 📈",
+      'Scrute le top 10 comme un analyste de canapé 🏆',
+      'Observe le classement avec l\'autorité d\'un jury auto-proclamé 🎖️',
+      'Compare les tendances comme un stratège du popcorn 📈',
     ],
   },
   {
     pattern: /^\/ftv$/i,
     variants: [
-      "Fouille France.tv sans télécommande et sans honte 🇫🇷",
-      "Navigue dans France.tv comme un explorateur du direct 📺",
-      "Inspecte France.tv avec une curiosité très nationale 🗼",
+      'Fouille France.tv sans télécommande et sans honte 🇫🇷',
+      'Navigue dans France.tv comme un explorateur du direct 📺',
+      'Inspecte France.tv avec une curiosité très nationale 🗼',
     ],
   },
   {
     pattern: /^\/ftv\/info\/[^/]+$/i,
     variants: [
-      "Inspecte une fiche France.tv avant le clic fatal 🇫🇷",
-      "Analyse un programme France.tv comme un critique du service public 🎬",
-      "Examine un programme France.tv avec un sérieux très républicain 📺",
+      'Inspecte une fiche France.tv avant le clic fatal 🇫🇷',
+      'Analyse un programme France.tv comme un critique du service public 🎬',
+      'Examine un programme France.tv avec un sérieux très républicain 📺',
     ],
   },
   {
     pattern: /^\/wrapped(?:\/[^/]+)?$/i,
     variants: [
-      "Relit son année ciné comme un audit émotionnel 📊",
-      "Observe son Wrapped comme un bilan existentiel premium 🪞",
-      "Revit son année Movix avec des statistiques et des frissons 📈",
+      'Relit son année ciné comme un audit émotionnel 📊',
+      'Observe son Wrapped comme un bilan existentiel premium 🪞',
+      'Revit son année Movix avec des statistiques et des frissons 📈',
     ],
   },
   {
-    pattern: /^(?:\*|\/404)$/i,
+    pattern: /^(?:\*|\/404)$/,
     variants: [
-      "S'est perdu avec une assurance spectaculaire 🧭",
-      "Erre dans le 404 comme un aventurier sans carte 🗺️",
-      "A réussi l'exploit de se perdre sur Movix, bravo 🫡",
+      'S\'est perdu avec une assurance spectaculaire 🧭',
+      'Erre dans le 404 comme un aventurier sans carte 🗺️',
+      'A réussi l\'exploit de se perdre sur Movix, bravo 🫡',
     ],
   },
-];
+]
 
 const WATCH_WAITING_VARIANTS: Array<{
-  pattern: RegExp;
-  variants: readonly string[];
+  pattern: RegExp
+  variants: readonly string[]
 }> = [
   {
     pattern: /^\/watch\/movie\/[^/]+$/i,
     variants: [
-      "cherche la bonne source sans paniquer 🍿",
-      "choisit un lecteur comme un sommelier du streaming 🎬",
-      "prépare le décollage du film avec gravité 🚀",
+      'cherche la bonne source sans paniquer 🍿',
+      'choisit un lecteur comme un sommelier du streaming 🎬',
+      'prépare le décollage du film avec gravité 🚀',
     ],
   },
   {
     pattern: /^\/watch\/tv\/[^/]+\/s\/[^/]+\/e\/[^/]+$/i,
     variants: [
-      "sélectionne une source avec panique élégante 📺",
-      "prépare le binge comme un ingénieur du canapé 🍿",
-      "cherche le bon épisode avec une foi inébranlable 🔎",
+      'sélectionne une source avec panique élégante 📺',
+      'prépare le binge comme un ingénieur du canapé 🍿',
+      'cherche le bon épisode avec une foi inébranlable 🔎',
     ],
   },
   {
     pattern: /^\/watch\/anime\/[^/]+\/season\/[^/]+\/episode\/[^/]+$/i,
     variants: [
-      "cherche son épisode comme un héros secondaire 🌸",
-      "prépare l'anime avec une hype difficile à cacher ✨",
-      "sélectionne une source en mode arc d'introduction ⚔️",
+      'cherche son épisode comme un héros secondaire 🌸',
+      'prépare l\'anime avec une hype difficile à cacher ✨',
+      'sélectionne une source en mode arc d\'introduction ⚔️',
     ],
   },
   {
     pattern: /^\/ftv\/watch\/[^/]+$/i,
     variants: [
-      "cherche le bon flux avec dignité 🇫🇷",
-      "accorde France.tv avec un sang-froid télévisuel 📡",
-      "prépare le direct comme un régisseur du salon 🎛️",
+      'cherche le bon flux avec dignité 🇫🇷',
+      'accorde France.tv avec un sang-froid télévisuel 📡',
+      'prépare le direct comme un régisseur du salon 🎛️',
     ],
   },
-];
+]
 
 const WATCH_PLAYING_VARIANTS: Array<{
-  pattern: RegExp;
-  variants: readonly string[];
+  pattern: RegExp
+  variants: readonly string[]
 }> = [
   {
     pattern: /^\/watch\/movie\/[^/]+$/i,
     variants: [
-      "lecture en cours, canapé en surchauffe 🍿",
-      "film lancé, le popcorn travaille en heures sup' 🎬",
-      "visionnage actif, dignité momentanément absente 🛋️",
+      'lecture en cours, canapé en surchauffe 🍿',
+      'film lancé, le popcorn travaille en heures sup\' 🎬',
+      'visionnage actif, dignité momentanément absente 🛋️',
     ],
   },
   {
     pattern: /^\/watch\/tv\/[^/]+\/s\/[^/]+\/e\/[^/]+$/i,
     variants: [
-      "binge hors de contrôle 📺",
-      "épisode en cours, plus personne ne dort 🍿",
-      "visionnage de série avec implication totale 🧠",
+      'binge hors de contrôle 📺',
+      'épisode en cours, plus personne ne dort 🍿',
+      'visionnage de série avec implication totale 🧠',
     ],
   },
   {
     pattern: /^\/watch\/anime\/[^/]+\/season\/[^/]+\/episode\/[^/]+$/i,
     variants: [
-      "anime en cours, théorie du fanclub activée 🌸",
-      "épisode lancé, niveau de hype dangereusement élevé ⚡",
-      "visionnage anime en mode ouverture dramatique 🎌",
+      'anime en cours, théorie du fanclub activée 🌸',
+      'épisode lancé, niveau de hype dangereusement élevé ⚡',
+      'visionnage anime en mode ouverture dramatique 🎌',
     ],
   },
   {
     pattern: /^\/ftv\/watch\/[^/]+$/i,
     variants: [
-      "programme en cours, télécommande au chômage 📺",
-      "direct lancé, salon officiellement mobilisé 🇫🇷",
-      "lecture France.tv active, canapé en mission 🛋️",
+      'programme en cours, télécommande au chômage 📺',
+      'direct lancé, salon officiellement mobilisé 🇫🇷',
+      'lecture France.tv active, canapé en mission 🛋️',
     ],
   },
-];
+]
 
 const WATCH_PAUSED_VARIANTS: Array<{
-  pattern: RegExp;
-  variants: readonly string[];
+  pattern: RegExp
+  variants: readonly string[]
 }> = [
   {
     pattern: /^\/watch\/movie\/[^/]+$/i,
     variants: [
-      "pause stratégique, le drame attend ⏸️",
-      "film en pause, le popcorn reprend son souffle 🍿",
-      "interruption tactique, suspense sous cloche 🎬",
+      'pause stratégique, le drame attend ⏸️',
+      'film en pause, le popcorn reprend son souffle 🍿',
+      'interruption tactique, suspense sous cloche 🎬',
     ],
   },
   {
     pattern: /^\/watch\/tv\/[^/]+\/s\/[^/]+\/e\/[^/]+$/i,
     variants: [
-      "pause très dramatique ⏸️",
-      "épisode en pause, cliffhanger sous surveillance 👀",
-      "arrêt technique du binge, émotion intacte 📺",
+      'pause très dramatique ⏸️',
+      'épisode en pause, cliffhanger sous surveillance 👀',
+      'arrêt technique du binge, émotion intacte 📺',
     ],
   },
   {
     pattern: /^\/watch\/anime\/[^/]+\/season\/[^/]+\/episode\/[^/]+$/i,
     variants: [
-      "pause technique, hype toujours intacte ⏸️",
-      "anime en pause, énergie shonen conservée ⚡",
-      "interruption temporaire, pouvoir de l'amitié stable 🌸",
+      'pause technique, hype toujours intacte ⏸️',
+      'anime en pause, énergie shonen conservée ⚡',
+      'interruption temporaire, pouvoir de l\'amitié stable 🌸',
     ],
   },
   {
     pattern: /^\/ftv\/watch\/[^/]+$/i,
     variants: [
-      "pause stratégique du direct ⏸️",
-      "programme en pause, personne ne touche à la télécommande 📡",
-      "intermède technique à la française 🇫🇷",
+      'pause stratégique du direct ⏸️',
+      'programme en pause, personne ne touche à la télécommande 📡',
+      'intermède technique à la française 🇫🇷',
     ],
   },
-];
+]
 
 const WATCH_ENDED_VARIANTS: Array<{
-  pattern: RegExp;
-  variants: readonly string[];
+  pattern: RegExp
+  variants: readonly string[]
 }> = [
   {
     pattern: /^\/watch\/movie\/[^/]+$/i,
     variants: [
-      "générique en vue, personne ne bouge 🎞️",
-      "film terminé, silence solennel dans le salon 🛋️",
-      "fin de séance, popcorn officiellement retraité 🍿",
+      'générique en vue, personne ne bouge 🎞️',
+      'film terminé, silence solennel dans le salon 🛋️',
+      'fin de séance, popcorn officiellement retraité 🍿',
     ],
   },
   {
     pattern: /^\/watch\/tv\/[^/]+\/s\/[^/]+\/e\/[^/]+$/i,
     variants: [
-      "épisode terminé, prochain cliffhanger en approche 📺",
-      "fin d'épisode, volonté personnelle en miettes 🍿",
-      "générique lancé, binge toujours menaçant 🎞️",
+      'épisode terminé, prochain cliffhanger en approche 📺',
+      'fin d\'épisode, volonté personnelle en miettes 🍿',
+      'générique lancé, binge toujours menaçant 🎞️',
     ],
   },
   {
     pattern: /^\/watch\/anime\/[^/]+\/season\/[^/]+\/episode\/[^/]+$/i,
     variants: [
-      "épisode terminé, l'arc suivant appelle déjà 🌸",
-      "fin d'épisode, niveau de hype toujours irresponsable ⚡",
-      "générique lancé, fanclub intérieurement debout 🎌",
+      'épisode terminé, l\'arc suivant appelle déjà 🌸',
+      'fin d\'épisode, niveau de hype toujours irresponsable ⚡',
+      'générique lancé, fanclub intérieurement debout 🎌',
     ],
   },
   {
     pattern: /^\/ftv\/watch\/[^/]+$/i,
     variants: [
-      "programme terminé, la télécommande réclame des congés 📺",
-      "fin de diffusion, mission salon accomplie 🇫🇷",
-      "générique France.tv détecté, calme retrouvé 🎞️",
+      'programme terminé, la télécommande réclame des congés 📺',
+      'fin de diffusion, mission salon accomplie 🇫🇷',
+      'générique France.tv détecté, calme retrouvé 🎞️',
     ],
   },
-];
+]
 
-let lastRouteKey = "";
-let lastRouteStartedAt = Date.now();
+let lastRouteKey = ''
+let lastRouteStartedAt = Date.now()
 
 function normalizeText(value: unknown): string {
-  return String(value ?? "")
-    .replace(/\u00A0/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+  return String(value ?? '')
+    .replace(NON_BREAKING_SPACE_PATTERN, ' ')
+    .replace(WHITESPACE_PATTERN, ' ')
+    .trim()
 }
 
 function truncate(value: unknown, max = 128): string {
-  const text = normalizeText(value);
-  if (!text) return "";
-  if (text.length <= max) return text;
-  return `${text.slice(0, max - 1).trim()}...`;
+  const text = normalizeText(value)
+  if (!text)
+    return ''
+  if (text.length <= max)
+    return text
+  return `${text.slice(0, max - 1).trim()}...`
 }
 
 function stripSiteName(value: unknown): string {
   return normalizeText(value)
-    .replace(/\s*(?:[-|:]\s*)?Movix$/i, "")
-    .trim();
+    .replace(STRIP_SITE_NAME_PATTERN, '')
+    .trim()
 }
-
-const RELEASE_TAG_PATTERN = /\s*\bSORTI(?:E|ES|S)?\b[.!]*$/i;
 
 function stripReleaseTag(value: string): string {
-  return value.replace(RELEASE_TAG_PATTERN, "").trim();
+  return value.replace(RELEASE_TAG_PATTERN, '').trim()
 }
 
-function firstNonEmpty<T>(...values: T[]): T | "" {
+function firstNonEmpty<T>(...values: T[]): T | '' {
   for (const value of values) {
     if (normalizeText(value)) {
-      return value;
+      return value
     }
   }
 
-  return "";
+  return ''
 }
 
 function safeDecode(value: string): string {
   try {
-    return decodeURIComponent(value);
-  } catch {
-    return value;
+    return decodeURIComponent(value)
+  }
+  catch {
+    return value
   }
 }
 
 function shortenId(value: string, size = 6): string {
-  const text = normalizeText(value);
-  return text ? text.slice(0, size).toUpperCase() : "";
+  const text = normalizeText(value)
+  return text ? text.slice(0, size).toUpperCase() : ''
 }
 
 function toAbsoluteUrl(value: string): string {
-  const text = normalizeText(value);
-  if (!text) return "";
+  const text = normalizeText(value)
+  if (!text)
+    return ''
 
   try {
-    return new URL(text, document.location.origin).toString();
-  } catch {
-    return "";
+    return new URL(text, document.location.origin).toString()
+  }
+  catch {
+    return ''
   }
 }
 
-function toTmdbImageUrl(path: unknown, size = "w500"): string {
-  const text = normalizeText(path);
-  return text ? `${TMDB_IMAGE_BASE}/${size}${text}` : "";
+function toTmdbImageUrl(path: unknown, size = 'w500'): string {
+  const text = normalizeText(path)
+  return text ? `${TMDB_IMAGE_BASE}/${size}${text}` : ''
 }
 
 function isImageUrlAllowed(value: string): boolean {
   return (
-    /^https:\/\//i.test(value) ||
-    value.startsWith("data:") ||
-    value.startsWith("blob:")
-  );
+    HTTPS_URL_PATTERN.test(value)
+    || value.startsWith('data:')
+    || value.startsWith('blob:')
+  )
 }
 
 function isButtonUrlAllowed(value: string): boolean {
-  return /^https:\/\//i.test(value);
+  return HTTPS_URL_PATTERN.test(value)
 }
 
 function findLatestValue<T extends Element>(
@@ -745,348 +791,343 @@ function findLatestValue<T extends Element>(
   resolveValue: (element: T) => string,
 ): string {
   for (let index = elements.length - 1; index >= 0; index -= 1) {
-    const element = elements[index];
+    const element = elements[index]
     if (!element) {
-      continue;
+      continue
     }
 
-    const value = resolveValue(element);
+    const value = resolveValue(element)
     if (value) {
-      return value;
+      return value
     }
   }
 
-  return "";
+  return ''
 }
 
 function isRelevantDomElement(element: Element | null): element is HTMLElement {
   if (!(element instanceof HTMLElement)) {
-    return false;
+    return false
   }
 
   if (
-    !element.isConnected ||
-    element.hidden ||
-    element.closest("[hidden], [inert], [aria-hidden='true']")
+    !element.isConnected
+    || element.hidden
+    || element.closest('[hidden], [inert], [aria-hidden=\'true\']')
   ) {
-    return false;
+    return false
   }
 
-  const style = window.getComputedStyle(element);
+  const style = window.getComputedStyle(element)
   if (
-    style.display === "none" ||
-    style.visibility === "hidden" ||
-    style.visibility === "collapse" ||
-    Number.parseFloat(style.opacity || "1") === 0
+    style.display === 'none'
+    || style.visibility === 'hidden'
+    || style.visibility === 'collapse'
+    || Number.parseFloat(style.opacity || '1') === 0
   ) {
-    return false;
+    return false
   }
 
   return (
-    element.getClientRects().length > 0 ||
-    element.offsetWidth > 0 ||
-    element.offsetHeight > 0
-  );
+    element.getClientRects().length > 0
+    || element.offsetWidth > 0
+    || element.offsetHeight > 0
+  )
 }
 
 function getMetaContent(selector: string): string {
   const elements = Array.from(
     document.querySelectorAll(selector),
-  ) as HTMLMetaElement[];
+  ) as HTMLMetaElement[]
 
-  const latestManagedMeta = findLatestValue(elements, (element) =>
-    element.getAttribute("data-rh") === "true"
+  const latestManagedMeta = findLatestValue(elements, element =>
+    element.getAttribute('data-rh') === 'true'
       ? normalizeText(element.content)
-      : "",
-  );
+      : '')
 
   if (latestManagedMeta) {
-    return latestManagedMeta;
+    return latestManagedMeta
   }
 
-  return findLatestValue(elements, (element) => normalizeText(element.content));
+  return findLatestValue(elements, element => normalizeText(element.content))
 }
 
 function getAttribute(selector: string, attribute: string): string {
-  const elements = Array.from(document.querySelectorAll(selector));
+  const elements = Array.from(document.querySelectorAll(selector))
 
-  const visibleValue = findLatestValue(elements, (element) =>
+  const visibleValue = findLatestValue(elements, element =>
     isRelevantDomElement(element)
       ? normalizeText(element.getAttribute(attribute))
-      : "",
-  );
+      : '')
 
   if (visibleValue) {
-    return visibleValue;
+    return visibleValue
   }
 
-  return findLatestValue(elements, (element) =>
-    normalizeText(element.getAttribute(attribute)),
-  );
+  return findLatestValue(elements, element =>
+    normalizeText(element.getAttribute(attribute)))
 }
 
 function getText(selector: string): string {
-  const elements = Array.from(document.querySelectorAll(selector));
+  const elements = Array.from(document.querySelectorAll(selector))
 
-  const visibleText = findLatestValue(elements, (element) =>
+  const visibleText = findLatestValue(elements, element =>
     isRelevantDomElement(element)
-      ? normalizeText(element.innerText || element.textContent)
-      : "",
-  );
+      ? normalizeText(element.textContent)
+      : '')
 
   if (visibleText) {
-    return visibleText;
+    return visibleText
   }
 
-  return findLatestValue(elements, (element) =>
+  return findLatestValue(elements, element =>
     element instanceof HTMLElement
-      ? normalizeText(element.innerText || element.textContent)
-      : "",
-  );
+      ? normalizeText(element.textContent)
+      : '')
 }
 
 function findTitleAttribute(predicate: (title: string) => boolean): string {
-  const elements = Array.from(document.querySelectorAll("[title]"));
+  const elements = Array.from(document.querySelectorAll('[title]'))
 
   const visibleTitle = findLatestValue(elements, (element) => {
     if (!isRelevantDomElement(element)) {
-      return "";
+      return ''
     }
 
-    const title = normalizeText(element.getAttribute("title"));
-    return title && predicate(title) ? title : "";
-  });
+    const title = normalizeText(element.getAttribute('title'))
+    return title && predicate(title) ? title : ''
+  })
 
   if (visibleTitle) {
-    return visibleTitle;
+    return visibleTitle
   }
 
   return findLatestValue(elements, (element) => {
-    const title = normalizeText(element.getAttribute("title"));
-    return title && predicate(title) ? title : "";
-  });
+    const title = normalizeText(element.getAttribute('title'))
+    return title && predicate(title) ? title : ''
+  })
 }
 
 function getCurrentVideoElement(): HTMLVideoElement | null {
   const videos = Array.from(
-    document.querySelectorAll("video"),
-  ) as HTMLVideoElement[];
-  let bestVideo: HTMLVideoElement | null = null;
-  let bestScore = Number.NEGATIVE_INFINITY;
+    document.querySelectorAll('video'),
+  ) as HTMLVideoElement[]
+  let bestVideo: HTMLVideoElement | null = null
+  let bestScore = Number.NEGATIVE_INFINITY
 
   for (const video of videos) {
     if (!video.isConnected) {
-      continue;
+      continue
     }
 
-    const isVisible = isRelevantDomElement(video);
-    const rect = isVisible ? video.getBoundingClientRect() : null;
-    const area = rect ? rect.width * rect.height : 0;
+    const isVisible = isRelevantDomElement(video)
+    const rect = isVisible ? video.getBoundingClientRect() : null
+    const area = rect ? rect.width * rect.height : 0
 
-    let score = 0;
+    let score = 0
     if (isVisible) {
-      score += 100;
+      score += 100
     }
 
-    score += Math.min(40, Math.floor(area / 20000));
+    score += Math.min(40, Math.floor(area / 20000))
 
     if (video.currentSrc || video.src) {
-      score += 20;
+      score += 20
     }
 
     if (video.readyState >= 2) {
-      score += 15;
+      score += 15
     }
 
     if (Number.isFinite(video.duration) && video.duration > 0) {
-      score += 20;
+      score += 20
     }
 
     if (!video.paused) {
-      score += 25;
+      score += 25
     }
 
     if (!video.ended) {
-      score += 5;
+      score += 5
     }
 
     if (score >= bestScore) {
-      bestScore = score;
-      bestVideo = video;
+      bestScore = score
+      bestVideo = video
     }
   }
 
-  return bestVideo;
+  return bestVideo
 }
 
 function getSearchParam(name: string): string {
-  return normalizeText(new URLSearchParams(document.location.search).get(name));
+  return normalizeText(new URLSearchParams(document.location.search).get(name))
 }
 
 function getMatchPart(match: RegExpMatchArray | null, index: number): string {
-  return normalizeText(match?.[index]);
+  return normalizeText(match?.[index])
 }
 
 function getRouteStartedAt(): number {
-  const key = `${document.location.pathname}${document.location.search}`;
+  const key = `${document.location.pathname}${document.location.search}`
 
   if (key !== lastRouteKey) {
-    lastRouteKey = key;
-    lastRouteStartedAt = Date.now();
+    lastRouteKey = key
+    lastRouteStartedAt = Date.now()
   }
 
-  return lastRouteStartedAt;
+  return lastRouteStartedAt
 }
 
 function hashString(value: string): number {
-  let hash = 0;
+  let hash = 0
 
   for (let index = 0; index < value.length; index += 1) {
-    hash = (hash << 5) - hash + value.charCodeAt(index);
-    hash |= 0;
+    hash = (hash << 5) - hash + value.charCodeAt(index)
+    hash |= 0
   }
 
-  return Math.abs(hash);
+  return Math.abs(hash)
 }
 
 function pickVariant(seed: string, variants: readonly string[]): string {
   const cleanVariants = variants
-    .map((variant) => normalizeText(variant))
-    .filter(Boolean);
+    .map(variant => normalizeText(variant))
+    .filter(Boolean)
 
   if (cleanVariants.length === 0) {
-    return "";
+    return ''
   }
 
-  return cleanVariants[hashString(seed) % cleanVariants.length] || "";
+  return cleanVariants[hashString(seed) % cleanVariants.length] || ''
 }
 
 function findVariantsForPath(
   pathname: string,
-  collection: Array<{ pattern: RegExp; variants: readonly string[] }>,
+  collection: Array<{ pattern: RegExp, variants: readonly string[] }>,
 ): readonly string[] | undefined {
-  return collection.find((entry) => entry.pattern.test(pathname))?.variants;
+  return collection.find(entry => entry.pattern.test(pathname))?.variants
 }
 
 function resolveVariantText(value: VariantText, seed: string): string {
-  return Array.isArray(value) ? pickVariant(seed, value) : normalizeText(value);
+  return Array.isArray(value) ? pickVariant(seed, value) : normalizeText(value)
 }
 
 function getPageTitle(): string {
   const title = firstNonEmpty(
-    getText("main h1"),
-    getText("h1"),
+    getText('main h1'),
+    getText('h1'),
     document.title,
-    getText("main h2"),
-    getText("h2"),
+    getText('main h2'),
+    getText('h2'),
     getMetaContent('meta[property="og:title"]'),
-  );
+  )
 
-  return stripSiteName(stripReleaseTag(title));
+  return stripSiteName(stripReleaseTag(title))
 }
 
-function getPageImage(mode: "logo" | "content" = "logo"): string {
-  if (mode === "logo") {
-    return FALLBACK_LOGO;
+function getPageImage(mode: 'logo' | 'content' = 'logo'): string {
+  if (mode === 'logo') {
+    return FALLBACK_LOGO
   }
 
-  const candidates =
-    mode === "content"
+  const candidates
+    = mode === 'content'
       ? [
-          getAttribute("video[poster]", "poster"),
-          getAttribute(".cinegraph-detail-backdrop img", "src"),
-          getAttribute(".cinegraph-tooltip-poster", "src"),
+          getAttribute('video[poster]', 'poster'),
+          getAttribute('.cinegraph-detail-backdrop img', 'src'),
+          getAttribute('.cinegraph-tooltip-poster', 'src'),
           getMetaContent('meta[property="og:image"]'),
-          getAttribute('img[alt="Poster"]', "src"),
-          getAttribute('img[alt*="poster" i]', "src"),
-          getAttribute('img[src*="tmdb.org"][src*="/w500"]', "src"),
-          getAttribute('img[src*="tmdb.org"][src*="/original"]', "src"),
+          getAttribute('img[alt="Poster"]', 'src'),
+          getAttribute('img[alt*="poster" i]', 'src'),
+          getAttribute('img[src*="tmdb.org"][src*="/w500"]', 'src'),
+          getAttribute('img[src*="tmdb.org"][src*="/original"]', 'src'),
           FALLBACK_LOGO,
         ]
-      : [FALLBACK_LOGO];
+      : [FALLBACK_LOGO]
 
   for (const candidate of candidates) {
-    const absolute = toAbsoluteUrl(candidate);
+    const absolute = toAbsoluteUrl(candidate)
     if (absolute && isImageUrlAllowed(absolute)) {
-      return absolute;
+      return absolute
     }
   }
 
-  return FALLBACK_LOGO;
+  return FALLBACK_LOGO
 }
 
 function getSafeButtons(
   pathname: string,
   enabled: boolean,
-): Array<{ label: string; url: string }> | undefined {
+): Array<{ label: string, url: string }> | undefined {
   if (
-    !enabled ||
-    !SAFE_BUTTON_PATTERNS.some((pattern) => pattern.test(pathname))
+    !enabled
+    || !SAFE_BUTTON_PATTERNS.some(pattern => pattern.test(pathname))
   ) {
-    return undefined;
+    return undefined
   }
 
-  const url = document.location.href;
+  const url = document.location.href
   if (!isButtonUrlAllowed(url)) {
-    return undefined;
+    return undefined
   }
 
   return [
     {
-      label: "Voir la page",
+      label: 'Voir la page',
       url,
     },
-  ];
+  ]
 }
 
 function buildBasePresence(image?: string): PresenceDataLike {
   return {
     name: SITE_NAME,
     largeImageKey: image || getPageImage() || FALLBACK_LOGO,
-  };
+  }
 }
 
 function finalizePresence(
   presenceData: PresenceDataLike | null,
   options: {
-    showTimestamp: boolean;
-    showButtons: boolean;
-    pathname: string;
-    allowPageTimestamp?: boolean;
+    showTimestamp: boolean
+    showButtons: boolean
+    pathname: string
+    allowPageTimestamp?: boolean
   },
 ) {
   if (!presenceData) {
-    return null;
+    return null
   }
 
-  presenceData.details = truncate(presenceData.details);
-  presenceData.state = truncate(presenceData.state);
+  presenceData.details = truncate(presenceData.details)
+  presenceData.state = truncate(presenceData.state)
 
   if (!presenceData.details || !presenceData.state) {
-    return null;
+    return null
   }
 
   if (!presenceData.buttons) {
-    const buttons = getSafeButtons(options.pathname, options.showButtons);
+    const buttons = getSafeButtons(options.pathname, options.showButtons)
     if (buttons?.length) {
-      presenceData.buttons = buttons;
+      presenceData.buttons = buttons
     }
   }
 
   if (
-    options.showTimestamp &&
-    options.allowPageTimestamp !== false &&
-    !presenceData.startTimestamp &&
-    !presenceData.endTimestamp
+    options.showTimestamp
+    && options.allowPageTimestamp !== false
+    && !presenceData.startTimestamp
+    && !presenceData.endTimestamp
   ) {
-    presenceData.startTimestamp = getRouteStartedAt();
+    presenceData.startTimestamp = getRouteStartedAt()
   }
 
   if (!presenceData.largeImageKey) {
-    presenceData.largeImageKey = FALLBACK_LOGO;
+    presenceData.largeImageKey = FALLBACK_LOGO
   }
 
-  return presenceData;
+  return presenceData
 }
 
 function createPagePresence(
@@ -1094,245 +1135,250 @@ function createPagePresence(
   state: VariantText,
   image?: string,
 ) {
-  const presenceData = buildBasePresence(image);
-  const seed = `${document.location.pathname}${document.location.search}`;
+  const presenceData = buildBasePresence(image)
+  const seed = `${document.location.pathname}${document.location.search}`
   const routeDetails = Array.isArray(details)
     ? details
-    : findVariantsForPath(document.location.pathname, PAGE_DETAIL_VARIANTS) ||
-      details;
+    : findVariantsForPath(document.location.pathname, PAGE_DETAIL_VARIANTS)
+      || details
 
-  presenceData.details = resolveVariantText(routeDetails, `${seed}:details`);
-  presenceData.state = resolveVariantText(state, `${seed}:state`);
-  return presenceData;
+  presenceData.details = resolveVariantText(routeDetails, `${seed}:details`)
+  presenceData.state = resolveVariantText(state, `${seed}:state`)
+  return presenceData
 }
 
 function createWatchingPresence(options: {
-  title: string;
-  displayTitle?: string;
-  playingText: VariantText;
-  pausedText: VariantText;
-  waitingText: VariantText;
-  embedText?: VariantText;
-  endedText?: VariantText;
-  season?: string;
-  episode?: string;
-  image?: string;
-  statePrefix?: string;
+  title: string
+  displayTitle?: string
+  playingText: VariantText
+  pausedText: VariantText
+  waitingText: VariantText
+  embedText?: VariantText
+  endedText?: VariantText
+  season?: string
+  episode?: string
+  image?: string
+  statePrefix?: string
 }) {
-  const presenceData = buildBasePresence(options.image);
-  const video = getCurrentVideoElement();
-  const season = normalizeText(options.season);
-  const episode = normalizeText(options.episode);
-  const routeWatchMediaType = getWatchMediaTypeForPath(document.location.pathname);
-  const useSimpleWatchRoute = Boolean(routeWatchMediaType);
+  const presenceData = buildBasePresence(options.image)
+  const video = getCurrentVideoElement()
+  const season = normalizeText(options.season)
+  const episode = normalizeText(options.episode)
+  const routeWatchMediaType = getWatchMediaTypeForPath(document.location.pathname)
+  const useSimpleWatchRoute = Boolean(routeWatchMediaType)
   const details = normalizeText(
-    options.displayTitle ||
-      (routeWatchMediaType
-        ? getFormattedWatchTitle(
-            options.title,
-            routeWatchMediaType,
-            season,
-            episode,
-          )
-        : options.title),
-  );
-  const prefix =
-    options.statePrefix !== undefined
+    options.displayTitle
+    || (routeWatchMediaType
+      ? getFormattedWatchTitle(
+          options.title,
+          routeWatchMediaType,
+          season,
+          episode,
+        )
+      : options.title),
+  )
+  const prefix
+    = options.statePrefix !== undefined
       ? options.statePrefix
       : useSimpleWatchRoute
-        ? ""
+        ? ''
         : season && episode
-        ? `S${season}E${episode} - `
-        : "";
-  const seed = `${document.location.pathname}:${details}:${season}:${episode}`;
+          ? `S${season}E${episode} - `
+          : ''
+  const seed = `${document.location.pathname}:${details}:${season}:${episode}`
   const waitingVariant = useSimpleWatchRoute
-    ? "Selection de la source"
+    ? 'Selection de la source'
     : Array.isArray(options.waitingText)
       ? options.waitingText
-      : findVariantsForPath(document.location.pathname, WATCH_WAITING_VARIANTS) ||
-        options.waitingText;
+      : findVariantsForPath(document.location.pathname, WATCH_WAITING_VARIANTS)
+        || options.waitingText
   const playingVariant = useSimpleWatchRoute
-    ? "Lecture en cours"
+    ? 'Lecture en cours'
     : Array.isArray(options.playingText)
       ? options.playingText
-      : findVariantsForPath(document.location.pathname, WATCH_PLAYING_VARIANTS) ||
-        options.playingText;
+      : findVariantsForPath(document.location.pathname, WATCH_PLAYING_VARIANTS)
+        || options.playingText
   const pausedVariant = useSimpleWatchRoute
-    ? "En pause"
+    ? 'En pause'
     : Array.isArray(options.pausedText)
       ? options.pausedText
-      : findVariantsForPath(document.location.pathname, WATCH_PAUSED_VARIANTS) ||
-        options.pausedText;
+      : findVariantsForPath(document.location.pathname, WATCH_PAUSED_VARIANTS)
+        || options.pausedText
   const endedVariant = useSimpleWatchRoute
-    ? "Lecture terminee"
+    ? 'Lecture terminee'
     : Array.isArray(options.endedText)
       ? options.endedText
-      : findVariantsForPath(document.location.pathname, WATCH_ENDED_VARIANTS) ||
-        options.endedText ||
-        "Le generique approche, personne ne bouge";
+      : findVariantsForPath(document.location.pathname, WATCH_ENDED_VARIANTS)
+        || options.endedText
+        || 'Le generique approche, personne ne bouge'
   const waitingText = resolveVariantText(
     waitingVariant,
     `${seed}:waiting`,
-  );
+  )
   const playingText = resolveVariantText(
     playingVariant,
     `${seed}:playing`,
-  );
+  )
   const pausedText = resolveVariantText(
     pausedVariant,
     `${seed}:paused`,
-  );
+  )
   const embedText = resolveVariantText(
-    options.embedText || "Lecteur embed actif",
+    options.embedText || 'Lecteur embed actif',
     `${seed}:embed`,
-  );
+  )
   const endedText = resolveVariantText(
     Array.isArray(options.endedText)
       ? options.endedText
-      : findVariantsForPath(document.location.pathname, WATCH_ENDED_VARIANTS) ||
-          options.endedText ||
-          "Le générique approche, personne ne bouge",
+      : findVariantsForPath(document.location.pathname, WATCH_ENDED_VARIANTS)
+        || options.endedText
+        || 'Le générique approche, personne ne bouge',
     `${seed}:ended`,
-  );
+  )
 
   const watchEndedText = useSimpleWatchRoute
     ? resolveVariantText(endedVariant, `${seed}:ended:simple`)
-    : endedText;
-  const watchContext = getWatchContext();
-  const activeEmbedFrame = getActiveEmbedFrame();
-  const embedSourceLabel = getActiveEmbedSourceLabel(activeEmbedFrame);
-  const selectedSourceLabel = formatWatchSourceLabel(watchContext.sourceLabel);
+    : endedText
+  const watchContext = getWatchContext()
+  const activeEmbedFrame = getActiveEmbedFrame()
+  const embedSourceLabel = getActiveEmbedSourceLabel(activeEmbedFrame)
+  const selectedSourceLabel = formatWatchSourceLabel(watchContext.sourceLabel)
   const embedSourceDisplay = formatWatchSourceDisplay(
     embedSourceLabel,
     watchContext.sourceDetail,
-  );
+  )
   const selectedSourceDisplay = formatWatchSourceDisplay(
     watchContext.sourceLabel,
     watchContext.sourceDetail,
-  );
+  )
   const embedSourceState = formatWatchSourceState(
     embedSourceLabel,
     watchContext.sourceDetail,
-  );
+  )
   const selectedSourceState = formatWatchSourceState(
     watchContext.sourceLabel,
     watchContext.sourceDetail,
-  );
-  const hoverEpisodeLabel = getWatchEpisodeHoverLabel(season, episode);
+  )
+  const hoverEpisodeLabel = getWatchEpisodeHoverLabel(season, episode)
 
-  presenceData.type = ActivityType.Watching;
-  presenceData.details = details || options.title;
-  presenceData.state = `${prefix}${waitingText}`;
+  presenceData.type = ActivityType.Watching
+  presenceData.details = details || options.title
+  presenceData.state = `${prefix}${waitingText}`
 
   if (hoverEpisodeLabel) {
-    presenceData.largeImageText = hoverEpisodeLabel;
-  } else {
-    presenceData.largeImageText = "Lecture en cours";
+    presenceData.largeImageText = hoverEpisodeLabel
+  }
+  else {
+    presenceData.largeImageText = 'Lecture en cours'
   }
 
   if (video && Number.isFinite(video.duration) && video.duration > 0) {
     if (video.ended) {
-      presenceData.state = `${prefix}${watchEndedText}`;
-    } else if (video.paused) {
+      presenceData.state = `${prefix}${watchEndedText}`
+    }
+    else if (video.paused) {
       presenceData.state = selectedSourceDisplay
         ? `En pause - ${selectedSourceDisplay}`
-        : `${prefix}${pausedText}`;
-    } else {
-      presenceData.state = selectedSourceDisplay || `${prefix}${playingText}`;
-      presenceData.startTimestamp =
-        Date.now() - Math.floor(video.currentTime * 1000);
-      presenceData.endTimestamp =
-        Date.now() +
-        Math.max(0, Math.floor((video.duration - video.currentTime) * 1000));
+        : `${prefix}${pausedText}`
     }
-  } else if (activeEmbedFrame || embedSourceLabel) {
+    else {
+      presenceData.state = selectedSourceDisplay || `${prefix}${playingText}`
+      presenceData.startTimestamp
+        = Date.now() - Math.floor(video.currentTime * 1000)
+      presenceData.endTimestamp
+        = Date.now()
+          + Math.max(0, Math.floor((video.duration - video.currentTime) * 1000))
+    }
+  }
+  else if (activeEmbedFrame || embedSourceLabel) {
     presenceData.state = embedSourceLabel
       ? embedSourceState
-      : embedSourceDisplay || embedText;
-  } else if (useSimpleWatchRoute && selectedSourceLabel) {
-    presenceData.state = selectedSourceState;
+      : embedSourceDisplay || embedText
+  }
+  else if (useSimpleWatchRoute && selectedSourceLabel) {
+    presenceData.state = selectedSourceState
   }
 
-  return presenceData;
+  return presenceData
 }
 
 const WATCH_EMBED_SOURCE_LABELS = new Set([
-  "coflix",
-  "custom",
-  "dood",
-  "doodstream",
-  "dropload",
-  "emmmmbed",
-  "frembed",
-  "fstream",
-  "lecteur6",
-  "mixdrop",
-  "omega",
-  "oneupload",
-  "sibnet",
-  "supervideo",
-  "uqload",
-  "videasy",
-  "vidmoly",
-  "viper",
-  "voe",
-  "vostfr",
-  "vox",
-  "wiflix",
-]);
+  'coflix',
+  'custom',
+  'dood',
+  'doodstream',
+  'dropload',
+  'emmmmbed',
+  'frembed',
+  'fstream',
+  'lecteur6',
+  'mixdrop',
+  'omega',
+  'oneupload',
+  'sibnet',
+  'supervideo',
+  'uqload',
+  'videasy',
+  'vidmoly',
+  'viper',
+  'voe',
+  'vostfr',
+  'vox',
+  'wiflix',
+])
 
 const WATCH_SOURCE_LABEL_MAP: Record<string, string> = {
-  coflix: "Coflix",
-  custom: "Custom",
-  darkino: "Nightflix",
-  dood: "Doodstream",
-  doodstream: "Doodstream",
-  dropload: "Dropload",
-  emmmmbed: "Emmmmbed",
-  frembed: "Frembed",
-  fstream: "FStream",
-  lecteur6: "Lecteur6",
-  mixdrop: "Mixdrop",
-  mp4: "MP4",
-  nexus_file: "Nexus File",
-  nexus_hls: "Nexus HLS",
-  omega: "Omega",
-  oneupload: "OneUpload",
-  rivestream: "Rivestream",
-  rivestream_hls: "Rivestream",
-  sibnet: "Sibnet",
-  supervideo: "Supervideo",
-  uqload: "Uqload",
-  videasy: "Videasy",
-  vidmoly: "Vidmoly",
-  viper: "Viper",
-  voe: "VOE",
-  vostfr: "VOSTFR",
-  vox: "Vox",
-  wiflix: "Wiflix",
-};
+  coflix: 'Coflix',
+  custom: 'Custom',
+  darkino: 'Nightflix',
+  dood: 'Doodstream',
+  doodstream: 'Doodstream',
+  dropload: 'Dropload',
+  emmmmbed: 'Emmmmbed',
+  frembed: 'Frembed',
+  fstream: 'FStream',
+  lecteur6: 'Lecteur6',
+  mixdrop: 'Mixdrop',
+  mp4: 'MP4',
+  nexus_file: 'Nexus File',
+  nexus_hls: 'Nexus HLS',
+  omega: 'Omega',
+  oneupload: 'OneUpload',
+  rivestream: 'Rivestream',
+  rivestream_hls: 'Rivestream',
+  sibnet: 'Sibnet',
+  supervideo: 'Supervideo',
+  uqload: 'Uqload',
+  videasy: 'Videasy',
+  vidmoly: 'Vidmoly',
+  viper: 'Viper',
+  voe: 'VOE',
+  vostfr: 'VOSTFR',
+  vox: 'Vox',
+  wiflix: 'Wiflix',
+}
 
-const WATCH_EMBED_PROVIDER_PATTERNS: Array<{ pattern: RegExp; label: string }> =
-  [
-    { pattern: /frembed/i, label: "Frembed" },
-    { pattern: /videasy/i, label: "Videasy" },
-    { pattern: /vidmoly/i, label: "Vidmoly" },
-    { pattern: /sibnet/i, label: "Sibnet" },
-    { pattern: /oneupload/i, label: "OneUpload" },
-    { pattern: /mixdrop/i, label: "Mixdrop" },
-    { pattern: /dood/i, label: "Doodstream" },
-    { pattern: /dropload/i, label: "Dropload" },
-    { pattern: /supervideo/i, label: "Supervideo" },
-    { pattern: /uqload/i, label: "Uqload" },
-    { pattern: /voe/i, label: "VOE" },
-    { pattern: /emmmmbed/i, label: "Emmmmbed" },
-    { pattern: /lecteur6/i, label: "Lecteur6" },
-    { pattern: /coflix/i, label: "Coflix" },
-    { pattern: /omega/i, label: "Omega" },
-    { pattern: /wiflix/i, label: "Wiflix" },
-    { pattern: /viper/i, label: "Viper" },
-    { pattern: /vox/i, label: "Vox" },
-  ];
+const WATCH_EMBED_PROVIDER_PATTERNS: Array<{ pattern: RegExp, label: string }>
+  = [
+    { pattern: /frembed/i, label: 'Frembed' },
+    { pattern: /videasy/i, label: 'Videasy' },
+    { pattern: /vidmoly/i, label: 'Vidmoly' },
+    { pattern: /sibnet/i, label: 'Sibnet' },
+    { pattern: /oneupload/i, label: 'OneUpload' },
+    { pattern: /mixdrop/i, label: 'Mixdrop' },
+    { pattern: /dood/i, label: 'Doodstream' },
+    { pattern: /dropload/i, label: 'Dropload' },
+    { pattern: /supervideo/i, label: 'Supervideo' },
+    { pattern: /uqload/i, label: 'Uqload' },
+    { pattern: /voe/i, label: 'VOE' },
+    { pattern: /emmmmbed/i, label: 'Emmmmbed' },
+    { pattern: /lecteur6/i, label: 'Lecteur6' },
+    { pattern: /coflix/i, label: 'Coflix' },
+    { pattern: /omega/i, label: 'Omega' },
+    { pattern: /wiflix/i, label: 'Wiflix' },
+    { pattern: /viper/i, label: 'Viper' },
+    { pattern: /vox/i, label: 'Vox' },
+  ]
 
 const WATCH_TITLE_BLOCKLIST = [
   /^d[ée]velopp[ée] avec$/i,
@@ -1344,305 +1390,303 @@ const WATCH_TITLE_BLOCKLIST = [
   /^param/i,
   /^settings?$/i,
   /^saison \d+\s*[,-]\s*[ée]pisode \d+$/i,
-];
+]
 
 function getWatchContext(): WatchContext {
-  const element = document.querySelector("[data-premid-watch-context]");
+  const element = document.querySelector('[data-premid-watch-context]')
 
   if (!(element instanceof HTMLElement)) {
     return {
-      title: "",
-      mediaType: "",
-      season: "",
-      episode: "",
-      episodeTitle: "",
-      sourceLabel: "",
-      sourceDetail: "",
-    };
+      title: '',
+      mediaType: '',
+      season: '',
+      episode: '',
+      episodeTitle: '',
+      sourceLabel: '',
+      sourceDetail: '',
+    }
   }
 
   return {
-    title: normalizeText(element.getAttribute("data-premid-title")),
-    mediaType: normalizeText(element.getAttribute("data-premid-media-type")),
-    season: normalizeText(element.getAttribute("data-premid-season")),
-    episode: normalizeText(element.getAttribute("data-premid-episode")),
+    title: normalizeText(element.getAttribute('data-premid-title')),
+    mediaType: normalizeText(element.getAttribute('data-premid-media-type')),
+    season: normalizeText(element.getAttribute('data-premid-season')),
+    episode: normalizeText(element.getAttribute('data-premid-episode')),
     episodeTitle: normalizeText(
-      element.getAttribute("data-premid-episode-title"),
+      element.getAttribute('data-premid-episode-title'),
     ),
     sourceLabel: normalizeText(
-      element.getAttribute("data-premid-source-label"),
+      element.getAttribute('data-premid-source-label'),
     ),
     sourceDetail: normalizeText(
-      element.getAttribute("data-premid-source-detail"),
+      element.getAttribute('data-premid-source-detail'),
     ),
-  };
+  }
 }
 
 function formatWatchSourceLabel(value: unknown): string {
-  const normalized = normalizeText(value);
+  const normalized = normalizeText(value)
   if (!normalized) {
-    return "";
+    return ''
   }
 
-  const lowered = normalized.toLowerCase().replace(/\s+/g, "_");
+  const lowered = normalized.toLowerCase().replace(WHITESPACE_PATTERN, '_')
   if (WATCH_SOURCE_LABEL_MAP[lowered]) {
-    return WATCH_SOURCE_LABEL_MAP[lowered];
+    return WATCH_SOURCE_LABEL_MAP[lowered]
   }
 
   return lowered
-    .replace(/[_-]+/g, " ")
-    .replace(/\b\w/g, (character) => character.toUpperCase());
+    .replace(WORD_SEPARATOR_PATTERN, ' ')
+    .replace(WORD_INITIAL_PATTERN, character => character.toUpperCase())
 }
 
 function formatWatchSourceDisplay(label: unknown, detail: unknown): string {
-  const sourceLabel = formatWatchSourceLabel(label);
+  const sourceLabel = formatWatchSourceLabel(label)
   if (!sourceLabel) {
-    return "";
+    return ''
   }
 
-  const sourceDetail = normalizeText(detail);
+  const sourceDetail = normalizeText(detail)
   if (!sourceDetail) {
-    return `Via ${sourceLabel}`;
+    return `Via ${sourceLabel}`
   }
 
   const normalizedLabel = sourceLabel
     .toLowerCase()
-    .replace(/[_-]+/g, " ")
-    .trim();
-  const cleanedDetail = sourceDetail
-    .replace(
-      new RegExp(
-        `^${sourceLabel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?:\\s*[:-]\\s*|\\s+)`,
-        "i",
-      ),
-      "",
-    )
-    .trim();
+    .replace(WORD_SEPARATOR_PATTERN, ' ')
+    .trim()
+  const loweredDetail = sourceDetail.toLowerCase()
+  const detailSuffix = loweredDetail.startsWith(normalizedLabel)
+    ? sourceDetail.slice(sourceLabel.length)
+    : sourceDetail
+  const cleanedDetail = detailSuffix
+    .replace(SOURCE_LABEL_SEPARATOR_PATTERN, '')
+    .trim()
   const normalizedDetail = cleanedDetail
     .toLowerCase()
-    .replace(/[_-]+/g, " ")
-    .trim();
+    .replace(WORD_SEPARATOR_PATTERN, ' ')
+    .trim()
 
   if (!cleanedDetail || normalizedDetail === normalizedLabel) {
-    return sourceLabel;
+    return sourceLabel
   }
 
-  return `${sourceLabel} - ${cleanedDetail}`;
+  return `${sourceLabel} - ${cleanedDetail}`
 }
 
 function formatWatchSourceState(label: unknown, detail: unknown): string {
-  const sourceDisplay = formatWatchSourceDisplay(label, detail);
-  return sourceDisplay ? `Via ${sourceDisplay}` : "";
+  const sourceDisplay = formatWatchSourceDisplay(label, detail)
+  return sourceDisplay ? `Via ${sourceDisplay}` : ''
 }
 
 function isLikelyEmbedSource(value: unknown): boolean {
-  const normalized = normalizeText(value).toLowerCase().replace(/\s+/g, "_");
-  return WATCH_EMBED_SOURCE_LABELS.has(normalized);
+  const normalized = normalizeText(value).toLowerCase().replace(WHITESPACE_PATTERN, '_')
+  return WATCH_EMBED_SOURCE_LABELS.has(normalized)
 }
 
 function getActiveEmbedFrame(): HTMLIFrameElement | null {
   const frames = Array.from(
-    document.querySelectorAll("iframe"),
-  ) as HTMLIFrameElement[];
+    document.querySelectorAll('iframe'),
+  ) as HTMLIFrameElement[]
 
   for (let index = frames.length - 1; index >= 0; index -= 1) {
-    const frame = frames[index];
-    const src = normalizeText(frame?.src || frame?.getAttribute("src"));
+    const frame = frames[index]
+    const src = normalizeText(frame?.src || frame?.getAttribute('src'))
 
     if (frame && src && isRelevantDomElement(frame)) {
-      return frame;
+      return frame
     }
   }
 
-  return null;
+  return null
 }
 
 function getEmbedSourceLabelFromUrl(value: unknown): string {
-  const normalized = normalizeText(value);
+  const normalized = normalizeText(value)
   if (!normalized) {
-    return "";
+    return ''
   }
 
   for (const entry of WATCH_EMBED_PROVIDER_PATTERNS) {
     if (entry.pattern.test(normalized)) {
-      return entry.label;
+      return entry.label
     }
   }
 
   try {
-    const hostname = new URL(normalized).hostname.replace(/^www\./i, "");
-    const root = hostname.split(".")[0] || "";
-    return formatWatchSourceLabel(root);
-  } catch {
-    return "";
+    const hostname = new URL(normalized).hostname.replace(WWW_PREFIX_PATTERN, '')
+    const root = hostname.split('.')[0] || ''
+    return formatWatchSourceLabel(root)
+  }
+  catch {
+    return ''
   }
 }
 
 function getActiveEmbedSourceLabel(frame?: HTMLIFrameElement | null): string {
-  const activeFrame = frame || getActiveEmbedFrame();
+  const activeFrame = frame || getActiveEmbedFrame()
   const frameLabel = getEmbedSourceLabelFromUrl(
-    activeFrame?.src || activeFrame?.getAttribute("src"),
-  );
+    activeFrame?.src || activeFrame?.getAttribute('src'),
+  )
 
   if (frameLabel) {
-    return frameLabel;
+    return frameLabel
   }
 
-  const contextSourceLabel = formatWatchSourceLabel(getWatchContext().sourceLabel);
+  const contextSourceLabel = formatWatchSourceLabel(getWatchContext().sourceLabel)
   if (contextSourceLabel && isLikelyEmbedSource(contextSourceLabel)) {
-    return contextSourceLabel;
+    return contextSourceLabel
   }
 
-  return "";
+  return ''
 }
 
 function sanitizeWatchTitle(value: unknown): string {
-  const normalized = normalizeText(value);
+  const normalized = normalizeText(value)
   if (!normalized) {
-    return "";
+    return ''
   }
 
-  const stripped = stripSiteName(stripReleaseTag(normalized));
+  const stripped = stripSiteName(stripReleaseTag(normalized))
   if (!stripped) {
-    return "";
+    return ''
   }
 
-  if (WATCH_TITLE_BLOCKLIST.some((pattern) => pattern.test(stripped))) {
-    return "";
+  if (WATCH_TITLE_BLOCKLIST.some(pattern => pattern.test(stripped))) {
+    return ''
   }
 
-  return stripped;
+  return stripped
 }
 
 function sanitizeWatchEpisodeTitle(value: unknown): string {
   const normalized = normalizeText(value)
-    .replace(/^\d+\.\s*/, "")
-    .replace(/^episode\s+\d+\s*[:-]?\s*/i, "")
-    .trim();
+    .replace(LEADING_EPISODE_NUMBER_PATTERN, '')
+    .replace(LEADING_EPISODE_LABEL_PATTERN, '')
+    .trim()
 
-  if (!normalized || /^episode\s+\d+$/i.test(normalized)) {
-    return "";
+  if (!normalized || ONLY_EPISODE_NUMBER_PATTERN.test(normalized)) {
+    return ''
   }
 
-  return normalized;
+  return normalized
 }
 
 function getWatchTitle(fallback: string): string {
-  const routeWatchMediaType = getWatchMediaTypeForPath(document.location.pathname);
+  const routeWatchMediaType = getWatchMediaTypeForPath(document.location.pathname)
   const titleFromAttributes = findTitleAttribute((title) => {
-    if (title.length < 4) return false;
-    if (/ouvrir dans une nouvelle page/i.test(title)) return false;
-    if (/trailer background/i.test(title)) return false;
-    if (/^[-+]\d+s$/i.test(title)) return false;
-    if (/^zoom [+-]$/i.test(title)) return false;
-    return Boolean(sanitizeWatchTitle(title));
-  });
+    if (title.length < 4)
+      return false
+    if (WATCH_TITLE_NEW_PAGE_PATTERN.test(title))
+      return false
+    if (WATCH_TITLE_TRAILER_PATTERN.test(title))
+      return false
+    if (WATCH_TITLE_SKIP_PATTERN.test(title))
+      return false
+    if (WATCH_TITLE_ZOOM_PATTERN.test(title))
+      return false
+    return Boolean(sanitizeWatchTitle(title))
+  })
 
-  const contextTitle = sanitizeWatchTitle(getWatchContext().title);
+  const contextTitle = sanitizeWatchTitle(getWatchContext().title)
   if (contextTitle) {
-    return contextTitle;
+    return contextTitle
   }
 
   if (routeWatchMediaType) {
-    return fallback;
+    return fallback
   }
 
   const candidates = [
     titleFromAttributes,
-    getText("main h2.text-white.text-3xl"),
-    getText("h2.text-white.text-3xl"),
-    getText("main h3.text-sm.font-bold"),
-    getText("main h3.text-lg.font-semibold"),
-    getText("main h1"),
-    getText("h3.text-lg"),
-    getText("h3"),
-    getText("h1"),
+    getText('main h2.text-white.text-3xl'),
+    getText('h2.text-white.text-3xl'),
+    getText('main h3.text-sm.font-bold'),
+    getText('main h3.text-lg.font-semibold'),
+    getText('main h1'),
+    getText('h3.text-lg'),
+    getText('h3'),
+    getText('h1'),
     document.title,
     getMetaContent('meta[property="og:title"]'),
-  ];
+  ]
 
   for (const candidate of candidates) {
-    const sanitized = sanitizeWatchTitle(candidate);
+    const sanitized = sanitizeWatchTitle(candidate)
     if (sanitized) {
-      return sanitized;
+      return sanitized
     }
   }
 
-  return fallback;
+  return fallback
 }
 
 function getFormattedWatchTitle(
   fallbackTitle: string,
-  mediaTypeFallback: "movie" | "tv" | "anime",
-  seasonFallback = "",
-  episodeFallback = "",
+  mediaTypeFallback: 'movie' | 'tv' | 'anime',
+  seasonFallback = '',
+  episodeFallback = '',
 ): string {
-  const context = getWatchContext();
-  const mediaType =
-    normalizeText(context.mediaType).toLowerCase() || mediaTypeFallback;
-  const title = sanitizeWatchTitle(context.title) || fallbackTitle;
+  const context = getWatchContext()
+  const mediaType
+    = normalizeText(context.mediaType).toLowerCase() || mediaTypeFallback
+  const title = sanitizeWatchTitle(context.title) || fallbackTitle
 
-  if (mediaType === "tv" || mediaType === "anime") {
-    const season = normalizeText(context.season) || seasonFallback;
-    const episode = normalizeText(context.episode) || episodeFallback;
-    const episodeCode = season && episode ? `S${season}E${episode}` : "";
-    const episodeTitle = sanitizeWatchEpisodeTitle(context.episodeTitle);
+  if (mediaType === 'tv' || mediaType === 'anime') {
+    const season = normalizeText(context.season) || seasonFallback
+    const episode = normalizeText(context.episode) || episodeFallback
+    const episodeCode = season && episode ? `S${season}E${episode}` : ''
+    const episodeTitle = sanitizeWatchEpisodeTitle(context.episodeTitle)
 
-    return [title, episodeCode, episodeTitle].filter(Boolean).join(" - ");
+    return [title, episodeCode, episodeTitle].filter(Boolean).join(' - ')
   }
 
-  return title;
+  return title
 }
 
 function getWatchEpisodeHoverLabel(season: string, episode: string): string {
-  const episodeCode = season && episode ? `S${season}E${episode}` : "";
-  const episodeTitle = sanitizeWatchEpisodeTitle(getWatchContext().episodeTitle);
+  const episodeCode = season && episode ? `S${season}E${episode}` : ''
+  const episodeTitle = sanitizeWatchEpisodeTitle(getWatchContext().episodeTitle)
 
-  return [episodeCode, episodeTitle].filter(Boolean).join(" - ");
+  return [episodeCode, episodeTitle].filter(Boolean).join(' - ')
 }
 
 function getWatchMediaTypeForPath(
   pathname: string,
-): "movie" | "tv" | "anime" | "" {
-  if (/^\/watch\/movie\/[^/]+$/i.test(pathname)) {
-    return "movie";
+): 'movie' | 'tv' | 'anime' | '' {
+  if (WATCH_MOVIE_PATH_PATTERN.test(pathname)) {
+    return 'movie'
   }
 
-  if (/^\/watch\/tv\/[^/]+\/s\/[^/]+\/e\/[^/]+$/i.test(pathname)) {
-    return "tv";
+  if (WATCH_TV_PATH_PATTERN.test(pathname)) {
+    return 'tv'
   }
 
-  if (/^\/watch\/anime\/[^/]+\/season\/[^/]+\/episode\/[^/]+$/i.test(pathname)) {
-    return "anime";
+  if (WATCH_ANIME_PATH_PATTERN.test(pathname)) {
+    return 'anime'
   }
 
-  return "";
+  return ''
 }
 
 function getProviderName(providerId: string): string {
-  return PROVIDER_NAMES[providerId] || `Provider ${providerId}`;
+  return PROVIDER_NAMES[providerId] || `Provider ${providerId}`
 }
 
 function extractQuotedText(value: unknown): string {
-  const text = normalizeText(value);
-  if (!text) return "";
+  const text = normalizeText(value)
+  if (!text)
+    return ''
 
-  const patterns = [
-    /«\s*([^«»]+?)\s*»/,
-    /“\s*([^“”]+?)\s*”/,
-    /"\s*([^"]+?)\s*"/,
-    /'\s*([^']+?)\s*'/,
-  ];
-
-  for (const pattern of patterns) {
-    const match = text.match(pattern);
-    const extracted = normalizeText(match?.[1]);
+  for (const pattern of QUOTED_TEXT_PATTERNS) {
+    const match = text.match(pattern)
+    const extracted = normalizeText(match?.[1])
     if (extracted) {
-      return extracted;
+      return extracted
     }
   }
 
-  return "";
+  return ''
 }
 
 function createSpecificPagePresence(
@@ -1651,834 +1695,850 @@ function createSpecificPagePresence(
   image?: string,
   seedSuffix?: string,
 ) {
-  const subject = normalizeText(details);
+  const subject = normalizeText(details)
   if (!subject) {
-    return null;
+    return null
   }
 
-  const presenceData = buildBasePresence(image);
-  const seed = `${document.location.pathname}${document.location.search}:${normalizeText(seedSuffix) || subject}`;
+  const presenceData = buildBasePresence(image)
+  const seed = `${document.location.pathname}${document.location.search}:${normalizeText(seedSuffix) || subject}`
 
-  presenceData.details = subject;
-  presenceData.state = resolveVariantText(state, `${seed}:state`);
-  return presenceData;
+  presenceData.details = subject
+  presenceData.state = resolveVariantText(state, `${seed}:state`)
+  return presenceData
 }
 
 async function fetchTmdbMediaSummary(
   type: TmdbMediaType,
   id: string,
 ): Promise<TmdbMediaSummary | null> {
-  const mediaId = normalizeText(id);
+  const mediaId = normalizeText(id)
   if (!TMDB_API_KEY || !mediaId) {
-    return null;
+    return null
   }
 
-  const cacheKey = `${type}:${mediaId}`;
-  const cachedPromise = tmdbMediaCache.get(cacheKey);
+  const cacheKey = `${type}:${mediaId}`
+  const cachedPromise = tmdbMediaCache.get(cacheKey)
   if (cachedPromise) {
-    return cachedPromise;
+    return cachedPromise
   }
 
   const request = (async () => {
     try {
-      const url = new URL(`${TMDB_API_BASE}/${type}/${mediaId}`);
-      url.searchParams.set("api_key", TMDB_API_KEY);
-      url.searchParams.set("language", "fr-FR");
+      const url = new URL(`${TMDB_API_BASE}/${type}/${mediaId}`)
+      url.searchParams.set('api_key', TMDB_API_KEY)
+      url.searchParams.set('language', 'fr-FR')
 
-      const response = await fetch(url.toString());
+      const response = await fetch(url.toString())
       if (!response.ok) {
-        return null;
+        return null
       }
 
       const data = (await response.json()) as {
-        title?: string;
-        name?: string;
-        poster_path?: string;
-        backdrop_path?: string;
-      };
+        title?: string
+        name?: string
+        poster_path?: string
+        backdrop_path?: string
+      }
 
-      const title = stripSiteName(firstNonEmpty(data.title, data.name));
+      const title = stripSiteName(firstNonEmpty(data.title, data.name))
       if (!title) {
-        return null;
+        return null
       }
 
       return {
         title,
         image: firstNonEmpty(
           toTmdbImageUrl(data.poster_path),
-          toTmdbImageUrl(data.backdrop_path, "w780"),
+          toTmdbImageUrl(data.backdrop_path, 'w780'),
         ),
-      };
-    } catch {
-      return null;
+      }
     }
-  })();
+    catch {
+      return null
+    }
+  })()
 
-  tmdbMediaCache.set(cacheKey, request);
-  return request;
+  tmdbMediaCache.set(cacheKey, request)
+  return request
 }
 
 function getCinegraphVariants(type: string): readonly string[] {
-  if (type === "movie") {
+  if (type === 'movie') {
     return [
-      "Connexions d'un film passées au scanner 🕸️",
-      "Univers d'un film disséqué dans CinéGraph 🎬",
-      "Réseau d'un film analysé comme un dossier secret 🧠",
-    ];
+      'Connexions d\'un film passées au scanner 🕸️',
+      'Univers d\'un film disséqué dans CinéGraph 🎬',
+      'Réseau d\'un film analysé comme un dossier secret 🧠',
+    ]
   }
 
-  if (type === "tv") {
+  if (type === 'tv') {
     return [
-      "Connexions d'une série passées au scanner 🕸️",
-      "Univers d'une série disséqué dans CinéGraph 📺",
-      "Réseau d'une série analysé comme un complot premium 🧠",
-    ];
+      'Connexions d\'une série passées au scanner 🕸️',
+      'Univers d\'une série disséqué dans CinéGraph 📺',
+      'Réseau d\'une série analysé comme un complot premium 🧠',
+    ]
   }
 
-  if (type === "person") {
+  if (type === 'person') {
     return [
-      "Connexions d'une personne passées au scanner 👤",
-      "Carrière disséquée dans CinéGraph 🎭",
-      "Réseau créatif observé comme un tableau d'enquête 🕵️",
-    ];
+      'Connexions d\'une personne passées au scanner 👤',
+      'Carrière disséquée dans CinéGraph 🎭',
+      'Réseau créatif observé comme un tableau d\'enquête 🕵️',
+    ]
   }
 
   return [
-    "Cartographie ciné en cours dans CinéGraph 🧠",
-    "Connexions ciné passées au scanner 🕸️",
-    "Univers Movix disséqué comme un dossier top secret 🧪",
-  ];
+    'Cartographie ciné en cours dans CinéGraph 🧠',
+    'Connexions ciné passées au scanner 🕸️',
+    'Univers Movix disséqué comme un dossier top secret 🧪',
+  ]
 }
 
 async function getCinegraphContext(pageTitle: string, pageImage: string) {
   const selectedTitle = firstNonEmpty(
-    getText("h2.cinegraph-detail-title"),
-    getText(".cinegraph-tooltip-title"),
-  );
+    getText('h2.cinegraph-detail-title'),
+    getText('.cinegraph-tooltip-title'),
+  )
   const selectedImage = firstNonEmpty(
-    getAttribute(".cinegraph-detail-backdrop img", "src"),
-    getAttribute(".cinegraph-tooltip-poster", "src"),
-  );
+    getAttribute('.cinegraph-detail-backdrop img', 'src'),
+    getAttribute('.cinegraph-tooltip-poster', 'src'),
+  )
   const selectedBadge = normalizeText(
     firstNonEmpty(
-      getText(".cinegraph-detail-meta .cinegraph-type-badge"),
-      getText(".cinegraph-tooltip-meta .cinegraph-type-badge"),
+      getText('.cinegraph-detail-meta .cinegraph-type-badge'),
+      getText('.cinegraph-tooltip-meta .cinegraph-type-badge'),
     ),
-  ).toLowerCase();
+  ).toLowerCase()
 
-  const queryType = normalizeText(getSearchParam("type")).toLowerCase();
-  const queryId = getSearchParam("id");
+  const queryType = normalizeText(getSearchParam('type')).toLowerCase()
+  const queryId = getSearchParam('id')
 
-  let graphType = queryType;
-  if (/film|movie/i.test(selectedBadge)) {
-    graphType = "movie";
-  } else if (/série|serie|tv/i.test(selectedBadge)) {
-    graphType = "tv";
-  } else if (/personne|artist|artiste|person/i.test(selectedBadge)) {
-    graphType = "person";
+  let graphType = queryType
+  if (selectedBadge.includes('film') || selectedBadge.includes('movie')) {
+    graphType = 'movie'
+  }
+  else if (
+    selectedBadge.includes('tv')
+    || selectedBadge.includes('serie')
+    || selectedBadge.includes('série')
+  ) {
+    graphType = 'tv'
+  }
+  else if (
+    selectedBadge.includes('person')
+    || selectedBadge.includes('artist')
+    || selectedBadge.includes('artiste')
+  ) {
+    graphType = 'person'
   }
 
-  let title = normalizeText(selectedTitle);
-  let image = toAbsoluteUrl(selectedImage);
+  let title = normalizeText(selectedTitle)
+  let image = toAbsoluteUrl(selectedImage)
 
-  if (!title && (queryType === "movie" || queryType === "tv") && queryId) {
+  if (!title && (queryType === 'movie' || queryType === 'tv') && queryId) {
     const summary = await fetchTmdbMediaSummary(
       queryType as TmdbMediaType,
       queryId,
-    );
-    title = normalizeText(summary?.title);
-    image = firstNonEmpty(image, toAbsoluteUrl(summary?.image || ""));
+    )
+    title = normalizeText(summary?.title)
+    image = firstNonEmpty(image, toAbsoluteUrl(summary?.image || ''))
   }
 
   if (!title) {
     title = firstNonEmpty(
-      extractQuotedText(getText(".cinegraph-subtitle")),
+      extractQuotedText(getText('.cinegraph-subtitle')),
       pageTitle,
-      "CinéGraph",
-    );
+      'CinéGraph',
+    )
   }
 
   return {
     title: String(title),
     image: firstNonEmpty(image, pageImage),
     variants: getCinegraphVariants(graphType),
-  };
+  }
 }
 
 async function buildRoutePresence(
   showTimestamp: boolean,
   showButtons: boolean,
 ) {
-  const { pathname } = document.location;
-  const pageTitle = getPageTitle();
-  const pageImage = getPageImage("logo");
-  const contentImage = getPageImage("content");
+  const { pathname } = document.location
+  const pageTitle = getPageTitle()
+  const pageImage = getPageImage('logo')
+  const contentImage = getPageImage('content')
 
-  let match: RegExpMatchArray | null = null;
-
-  if (pathname === "/") {
+  if (pathname === '/') {
     return finalizePresence(
       createPagePresence(
-        "Farfouille l'accueil comme un critique sous caféine",
-        "Accueil Movix",
+        'Farfouille l\'accueil comme un critique sous caféine',
+        'Accueil Movix',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/search") {
-    const query = getSearchParam("q");
+  if (pathname === '/search') {
+    const query = getSearchParam('q')
 
     return finalizePresence(
       createPagePresence(
-        "Traque la perle rare avec un calme très relatif",
-        query ? `Recherche : ${query}` : "Recherche globale",
+        'Traque la perle rare avec un calme très relatif',
+        query ? `Recherche : ${query}` : 'Recherche globale',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/movies") {
+  if (pathname === '/movies') {
     return finalizePresence(
       createPagePresence(
-        "Passe le catalogue films au rayon X",
-        "Catalogue films",
+        'Passe le catalogue films au rayon X',
+        'Catalogue films',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/tv-shows") {
+  if (pathname === '/tv-shows') {
     return finalizePresence(
       createPagePresence(
-        "Collectionne les séries sans finir les précédentes",
-        "Catalogue séries",
+        'Collectionne les séries sans finir les précédentes',
+        'Catalogue séries',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/collections") {
+  if (pathname === '/collections') {
     return finalizePresence(
       createPagePresence(
-        "Fouille les collections comme un conservateur insomniaque",
-        pageTitle || "Collections Movix",
+        'Fouille les collections comme un conservateur insomniaque',
+        pageTitle || 'Collections Movix',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/collection\/([^/]+)$/i))) {
-    const collectionId = getMatchPart(match, 1);
-    const collectionTitle =
-      pageTitle || `Collection ${shortenId(collectionId)}`;
+  const collectionMatch = pathname.match(ROUTE_COLLECTION_PATTERN)
+  if (collectionMatch) {
+    const collectionId = getMatchPart(collectionMatch, 1)
+    const collectionTitle
+      = pageTitle || `Collection ${shortenId(collectionId)}`
 
     return finalizePresence(
       createSpecificPagePresence(
         collectionTitle,
         [
-          "Collection passée au scanner 🗂️",
-          "Saga observée avec un sérieux disproportionné 🎞️",
-          "Collection inspectée comme un trésor du canapé 📚",
+          'Collection passée au scanner 🗂️',
+          'Saga observée avec un sérieux disproportionné 🎞️',
+          'Collection inspectée comme un trésor du canapé 📚',
         ],
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/movie\/([^/]+)$/i))) {
-    const movieId = getMatchPart(match, 1);
-    const movieTitle = pageTitle || `Film ${shortenId(movieId)}`;
+  const movieMatch = pathname.match(ROUTE_MOVIE_PATTERN)
+  if (movieMatch) {
+    const movieId = getMatchPart(movieMatch, 1)
+    const movieTitle = pageTitle || `Film ${shortenId(movieId)}`
 
     return finalizePresence(
       createSpecificPagePresence(
         movieTitle,
         [
-          "Fiche film sous la loupe 🎬",
-          "Film inspecté comme un dossier brûlant 🍿",
-          "Autopsie ciné en cours sur Movix 🎞️",
+          'Fiche film sous la loupe 🎬',
+          'Film inspecté comme un dossier brûlant 🍿',
+          'Autopsie ciné en cours sur Movix 🎞️',
         ],
         contentImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/tv\/([^/]+)$/i))) {
-    const showId = getMatchPart(match, 1);
-    const showTitle = pageTitle || `Série ${shortenId(showId)}`;
+  const tvMatch = pathname.match(ROUTE_TV_PATTERN)
+  if (tvMatch) {
+    const showId = getMatchPart(tvMatch, 1)
+    const showTitle = pageTitle || `Série ${shortenId(showId)}`
 
     return finalizePresence(
       createSpecificPagePresence(
         showTitle,
         [
-          "Fiche série sous surveillance 📺",
-          "Série inspectée comme un complot à cliffhangers 🍿",
-          "Binge en préparation devant la fiche série 🎞️",
+          'Fiche série sous surveillance 📺',
+          'Série inspectée comme un complot à cliffhangers 🍿',
+          'Binge en préparation devant la fiche série 🎞️',
         ],
         contentImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/download\/(movie|tv)\/([^/]+)$/i))) {
-    const contentType = getMatchPart(match, 1);
-    const typeLabel = contentType === "movie" ? "Film" : "Série";
+  const downloadMatch = pathname.match(ROUTE_DOWNLOAD_PATTERN)
+  if (downloadMatch) {
+    const contentType = getMatchPart(downloadMatch, 1)
+    const typeLabel = contentType === 'movie' ? 'Film' : 'Série'
     const title = firstNonEmpty(
-      getText("h2"),
+      getText('h2'),
       pageTitle,
       `${typeLabel} à télécharger`,
-    );
+    )
 
     return finalizePresence(
       createSpecificPagePresence(
         String(title),
-        contentType === "movie"
+        contentType === 'movie'
           ? [
-              "Téléchargement film en préparation ⬇️",
-              "Plan B cinéma armé jusqu'aux dents 📦",
-              "Mode furtif: aucun spoiler autorisé 🕶️",
+              'Téléchargement film en préparation ⬇️',
+              'Plan B cinéma armé jusqu\'aux dents 📦',
+              'Mode furtif: aucun spoiler autorisé 🕶️',
             ]
           : [
-              "Téléchargement série en préparation ⬇️",
-              "Plan B binge prêt à décoller 📺",
-              "Rechargement stratégique des buffers 🔄",
+              'Téléchargement série en préparation ⬇️',
+              'Plan B binge prêt à décoller 📺',
+              'Rechargement stratégique des buffers 🔄',
             ],
         contentImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/debrid") {
-    const provider = getSearchParam("provider");
+  if (pathname === '/debrid') {
+    const provider = getSearchParam('provider')
     const state = provider
       ? `Debrid via ${provider}`
-      : "Atelier anti-liens capricieux";
+      : 'Atelier anti-liens capricieux'
 
     return finalizePresence(
       createPagePresence(
-        "Dompte des liens récalcitrants à mains nues",
+        'Dompte des liens récalcitrants à mains nues',
         state,
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
-  if ((match = pathname.match(/^\/genre\/([^/]+)\/([^/]+)$/i))) {
-    const mediaType = getMatchPart(match, 1);
-    const mediaLabel = mediaType === "movie" ? "Films" : "Séries";
+  const genreMatch = pathname.match(ROUTE_GENRE_PATTERN)
+  if (genreMatch) {
+    const mediaType = getMatchPart(genreMatch, 1)
+    const mediaLabel = mediaType === 'movie' ? 'Films' : 'Séries'
 
     return finalizePresence(
       createPagePresence(
-        "Trie le chaos par genre parce qu'il le peut",
+        'Trie le chaos par genre parce qu\'il le peut',
         pageTitle || `${mediaLabel} par genre`,
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/roulette") {
+  if (pathname === '/roulette') {
     return finalizePresence(
       createPagePresence(
-        "Laisse le destin choisir quelle idée brillante",
-        pageTitle || "Roulette Movix",
+        'Laisse le destin choisir quelle idée brillante',
+        pageTitle || 'Roulette Movix',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (
-    (match = pathname.match(/^\/provider\/([^/]+)\/([^/]+)(?:\/([^/]+))?$/i))
-  ) {
-    const providerId = getMatchPart(match, 1);
-    const mediaType = getMatchPart(match, 2);
-    const providerName = getProviderName(providerId);
-    const mediaLabel = mediaType === "movies" ? "Films" : "Séries";
+  const providerCatalogMatch = pathname.match(ROUTE_PROVIDER_CATALOG_PATTERN)
+  if (providerCatalogMatch) {
+    const providerId = getMatchPart(providerCatalogMatch, 1)
+    const mediaType = getMatchPart(providerCatalogMatch, 2)
+    const providerName = getProviderName(providerId)
+    const mediaLabel = mediaType === 'movies' ? 'Films' : 'Séries'
 
     return finalizePresence(
       createPagePresence(
-        "Retourne un catalogue provider dans tous les sens",
+        'Retourne un catalogue provider dans tous les sens',
         pageTitle || `${providerName} - ${mediaLabel}`,
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/provider\/([^/]+)$/i))) {
-    const providerId = getMatchPart(match, 1);
+  const providerMatch = pathname.match(ROUTE_PROVIDER_PATTERN)
+  if (providerMatch) {
+    const providerId = getMatchPart(providerMatch, 1)
 
     return finalizePresence(
       createPagePresence(
-        "Espionne un provider avec une curiosité très assumée",
+        'Espionne un provider avec une curiosité très assumée',
         getProviderName(providerId),
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/auth" || pathname === "/auth/google") {
+  if (pathname === '/auth' || pathname === '/auth/google') {
     return finalizePresence(
       createPagePresence(
-        "Négocie avec l'authentification sans perdre la face",
-        "Connexion en cours",
+        'Négocie avec l\'authentification sans perdre la face',
+        'Connexion en cours',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/create-account" || pathname === "/link-bip39/create") {
+  if (pathname === '/create-account' || pathname === '/link-bip39/create') {
     return finalizePresence(
       createPagePresence(
-        "Forge un compte comme un druide numérique",
-        "Création de compte",
+        'Forge un compte comme un druide numérique',
+        'Création de compte',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/login-bip39" || pathname === "/link-bip39") {
+  if (pathname === '/login-bip39' || pathname === '/link-bip39') {
     return finalizePresence(
       createPagePresence(
-        "Récite sa phrase magique sans cligner des yeux",
-        "Connexion BIP39",
+        'Récite sa phrase magique sans cligner des yeux',
+        'Connexion BIP39',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/person\/([^/]+)$/i))) {
-    const personId = getMatchPart(match, 1);
-    const personTitle = pageTitle || `Personne ${shortenId(personId)}`;
+  const personMatch = pathname.match(ROUTE_PERSON_PATTERN)
+  if (personMatch) {
+    const personId = getMatchPart(personMatch, 1)
+    const personTitle = pageTitle || `Personne ${shortenId(personId)}`
 
     return finalizePresence(
       createSpecificPagePresence(
         personTitle,
         [
-          "Filmo disséquée comme un détective du générique 🎭",
-          "Carrière passée au scanner plan par plan 🎬",
-          "Profil ciné observé comme une archive sacrée 📚",
+          'Filmo disséquée comme un détective du générique 🎭',
+          'Carrière passée au scanner plan par plan 🎬',
+          'Profil ciné observé comme une archive sacrée 📚',
         ],
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/profile") {
+  if (pathname === '/profile') {
     return finalizePresence(
       createPagePresence(
-        "Range son profil puis dérange tout à nouveau",
-        "Profil utilisateur",
+        'Range son profil puis dérange tout à nouveau',
+        'Profil utilisateur',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/alerts") {
+  if (pathname === '/alerts') {
     return finalizePresence(
       createPagePresence(
-        "Surveille ses alertes comme une tour de contrôle du binge",
-        pageTitle || "Mes alertes",
+        'Surveille ses alertes comme une tour de contrôle du binge',
+        pageTitle || 'Mes alertes',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/live-tv") {
+  if (pathname === '/live-tv') {
     const liveTitle = firstNonEmpty(
-      getText("h1"),
-      getText("h2"),
+      getText('h1'),
+      getText('h2'),
       pageTitle,
-      "Live TV",
-    );
+      'Live TV',
+    )
 
     return finalizePresence(
       createPagePresence(
-        "Zappe plus vite que la télécommande ne l'accepte",
+        'Zappe plus vite que la télécommande ne l\'accepte',
         String(liveTitle),
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/watch\/movie\/([^/]+)$/i))) {
-    const title = getWatchTitle("Film mystère");
+  if (WATCH_MOVIE_PATH_PATTERN.test(pathname)) {
+    const title = getWatchTitle('Film mystère')
 
     return finalizePresence(
       createWatchingPresence({
         title,
-        playingText: "lecture en cours, canapé en surchauffe",
-        pausedText: "pause stratégique, le drame attend",
-        waitingText: "cherche la bonne source sans paniquer",
+        playingText: 'lecture en cours, canapé en surchauffe',
+        pausedText: 'pause stratégique, le drame attend',
+        waitingText: 'cherche la bonne source sans paniquer',
         image: contentImage,
       }),
       { showTimestamp, showButtons, pathname, allowPageTimestamp: false },
-    );
+    )
   }
 
-  if (
-    (match = pathname.match(/^\/watch\/tv\/([^/]+)\/s\/([^/]+)\/e\/([^/]+)$/i))
-  ) {
-    const season = getMatchPart(match, 2);
-    const episode = getMatchPart(match, 3);
-    const rawTitle = getWatchTitle("Série mystère");
-    const title =
-      rawTitle.replace(/\s*-\s*S\d+E\d+$/i, "").trim() || "Série mystère";
-
-    return finalizePresence(
-      createWatchingPresence({
-        title,
-        season,
-        episode,
-        playingText: "binge hors de contrôle",
-        pausedText: "pause très dramatique",
-        waitingText: "sélectionne une source avec panique élégante",
-        image: contentImage,
-      }),
-      { showTimestamp, showButtons, pathname, allowPageTimestamp: false },
-    );
-  }
-
-  if (
-    (match = pathname.match(
-      /^\/watch\/anime\/([^/]+)\/season\/([^/]+)\/episode\/([^/]+)$/i,
-    ))
-  ) {
-    const season = getMatchPart(match, 2);
-    const episode = getMatchPart(match, 3);
-    const rawTitle = getWatchTitle("Anime mystère");
-    const title =
-      rawTitle.replace(/\s*-\s*S\d+E\d+$/i, "").trim() || "Anime mystère";
+  const watchTvMatch = pathname.match(WATCH_TV_PATH_PATTERN)
+  if (watchTvMatch) {
+    const season = getMatchPart(watchTvMatch, 2)
+    const episode = getMatchPart(watchTvMatch, 3)
+    const rawTitle = getWatchTitle('Série mystère')
+    const title
+      = rawTitle.replace(EPISODE_CODE_SUFFIX_PATTERN, '').trim() || 'Série mystère'
 
     return finalizePresence(
       createWatchingPresence({
         title,
         season,
         episode,
-        playingText: "anime en cours, théorie du fanclub activée",
-        pausedText: "pause technique, hype toujours intacte",
-        waitingText: "cherche son épisode comme un héros secondaire",
+        playingText: 'binge hors de contrôle',
+        pausedText: 'pause très dramatique',
+        waitingText: 'sélectionne une source avec panique élégante',
         image: contentImage,
       }),
       { showTimestamp, showButtons, pathname, allowPageTimestamp: false },
-    );
+    )
   }
 
-  if (pathname === "/watchparty/create") {
+  const watchAnimeMatch = pathname.match(WATCH_ANIME_PATH_PATTERN)
+  if (watchAnimeMatch) {
+    const season = getMatchPart(watchAnimeMatch, 2)
+    const episode = getMatchPart(watchAnimeMatch, 3)
+    const rawTitle = getWatchTitle('Anime mystère')
+    const title
+      = rawTitle.replace(EPISODE_CODE_SUFFIX_PATTERN, '').trim() || 'Anime mystère'
+
+    return finalizePresence(
+      createWatchingPresence({
+        title,
+        season,
+        episode,
+        playingText: 'anime en cours, théorie du fanclub activée',
+        pausedText: 'pause technique, hype toujours intacte',
+        waitingText: 'cherche son épisode comme un héros secondaire',
+        image: contentImage,
+      }),
+      { showTimestamp, showButtons, pathname, allowPageTimestamp: false },
+    )
+  }
+
+  if (pathname === '/watchparty/create') {
     const title = firstNonEmpty(
-      getText("h2"),
-      getText("h1"),
-      "Création de WatchParty",
-    );
+      getText('h2'),
+      getText('h1'),
+      'Création de WatchParty',
+    )
 
     return finalizePresence(
       createPagePresence(
-        "Prépare une WatchParty comme un maître de cérémonie chaotique",
+        'Prépare une WatchParty comme un maître de cérémonie chaotique',
         String(title),
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/watchparty\/room\/([^/]+)$/i))) {
-    const roomId = getMatchPart(match, 1);
+  const watchpartyRoomMatch = pathname.match(ROUTE_WATCHPARTY_ROOM_PATTERN)
+  if (watchpartyRoomMatch) {
+    const roomId = getMatchPart(watchpartyRoomMatch, 1)
     const roomTitle = firstNonEmpty(
-      getAttribute("h1[title]", "title"),
-      getText("h1"),
-      getText("h2"),
+      getAttribute('h1[title]', 'title'),
+      getText('h1'),
+      getText('h2'),
       `Salon ${shortenId(roomId)}`,
-    );
+    )
 
     return finalizePresence(
       createSpecificPagePresence(
         String(roomTitle),
         [
-          "Salon WatchParty en ébullition 💬",
-          "WatchParty pilotée comme un chaos organisé 🎉",
-          "Salle commune tenue d'une main très popcorn 🍿",
+          'Salon WatchParty en ébullition 💬',
+          'WatchParty pilotée comme un chaos organisé 🎉',
+          'Salle commune tenue d\'une main très popcorn 🍿',
         ],
         contentImage === FALLBACK_LOGO ? pageImage : contentImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/watchparty\/join(?:\/([^/]+))?$/i))) {
-    const joinCode = getMatchPart(match, 1);
+  const watchpartyJoinMatch = pathname.match(ROUTE_WATCHPARTY_JOIN_PATTERN)
+  if (watchpartyJoinMatch) {
+    const joinCode = getMatchPart(watchpartyJoinMatch, 1)
     const state = joinCode
       ? `Code ${safeDecode(joinCode).toUpperCase()}`
       : String(
           firstNonEmpty(
-            getText("h2"),
-            getText("h1"),
-            "Rejoindre une WatchParty",
+            getText('h2'),
+            getText('h1'),
+            'Rejoindre une WatchParty',
           ),
-        );
+        )
 
     return finalizePresence(
       createPagePresence(
-        "Essaie d'entrer dans une WatchParty sans rater le code",
+        'Essaie d\'entrer dans une WatchParty sans rater le code',
         state,
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/watchparty/list") {
+  if (pathname === '/watchparty/list') {
     return finalizePresence(
       createPagePresence(
-        "Fouille les salons WatchParty comme un videur curieux",
-        String(firstNonEmpty(getText("h1"), "Liste des salons WatchParty")),
+        'Fouille les salons WatchParty comme un videur curieux',
+        String(firstNonEmpty(getText('h1'), 'Liste des salons WatchParty')),
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/suggestion") {
+  if (pathname === '/suggestion') {
     return finalizePresence(
       createPagePresence(
-        "Demande au site de choisir à sa place, aveu touchant",
-        pageTitle || "Suggestions personnalisées",
+        'Demande au site de choisir à sa place, aveu touchant',
+        pageTitle || 'Suggestions personnalisées',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/extension") {
+  if (pathname === '/extension') {
     return finalizePresence(
       createPagePresence(
-        "Équipe son navigateur pour boxer les hosters relous",
-        pageTitle || "Extension Movix",
+        'Équipe son navigateur pour boxer les hosters relous',
+        pageTitle || 'Extension Movix',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/list\/([^/]+)$/i))) {
-    const listId = getMatchPart(match, 1);
-    const listTitle = pageTitle || `Liste ${shortenId(listId)}`;
+  const listMatch = pathname.match(ROUTE_LIST_PATTERN)
+  if (listMatch) {
+    const listId = getMatchPart(listMatch, 1)
+    const listTitle = pageTitle || `Liste ${shortenId(listId)}`
 
     return finalizePresence(
       createSpecificPagePresence(
         listTitle,
         [
-          "Liste publique inspectée avec gravité 📋",
-          "Sélection passée au peigne fin 🍽️",
-          "Compilation ciné dégustée comme un menu secret 🗃️",
+          'Liste publique inspectée avec gravité 📋',
+          'Sélection passée au peigne fin 🍽️',
+          'Compilation ciné dégustée comme un menu secret 🗃️',
         ],
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/list-catalog") {
+  if (pathname === '/list-catalog') {
     return finalizePresence(
       createPagePresence(
-        "Parcourt les listes publiques comme un brocanteur du streaming",
-        pageTitle || "Catalogue des listes publiques",
+        'Parcourt les listes publiques comme un brocanteur du streaming',
+        pageTitle || 'Catalogue des listes publiques',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/dmca") {
+  if (pathname === '/dmca') {
     return finalizePresence(
       createPagePresence(
-        "Lit la DMCA, oui ça arrive vraiment",
-        "Section juridique",
+        'Lit la DMCA, oui ça arrive vraiment',
+        'Section juridique',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/admin") {
+  if (pathname === '/admin') {
     return finalizePresence(
       createPagePresence(
-        "Traîne dans l'admin avec beaucoup trop de boutons",
-        "Console admin",
+        'Traîne dans l\'admin avec beaucoup trop de boutons',
+        'Console admin',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/profile-selection") {
+  if (pathname === '/profile-selection') {
     return finalizePresence(
       createPagePresence(
-        "Choisit un profil comme si Netflix observait",
-        "Sélection de profil",
+        'Choisit un profil comme si Netflix observait',
+        'Sélection de profil',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/profile-management") {
+  if (pathname === '/profile-management') {
     return finalizePresence(
       createPagePresence(
-        "Bidouille les profils avec une autorité discutable",
-        "Gestion des profils",
+        'Bidouille les profils avec une autorité discutable',
+        'Gestion des profils',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/wishboard") {
+  if (pathname === '/wishboard') {
     return finalizePresence(
       createPagePresence(
-        "Vote sur le Wishboard comme un ministre du catalogue",
-        pageTitle || "Wishboard",
+        'Vote sur le Wishboard comme un ministre du catalogue',
+        pageTitle || 'Wishboard',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/wishboard/new") {
+  if (pathname === '/wishboard/new') {
     return finalizePresence(
       createPagePresence(
-        "Dépose une requête avec l'espoir d'être exaucé",
-        String(firstNonEmpty(getText("h1"), "Nouvelle demande Wishboard")),
+        'Dépose une requête avec l\'espoir d\'être exaucé',
+        String(firstNonEmpty(getText('h1'), 'Nouvelle demande Wishboard')),
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/wishboard/my-requests") {
+  if (pathname === '/wishboard/my-requests') {
     return finalizePresence(
       createPagePresence(
-        "Surveille ses requêtes comme des actions en bourse",
-        String(firstNonEmpty(getText("h1"), "Mes demandes Wishboard")),
+        'Surveille ses requêtes comme des actions en bourse',
+        String(firstNonEmpty(getText('h1'), 'Mes demandes Wishboard')),
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/wishboard/submit-link") {
+  if (pathname === '/wishboard/submit-link') {
     return finalizePresence(
       createPagePresence(
-        "Soumet un lien pour sauver le catalogue à mains nues",
+        'Soumet un lien pour sauver le catalogue à mains nues',
         String(
-          firstNonEmpty(getText("h2"), getText("h1"), "Soumission de lien"),
+          firstNonEmpty(getText('h2'), getText('h1'), 'Soumission de lien'),
         ),
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/vip") {
+  if (pathname === '/vip') {
     return finalizePresence(
       createPagePresence(
-        "Examine le VIP avec un regard de mécène stratégique",
-        "Espace VIP",
+        'Examine le VIP avec un regard de mécène stratégique',
+        'Espace VIP',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/vip/don") {
+  if (pathname === '/vip/don') {
     return finalizePresence(
       createPagePresence(
-        "Sort la carte bleue avec un panache douteux",
-        "Don VIP",
+        'Sort la carte bleue avec un panache douteux',
+        'Don VIP',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/vip\/invoice\/([^/]+)$/i))) {
-    const invoiceId = getMatchPart(match, 1);
+  const vipInvoiceMatch = pathname.match(ROUTE_VIP_INVOICE_PATTERN)
+  if (vipInvoiceMatch) {
+    const invoiceId = getMatchPart(vipInvoiceMatch, 1)
 
     return finalizePresence(
       createPagePresence(
-        "Contemple une facture VIP, romance moderne",
+        'Contemple une facture VIP, romance moderne',
         `Facture ${shortenId(invoiceId)}`,
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/vip\/cadeau\/([^/]+)$/i))) {
-    const giftId = getMatchPart(match, 1);
+  const vipGiftMatch = pathname.match(ROUTE_VIP_GIFT_PATTERN)
+  if (vipGiftMatch) {
+    const giftId = getMatchPart(vipGiftMatch, 1)
 
     return finalizePresence(
       createPagePresence(
-        "Déballe un cadeau VIP sans papier brillant",
+        'Déballe un cadeau VIP sans papier brillant',
         `Cadeau ${shortenId(giftId)}`,
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/about") {
+  if (pathname === '/about') {
     return finalizePresence(
       createPagePresence(
-        "Raconte l'histoire de Movix comme une légende locale",
-        pageTitle || "À propos de Movix",
+        'Raconte l\'histoire de Movix comme une légende locale',
+        pageTitle || 'À propos de Movix',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/privacy") {
+  if (pathname === '/privacy') {
     return finalizePresence(
       createPagePresence(
-        "Lit la politique de confidentialité avec un courage rare",
-        "Politique de confidentialité",
+        'Lit la politique de confidentialité avec un courage rare',
+        'Politique de confidentialité',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/terms-of-service" || pathname === "/terms") {
+  if (pathname === '/terms-of-service' || pathname === '/terms') {
     return finalizePresence(
       createPagePresence(
-        "Traverse les CGU armé d'un café très serré",
-        "Conditions d'utilisation",
+        'Traverse les CGU armé d\'un café très serré',
+        'Conditions d\'utilisation',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/cinegraph") {
-    const graphContext = await getCinegraphContext(pageTitle, pageImage);
+  if (pathname === '/cinegraph') {
+    const graphContext = await getCinegraphContext(pageTitle, pageImage)
 
     return finalizePresence(
       createSpecificPagePresence(
@@ -2487,117 +2547,119 @@ async function buildRoutePresence(
         graphContext.image,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/settings") {
+  if (pathname === '/settings') {
     return finalizePresence(
       createPagePresence(
-        "Tripatouille les réglages jusqu'à friser la perfection",
-        "Réglages Movix",
+        'Tripatouille les réglages jusqu\'à friser la perfection',
+        'Réglages Movix',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/top10") {
+  if (pathname === '/top10') {
     return finalizePresence(
       createPagePresence(
-        "Scrute le top 10 comme un analyste de canapé",
-        pageTitle || "Top 10 Movix",
+        'Scrute le top 10 comme un analyste de canapé',
+        pageTitle || 'Top 10 Movix',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "/ftv") {
+  if (pathname === '/ftv') {
     return finalizePresence(
       createPagePresence(
-        "Fouille France.tv sans télécommande et sans honte",
-        String(firstNonEmpty(getText("h2"), pageTitle, "France.tv")),
+        'Fouille France.tv sans télécommande et sans honte',
+        String(firstNonEmpty(getText('h2'), pageTitle, 'France.tv')),
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/ftv\/info\/([^/]+)$/i))) {
-    const programId = getMatchPart(match, 1);
+  const ftvInfoMatch = pathname.match(ROUTE_FTV_INFO_PATTERN)
+  if (ftvInfoMatch) {
+    const programId = getMatchPart(ftvInfoMatch, 1)
     const programTitle = String(
       firstNonEmpty(
-        getText("h1"),
+        getText('h1'),
         pageTitle,
         `Programme ${shortenId(programId)}`,
       ),
-    );
+    )
 
     return finalizePresence(
       createSpecificPagePresence(
         programTitle,
         [
-          "Fiche France.tv sous inspection 🇫🇷",
-          "Programme France.tv étudié avec un sérieux républicain 📺",
-          "France.tv passé au microscope télévisuel 🎬",
+          'Fiche France.tv sous inspection 🇫🇷',
+          'Programme France.tv étudié avec un sérieux républicain 📺',
+          'France.tv passé au microscope télévisuel 🎬',
         ],
         contentImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/ftv\/watch\/([^/]+)$/i))) {
-    const title = getWatchTitle("Programme France.tv");
+  if (ROUTE_FTV_WATCH_PATTERN.test(pathname)) {
+    const title = getWatchTitle('Programme France.tv')
 
     return finalizePresence(
       createWatchingPresence({
         title,
         playingText:
-          "programme en cours, télécommande officiellement au chômage",
-        pausedText: "pause stratégique du direct",
-        waitingText: "cherche le bon flux avec dignité",
+          'programme en cours, télécommande officiellement au chômage',
+        pausedText: 'pause stratégique du direct',
+        waitingText: 'cherche le bon flux avec dignité',
         image: contentImage,
       }),
       { showTimestamp, showButtons, pathname, allowPageTimestamp: false },
-    );
+    )
   }
 
-  if ((match = pathname.match(/^\/wrapped(?:\/([^/]+))?$/i))) {
-    const wrappedYear = getMatchPart(match, 1);
+  const wrappedMatch = pathname.match(ROUTE_WRAPPED_PATTERN)
+  if (wrappedMatch) {
+    const wrappedYear = getMatchPart(wrappedMatch, 1)
     const state = wrappedYear
       ? `Wrapped ${wrappedYear}`
-      : String(firstNonEmpty(getText("h1"), "Wrapped Movix"));
+      : String(firstNonEmpty(getText('h1'), 'Wrapped Movix'))
 
     return finalizePresence(
       createPagePresence(
-        "Relit son année ciné comme un bilan existentiel",
+        'Relit son année ciné comme un bilan existentiel',
         state,
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
-  if (pathname === "*" || pathname === "/404") {
+  if (pathname === '*' || pathname === '/404') {
     return finalizePresence(
       createPagePresence(
-        "S'est perdu dans Movix, ce qui était statistiquement évitable",
-        "404 - page introuvable",
+        'S\'est perdu dans Movix, ce qui était statistiquement évitable',
+        '404 - page introuvable',
         pageImage,
       ),
       { showTimestamp, showButtons, pathname },
-    );
+    )
   }
 
   return finalizePresence(
     createPagePresence(
-      "Explore Movix sans carte ni boussole",
-      pageTitle || "Exploration en cours",
+      'Explore Movix sans carte ni boussole',
+      pageTitle || 'Exploration en cours',
       pageImage,
     ),
     { showTimestamp, showButtons, pathname },
-  );
+  )
 }
 
 async function getBooleanSetting(
@@ -2605,24 +2667,26 @@ async function getBooleanSetting(
   fallback: boolean,
 ): Promise<boolean> {
   try {
-    const value = await presence.getSetting<boolean>(settingId);
-    return typeof value === "boolean" ? value : fallback;
-  } catch {
-    return fallback;
+    const value = await presence.getSetting<boolean>(settingId)
+    return typeof value === 'boolean' ? value : fallback
+  }
+  catch {
+    return fallback
   }
 }
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const [showTimestamp, showButtons] = await Promise.all([
-    getBooleanSetting("showTimestamp", true),
-    getBooleanSetting("showButtons", false),
-  ]);
+    getBooleanSetting('showTimestamp', true),
+    getBooleanSetting('showButtons', false),
+  ])
 
-  const presenceData = await buildRoutePresence(showTimestamp, showButtons);
+  const presenceData = await buildRoutePresence(showTimestamp, showButtons)
 
   if (presenceData) {
-    presence.setActivity(presenceData);
-  } else {
-    presence.clearActivity();
+    presence.setActivity(presenceData)
   }
-});
+  else {
+    presence.clearActivity()
+  }
+})
