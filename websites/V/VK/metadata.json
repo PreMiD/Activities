@@ -17,8 +17,8 @@
   ],
   "service": "VK",
   "description": {
-    "en": "This presence will be displaying a music info.",
-    "ru": "Эта активность будет отображать в статус информацию о музыке."
+    "en": "VK is a Russian social media platform for messaging, sharing music and videos, and connecting with friends and communities.",
+    "ru": "ВК это российская социальная платформа для общения, обмена музыкой и видео, а также связи с друзьями и сообществами."
   },
   "url": "vk.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*vk[.]com[/]",
