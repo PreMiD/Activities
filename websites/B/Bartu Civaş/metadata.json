@@ -18,7 +18,7 @@
   "regExp": "^https?[:][/][/](www[.])?bartucivas[.]com[.]tr[/]",
   "version": "1.0.0",
   "logo": "https://bartucivas.com.tr/img/bartu-civas.png",
-  "thumbnail": "https://bartucivas.com.tr/img/bartu-civas.png",
+  "thumbnail": "https://bartucivas.com.tr/img/thumbnail.png",
   "color": "#f01c25",
   "category": "other",
   "tags": [
