@@ -270,7 +270,7 @@ presence.on('UpdateData', async () => {
     lastPage = pageData.page
   }
 
-  const presenceData: any = {
+  const presenceData: PresenceData = {
     startTimestamp,
     largeImageKey: 'https://i.ibb.co/ns57qq7g/512x512.jpg',
   }
