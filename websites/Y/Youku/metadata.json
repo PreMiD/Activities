@@ -11,7 +11,7 @@
     "th": "แสดงซีรีส์จีนจาก Youku บน Discord ของคุณ"
   },
   "url": "www.youku.tv",
-  "regExp": "([a-z0-9-]+[.])*youku[.]tv[/]",
+  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*youku[.]tv[/]",
   "version": "1.0.0",
   "logo": "https://cdn-icons-png.flaticon.com/512/2111/2111710.png",
   "thumbnail": "https://cdn-icons-png.flaticon.com/512/2111/2111710.png",
