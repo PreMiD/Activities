@@ -12,7 +12,7 @@
     "es": "ChatLLM Teams de Abacus.AI - Un super asistente de IA con acceso a multiples modelos de lenguaje como GPT-4, Claude, Gemini y mas."
   },
   "url": "apps.abacus.ai",
-  "regExp": "^https?[:][/][/]apps[.]abacus[.]ai[/]chatllm.*",
+  "regExp": "^https?[:][/][/]apps[.]abacus[.]ai[/].*",
   "version": "1.0.0",
   "logo": "https://play-lh.googleusercontent.com/O35u7LcmgKHsRpEQvHmT9ACfvDvP5S6HRIVmz-x-spUhojXIcnk0wbMEqaBSWPUJYQ?.png",
   "thumbnail": "https://www.hrkatha.com/wp-content/uploads/2022/01/Abacus.png",
