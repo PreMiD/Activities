@@ -17,7 +17,7 @@
   },
   "url": "cineby.gd",
   "regExp": "^https?[:][/][/](www[.])?cineby[.](gd|app|sc)[/]?",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/thumbnail.png",
   "color": "#fb0013",
