@@ -7,7 +7,8 @@
   },
   "service": "WatchIt",
   "description": {
-    "en": "Watch movies and series"
+    "en": "WATCH IT is an Egyptian subscription over-the-top, streaming television service developed and operated by the United Media Services. The service launched on 15 March 2019. It is one of the most-watched Arabic streaming services in the Middle East and North Africa.",
+    "ar" : "واتش إت هي منصة بث فيديو رقمي مصريّة تابعة لشركة المتحدة للخدمات الإعلامية أُنشئت في عام 2019 تزامناً مع شهر رمضان عام 1440 هجرياً، وتمّ إنشاء المنصة لعرض الأعمال الفنية المصرية الكلاسيكية والأفلام ومسلسلات رمضان."
   },
   "url": "watchit.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*watchit[.]com[/]",
