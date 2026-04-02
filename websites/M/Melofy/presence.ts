@@ -51,7 +51,6 @@ presence.on('UpdateData', () => {
     details: title,
     state: `by ${artist}`,
     largeImageKey: artworkUrl || ActivityAssets.Logo,
-    largeImageText: title,
     smallImageKey: isPlaying ? Assets.Play : Assets.Pause,
     smallImageText: isPlaying ? 'Playing' : 'Paused',
   }
@@ -64,14 +63,7 @@ presence.on('UpdateData', () => {
       },
     ]
   }
-  else {
-    presenceData.buttons = [
-      {
-        label: 'Open Melofy',
-        url: 'https://melofy.jene.in',
-      },
-    ]
-  }
+
   if (isPlaying && duration > 0) {
     const start = Date.now() - progress
     presenceData.startTimestamp = start
