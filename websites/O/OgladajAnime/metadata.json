@@ -43,7 +43,7 @@
       "title": "Privacy Mode",
       "icon": "fad fa-user-secret",
       "value": false,
-      "description": "Hides 'Mój Profil' button"
+      "description": "Hides 'My profile' button"
     },
     {
       "id": "browsingStatus",
