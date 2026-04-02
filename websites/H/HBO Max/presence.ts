@@ -3,7 +3,7 @@ import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 import {
   clearPageInfo,
   fetchPageInfo,
-  pageInfo,
+  getPageInfo,
 } from './functions/fetchPageInfo.js'
 
 enum ActivityAssets {
@@ -15,11 +15,11 @@ const presence = new Presence({
 })
 
 function findByAlternateId(id: string) {
-  return pageInfo?.data?.included?.find((x: IncludedItem) => x.attributes?.alternateId === id)
+  return getPageInfo()?.data?.included?.find((x: IncludedItem) => x.attributes?.alternateId === id)
 }
 
 function findById(id: string) {
-  return pageInfo?.data?.included?.find((x: IncludedItem) => x.id === id)
+  return getPageInfo()?.data?.included?.find((x: IncludedItem) => x.id === id)
 }
 
 function getCoverArt(item: ReturnType<typeof findByAlternateId>): string | undefined {
@@ -52,6 +52,7 @@ function getDescription(item: ReturnType<typeof findByAlternateId>): string | un
 }
 
 function getTitleInfo(usePresenceName: boolean) {
+  const pageInfo = getPageInfo()
   if (!pageInfo?.data)
     return null
 

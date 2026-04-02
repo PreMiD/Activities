@@ -3,11 +3,14 @@ import pLimit from 'p-limit'
 
 const limit = pLimit(1)
 
-// eslint-disable-next-line import/no-mutable-exports
-export let pageInfo: {
+let pageInfo: {
   url: string
   data?: MaxAPIResponse
 } | null = null
+
+export function getPageInfo() {
+  return pageInfo
+}
 
 export async function fetchPageInfo(pathname: string): Promise<void> {
   await limit(async () => {
