@@ -89,13 +89,6 @@
       "value": true
     },
     {
-      "id": "usePosterDimensions",
-      "title": "Use Poster Dimensions",
-      "description": "This uses the dimensions that the anime images typically use when required. This may break some features, such as the small images or making the status show 'Showing character:' instead of just OgladajAnime.",
-      "value": false,
-      "icon": "fas fa-image-portrait"
-    },
-    {
       "id": "determineSeason",
       "title": "Determine Season",
       "description": "This checks all available names to try and determine the season and show it on the activity. This may not find the season always and might sometimes have false positives. This might interfere with the 'Use Alternative Name' setting",
