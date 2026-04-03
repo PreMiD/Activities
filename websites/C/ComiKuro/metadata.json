@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "Kuro",
+    "id": "863929715798704129"
+  },
+  "service": "ComiKuro",
+  "description": {
+    "en": "Browse and read manga on ComiKuro."
+  },
+  "url": "comikuro.to",
+  "regExp": "^https?[:][/][/]comikuro\\.to([/]|$)",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/AfDB5nr.png",
+  "thumbnail": "https://i.imgur.com/3WgvGUO.png",
+  "color": "#0b0b0f",
+  "category": "other",
+  "tags": ["manga", "reading", "comics"]
+}
