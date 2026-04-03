@@ -18,6 +18,7 @@ import {
   getThumbnail,
   limitText,
   presence,
+  sanitize,
   strings,
 } from './util.js'
 
@@ -154,7 +155,7 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageText = strings.privacy
       }
       else {
-        presenceData.state = strings.viewList
+        presenceData.state = strings.viewlist
         if (useButtons) {
           presenceData.buttons = [
             {
@@ -170,9 +171,7 @@ presence.on('UpdateData', async () => {
     /* CATEGORY PAGE / COLLECTION PAGE (Page de catégorie)
 
     (https://www.rtlplay.be/rtlplay/collection/c2dBY3Rpb24) */
-    case ['collection', 'series', 'films', 'divertissement'].includes(
-      pathParts[2]!,
-    ): {
+    case ['series', 'films', 'divertissement'].includes(pathParts[3]!) || pathParts[2] === 'collection': {
       if (usePrivacyMode) {
         presenceData.state = strings.viewAPage
 
@@ -180,17 +179,9 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageText = strings.privacy
       }
       else {
-        const data = JSON.parse(
-          document.querySelector('script[type=\'application/ld+json\']')
-            ?.textContent ?? '{}',
-        )
 
         presenceData.state = strings.viewCategory.replace(':', '')
-        presenceData.details = pathParts[2] !== 'collection'
-          ? pathParts[2]![0]!.toUpperCase() + pathParts[2]!.substring(1) // to Upper Case the first letter
-          : data[0]['@type'] === 'CollectionPage'
-            ? data[0].name
-            : null
+        presenceData.details = document.querySelector('[class*=MainLayout-module-scss-module] h1')?.textContent?.trim() || ''
 
         presenceData.smallImageKey = ActivityAssets.Binoculars
         presenceData.smallImageText = strings.browsing
@@ -231,16 +222,17 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageText = strings.privacy
           }
           else {
-            if (exist('div.playerui__adBreakInfo')) {
+            const buttons = document.querySelectorAll('[class*=ActionButton-module-scss-module] > div > span')
+            if (document.querySelector('[class*=AdBreakStats-module-scss-module] > span')) {
               presenceData.smallImageKey = localizedAssets.Ad
               presenceData.smallImageText = strings.watchingAd
             }
-            else if (exist('i.playerui__icon--name-play')) {
+            else if (buttons[0]?.textContent == "Play") {
               // State paused
               presenceData.smallImageKey = Assets.Pause
               presenceData.smallImageText = strings.pause
             }
-            else if (exist('div.playerui__liveStat--deferred')) {
+            else if (buttons[2]?.textContent == "Retour au live") {
               // State deferred
               presenceData.smallImageKey = ActivityAssets.Deferred
               presenceData.smallImageText = strings.deferred
@@ -251,18 +243,19 @@ presence.on('UpdateData', async () => {
               presenceData.smallImageText = strings.live
             }
 
+            const items = Array.from(document.querySelectorAll<HTMLAnchorElement>("[class*=LiveChannelsItem-module-scss-module] [class*=link]"))
+            const livestreamIdx = items.findIndex((el) => {
+              const href = el.getAttribute('href') || ''
+              if (!href) return false
+              return new URL(href, window.location.origin).pathname === pathname
+            })
+            const livestreamItems = document.querySelectorAll('[class*=LiveChannelsItem-module-scss-module] [class*=title]')
             if (
               !useChannelName
-              && (
-                document.querySelector(
-                  'li[aria-current=\'true\'] > a > div > div.live-broadcast__channel-title',
-                )?.textContent || ''
-              ).toLowerCase() !== 'aucune donnée disponible'
+              && (livestreamItems[livestreamIdx])
               && !['contact', 'bel'].includes(pathParts[3]!) // Radio show name are not relevant
             ) {
-              presenceData.name = document.querySelector(
-                'li[aria-current=\'true\'] > a > div > div.live-broadcast__channel-title',
-              )?.textContent || ''
+              presenceData.name = livestreamItems[livestreamIdx]?.textContent || ''
             }
             else {
               presenceData.name = getChannel(pathParts[3]!).name
@@ -271,12 +264,11 @@ presence.on('UpdateData', async () => {
             presenceData.type = getChannel(pathParts[3]!).type
 
             presenceData.state = strings.watchingLive
-            presenceData.details = document.querySelector(
-              'li[aria-current=\'true\'] > a > div > div.live-broadcast__channel-title',
-            )?.textContent || ''
+            presenceData.details = livestreamItems[livestreamIdx]?.textContent || ''
+            
             if (['contact', 'bel'].includes(pathParts[3]!)) {
-              /* Songs played in the livestream are the same as the audio radio ones but with video clips
-              Fetch the data from the Radioplayer API. It is used on the official radio contact and bel rtl websites */
+              // Songs played in the livestream are the same as the audio radio ones but with video clips
+              //Fetch the data from the Radioplayer API. It is used on the official radio contact and bel rtl websites
               const response = await fetch(
                 getChannel(pathParts[3]!).radioAPI!,
               )
@@ -290,7 +282,7 @@ presence.on('UpdateData', async () => {
 
               if (usePresenceName && !useChannelName) {
                 const detail = media.results.now.programmeName || media.results.now.artistName
-                presenceData.name = strings.on.replace('{0}', detail).replace('{1}', presenceData.name)
+                presenceData.name = detail ? strings.on.replace('{0}', detail).replace('{1}', presenceData.name) : presenceData.name
               }
 
               presenceData.largeImageText = strings.watchingLiveMusic
@@ -303,61 +295,30 @@ presence.on('UpdateData', async () => {
               presenceData.largeImageText = getChannel(pathParts[3]!).name
             }
 
+            
             if (useTimestamps) {
-              if (exist('span.playerui__controls__stat__time')) {
+              const timeStatSelector = '[class*=TimeStat-module-scss-module]'
+              if (exist(timeStatSelector)) {
                 // Video method: Uses video viewing statistics near play button if displayed
                 [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
                   timestampFromFormat(
                     document
-                      .querySelector('span.playerui__controls__stat__time')
+                      .querySelector(timeStatSelector)
                       ?.textContent
                       ?.split('/')[0]
                       ?.trim() ?? '',
                   ),
                   timestampFromFormat(
                     document
-                      .querySelector('span.playerui__controls__stat__time')
+                      .querySelector(timeStatSelector)
                       ?.textContent
                       ?.split('/')[1]
                       ?.trim() ?? '',
                   ),
                 )
               }
-              else {
-                // Fallback method: Uses program start and end times in tv guide overlay
-                presenceData.startTimestamp = Math.floor(
-                  new Date(
-                    document
-                      .querySelector(
-                        'li.live-broadcast__channel[aria-current="true"] time[js-element="startTime"]',
-                      )
-                      ?.getAttribute('datetime')
-                      ?.replace(/[+-]\d{2}:\d{2}\[.*\]/, '') ?? '', // Removing UTC offset and the time zone
-                  ).getTime() / 1000,
-                )
-                presenceData.endTimestamp = Math.floor(
-                  new Date(
-                    document
-                      .querySelector(
-                        'li.live-broadcast__channel[aria-current="true"] time[js-element="endTime"]',
-                      )
-                      ?.getAttribute('datetime')
-                      ?.replace(/[+-]\d{2}:\d{2}\[.*\]/, '') ?? '', // Removing UTC offset and the time zone
-                  ).getTime() / 1000,
-                )
-              }
             }
-            else if (exist('span.playerui__controls__stat__time')) {
-              presenceData.largeImageText += ` - ${Math.round(
-                timestampFromFormat(
-                  document
-                    .querySelector('span.playerui__controls__stat__time')
-                    ?.textContent
-                    ?.split('/')[1]
-                    ?.trim() ?? '',
-                ) / 60,
-              )} min`
-            }
+
             if (useButtons) {
               presenceData.buttons = [
                 {
@@ -427,15 +388,17 @@ presence.on('UpdateData', async () => {
 
             if (usePresenceName && !useChannelName) {
               const detail = data.programmeName || data.artistName
-              presenceData.name = strings.on.replace('{0}', detail).replace('{1}', presenceData.name)
+              presenceData.name = detail ? strings.on.replace('{0}', detail).replace('{1}', presenceData.name) : presenceData.name
             }
 
-            presenceData.startTimestamp = data.startTime || browsingTimestamp
-            presenceData.endTimestamp = data.stopTime
-              || delete presenceData.endTimestamp
-            presenceData.largeImageKey = await getThumbnail(
-              data.imageUrl,
-            )
+            if (useTimestamps && pathParts[2] !== 'live') {
+              presenceData.startTimestamp = data.startTime || browsingTimestamp
+              presenceData.endTimestamp = data.stopTime
+                || delete presenceData.endTimestamp
+              presenceData.largeImageKey = await getThumbnail(
+                data.imageUrl,
+              )
+            }
 
             presenceData.largeImageText = data.serviceDescription
               ? limitText(
@@ -473,10 +436,12 @@ presence.on('UpdateData', async () => {
       const mediaInfos = document.querySelector('script[type="application/ld+json"]')?.textContent
       if (mediaInfos) {
         // Retrieve the json in the page
-        const data = JSON.parse(mediaInfos)
-        mediaName = data[0].name
-        const description = data[0].description.match(/S(?<seasonNumber>\d+)\sE(?<episodeNumber>\d+)\s(?<episodeName>.*)/)
+        let data = []
+        data.push(JSON.parse(mediaInfos))
+        let description = sanitize(data[0].name) as any
+        description = description.match(/(?<mediaName>.*?)(?:\sS(?<seasonNumber>\d+)\sE(?<episodeNumber>\d+)\s(?<episodeName>.*))?$/i)
         if (description && description.groups) {
+          mediaName = description.groups.mediaName || 'Unknown Media'
           seasonNumber = description.groups.seasonNumber || null
           episodeNumber = description.groups.episodeNumber || null
           episodeName = description.groups.episodeName || null
@@ -541,7 +506,7 @@ presence.on('UpdateData', async () => {
         }
 
         // Progress Bar / Timestamps
-        const ad = exist('div.playerui__adBreakInfo')
+        const ad = exist('[class*=AdBreakStats-module-scss-module] > span')
         if (useTimestamps && !ad) {
           const video = document.querySelector('video') as HTMLMediaElement
           if (video) {
@@ -594,12 +559,23 @@ presence.on('UpdateData', async () => {
           ? localizedAssets.Ad
           : isPaused
             ? Assets.Pause
-            : Assets.Play
+            : ActivityAssets.PlayGradient
         presenceData.smallImageText = ad
           ? strings.watchingAd
           : isPaused
             ? strings.pause
             : strings.play
+
+        if (useButtons) {
+          presenceData.buttons = [
+            {
+              label: episodeName
+                ? strings.buttonWatchEpisode
+                : strings.buttonWatchMovie,
+              url: href, // We are not redirecting directly to the raw video stream, it's only the media page
+            },
+          ]
+        }
 
         // Key Art - Poster
         if (usePoster && exist('meta[property="og:image"')) {
@@ -622,17 +598,6 @@ presence.on('UpdateData', async () => {
             slideshow.addSlide('poster-image', presenceDataPoster, 5000)
             slideshow.addSlide('episode-image', presenceData, 5000)
           }
-        }
-
-        if (useButtons) {
-          presenceData.buttons = [
-            {
-              label: episodeName
-                ? strings.buttonWatchEpisode
-                : strings.buttonWatchMovie,
-              url: href, // We are not redirecting directly to the raw video stream, it's only the media page
-            },
-          ]
         }
       }
 
@@ -696,11 +661,11 @@ presence.on('UpdateData', async () => {
         for (const element of genresArray) // Add Genres
           subtitle += ` - ${element.textContent}`
 
-        presenceData.details = mediaName // MediaName
-        presenceData.state = subtitle // MediaType - 2024 - 4 seasons or 50 min - Action - Drame
+        presenceData.details = sanitize(mediaName) // MediaName
+        presenceData.state = sanitize(subtitle) // MediaType - 2024 - 4 seasons or 50 min - Action - Drame
 
         presenceData.largeImageText = description
-          ? limitText(description) // 128 characters is the limit
+          ? sanitize(limitText(description)) // 128 characters is the limit
           : subtitle // Summary if available
 
         presenceData.smallImageKey = ActivityAssets.Binoculars

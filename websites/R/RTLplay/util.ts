@@ -32,7 +32,7 @@ export const stringMap = {
   on: 'RTLplay.on',
   privacy: 'RTBLplay.privatePlay',
   tvshow: 'RTLplay.tvshow',
-  viewList: 'RTLplay.viewList',
+  viewlist: 'RTLplay.viewlist',
   watchingAd: 'RTLplay.watchingAd',
   watchingAProgramOrSeries: 'RTLplay.watchingAProgramOrSeries',
   watchingLiveMusic: 'RTLplay.watchingLiveMusic',
@@ -134,6 +134,7 @@ export enum ActivityAssets {
   LiveAnimated = 'https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/2.gif',
   ListeningPaused = 'https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/3.png',
   ListeningLive = 'https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/12.gif',
+  PlayGradient = "https://imgur.com/PaWs8B8.png",
   // Localized
   AdEn = 'https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/4.png',
   AdFr = 'https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/5.png',
@@ -201,6 +202,7 @@ interface ChannelInfo {
 }
 
 export function getChannel(channel: string): ChannelInfo {
+  channel = channel.toLowerCase()
   switch (true) {
     case channel.includes('www.rtlplay.be'): {
       return {
@@ -231,14 +233,14 @@ export function getChannel(channel: string): ChannelInfo {
         logo: ActivityAssets.RTLPlug,
       }
     }
-    case ['rtlplay', 'district', 'RTLdistrict'].includes(channel): {
+    case ['rtlplay', 'district', 'rtldistrict'].includes(channel): {
       return {
         name: 'RTL district',
         type: ActivityType.Watching,
         logo: ActivityAssets.RTLDistrict,
       }
     }
-    case ['rtlplay2', 'sports', 'RTLsports'].includes(channel): {
+    case ['rtlplay2', 'sports', 'rtlsports'].includes(channel): {
       return {
         name: 'RTL sports',
         type: ActivityType.Watching,
@@ -256,66 +258,76 @@ export function getChannel(channel: string): ChannelInfo {
         radioAPI: 'https://core-search.radioplayer.cloud/056/qp/v4/events/?rpId=6',
       }
     }
-    // [2/7] bel RTL Musique
+    // [2/7] bel RTL 100% Numéro 1
     case ['webradio1'].includes(channel): {
       return {
-        name: 'bel RTL Musique',
+        name: 'bel RTL 100% Numéro 1',
         type: ActivityType.Listening,
         logo: ActivityAssets.BelRTL,
         animated: ActivityAssets.BelRTLAnimated,
         radioAPI: 'https://www.belrtl.be/webradios/api/playlist/mooov_10',
       }
     }
-    // [3/7] bel RTL Summer Station
+    // [3/7] bel RTL Happy Hour
     case ['webradio3'].includes(channel): {
       return {
-        name: 'bel RTL Summer Station',
+        name: 'bel RTL Happy Hour',
         type: ActivityType.Listening,
         logo: ActivityAssets.BelRTL,
         animated: ActivityAssets.BelRTLAnimated,
         radioAPI: 'https://www.belrtl.be/webradios/api/playlist/mooov_11',
       }
     }
-    // [4/7] bel RTL 90
+    // [4/7] bel RTL 100% Relax
     case ['webradio6'].includes(channel): {
       return {
-        name: 'bel RTL 90',
+        name: 'bel RTL 100% Relax',
         type: ActivityType.Listening,
         logo: ActivityAssets.BelRTL,
         animated: ActivityAssets.BelRTLAnimated,
         radioAPI: 'https://www.belrtl.be/webradios/api/playlist/mooov_14',
       }
     }
-    // [5/7] bel RTL 80
+    // [5/7] bel RTL 80 90
     case ['webradio2'].includes(channel): {
       return {
-        name: 'bel RTL 80',
+        name: 'bel RTL 80 90',
         type: ActivityType.Listening,
         logo: ActivityAssets.BelRTL,
         animated: ActivityAssets.BelRTLAnimated,
         radioAPI: 'https://www.belrtl.be/webradios/api/playlist/mooov_12',
       }
     }
-    // [6/7] bel RTL 80
+    // [6/7] bel RTL 100% français
     case ['webradio7'].includes(channel): {
       return {
-        name: 'bel RTL chanson française',
+        name: 'bel RTL 100% français',
         type: ActivityType.Listening,
         logo: ActivityAssets.BelRTL,
         animated: ActivityAssets.BelRTLAnimated,
         radioAPI: 'https://www.belrtl.be/webradios/api/playlist/mooov_16',
       }
     }
-    // [7/7] bel RTL Comédie
+    // [7/7] bel RTL 100% Grosses Têtes
     case ['webradio4'].includes(channel): {
       return {
-        name: 'bel RTL Comédie',
+        name: 'bel RTL 100% Grosses Têtes',
         type: ActivityType.Listening,
         logo: ActivityAssets.BelRTL,
         animated: ActivityAssets.BelRTLAnimated,
         radioAPI: 'https://www.belrtl.be/webradios/api/playlist/mooov_15',
       }
     }
+    case ['webradio5'].includes(channel): {
+      return {
+        name: 'bel RTL Génération 60 70',
+        type: ActivityType.Listening,
+        logo: ActivityAssets.BelRTL,
+        animated: ActivityAssets.BelRTLAnimated,
+        radioAPI: 'https://www.belrtl.be/webradios/api/playlist/mooov_13',
+      }
+    }
+
     // Radio Contact
     // [1/8] Main Radio
     case ['contact', 'www.radiocontact.be'].includes(channel): {
@@ -337,10 +349,10 @@ export function getChannel(channel: string): ChannelInfo {
         radioAPI: 'https://rtlmedias.rtl.be/webradios/api/playlist/mooov_5',
       }
     }
-    // [3/8] Contact Summertime
-    case ['plus'].includes(channel): {
+    // [3/8] Contact Summertime/KPOP
+    case ['plus', 'kpop'].includes(channel): {
       return {
-        name: 'Contact Summertime',
+        name: `Contact ${channel === 'plus' ? 'Summertime' : 'KPOP'}`,
         type: ActivityType.Listening,
         logo: ActivityAssets.Contact,
         animated: ActivityAssets.ContactAnimated,
@@ -571,4 +583,9 @@ export async function fetchCache(url: string, options?: RequestInit): Promise<un
   // Cache with timestamp and return the data
   cacheStore[url] = { data, timestamp: now }
   return data
+}
+
+export function sanitize(input: string): string {
+  const DOM = new DOMParser().parseFromString(input, 'text/html')
+  return DOM.documentElement.textContent || ''
 }
