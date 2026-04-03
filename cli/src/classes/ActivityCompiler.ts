@@ -30,6 +30,7 @@ export interface ActivityMetadata {
   logo: string
   thumbnail: string
   url: string | string[]
+  regExp: string
   iframe?: boolean
   iFrameRegExp?: string
   description: Record<string, string>
@@ -403,8 +404,59 @@ export class ActivityCompiler {
       valid = false
     }
 
-    // DNS validation for URLs
     const urls = Array.isArray(metadata.url) ? metadata.url : [metadata.url]
+
+    // regExp validation for URLs
+    {
+      let regex: RegExp | null = null
+      try {
+        regex = new RegExp(metadata.regExp)
+      }
+      catch {
+        const message = `Invalid regExp "${metadata.regExp}": failed to compile as a regular expression`
+        if (kill) {
+          exit(message)
+        }
+
+        error(message)
+        addSarifLog({
+          path: resolve(this.cwd, 'metadata.json'),
+          message,
+          ruleId: SarifRuleId.regExpUrlCheck,
+          position: await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'regExp'),
+        })
+        valid = false
+      }
+
+      if (regex) {
+        for (let i = 0; i < urls.length; i++) {
+          const url = urls[i]
+          const testUrl = `https://${url}/`
+          if (!regex.test(testUrl)) {
+            const message = `regExp "${metadata.regExp}" does not match URL "${testUrl}" (derived from url "${url}")`
+            if (kill) {
+              exit(message)
+            }
+
+            error(message)
+
+            const position = Array.isArray(metadata.url)
+              ? await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'url', i)
+              : await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'url')
+
+            addSarifLog({
+              path: resolve(this.cwd, 'metadata.json'),
+              message,
+              ruleId: SarifRuleId.regExpUrlCheck,
+              position,
+            })
+            valid = false
+          }
+        }
+      }
+    }
+
+    // DNS validation for URLs
 
     // Check all URLs in parallel for this activity
     const urlChecks = await Promise.all(
