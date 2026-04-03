@@ -1,183 +1,124 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets, StatusDisplayType } from 'premid'
 
 const presence = new Presence({
   clientId: '514771696134389760',
 })
-const localeStrings: { [stringPath: string]: Record<string, string> } = {
-  en: {
-    Chatting: 'Browsing PM\'s...',
-    Watching: 'Watching',
-    Browsing: 'Browsing',
-    BrowsingFeed: 'Browsing feed...',
-  },
-  ru: {
-    Chatting: 'Смотрит сообщения...',
-    Watching: 'Смотрит',
-    Browsing: 'Просматривает',
-    BrowsingFeed: 'Смотрит ленту...',
-  },
-}
-let isPlaying: boolean, timestamps
 
-function getLocale(): string {
-  return window.navigator.language.replace('-', '_').toLowerCase()
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/V/VK/assets/logo.png',
 }
 
-function getLocalizedString(stringPath: string): string {
-  if (localeStrings[getLocale()] && localeStrings[getLocale()]![stringPath]) {
-    return localeStrings[getLocale()]![stringPath]!
-  }
-  else {
-    presence.info(`Language for [${stringPath}] was not found!`)
-    return localeStrings.en![stringPath]!
-  }
-}
-
-function getVKTrackTimePassed(duration: number) {
-  const playerDuration = document.querySelector(
-    '.audio_page_player_duration',
-  )?.textContent
-
-  let timePassed
-
-  if (playerDuration && !playerDuration?.startsWith('-')) {
-    timePassed = presence.timestampFromFormat(playerDuration)
-  }
-  else if (playerDuration) {
-    timePassed = duration - presence.timestampFromFormat(playerDuration.slice(1))
-  }
-
-  return timePassed
-}
-
-function getAudioPlayer() {
-  return new Promise<[{ duration: number }]>((resolve) => {
-    const script = document.createElement('script')
-    const _listener = (data: Event) => {
-      script.remove()
-      resolve(JSON.parse((data as CustomEvent).detail))
-
-      window.removeEventListener('PreMiD_Pageletiable', _listener, true)
-    }
-
-    window.addEventListener('PreMiD_Pageletiable', _listener)
-
-    script.id = 'PreMiD_Pageletiables'
-    script.appendChild(
-      document.createTextNode(`
-        var pmdPL = new CustomEvent("PreMiD_Pageletiable", {detail: JSON.stringify(window["getAudioPlayer"]()._currentAudio)});
-        window.dispatchEvent(pmdPL);
-      `),
-    );
-
-    (document.body || document.head || document.documentElement).appendChild(
-      script,
-    )
-  })
-}
-
-let browsingTimestamp = Math.floor(Date.now() / 1000)
-let audioPlayer: [{ duration: number }]
+let lastTrack = ''
+let startTime = 0
 
 presence.on('UpdateData', async () => {
-  const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/V/VK/assets/logo.png',
+  const [showTS, hidePaused, showCover, displayType] = await Promise.all([
+    presence.getSetting<boolean>('timestamp'),
+    presence.getSetting<boolean>('hidePaused'),
+    presence.getSetting<boolean>('cover'),
+    presence.getSetting<number>('displayType').catch(() => 0),
+  ])
+
+  const titleEl = document.querySelector('[data-testid="TopAudioPlayer_Title"]')
+  const fullText = titleEl?.textContent?.trim() || ''
+  if (!fullText) {
+    return presence.clearActivity()
   }
-  const gstrings = await presence.getStrings({
-    play: 'general.playing',
-    pause: 'general.paused',
-  })
 
-  if (
-    document.location.pathname.startsWith('/audios')
-    || document.querySelector('.audio_layer_container')
-  ) {
-    audioPlayer ??= await getAudioPlayer()
+  const separator = fullText.indexOf('—')
+  let title = separator !== -1 ? fullText.substring(separator + 1).trim() : fullText
+  const artist = separator !== -1 ? fullText.substring(0, separator).trim() : ''
 
-    if (document.querySelector('.audio_playing') === null)
-      isPlaying = true
-    else isPlaying = false
-
-    const { duration } = audioPlayer.find(x => x.duration)!
-
-    timestamps = presence.getTimestamps(
-      getVKTrackTimePassed(duration)!,
-      duration,
-    )
-
-    presenceData.details = document.querySelector<HTMLElement>(
-      '.audio_page_player_title_song',
-    )?.textContent
-    presenceData.state = document.querySelector<HTMLElement>(
-      '.audio_page_player_title_performer a',
-    )?.textContent
-    if (isPlaying) {
-      presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = gstrings.pause
+  // Get remix/version info and track URL from the title element
+  const titleContainer = document.querySelector('[data-testid="audioplayeraudioinfo-title"]')
+  let trackUrl = ''
+  if (titleContainer) {
+    const titleText = titleContainer.textContent?.trim() || ''
+    if (titleText.includes(title) && titleText !== title) {
+      title = titleText
     }
-    else {
-      presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = gstrings.play;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = timestamps
+    const trackLink = titleContainer.querySelector('a')
+    if (trackLink?.getAttribute('href')) {
+      trackUrl = `https://vk.com${trackLink.getAttribute('href')}`
     }
-
-    presence.setActivity(presenceData, true)
   }
-  else if (window.location.href.match(/https:\/\/vk.com\/.*?z=video.*/)) {
-    isPlaying = document.querySelector('.videoplayer_ui')?.getAttribute('data-state')
-      === 'paused'
 
-    const videoCurrentTime = document
-      .querySelector<HTMLElement>('._time_current')!
-      .textContent!
-      .split(':')
-    const videoDuration = document
-      .querySelector<HTMLElement>('._time_duration')!
-      .textContent!
-      .split(':')
-
-    timestamps = presence.getTimestamps(
-      Math.floor(
-        Number(videoCurrentTime[0]) * 60 + Number(videoCurrentTime[1]),
-      ),
-      Math.floor(Number(videoDuration[0]) * 60 + Number(videoDuration[1])),
-    )
-
-    presenceData.details = `${getLocalizedString('Watching')} ${
-      document.querySelector<HTMLElement>('.mv_title')?.textContent
-    }`
-    presenceData.state = document.querySelector<HTMLElement>('.mv_author_name a')?.textContent
-    if (isPlaying) {
-      presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = gstrings.pause
+  // Get artist URL
+  let artistUrl = ''
+  const artistContainer = document.querySelector('[data-testid="audio-player-block-audio-artists"]')
+  if (artistContainer) {
+    const artistLink = artistContainer.querySelector('a')
+    if (artistLink?.getAttribute('href')) {
+      artistUrl = `https://vk.com${artistLink.getAttribute('href')}`
     }
-    else {
-      presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = gstrings.play;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = timestamps
-    }
-    presence.setActivity(presenceData, true)
   }
-  else if (document.querySelector('.page_name')) {
-    presenceData.details = document.querySelector<HTMLElement>('.page_name')?.textContent
-    presenceData.startTimestamp = browsingTimestamp
 
-    presence.setActivity(presenceData, true)
-  }
-  else if (document.location.pathname.startsWith('/feed')) {
-    presenceData.details = getLocalizedString('BrowsingFeed')
-    presenceData.startTimestamp = browsingTimestamp
+  const isPlaying = document.querySelector('[data-testid="TopAudioPlayer_TogglePlayAction"]')
+    ?.getAttribute('data-testactive') === 'true'
 
-    presence.setActivity(presenceData, true)
+  if (!title || !artist) {
+    return presence.clearActivity()
   }
-  else if (document.location.pathname.startsWith('/im')) {
-    presenceData.details = getLocalizedString('Chatting')
-    presenceData.startTimestamp = browsingTimestamp
 
-    presence.setActivity(presenceData, true)
+  if (hidePaused && !isPlaying) {
+    return presence.clearActivity()
   }
-  else {
-    browsingTimestamp = Math.floor(Date.now() / 1000)
-    presence.clearActivity()
+
+  const trackId = `${title}|${artist}`
+
+  // Reset timer only when track changes
+  if (trackId !== lastTrack) {
+    lastTrack = trackId
+    startTime = Math.floor(Date.now() / 1000)
   }
+
+  // Get cover image
+  let coverUrl = ''
+  if (showCover) {
+    const coverImg = document.querySelector('[data-testid="audio-player-block-audio-cover"] img')
+    coverUrl = coverImg?.getAttribute('src') || ''
+  }
+
+  // Set status display type
+  let statusDisplayType: StatusDisplayType | undefined
+  switch (displayType) {
+    case 0:
+      statusDisplayType = StatusDisplayType.Name
+      break
+    case 1:
+      statusDisplayType = StatusDisplayType.State
+      break
+    case 2:
+      statusDisplayType = StatusDisplayType.Details
+      break
+  }
+
+  const activity: PresenceData = {
+    name: 'VK Music',
+    type: ActivityType.Listening,
+    details: title,
+    state: artist,
+    largeImageKey: coverUrl || ActivityAssets.Logo,
+    smallImageKey: isPlaying ? Assets.Play : Assets.Pause,
+    smallImageText: isPlaying ? 'Playing' : 'Paused',
+    statusDisplayType,
+  }
+
+  // Add timestamp
+  if (showTS && isPlaying) {
+    activity.startTimestamp = startTime
+  }
+
+  // Add track URL ONLY if it exists
+  if (trackUrl) {
+    activity.detailsUrl = trackUrl
+    activity.largeImageUrl = trackUrl
+  }
+
+  // Add artist URL ONLY if it exists
+  if (artistUrl) {
+    activity.stateUrl = artistUrl
+  }
+
+  presence.setActivity(activity)
 })
