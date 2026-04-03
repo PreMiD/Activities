@@ -1,3 +1,5 @@
+import { ActivityType, getTimestamps } from 'premid'
+
 const presence = new Presence({
   clientId: '1489078772291342418',
 })

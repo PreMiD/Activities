@@ -13,7 +13,7 @@
   "regExp": "^https?[:][/][/](www[.]|dev[.])?anivault[.]xyz[/]",
   "version": "1.0.0",
   "logo": "https://anivault.xyz/icon-512.png",
-  "thumbnail": "https://anivault.xyz/icon-512.png",
+  "thumbnail": "https://anivault.xyz/thumbnail.png",
   "color": "#9333ea",
   "category": "anime",
   "tags": [
