@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "Neocat",
+    "id": "386490166916939799"
+  },
+  "service": "StudySapuri",
+  "altnames": ["\u30b9\u30bf\u30c7\u30a3\u30b5\u30d7\u30ea"],
+  "description": {
+    "en": "Show StudySapuri learning activity in Discord Rich Presence, including dashboard browsing, course pages, and active lesson playback.",
+    "ja": "スタディサプリでの学習状況を Discord Rich Presence に表示します。ダッシュボード、講座ページ、動画講義の再生状況に対応しています。"
+  },
+  "url": ["www.studysapuri.jp", "learn.studysapuri.jp"],
+  "regExp": "([a-z0-9-]+[.])*studysapuri[.]jp[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/SZzhg15.png",
+  "thumbnail": "https://i.imgur.com/ppfTH1r.png",
+  "color": "#1FABE2",
+  "category": "videos",
+  "tags": ["study", "education", "learning", "videos", "japan"],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Show playback timestamps only while a lesson video is actively playing."
+    }
+  ]
+}
