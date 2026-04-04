@@ -51,8 +51,6 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageText = element?.textContent
   }
 
-
-
   if (separator) {
     const parts = tabTitle.split(separator)
     // sets the StatusDisplayType on bases of the display type selected
