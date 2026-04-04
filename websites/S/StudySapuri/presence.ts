@@ -1,4 +1,4 @@
-import { ActivityType, Assets, StatusDisplayType, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia, StatusDisplayType } from 'premid'
 
 const ACTIVITY_NAME = 'スタディサプリ'
 const DASHBOARD_URL = 'https://learn.studysapuri.jp/ja/dashboard'
@@ -218,7 +218,7 @@ function getCurrentCourseHeading() {
 function getAccessToken() {
   const tokenCookie = document.cookie
     .split('; ')
-    .find((entry) => entry.startsWith('qlearn_access_token='))
+    .find(entry => entry.startsWith('qlearn_access_token='))
 
   if (!tokenCookie) {
     return null
@@ -239,9 +239,9 @@ async function fetchStudySapuriJson<T>(path: string): Promise<T | null> {
   try {
     const response = await fetch(path, {
       headers: {
-        Accept: 'application/json',
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
+        'Authorization': `Token ${token}`,
       },
       credentials: 'same-origin',
     })
@@ -284,15 +284,11 @@ function getCachedValue<T>(
 }
 
 function getTopicContents(topicId: string) {
-  return getCachedValue(topicCache, topicId, () =>
-    fetchStudySapuriJson<TopicContents>(`/v1/topic/${topicId}/contents?sections=true`),
-  )
+  return getCachedValue(topicCache, topicId, () => fetchStudySapuriJson<TopicContents>(`/v1/topic/${topicId}/contents?sections=true`))
 }
 
 function getCourseDetails(courseId: string) {
-  return getCachedValue(courseCache, courseId, () =>
-    fetchStudySapuriJson<CourseDetails>(`/v2/course/${courseId}?with_topic_status=true`),
-  )
+  return getCachedValue(courseCache, courseId, () => fetchStudySapuriJson<CourseDetails>(`/v2/course/${courseId}?with_topic_status=true`))
 }
 
 function findBundleForTopic(courseDetails: CourseDetails | null, topicId: string) {
@@ -303,8 +299,8 @@ function findBundleForTopic(courseDetails: CourseDetails | null, topicId: string
   return (
     courseDetails.bundles.find(
       (bundle: CourseBundle) =>
-        Array.isArray(bundle.topics) &&
-        bundle.topics.some((topic: CourseTopic) => topic?.id === topicId),
+        Array.isArray(bundle.topics)
+        && bundle.topics.some((topic: CourseTopic) => topic?.id === topicId),
     ) || null
   )
 }
