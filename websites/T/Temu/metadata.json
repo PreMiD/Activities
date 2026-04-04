@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": ".toop",
+    "id": "868807712874582096"
+  },
+  "service": "Temu",
+  "description": {
+    "en": "Temu is a global online marketplace offering affordable fashion, beauty, home, electronics and more with free shipping and returns."
+  },
+  "url": "www.temu.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])?temu[.]com",
+  "version": "1.0.0",
+  "logo": "https://images2.imgbox.com/eb/0f/4V9TX7r7_o.png",
+  "thumbnail": "https://images2.imgbox.com/a6/dd/8N5YJXsF_o.png",
+  "color": "#FB6D13",
+  "category": "other",
+  "tags": [
+    "shopping",
+    "marketplace",
+    "fashion",
+    "deals",
+    "ecommerce"
+  ],
+  "settings": []
+}
