@@ -4,7 +4,7 @@ import { ActivityType, StatusDisplayType } from 'premid'
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/M/Monochrome/assets/logo.png',
   Play = 'https://cdn.rcd.gg/PreMiD/resources/play.png',
-  Pause = "https://cdn.rcd.gg/PreMiD/resources/pause.png",
+  Pause = 'https://cdn.rcd.gg/PreMiD/resources/pause.png',
 }
 
 const presence = new Presence({
@@ -46,7 +46,7 @@ presence.on('UpdateData', async () => {
     separator = ' • '
 
   // get the album title
-  const element = document.querySelector('.album');
+  const element = document.querySelector('.album')
   if (element?.matches('.details > .album')) {
     presenceData.largeImageText = element?.textContent
   }
@@ -63,12 +63,11 @@ presence.on('UpdateData', async () => {
     switch (displayType) {
       case 1:
         presenceData.statusDisplayType = StatusDisplayType.State
-        break;
+        break
 
       case 2:
         presenceData.statusDisplayType = StatusDisplayType.Details
-        break;
-
+        break
     }
     presenceData.details = parts[0]?.trim() || 'Unknown Song'
     presenceData.state = parts.slice(1).join(separator).trim() || 'Unknown Artist'
