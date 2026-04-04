@@ -1,5 +1,6 @@
 import { ActivityType } from 'premid'
 import { RouteHandlers } from './handlers/route.js'
+import { swarmCoverToDataUrl } from './managers/coverDataUrl.js'
 import { PosterManager } from './managers/poster.js'
 import { SettingsManager } from './managers/settings.js'
 import { Images } from './types.js'
@@ -31,13 +32,14 @@ class SwarmPresence {
     })
   }
 
-  private buildBasePresence(): PresenceData {
+  private async buildBasePresence(): Promise<PresenceData> {
     const settings = this.settingsManager.currentSettings
 
-    const largeImage
-      = !settings?.privacy && settings?.showPosters && this.posterManager.posterUrl
-        ? this.posterManager.posterUrl
-        : Images.Logo
+    let largeImage: string = Images.Logo
+    if (!settings?.privacy && settings?.showPosters && this.posterManager.posterUrl) {
+      largeImage
+        = (await swarmCoverToDataUrl(this.posterManager.posterUrl)) ?? Images.Logo
+    }
 
     const presenceData: PresenceData = {
       largeImageKey: largeImage,
@@ -56,7 +58,7 @@ class SwarmPresence {
     await this.settingsManager.getSettings()
     const settings = this.settingsManager.currentSettings!
 
-    const presenceData = this.buildBasePresence()
+    const presenceData = await this.buildBasePresence()
 
     if (settings?.privacy) {
       presenceData.details = 'Swarm'

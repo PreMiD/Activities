@@ -1,12 +1,14 @@
+const SWARM_COVER_ORIGIN = 'https://swarm.ws'
+
 export class PosterManager {
   private coverUrl: string | null = null
 
   updatePoster(): void {
-    const { origin, pathname } = document.location
-    this.coverUrl = this.seriesCoverUrl(pathname, origin)
+    const { pathname } = document.location
+    this.coverUrl = this.seriesCoverUrl(pathname)
   }
 
-  private seriesCoverUrl(pathname: string, origin: string): string | null {
+  private seriesCoverUrl(pathname: string): string | null {
     const segments = pathname.split('/').filter(Boolean)
     if (segments.length < 2) {
       return null
@@ -22,7 +24,7 @@ export class PosterManager {
       return null
     }
 
-    return `${origin}/${kind}/${encodeURIComponent(slug)}.png`
+    return `${SWARM_COVER_ORIGIN}/${kind}/${encodeURIComponent(slug)}.png`
   }
 
   get posterUrl(): string | null {

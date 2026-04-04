@@ -11,7 +11,7 @@
   },
   "url": ["swarm.ws", "www.swarm.ws"],
   "regExp": "^https?:\\/\\/(www\\.)?swarm\\.ws(\\/.*)?$",
-  "version": "1.0.0",
+  "version": "1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Swarm/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Swarm/assets/thumbnail.png",
   "color": "#fbbf24",
