@@ -1,10 +1,10 @@
-import { ActivityType } from 'premid'
+import { ActivityType, StatusDisplayType } from 'premid'
 
 // Static Asset Configuration
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/M/Monochrome/assets/logo.png',
-  Play = 'https://cdn.rcd.gg/PreMiD/websites/M/Monochrome/assets/0.png',
-  Pause = 'https://cdn.rcd.gg/PreMiD/websites/M/Monochrome/assets/1.png',
+  Play = 'https://cdn.rcd.gg/PreMiD/resources/play.png',
+  Pause = "https://cdn.rcd.gg/PreMiD/resources/pause.png",
 }
 
 const presence = new Presence({
@@ -25,7 +25,7 @@ presence.on('UpdateData', async () => {
     if (coverUrl) {
       currentLargeImage = coverUrl
     }
-  }
+  }  
 
   // 2. INITIALIZE ACTIVITY DATA
   // Fix: Use 'PresenceData' (global interface), NOT 'ActivityData' or 'any'
@@ -33,9 +33,6 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Listening,
     largeImageKey: currentLargeImage,
     largeImageText: 'Listening on Monochrome',
-    // Default small icon (overwritten below if paused)
-    smallImageKey: ActivityAssets.Play,
-    smallImageText: 'Playing',
   }
 
   // 3. TEXT STRATEGY (Browser Tab)
@@ -48,8 +45,31 @@ presence.on('UpdateData', async () => {
   else if (tabTitle.includes(' • '))
     separator = ' • '
 
+  // get the album title
+  const element = document.querySelector('.album');
+if (element?.matches('.details > .album')) {
+    presenceData.largeImageText = element?.textContent
+}
+
+
+
   if (separator) {
     const parts = tabTitle.split(separator)
+    // sets the StatusDisplayType on bases of the display type selected
+    // displayType 0 - Monochrome
+    // displayType 1 - Artist Name
+    // displayType 2 - Song Name
+    const displayType = await presence.getSetting<number>('displayType')
+    switch(displayType){
+      case 1:
+        presenceData.statusDisplayType = StatusDisplayType.State
+      break;
+    
+    case 2:
+        presenceData.statusDisplayType = StatusDisplayType.Details
+        break;
+
+  }
     presenceData.details = parts[0]?.trim() || 'Unknown Song'
     presenceData.state = parts.slice(1).join(separator).trim() || 'Unknown Artist'
   }
@@ -61,11 +81,15 @@ presence.on('UpdateData', async () => {
 
   // 4. AUDIO STATUS & TIMESTAMPS
   const mediaElement = document.querySelector('audio')
-
+  const hidePausedSetting = await presence.getSetting<boolean>('hidePaused')
+  
   if (mediaElement) {
     if (!mediaElement.paused) {
       // -- PLAYING STATE --
-      presenceData.smallImageKey = ActivityAssets.Play
+      // hides the play btn if the hidePausedSetting is true
+      if (!hidePausedSetting){
+        presenceData.smallImageKey = ActivityAssets.Play
+      }
       presenceData.smallImageText = 'Playing'
 
       // Calculate timestamps using native Date.now() for accuracy
@@ -79,6 +103,10 @@ presence.on('UpdateData', async () => {
     }
     else {
       // -- PAUSED STATE --
+      // clears the activity is hidePausedSetting is set to true
+      if (await presence.getSetting<boolean>('hidePaused') && mediaElement.paused) {
+    return presence.clearActivity()
+  }
       presenceData.smallImageKey = ActivityAssets.Pause
       presenceData.smallImageText = 'Paused'
       // Note: We do not set timestamps here, effectively hiding the time bar
