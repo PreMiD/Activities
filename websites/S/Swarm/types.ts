@@ -1,5 +1,5 @@
 export enum Images {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/Swarm/assets/logo.png',
+  Logo = 'https://i.imgur.com/UIAo8G2.png',
 }
 
 export interface Settings {
