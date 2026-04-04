@@ -25,7 +25,7 @@ presence.on('UpdateData', async () => {
     if (coverUrl) {
       currentLargeImage = coverUrl
     }
-  }  
+  }
 
   // 2. INITIALIZE ACTIVITY DATA
   // Fix: Use 'PresenceData' (global interface), NOT 'ActivityData' or 'any'
@@ -47,9 +47,9 @@ presence.on('UpdateData', async () => {
 
   // get the album title
   const element = document.querySelector('.album');
-if (element?.matches('.details > .album')) {
+  if (element?.matches('.details > .album')) {
     presenceData.largeImageText = element?.textContent
-}
+  }
 
 
 
@@ -60,16 +60,16 @@ if (element?.matches('.details > .album')) {
     // displayType 1 - Artist Name
     // displayType 2 - Song Name
     const displayType = await presence.getSetting<number>('displayType')
-    switch(displayType){
+    switch (displayType) {
       case 1:
         presenceData.statusDisplayType = StatusDisplayType.State
-      break;
-    
-    case 2:
+        break;
+
+      case 2:
         presenceData.statusDisplayType = StatusDisplayType.Details
         break;
 
-  }
+    }
     presenceData.details = parts[0]?.trim() || 'Unknown Song'
     presenceData.state = parts.slice(1).join(separator).trim() || 'Unknown Artist'
   }
@@ -82,12 +82,12 @@ if (element?.matches('.details > .album')) {
   // 4. AUDIO STATUS & TIMESTAMPS
   const mediaElement = document.querySelector('audio')
   const hidePausedSetting = await presence.getSetting<boolean>('hidePaused')
-  
+
   if (mediaElement) {
     if (!mediaElement.paused) {
       // -- PLAYING STATE --
       // hides the play btn if the hidePausedSetting is true
-      if (!hidePausedSetting){
+      if (!hidePausedSetting) {
         presenceData.smallImageKey = ActivityAssets.Play
       }
       presenceData.smallImageText = 'Playing'
@@ -105,8 +105,8 @@ if (element?.matches('.details > .album')) {
       // -- PAUSED STATE --
       // clears the activity is hidePausedSetting is set to true
       if (await presence.getSetting<boolean>('hidePaused') && mediaElement.paused) {
-    return presence.clearActivity()
-  }
+        return presence.clearActivity()
+      }
       presenceData.smallImageKey = ActivityAssets.Pause
       presenceData.smallImageText = 'Paused'
       // Note: We do not set timestamps here, effectively hiding the time bar
