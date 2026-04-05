@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "184040656761651200",
+    "name": "Victor"
+  },
+  "service": "Clearn",
+  "description": {
+    "en": "Clearn is a platform to create and manage programming assessments easily, helping you evaluate coding skills without handling implementation."
+  },
+  "url": "clearn.cl",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*clearn[.]cl[/]",
+  "version": "1.0.0",
+  "logo": "https://imgur.com/vQmQSrT.pngs",
+  "thumbnail": "https://imgur.com/mO4Qdg5.png",
+  "color": "#000000",
+  "category": "other",
+  "tags": [
+    "programming",
+    "coding"
+  ]
+}
