@@ -591,7 +591,3 @@ export function sanitize(input: string): string {
   const DOM = new DOMParser().parseFromString(input, 'text/html')
   return DOM.documentElement.textContent || ''
 }
-
-export function log(data: unknown, prefix?: string): void {
-  presence.info(`${prefix || ''}${typeof data === 'string' ? data : JSON.stringify(data)}`)
-}
