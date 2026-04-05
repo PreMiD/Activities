@@ -24,7 +24,7 @@ presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
 
   const presenceData: PresenceData = {
-    type: ActivityType.Watching,
+    type: 3, // ActivityType.Watching
     largeImageKey: 'logo',
     largeImageText: 'Tengoku Fansub',
   }
