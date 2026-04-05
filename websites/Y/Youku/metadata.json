@@ -14,7 +14,7 @@
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*youku[.]tv[/]",
   "version": "1.0.0",
   "logo": "https://cdn-icons-png.flaticon.com/512/2111/2111710.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Youku/assets/thumbnail.png",
+  "thumbnail": "https://i.ibb.co/m5mgjskc/thumbnail.png",
   "color": "#2fb3ff",
   "category": "videos",
   "tags": ["video", "streaming", "chinese-drama"],
