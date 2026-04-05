@@ -714,7 +714,7 @@ presence.on('UpdateData', async () => {
           )
 
           const presenceDataSlide = structuredClone(presenceData) // Deep copy
-          presenceDataSlide.state = description ? description : subtitle
+          presenceDataSlide.state = description || subtitle
           presenceDataSlide.largeImageKey = await getThumbnail(backgroundArt, ActivityAssets.Animated, cropPreset.horizontal)
 
           slideshow.addSlide('poster-image', presenceData, 5000)
