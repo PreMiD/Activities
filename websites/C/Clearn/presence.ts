@@ -1,5 +1,3 @@
-import { Assets } from 'premid'
-
 const presence = new Presence({
   clientId: '1490167907068674189',
 })
@@ -15,7 +13,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
     smallImageKey: ActivityAssets.SmallLogo,
-    details: "Coding on Clearn"
+    details: "Coding on Clearn",
   }
 
   presence.setActivity(presenceData)

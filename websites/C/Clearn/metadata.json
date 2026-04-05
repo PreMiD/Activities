@@ -12,7 +12,7 @@
   "url": "clearn.cl",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*clearn[.]cl[/]",
   "version": "1.0.0",
-  "logo": "https://imgur.com/vQmQSrT.pngs",
+  "logo": "https://imgur.com/vQmQSrT.png",
   "thumbnail": "https://imgur.com/mO4Qdg5.png",
   "color": "#000000",
   "category": "other",
