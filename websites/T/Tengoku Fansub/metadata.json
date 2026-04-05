@@ -7,13 +7,13 @@
   "service": "Tengoku Fansub",
   "altnames": ["Tengoku"],
   "description": {
-    "az": "Tengoku Fansub-da Azərbaycanca altyazılı anime izləyin.",
-    "en": "Watch anime with Azerbaijani subtitles on Tengoku Fansub."
+    "en": "Watch anime with Azerbaijani subtitles on Tengoku Fansub.",
+    "tr": "Tengoku Fansub'da Azerbaycan altyazılı anime izleyin."
   },
   "url": "tengoku-fansub.com",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/KcCqy0A.png",
-  "thumbnail": "https://i.imgur.com/KcCqy0A.png",
+  "logo": "https://i.imgur.com/1cbS9Rr.png",
+  "thumbnail": "https://i.imgur.com/1cbS9Rr.png",
   "color": "#0096aa",
   "category": "anime",
   "tags": ["anime", "azerbaijani", "fansub", "subtitle"],
