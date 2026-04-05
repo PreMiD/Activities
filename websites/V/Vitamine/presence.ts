@@ -30,11 +30,11 @@ function extractCountdown(): string {
 }
 
 function getCourseInfo(): string {
-  const courseInfo =
-    document.querySelector(".card .text-muted.text-end u")?.parentElement?.textContent?.trim()
-    || getText(".text-muted.px-2.fst-italic.py-1.text-end")
-    || getText("#courses-nav .nav-link.active")
-    || ""
+  const courseInfo
+    = document.querySelector(".card .text-muted.text-end u")?.parentElement?.textContent?.trim()
+      || getText(".text-muted.px-2.fst-italic.py-1.text-end")
+      || getText("#courses-nav .nav-link.active")
+      || ""
 
   return courseInfo.replace(/\s+/g, " ").trim()
 }
@@ -44,12 +44,31 @@ function joinStateParts(parts: Array<string | false | null | undefined>): string
   return filtered.length > 0 ? filtered.join(" • ") : undefined
 }
 
-presence.on("UpdateData", async () => {
-  const showGlobalTimer = await presence.getSetting<boolean>("showGlobalTimer")
+function hasVisibleSessionInfo(
+  showCourseName: boolean,
+  showSessionType: boolean,
+  showQuestionNumber: boolean,
+  showQcmCountdown: boolean,
+): boolean {
+  return showCourseName || showSessionType || showQuestionNumber || showQcmCountdown
+}
+
+function withEmoji(text: string, emoji: string): string {
+  return `${emoji} ${text}`
+}
+
+async function updatePresence(): Promise<void> {
   const showQcmCountdown = await presence.getSetting<boolean>("showQcmCountdown")
   const showCourseName = await presence.getSetting<boolean>("showCourseName")
   const showSessionType = await presence.getSetting<boolean>("showSessionType")
   const showQuestionNumber = await presence.getSetting<boolean>("showQuestionNumber")
+
+  const hasVisibleInfo = hasVisibleSessionInfo(
+    showCourseName,
+    showSessionType,
+    showQuestionNumber,
+    showQcmCountdown,
+  )
 
   const { pathname } = document.location
   const pageText = document.body.textContent || ""
@@ -58,64 +77,64 @@ presence.on("UpdateData", async () => {
   const presenceData: PresenceData = {
     largeImageKey: "https://cdn.rcd.gg/PreMiD/websites/V/Vitamine/assets/logo.png",
     details: "Vitamine",
-  }
-
-  if (showGlobalTimer) {
-    presenceData.startTimestamp = browsingTimestamp
+    startTimestamp: browsingTimestamp,
   }
 
   switch (true) {
     case pathname === "/":
-      presenceData.details = "Menu principal"
+      presenceData.details = withEmoji("Menu principal", "🏠")
       presenceData.state = "Page d’accueil"
       break
 
     case pathname === "/anchoring/" || pathname.startsWith("/anchoring"):
-      presenceData.details = "Ancrage"
+      presenceData.details = withEmoji("Ancrage", "🧠")
       if (showSessionType) {
-        presenceData.state = "Mode Ancrage"
+        presenceData.state = "Mode ancrage"
       }
       break
 
     case pathname === "/bank/" || pathname.startsWith("/bank"):
-      presenceData.details = "Banque"
+      presenceData.details = withEmoji("Banque de QCM", "📚")
       if (showSessionType) {
-        presenceData.state = "Banque de QCM"
+        presenceData.state = "Banque"
       }
       break
 
     case pathname === "/test/" || pathname.startsWith("/test"):
-      presenceData.details = "Épreuves"
+      presenceData.details = withEmoji("Épreuves", "📝")
       if (showSessionType) {
         presenceData.state = "Consultation des épreuves"
       }
       break
 
     case pathname === "/annal/" || pathname.startsWith("/annal"):
-      presenceData.details = "Annales"
+      presenceData.details = withEmoji("Annales", "📖")
       if (showSessionType) {
         presenceData.state = "Consultation des annales"
       }
       break
 
     case pathname === "/course/" || pathname.startsWith("/course"): {
-      const ueTitle =
-        getText("h1.h3")
-        || pageTitle
-        || "Cours"
+      const ueTitle
+        = getText("h1.h3")
+          || pageTitle
+          || "Cours"
 
-      const activeCourse =
-        getText("#courses-nav .nav-link.active")
-        || getText(".pdf-file:not(.d-none) h4")
-        || "Consultation du cours"
+      const activeCourse
+        = getText("#courses-nav .nav-link.active")
+          || getText(".pdf-file:not(.d-none) h4")
+          || "Consultation du cours"
 
-      presenceData.details = showCourseName ? ueTitle : "Cours"
+      presenceData.details = showCourseName
+        ? withEmoji(ueTitle, "📘")
+        : withEmoji("Cours", "📘")
+
       presenceData.state = showSessionType ? activeCourse : undefined
       break
     }
 
     case pathname === "/comment/list" || pathname.startsWith("/comment/list"):
-      presenceData.details = "Commentaires"
+      presenceData.details = withEmoji("Commentaires", "💬")
       if (showSessionType) {
         presenceData.state = "Liste des commentaires"
       }
@@ -123,12 +142,12 @@ presence.on("UpdateData", async () => {
 
     case pathname.startsWith("/comment/"): {
       const commentId = pathname.match(/\/comment\/(\d+)/)?.[1]
-      const commentTitle =
-        getText("h1")
-        || getText(".card h4")
-        || getText(".card-title")
+      const commentTitle
+        = getText("h1")
+          || getText(".card h4")
+          || getText(".card-title")
 
-      presenceData.details = "Commentaires"
+      presenceData.details = withEmoji("Commentaires", "💬")
       presenceData.state = showSessionType
         ? (commentTitle || (commentId ? `Commentaire #${commentId}` : "Lecture des commentaires"))
         : undefined
@@ -136,46 +155,46 @@ presence.on("UpdateData", async () => {
     }
 
     case pathname === "/results/" || pathname.startsWith("/results"):
-      presenceData.details = "Résultats"
+      presenceData.details = withEmoji("Résultats", "📊")
       if (showSessionType) {
         presenceData.state = "Consultation des résultats"
       }
       break
 
     case pathname === "/settings/card" || pathname.startsWith("/settings/card"):
-      presenceData.details = "Carte d’adhérent"
+      presenceData.details = withEmoji("Carte d’adhérent", "🪪")
       if (showSessionType) {
         presenceData.state = "Consultation de la carte"
       }
       break
 
     case pathname === "/settings/" || pathname.startsWith("/settings"):
-      presenceData.details = "Paramètres"
+      presenceData.details = withEmoji("Paramètres", "⚙️")
       if (showSessionType) {
         presenceData.state = "Modification des paramètres"
       }
       break
 
     case pathname === "/logout" || pathname.startsWith("/logout"):
-      presenceData.details = "Déconnexion"
+      presenceData.details = withEmoji("Déconnexion", "🚪")
       if (showSessionType) {
         presenceData.state = "Quitte la plateforme"
       }
       break
 
     case pathname === "/cgu" || pathname.startsWith("/cgu"):
-      presenceData.details = "CGU"
+      presenceData.details = withEmoji("CGU", "📜")
       if (showSessionType) {
         presenceData.state = "Lecture des conditions d’utilisation"
       }
       break
 
     case pathname.startsWith("/session/"): {
-      const sessionTitle =
-        getText("h1")
-        || getText(".anchoring-title")
-        || pageTitle
-        || "Session"
+      const sessionTitle
+        = getText("h1")
+          || getText(".anchoring-title")
+          || pageTitle
+          || "Session"
 
       const courseInfo = getCourseInfo()
       const cleanCountdown = extractCountdown()
@@ -193,19 +212,37 @@ presence.on("UpdateData", async () => {
         return /valider la réponse|valider|terminer/i.test(el.textContent || "")
       })
 
-      const looksLikeExamTitle =
-        /séance|seance|épreuve|epreuve|qcm n°|qcm n|pass\s*-|ue\d+/i.test(sessionTitle)
+      const looksLikeExamTitle
+        = /séance|seance|épreuve|epreuve|qcm n°|qcm n|pass\s*-|ue\d+/i.test(sessionTitle)
 
-      const looksLikeExamByPage =
-        !!cleanCountdown && (questionCount >= 2 || looksLikeExamTitle || hasSubmitButton)
+      const looksLikeExamByPage
+        = !!cleanCountdown && (questionCount >= 2 || looksLikeExamTitle || hasSubmitButton)
 
       const isExam = looksLikeExamTitle || looksLikeExamByPage
       const isAnchoring = /ancrage/i.test(sessionTitle) || /questions?\s+restantes/i.test(pageText)
       const isBank = /banque/i.test(sessionTitle)
 
+      if (!hasVisibleInfo) {
+        if (isExam) {
+          presenceData.details = withEmoji("Épreuve en cours", "📝")
+        }
+        else if (isAnchoring) {
+          presenceData.details = withEmoji("Ancrage", "🧠")
+        }
+        else if (isBank) {
+          presenceData.details = withEmoji("Banque de QCM", "📚")
+        }
+        else {
+          presenceData.details = withEmoji("Révision sur Vitamine", "📖")
+        }
+
+        delete presenceData.state
+        break
+      }
+
       presenceData.details = showCourseName
-        ? (courseInfo || sessionTitle || "Session")
-        : "Vitamine"
+        ? withEmoji(courseInfo || sessionTitle || "Session", "📘")
+        : withEmoji("Vitamine", "💜")
 
       if (isExam) {
         presenceData.state = joinStateParts([
@@ -241,26 +278,29 @@ presence.on("UpdateData", async () => {
 
     case pathname.startsWith("/files/course/"): {
       const filename = pathname.split("/").pop() || "Fichier"
-      presenceData.details = "Fichier de cours"
+      presenceData.details = withEmoji("Fichier de cours", "📄")
       presenceData.state = showSessionType ? decodeURIComponent(filename) : undefined
       break
     }
 
     default: {
       const h1 = getText("h1")
-      presenceData.details = pageTitle || "Vitamine"
+      presenceData.details = withEmoji(pageTitle || "Vitamine", "💜")
       presenceData.state = showSessionType ? (h1 || pathname) : undefined
       break
     }
+  }
+
+  if (!presenceData.state) {
+    delete presenceData.state
   }
 
   const signature = JSON.stringify({
     path: location.pathname,
     title: document.title,
     details: presenceData.details,
-    state: presenceData.state,
-    startTimestamp: presenceData.startTimestamp,
-    showGlobalTimer,
+    state: presenceData.state ?? null,
+    startTimestamp: presenceData.startTimestamp ?? null,
     showQcmCountdown,
     showCourseName,
     showSessionType,
@@ -279,13 +319,17 @@ presence.on("UpdateData", async () => {
   else {
     presence.clearActivity()
   }
+}
+
+presence.on("UpdateData", async () => {
+  await updatePresence()
 })
 
 const originalPushState = history.pushState
 history.pushState = function (...args) {
   originalPushState.apply(this, args)
   setTimeout(() => {
-    presence.emit("UpdateData")
+    void updatePresence()
   }, 50)
 }
 
@@ -293,24 +337,24 @@ const originalReplaceState = history.replaceState
 history.replaceState = function (this: History, ...args: Parameters<History["replaceState"]>) {
   originalReplaceState.apply(this, args)
   setTimeout(() => {
-    presence.emit("UpdateData")
+    void updatePresence()
   }, 50)
 }
 
 window.addEventListener("popstate", () => {
   setTimeout(() => {
-    presence.emit("UpdateData")
+    void updatePresence()
   }, 50)
 })
 
 window.addEventListener("hashchange", () => {
   setTimeout(() => {
-    presence.emit("UpdateData")
+    void updatePresence()
   }, 50)
 })
 
 const observer = new MutationObserver(() => {
-  presence.emit("UpdateData")
+  void updatePresence()
 })
 
 observer.observe(document.body, {
@@ -320,5 +364,5 @@ observer.observe(document.body, {
 })
 
 setInterval(() => {
-  presence.emit("UpdateData")
+  void updatePresence()
 }, 1000)

@@ -25,14 +25,8 @@
   ],
   "settings": [
     {
-      "id": "showGlobalTimer",
-      "title": "Show global session timer",
-      "icon": "fas fa-clock",
-      "value": true
-    },
-    {
       "id": "showQcmCountdown",
-      "title": "Show QCM countdown",
+      "title": "Show question countdown",
       "icon": "fas fa-hourglass-half",
       "value": false
     },
@@ -44,7 +38,7 @@
     },
     {
       "id": "showSessionType",
-      "title": "Show session type",
+      "title": "Show session label",
       "icon": "fas fa-layer-group",
       "value": true
     },
