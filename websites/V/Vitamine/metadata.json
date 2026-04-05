@@ -34,7 +34,7 @@
       "id": "showCourseName",
       "title": "Show course name",
       "icon": "fas fa-book",
-      "value": true
+      "value": false
     },
     {
       "id": "showSessionType",
