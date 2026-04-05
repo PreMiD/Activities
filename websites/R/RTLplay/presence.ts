@@ -113,15 +113,15 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageText = strings.privacy
       }
       else {
-        const { searchQuery } = JSON.parse(
-          document
-            .querySelector('div[js-element="searchResults"]')
-            ?.getAttribute('data-tracking') ?? '{}',
-        )
+        const searchBarSelector = '[class*="InputField-module-scss-module"]'
+        if (!exist(searchBarSelector))
+          console.warn('Search bar not found, presence may need update to fit the new website design')
+
+        const searchQuery = document.querySelector(searchBarSelector)?.getAttribute('value') ?? '{}'
 
         presenceData.details = strings.browsing
         presenceData.state = searchQuery
-          ? `${strings.searchFor} ${searchQuery.term}`
+          ? `${strings.searchFor} ${searchQuery}`
           : strings.searchSomething
 
         if (useTimestamps)
@@ -179,9 +179,12 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageText = strings.privacy
       }
       else {
+        const categoryTitleSelector = '[class*=MainLayout-module-scss-module] h1'
+        if (!exist(categoryTitleSelector))
+          console.warn('Category title not found, presence may need update to fit the new website design')
 
         presenceData.state = strings.viewCategory.replace(':', '')
-        presenceData.details = document.querySelector('[class*=MainLayout-module-scss-module] h1')?.textContent?.trim() || ''
+        presenceData.details = document.querySelector(categoryTitleSelector)?.textContent?.trim() || ''
 
         presenceData.smallImageKey = ActivityAssets.Binoculars
         presenceData.smallImageText = strings.browsing
@@ -222,17 +225,21 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageText = strings.privacy
           }
           else {
-            const buttons = document.querySelectorAll('[class*=ActionButton-module-scss-module] > div > span')
+            const buttonsSelector = '[class*=ActionButton-module-scss-module] > div > span'
+            if (!exist(buttonsSelector))
+              console.warn('Buttons not found, presence may need update to fit the new website design')
+
+            const buttons = document.querySelectorAll(buttonsSelector)
             if (document.querySelector('[class*=AdBreakStats-module-scss-module] > span')) {
               presenceData.smallImageKey = localizedAssets.Ad
               presenceData.smallImageText = strings.watchingAd
             }
-            else if (buttons[0]?.textContent == "Play") {
+            else if (buttons[0]?.textContent == 'Play') {
               // State paused
               presenceData.smallImageKey = Assets.Pause
               presenceData.smallImageText = strings.pause
             }
-            else if (buttons[2]?.textContent == "Retour au live") {
+            else if (buttons[2]?.textContent == 'Retour au live') {
               // State deferred
               presenceData.smallImageKey = ActivityAssets.Deferred
               presenceData.smallImageText = strings.deferred
@@ -243,10 +250,11 @@ presence.on('UpdateData', async () => {
               presenceData.smallImageText = strings.live
             }
 
-            const items = Array.from(document.querySelectorAll<HTMLAnchorElement>("[class*=LiveChannelsItem-module-scss-module] [class*=link]"))
+            const items = Array.from(document.querySelectorAll<HTMLAnchorElement>('[class*=LiveChannelsItem-module-scss-module] [class*=link]'))
             const livestreamIdx = items.findIndex((el) => {
               const href = el.getAttribute('href') || ''
-              if (!href) return false
+              if (!href)
+                return false
               return new URL(href, window.location.origin).pathname === pathname
             })
             const livestreamItems = document.querySelectorAll('[class*=LiveChannelsItem-module-scss-module] [class*=title]')
@@ -265,10 +273,10 @@ presence.on('UpdateData', async () => {
 
             presenceData.state = strings.watchingLive
             presenceData.details = livestreamItems[livestreamIdx]?.textContent || ''
-            
+
             if (['contact', 'bel'].includes(pathParts[3]!)) {
               // Songs played in the livestream are the same as the audio radio ones but with video clips
-              //Fetch the data from the Radioplayer API. It is used on the official radio contact and bel rtl websites
+              // Fetch the data from the Radioplayer API. It is used on the official radio contact and bel rtl websites
               const response = await fetch(
                 getChannel(pathParts[3]!).radioAPI!,
               )
@@ -295,7 +303,6 @@ presence.on('UpdateData', async () => {
               presenceData.largeImageText = getChannel(pathParts[3]!).name
             }
 
-            
             if (useTimestamps) {
               const timeStatSelector = '[class*=TimeStat-module-scss-module]'
               if (exist(timeStatSelector)) {
@@ -316,6 +323,9 @@ presence.on('UpdateData', async () => {
                       ?.trim() ?? '',
                   ),
                 )
+              }
+              else {
+                console.warn('Timestamps not found, presence may need update to fit the new website design')
               }
             }
 
@@ -383,6 +393,11 @@ presence.on('UpdateData', async () => {
               }
             }
 
+            if (!data) {
+              console.warn('No song data found, presence may need update to fit the new website design')
+              break
+            }
+
             presenceData.details = data.name || strings.listeningMusic
             presenceData.state = data.artistName || data.description || getChannel(webradio).name
 
@@ -436,7 +451,7 @@ presence.on('UpdateData', async () => {
       const mediaInfos = document.querySelector('script[type="application/ld+json"]')?.textContent
       if (mediaInfos) {
         // Retrieve the json in the page
-        let data = []
+        const data = []
         data.push(JSON.parse(mediaInfos))
         let description = sanitize(data[0].name) as any
         description = description.match(/(?<mediaName>.*?)(?:\sS(?<seasonNumber>\d+)\sE(?<episodeNumber>\d+)\s(?<episodeName>.*))?$/i)
@@ -453,14 +468,14 @@ presence.on('UpdateData', async () => {
       }
       else {
         // Fallback method: read the player title
-        const titleText = document.querySelector('h1.lfvp-player__title')?.textContent
+        const titleText = document.querySelector('h1')?.textContent
           || 'Unknown Media'
 
         // Clean the text: remove extra whitespace, newlines, and normalize spaces
         const cleanTitle = titleText.replace(/\s+/g, ' ').trim()
 
         const matchResult = cleanTitle.match(
-          /^(?<mediaName>.*?)\sS(?<seasonNumber>\d+)\sE(?<episodeNumber>\d+)\s(?<episodeName>.*)$/,
+          /^(?<mediaName>.*?)\sS(?<seasonNumber>\d+)\sE(?<episodeNumber>\d+)\s(?<episodeName>.*) - $/,
         )
         if (matchResult && matchResult.groups) {
           mediaName = matchResult.groups.mediaName || cleanTitle
@@ -472,6 +487,9 @@ presence.on('UpdateData', async () => {
           mediaName = cleanTitle
         }
       }
+
+      if (mediaName === 'Unknown Media')
+        console.warn('Media name not found, presence may need update to fit the new website design')
 
       let isPaused = false
       presenceData.largeImageKey = ActivityAssets.Logo // Initializing default
@@ -535,8 +553,12 @@ presence.on('UpdateData', async () => {
               delete presenceData.endTimestamp
             }
             else {
+              const timeStatSelector = '[class*=TimeStat-module-scss-module]'
+              if (!exist(timeStatSelector))
+                console.warn('FallbackTimestamps not found, presence may need update to fit the new website design')
+
               const formattedTimestamps = document
-                .querySelector('.playerui__controls__stat__time')
+                .querySelector(timeStatSelector)
                 ?.textContent
                 ?.split('/')
 
@@ -558,7 +580,7 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = ad
           ? localizedAssets.Ad
           : isPaused
-            ? Assets.Pause
+            ? ActivityAssets.PauseGradient
             : ActivityAssets.PlayGradient
         presenceData.smallImageText = ad
           ? strings.watchingAd
@@ -620,7 +642,8 @@ presence.on('UpdateData', async () => {
         let mediaType: string = ''
         let description: string = ''
         let coverArt: string | null = null
-        let tags: string[] = []
+
+        const backgroundArt = document.querySelector('[class*="__img"]')?.getAttribute('src') as string ?? presenceData.largeImageKey
         // TODO can be improve by retrieving the full json using an intercept api
         const mediaInfos = document.querySelector('script[type="application/ld+json"]')?.textContent
         if (mediaInfos) {
@@ -630,31 +653,34 @@ presence.on('UpdateData', async () => {
           mediaType = data['@type']
           description = data.description
           coverArt = data.image
-          tags = [data.director?.name, data.dateCreated, data.containsSeason?.name, data.containsSeason ? `${data.containsSeason?.numberOfEpisodes} episodes` : '']
-          tags = tags.filter((e) => {
-            return e
-          })
         }
         else {
-          mediaName = document.querySelector('h1[class*="detail"][class*="__title"]')?.textContent || 'Unknown Media'
+          mediaName = document.querySelector('h1[class*="__title"]')?.textContent || 'Unknown Media'
           mediaType = document.querySelector('meta[property="og:type"]')?.getAttribute('content')?.includes('movie') ? 'Movie' : 'TVSeries'
-          description = document.querySelector('[class*="detail"][class*="__description"]')?.textContent || ''
-          coverArt = document.querySelector('[class*="detail"][class*="__img"]')?.getAttribute('src') ?? ''
+          description = document.querySelector('p[class*="__root"]')?.textContent || ''
+          coverArt = document.querySelector('[class*="__img"]')?.getAttribute('src') ?? ''
         }
 
-        const yearElement = document.querySelector(
-          'dd[class*="detail"][class*="__meta-label"][title="Année de production"]',
-        )
-        const durationElement = document.querySelector(
-          'dd[class*="detail"][class*="__meta-label"][title="Durée"]',
-        )
-        const seasonElement = document.querySelector(
-          'dd[class*="detail"][class*="__meta-label"]:not([title])',
-        )
-        const genresArray = document.querySelectorAll('dd[class*="detail"][class*="__meta-label"][title="Genre"]')
+        const yearSelector = 'dd[title="Année de production"]'
+        const durationSelector = 'dd[title="Durée"]'
+        const seasonSelector = 'dd:not([title])'
+        const genresSelector = 'dd[title="Genre"]'
+        if (!exist(yearSelector))
+          console.warn('Year element not found, presence may need update to fit the new website design')
+        if (!exist(durationSelector))
+          console.warn('Duration element not found, presence may need update to fit the new website design')
+        if (!exist(seasonSelector) && mediaType === 'TVSeries')
+          console.warn('Season element not found, presence may need update to fit the new website design')
+        if (!exist(genresSelector))
+          console.warn('Genres elements not found, presence may need update to fit the new website design')
+
+        const yearElement = document.querySelector(yearSelector)
+        const durationElement = document.querySelector(durationSelector)
+        const seasonElement = document.querySelector(seasonSelector)
+        const genresArray = document.querySelectorAll(genresSelector)
 
         let subtitle = mediaType === 'Movie' ? strings.movie : strings.tvshow
-        subtitle += yearElement ? ` - ${yearElement.textContent}` : '' // Add Release Year
+        subtitle += yearElement ? `, ${yearElement.textContent}` : '' // Add Release Year
         subtitle += seasonElement && mediaType === 'TVSeries' ? ` - ${seasonElement.textContent}` : '' // Add amount of seasons
         subtitle += durationElement ? ` - ${durationElement.textContent}` : '' // Add Duration
 
@@ -684,11 +710,12 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageKey = await getThumbnail(
             coverArt ?? '',
             ActivityAssets.Animated,
-            cropPreset.horizontal,
+            cropPreset.horizontalCentered,
           )
 
           const presenceDataSlide = structuredClone(presenceData) // Deep copy
-          presenceDataSlide.state = tags.join(' - ')
+          presenceDataSlide.state = description ? description : subtitle
+          presenceDataSlide.largeImageKey = await getThumbnail(backgroundArt, ActivityAssets.Animated, cropPreset.horizontal)
 
           slideshow.addSlide('poster-image', presenceData, 5000)
           slideshow.addSlide('background-image', presenceDataSlide, 5000)

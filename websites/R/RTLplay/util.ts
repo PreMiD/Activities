@@ -134,7 +134,8 @@ export enum ActivityAssets {
   LiveAnimated = 'https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/2.gif',
   ListeningPaused = 'https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/3.png',
   ListeningLive = 'https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/12.gif',
-  PlayGradient = "https://imgur.com/PaWs8B8.png",
+  PlayGradient = 'https://imgur.com/PaWs8B8.png',
+  PauseGradient = 'https://imgur.com/U8Nq3El.png',
   // Localized
   AdEn = 'https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/4.png',
   AdFr = 'https://cdn.rcd.gg/PreMiD/websites/R/RTLplay/assets/5.png',
@@ -233,14 +234,14 @@ export function getChannel(channel: string): ChannelInfo {
         logo: ActivityAssets.RTLPlug,
       }
     }
-    case ['rtlplay', 'district', 'rtldistrict'].includes(channel): {
+    case ['district', 'rtldistrict'].includes(channel): {
       return {
         name: 'RTL district',
         type: ActivityType.Watching,
         logo: ActivityAssets.RTLDistrict,
       }
     }
-    case ['rtlplay2', 'sports', 'rtlsports'].includes(channel): {
+    case ['rtlplay', 'rtlplay2', 'sports', 'rtlsports'].includes(channel): {
       return {
         name: 'RTL sports',
         type: ActivityType.Watching,
@@ -436,7 +437,8 @@ export const cropPreset = {
   // Crop values in percent correspond to Left, Right, Top, Bottom.
   squared: [0, 0, 0, 0],
   vertical: [0.22, 0.22, 0, 0.3],
-  horizontal: [0.425, 0.025, 0, 0],
+  horizontal: [0.34, 0.10, 0, 0],
+  horizontalCentered: [0.22, 0.22, 0, 0],
 }
 
 export async function getThumbnail(
@@ -588,4 +590,8 @@ export async function fetchCache(url: string, options?: RequestInit): Promise<un
 export function sanitize(input: string): string {
   const DOM = new DOMParser().parseFromString(input, 'text/html')
   return DOM.documentElement.textContent || ''
+}
+
+export function log(data: unknown, prefix?: string): void {
+  presence.info(`${prefix || ''}${typeof data === 'string' ? data : JSON.stringify(data)}`)
 }
