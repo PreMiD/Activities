@@ -234,12 +234,12 @@ presence.on('UpdateData', async () => {
               presenceData.smallImageKey = localizedAssets.Ad
               presenceData.smallImageText = strings.watchingAd
             }
-            else if (buttons[0]?.textContent == 'Play') {
+            else if (buttons[0]?.textContent.toLowerCase() === 'play') {
               // State paused
               presenceData.smallImageKey = Assets.Pause
               presenceData.smallImageText = strings.pause
             }
-            else if (buttons[2]?.textContent == 'Retour au live') {
+            else if (buttons[2]?.textContent.toLowerCase() === 'tetour au live') {
               // State deferred
               presenceData.smallImageKey = ActivityAssets.Deferred
               presenceData.smallImageText = strings.deferred
