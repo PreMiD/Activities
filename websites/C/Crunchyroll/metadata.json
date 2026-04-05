@@ -51,6 +51,8 @@
     "video",
     "anime"
   ],
+  "iframe": true,
+  "iFrameRegExp": "static.crunchyroll.com",
   "settings": [
     {
       "id": "lang",
