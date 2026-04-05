@@ -2,18 +2,35 @@ const presence = new Presence({
   clientId: '1486144929213321357',
 })
 
-const browsingTimestamp = Math.floor(Date.now() / 1000)
+const GLOBAL_START_KEY = 'vitamine_global_start_timestamp'
 
+function getGlobalStartTimestamp(): number {
+  const saved = sessionStorage.getItem(GLOBAL_START_KEY)
+
+  if (saved && !Number.isNaN(Number(saved))) {
+    return Number(saved)
+  }
+
+  const now = Math.floor(Date.now() / 1000)
+  sessionStorage.setItem(GLOBAL_START_KEY, String(now))
+  return now
+}
+
+let browsingTimestamp = getGlobalStartTimestamp()
 let lastSignature = ''
 
 function getText(selector: string): string {
   return document.querySelector(selector)?.textContent?.replace(/\s+/g, ' ').trim() || ''
 }
 
-function extractCountdown(): string {
-  const raw = getText('#countdown')
-  const match = raw.match(/(\d+:\d{2}:\d{2})/)
-  return match?.[1] || ''
+function getCourseInfo(): string {
+  const courseInfo
+    = document.querySelector('.card .text-muted.text-end u')?.parentElement?.textContent?.trim()
+      || getText('.text-muted.px-2.fst-italic.py-1.text-end')
+      || getText('#courses-nav .nav-link.active')
+      || ''
+
+  return courseInfo.replace(/\s+/g, ' ').trim()
 }
 
 function buildPresenceData(): PresenceData {
@@ -30,7 +47,7 @@ function buildPresenceData(): PresenceData {
   switch (true) {
     case pathname === '/':
       presenceData.details = 'Menu principal'
-      presenceData.state = 'Page d\'accueil'
+      presenceData.state = 'Page d’accueil'
       break
 
     case pathname === '/anchoring/' || pathname.startsWith('/anchoring'):
@@ -62,9 +79,10 @@ function buildPresenceData(): PresenceData {
       const activeCourse
         = getText('#courses-nav .nav-link.active')
           || getText('.pdf-file:not(.d-none) h4')
+          || 'Consultation du cours'
 
       presenceData.details = ueTitle
-      presenceData.state = activeCourse || 'Consultation du cours'
+      presenceData.state = activeCourse
       break
     }
 
@@ -91,7 +109,7 @@ function buildPresenceData(): PresenceData {
       break
 
     case pathname === '/settings/card' || pathname.startsWith('/settings/card'):
-      presenceData.details = 'Carte d\'adhérent'
+      presenceData.details = 'Carte d’adhérent'
       presenceData.state = 'Consultation de la carte'
       break
 
@@ -107,7 +125,7 @@ function buildPresenceData(): PresenceData {
 
     case pathname === '/cgu' || pathname.startsWith('/cgu'):
       presenceData.details = 'CGU'
-      presenceData.state = 'Lecture des conditions d\'utilisation'
+      presenceData.state = 'Lecture des conditions d’utilisation'
       break
 
     case pathname.startsWith('/session/'): {
@@ -117,90 +135,34 @@ function buildPresenceData(): PresenceData {
           || pageTitle
           || 'Session'
 
-      const courseInfo
-        = document.querySelector('.card .text-muted.text-end u')?.parentElement?.textContent?.trim()
-          || getText('.text-muted.px-2.fst-italic.py-1.text-end')
-          || ''
-
-      const cleanedCourseInfo = courseInfo.replace(/\s+/g, ' ').trim()
-
-      const remainingMatch = pageText.match(/(\d+)\s+questions?\s+restantes/i)
-      const cleanCountdown = extractCountdown()
-      const questionNumber = getText('.card-header strong')
-
-      const questionCards = Array.from(document.querySelectorAll('[id^="mcq-"], .card[id^="mcq-"]'))
-      const visibleQuestionCards = questionCards.filter((el) => {
-        const htmlEl = el as HTMLElement
-        return htmlEl.offsetParent !== null
-      })
-
-      const questionCount = visibleQuestionCards.length
-
-      const hasSubmitButton
-        = Array.from(document.querySelectorAll('button, input[type="submit"]')).some((el) => {
-          return /valider la réponse|valider|terminer/i.test(el.textContent || '')
-        })
+      const cleanedCourseInfo = getCourseInfo()
 
       const looksLikeExamTitle
         = /séance|seance|épreuve|epreuve|qcm n°|qcm n|pass\s*-|ue\d+/i.test(sessionTitle)
 
-      const looksLikeExamByPage
-        = !!cleanCountdown
-          && (questionCount >= 2 || looksLikeExamTitle || hasSubmitButton)
-
-      const isExam = looksLikeExamTitle || looksLikeExamByPage
       const isAnchoring = /ancrage/i.test(sessionTitle) || /questions?\s+restantes/i.test(pageText)
       const isBank = /banque/i.test(sessionTitle)
+      const isExam = looksLikeExamTitle
 
       switch (true) {
-        case isExam: {
-          presenceData.details = sessionTitle
-
-          if (questionCount >= 2) {
-            presenceData.state = cleanCountdown
-              ? `${questionCount} questions • ${cleanCountdown}`
-              : `${questionCount} questions en cours`
-          }
-          else if (questionNumber) {
-            presenceData.state = cleanCountdown
-              ? `${questionNumber} • ${cleanCountdown}`
-              : questionNumber
-          }
-          else {
-            presenceData.state = cleanCountdown
-              ? `Temps restant : ${cleanCountdown}`
-              : 'Épreuve en cours'
-          }
+        case isExam:
+          presenceData.details = cleanedCourseInfo || sessionTitle || 'Épreuve'
+          presenceData.state = 'Épreuve en cours'
           break
-        }
 
         case isAnchoring:
           presenceData.details = cleanedCourseInfo || 'Ancrage'
-          presenceData.state = remainingMatch
-            ? (
-                cleanCountdown
-                  ? `${remainingMatch[1]} QCM restants • ${cleanCountdown}`
-                  : `${remainingMatch[1]} QCM restants`
-              )
-            : (
-                cleanCountdown
-                  ? `${questionNumber || 'Session ancrage'} • ${cleanCountdown}`
-                  : questionNumber || 'Session ancrage en cours'
-              )
+          presenceData.state = 'Session ancrage'
           break
 
         case isBank:
           presenceData.details = cleanedCourseInfo || 'Banque'
-          presenceData.state = cleanCountdown
-            ? `${questionNumber || 'Session banque'} • ${cleanCountdown}`
-            : questionNumber || 'Session banque en cours'
+          presenceData.state = 'Session banque'
           break
 
         default:
           presenceData.details = cleanedCourseInfo || sessionTitle || 'Session'
-          presenceData.state = cleanCountdown
-            ? `${questionNumber || 'Session en cours'} • ${cleanCountdown}`
-            : questionNumber || 'Session en cours'
+          presenceData.state = 'Session en cours'
           break
       }
       break
@@ -226,6 +188,7 @@ function buildPresenceData(): PresenceData {
 
 function updatePresence(force = false): void {
   const data = buildPresenceData()
+
   const signature = JSON.stringify({
     path: location.pathname,
     title: document.title,
