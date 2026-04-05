@@ -1,8 +1,8 @@
 const presence = new Presence({
-  clientId: "1486144929213321357",
+  clientId: '1486144929213321357',
 })
 
-const GLOBAL_START_KEY = "vitamine_global_start_timestamp"
+const GLOBAL_START_KEY = 'vitamine_global_start_timestamp'
 
 function getGlobalStartTimestamp(): number {
   const saved = sessionStorage.getItem(GLOBAL_START_KEY)
@@ -17,37 +17,37 @@ function getGlobalStartTimestamp(): number {
 }
 
 const browsingTimestamp = getGlobalStartTimestamp()
-let lastSignature = ""
+let lastSignature = ''
 
 function getText(selector: string): string {
-  return document.querySelector(selector)?.textContent?.replace(/\s+/g, " ").trim() || ""
+  return document.querySelector(selector)?.textContent?.replace(/\s+/g, ' ').trim() || ''
 }
 
 function extractCountdown(): string {
-  const raw = getText("#countdown")
+  const raw = getText('#countdown')
   const match = raw.match(/(\d+:\d{2}:\d{2})/)
-  return match?.[1] || ""
+  return match?.[1] || ''
 }
 
 function getCourseInfo(): string {
   const courseInfo
-    = document.querySelector(".card .text-muted.text-end u")?.parentElement?.textContent?.trim()
-      || getText(".text-muted.px-2.fst-italic.py-1.text-end")
-      || getText("#courses-nav .nav-link.active")
-      || ""
+    = document.querySelector('.card .text-muted.text-end u')?.parentElement?.textContent?.trim()
+      || getText('.text-muted.px-2.fst-italic.py-1.text-end')
+      || getText('#courses-nav .nav-link.active')
+      || ''
 
-  return courseInfo.replace(/\s+/g, " ").trim()
+  return courseInfo.replace(/\s+/g, ' ').trim()
 }
 
 function joinStateParts(parts: Array<string | false | null | undefined>): string | undefined {
   const filtered = parts.filter(Boolean) as string[]
-  return filtered.length > 0 ? filtered.join(" • ") : undefined
+  return filtered.length > 0 ? filtered.join(' • ') : undefined
 }
 
 function cleanCourseTitle(text: string): string {
   return text
-    .replace(/^UE\s*\d*\s*/i, "")
-    .replace(/\s+/g, " ")
+    .replace(/^UE\s*\d*\s*/i, '')
+    .replace(/\s+/g, ' ')
     .trim()
 }
 
@@ -65,10 +65,10 @@ function withEmoji(text: string, emoji: string): string {
 }
 
 async function updatePresence(): Promise<void> {
-  const showQcmCountdown = await presence.getSetting<boolean>("showQcmCountdown")
-  const showCourseName = await presence.getSetting<boolean>("showCourseName")
-  const showSessionType = await presence.getSetting<boolean>("showSessionType")
-  const showQuestionNumber = await presence.getSetting<boolean>("showQuestionNumber")
+  const showQcmCountdown = await presence.getSetting<boolean>('showQcmCountdown')
+  const showCourseName = await presence.getSetting<boolean>('showCourseName')
+  const showSessionType = await presence.getSetting<boolean>('showSessionType')
+  const showQuestionNumber = await presence.getSetting<boolean>('showQuestionNumber')
 
   const hasVisibleInfo = hasVisibleSessionInfo(
     showCourseName,
@@ -78,84 +78,90 @@ async function updatePresence(): Promise<void> {
   )
 
   const { pathname } = document.location
-  const pageText = document.body.textContent || ""
-  const pageTitle = document.title?.replace(/^Vitamine\s*·\s*/i, "").trim() || "Vitamine"
+  const pageTitle = document.title?.replace(/^Vitamine\s*·\s*/i, '').trim() || 'Vitamine'
 
   const presenceData: PresenceData = {
-    largeImageKey: "https://cdn.rcd.gg/PreMiD/websites/V/Vitamine/assets/logo.png",
-    details: "Vitamine",
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/V/Vitamine/assets/logo.png',
+    details: 'Vitamine',
     startTimestamp: browsingTimestamp,
   }
 
   switch (true) {
-    case pathname === "/":
-      presenceData.details = withEmoji("Menu principal", "🏠")
-      presenceData.state = "Page d’accueil"
+    case pathname === '/':
+      presenceData.details = withEmoji('Menu principal', '🏠')
+      presenceData.state = 'Page d’accueil'
       break
 
-    case pathname.startsWith("/anchoring"):
-      presenceData.details = withEmoji("Ancrage", "🧠")
-      if (showSessionType) presenceData.state = "Mode ancrage"
+    case pathname.startsWith('/anchoring'):
+      presenceData.details = withEmoji('Ancrage', '🧠')
+      if (showSessionType) {
+        presenceData.state = 'Mode ancrage'
+      }
       break
 
-    case pathname.startsWith("/bank"):
-      presenceData.details = withEmoji("Banque de QCM", "📚")
-      if (showSessionType) presenceData.state = "Banque"
+    case pathname.startsWith('/bank'):
+      presenceData.details = withEmoji('Banque de QCM', '📚')
+      if (showSessionType) {
+        presenceData.state = 'Banque'
+      }
       break
 
-    case pathname.startsWith("/test"):
-      presenceData.details = withEmoji("Épreuves", "📝")
-      if (showSessionType) presenceData.state = "Consultation des épreuves"
+    case pathname.startsWith('/test'):
+      presenceData.details = withEmoji('Épreuves', '📝')
+      if (showSessionType) {
+        presenceData.state = 'Consultation des épreuves'
+      }
       break
 
-    case pathname.startsWith("/annal"):
-      presenceData.details = withEmoji("Annales", "📖")
-      if (showSessionType) presenceData.state = "Consultation des annales"
+    case pathname.startsWith('/annal'):
+      presenceData.details = withEmoji('Annales', '📖')
+      if (showSessionType) {
+        presenceData.state = 'Consultation des annales'
+      }
       break
 
-    case pathname.startsWith("/course"): {
-      const ueTitle = getText("h1.h3") || pageTitle || "Cours"
-      const activeCourse =
-        getText("#courses-nav .nav-link.active")
-        || getText(".pdf-file:not(.d-none) h4")
-        || "Consultation du cours"
+    case pathname.startsWith('/course'): {
+      const ueTitle = getText('h1.h3') || pageTitle || 'Cours'
+      const activeCourse
+        = getText('#courses-nav .nav-link.active')
+          || getText('.pdf-file:not(.d-none) h4')
+          || 'Consultation du cours'
 
       presenceData.details = showCourseName
-        ? withEmoji(cleanCourseTitle(ueTitle), "📘")
-        : withEmoji("Cours", "📘")
+        ? withEmoji(cleanCourseTitle(ueTitle), '📘')
+        : withEmoji('Cours', '📘')
 
       presenceData.state = showSessionType ? activeCourse : undefined
       break
     }
 
-    case pathname.startsWith("/session/"): {
-      const sessionTitle =
-        getText("h1")
-        || getText(".anchoring-title")
-        || pageTitle
-        || "Session"
+    case pathname.startsWith('/session/'): {
+      const sessionTitle
+        = getText('h1')
+          || getText('.anchoring-title')
+          || pageTitle
+          || 'Session'
 
       const courseInfo = getCourseInfo()
       const cleanCountdown = extractCountdown()
-      const questionNumber = getText(".card-header strong")
+      const questionNumber = getText('.card-header strong')
 
       const isExam = /épreuve|qcm|pass|ue\d+/i.test(sessionTitle)
       const isAnchoring = /ancrage/i.test(sessionTitle)
       const isBank = /banque/i.test(sessionTitle)
 
-      // 🔥 MODE CLEAN quand tout est OFF
       if (!hasVisibleInfo) {
         if (isExam) {
-          presenceData.details = "📝 Épreuve en cours"
+          presenceData.details = '📝 Épreuve en cours'
         }
         else if (isAnchoring) {
-          presenceData.details = "🧠 Ancrage"
+          presenceData.details = '🧠 Ancrage'
         }
         else if (isBank) {
-          presenceData.details = "📚 Banque de QCM"
+          presenceData.details = '📚 Banque de QCM'
         }
         else {
-          presenceData.details = "📖 Révision"
+          presenceData.details = '📖 Révision'
         }
 
         delete presenceData.state
@@ -165,11 +171,11 @@ async function updatePresence(): Promise<void> {
       const courseTitle = cleanCourseTitle(courseInfo || sessionTitle)
 
       presenceData.details = showCourseName
-        ? withEmoji(courseTitle, "📘")
-        : withEmoji("Vitamine", "💜")
+        ? withEmoji(courseTitle, '📘')
+        : withEmoji('Vitamine', '💜')
 
       presenceData.state = joinStateParts([
-        showSessionType && (isExam ? "Épreuve" : isAnchoring ? "Ancrage" : "Session"),
+        showSessionType && (isExam ? 'Épreuve' : isAnchoring ? 'Ancrage' : 'Session'),
         showQuestionNumber && questionNumber,
         showQcmCountdown && cleanCountdown,
       ])
@@ -178,9 +184,9 @@ async function updatePresence(): Promise<void> {
     }
 
     default:
-      presenceData.details = withEmoji(pageTitle || "Vitamine", "💜")
+      presenceData.details = withEmoji(pageTitle || 'Vitamine', '💜')
       if (showSessionType) {
-        presenceData.state = getText("h1") || pathname
+        presenceData.state = getText('h1') || pathname
       }
   }
 
@@ -194,7 +200,10 @@ async function updatePresence(): Promise<void> {
     state: presenceData.state ?? null,
   })
 
-  if (signature === lastSignature) return
+  if (signature === lastSignature) {
+    return
+  }
+
   lastSignature = signature
 
   if (presenceData.state || presenceData.details) {
@@ -205,6 +214,6 @@ async function updatePresence(): Promise<void> {
   }
 }
 
-presence.on("UpdateData", updatePresence)
+presence.on('UpdateData', updatePresence)
 
 setInterval(updatePresence, 1000)
