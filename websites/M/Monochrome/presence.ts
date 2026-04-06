@@ -1,20 +1,27 @@
-import { ActivityType, StatusDisplayType } from 'premid'
+import { ActivityType, StatusDisplayType, Assets } from 'premid'
 
-// Static Asset Configuration
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/M/Monochrome/assets/logo.png',
-  Play = 'https://cdn.rcd.gg/PreMiD/resources/play.png',
-  Pause = 'https://cdn.rcd.gg/PreMiD/resources/pause.png',
 }
 
 const presence = new Presence({
   clientId: '1459594619972096248',
 })
 
-// Track the last known playing title to detect track switches
-let prevTitle = ''
-
 presence.on('UpdateData', async () => {
+  const mediaElement = document.querySelector('audio')
+  const hidePausedSetting = await presence.getSetting<boolean>('hidePaused')
+
+  // Mirror YT Music: if hidePaused and not playing, clear — but only if media is ready.
+  // During a track switch the audio element is briefly absent or has no duration,
+  // so we return early (no clear) to avoid the flicker.
+  if (hidePausedSetting) {
+    if (!mediaElement || !Number.isFinite(mediaElement.duration))
+      return
+    if (mediaElement.paused)
+      return presence.clearActivity()
+  }
+
   // 1. DYNAMIC IMAGE LOGIC
   let currentLargeImage: string = ActivityAssets.Logo
 
@@ -41,9 +48,9 @@ presence.on('UpdateData', async () => {
   else if (tabTitle.includes(' • '))
     separator = ' • '
 
-  const element = document.querySelector('.album')
-  if (element?.matches('.details > .album'))
-    presenceData.largeImageText = element?.textContent
+  const albumElement = document.querySelector('.album')
+  if (albumElement?.matches('.details > .album'))
+    presenceData.largeImageText = albumElement.textContent
 
   if (separator) {
     const parts = tabTitle.split(separator)
@@ -65,34 +72,23 @@ presence.on('UpdateData', async () => {
   }
 
   // 4. AUDIO STATUS & TIMESTAMPS
-  const mediaElement = document.querySelector('audio')
-  const hidePausedSetting = await presence.getSetting<boolean>('hidePaused')
-
   if (mediaElement) {
     if (!mediaElement.paused) {
       // -- PLAYING STATE --
-      // Update prevTitle so we know what was last playing
-      prevTitle = tabTitle
-
-      if (!hidePausedSetting)
-        presenceData.smallImageKey = ActivityAssets.Play
+      if(!hidePausedSetting){
+          presenceData.smallImageKey = Assets.Play  
+      }
       presenceData.smallImageText = 'Playing'
 
       const now = Date.now()
       presenceData.startTimestamp = now - (mediaElement.currentTime * 1000)
 
-      if (mediaElement.duration && Number.isFinite(mediaElement.duration) && mediaElement.duration > 0)
+      if (Number.isFinite(mediaElement.duration) && mediaElement.duration > 0)
         presenceData.endTimestamp = now + ((mediaElement.duration - mediaElement.currentTime) * 1000)
     }
     else {
-      // -- PAUSED STATE --
-      if (hidePausedSetting) {
-        // If the title changed while paused, a track switch is in progress — don't clear yet
-        if (tabTitle !== prevTitle)
-          return
-        return presence.clearActivity()
-      }
-      presenceData.smallImageKey = ActivityAssets.Pause
+      // -- PAUSED STATE (only reached when hidePaused is false) --
+      presenceData.smallImageKey = Assets.Pause
       presenceData.smallImageText = 'Paused'
     }
 
