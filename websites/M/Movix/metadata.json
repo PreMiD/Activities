@@ -13,7 +13,7 @@
   "regExp": "([a-z0-9-]+[.])*(movix[.](?:rodeo|website|blog))[/]?",
   "version": "1.0.0",
   "logo": "https://movix.rodeo/movix512.png",
-  "thumbnail": "https://movix.rodeo/movix512.png",
+  "thumbnail": "https://movix.rodeo/thumbnail.png",
   "color": "#dc2626",
   "category": "videos",
   "tags": ["movies", "series", "anime", "watchparty", "streaming"],
