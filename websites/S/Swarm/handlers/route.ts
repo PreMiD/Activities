@@ -27,7 +27,7 @@ export class RouteHandlers {
     href: string,
   ): void {
     presenceData.details = 'swarm.ws'
-    presenceData.state = null
+    delete presenceData.state
     this.viewPageButton(presenceData, settings, href, 'View page')
   }
 
