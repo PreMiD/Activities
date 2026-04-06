@@ -1,4 +1,4 @@
-import { ActivityType, StatusDisplayType, Assets } from 'premid'
+import { ActivityType, Assets, StatusDisplayType } from 'premid'
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/M/Monochrome/assets/logo.png',
@@ -75,8 +75,8 @@ presence.on('UpdateData', async () => {
   if (mediaElement) {
     if (!mediaElement.paused) {
       // -- PLAYING STATE --
-      if(!hidePausedSetting){
-          presenceData.smallImageKey = Assets.Play  
+      if (!hidePausedSetting) {
+        presenceData.smallImageKey = Assets.Play
       }
       presenceData.smallImageText = 'Playing'
 
