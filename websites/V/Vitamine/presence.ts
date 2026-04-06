@@ -71,10 +71,10 @@ async function updatePresence(): Promise<void> {
     showSessionType,
     showQuestionNumber,
   ] = await Promise.all([
-    presence.getSetting<boolean>("showQcmCountdown"),
-    presence.getSetting<boolean>("showCourseName"),
-    presence.getSetting<boolean>("showSessionType"),
-    presence.getSetting<boolean>("showQuestionNumber"),
+    presence.getSetting<boolean>('showQcmCountdown'),
+    presence.getSetting<boolean>('showCourseName'),
+    presence.getSetting<boolean>('showSessionType'),
+    presence.getSetting<boolean>('showQuestionNumber'),
   ])
 
   const hasVisibleInfo = hasVisibleSessionInfo(
