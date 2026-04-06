@@ -65,10 +65,17 @@ function withEmoji(text: string, emoji: string): string {
 }
 
 async function updatePresence(): Promise<void> {
-  const showQcmCountdown = await presence.getSetting<boolean>('showQcmCountdown')
-  const showCourseName = await presence.getSetting<boolean>('showCourseName')
-  const showSessionType = await presence.getSetting<boolean>('showSessionType')
-  const showQuestionNumber = await presence.getSetting<boolean>('showQuestionNumber')
+  const [
+    showQcmCountdown,
+    showCourseName,
+    showSessionType,
+    showQuestionNumber,
+  ] = await Promise.all([
+    presence.getSetting<boolean>("showQcmCountdown"),
+    presence.getSetting<boolean>("showCourseName"),
+    presence.getSetting<boolean>("showSessionType"),
+    presence.getSetting<boolean>("showQuestionNumber"),
+  ])
 
   const hasVisibleInfo = hasVisibleSessionInfo(
     showCourseName,
