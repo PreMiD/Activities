@@ -216,4 +216,3 @@ async function updatePresence(): Promise<void> {
 
 presence.on('UpdateData', updatePresence)
 
-setInterval(updatePresence, 1000)
