@@ -239,7 +239,7 @@ presence.on('UpdateData', async () => {
               presenceData.smallImageKey = Assets.Pause
               presenceData.smallImageText = strings.pause
             }
-            else if (buttons[2]?.textContent.toLowerCase() === 'tetour au live') {
+            else if (buttons[2]?.textContent.toLowerCase() === 'retour au live') {
               // State deferred
               presenceData.smallImageKey = ActivityAssets.Deferred
               presenceData.smallImageText = strings.deferred
