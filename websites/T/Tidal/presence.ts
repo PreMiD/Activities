@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const LOGO_URL = 'https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/logo.png'
 
@@ -70,9 +70,9 @@ presence.on('UpdateData', async () => {
   const [min = 0, sec = 0] = (currentTime ?? '0:0').split(':').map(Number)
 
   if ((min * 60 + sec) * 1000 > 0 || !paused) {
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-      presence.timestampFromFormat(currentTime ?? ''),
-      presence.timestampFromFormat(
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+      timestampFromFormat(currentTime ?? ''),
+      timestampFromFormat(
         document.querySelector<HTMLElement>('time[data-test="duration"]')
           ?.textContent ?? '',
       ),
