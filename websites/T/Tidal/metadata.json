@@ -9,7 +9,11 @@
     {
       "name": "Kyrie",
       "id": "368399721494216706"
-    }
+    },
+	{
+	  "name": "theelgass",
+      "id": "275368935615102976"
+	}
   ],
   "service": "Tidal",
   "description": {
@@ -24,7 +28,7 @@
     "tidal.com"
   ],
   "regExp": "^https?[:][/][/](listen[.])?tidal[.]com[/]",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/thumbnail.png",
   "color": "#000000",
