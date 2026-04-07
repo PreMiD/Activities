@@ -3,6 +3,17 @@ import { Assets } from 'premid'
 import { Utils } from '../utils.js'
 
 export class RouteHandlers {
+  private static viewPageButton(
+    presenceData: PresenceData,
+    settings: Settings,
+    href: string,
+    label: string,
+  ): void {
+    if (settings.showButtons) {
+      presenceData.buttons = [{ label, url: href }]
+    }
+  }
+
   private static seriesHeading(pathname: string): string {
     const slug = pathname.split('/').filter(Boolean)[1] ?? ''
     const docTitle = Utils.titleFromDocument()
@@ -21,29 +32,32 @@ export class RouteHandlers {
 
   static handleBrowsePage(
     presenceData: PresenceData,
-    _settings: Settings,
-    _href: string,
+    settings: Settings,
+    href: string,
   ): void {
     presenceData.details = 'Browsing'
     presenceData.state = 'Exploring the catalog'
+    this.viewPageButton(presenceData, settings, href, 'View Page')
   }
 
   static handlePopularPage(
     presenceData: PresenceData,
-    _settings: Settings,
-    _href: string,
+    settings: Settings,
+    href: string,
   ): void {
     presenceData.details = 'Browsing'
     presenceData.state = 'Seeing what\'s popular'
+    this.viewPageButton(presenceData, settings, href, 'View Page')
   }
 
   static handleRandomPage(
     presenceData: PresenceData,
-    _settings: Settings,
-    _href: string,
+    settings: Settings,
+    href: string,
   ): void {
     presenceData.details = 'Feeling lucky'
     presenceData.state = 'Random series'
+    this.viewPageButton(presenceData, settings, href, 'View Page')
   }
 
   static handleSearchPage(presenceData: PresenceData, search: string): void {
@@ -66,8 +80,8 @@ export class RouteHandlers {
 
   static handleComicChapter(
     presenceData: PresenceData,
-    _settings: Settings,
-    _href: string,
+    settings: Settings,
+    href: string,
     pathname: string,
   ): void {
     const chapterId = pathname.split('/').filter(Boolean)[3] ?? ''
@@ -76,6 +90,8 @@ export class RouteHandlers {
 
     presenceData.details = Utils.trunc(title)
     presenceData.state = `Reading chapter ${chapter}`
+
+    this.viewPageButton(presenceData, settings, href, 'View Chapter')
   }
 
   static handleNovelChapter(
@@ -105,13 +121,15 @@ export class RouteHandlers {
 
   static handleComicSeries(
     presenceData: PresenceData,
-    _settings: Settings,
-    _href: string,
+    settings: Settings,
+    href: string,
     pathname: string,
   ): void {
     const title = this.seriesHeading(pathname)
     presenceData.details = Utils.trunc(title)
     presenceData.state = 'Checking the series out'
+
+    this.viewPageButton(presenceData, settings, href, 'View Comic')
   }
 
   static handleNovelSeries(
