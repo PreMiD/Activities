@@ -23,12 +23,11 @@ export class RouteHandlers {
 
   static handleHomePage(
     presenceData: PresenceData,
-    settings: Settings,
-    href: string,
+    _settings: Settings,
+    _href: string,
   ): void {
     presenceData.details = 'swarm.ws'
     presenceData.state = null
-    this.viewPageButton(presenceData, settings, href, 'View page')
   }
 
   static handleBrowsePage(
@@ -38,7 +37,7 @@ export class RouteHandlers {
   ): void {
     presenceData.details = 'Browsing'
     presenceData.state = 'Exploring the catalog'
-    this.viewPageButton(presenceData, settings, href, 'View page')
+    this.viewPageButton(presenceData, settings, href, 'View Page')
   }
 
   static handlePopularPage(
@@ -48,7 +47,7 @@ export class RouteHandlers {
   ): void {
     presenceData.details = 'Browsing'
     presenceData.state = 'Seeing what\'s popular'
-    this.viewPageButton(presenceData, settings, href, 'View page')
+    this.viewPageButton(presenceData, settings, href, 'View Page')
   }
 
   static handleRandomPage(
@@ -58,7 +57,7 @@ export class RouteHandlers {
   ): void {
     presenceData.details = 'Feeling lucky'
     presenceData.state = 'Random series'
-    this.viewPageButton(presenceData, settings, href, 'View page')
+    this.viewPageButton(presenceData, settings, href, 'View Page')
   }
 
   static handleSearchPage(presenceData: PresenceData, search: string): void {
@@ -92,7 +91,7 @@ export class RouteHandlers {
     presenceData.details = Utils.trunc(title)
     presenceData.state = `Reading chapter ${chapter}`
 
-    this.viewPageButton(presenceData, settings, href, 'View chapter')
+    this.viewPageButton(presenceData, settings, href, 'View Chapter')
   }
 
   static handleNovelChapter(
@@ -130,7 +129,7 @@ export class RouteHandlers {
     presenceData.details = Utils.trunc(title)
     presenceData.state = 'Checking the series out'
 
-    this.viewPageButton(presenceData, settings, href, 'View comic')
+    this.viewPageButton(presenceData, settings, href, 'View Comic')
   }
 
   static handleNovelSeries(
