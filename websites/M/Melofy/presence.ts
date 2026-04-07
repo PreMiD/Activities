@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'logo',
+  Logo = 'https://i.ibb.co/HpfVk6KN/melofy.png',
 }
 
 let cachedData: any = null
