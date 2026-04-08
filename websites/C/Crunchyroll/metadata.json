@@ -52,7 +52,7 @@
     "anime"
   ],
   "iframe": true,
-  "iFrameRegExp": "static.crunchyroll.com",
+  "iFrameRegExp": "^https?:[/][/]static[.]crunchyroll[.]com[/]",
   "settings": [
     {
       "id": "lang",
