@@ -1,3 +1,4 @@
+import type { RoutePresenceContext } from '../types.js'
 import {
   ROUTE_FTV_INFO_PATTERN,
   ROUTE_LIST_PATTERN,
@@ -14,7 +15,6 @@ import {
   shortenId,
 } from '../../core/utils.js'
 import { getCinegraphContext } from '../../features/media.js'
-import type { RoutePresenceContext } from '../types.js'
 import { finalizeRoutePresence } from '../helpers.js'
 
 export async function handleMiscRoutes(

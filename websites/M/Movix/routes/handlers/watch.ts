@@ -1,3 +1,4 @@
+import type { RoutePresenceContext } from '../types.js'
 import {
   EPISODE_CODE_SUFFIX_PATTERN,
   FALLBACK_LOGO,
@@ -20,7 +21,6 @@ import {
   safeDecode,
   shortenId,
 } from '../../core/utils.js'
-import type { RoutePresenceContext } from '../types.js'
 import { finalizeRoutePresence } from '../helpers.js'
 
 export async function handleWatchRoutes(

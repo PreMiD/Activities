@@ -1,5 +1,6 @@
 import type { RoutePresenceContext } from './types.js'
 import { finalizePresence, getPageImage, getPageTitle } from '../core/utils.js'
+
 export function createRoutePresenceContext(
   showTimestamp: boolean,
   showButtons: boolean,

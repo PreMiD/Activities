@@ -1,5 +1,5 @@
-import { ActivityType } from 'premid'
 import type { VariantText, WatchContext } from './types.js'
+import { ActivityType } from 'premid'
 import {
   FALLBACK_LOGO,
   HTTPS_URL_PATTERN,
