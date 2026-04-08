@@ -1,4 +1,4 @@
-﻿import {
+import {
   EPISODE_CODE_SUFFIX_PATTERN,
   FALLBACK_LOGO,
   ROUTE_FTV_WATCH_PATTERN,
@@ -20,8 +20,8 @@ import {
   safeDecode,
   shortenId,
 } from '../../core/utils.js'
-import { finalizeRoutePresence } from '../helpers.js'
 import type { RoutePresenceContext } from '../types.js'
+import { finalizeRoutePresence } from '../helpers.js'
 
 export async function handleWatchRoutes(
   context: RoutePresenceContext,
@@ -184,4 +184,3 @@ export async function handleWatchRoutes(
 
   return null
 }
-

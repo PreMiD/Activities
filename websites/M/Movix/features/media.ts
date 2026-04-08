@@ -1,4 +1,4 @@
-﻿import type { TmdbMediaSummary, TmdbMediaType } from '../core/types.js'
+import type { TmdbMediaSummary, TmdbMediaType } from '../core/types.js'
 import { TMDB_API_BASE, TMDB_API_KEY } from '../core/constants.js'
 import {
   extractQuotedText,
@@ -165,4 +165,3 @@ export async function getCinegraphContext(pageTitle: string, pageImage: string) 
     variants: getCinegraphVariants(graphType),
   }
 }
-

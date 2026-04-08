@@ -1,4 +1,4 @@
-﻿export const SITE_NAME = 'Movix'
+export const SITE_NAME = 'Movix'
 export const FALLBACK_SITE_URL = 'https://movix.rodeo'
 export const FALLBACK_LOGO = `${FALLBACK_SITE_URL}/movix512.png`
 export const TMDB_API_BASE = 'https://api.themoviedb.org/3'
@@ -75,4 +75,3 @@ export const ROUTE_FTV_INFO_PATTERN = /^\/ftv\/info\/([^/]+)$/i
 export const ROUTE_FTV_WATCH_PATTERN = /^\/ftv\/watch\/[^/]+$/i
 export const ROUTE_WRAPPED_PATTERN = /^\/wrapped(?:\/([^/]+))?$/i
 export const EPISODE_CODE_SUFFIX_PATTERN = /\s*-\s*S\d+E\d+$/i
-

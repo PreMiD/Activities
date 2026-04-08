@@ -1,4 +1,4 @@
-﻿import { buildRoutePresence } from './routes/buildRoutePresence.js'
+import { buildRoutePresence } from './routes/buildRoutePresence.js'
 
 const presence = new Presence({
   clientId: '1259926474174238741',
@@ -32,4 +32,3 @@ presence.on('UpdateData', async () => {
     presence.clearActivity()
   }
 })
-

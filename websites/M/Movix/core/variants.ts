@@ -1,4 +1,4 @@
-﻿export const PAGE_DETAIL_VARIANTS: Array<{
+export const PAGE_DETAIL_VARIANTS: Array<{
   pattern: RegExp
   variants: readonly string[]
 }> = [
@@ -563,4 +563,3 @@ export const WATCH_ENDED_VARIANTS: Array<{
     ],
   },
 ]
-

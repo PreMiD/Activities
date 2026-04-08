@@ -1,4 +1,5 @@
-﻿import type { VariantText, WatchContext } from './types.js'
+import { ActivityType } from 'premid'
+import type { VariantText, WatchContext } from './types.js'
 import {
   FALLBACK_LOGO,
   HTTPS_URL_PATTERN,
@@ -33,7 +34,6 @@ import {
   WATCH_PLAYING_VARIANTS,
   WATCH_WAITING_VARIANTS,
 } from './variants.js'
-import { ActivityType } from 'premid'
 
 let lastRouteKey = ''
 let lastRouteStartedAt = Date.now()
@@ -1039,5 +1039,3 @@ export function createSpecificPagePresence(
   presenceData.state = resolveVariantText(state, `${seed}:state`)
   return presenceData
 }
-
-
