@@ -267,7 +267,7 @@ presence.on('UpdateData', () => {
     startTimestamp: pageStartTimestamp,
   }
 
-  const logoUrl = 'https://comikuro.to/pwa/icon-512.png'
+  const logoUrl = 'https://i.imgur.com/AfDB5nr.png'
   ;(presenceData as Record<string, unknown>).largeImageKey = shouldUseMangaCover && mangaCoverUrl ? mangaCoverUrl : logoUrl
 
   if (shouldHideMangaCover) {
