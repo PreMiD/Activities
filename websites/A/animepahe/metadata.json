@@ -20,7 +20,7 @@
     "animepahe.org"
   ],
   "regExp": "^https?[:][/][/]animepahe[.](pw|com|org)[/]",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/animepahe/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/animepahe/assets/thumbnail.png",
   "color": "#d5015b",
