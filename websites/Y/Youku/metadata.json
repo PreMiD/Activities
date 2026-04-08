@@ -7,8 +7,7 @@
   },
   "service": "Youku",
   "description": {
-    "en": "Show your favorite Chinese dramas from Youku on Discord.",
-    "th": "แสดงซีรีส์จีนจาก Youku บน Discord ของคุณ"
+    "en": "Watch as much as you want on YOUKU! Here you will find a wide variety of TV shows, movies, anime, and more with subtitles in your preferred language. Enjoy!"
   },
   "url": "www.youku.tv",
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*youku[.]tv[/]",
