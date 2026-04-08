@@ -4,7 +4,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://images2.imgbox.com/67/70/DlTzPbOG_o.png',
+  Logo = 'https://images2.imgbox.com/27/6a/h63rQ6Yr_o.jpg',
 }
 
 let elapsed = browsingTimestamp
