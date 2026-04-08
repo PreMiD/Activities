@@ -53,9 +53,8 @@ presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
     browsing: 'general.browsing',
     view: 'general.view',
-    homepage: 'cardmarket.homepage',
     gameLabel: 'cardmarket.game',
-    browsingCategory: 'cardmarket.browsingCategory',
+    browsingCategory: 'cardmarket.browsing_category',
   })
 
   const presenceData: PresenceData = {

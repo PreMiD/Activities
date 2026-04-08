@@ -7,15 +7,15 @@
   },
   "service": "Cardmarket",
   "description": {
-    "en": "Shows your current activity on Cardmarket.",
-    "es": "Muestra tu actividad actual en Cardmarket.",
-    "fr": "Affiche votre activité en cours sur Cardmarket."
+    "en": "Cardmarket is Europe's leading online marketplace for trading card games, where users buy and sell singles, sealed products, and accessories.",
+    "es": "Cardmarket es la principal plataforma europea de compraventa de juegos de cartas coleccionables: cartas sueltas, productos sellados y accesorios.",
+    "fr": "Cardmarket est la principale place de marché en ligne européenne pour les jeux de cartes à collectionner : achat et vente de cartes à l'unité, produits scellés et accessoires."
   },
   "url": [
     "www.cardmarket.com",
     "cardmarket.com"
   ],
-  "regExp": "^https?[:][/][/](www[.])?cardmarket[.]com",
+  "regExp": "^https?[:][/][/](www[.])?cardmarket[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/bmVVGUa.jpeg",
   "thumbnail": "https://i.imgur.com/oRY0a6M.jpeg",
