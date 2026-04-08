@@ -6,11 +6,11 @@
   },
   "service": "Movix",
   "description": {
-    "en": "Shows a detailed and slightly absurd Discord presence while browsing Movix.",
-    "fr": "Affiche une présence Discord détaillée et un peu absurde pendant la navigation sur Movix."
+    "en": "Movix is a streaming platform for movies, series, anime, and watch parties.",
+    "fr": "Movix est une plateforme de streaming pour films, series, anime et watch parties."
   },
   "url": ["movix.rodeo", "movix.website", "movix.blog"],
-  "regExp": "([a-z0-9-]+[.])*(movix[.](?:rodeo|website|blog))[/]?",
+  "regExp": "^https:\\/\\/([a-z0-9-]+[.])*(movix[.](?:rodeo|website|blog))(?:[/]|$)",
   "version": "1.0.0",
   "logo": "https://movix.rodeo/movix512.png",
   "thumbnail": "https://movix.rodeo/thumbnail.png",
@@ -21,17 +21,17 @@
   "settings": [
     {
       "id": "showTimestamp",
-      "title": "Afficher le temps",
+      "title": "Show Timestamp",
       "icon": "fas fa-clock",
       "value": true,
-      "description": "Affiche le temps passé sur une page ou la durée média quand elle est disponible."
+      "description": "Show time spent on a page or media duration when available."
     },
     {
       "id": "showButtons",
-      "title": "Afficher le bouton",
+      "title": "Show Buttons",
       "icon": "fas fa-link",
       "value": false,
-      "description": "Ajoute un bouton vers certaines pages profondes quand l'URL est en HTTPS."
+      "description": "Add a button for supported deep pages when the URL uses HTTPS."
     }
   ]
 }
