@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "Neocat",
+    "id": "386490166916939799"
+  },
+  "service": "StudySapuri",
+  "altnames": [
+    "スタディサプリ"
+  ],
+  "description": {
+    "en": "For elementary, middle, and high school students, StudySapuri offers unlimited access to over 40,000 video lessons from professional instructors. These acclaimed easy-to-understand lessons help boost grades efficiently in less time, at a price far lower than cram schools, prep schools, and correspondence education.",
+    "ja": "小中高校生向けに、4万本以上のプロ講師の授業動画が見放題！分かりやすいと評判の「神授業」だから短時間でギュッと効率的に成績アップが目指せる！塾や予備校・通信教育を圧倒的に下回る料金でご提供します。"
+  },
+  "url": [
+    "studysapuri.jp",
+    "learn.studysapuri.jp"
+  ],
+  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*studysapuri[.]jp[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/StudySapuri/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/StudySapuri/assets/thumbnail.png",
+  "color": "#1FABE2",
+  "category": "videos",
+  "tags": [
+    "study",
+    "education",
+    "learning",
+    "videos",
+    "japan"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Show playback timestamps only while a lesson video is actively playing."
+    }
+  ]
+}
