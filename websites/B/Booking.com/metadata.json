@@ -12,8 +12,8 @@
   "url": "www.booking.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])?booking[.]com",
   "version": "1.0.0",
-  "logo": "https://images2.imgbox.com/67/70/DlTzPbOG_o.png",
-  "thumbnail": "https://images2.imgbox.com/1f/5d/Z3LdonqF_o.jpeg",
+  "logo": "https://images2.imgbox.com/27/6a/h63rQ6Yr_o.jpg",
+  "thumbnail": "https://images2.imgbox.com/53/aa/cr2MJEm5_o.jpg",
   "color": "#003580",
   "category": "other",
   "tags": [
