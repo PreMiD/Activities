@@ -291,10 +291,10 @@ function resolveLocale(
     .join(' ')
     .toLowerCase()
 
-  if (/(chương|đọc|duyệt|trang chủ|hồ sơ|người dùng|tiếng việt|tieng viet|[ăâđêôơư])/.test(sharedStringsSnapshot))
+  if (/chương|đọc|duyệt|trang chủ|hồ sơ|người dùng|tiếng việt|tieng viet|[ăâđêôơư]/.test(sharedStringsSnapshot))
     return 'vi'
 
-  if (/(chapter|reading|browsing|viewing home page|viewing user)/.test(sharedStringsSnapshot))
+  if (/chapter|reading|browsing|viewing home page|viewing user/.test(sharedStringsSnapshot))
     return 'en'
 
   return 'vi'
