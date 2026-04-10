@@ -7,9 +7,7 @@
   },
   "service": "MoeTruyen",
   "altnames": [
-    "MoeTruyen",
-    "Mòe Truyện",
-    "moetruyen"
+    "Mòe Truyện"
   ],
   "description": {
     "en": "MoeTruyen is a free Vietnamese manga reader with fast updates for manga, manhwa, and manhua.",
@@ -21,8 +19,8 @@
   ],
   "regExp": "^https?[:][/][/](www[.])?moetruyen[.]net([/]|$)",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/AcBElBO.png",
-  "thumbnail": "https://i.imgur.com/ayxlL6P.png",
+  "logo": "https://i.imgur.com/WWU7hzR.png",
+  "thumbnail": "https://i.imgur.com/8e7bQQY.jpeg",
   "color": "#bcbcbc",
   "category": "anime",
   "tags": [
@@ -32,10 +30,6 @@
     "reading"
   ],
   "settings": [
-    {
-      "id": "lang",
-      "multiLanguage": true
-    },
     {
       "id": "buttons",
       "title": "Show link buttons",

@@ -7,19 +7,20 @@ type SupportedLocale = 'en' | 'vi'
 const customStrings = {
   en: {
     account: 'Account',
+    browsing: 'Browsing',
     browsingForum: 'Browsing forum',
     browsingGroups: 'Browsing groups',
     browsingManga: 'Browsing manga',
     browsingNews: 'Browsing news',
     browsingSite: 'Browsing MoeTruyen',
     buttonViewArticle: 'View article',
-    buttonReadFirstChapter: 'Read first chapter',
+    buttonReadChapter: 'Read chapter',
     buttonReadThisChapter: 'Read this chapter',
-    buttonViewHomePage: 'View home page',
     buttonViewManga: 'View manga',
     catalog: 'Catalog',
     history: 'History',
     messaging: 'Messaging',
+    reading: 'Reading',
     readingChapter: 'Reading a chapter',
     readingForum: 'Reading forum',
     readingNews: 'Reading news',
@@ -36,23 +37,26 @@ const customStrings = {
     viewingReadingHistory: 'Viewing reading history',
     viewingSavedManga: 'Viewing saved manga',
     viewingTranslationGroup: 'Viewing translation group',
+    viewHome: 'Viewing home page',
+    viewUser: 'Viewing user:',
     website: 'Website',
   },
   vi: {
     account: 'Tài khoản',
+    browsing: 'Đang duyệt',
     browsingForum: 'Đang duyệt diễn đàn',
     browsingGroups: 'Đang duyệt nhóm',
     browsingManga: 'Đang duyệt truyện',
     browsingNews: 'Đang duyệt tin tức',
     browsingSite: 'Đang duyệt MoeTruyen',
     buttonViewArticle: 'Xem bài viết',
-    buttonReadFirstChapter: 'Đọc chương đầu',
+    buttonReadChapter: 'Đọc chương',
     buttonReadThisChapter: 'Đọc chương này',
-    buttonViewHomePage: 'Trang chủ',
     buttonViewManga: 'Xem truyện',
     catalog: 'Danh mục',
     history: 'Lịch sử',
     messaging: 'Đang nhắn tin',
+    reading: 'Đang đọc',
     readingChapter: 'Đang đọc chương',
     readingForum: 'Đang đọc diễn đàn',
     readingNews: 'Đang đọc tin tức',
@@ -69,6 +73,8 @@ const customStrings = {
     viewingReadingHistory: 'Đang xem lịch sử đọc',
     viewingSavedManga: 'Đang xem truyện đã lưu',
     viewingTranslationGroup: 'Đang xem nhóm dịch',
+    viewHome: 'Đang xem trang chủ',
+    viewUser: 'Đang xem người dùng:',
     website: 'Trang web',
   },
 } satisfies Record<SupportedLocale, Record<string, string>>
@@ -79,31 +85,10 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-async function getStrings() {
-  return presence.getStrings({
-    browsing: 'general.browsing',
-    chapter: 'general.chapter',
-    reading: 'general.reading',
-    viewHome: 'general.viewHome',
-    viewUser: 'general.viewUser',
-  })
-}
-
-let strings: Awaited<ReturnType<typeof getStrings>>
-let localeStrings = customStrings.en
-let oldLang: string | null = null
-
 presence.on('UpdateData', async () => {
-  const [showButtons, langSetting] = await Promise.all([
-    presence.getSetting<boolean>('buttons'),
-    presence.getSetting<string>('lang').catch(() => 'en'),
-  ])
+  const showButtons = await presence.getSetting<boolean>('buttons')
   const { pathname, href } = document.location
-  if (!strings || langSetting !== oldLang) {
-    oldLang = langSetting
-    strings = await getStrings()
-    localeStrings = customStrings[resolveLocale(langSetting, strings)]
-  }
+  const localeStrings = customStrings[resolveLocale(document.documentElement.lang || navigator.language)]
 
   const presenceData: PresenceData = {
     largeImageKey: LOGO,
@@ -123,7 +108,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = chapterTitle ?? localeStrings.readingChapter
     presenceData.largeImageKey = getReaderLargeImage() ?? LOGO
     presenceData.smallImageKey = Assets.Reading
-    presenceData.smallImageText = strings.reading
+    presenceData.smallImageText = localeStrings.reading
 
     if (showButtons) {
       presenceData.buttons = buildButtons([
@@ -151,33 +136,27 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = buildButtons([
         { label: localeStrings.buttonViewManga, url: href },
-        { label: localeStrings.buttonReadFirstChapter, url: firstChapterUrl },
+        { label: localeStrings.buttonReadChapter, url: firstChapterUrl },
       ])
     }
   }
   else if (pathname === '/') {
-    presenceData.details = strings.viewHome
+    presenceData.details = localeStrings.viewHome
     presenceData.state = localeStrings.siteName
     presenceData.smallImageKey = Assets.Viewing
-    presenceData.smallImageText = strings.browsing
-
-    if (showButtons) {
-      presenceData.buttons = buildButtons([
-        { label: localeStrings.buttonViewHomePage, url: href },
-      ])
-    }
+    presenceData.smallImageText = localeStrings.browsing
   }
   else if (pathname === '/manga') {
     presenceData.details = localeStrings.browsingManga
     presenceData.state = localeStrings.catalog
     presenceData.smallImageKey = Assets.Viewing
-    presenceData.smallImageText = strings.browsing
+    presenceData.smallImageText = localeStrings.browsing
   }
   else if (pathname.startsWith('/tin-tuc')) {
     presenceData.details = pathname === '/tin-tuc' ? localeStrings.browsingNews : localeStrings.viewingNewsPost
     presenceData.state = getDocumentTitle()
     presenceData.smallImageKey = Assets.Viewing
-    presenceData.smallImageText = pathname === '/tin-tuc' ? strings.browsing : localeStrings.readingNews
+    presenceData.smallImageText = pathname === '/tin-tuc' ? localeStrings.browsing : localeStrings.readingNews
   }
   else if (pathname.startsWith('/forum/post/')) {
     presenceData.details = localeStrings.viewingForumPost
@@ -230,7 +209,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = localeStrings.viewingGroup
   }
   else if (pathname.startsWith('/user/')) {
-    presenceData.details = strings.viewUser
+    presenceData.details = localeStrings.viewUser
     presenceData.state = getDocumentTitle()
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = localeStrings.viewingProfile
@@ -239,7 +218,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = localeStrings.browsingSite
     presenceData.state = getDocumentTitle() ?? localeStrings.website
     presenceData.smallImageKey = Assets.Viewing
-    presenceData.smallImageText = strings.browsing
+    presenceData.smallImageText = localeStrings.browsing
   }
 
   if (presenceData.details)
@@ -250,8 +229,12 @@ presence.on('UpdateData', async () => {
 
 function buildButtons(buttons: Array<{ label: string, url: string | null }>): [ButtonData, ButtonData?] | undefined {
   const validButtons = buttons.filter(
-    (button): button is { label: string, url: string } => Boolean(button.label && button.url),
+    (button): button is { label: string, url: string } => Boolean(button.label && normalizeButtonUrl(button.url)),
   )
+    .map(button => ({
+      ...button,
+      url: normalizeButtonUrl(button.url) as string,
+    }))
   const [firstButton, secondButton] = validButtons
 
   if (!firstButton)
@@ -260,10 +243,7 @@ function buildButtons(buttons: Array<{ label: string, url: string | null }>): [B
   return secondButton ? [firstButton, secondButton] : [firstButton]
 }
 
-function resolveLocale(
-  lang: string | null | undefined,
-  strings?: Awaited<ReturnType<typeof getStrings>>,
-): SupportedLocale {
+function resolveLocale(lang: string | null | undefined): SupportedLocale {
   const normalizedLang = normalizeLocaleValue(lang)
 
   if (isVietnameseLocale(normalizedLang))
@@ -278,23 +258,6 @@ function resolveLocale(
     return 'vi'
 
   if (isEnglishLocale(pageLocale))
-    return 'en'
-
-  const sharedStringsSnapshot = [
-    strings?.chapter,
-    strings?.reading,
-    strings?.viewHome,
-    strings?.viewUser,
-  ]
-    .filter(Boolean)
-    .map(value => String(value))
-    .join(' ')
-    .toLowerCase()
-
-  if (/chương|đọc|duyệt|trang chủ|hồ sơ|người dùng|tiếng việt|tieng viet|[ăâđêôơư]/.test(sharedStringsSnapshot))
-    return 'vi'
-
-  if (/chapter|reading|browsing|viewing home page|viewing user/.test(sharedStringsSnapshot))
     return 'en'
 
   return 'vi'
@@ -334,8 +297,9 @@ function cleanText(text: string | null | undefined): string | null {
 function getDocumentTitle(): string | null {
   return cleanText(
     document.title
-      .replace(/\s+[—-]\s+Mòe Truyện$/u, '')
-      .replace(/\s+\|\s+Mòe Truyện$/u, ''),
+      .replace(/^\(\d+\)\s*/u, '')
+      .replace(/\s+[—-]\s+(?:Mòe Truyện|MoeTruyen)$/iu, '')
+      .replace(/\s+\|\s+(?:Mòe Truyện|MoeTruyen)$/iu, ''),
   )
 }
 
@@ -366,6 +330,13 @@ function getImageUrl(image: HTMLImageElement | null | undefined): string | null 
 }
 
 function getReaderLargeImage(): string | null {
+  const coverImage = normalizePresenceImageUrl(
+    document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content,
+  )
+
+  if (coverImage)
+    return coverImage
+
   const loadedImages = Array.from(
     document.querySelectorAll<HTMLImageElement>('img.page-media'),
   )
@@ -396,6 +367,23 @@ function normalizePresenceImageUrl(raw: string | null | undefined): string | nul
 
   try {
     return new URL(imageUrl, document.location.href).href
+  }
+  catch {
+    return null
+  }
+}
+
+function normalizeButtonUrl(raw: string | null | undefined): string | null {
+  const url = normalizePresenceImageUrl(raw)
+
+  if (!url)
+    return null
+
+  try {
+    const normalizedUrl = new URL(url)
+    normalizedUrl.hash = ''
+
+    return normalizedUrl.href
   }
   catch {
     return null
