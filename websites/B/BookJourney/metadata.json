@@ -3,7 +3,7 @@
   "apiVersion": 1,
   "author": {
     "name": "BookJourney Team",
-    "id": "0"
+    "id": "718443364965679165"
   },
   "service": "BookJourney",
   "description": {
@@ -13,7 +13,7 @@
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*bookreading[.]space[/]",
   "version": "1.0.0",
   "logo": "https://raw.githubusercontent.com/quetrea/Activities/821ae5755/websites/B/BookJourney/assets/logo-v2.png",
-  "thumbnail": "https://raw.githubusercontent.com/quetrea/Activities/a64ce90c7/websites/B/BookJourney/assets/thumbnail-v3.png",
+  "thumbnail": "https://bookreading.space/bookjourneythumbnail.png",
   "color": "#5865F2",
   "category": "other",
   "tags": [
