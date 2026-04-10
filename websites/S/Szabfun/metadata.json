@@ -10,10 +10,10 @@
     "en": "Szabfun is a free online gaming platform with fun mini-games and interactive activities."
   },
   "url": "fun.szabee.me",
-  "regExp": "^https?[:][/][/]fun[.]szabee[.]me[/]",
+  "regExp": "^https?[:][/][/]fun[.]szabee[.]me([/]|$)",
   "version": "1.0.0",
-  "logo": "https://fun.szabee.me/img/logo.png",
-  "thumbnail": "https://fun.szabee.me/img/thumbnail.png",
+  "logo": "https://i.imgur.com/uERHbwA.png",
+  "thumbnail": "https://i.imgur.com/IPzIfUO.png",
   "color": "#FFFFFF",
   "category": "games",
   "tags": [

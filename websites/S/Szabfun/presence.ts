@@ -5,12 +5,12 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://fun.szabee.me/img/logo.png',
+  Logo = 'https://i.imgur.com/uERHbwA.png',
 }
 
 const pageNames: Record<string, string> = {
   'tic-tac-toe': 'Tic-tac-toe',
-  'choose-an-username': 'Choose an Username',
+  'choose-a-username': 'Choose a Username',
   'swear-word-generator': 'Swear Word Generator',
   'guess-the-number': 'Guess The Number',
   'watch-some-youtube': 'Watch Some Youtube',
