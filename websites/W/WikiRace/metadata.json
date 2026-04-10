@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "671037171611729920",
+    "name": "Skully"
+  },
+  "service": "WikiRace",
+  "description": {
+    "en": "Use your Wikipedia skills to get from one page to another as quick as possible and try to beat your friends.",
+    "fr": "Utilisez vos compétences sur Wikipédia pour passer d'une page à une autre aussi rapidement que possible et essayez de battre vos amis."
+  },
+  "url": "wiki-race.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wiki-race[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/j6iIk22.png",
+  "thumbnail": "https://i.imgur.com/h9cZbdl.png",
+  "color": "#3732AB",
+  "category": "games",
+  "tags": [
+    "wiki",
+    "race"
+  ],
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}
