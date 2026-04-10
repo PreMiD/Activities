@@ -12,7 +12,6 @@ enum ActivityAssets {
 
 presence.on('UpdateData', async () => {
   const pathname = document.location.pathname
-  const hostname = document.location.hostname
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
