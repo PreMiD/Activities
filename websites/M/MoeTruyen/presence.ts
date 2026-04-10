@@ -1,6 +1,6 @@
 import { Assets } from 'premid'
 
-const LOGO = 'https://i.imgur.com/AcBElBO.png'
+const LOGO = 'https://i.imgur.com/WWU7hzR.png'
 
 type SupportedLocale = 'en' | 'vi'
 
