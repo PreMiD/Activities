@@ -15,14 +15,13 @@
     "www.windy.com",
     "community.windy.com"
   ],
-  "regExp": "([a-z0-9-]+[.])*windy[.]com[/]",
+  "regExp": "^https?:\\/\\/([a-z0-9-]+\\.)*windy\\.com\\/",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/DYIEgcX.png",
-  "thumbnail": "https://i.imgur.com/3nWHyyL.png",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Windy/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Windy/assets/thumbnail.png",
   "color": "#e5cca5",
   "category": "other",
   "tags": [
-    "windy",
     "weather",
     "wmf"
   ],

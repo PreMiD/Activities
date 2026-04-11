@@ -419,7 +419,7 @@ presence.on('UpdateData', async () => {
   const t = i18n[langId as keyof typeof i18n] || i18n[0]
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://i.imgur.com/DYIEgcX.png',
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/W/Windy/assets/logo.png',
     startTimestamp: browsingTimestamp,
   }
 
@@ -481,11 +481,13 @@ presence.on('UpdateData', async () => {
     else if (pathname.includes('/hurricanes/')) {
       const hurricaneName = pathname.split('/hurricanes/')[1]?.split('/')[0]?.replace(/[-_]/g, ' ').toUpperCase() || ''
       presenceData.details = t.exploringHurricanes
-      presenceData.state = hurricaneName
+      presenceData.state = hurricaneName || undefined
     }
     else {
-      const activeLayerMatch: string = search ? (search.substring(1).split(',')[0] || '') : ''
+      // General map exploration
+      const layerTokens = search.substring(1).split(/[:,]/)
       const layersMap: Record<string, string> = t.layers as any
+      const activeLayerMatch = layerTokens.find(token => layersMap[token]) || ''
       const layerTranslated = activeLayerMatch ? layersMap[activeLayerMatch] : undefined
 
       presenceData.details = pathname === '/' ? t.globalMap : t.exploringWindy
