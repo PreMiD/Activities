@@ -484,7 +484,6 @@ presence.on('UpdateData', async () => {
       presenceData.state = hurricaneName
     }
     else {
-      // General map exploration
       const activeLayerMatch: string = search ? (search.substring(1).split(',')[0] || '') : ''
       const layersMap: Record<string, string> = t.layers as any
       const layerTranslated = activeLayerMatch ? layersMap[activeLayerMatch] : undefined
