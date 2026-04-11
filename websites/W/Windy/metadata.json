@@ -1,0 +1,68 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "alexxhumilde",
+    "id": "829868469326970900"
+  },
+  "service": "Windy",
+  "description": {
+    "en": "Windy provides accurate, professional, and real-time interactive weather forecasts worldwide. Visualize air quality, storms, winds, and multiple specialized layers for advanced tracking. Trusted by professional pilots, meteorologists, and weather enthusiasts globally.",
+    "es": "Windy ofrece pronósticos meteorológicos interactivos precisos, profesionales y en tiempo real a nivel mundial. Visualiza calidad del aire, tormentas, vientos y múltiples capas especializadas para seguimiento meteorológico avanzado. Confiado por pilotos y meteorólogos en todo el planeta."
+  },
+  "url": [
+    "windy.com",
+    "www.windy.com",
+    "community.windy.com"
+  ],
+  "regExp": "([a-z0-9-]+[.])*windy[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/DYIEgcX.png",
+  "thumbnail": "https://i.imgur.com/3nWHyyL.png",
+  "color": "#e5cca5",
+  "category": "other",
+  "tags": [
+    "windy",
+    "weather",
+    "wmf"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "title": "Language",
+      "icon": "fas fa-language",
+      "value": 0,
+      "values": [
+        "English",
+        "Español",
+        "Português",
+        "Français",
+        "Deutsch"
+      ]
+    },
+    {
+      "id": "showLayer",
+      "title": "Show current weather layer",
+      "icon": "fas fa-layer-group",
+      "value": true
+    },
+    {
+      "id": "showStation",
+      "title": "Show selected station",
+      "icon": "fas fa-broadcast-tower",
+      "value": true
+    },
+    {
+      "id": "showMenu",
+      "title": "Show Main Menu status",
+      "icon": "fas fa-bars",
+      "value": false
+    },
+    {
+      "id": "showSettings",
+      "title": "Show Settings status",
+      "icon": "fas fa-cog",
+      "value": true
+    }
+  ]
+}
