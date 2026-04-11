@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat, StatusDisplayType } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, StatusDisplayType, timestampFromFormat } from 'premid'
 
 let elapsed = Math.floor(Date.now() / 1000)
 let prevUrl = document.location.href
@@ -573,23 +573,6 @@ presence.on('UpdateData', async () => {
           delete presenceData.endTimestamp
           presenceData.smallImageKey = Assets.Pause
           presenceData.smallImageText = strings.pause
-        }
-
-        // Set streamer name for both live and video
-        let streamerName: string | undefined
-        if (showLive && live) {
-          streamerName = document.querySelector('.channel-info-content h1')?.textContent
-            ?? document
-              .querySelector('[class*="metadata-layout__support"]')
-              ?.querySelector('a')
-              ?.textContent
-        }
-        else if (showVideo && !live) {
-          streamerName = document.querySelector('.channel-info-content h1')?.textContent
-            ?? document
-              .querySelector('[class*="metadata-layout__support"]')
-              ?.querySelector('a')
-              ?.textContent
         }
 
         //* Privacy mode enabled.
