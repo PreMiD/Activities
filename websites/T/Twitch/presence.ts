@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat, StatusDisplayType } from 'premid'
 
 let elapsed = Math.floor(Date.now() / 1000)
 let prevUrl = document.location.href
@@ -144,7 +144,7 @@ presence.on('UpdateData', async () => {
     logo,
     devLogo,
     buttons,
-    streamerTitle,
+    displayType,
   ] = await Promise.all([
     presence.getSetting<boolean>('browse'),
     presence.getSetting<boolean>('live'),
@@ -160,7 +160,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<number>('logo'),
     presence.getSetting<number>('devLogo'),
     presence.getSetting<boolean>('buttons'),
-    presence.getSetting<boolean>('streamerTitle'),
+    presence.getSetting<number>('displayType'),
   ])
 
   if (oldLang !== newLang || !strings) {
@@ -500,9 +500,6 @@ presence.on('UpdateData', async () => {
             ?.src
             ?.replace(/-\d{1,2}x\d{1,2}/, '-600x600')
             ?? (logoArr[logo] || ActivityAssets.Logo)
-          if (streamer && streamerTitle && !privacy) {
-            presenceData.name = streamer
-          }
           presenceData.details = streamDetail
             .replace('%title%', title ?? '')
             .replace('%streamer%', streamer ?? '')
@@ -578,6 +575,23 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageText = strings.pause
         }
 
+        // Set streamer name for both live and video
+        let streamerName: string | undefined
+        if (showLive && live) {
+          streamerName = document.querySelector('.channel-info-content h1')?.textContent
+            ?? document
+              .querySelector('[class*="metadata-layout__support"]')
+              ?.querySelector('a')
+              ?.textContent
+        }
+        else if (showVideo && !live) {
+          streamerName = document.querySelector('.channel-info-content h1')?.textContent
+            ?? document
+              .querySelector('[class*="metadata-layout__support"]')
+              ?.querySelector('a')
+              ?.textContent
+        }
+
         //* Privacy mode enabled.
         if (privacy && showLive && live) {
           presenceData.details = strings.watchingLive
@@ -590,6 +604,21 @@ presence.on('UpdateData', async () => {
         else if (showBrowsing && (!showVideo || !showLive)) {
           presenceData.details = strings.browse
           delete presenceData.state
+        }
+
+        switch (displayType) {
+          case 0: {
+            presenceData.statusDisplayType = StatusDisplayType.Name
+            break
+          }
+          case 1: {
+            presenceData.statusDisplayType = StatusDisplayType.Details
+            break
+          }
+          case 2: {
+            presenceData.statusDisplayType = StatusDisplayType.State
+            break
+          }
         }
       }
 
@@ -965,9 +994,6 @@ presence.on('UpdateData', async () => {
   }
   if (privacy || !buttons)
     delete presenceData.buttons
-
-  if (privacy)
-    delete presenceData.name
 
   if (presenceData.details)
     presence.setActivity(presenceData)
