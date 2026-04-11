@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "378501743366897675",
+    "name": "hackviser"
+  },
+  "service": "Hackviser",
+  "description": {
+    "en": "Hackviser is an online cybersecurity training platform where you can practice hacking skills through labs, CTF challenges, learning paths, and real-world scenarios.",
+    "tr": "Hackviser, laboratuvarlar, CTF yarışmaları, öğrenme yolları ve gerçek dünya senaryoları aracılığıyla siber güvenlik becerilerinizi geliştirebileceğiniz çevrimiçi bir eğitim platformudur."
+  },
+  "url": "hackviser.com",
+  "regExp": "^https?[:][/][/]([a-zA-Z0-9-]+[.])*hackviser[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/ns57qq7g/512x512.jpg",
+  "thumbnail": "https://github.com/user-attachments/assets/bf3d8382-4789-494e-802a-244f571bf676?v=.png",
+  "color": "#00ff00",
+  "category": "other",
+  "tags": [
+    "cybersecurity",
+    "hacking",
+    "ctf",
+    "labs",
+    "learning"
+  ]
+}
