@@ -435,7 +435,8 @@ presence.on('UpdateData', async () => {
       if (showSettings) {
         presenceData.details = t.settings
         presenceData.state = t.modifyingSettings
-      } else {
+      }
+      else {
         presenceData.details = t.exploringWindy
       }
     }
@@ -443,7 +444,8 @@ presence.on('UpdateData', async () => {
       if (showMenu) {
         presenceData.details = t.mainMenu
         presenceData.state = t.navigating
-      } else {
+      }
+      else {
         presenceData.details = t.exploringWindy
       }
     }
@@ -452,7 +454,7 @@ presence.on('UpdateData', async () => {
         let stationName = document.querySelector('.station-title')?.textContent?.trim()
           || document.title.split('-')[0]?.trim()
           || t.stationFallback
-        stationName = stationName.replace(/\s*\([^)]*(estaci[oó]n|station|estação|wetterstation)[^)]*\)/gi, '')
+        stationName = stationName.replace(/\s*\([^)]*(?:estaci[oó]n|station|estação|wetterstation)[^)]*\)/gi, '')
         stationName = stationName.replace(/\s*\(undefined\)/gi, '')
         stationName = stationName.replace(/^Windy:\s*/i, '').trim()
         presenceData.details = stationName
@@ -496,7 +498,7 @@ presence.on('UpdateData', async () => {
 
     presence.setActivity(presenceData)
   }
-  catch (error) {
+  catch {
     presence.clearActivity()
   }
 })
