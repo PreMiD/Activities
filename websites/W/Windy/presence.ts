@@ -452,7 +452,10 @@ presence.on('UpdateData', async () => {
         let stationName = document.querySelector('.station-title')?.textContent?.trim()
           || document.title.split('-')[0]?.trim()
           || t.stationFallback
-        presenceData.details = stationName.replace(/\s*\(undefined\)/gi, '').trim()
+        stationName = stationName.replace(/\s*\([^)]*(estaci[oó]n|station|estação|wetterstation)[^)]*\)/gi, '')
+        stationName = stationName.replace(/\s*\(undefined\)/gi, '')
+        stationName = stationName.replace(/^Windy:\s*/i, '').trim()
+        presenceData.details = stationName
         presenceData.state = t.weatherStation
       }
       else {
