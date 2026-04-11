@@ -181,7 +181,9 @@ function getActiveEpisode(pathname: string, search: string): string {
     if (num) return num[0];
   }
 
-  const newSiteVersion = document.querySelector('[data-selected="1"]');
+  const newSiteVersion = document.querySelector(
+    'div.wB div[data-selected="1"]',
+  );
   if (newSiteVersion) {
     const text = newSiteVersion.textContent?.trim();
     const match = text?.match(/(\d+)/);
