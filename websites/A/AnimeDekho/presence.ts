@@ -12,7 +12,7 @@ let data: {
   duration: number
   paused: boolean
   timestamp: number
-} = null as any
+} | null = null
 
 // Track the last URL to detect page changes
 let lastUrl = document.location.href
@@ -53,7 +53,7 @@ presence.on('iFrameData', (iframeData: { currTime: number, duration: number, pau
 _urlCheckInterval = setInterval(() => {
   const currentUrl = document.location.href
   if (currentUrl !== lastUrl) {
-    data = null as any
+    data = null
     lastUrl = currentUrl
   }
 }, 1000)
@@ -74,7 +74,7 @@ presence.on('UpdateData', async () => {
   // Check if data is stale (more than 3 seconds old)
   const now = Date.now()
   if (data && now - data.timestamp > 3000) {
-    data = null as any
+    data = null
   }
 
   // Set default logo only for homepage and non-anime pages
@@ -90,7 +90,6 @@ presence.on('UpdateData', async () => {
 
   // Search page
   else if (search.startsWith('?s=')) {
-    // amazonq-ignore-next-line
     const searchQuery = document.querySelector('h1.section-title span')?.textContent
     presenceData.details = 'Searching'
     presenceData.state = searchQuery ? `for "${searchQuery}"` : 'for ...'
@@ -106,19 +105,19 @@ presence.on('UpdateData', async () => {
   }
 
   // Series category page
-  else if (pathname === '/series/') {
+  else if (pathname === '/serie/') {
     presenceData.details = 'Browsing Series Category'
     presenceData.smallImageKey = ActivityAssets.Searching
   }
 
   // Movie category page
-  else if (pathname === '/movie/') {
+  else if (pathname === '/movies/') {
     presenceData.details = 'Browsing Movie Category'
     presenceData.smallImageKey = ActivityAssets.Searching
   }
 
   // Anime page
-  else if (pathname.startsWith('/series/')) {
+  else if (pathname.startsWith('/serie/')) {
     const title = document.querySelector('h1')?.textContent
     const thumbnail = document.querySelector('.post-thumbnail img')?.getAttribute('src')
 
@@ -139,7 +138,7 @@ presence.on('UpdateData', async () => {
   }
 
   // Movie page
-  else if (pathname.startsWith('/movie/') && pathname !== '/movie/') {
+  else if (pathname.startsWith('/movies/') && pathname !== '/movies/') {
     const title = document.querySelector('h1')?.textContent
     const thumbnail = document.querySelector('.post-thumbnail img')?.getAttribute('src')
 
@@ -230,7 +229,7 @@ presence.on('UpdateData', async () => {
           const animeId = match[1].replace(/-\d+x\d+$/, '')
           presenceData.buttons.push({
             label: 'View Series',
-            url: `${document.location.origin}/series/${animeId}`,
+            url: `${document.location.origin}/serie/${animeId}`,
           })
         }
       }

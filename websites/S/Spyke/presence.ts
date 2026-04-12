@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1161544315105976342',
+  clientId: '1475915807660707990',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 enum ActivityAssets {
@@ -67,11 +67,11 @@ presence.on('UpdateData', async () => {
         presence.setActivity(presenceData)
       }
     }
-    else if (document.location.href.includes('/g/')) {
+    else if (document.location.href.includes('/?group=')) {
       const res = await postGQLAPI(
         'presencegrp',
         'query presencegrp($name:String!){ communityByName(name:$name) { name dp cover}}',
-        { name: document.location.href.split('/g/')[1] },
+        { name: document.location.href.split('/?group=')[1] },
       )
       presenceData.largeImageKey = res.data.communityByName.cover
       presenceData.smallImageKey = res.data.communityByName.dp

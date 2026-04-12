@@ -217,7 +217,7 @@ const periodicCheck = setInterval(() => {
   }
 }, 3000)
 
-if (window.location.hostname.includes('animedekho.co')
+if (window.location.hostname.includes('animedekho.app')
   || window.location.hostname.includes('abysscdn.com')
   || window.location.hostname.includes('short.icu')) {
   findAndTrackVideo()

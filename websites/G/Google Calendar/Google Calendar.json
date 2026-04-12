@@ -71,6 +71,10 @@
     "description": "Displayed when the user is searching for an event.",
     "message": "Searching the event:"
   },
+  "googlecalendar.viewingAnEvent": {
+    "description": "Displayed when the user is viewing an event.",
+    "message": "Viewing an event"
+  },
   "googlecalendar.viewingCalendar": {
     "description": "Displayed when the user is viewing a calendar.",
     "message": "Viewing the calendar"

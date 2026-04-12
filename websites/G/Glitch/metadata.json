@@ -11,13 +11,9 @@
     "ga": "Is é Glitch an pobal cairdiúil inar féidir leat an app do aislingí a aimsiú nó a chruthú. Tá níos mó ná milliún duine anois mar chuid de phobal Glitch, ag cruthú apps, bots, láithreáin ghréasáin, tionscadail ealaíne, eispéiris réaltachta fhíorúla, grafaicí faisnéise idirghníomhacha agus i bhfad níos mó.",
     "nl": "Glitch is de vriendelijke community waar je de app van je dromen kunt vinden of maken. Meer dan een miljoen mensen zijn onderdeel geworden van de Glitch-community en hebben geweldige apps, bots, websites, kunstprojecten, virtual reality-ervaringen, interactieve infographics en nog veel meer gemaakt."
   },
-  "url": [
-    "glitch.com",
-    "support.glitch.com",
-    "status.glitch.com"
-  ],
+  "url": "glitch.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*glitch([.][a-z]+)+[/]",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Glitch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Glitch/assets/thumbnail.png",
   "color": "#f003fc",

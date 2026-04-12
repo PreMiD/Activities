@@ -5,40 +5,66 @@
     "id": "374905512661221377",
     "name": "slowlife."
   },
+  "contributors": [
+    {
+      "id": "711329563715698760",
+      "name": "Algerization"
+    }
+  ],
   "service": "Cineby",
   "description": {
-    "en": "Watch Free TV Shows Online, Watch Free Movies Online"
+    "en": "Watch free TV shows and movies online"
   },
-  "url": "www.cineby.app",
-  "regExp": "^https?[:][/][/]www\\.cineby\\.[a-z]",
-  "version": "1.1.0",
+  "url": "www.cineby.sc",
+  "regExp": "^https?[:][/][/](www[.])?cineby[.](sc|gd|app)[/]?",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/thumbnail.png",
   "color": "#fb0013",
   "category": "videos",
-  "tags": [
-    "series",
-    "movies",
-    "anime"
-  ],
+  "tags": ["series", "movies", "anime"],
   "settings": [
     {
       "id": "showBrowsing",
       "title": "Show Browsing",
       "icon": "fad fa-search",
-      "value": false
+      "value": false,
+      "description": "Show when browsing Cineby without watching content."
     },
     {
       "id": "useActivityName",
       "title": "Show Title as Activity",
       "icon": "fad fa-user-edit",
-      "value": true
+      "value": true,
+      "description": "Show the movie or show title in the Rich Presence."
     },
     {
       "id": "showCover",
       "title": "Show Cover",
       "icon": "fas fa-images",
-      "value": true
+      "value": true,
+      "description": "Display the movie/episode poster thumbnail."
+    },
+    {
+      "id": "showPlaybackTimer",
+      "title": "Show Playback Timer",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Show playback progress (elapsed/remaining) in Discord."
+    },
+    {
+      "id": "showEpisodeInfo",
+      "title": "Show Episode Information",
+      "icon": "fas fa-tv",
+      "value": true,
+      "description": "Display season and episode when watching TV shows."
+    },
+    {
+      "id": "showWatchEpisodeButton",
+      "title": "Enable \"Watch Episode\" Button",
+      "icon": "fas fa-external-link-alt",
+      "value": true,
+      "description": "Show button linking to the current movie or episode."
     }
   ]
 }

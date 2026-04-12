@@ -42,6 +42,7 @@ async function getStrings() {
   })
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)
+const svgCache = new Map<string, string>()
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/T/TBM/assets/logo.png',
@@ -57,6 +58,10 @@ enum ActivityAssets {
 }
 
 async function svgToPng(svgUrl: string): Promise<string | undefined> {
+  if (svgCache.has(svgUrl)) {
+    return svgCache.get(svgUrl)
+  }
+
   if (!svgUrl || !svgUrl.endsWith('.svg'))
     return
 
@@ -92,6 +97,7 @@ async function svgToPng(svgUrl: string): Promise<string | undefined> {
     ctx.drawImage(img, x, y, img.width, img.height)
 
     png = canvas.toDataURL('image/png')
+    svgCache.set(svgUrl, png)
   }
 
   URL.revokeObjectURL(url)
@@ -231,8 +237,10 @@ presence.on('UpdateData', async () => {
         presenceData.details = strings.viewLines
         presenceData.smallImageKey = ActivityAssets.Lines
         if (document.querySelector('.title-line')) {
+          const departureStop = document.querySelector('.lines > h2:nth-of-type(1)')
+          const arrivalStop = document.querySelector('.lines > h2:nth-of-type(2)')
           presenceData.details = strings.viewLineInfo
-          presenceData.state = `${document.querySelector('.lines > h2:nth-of-type(1)')?.textContent} ↔ ${document.querySelector('.lines > h2:nth-of-type(2)')?.textContent}`
+          presenceData.state = `${departureStop?.textContent}${arrivalStop ? ` ↔ ${arrivalStop?.textContent}` : ''}`
           svgImg = document.querySelector<HTMLImageElement>('.tbm-icon-picto > img')
           if (svgImg) {
             presenceData.smallImageKey = await svgToPng(svgImg?.src)

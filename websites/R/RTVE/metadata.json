@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "970249245955354696",
+    "name": "_sailok"
+  },
+  "service": "RTVE",
+  "description": {
+    "en": "News, sports, current affairs, albums, series and programs, and the latest from Spain and the world.",
+    "es": "Noticias, deportes, actualidad, álbumes, series y programas, y la última hora de España y el mundo."
+  },
+  "url": "rtve.es",
+  "regExp": "^https?[:][/][/](www[.])?rtve[.]es[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RTVE/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RTVE/assets/thumbnail.png",
+  "color": "#f56b0d",
+  "category": "videos",
+  "tags": [
+    "tv",
+    "radio",
+    "news",
+    "streaming",
+    "clan",
+    "series",
+    "playz",
+    "public-broadcaster"
+  ],
+  "iframe": true,
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover Images",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}

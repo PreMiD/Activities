@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "CRUGG",
+    "id": "228965621478588416"
+  },
+  "service": "npm",
+  "description": {
+    "de": "Der Node Package Manager ist ein Paketmanager für die JavaScript-Laufzeitumgebung node.js.",
+    "en": "The Node Package Manager is a package manager for the JavaScript runtime environment node.js.",
+    "nl": "De Node Package Manager is een pakketbeheerder voor de JavaScript-runtime-omgeving node.js."
+  },
+  "url": "www.npmjs.com",
+  "regExp": "^https?[:][/][/](www[.])?npmjs[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/npm/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/npm/assets/thumbnail.png",
+  "color": "#C12127",
+  "category": "other",
+  "tags": [
+    "programming"
+  ]
+}
