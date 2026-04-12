@@ -12,7 +12,7 @@
   "url": "duel.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*duel[.]com[/]",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/a/vuyXJvx",
+  "logo": "https://i.imgur.com/a/vuyXJvx.png",
   "thumbnail": "https://duel.com/assets/header-md-6tXH1jdN.webp",
   "color": "#1a2c4a",
   "category": "games",
