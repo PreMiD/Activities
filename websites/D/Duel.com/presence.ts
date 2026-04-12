@@ -18,18 +18,15 @@ presence.on('UpdateData', async () => {
 
   presenceData.name = 'Duel.com | Crypto Casino'
 
-  const { pathname, search } = document.location
-  let gameProvider = 'unknown provider'
-  let gameName = 'unknown game'
-
- const originals = ['blackjack', 'dice', 'crash', 'plinko', 'mines', 'beef', 'keno', 'castle-roulette', 'video-poker']
+  const { pathname } = document.location
+  const originals = ['blackjack', 'dice', 'crash', 'plinko', 'mines', 'beef', 'keno', 'castle-roulette', 'video-poker']
   const toTitleCase = (str: string) => str.replace(/\b\w/g, l => l.toUpperCase())
   const currentOriginal = originals.find(game => pathname === `/${game}`)
 
-  if (showTimestamp) {
+  if (showTimestamp)
     presenceData.startTimestamp = browsingTimestamp
-  }
-if (currentOriginal || pathname.includes('/casino/provably-fair/')) {
+
+  if (currentOriginal || pathname.includes('/casino/provably-fair/')) {
     const name = currentOriginal
       ? toTitleCase(currentOriginal)
       : toTitleCase(pathname.split('/casino/provably-fair/').pop()?.replaceAll('-', ' ') ?? 'unknown game')
@@ -60,9 +57,7 @@ if (currentOriginal || pathname.includes('/casino/provably-fair/')) {
     presenceData.state = 'Browsing Sports...'
   }
 
-
-  
-   if (showBal) {
+  if (showBal) {
     const currencyContainer = document.querySelector('[data-testid="currency-value"]')
     const balanceText = Array.from(currencyContainer?.querySelectorAll('span') ?? [])
       .map(s => s.textContent?.trim())
@@ -84,8 +79,6 @@ if (currentOriginal || pathname.includes('/casino/provably-fair/')) {
   else {
     presenceData.details = 'Balance: Hidden'
   }
-
- 
 
   presenceData.stateUrl = document.location.href
   presence.setActivity(presenceData)
