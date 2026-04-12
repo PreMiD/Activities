@@ -9,36 +9,11 @@ enum ActivityAssets {
   OpenBook = 'https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/0.png',
 }
 
-let playback: boolean = false
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-let iFrameVideo: boolean,
-  currentTime: number,
+let currentTime: number,
   duration: number,
   paused: boolean
-
-interface iFrameData {
-  iFrameVideoData: {
-    iFrameVideo: boolean
-    currTime: number
-    dur: number
-    paused: boolean
-  }
-}
-
-presence.on('iFrameData', (inc: unknown) => {
-  const data = inc as iFrameData
-  playback = data.iFrameVideoData !== null
-
-  if (playback) {
-    ({
-      iFrameVideo,
-      currTime: currentTime,
-      dur: duration,
-      paused,
-    } = data.iFrameVideoData)
-  }
-})
 
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
@@ -74,8 +49,17 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('hideWhenPaused'),
   ])
 
+  let video = false
+  const player = document.querySelector<HTMLVideoElement>('#player-container > div > video')
+  if (player !== null && !Number.isNaN(player.duration)) {
+    video = true
+    currentTime = player.currentTime
+    duration = player.duration
+    paused = player.paused
+  }
+
   if (
-    iFrameVideo !== false
+    video !== false
     && !Number.isNaN(duration)
     && pathname.includes('/watch/')
   ) {
