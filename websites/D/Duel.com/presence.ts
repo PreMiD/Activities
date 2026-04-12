@@ -14,7 +14,7 @@ presence.on('UpdateData', async () => {
   ])
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://s3-eu-west-1.amazonaws.com/tpd/logos/67c8f36b11f3ffaeab0a7937/0x0.png',
+    largeImageKey: 'https://imgur.com/vc9ErETg',
     details: 'duel.com',
   }
 
