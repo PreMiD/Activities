@@ -6,15 +6,12 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets {
-  Logo = 'https://i.imgur.com/VoTEoEt.png',
-}
-
 presence.on('UpdateData', async () => {
   const pathname = document.location.pathname
+  const href = document.location.href
 
   const presenceData: PresenceData = {
-    largeImageKey: ActivityAssets.Logo,
+    largeImageKey: 'https://i.imgur.com/VoTEoEt.png',
     startTimestamp: browsingTimestamp,
   }
 
@@ -38,8 +35,9 @@ presence.on('UpdateData', async () => {
   // Specific achievement/trophy
   else if (pathname.includes('/achievement/') || pathname.includes('/trophy/')) {
     const achievementTitle = document.querySelector('.award-title a')?.textContent?.trim()
-    presenceData.details = 'Viewing Achievement'
-    presenceData.state = achievementTitle || 'Achievement Details'
+    const isTrophy = pathname.includes('/trophy/')
+    presenceData.details = isTrophy ? 'Viewing Trophy' : 'Viewing Achievement'
+    presenceData.state = achievementTitle || (isTrophy ? 'Trophy Details' : 'Achievement Details')
   }
   // Leaderboards
   else if (pathname.includes('/leaderboard')) {
@@ -56,7 +54,7 @@ presence.on('UpdateData', async () => {
   else if (pathname.includes('/forums') || pathname.includes('/threads')) {
     const threadTitle = document.querySelector('h1, .thread-title')
     presenceData.details = 'In Forums'
-    presenceData.state = threadTitle ? threadTitle.textContent?.substring(0, 128) || 'Reading Forum' : 'Browsing Forums'
+    presenceData.state = threadTitle ? threadTitle.textContent || 'Reading Forum' : 'Browsing Forums'
   }
   // Account/Settings
   else if (pathname.includes('/account')) {
@@ -71,5 +69,5 @@ presence.on('UpdateData', async () => {
   if (presenceData.details)
     presence.setActivity(presenceData)
   else
-    presence.setActivity()
+    presence.clearActivity()
 })
