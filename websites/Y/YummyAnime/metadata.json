@@ -18,7 +18,7 @@
   },
   "url": "yummyani.me",
   "regExp": "^https?[:][/][/](www[.])?(old[.])?(en[.])?(ru[.])?yummyani[.]me[/]",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/thumbnail.png",
   "color": "#FF5722",
