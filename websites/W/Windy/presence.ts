@@ -419,7 +419,7 @@ presence.on('UpdateData', async () => {
   const t = i18n[langId as keyof typeof i18n] || i18n[0]
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/W/Windy/assets/logo.png',
+    largeImageKey: 'https://i.imgur.com/DYIEgcX.png',
     startTimestamp: browsingTimestamp,
   }
 
