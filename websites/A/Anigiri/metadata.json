@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "769618105990643803",
+    "name": "vordlex"
+  },
+  "service": "Anigiri",
+  "description": {
+    "da": "Din kilde til anime!",
+    "de": "Deine Quelle für Anime!",
+    "en": "Your Anime Source!",
+    "es": "¡Tu fuente de anime!",
+    "fi": "Anime-lähteesi!",
+    "fr": "Votre source d’anime !",
+    "it": "La tua fonte di anime!",
+    "nl": "Jouw bron voor anime!",
+    "no": "Din kilde til anime!",
+    "pt": "A sua fonte de anime!",
+    "pt-br": "Sua fonte de animes!",
+    "sv": "Din källa för anime!"
+  },
+  "url": "anigiri.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anigiri[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://anigiri.com/icon-512.png",
+  "thumbnail": "https://anigiri.com/images/default_banner.jpg",
+  "color": "#22c55e",
+  "category": "anime",
+  "tags": ["anime", "streaming"]
+}
