@@ -1,5 +1,5 @@
 export const SITE_NAME = 'Movix'
-export const FALLBACK_SITE_URL = 'https://movix.rodeo'
+export const FALLBACK_SITE_URL = 'https://movix.llc'
 export const FALLBACK_LOGO = `${FALLBACK_SITE_URL}/movix512.png`
 export const TMDB_API_BASE = 'https://api.themoviedb.org/3'
 export const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p'
