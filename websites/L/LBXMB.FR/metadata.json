@@ -1,0 +1,75 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "intetrverti",
+    "id": "674329017339346955"
+  },
+  "service": "LBXMB.FR",
+  "altnames": [
+    "LBXMB",
+    "lbxmb"
+  ],
+  "description": {
+    "en": "LBXMB.FR is a French community offering resources, guides, and tools for Xbox, PlayStation, and Nintendo modding.",
+    "fr": "LBXMB.FR est une communauté française proposant des ressources, guides et outils pour le modding Xbox, PlayStation et Nintendo."
+  },
+  "url": "lbxmb.fr",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*lbxmb[.]fr[/]",
+  "version": "1.0.0",
+  "logo": "https://lbxmb.fr/lbxmb.png",
+  "thumbnail": "https://lbxmb.fr/lbxmb.png",
+  "color": "#3b82f6",
+  "category": "games",
+  "tags": [
+    "lbxmb",
+    "gaming",
+    "modding",
+    "xbox",
+    "playstation",
+    "nintendo",
+    "resources",
+    "guides"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false,
+      "description": "Hide all activity details from others"
+    },
+    {
+      "id": "time",
+      "title": "Show timestamp",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "description": "Show elapsed time since you started browsing"
+    },
+    {
+      "id": "showPage",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show current page",
+      "icon": "fas fa-file-alt",
+      "value": true,
+      "description": "Show the current section you are visiting"
+    },
+    {
+      "id": "buttons",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "description": "Show a button linking to LBXMB.FR"
+    }
+  ],
+  "mobile": true
+}
