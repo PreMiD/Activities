@@ -22,13 +22,14 @@ const logosManuais: { [key: string]: string } = {
   // --- Grupo MLSSEASON PASS ---
 }
 
-const logoPadrao = "logo.png"
-const browsingTimestamp = Math.floor(Date.now() / 1000)
-let ultimoTituloFilme = ""
-let ultimaLogoFilme = ""
-let lastHref = ""
-let ultimoCanal = ""
-let ultimoManual = ""
+const logoPadrao = 'https://raw.githubusercontent.com/PreMiD/Activities/fc9e8b561349b7433267e3ccfc408f41c8f2cf68/websites/T/TV-Streaming/logo.png'
+const _browsingTimestamp = Math.floor(Date.now() / 1000)
+
+let ultimoTituloFilme = ''
+let ultimaLogoFilme = ''
+let lastHref = ''
+let ultimoCanal = ''
+let ultimoManual = ''
 let bloquearManual = false
 
 document.addEventListener('click', (e) => {
