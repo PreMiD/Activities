@@ -189,8 +189,8 @@ presence.on('UpdateData', async () => {
 
       const infoFinal
         = descSeries?.textContent?.trim()
-        || descEpisodio?.textContent?.trim()
-        || ''
+          || descEpisodio?.textContent?.trim()
+          || ''
 
       if (infoFinal && infoFinal !== 'N/A') {
         stateText = infoFinal
