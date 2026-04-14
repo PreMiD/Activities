@@ -1,0 +1,34 @@
+{
+  "author": {
+    "name": "hostwarp",
+    "id": "1363276484436820019"
+  },
+  "service": "TV & Streaming",
+  "description": {
+    "en": "",
+    "pt-BR": ""
+  },
+  "url": "http://webtv.iptvsmarters.com",
+  "regExp": "webtv\\.iptvsmarters\\.com",
+  "version": "1.0.2",
+  "logo": "logo.png",
+  "thumbnail": "thumbnail.jpeg",
+  "color": "#ea4335",
+  "category": "video",
+  "tags": ["video", "streaming"],
+
+  "settings": [
+    {
+      "id": "customEpg",
+      "title": "Corrigir Guia (Ex: Fantástico) 🗑️➡️",
+      "icon": "fas fa-tv",
+      "value": ""
+    },
+    {
+      "id": "privateMode",
+      "title": "Modo Privado (Ocultar tudo)",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
+}
