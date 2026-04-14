@@ -4,7 +4,8 @@ const presence = new Presence({
 
 const logosManuais: { [key: string]: string } = {}
 
-const logoPadrao = 'https://raw.githubusercontent.com/PreMiD/Activities/fc9e8b561349b7433267e3ccfc408f41c8f2cf68/websites/T/TV-Streaming/logo.png'
+const logoPadrao =
+  'https://raw.githubusercontent.com/PreMiD/Activities/master/websites/T/TV-Streaming/logo.png'
 
 const _browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -50,8 +51,7 @@ presence.on('UpdateData', async () => {
   if (isDashboard) {
     if (privateMode) {
       detailsText = 'Navegando'
-    }
-    else {
+    } else {
       detailsText = 'No Menu Principal'
       stateText = 'Selecionando serviço...'
     }
@@ -62,22 +62,25 @@ presence.on('UpdateData', async () => {
     if (privateMode) {
       detailsText = 'Canal Privado'
       logoFinal = logoPadrao
-    }
-    else {
+    } else {
       const canalAtivo =
-        document.querySelector('.liveFrameBody.active .liveFrameChanName span') as HTMLElement | null
-        || document.querySelector('.list-group-item.active .channel-name') as HTMLElement | null
-        || document.querySelector('.liveFrameChanName span') as HTMLElement | null
+        document.querySelector('.liveFrameBody.active .liveFrameChanName span') as HTMLElement | null ||
+        document.querySelector('.list-group-item.active .channel-name') as HTMLElement | null ||
+        document.querySelector('.liveFrameChanName span') as HTMLElement | null
 
-      const nomeCanal = canalAtivo?.textContent?.trim() ?? 'Escolhendo Canal...'
+      const nomeCanal =
+        canalAtivo?.textContent?.trim() ?? 'Escolhendo Canal...'
+
       detailsText = nomeCanal
 
-      const customEpg = String(await presence.getSetting('customEpg') || '').trim()
+      const customEpg = String(
+        await presence.getSetting('customEpg') || '',
+      ).trim()
 
       if (
-        nomeCanal
-        && nomeCanal !== 'Escolhendo Canal...'
-        && nomeCanal !== ultimoCanal
+        nomeCanal &&
+        nomeCanal !== 'Escolhendo Canal...' &&
+        nomeCanal !== ultimoCanal
       ) {
         ultimoCanal = nomeCanal
         bloquearManual = true
@@ -89,8 +92,13 @@ presence.on('UpdateData', async () => {
 
       ultimoManual = customEpg
 
-      const epgAtual = document.querySelector('.liveEPGdiv .liveEpgTime[data-titleis]') as HTMLElement | null
-      const programaNome = epgAtual?.getAttribute('data-titleis')?.trim() || ''
+      const epgAtual =
+        document.querySelector(
+          '.liveEPGdiv .liveEpgTime[data-titleis]',
+        ) as HTMLElement | null
+
+      const programaNome =
+        epgAtual?.getAttribute('data-titleis')?.trim() || ''
 
       const epgInvalido = [
         'Guia de programação indisponível',
@@ -102,22 +110,22 @@ presence.on('UpdateData', async () => {
 
       if (!bloquearManual && customEpg.length > 0) {
         stateText = customEpg
-      }
-      else if (
-        programaNome
-        && !epgInvalido.includes(programaNome)
+      } else if (
+        programaNome &&
+        !epgInvalido.includes(programaNome)
       ) {
         stateText = programaNome
-      }
-      else {
+      } else {
         stateText = 'Guia de programação indisponível'
       }
 
       if (logosManuais[nomeCanal]) {
         logoFinal = logosManuais[nomeCanal]
-      }
-      else {
-        const logoAtiva = document.querySelector('.liveFrameBody.active .liveFrameImg img') as HTMLImageElement | null
+      } else {
+        const logoAtiva =
+          document.querySelector(
+            '.liveFrameBody.active .liveFrameImg img',
+          ) as HTMLImageElement | null
 
         if (logoAtiva?.src) {
           logoFinal = logoAtiva.src
@@ -131,24 +139,37 @@ presence.on('UpdateData', async () => {
     if (privateMode) {
       detailsText = 'Filme Privado'
       logoFinal = logoPadrao
-    }
-    else {
-      const activeMovie = document.querySelector('.streamselector.posterDiv.active') as HTMLElement | null
-      const poster = activeMovie?.querySelector('img.mainsss') as HTMLImageElement | null
+    } else {
+      const activeMovie =
+        document.querySelector(
+          '.streamselector.posterDiv.active',
+        ) as HTMLElement | null
 
-      detailsText = (ultimoTituloFilme || poster?.alt || 'Filme')
+      const poster =
+        activeMovie?.querySelector('img.mainsss') as HTMLImageElement | null
+
+      detailsText = (
+        ultimoTituloFilme ||
+        poster?.alt ||
+        'Filme'
+      )
         .replace(/\s*\(\d{4}\).*$/, '')
         .replace(/\[.*?\]/g, '')
         .trim()
 
       const infos = document.querySelectorAll('.two')
 
-      const genero = infos.length >= 4
-        ? (infos[3] as HTMLElement).textContent?.trim()
-        : ''
+      const genero =
+        infos.length >= 4
+          ? (infos[3] as HTMLElement).textContent?.trim()
+          : ''
 
       stateText = genero || 'Cinema'
-      logoFinal = ultimaLogoFilme || poster?.src || logoPadrao
+
+      logoFinal =
+        ultimaLogoFilme ||
+        poster?.src ||
+        logoPadrao
     }
   }
 
@@ -157,51 +178,63 @@ presence.on('UpdateData', async () => {
     if (privateMode) {
       detailsText = 'Série Privada'
       logoFinal = logoPadrao
-    }
-    else {
-      const nomeSerieRaw = document.querySelector('.serieEpiName span') as HTMLElement | null
+    } else {
+      const nomeSerieRaw =
+        document.querySelector(
+          '.serieEpiName span',
+        ) as HTMLElement | null
 
-      const nomeSerieText = nomeSerieRaw?.textContent?.trim() || ultimoTituloFilme || 'Série'
+      const nomeSerieText =
+        nomeSerieRaw?.textContent?.trim() ||
+        ultimoTituloFilme ||
+        'Série'
 
       const partesSerie = nomeSerieText.split(' S')
+
       detailsText = (partesSerie[0] || '').trim()
 
-      const descSeries = document.querySelector('.movieInDescription') as HTMLElement | null
-      const descEpisodio = document.querySelector('.serieEpiDesc span') as HTMLElement | null
+      const descSeries =
+        document.querySelector(
+          '.movieInDescription',
+        ) as HTMLElement | null
 
-      const infoFinal = descSeries?.textContent?.trim()
-        || descEpisodio?.textContent?.trim()
-        || ''
+      const descEpisodio =
+        document.querySelector(
+          '.serieEpiDesc span',
+        ) as HTMLElement | null
 
-      if (
-        infoFinal
-        && infoFinal !== 'N/A'
-      ) {
-        stateText = infoFinal
-      }
-      else {
-        stateText = 'Assistindo Série'
-      }
+      const infoFinal =
+        descSeries?.textContent?.trim() ||
+        descEpisodio?.textContent?.trim() ||
+        ''
 
-      const logoSerie = document.querySelector('.playstreamepimg') as HTMLElement | null
+      stateText =
+        infoFinal && infoFinal !== 'N/A'
+          ? infoFinal
+          : 'Assistindo Série'
+
+      const logoSerie =
+        document.querySelector('.playstreamepimg') as HTMLElement | null
 
       if (logoSerie) {
-        const bg = getComputedStyle(logoSerie).backgroundImage || ''
+        const bg =
+          getComputedStyle(logoSerie).backgroundImage || ''
+
         const match = bg.match(/url\(["']?(.*?)["']?\)/)
 
         if (
-          match
-          && match[1]
-          && !match[1].includes('play.png')
+          match &&
+          match[1] &&
+          !match[1].includes('play.png')
         ) {
           logoFinal = match[1]
+        } else {
+          logoFinal =
+            ultimaLogoFilme || logoPadrao
         }
-        else {
-          logoFinal = ultimaLogoFilme || logoPadrao
-        }
-      }
-      else {
-        logoFinal = ultimaLogoFilme || logoPadrao
+      } else {
+        logoFinal =
+          ultimaLogoFilme || logoPadrao
       }
     }
   }
@@ -210,41 +243,28 @@ presence.on('UpdateData', async () => {
     return
   }
 
-  const video = document.querySelector('#custom-video-player_html5_api') as HTMLVideoElement | null
+  const video =
+    document.querySelector(
+      '#custom-video-player_html5_api',
+    ) as HTMLVideoElement | null
+
   const estaPausado = video?.paused ?? true
   const duration = video?.duration ?? 0
   const currentTime = video?.currentTime ?? 0
-
-  let smallImageKey = ''
-  let smallImageText = ''
-
-  if (isLive) {
-    smallImageKey = estaPausado ? 'pause' : 'live'
-    smallImageText = estaPausado ? 'PAUSADO' : 'AO VIVO'
-  }
-  else if (isMovie || isSeries) {
-    smallImageKey = estaPausado ? 'pause' : 'play'
-    smallImageText = estaPausado ? 'Pausado' : 'Assistindo'
-  }
 
   const presenceData: any = {
     details: detailsText,
     ...(stateText ? { state: stateText } : {}),
     largeImageKey: logoFinal,
     largeImageText: detailsText,
-    smallImageKey,
-    smallImageText,
     type: 3,
   }
 
-  if (
-    !isLive
-    && !estaPausado
-    && duration > 0
-  ) {
-    presenceData.endTimestamp = Math.floor(Date.now() / 1000) + Math.floor(duration - currentTime)
-  }
-  else {
+  if (!isLive && !estaPausado && duration > 0) {
+    presenceData.endTimestamp =
+      Math.floor(Date.now() / 1000) +
+      Math.floor(duration - currentTime)
+  } else {
     presenceData.startTimestamp = startBaseTimestamp
   }
 
