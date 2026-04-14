@@ -12,7 +12,7 @@
   "regExp": "webtv\\.iptvsmarters\\.com",
   "version": "1.0.0",
   "logo": "logo.png",
-  "thumbnail": "thumbnail.jpeg",
+  "thumbnail": "thumbnail.png",
   "color": "#ea4335",
   "category": "video",
   "tags": ["video", "streaming"],
