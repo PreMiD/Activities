@@ -2,93 +2,64 @@ import { Assets } from 'premid'
 
 const LOGO = 'https://i.imgur.com/WWU7hzR.png'
 
-type SupportedLocale = 'en' | 'vi'
-
-const customStrings = {
-  en: {
-    account: 'Account',
-    browsing: 'Browsing',
-    browsingForum: 'Browsing forum',
-    browsingGroups: 'Browsing groups',
-    browsingManga: 'Browsing manga',
-    browsingNews: 'Browsing news',
-    browsingSite: 'Browsing MoeTruyen',
-    buttonViewArticle: 'View article',
-    buttonReadChapter: 'Read chapter',
-    buttonReadThisChapter: 'Read this chapter',
-    buttonViewManga: 'View manga',
-    catalog: 'Catalog',
-    history: 'History',
-    messaging: 'Messaging',
-    reading: 'Reading',
-    readingChapter: 'Reading a chapter',
-    readingForum: 'Reading forum',
-    readingNews: 'Reading news',
-    savedManga: 'Saved manga',
-    siteName: 'MoeTruyen',
-    viewingAccountSettings: 'Viewing account settings',
-    viewingDetails: 'Viewing details',
-    viewingForumPost: 'Viewing forum post',
-    viewingGroup: 'Viewing group',
-    viewingManga: 'Viewing manga:',
-    viewingMessages: 'Viewing messages',
-    viewingNewsPost: 'Viewing news post',
-    viewingProfile: 'Viewing profile',
-    viewingReadingHistory: 'Viewing reading history',
-    viewingSavedManga: 'Viewing saved manga',
-    viewingTranslationGroup: 'Viewing translation group',
-    viewHome: 'Viewing home page',
-    viewUser: 'Viewing user:',
-    website: 'Website',
-  },
-  vi: {
-    account: 'Tài khoản',
-    browsing: 'Đang duyệt',
-    browsingForum: 'Đang duyệt diễn đàn',
-    browsingGroups: 'Đang duyệt nhóm',
-    browsingManga: 'Đang duyệt truyện',
-    browsingNews: 'Đang duyệt tin tức',
-    browsingSite: 'Đang duyệt MoeTruyen',
-    buttonViewArticle: 'Xem bài viết',
-    buttonReadChapter: 'Đọc chương',
-    buttonReadThisChapter: 'Đọc chương này',
-    buttonViewManga: 'Xem truyện',
-    catalog: 'Danh mục',
-    history: 'Lịch sử',
-    messaging: 'Đang nhắn tin',
-    reading: 'Đang đọc',
-    readingChapter: 'Đang đọc chương',
-    readingForum: 'Đang đọc diễn đàn',
-    readingNews: 'Đang đọc tin tức',
-    savedManga: 'Truyện đã lưu',
-    siteName: 'MoeTruyen',
-    viewingAccountSettings: 'Đang xem cài đặt tài khoản',
-    viewingDetails: 'Đang xem chi tiết',
-    viewingForumPost: 'Đang xem bài viết diễn đàn',
-    viewingGroup: 'Đang xem nhóm',
-    viewingManga: 'Đang xem truyện:',
-    viewingMessages: 'Đang xem tin nhắn',
-    viewingNewsPost: 'Đang xem bài tin tức',
-    viewingProfile: 'Đang xem hồ sơ',
-    viewingReadingHistory: 'Đang xem lịch sử đọc',
-    viewingSavedManga: 'Đang xem truyện đã lưu',
-    viewingTranslationGroup: 'Đang xem nhóm dịch',
-    viewHome: 'Đang xem trang chủ',
-    viewUser: 'Đang xem người dùng:',
-    website: 'Trang web',
-  },
-} satisfies Record<SupportedLocale, Record<string, string>>
-
 const presence = new Presence({
   clientId: '578560798205673482',
 })
 
+async function getStrings() {
+  return presence.getStrings({
+    account: 'moetruyen.account',
+    browsing: 'moetruyen.browsing',
+    browsingForum: 'moetruyen.browsingForum',
+    browsingGroups: 'moetruyen.browsingGroups',
+    browsingManga: 'moetruyen.browsingManga',
+    browsingNews: 'moetruyen.browsingNews',
+    browsingSite: 'moetruyen.browsingSite',
+    buttonViewArticle: 'moetruyen.buttonViewArticle',
+    buttonReadChapter: 'moetruyen.buttonReadChapter',
+    buttonReadThisChapter: 'moetruyen.buttonReadThisChapter',
+    buttonViewManga: 'moetruyen.buttonViewManga',
+    catalog: 'moetruyen.catalog',
+    history: 'moetruyen.history',
+    messaging: 'moetruyen.messaging',
+    reading: 'moetruyen.reading',
+    readingChapter: 'moetruyen.readingChapter',
+    readingForum: 'moetruyen.readingForum',
+    readingNews: 'moetruyen.readingNews',
+    savedManga: 'moetruyen.savedManga',
+    siteName: 'moetruyen.siteName',
+    viewingAccountSettings: 'moetruyen.viewingAccountSettings',
+    viewingDetails: 'moetruyen.viewingDetails',
+    viewingForumPost: 'moetruyen.viewingForumPost',
+    viewingGroup: 'moetruyen.viewingGroup',
+    viewingManga: 'moetruyen.viewingManga',
+    viewingMessages: 'moetruyen.viewingMessages',
+    viewingNewsPost: 'moetruyen.viewingNewsPost',
+    viewingProfile: 'moetruyen.viewingProfile',
+    viewingReadingHistory: 'moetruyen.viewingReadingHistory',
+    viewingSavedManga: 'moetruyen.viewingSavedManga',
+    viewingTranslationGroup: 'moetruyen.viewingTranslationGroup',
+    viewHome: 'moetruyen.viewHome',
+    viewUser: 'moetruyen.viewUser',
+    website: 'moetruyen.website',
+  })
+}
+
 const browsingTimestamp = Math.floor(Date.now() / 1000)
+let oldLang: string | null = null
+let localeStrings: Awaited<ReturnType<typeof getStrings>> | null = null
 
 presence.on('UpdateData', async () => {
-  const showButtons = await presence.getSetting<boolean>('buttons')
+  const [showButtons, currentLang] = await Promise.all([
+    presence.getSetting<boolean>('buttons'),
+    presence.getSetting<string>('lang').catch(() => 'en'),
+  ])
   const { pathname, href } = document.location
-  const localeStrings = customStrings[resolveLocale(document.documentElement.lang || navigator.language)]
+
+  if (!localeStrings || oldLang !== currentLang) {
+    oldLang = currentLang
+    localeStrings = await getStrings()
+  }
 
   const presenceData: PresenceData = {
     largeImageKey: LOGO,
@@ -241,49 +212,6 @@ function buildButtons(buttons: Array<{ label: string, url: string | null }>): [B
     return undefined
 
   return secondButton ? [firstButton, secondButton] : [firstButton]
-}
-
-function resolveLocale(lang: string | null | undefined): SupportedLocale {
-  const normalizedLang = normalizeLocaleValue(lang)
-
-  if (isVietnameseLocale(normalizedLang))
-    return 'vi'
-
-  if (isEnglishLocale(normalizedLang))
-    return 'en'
-
-  const pageLocale = normalizeLocaleValue(document.documentElement.lang)
-
-  if (isVietnameseLocale(pageLocale))
-    return 'vi'
-
-  if (isEnglishLocale(pageLocale))
-    return 'en'
-
-  return 'vi'
-}
-
-function normalizeLocaleValue(value: string | null | undefined): string {
-  return String(value ?? '')
-    .trim()
-    .toLowerCase()
-    .replace(/_/g, '-')
-}
-
-function isVietnameseLocale(locale: string): boolean {
-  const baseLocale = locale.split('-')[0]
-
-  return baseLocale === 'vi'
-    || baseLocale === 'vn'
-    || locale.includes('vietnamese')
-    || locale.includes('tiếng việt')
-    || locale.includes('tieng viet')
-}
-
-function isEnglishLocale(locale: string): boolean {
-  const baseLocale = locale.split('-')[0]
-
-  return baseLocale === 'en' || locale.includes('english')
 }
 
 function cleanText(text: string | null | undefined): string | null {

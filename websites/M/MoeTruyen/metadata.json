@@ -31,6 +31,10 @@
   ],
   "settings": [
     {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
       "id": "buttons",
       "title": "Show link buttons",
       "icon": "fas fa-compress-arrows-alt",
