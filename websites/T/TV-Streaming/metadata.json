@@ -6,11 +6,11 @@
   "service": "TV-Streaming",
   "description": {
     "en": "TV/MOVIES AND SERIES",
-    "pt-BR": "TV/FILMES E SÉRIES"
+    "pt": "TV/FILMES E SÉRIES"
   },
   "url": "http://webtv.iptvsmarters.com",
   "regExp": "webtv\\.iptvsmarters\\.com",
-  "version": "1.1.5",
+  "version": "1.0.0",
   "logo": "logo.png",
   "thumbnail": "thumbnail.jpeg",
   "color": "#ea4335",
