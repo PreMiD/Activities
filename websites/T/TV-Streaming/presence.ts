@@ -2,8 +2,7 @@ const presence = new Presence({
   clientId: '1363276484436820019',
 })
 
-const logosManuais: { [key: string]: string } = {
-}
+const logosManuais: { [key: string]: string } = {}
 
 const logoPadrao = 'https://raw.githubusercontent.com/PreMiD/Activities/fc9e8b561349b7433267e3ccfc408f41c8f2cf68/websites/T/TV-Streaming/logo.png'
 
@@ -47,24 +46,20 @@ presence.on('UpdateData', async () => {
   let stateText = ''
   let logoFinal = logoPadrao
 
-  // DASHBOARD
   if (isDashboard) {
     if (privateMode) {
       detailsText = 'Navegando'
-    }
-    else {
+    } else {
       detailsText = 'No Menu Principal'
       stateText = 'Selecionando serviço...'
     }
   }
 
-  // LIVE
   else if (isLive) {
     if (privateMode) {
       detailsText = 'Canal Privado'
       logoFinal = logoPadrao
-    }
-    else {
+    } else {
       const canalAtivo =
         document.querySelector('.liveFrameBody.active .liveFrameChanName span') as HTMLElement | null
         || document.querySelector('.list-group-item.active .channel-name') as HTMLElement | null
@@ -76,9 +71,9 @@ presence.on('UpdateData', async () => {
       const customEpg = String(await presence.getSetting('customEpg') || '').trim()
 
       if (
-        nomeCanal
-        && nomeCanal !== 'Escolhendo Canal...'
-        && nomeCanal !== ultimoCanal
+        nomeCanal &&
+        nomeCanal !== 'Escolhendo Canal...' &&
+        nomeCanal !== ultimoCanal
       ) {
         ultimoCanal = nomeCanal
         bloquearManual = true
@@ -103,20 +98,16 @@ presence.on('UpdateData', async () => {
 
       if (!bloquearManual && customEpg.length > 0) {
         stateText = customEpg
-      }
-      else if (programaNome && !epgInvalido.includes(programaNome)) {
+      } else if (programaNome && !epgInvalido.includes(programaNome)) {
         stateText = programaNome
-      }
-      else {
+      } else {
         stateText = 'Guia de programação indisponível'
       }
 
       if (logosManuais[nomeCanal]) {
         logoFinal = logosManuais[nomeCanal]
-      }
-      else {
+      } else {
         const logoAtiva = document.querySelector('.liveFrameBody.active .liveFrameImg img') as HTMLImageElement | null
-
         if (logoAtiva?.src) {
           logoFinal = logoAtiva.src
         }
@@ -124,13 +115,11 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  // FILMES
   else if (isMovie) {
     if (privateMode) {
       detailsText = 'Filme Privado'
       logoFinal = logoPadrao
-    }
-    else {
+    } else {
       const activeMovie = document.querySelector('.streamselector.posterDiv.active') as HTMLElement | null
       const poster = activeMovie?.querySelector('img.mainsss') as HTMLImageElement | null
 
@@ -140,24 +129,20 @@ presence.on('UpdateData', async () => {
         .trim()
 
       const infos = document.querySelectorAll('.two')
-
       const genero = infos.length >= 4
         ? (infos[3] as HTMLElement).textContent?.trim()
         : ''
 
       stateText = genero || 'Cinema'
-
       logoFinal = ultimaLogoFilme || poster?.src || logoPadrao
     }
   }
 
-  // SÉRIES
   else if (isSeries) {
     if (privateMode) {
       detailsText = 'Série Privada'
       logoFinal = logoPadrao
-    }
-    else {
+    } else {
       const nomeSerieRaw = document.querySelector('.serieEpiName span') as HTMLElement | null
 
       const nomeSerieText = nomeSerieRaw?.textContent?.trim() || ultimoTituloFilme || 'Série'
@@ -174,8 +159,7 @@ presence.on('UpdateData', async () => {
 
       if (infoFinal && infoFinal !== 'N/A') {
         stateText = infoFinal
-      }
-      else {
+      } else {
         stateText = 'Assistindo Série'
       }
 
@@ -187,12 +171,10 @@ presence.on('UpdateData', async () => {
 
         if (match && match[1] && !match[1].includes('play.png')) {
           logoFinal = match[1]
-        }
-        else {
+        } else {
           logoFinal = ultimaLogoFilme || logoPadrao
         }
-      }
-      else {
+      } else {
         logoFinal = ultimaLogoFilme || logoPadrao
       }
     }
@@ -213,8 +195,7 @@ presence.on('UpdateData', async () => {
   if (isLive) {
     smallImageKey = estaPausado ? 'pause' : 'live'
     smallImageText = estaPausado ? 'PAUSADO' : 'AO VIVO'
-  }
-  else if (isMovie || isSeries) {
+  } else if (isMovie || isSeries) {
     smallImageKey = estaPausado ? 'pause' : 'play'
     smallImageText = estaPausado ? 'Pausado' : 'Assistindo'
   }
@@ -231,8 +212,7 @@ presence.on('UpdateData', async () => {
 
   if (!isLive && !estaPausado && duration > 0) {
     presenceData.endTimestamp = Math.floor(Date.now() / 1000) + Math.floor(duration - currentTime)
-  }
-  else {
+  } else {
     presenceData.startTimestamp = startBaseTimestamp
   }
 
