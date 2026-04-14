@@ -21,13 +21,5 @@
     "fun",
     "minigames",
     "casual-games"
-  ],
-  "settings": [
-    {
-      "id": "buttons",
-      "title": "Show Presence Buttons",
-      "icon": "fas fa-th-large",
-      "value": true
-    }
   ]
 }

@@ -37,7 +37,6 @@ presence.on('UpdateData', async () => {
   const pathname = document.location.pathname
   const currentSegment = getPathSegment(pathname)
   const currentPageName = pageNames[currentSegment]
-  const buttons = await presence.getSetting<boolean>('buttons')
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -64,15 +63,6 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Browsing'
     if (title.length > 0)
       presenceData.state = title
-  }
-
-  if (buttons) {
-    presenceData.buttons = [
-      {
-        label: 'Visit Szabfun',
-        url: document.location.href,
-      },
-    ]
   }
 
   if (presenceData.details)
