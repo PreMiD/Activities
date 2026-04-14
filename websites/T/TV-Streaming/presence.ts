@@ -5,8 +5,7 @@ const presence = new Presence({
 const logosManuais: { [key: string]: string } = {
 }
 
-const logoPadrao
-  = 'https://raw.githubusercontent.com/PreMiD/Activities/fc9e8b561349b7433267e3ccfc408f41c8f2cf68/websites/T/TV-Streaming/logo.png'
+const logoPadrao = 'https://raw.githubusercontent.com/PreMiD/Activities/fc9e8b561349b7433267e3ccfc408f41c8f2cf68/websites/T/TV-Streaming/logo.png'
 
 const _browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -91,10 +90,7 @@ presence.on('UpdateData', async () => {
 
       ultimoManual = customEpg
 
-      const epgAtual = document.querySelector(
-        '.liveEPGdiv .liveEpgTime[data-titleis]',
-      ) as HTMLElement | null
-
+      const epgAtual = document.querySelector('.liveEPGdiv .liveEpgTime[data-titleis]') as HTMLElement | null
       const programaNome = epgAtual?.getAttribute('data-titleis')?.trim() || ''
 
       const epgInvalido = [
@@ -119,9 +115,7 @@ presence.on('UpdateData', async () => {
         logoFinal = logosManuais[nomeCanal]
       }
       else {
-        const logoAtiva = document.querySelector(
-          '.liveFrameBody.active .liveFrameImg img',
-        ) as HTMLImageElement | null
+        const logoAtiva = document.querySelector('.liveFrameBody.active .liveFrameImg img') as HTMLImageElement | null
 
         if (logoAtiva?.src) {
           logoFinal = logoAtiva.src
@@ -137,13 +131,8 @@ presence.on('UpdateData', async () => {
       logoFinal = logoPadrao
     }
     else {
-      const activeMovie = document.querySelector(
-        '.streamselector.posterDiv.active',
-      ) as HTMLElement | null
-
-      const poster = activeMovie?.querySelector(
-        'img.mainsss',
-      ) as HTMLImageElement | null
+      const activeMovie = document.querySelector('.streamselector.posterDiv.active') as HTMLElement | null
+      const poster = activeMovie?.querySelector('img.mainsss') as HTMLImageElement | null
 
       detailsText = (ultimoTituloFilme || poster?.alt || 'Filme')
         .replace(/\s*\(\d{4}\).*$/, '')
@@ -169,28 +158,19 @@ presence.on('UpdateData', async () => {
       logoFinal = logoPadrao
     }
     else {
-      const nomeSerieRaw = document.querySelector(
-        '.serieEpiName span',
-      ) as HTMLElement | null
+      const nomeSerieRaw = document.querySelector('.serieEpiName span') as HTMLElement | null
 
-      const nomeSerieText
-        = nomeSerieRaw?.textContent?.trim() || ultimoTituloFilme || 'Série'
+      const nomeSerieText = nomeSerieRaw?.textContent?.trim() || ultimoTituloFilme || 'Série'
 
       const partesSerie = nomeSerieText.split(' S')
       detailsText = (partesSerie[0] || '').trim()
 
-      const descSeries = document.querySelector(
-        '.movieInDescription',
-      ) as HTMLElement | null
+      const descSeries = document.querySelector('.movieInDescription') as HTMLElement | null
+      const descEpisodio = document.querySelector('.serieEpiDesc span') as HTMLElement | null
 
-      const descEpisodio = document.querySelector(
-        '.serieEpiDesc span',
-      ) as HTMLElement | null
-
-      const infoFinal
-        = descSeries?.textContent?.trim()
-          || descEpisodio?.textContent?.trim()
-          || ''
+      const infoFinal = descSeries?.textContent?.trim()
+        || descEpisodio?.textContent?.trim()
+        || ''
 
       if (infoFinal && infoFinal !== 'N/A') {
         stateText = infoFinal
@@ -199,9 +179,7 @@ presence.on('UpdateData', async () => {
         stateText = 'Assistindo Série'
       }
 
-      const logoSerie = document.querySelector(
-        '.playstreamepimg',
-      ) as HTMLElement | null
+      const logoSerie = document.querySelector('.playstreamepimg') as HTMLElement | null
 
       if (logoSerie) {
         const bg = getComputedStyle(logoSerie).backgroundImage || ''
@@ -224,10 +202,7 @@ presence.on('UpdateData', async () => {
     return
   }
 
-  const video = document.querySelector(
-    '#custom-video-player_html5_api',
-  ) as HTMLVideoElement | null
-
+  const video = document.querySelector('#custom-video-player_html5_api') as HTMLVideoElement | null
   const estaPausado = video?.paused ?? true
   const duration = video?.duration ?? 0
   const currentTime = video?.currentTime ?? 0
@@ -255,8 +230,7 @@ presence.on('UpdateData', async () => {
   }
 
   if (!isLive && !estaPausado && duration > 0) {
-    presenceData.endTimestamp
-      = Math.floor(Date.now() / 1000) + Math.floor(duration - currentTime)
+    presenceData.endTimestamp = Math.floor(Date.now() / 1000) + Math.floor(duration - currentTime)
   }
   else {
     presenceData.startTimestamp = startBaseTimestamp
