@@ -3,11 +3,10 @@ const presence = new Presence({
 })
 
 const logosManuais: { [key: string]: string } = {
-  // vazio por enquanto
 }
 
-const logoPadrao =
-  'https://raw.githubusercontent.com/PreMiD/Activities/fc9e8b561349b7433267e3ccfc408f41c8f2cf68/websites/T/TV-Streaming/logo.png'
+const logoPadrao
+  = 'https://raw.githubusercontent.com/PreMiD/Activities/fc9e8b561349b7433267e3ccfc408f41c8f2cf68/websites/T/TV-Streaming/logo.png'
 
 const _browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -152,6 +151,7 @@ presence.on('UpdateData', async () => {
         .trim()
 
       const infos = document.querySelectorAll('.two')
+
       const genero = infos.length >= 4
         ? (infos[3] as HTMLElement).textContent?.trim()
         : ''
@@ -173,8 +173,8 @@ presence.on('UpdateData', async () => {
         '.serieEpiName span',
       ) as HTMLElement | null
 
-      const nomeSerieText =
-        nomeSerieRaw?.textContent?.trim() || ultimoTituloFilme || 'Série'
+      const nomeSerieText
+        = nomeSerieRaw?.textContent?.trim() || ultimoTituloFilme || 'Série'
 
       const partesSerie = nomeSerieText.split(' S')
       detailsText = (partesSerie[0] || '').trim()
@@ -187,8 +187,8 @@ presence.on('UpdateData', async () => {
         '.serieEpiDesc span',
       ) as HTMLElement | null
 
-      const infoFinal =
-        descSeries?.textContent?.trim()
+      const infoFinal
+        = descSeries?.textContent?.trim()
         || descEpisodio?.textContent?.trim()
         || ''
 
@@ -255,8 +255,8 @@ presence.on('UpdateData', async () => {
   }
 
   if (!isLive && !estaPausado && duration > 0) {
-    presenceData.endTimestamp =
-      Math.floor(Date.now() / 1000) + Math.floor(duration - currentTime)
+    presenceData.endTimestamp
+      = Math.floor(Date.now() / 1000) + Math.floor(duration - currentTime)
   }
   else {
     presenceData.startTimestamp = startBaseTimestamp
