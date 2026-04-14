@@ -13,7 +13,7 @@ const pageNames: Record<string, string> = {
   'choose-a-username': 'Choose a Username',
   'swear-word-generator': 'Swear Word Generator',
   'guess-the-number': 'Guess The Number',
-  'watch-some-youtube': 'Watch Some Youtube',
+  'watch-some-youtube': 'Watch Some YouTube',
   'escape-game': 'Escape Game',
   'chat': 'Chat',
   'enter-password': 'Enter Password',
