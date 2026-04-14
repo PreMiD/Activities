@@ -3,10 +3,10 @@
     "name": "hostwarp",
     "id": "1363276484436820019"
   },
-  "service": "TV & Streaming",
+  "service": "TV-Streaming",
   "description": {
-    "en": "",
-    "pt-BR": ""
+    "en": "TV/MOVIES AND SERIES",
+    "pt-BR": "TV/FILMES E SÉRIES"
   },
   "url": "http://webtv.iptvsmarters.com",
   "regExp": "webtv\\.iptvsmarters\\.com",
