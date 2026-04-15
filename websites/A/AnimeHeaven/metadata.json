@@ -15,9 +15,9 @@
   },
   "url": "animeheaven.me",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animeheaven[.]me([/]|$)",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/Y65f6pt.png",
-  "thumbnail": "https://i.imgur.com/WcseDVm.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeHeaven/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeHeaven/assets/thumbnail.png",
   "color": "#dd0021",
   "category": "anime",
   "tags": [
