@@ -34,7 +34,7 @@
       "id": "showBal",
       "title": "Display Balance",
       "icon": "fad fa-coins",
-      "value": true
+      "value": false
     },
     {
       "id": "showTimestamp",
