@@ -15,7 +15,7 @@
     "www.windy.com",
     "community.windy.com"
   ],
-  "regExp": "^https?:\\/\\/([a-z0-9-]+\\.)*windy\\.com\\/",
+  "regExp": "^https?:\\/\\/(www\\.|community\\.|[a-z0-9-]+\\.)?windy\\.com\\/.*",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/DYIEgcX.png",
   "thumbnail": "https://i.imgur.com/3nWHyyL.png",
@@ -28,16 +28,7 @@
   "settings": [
     {
       "id": "lang",
-      "title": "Language",
-      "icon": "fas fa-language",
-      "value": 0,
-      "values": [
-        "English",
-        "Español",
-        "Português",
-        "Français",
-        "Deutsch"
-      ]
+      "multiLanguage": true
     },
     {
       "id": "showLayer",
@@ -61,7 +52,7 @@
       "id": "showSettings",
       "title": "Show Settings status",
       "icon": "fas fa-cog",
-      "value": true
+      "value": false
     }
   ]
 }
