@@ -1,34 +1,34 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.16",
-	"apiVersion": 1,
-	"author": {
-		"name": "ShadowIsHere",
-		"id": "1055414059861823620"
-	},
-	"service": "Proton Mail",
-	"description": {
-		"en": "Secure, private email by Proton. End‑to‑end encryption and no tracking."
-	},
-	"url": "mail.proton.me",
-	"regExp": "^https?://mail[.]proton[.]me[/]",
-	"version": "1.0.0",
-	"logo": "https://staffix.xyz/protonmail.png",
-	"thumbnail": "https://staffix.xyz/protonmail.png",
-	"color": "#42B883",
-	"category": "other",
-	"tags": ["email","privacy","secure"],
-	"settings": [
-		{
-			"id": "privacy",
-			"title": "Privacy Mode",
-			"icon": "fad fa-user-secret",
-			"value": false
-		},
-		{
-			"id": "time",
-			"title": "Show Timestamp",
-			"icon": "fad fa-stopwatch",
-			"value": true
-		}
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "ShadowIsHere",
+    "id": "1055414059861823620"
+  },
+  "service": "Proton Mail",
+  "description": {
+    "en": "Secure, private email by Proton. End-to-end encryption and no tracking."
+  },
+  "url": "mail.proton.me",
+  "regExp": "^https?://mail[.]proton[.]me[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/rm69OQ1.png",
+  "thumbnail": "https://i.imgur.com/rm69OQ1.png",
+  "color": "#42B883",
+  "category": "other",
+  "tags": ["email", "privacy", "secure"],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "time",
+      "title": "Show Timestamp",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    }
+  ]
 }
