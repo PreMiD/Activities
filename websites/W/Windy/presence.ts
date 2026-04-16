@@ -9,13 +9,61 @@ presence.on('UpdateData', async () => {
 
   try {
     const layerKeys = [
-      'satellite', 'radar', 'wind', 'gust', 'rain', 'rainAccu', 'snowAccu', 'snowcover', 'thunder',
-      'temp', 'aqi', 'clouds', 'hclouds', 'mclouds', 'lclouds', 'fog', 'cape', 'thermals',
-      'freezing', 'ozone', 'so2', 'ozoneLayer', 'pm2p5', 'aerosol', 'dust', 'waves',
-      'swell1', 'swell2', 'swell3', 'seaTemp', 'currents', 'tidal', 'hurricanes',
-      'windAccu', 'pressure', 'dewpoint', 'rh', 'wetbulb', 'solar', 'uvindex',
-      'ptype', 'cloudtop', 'cloudbase', 'visibility', 'icing', 'cat', 'wwaves',
-      'wavepower', 'no2', 'co', 'drought', 'fire', 'cap', 'efi', 'hiking'
+      'satellite',
+      'radar',
+      'wind',
+      'gust',
+      'rain',
+      'rainAccu',
+      'snowAccu',
+      'snowcover',
+      'thunder',
+      'temp',
+      'aqi',
+      'clouds',
+      'hclouds',
+      'mclouds',
+      'lclouds',
+      'fog',
+      'cape',
+      'thermals',
+      'freezing',
+      'ozone',
+      'so2',
+      'ozoneLayer',
+      'pm2p5',
+      'aerosol',
+      'dust',
+      'waves',
+      'swell1',
+      'swell2',
+      'swell3',
+      'seaTemp',
+      'currents',
+      'tidal',
+      'hurricanes',
+      'windAccu',
+      'pressure',
+      'dewpoint',
+      'rh',
+      'wetbulb',
+      'solar',
+      'uvindex',
+      'ptype',
+      'cloudtop',
+      'cloudbase',
+      'visibility',
+      'icing',
+      'cat',
+      'wwaves',
+      'wavepower',
+      'no2',
+      'co',
+      'drought',
+      'fire',
+      'cap',
+      'efi',
+      'hiking',
     ]
 
     const stringsToFetch: Record<string, string> = {
@@ -35,10 +83,10 @@ presence.on('UpdateData', async () => {
       exploringWindy: 'windy.exploringWindy',
       exploringHurricanes: 'windy.exploringHurricanes',
       stationFallback: 'windy.stationFallback',
-      layer: 'windy.layer'
+      layer: 'windy.layer',
     }
 
-    layerKeys.forEach(key => {
+    layerKeys.forEach((key) => {
       stringsToFetch[key] = `windy.layer_${key}`
     })
 
@@ -50,7 +98,8 @@ presence.on('UpdateData', async () => {
       presence.getStrings(stringsToFetch).catch(() => null),
     ])
 
-    if (!t) return
+    if (!t)
+      return
 
     const presenceData: PresenceData = {
       largeImageKey: 'https://i.imgur.com/DYIEgcX.png',
