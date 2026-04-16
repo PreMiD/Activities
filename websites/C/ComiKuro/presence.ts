@@ -1,5 +1,3 @@
-import 'premid'
-
 const presence = new Presence({
   clientId: '1488531690115567737',
 })
