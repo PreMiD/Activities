@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": ".toop",
+    "id": "868807712874582096"
+  },
+  "service": "Booking.com",
+  "description": {
+    "en": "Booking.com is the world's leading online accommodation platform, offering hotels, apartments, flights, car rentals, and attractions."
+  },
+  "url": "www.booking.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])?booking[.]com",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Booking.com/assets/logo.jpg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Booking.com/assets/thumbnail.jpg",
+  "color": "#003580",
+  "category": "other",
+  "tags": [
+    "travel",
+    "hotels",
+    "booking",
+    "flights",
+    "vacation"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}

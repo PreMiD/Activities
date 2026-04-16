@@ -9,22 +9,20 @@
     {
       "name": "Bas950",
       "id": "241278257335500811"
+    },
+    {
+      "name": "potma13",
+      "id": "416596242370658314"
     }
   ],
   "service": "VK",
   "description": {
-    "en": "This presence will be displaying things that you usually do in VK. It displays a music info (if you're on the Music page), a video info (when you watching video) and info if you're watching community or user profile.",
-    "fr": "Cette présence affichera que vous faites habituellement sur VK. Elle affiche les informations d'une musique (si vous êtes sur la page Musique), des informations sur la vidéo (lorsque vous regardez une vidéo) et des informations si vous regardez une communauté ou un profil utilisateur.",
-    "ga": "Beidh an láithreacht seo ag taispeáint rudaí a dhéanann tú de ghnáth i VK. Taispeánann sé eolas ceoil (má tá tú ar an leathanach Ceoil), faisnéis físe (agus tú ag féachaint ar fhíseán) agus faisnéis má tá tú ag féachaint ar phróifíl pobail nó úsáideora.",
-    "nl": "Deze presence zal dingen weergeven die je gewoonlijk in VK doet. Het toont muziekinfo (als je op de Muziek-pagina bent), video-info (wanneer je videos bekijkt) en info als je een community- of gebruikersprofiel bekijkt.",
-    "pt-br": "Esta presença vai mostrar o que você geralmente faz no VK. Essa presença mostra informação de uma música (se você estiver na página de música), informação de vídeo (quando você estiver assistindo um vídeo) e mostra se você está vendo uma comunidade ou um perfil de usuário.",
-    "ro": "Această prezență va afișa chestile pe care le faci deobicei pe VK. Afișează informații despre melodie (dacă ești pe pagina melodiei), informații despre videoclip (când te uiți la un videoclip) și informații despre comunități sau profiluri.",
-    "ru": "Этот статус будет отображать штуки, которые вы обычно делаете в ВК. Оно отображает информацию о музыке (если вы на странице Музыка), информацию о видео! (когда вы смотрите его) и информацию о просматриваемых вами группах или профилях.",
-    "uk": "Цей статус буде показувати штуки, які ви зазвичай робите у ВК. Оновлює інформацію про музику (якщо ви на сторінкці Музика), інформацію про відео! (коли Ви дивитеся його) та інформацію про групи або профілі, які Ви переглядаєте."
+    "en": "VK is a Russian social media platform for messaging, sharing music and videos, and connecting with friends and communities.",
+    "ru": "ВК это российская социальная платформа для общения, обмена музыкой и видео, а также связи с друзьями и сообществами."
   },
   "url": "vk.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*vk[.]com[/]",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VK/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VK/assets/thumbnail.png",
   "color": "#0077FF",
@@ -32,8 +30,32 @@
   "tags": [
     "social",
     "music",
-    "video",
     "info",
     "data"
+  ],
+  "settings": [
+    {
+      "id": "cover",
+      "title": "Show Album Cover",
+      "icon": "fas fa-images",
+      "value": true
+    },
+    {
+      "id": "hidePaused",
+      "title": "Hide while paused",
+      "icon": "fas fa-pause",
+      "value": false
+    },
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 2,
+      "values": [
+        "Activity Name",
+        "Artist Name",
+        "Song Title"
+      ]
+    }
   ]
 }

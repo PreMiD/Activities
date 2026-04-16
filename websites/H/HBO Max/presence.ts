@@ -1,155 +1,224 @@
-import { ActivityType, Assets } from 'premid'
-
-const presence = new Presence({
-  clientId: '1394513095367463043',
-})
-
-let isFetching = false
+import type { IncludedItem } from './types.js'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
+import {
+  clearPageInfo,
+  fetchPageInfo,
+  getPageInfo,
+} from './functions/fetchPageInfo.js'
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/H/HBO%20Max/assets/logo.jpeg',
 }
 
-let fetchedInfo: {
-  included: {
-    attributes: {
-      alternateId: string
-      src?: string
-      name?: string
-      episodeNumber?: number
-      seasonNumber?: number
-      videoType?: string
-    }
-    id: string
-    relationships?: {
-      images: {
-        data: {
-          id: string
-        }[]
-      }
-      show: {
-        data: {
-          id: string
-        }
-      }
-    }
-  }[]
-  path: string
+const presence = new Presence({
+  clientId: '1394513095367463043',
+})
+
+function findByAlternateId(id: string) {
+  return getPageInfo()?.data?.included?.find((x: IncludedItem) => x.attributes?.alternateId === id)
 }
 
-function findAlternateId(id: string) {
-  return fetchedInfo.included?.find(x => x.attributes?.alternateId === id)
+function findById(id: string) {
+  return getPageInfo()?.data?.included?.find((x: IncludedItem) => x.id === id)
 }
 
-function findId(id: string) {
-  return fetchedInfo.included?.find(x => x.id === id)
+function getCoverArt(item: ReturnType<typeof findByAlternateId>): string | undefined {
+  if (!item?.relationships?.images?.data)
+    return undefined
+
+  const images = item.relationships.images.data
+  const allImages = images
+    .map(ref => findById(ref.id))
+    .filter(Boolean)
+
+  const boxart = allImages.find((img) => {
+    const kind = (img?.attributes as any)?.kind as string | undefined
+    return kind && (kind.includes('box') || kind.includes('tile') || kind.includes('poster'))
+  })
+  if (boxart?.attributes.src)
+    return boxart.attributes.src
+
+  const any = allImages.find(img => img?.attributes.src)
+  return any?.attributes.src
 }
 
-async function fetchPageInfo() {
-  const { pathname } = location
-
-  if (isFetching || fetchedInfo?.path === pathname)
-    return
-  isFetching = true
-
-  try {
-    fetchedInfo = await fetch(
-      `https://default.any-amer.prd.api.hbomax.com/cms/routes${pathname}?include=default&page[items.size]=10`,
-      {
-        method: 'GET',
-        credentials: 'include',
-      },
-    ).then(res => res.json())
-  }
-  catch {
-    isFetching = false
-    return false
-  }
-
-  fetchedInfo.path = pathname
-  isFetching = false
-
-  return true
+function getAttrs(item: ReturnType<typeof findByAlternateId>) {
+  return item?.attributes as any
 }
 
-function getTitleInfo(usePresenceName?: boolean) {
-  if (!fetchedInfo)
-    return
+function getDescription(item: ReturnType<typeof findByAlternateId>): string | undefined {
+  const attrs = getAttrs(item)
+  return attrs?.logLine ?? attrs?.description ?? attrs?.synopsis ?? undefined
+}
 
-  if (location.pathname.includes('/video/')) {
-    const episodeInfo = findAlternateId(location.pathname.split('/')[3]!)
-    const showInfo = findAlternateId(episodeInfo?.relationships?.show.data.id ?? '')
+function getTitleInfo(usePresenceName: boolean) {
+  const pageInfo = getPageInfo()
+  if (!pageInfo?.data)
+    return null
 
-    if (!episodeInfo || !showInfo)
-      return
+  const segments = location.pathname.split('/')
+
+  if (segments[1] === 'video') {
+    const episodeItem = findByAlternateId(segments[3] ?? '')
+    const showId = episodeItem?.relationships?.show?.data.id ?? ''
+    const showItem = findByAlternateId(showId)
+
+    if (!episodeItem || !showItem)
+      return null
+
+    const isMovie = episodeItem.attributes.videoType === 'MOVIE'
+    const s = episodeItem.attributes.seasonNumber
+    const e = episodeItem.attributes.episodeNumber
+    const episodeDesc = getDescription(episodeItem)
+    const showDesc = getDescription(showItem)
 
     return {
-      name: usePresenceName ? showInfo.attributes.name : 'Max',
+      name: usePresenceName ? showItem.attributes.name : 'Max',
       details: usePresenceName
-        ? episodeInfo.attributes.name
-        : showInfo.attributes.name,
-      state: episodeInfo.attributes.videoType === 'MOVIE'
-        ? 'Movie'
+        ? episodeItem.attributes.name
+        : showItem.attributes.name,
+      state: isMovie
+        ? (showDesc?.slice(0, 128) ?? 'Movie')
         : usePresenceName
-          ? `Season ${episodeInfo.attributes.seasonNumber}, Episode ${episodeInfo.attributes.episodeNumber}`
-          : `S${episodeInfo.attributes.seasonNumber}:E${episodeInfo.attributes.episodeNumber} ${episodeInfo.attributes.name}`,
-      largeImageKey: findId(showInfo.relationships?.images.data[5]?.id ?? '')?.attributes.src,
+          ? (episodeDesc?.slice(0, 128) ?? `Season ${s}, Episode ${e}`)
+          : `S${s}:E${e} — ${episodeItem.attributes.name}`,
+      largeImageKey: getCoverArt(showItem),
+      largeImageText: isMovie
+        ? showItem.attributes.name
+        : `S${s}:E${e} — ${episodeItem.attributes.name}`,
+      isMovie,
+      pageUrl: document.location.href.split('?')[0]!,
+      showUrl: `https://play.hbomax.com/series/${showId}`,
     }
   }
 
-  const info = findAlternateId(location.pathname.split('/')[2]!)
+  const browseItem = findByAlternateId(segments[2] ?? '')
+  const desc = getDescription(browseItem)
+
   return {
-    state: info?.attributes.name,
-    largeImageKey: findId(info?.relationships?.images.data[5]?.id ?? '')?.attributes.src,
+    details: browseItem?.attributes.name,
+    state: desc?.slice(0, 128),
+    largeImageKey: getCoverArt(browseItem),
+    largeImageText: browseItem?.attributes.name,
+    isMovie: segments[1] === 'movie',
+    pageUrl: document.location.href.split('?')[0]!,
+    showUrl: undefined,
   }
 }
 
 presence.on('UpdateData', async () => {
+  const [
+    usePresenceName,
+    showCoverArt,
+    showTimestamp,
+    showBrowsingStatus,
+    privacyMode,
+  ] = await Promise.all([
+    presence.getSetting<boolean>('usePresenceName'),
+    presence.getSetting<boolean>('cover'),
+    presence.getSetting<boolean>('timestamp'),
+    presence.getSetting<boolean>('showBrowsingStatus'),
+    presence.getSetting<boolean>('privacy'),
+  ])
+
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     largeImageKey: ActivityAssets.Logo,
   }
-  const [usePresenceName, showCoverArt] = await Promise.all([
-    presence.getSetting<boolean>('usePresenceName'),
-    presence.getSetting<boolean>('cover'),
-  ])
-  await fetchPageInfo()
 
-  switch (document.location.pathname.split('/')[1]) {
+  const segments = document.location.pathname.split('/')
+
+  await fetchPageInfo(document.location.pathname)
+
+  switch (segments[1]) {
     case 'show': {
-      Object.assign(presenceData, getTitleInfo())
-      presenceData.details = 'Viewing a show:'
+      if (privacyMode) {
+        presenceData.details = 'Watching a series'
+        break
+      }
+      const info = getTitleInfo(false)
+      presenceData.details = info?.details ?? 'Viewing a show:'
+      presenceData.state = info?.state
+      if (showCoverArt && info?.largeImageKey) {
+        presenceData.largeImageKey = info.largeImageKey
+        presenceData.largeImageText = info.largeImageText
+      }
+      if (info?.pageUrl)
+        presenceData.buttons = [{ label: 'View Series', url: info.pageUrl }]
       break
     }
+
     case 'movie': {
-      Object.assign(presenceData, getTitleInfo())
-      presenceData.details = 'Viewing a movie:'
+      if (privacyMode) {
+        presenceData.details = 'Watching a movie'
+        break
+      }
+      const info = getTitleInfo(false)
+      presenceData.details = info?.details ?? 'Viewing a movie:'
+      presenceData.state = info?.state
+      if (showCoverArt && info?.largeImageKey) {
+        presenceData.largeImageKey = info.largeImageKey
+        presenceData.largeImageText = info.largeImageText
+      }
+      if (info?.pageUrl)
+        presenceData.buttons = [{ label: 'View Movie', url: info.pageUrl }]
       break
     }
+
     case 'video': {
       const video = document.querySelector('video')
-      Object.assign(presenceData, getTitleInfo(usePresenceName))
+      const info = getTitleInfo(usePresenceName && !privacyMode)
 
-      if (video) {
-        if (!video.paused) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      if (!info || !video)
+        break
+
+      if (!privacyMode) {
+        presenceData.name = info.name
+        presenceData.details = info.details
+        presenceData.state = info.state
+        if (showCoverArt && info.largeImageKey) {
+          presenceData.largeImageKey = info.largeImageKey
+          presenceData.largeImageText = info.largeImageText
         }
+        if (info.isMovie) {
+          presenceData.buttons = [{ label: 'Watch Movie', url: info.pageUrl }]
+        }
+        else {
+          presenceData.buttons = info.showUrl
+            ? [{ label: 'Watch Episode', url: info.pageUrl }, { label: 'View Series', url: info.showUrl }]
+            : [{ label: 'Watch Episode', url: info.pageUrl }]
+        }
+      }
+      else {
+        presenceData.details = info.isMovie ? 'Watching a movie' : 'Watching a series'
+      }
 
-        presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-        presenceData.smallImageText = video.paused ? 'Paused' : 'Playing'
+      presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
+      presenceData.smallImageText = video.paused ? 'Paused' : 'Playing'
+
+      if (showTimestamp && !video.paused && !privacyMode) {
+        const [start, end] = getTimestampsFromMedia(video)
+        presenceData.startTimestamp = start
+        presenceData.endTimestamp = end
       }
       break
     }
+
     default: {
-      presenceData.details = 'Browsing...'
+      clearPageInfo()
+
+      if (!showBrowsingStatus || privacyMode)
+        return presence.clearActivity()
+
+      presenceData.details = 'Browsing Max...'
+      presenceData.smallImageKey = Assets.Reading
+      presenceData.smallImageText = 'Browsing'
       break
     }
   }
 
-  if (!showCoverArt)
-    presenceData.largeImageKey = ActivityAssets.Logo
-
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else
+    presence.clearActivity()
 })
