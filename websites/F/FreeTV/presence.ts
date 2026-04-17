@@ -38,10 +38,23 @@ function formatTimestamps(cursorTime: number, currentTime: string, duration: str
   else {
     const date = new Date()
     date.setHours(0, 0, 0, 0)
-    return getTimestamps(
-      cursorTime - (date.getTime() / 1000) - timestampFromFormat(currentTime?.replaceAll('h', ':')?.trim().concat(':00')),
-      timestampFromFormat(duration?.replaceAll('h', ':').trim().concat(':00')) - timestampFromFormat(currentTime?.replaceAll('h', ':')?.trim().concat(':00')),
-    )
+
+    const midnightTimestamp = date.getTime() / 1000
+    const startInSeconds = timestampFromFormat(currentTime?.replace('h', ':')?.trim()?.concat(':00'))
+    const endInSeconds = timestampFromFormat(duration?.replace('h', ':')?.trim()?.concat(':00'))
+    const nowInSeconds = cursorTime - midnightTimestamp
+
+    let totalDuration = endInSeconds - startInSeconds
+    if (totalDuration < 0) {
+      totalDuration += 86400
+    }
+
+    let elapsed = nowInSeconds - startInSeconds
+    if (elapsed < 0) {
+      elapsed += 86400
+    }
+
+    return getTimestamps(elapsed, totalDuration)
   }
 }
 
