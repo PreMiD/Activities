@@ -1,0 +1,67 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "671037171611729920",
+    "name": "Skully"
+  },
+  "service": "FreeTV",
+  "description": {
+    "en": "Access a wide selection of live and replay TV channels. Enjoy your favorite shows, news, and entertainment with ease.",
+    "fr": "Accédez à une large sélection de chaînes de télévision en direct et en replay. Profitez de vos programmes préférés, des actualités et du divertissement en toute simplicité."
+  },
+  "url": "tv.free.fr",
+  "regExp": "^https?[:][/][/]tv[.]free[.]fr[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/u75ktEz.png",
+  "thumbnail": "https://i.imgur.com/IbHDqcq.jpeg",
+  "color": "#cc0000",
+  "category": "videos",
+  "tags": [
+    "tv",
+    "video",
+    "streaming",
+    "french",
+    "freebox"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "usePresenceName",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "if": {
+        "privacy": false
+      },
+      "value": true
+    },
+    {
+      "id": "showChannelOnHomepage",
+      "title": "Show Channel Info on Homepage",
+      "description": "If set to false, homepage will show \"Browsing...\"",
+      "icon": "fad fa-tv-retro",
+      "if": {
+        "privacy": false
+      },
+      "value": false
+    },
+    {
+      "id": "showChannelLogo",
+      "title": "Show Channel Logo",
+      "icon": "fad fa-tv-retro",
+      "if": {
+        "privacy": false
+      },
+      "value": true
+    }
+  ]
+}
