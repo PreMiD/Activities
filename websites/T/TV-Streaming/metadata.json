@@ -1,0 +1,34 @@
+{
+  "author": {
+    "name": "hostwarp",
+    "id": "1363276484436820019"
+  },
+  "service": "TV-Streaming",
+  "description": {
+    "en": "TV/MOVIES AND SERIES",
+    "pt": "TV/FILMES E SÉRIES"
+  },
+  "url": "http://webtv.iptvsmarters.com",
+  "regExp": "webtv\\.iptvsmarters\\.com",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/PreMiD/Activities/fc9e8b561349b7433267e3ccfc408f41c8f2cf68/websites/T/TV-Streaming/logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/PreMiD/Activities/fc9e8b561349b7433267e3ccfc408f41c8f2cf68/websites/T/TV-Streaming/thumbnail.png",
+  "color": "#ea4335",
+  "category": "video",
+  "tags": ["video", "streaming"],
+
+  "settings": [
+    {
+      "id": "customEpg",
+      "title": "Corrigir Guia (Ex: Fantástico) 🗑️➡️",
+      "icon": "fas fa-tv",
+      "value": ""
+    },
+    {
+      "id": "privateMode",
+      "title": "Modo Privado (Ocultar tudo)",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
+}
