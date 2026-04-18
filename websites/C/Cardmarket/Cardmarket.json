@@ -1,8 +1,4 @@
 {
-  "cardmarket.homepage": {
-    "description": "Shown when viewing a game's homepage",
-    "message": "Homepage"
-  },
   "cardmarket.game": {
     "description": "Shown with the game name (e.g., 'Game: Pokemon')",
     "message": "Game: {0}"
