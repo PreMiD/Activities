@@ -1,5 +1,4 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Movix",
@@ -10,20 +9,14 @@
     "en": "Movix is a streaming platform for movies, series, anime, and watch parties.",
     "fr": "Movix est une plateforme de streaming pour films, series, anime et watch parties."
   },
-  "url": "movix.llc",
-  "regExp": "^https:\\/\\/([a-z0-9-]+[.])*(movix[.]llc)(?:[/]|$)",
-  "version": "1.0.1",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/thumbnail.png",
+  "url": "movix.cash",
+  "regExp": "^https:\\/\\/([a-z0-9-]+[.])*(movix[.]cash)(?:[/]|$)",
+  "version": "1.0.0",
+  "logo": "https://movix.cash/movix512.png",
+  "thumbnail": "https://movix.cash/thumbnail.png",
   "color": "#dc2626",
   "category": "videos",
-  "tags": [
-    "movies",
-    "series",
-    "anime",
-    "watchparty",
-    "streaming"
-  ],
+  "tags": ["movies", "series", "anime", "watchparty", "streaming"],
   "allowURLOverrides": true,
   "settings": [
     {
