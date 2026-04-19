@@ -503,6 +503,18 @@
     "description": "Shown when viewing the 'What do I do if there is a product issue after I received it?' page",
     "message": "Viewing product issue guide"
   },
+  "hipobuy.starRating": {
+    "description": "",
+    "message": "Star Rating"
+  },
+  "hipobuy.salesVolume": {
+    "description": "",
+    "message": "Sales"
+  },
+  "hipobuy.qcPhotos": {
+    "description": "",
+    "message": "QC Photos"
+  },
   "hipobuy.noticeInsuranceCompensation": {
     "description": "Shown when viewing the Insurance and compensation page",
     "message": "Viewing Insurance and compensation"

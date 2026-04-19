@@ -16,17 +16,28 @@ enum ActivityAssets {
   Login = 'https://i.imgur.com/FsZPn7h.png',
   PersonCheck = 'https://i.imgur.com/Q2gWRtY.png',
   Person = 'https://i.imgur.com/ZSiPGqT.png',
-  Plus = 'https://i.imgur.com/F1W4m5F.png',
   Bookmark = 'https://i.imgur.com/DzXeiWS.png',
-  Clock = 'https://i.imgur.com/5PiTO2N.png',
   Crown = 'https://i.imgur.com/46F79PQ.png',
   Pencil = 'https://i.imgur.com/WCNCAfF.png',
   Settings = 'https://i.imgur.com/JKIwVXB.png',
   Group = 'https://i.imgur.com/5yGqlXI.png',
   MagicPen = 'https://i.imgur.com/u91zmaE.png',
-  Sparkle = 'https://i.imgur.com/DBNSiFh.png',
+  Sparkle = 'https://i.imgur.com/Rg5u3bX.png',
   Notification = 'https://i.imgur.com/PVJdOfm.png',
   Chat = 'https://i.imgur.com/GmdAyQk.png',
+  Parcel = 'https://i.imgur.com/QcQ4uDk.png',
+  Cart = 'https://i.imgur.com/Pdhm2Ja.png',
+}
+
+function cleanInviteCode(url: string): string {
+  try {
+    const urlObj = new URL(url)
+    urlObj.searchParams.delete('inviteCode')
+    return urlObj.toString()
+  }
+  catch {
+    return url.replace(/[?&]inviteCode=[^&]*/g, '').replace(/[?&]$/, '')
+  }
 }
 
 function getActiveTab(): string {
@@ -96,6 +107,54 @@ function getPlatformFromDOM(): string | null {
     return platformText
   }
   return null
+}
+
+function getProductInfoFromStructuredData(): { name: string | null, price: number | null, currency: string | null } {
+  const script = document.querySelector<HTMLScriptElement>('script[type="application/ld+json"][data-structured-data="product"]')
+  if (!script) {
+    return { name: null, price: null, currency: null }
+  }
+  try {
+    const data = JSON.parse(script.textContent || '')
+    if (data['@type'] === 'Product') {
+      return {
+        name: data.name || null,
+        price: data.offers?.price ?? null,
+        currency: data.offers?.priceCurrency || null,
+      }
+    }
+  }
+  catch {
+    console.warn('Falling Back To DOM Elements.')
+  }
+  return { name: null, price: null, currency: null }
+}
+
+function getShopNameFromDOM(): string | null {
+  return document.querySelector<HTMLElement>('.shop-name .shop-text .shop-title')?.textContent?.trim() ?? null
+}
+
+function getProductNameFromDOM(): string | null {
+  return document.querySelector<HTMLElement>('.good-info .title .text h1')?.textContent?.trim() ?? null
+}
+
+function getQCCount(): number {
+  const items = document.querySelectorAll('.new-qc-content-item')
+  return items.length
+}
+
+function getShopRatingAndSales(): { rating: string | null, sales: string | null } {
+  const ratingEl = document.querySelector<HTMLElement>('.shop-rating .score')
+  const rating = ratingEl?.textContent?.trim() ?? null
+  const salesEl = document.querySelector<HTMLElement>('.shop-rating .positive')
+  let sales = salesEl?.textContent?.trim() ?? null
+  if (sales) {
+    const match = sales.match(/([\d,]+)\s*Sales\s*Volume/i)
+    if (match) {
+      sales = match[1]!
+    }
+  }
+  return { rating, sales }
 }
 
 async function getSmallImageKey(defaultKey: string, defaultTextKey: string, strings: Record<string, string>): Promise<{ key: string, text: string }> {
@@ -244,6 +303,9 @@ presence.on('UpdateData', async () => {
     noticeCustomsTaxation: 'hipobuy.noticeCustomsTaxation',
     noticeProductIssue: 'hipobuy.noticeProductIssue',
     noticeInsuranceCompensation: 'hipobuy.noticeInsuranceCompensation',
+    starRating: 'hipobuy.starRating',
+    salesVolume: 'hipobuy.salesVolume',
+    qcPhotos: 'hipobuy.qcPhotos',
   })
 
   const presenceData: PresenceData = {
@@ -254,7 +316,7 @@ presence.on('UpdateData', async () => {
 
   if (pathname.startsWith('/user/')) {
     if (pathname.includes('/shopping')) {
-      const { key, text } = await getSmallImageKey(ActivityAssets.Plus, 'cart', strings)
+      const { key, text } = await getSmallImageKey(ActivityAssets.Cart, 'cart', strings)
       presenceData.smallImageKey = key
       presenceData.smallImageText = text
       presenceData.details = strings.viewingCart
@@ -274,7 +336,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = (tab && favTabMap[tab]) ? favTabMap[tab] : strings.favoritesTabAll
     }
     else if (pathname.includes('/order')) {
-      const { key, text } = await getSmallImageKey(ActivityAssets.Clock, 'orders', strings)
+      const { key, text } = await getSmallImageKey(ActivityAssets.Parcel, 'orders', strings)
       presenceData.smallImageKey = key
       presenceData.smallImageText = text
       presenceData.details = strings.viewingOrders
@@ -293,7 +355,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.viewingWarehouse
     }
     else if (pathname.includes('/shipment')) {
-      const { key, text } = await getSmallImageKey(ActivityAssets.Network, 'shipments', strings)
+      const { key, text } = await getSmallImageKey(ActivityAssets.Parcel, 'shipments', strings)
       presenceData.smallImageKey = key
       presenceData.smallImageText = text
       presenceData.details = strings.viewingShipments
@@ -414,70 +476,110 @@ presence.on('UpdateData', async () => {
       presenceData.state = strings.viewingHomepage
     }
     else if (pathname.startsWith('/product/')) {
-      const productTitleEl = document.querySelector<HTMLElement>('.good-info .title .text h1')
-      if (!productTitleEl) {
+      const structured = getProductInfoFromStructuredData()
+      let productName = structured.name
+      if (!productName) {
+        productName = getProductNameFromDOM()
+      }
+      if (!productName) {
         presence.clearActivity()
         return
       }
-      const segments = pathname.split('/').filter(Boolean)
-      const sourcePlatform = segments[1]
-      const platformNames: Record<string, string> = {
-        weidian: 'Weidian',
-        taobao: 'Taobao',
-        1688: '1688',
-        jd: 'JD.com',
-      }
-      const platformDisplay = sourcePlatform ? (platformNames[sourcePlatform] ?? sourcePlatform) : null
-      const { key, text } = await getSmallImageKey(ActivityAssets.Eye, platformDisplay ? 'product' : 'product', strings)
+
+      const shopName = getShopNameFromDOM()
+      const { rating, sales } = getShopRatingAndSales()
+      const qcCount = getQCCount()
+
+      const { key, text } = await getSmallImageKey(ActivityAssets.Eye, 'product', strings)
       presenceData.smallImageKey = key
       presenceData.smallImageText = text
-      const productName = productTitleEl.textContent?.trim()
-      const shopName = document.querySelector<HTMLElement>('.shop-name .shop-text .shop-title')?.textContent?.trim()
 
-      if (platformDisplay && productName) {
-        presenceData.details = `${strings.viewingProductFrom} ${platformDisplay}: ${truncate(productName, 80)}`
+      let priceStr = ''
+      if (structured.price && structured.currency) {
+        priceStr = `${structured.currency} ${structured.price.toFixed(2)}`
+      }
+
+      const productPart = truncate(productName, 70)
+      if (priceStr) {
+        presenceData.details = `${priceStr}⠀•⠀${productPart}`
       }
       else {
-        presenceData.details = strings.viewingProduct
-        if (productName) {
-          presenceData.details = truncate(productName, 80)
-        }
+        presenceData.details = productPart
       }
 
+      const stateParts: string[] = []
       if (shopName) {
-        presenceData.state = `${strings.shopPrefix} ${truncate(shopName, 60)}`
+        stateParts.push(truncate(shopName, 40))
+      }
+      if (rating) {
+        stateParts.push(`${rating} ${strings.starRating}`)
+      }
+      if (sales) {
+        stateParts.push(`${sales} ${strings.salesVolume}`)
+      }
+      if (qcCount > 0) {
+        stateParts.push(`${qcCount} ${strings.qcPhotos}`)
+      }
+      if (stateParts.length) {
+        presenceData.state = stateParts.join('⠀•⠀')
       }
 
       if (!disableButtons) {
-        presenceData.buttons = [{ label: strings.viewProduct, url: href }]
+        presenceData.buttons = [{ label: strings.viewProduct, url: cleanInviteCode(href) }]
       }
     }
     else if (pathname.startsWith('/goods/details')) {
-      const productTitle = document.querySelector<HTMLElement>('.good-info .title .text h1')
-      if (!productTitle) {
+      const structured = getProductInfoFromStructuredData()
+      let productName = structured.name
+      if (!productName) {
+        productName = getProductNameFromDOM()
+      }
+      if (!productName) {
         presence.clearActivity()
         return
       }
+
+      const shopName = getShopNameFromDOM()
+      const { rating, sales } = getShopRatingAndSales()
+      const qcCount = getQCCount()
       const platformDisplay = getPlatformFromDOM()
-      const { key, text } = await getSmallImageKey(ActivityAssets.Eye, platformDisplay ? 'product' : 'product', strings)
+
+      const { key, text } = await getSmallImageKey(ActivityAssets.Eye, 'product', strings)
       presenceData.smallImageKey = key
       presenceData.smallImageText = text
-      const productName = productTitle.textContent?.trim()
-      const shopName = document.querySelector<HTMLElement>('.shop-name .shop-text .shop-title')?.textContent?.trim()
-      if (platformDisplay && productName) {
-        presenceData.details = `${strings.productPrefix} ${strings.viewingProductFrom} ${platformDisplay}: ${truncate(productName, 80)}`
+
+      let priceStr = ''
+      if (structured.price && structured.currency) {
+        priceStr = `${structured.currency} ${structured.price.toFixed(2)}`
       }
-      else if (productName) {
-        presenceData.details = `${strings.productPrefix} ${truncate(productName, 80)}`
+
+      const productPart = truncate(productName, 70)
+      const prefix = platformDisplay ? `${strings.productPrefix} ${strings.viewingProductFrom} ${platformDisplay}: ` : `${strings.productPrefix} `
+      if (priceStr) {
+        presenceData.details = `${priceStr}⠀•⠀${prefix}${productPart}`
       }
       else {
-        presenceData.details = strings.viewingGoodsDetails
+        presenceData.details = `${prefix}${productPart}`
       }
+
+      const stateParts: string[] = []
       if (shopName) {
-        presenceData.state = `${strings.shopPrefix} ${truncate(shopName, 60)}`
+        stateParts.push(truncate(shopName, 40))
+      }
+      if (rating) {
+        stateParts.push(`${rating} ${strings.starRating}`)
+      }
+      if (sales) {
+        stateParts.push(`${sales} ${strings.salesVolume}`)
+      }
+      if (qcCount > 0) {
+        stateParts.push(`${qcCount} ${strings.qcPhotos}`)
+      }
+      if (stateParts.length) {
+        presenceData.state = stateParts.join('⠀•⠀')
       }
       if (!disableButtons) {
-        presenceData.buttons = [{ label: strings.viewProduct, url: href }]
+        presenceData.buttons = [{ label: strings.viewProduct, url: cleanInviteCode(href) }]
       }
     }
     else if (pathname.startsWith('/shop/details')) {
@@ -559,6 +661,12 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = key
       presenceData.smallImageText = text
       presenceData.details = strings.estimatingPrice
+    }
+    else if (pathname.includes('/com-share')) {
+      const { key, text } = await getSmallImageKey(ActivityAssets.Group, 'affiliate', strings)
+      presenceData.smallImageKey = key
+      presenceData.smallImageText = text
+      presenceData.details = strings.viewingAffiliate
     }
     else if (pathname.startsWith('/beginner-guide')) {
       const { key, text } = await getSmallImageKey(ActivityAssets.Book, 'beginnerGuide', strings)
