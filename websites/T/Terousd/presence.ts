@@ -89,7 +89,7 @@ presence.on('UpdateData', async () => {
 
     if (showButtons && params.get('id')) {
       presenceData.buttons = [{
-        label: 'Open Title',
+        label: 'View Title',
         url: document.location.href,
       }]
     }
@@ -120,7 +120,7 @@ presence.on('UpdateData', async () => {
 
     if (showButtons && params.get('id')) {
       presenceData.buttons = [{
-        label: 'Open Stream',
+        label: 'Watch Stream',
         url: document.location.href,
       }]
     }
