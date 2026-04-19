@@ -13,15 +13,15 @@ const statics: {
 }
 const slideshow = presence.createSlideshow()
 const creatorSections: Record<string, string> = {
-  'about': 'Viewing creator about page',
-  'chats': 'Viewing creator chats',
-  'collections': 'Viewing creator collections',
-  'gift': 'Viewing gift options',
-  'membership': 'Viewing membership options',
-  'memberships': 'Viewing membership options',
-  'posts': 'Browsing creator posts',
-  'recommendations': 'Viewing creator recommendations',
-  'shop': 'Viewing creator shop',
+  about: 'Viewing creator about page',
+  chats: 'Viewing creator chats',
+  collections: 'Viewing creator collections',
+  gift: 'Viewing gift options',
+  membership: 'Viewing membership options',
+  memberships: 'Viewing membership options',
+  posts: 'Browsing creator posts',
+  recommendations: 'Viewing creator recommendations',
+  shop: 'Viewing creator shop',
 }
 
 enum ActivityAssets {
@@ -66,7 +66,7 @@ function getPostCreatorName() {
 
   return [...document.querySelectorAll<HTMLAnchorElement>('a[href]')]
     .find(anchor =>
-      /^https:\/\/www\.patreon\.com\/[A-Za-z0-9_.-]+\/?$/.test(anchor.href)
+      /^https:\/\/www\.patreon\.com\/[\w.-]+\/?$/.test(anchor.href)
       && anchor.textContent?.trim(),
     )
     ?.textContent
@@ -127,17 +127,17 @@ presence.on('UpdateData', async () => {
       ? 'Reading privacy policies'
       : 'Viewing Patreon privacy information'
   }
-  else switch (pathArr[1]) {
-    case 'product':
-      presenceData.details = 'Viewing a plan'
-      if (!privacy)
-        presenceData.state = `Plan: ${pathArr[2]}`
-      break
-    case 'c':
-      presenceData.details = 'Viewing a page for creators'
-      if (!privacy) {
-        presenceData.state = `For: ${
-          {
+  else {
+    switch (pathArr[1]) {
+      case 'product':
+        presenceData.details = 'Viewing a plan'
+        if (!privacy && pathArr[2])
+          presenceData.state = `Plan: ${pathArr[2]}`
+        break
+      case 'c': {
+        presenceData.details = 'Viewing a page for creators'
+        if (!privacy) {
+          const creatorType = ({
             'podcasts': 'podcasters',
             'video': 'video creators',
             'music': 'musicians',
@@ -148,156 +148,162 @@ presence.on('UpdateData', async () => {
             'nonprofits': 'nonprofit organizations',
             'tutorials-and-education': 'education & tutorial creators',
             'local-businesses': 'local businesses',
-          }[pathArr[2]!]
-        }`
+          } as Record<string, string>)[pathArr[2]!]
+          if (creatorType)
+            presenceData.state = `For: ${creatorType}`
+        }
+        break
       }
-      break
-    case 'explore':
-      if (pathArr[2] === 'search') {
-        const searchQuery = getSearchQuery()
-        const searchType = searchParams.get('type')
+      case 'explore':
+        if (pathArr[2] === 'search') {
+          const searchQuery = getSearchQuery()
+          const searchType = searchParams.get('type')
 
-        presenceData.details = searchQuery
-          ? {
-              'post': 'Searching posts',
-              'creator': 'Searching creators',
-            }[searchType ?? ''] ?? 'Searching Patreon'
-          : 'On searching page'
-        if (!privacy && searchQuery)
-          presenceData.state = `Query: ${searchQuery}`
-        presenceData.smallImageKey = Assets.Search
-      }
-      else {
-        presenceData.details = pathArr[2] === 'creators'
-          ? searchParams.get('type') === 'suggested-campaigns'
+          presenceData.details = searchQuery
+            ? {
+                post: 'Searching posts',
+                creator: 'Searching creators',
+              }[searchType ?? ''] ?? 'Searching Patreon'
+            : 'On searching page'
+          if (!privacy && searchQuery)
+            presenceData.state = `Query: ${searchQuery}`
+          presenceData.smallImageKey = Assets.Search
+        }
+        else {
+          presenceData.details = pathArr[2] === 'creators'
+            ? searchParams.get('type') === 'suggested-campaigns'
               ? 'Exploring suggested creators'
               : 'Exploring creators'
-          : 'Exploring Patreon'
-        if (!privacy) {
-          const topic = searchParams
-            .get('topic')
-            ?.replace(/_/g, ' ')
-            ?? (pathArr[2] && !['all', 'creators'].includes(pathArr[2])
-              ? pathArr[2].replace(/-/g, ' ')
-              : undefined)
-          if (topic)
-            presenceData.state = `Topic: ${topic}`
+            : 'Exploring Patreon'
+          if (!privacy) {
+            const topic = searchParams
+              .get('topic')
+              ?.replace(/_/g, ' ')
+              ?? (pathArr[2] && !['all', 'creators'].includes(pathArr[2])
+                ? pathArr[2].replace(/-/g, ' ')
+                : undefined)
+            if (topic)
+              presenceData.state = `Topic: ${topic}`
+          }
         }
-      }
-      break
-    case 'apps':
-      if (pathArr.length === 2) {
-        presenceData.details = 'Viewing apps available'
-      }
-      else {
-        presenceData.details = 'Viewing an app'
-        if (!privacy) {
-          presenceData.state = document.querySelector(
-            '.Text_variantDisplayTextLg__NwCo5',
-          )?.textContent
-          presenceData.buttons = [{ label: 'View app', url: href }]
+        break
+      case 'apps':
+        if (pathArr.length === 2) {
+          presenceData.details = 'Viewing apps available'
         }
+        else {
+          presenceData.details = 'Viewing an app'
+          if (!privacy) {
+            presenceData.state = document.querySelector(
+              '.Text_variantDisplayTextLg__NwCo5',
+            )?.textContent
+            presenceData.buttons = [{ label: 'View app', url: href }]
+          }
+        }
+        break
+      case 'settings': {
+        presenceData.details = 'Editing their settings'
+        if (!privacy) {
+          const settingPage = document.querySelectorAll('a[aria-current="page"]')[1]?.textContent
+          if (settingPage)
+            presenceData.state = `Page: ${settingPage}`
+        }
+        break
       }
-      break
-    case 'settings':
-      presenceData.details = 'Editing their settings'
-      if (!privacy) {
-        presenceData.state = `Page: ${
-          document.querySelectorAll('a[aria-current="page"]')[1]?.textContent
-        }`
+      case 'search': {
+        const legacySearchQuery = getSearchQuery()
+        if (legacySearchQuery) {
+          presenceData.details = 'Searching creators'
+          if (!privacy)
+            presenceData.state = `Query: ${legacySearchQuery}`
+          presenceData.smallImageKey = Assets.Search
+        }
+        else {
+          presenceData.details = 'On searching page'
+        }
+        break
       }
-      break
-    case 'search':
-      if (getSearchQuery()) {
-        presenceData.details = 'Searching creators'
+      case 'notifications':
+        presenceData.details = 'Viewing notifications'
+        break
+      case 'messages':
+        if (searchParams.get('tab') === 'direct-messages') {
+          presenceData.details = pathArr[2]
+            ? 'Viewing a direct message'
+            : 'Browsing direct messages'
+        }
+        else if (searchParams.get('tab') === 'chats') {
+          presenceData.details = pathArr[2]
+            ? 'Viewing a group chat'
+            : 'Browsing group chats'
+        }
+        else {
+          presenceData.details = 'Reading their messages'
+        }
+        break
+      case 'policy':
+        presenceData.details = pathArr[2] === 'legal'
+          ? 'Reading terms of use'
+          : 'Reading community policies'
+        break
+      case 'posts':
+        presenceData.details = 'Viewing a post'
+
+        if (!privacy) {
+          const postTitle = getPostTitle()
+          const creatorName = getPostCreatorName()
+
+          if (postTitle) {
+            presenceData.state = postTitle
+            slideshow.addSlide('slidePostName', presenceData, 5000)
+          }
+
+          if (creatorName) {
+            presenceDataSlide.details = 'Viewing a post'
+            presenceDataSlide.state = `From ${creatorName}`
+            slideshow.addSlide('slideCreatorName', presenceDataSlide, 5000)
+          }
+
+          if (showButtons)
+            presenceData.buttons = presenceDataSlide.buttons = [{ label: 'View Post', url: href }]
+        }
+        break
+      case 'collection':
+        presenceData.details = 'Viewing a collection'
         if (!privacy)
-          presenceData.state = `Query: ${getSearchQuery()}`
-        presenceData.smallImageKey = Assets.Search
-      }
-      else {
-        presenceData.details = 'On searching page'
-      }
-      break
-    case 'notifications':
-      presenceData.details = 'Viewing notifications'
-      break
-    case 'messages':
-      if (searchParams.get('tab') === 'direct-messages') {
-        presenceData.details = pathArr[2]
-          ? 'Viewing a direct message'
-          : 'Browsing direct messages'
-      }
-      else if (searchParams.get('tab') === 'chats') {
-        presenceData.details = pathArr[2]
-          ? 'Viewing a group chat'
-          : 'Browsing group chats'
-      }
-      else {
-        presenceData.details = 'Reading their messages'
-      }
-      break
-    case 'policy':
-      presenceData.details = pathArr[2] === 'legal'
-        ? 'Reading terms of use'
-        : 'Reading community policies'
-      break
-    case 'posts':
-      presenceData.details = 'Viewing a post'
-
-      if (!privacy) {
-        const postTitle = getPostTitle()
-        const creatorName = getPostCreatorName()
-
-        if (postTitle) {
-          presenceData.state = postTitle
-          slideshow.addSlide('slidePostName', presenceData, 5000)
-        }
-
-        if (creatorName) {
-          presenceDataSlide.details = 'Viewing a post'
-          presenceDataSlide.state = `From ${creatorName}`
-          slideshow.addSlide('slideCreatorName', presenceDataSlide, 5000)
-        }
-
-        if (showButtons)
-          presenceData.buttons = presenceDataSlide.buttons = [{ label: 'View Post', url: href }]
-      }
-      break
-    case 'collection':
-      presenceData.details = 'Viewing a collection'
-      if (!privacy)
-        presenceData.state = getTextContent('h1') ?? undefined
-      break
-    case 'cw':
-      presenceData.details = creatorSlug === 'patreon' && !creatorSection
-        ? 'Viewing Patreon news'
-        : creatorSection && creatorSections[creatorSection]
+          presenceData.state = getTextContent('h1') ?? undefined
+        break
+      case 'cw':
+        presenceData.details = creatorSlug === 'patreon' && !creatorSection
+          ? 'Viewing Patreon news'
+          : creatorSection && creatorSections[creatorSection]
             ? creatorSections[creatorSection]
             : 'Viewing a creator'
-      if (!privacy && creatorSlug !== 'patreon')
-        presenceData.state = getCreatorName()
-      if (!privacy && showButtons && !creatorSection)
-        presenceData.buttons = [{ label: 'View Creator', url: href }]
-      break
-    default:
-      if (Object.keys(statics).includes(pathArr[1]!)) {
-        presenceData.details = statics[pathArr[1]!]
-      }
-      else if (pathArr[1]!.includes('messages')) {
-        presenceData.details = 'Reading their messages'
-      }
-      else {
-        presenceData.details = creatorSection && creatorSections[creatorSection]
-          ? creatorSections[creatorSection]
-          : 'Viewing a creator'
-        if (!privacy) {
-          presenceData.state = creatorSlug === 'patreon' && !creatorSection
-            ? undefined
-            : getCreatorName()
-          if (!creatorSection)
-            presenceData.buttons = [{ label: 'View Creator', url: href }]
+        if (!privacy && creatorSlug !== 'patreon')
+          presenceData.state = getCreatorName()
+        if (!privacy && showButtons && !creatorSection)
+          presenceData.buttons = [{ label: 'View Creator', url: href }]
+        break
+      default:
+        if (Object.keys(statics).includes(pathArr[1]!)) {
+          presenceData.details = statics[pathArr[1]!]
         }
-      }
+        else if (pathArr[1]!.includes('messages')) {
+          presenceData.details = 'Reading their messages'
+        }
+        else {
+          presenceData.details = creatorSection && creatorSections[creatorSection]
+            ? creatorSections[creatorSection]
+            : 'Viewing a creator'
+          if (!privacy) {
+            presenceData.state = creatorSlug === 'patreon' && !creatorSection
+              ? undefined
+              : getCreatorName()
+            if (!creatorSection)
+              presenceData.buttons = [{ label: 'View Creator', url: href }]
+          }
+        }
+    }
   }
 
   if (!showButtons || privacy) {
