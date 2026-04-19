@@ -11,7 +11,7 @@
   },
   "url": "movix.cash",
   "regExp": "^https:\\/\\/([a-z0-9-]+[.])*(movix[.]cash)(?:[/]|$)",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "logo": "https://movix.cash/movix512.png",
   "thumbnail": "https://movix.cash/thumbnail.png",
   "color": "#dc2626",
