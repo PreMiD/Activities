@@ -22,7 +22,7 @@ enum ActivityAssets {
   Settings = 'https://i.imgur.com/JKIwVXB.png',
   Group = 'https://i.imgur.com/5yGqlXI.png',
   MagicPen = 'https://i.imgur.com/u91zmaE.png',
-  Sparkle = 'https://i.imgur.com/Rg5u3bX.png',
+  Sparkle = 'https://i.imgur.com/DBNSiFh.png',
   Notification = 'https://i.imgur.com/PVJdOfm.png',
   Chat = 'https://i.imgur.com/GmdAyQk.png',
   Parcel = 'https://i.imgur.com/QcQ4uDk.png',
