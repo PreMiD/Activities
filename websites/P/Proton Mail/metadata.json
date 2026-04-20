@@ -10,10 +10,10 @@
     "en": "Secure, private email by Proton. End-to-end encryption and no tracking."
   },
   "url": "mail.proton.me",
-  "regExp": "^https?://mail[.]proton[.]me[/]",
+  "regExp": "^https?[:][/][/]mail[.]proton[.]me[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/rm69OQ1.png",
-  "thumbnail": "https://i.imgur.com/rm69OQ1.png",
+  "thumbnail": "https://i.imgur.com/vxBshvq.png",
   "color": "#42B883",
   "category": "other",
   "tags": ["email", "privacy", "secure"],

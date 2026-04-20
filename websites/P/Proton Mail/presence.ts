@@ -2,23 +2,17 @@ const presence = new Presence({
   clientId: '1494011757717487626',
 })
 
-const browsingTimestamp = Math.floor(Date.now() / 1000)
-
 presence.on('UpdateData', async () => {
-  const { hostname } = document.location
+  const path = document.location.href
 
-  if (hostname !== 'mail.proton.me') {
-    presence.setActivity()
-    return
-  }
+  const browsingTimestamp = Math.floor(Date.now() / 1000)
 
   const presenceData: PresenceData = {
     largeImageKey: 'https://i.imgur.com/rm69OQ1.png',
     startTimestamp: browsingTimestamp,
   }
 
-  const path = document.location.href
-  const [, time] = await Promise.all([
+  const [_privacy, time] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('time'),
   ])
@@ -27,7 +21,7 @@ presence.on('UpdateData', async () => {
     delete presenceData.startTimestamp
 
   const isComposing
-    = !!document.querySelector('[data-testid=\'composer\']')
+    = !!document.querySelector('[data-testid="composer"]')
       || !!document.querySelector('.composer-container')
       || !!document.querySelector('.proton-mail-composer')
       || !!document.querySelector('.composer--container')
@@ -35,46 +29,41 @@ presence.on('UpdateData', async () => {
   if (isComposing) {
     presenceData.details = 'Composing an email'
   }
-  else if (path.startsWith('https://mail.proton.me/u/2/all-drafts')) {
+  else if (path.includes('/u/') && path.includes('/all-drafts')) {
     presenceData.details = 'Viewing drafts'
   }
-  else if (path.startsWith('https://mail.proton.me/u/2/all-sent')) {
+  else if (path.includes('/u/') && path.includes('/all-sent')) {
     presenceData.details = 'Viewing sent emails'
   }
-  else if (path.startsWith('https://mail.proton.me/u/2/starred')) {
+  else if (path.includes('/u/') && path.includes('/starred')) {
     presenceData.details = 'Viewing starred emails'
   }
-  else if (path.startsWith('https://mail.proton.me/u/2/archive')) {
+  else if (path.includes('/u/') && path.includes('/archive')) {
     presenceData.details = 'Viewing archived emails'
   }
-  else if (path.startsWith('https://mail.proton.me/u/2/spam')) {
+  else if (path.includes('/u/') && path.includes('/spam')) {
     presenceData.details = 'Viewing spam emails'
   }
-  else if (path.startsWith('https://mail.proton.me/u/2/trash')) {
+  else if (path.includes('/u/') && path.includes('/trash')) {
     presenceData.details = 'Viewing trash'
   }
-  else if (path.startsWith('https://mail.proton.me/u/2/almost-all-mail')) {
+  else if (
+    (path.includes('/u/') && path.includes('/almost-all-mail'))
+    || (path.includes('/u/') && path.includes('/all-mail'))
+  ) {
     presenceData.details = 'Viewing all emails'
   }
-  else if (path.startsWith('https://mail.proton.me/u/2/all-mail')) {
-    presenceData.details = 'Viewing all emails'
-  }
-  else if (path.startsWith('https://mail.proton.me/u/2/views/newsletters')) {
+  else if (path.includes('/u/') && path.includes('/views/newsletters')) {
     presenceData.details = 'Viewing newsletters'
   }
   else if (
-    path.startsWith('https://mail.proton.me/u/2/inbox/')
-    && path.split('/').length > 6
+    path.includes('/u/')
+    && path.includes('/inbox/')
+    && path.split('/').length > 7
   ) {
     presenceData.details = 'Viewing an email'
   }
-  else if (
-    path.startsWith('https://mail.proton.me/u/2/inbox')
-    && !path.split('/').pop()?.includes('L')
-  ) {
-    presenceData.details = 'Viewing inbox'
-  }
-  else if (path.includes('/u/2/inbox')) {
+  else if (path.includes('/u/') && path.includes('/inbox')) {
     presenceData.details = 'Viewing inbox'
   }
   else {
@@ -85,6 +74,6 @@ presence.on('UpdateData', async () => {
     presence.setActivity(presenceData)
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
   }
 })
