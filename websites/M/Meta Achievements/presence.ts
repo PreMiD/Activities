@@ -50,6 +50,7 @@ presence.on('UpdateData', async () => {
     }
 
     const avatarImg = document.querySelector('#profileAvatar img') as HTMLImageElement
+    if (avatarImg?.src) smallImageKey = avatarImg.src
   } else if (pathname.endsWith('achievementdefinitions.html')) {
     details = 'All Achievements'
     smallImageKey = getEmojiUrl('📚')
