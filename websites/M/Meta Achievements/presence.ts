@@ -31,27 +31,28 @@ presence.on('UpdateData', async () => {
   if (pathname.endsWith('index.html') || pathname === '/') {
     details = 'Home'
     smallImageKey = getEmojiUrl('🏠')
-  } else if (pathname.endsWith('achievements.html')) {
+  }
+  else if (pathname.endsWith('achievements.html')) {
     const username = document.querySelector('.summary-title')?.textContent?.trim()
-    
     const games = getMetric('Games Tracked')
     const achievements = getMetric('Achievements Unlocked')
     const completions = getMetric('100% Completions')
 
     if (games || achievements || completions) {
-      details = username ? `${username}'s Profile` : "Loading Profile..."
+      details = username ? `${username}'s Profile` : 'Loading Profile...'
       const parts = []
       if (games) parts.push(`${games} Games`)
       if (achievements) parts.push(`${achievements} Achievements`)
       if (completions) parts.push(`${completions} 100%`)
       state = parts.join(' · ')
     } else {
-      details = "Loading Profile..."
+      details = 'Loading Profile...'
     }
 
     const avatarImg = document.querySelector('#profileAvatar img') as HTMLImageElement
     if (avatarImg?.src) smallImageKey = avatarImg.src
-  } else if (pathname.endsWith('achievementdefinitions.html')) {
+  }
+  else if (pathname.endsWith('achievementdefinitions.html')) {
     details = 'All Achievements'
     smallImageKey = getEmojiUrl('📚')
 
@@ -64,16 +65,20 @@ presence.on('UpdateData', async () => {
       if (achievements) parts.push(`${achievements} Achievements`)
       state = parts.join(' · ')
     }
-  } else if (pathname.endsWith('achievementdefinitionsapp.html')) {
+  }
+  else if (pathname.endsWith('achievementdefinitionsapp.html')) {
     details = 'Definitions App'
     smallImageKey = getEmojiUrl('🛠️')
-  } else if (pathname.endsWith('gamercard.html')) {
+  }
+  else if (pathname.endsWith('gamercard.html')) {
     details = 'Gamercard'
     smallImageKey = getEmojiUrl('🪪')
-  } else if (pathname.endsWith('ios-webapp-guide.html')) {
+  }
+  else if (pathname.endsWith('ios-webapp-guide.html')) {
     details = 'IOS Web App Guide'
     smallImageKey = getEmojiUrl('🍏')
-  } else if (pathname.endsWith('settings.html')) {
+  }
+  else if (pathname.endsWith('settings.html')) {
     details = 'User Settings'
     smallImageKey = getEmojiUrl('⚙️')
   }
