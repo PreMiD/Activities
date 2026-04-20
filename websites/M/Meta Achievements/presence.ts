@@ -42,7 +42,6 @@ presence.on('UpdateData', async () => {
       details = username ? `${username}'s Profile` : 'Loading Profile...'
       const parts = []
       if (games) {
-
         parts.push(`${games} Games`)
       }
       if (achievements) {
