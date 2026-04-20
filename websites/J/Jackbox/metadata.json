@@ -17,13 +17,12 @@
     "nl": "Het is gemakkelijk om deze website te gebruiken om van je telefoon, tablet of computer een controller te maken voor een van de vele partygames van Jackbox Games. Het enige dat u nodig heeft, is een kamercode"
   },
   "url": [
-    "jackbox.tv",
     "games.jackbox.tv",
     "www.jackboxgames.com",
     "shop.jackboxgames.com"
   ],
   "regExp": "^https?[:][/][/]((games[.])?jackbox[.]tv|(www|shop)[.]jackboxgames[.]com)[/]",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Jackbox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Jackbox/assets/thumbnail.png",
   "color": "#4254f4",
