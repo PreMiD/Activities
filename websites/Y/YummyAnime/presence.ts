@@ -203,7 +203,7 @@ function getActiveEpisode(pathname: string, search: string): string {
   }
 
   const newSiteVersion = document.querySelector(
-    'section.c5.c6 .oT .sB [data-selected="1"]',
+    'div.wB div[data-selected="1"]',
   )
   if (newSiteVersion) {
     const text = newSiteVersion.textContent?.trim()
@@ -402,7 +402,8 @@ presence.on('UpdateData', async () => {
   const { pathname, search } = document.location
 
   const presenceData: Record<string, unknown> = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.jpeg',
+    largeImageKey:
+      'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.jpeg',
     largeImageText: 'YummyAnime',
     type: ActivityType.Watching,
   }

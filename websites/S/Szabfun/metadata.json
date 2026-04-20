@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "SzaBee13",
+    "id": "1015545127500009562"
+  },
+  "service": "Szabfun",
+  "description": {
+    "en": "Szabfun is a free online gaming platform with fun mini-games and interactive activities."
+  },
+  "url": "fun.szabee.me",
+  "regExp": "^https?[:][/][/]fun[.]szabee[.]me([/]|$)",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Szabfun/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Szabfun/assets/thumbnail.png",
+  "color": "#FFFFFF",
+  "category": "games",
+  "tags": [
+    "games",
+    "fun",
+    "minigames",
+    "casual-games"
+  ]
+}
