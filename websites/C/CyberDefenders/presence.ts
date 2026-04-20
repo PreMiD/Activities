@@ -3,11 +3,11 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-const enum Assets {
-  Logo = 'https://cdn.discordapp.com/app-assets/1046391448133701672/1490308411441549432.png?size=512',
-  Labs = 'https://cdn.discordapp.com/app-assets/1046391448133701672/1490360031940706385.png?size=512',
-  CertifyL1 = 'https://cdn.discordapp.com/app-assets/1046391448133701672/1495835652389077173.png?size=512',
-  CertifyL2 = 'https://cdn.discordapp.com/app-assets/1046391448133701672/1495835652766437456.png?size=512',
+enum Assets {
+  Logo = 'https://raw.githubusercontent.com/ahmednader2019/Activities/feat/cyberdefenders-presence/websites/C/CyberDefenders/assets/logo.png',
+  Labs = 'https://raw.githubusercontent.com/ahmednader2019/Activities/feat/cyberdefenders-presence/websites/C/CyberDefenders/assets/labs.png',
+  CertifyL1 = 'https://raw.githubusercontent.com/ahmednader2019/Activities/feat/cyberdefenders-presence/websites/C/CyberDefenders/assets/ccdl1.png',
+  CertifyL2 = 'https://raw.githubusercontent.com/ahmednader2019/Activities/feat/cyberdefenders-presence/websites/C/CyberDefenders/assets/ccdl2.png',
 }
 
 const certDisplayNames: Record<string, string> = {
@@ -29,7 +29,7 @@ function formatSlug(slug: string): string {
 function getCertName(certSlug: string): string {
   return (
     certDisplayNames[certSlug]
-    ?? extractFromTitle(/^(.+?)\s*-\s*Dashboard\s*\|\s*CyberDefenders/)
+    ?? extractFromTitle(/^([^-]+)-\s*Dashboard\s*\|\s*CyberDefenders/)
     ?? formatSlug(certSlug)
   )
 }
@@ -74,9 +74,8 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'BlueYard Rankings'
       }
       else if (path[1]) {
-        const challengeName =
-          extractFromTitle(/^(.+?)\s*[-|]\s*CyberDefenders/)
-          ?? formatSlug(path[1])
+        const challengeName
+          = extractFromTitle(/^([^-|]+)[-|]/) ?? formatSlug(path[1])
         presenceData.details = privacyMode
           ? 'Viewing a Challenge'
           : `Viewing Challenge: ${challengeName}`
@@ -122,10 +121,10 @@ presence.on('UpdateData', async () => {
             const progressEl = document.querySelector(
               '[role="progressbar"], .progress-bar, [data-progress]',
             )
-            const progressValue =
-              progressEl?.getAttribute('aria-valuenow')
-              ?? progressEl?.getAttribute('data-progress')
-              ?? progressEl?.getAttribute('style')?.match(/width:\s*(\d+)%/)?.[1]
+            const progressValue
+              = progressEl?.getAttribute('aria-valuenow')
+                ?? progressEl?.getAttribute('data-progress')
+                ?? progressEl?.getAttribute('style')?.match(/width:\s*(\d+)%/)?.[1]
 
             presenceData.state = progressValue
               ? `Lessons (${progressValue}%)`
@@ -149,9 +148,8 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = Assets.Labs
 
       if (path[1]) {
-        const trackName =
-          extractFromTitle(/^(.+?)\s+Track\s*-\s*CyberDefenders/)
-          ?? formatSlug(path[1])
+        const trackName
+          = extractFromTitle(/^([^-]+)Track\s*-/) ?? formatSlug(path[1])
         presenceData.details = privacyMode
           ? 'Viewing a Track'
           : `Viewing Track: ${trackName}`
@@ -165,8 +163,8 @@ presence.on('UpdateData', async () => {
     case 'p': {
       presenceData.largeImageKey = Assets.Logo
       if (path[1]) {
-        const username =
-          extractFromTitle(/^(.+?)\s*\|\s*CyberDefenders/) ?? path[1]
+        const username
+          = extractFromTitle(/^([^|]+)\|/) ?? path[1]
         presenceData.details = 'Viewing Profile'
         presenceData.state = privacyMode ? 'a User' : username
       }
@@ -180,9 +178,9 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = Assets.Logo
 
       if (path[1]) {
-        const postTitle =
-          extractFromTitle(/^(.+?)\s*\|\s*CyberDefenders Blog/)
-          ?? formatSlug(path[1])
+        const postTitle
+          = extractFromTitle(/^([^|]+)\|\s*CyberDefenders Blog/)
+            ?? formatSlug(path[1])
         presenceData.details = 'Reading Blog Post'
         presenceData.state = privacyMode ? 'an Article' : postTitle
       }
@@ -215,9 +213,8 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = Assets.Labs
 
       if (path[1] === 'labs' && path[2]) {
-        const labName =
-          extractFromTitle(/^(.+?)\s*[-|]\s*CyberDefenders/)
-          ?? formatSlug(path[2])
+        const labName
+          = extractFromTitle(/^([^-|]+)[-|]/) ?? formatSlug(path[2])
         presenceData.details = privacyMode
           ? 'Solving a Lab'
           : `Solving: ${labName}`
