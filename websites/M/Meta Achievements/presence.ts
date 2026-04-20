@@ -70,9 +70,12 @@ presence.on('UpdateData', async () => {
     const achievements = getMetric('Total Achievements')
     if (games || achievements) {
       const parts = []
-      if (games) parts.push(`${games} Total Games`)
-      if (achievements) parts.push(`${achievements} Achievements`)
-
+      if (games) {
+        parts.push(`${games} Total Games`)
+      }
+      if (achievements) {
+        parts.push(`${achievements} Achievements`)
+      }
       state = parts.join(' · ')
     }
   }
