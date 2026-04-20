@@ -4,10 +4,10 @@ const presence = new Presence({
 	browsingTimestamp = Math.floor(Date.now() / 1000);
 
 const enum Assets {
-	Logo = "https://cdn.discordapp.com/app-assets/1046391448133701672/1490308411441549432.png",
-	Labs = "https://cdn.discordapp.com/app-assets/1046391448133701672/1490360031940706385.png",
-	CertifyL1 = "https://cdn.discordapp.com/app-assets/1046391448133701672/1495835652389077173.png",
-	CertifyL2 = "https://cdn.discordapp.com/app-assets/1046391448133701672/1495835652766437456.png",
+	Logo = "https://cdn.discordapp.com/app-assets/1046391448133701672/1490308411441549432.png?size=512",
+	Labs = "https://cdn.discordapp.com/app-assets/1046391448133701672/1490360031940706385.png?size=512",
+	CertifyL1 = "https://cdn.discordapp.com/app-assets/1046391448133701672/1495835652389077173.png?size=512",
+	CertifyL2 = "https://cdn.discordapp.com/app-assets/1046391448133701672/1495835652766437456.png?size=512",
 }
 
 const certDisplayNames: Record<string, string> = {

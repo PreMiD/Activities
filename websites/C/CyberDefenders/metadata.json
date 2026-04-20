@@ -12,7 +12,7 @@
   "url": "cyberdefenders.org",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*cyberdefenders[.]org[/]",
   "version": "1.0.0",
-  "logo": "https://cyberdefenders.org/favicon/apple-touch-icon.png",
+  "logo": "https://cdn.discordapp.com/app-assets/1046391448133701672/1490308411441549432.png?size=512",
   "thumbnail": "https://cyberdefenders.org/static-assets/img/og-images/cyberdefenders_og.png",
   "color": "#335eea",
   "category": "other",
