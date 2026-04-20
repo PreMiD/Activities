@@ -68,7 +68,6 @@ presence.on('UpdateData', async () => {
 
     const games = getMetric('Games indexed')
     const achievements = getMetric('Total Achievements')
-
     if (games || achievements) {
       const parts = []
       if (games) parts.push(`${games} Total Games`)
