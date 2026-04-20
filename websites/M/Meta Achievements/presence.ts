@@ -17,7 +17,7 @@ presence.on('UpdateData', async () => {
 
   const getMetric = (label: string) => {
     const metric = Array.from(document.querySelectorAll('.summary-metric'))
-      .find(m => {
+      .find((m) => {
         const l = m.querySelector('.summary-metric-label')?.textContent?.trim().toLowerCase()
         return l && l.includes(label.toLowerCase())
       })
