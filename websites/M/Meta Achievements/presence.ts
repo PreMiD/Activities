@@ -42,15 +42,20 @@ presence.on('UpdateData', async () => {
       details = username ? `${username}'s Profile` : 'Loading Profile...'
       const parts = []
       if (games) parts.push(`${games} Games`)
+
       if (achievements) parts.push(`${achievements} Achievements`)
+
       if (completions) parts.push(`${completions} 100%`)
+
       state = parts.join(' · ')
-    } else {
+    }
+    else {
       details = 'Loading Profile...'
     }
 
     const avatarImg = document.querySelector('#profileAvatar img') as HTMLImageElement
     if (avatarImg?.src) smallImageKey = avatarImg.src
+
   }
   else if (pathname.endsWith('achievementdefinitions.html')) {
     details = 'All Achievements'
@@ -62,7 +67,9 @@ presence.on('UpdateData', async () => {
     if (games || achievements) {
       const parts = []
       if (games) parts.push(`${games} Total Games`)
+
       if (achievements) parts.push(`${achievements} Achievements`)
+
       state = parts.join(' · ')
     }
   }
