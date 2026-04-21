@@ -28,6 +28,7 @@ presence.on('UpdateData', async () => {
   // Twemoji helper for smallImageKey
   const getEmojiUrl = (char: string) => `https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/72x72/${char.codePointAt(0)?.toString(16)}.png`
 
+  let buttonLabel: string | undefined
   if (pathname.endsWith('index.html') || pathname === '/') {
     details = 'Home'
     smallImageKey = getEmojiUrl('🏠')
@@ -39,6 +40,7 @@ presence.on('UpdateData', async () => {
     const completions = getMetric('100% Completions')
 
     if (games || achievements || completions) {
+      buttonLabel = 'View Profile'
       details = username ? `${username}'s Profile` : 'Loading Profile...'
       const parts = []
       if (games) {
@@ -69,6 +71,7 @@ presence.on('UpdateData', async () => {
     const games = getMetric('Games indexed')
     const achievements = getMetric('Total Achievements')
     if (games || achievements) {
+      buttonLabel = 'View Game List'
       const parts = []
       if (games) {
         parts.push(`${games} Total Games`)
@@ -102,12 +105,14 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
     smallImageKey,
-    buttons: [
-      {
-        label: 'View Page',
-        url: window.location.href,
-      },
-    ],
+    buttons: buttonLabel
+      ? [
+          {
+            label: buttonLabel,
+            url: window.location.href,
+          },
+        ]
+      : undefined,
   }
 
   presence.setActivity(presenceData)
