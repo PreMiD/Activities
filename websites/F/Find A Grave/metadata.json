@@ -19,8 +19,8 @@
   ],
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*findagrave[.]com[/]",
   "version": "1.0.0",
-  "logo": "./logo.png",
-  "thumbnail": "./logo.png",
+  "logo": "https://raw.githubusercontent.com/ikeblo/Activities/main/websites/F/Find%20A%20Grave/logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/ikeblo/Activities/main/websites/F/Find%20A%20Grave/logo.png",
   "color": "#4a7c59",
   "category": "other",
   "tags": [
