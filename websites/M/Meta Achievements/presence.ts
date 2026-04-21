@@ -71,7 +71,7 @@ presence.on('UpdateData', async () => {
     const games = getMetric('Games indexed')
     const achievements = getMetric('Total Achievements')
     if (games || achievements) {
-      buttonLabel = 'View Achievements'
+      buttonLabel = 'View Game List'
       const parts = []
       if (games) {
         parts.push(`${games} Total Games`)
