@@ -1,7 +1,7 @@
 import { ActivityType } from 'premid'
 
 const presence = new Presence({
-  clientId: '1495991942297682011'
+  clientId: '1495991942297682011',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -10,7 +10,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'logo',
     startTimestamp: browsingTimestamp,
-    type: ActivityType.Watching
+    type: ActivityType.Watching,
   }
 
   const path = document.location.pathname

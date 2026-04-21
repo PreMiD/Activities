@@ -19,8 +19,8 @@
   ],
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*findagrave[.]com[/]",
   "version": "1.0.0",
-  "logo": "https://images.findagrave.com/favicon-192x192.png",
-  "thumbnail": "https://images.findagrave.com/favicon-192x192.png",
+  "logo": "./logo.png",
+  "thumbnail": "./logo.png",
   "color": "#4a7c59",
   "category": "other",
   "tags": [
