@@ -9,7 +9,14 @@
   "description": {
     "en": "Browse memorials, cemeteries and family history on Find A Grave."
   },
-  "url": ["findagrave.com", "pt.findagrave.com", "es.findagrave.com", "fr.findagrave.com", "de.findagrave.com", "it.findagrave.com"],
+  "url": [
+    "findagrave.com",
+    "pt.findagrave.com",
+    "es.findagrave.com",
+    "fr.findagrave.com",
+    "de.findagrave.com",
+    "it.findagrave.com"
+  ],
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*findagrave[.]com[/]",
   "version": "1.0.0",
   "logo": "https://images.findagrave.com/favicon-192x192.png",
