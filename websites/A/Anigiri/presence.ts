@@ -8,7 +8,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://anigiri.com/icon-512.png',
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/Anigiri/assets/logo.png',
     startTimestamp: browsingTimestamp,
     type: ActivityType.Watching,
   }
@@ -34,7 +34,7 @@ presence.on('UpdateData', async () => {
 
     if (animeImage) {
       presenceData.largeImageKey = animeImage
-      presenceData.smallImageKey = 'https://anigiri.com/icon-512.png'
+      presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/A/Anigiri/assets/logo.png'
     }
 
     const video = document.querySelector('video')
@@ -70,7 +70,7 @@ presence.on('UpdateData', async () => {
 
     if (animeImage) {
       presenceData.largeImageKey = animeImage
-      presenceData.smallImageKey = 'https://anigiri.com/icon-512.png'
+      presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/A/Anigiri/assets/logo.png'
     }
   }
   else if (pathname.startsWith('/public-rooms')) {

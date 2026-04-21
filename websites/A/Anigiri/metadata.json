@@ -22,10 +22,13 @@
   },
   "url": "anigiri.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anigiri[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://anigiri.com/icon-512.png",
-  "thumbnail": "https://anigiri.com/images/default_banner.jpg",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anigiri/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anigiri/assets/thumbnail.jpg",
   "color": "#22c55e",
   "category": "anime",
-  "tags": ["anime", "streaming"]
+  "tags": [
+    "anime",
+    "streaming"
+  ]
 }
