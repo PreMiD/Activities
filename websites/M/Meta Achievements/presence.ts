@@ -57,7 +57,7 @@ presence.on('UpdateData', async () => {
       details = 'Loading Profile...'
     }
 
-    const avatarImg = document.querySelector('#profileAvatar img') as HTMLImageElement
+    const avatarImg = document.querySelector<HTMLImageElement>('#profileAvatar img')
     if (avatarImg?.src) {
       smallImageKey = avatarImg.src
     }
