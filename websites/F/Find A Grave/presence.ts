@@ -37,7 +37,6 @@ presence.on('UpdateData', async () => {
   }
   else {
     presenceData.details = 'Navegando no Find A Grave'
-    presenceData.state = 'findagrave.com'
   }
 
   presence.setActivity(presenceData)
