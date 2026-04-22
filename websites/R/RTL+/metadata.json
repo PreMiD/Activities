@@ -17,9 +17,12 @@
     "en": "RTL+ offers you exciting films and series. Also many shows and documentaries can be found in the online stream! Watch your favorite show online now!",
     "nl": "RTL+ biedt spannende films en series. Ook zijn er veel shows en documentaires te vinden in de online stream! Bekijk nu uw favoriete programma online!"
   },
-  "url": "plus.rtl.de",
-  "regExp": "^https?[:][/][/]plus[.]rtl[.]de[/]",
-  "version": "1.2.0",
+  "url": [
+    "plus.rtl.de",
+    "beta.plus.rtl.de"
+  ],
+  "regExp": "^https?[:][/][/](beta[.])?plus[.]rtl[.]de[/]",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RTL%2B/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RTL%2B/assets/thumbnail.jpg",
   "color": "#ffbc2d",
