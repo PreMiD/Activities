@@ -1,14 +1,16 @@
 import type { ActivityMetadata } from '../classes/ActivityCompiler.js'
 import { existsSync } from 'node:fs'
-import { readFile } from 'node:fs/promises'
+import { cp, readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import process from 'node:process'
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import isCI from 'is-ci'
+import { SyncScriptCompiler } from '../classes/SyncScriptCompiler.js'
 import { getDmcaServices, isDmcaBlocked } from '../util/dmca.js'
 import { getChangedActivities } from '../util/getActivities.js'
 import { getFolderLetter } from '../util/getFolderLetter.js'
+import { getChangedSyncScripts } from '../util/getSyncScripts.js'
 import { exit, MESSAGES, success } from '../util/log.js'
 import { sanitazeFolderName } from '../util/sanitazeFolderName.js'
 import { buildActivity } from './build/buildActivity.js'
@@ -145,4 +147,78 @@ export async function release() {
   }
 
   core.info(`Successfully updated ${successCount} activities`)
+
+  // Release sync scripts
+  const { changed: changedScripts, deleted: deletedScripts } = await getChangedSyncScripts()
+  core.info(`Found ${changedScripts.length} changed sync scripts, ${deletedScripts.length} deleted sync scripts`)
+
+  for (const script of deletedScripts) {
+    try {
+      const response = await fetch(`${apiUrl}/sync-scripts/v1/${encodeURIComponent(script.metadata.service)}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (!response.ok)
+        core.setFailed(`Failed to delete sync script ${script.metadata.service}: ${response.statusText}, ${await response.text()}`)
+    }
+    catch (error) {
+      core.setFailed(`Error deleting sync script ${script.metadata.service}: ${error}`)
+    }
+  }
+
+  let syncSuccessCount = 0
+
+  for (const script of changedScripts) {
+    await cp(
+      resolve(process.cwd(), 'cli/templates/sync-tsconfig.json'),
+      resolve(script.folder, 'tsconfig.json'),
+    )
+
+    const compiler = new SyncScriptCompiler(script.folder, script.metadata)
+    const built = await compiler.compile({ kill: false, zip: false })
+    if (!built) {
+      core.setFailed(`Failed to build sync script ${script.metadata.service}`)
+      continue
+    }
+
+    const contentJs = await readFile(resolve(script.folder, 'dist', 'content.js'), 'utf8')
+    const iframeJs = existsSync(resolve(script.folder, 'dist', 'iframe.js'))
+      ? await readFile(resolve(script.folder, 'dist', 'iframe.js'), 'utf8')
+      : undefined
+    const mainworldJs = existsSync(resolve(script.folder, 'dist', 'mainworld.js'))
+      ? await readFile(resolve(script.folder, 'dist', 'mainworld.js'), 'utf8')
+      : undefined
+
+    try {
+      const response = await fetch(`${apiUrl}/sync-scripts/v1`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          service: script.metadata.service,
+          contentJs,
+          iframeJs,
+          mainworldJs,
+          regExp: script.metadata.regExp,
+          iframeRegExp: script.metadata.iframeRegExp,
+        }),
+      })
+
+      if (response.ok)
+        syncSuccessCount++
+      else
+        core.setFailed(`Failed to update sync script ${script.metadata.service}: ${response.statusText}, ${await response.text()}`)
+    }
+    catch (error) {
+      core.setFailed(`Error updating sync script ${script.metadata.service}: ${error}`)
+    }
+  }
+
+  core.info(`Successfully updated ${syncSuccessCount} sync scripts`)
 }
