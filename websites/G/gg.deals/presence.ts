@@ -71,8 +71,8 @@ function getLargestImageSource(image: HTMLImageElement): string | undefined {
   if (srcset) {
     const largestCandidate = srcset
       .split(',')
-      .map((candidate) => candidate.trim())
-      .map((candidate) => {
+      .map(candidate => candidate.trim())
+      .map(candidate => {
         const [url, descriptor] = candidate.split(/\s+/)
         const size = Number.parseFloat(descriptor?.replace(/[wx]/, '') || '0')
         const priority = descriptor?.endsWith('x')
@@ -81,7 +81,7 @@ function getLargestImageSource(image: HTMLImageElement): string | undefined {
 
         return { url, priority: Number.isNaN(priority) ? 0 : priority }
       })
-      .filter((candidate) => candidate.url)
+      .filter(candidate => candidate.url)
       .sort((left, right) => right.priority - left.priority)[0]
 
     if (largestCandidate?.url) {
@@ -263,15 +263,20 @@ function updatePresence() {
 
       if (pathname.includes('/game/')) {
         presenceData.details = 'Viewing game:'
-      } else if (pathname.includes('/franchise/')) {
+      }
+      else if (pathname.includes('/franchise/')) {
         presenceData.details = 'Viewing franchise:'
-      } else if (pathname.includes('/pack/')) {
+      }
+      else if (pathname.includes('/pack/')) {
         presenceData.details = 'Viewing pack:'
-      } else if (pathname.includes('/dlc/')) {
+      }
+      else if (pathname.includes('/dlc/')) {
         presenceData.details = 'Viewing DLC:'
-      } else if (pathname.includes('/gift-card/') || pathname.includes('/gift-cards-group/')) {
+      }
+      else if (pathname.includes('/gift-card/') || pathname.includes('/gift-cards-group/')) {
         presenceData.details = 'Viewing gift card:'
-      } else {
+      }
+      else {
         presenceData.details = 'Viewing:'
       }
 
@@ -290,21 +295,28 @@ function updatePresence() {
 
       if (pathname.includes('/game/')) {
         addPageButton(presenceData, 'View Game')
-      } else if (pathname.includes('/franchise/')) {
+      }
+      else if (pathname.includes('/franchise/')) {
         addPageButton(presenceData, 'View Franchise')
-      } else if (pathname.includes('/pack/')) {
+      }
+      else if (pathname.includes('/pack/')) {
         addPageButton(presenceData, 'View Pack')
-      } else if (pathname.includes('/dlc/')) {
+      }
+      else if (pathname.includes('/dlc/')) {
         addPageButton(presenceData, 'View DLC')
-      } else if (pathname.includes('/gift-card/')) {
+      }
+      else if (pathname.includes('/gift-card/')) {
         addPageButton(presenceData, 'View Gift Card')
-      } else if (pathname.includes('/gift-cards-group/')) {
+      }
+      else if (pathname.includes('/gift-cards-group/')) {
         addPageButton(presenceData, 'View Gift Cards')
       }
-    } else {
+    }
+    else {
       presenceData.details = 'Browsing deals'
     }
-  } else if (newsArticleRoutes.some((route) => pathname.includes(route))) {
+  }
+  else if (newsArticleRoutes.some(route => pathname.includes(route))) {
     const articleHeading = document.querySelector('.news-heading-title h1')
 
     presenceData.details = 'Reading article:'
@@ -320,7 +332,8 @@ function updatePresence() {
     }
 
     addPageButton(presenceData, 'Read Article')
-  } else if (pathname.match(/\/ranking\/((pc|xbox|playstation|nintendo)\/)?[^/]+(\/[^/]+)?\/?$/)) {
+  }
+  else if (pathname.match(/\/ranking\/((pc|xbox|playstation|nintendo)\/)?[^/]+(\/[^/]+)?\/?$/)) {
     const rankingTitle = document.querySelector('h1.sm-side-padding.main-title')
 
     presenceData.details = 'Viewing ranking:'
@@ -330,45 +343,60 @@ function updatePresence() {
     }
 
     addPageButton(presenceData, 'View Ranking')
-  } else if (platformHomepages[pathname]) {
+  }
+  else if (platformHomepages[pathname]) {
     presenceData.details = platformHomepages[pathname]
-  } else if (pathname.includes('/games/pc/')) {
+  }
+  else if (pathname.includes('/games/pc/')) {
     presenceData.details = 'Browsing PC games'
-  } else if (pathname.includes('/games/xbox/')) {
+  }
+  else if (pathname.includes('/games/xbox/')) {
     presenceData.details = 'Browsing Xbox games'
-  } else if (pathname.includes('/games/playstation/')) {
+  }
+  else if (pathname.includes('/games/playstation/')) {
     presenceData.details = 'Browsing PSN games'
-  } else if (pathname.includes('/games/nintendo/')) {
+  }
+  else if (pathname.includes('/games/nintendo/')) {
     presenceData.details = 'Browsing Nintendo games'
-  } else if (pathname.match(/\/games\/?$/)) {
+  }
+  else if (pathname.match(/\/games\/?$/)) {
     presenceData.details = 'Browsing all platforms'
-  } else if (pathname.includes('/franchises/pc/')) {
+  }
+  else if (pathname.includes('/franchises/pc/')) {
     presenceData.details = 'Browsing PC franchises'
-  } else if (pathname.includes('/franchises/xbox/')) {
+  }
+  else if (pathname.includes('/franchises/xbox/')) {
     presenceData.details = 'Browsing Xbox franchises'
-  } else if (pathname.includes('/franchises/playstation/')) {
+  }
+  else if (pathname.includes('/franchises/playstation/')) {
     presenceData.details = 'Browsing PSN franchises'
-  } else if (pathname.includes('/franchises/nintendo/')) {
+  }
+  else if (pathname.includes('/franchises/nintendo/')) {
     presenceData.details = 'Browsing Nintendo franchises'
-  } else if (pathname.match(/\/franchises\/?$/)) {
+  }
+  else if (pathname.match(/\/franchises\/?$/)) {
     presenceData.details = 'Browsing all franchises'
-  } else if (pathname.includes('/settings/')) {
+  }
+  else if (pathname.includes('/settings/')) {
     presenceData.details = 'Viewing user settings'
-  } else if (pathname.includes('/wishlist/')) {
+  }
+  else if (pathname.includes('/wishlist/')) {
     presenceData.details = 'Viewing my wishlist'
 
     const wishlistCount = getResultsCount()
     if (wishlistCount) {
       presenceData.state = `${wishlistCount} wishlisted`
     }
-  } else if (pathname.includes('/alerts/')) {
+  }
+  else if (pathname.includes('/alerts/')) {
     presenceData.details = 'Viewing my alerts'
 
     const alertsCount = getResultsCount()
     if (alertsCount) {
       presenceData.state = `${alertsCount} alerts`
     }
-  } else if (pathname.includes('/collection/')) {
+  }
+  else if (pathname.includes('/collection/')) {
     const filters = getActiveCollectionFilters()
     const platform = filters.platform || getPlatformLabel(pathname)
     const typeLabel = filters.type ? getPluralType(filters.type) : 'items'
@@ -385,12 +413,14 @@ function updatePresence() {
         presenceData.details = platform
           ? `Viewing my ${tag}${platform} ${typeLabel} from ${value}`
           : `Viewing my ${tag}${typeLabel} from ${value}`
-      } else {
+      }
+      else {
         presenceData.details = platform
           ? `Viewing my ${tag}${value} ${typeLabel} on ${platform}`
           : `Viewing my ${tag}${value} ${typeLabel}`
       }
-    } else {
+    }
+    else {
       presenceData.details = platform
         ? `Viewing my ${tag}${platform} collection`
         : `Viewing my ${tag}collection`
@@ -400,57 +430,83 @@ function updatePresence() {
     if (collectionCount) {
       presenceData.state = `${collectionCount} ${typeLabel} in my collection`
     }
-  } else if (pathname.includes('/news/pc/')) {
+  }
+  else if (pathname.includes('/news/pc/')) {
     presenceData.details = 'Browsing PC news'
-  } else if (pathname.includes('/news/xbox/')) {
+  }
+  else if (pathname.includes('/news/xbox/')) {
     presenceData.details = 'Browsing Xbox news'
-  } else if (pathname.includes('/news/playstation/')) {
+  }
+  else if (pathname.includes('/news/playstation/')) {
     presenceData.details = 'Browsing PSN news'
-  } else if (pathname.includes('/news/nintendo/')) {
+  }
+  else if (pathname.includes('/news/nintendo/')) {
     presenceData.details = 'Browsing Nintendo news'
-  } else if (pathname.includes('/news/')) {
+  }
+  else if (pathname.includes('/news/')) {
     presenceData.details = 'Browsing all news'
-  } else if (pathname.includes('/vouchers/pc/')) {
+  }
+  else if (pathname.includes('/vouchers/pc/')) {
     presenceData.details = 'Browsing PC vouchers'
-  } else if (pathname.includes('/vouchers/xbox/')) {
+  }
+  else if (pathname.includes('/vouchers/xbox/')) {
     presenceData.details = 'Browsing Xbox vouchers'
-  } else if (pathname.includes('/vouchers/playstation/')) {
+  }
+  else if (pathname.includes('/vouchers/playstation/')) {
     presenceData.details = 'Browsing PSN vouchers'
-  } else if (pathname.includes('/vouchers/nintendo/')) {
+  }
+  else if (pathname.includes('/vouchers/nintendo/')) {
     presenceData.details = 'Browsing Nintendo vouchers'
-  } else if (pathname.includes('/vouchers/')) {
+  }
+  else if (pathname.includes('/vouchers/')) {
     presenceData.details = 'Browsing all vouchers'
-  } else if (pathname.includes('/rankings/pc/')) {
+  }
+  else if (pathname.includes('/rankings/pc/')) {
     presenceData.details = 'Browsing PC rankings'
-  } else if (pathname.includes('/rankings/xbox/')) {
+  }
+  else if (pathname.includes('/rankings/xbox/')) {
     presenceData.details = 'Browsing Xbox rankings'
-  } else if (pathname.includes('/rankings/playstation/')) {
+  }
+  else if (pathname.includes('/rankings/playstation/')) {
     presenceData.details = 'Browsing PSN rankings'
-  } else if (pathname.includes('/rankings/nintendo/')) {
+  }
+  else if (pathname.includes('/rankings/nintendo/')) {
     presenceData.details = 'Browsing Nintendo rankings'
-  } else if (pathname.includes('/rankings/')) {
+  }
+  else if (pathname.includes('/rankings/')) {
     presenceData.details = 'Browsing all rankings'
-  } else if (pathname.includes('/deals/pc/')) {
+  }
+  else if (pathname.includes('/deals/pc/')) {
     presenceData.details = 'Browsing PC deals'
-  } else if (pathname.includes('/deals/xbox/')) {
+  }
+  else if (pathname.includes('/deals/xbox/')) {
     presenceData.details = 'Browsing Xbox deals'
-  } else if (pathname.includes('/deals/playstation/')) {
+  }
+  else if (pathname.includes('/deals/playstation/')) {
     presenceData.details = 'Browsing PSN deals'
-  } else if (pathname.includes('/deals/nintendo/')) {
+  }
+  else if (pathname.includes('/deals/nintendo/')) {
     presenceData.details = 'Browsing Nintendo deals'
-  } else if (pathname.includes('/deals/')) {
+  }
+  else if (pathname.includes('/deals/')) {
     presenceData.details = 'Browsing all deals'
-  } else if (pathname.includes('/prepaids/pc/')) {
+  }
+  else if (pathname.includes('/prepaids/pc/')) {
     presenceData.details = 'Browsing PC prepaid cards'
-  } else if (pathname.includes('/prepaids/xbox/')) {
+  }
+  else if (pathname.includes('/prepaids/xbox/')) {
     presenceData.details = 'Browsing Xbox prepaid cards'
-  } else if (pathname.includes('/prepaids/playstation/')) {
+  }
+  else if (pathname.includes('/prepaids/playstation/')) {
     presenceData.details = 'Browsing PSN prepaid cards'
-  } else if (pathname.includes('/prepaids/nintendo/')) {
+  }
+  else if (pathname.includes('/prepaids/nintendo/')) {
     presenceData.details = 'Browsing Nintendo prepaid cards'
-  } else if (pathname.includes('/prepaids/')) {
+  }
+  else if (pathname.includes('/prepaids/')) {
     presenceData.details = 'Browsing all prepaid cards'
-  } else {
+  }
+  else {
     presenceData.details = 'Browsing deals'
   }
 
