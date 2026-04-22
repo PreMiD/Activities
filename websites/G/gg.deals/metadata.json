@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "656514596303142934",
+    "name": "theandromedacat"
+  },
+  "service": "gg.deals",
+  "description": {
+    "en": "TODO"
+  },
+  "url": "gg.deals",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gg[.]deals[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/pXWjFbw.jpeg",
+  "thumbnail": "https://i.imgur.com/000000.png",
+  "color": "#000000",
+  "category": "games",
+  "tags": [
+    "gaming",
+    "shopping"
+  ]
+}
