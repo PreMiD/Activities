@@ -72,7 +72,7 @@ function getLargestImageSource(image: HTMLImageElement): string | undefined {
     const largestCandidate = srcset
       .split(',')
       .map(candidate => candidate.trim())
-      .map(candidate => {
+      .map((candidate) => {
         const [url, descriptor] = candidate.split(/\s+/)
         const size = Number.parseFloat(descriptor?.replace(/[wx]/, '') || '0')
         const priority = descriptor?.endsWith('x')
@@ -254,8 +254,8 @@ function updatePresence() {
         title = parsedTitle.title
 
         if (
-          parsedTitle.platform &&
-          (pathname.includes('/game/') || pathname.includes('/pack/') || pathname.includes('/dlc/'))
+          parsedTitle.platform
+          && (pathname.includes('/game/') || pathname.includes('/pack/') || pathname.includes('/dlc/'))
         ) {
           presenceData.state = `${title} on ${parsedTitle.platform}`
         }
