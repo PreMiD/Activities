@@ -12,8 +12,8 @@
   "url": "www.1shows.ru",
   "regExp": "^https?[:][/][/](www[.])?1shows[.]ru[/]",
   "version": "1.0.0",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/thumbnail.png",
+  "logo": "https://i.imgur.com/GhoM28H.png",
+  "thumbnail": "https://i.imgur.com/HCpF6JV.png",
   "color": "#121212",
   "category": "videos",
   "tags": [
