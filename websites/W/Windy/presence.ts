@@ -80,7 +80,6 @@ presence.on('UpdateData', async () => {
       localForecast: 'windy.localForecast',
       globalMap: 'windy.globalMap',
       exploring: 'windy.exploring',
-      exploringWindy: 'windy.exploringWindy',
       exploringHurricanes: 'windy.exploringHurricanes',
       stationFallback: 'windy.stationFallback',
       layer: 'windy.layer',
@@ -102,7 +101,7 @@ presence.on('UpdateData', async () => {
       return
 
     const presenceData: PresenceData = {
-      largeImageKey: 'https://i.imgur.com/DYIEgcX.png',
+      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/W/Windy/assets/logo.png',
       startTimestamp: browsingTimestamp,
     }
 
@@ -119,7 +118,7 @@ presence.on('UpdateData', async () => {
         presenceData.state = t.modifyingSettings
       }
       else {
-        presenceData.details = t.exploringWindy
+        presenceData.details = t.exploring
       }
     }
     else if (pathname.includes('/menu')) {
@@ -128,7 +127,7 @@ presence.on('UpdateData', async () => {
         presenceData.state = t.navigating
       }
       else {
-        presenceData.details = t.exploringWindy
+        presenceData.details = t.exploring
       }
     }
     else if (pathname.includes('/station/')) {
@@ -158,7 +157,7 @@ presence.on('UpdateData', async () => {
       const activeLayerMatch = layerTokens.find(token => layerKeys.includes(token)) || ''
       const layerTranslated = activeLayerMatch ? (t as any)[activeLayerMatch] : undefined
 
-      presenceData.details = pathname === '/' ? t.globalMap : t.exploringWindy
+      presenceData.details = pathname === '/' ? t.globalMap : t.exploring
       presenceData.state = (showLayer && layerTranslated) ? `${t.layer}: ${layerTranslated}` : undefined
     }
 

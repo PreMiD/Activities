@@ -15,10 +15,6 @@
     "message": "Viewing hurricanes",
     "description": "Hurricane tracking status"
   },
-  "windy.exploringWindy": {
-    "message": "Exploring",
-    "description": "Generic exploring status"
-  },
   "windy.globalMap": {
     "message": "Global map",
     "description": "Global map status"
