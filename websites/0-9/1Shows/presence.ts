@@ -36,6 +36,14 @@ presence.on('UpdateData', async () => {
       details: 'Viewing Profile',
       smallImageKey: Assets.Viewing,
     },
+    '/login': {
+      details: 'Signing in',
+      smallImageKey: Assets.Viewing,
+    },
+    '/register': {
+      details: 'Creating an account',
+      smallImageKey: Assets.Viewing,
+    },
     '/tv': {
       details: 'Browsing TV Shows',
       smallImageKey: Assets.Viewing,
