@@ -333,7 +333,7 @@ function updatePresence() {
 
     addPageButton(presenceData, 'Read Article')
   }
-  else if (pathname.match(/\/ranking\/((pc|xbox|playstation|nintendo)\/)?[^/]+(\/[^/]+)?\/?$/)) {
+  else if (pathname.match(/\/ranking\/(?:(?:pc|xbox|playstation|nintendo)\/)?[^/]+(?:\/[^/]+)?\/?$/)) {
     const rankingTitle = document.querySelector('h1.sm-side-padding.main-title')
 
     presenceData.details = 'Viewing ranking:'
