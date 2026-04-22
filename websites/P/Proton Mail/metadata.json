@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "ShadowIsHere",
+    "id": "1055414059861823620"
+  },
+  "service": "Proton Mail",
+  "description": {
+    "en": "Secure, private email by Proton. End-to-end encryption and no tracking."
+  },
+  "url": "mail.proton.me",
+  "regExp": "^https?[:][/][/]mail[.]proton[.]me[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Proton%20Mail/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Proton%20Mail/assets/thumbnail.png",
+  "color": "#42B883",
+  "category": "other",
+  "tags": [
+    "email",
+    "privacy",
+    "secure"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "time",
+      "title": "Show Timestamp",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    }
+  ]
+}
