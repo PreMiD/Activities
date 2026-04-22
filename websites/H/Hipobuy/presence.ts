@@ -176,11 +176,11 @@ presence.on('UpdateData', async () => {
 
   const strings = await presence.getStrings({
     browsing: 'general.browsing',
-    viewingHomepage: 'hipobuy.viewingHomepage',
+    viewingHomepage: 'general.viewHome',
     browsingCategories: 'hipobuy.browsingCategories',
     browsingShop: 'hipobuy.browsingShop',
     browsingGoods: 'hipobuy.browsingGoods',
-    viewingProduct: 'hipobuy.viewingProduct',
+    viewingProduct: 'general.viewAProduct',
     viewingProductFrom: 'hipobuy.viewingProductFrom',
     viewingGoodsDetails: 'hipobuy.viewingGoodsDetails',
     viewingShopDetails: 'hipobuy.viewingShopDetails',
@@ -246,9 +246,9 @@ presence.on('UpdateData', async () => {
     viewingFreeShipping: 'hipobuy.viewingFreeShipping',
     viewingRewards: 'hipobuy.viewingRewards',
     viewingPopUpShop: 'hipobuy.viewingPopUpShop',
-    searchingFor: 'hipobuy.searchingFor',
+    searchingFor: 'general.search',
     profilePicture: 'hipobuy.profilePicture',
-    cart: 'hipobuy.cart',
+    cart: 'general.shopCart',
     favorites: 'hipobuy.favorites',
     orders: 'hipobuy.orders',
     warehouse: 'hipobuy.warehouse',
@@ -274,8 +274,8 @@ presence.on('UpdateData', async () => {
     helpArticle: 'hipobuy.helpArticle',
     helpCenter: 'hipobuy.helpCenter',
     issue: 'hipobuy.issue',
-    privacyPolicy: 'hipobuy.privacyPolicy',
-    termsOfService: 'hipobuy.termsOfService',
+    privacyPolicy: 'general.privacy',
+    termsOfService: 'general.terms',
     notice: 'hipobuy.notice',
     download: 'hipobuy.download',
     signIn: 'hipobuy.signIn',
@@ -310,7 +310,6 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
-    details: '',
     startTimestamp: showTimestamps ? browsingTimestamp : undefined,
   }
 

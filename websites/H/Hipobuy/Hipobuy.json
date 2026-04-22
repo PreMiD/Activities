@@ -1,8 +1,4 @@
 {
-  "hipobuy.viewingHomepage": {
-    "description": "Shown when the user is on the Hipobuy homepage",
-    "message": "Viewing the homepage"
-  },
   "hipobuy.browsingCategories": {
     "description": "Shown when the user is browsing all product categories",
     "message": "Browsing categories"
@@ -14,10 +10,6 @@
   "hipobuy.browsingGoods": {
     "description": "Shown when the user is browsing the goods/product listing",
     "message": "Browsing goods"
-  },
-  "hipobuy.viewingProduct": {
-    "description": "Shown when the user is viewing a specific product detail page (/product/)",
-    "message": "Viewing a product"
   },
   "hipobuy.viewingProductFrom": {
     "description": "Shown before the source platform name when viewing a product",
@@ -279,17 +271,9 @@
     "description": "Shown when the user is browsing the pop-up shop event (/pop-up-shop)",
     "message": "Browsing pop-up shop"
   },
-  "hipobuy.searchingFor": {
-    "description": "Shown when the user performs a search on /goods?text=...",
-    "message": "Searching for"
-  },
   "hipobuy.profilePicture": {
     "description": "Hover text for small image when showing user avatar",
     "message": "Profile picture"
-  },
-  "hipobuy.cart": {
-    "description": "Small image hover text for shopping cart",
-    "message": "Cart"
   },
   "hipobuy.favorites": {
     "description": "Small image hover text for favorites",
@@ -390,14 +374,6 @@
   "hipobuy.issue": {
     "description": "Small image text for issue page",
     "message": "Issue"
-  },
-  "hipobuy.privacyPolicy": {
-    "description": "Small image text for privacy policy",
-    "message": "Privacy Policy"
-  },
-  "hipobuy.termsOfService": {
-    "description": "Small image text for terms of service",
-    "message": "Terms of Service"
   },
   "hipobuy.notice": {
     "description": "Small image text for notice",
