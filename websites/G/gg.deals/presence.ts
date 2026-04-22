@@ -35,7 +35,7 @@ function getLargestGameImage(): string | undefined {
 
 function getLargestGiftCardImage(): string | undefined {
   const giftCardImages = Array.from(
-    document.querySelectorAll<HTMLImageElement>('.game-info img, .game-header img, .game-heading img, img')
+    document.querySelectorAll<HTMLImageElement>('.game-info img, .game-header img, .game-heading img, img'),
   )
 
   const giftCardImage = giftCardImages.find((image) => {
@@ -95,8 +95,8 @@ function getLargestImageSource(image: HTMLImageElement): string | undefined {
 function getLargestNewsImage(): string | undefined {
   const articleImages = Array.from(
     document.querySelectorAll<HTMLImageElement>(
-      '.news-heading-title img, article img, .text article img, .text img, img.img, main img'
-    )
+      '.news-heading-title img, article img, .text article img, .text img, img.img, main img',
+    ),
   )
 
   const eligibleImages = articleImages
@@ -156,6 +156,7 @@ function getActiveCollectionFilters(): Record<string, string> {
     genre: '.content .filter.badge.with-icon.active.remove-filter.genre-filter .value',
     ageRating: '.content .filter.badge.with-icon.active.remove-filter.ageRating-filter .value',
     releaseDate: '.content .filter.badge.with-icon.active.remove-filter.releaseDate-filter .value',
+    tag: '.content .filter.badge.with-icon.active.remove-filter.tag-filter .value',
     type: '.content .filter.badge.with-icon.active.remove-filter.type-filter .value',
   }
 
@@ -371,9 +372,10 @@ function updatePresence() {
     const filters = getActiveCollectionFilters()
     const platform = filters.platform || getPlatformLabel(pathname)
     const typeLabel = filters.type ? getPluralType(filters.type) : 'items'
+    const tag = filters.tag ? `${filters.tag} ` : ''
 
     const primaryFilterType = ['releaseDate', 'genre', 'developer', 'publisher', 'drm', 'ageRating'].find(
-      (type) => filters[type]
+      (type) => filters[type],
     )
 
     if (primaryFilterType) {
@@ -381,15 +383,17 @@ function updatePresence() {
 
       if (primaryFilterType === 'releaseDate') {
         presenceData.details = platform
-          ? `Viewing my ${platform} ${typeLabel} from ${value}`
-          : `Viewing my ${typeLabel} from ${value}`
+          ? `Viewing my ${tag}${platform} ${typeLabel} from ${value}`
+          : `Viewing my ${tag}${typeLabel} from ${value}`
       } else {
         presenceData.details = platform
-          ? `Viewing my ${value} ${typeLabel} on ${platform}`
-          : `Viewing my ${value} ${typeLabel}`
+          ? `Viewing my ${tag}${value} ${typeLabel} on ${platform}`
+          : `Viewing my ${tag}${value} ${typeLabel}`
       }
     } else {
-      presenceData.details = platform ? `Viewing my ${platform} collection` : 'Viewing my collection'
+      presenceData.details = platform
+        ? `Viewing my ${tag}${platform} collection`
+        : `Viewing my ${tag}collection`
     }
 
     const collectionCount = getResultsCount()
