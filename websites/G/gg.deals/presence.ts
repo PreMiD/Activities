@@ -403,7 +403,7 @@ function updatePresence() {
     const tag = filters.tag ? `${filters.tag} ` : ''
 
     const primaryFilterType = ['releaseDate', 'genre', 'developer', 'publisher', 'drm', 'ageRating'].find(
-      (type) => filters[type],
+      type => filters[type],
     )
 
     if (primaryFilterType) {
