@@ -101,7 +101,7 @@ presence.on('UpdateData', async () => {
       return
 
     const presenceData: PresenceData = {
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/W/Windy/assets/logo.png',
+      largeImageKey: 'https://i.imgur.com/DYIEgcX.png',
       startTimestamp: browsingTimestamp,
     }
 
