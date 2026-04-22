@@ -4,10 +4,10 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum Assets {
-  Logo = 'https://raw.githubusercontent.com/ahmednader2019/Activities/feat/cyberdefenders-presence/websites/C/CyberDefenders/assets/logo.png',
-  Labs = 'https://raw.githubusercontent.com/ahmednader2019/Activities/feat/cyberdefenders-presence/websites/C/CyberDefenders/assets/labs.png',
-  CertifyL1 = 'https://raw.githubusercontent.com/ahmednader2019/Activities/feat/cyberdefenders-presence/websites/C/CyberDefenders/assets/ccdl1.png',
-  CertifyL2 = 'https://raw.githubusercontent.com/ahmednader2019/Activities/feat/cyberdefenders-presence/websites/C/CyberDefenders/assets/ccdl2.png',
+  Logo = 'https://raw.githubusercontent.com/ahmednader2019/Activities/2b6e0dbbd/websites/C/CyberDefenders/assets/logo.png',
+  Labs = 'https://raw.githubusercontent.com/ahmednader2019/Activities/2b6e0dbbd/websites/C/CyberDefenders/assets/labs.png',
+  CertifyL1 = 'https://raw.githubusercontent.com/ahmednader2019/Activities/2b6e0dbbd/websites/C/CyberDefenders/assets/ccdl1.png',
+  CertifyL2 = 'https://raw.githubusercontent.com/ahmednader2019/Activities/2b6e0dbbd/websites/C/CyberDefenders/assets/ccdl2.png',
 }
 
 const certDisplayNames: Record<string, string> = {
@@ -254,5 +254,5 @@ presence.on('UpdateData', async () => {
   if (presenceData.details)
     presence.setActivity(presenceData)
   else
-    presence.setActivity()
+    presence.clearActivity()
 })
