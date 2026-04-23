@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps } from 'premid'
+import { ActivityType, Assets, getTimestamps, StatusDisplayType } from 'premid'
 
 const presence = new Presence({
   clientId: '1103003257795793018',
@@ -158,17 +158,29 @@ function getPageData(): PageData {
 // Main update loop - runs every few seconds
 presence.on('UpdateData', async () => {
   // Get user settings from metadata.json
-  const [showButtons, showTimestamp, showCover] = await Promise.all([
-    presence.getSetting<boolean>('showButtons').catch(() => true),
-    presence.getSetting<boolean>('showTimestamp').catch(() => true),
+  const [showCover, statusDisplay] = await Promise.all([
     presence.getSetting<boolean>('showCover').catch(() => true),
+    presence.getSetting<number>('statusDisplay').catch(() => 1),
   ])
 
   const pageData = getPageData()
   const presenceData: PresenceData = {
-    largeImageKey: ActivityAssets.Logo, // Default to logo
+    name: 'Anime365',
+    largeImageKey: ActivityAssets.Logo,
     type: ActivityType.Watching,
   }
+
+  // Set status display type based on user preference
+  let statusDisplayType: StatusDisplayType | undefined
+  switch (statusDisplay) {
+    case 0:
+      statusDisplayType = StatusDisplayType.Name
+      break
+    case 1:
+      statusDisplayType = StatusDisplayType.Details
+      break
+  }
+  presenceData.statusDisplayType = statusDisplayType
 
   // Use anime cover ONLY on anime-related pages and if enabled
   if (showCover && (pageData.type === 'anime' || pageData.type === 'watching')) {
@@ -184,8 +196,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Browsing new releases'
       presenceData.smallImageKey = Assets.Search
       presenceData.smallImageText = 'Homepage'
-      if (showTimestamp)
-        presenceData.startTimestamp = browsingTimestamp
+      presenceData.startTimestamp = browsingTimestamp
       break
 
     case 'catalog':
@@ -193,8 +204,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Looking for anime'
       presenceData.smallImageKey = Assets.Search
       presenceData.smallImageText = 'Catalog'
-      if (showTimestamp)
-        presenceData.startTimestamp = browsingTimestamp
+      presenceData.startTimestamp = browsingTimestamp
       break
 
     case 'anime':
@@ -204,15 +214,12 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Reading
       presenceData.smallImageText = 'Reading description'
 
-      if (showTimestamp)
-        presenceData.startTimestamp = browsingTimestamp
+      presenceData.startTimestamp = browsingTimestamp
 
-      if (showButtons) {
-        presenceData.buttons = [{
-          label: 'Watch episodes',
-          url: document.location.href,
-        }]
-      }
+      presenceData.buttons = [{
+        label: 'Watch episodes',
+        url: document.location.href,
+      }]
       break
 
     case 'watching':
@@ -236,8 +243,8 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageKey = Assets.Play
           presenceData.smallImageText = 'Watching'
 
-          // Add timestamps if enabled
-          if (showTimestamp && iframeVideo.currentTime && iframeVideo.duration) {
+          // Add timestamps
+          if (iframeVideo.currentTime && iframeVideo.duration) {
             [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
               Math.floor(iframeVideo.currentTime),
               Math.floor(iframeVideo.duration),
@@ -253,12 +260,10 @@ presence.on('UpdateData', async () => {
         delete presenceData.endTimestamp
       }
 
-      if (showButtons) {
-        presenceData.buttons = [{
-          label: 'Watch',
-          url: document.location.href,
-        }]
-      }
+      presenceData.buttons = [{
+        label: 'Watch',
+        url: document.location.href,
+      }]
       break
 
     case 'search':
@@ -271,8 +276,7 @@ presence.on('UpdateData', async () => {
       }
       presenceData.smallImageKey = Assets.Search
       presenceData.smallImageText = 'Search'
-      if (showTimestamp)
-        presenceData.startTimestamp = browsingTimestamp
+      presenceData.startTimestamp = browsingTimestamp
       break
 
     case 'profile':
@@ -280,8 +284,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Their anime list'
       presenceData.smallImageKey = Assets.Reading
       presenceData.smallImageText = 'List'
-      if (showTimestamp)
-        presenceData.startTimestamp = browsingTimestamp
+      presenceData.startTimestamp = browsingTimestamp
       break
 
     default:
@@ -289,8 +292,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'On website'
       presenceData.state = 'Exploring content'
       presenceData.smallImageText = 'On website'
-      if (showTimestamp)
-        presenceData.startTimestamp = browsingTimestamp
+      presenceData.startTimestamp = browsingTimestamp
   }
 
   presence.setActivity(presenceData)
