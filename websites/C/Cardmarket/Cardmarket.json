@@ -1,0 +1,10 @@
+{
+  "cardmarket.game": {
+    "description": "Shown with the game name (e.g., 'Game: Pokemon')",
+    "message": "Game: {0}"
+  },
+  "cardmarket.browsing_category": {
+    "description": "Shown when browsing a category (e.g., 'Browsing Singles')",
+    "message": "Browsing {0}"
+  }
+}

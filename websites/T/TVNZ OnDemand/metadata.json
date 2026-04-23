@@ -10,12 +10,9 @@
     "en": "TVNZ OnDemand. We've rounded up the best of the best for you. Finding your favourite TVNZ shows and discovering new ones has never been easier.",
     "nl": "TVNZ OnDemand. We hebben het beste van het beste voor je op een rijtje gezet. Het vinden van uw favoriete TVNZ-programma's en het ontdekken van nieuwe is nog nooit zo eenvoudig geweest."
   },
-  "url": [
-    "www.tvnz.co.nz",
-    "login.tech.tvnz.co.nz"
-  ],
+  "url": "www.tvnz.co.nz",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tvnz[.]co[.]nz[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TVNZ%20OnDemand/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TVNZ%20OnDemand/assets/thumbnail.png",
   "color": "#167EF5",
