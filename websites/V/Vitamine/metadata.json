@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "302182137854165004",
+    "name": "zaitoo_"
+  },
+  "service": "Vitamine",
+  "description": {
+    "en": "The Marseille Student Tutoring Platform",
+    "fr": "La plateforme du Tutorat Associatif Marseillais"
+  },
+  "url": "vitamine.tutorat-marseille.fr",
+  "regExp": "^https?[:][/][/]vitamine[.]tutorat-marseille[.]fr[/](.*)$",
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vitamine/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vitamine/assets/thumbnail.png",
+  "color": "#2A1719",
+  "category": "other",
+  "tags": [
+    "medecine",
+    "work",
+    "qcm",
+    "marseille"
+  ],
+  "settings": [
+    {
+      "id": "showQcmCountdown",
+      "title": "Show question countdown",
+      "icon": "fas fa-hourglass-half",
+      "value": false
+    },
+    {
+      "id": "showCourseName",
+      "title": "Show course name",
+      "icon": "fas fa-book",
+      "value": true
+    },
+    {
+      "id": "showSessionType",
+      "title": "Show session label",
+      "icon": "fas fa-layer-group",
+      "value": true
+    },
+    {
+      "id": "showQuestionNumber",
+      "title": "Show question number",
+      "icon": "fas fa-hashtag",
+      "value": false
+    }
+  ]
+}

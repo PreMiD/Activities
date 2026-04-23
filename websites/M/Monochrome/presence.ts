@@ -1,10 +1,7 @@
-import { ActivityType } from 'premid'
+import { ActivityType, Assets, StatusDisplayType } from 'premid'
 
-// Static Asset Configuration
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/M/Monochrome/assets/logo.png',
-  Play = 'https://cdn.rcd.gg/PreMiD/websites/M/Monochrome/assets/0.png',
-  Pause = 'https://cdn.rcd.gg/PreMiD/websites/M/Monochrome/assets/1.png',
 }
 
 const presence = new Presence({
@@ -12,34 +9,37 @@ const presence = new Presence({
 })
 
 presence.on('UpdateData', async () => {
+  const mediaElement = document.querySelector('audio')
+  const hidePausedSetting = await presence.getSetting<boolean>('hidePaused')
+
+  // Mirror YT Music: if hidePaused and not playing, clear — but only if media is ready.
+  // During a track switch the audio element is briefly absent or has no duration,
+  // so we return early (no clear) to avoid the flicker.
+  if (hidePausedSetting) {
+    if (!mediaElement || !Number.isFinite(mediaElement.duration))
+      return
+    if (mediaElement.paused)
+      return presence.clearActivity()
+  }
+
   // 1. DYNAMIC IMAGE LOGIC
-  // Default to the static logo
   let currentLargeImage: string = ActivityAssets.Logo
 
-  // standard mediaSession check for high-res artwork
   const artwork = navigator.mediaSession?.metadata?.artwork
-
   if (artwork && artwork.length > 0) {
-    // Select the last image in the array (typically the highest resolution)
     const coverUrl = artwork[artwork.length - 1]?.src
-    if (coverUrl) {
+    if (coverUrl)
       currentLargeImage = coverUrl
-    }
   }
 
   // 2. INITIALIZE ACTIVITY DATA
-  // Fix: Use 'PresenceData' (global interface), NOT 'ActivityData' or 'any'
   const presenceData: PresenceData = {
     type: ActivityType.Listening,
     largeImageKey: currentLargeImage,
     largeImageText: 'Listening on Monochrome',
-    // Default small icon (overwritten below if paused)
-    smallImageKey: ActivityAssets.Play,
-    smallImageText: 'Playing',
   }
 
   // 3. TEXT STRATEGY (Browser Tab)
-  // Parses "Song - Artist" or "Song • Artist" from the document title
   const tabTitle = document.title || ''
   let separator = ''
 
@@ -48,40 +48,48 @@ presence.on('UpdateData', async () => {
   else if (tabTitle.includes(' • '))
     separator = ' • '
 
+  const albumElement = document.querySelector('.album')
+  if (albumElement?.matches('.details > .album'))
+    presenceData.largeImageText = albumElement.textContent
+
   if (separator) {
     const parts = tabTitle.split(separator)
+    const displayType = await presence.getSetting<number>('displayType')
+    switch (displayType) {
+      case 1:
+        presenceData.statusDisplayType = StatusDisplayType.State
+        break
+      case 2:
+        presenceData.statusDisplayType = StatusDisplayType.Details
+        break
+    }
     presenceData.details = parts[0]?.trim() || 'Unknown Song'
     presenceData.state = parts.slice(1).join(separator).trim() || 'Unknown Artist'
   }
   else {
-    // Fallback for non-standard titles
     presenceData.details = 'Monochrome'
     presenceData.state = 'Listening...'
   }
 
   // 4. AUDIO STATUS & TIMESTAMPS
-  const mediaElement = document.querySelector('audio')
-
   if (mediaElement) {
     if (!mediaElement.paused) {
       // -- PLAYING STATE --
-      presenceData.smallImageKey = ActivityAssets.Play
+      if (!hidePausedSetting) {
+        presenceData.smallImageKey = Assets.Play
+      }
       presenceData.smallImageText = 'Playing'
 
-      // Calculate timestamps using native Date.now() for accuracy
       const now = Date.now()
       presenceData.startTimestamp = now - (mediaElement.currentTime * 1000)
 
-      // Only set endTimestamp if duration is finite and positive
-      if (mediaElement.duration && Number.isFinite(mediaElement.duration) && mediaElement.duration > 0) {
+      if (Number.isFinite(mediaElement.duration) && mediaElement.duration > 0)
         presenceData.endTimestamp = now + ((mediaElement.duration - mediaElement.currentTime) * 1000)
-      }
     }
     else {
-      // -- PAUSED STATE --
-      presenceData.smallImageKey = ActivityAssets.Pause
+      // -- PAUSED STATE (only reached when hidePaused is false) --
+      presenceData.smallImageKey = Assets.Pause
       presenceData.smallImageText = 'Paused'
-      // Note: We do not set timestamps here, effectively hiding the time bar
     }
 
     presence.setActivity(presenceData)
