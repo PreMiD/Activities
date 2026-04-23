@@ -11,9 +11,34 @@ enum ActivityAssets {
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-let currentTime: number,
-  duration: number,
-  paused: boolean
+let currentTime: number
+let duration: number
+let paused: boolean
+let iFrameVideo = false
+
+interface iFrameData {
+  iFrameVideoData: {
+    iFrameVideo: boolean
+    currTime: number
+    dur: number
+    paused: boolean
+  } | null
+}
+
+presence.on('iFrameData', (data: iFrameData) => {
+  if (data.iFrameVideoData) {
+    iFrameVideo = data.iFrameVideoData.iFrameVideo
+    currentTime = data.iFrameVideoData.currTime
+    duration = data.iFrameVideoData.dur
+    paused = data.iFrameVideoData.paused
+  }
+  else {
+    iFrameVideo = false
+    currentTime = 0
+    duration = Number.NaN
+    paused = true
+  }
+})
 
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
@@ -49,17 +74,22 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('hideWhenPaused'),
   ])
 
-  let video = false
-  const player = document.querySelector<HTMLVideoElement>('#player-container > div > video')
+  let hasPlayback = false
+  const player
+    = document.querySelector<HTMLVideoElement>('#player-container video')
+      ?? document.querySelector<HTMLVideoElement>('video')
   if (player !== null && !Number.isNaN(player.duration)) {
-    video = true
+    hasPlayback = true
     currentTime = player.currentTime
     duration = player.duration
     paused = player.paused
   }
+  else if (iFrameVideo) {
+    hasPlayback = true
+  }
 
   if (
-    video !== false
+    hasPlayback
     && !Number.isNaN(duration)
     && pathname.includes('/watch/')
   ) {
