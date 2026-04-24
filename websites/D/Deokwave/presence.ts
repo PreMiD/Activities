@@ -30,25 +30,27 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Ana Sayfada'
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = resolvedStrings.browsing
-  } else if (path.startsWith('/watch/')) {
+  }
+  else if (path.startsWith('/watch/')) {
     const videoPlayer = document.getElementById('videoPlayer') as HTMLVideoElement | null
     const titleEl = document.getElementById('videoTitle')
 
     if (videoPlayer) {
-      const titleText =
-        titleEl?.textContent?.trim() ||
-        document.title.replace(' - Deokwave', '').trim()
+      const titleText
+        = titleEl?.textContent?.trim()
+        || document.title.replace(' - Deokwave', '').trim()
 
       const isPaused = videoPlayer.paused
 
-      if (!isPaused && showTimestamps && !isNaN(videoPlayer.duration)) {
+      if (!isPaused && showTimestamps && !Number.isNaN(videoPlayer.duration)) {
         ;[startTimestamp, endTimestamp] = getTimestamps(
           Math.floor(videoPlayer.currentTime),
           Math.floor(videoPlayer.duration),
         )
         presenceData.startTimestamp = startTimestamp
         presenceData.endTimestamp = endTimestamp
-      } else {
+      }
+      else {
         delete presenceData.startTimestamp
         delete presenceData.endTimestamp
       }
@@ -57,63 +59,83 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = isPaused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = isPaused ? resolvedStrings.pause : resolvedStrings.play
 
-      if (showEpisode) presenceData.state = titleText
-    } else {
+      if (showEpisode) {
+        presenceData.state = titleText
+      }
+    }
+    else {
       presenceData.details = 'Anime İzliyor'
       presenceData.smallImageKey = Assets.Play
     }
-  } else if (path.startsWith('/anime/')) {
+  }
+  else if (path.startsWith('/anime/')) {
     const title = (document.querySelector('h1') as HTMLElement | null)?.textContent?.trim()
     presenceData.details = 'Anime Sayfasında'
-    if (title) presenceData.state = title
+
+    if (title) {
+      presenceData.state = title
+    }
+
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = resolvedStrings.browsing
-  } else if (path.startsWith('/animeler/')) {
+  }
+  else if (path.startsWith('/animeler/')) {
     presenceData.details = 'Anime Listesinde'
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = resolvedStrings.browsing
-  } else if (path.startsWith('/kategoriler/')) {
+  }
+  else if (path.startsWith('/kategoriler/')) {
     presenceData.details = 'Kategorilerde'
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = resolvedStrings.browsing
-  } else if (path.startsWith('/takvim/')) {
+  }
+  else if (path.startsWith('/takvim/')) {
     presenceData.details = 'Yayın Takviminde'
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = resolvedStrings.browsing
-  } else if (path.startsWith('/kesfet/')) {
+  }
+  else if (path.startsWith('/kesfet/')) {
     presenceData.details = 'Anime Keşfediyor'
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = resolvedStrings.browsing
-  } else if (path.startsWith('/siralama/')) {
+  }
+  else if (path.startsWith('/siralama/')) {
     presenceData.details = 'Sıralamada'
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = resolvedStrings.browsing
-  } else if (path.startsWith('/liste/')) {
+  }
+  else if (path.startsWith('/liste/')) {
     presenceData.details = 'Listesinde'
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = resolvedStrings.browsing
-  } else if (path.startsWith('/profil/')) {
+  }
+  else if (path.startsWith('/profil/')) {
     presenceData.details = 'Profil Sayfasında'
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = resolvedStrings.browsing
-  } else if (path.startsWith('/mesajlar/')) {
+  }
+  else if (path.startsWith('/mesajlar/')) {
     presenceData.details = 'Mesajlarında'
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = resolvedStrings.browsing
-  } else if (path.startsWith('/birlikte-izle/')) {
+  }
+  else if (path.startsWith('/birlikte-izle/')) {
     presenceData.details = 'Birlikte İzliyor'
     presenceData.smallImageKey = Assets.Play
     presenceData.smallImageText = resolvedStrings.play
-  } else if (path.startsWith('/ayarlar/')) {
+  }
+  else if (path.startsWith('/ayarlar/')) {
     presenceData.details = 'Ayarlarda'
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = resolvedStrings.browsing
-  } else if (path.startsWith('/rehber/')) {
+  }
+  else if (path.startsWith('/rehber/')) {
     presenceData.details = 'Rehberde'
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = resolvedStrings.browsing
-  } else {
-    presenceData.details = "Deokwave'de"
+  }
+  else {
+    presenceData.details = `Deokwave'de`
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = resolvedStrings.browsing
   }
