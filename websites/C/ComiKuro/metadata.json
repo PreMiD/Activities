@@ -7,7 +7,7 @@
   },
   "service": "ComiKuro",
   "description": {
-    "en": "Browse and read manga on ComiKuro."
+    "en": "ComiKuro is a brand-new platform designed for enjoying your favorite manga, manhwa, and manhua - simple, customizable, and built with readers in mind."
   },
   "url": "comikuro.to",
   "regExp": "^https?[:][/][/]comikuro\\.to([/]|$)",
