@@ -1,7 +1,7 @@
 import { Assets, getTimestamps } from 'premid'
 
 enum Images {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/D/Deokwave/assets/logo.png',
+  Logo = 'https://i.imgur.com/XM3NmlJ.png',
 }
 
 const presence = new Presence({
