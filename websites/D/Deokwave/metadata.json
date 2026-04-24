@@ -5,18 +5,17 @@
     "id": "681582689828208646"
   },
   "service": "Deokwave",
-  "altnames": [],
   "description": {
     "en": "Watch anime on Deokwave.",
     "tr": "Deokwave'de anime izle."
   },
   "url": "deokwave.com",
   "version": "1.0.0",
-  "logo": "https://imgur.com/undefined",
-  "thumbnail": "https://imgur.com/VA36ab8",
+  "logo": "https://i.imgur.com/XM3NmlJ.png",
+  "thumbnail": "https://i.imgur.com/MoEBLvd.jpeg",
   "color": "#8b5cf6",
-  "tags": ["anime", "turkish", "streaming"],
   "category": "anime",
+  "tags": ["anime", "turkish", "streaming"],
   "readLogs": false,
   "settings": [
     {
