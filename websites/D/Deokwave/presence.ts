@@ -8,23 +8,21 @@ const presence = new Presence({
   clientId: '1471931109104160820',
 })
 
-const strings = presence.getStrings({
-  play: 'general.playing',
-  pause: 'general.paused',
-  browsing: 'general.browsing',
-})
-
-let startTimestamp: number, endTimestamp: number
-
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: Images.Logo,
   }
 
   const path = document.location.pathname
-  const showEpisode = await presence.getSetting<boolean>('showEpisode')
-  const showTimestamps = await presence.getSetting<boolean>('showTimestamps')
-  const resolvedStrings = await strings
+  const [showEpisode, showTimestamps, resolvedStrings] = await Promise.all([
+    presence.getSetting<boolean>('showEpisode'),
+    presence.getSetting<boolean>('showTimestamps'),
+    presence.getStrings({
+      play: 'general.playing',
+      pause: 'general.paused',
+      browsing: 'general.browsing',
+    }),
+  ])
 
   if (path === '/') {
     presenceData.details = 'Ana Sayfada'
@@ -37,20 +35,15 @@ presence.on('UpdateData', async () => {
 
     if (videoPlayer) {
       const titleText = titleEl?.textContent?.trim() || document.title.replace(' - Deokwave', '').trim()
-
       const isPaused = videoPlayer.paused
 
       if (!isPaused && showTimestamps && !Number.isNaN(videoPlayer.duration)) {
-        ;[startTimestamp, endTimestamp] = getTimestamps(
+        const [startTimestamp, endTimestamp] = getTimestamps(
           Math.floor(videoPlayer.currentTime),
           Math.floor(videoPlayer.duration),
         )
         presenceData.startTimestamp = startTimestamp
         presenceData.endTimestamp = endTimestamp
-      }
-      else {
-        delete presenceData.startTimestamp
-        delete presenceData.endTimestamp
       }
 
       presenceData.details = isPaused ? resolvedStrings.pause : resolvedStrings.play
