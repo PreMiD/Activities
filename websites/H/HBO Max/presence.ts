@@ -77,11 +77,7 @@ function getTitleInfo(usePresenceName: boolean) {
       details: usePresenceName
         ? episodeItem.attributes.name
         : showItem.attributes.name,
-      state: isMovie
-        ? (showDesc?.slice(0, 128) ?? 'Movie')
-        : usePresenceName
-          ? (episodeDesc?.slice(0, 128) ?? `Season ${s}, Episode ${e}`)
-          : `S${s}:E${e} — ${episodeItem.attributes.name}`,
+      state: isMovie ? 'Movie' : `Season ${s}, Episode ${e}`,
       largeImageKey: getCoverArt(showItem),
       largeImageText: isMovie
         ? showItem.attributes.name
