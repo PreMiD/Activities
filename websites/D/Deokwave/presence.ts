@@ -37,8 +37,8 @@ presence.on('UpdateData', async () => {
 
     if (videoPlayer) {
       const titleText
-        = titleEl?.textContent?.trim()
-        || document.title.replace(' - Deokwave', '').trim()
+          = titleEl?.textContent?.trim()
+          || document.title.replace(' - Deokwave', '').trim()
 
       const isPaused = videoPlayer.paused
 
