@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.7",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "author": {
     "name": "Deokwave",
     "id": "681582689828208646"
