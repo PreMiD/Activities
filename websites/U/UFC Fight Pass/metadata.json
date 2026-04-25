@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "922677780074881045",
+    "name": "_y3n"
+  },
+  "service": "UFC Fight Pass",
+  "description": {
+    "en": "Watch UFC fights, live events, replays and highlights."
+  },
+  "url": [
+    "ufcfightpass.com",
+    "www.ufcfightpass.com"
+  ],
+  "regExp": "^https?://([a-z0-9-]+\\.)*ufcfightpass\\.com/?",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/hVg7eP2.jpg",
+  "thumbnail": "https://i.imgur.com/hVg7eP2.jpg",
+  "color": "#e10600",
+  "category": "videos",
+  "tags": [
+    "ufc",
+    "mma",
+    "fight",
+    "sports",
+    "streaming",
+    "fightpass"
+  ]
+}
