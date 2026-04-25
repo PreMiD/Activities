@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.7",
+  "author": {
+    "name": "fkarlsefnii",
+    "id": "1259773387857854506"
+  },
+  "service": "Tengoku Fansub",
+  "altnames": ["Tengoku"],
+  "description": {
+    "en": "Watch anime with Azerbaijani subtitles on Tengoku Fansub.",
+    "tr": "Tengoku Fansub'da Azerbaycan altyazılı anime izleyin."
+  },
+  "url": "tengoku-fansub.com",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/TAYvhp6.png",
+  "thumbnail": "https://i.imgur.com/TAYvhp6.png",
+  "color": "#0096aa",
+  "category": "anime",
+  "tags": ["anime", "azerbaijani", "fansub", "subtitle"],
+  "iframe": false,
+  "readLogs": false,
+  "settings": [
+    {
+      "id": "showEpisode",
+      "title": "Show episode number",
+      "icon": "fas fa-tv",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show elapsed time",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show watch button",
+      "icon": "fas fa-link",
+      "value": true
+    }
+  ]
+}
