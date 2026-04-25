@@ -234,3 +234,4 @@ presence.on('UpdateData', async () => {
   }
   presence.setActivity(presenceData)
 })
+
