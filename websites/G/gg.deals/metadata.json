@@ -7,7 +7,7 @@
   },
   "service": "gg.deals",
   "description": {
-    "en": "Website that helps you get deals for games on all platforms, includes first, second, and third party stores and keysites."
+    "en": "Compare prices of video games from almost 60 stores, find the best game deals online."
   },
   "url": "gg.deals",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gg[.]deals[/]",
