@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "961292362208919582",
+    "name": "jethi_"
+  },
+  "service": "RetroAchievements",
+  "description": {
+    "en": "RetroAchievements is a platform for tracking and earning achievements in retro video games."
+  },
+  "url": "retroachievements.org",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*retroachievements[.]org[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/dFegUxW.png",
+  "thumbnail": "https://i.imgur.com/xuvJ8sD.png",
+  "color": "#1065df",
+  "category": "games",
+  "tags": [
+    "ra",
+    "achievements",
+    "games",
+    "gaming",
+    "leaderboards",
+    "retro",
+    "tracker"
+  ]
+}
