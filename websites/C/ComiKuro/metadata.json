@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "ceco",
+    "id": "1101541796917559406"
+  },
+  "service": "ComiKuro",
+  "description": {
+    "en": "ComiKuro is a brand-new platform designed for enjoying your favorite manga, manhwa, and manhua - simple, customizable, and built with readers in mind."
+  },
+  "url": "comikuro.to",
+  "regExp": "^https?[:][/][/]comikuro\\.to([/]|$)",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/ComiKuro/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/ComiKuro/assets/thumbnail.png",
+  "color": "#0b0b0f",
+  "category": "other",
+  "tags": [
+    "manga",
+    "reading",
+    "comics"
+  ]
+}
