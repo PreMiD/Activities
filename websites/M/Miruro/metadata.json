@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "primedby",
+    "id": "774832439905484820"
+  },
+  "service": "Miruro",
+  "description": {
+    "en": "Watch anime on Miruro and show what you're watching on Discord."
+  },
+  "url": "miruro.tv",
+  "altnames": ["miruro.com", "miruro.su", "miruro.ro"],
+  "regExp": "miruro\\.(tv|com|su|ro)",
+  "version": "1.0.0",
+  "logo": "https://www.miruro.tv/favicon.ico",
+  "thumbnail": "https://www.miruro.tv/favicon.ico",
+  "color": "#E85D04",
+  "tags": ["anime", "video", "streaming"],
+  "category": "videos"
+}
