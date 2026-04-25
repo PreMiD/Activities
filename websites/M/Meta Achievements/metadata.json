@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "656514596303142934",
+    "name": "theandromedacat"
+  },
+  "service": "Meta Achievements",
+  "description": {
+    "en": "This site turns Meta achievement data into a readable profile, a browsable achievement database, and a shareable gamercard."
+  },
+  "url": "meta-achievements.notaglitch.net",
+  "regExp": "^https?[:][/][/]meta-achievements[.]notaglitch[.]net[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/WpN6Sm6.png",
+  "thumbnail": "https://i.imgur.com/l9U36yw.png",
+  "color": "#0077ef",
+  "category": "games",
+  "tags": [
+    "games",
+    "vr",
+    "achievements",
+    "virtualreality",
+    "xr"
+  ]
+}
