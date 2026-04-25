@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "Deokwave",
+    "id": "681582689828208646"
+  },
+  "service": "Deokwave",
+  "description": {
+    "en": "Watch anime on Deokwave.",
+    "tr": "Deokwave'de anime izle."
+  },
+  "url": "deokwave.com",
+  "regExp": "^https?[:][/][/](deokwave[.]com)[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/SbmVetu.png",
+  "thumbnail": "https://i.imgur.com/MoEBLvd.jpeg",
+  "color": "#8b5cf6",
+  "category": "anime",
+  "tags": ["anime", "turkish", "streaming"],
+  "settings": [
+    {
+      "id": "showEpisode",
+      "title": "Show episode info",
+      "icon": "fas fa-play-circle",
+      "value": true
+    },
+    {
+      "id": "showTimestamps",
+      "title": "Show timestamps",
+      "icon": "fas fa-clock",
+      "value": true
+    }
+  ]
+}
