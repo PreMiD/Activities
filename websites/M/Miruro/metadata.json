@@ -5,16 +5,15 @@
     "name": "primedby",
     "id": "774832439905484820"
   },
-  "service": "Miruro",
+  "service": "miruro.tv",
   "description": {
-    "en": "Watch anime on Miruro and show what you're watching on Discord."
+    "en": "Watch anime on miruro.tv and show what you're watching on Discord."
   },
   "url": "miruro.tv",
-  "altnames": ["miruro.com", "miruro.su", "miruro.ro"],
-  "regExp": "miruro\\.(tv|com|su|ro)",
+  "regExp": "miruro\\.tv",
   "version": "1.0.0",
-  "logo": "https://www.miruro.tv/favicon.ico",
-  "thumbnail": "https://www.miruro.tv/favicon.ico",
+  "logo": "https://www.miruro.tv/android-chrome-512x512.png",
+  "thumbnail": "https://www.miruro.tv/android-chrome-512x512.png",
   "color": "#E85D04",
   "tags": ["anime", "video", "streaming"],
   "category": "videos"
