@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "860122608682795028",
+    "name": "itsmarian.mc"
+  },
+  "service": "Hipobuy",
+  "altnames": [
+    "Hipo Buy",
+    "hipobuy.com",
+    "hippoobuy.com",
+    "hippoobuy"
+  ],
+  "description": {
+    "de": "Hipobuy ist ein chinesischer Shopping-Agent, der dir ermöglicht, Produkte von Plattformen wie Taobao, Weidian, 1688 und JD.com zu kaufen und weltweit versenden zu lassen. Die Plattform bietet Preisschätzungen, Lagerhaltung und einfache Abwicklung für internationale Käufer.",
+    "en": "Hipobuy is a Chinese shopping agent that lets you buy products from platforms like Taobao, Weidian, 1688, and JD.com with worldwide shipping. The platform offers price estimations, warehousing, and a streamlined experience for international buyers.",
+    "zh": "Hipobuy 是一个中国购物代理平台, 帮助您从淘宝、微店、1688 和京东等平台购买商品并提供全球配送服务。平台提供价格估算、仓储和便捷的国际买家购物体验。"
+  },
+  "url": [
+    "hipobuy.com",
+    "www.hipobuy.com"
+  ],
+  "regExp": "^https?[:][/][/](www\\.)?hipobuy[.]com[/]?",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/pyXT0kP.png",
+  "thumbnail": "https://i.imgur.com/yfEp1n3.png",
+  "color": "#FF6600",
+  "category": "other",
+  "tags": [
+    "shopping",
+    "ecommerce",
+    "agent",
+    "china",
+    "taobao"
+  ],
+  "settings": [
+    {
+      "id": "timestamps",
+      "title": "Show timestamps",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "disableButtons",
+      "title": "Disable buttons",
+      "icon": "fas fa-ban",
+      "value": false
+    },
+    {
+      "id": "useAvatar",
+      "title": "Use profile picture as small image",
+      "icon": "fas fa-user-circle",
+      "value": false
+    }
+  ]
+}

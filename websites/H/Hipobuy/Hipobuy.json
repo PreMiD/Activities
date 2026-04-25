@@ -1,0 +1,498 @@
+{
+  "hipobuy.browsingCategories": {
+    "description": "Shown when the user is browsing all product categories",
+    "message": "Browsing categories"
+  },
+  "hipobuy.browsingShop": {
+    "description": "Shown when the user is browsing the general shop listing",
+    "message": "Browsing the shop"
+  },
+  "hipobuy.browsingGoods": {
+    "description": "Shown when the user is browsing the goods/product listing",
+    "message": "Browsing goods"
+  },
+  "hipobuy.viewingProductFrom": {
+    "description": "Shown before the source platform name when viewing a product",
+    "message": "Viewing product from"
+  },
+  "hipobuy.viewingGoodsDetails": {
+    "description": "Shown when the user is on a goods detail page (/goods/details) without a known channel",
+    "message": "Viewing product details"
+  },
+  "hipobuy.viewingShopDetails": {
+    "description": "Shown when the user is viewing a specific shop detail page (/shop/details)",
+    "message": "Viewing shop details"
+  },
+  "hipobuy.estimatingPrice": {
+    "description": "Shown when the user is using the price/shipping estimation tool (/estimation)",
+    "message": "Estimating shipping price"
+  },
+  "hipobuy.readingBeginnerGuide": {
+    "description": "Shown when the user is reading the beginner guide (/beginner-guide)",
+    "message": "Reading the beginner guide"
+  },
+  "hipobuy.viewingTransportInfo": {
+    "description": "Shown when the user is viewing shipping and transport information (/transport)",
+    "message": "Viewing transport info"
+  },
+  "hipobuy.viewingHelp": {
+    "description": "Shown when the user is browsing the help center index (/help)",
+    "message": "Viewing the help center"
+  },
+  "hipobuy.readingHelpArticle": {
+    "description": "Shown when the user is reading a specific help article (/help/details/:id)",
+    "message": "Reading a help article"
+  },
+  "hipobuy.viewingIssue": {
+    "description": "Shown when the user is viewing an issue report (/issueView)",
+    "message": "Viewing an issue"
+  },
+  "hipobuy.viewingNotice": {
+    "description": "Shown when the user is reading a generic news/notice article (/notice/:id)",
+    "message": "Reading a notice"
+  },
+  "hipobuy.readingPrivacyPolicy": {
+    "description": "Shown when the user is reading the Privacy Policy notice",
+    "message": "Reading Privacy Policy"
+  },
+  "hipobuy.readingTerms": {
+    "description": "Shown when the user is reading the Terms of Service notice",
+    "message": "Reading Terms of Service"
+  },
+  "hipobuy.viewingDownload": {
+    "description": "Shown when the user is on the app download page (/download)",
+    "message": "Viewing the app download page"
+  },
+  "hipobuy.signingIn": {
+    "description": "Shown when the user is on the login page (/login)",
+    "message": "Signing in"
+  },
+  "hipobuy.creatingAccount": {
+    "description": "Shown when the user is on the registration page (/register)",
+    "message": "Creating an account"
+  },
+  "hipobuy.resettingPassword": {
+    "description": "Shown when the user is on the forgot-password page (/forgot)",
+    "message": "Resetting password"
+  },
+  "hipobuy.viewingDashboard": {
+    "description": "Shown when the user is in their personal dashboard/user center (/user/center)",
+    "message": "Viewing dashboard"
+  },
+  "hipobuy.viewingCart": {
+    "description": "Shown when the user is viewing their shopping cart (/user/shopping)",
+    "message": "Viewing shopping cart"
+  },
+  "hipobuy.viewingFavorites": {
+    "description": "Shown when the user is browsing their saved/favorite items (/user/favorite)",
+    "message": "Viewing favorites"
+  },
+  "hipobuy.favoritesTabAll": {
+    "description": "State shown when the All channel tab is active on /user/favorite",
+    "message": "All platforms"
+  },
+  "hipobuy.favoritesTab1688": {
+    "description": "State shown when the 1688 channel tab is active on /user/favorite",
+    "message": "1688"
+  },
+  "hipobuy.favoritesTabTaobao": {
+    "description": "State shown when the TaoBao channel tab is active on /user/favorite",
+    "message": "TaoBao"
+  },
+  "hipobuy.favoritesTabWeidian": {
+    "description": "State shown when the WeiDian channel tab is active on /user/favorite",
+    "message": "WeiDian"
+  },
+  "hipobuy.viewingOrders": {
+    "description": "Shown when the user is viewing their order history (/user/order)",
+    "message": "Viewing orders"
+  },
+  "hipobuy.ordersTabAll": {
+    "description": "State shown when the All tab is active on /user/order",
+    "message": "All orders"
+  },
+  "hipobuy.ordersTabPaymentPending": {
+    "description": "State shown when the Payment Pending tab is active on /user/order",
+    "message": "Payment pending"
+  },
+  "hipobuy.ordersTabToBeConfirmed": {
+    "description": "State shown when the Orders to be confirmed tab is active on /user/order",
+    "message": "Orders to be confirmed"
+  },
+  "hipobuy.viewingWarehouse": {
+    "description": "Shown when the user is viewing items stored in their warehouse (/user/warehouse)",
+    "message": "Viewing warehouse"
+  },
+  "hipobuy.viewingShipments": {
+    "description": "Shown when the user is tracking their shipments (/user/shipment)",
+    "message": "Tracking shipments"
+  },
+  "hipobuy.shipmentsTabAll": {
+    "description": "State shown when the All Parcels tab is active on /user/shipment",
+    "message": "All parcels"
+  },
+  "hipobuy.shipmentsTabWaitingConfirmation": {
+    "description": "State shown when the Waiting for Confirmation tab is active on /user/shipment",
+    "message": "Waiting for confirmation"
+  },
+  "hipobuy.shipmentsTabWaitPayment": {
+    "description": "State shown when the Wait for Payment tab is active on /user/shipment",
+    "message": "Wait for payment"
+  },
+  "hipobuy.shipmentsTabShipped": {
+    "description": "State shown when the Shipped tab is active on /user/shipment",
+    "message": "Shipped"
+  },
+  "hipobuy.shipmentsTabCompleted": {
+    "description": "State shown when the Completed tab is active on /user/shipment",
+    "message": "Completed"
+  },
+  "hipobuy.shipmentsTabCancelled": {
+    "description": "State shown when the Cancel the Waybill tab is active on /user/shipment",
+    "message": "Cancelled waybill"
+  },
+  "hipobuy.viewingAssets": {
+    "description": "Shown when the user is viewing their account balance and assets (/user/assets)",
+    "message": "Viewing account balance"
+  },
+  "hipobuy.assetsTabBalance": {
+    "description": "State shown when the Balance tab is active on /user/assets",
+    "message": "Balance"
+  },
+  "hipobuy.assetsTabHipoCoin": {
+    "description": "State shown when the Hipo Coin tab is active on /user/assets",
+    "message": "Hipo Coin"
+  },
+  "hipobuy.assetsTabThirdPayment": {
+    "description": "State shown when the Third Payment tab is active on /user/assets",
+    "message": "Third party payment"
+  },
+  "hipobuy.writingReview": {
+    "description": "Shown when the user is writing or browsing reviews (/user/review)",
+    "message": "Writing a review"
+  },
+  "hipobuy.viewingPoints": {
+    "description": "Shown when the user is checking their loyalty points (/user/points)",
+    "message": "Checking loyalty points"
+  },
+  "hipobuy.viewingNews": {
+    "description": "Shown when the user is on the notifications/news page (/user/news)",
+    "message": "Viewing notifications"
+  },
+  "hipobuy.newsTabConfirm": {
+    "description": "State shown when the Confirm tab is active on /user/news",
+    "message": "Confirm"
+  },
+  "hipobuy.newsTabInSiteMessage": {
+    "description": "State shown when the In-site Message tab is active on /user/news",
+    "message": "In-site messages"
+  },
+  "hipobuy.newsTabPendingTasks": {
+    "description": "State shown when the Pending Tasks tab is active on /user/news",
+    "message": "Pending tasks"
+  },
+  "hipobuy.newsTabPurchasingAgent": {
+    "description": "State shown when the Purchasing Agent tab is active on /user/news",
+    "message": "Purchasing agent"
+  },
+  "hipobuy.viewingRehearsal": {
+    "description": "Shown when the user is on the rehearsal/trial order page (/user/rehearsal)",
+    "message": "Viewing rehearsal orders"
+  },
+  "hipobuy.viewingWinningRecord": {
+    "description": "Shown when the user is viewing their winning record (/user/winningRecord)",
+    "message": "Viewing winning record"
+  },
+  "hipobuy.viewingCouponCenter": {
+    "description": "Shown when the user is browsing available coupons (/user/coupon-center)",
+    "message": "Viewing coupon center"
+  },
+  "hipobuy.couponTabProduct": {
+    "description": "State shown when the Product Coupon filter is active on /user/coupon-center",
+    "message": "Product coupons"
+  },
+  "hipobuy.couponTabShipping": {
+    "description": "State shown when the Shipping Coupon filter is active on /user/coupon-center",
+    "message": "Shipping coupons"
+  },
+  "hipobuy.couponTabExpired": {
+    "description": "State shown when the Expired Coupon filter is active on /user/coupon-center",
+    "message": "Expired coupons"
+  },
+  "hipobuy.viewingSettings": {
+    "description": "Shown when the user is on the account settings page (/user/setting)",
+    "message": "Viewing account settings"
+  },
+  "hipobuy.settingsShippingAddress": {
+    "description": "State shown when the Shipping Address tab is active on /user/setting",
+    "message": "Shipping address"
+  },
+  "hipobuy.settingsAccountSecurity": {
+    "description": "State shown when the Account Security tab is active on /user/setting",
+    "message": "Account security"
+  },
+  "hipobuy.settingsAccountsReceivable": {
+    "description": "State shown when the Accounts Receivable tab is active on /user/setting",
+    "message": "Accounts receivable"
+  },
+  "hipobuy.settingsCreditCardBilling": {
+    "description": "State shown when the Credit Card Billing Address tab is active on /user/setting",
+    "message": "Credit card billing address"
+  },
+  "hipobuy.checkingOut": {
+    "description": "Shown when the user is on the payment/checkout page (/pay)",
+    "message": "Checking out"
+  },
+  "hipobuy.bankRemittance": {
+    "description": "Shown when the user is on the bank remittance payment page (/bankRemittance)",
+    "message": "Processing bank remittance"
+  },
+  "hipobuy.viewingAffiliate": {
+    "description": "Shown when the user is on the affiliate/commission sharing page (/com-share)",
+    "message": "Viewing affiliate program"
+  },
+  "hipobuy.placingDiyOrder": {
+    "description": "Shown when the user is placing a custom/DIY order (/diy-order)",
+    "message": "Placing a custom order"
+  },
+  "hipobuy.viewingPromotion": {
+    "description": "Shown when the user is on a promotional or campaign page",
+    "message": "Viewing a promotion"
+  },
+  "hipobuy.viewingFreeShipping": {
+    "description": "Shown when the user is on the free shipping promotion page (/free-shipping)",
+    "message": "Viewing free shipping deals"
+  },
+  "hipobuy.viewingRewards": {
+    "description": "Shown when the user is on the rewards/referral page (/get-rewards)",
+    "message": "Viewing rewards"
+  },
+  "hipobuy.viewingPopUpShop": {
+    "description": "Shown when the user is browsing the pop-up shop event (/pop-up-shop)",
+    "message": "Browsing pop-up shop"
+  },
+  "hipobuy.profilePicture": {
+    "description": "Hover text for small image when showing user avatar",
+    "message": "Profile picture"
+  },
+  "hipobuy.favorites": {
+    "description": "Small image hover text for favorites",
+    "message": "Favorites"
+  },
+  "hipobuy.orders": {
+    "description": "Small image hover text for orders",
+    "message": "Orders"
+  },
+  "hipobuy.warehouse": {
+    "description": "Small image hover text for warehouse",
+    "message": "Warehouse"
+  },
+  "hipobuy.shipments": {
+    "description": "Small image hover text for shipments",
+    "message": "Shipments"
+  },
+  "hipobuy.assets": {
+    "description": "Small image hover text for assets/balance",
+    "message": "Assets"
+  },
+  "hipobuy.review": {
+    "description": "Small image hover text for writing a review",
+    "message": "Review"
+  },
+  "hipobuy.points": {
+    "description": "Small image hover text for loyalty points",
+    "message": "Points"
+  },
+  "hipobuy.notifications": {
+    "description": "Small image hover text for notifications",
+    "message": "Notifications"
+  },
+  "hipobuy.rehearsal": {
+    "description": "Small image hover text for rehearsal orders",
+    "message": "Rehearsal"
+  },
+  "hipobuy.winningRecord": {
+    "description": "Small image hover text for winning record",
+    "message": "Winning Record"
+  },
+  "hipobuy.coupons": {
+    "description": "Small image hover text for coupons",
+    "message": "Coupons"
+  },
+  "hipobuy.settings": {
+    "description": "Small image hover text for settings",
+    "message": "Settings"
+  },
+  "hipobuy.affiliate": {
+    "description": "Small image hover text for affiliate program",
+    "message": "Affiliate"
+  },
+  "hipobuy.dashboard": {
+    "description": "Small image hover text for user dashboard",
+    "message": "Dashboard"
+  },
+  "hipobuy.homepage": {
+    "description": "Small image hover text for homepage",
+    "message": "Homepage"
+  },
+  "hipobuy.viewProduct": {
+    "description": "Button label for viewing a product",
+    "message": "View Product"
+  },
+  "hipobuy.visitShop": {
+    "description": "Button label for visiting a shop",
+    "message": "Visit Shop"
+  },
+  "hipobuy.search": {
+    "description": "Button label for viewing search results and small image text for search",
+    "message": "Search"
+  },
+  "hipobuy.goods": {
+    "description": "Small image text for browsing goods",
+    "message": "Goods"
+  },
+  "hipobuy.estimation": {
+    "description": "Small image text for estimation tool",
+    "message": "Estimation"
+  },
+  "hipobuy.beginnerGuide": {
+    "description": "Small image text for beginner guide",
+    "message": "Beginner Guide"
+  },
+  "hipobuy.transport": {
+    "description": "Small image text for transport info",
+    "message": "Transport"
+  },
+  "hipobuy.helpArticle": {
+    "description": "Small image text for help article",
+    "message": "Help Article"
+  },
+  "hipobuy.helpCenter": {
+    "description": "Small image text for help center",
+    "message": "Help Center"
+  },
+  "hipobuy.issue": {
+    "description": "Small image text for issue page",
+    "message": "Issue"
+  },
+  "hipobuy.notice": {
+    "description": "Small image text for notice",
+    "message": "Notice"
+  },
+  "hipobuy.download": {
+    "description": "Small image text for download page",
+    "message": "Download"
+  },
+  "hipobuy.signIn": {
+    "description": "Small image text for sign in",
+    "message": "Sign In"
+  },
+  "hipobuy.register": {
+    "description": "Small image text for register",
+    "message": "Register"
+  },
+  "hipobuy.passwordReset": {
+    "description": "Small image text for password reset",
+    "message": "Password Reset"
+  },
+  "hipobuy.checkout": {
+    "description": "Small image text for checkout",
+    "message": "Checkout"
+  },
+  "hipobuy.bankTransfer": {
+    "description": "Small image text for bank transfer",
+    "message": "Bank Transfer"
+  },
+  "hipobuy.customOrder": {
+    "description": "Small image text for custom/DIY order",
+    "message": "Custom Order"
+  },
+  "hipobuy.freeShipping": {
+    "description": "Small image text for free shipping",
+    "message": "Free Shipping"
+  },
+  "hipobuy.rewards": {
+    "description": "Small image text for rewards",
+    "message": "Rewards"
+  },
+  "hipobuy.popUpShop": {
+    "description": "Small image text for pop-up shop",
+    "message": "Pop-up Shop"
+  },
+  "hipobuy.sale1111": {
+    "description": "State text for 11.11 sale promotion",
+    "message": "11.11 Sale"
+  },
+  "hipobuy.product": {
+    "description": "Small image text for generic product viewing",
+    "message": "Product"
+  },
+  "hipobuy.shopPrefix": {
+    "description": "Prefix for shop name in state",
+    "message": "Shop:"
+  },
+  "hipobuy.productPrefix": {
+    "description": "Prefix for product name in state",
+    "message": "Product:"
+  },
+  "hipobuy.noticeContactUs": {
+    "description": "Shown when viewing the Contact Us page",
+    "message": "Viewing Contact Us page"
+  },
+  "hipobuy.noticeAboutUs": {
+    "description": "Shown when viewing the About Us page",
+    "message": "Viewing About Us page"
+  },
+  "hipobuy.noticeServiceFees": {
+    "description": "Shown when viewing the Service & Fees page",
+    "message": "Viewing Service & Fees"
+  },
+  "hipobuy.noticeReturnsRefunds": {
+    "description": "Shown when viewing the Returns and Refunds page",
+    "message": "Viewing Returns and Refunds"
+  },
+  "hipobuy.noticeOrderStatus": {
+    "description": "Shown when viewing the Order Status Display page",
+    "message": "Viewing Order Status Display"
+  },
+  "hipobuy.noticeInternationalCreditCard": {
+    "description": "Shown when viewing the International Credit Card payment page",
+    "message": "Viewing International Credit Card info"
+  },
+  "hipobuy.noticeReceiptInfo": {
+    "description": "Shown when viewing the Receipt Information page",
+    "message": "Viewing Receipt Information"
+  },
+  "hipobuy.noticeParcelAgreement": {
+    "description": "Shown when viewing the International Parcel Delivery Agreement",
+    "message": "Viewing International Parcel Delivery Agreement"
+  },
+  "hipobuy.noticeCharges": {
+    "description": "Shown when viewing the Charges page",
+    "message": "Viewing Charges"
+  },
+  "hipobuy.noticeCustomsTaxation": {
+    "description": "Shown when viewing the Customs and Taxation page",
+    "message": "Viewing Customs and Taxation"
+  },
+  "hipobuy.noticeProductIssue": {
+    "description": "Shown when viewing the 'What do I do if there is a product issue after I received it?' page",
+    "message": "Viewing product issue guide"
+  },
+  "hipobuy.starRating": {
+    "description": "",
+    "message": "Star Rating"
+  },
+  "hipobuy.salesVolume": {
+    "description": "",
+    "message": "Sales"
+  },
+  "hipobuy.qcPhotos": {
+    "description": "",
+    "message": "QC Photos"
+  },
+  "hipobuy.noticeInsuranceCompensation": {
+    "description": "Shown when viewing the Insurance and compensation page",
+    "message": "Viewing Insurance and compensation"
+  }
+}
