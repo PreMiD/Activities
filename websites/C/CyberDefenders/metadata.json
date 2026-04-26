@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1046390116144398416",
+    "name": "cyberdefenders"
+  },
+  "service": "CyberDefenders",
+  "description": {
+    "en": "CyberDefenders is a blue team cybersecurity training platform offering hands-on labs, CTF challenges, and professional certifications for SOC analysts and DFIR practitioners."
+  },
+  "url": "cyberdefenders.org",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*cyberdefenders[.]org[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/ahmednader2019/Activities/2b6e0dbbd/websites/C/CyberDefenders/assets/logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/ahmednader2019/Activities/2b6e0dbbd/websites/C/CyberDefenders/assets/thumbnail.png",
+  "color": "#335eea",
+  "category": "other",
+  "tags": ["cybersecurity", "training", "ctf", "blue-team", "dfir"],
+  "settings": [
+    {
+      "id": "showProgress",
+      "title": "Show Progress on Certification Pages",
+      "icon": "fas fa-tasks",
+      "value": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode (Hide specific lab/cert names)",
+      "icon": "fas fa-eye-slash",
+      "value": false
+    }
+  ]
+}
