@@ -3,7 +3,7 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets { // Other default assets can be found at index.d.ts
+enum ActivityAssets {
   Logo = 'https://i.imgur.com/8EhCZKg.png',
 }
 
@@ -38,7 +38,6 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    // smallImageKey: Assets.Play,
   }
 
   const { href, pathname } = document.location
