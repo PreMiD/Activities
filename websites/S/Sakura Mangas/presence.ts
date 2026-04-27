@@ -8,12 +8,14 @@ enum ActivityAssets {
 }
 
 // Fetches an image and converts it to a base64 data URL, with caching.
+// Uses sessionStorage so the cache persists across page navigations.
 // Needed because the server requires JavaScript to serve images,
 // so Discord can't fetch them directly via URL.
-const dataUrlCache = new Map<string, string | null>()
+const DATA_URL_PREFIX = 'pmd_dataurl_'
 async function toDataUrl(url: string): Promise<string | null> {
-  if (dataUrlCache.has(url))
-    return dataUrlCache.get(url)!
+  const cached = sessionStorage.getItem(`${DATA_URL_PREFIX}${url}`)
+  if (cached !== null)
+    return cached || null
   try {
     const blob = await fetch(url).then(r => r.blob())
     const result = await new Promise<string | null>((resolve) => {
@@ -21,11 +23,11 @@ async function toDataUrl(url: string): Promise<string | null> {
       reader.onloadend = () => resolve(reader.result as string)
       reader.readAsDataURL(blob)
     })
-    dataUrlCache.set(url, result)
+    sessionStorage.setItem(`${DATA_URL_PREFIX}${url}`, result ?? '')
     return result
   }
   catch {
-    dataUrlCache.set(url, null)
+    sessionStorage.setItem(`${DATA_URL_PREFIX}${url}`, '')
     return null
   }
 }
