@@ -60,7 +60,7 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (path.startsWith('/anime/')) {
-    const title = (document.querySelector('h1') as HTMLElement | null)?.textContent?.trim()
+    const title = document.querySelector<HTMLElement>('h1')?.textContent?.trim()
     presenceData.details = 'Anime Sayfasında'
 
     if (title) {
