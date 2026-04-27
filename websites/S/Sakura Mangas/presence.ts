@@ -7,19 +7,25 @@ enum ActivityAssets {
   Logo = 'https://i.imgur.com/8EhCZKg.png',
 }
 
-// Fetches an image and converts it to a base64 data URL.
+// Fetches an image and converts it to a base64 data URL, with caching.
 // Needed because the server requires JavaScript to serve images,
 // so Discord can't fetch them directly via URL.
+const dataUrlCache = new Map<string, string | null>()
 async function toDataUrl(url: string): Promise<string | null> {
+  if (dataUrlCache.has(url))
+    return dataUrlCache.get(url)!
   try {
     const blob = await fetch(url).then(r => r.blob())
-    return await new Promise((resolve) => {
+    const result = await new Promise<string | null>((resolve) => {
       const reader = new FileReader()
       reader.onloadend = () => resolve(reader.result as string)
       reader.readAsDataURL(blob)
     })
+    dataUrlCache.set(url, result)
+    return result
   }
   catch {
+    dataUrlCache.set(url, null)
     return null
   }
 }
