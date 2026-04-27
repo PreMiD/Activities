@@ -1,0 +1,4 @@
+{
+  "service": "YouTube",
+  "regExp": "^https?[:][/][/](www|studio|m)[.]youtube[.]com[/]"
+}

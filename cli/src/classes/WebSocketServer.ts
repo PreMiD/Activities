@@ -9,8 +9,13 @@ import { info, prefix } from '../util/log.js'
 
 export class WebSocketServer {
   private server: WSServer
+  private label: string
 
-  constructor(public readonly cwd: string) {
+  constructor(
+    public readonly cwd: string,
+    private readonly messageType: string = 'localPresence',
+  ) {
+    this.label = messageType === 'localSyncScript' ? 'sync script' : 'activity'
     this.server = new WSServer({ port: 3021 })
 
     this.server.on('connection', (socket) => {
@@ -46,7 +51,7 @@ export class WebSocketServer {
     const files = await readdir(distPath)
 
     const spinner = ora(
-      prefix + chalk.yellow(' Sending activity to the extension...'),
+      prefix + chalk.yellow(` Sending ${this.label} to the extension...`),
     ).start()
 
     let expectedCount = 0
@@ -83,7 +88,7 @@ export class WebSocketServer {
       client.on('close', removeExpectedCount)
 
       client.send(JSON.stringify({
-        type: 'localPresence',
+        type: this.messageType,
         files: await Promise.all(files
           .filter(file => ['.json', '.js'].includes(extname(file)))
           .map(async (file) => {
@@ -108,7 +113,7 @@ export class WebSocketServer {
       await new Promise(resolve => setTimeout(resolve, 100))
     }
 
-    spinner.succeed(prefix + chalk.greenBright(' Activity sent to the extension!'))
+    spinner.succeed(prefix + chalk.greenBright(` ${this.label[0].toUpperCase() + this.label.slice(1)} sent to the extension!`))
 
     this.isSending = false
   }

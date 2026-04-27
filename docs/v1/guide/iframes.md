@@ -430,3 +430,4 @@ Now that you understand how to use iFrames in your activity, you can learn more 
 - [Slideshows](/v1/guide/slideshows): Learn how to create a slideshow that alternates between different presence data.
 - [Localization](/v1/guide/localization): Learn how to add support for multiple languages to your activity.
 - [Best Practices](/v1/guide/best-practices): Learn best practices for creating activities.
+- [Watch Party Sync Scripts](/v1/guide/watch-party-sync-scripts#iframe-communication): Learn how to use iFrame communication in Watch Party sync scripts for synchronized video playback.
