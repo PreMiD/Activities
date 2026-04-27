@@ -152,7 +152,6 @@ presence.on('UpdateData', async () => {
             presenceData.details = 'eBay Live'
             presenceData.state = subPage
           }
-
           break
         }
         default:
