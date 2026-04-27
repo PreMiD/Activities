@@ -10,19 +10,35 @@ presence.on('UpdateData', async () => {
   let details = 'Using ccLeaf'
   let state = 'In the app'
 
-  if (path === '/animations') {
-    details = 'Browsing animations'
-    state = 'Looking for templates'
+  // Homepage
+  if (path === '/') {
+    details = 'Viewing homepage'
+    state = 'Exploring ccLeaf'
   }
+
+  // Animations list
+  else if (path === '/animations') {
+    details = 'Browsing animations'
+    state = 'Selecting a template'
+  }
+
+  // Editor page
   else if (/^\/animations\/\d+\/.+/.test(path)) {
-    details = 'In the editor'
-    state = 'Editing an animation'
+    const animationSlug = path.match(/^\/animations\/\d+\/(.+)$/)?.[1]
+
+    if (animationSlug) {
+      const animationName = animationSlug
+  .replace(/-/g, ' ')
+  .replace(/\b\w/g, (c) => c.toUpperCase())
+      details = 'Editing animation'
+      state = animationName
+    }
   }
 
   presence.setActivity({
     details,
     state,
     startTimestamp: browsingTimestamp,
-    largeImageKey: 'ccleaf',
+    largeImageKey: 'https://i.imgur.com/fv1VJQR.png',
   })
 })
