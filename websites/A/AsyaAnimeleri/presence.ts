@@ -4,9 +4,7 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000);
 
-enum ActivityAssets {
-	Logo = "https://i.imgur.com/4lU3x0V.png"
-}
+const Logo = "https://i.imgur.com/4lU3x0V.png";
 
 interface PageInfo {
 	animeName: string;
@@ -25,19 +23,16 @@ function getPageInfo(): PageInfo {
 
 	const path = document.location.pathname;
 
-	// /battle-through-the-heavens-5-sezon-196-bolum-turkce-altyazi/
 	const withSeason = path.match(/\/(.+?)-(\d+)-sezon-(\d+)-bolum/i);
-	// /spy-x-family-5-bolum/
 	const noSeason = path.match(/\/(.+?)-(\d+)-bolum/i);
 
 	if (withSeason) {
-		info.season = parseInt(withSeason[2], 10);
-		info.episode = parseInt(withSeason[3], 10);
+		info.season = parseInt(withSeason[2]!, 10);
+		info.episode = parseInt(withSeason[3]!, 10);
 	} else if (noSeason) {
-		info.episode = parseInt(noSeason[2], 10);
+		info.episode = parseInt(noSeason[2]!, 10);
 	}
 
-	// "Battle Through The Heavens 5.Sezon 196.Bölüm Türkçe Altyazı - Asya Animeleri"
 	const cleanTitle = (document.title ?? "")
 		.replace(/\s*[-–|]\s*Asya Animeleri.*/i, "")
 		.replace(/\s+\d+\.?\s*[Ss]ezon.*/i, "")
@@ -48,7 +43,6 @@ function getPageInfo(): PageInfo {
 
 	if (cleanTitle) info.animeName = cleanTitle;
 
-	// img.thumbnel or img.tb is the series cover on episode pages
 	const poster =
 		document.querySelector<HTMLImageElement>("img.thumbnel") ??
 		document.querySelector<HTMLImageElement>("img.tb") ??
@@ -79,17 +73,16 @@ presence.on("UpdateData", async () => {
 	const pageType = getPageType();
 
 	const presenceData: PresenceData = {
-		largeImageKey: ActivityAssets.Logo,
+		largeImageKey: Logo,
 		largeImageText: "Asya Animeleri",
-		smallImageKey: ActivityAssets.Logo,
-		smallImageText: "Asya Animeleri",
-		type: ActivityType.Watching
+		smallImageKey: Logo,
+		smallImageText: "Asya Animeleri"
 	};
 
 	if (pageType === "episode") {
 		const info = getPageInfo();
 
-		presenceData.largeImageKey = info.poster ?? ActivityAssets.Logo;
+		presenceData.largeImageKey = info.poster ?? Logo;
 		presenceData.largeImageText = info.animeName;
 		presenceData.details = info.animeName;
 
