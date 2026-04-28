@@ -76,7 +76,8 @@ presence.on("UpdateData", async () => {
 		largeImageKey: Logo,
 		largeImageText: "Asya Animeleri",
 		smallImageKey: Logo,
-		smallImageText: "Asya Animeleri"
+		smallImageText: "Asya Animeleri",
+		type: 3
 	};
 
 	if (pageType === "episode") {
