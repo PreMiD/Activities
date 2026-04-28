@@ -21,7 +21,7 @@
     "smotret-anime.online"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(anime-365[.]ru|smotret-anime[.]org|smotret-anime[.]app|smotret-anime[.]online)[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime365/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime365/assets/thumbnail.png",
   "color": "#1B5E20",
@@ -36,22 +36,20 @@
   "iFrameRegExp": "anime-365[.]ru|smotret-anime[.]org|smotret-anime[.]app|smotret-anime[.]online",
   "settings": [
     {
-      "id": "showButtons",
-      "title": "Show Buttons",
-      "icon": "fas fa-compress-arrows-alt",
-      "value": true
-    },
-    {
-      "id": "showTimestamp",
-      "title": "Show Timestamp",
-      "icon": "fas fa-clock",
-      "value": true
-    },
-    {
       "id": "showCover",
       "title": "Show Anime Cover",
       "icon": "fas fa-image",
       "value": true
+    },
+    {
+      "id": "statusDisplay",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 1,
+      "values": [
+        "Activity Name",
+        "Anime Title"
+      ]
     }
   ]
 }
