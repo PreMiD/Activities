@@ -7,16 +7,16 @@
   },
   "service": "JuicerBot",
   "description": {
-    "en": "Official Rich Presence for JuicerBot.de",
-    "de": "Offizielle Rich Presence für JuicerBot.de"
+    "de": "Offizielle Rich Presence für JuicerBot.de",
+    "en": "Official Rich Presence for JuicerBot.de"
   },
   "url": "juicerbot.de",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*juicerbot[.]de[/]",
   "version": "1.0.0",
-  "logo": "https://cdn.discordapp.com/avatars/1459583460858531952/da166fa0d60fe899244a4765071e0eb4.png?size=512",
-  "thumbnail": "https://cdn.discordapp.com/avatars/1459583460858531952/da166fa0d60fe899244a4765071e0eb4.png?size=512",
+  "logo": "https://cdn.discordapp.com/avatars/1459583460858531952/da166fa0d60fe899244a4765071e0eb4.png",
+  "thumbnail": "https://cdn.discordapp.com/avatars/1459583460858531952/da166fa0d60fe899244a4765071e0eb4.png",
   "color": "#fbbf24",
-  "category": "gaming",
+  "category": "games",
   "tags": [
     "juicer",
     "casino",
