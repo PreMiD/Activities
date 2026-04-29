@@ -7,19 +7,19 @@ const presence = new Presence({
 
 enum ActivityAssets {
     FaceIt = 'https://i.imgur.com/n5ielUx.png',
-    CounterStrike = 'https://i.imgur.com/y8YLyBw.png',
-    LevelUnranked = 'https://i.imgur.com/1EGrUxE.png', // Have to find this one yet
-    LevelOne = 'https://i.imgur.com/y2aZvKz.png',
-    LevelTwo = 'https://i.imgur.com/Z4DgGpl.png',
-    LevelThree = 'https://i.imgur.com/kYri6HG.png',
-    LevelFour = 'https://i.imgur.com/dD5xBFH.png',
-    LevelFive = 'https://i.imgur.com/smsFLir.png',
-    LevelSix = 'https://i.imgur.com/5WFEP1Z.png',
-    LevelSeven = 'https://i.imgur.com/RdrnZLz.png',
-    LevelEight = 'https://i.imgur.com/zMwX3dF.png',
-    LevelNine = 'https://i.imgur.com/CpecMDC.png',
-    LevelTen = 'https://i.imgur.com/LSPHHpW.png',
-    LevelChallenger = 'https://i.imgur.com/E2pxI05.png'
+    CounterStrike = 'https://i.imgur.com/DKS55vg.png',
+    LevelUnranked = 'https://i.imgur.com/9SgqYFm.png', // Have to find this one yet
+    LevelOne = 'https://i.imgur.com/6rN5cuh.png',
+    LevelTwo = 'https://i.imgur.com/vENOEdq.png',
+    LevelThree = 'https://i.imgur.com/8kluHJ0.png',
+    LevelFour = 'https://i.imgur.com/IERNixS.png',
+    LevelFive = 'https://i.imgur.com/Xy95TsF.png',
+    LevelSix = 'https://i.imgur.com/bJtZMTZ.png',
+    LevelSeven = 'https://i.imgur.com/GNacaVX.png',
+    LevelEight = 'https://i.imgur.com/wurmgAc.png',
+    LevelNine = 'https://i.imgur.com/aBZIzCx.png',
+    LevelTen = 'https://i.imgur.com/qx8irJg.png',
+    LevelEleven = 'https://i.imgur.com/s7nR1iZ.png'
 }
 
 const getLevelAsset = (level: string): string | null => {
@@ -34,7 +34,7 @@ const getLevelAsset = (level: string): string | null => {
         case '8': return ActivityAssets.LevelEight
         case '9': return ActivityAssets.LevelNine
         case '10': return ActivityAssets.LevelTen
-        case 'challenger': return ActivityAssets.LevelChallenger
+        case '11': return ActivityAssets.LevelEleven
         case 'unranked': return ActivityAssets.LevelUnranked
         default: return null
     }
@@ -74,15 +74,10 @@ const getSelfUser = (): { team: 1 | 2 | null, levelAsset: string | null, elo: nu
                     if (!titleText) titleText = skillSvg.getAttribute('aria-label')?.toLowerCase() || ''
                 }
 
-                const levelMatch = titleText.match(/\d+/)
+                
                 let levelKey = 'unranked'
-
-                if (titleText.includes('challenger')) {
-                    levelKey = 'challenger'
-                } else if (levelMatch) {
-                    levelKey = levelMatch[0]
-                }
-                console.log('levelMatch, levelKey, titleText', levelMatch, levelKey, titleText)
+                const levelMatch = titleText.match(/\d+/)
+                if (levelMatch) levelKey = levelMatch[0]
 
                 const eloElement = container?.querySelector('[class*="Subtitle__Holder"], [class*="LevelAndElo"], [class*="SkillLevel__Elo"]')
                 const eloText = eloElement?.textContent || ''
