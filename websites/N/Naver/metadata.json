@@ -39,7 +39,7 @@
     "blog.naver.com",
     "cafe.naver.com"
   ],
-  "regExp": "^https?[:][/][/]((section)[.])?(?!chzzk)([a-z]+)[.]naver[.]([a-z0-9]+)",
+  "regExp": "^https?[:][/][/]((section)[.])?(?!chzzk)([a-z]+)[.]naver([.][a-z]+)+[/]",
   "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Naver/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Naver/assets/thumbnail.png",

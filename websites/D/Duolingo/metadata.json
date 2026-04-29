@@ -38,7 +38,7 @@
     "zh": "学习外语，寓教于乐"
   },
   "url": "duolingo.com",
-  "regExp": "^https?[:][/][/](www|preview)\\.duolingo\\.(com|cn)",
+  "regExp": "^https?[:][/][/](www|preview)[.]duolingo[.](com|cn)[/]",
   "version": "3.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Duolingo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Duolingo/assets/thumbnail.png",

@@ -21,7 +21,7 @@
     "parody"
   ],
   "iframe": true,
-  "iFrameRegExp": "https:\\/\\/www\\.windows93\\.net",
+  "iFrameRegExp": "^https?[:][/][/]www[.]windows93[.]net",
   "settings": [
     {
       "id": "logo",

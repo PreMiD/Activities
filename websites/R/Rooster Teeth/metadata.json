@@ -23,7 +23,7 @@
     "streaming"
   ],
   "iframe": true,
-  "iFrameRegExp": "(?:https?:)?\\/\\/(?:www\\.)?(?:youtube\\.com\\/embed\\/[A-Za-z0-9_-]+|player\\.vimeo\\.com\\/video\\/\\d+)",
+  "iFrameRegExp": "^https?[:][/][/](www[.])?(youtube[.]com[/]embed[/][A-Za-z0-9_-]+|player[.]vimeo[.]com[/]video[/]\\d+)",
   "settings": [
     {
       "id": "buttons",

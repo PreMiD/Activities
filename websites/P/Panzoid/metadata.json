@@ -27,5 +27,5 @@
     "clipmaker"
   ],
   "iframe": true,
-  "iFrameRegExp": "https://panzoid\\.com/legacy/gen[23]/clipmaker\\.html"
+  "iFrameRegExp": "^https?[:][/][/]panzoid[.]com[/]legacy[/]gen[23][/]clipmaker[.]html"
 }

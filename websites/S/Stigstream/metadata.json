@@ -24,7 +24,7 @@
     "media"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https?://(player\\.vidplus\\.to|turbovid\\.eu|player\\.videasy\\.net|embed\\.su)/(?:.*?/)?(tv|movie)/\\d+(?:/\\d+)*$",
+  "iFrameRegExp": "^https?[:][/][/](player[.]vidplus[.]to|turbovid[.]eu|player[.]videasy[.]net|embed[.]su)[/](.*?[/])?(tv|movie)[/]\\d+([/]\\d+)*$",
   "settings": [
     {
       "id": "privacy",

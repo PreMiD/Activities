@@ -17,7 +17,7 @@
     "nl": "Het gratis software mediasysteem"
   },
   "url": "jellyfin.org",
-  "regExp": "^https?[:][/][/](jellyfin.org)|(.*[/]web[/](index[.]html#|#))",
+  "regExp": "^https?[:][/][/](jellyfin[.]org|.*[/]web[/](index[.]html)?#)[/]",
   "version": "1.10.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Jellyfin/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Jellyfin/assets/thumbnail.png",

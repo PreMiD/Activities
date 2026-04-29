@@ -35,5 +35,5 @@
     "movie"
   ],
   "iframe": true,
-  "iFrameRegExp": "https?:\\/\\/anm\\.cx\\/secure\\/best-video\\?.*|https?:\\/\\/tau-video\\.xyz\\/embed\\/.*|https?:\\/\\/ok\\.ru\\/videoembed\\/.*|https?:\\/\\/drive\\.google\\.com\\/file\\/d\\/.*|https?:\\/\\/uqload\\.io\\/.*|https?:\\/\\/doodstream\\.com\\/e\\/.*"
+  "iFrameRegExp": "^https?[:][/][/](anm[.]cx[/]secure[/]best-video|tau-video[.]xyz[/]embed|ok[.]ru[/]videoembed|drive[.]google[.]com[/]file[/]d|uqload[.]io|doodstream[.]com[/]e)[/]"
 }

@@ -22,5 +22,5 @@
     "streaming"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https:\\/\\/rapid-cloud\\.co\\/embed-2\\/v2\\/e-1\\/[A-Za-z0-9]+\\?.*$"
+  "iFrameRegExp": "^https?[:][/][/]rapid-cloud[.]co[/]embed-2[/]v2[/]e-1[/][A-Za-z0-9]+"
 }

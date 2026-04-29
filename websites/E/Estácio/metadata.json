@@ -39,7 +39,7 @@
     "distance-learning"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https://conteudo\\.ensineme\\.com\\.br/[^/]+/[^/]+\\?brand=estacio$",
+  "iFrameRegExp": "^https?[:][/][/]conteudo[.]ensineme[.]com[.]br/[^/]+/[^/]+\\?brand=estacio$",
   "settings": [
     {
       "id": "show-student-page",

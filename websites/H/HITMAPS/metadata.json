@@ -14,7 +14,7 @@
     "www.hitmaps.com",
     "roulette.hitmaps.com"
   ],
-  "regExp": "^https?[:][/][/]([a-z0-9]+)[.]hitmaps[.]com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*hitmaps[.]com[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HITMAPS/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HITMAPS/assets/thumbnail.png",

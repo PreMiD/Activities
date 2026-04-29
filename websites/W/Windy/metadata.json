@@ -15,7 +15,7 @@
     "www.windy.com",
     "community.windy.com"
   ],
-  "regExp": "^https?:\\/\\/(www\\.|community\\.|[a-z0-9-]+\\.)?windy\\.com\\/.*",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*windy[.]com[/]",
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Windy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Windy/assets/thumbnail.png",

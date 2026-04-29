@@ -17,7 +17,7 @@
     "studysapuri.jp",
     "learn.studysapuri.jp"
   ],
-  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*studysapuri[.]jp[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*studysapuri[.]jp[/]",
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/StudySapuri/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/StudySapuri/assets/thumbnail.png",

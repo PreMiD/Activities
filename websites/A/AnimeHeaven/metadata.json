@@ -14,7 +14,7 @@
     "en": "AnimeHeaven is a site for browsing anime schedules, tracking releases, and streaming anime episodes."
   },
   "url": "animeheaven.me",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animeheaven[.]me([/]|$)",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animeheaven[.]me[/]",
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeHeaven/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeHeaven/assets/thumbnail.png",

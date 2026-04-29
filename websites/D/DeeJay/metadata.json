@@ -20,7 +20,7 @@
     "deejay.it",
     "www.deejay.it"
   ],
-  "regExp": "^https?[:][/][/](www\\.)?deejay[.]it[/]",
+  "regExp": "^https?[:][/][/](www[.])?deejay[.]it[/]",
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DeeJay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DeeJay/assets/thumbnail.jpeg",

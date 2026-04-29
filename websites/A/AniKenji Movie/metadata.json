@@ -25,7 +25,7 @@
     "anime"
   ],
   "iframe": true,
-  "iFrameRegExp": "(?:streamc\\.xyz|service\\.anikenji\\.live|(?:.*\\.)?youtube\\.com|(?:.*\\.)?vimeo\\.com)",
+  "iFrameRegExp": "(?:streamc[.]xyz|service[.]anikenji[.]live|([a-z0-9-]+[.])*youtube[.]com|([a-z0-9-]+[.])*vimeo[.]com)",
   "settings": [
     {
       "id": "showButtons",

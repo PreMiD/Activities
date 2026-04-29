@@ -22,7 +22,7 @@
     "media"
   ],
   "iframe": true,
-  "iFrameRegExp": "https://(moikatsu\\.in/src/player/sub\\.php\\?.*|megaplay\\.buzz/stream/.*)",
+  "iFrameRegExp": "^https?[:][/][/](moikatsu[.]in[/]src[/]player[/]sub[.]php|megaplay[.]buzz[/]stream)[/]",
   "settings": [
     {
       "id": "privacy",

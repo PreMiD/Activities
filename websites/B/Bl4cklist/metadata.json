@@ -14,7 +14,7 @@
     "discord.bl4cklist.de",
     "bl4cklist.de"
   ],
-  "regExp": "^https?://([a-z0-9-]+\\.)*bl4cklist[.]de[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*bl4cklist[.]de[/]",
   "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bl4cklist/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bl4cklist/assets/thumbnail.png",

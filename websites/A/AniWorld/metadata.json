@@ -31,7 +31,7 @@
     "anicloud"
   ],
   "iframe": true,
-  "iFrameRegExp": "https:\\/\\/(jilliandescribecompany\\.com\\/e|loadx\\.ws\\/video)\\/[a-zA-Z0-9]+",
+  "iFrameRegExp": "^https?[:][/][/](jilliandescribecompany[.]com[/]e|loadx[.]ws[/]video)[/][a-zA-Z0-9]+",
   "settings": [
     {
       "id": "lang",

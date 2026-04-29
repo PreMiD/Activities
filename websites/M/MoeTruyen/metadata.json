@@ -17,7 +17,7 @@
     "www.moetruyen.net",
     "moetruyen.net"
   ],
-  "regExp": "^https?[:][/][/](www[.])?moetruyen[.]net([/]|$)",
+  "regExp": "^https?[:][/][/](www[.])?moetruyen[.]net[/]",
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MoeTruyen/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MoeTruyen/assets/thumbnail.jpeg",

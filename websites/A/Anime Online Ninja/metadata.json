@@ -26,5 +26,5 @@
     "video"
   ],
   "iframe": true,
-  "iFrameRegExp": "(streamtape\\.com|mixdropjmk\\.pw|netuplayer\\.top|dood\\.ws|d-s\\.io|[a-z0-9]+\\.(com|net|org|ws|pw|top|io||to))"
+  "iFrameRegExp": "(streamtape[.]com|mixdropjmk[.]pw|netuplayer[.]top|dood[.]ws|d-s[.]io|[a-z0-9]+[.](com|net|org|ws|pw|top|io|to))"
 }

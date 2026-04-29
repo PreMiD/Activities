@@ -25,5 +25,5 @@
     "database"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https://www\\.youtube-nocookie\\.com|^https://embed\\.nicovideo\\.jp|^https://player\\.bilibili\\.com|^https://bandcamp\\.com|^https://w\\.soundcloud\\.com|^https://player\\.vimeo\\.com"
+  "iFrameRegExp": "^https?[:][/][/](www[.]youtube-nocookie[.]com|embed[.]nicovideo[.]jp|player[.]bilibili[.]com|bandcamp[.]com|w[.]soundcloud[.]com|player[.]vimeo[.]com)"
 }
