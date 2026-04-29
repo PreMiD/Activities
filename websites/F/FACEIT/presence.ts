@@ -19,7 +19,7 @@ enum ActivityAssets {
   LevelEight = 'https://i.imgur.com/ZjFZ9ME.jpeg',
   LevelNine = 'https://i.imgur.com/s9AtaVp.jpeg',
   LevelTen = 'https://i.imgur.com/iClJnOT.jpeg',
-  LevelEleven = 'https://i.imgur.com/poEjdMY.jpeg'
+  LevelEleven = 'https://i.imgur.com/poEjdMY.jpeg',
 }
 
 function getLevelAsset(level: string): string | null {
@@ -42,7 +42,9 @@ function getLevelAsset(level: string): string | null {
 
 function getElapsedSeconds(timeStr?: string | null): number {
   const parts = timeStr?.split(':').map(Number)
-  if (!parts || parts.some(isNaN)) return 0
+  if (!parts || parts.some(val => Number.isNaN(val))) {
+    return 0
+  }
   const [s = 0, m = 0, h = 0] = [...parts].reverse()
   return h * 3600 + m * 60 + s
 }
@@ -71,22 +73,25 @@ function getSelfUser(): { team: 1 | 2 | null, levelAsset: string | null, elo: nu
 
         if (skillSvg) {
           titleText = skillSvg.querySelector('title')?.textContent?.toLowerCase() || ''
-          if (!titleText) titleText = skillSvg.getAttribute('aria-label')?.toLowerCase() || ''
+          if (!titleText) {
+            titleText = skillSvg.getAttribute('aria-label')?.toLowerCase() || ''
+          }
         }
-
 
         let levelKey = 'unranked'
         const levelMatch = titleText.match(/\d+/)
-        if (levelMatch) levelKey = levelMatch[0]
+        if (levelMatch) {
+           levelKey = levelMatch[0]
+        }
 
         const eloElement = container?.querySelector('[class*="Subtitle__Holder"], [class*="LevelAndElo"], [class*="SkillLevel__Elo"]')
         const eloText = eloElement?.textContent || ''
-        const elo = Number(eloText.replace(/[^0-9]/g, '')) || 0
+        const elo = Number(eloText.replace(/\D/g, '')) || 0
 
         return {
           team: (isT1 ? 1 : 2) as 1 | 2,
           levelAsset: getLevelAsset(levelKey),
-          elo
+          elo,
         }
       }
     }
@@ -103,43 +108,47 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
     details: null,
     state: null,
-    smallImageKey: null
+    smallImageKey: null,
   }
 
   const showBrowsing = await presence.getSetting<boolean>('browsing')
-  if (showBrowsing) presenceData.details = strings.browsingHome
+  if (showBrowsing) {
+    presenceData.details = strings.browsingHome
+  }
 
   const { pathname: rawPath } = document.location
-  const pathname = rawPath.replace(/^\/[a-z]{2}(-[A-Z]{2})?\//, '/') // Remove locale from path
+  const pathname = rawPath.replace(/^\/[a-z]{2}(?:-[A-Z]{2})?\//, '/') // Remove locale from path
 
   // Hide all browsing states if disabled
   if (showBrowsing) {
-    if (pathname.startsWith('/parties')) presenceData.details = strings.browsingParties
-    else if (pathname.startsWith('/cs2/rank')) presenceData.details = strings.browsingRank
-    else if (pathname.startsWith('/track')) presenceData.details = strings.browsingTrack
-    else if (pathname.startsWith('/social-feed')) presenceData.details = strings.browsingFeed
-    else if (pathname.startsWith('/clubs')) presenceData.details = strings.browsingClubs
-    else if (pathname.startsWith('/players/')) {
-
+    if (pathname.startsWith('/parties')) {
+      presenceData.details = strings.browsingParties
+    } else if (pathname.startsWith('/cs2/rank')) {
+      presenceData.details = strings.browsingRank
+    } else if (pathname.startsWith('/track')) {
+      presenceData.details = strings.browsingTrack
+    } else if (pathname.startsWith('/social-feed')) {
+      presenceData.details = strings.browsingFeed
+    } else if (pathname.startsWith('/clubs')) {
+      presenceData.details = strings.browsingClubs
+    } else if (pathname.startsWith('/players/')) {
       const username = pathname.split('/')[2]
-      const gameAction = pathname.split('/')[4] ?? null;
+      const gameAction = pathname.split('/')[4] ?? null
 
       let details = `${strings.viewingProfile} @${username}`
-      if (gameAction === 'history') details = `${strings.viewingMatchHistory} @${username}`
+      if (gameAction === 'history') {
+        details = `${strings.viewingMatchHistory} @${username}`
+      }
       presenceData.details = details
-
     } else if (pathname.startsWith('/club')) {
-
       const name = document.querySelector('h6[class*="HeadingTruncated"]')?.textContent?.trim() ?? 'Unknown Club'
       presenceData.details = `${strings.viewingClub} @${name}`
       presenceData.buttons = [{ label: 'View Club', url: document.location.href }]
-
     }
   }
 
   // Handle non-browsing states
   if (pathname.startsWith('/matchmaking')) {
-
     presenceData.details = strings.inLobby
     const modal = document.querySelector('[role="dialog"][data-dialog-type="MODAL"]')
     const playArea = document.querySelector('div[name="playbutton"]')
@@ -160,15 +169,12 @@ presence.on('UpdateData', async () => {
     const vetoContainer = document.querySelector('[data-testid="matchroomVeto"]')
 
     presenceData.smallImageKey = levelAsset ?? (team ? Assets.Live : null)
-    presenceData.smallImageText = team && elo > 0 ? `${strings.elo}: ${elo}` : (team ? "Unranked" : null)
+    presenceData.smallImageText = team && elo > 0 ? `${strings.elo}: ${elo}` : (team ? strings.unranked : null)
 
     // Veto Phase
     if (vetoContainer) {
       presenceData.details = team ? strings.vetoingMaps : strings.watchingVeto
-    }
-
-    // Match Phase
-    else {
+    } else {  // Match Phase
       const mapImg = document.querySelector('img[class*="SelectedMapIcon"]') as HTMLImageElement | null
       const mapName = mapImg?.nextElementSibling?.textContent?.trim() ?? 'Unknown Map'
 
@@ -182,15 +188,14 @@ presence.on('UpdateData', async () => {
           win: el?.textContent?.includes('Winner') || !!el?.querySelector('[class*="MatchOutcomeBadge"]')
         })
 
-        const t1 = getFaction(factions[0]), t2 = getFaction(factions[1])
+        const t1 = getFaction(factions[0]) 
+        const t2 = getFaction(factions[1])
         const [sL, sR] = team === 2 ? [t2.score, t1.score] : [t1.score, t2.score]
         const scoreDisplay = `[ ${sL} : ${sR} ]`
-
 
         const timerText = header.querySelector('[class*="MatchStateText"]')?.textContent?.trim() ?? null
 
         if (team) { // We are playing
-
           // Live Match
           if (timerText && /\d{2}:\d{2}/.test(timerText)) {
             presenceData.name = 'Counter-Strike 2'
@@ -199,15 +204,13 @@ presence.on('UpdateData', async () => {
             presenceData.state = `${strings.competitive} ${scoreDisplay}`
             presenceData.startTimestamp = Math.floor(Date.now() / 1000) - getElapsedSeconds(timerText)
           } else {
-            const didIWin = (team === 1 && t1.win) || (team === 2 && t2.win);
-            const resultLabel = didIWin ? strings.won : strings.lost;
+            const didIWin = (team === 1 && t1.win) || (team === 2 && t2.win)
+            const resultLabel = didIWin ? strings.won : strings.lost
             presenceData.details = `${strings.matchroom} - ${mapName}`
             presenceData.state = `${resultLabel} ${scoreDisplay}`
             presenceData.startTimestamp = null
           }
-
         } else { // We are not playing
-
           // Live Match
           if (timerText && /\d{2}:\d{2}/.test(timerText)) {
             presenceData.details = `${strings.watching} - ${mapName}`
@@ -216,7 +219,6 @@ presence.on('UpdateData', async () => {
           } else {
             presenceData.details = `${strings.matchroom} - ${mapName}`
           }
-
         }
       }
     }
