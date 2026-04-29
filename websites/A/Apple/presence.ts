@@ -818,7 +818,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Apple Developer'
         presenceData.state = 'Home'
 
-        if (dPages.includes(urlpath[1])) {
+        if (dPages.includes(urlpath[1] ?? '')) {
           presenceData.state = document.querySelector(`a.ac-gn-link.ac-gn-link-${cpage}>span`)
             ?.textContent
             || document.querySelector('section.section-hero>h1.section-headline')
