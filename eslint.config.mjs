@@ -13,6 +13,10 @@ export default antfu(
         'error',
         { newIsCapExceptions: ['iFrame'], capIsNew: false, newIsCap: true, properties: true },
       ],
+      // Documentation pages intentionally use multiple H1s and skipped heading
+      // levels for visual structure.
+      'markdown/no-multiple-h1': 'off',
+      'markdown/heading-increment': 'off',
     },
   },
   {
