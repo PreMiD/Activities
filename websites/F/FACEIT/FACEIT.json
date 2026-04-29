@@ -1,8 +1,4 @@
 {
-  "faceit.browsingHome": {
-    "description": "Default state when the user is browsing the FACEIT website.",
-    "message": "Browsing Homepage"
-  },
   "faceit.parties": {
     "description": "Shown when the user is in the party finder section of the website.",
     "message": "Browsing Parties"
@@ -26,10 +22,6 @@
   "faceit.club": {
     "description": "Shown when the user is viewing a specific club.",
     "message": "Viewing Club"
-  },
-  "faceit.profile": {
-    "description": "Shown when the user is viewing a profile page (their own or another user's).",
-    "message": "Viewing Profile"
   },
   "faceit.matchhistory": {
     "description": "Shown when the user is viewing their match history.",

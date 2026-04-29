@@ -106,9 +106,6 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.FaceIt,
     startTimestamp: browsingTimestamp,
-    details: null,
-    state: null,
-    smallImageKey: null,
   }
 
   const showBrowsing = await presence.getSetting<boolean>('browsing')
@@ -183,7 +180,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = team ? strings.vetoingMaps : strings.watchingVeto
     }
     else { // Match Phase
-      const mapImg = document.querySelector('img[class*="SelectedMapIcon"]') as HTMLImageElement | null
+      const mapImg = document.querySelector<HTMLImageElement>('img[class*="SelectedMapIcon"]')
       const mapName = mapImg?.nextElementSibling?.textContent?.trim() ?? 'Unknown Map'
 
       const factionNames = document.querySelectorAll('[class*="FactionName"]')
@@ -217,7 +214,7 @@ presence.on('UpdateData', async () => {
             const resultLabel = didIWin ? strings.won : strings.lost
             presenceData.details = `${strings.matchroom} - ${mapName}`
             presenceData.state = `${resultLabel} ${scoreDisplay}`
-            presenceData.startTimestamp = null
+            delete presenceData.startTimestamp
           }
         }
         else { // We are not playing

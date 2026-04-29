@@ -3,15 +3,15 @@ export type Strings = typeof stringMap
 export const stringMap = {
   playing: 'general.playing',
   watching: 'general.watching',
+  browsingHome: 'general.browsing',
+  viewingProfile: 'general.viewAProfile',
 
-  browsingHome: 'faceit.browsingHome',
   browsingParties: 'faceit.parties',
   browsingTrack: 'faceit.track',
   browsingRank: 'faceit.rank',
   browsingFeed: 'faceit.feed',
   browsingClubs: 'faceit.clubs',
   viewingClub: 'faceit.club',
-  viewingProfile: 'faceit.profile',
   viewingMatchHistory: 'faceit.matchhistory',
   inLobby: 'faceit.inlobby',
   inQueue: 'faceit.queuing',
