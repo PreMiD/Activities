@@ -16,7 +16,7 @@ export default antfu(
     },
   },
   {
-    files: ['**/*.json', '**/*.json5', '**/*.jsonc'],
+    files: ['**/*.json'],
     rules: {
       'jsonc/sort-keys': [
         'error',
@@ -61,14 +61,7 @@ export default antfu(
     },
   },
   {
-    files: [
-      '**/*.json',
-      '**/*.json5',
-      '**/*.jsonc',
-      '**/*.yaml',
-      '**/*.yml',
-      '**/*.toml',
-    ],
+    files: ['**/*.json', '**/*.yaml', '**/*.yml'],
     rules: {
       'json-schema-validator/no-invalid': 'error',
     },
