@@ -13,7 +13,7 @@ function simplifyKey(key: string): string {
   if (
     (result.includes('-PinkPlay_Controllable')
       && !/(?:Standard|OneSaber|Lawless)-PinkPlay_Controllable/.test(result))
-    || /(Horizontal|Vertical|Inverted|Inverse)/.test(result)
+    || /Horizontal|Vertical|Inverted|Inverse/.test(result)
   ) {
     result = result.replace('-PinkPlay_Controllable', '')
   }

@@ -77,7 +77,7 @@ presence.on('UpdateData', async () => {
       }
       const titles = name?.textContent
         ?.replace(/смотреть\s/i, '')
-        .replace(/(\d* сезон)?\s?\d* серия|\d фильм/g, '')
+        .replace(/(?:\d* сезон)?\s?\d* серия|\d фильм/g, '')
         .trim()
       presenceData.details = titles
       presenceData.state = name?.textContent

@@ -166,7 +166,7 @@ presence.on('UpdateData', async () => {
         episodeNumber = fullEpisodeName.split('.')[0]!
         episodeName = fullEpisodeName.split('.').slice(1).join('.')
         hasEpName = !episodeName.includes('EP.')
-        part = episodeName.match(/([1-9]\/[1-9])/g) ?? []
+        part = episodeName.match(/[1-9]\/[1-9]/g) ?? []
       }
 
       presenceData.details = document.querySelector('#series_title')?.textContent

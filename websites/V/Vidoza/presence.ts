@@ -25,7 +25,7 @@ presence.on('UpdateData', async () => {
       ?.querySelectorAll('[type="text/javascript"]')
     const title = el?.[el.length - 1]?.innerHTML
       .split('var curFileName =')?.[1]
-      ?.replace(/(\.)/g, ' ')
+      ?.replace(/\./g, ' ')
       .replace('"', '')
 
     presenceData.details = title?.split(' S0')?.[0] ?? title

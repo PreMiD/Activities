@@ -75,8 +75,8 @@ const pages: PageContext[] = [
         .filter(x => !!x && x.length > 1 && x[1])
         .map(x => capitalizeFirstLetter(x![1]!))
       data.state = `Browsing ${
-        isCoubPicks && /^(\w+)/.test(activeTabTitle)
-          ? activeTabTitle.match(/^(\w+)/g)?.[0]
+        isCoubPicks && /^\w+/.test(activeTabTitle)
+          ? activeTabTitle.match(/^\w+/g)?.[0]
           : activeTabTitle
       }${
         (pageType?.length ?? 0) > 0

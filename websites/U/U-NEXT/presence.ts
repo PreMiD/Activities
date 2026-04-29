@@ -101,7 +101,7 @@ presence.on('UpdateData', async () => {
   }
 
   //* Match /play/sid/ed and get ed
-  const watchingMediaId = path.match(/\/play\/(\w+)\/(\w+)/)
+  const watchingMediaId = path.match(/\/play\/(\w+)\/\w+/)
   if (watchingMediaId) {
     await fetchMetadata(watchingMediaId[1]!)
     const video = document.querySelector('video')

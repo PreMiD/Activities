@@ -94,7 +94,7 @@ presence.on('UpdateData', async () => {
         title = document
           .querySelector('title')
           ?.textContent
-          ?.replace(/( - )|(OneTouch TV)/g, '')
+          ?.replace(/ - |OneTouch TV/g, '')
       }
 
       if (title?.includes('Episode')) {

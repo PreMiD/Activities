@@ -26,7 +26,7 @@ presence.on('UpdateData', () => {
     }
     case 'forum.warthunder.com': {
       presenceData.details = 'Viewing forums'
-      const searchPath = /\?(.*?)(?:&.*|$)/.test(search)
+      const searchPath = /\?.*?(?:&.*|$)/.test(search)
         ? search.match(/\?(.*?)(?:&.*|$)/)?.[1]
         : ''
       const searchParams = new URLSearchParams(search)

@@ -126,7 +126,7 @@ presence.on('UpdateData', async () => {
         /https:\/\/www\.tiktok\.com\/@.*\/video\/\d{19}/,
       )
       const creatorURLMatch = creatorURL.match(
-        /http(s)?:\/\/(www\.)?tiktok\.com\/@([\w.]{0,23}\w)(?:\/\S*)?\//,
+        /https?:\/\/(?:www\.)?tiktok\.com\/@[\w.]{0,23}\w(?:\/\S*)?\//,
       )?.[0]
       const paused = video
         ?.closest('div[data-e2e="feed-video"]')

@@ -10,7 +10,7 @@ const strings = presence.getStrings({
 })
 
 function seriesName(name: string): string {
-  return name.replace(/([^\W_][^\s-]*) */g, (text) => {
+  return name.replace(/[^\W_][^\s-]* */g, (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
   })
 }

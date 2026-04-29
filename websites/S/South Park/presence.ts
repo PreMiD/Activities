@@ -60,7 +60,7 @@ presence.on('UpdateData', async () => {
   else if (path.includes('/seasons/')) {
     presenceData.details = 'Viewing Episodes of:'
     presenceData.state = `Season ${document.URL.match(
-      /(season-[1-9]?\d)/,
+      /season-[1-9]?\d/,
     )?.[0].replace('season-', '')}`
   }
   else if (path.includes('/collections/')) {

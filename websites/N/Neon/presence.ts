@@ -91,7 +91,7 @@ presence.on('UpdateData', async () => {
       )?.textContent?.replace('.', ':')} ${findElement('h3', 'so-name')
         ?.textContent
         ?.trim()
-        .replace(/(\d+)\./, '')}`
+        .replace(/\d+\./, '')}`
     }
     else {
       presenceData.state = 'Movie'

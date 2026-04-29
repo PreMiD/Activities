@@ -157,7 +157,7 @@ presence.on('UpdateData', async () => {
       )?.textContent
       const podcastCover = document.querySelector<HTMLImageElement>(
         'div.podcast-view__podcast-thumb > div > img',
-      )?.srcset.match(/(https.+\.(png|jpg)) 360w/)?.[1]
+      )?.srcset.match(/(https.+\.(?:png|jpg)) 360w/)?.[1]
       const podcastCoveralt = document.querySelector<HTMLImageElement>(
         'div.podcast-episode-view__thumb > div > img',
       )?.src
@@ -177,7 +177,7 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageKey = playingPodcastalt
             .querySelector<HTMLImageElement>('img')
             ?.srcset
-            .match(/(https.+\.(png|jpg)) 360w/)?.[1]
+            .match(/(https.+\.(?:png|jpg)) 360w/)?.[1]
 
           presenceData.details = podcastTitlealt
 
@@ -216,7 +216,7 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = playingPodcast
           .querySelector<HTMLImageElement>('img')
           ?.srcset
-          .match(/(https.+\.(png|jpg)) 360w/)?.[1]
+          .match(/(https.+\.(?:png|jpg)) 360w/)?.[1]
 
         presenceData.details = podcastTitle
 

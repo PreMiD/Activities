@@ -518,7 +518,7 @@ presence.on('UpdateData', async () => {
     }
     default: {
       presenceData.details = 'Browsing'
-      presenceData.state = pageTitle ?? document.title.match(/^(.*?)( - D&D Beyond)?$/)?.[1]
+      presenceData.state = pageTitle ?? document.title.match(/^(.*?)(?: - D&D Beyond)?$/)?.[1]
       break
     }
   }

@@ -97,7 +97,7 @@ presence.on('UpdateData', async () => {
 
           if (presence.isTrailer()) {
             presenceData.details = 'Watching a trailer'
-            presenceData.state = presence.getVideoTitle()?.replace(/- (.+)/, '')
+            presenceData.state = presence.getVideoTitle()?.replace(/- .+/, '')
 
             presenceData.smallImageText = video.paused ? 'Paused' : 'Playing'
             presenceData.smallImageKey = video.paused
@@ -139,7 +139,7 @@ presence.on('UpdateData', async () => {
           presenceData.details = `Viewing ${
             presence.getVideoType() === 'show' ? 'Show' : 'Movie'
           }:`
-          presenceData.state = presence.getVideoTitle()?.replace(/(.+)/, '')
+          presenceData.state = presence.getVideoTitle()?.replace(/.+/, '')
 
           presenceData.buttons = [
             {

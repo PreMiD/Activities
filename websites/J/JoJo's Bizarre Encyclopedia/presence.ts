@@ -217,7 +217,7 @@ function toTitleCase(phrase: string) {
     .join(' ')
 }
 function newsUrlToCategory(url: string) {
-  url = url.replace(/(^\/|\/$)/g, '')
+  url = url.replace(/^\/|\/$/g, '')
   const urlSplit = url.split('/')
   // Get last sub category in category list
   if (urlSplit.length > 1)

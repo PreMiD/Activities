@@ -37,7 +37,7 @@ presence.on('UpdateData', async () => {
   if (document.location.host === 'hub.docker.com') {
     presenceData.startTimestamp = browsingTimestamp
 
-    if (/^\/(repositories)?$/.test(document.location.pathname)) {
+    if (/^\/(?:repositories)?$/.test(document.location.pathname)) {
       presenceData.details = 'Bowsing own repositories'
     }
     else if (/^\/settings/.test(document.location.pathname)) {
@@ -76,7 +76,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Browsing organizations'
     }
     else if (
-      /^\/orgs\/([^/]+)(?:\/([^/]+))?/.test(document.location.pathname)
+      /^\/orgs\/[^/]+(?:\/[^/]+)?/.test(document.location.pathname)
     ) {
       let [, name, tab] = document.location.pathname.match(
         /^\/orgs\/([^/]+)(?:\/([^/]+))?/,
@@ -85,7 +85,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = `On org ${tab}page`
       presenceData.state = `${name}`
     }
-    else if (/^\/_\/([^?]+)/.test(document.location.pathname)) {
+    else if (/^\/_\/[^?]+/.test(document.location.pathname)) {
       url = new URL(document.location.href)
       params = url.searchParams
 
@@ -97,7 +97,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = `${name}`
     }
     else if (
-      /^\/r\/([^/]+)\/([^/]+)(?:\/([^?]+))?/.test(document.location.pathname)
+      /^\/r\/[^/]+\/[^/]+(?:\/[^?]+)?/.test(document.location.pathname)
     ) {
       url = new URL(document.location.href)
       params = url.searchParams
@@ -114,7 +114,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = `${owner}/${name}`
     }
     else if (
-      /^\/layers\/([^/]+)\/([^/]+)\/([^/]+)/.test(document.location.pathname)
+      /^\/layers\/[^/]+\/[^/]+\/[^/]+/.test(document.location.pathname)
     ) {
       match = document.location.pathname.match(
         /^\/layers\/([^/]+)\/([^/]+)\/([^/]+)/,
@@ -137,7 +137,7 @@ presence.on('UpdateData', async () => {
       }
     }
     else if (
-      /^\/u\/([^/]+)(?:\/([^/]+))?/.test(document.location.pathname)
+      /^\/u\/[^/]+(?:\/[^/]+)?/.test(document.location.pathname)
     ) {
       tab = match[2] || 'repositories'
       presenceData.details = `On profile ${tab} page`;
@@ -148,7 +148,7 @@ presence.on('UpdateData', async () => {
     else if (/^\/repository\/create/.test(document.location.pathname)) {
       presenceData.details = 'Creating repository'
     }
-    else if (/^\/repository(?:\/([^/?]+))+/.test(document.location.pathname)) {
+    else if (/^\/repository(?:\/[^/?]+)+/.test(document.location.pathname)) {
       url = new URL(document.location.href)
       params = url.searchParams
 
@@ -172,7 +172,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = `${capitalize(tab!)}${page ? ` ${page}` : ''}`
     }
     else if (
-      /^\/support\/(doc)?(contact)?/.test(document.location.pathname)
+      /^\/support\/(?:doc)?(?:contact)?/.test(document.location.pathname)
     ) {
       match = document.location.pathname.match(
         /^\/support\/(doc)?(contact)?/,

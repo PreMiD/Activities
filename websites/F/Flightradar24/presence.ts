@@ -191,11 +191,11 @@ presence.on('UpdateData', async () => {
                 presenceData.details = `Viewing ${document
                   .querySelector('[data-testid=\'cnt-subpage-info\'] > h1 ')
                   ?.textContent
-                  ?.match(/(flight .+$)/g)}`
+                  ?.match(/flight .+$/g)}`
                 presenceData.state = `${document
                   .querySelector('[data-testid=\'cnt-subpage-info\'] > h1 ')
                   ?.textContent
-                  ?.replace(/(flight .+$)/g, '')
+                  ?.replace(/flight .+$/g, '')
                   ?.replace('Flight history for ', '')}`
                 presenceData.buttons = [
                   {

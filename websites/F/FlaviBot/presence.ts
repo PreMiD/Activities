@@ -68,7 +68,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = document
         .querySelector('[aria-current="page"]')
         ?.textContent
-        ?.replace(/(New)|(Soon)|(Beta)/, '')
+        ?.replace(/New|Soon|Beta/, '')
       break
     }
     case pathname.includes('/leaderboard'): {

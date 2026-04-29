@@ -26,7 +26,7 @@ presence.on('UpdateData', async () => {
     const songPath = document.querySelector('#g_player > div.play > div.j-flag.words > a')?.getAttribute('href')
     const author = document.querySelector('#g_player > div.play > div.j-flag.words > span > span')?.textContent
     const audioTime = timestampFromFormat(document.querySelector('#g_player > div.play > div.m-pbar > span > em')!.textContent!)
-    const audioDuration = timestampFromFormat(audioTimeLeft!.replace(/(.*)(?=\/)/, '').replace('/ ', ''))
+    const audioDuration = timestampFromFormat(audioTimeLeft!.replace(/.*(?=\/)/, '').replace('/ ', ''))
 
     const [startTimestamp, endTimestamp] = getTimestamps(audioTime, audioDuration)
     const presenceData: PresenceData = {

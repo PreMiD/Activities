@@ -57,13 +57,13 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Wyszukuje po frazie'
         presenceData.state = searchvalue
           .substring(2, searchvalue.length)
-          .replace(/(%20)(\+)/g, ' ')
+          .replace(/%20\+/g, ' ')
       }
       else if (searchvalue.startsWith('?s=')) {
         presenceData.details = 'Wyszukuje po frazie'
         presenceData.state = searchvalue
           .substring(3, searchvalue.length)
-          .replace(/(%20)(\+)/g, ' ')
+          .replace(/%20\+/g, ' ')
       }
     }
   }

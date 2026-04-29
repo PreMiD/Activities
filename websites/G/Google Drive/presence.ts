@@ -26,7 +26,7 @@ presence.on('UpdateData', async () => {
   }
   const path = document.location.pathname
     .toLowerCase()
-    .replace(/(\/u\/(\d)+)/g, '')
+    .replace(/\/u\/\d+/g, '')
   const privacy = await presence.getSetting<boolean>('privacy')
 
   if (path.startsWith('/drive/folders')) {

@@ -98,7 +98,7 @@ presence.on('UpdateData', async () => {
           ?.iterateNext()
           ?.textContent
           ?.match(/title_en:".{1,256}",/g)?.[0]
-          ?.replace(/(title_en:")|(",)/g, '')
+          ?.replace(/title_en:"|",/g, '')
       presenceData.state = document
         .querySelector('[name="og:title"]')
         ?.getAttribute('content')

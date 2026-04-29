@@ -24,9 +24,9 @@ presence.on('UpdateData', async () => {
     loc = loc.slice(0, -1) // remove trailing slash
 
   // if on a subdomain (reading a doc)
-  if (/([a-z0-9-]+)\.readthedocs\.(io|org).*/.test(loc)) {
+  if (/[a-z0-9-]+\.readthedocs\.(?:io|org).*/.test(loc)) {
     const name = loc.replace(
-      /https:\/\/([a-z0-9-]+)\.readthedocs\.(io|org).*/g,
+      /https:\/\/([a-z0-9-]+)\.readthedocs\.(?:io|org).*/g,
       '$1',
     ) // get subdomain
 
@@ -48,8 +48,8 @@ presence.on('UpdateData', async () => {
     if (/search/.test(loc)) {
       // if searching on docs
       let term = loc.replace(
-        /([a-z0-9-/:]+)\.readthedocs\.(io|org)\/.[^\n\r/\u2028\u2029]*\/.+\/search.*\?q=([^&]+).*/g,
-        '$3',
+        /[a-z0-9-/:]+\.readthedocs\.(?:io|org)\/.[^\n\r/\u2028\u2029]*\/.+\/search.*\?q=([^&]+).*/g,
+        '$1',
       ) // get search term
 
       if (term.endsWith('#'))
@@ -95,8 +95,8 @@ presence.on('UpdateData', async () => {
         'searching_for',
         {
           term: loc.replace(
-            /https?:\/\/readthedocs\.(io|org)\/search\/\?q=([^&]+).*/g,
-            '$2',
+            /https?:\/\/readthedocs\.(?:io|org)\/search\/\?q=([^&]+).*/g,
+            '$1',
           ),
         },
       )
