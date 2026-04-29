@@ -52,7 +52,7 @@ presence.on('UpdateData', async () => {
           presenceData.details = radioInfo?.[0]
           presenceData.state = radioInfo?.[1]
           presenceData.largeImageText = document
-            .querySelector('font')
+            .querySelector<HTMLElement>('font')
             ?.textContent
             ?.trim()
           presenceData.smallImageKey = Assets.Live

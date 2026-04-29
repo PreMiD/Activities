@@ -21,7 +21,7 @@ interface PlayerData {
 
 const presence = new Presence({ clientId: '826806766033174568' })
 const [, page] = document.location.pathname.split('/')
-const qs = document.querySelector.bind(document)
+const qs = <E extends Element = Element>(s: string): E | null => document.querySelector<E>(s)
 const initMillis = Date.now()
 const rpaImage = {
   general: {
