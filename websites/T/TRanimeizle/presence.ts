@@ -19,7 +19,6 @@ const strings = presence.getStrings(
     play: 'general.playing',
     pause: 'general.paused',
   },
-  'tr',
 )
 
 interface iframeData {

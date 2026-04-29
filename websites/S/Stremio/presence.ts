@@ -71,7 +71,7 @@ interface Video {
   endTimestamp?: number
 }
 
-function findVideo(presence: Presence): Video | null {
+function findVideo(): Video | null {
   const videoElement = document.querySelector<HTMLMediaElement>('video')
 
   if (videoElement) {
@@ -144,7 +144,7 @@ presence.on('UpdateData', async () => {
   switch (appVersion) {
     case AppVersion.V4:
     case AppVersion.V5: {
-      const video = findVideo(presence)
+      const video = findVideo()
 
       if (privacy) {
         presenceData.state = video !== null ? 'Watching' : 'Browsing'

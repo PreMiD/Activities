@@ -16,7 +16,6 @@ async function getStrings() {
       viewCategory: 'general.viewCategory',
       viewHome: 'general.viewHome',
     },
-    'en',
   )
 }
 function capitalizeFirstLetter(string: string | undefined | null) {

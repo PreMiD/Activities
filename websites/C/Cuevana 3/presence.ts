@@ -19,7 +19,6 @@ async function getStrings() {
       watchingSeries: 'general.watchingSeries',
       watchingMovie: 'general.watchingMovie',
     },
-    'es_419',
   )
 }
 

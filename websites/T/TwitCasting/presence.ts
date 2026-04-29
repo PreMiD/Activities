@@ -32,7 +32,6 @@ async function getStrings() {
       buttonWatchStream: 'general.buttonWatchStream',
       buttonWatchVideo: 'general.buttonWatchVideo',
     },
-    oldLang,
   )
 }
 

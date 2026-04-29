@@ -17,7 +17,6 @@ async function getStrings() {
       watchStream: 'general.buttonWatchStream',
       watchVideo: 'general.buttonWatchVideo',
     },
-    oldLang,
   )
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)
