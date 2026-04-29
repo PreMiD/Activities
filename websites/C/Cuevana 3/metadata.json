@@ -13,7 +13,7 @@
   },
   "url": "cuevana3.nu",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*cuevana[a-z0-9]*([.][a-z]+)+[/]",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Cuevana%203/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Cuevana%203/assets/thumbnail.png",
   "color": "#007AFF",

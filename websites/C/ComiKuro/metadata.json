@@ -11,7 +11,7 @@
   },
   "url": "comikuro.to",
   "regExp": "^https?[:][/][/]comikuro[.]to[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/ComiKuro/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/ComiKuro/assets/thumbnail.png",
   "color": "#0b0b0f",

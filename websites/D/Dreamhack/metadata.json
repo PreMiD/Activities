@@ -15,7 +15,7 @@
     "learn.dreamhack.io"
   ],
   "regExp": "^https?[:][/][/](learn[.])?dreamhack[.]io[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dreamhack/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dreamhack/assets/thumbnail.png",
   "color": "#7d89f7",

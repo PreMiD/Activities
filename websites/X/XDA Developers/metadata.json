@@ -11,7 +11,7 @@
   },
   "url": "www.xda-developers.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*xda-developers[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/X/XDA%20Developers/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/X/XDA%20Developers/assets/thumbnail.jpg",
   "color": "#31035B",

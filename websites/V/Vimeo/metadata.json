@@ -13,7 +13,7 @@
   },
   "url": "vimeo.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*vimeo[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vimeo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vimeo/assets/thumbnail.png",
   "color": "#18B3E2",

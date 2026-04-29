@@ -12,7 +12,7 @@
   },
   "url": "dealabs.com",
   "regExp": "^https?[:][/][/](www[.])?dealabs[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dealabs/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dealabs/assets/thumbnail.png",
   "color": "#36bca1",

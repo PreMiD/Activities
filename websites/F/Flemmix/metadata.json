@@ -12,7 +12,7 @@
   },
   "url": "flemmix.rent",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flemmix([.][a-z]+)+[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flemmix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Flemmix/assets/thumbnail.png",
   "color": "#d90000",

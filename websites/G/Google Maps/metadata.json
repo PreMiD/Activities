@@ -18,7 +18,7 @@
   },
   "url": "maps.google.com",
   "regExp": "^https?[:][/][/]www[.]google[.]com[/]maps[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/thumbnail.png",
   "color": "#4e85f2",
