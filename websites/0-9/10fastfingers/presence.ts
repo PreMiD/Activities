@@ -15,7 +15,7 @@ presence.on('UpdateData', async () => {
   if (document.location.pathname === '/') {
     presenceData.details = 'In home page'
   }
-  else if (document.location.pathname.match(/\/typing-test\/.+\/top50/g)) {
+  else if (/\/typing-test\/.+\/top50/.test(document.location.pathname)) {
     presenceData.details = 'Viewing top 50'
   }
   else if (document.location.pathname.includes('/typing-test/')) {

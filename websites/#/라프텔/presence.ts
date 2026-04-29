@@ -45,7 +45,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = '검색중'
     presenceData.state = `"${getQuery().keyword}"`
   }
-  else if (pathname.match(/^\/item\/\d/)) {
+  else if (/^\/item\/\d/.test(pathname)) {
     if (prevData === pathname && animeData.name) {
       presenceData.details = animeData.name
       presenceData.largeImageKey = animeData.img
@@ -95,7 +95,7 @@ presence.on('UpdateData', async () => {
       ]
     }
   }
-  else if (pathname.match(/\/player\/\d*\/\d/)) {
+  else if (/\/player\/\d*\/\d/.test(pathname)) {
     const video = document.querySelector<HTMLVideoElement>('video')
     if (video && !Number.isNaN(video.duration)) {
       if (prevData !== pathname) {

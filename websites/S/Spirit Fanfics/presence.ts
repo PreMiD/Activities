@@ -69,7 +69,7 @@ presence.on('UpdateData', async () => {
         ?.textContent
         ?.replace('História ', '')
         .split(' - ') ?? []
-      if (pathname.match(/\/historia\/(\w+-)+\d+\/\w+/)) {
+      if (/\/historia\/(\w+-)+\d+\/\w+/.test(pathname)) {
         [presenceData.details] = title
         presenceData.state = `${title[1]} - ${nav}`
         presenceData.smallImageKey = Assets.Reading

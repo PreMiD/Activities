@@ -52,7 +52,7 @@ presence.on('UpdateData', async () => {
       },
     ]
   }
-  else if (href.match(/\d{4}/g)) {
+  else if (/\d{4}/.test(href)) {
     presenceData.details = `Bekijkt: ${
       document
         .querySelector<HTMLMetaElement>('meta[property=\'og:title\']')

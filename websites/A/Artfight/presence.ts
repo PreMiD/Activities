@@ -157,7 +157,8 @@ presence.on('UpdateData', async () => {
           {
             label: 'Join a team !',
             url: document
-              .querySelector<HTMLLinkElement>('.btn')!.getAttribute('href'),
+              .querySelector<HTMLLinkElement>('.btn')!
+              .getAttribute('href'),
           },
         ]
       }

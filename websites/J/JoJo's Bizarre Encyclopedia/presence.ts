@@ -170,7 +170,7 @@ presence.on('UpdateData', async () => {
     if (pathname === '' || pathname === '/' || pathname === '/JoJo_Wiki') {
       presenceData.state = 'Viewing: Homepage'
     }
-    else if (pathname.match(/^\/\d+\/\d+\/\d+\//)) {
+    else if (/^\/\d+\/\d+\/\d+\//.test(pathname)) {
       presenceData.state = `Reading ${
         document.querySelectorAll('.entry-title.entry--item.h2')[0]?.innerHTML
       }`

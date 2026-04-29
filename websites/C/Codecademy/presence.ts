@@ -181,7 +181,8 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'in the catalog'
         presenceData.smallImageKey = assets[
           document
-            .querySelector('#catalog-heading')!.textContent!.toLowerCase()
+            .querySelector('#catalog-heading')!
+            .textContent!.toLowerCase()
             .replace(' ', '_')
             .replace('+', 'plus')
             .replace('#', 'sharp')

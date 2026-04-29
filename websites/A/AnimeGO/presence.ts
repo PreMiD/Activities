@@ -59,9 +59,7 @@ presence.on('UpdateData', async () => {
     document.location.pathname === '/anime'
     || document.location.pathname === '/manga'
     || document.location.pathname === '/characters'
-    || document.location.pathname.match(
-      /(\/(anime|manga|characters)\/(season|genre|type|status|filter|studio|dubbing)\/)/,
-    )
+    || /(\/(anime|manga|characters)\/(season|genre|type|status|filter|studio|dubbing)\/)/.test(document.location.pathname)
   ) {
     presenceData.details = `В поиске ${typeCurrent}`
     if (!privacy) {
@@ -71,7 +69,7 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (
-    document.location.pathname.match(/\/(anime|manga|character|person)\//)
+    /\/(anime|manga|character|person)\//.test(document.location.pathname)
   ) {
     const elementContent = typeContent === 'person' ? 'people' : typeContent
     const titleContent = document.querySelector(

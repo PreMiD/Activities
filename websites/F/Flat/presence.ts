@@ -39,7 +39,7 @@ presence.on('UpdateData', async () => {
   if (pathname === '/settings/upgrade')
     presenceData.details = 'Viewing upgrade options'
   if (pathname.startsWith('/community')) {
-    if (pathname.match(/^\/community\/popular(\/.+)?\/?$/)) {
+    if (/^\/community\/popular(\/.+)?\/?$/.test(pathname)) {
       presenceData.details = 'Viewing community scores'
       presenceData.state = `Since: ${
         document.querySelector('[data-cy="community-date-filter-btn"]')

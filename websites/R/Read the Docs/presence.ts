@@ -24,7 +24,7 @@ presence.on('UpdateData', async () => {
     loc = loc.slice(0, -1) // remove trailing slash
 
   // if on a subdomain (reading a doc)
-  if (loc.match(/([a-z0-9-]+)\.readthedocs\.(io|org).*/g)) {
+  if (/([a-z0-9-]+)\.readthedocs\.(io|org).*/.test(loc)) {
     const name = loc.replace(
       /https:\/\/([a-z0-9-]+)\.readthedocs\.(io|org).*/g,
       '$1',
@@ -45,7 +45,7 @@ presence.on('UpdateData', async () => {
       )
     }
 
-    if (loc.match(/search/g)) {
+    if (/search/.test(loc)) {
       // if searching on docs
       let term = loc.replace(
         /([a-z0-9-/:]+)\.readthedocs\.(io|org)\/.[^\n\r/\u2028\u2029]*\/.+\/search.*\?q=([^&]+).*/g,
@@ -72,10 +72,10 @@ presence.on('UpdateData', async () => {
   else if (loc.endsWith('login')) {
     presenceData.details = await getStringFromSettings(presence, 'login', {})
   }
-  else if (loc.match(/accounts/)) {
+  else if (/accounts/.test(loc)) {
     presenceData.details = await getStringFromSettings(presence, 'manage', {})
   }
-  else if (loc.match(/profiles/)) {
+  else if (/profiles/.test(loc)) {
     presenceData.details = await getStringFromSettings(presence, 'profile', {
       name: loc.split('/')[loc.split('/').length - 1]!,
     })
@@ -88,7 +88,7 @@ presence.on('UpdateData', async () => {
     )
     // if searching for docs with the search term in the url
   }
-  else if (loc.match(/search/)) {
+  else if (/search/.test(loc)) {
     if (!loc.endsWith('/search')) {
       presenceData.state = await getStringFromSettings(
         presence,

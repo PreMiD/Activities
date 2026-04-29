@@ -162,9 +162,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viendo el perfil de'
 
     if (
-      [...document.querySelectorAll('.SingleTab')].find(
-        tab => tab.textContent === 'Mi Portafolio',
-      )
+      [...document.querySelectorAll('.SingleTab')].some(tab => tab.textContent === 'Mi Portafolio')
     ) {
       presenceData.details = 'Viendo su perfil'
     }
