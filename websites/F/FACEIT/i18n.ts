@@ -15,7 +15,6 @@ export const stringMap = {
   viewingMatchHistory: 'faceit.matchhistory',
   inLobby: 'faceit.inlobby',
   inQueue: 'faceit.queuing',
-  matchFound: 'faceit.matchfound',
   vetoingMaps: 'faceit.vetoing',
   watchingVeto: 'faceit.watchingVeto',
   inWarmup: 'faceit.warmup',
@@ -26,6 +25,7 @@ export const stringMap = {
   lost: 'faceit.lost',
   finished: 'faceit.finished',
   unknownMap: 'faceit.unknownMap',
+  unknownClub: 'faceit.unknownClub',
   matchResults: 'faceit.matchResults',
   matchroom: 'faceit.matchroom',
 }

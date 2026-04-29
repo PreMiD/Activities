@@ -35,10 +35,6 @@
     "description": "Shown when the user is queuing for a match.",
     "message": "In Queue"
   },
-  "faceit.matchfound": {
-    "description": "Shown when the user has found a match and is in the process of accepting it.",
-    "message": "Match Found"
-  },
   "faceit.vetoing": {
     "description": "Shown when the user is vetoing maps before a match.",
     "message": "[Matchroom] Vetoing Maps"
@@ -66,6 +62,10 @@
   "faceit.unknownMap": {
     "description": "Tooltip that shows when the map being played is unknown.",
     "message": "Unknown Map"
+  },
+  "faceit.unknownClub": {
+    "description": "Tooltip that shows when the club being viewed is unknown.",
+    "message": "Unknown Club"
   },
   "faceit.won": {
     "description": "Shown when the user has won a match.",

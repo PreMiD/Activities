@@ -144,7 +144,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = details
     }
     else if (pathname.startsWith('/club')) {
-      const name = document.querySelector('h6[class*="HeadingTruncated"]')?.textContent?.trim() ?? 'Unknown Club'
+      const name = document.querySelector('h6[class*="HeadingTruncated"]')?.textContent?.trim() ?? strings.unknownClub
       presenceData.details = `${strings.viewingClub} @${name}`
       presenceData.buttons = [{ label: 'View Club', url: document.location.href }]
     }
@@ -153,13 +153,9 @@ presence.on('UpdateData', async () => {
   // Handle non-browsing states
   if (pathname.startsWith('/matchmaking')) {
     presenceData.details = strings.inLobby
-    const modal = document.querySelector('[role="dialog"][data-dialog-type="MODAL"]')
     const playArea = document.querySelector('div[name="playbutton"]')
 
-    if (modal) {
-      presenceData.details = strings.matchFound
-    }
-    else if (playArea) {
+    if (playArea) {
       const timer = Array.from(playArea.querySelectorAll('span')).find(s => /\d{2}:\d{2}/.test(s.textContent ?? ''))
       const timerText = timer?.textContent?.trim() ?? null
       if (timerText) {
@@ -181,7 +177,7 @@ presence.on('UpdateData', async () => {
     }
     else { // Match Phase
       const mapImg = document.querySelector<HTMLImageElement>('img[class*="SelectedMapIcon"]')
-      const mapName = mapImg?.nextElementSibling?.textContent?.trim() ?? 'Unknown Map'
+      const mapName = mapImg?.nextElementSibling?.textContent?.trim() ?? strings.unknownMap
 
       const factionNames = document.querySelectorAll('[class*="FactionName"]')
       const header = factionNames[0]?.closest('[class*="styles__Container"]')
@@ -199,33 +195,46 @@ presence.on('UpdateData', async () => {
         const scoreDisplay = `[ ${sL} : ${sR} ]`
 
         const timerText = header.querySelector('[class*="MatchStateText"]')?.textContent?.trim() ?? null
+        const isFinished = t1.win || t2.win
 
         if (team) { // We are playing
+          presenceData.details = isFinished 
+            ? `${strings.matchResults} - ${mapName}` 
+            : `${strings.playing} on ${mapName}`
+
           // Live Match
           if (timerText && /\d{2}:\d{2}/.test(timerText)) {
             presenceData.name = 'Counter-Strike 2'
             presenceData.type = ActivityType.Competing
-            presenceData.details = `${strings.playing} on ${mapName}`
             presenceData.state = `${strings.competitive} ${scoreDisplay}`
             presenceData.startTimestamp = Math.floor(Date.now() / 1000) - getElapsedSeconds(timerText)
-          }
+          } 
+          // Warmup or Finished
           else {
-            const didIWin = (team === 1 && t1.win) || (team === 2 && t2.win)
-            const resultLabel = didIWin ? strings.won : strings.lost
-            presenceData.details = `${strings.matchroom} - ${mapName}`
+            let resultLabel = strings.inWarmup
+            if (isFinished) {
+              const didIWin = (team === 1 && t1.win) || (team === 2 && t2.win)
+              resultLabel = didIWin ? strings.won : strings.lost
+            }
+            
             presenceData.state = `${resultLabel} ${scoreDisplay}`
             delete presenceData.startTimestamp
           }
-        }
+        } 
         else { // We are not playing
-          // Live Match
-          if (timerText && /\d{2}:\d{2}/.test(timerText)) {
-            presenceData.details = `${strings.watching} - ${mapName}`
-            presenceData.state = `${strings.competitive} ${scoreDisplay}`
+          const isLive = !!(timerText && /\d{2}:\d{2}/.test(timerText))
+          
+          presenceData.details = isFinished 
+            ? `${strings.matchResults} - ${mapName}` 
+            : `${strings.watching} ${mapName}`
+
+          const resultLabel = isFinished ? strings.finished : strings.inWarmup
+          presenceData.state = isLive ? `${strings.competitive} ${scoreDisplay}` : `${resultLabel} ${scoreDisplay}`
+          
+          if (isLive) {
             presenceData.startTimestamp = Math.floor(Date.now() / 1000) - getElapsedSeconds(timerText)
-          }
-          else {
-            presenceData.details = `${strings.matchroom} - ${mapName}`
+          } else {
+            delete presenceData.startTimestamp
           }
         }
       }
