@@ -81,7 +81,7 @@ function getSelfUser(): { team: 1 | 2 | null, levelAsset: string | null, elo: nu
         let levelKey = 'unranked'
         const levelMatch = titleText.match(/\d+/)
         if (levelMatch) {
-           levelKey = levelMatch[0]
+          levelKey = levelMatch[0]
         }
 
         const eloElement = container?.querySelector('[class*="Subtitle__Holder"], [class*="LevelAndElo"], [class*="SkillLevel__Elo"]')
@@ -123,15 +123,20 @@ presence.on('UpdateData', async () => {
   if (showBrowsing) {
     if (pathname.startsWith('/parties')) {
       presenceData.details = strings.browsingParties
-    } else if (pathname.startsWith('/cs2/rank')) {
+    } 
+    else if (pathname.startsWith('/cs2/rank')) {
       presenceData.details = strings.browsingRank
-    } else if (pathname.startsWith('/track')) {
+    } 
+    else if (pathname.startsWith('/track')) {
       presenceData.details = strings.browsingTrack
-    } else if (pathname.startsWith('/social-feed')) {
+    } 
+    else if (pathname.startsWith('/social-feed')) {
       presenceData.details = strings.browsingFeed
-    } else if (pathname.startsWith('/clubs')) {
+    } 
+    else if (pathname.startsWith('/clubs')) {
       presenceData.details = strings.browsingClubs
-    } else if (pathname.startsWith('/players/')) {
+    } 
+    else if (pathname.startsWith('/players/')) {
       const username = pathname.split('/')[2]
       const gameAction = pathname.split('/')[4] ?? null
 
@@ -140,7 +145,8 @@ presence.on('UpdateData', async () => {
         details = `${strings.viewingMatchHistory} @${username}`
       }
       presenceData.details = details
-    } else if (pathname.startsWith('/club')) {
+    } 
+    else if (pathname.startsWith('/club')) {
       const name = document.querySelector('h6[class*="HeadingTruncated"]')?.textContent?.trim() ?? 'Unknown Club'
       presenceData.details = `${strings.viewingClub} @${name}`
       presenceData.buttons = [{ label: 'View Club', url: document.location.href }]
@@ -155,7 +161,8 @@ presence.on('UpdateData', async () => {
 
     if (modal) {
       presenceData.details = strings.matchFound
-    } else if (playArea) {
+    } 
+    else if (playArea) {
       const timer = Array.from(playArea.querySelectorAll('span')).find(s => /\d{2}:\d{2}/.test(s.textContent ?? ''))
       const timerText = timer?.textContent?.trim() ?? null
       if (timerText) {
@@ -163,8 +170,8 @@ presence.on('UpdateData', async () => {
         presenceData.startTimestamp = Math.floor(Date.now() / 1000) - getElapsedSeconds(timerText)
       }
     }
-
-  } else if (pathname.includes('/room/')) {
+  } 
+  else if (pathname.includes('/room/')) {
     const { team, levelAsset, elo } = getSelfUser()
     const vetoContainer = document.querySelector('[data-testid="matchroomVeto"]')
 
@@ -174,7 +181,8 @@ presence.on('UpdateData', async () => {
     // Veto Phase
     if (vetoContainer) {
       presenceData.details = team ? strings.vetoingMaps : strings.watchingVeto
-    } else {  // Match Phase
+    } 
+    else { // Match Phase
       const mapImg = document.querySelector('img[class*="SelectedMapIcon"]') as HTMLImageElement | null
       const mapName = mapImg?.nextElementSibling?.textContent?.trim() ?? 'Unknown Map'
 
@@ -185,10 +193,10 @@ presence.on('UpdateData', async () => {
       if (header && factions && factions.length >= 2) {
         const getFaction = (el: Element | undefined) => ({
           score: el?.querySelector('[class*="FactionScore"]')?.textContent?.trim() ?? '0',
-          win: el?.textContent?.includes('Winner') || !!el?.querySelector('[class*="MatchOutcomeBadge"]')
+          win: el?.textContent?.includes('Winner') || !!el?.querySelector('[class*="MatchOutcomeBadge"]'),
         })
 
-        const t1 = getFaction(factions[0]) 
+        const t1 = getFaction(factions[0])
         const t2 = getFaction(factions[1])
         const [sL, sR] = team === 2 ? [t2.score, t1.score] : [t1.score, t2.score]
         const scoreDisplay = `[ ${sL} : ${sR} ]`
@@ -203,20 +211,23 @@ presence.on('UpdateData', async () => {
             presenceData.details = `${strings.playing} on ${mapName}`
             presenceData.state = `${strings.competitive} ${scoreDisplay}`
             presenceData.startTimestamp = Math.floor(Date.now() / 1000) - getElapsedSeconds(timerText)
-          } else {
+          } 
+          else {
             const didIWin = (team === 1 && t1.win) || (team === 2 && t2.win)
             const resultLabel = didIWin ? strings.won : strings.lost
             presenceData.details = `${strings.matchroom} - ${mapName}`
             presenceData.state = `${resultLabel} ${scoreDisplay}`
             presenceData.startTimestamp = null
           }
-        } else { // We are not playing
+        } 
+        else { // We are not playing
           // Live Match
           if (timerText && /\d{2}:\d{2}/.test(timerText)) {
             presenceData.details = `${strings.watching} - ${mapName}`
             presenceData.state = `${strings.competitive} ${scoreDisplay}`
             presenceData.startTimestamp = Math.floor(Date.now() / 1000) - getElapsedSeconds(timerText)
-          } else {
+          } 
+          else {
             presenceData.details = `${strings.matchroom} - ${mapName}`
           }
         }
