@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '634124614544392193',
@@ -92,9 +92,9 @@ presence.on('UpdateData', async () => {
             .querySelector<HTMLDivElement>('.player__timing-wrap')
             ?.textContent
             ?.split('|') ?? []
-          const timestamps = presence.getTimestamps(
-            presence.timestampFromFormat(times[0] ?? ''),
-            presence.timestampFromFormat(times[1] ?? ''),
+          const timestamps = getTimestamps(
+            timestampFromFormat(times[0] ?? ''),
+            timestampFromFormat(times[1] ?? ''),
           )
 
           presenceData.details = document.querySelector<HTMLHeadingElement>('h1')?.textContent

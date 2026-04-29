@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '641394369651277834',
@@ -127,7 +127,7 @@ presence.on('UpdateData', async () => {
       }
 
       if (video && !Number.isNaN(video.duration)) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
           Math.floor(video.currentTime),
           Math.floor(video.duration),
         )
@@ -200,9 +200,9 @@ presence.on('UpdateData', async () => {
             )?.textContent
 
             if (currentTime && totalTime) {
-              [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-                presence.timestampFromFormat(currentTime),
-                presence.timestampFromFormat(totalTime),
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+                timestampFromFormat(currentTime),
+                timestampFromFormat(totalTime),
               )
             }
           }
@@ -239,9 +239,9 @@ presence.on('UpdateData', async () => {
           )?.textContent
 
           if (currentTime && totalTime) {
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-              presence.timestampFromFormat(currentTime),
-              presence.timestampFromFormat(totalTime),
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+              timestampFromFormat(currentTime),
+              timestampFromFormat(totalTime),
             )
           }
         }

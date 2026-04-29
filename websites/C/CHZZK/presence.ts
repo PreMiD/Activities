@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, getTimestampsFromMedia, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1232944311415603281',
@@ -89,7 +89,7 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageText = strings.live
             if (showElapsedTime) {
               presenceData.startTimestamp = Math.floor(Date.now() / 1000)
-                - presence.timestampFromFormat(
+                - timestampFromFormat(
                   document.querySelector('span[class^=video_information_count]')
                     ?.textContent ?? '',
                 )
@@ -99,7 +99,7 @@ presence.on('UpdateData', async () => {
           else {
             presenceData.smallImageKey = ChzzkAssets.Play
             presenceData.smallImageText = strings.play;
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video!)
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video!)
             presenceData.buttons = [{ url: href, label: strings.watchVideo }]
           }
 

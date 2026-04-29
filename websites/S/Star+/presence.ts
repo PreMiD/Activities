@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence: Presence = new Presence({
   clientId: '897325334200975360',
@@ -94,7 +94,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = video.paused
         ? (await strings).pause
         : (await strings).play;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
       // remove timestamps if video is paused or user disabled timestamps
       if (video.paused || !time) {

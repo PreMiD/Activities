@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '808762696023146578',
@@ -22,7 +22,7 @@ presence.on('UpdateData', async () => {
   else if (video && !Number.isNaN(video.duration)) {
     const title = document.querySelector('._1fHNK')?.textContent
     const uploader = document.querySelector('.js-user_link')?.textContent;
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
       Math.floor(video.currentTime),
       Math.floor(video.duration),
     )

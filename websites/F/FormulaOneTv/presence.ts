@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 interface VideoDetails {
   [contentId: string]: {
@@ -100,7 +100,7 @@ async function setWatchingVideoActivity(
       ?.querySelectorAll('.bmpui-ui-playbacktimelabel') ?? []
 
     if (videoMetadata?.duration && currentTime) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
         videoMetadata.duration,
         Number(currentTime?.textContent),
       )

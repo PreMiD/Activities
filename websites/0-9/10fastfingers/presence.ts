@@ -1,3 +1,5 @@
+import { getTimestamps, timestampFromFormat } from 'premid'
+
 const presence = new Presence({
   clientId: '895022531868774451',
 })
@@ -8,9 +10,9 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/0-9/10fastfingers/assets/logo.png',
     startTimestamp: browsingTimestamp,
   }
-  const [start, end] = presence.getTimestamps(
-    presence.timestampFromFormat('00:00'),
-    presence.timestampFromFormat('1:00'),
+  const [start, end] = getTimestamps(
+    timestampFromFormat('00:00'),
+    timestampFromFormat('1:00'),
   )
   if (document.location.pathname === '/') {
     presenceData.details = 'In home page'

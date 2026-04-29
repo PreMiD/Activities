@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '808756700022702120',
@@ -85,7 +85,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? strings.pause : strings.play
     presenceData.endTimestamp = Date.now() / 1000
-      + presence.timestampFromFormat(
+      + timestampFromFormat(
         document
           .querySelector('div.sXaGQzYs9WqImj2uxDCBs > span:nth-child(2)')!
           .textContent!

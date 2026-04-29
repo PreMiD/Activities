@@ -1,5 +1,5 @@
 import { compare } from 'compare-versions'
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 /*
  * The interfaces may have some things missing,
@@ -493,7 +493,7 @@ async function handleAudioPlayback(): Promise<void> {
       presenceData.smallImageText = 'Playing'
 
       if (showMediaTimestamp) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(audioElement)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(audioElement)
       }
       else {
         delete presenceData.endTimestamp
@@ -672,7 +672,7 @@ async function handleVideoPlayback(): Promise<void> {
       presenceData.smallImageText = 'Playing'
 
       if (showMediaTimestamp) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(videoPlayerElem)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(videoPlayerElem)
       }
       else {
         delete presenceData.endTimestamp

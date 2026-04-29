@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1247668968395903030',
@@ -79,7 +79,7 @@ presence.on('UpdateData', async () => {
               : Assets.Play
             presenceData.smallImageText = audio.paused ? 'Paused' : 'Playing'
             if (!audio.paused) {
-              [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(audio)
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(audio)
             }
           }
           else {

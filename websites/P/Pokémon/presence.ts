@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '684885381728043048',
@@ -414,7 +414,7 @@ presence.on('UpdateData', async () => {
               presenceData.smallImageText = video.paused
                 ? (await strings).pause
                 : (await strings).play;
-              [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
               const title = document
                 .querySelector('.header-bar-small > span:nth-child(4)')

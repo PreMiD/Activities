@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '839150832036872213',
@@ -1084,7 +1084,7 @@ presence.on('UpdateData', async () => {
                 )?.textContent
 
                 if (vid) {
-                  [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(vid.currentTime, vid.duration)
+                  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(vid.currentTime, vid.duration)
 
                   if (!vid.paused) {
                     presenceData.smallImageKey = Assets.Play

@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 /*
  * The interfaces may have some things missing,
  * I've tried to set as many properties as I could find.
@@ -631,7 +631,7 @@ async function setPresenceByMediaId(mediaId: string): Promise<void> {
 
       // TODO: worth setting timestamps on remote playback? Requires WS connection
       if (mediaElement && (await presence.getSetting('showMediaTimestamps'))) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(mediaElement)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(mediaElement)
       }
     }
   }

@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '835652520637890620',
@@ -56,7 +56,7 @@ presence.on('UpdateData', async () => {
     ]
   }
   else if (pathname.startsWith('/episode')) {
-    const elapsedTime = presence.timestampFromFormat(
+    const elapsedTime = timestampFromFormat(
       document.querySelector('#elapsedTime')?.textContent ?? '',
     )
 
@@ -71,9 +71,9 @@ presence.on('UpdateData', async () => {
         ?.classList
         .contains('fa-play-circle')
     ) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
         elapsedTime,
-        presence.timestampFromFormat(
+        timestampFromFormat(
           document.querySelector('#remainingTime')?.textContent?.substr(1) ?? '',
         ) + elapsedTime,
       )

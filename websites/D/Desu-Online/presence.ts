@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '580032576434077707',
@@ -169,7 +169,7 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = document
           .querySelector('img.ts-post-image')
           ?.getAttribute('src');
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.current, video.duration)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.current, video.duration)
 
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = 'Odtwarzanie'

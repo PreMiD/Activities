@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, getTimestampsFromMedia, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1325035374430519392',
@@ -64,7 +64,7 @@ presence.on('UpdateData', async () => {
 
       if (showElapsedTime) {
         presenceData.startTimestamp = Math.floor(Date.now() / 1000)
-          - presence.timestampFromFormat(
+          - timestampFromFormat(
             document.querySelector('span#time')?.textContent ?? '',
           )
       }
@@ -98,7 +98,7 @@ presence.on('UpdateData', async () => {
 
         presenceData.buttons = [{ url: href, label: strings.watchVideo }];
 
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
         if (video.paused) {
           delete presenceData.startTimestamp

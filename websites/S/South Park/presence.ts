@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '819942708604174376',
@@ -34,7 +34,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = video.paused || Number.isNaN(video.duration) ? Assets.Pause : Assets.Play
       presenceData.smallImageText = video.paused || Number.isNaN(video.duration) ? 'Paused' : 'Playing';
 
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
       presenceData.buttons = [
         {
@@ -71,7 +71,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = video.paused ? 'Paused' : 'Playing';
 
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
       presenceData.buttons = [
         {

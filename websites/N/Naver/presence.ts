@@ -1,3 +1,5 @@
+import { getTimestampsFromMedia } from 'premid'
+
 const presence = new Presence({
   clientId: '825307070584586250',
 })
@@ -92,7 +94,7 @@ presence.on('UpdateData', async () => {
             '[data-role="videoEl"]',
           )!
           presenceData.details = 'Currently watching an ad';
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
           presenceData.smallImageKey = MainAssets.Play
           presenceData.smallImageText = 'Playing'
 
@@ -114,7 +116,7 @@ presence.on('UpdateData', async () => {
             ?.textContent
             ?.trim();
 
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
           presenceData.smallImageKey = MainAssets.Play
           presenceData.smallImageText = 'Playing'
 

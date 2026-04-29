@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '715116675346989096',
@@ -26,11 +26,11 @@ presence.on('UpdateData', async () => {
     )!
     const title = currentSong.children[0]?.textContent
     const author = currentSong.children[1]?.textContent
-    const timestamps = presence.getTimestamps(
-      presence.timestampFromFormat(
+    const timestamps = getTimestamps(
+      timestampFromFormat(
         document.querySelector('#currentTime')?.textContent ?? '',
       ),
-      presence.timestampFromFormat(
+      timestampFromFormat(
         document.querySelector('#currentTime')?.nextSibling?.textContent ?? '',
       ),
     )

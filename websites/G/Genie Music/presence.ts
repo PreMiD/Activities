@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '857504938443407360',
@@ -57,11 +57,11 @@ presence.on('UpdateData', async () => {
     case '/player/fPlayer': {
       const playBar = document.querySelector('div.fp-ui')!
       const playButton = playBar.querySelector('a.fp-playbtn')?.textContent;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-        presence.timestampFromFormat(
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+        timestampFromFormat(
           playBar.querySelector('span.fp-elapsed')!.textContent!,
         ),
-        presence.timestampFromFormat(
+        timestampFromFormat(
           playBar.querySelector('span.fp-duration')!.textContent!,
         ),
       )
@@ -89,7 +89,7 @@ presence.on('UpdateData', async () => {
         .querySelector('div.fp-player')!
         .querySelector<HTMLVideoElement>('video.fp-engine')!;
 
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
       presenceData.details = `${
         document.querySelector('h2.videoTitle')?.textContent
       }`

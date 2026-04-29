@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 class Emanate extends Presence {
   constructor(options: PresenceOptions) {
@@ -26,13 +26,13 @@ class Emanate extends Presence {
         ?.textContent
         ?.replace(' _ ', ''),
       title: document.querySelector('span.title')?.textContent,
-      duration: this.timestampFromFormat(
+      duration: timestampFromFormat(
         document
           .querySelector('div.position-duration')
           ?.textContent
           ?.split(' / ')[1] ?? '',
       ),
-      currentTime: this.timestampFromFormat(
+      currentTime: timestampFromFormat(
         document
           .querySelector('div.position-duration')
           ?.textContent
@@ -100,7 +100,7 @@ emanate.on('UpdateData', async () => {
         ?.replace('%title%', songData?.title ?? '')
         ?.replace('%author%', songData?.author ?? '');
 
-      [presenceData.startTimestamp, presenceData.endTimestamp] = emanate.getTimestamps(songData?.currentTime ?? 0, songData?.duration ?? 0)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(songData?.currentTime ?? 0, songData?.duration ?? 0)
 
       presenceData.smallImageKey = songData?.paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = songData?.paused ? 'Paused' : 'Playing'

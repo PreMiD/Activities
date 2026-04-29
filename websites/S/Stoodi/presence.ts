@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1043638037042712637',
@@ -58,7 +58,7 @@ presence.on('UpdateData', async () => {
 
         delete presenceData.startTimestamp
         if (!player.paused) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(player)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(player)
         }
       }
     }

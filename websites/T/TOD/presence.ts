@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const { href } = document.location
 
@@ -93,7 +93,7 @@ presence.on('UpdateData', async () => {
         if (presence.isWatching()) {
           const video = presence.getVideo()!;
 
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
           if (presence.isTrailer()) {
             presenceData.details = 'Watching a trailer'
@@ -163,7 +163,7 @@ presence.on('UpdateData', async () => {
               : Assets.Live
           }
           else {
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
             presenceData.smallImageText = video.paused ? 'Paused' : 'Playing'
             presenceData.smallImageKey = video.paused
@@ -203,7 +203,7 @@ presence.on('UpdateData', async () => {
       setPresenceData() {
         if (presence.isWatching()) {
           const video = presence.getVideo()!;
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
           presenceData.details = presence.getTitle()
           presenceData.state = 'Match'

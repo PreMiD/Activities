@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeOnsen/assets/logo.png',
@@ -46,7 +46,7 @@ function updateData() {
       time: {
         progress,
         duration,
-        snowflake: presence.getTimestamps(progress, duration),
+        snowflake: getTimestamps(progress, duration),
       },
       title: qs('span.ao-player-metadata-title')?.textContent ?? '',
       episode: Number(
