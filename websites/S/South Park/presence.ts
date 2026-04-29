@@ -12,7 +12,7 @@ presence.on('UpdateData', async () => {
   const path = document.location.pathname
   const showButtons = await presence.getSetting<boolean>('buttons')
 
-  SouthParkData ??= await presence.getPageletiable<Data>('__DATA__')
+  SouthParkData ??= (await presence.getPageVariable<{ __DATA__: Data }>('__DATA__')).__DATA__
   const data = SouthParkData.children[0]!.handleTVEAuthRedirection
 
   let presenceData: PresenceData = {

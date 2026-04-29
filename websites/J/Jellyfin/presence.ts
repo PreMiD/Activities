@@ -660,7 +660,7 @@ async function loggedIn(): Promise<void> {
 
   do {
     await sleep(125)
-    newApiClient = await presence.getPageletiable<ApiClient>('ApiClient')
+    newApiClient = (await presence.getPageVariable<{ ApiClient: ApiClient }>('ApiClient')).ApiClient
   } while (!apiClient._serverInfo.AccessToken)
 
   apiClient = newApiClient
