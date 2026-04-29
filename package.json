@@ -23,7 +23,7 @@
     "eslint-plugin-json-schema-validator": "^6.0.3",
     "pmd": "file:cli",
     "premid": "file:premid",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.0",
     "vitest": "^4.0.18"
   }
 }

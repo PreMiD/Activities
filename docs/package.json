@@ -12,6 +12,6 @@
     "vitepress": "^1.6.4",
     "markdown-it": "^14.1.1",
     "@types/node": "^25.2.3",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.0"
   }
 }
