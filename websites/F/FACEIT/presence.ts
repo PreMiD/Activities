@@ -8,18 +8,18 @@ const presence = new Presence({
 enum ActivityAssets {
     FaceIt = 'https://i.imgur.com/n5ielUx.png',
     CounterStrike = 'https://i.imgur.com/DKS55vg.png',
-    LevelUnranked = 'https://i.imgur.com/9SgqYFm.png', // Have to find this one yet
-    LevelOne = 'https://i.imgur.com/6rN5cuh.png',
-    LevelTwo = 'https://i.imgur.com/vENOEdq.png',
-    LevelThree = 'https://i.imgur.com/8kluHJ0.png',
-    LevelFour = 'https://i.imgur.com/IERNixS.png',
-    LevelFive = 'https://i.imgur.com/Xy95TsF.png',
-    LevelSix = 'https://i.imgur.com/bJtZMTZ.png',
-    LevelSeven = 'https://i.imgur.com/GNacaVX.png',
-    LevelEight = 'https://i.imgur.com/wurmgAc.png',
-    LevelNine = 'https://i.imgur.com/aBZIzCx.png',
-    LevelTen = 'https://i.imgur.com/qx8irJg.png',
-    LevelEleven = 'https://i.imgur.com/s7nR1iZ.png'
+    LevelUnranked = 'https://i.imgur.com/SbC23rK.jpeg', // Have to find this one yet
+    LevelOne = 'https://i.imgur.com/1YNbcYo.jpeg',
+    LevelTwo = 'https://i.imgur.com/3HZsPEd.jpeg',
+    LevelThree = 'https://i.imgur.com/ywFpaEq.jpeg',
+    LevelFour = 'https://i.imgur.com/yyfIjLa.jpeg',
+    LevelFive = 'https://i.imgur.com/rF0Pfyz.jpeg',
+    LevelSix = 'https://i.imgur.com/p7Nrv7o.jpeg',
+    LevelSeven = 'https://i.imgur.com/ZiAAqWh.jpeg',
+    LevelEight = 'https://i.imgur.com/ZjFZ9ME.jpeg',
+    LevelNine = 'https://i.imgur.com/s9AtaVp.jpeg',
+    LevelTen = 'https://i.imgur.com/iClJnOT.jpeg',
+    LevelEleven = 'https://i.imgur.com/poEjdMY.jpeg'
 }
 
 const getLevelAsset = (level: string): string | null => {
