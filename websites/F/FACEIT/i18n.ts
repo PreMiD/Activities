@@ -1,0 +1,31 @@
+export type Strings = typeof stringMap
+
+export const stringMap = {
+  playing: 'general.playing',
+  watching: 'general.watching',
+
+  browsingHome: 'faceit.browsingHome',
+  browsingParties: 'faceit.parties',
+  browsingTrack: 'faceit.track',
+  browsingRank: 'faceit.rank',
+  browsingFeed: 'faceit.feed',
+  browsingClubs: 'faceit.clubs',
+  viewingClub: 'faceit.club',
+  viewingProfile: 'faceit.profile',
+  viewingMatchHistory: 'faceit.matchhistory',
+  inLobby: 'faceit.inlobby',
+  inQueue: 'faceit.queuing',
+  matchFound: 'faceit.matchfound',
+  vetoingMaps: 'faceit.vetoing',
+  watchingVeto: 'faceit.watchingVeto',
+  inWarmup: 'faceit.warmup',
+  competitive: 'faceit.competitive',
+  elo: 'faceit.elo',
+  unranked: 'faceit.unranked',
+  won: 'faceit.won',
+  lost: 'faceit.lost',
+  finished: 'faceit.finished',
+  unknownMap: 'faceit.unknownMap',
+  matchResults: 'faceit.matchResults',
+  matchroom: 'faceit.matchroom',
+}
