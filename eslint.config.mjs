@@ -6,13 +6,18 @@ export default antfu(
     formatters: true,
     typescript: true,
   },
-  ...eslintPluginJsonSchemaValidator.configs['flat/recommended'],
+  ...eslintPluginJsonSchemaValidator.configs.base,
   {
     rules: {
       'new-cap': [
         'error',
         { newIsCapExceptions: ['iFrame'], capIsNew: false, newIsCap: true, properties: true },
       ],
+    },
+  },
+  {
+    files: ['**/*.json', '**/*.json5', '**/*.jsonc'],
+    rules: {
       'jsonc/sort-keys': [
         'error',
         {
@@ -53,6 +58,18 @@ export default antfu(
           order: { type: 'asc' },
         },
       ],
+    },
+  },
+  {
+    files: [
+      '**/*.json',
+      '**/*.json5',
+      '**/*.jsonc',
+      '**/*.yaml',
+      '**/*.yml',
+      '**/*.toml',
+    ],
+    rules: {
       'json-schema-validator/no-invalid': 'error',
     },
   },
