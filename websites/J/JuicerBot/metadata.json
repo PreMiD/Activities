@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "339349860350164992",
+    "name": "ammoknoxx"
+  },
+  "service": "JuicerBot",
+  "description": {
+    "en": "Official Rich Presence for JuicerBot.de",
+    "de": "Offizielle Rich Presence für JuicerBot.de"
+  },
+  "url": "juicerbot.de",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*juicerbot[.]de[/]",
+  "version": "1.0.0",
+  "logo": "https://cdn.discordapp.com/avatars/1459583460858531952/da166fa0d60fe899244a4765071e0eb4.png?size=512",
+  "thumbnail": "https://cdn.discordapp.com/avatars/1459583460858531952/da166fa0d60fe899244a4765071e0eb4.png?size=512",
+  "color": "#fbbf24",
+  "category": "gaming",
+  "tags": [
+    "juicer",
+    "casino",
+    "tracker"
+  ]
+}
