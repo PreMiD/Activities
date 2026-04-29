@@ -149,7 +149,5 @@ presence.on('UpdateData', async () => {
       smallImageText,
       startTimestamp,
       endTimestamp,
-    },
-    playing,
-  )
+    })
 })

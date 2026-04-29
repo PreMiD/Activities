@@ -87,5 +87,5 @@ presence.on('UpdateData', async () => {
 
   // Update the presence with all the values from the presenceData object
   // Set second parameter to true since we provide timestamps according to PreMiD documentation
-  presence.setActivity(presenceData, presenceData.details === 'Playing')
+  presence.setActivity(presenceData)
 })

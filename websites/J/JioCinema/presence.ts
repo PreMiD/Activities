@@ -58,5 +58,5 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Browsing'
   }
 
-  presence.setActivity(presenceData, true)
+  presence.setActivity(presenceData)
 })

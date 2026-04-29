@@ -202,5 +202,5 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Contacting Support'
     presenceData.startTimestamp = Math.floor(Date.now() / 1000)
   }
-  presence.setActivity(presenceData, true)
+  presence.setActivity(presenceData)
 })

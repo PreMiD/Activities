@@ -51,7 +51,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (title && author)
-      presence.setActivity(presenceData, !paused)
+      presence.setActivity(presenceData)
   }
   else {
     presence.clearActivity()

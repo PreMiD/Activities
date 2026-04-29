@@ -213,5 +213,5 @@ presence.on('UpdateData', async () => {
   if (showTimestamp && route.endTimestamp)
     presenceData.endTimestamp = route.endTimestamp()
 
-  presence.setActivity(presenceData, route.playback ? route.playback() : false)
+  presence.setActivity(presenceData)
 })

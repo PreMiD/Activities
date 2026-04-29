@@ -74,7 +74,7 @@ presence.on('UpdateData', async () => {
       if (channel && channel.getAttribute('alt'))
         presenceData.state += ` on ${channel.getAttribute('alt')}`
 
-      presence.setActivity(presenceData, !video.paused)
+      presence.setActivity(presenceData)
     }
   }
   else {

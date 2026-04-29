@@ -129,7 +129,7 @@ presence.on('UpdateData', async () => {
       }
 
       if (title)
-        presence.setActivity(presenceData, !video.paused)
+        presence.setActivity(presenceData)
     }
 
     // Star+ Livestreams
@@ -170,7 +170,7 @@ presence.on('UpdateData', async () => {
         ]
       }
       if (title)
-        presence.setActivity(presenceData, !video.paused)
+        presence.setActivity(presenceData)
     }
 
     // GroupWatch lobby
@@ -218,7 +218,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (title)
-      presence.setActivity(presenceData, false)
+      presence.setActivity(presenceData)
 
     // Browsing
   }

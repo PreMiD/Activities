@@ -52,7 +52,7 @@ presence.on('UpdateData', async () => {
       delete presenceData.endTimestamp
     }
 
-    presence.setActivity(presenceData, !video.paused)
+    presence.setActivity(presenceData)
   }
   else if (location.pathname.startsWith('/search')) {
     presenceData.smallImageKey = Assets.Search

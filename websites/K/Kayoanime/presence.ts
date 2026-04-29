@@ -104,5 +104,5 @@ presence.on('UpdateData', async () => {
       .getNamedItem('value')
       ?.value
   }
-  return presence.setActivity(presenceData, true)
+  return presence.setActivity(presenceData)
 })

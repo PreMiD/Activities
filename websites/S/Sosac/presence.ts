@@ -74,7 +74,7 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [
       { label: 'Watch on Sosac', url: document.location.href },
     ]
-    presence.setActivity(presenceData, !video.paused)
+    presence.setActivity(presenceData)
   }
   else {
     presenceData.details = strs.browsing

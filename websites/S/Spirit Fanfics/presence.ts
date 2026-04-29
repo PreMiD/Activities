@@ -123,5 +123,5 @@ presence.on('UpdateData', async () => {
     presenceData.state = nav
   }
 
-  presence.setActivity(presenceData, true)
+  presence.setActivity(presenceData)
 })

@@ -51,7 +51,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (title && game)
-      presence.setActivity(presenceData, !video.paused)
+      presence.setActivity(presenceData)
   }
   else {
     presence.setActivity({

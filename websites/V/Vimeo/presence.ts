@@ -40,7 +40,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (title && uploader)
-      presence.setActivity(presenceData, !video.paused)
+      presence.setActivity(presenceData)
   }
   else {
     presenceData.details = 'Browsing...'

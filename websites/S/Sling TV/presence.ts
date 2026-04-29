@@ -78,5 +78,5 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  presence.setActivity(presenceData, video ? !video.paused : true)
+  presence.setActivity(presenceData)
 })
