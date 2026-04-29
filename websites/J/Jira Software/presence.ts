@@ -156,7 +156,7 @@ presence.on('UpdateData', async () => {
             presenceData.details = 'Tracking global Issues:'
             presenceData.state = issuesSection[
               Number.parseInt(
-                document.location.search.split('=', 2).pop()?.substr(0, 2) ?? '',
+                document.location.search.split('=', 2).pop()?.slice(0, 2) ?? '',
               )
             ] || 'Searching for an issue.'
 

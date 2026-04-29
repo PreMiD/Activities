@@ -12,7 +12,7 @@ presence.on('UpdateData', async () => {
   }
   const { pathname, search } = document.location
 
-  if (pathname === '/' && search.substr(0, 2) === '?q') {
+  if (pathname === '/' && search.slice(0, 2) === '?q') {
     presenceData.details = 'Searching:'
     presenceData.state = document.querySelector('.caption')?.textContent
     presenceData.smallImageKey = Assets.Search
@@ -74,7 +74,7 @@ presence.on('UpdateData', async () => {
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
         elapsedTime,
         timestampFromFormat(
-          document.querySelector('#remainingTime')?.textContent?.substr(1) ?? '',
+          document.querySelector('#remainingTime')?.textContent?.slice(1) ?? '',
         ) + elapsedTime,
       )
       presenceData.smallImageKey = Assets.Play

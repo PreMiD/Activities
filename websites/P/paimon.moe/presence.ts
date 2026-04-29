@@ -69,7 +69,7 @@ presence.on('UpdateData', async () => {
     if (validCharacter) {
       const original = document.URL.match(/(\/\w+)/g)
         ?.pop()
-        ?.substr(1)
+        ?.slice(1)
       switch (original) {
         case 'traveler_anemo': {
           stateText = 'Anemo Traveler'

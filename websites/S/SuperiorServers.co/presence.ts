@@ -210,7 +210,7 @@ presence.on('UpdateData', async () => {
       let steamID32
       const steamID64 = BigInt(
         document.location.pathname
-          .substr(document.location.pathname.indexOf('/', 2))
+          .slice(document.location.pathname.indexOf('/', 2))
           .replace('/', '')
           .replace('/', ''),
       )

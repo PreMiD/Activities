@@ -14,8 +14,8 @@ function getQuery() {
 }
 
 function getGenre(code: string) {
-  const firstCode = code.substr(0, 1)
-  const endCode = code.substr(1)
+  const firstCode = code.slice(0, 1)
+  const endCode = code.slice(1)
   if (firstCode === 'E')
     return 'EDM'
   else if (firstCode === 'L' && endCode === '0107')

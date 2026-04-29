@@ -31,7 +31,7 @@ presence.on('UpdateData', () => {
       e => e.textContent,
     )
     const maxEp = getByXpath('//*[@id=\'wContainer\']//*[@class=\'wEp\']', e =>
-      e.nextSibling?.textContent?.substr(1)?.trim() ?? '')
+      e.nextSibling?.textContent?.slice(1)?.trim() ?? '')
     const lang = getByXpath(
       '//*[@id=\'wContainer\']//*[@class=\'wLanguage\']',
       e => e.textContent,
