@@ -198,8 +198,8 @@ presence.on('UpdateData', async () => {
         const isFinished = t1.win || t2.win
 
         if (team) { // We are playing
-          presenceData.details = isFinished 
-            ? `${strings.matchResults} - ${mapName}` 
+          presenceData.details = isFinished
+            ? `${strings.matchResults} - ${mapName}`
             : `${strings.playing} on ${mapName}`
 
           // Live Match
@@ -208,7 +208,7 @@ presence.on('UpdateData', async () => {
             presenceData.type = ActivityType.Competing
             presenceData.state = `${strings.competitive} ${scoreDisplay}`
             presenceData.startTimestamp = Math.floor(Date.now() / 1000) - getElapsedSeconds(timerText)
-          } 
+          }
           // Warmup or Finished
           else {
             let resultLabel = strings.inWarmup
@@ -216,24 +216,25 @@ presence.on('UpdateData', async () => {
               const didIWin = (team === 1 && t1.win) || (team === 2 && t2.win)
               resultLabel = didIWin ? strings.won : strings.lost
             }
-            
+
             presenceData.state = `${resultLabel} ${scoreDisplay}`
             delete presenceData.startTimestamp
           }
-        } 
+        }
         else { // We are not playing
           const isLive = !!(timerText && /\d{2}:\d{2}/.test(timerText))
-          
-          presenceData.details = isFinished 
-            ? `${strings.matchResults} - ${mapName}` 
+
+          presenceData.details = isFinished
+            ? `${strings.matchResults} - ${mapName}`
             : `${strings.watching} ${mapName}`
 
           const resultLabel = isFinished ? strings.finished : strings.inWarmup
           presenceData.state = isLive ? `${strings.competitive} ${scoreDisplay}` : `${resultLabel} ${scoreDisplay}`
-          
+
           if (isLive) {
             presenceData.startTimestamp = Math.floor(Date.now() / 1000) - getElapsedSeconds(timerText)
-          } else {
+          }
+          else {
             delete presenceData.startTimestamp
           }
         }
