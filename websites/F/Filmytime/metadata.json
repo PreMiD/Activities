@@ -12,14 +12,14 @@
     "es": "Películas, series, anime, deportes y TV en vivo en un solo lugar, interfaz limpia y streaming rápido sin el desorden habitual.",
     "fr": "Films, séries, anime, sports et TV en direct en un seul endroit, interface propre et streaming rapide.",
     "de": "Filme, Serien, Anime, Sport und Live-TV an einem Ort, saubere Benutzeroberfläche und schnelles Streaming.",
-    "pt_BR": "Filmes, séries, anime, esportes e TV ao vivo em um só lugar, interface limpa e streaming rápido.",
+    "pt-BR": "Filmes, séries, anime, esportes e TV ao vivo em um só lugar, interface limpa e streaming rápido.",
     "ru": "Фильмы, сериалы, аниме, спорт и прямой эфир в одном месте, чистый интерфейс и быстрая трансляция.",
     "ja": "映画、番組、アニメ、スポーツ、ライブTVを一箇所で。クリーンなUIと高速ストリーミング。",
     "ko": "영화, 쇼, 애니메이션, 스포츠, 라이브 TV를 한 곳에서. 깔끔한 UI와 빠른 스트리밍。",
-    "zh_CN": "电影、节目、动漫、体育和直播电视集于一处，界面简洁，快速流媒体播放。"
+    "zh-CN": "电影、节目、动漫、体育和直播电视集于一处，界面简洁，快速流媒体播放。"
   },
-  "url": ["filmytime.site", "www.filmytime.site", "filmytime.top", "www.filmytime.top", "fimytime.site", "www.fimytime.site"],
-  "regExp": "(filmytime\\.(site|top)|fimytime\\.site)",
+  "url": ["filmytime.site", "www.filmytime.site", "filmytime.top", "www.filmytime.top"],
+  "regExp": "filmytime\\.(site|top)",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/rGgYRY6.png",
   "thumbnail": "https://i.imgur.com/gIrfCmY.png",
