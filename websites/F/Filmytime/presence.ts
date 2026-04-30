@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: "1499195388081475604"
 });
 
-const LOGO = "https://i.imgur.com/rGgYRY6.png";
+const LOGO = "https://i.imgur.com/tew3bhe.png";
 const BASE_URL = "https://filmytime.site";
 
 presence.on("UpdateData", async () => {
