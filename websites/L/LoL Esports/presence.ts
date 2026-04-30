@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '767140375785111562',
@@ -58,7 +58,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = 'Looking at past matches'
   }
   else if (path.includes('/vod/')) {
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(Math.floor(currentTime), Math.floor(duration))
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     if (paused) {
       delete presenceData.startTimestamp

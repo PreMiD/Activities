@@ -11,7 +11,7 @@ presence.on('UpdateData', async () => {
   }
   else if (document.location.pathname.startsWith('/search')) {
     presenceData.details = 'Searching...'
-    presenceData.state = document.location.search.substr(3)
+    presenceData.state = document.location.search.slice(3)
   }
   else if (document.location.pathname.startsWith('/package/')) {
     presenceData.details = 'Viewing a package'
@@ -30,7 +30,7 @@ presence.on('UpdateData', async () => {
   }
   else if (document.location.pathname.startsWith('/~')) {
     presenceData.details = 'Viewing a profile...'
-    presenceData.state = document.location.pathname.substr(3)
+    presenceData.state = document.location.pathname.slice(3)
   }
   presence.setActivity(presenceData)
 })

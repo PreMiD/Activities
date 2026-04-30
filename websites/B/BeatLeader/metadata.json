@@ -15,8 +15,8 @@
     "replay.beatleader.com",
     "royale.beatleader.com"
   ],
-  "regExp": "^https?[:][/][/]beatleader\\.(?:xyz|com|net)",
-  "version": "1.13.0",
+  "regExp": "^https?[:][/][/]beatleader[.](xyz|com|net)[/]",
+  "version": "1.13.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BeatLeader/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BeatLeader/assets/thumbnail.png",
   "color": "#c81c9f",
@@ -30,7 +30,7 @@
     "vr"
   ],
   "iframe": true,
-  "iFrameRegExp": "https:\\/\\/replay\\.beatleader\\.(?:xyz|com|net)",
+  "iFrameRegExp": "^https?[:][/][/]replay[.]beatleader[.](xyz|com|net)",
   "settings": [
     {
       "id": "logo",

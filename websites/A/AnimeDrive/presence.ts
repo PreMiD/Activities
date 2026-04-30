@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1211027222815711282',
@@ -99,7 +99,7 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageText = videoData.paused ? 'Szünet' : 'Néz'
 
           if (!videoData.paused) {
-            const [startTimestamp, endTimestamp] = presence.getTimestamps(
+            const [startTimestamp, endTimestamp] = getTimestamps(
               videoData.currentTime,
               videoData.duration,
             );

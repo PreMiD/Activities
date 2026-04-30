@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '861594094623129691',
@@ -41,9 +41,9 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageText = 'Listening'
       }
       if (currentTime?.textContent && duration?.textContent) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-          presence.timestampFromFormat(currentTime.textContent),
-          presence.timestampFromFormat(duration.textContent),
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+          timestampFromFormat(currentTime.textContent),
+          timestampFromFormat(duration.textContent),
         )
       }
     }

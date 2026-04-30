@@ -10,8 +10,8 @@
     "en": "Watch as much as you want on YOUKU! Here you will find a wide variety of TV shows, movies, anime, and more with subtitles in your preferred language. Enjoy!"
   },
   "url": "www.youku.tv",
-  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*youku[.]tv[/]",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*youku[.]tv[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Youku/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Youku/assets/thumbnail.png",
   "color": "#2fb3ff",

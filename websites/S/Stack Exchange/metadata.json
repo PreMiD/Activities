@@ -14,8 +14,8 @@
     "serverfault.com",
     "superuser.com"
   ],
-  "regExp": "^https?[:][/][/](.*\\.)*(stackexchange\\.com|superuser\\.com|serverfault\\.com)",
-  "version": "1.2.0",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(stackexchange[.]com|superuser[.]com|serverfault[.]com)[/]",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stack%20Exchange/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stack%20Exchange/assets/thumbnail.png",
   "color": "#1E5397",

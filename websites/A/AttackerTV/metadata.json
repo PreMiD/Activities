@@ -12,7 +12,7 @@
   },
   "url": "attackertv.so",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*attackertv[.]so[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AttackerTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AttackerTV/assets/thumbnail.png",
   "color": "#000000",
@@ -21,5 +21,5 @@
     "movies"
   ],
   "iframe": true,
-  "iFrameRegExp": "(.*\\.)?videostr\\.net"
+  "iFrameRegExp": "([a-z0-9-]+[.])*videostr[.]net"
 }

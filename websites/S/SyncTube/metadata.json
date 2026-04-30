@@ -12,7 +12,7 @@
   },
   "url": "sync-tube.de",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sync-tube[.]de[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SyncTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SyncTube/assets/thumbnail.png",
   "color": "#381010",

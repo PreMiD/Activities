@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '928134371205083166',
@@ -72,7 +72,7 @@ presence.on('UpdateData', async () => {
           data.largeImageKey = await getShortURL(coverUrl)
 
         if (!video.paused) {
-          [data.startTimestamp, data.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [data.startTimestamp, data.endTimestamp] = getTimestampsFromMedia(video)
         }
 
         data.buttons = [

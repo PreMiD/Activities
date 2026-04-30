@@ -10,7 +10,7 @@ presence.on('UpdateData', async () => {
   }
   const path = document.location.pathname
 
-  if (document.location.hostname.match(/[a-z0-9]+\.atlassian\.net/)) {
+  if (/[a-z0-9]+\.atlassian\.net/.test(document.location.hostname)) {
     // If user is not creating a new issue.
     if (document.title !== 'Create issue - Jira') {
       // Projects homepage section.
@@ -25,7 +25,7 @@ presence.on('UpdateData', async () => {
           .shift()
 
         // Project Board section.
-        if (path.match(/\/[a-zA-Z0-9]+\/boards\/\d$/)) {
+        if (/\/[a-zA-Z0-9]+\/boards\/\d$/.test(path)) {
           presenceData.details = `Viewing ${
             document.querySelector(
               '#jira-frontend > #helpPanelContainer > div:first-child > div > div[data-testid="Content"] > div:first-child > div:first-child > div:first-child > div > div:nth-child(2) > div:first-child > div:first-child > div > h1',
@@ -156,7 +156,7 @@ presence.on('UpdateData', async () => {
             presenceData.details = 'Tracking global Issues:'
             presenceData.state = issuesSection[
               Number.parseInt(
-                document.location.search.split('=', 2).pop()?.substr(0, 2) ?? '',
+                document.location.search.split('=', 2).pop()?.slice(0, 2) ?? '',
               )
             ] || 'Searching for an issue.'
 
@@ -190,14 +190,14 @@ presence.on('UpdateData', async () => {
             break
           }
           default:
-            if (path.match(/\/jira\/people\/[a-z0-9]+$/)) {
+            if (/\/jira\/people\/[a-z0-9]+$/.test(path)) {
               // User profile page section.
               presenceData.details = 'Viewing a User:'
               presenceData.state = document.querySelector(
                 '#jira-frontend > #helpPanelContainer > div > div > div[data-testid="Content"] > div:first-child > div > div > div > div > div:nth-child(2) > aside > div:first-child > div > div:nth-child(2) > h2',
               )?.textContent
             }
-            else if (path.match(/\/jira\/people\/team\/[a-z0-9-]+$/)) {
+            else if (/\/jira\/people\/team\/[a-z0-9-]+$/.test(path)) {
               // Team profile page section.
               presenceData.details = 'Viewing a Team:'
               presenceData.state = document.querySelector(

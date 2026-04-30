@@ -116,7 +116,7 @@ presence.on('UpdateData', async () => {
       page = `User: ${page[2]}`
     else page = 'IP User'
   }
-  else if (validateMembershipUrl.exec(path)) {
+  else if (validateMembershipUrl.test(path)) {
     page = validateMembershipUrl.exec(path)
     /* View Membership */
     presenceData.details = 'Member Page'

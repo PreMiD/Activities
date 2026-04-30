@@ -55,7 +55,7 @@ presence.on('UpdateData', async () => {
     if (showUsername)
       presenceData.state = getUsername()
   }
-  else if (urlData[0] && Object.prototype.hasOwnProperty.call(singlePageTitles, urlData[0])) {
+  else if (urlData[0] && Object.hasOwn(singlePageTitles, urlData[0])) {
     presenceData.details = singlePageTitles[urlData[0]]
   }
   else if (urlData[0] === 'duels') {

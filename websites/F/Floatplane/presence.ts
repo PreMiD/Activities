@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '889918462477095012',
@@ -232,7 +232,7 @@ presence.on('UpdateData', async () => {
                     ) as HTMLLinkElement
                   )?.href.toLowerCase()?.split('/').slice(-1)[0] as keyof typeof assets
                 ];
-                [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+                [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
                 presenceData.smallImageKey = video.paused
                   ? Assets.Pause
                   : Assets.Play

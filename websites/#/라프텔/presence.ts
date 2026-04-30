@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1133347072200949770',
@@ -45,7 +45,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = '검색중'
     presenceData.state = `"${getQuery().keyword}"`
   }
-  else if (pathname.match(/^\/item\/\d/)) {
+  else if (/^\/item\/\d/.test(pathname)) {
     if (prevData === pathname && animeData.name) {
       presenceData.details = animeData.name
       presenceData.largeImageKey = animeData.img
@@ -95,7 +95,7 @@ presence.on('UpdateData', async () => {
       ]
     }
   }
-  else if (pathname.match(/\/player\/\d*\/\d/)) {
+  else if (/\/player\/\d*\/\d/.test(pathname)) {
     const video = document.querySelector<HTMLVideoElement>('video')
     if (video && !Number.isNaN(video.duration)) {
       if (prevData !== pathname) {
@@ -147,7 +147,7 @@ presence.on('UpdateData', async () => {
         && !video.ended
         && video.readyState > 2
       ) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = '재생중'
       }

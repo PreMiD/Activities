@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1066684228726698014',
@@ -66,7 +66,7 @@ presence.on('UpdateData', async () => {
       delete presenceData.startTimestamp
 
       if (!video.paused && !Number.isNaN(Number(video.duration))) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = 'Воспроизводится'
       }
@@ -77,7 +77,7 @@ presence.on('UpdateData', async () => {
       }
       const titles = name?.textContent
         ?.replace(/смотреть\s/i, '')
-        .replace(/(\d* сезон)?\s?\d* серия|\d фильм/g, '')
+        .replace(/(?:\d* сезон)?\s?\d* серия|\d фильм/g, '')
         .trim()
       presenceData.details = titles
       presenceData.state = name?.textContent

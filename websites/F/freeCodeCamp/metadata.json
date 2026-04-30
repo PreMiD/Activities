@@ -22,7 +22,7 @@
   },
   "url": "www.freecodecamp.org",
   "regExp": "^https?[:][/][/](www[.])?freecodecamp[.]org[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/freeCodeCamp/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/freeCodeCamp/assets/thumbnail.png",
   "color": "#00008B",

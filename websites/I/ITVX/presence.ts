@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 interface ChannelSlotData {
   displayTitle: string
@@ -168,7 +168,7 @@ presence.on('UpdateData', async () => {
           const [video] = document.querySelectorAll('video')
 
           if (video && !video.paused) {
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
               Math.floor(video.currentTime),
               Math.floor(video.duration),
             )

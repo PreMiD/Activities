@@ -12,7 +12,7 @@
   },
   "url": "flemmix.rent",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flemmix([.][a-z]+)+[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flemmix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Flemmix/assets/thumbnail.png",
   "color": "#d90000",
@@ -24,7 +24,7 @@
     "vf"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*(d-s\\.io|jilliandescribecompany\\.com|uqload\\.(cx|is)|vidhidevip\\.com|vudeo\\.ws|waaw1?\\.(tv|to)|streamtape\\.(to|com)|upstream\\.to|embedwish\\.com|ups2up\\.fun|luluvdoo\\.com|tipfly\\.xyz|vidmoly\\.net|[Mm]ivalyo\\.com|hg(link|cloud)\\.to|christopheruntilpoint\\.com|upns\\.pro|luluvid\\.com|savefiles\\.com|dsvplay\\.com|minochinos\\.com|lancewhosedifficult\\.com|up4fun\\.top|myvidplay\\.com).*",
+  "iFrameRegExp": "(d-s[.]io|jilliandescribecompany[.]com|uqload[.](cx|is)|vidhidevip[.]com|vudeo[.]ws|waaw1?[.](tv|to)|streamtape[.](to|com)|upstream[.]to|embedwish[.]com|ups2up[.]fun|luluvdoo[.]com|tipfly[.]xyz|vidmoly[.]net|[Mm]ivalyo[.]com|hg(link|cloud)[.]to|christopheruntilpoint[.]com|upns[.]pro|luluvid[.]com|savefiles[.]com|dsvplay[.]com|minochinos[.]com|lancewhosedifficult[.]com|up4fun[.]top|myvidplay[.]com)",
   "settings": [
     {
       "id": "buttons",

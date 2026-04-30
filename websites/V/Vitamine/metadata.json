@@ -11,8 +11,8 @@
     "fr": "La plateforme du Tutorat Associatif Marseillais"
   },
   "url": "vitamine.tutorat-marseille.fr",
-  "regExp": "^https?[:][/][/]vitamine[.]tutorat-marseille[.]fr[/](.*)$",
-  "version": "1.0.2",
+  "regExp": "^https?[:][/][/]vitamine[.]tutorat-marseille[.]fr[/]",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Vitamine/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Vitamine/assets/thumbnail.png",
   "color": "#2A1719",
