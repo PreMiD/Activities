@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "504541573636161546",
+    "name": "tx24"
+  },
+  "service": "AMLL TTML Tool",
+  "description": {
+    "en": "A Word-by-Word TTML Editing and Timeline Tool for Apple Music-like Lyrics",
+    "zh": "Apple Music 风格歌词逐字 TTML 编辑与时间轴制作工具"
+  },
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ],
+  "url": [
+    "amll-ttml-tool.stevexmh.net",
+    "verycool-ttml-tool-trust.vercel.app"
+  ],
+  "regExp": "^https?:\\/\\/(amll-ttml-tool(-test\\.vercel\\.app|\\.stevexmh\\.net)|verycool-ttml-tool-trust\\.vercel\\.app)\\/?",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/78zp1Xo.png",
+  "thumbnail": "https://i.imgur.com/u1ojO04.png",
+  "color": "#18a058",
+  "category": "music",
+  "tags": [
+    "ttml",
+    "lyrics",
+    "music",
+    "apple-music",
+    "spicy-lyrics"
+  ]
+}
