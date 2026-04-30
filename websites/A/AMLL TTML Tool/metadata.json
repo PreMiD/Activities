@@ -10,12 +10,6 @@
     "en": "A Word-by-Word TTML Editing and Timeline Tool for Apple Music-like Lyrics",
     "zh": "Apple Music 风格歌词逐字 TTML 编辑与时间轴制作工具"
   },
-  "settings": [
-    {
-      "id": "lang",
-      "multiLanguage": true
-    }
-  ],
   "url": [
     "amll-ttml-tool.stevexmh.net",
     "verycool-ttml-tool-trust.vercel.app"
@@ -32,5 +26,11 @@
     "music",
     "apple-music",
     "spicy-lyrics"
+  ],
+    "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
   ]
 }
