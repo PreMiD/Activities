@@ -27,7 +27,7 @@
     "apple-music",
     "spicy-lyrics"
   ],
-    "settings": [
+  "settings": [
     {
       "id": "lang",
       "multiLanguage": true
