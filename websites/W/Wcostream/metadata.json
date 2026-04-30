@@ -10,8 +10,8 @@
     "en": "Watch anime online, You can watch anime movies online and english dubbed. Our site to watch animes. Best online animes series here."
   },
   "url": "www.wcostream.tv",
-  "regExp": "^https?[:][/][/](www[.])?wcostream[.].{2,5}",
-  "version": "1.2.0",
+  "regExp": "^https?[:][/][/](www[.])?wcostream([.][a-z]+)+[/]",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wcostream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wcostream/assets/thumbnail.png",
   "color": "#FFCE39",

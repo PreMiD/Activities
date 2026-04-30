@@ -152,7 +152,7 @@ presence.on('UpdateData', async () => {
       default: {
         presenceData.details = 'Browsing the community'
         presenceData.state = document.title.match(
-          /^(.*?)( - Bunpro Community)?$/,
+          /^(.*?)(?: - Bunpro Community)?$/,
         )?.[1]
       }
     }

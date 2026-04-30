@@ -13,7 +13,7 @@
   },
   "url": "www.gamestar.de",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gamestar[.]de[/]",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GameStar/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GameStar/assets/thumbnail.png",
   "color": "#162781",

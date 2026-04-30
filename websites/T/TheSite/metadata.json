@@ -12,7 +12,7 @@
   },
   "url": "relx.site",
   "regExp": "^https?[:][/][/]relx[.]site[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TheSite/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TheSite/assets/thumbnail.png",
   "color": "#00A0EC",

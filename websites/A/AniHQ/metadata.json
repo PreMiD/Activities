@@ -18,7 +18,7 @@
   },
   "url": "anihq.org",
   "regExp": "^https?[:][/][/](www[.])?anihq[.]org[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniHQ/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniHQ/assets/thumbnail.png",
   "color": "#8151ff",
@@ -30,5 +30,5 @@
     "watch"
   ],
   "iframe": true,
-  "iFrameRegExp": "https://(animestream\\.playerp2p\\.com|9ivihskdhwqv\\.playerp2p\\.com|hnexehfik2jq\\.playerp2p\\.com|byseqekaho\\.com|hglink\\.to|voe\\.sx|lauradaydo\\.com|mp4upload\\.com|hexload\\.com|mxdrop\\.to|listeamed\\.net|rubyvidhub\\.com|oneupload\\.to)/.*"
+  "iFrameRegExp": "^https?[:][/][/](animestream[.]playerp2p[.]com|9ivihskdhwqv[.]playerp2p[.]com|hnexehfik2jq[.]playerp2p[.]com|byseqekaho[.]com|hglink[.]to|voe[.]sx|lauradaydo[.]com|mp4upload[.]com|hexload[.]com|mxdrop[.]to|listeamed[.]net|rubyvidhub[.]com|oneupload[.]to)[/]"
 }

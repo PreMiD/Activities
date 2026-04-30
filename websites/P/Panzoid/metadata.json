@@ -15,7 +15,7 @@
     "panzoid.com"
   ],
   "regExp": "^https?[:][/][/](app[.])?panzoid[.]com[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Panzoid/assets/logo.webp",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Panzoid/assets/thumbnail.png",
   "color": "#000000",
@@ -27,5 +27,5 @@
     "clipmaker"
   ],
   "iframe": true,
-  "iFrameRegExp": "https://panzoid\\.com/legacy/gen[23]/clipmaker\\.html"
+  "iFrameRegExp": "^https?[:][/][/]panzoid[.]com[/]legacy[/]gen[23][/]clipmaker[.]html"
 }

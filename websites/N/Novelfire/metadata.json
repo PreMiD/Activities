@@ -14,8 +14,8 @@
     "novelfire.net",
     "www.novelfire.net"
   ],
-  "regExp": "^https?:[/][/](www[.])?novelfire[.]net[/]",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/](www[.])?novelfire[.]net[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Novelfire/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Novelfire/assets/thumbnail.jpg",
   "color": "#000000",

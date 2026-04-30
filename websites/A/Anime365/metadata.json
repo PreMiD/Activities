@@ -21,7 +21,7 @@
     "smotret-anime.online"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(anime-365[.]ru|smotret-anime[.]org|smotret-anime[.]app|smotret-anime[.]online)[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime365/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime365/assets/thumbnail.png",
   "color": "#1B5E20",

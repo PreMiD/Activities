@@ -20,7 +20,7 @@
   },
   "url": "aniworld.to",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*aniworld[.]to[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/thumbnail.png",
   "color": "#637cf9",
@@ -31,7 +31,7 @@
     "anicloud"
   ],
   "iframe": true,
-  "iFrameRegExp": "https:\\/\\/(jilliandescribecompany\\.com\\/e|loadx\\.ws\\/video)\\/[a-zA-Z0-9]+",
+  "iFrameRegExp": "^https?[:][/][/](jilliandescribecompany[.]com[/]e|loadx[.]ws[/]video)[/][a-zA-Z0-9]+",
   "settings": [
     {
       "id": "lang",

@@ -93,5 +93,5 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Not playing'
     presenceData.state = 'Home'
   }
-  presence.setActivity(presenceData, true)
+  presence.setActivity(presenceData)
 })

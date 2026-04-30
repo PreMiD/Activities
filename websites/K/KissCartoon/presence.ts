@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '698231292172435567',
@@ -43,7 +43,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing home page'
   }
   else if (document.querySelector('.full.watch_container')) {
-    timestamps = presence.getTimestamps(
+    timestamps = getTimestamps(
       Math.floor(currentTime),
       Math.floor(duration),
     )

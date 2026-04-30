@@ -16,8 +16,8 @@
     "lotus-simulator.dev",
     "docs.lotus-simulator.dev"
   ],
-  "regExp": "^https?:[/][/]((www|docs)[.])?lotus-simulator[.](de|dev)[/]",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]((www|docs)[.])?lotus-simulator[.](de|dev)[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Lotus-Simulator/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Lotus-Simulator/assets/thumbnail.png",
   "color": "#ebd409",

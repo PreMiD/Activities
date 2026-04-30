@@ -6,13 +6,22 @@ export default antfu(
     formatters: true,
     typescript: true,
   },
-  ...eslintPluginJsonSchemaValidator.configs['flat/recommended'],
+  ...eslintPluginJsonSchemaValidator.configs.base,
   {
     rules: {
       'new-cap': [
         'error',
         { newIsCapExceptions: ['iFrame'], capIsNew: false, newIsCap: true, properties: true },
       ],
+      // Documentation pages intentionally use multiple H1s and skipped heading
+      // levels for visual structure.
+      'markdown/no-multiple-h1': 'off',
+      'markdown/heading-increment': 'off',
+    },
+  },
+  {
+    files: ['**/*.json'],
+    rules: {
       'jsonc/sort-keys': [
         'error',
         {
@@ -53,6 +62,11 @@ export default antfu(
           order: { type: 'asc' },
         },
       ],
+    },
+  },
+  {
+    files: ['**/*.json', '**/*.yaml', '**/*.yml'],
+    rules: {
       'json-schema-validator/no-invalid': 'error',
     },
   },

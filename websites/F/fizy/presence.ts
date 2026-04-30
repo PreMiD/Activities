@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '633985961604415519',
@@ -23,7 +23,7 @@ presence.on('UpdateData', async () => {
     'body > div.main-wrapper.ng-scope > ui-view > main > div > media-player > div > div.player > div.player__wrapper > div.player__metadata > div > div.player__media-artists > a',
   )
   if (player) {
-    [data.startTimestamp, data.endTimestamp] = presence.getTimestamps(
+    [data.startTimestamp, data.endTimestamp] = getTimestamps(
       Math.floor(player.currentTime),
       Math.floor(player.duration),
     )

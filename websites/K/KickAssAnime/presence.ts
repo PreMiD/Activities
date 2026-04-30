@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '802964241179082822',
@@ -73,7 +73,7 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused ? 'Paused' : 'Playing'
         if (!video.paused) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
         }
         presenceData.buttons = [
           {
@@ -98,7 +98,7 @@ presence.on('UpdateData', async () => {
           ?.iterateNext()
           ?.textContent
           ?.match(/title_en:".{1,256}",/g)?.[0]
-          ?.replace(/(title_en:")|(",)/g, '')
+          ?.replace(/title_en:"|",/g, '')
       presenceData.state = document
         .querySelector('[name="og:title"]')
         ?.getAttribute('content')

@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1278380348731818081',
@@ -35,7 +35,7 @@ presence.on('UpdateData', async () => {
   if (href.startsWith('https://www1.animixplayer.top/')) {
     const titleAndEpisode = document.querySelector('.animetitle')?.textContent ?? '';
 
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
       Math.floor(video.currentTime),
       Math.floor(video.duration),
     )

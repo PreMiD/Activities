@@ -25,7 +25,7 @@
     "sosac.tv"
   ],
   "regExp": "^https?[:][/][/]((tv|movies)[.])?sosac[.]tv[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sosac/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sosac/assets/thumbnail.png",
   "color": "#ff5600",

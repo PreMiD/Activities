@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '893871116945350726',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-const threadExportRegex = /([a-f\d]{8}(-[a-f\d]{4}){3}-[a-f\d]{12})/i
+const threadExportRegex = /[a-f\d]{8}(?:-[a-f\d]{4}){3}-[a-f\d]{12}/i
 let recentSearchQuery: string | null = null
 
 presence.on('UpdateData', async () => {
@@ -39,7 +39,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = privacy ? 'Searching' : 'Searching for'
       presenceData.smallImageKey = Assets.Search
 
-      if (pathname.match(threadExportRegex)) {
+      if (threadExportRegex.test(pathname)) {
         presenceData.buttons = [
           {
             label: 'Open Thread',
