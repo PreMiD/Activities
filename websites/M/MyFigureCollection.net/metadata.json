@@ -14,8 +14,8 @@
     "en": "MyFigureCollection.net is a service for Japanese pop-culture (anime, manga, video-games, etc.) goods (figures, artbooks, CDs, cups, collectibles, dakimakura, etc.) collectors."
   },
   "url": "myfigurecollection.net",
-  "regExp": "^https?[:][/][/]^https://(\\w+[.])?myfigurecollection[.]net[/]",
-  "version": "1.1.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*myfigurecollection[.]net[/]",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MyFigureCollection.net/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MyFigureCollection.net/assets/thumbnail.jpeg",
   "color": "#57A052",

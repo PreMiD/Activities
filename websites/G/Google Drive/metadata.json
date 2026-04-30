@@ -27,7 +27,7 @@
   },
   "url": "drive.google.com",
   "regExp": "^https?[:][/][/]drive[.]google([.][a-z]+)+[/]",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Drive/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Drive/assets/thumbnail.png",
   "color": "#3aa154",

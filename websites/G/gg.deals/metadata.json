@@ -11,7 +11,7 @@
   },
   "url": "gg.deals",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gg[.]deals[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/gg.deals/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/gg.deals/assets/thumbnail.png",
   "color": "#000000",

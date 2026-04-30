@@ -81,7 +81,9 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = `${
         (
           document
-            .querySelector('a[class~=\'active\']')!.childNodes.item(0) as HTMLImageElement
+            .querySelector('a[class~=\'active\']')!
+            .childNodes
+            .item(0) as HTMLImageElement
         ).alt
       } ${
         document.querySelector('a[class~=\'active\']')?.childNodes.item(1).textContent

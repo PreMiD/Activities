@@ -21,7 +21,7 @@
   },
   "url": "play.hbomax.com",
   "regExp": "^https?[:][/][/]play[.]hbomax[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20Max/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20Max/assets/thumbnail.jpeg",
   "color": "#0014a4",

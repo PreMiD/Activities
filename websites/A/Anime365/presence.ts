@@ -97,7 +97,7 @@ function getPageData(): PageData {
       data.coverUrl = coverUrl
 
     // Check if this is a video watching page (contains pattern like /1-seriya-9604/)
-    if (url.match(/\/\d+-seriya-\d+\//)) {
+    if (/\/\d+-seriya-\d+\//.test(url)) {
       data.type = 'watching'
 
       // Extract IDs from URL for potential future use

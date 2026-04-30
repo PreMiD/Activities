@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '719985436075753492',
@@ -39,7 +39,7 @@ presence.on('UpdateData', async () => {
       ) as HTMLTextAreaElement
       chapter = document.querySelector('#video_episode') as HTMLTextAreaElement
       if (video) {
-        timestamps = presence.getTimestamps(video.currentTime, video.duration)
+        timestamps = getTimestamps(video.currentTime, video.duration)
         if (video.paused && title && video.currentTime !== 0) {
           presenceData.details = 'Paused'
           presenceData.smallImageKey = Assets.Pause
@@ -163,7 +163,7 @@ presence.on('UpdateData', async () => {
             'div > h2 > span',
           ) as HTMLTextAreaElement
           if (video && title && chapter) {
-            timestamps = presence.getTimestamps(
+            timestamps = getTimestamps(
               video.currentTime,
               video.duration,
             )

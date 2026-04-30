@@ -16,13 +16,17 @@
     "en": "Watch free TV shows and movies online"
   },
   "url": "www.cineby.sc",
-  "regExp": "^https?[:][/][/](www[.])?cineby[.](sc|gd|app)[/]?",
-  "version": "1.3.0",
+  "regExp": "^https?[:][/][/](www[.])?cineby[.](sc|gd|app)[/]",
+  "version": "1.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/thumbnail.png",
   "color": "#fb0013",
   "category": "videos",
-  "tags": ["series", "movies", "anime"],
+  "tags": [
+    "series",
+    "movies",
+    "anime"
+  ],
   "settings": [
     {
       "id": "showBrowsing",

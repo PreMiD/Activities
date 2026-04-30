@@ -16,7 +16,6 @@ async function getStrings() {
       viewCategory: 'general.viewCategory',
       viewHome: 'general.viewHome',
     },
-    'en',
   )
 }
 function capitalizeFirstLetter(string: string | undefined | null) {
@@ -70,10 +69,10 @@ presence.on('UpdateData', async () => {
       ?.replace(/ /g, '') ?? '',
   ).replace('doc', 'document')
   const type = selected?.match(
-    /(everything)|(book)|(doc)|(podcast)|(sheeetmusic)|(snapshot)/g,
+    /everything|book|doc|podcast|sheeetmusic|snapshot/g,
   )
     ? true
-    : !!pathname.match(/(book)|(doc)|(podcast)|(sheetmusic)|(snapshot)/g)
+    : !!pathname.match(/book|doc|podcast|sheetmusic|snapshot/g)
   const search = document.querySelector<HTMLInputElement>('[type="search"]')
   const moduleList = document.querySelector(
     '[class*="Breadcrumbs-ds2-module_list__"]',
@@ -110,12 +109,12 @@ presence.on('UpdateData', async () => {
                       ?? selected
                         ?.replace(/doc/g, 'document')
                         .match(
-                          /(everything)|(book)|(document)|(podcast)|(snapshot)/g,
+                          /everything|book|document|podcast|snapshot/g,
                         )?.[0]
                         ?? pathname
                           .replace(/doc/g, 'document')
                           .match(
-                            /(everything)|(book)|(document)|(podcast)|(snapshot)/g,
+                            /everything|book|document|podcast|snapshot/g,
                           )?.[0],
               ),
             )}:`

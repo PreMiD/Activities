@@ -11,7 +11,7 @@
   },
   "url": "www.aha.video",
   "regExp": "^https?[:][/][/](www[.])?aha[.]video[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/aha/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/aha/assets/thumbnail.png",
   "color": "#ffa500",

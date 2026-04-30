@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1034382710589898882',
@@ -187,13 +187,13 @@ presence.on('UpdateData', async () => {
                 presenceData.state = 'Watching an ad'
               }
               else if (!video.paused) {
-                [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-                  presence.timestampFromFormat(
+                [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+                  timestampFromFormat(
                     document.querySelectorAll(
                       '[class*="TimeViewFontStyle"]',
                     )[0]?.textContent ?? '',
                   ),
-                  presence.timestampFromFormat(
+                  timestampFromFormat(
                     document.querySelectorAll(
                       '[class*="TimeViewFontStyle"]',
                     )[1]?.textContent ?? '',
@@ -278,7 +278,7 @@ presence.on('UpdateData', async () => {
                     ? strings.paused
                     : strings.play
                   if (!video.paused) {
-                    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+                    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
                   }
                 }
                 presenceData.buttons = [

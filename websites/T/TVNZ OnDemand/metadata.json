@@ -12,7 +12,7 @@
   },
   "url": "www.tvnz.co.nz",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tvnz[.]co[.]nz[/]",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TVNZ%20OnDemand/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TVNZ%20OnDemand/assets/thumbnail.png",
   "color": "#167EF5",

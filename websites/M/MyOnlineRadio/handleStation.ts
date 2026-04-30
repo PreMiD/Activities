@@ -1,3 +1,4 @@
+import { getTimestamps, timestampFromFormat } from 'premid'
 import { ActivityAssets } from './presence.js'
 import { getDropDownSelected, getInp, tDiffInMS, toDate } from './utils.js'
 
@@ -81,9 +82,9 @@ export function handleStation(
           if (startTS)
             presenceData.startTimestamp = tDiffInMS(startTS)
           if (startTS && endTS) {
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-              presence.timestampFromFormat(startTS),
-              presence.timestampFromFormat(endTS),
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+              timestampFromFormat(startTS),
+              timestampFromFormat(endTS),
             )
           }
         }

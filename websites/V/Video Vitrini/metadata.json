@@ -14,8 +14,8 @@
     "videovitrini.com",
     "www.videovitrini.com"
   ],
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*videovitrini[.]com[/](watch|shorts)",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*videovitrini[.]com[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Video%20Vitrini/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Video%20Vitrini/assets/thumbnail.png",
   "color": "#FF0000",

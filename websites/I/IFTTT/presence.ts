@@ -17,7 +17,7 @@ presence.on('UpdateData', async () => {
   oldLang = newLang
   newLang = await presence.getSetting<string>('lang').catch(() => 'en')
   if (!strings || oldLang !== newLang)
-    strings = await getStrings(newLang)
+    strings = await getStrings()
 
   switch (window.location.hostname) {
     case 'ift.tt': {
@@ -275,13 +275,12 @@ presence.on('UpdateData', async () => {
   presence.setActivity(presenceData)
 })
 
-async function getStrings(lang: string) {
+async function getStrings() {
   return presence.getStrings(
     {
       search: 'general.searching',
       browsing: 'general.browsing',
       reading: 'general.reading',
     },
-    lang,
   )
 }

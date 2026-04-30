@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '857504781438681089',
@@ -21,8 +21,8 @@ presence.on('UpdateData', async () => {
   if (!(player.querySelector('input.progress') as HTMLInputElement).disabled) {
     const playButton: HTMLButtonElement = player.querySelector('button.icon-player')!;
 
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-      presence.timestampFromFormat(
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+      timestampFromFormat(
         player
           .querySelector('.time_current')
           ?.textContent
@@ -31,7 +31,7 @@ presence.on('UpdateData', async () => {
             '',
           ) ?? '',
       ),
-      presence.timestampFromFormat(
+      timestampFromFormat(
         player
           ?.querySelector('.time_all')
           ?.textContent

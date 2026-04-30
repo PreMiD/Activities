@@ -66,7 +66,7 @@ export async function decompressGzip(
 type obj = Record<string, unknown>
 export function updateUndefinedKeys(obj1: obj, obj2: obj): void {
   for (const key of Object.keys(obj2)) {
-    if (Object.prototype.hasOwnProperty.call(obj2, key) && !obj1[key])
+    if (Object.hasOwn(obj2, key) && !obj1[key])
       obj1[key] = obj2[key]
   }
 }

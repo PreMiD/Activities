@@ -13,8 +13,8 @@
     "navidrome.org",
     "www.navidrome.org"
   ],
-  "regExp": "^https?[:][/][/]navidrome[.]([a-z0-9]+)[.]([a-z0-9]+)",
-  "version": "1.2.2",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*navidrome([.][a-z]+)+[/]",
+  "version": "1.2.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Navidrome/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Navidrome/assets/thumbnail.png",
   "color": "#2979ff",

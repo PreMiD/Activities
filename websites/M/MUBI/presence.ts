@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1044942179958804552',
@@ -171,7 +171,7 @@ presence.on('UpdateData', async () => {
           ?.split('|')[0]
           ?? document.querySelector('title')?.textContent?.split('|')[0]
         if (video.duration && !video.paused) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
         }
         presenceData.largeImageKey = document
           .querySelector('#__NEXT_DATA__')

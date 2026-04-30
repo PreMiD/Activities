@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '930914836773224498',
@@ -191,11 +191,11 @@ presence.on('UpdateData', async () => {
                 presenceData.details = `Viewing ${document
                   .querySelector('[data-testid=\'cnt-subpage-info\'] > h1 ')
                   ?.textContent
-                  ?.match(/(flight .+$)/g)}`
+                  ?.match(/flight .+$/g)}`
                 presenceData.state = `${document
                   .querySelector('[data-testid=\'cnt-subpage-info\'] > h1 ')
                   ?.textContent
-                  ?.replace(/(flight .+$)/g, '')
+                  ?.replace(/flight .+$/g, '')
                   ?.replace('Flight history for ', '')}`
                 presenceData.buttons = [
                   {
@@ -345,9 +345,9 @@ presence.on('UpdateData', async () => {
                 if (player.isPlaying) {
                   presenceData.smallImageKey = Assets.Play
                   presenceData.smallImageText = 'Playing';
-                  [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-                    presence.timestampFromFormat(player.total),
-                    presence.timestampFromFormat(player.elapsed),
+                  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+                    timestampFromFormat(player.total),
+                    timestampFromFormat(player.elapsed),
                   )
                 }
                 else {
@@ -361,13 +361,13 @@ presence.on('UpdateData', async () => {
                 )
               ) {
                 if (video.duration !== 0) {
-                  [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-                    presence.timestampFromFormat(player.total),
-                    presence.timestampFromFormat(player.elapsed),
+                  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+                    timestampFromFormat(player.total),
+                    timestampFromFormat(player.elapsed),
                   )
                 }
                 else if (document.querySelector('video')) {
-                  [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(
+                  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(
                     document.querySelector<HTMLMediaElement>('video')!,
                   )
                 }

@@ -241,7 +241,7 @@ function updatePresence() {
     startTimestamp: browsingTimestamp,
   }
 
-  if (pathname.match(/\/game\/|\/gift-cards-group\/|\/gift-card\/|\/pack\/|\/dlc\/|\/franchise\//)) {
+  if (/\/game\/|\/gift-cards-group\/|\/gift-card\/|\/pack\/|\/dlc\/|\/franchise\//.test(pathname)) {
     const gameHeading = document.querySelector('.game-heading h1')
     if (gameHeading) {
       let title = gameHeading.textContent?.trim() || ''
@@ -333,7 +333,7 @@ function updatePresence() {
 
     addPageButton(presenceData, 'Read Article')
   }
-  else if (pathname.match(/\/ranking\/(?:(?:pc|xbox|playstation|nintendo)\/)?[^/]+(?:\/[^/]+)?\/?$/)) {
+  else if (/\/ranking\/(?:(?:pc|xbox|playstation|nintendo)\/)?[^/]+(?:\/[^/]+)?\/?$/.test(pathname)) {
     const rankingTitle = document.querySelector('h1.sm-side-padding.main-title')
 
     presenceData.details = 'Viewing ranking:'
@@ -359,7 +359,7 @@ function updatePresence() {
   else if (pathname.includes('/games/nintendo/')) {
     presenceData.details = 'Browsing Nintendo games'
   }
-  else if (pathname.match(/\/games\/?$/)) {
+  else if (/\/games\/?$/.test(pathname)) {
     presenceData.details = 'Browsing all platforms'
   }
   else if (pathname.includes('/franchises/pc/')) {
@@ -374,7 +374,7 @@ function updatePresence() {
   else if (pathname.includes('/franchises/nintendo/')) {
     presenceData.details = 'Browsing Nintendo franchises'
   }
-  else if (pathname.match(/\/franchises\/?$/)) {
+  else if (/\/franchises\/?$/.test(pathname)) {
     presenceData.details = 'Browsing all franchises'
   }
   else if (pathname.includes('/settings/')) {

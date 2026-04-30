@@ -23,7 +23,7 @@ presence.on('UpdateData', async () => {
         .split('/group/')
         .pop()
         ?.replaceAll('-', ' ')
-        .replace(/(^\w)|(\s+\w)/g, letter => letter.toUpperCase())}...`
+        .replace(/^\w|\s+\w/g, letter => letter.toUpperCase())}...`
     }
     else {
       presenceData.state = 'Browsing Casino...'

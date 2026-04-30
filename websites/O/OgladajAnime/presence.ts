@@ -248,7 +248,7 @@ presence.on('UpdateData', async () => {
 
     presenceData.buttons = await setButton(strings.buttonWatchAnime, document.location.href)
   }
-  else if (pathname.match(/\/watch2gether\/\d+/)) {
+  else if (/\/watch2gether\/\d+/.test(pathname)) {
     const name = document.querySelector('h5[class="card-title text-dark"]')
     const animeIcon = document.querySelector('img[class="img-fluid lozad rounded tooltip tooltip-anime mb-2 tooltipstered"]')
     const spans = document.querySelectorAll('.card-subtitle > .text-gray')
@@ -421,7 +421,7 @@ presence.on('UpdateData', async () => {
       state = replaceTime(state, 1, hours)
       state = replaceTime(state, 2, minutes)
 
-      if (!state.match(/\d+/))
+      if (!/\d+/.test(state))
         state += watchTime
 
       presenceData.state = state
