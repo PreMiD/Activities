@@ -8,15 +8,7 @@
   "service": "Filmytime",
   "altnames": ["Fimytime", "Filmy Time", "FilmyTime", "Film Time", "FT", "FT Streaming", "Filmytime Streaming", "Filmytime Movies", "Filmytime TV", "Filmytime Anime"],
   "description": {
-    "en": "Movies, shows, anime, sports, and live TV in one place, clean UI, and quick streaming without the usual messy website feel. Watch free movies, TV series, anime, sports and live TV online.",
-    "es": "Películas, series, anime, deportes y TV en vivo en un solo lugar, interfaz limpia y streaming rápido sin el desorden habitual.",
-    "fr": "Films, séries, anime, sports et TV en direct en un seul endroit, interface propre et streaming rapide.",
-    "de": "Filme, Serien, Anime, Sport und Live-TV an einem Ort, saubere Benutzeroberfläche und schnelles Streaming.",
-    "pt-BR": "Filmes, séries, anime, esportes e TV ao vivo em um só lugar, interface limpa e streaming rápido.",
-    "ru": "Фильмы, сериалы, аниме, спорт и прямой эфир в одном месте, чистый интерфейс и быстрая трансляция.",
-    "ja": "映画、番組、アニメ、スポーツ、ライブTVを一箇所で。クリーンなUIと高速ストリーミング。",
-    "ko": "영화, 쇼, 애니메이션, 스포츠, 라이브 TV를 한 곳에서. 깔끔한 UI와 빠른 스트리밍。",
-    "zh-CN": "电影、节目、动漫、体育和直播电视集于一处，界面简洁，快速流媒体播放。"
+    "en": "Watch free movies, TV series, anime, sports and live TV online."
   },
   "url": ["filmytime.site", "www.filmytime.site", "filmytime.top", "www.filmytime.top"],
   "regExp": "filmytime\\.(site|top)",
