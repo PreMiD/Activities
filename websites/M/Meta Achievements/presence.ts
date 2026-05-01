@@ -6,7 +6,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/WpN6Sm6.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/M/Meta%20Achievements/assets/logo.png',
 }
 
 presence.on('UpdateData', async () => {
@@ -17,10 +17,10 @@ presence.on('UpdateData', async () => {
 
   const getMetric = (label: string) => {
     const metric = Array.from(document.querySelectorAll('.summary-metric'))
-      .find((m) => {
-        const l = m.querySelector('.summary-metric-label')?.textContent?.trim().toLowerCase()
-        return l && l.includes(label.toLowerCase())
-      })
+        .find((m) => {
+          const l = m.querySelector('.summary-metric-label')?.textContent?.trim().toLowerCase()
+          return l && l.includes(label.toLowerCase())
+        })
     const value = metric?.querySelector('.summary-metric-value')?.textContent?.trim()
     return value && value.length > 0 ? value : null
   }
@@ -85,8 +85,7 @@ presence.on('UpdateData', async () => {
       }
 
       state = parts.join(' · ')
-    }
-    else {
+    } else {
       details = 'Loading Profile...'
     }
 
@@ -95,7 +94,7 @@ presence.on('UpdateData', async () => {
       smallImageKey = avatarImg.src
     }
   }
-  else if (pathname.endsWith('achievementdefinitions.html')) {
+    else if (pathname.endsWith('achievementdefinitions.html')) {
     details = 'All Achievements'
     smallImageKey = getEmojiUrl('📚')
 
@@ -113,24 +112,24 @@ presence.on('UpdateData', async () => {
       state = parts.join(' · ')
     }
   }
-  else if (pathname.endsWith('achievementdefinitionsbeta.html')) {
-    details = 'All Achievements'
-    smallImageKey = getEmojiUrl('📚')
+    else if (pathname.endsWith('achievementdefinitionsbeta.html')) {
+      details = 'All Achievements'
+      smallImageKey = getEmojiUrl('📚')
 
-    const games = getMetric('Games indexed')
-    const achievements = getMetric('Total Achievements')
-    if (games || achievements) {
-      buttonLabel = 'View Game List'
-      const parts = []
-      if (games) {
-        parts.push(`${games} Total Games`)
+      const games = getMetric('Games indexed')
+      const achievements = getMetric('Total Achievements')
+      if (games || achievements) {
+        buttonLabel = 'View Game List'
+        const parts = []
+        if (games) {
+          parts.push(`${games} Total Games`)
+        }
+        if (achievements) {
+          parts.push(`${achievements} Achievements`)
+        }
+        state = parts.join(' · ')
       }
-      if (achievements) {
-        parts.push(`${achievements} Achievements`)
-      }
-      state = parts.join(' · ')
     }
-  }
   else if (pathname.endsWith('achievementdefinitionsapp.html')) {
     details = 'Definitions App'
     smallImageKey = getEmojiUrl('🛠️')
@@ -155,13 +154,13 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
     smallImageKey,
     buttons: buttonLabel
-      ? [
+        ? [
           {
             label: buttonLabel,
             url: window.location.href,
           },
         ]
-      : undefined,
+        : undefined,
   }
 
   presence.setActivity(presenceData)

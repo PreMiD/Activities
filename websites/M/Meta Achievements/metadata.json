@@ -11,9 +11,9 @@
   },
   "url": "meta-achievements.notaglitch.net",
   "regExp": "^https?[:][/][/]meta-achievements[.]notaglitch[.]net[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/WpN6Sm6.png",
-  "thumbnail": "https://i.imgur.com/l9U36yw.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Meta%20Achievements/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Meta%20Achievements/assets/thumbnail.png",
   "color": "#0077ef",
   "category": "games",
   "tags": [
