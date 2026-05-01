@@ -11,8 +11,8 @@
     "fr": "Movix est une plateforme de streaming pour films, series, anime et watch parties."
   },
   "url": "movix.cash",
-  "regExp": "^https:\\/\\/([a-z0-9-]+[.])*(movix[.]cash)(?:[/]|$)",
-  "version": "1.0.3",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*movix[.]cash[/]",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/thumbnail.png",
   "color": "#dc2626",

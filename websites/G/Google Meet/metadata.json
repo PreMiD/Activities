@@ -14,7 +14,7 @@
   },
   "url": "meet.google.com",
   "regExp": "^https?[:][/][/]meet[.]google([.][a-z]+)+[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Meet/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Meet/assets/thumbnail.png",
   "color": "#308574",

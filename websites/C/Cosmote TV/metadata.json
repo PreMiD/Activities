@@ -13,7 +13,7 @@
   },
   "url": "www.cosmotetvott.gr",
   "regExp": "^https?[:][/][/](www[.])?cosmotetvott[.]gr[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Cosmote%20TV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Cosmote%20TV/assets/thumbnail.png",
   "color": "#14D900",

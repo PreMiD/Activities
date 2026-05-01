@@ -2,10 +2,10 @@
   "type": "module",
   "dependencies": {
     "franc-min": "^6.2.0",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.1",
     "p-limit": "^7.3.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.23"
+    "@types/lodash": "^4.17.24"
   }
 }

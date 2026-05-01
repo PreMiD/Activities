@@ -10,8 +10,8 @@
     "en": "OneTouch TV is the hit Drama & Movie & TV app . OneTouch TV has it all in a single app. You can stream all your favorite movies & drama & TV for free."
   },
   "url": "onetouchtv.info",
-  "regExp": "^https?[:][/][/](ww(w)?[0-9]?[.])?onetouchtv[.].*",
-  "version": "1.1.0",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*onetouchtv([.][a-z]+)+[/]",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OneTouchTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OneTouchTV/assets/thumbnail.png",
   "color": "#000000",

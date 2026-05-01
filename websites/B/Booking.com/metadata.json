@@ -10,8 +10,8 @@
     "en": "Booking.com is the world's leading online accommodation platform, offering hotels, apartments, flights, car rentals, and attractions."
   },
   "url": "www.booking.com",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])?booking[.]com",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*booking[.]com[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Booking.com/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Booking.com/assets/thumbnail.jpg",
   "color": "#003580",

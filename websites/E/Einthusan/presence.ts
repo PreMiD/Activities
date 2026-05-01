@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '702375041320484944',
@@ -8,7 +8,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 function getSeconds(videoTime: string, videoDuration: string) {
   const a = videoTime.split(':')
   const b = videoDuration.split(':')
-  return presence.getTimestamps(
+  return getTimestamps(
     Math.floor(+a[0]! * 60 * 60 + +a[1]! * 60 + +a[2]!),
     Math.floor(+b[0]! * 60 * 60 + +b[1]! * 60 + +b[2]!),
   )

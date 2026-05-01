@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '895232122892214313',
@@ -27,7 +27,6 @@ presence.on(
   },
 )
 presence.on('UpdateData', async () => {
-
   const fetch_img = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')
     ?.content
 
@@ -58,7 +57,6 @@ presence.on('UpdateData', async () => {
 
     default:
       if (document.querySelector('.entry-header-outer > .entry-header > h1 ')) {
-
         if (fetch_img) {
           presenceData.largeImageKey = fetch_img
         }
@@ -74,7 +72,7 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageText = video.paused
               ? (await strings).pause
               : (await strings).play;
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
             presenceData.details = details.stream
             presenceData.state = document.querySelector(
               '.entry-header-outer > .entry-header > h1 ',
@@ -106,5 +104,5 @@ presence.on('UpdateData', async () => {
       .getNamedItem('value')
       ?.value
   }
-  return presence.setActivity(presenceData, true)
+  return presence.setActivity(presenceData)
 })

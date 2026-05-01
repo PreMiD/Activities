@@ -11,7 +11,7 @@
   },
   "url": "emanate.live",
   "regExp": "^https?[:][/][/]emanate[.]live[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Emanate/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Emanate/assets/thumbnail.png",
   "color": "#1e1e1e",

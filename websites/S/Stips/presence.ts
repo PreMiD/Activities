@@ -203,8 +203,8 @@ presence.on('UpdateData', () => {
         details = xplrObj['/'].edit
 
       if (
-        !details // eslint-disable-next-line no-prototype-builtins
-        && xplrObj.hasOwnProperty(PathSecond)
+        !details
+        && Object.hasOwn(xplrObj, PathSecond)
       ) {
         // seems like xplrObj[PathSecond] won't work
         // let's do it manually then >'-'<

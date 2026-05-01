@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 let elapsed = Math.floor(Date.now() / 1000)
 let prevUrl = document.location.href
@@ -105,7 +105,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = document.querySelector(
         'ol li:nth-last-child(1) span',
       )?.textContent;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
         Math.floor(video.currentTime),
         Math.floor(video.duration),
       )

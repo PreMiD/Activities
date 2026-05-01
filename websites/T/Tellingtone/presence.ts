@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({ clientId: '1006201873985961984' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -71,9 +71,9 @@ presence.on('UpdateData', async () => {
     const timers: string[] = []
     for (const element of document.querySelectorAll('div.desktop > div.timer'))
       timers.push(element.textContent!);
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-      presence.timestampFromFormat(timers[0]!),
-      presence.timestampFromFormat(timers[1]!),
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+      timestampFromFormat(timers[0]!),
+      timestampFromFormat(timers[1]!),
     )
     delete presenceData.buttons
 

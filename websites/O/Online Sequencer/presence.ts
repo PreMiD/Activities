@@ -88,7 +88,7 @@ presence.on('UpdateData', async () => {
             document.querySelectorAll('.thead')[0] as HTMLElement
           ).textContent
           if (threadtitle?.includes('Thread Modes'))
-            presenceData.state = threadtitle.substr(13)
+            presenceData.state = threadtitle.slice(13)
           else presenceData.state = threadtitle
         }
         else if (
@@ -123,7 +123,7 @@ presence.on('UpdateData', async () => {
           currPage = 'f'
           presenceData.details = 'Viewing Forum'
         }
-        else if (!Number.isNaN(Number.parseInt(document.location.pathname.substr(1)))) {
+        else if (!Number.isNaN(Number.parseInt(document.location.pathname.slice(1)))) {
           prevPage = currPage
           currPage = 's'
           if (document.querySelectorAll('.active.tooltipstered')[0]) {

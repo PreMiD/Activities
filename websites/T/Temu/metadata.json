@@ -10,8 +10,8 @@
     "en": "Temu is a global online marketplace offering affordable fashion, beauty, home, electronics and more with free shipping and returns."
   },
   "url": "www.temu.com",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])?temu[.]com",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*temu[.]com[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Temu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Temu/assets/thumbnail.png",
   "color": "#FB6D13",

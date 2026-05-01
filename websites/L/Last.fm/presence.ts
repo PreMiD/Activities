@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '917456087299534858',
@@ -150,7 +150,7 @@ presence.on('UpdateData', async () => {
       .endsWith('play')
 
     if (timestamps) {
-      const timeLeft = presence.timestampFromFormat(
+      const timeLeft = timestampFromFormat(
         document
           .querySelector('div.player-bar-progress-wrap > div > div > span')
           ?.textContent

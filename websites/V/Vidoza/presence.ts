@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -25,7 +25,7 @@ presence.on('UpdateData', async () => {
       ?.querySelectorAll('[type="text/javascript"]')
     const title = el?.[el.length - 1]?.innerHTML
       .split('var curFileName =')?.[1]
-      ?.replace(/(\.)/g, ' ')
+      ?.replace(/\./g, ' ')
       .replace('"', '')
 
     presenceData.details = title?.split(' S0')?.[0] ?? title
@@ -33,7 +33,7 @@ presence.on('UpdateData', async () => {
 
     if (video && !Number.isNaN(video.duration)) {
       if (!video.paused) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
       }
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = video.paused

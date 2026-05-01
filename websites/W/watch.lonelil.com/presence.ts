@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1147910465134002276',
@@ -154,9 +154,9 @@ presence.on('UpdateData', async () => {
             '.jw-text-duration[role="timer"]',
           )?.textContent
           if (elapsed && duration) {
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-              presence.timestampFromFormat(elapsed),
-              presence.timestampFromFormat(duration),
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+              timestampFromFormat(elapsed),
+              timestampFromFormat(duration),
             )
           }
         }

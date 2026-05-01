@@ -21,7 +21,7 @@
     "www.podcastaddict.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?podcastaddict[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PodcastAddict/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PodcastAddict/assets/thumbnail.jpg",
   "color": "#f48529",

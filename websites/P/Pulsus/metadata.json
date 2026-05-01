@@ -11,7 +11,7 @@
   },
   "url": "pulsus.cc",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pulsus[.]cc[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pulsus/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pulsus/assets/thumbnail.png",
   "color": "#50AFFD",
