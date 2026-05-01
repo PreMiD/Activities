@@ -85,7 +85,8 @@ presence.on('UpdateData', async () => {
       }
 
       state = parts.join(' · ')
-    } else {
+    }
+    else {
       details = 'Loading Profile...'
     }
 
@@ -94,7 +95,7 @@ presence.on('UpdateData', async () => {
       smallImageKey = avatarImg.src
     }
   }
-    else if (pathname.endsWith('achievementdefinitions.html')) {
+  else if (pathname.endsWith('achievementdefinitions.html')) {
     details = 'All Achievements'
     smallImageKey = getEmojiUrl('📚')
 
@@ -112,22 +113,22 @@ presence.on('UpdateData', async () => {
       state = parts.join(' · ')
     }
   }
-    else if (pathname.endsWith('achievementdefinitionsbeta.html')) {
-      details = 'All Achievements'
-      smallImageKey = getEmojiUrl('📚')
+  else if (pathname.endsWith('achievementdefinitionsbeta.html')) {
+    details = 'All Achievements'
+    smallImageKey = getEmojiUrl('📚')
 
-      const games = getMetric('Games indexed')
-      const achievements = getMetric('Total Achievements')
-      if (games || achievements) {
-        buttonLabel = 'View Game List'
-        const parts = []
-        if (games) {
+    const games = getMetric('Games indexed')
+    const achievements = getMetric('Total Achievements')
+    if (games || achievements) {
+      buttonLabel = 'View Game List'
+      const parts = []
+      if (games) {
           parts.push(`${games} Total Games`)
         }
-        if (achievements) {
-          parts.push(`${achievements} Achievements`)
+      if (achievements) {
+        parts.push(`${achievements} Achievements`)
         }
-        state = parts.join(' · ')
+      state = parts.join(' · ')
       }
     }
   else if (pathname.endsWith('achievementdefinitionsapp.html')) {
