@@ -64,7 +64,56 @@ presence.on('UpdateData', async () => {
       smallImageKey = avatarImg.src
     }
   }
+  else if (pathname.endsWith('achievementsbeta.html')) {
+    const username = document.querySelector('.summary-title')?.textContent?.trim()
+    const games = getMetric('Games Tracked')
+    const achievements = getMetric('Achievements Unlocked')
+    const completions = getMetric('100% Completions')
+
+    if (games || achievements || completions) {
+      buttonLabel = 'View Profile'
+      details = username ? `${username}'s Profile` : 'Loading Profile...'
+      const parts = []
+      if (games) {
+        parts.push(`${games} Games`)
+      }
+      if (achievements) {
+        parts.push(`${achievements} Achievements`)
+      }
+      if (completions) {
+        parts.push(`${completions} 100%`)
+      }
+
+      state = parts.join(' · ')
+    }
+    else {
+      details = 'Loading Profile...'
+    }
+
+    const avatarImg = document.querySelector<HTMLImageElement>('#profileAvatar img')
+    if (avatarImg?.src) {
+      smallImageKey = avatarImg.src
+    }
+  }
   else if (pathname.endsWith('achievementdefinitions.html')) {
+    details = 'All Achievements'
+    smallImageKey = getEmojiUrl('📚')
+
+    const games = getMetric('Games indexed')
+    const achievements = getMetric('Total Achievements')
+    if (games || achievements) {
+      buttonLabel = 'View Game List'
+      const parts = []
+      if (games) {
+        parts.push(`${games} Total Games`)
+      }
+      if (achievements) {
+        parts.push(`${achievements} Achievements`)
+      }
+      state = parts.join(' · ')
+    }
+  }
+  else if (pathname.endsWith('achievementdefinitionsbeta.html')) {
     details = 'All Achievements'
     smallImageKey = getEmojiUrl('📚')
 
