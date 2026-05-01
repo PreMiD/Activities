@@ -1,26 +1,25 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.7",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "author": {
     "name": "alex",
     "id": "1328246226201874475"
   },
-  "contributors": [],
-  "service": "Filmytime",
+    "service": "Filmytime",
   "altnames": ["Fimytime", "Filmy Time", "FilmyTime", "Film Time", "FT", "FT Streaming", "Filmytime Streaming", "Filmytime Movies", "Filmytime TV", "Filmytime Anime"],
   "description": {
     "en": "Watch free movies, TV series, anime, sports and live TV online."
   },
   "url": ["filmytime.site", "www.filmytime.site", "filmytime.top", "www.filmytime.top"],
-  "regExp": "filmytime\\.(site|top)",
+  "regExp": "^https?[:][/][/]filmytime[.](site|top)[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/tew3bhe.png",
   "thumbnail": "https://i.imgur.com/gIrfCmY.png",
   "color": "#0ea5e9",
-  "category": "videos",
   "tags": ["streaming", "movies", "tv-shows", "anime", "sports", "live-tv", "free-streaming", "entertainment", "video"],
+  "category": "videos",
   "iframe": false,
   "settings": [
-    { "id": "showButtons", "title": "Show Buttons", "icon": "fas fa-link", "value": true },
-    { "id": "privacyMode", "title": "Privacy Mode (Hide Titles)", "icon": "fas fa-eye-slash", "value": false }
+    {"id": "showButtons", "title": "Show Buttons", "icon": "fas fa-link", "value": true},
+    {"id": "privacyMode", "title": "Privacy Mode (Hide Titles)", "icon": "fas fa-eye-slash", "value": false}
   ]
 }

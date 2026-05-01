@@ -21,8 +21,8 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     largeImageKey: LOGO,
-    largeImageText: 'Filmytime',
-  } as any
+  }
+  presenceData.largeImageText = 'Filmytime'
 
   const getText = (selector: string): string =>
     document.querySelector(selector)?.textContent?.trim() || ''
@@ -65,7 +65,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = privacyMode ? 'Watching something' : title
     presenceData.state = getGenre() || getRating() || (video.paused ? 'Paused' : 'Playing')
     presenceData.largeImageKey = privacyMode ? LOGO : getPoster()
-    ;(presenceData as any).largeImageText = privacyMode ? 'Filmytime' : title
+    presenceData.largeImageText = privacyMode ? 'Filmytime' : title
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = video.paused ? 'Paused' : 'Playing'
 
