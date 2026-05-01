@@ -13,8 +13,8 @@
     "tako.id",
     "help.tako.id"
   ],
-  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*tako[.]id[/]",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tako[.]id[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tako/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tako/assets/thumbnail.jpeg",
   "color": "#37a2e8",

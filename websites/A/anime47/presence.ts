@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '640990409224486971',
@@ -41,7 +41,7 @@ presence.on('iFrameData', (data: unknown) => {
 })
 
 presence.on('UpdateData', async () => {
-  const [startTimestamp, endTimestamp] = presence.getTimestamps(
+  const [startTimestamp, endTimestamp] = getTimestamps(
     Math.floor(currentTime),
     Math.floor(duration),
   )

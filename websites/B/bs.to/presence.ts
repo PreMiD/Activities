@@ -15,7 +15,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing burning series domains'
   }
   else if (
-    document.location.hostname.match(/(bs|burningseries)\.([a-z0-9-])+/g)
+    /(?:bs|burningseries)\.[a-z0-9-]+/.test(document.location.hostname)
   ) {
     presenceData.startTimestamp = browsingTimestamp
     if (document.location.pathname === '/') {

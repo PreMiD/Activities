@@ -91,10 +91,8 @@ presence.on('UpdateData', async () => {
           e => e.src,
         )
         if (
-          !urls.find(
-            e =>
-              e.includes('avatar') && e !== urls.find(e => e.includes('avatar')),
-          )
+          !urls.some(e =>
+            e.includes('avatar') && e !== urls.find(e => e.includes('avatar')))
         ) {
           presenceData.details = 'Viewing own profile'
           if (displayStats) {

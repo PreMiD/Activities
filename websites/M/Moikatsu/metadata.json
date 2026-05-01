@@ -11,7 +11,7 @@
   },
   "url": "moikatsu.in",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*moikatsu[.]in[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Moikatsu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Moikatsu/assets/thumbnail.png",
   "color": "#ffffff",
@@ -22,7 +22,7 @@
     "media"
   ],
   "iframe": true,
-  "iFrameRegExp": "https://(moikatsu\\.in/src/player/sub\\.php\\?.*|megaplay\\.buzz/stream/.*)",
+  "iFrameRegExp": "^https?[:][/][/](moikatsu[.]in[/]src[/]player[/]sub[.]php|megaplay[.]buzz[/]stream)[/]",
   "settings": [
     {
       "id": "privacy",

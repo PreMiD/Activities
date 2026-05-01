@@ -13,8 +13,8 @@
     "kissanime.com.ru",
     "www.kissanime.com.ru"
   ],
-  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*kissanime([.][a-z]+)+[/]",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kissanime([.][a-z]+)+[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KissAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KissAnime/assets/thumbnail.png",
   "color": "#000000",
@@ -25,5 +25,5 @@
     "video"
   ],
   "iframe": true,
-  "iFrameRegExp": "(https?:\\/\\/(?:[a-z0-9-]+\\.)?(vidstream\\.vip|playhydrax\\.com)(?:\\/[^\"' ]*)?)"
+  "iFrameRegExp": "^https?[:][/][/]([a-z0-9-]+[.])*(vidstream[.]vip|playhydrax[.]com)"
 }

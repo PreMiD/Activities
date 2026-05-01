@@ -39,8 +39,8 @@ presence.on('UpdateData', async () => {
   }
   const privacy = await presence.getSetting<boolean>('privacy')
   const strings = await getStrings()
-  // eslint-disable-next-line regexp/no-unused-capturing-group
-  const date = document.title?.replace(/Google[\xA0 ](Calendar|Agenda) -/, '')?.replaceAll(',', ' -')?.trim()
+
+  const date = document.title?.replace(/Google[\xA0 ](?:Calendar|Agenda) -/, '')?.replaceAll(',', ' -')?.trim()
   const eventDialog = document.querySelector('div[role="dialog"]')
 
   if (document.location.pathname === '/') {

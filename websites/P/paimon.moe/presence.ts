@@ -67,9 +67,9 @@ presence.on('UpdateData', async () => {
   if (pathname.includes('/characters') || pathname.includes('/characters/')) {
     presenceData.details = 'Viewing the character list/details'
     if (validCharacter) {
-      const original = document.URL.match(/(\/\w+)/g)
+      const original = document.URL.match(/\/\w+/g)
         ?.pop()
-        ?.substr(1)
+        ?.slice(1)
       switch (original) {
         case 'traveler_anemo': {
           stateText = 'Anemo Traveler'
@@ -229,7 +229,7 @@ presence.on('UpdateData', async () => {
         '#sapper > main > div > div.flex.svelte-15n1215 > div.svelte-15n1215 > div > label',
       )
       ?.textContent
-      ?.match(/(\w(\s+)?)+/g)
+      ?.match(/(?:\w\s*)+/g)
       ?.pop()}`
   }
   else if (pathname.includes('/settings') || pathname.includes('/settings/')) {

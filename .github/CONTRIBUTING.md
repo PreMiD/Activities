@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://github.com/PreMiD.png?size=2048" width="128px" style="max-width:100%;">
+    <img src="https://github.com/PreMiD.png?size=2048" alt="PreMiD logo" width="128px" style="max-width:100%;">
     <h3 style="font-size: 2rem; margin-bottom: 0">Activity Guidelines</h3>
     <h4 style="margin-top: 0">Revision 3.2</h4>
     <br />
@@ -262,7 +262,7 @@ The most important process of activity development is getting your activity on t
 
 <div>
   <h2 style="font-size: 2rem; margin-bottom: 0;">Activity Reviewers</h2>
-  <a href="https://github.com/Bas950"><img src="https://github.com/Bas950.png?size=2048" title="Bas950" width="48px" style="max-width:100%; border-radius: 50%;"/></a> <a href="https://github.com/theusaf"><img src="https://github.com/theusaf.png?size=2048" title="theusaf" width="48px" style="max-width:100%; border-radius: 50%;"/></a> <a href="https://github.com/Timeraa"><img src="https://github.com/Timeraa.png?size=2048" title="Timeraa" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
+  <a href="https://github.com/Bas950"><img src="https://github.com/Bas950.png?size=2048" alt="Bas950" title="Bas950" width="48px" style="max-width:100%; border-radius: 50%;"/></a> <a href="https://github.com/theusaf"><img src="https://github.com/theusaf.png?size=2048" alt="theusaf" title="theusaf" width="48px" style="max-width:100%; border-radius: 50%;"/></a> <a href="https://github.com/Timeraa"><img src="https://github.com/Timeraa.png?size=2048" alt="Timeraa" title="Timeraa" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
   <br />
 </div>
 
@@ -311,19 +311,19 @@ If you have some suggestions about our guidelines, you should contact us @ [PreM
 `Revision 3` of the guidelines was written and was contributed to by the following individuals:
 
 <div>
-<a href="https://github.com/PreMiD"><img src="https://github.com/PreMiD.png?size=2048" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
+<a href="https://github.com/PreMiD"><img src="https://github.com/PreMiD.png?size=2048" alt="PreMiD" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
 </div>
 
 `Revision 2` of the guidelines was written and was contributed to by the following individuals:
 
 <div>
-<a href="https://github.com/CobyPowers"><img src="https://github.com/CobyPowers.png?size=2048" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
+<a href="https://github.com/CobyPowers"><img src="https://github.com/CobyPowers.png?size=2048" alt="CobyPowers" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
 </div>
 
 `Revision 1` was maintained by the following individuals:
 
 <div>
-<a href="https://github.com/CobyPowers"><img src="https://github.com/CobyPowers.png?size=2048" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
-<a href="https://github.com/Bas950"><img src="https://github.com/Bas950.png?size=2048" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
-<a href="https://github.com/i1u5"><img src="https://github.com/i1u5.png?size=2048" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
+<a href="https://github.com/CobyPowers"><img src="https://github.com/CobyPowers.png?size=2048" alt="CobyPowers" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
+<a href="https://github.com/Bas950"><img src="https://github.com/Bas950.png?size=2048" alt="Bas950" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
+<a href="https://github.com/i1u5"><img src="https://github.com/i1u5.png?size=2048" alt="i1u5" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
 </div>

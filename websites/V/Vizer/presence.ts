@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '684199669424848970',
@@ -60,7 +60,7 @@ presence.on('UpdateData', async () => {
           } - ${episodeName.textContent?.split('.')[1]}`
 
           if (iFrameVideo && !Number.isNaN(duration)) {
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
               Math.floor(currentTime),
               Math.floor(duration),
             )
@@ -99,7 +99,7 @@ presence.on('UpdateData', async () => {
         } - ${document.querySelector('.rating')?.textContent}`
 
         if (iFrameVideo && !Number.isNaN(duration)) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
             Math.floor(currentTime),
             Math.floor(duration),
           )

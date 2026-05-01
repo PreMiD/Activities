@@ -12,7 +12,7 @@
   },
   "url": "doroni.me",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*doroni[.]me[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Doronime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Doronime/assets/thumbnail.png",
   "color": "#b11415",

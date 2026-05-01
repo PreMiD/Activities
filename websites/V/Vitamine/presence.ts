@@ -222,4 +222,3 @@ async function updatePresence(): Promise<void> {
 }
 
 presence.on('UpdateData', updatePresence)
-

@@ -20,7 +20,7 @@
   },
   "url": "www.pokemon.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(pokemon|portal-pokemon|pokemontcg|pokemoncenter|pokemoncenter-online|pokemon-cafe|pokemonkorea|pokemoncard|pokemonstore|pokemon-movie|pokemon-card)([.][a-z]+)+[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pok%C3%A9mon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pok%C3%A9mon/assets/thumbnail.jpg",
   "color": "#ffcb05",

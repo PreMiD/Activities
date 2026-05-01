@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '841014953439264841',
@@ -101,7 +101,7 @@ presence.on('UpdateData', async () => {
     }
     case 'WideoLAN': {
       if (!iFrameData.wlc.paused) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
           iFrameData.wlc.currentTime,
           iFrameData.wlc.duration,
         )

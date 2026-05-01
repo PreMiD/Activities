@@ -19,7 +19,7 @@ presence.on('UpdateData', async () => {
       if (document.querySelector('#result_area > div.kanji > div') === null) {
         presenceData.details = 'Searching:'
         presenceData.state = decodeURIComponent(
-          document.location.pathname.substr(8),
+          document.location.pathname.slice(8),
         )
         presence.info('searching')
       }
@@ -41,7 +41,7 @@ presence.on('UpdateData', async () => {
     else if (document.location.pathname.startsWith('/word')) {
       presenceData.details = 'Viewing a word:'
       presenceData.state = decodeURIComponent(
-        document.location.pathname.substr(6),
+        document.location.pathname.slice(6),
       )
     }
     else if (document.location.pathname.startsWith('/forum')) {

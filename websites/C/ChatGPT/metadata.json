@@ -22,7 +22,7 @@
   },
   "url": "chatgpt.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*chatgpt[.]com[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/ChatGPT/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/ChatGPT/assets/thumbnail.png",
   "color": "#FFFFFF",
