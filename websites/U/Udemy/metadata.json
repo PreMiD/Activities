@@ -5,6 +5,12 @@
     "name": "EGGSY",
     "id": "162969778699501569"
   },
+  "contributors": [
+    {
+      "name": "rikunz",
+      "id": "430729478151602183"
+    }
+  ],
   "service": "Udemy",
   "description": {
     "en": " Udemy is an online learning and teaching marketplace with over 100000 courses and 24 million students.",
