@@ -7,8 +7,8 @@
   },
   "service": "Asya Animeleri",
   "description": {
-    "en": "Shows what anime you are watching on Asya Animeleri, including anime name, season, episode and elapsed time.",
-    "tr": "Asya Animeleri üzerinde izlediğiniz animeyi, sezon, bölüm ve geçen süreyle birlikte gösterir."
+    "en": "A Turkish anime streaming site featuring Chinese and Japanese anime with Turkish subtitles.",
+    "tr": "Türkçe altyazılı Çin ve Japon animelerinin yayınlandığı Türkçe anime sitesi."
   },
   "url": "asyaanimeleri.top",
   "regExp": "^https?[:][/][/]asyaanimeleri[.]top[/]",
