@@ -86,11 +86,11 @@ presence.on('UpdateData', async () => {
     presenceData.details = info.animeName;
 
     if (showEpisode && info.season && info.episode)
-      presenceData.state = `Season ${info.season}, Episode ${info.episode}`;
+      presenceData.state = `${info.season}. Sezon • ${info.episode}. Bölüm`;
     else if (showEpisode && info.episode)
-      presenceData.state = `Episode ${info.episode}`;
+      presenceData.state = `${info.episode}. Bölüm`;
     else
-      presenceData.state = 'Watching';
+      presenceData.state = 'İzleniyor';
 
     if (showTimestamp) presenceData.startTimestamp = browsingTimestamp;
     else delete presenceData.startTimestamp;
@@ -103,8 +103,8 @@ presence.on('UpdateData', async () => {
       .trim();
 
     presenceData.largeImageText = title;
-    presenceData.details = title || 'Anime Page';
-    presenceData.state = 'Browsing series';
+    presenceData.details = title || 'Anime Sayfası';
+    presenceData.state = 'Seri sayfasına bakıyor';
 
     if (showTimestamp) presenceData.startTimestamp = browsingTimestamp;
     else delete presenceData.startTimestamp;
@@ -113,7 +113,7 @@ presence.on('UpdateData', async () => {
     if (!showBrowsing) { presence.setActivity(); return; }
 
     presenceData.details = 'Asya Animeleri';
-    presenceData.state = 'Browsing home page';
+    presenceData.state = 'Ana sayfada geziniyor';
 
     if (showTimestamp) presenceData.startTimestamp = browsingTimestamp;
     else delete presenceData.startTimestamp;
@@ -126,7 +126,7 @@ presence.on('UpdateData', async () => {
       .trim();
 
     presenceData.details = label || 'Asya Animeleri';
-    presenceData.state = 'Browsing';
+    presenceData.state = 'Geziniyor';
 
     if (showTimestamp) presenceData.startTimestamp = browsingTimestamp;
     else delete presenceData.startTimestamp;
