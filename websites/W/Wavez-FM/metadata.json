@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1500686150845595730",
+    "name": "eoyami"
+  },
+  "contributors": [
+    {
+      "id": "146019830036692993",
+      "name": "aqueleharu"
+    }
+  ],
+  "service": "WavezFM",
+  "description": {
+    "en": "Enjoy a rich experience while listening to music on Wavez.fm with real-time status and playback synchronization.",
+    "pt": "Aproveite uma experiência rica enquanto ouve música no Wavez.fm com status em tempo real e sincronização de reprodução."
+  },
+  "url": "wavez.fm",
+  "regExp": "^https?://(www\\.)?wavez\\.fm/.*",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/XrWwSgw.png",
+  "thumbnail": "https://i.imgur.com/XrWwSgw.png",
+  "color": "#000000",
+  "category": "music",
+  "tags": [
+    "audio",
+    "streaming"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true,
+      "title": "Language",
+      "value": "pt-BR"
+    }
+  ]
+}
