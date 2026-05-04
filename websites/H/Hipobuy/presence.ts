@@ -203,7 +203,6 @@ presence.on('UpdateData', async () => {
     viewingCart: 'hipobuy.viewingCart',
     viewingFavorites: 'hipobuy.viewingFavorites',
     favoritesTabAll: 'hipobuy.favoritesTabAll',
-    favoritesTab1688: 'hipobuy.favoritesTab1688',
     favoritesTabTaobao: 'hipobuy.favoritesTabTaobao',
     favoritesTabWeidian: 'hipobuy.favoritesTabWeidian',
     viewingOrders: 'hipobuy.viewingOrders',
@@ -330,7 +329,7 @@ presence.on('UpdateData', async () => {
       const tab = getFavoriteTab()
       const favTabMap: Record<string, string> = {
         All: strings.favoritesTabAll,
-        1688: strings.favoritesTab1688,
+        1688: '1688',
         TaoBao: strings.favoritesTabTaobao,
         WeiDian: strings.favoritesTabWeidian,
       }

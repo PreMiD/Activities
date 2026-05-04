@@ -21,7 +21,7 @@
     "hipobuy.com",
     "www.hipobuy.com"
   ],
-  "regExp": "^https?[:][/][/](www\\.)?hipobuy[.]com[/]?",
+  "regExp": "^https?[:][/][/](www[.])?hipobuy[.]com[/]?",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/pyXT0kP.png",
   "thumbnail": "https://i.imgur.com/yfEp1n3.png",

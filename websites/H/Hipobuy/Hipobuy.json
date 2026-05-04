@@ -91,10 +91,6 @@
     "description": "State shown when the All channel tab is active on /user/favorite",
     "message": "All platforms"
   },
-  "hipobuy.favoritesTab1688": {
-    "description": "State shown when the 1688 channel tab is active on /user/favorite",
-    "message": "1688"
-  },
   "hipobuy.favoritesTabTaobao": {
     "description": "State shown when the TaoBao channel tab is active on /user/favorite",
     "message": "TaoBao"
