@@ -58,7 +58,7 @@ presence.on('UpdateData', async () => {
     },
   }
   const currentStrings = strings[lang] || strings.en
-
+  const { pathname } = window.location
   const wavezFMUrl = window.location.href
   const presenceData: PresenceData = {
     details: currentStrings['wavezfm.noMusic'].message,
@@ -83,18 +83,31 @@ presence.on('UpdateData', async () => {
     const currentSeconds = parseTime(currentTimeStr)
     const totalSeconds = parseTime(totalTimeStr)
     const now = Date.now()
-    if (songElement && djElement && timeElement) {
-      presenceData.largeImageKey = ActivityAssets.Logo
-      presenceData.startTimestamp = now - (currentSeconds * 1000)
-      presenceData.endTimestamp = presenceData.startTimestamp + (totalSeconds * 1000)
-      presenceData.smallImageKey = Assets.Play
-      presenceData.details = `${currentStrings['wavezfm.listening'].message}: ${songElement}`
-      presenceData.state = `${djElement} ${currentStrings['wavezfm.playingTo'].message} ${peopleElement} ${currentStrings['wavezfm.peoples'].message}!`
-      presenceData.buttons = [{
-        label: `${currentStrings['wavezfm.joinRoom'].message}`,
-        url: `${wavezFMUrl}`,
-      }]
-      presence.setActivity(presenceData)
+    if (pathname.includes('/~/')) {
+      if (songElement && djElement && timeElement) {
+        presenceData.largeImageKey = ActivityAssets.Logo
+        presenceData.startTimestamp = now - (currentSeconds * 1000)
+        presenceData.endTimestamp = presenceData.startTimestamp + (totalSeconds * 1000)
+        presenceData.smallImageKey = Assets.Play
+        presenceData.details = `${currentStrings['wavezfm.listening'].message}: ${songElement}`
+        presenceData.state = `${djElement} ${currentStrings['wavezfm.playingTo'].message} ${peopleElement} ${currentStrings['wavezfm.peoples'].message}!`
+        presenceData.buttons = [{
+          label: `${currentStrings['wavezfm.joinRoom'].message}`,
+          url: `${wavezFMUrl}`,
+        }]
+        presence.setActivity(presenceData)
+        return
+      }
+    }
+    if (pathname === '/') {
+      presenceData.details = 'Navegando na Home'
+      presenceData.state = 'Wavez.fm - 2026'
+      presenceData.buttons = [
+        {
+          label: 'Acessar Wavez.fm',
+          url: 'wavez.fm',
+        },
+      ]
     }
   }
   presence.setActivity(presenceData)
