@@ -16,7 +16,7 @@ presence.on('UpdateData', () => {
     if (hash) {
       const routeName = decodeURIComponent(hash.substring(1))
         .split(' ')
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ')
 
       presenceData.details = `Lendo sobre ${routeName} nas rotas`
