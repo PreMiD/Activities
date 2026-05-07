@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "401715907975577600",
+    "name": "UndoingTurtle"
+  },
+  "service": "Miruro",
+  "description": {
+    "en": "Miruro is a free anime website where millions visit to watch anime online."
+  },
+  "url": [
+    "miruro.tv",
+    "miruro.to",
+    "miruro.bz",
+    "miruro.ru"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?miruro[.](tv|to|bz|ru)[/]",
+  "version": "1.0.0",
+  "logo": "https://i.postimg.cc/N0ZsxZxb/favicon-V2.png",
+  "thumbnail": "https://i.postimg.cc/N0ZsxZxb/favicon-V2.png",
+  "color": "#1a1a1a",
+  "category": "anime",
+  "tags": ["anime", "streaming"],
+  "iframe": true,
+  "iFrameRegExp": "kwik[.](cx|si)|ok[.]ru|megaplay[.]buzz",
+  "settings": [
+    {
+      "id": "usePresenceName",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": true
+    }
+  ]
+}
