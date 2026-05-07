@@ -8,7 +8,7 @@ presence.on('UpdateData', () => {
   const { pathname, hash } = document.location
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://pawsy.fun/favicon.ico',
+    largeImageKey: 'https://i.imgur.com/DZb1KAE.jpeg',
     startTimestamp: browsingTimestamp,
   }
 
