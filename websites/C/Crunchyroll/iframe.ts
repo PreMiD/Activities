@@ -1,6 +1,6 @@
 const iframe = new iFrame()
 
-setInterval(() => {
+iframe.on('UpdateData', () => {
   const video
     = document.querySelector<HTMLVideoElement>('video')
       ?? document.querySelector<HTMLVideoElement>('#player0')
@@ -16,4 +16,4 @@ setInterval(() => {
       },
     })
   }
-}, 100)
+})
