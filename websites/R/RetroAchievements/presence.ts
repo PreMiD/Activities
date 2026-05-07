@@ -76,7 +76,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing Emulators'
   }
   // Hubs
-  else if (pathname === '/hubs' || pathname.match(/\/hub\/\d+/)) {
+  else if (pathname === '/hubs' || pathname.test(/\/hub\/\d+/)) {
     if (pathname === '/hubs') {
       presenceData.details = 'Viewing Hubs'
     }
