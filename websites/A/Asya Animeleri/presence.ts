@@ -138,7 +138,7 @@ presence.on('UpdateData', async () => {
   }
   else {
     if (!showBrowsing) {
-      presence.setActivity()
+      presence.clearActivity()
       return
     }
 
