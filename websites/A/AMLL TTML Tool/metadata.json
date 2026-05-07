@@ -14,7 +14,7 @@
     "amll-ttml-tool.stevexmh.net",
     "verycool-ttml-tool-trust.vercel.app"
   ],
-  "regExp": "^https?:\\/\\/(amll-ttml-tool(-test\\.vercel\\.app|\\.stevexmh\\.net)|verycool-ttml-tool-trust\\.vercel\\.app)\\/?",
+  "regExp": "^https?[:][/][/](amll-ttml-tool(-test[.]vercel[.]app|[.]stevexmh[.]net)|verycool-ttml-tool-trust[.]vercel[.]app)[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/78zp1Xo.png",
   "thumbnail": "https://i.imgur.com/u1ojO04.png",
