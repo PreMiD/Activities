@@ -19,6 +19,7 @@ presence.on('UpdateData', async () => {
     watchEpisode: 'general.buttonViewEpisode',
     viewCollection: 'general.viewACategory',
     viewSeries: 'general.buttonViewSeries',
+    watchingAnime: 'general.watchingAnime',
     viewProfile: 'general.viewProfile',
     viewPage: 'general.viewPage',
     browse: 'general.browsing',
@@ -33,8 +34,9 @@ presence.on('UpdateData', async () => {
   }
 
   const { href, pathname } = window.location
-  const [showCover, showBrowsingActivity, showTitleAsPresence] = await Promise.all([
+  const [showCover, privacy, showBrowsingActivity, showTitleAsPresence] = await Promise.all([
     presence.getSetting<boolean>('cover'),
+    presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('browsingActivity'),
     presence.getSetting<boolean>('titleAsPresence'),
   ])
@@ -55,9 +57,12 @@ presence.on('UpdateData', async () => {
   ) {
     const scripts = document.querySelectorAll('script[type="application/ld+json"]')
 
-    presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
-    presenceData.smallImageText = paused ? strings.pause : strings.play;
-    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
+    presenceData.largeImageText = ANIME_NEXUS
+    if (!privacy) {
+      presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
+      presenceData.smallImageText = paused ? strings.pause : strings.play;
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
+    }
 
     let seriesHref = ANIME_NEXUS_URL
     if (scripts) {
@@ -71,13 +76,23 @@ presence.on('UpdateData', async () => {
             const coverImage = json.image ?? ActivityAssets.Logo
             seriesHref = json.partOfSeries?.url ?? seriesHref
 
-            if (showTitleAsPresence) {
-              presenceData.largeImageText = ANIME_NEXUS
+            if (!privacy) {
+              presenceData.details = seriesTitle
+              presenceData.state = `Episode ${episodeNum}`
+              if (showCover) {
+                presenceData.largeImageKey = coverImage
+              }
+            }
+            else {
+              presenceData.details = strings.watchingAnime
+            }
+
+            if (showTitleAsPresence && !privacy) {
               presenceData.name = seriesTitle
             }
-            presenceData.details = seriesTitle
-            presenceData.state = `Episode ${episodeNum}`
-            presenceData.largeImageKey = coverImage
+            else {
+              presenceData.name = ANIME_NEXUS
+            }
           }
         }
         catch {
@@ -91,18 +106,20 @@ presence.on('UpdateData', async () => {
       delete presenceData.endTimestamp
     }
 
-    presenceData.buttons = [
-      {
-        label: strings.watchEpisode,
-        url: href,
-      },
-      {
-        label: strings.viewSeries,
-        url: seriesHref,
-      },
-    ]
+    if (!privacy) {
+      presenceData.buttons = [
+        {
+          label: strings.watchEpisode,
+          url: href,
+        },
+        {
+          label: strings.viewSeries,
+          url: seriesHref,
+        },
+      ]
+    }
   }
-  else if (pathname.includes('/series') && showBrowsingActivity) {
+  else if (pathname.includes('/series') && showBrowsingActivity && !privacy) {
     const pageTitle = document.querySelector<HTMLHeadingElement>('h2[class^="text-3xl"]')?.textContent
     presenceData.details = strings.viewPage
     presenceData.state = pageTitle
@@ -127,27 +144,27 @@ presence.on('UpdateData', async () => {
     || pathname.includes('/latest')
     || pathname.includes('/user/updates')
     || pathname.includes('/user/history')
-  ) && showBrowsingActivity) {
+  ) && showBrowsingActivity && !privacy) {
     presenceData.details = strings.viewPage
     presenceData.state = document.querySelector<HTMLHeadingElement>('h1[class^="text-2xl"]')?.textContent
   }
-  else if (pathname.includes('/user/profile') && showBrowsingActivity) {
+  else if (pathname.includes('/user/profile') && showBrowsingActivity && !privacy) {
     presenceData.details = strings.viewProfile
     presenceData.state = document.querySelector<HTMLHeadingElement>('h1[class^="text-3xl"]')?.textContent
   }
-  else if (pathname.includes('/schedule') && showBrowsingActivity) {
+  else if (pathname.includes('/schedule') && showBrowsingActivity && !privacy) {
     presenceData.details = strings.viewPage
     presenceData.state = document.querySelector<HTMLHeadingElement>('h2[class^="text-lg"]')?.textContent
   }
-  else if (pathname.includes('/user/collection') && showBrowsingActivity) {
+  else if (pathname.includes('/user/collection') && showBrowsingActivity && !privacy) {
     presenceData.details = strings.viewPage
     presenceData.state = document.querySelector<HTMLHeadingElement>('h2[class^="text-3xl"]')?.textContent
   }
-  else if (pathname.includes('/user/lists') && showBrowsingActivity) {
+  else if (pathname.includes('/user/lists') && showBrowsingActivity && !privacy) {
     presenceData.details = strings.viewPage
     presenceData.state = document.querySelector<HTMLHeadingElement>('h2[class^="text-2xl"]')?.textContent
   }
-  else if (showBrowsingActivity) {
+  else if (showBrowsingActivity && !privacy) {
     presenceData.details = strings.browse
     presenceData.startTimestamp = browsingTimestamp
 

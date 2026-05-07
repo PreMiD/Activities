@@ -27,19 +27,34 @@
       "multiLanguage": true
     },
     {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
       "id": "browsingActivity",
+      "if": {
+        "privacy": false
+      },
       "title": "Show Browsing",
       "icon": "fad fa-compass",
       "value": true
     },
     {
       "id": "cover",
+      "if": {
+        "privacy": false
+      },
       "title": "Show Cover",
       "icon": "fad fa-images",
       "value": true
     },
     {
       "id": "titleAsPresence",
+      "if": {
+        "privacy": false
+      },
       "title": "Show Title as Presence",
       "icon": "fad fa-user-edit",
       "value": true
