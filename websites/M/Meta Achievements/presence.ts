@@ -17,10 +17,10 @@ presence.on('UpdateData', async () => {
 
   const getMetric = (label: string) => {
     const metric = Array.from(document.querySelectorAll('.summary-metric'))
-        .find((m) => {
-          const l = m.querySelector('.summary-metric-label')?.textContent?.trim().toLowerCase()
-          return l && l.includes(label.toLowerCase())
-        })
+      .find((m) => {
+        const l = m.querySelector('.summary-metric-label')?.textContent?.trim().toLowerCase()
+        return l && l.includes(label.toLowerCase())
+      })
     const value = metric?.querySelector('.summary-metric-value')?.textContent?.trim()
     return value && value.length > 0 ? value : null
   }
@@ -123,14 +123,14 @@ presence.on('UpdateData', async () => {
       buttonLabel = 'View Game List'
       const parts = []
       if (games) {
-          parts.push(`${games} Total Games`)
-        }
+        parts.push(`${games} Total Games`)
+      }
       if (achievements) {
         parts.push(`${achievements} Achievements`)
-        }
-      state = parts.join(' · ')
       }
+      state = parts.join(' · ')
     }
+  }
   else if (pathname.endsWith('achievementdefinitionsapp.html')) {
     details = 'Definitions App'
     smallImageKey = getEmojiUrl('🛠️')
@@ -155,13 +155,13 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
     smallImageKey,
     buttons: buttonLabel
-        ? [
+      ? [
           {
             label: buttonLabel,
             url: window.location.href,
           },
         ]
-        : undefined,
+      : undefined,
   }
 
   presence.setActivity(presenceData)
