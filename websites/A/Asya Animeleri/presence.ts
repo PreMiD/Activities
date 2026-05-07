@@ -124,7 +124,7 @@ presence.on('UpdateData', async () => {
   }
   else if (pageType === 'home') {
     if (!showBrowsing) {
-      presence.setActivity()
+      presence.clearActivity()
       return
     }
 
