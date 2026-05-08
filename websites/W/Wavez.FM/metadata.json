@@ -11,16 +11,16 @@
       "name": "aqueleharu"
     }
   ],
-  "service": "Wavez-FM",
+  "service": "Wavez.FM",
   "description": {
     "en": "Enjoy a rich experience while listening to music on Wavez.fm with real-time status and playback synchronization.",
     "pt": "Aproveite uma experiência rica enquanto ouve música no Wavez.fm com status em tempo real e sincronização de reprodução."
   },
   "url": "wavez.fm",
-  "regExp": "^https?://(www\\.)?wavez\\.fm/.*",
+  "regExp": "^https?[:][/][/](www[.])?wavez[.]fm[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/1fybXxK.png",
-  "thumbnail": "https://i.imgur.com/1fybXxK.png",
+  "thumbnail": "https://i.imgur.com/7epqBF3.jpeg",
   "color": "#000000",
   "category": "music",
   "tags": [
@@ -30,9 +30,7 @@
   "settings": [
     {
       "id": "lang",
-      "multiLanguage": true,
-      "title": "Language",
-      "value": "en"
+      "multiLanguage": true
     }
   ]
 }

@@ -1,0 +1,26 @@
+{
+  "wavezfm.listening": {
+    "description": "Listening",
+    "message": "Listening"
+  },
+  "wavezfm.joinRoom": {
+    "description": "Join room",
+    "message": "Join Room"
+  },
+  "wavezfm.playingTo": {
+    "description": "playing to",
+    "message": "playing to"
+  },
+  "wavezfm.noMusic": {
+    "description": "No music playing",
+    "message": "No music playing"
+  },
+  "wavezfm.peoples": {
+    "description": "Peoples",
+    "message": "peoples"
+  },
+  "wavezfm.browsing": {
+    "description": "Browsing Dashboard",
+    "message": "Browsing Dashboard"
+  }
+}
