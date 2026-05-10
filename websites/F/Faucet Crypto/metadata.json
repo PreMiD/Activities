@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "134710228242530305",
+    "name": "feverz"
+  },
+  "service": "Faucet Crypto",
+  "description": {
+    "en": "Your faucet of choice! Earn free cryptocurrencies by completing simple tasks, such as visiting websites, filling surveys and downloading apps. Multiple cryptocurrencies available."
+  },
+  "url": [
+    "faucetcrypto.com",
+    "status.faucetcrypto.com"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*faucetcrypto[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/37tBbHi.jpeg",
+  "thumbnail": "https://faucetcrypto.com/banner-widget.jpg",
+  "color": "#50a2ff",
+  "category": "other",
+  "tags": [
+    "crypto",
+    "blockchain"
+  ]
+}
