@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "venus999999",
+    "id": "1228414171020787823"
+  },
+  "service": "BBN",
+  "description": {
+    "en": "BBN — Twitch streamer & TikTok creator. Mauritius × Paris.",
+    "fr": "BBN — Streamer Twitch & créateur TikTok. Maurice × Paris."
+  },
+  "url": "bbncorps.fr",
+  "regExp": "^https?[:][/][/](www[.])?bbncorps[.]fr[/]?",
+  "version": "1.0.0",
+  "logo": "https://bbncorps.fr/premid-logo.png",
+  "thumbnail": "https://bbncorps.fr/premid-thumbnail.png",
+  "color": "#D4AF37",
+  "category": "socials",
+  "tags": [
+    "bbn",
+    "bbn-zm",
+    "streamer",
+    "twitch",
+    "tiktok",
+    "mauritius",
+    "paris",
+    "gaming"
+  ]
+}
