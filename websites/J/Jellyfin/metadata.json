@@ -18,7 +18,7 @@
   },
   "url": "jellyfin.org",
   "regExp": "^https?[:][/][/](jellyfin[.]org|.*[/]web[/](index[.]html)?#)[/]",
-  "version": "1.10.3",
+  "version": "1.10.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Jellyfin/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Jellyfin/assets/thumbnail.png",
   "color": "#00698c",
@@ -47,6 +47,15 @@
       "title": "Show thumbnails",
       "icon": "fad fa-image",
       "value": true
+    },
+    {
+      "id": "localImageExtraction",
+      "title": "Force local image extraction",
+      "icon": "fad fa-download",
+      "value": false,
+      "if": {
+        "showThumbnails": true
+      }
     }
   ],
   "allowURLOverrides": true
