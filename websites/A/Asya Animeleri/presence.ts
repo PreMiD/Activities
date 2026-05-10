@@ -1,3 +1,5 @@
+import { ActivityType } from 'premid'
+
 const presence = new Presence({
   clientId: '1449057122469019749',
 })
@@ -81,7 +83,7 @@ presence.on('UpdateData', async () => {
     largeImageText: 'Asya Animeleri',
     smallImageKey: Logo,
     smallImageText: 'Asya Animeleri',
-    type: 3,
+    type: ActivityType.Watching,
   }
 
   if (pageType === 'episode') {
