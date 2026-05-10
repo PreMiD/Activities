@@ -5,7 +5,6 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-
 const strings = presence.getStrings({
   browse: 'general.browsing',
   viewHome: 'general.viewHome',
