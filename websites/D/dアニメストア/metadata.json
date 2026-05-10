@@ -36,6 +36,12 @@
       "title": "Show Thumbnail",
       "icon": "fad fa-images",
       "value": true
+    },
+    {
+      "id": "showTitle",
+      "title": "Show Title",
+      "icon": "fas fa-tv",
+      "value": false
     }
   ]
 }
