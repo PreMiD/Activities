@@ -90,7 +90,39 @@ presence.on('UpdateData', async () => {
     presenceData.details = (await strings).browse
     presenceData.state = 'Catalogue Replay'
   }
-  // Toute autre page (la-chaine, direct, programmation…)
+  // Page : Direct
+  else if (pathname.startsWith('/direct')) {
+    const isOffline = Array.from(document.querySelectorAll('h2')).some((el) =>
+      el.textContent?.includes('Nous ne diffusons pas')
+    )
+
+    if (isOffline) {
+      presenceData.details = (await strings).view
+      presenceData.state = 'Direct (Hors ligne)'
+    } else {
+      presenceData.details = (await strings).watching
+      presenceData.state = 'Le direct'
+
+      const video = document.querySelector('video')
+      if (video) {
+        const isPaused = video.paused
+        presenceData.smallImageKey = isPaused ? Assets.Pause : Assets.Play
+        presenceData.smallImageText = isPaused
+          ? (await strings).paused
+          : (await strings).watching
+      }
+
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: (await strings).buttonWatchVideo,
+            url: href,
+          },
+        ]
+      }
+    }
+  }
+  // Toute autre page (la-chaine, programmation…)
   else {
     const pageTitle = document.querySelector('title')?.textContent?.trim()
     presenceData.details = (await strings).view
