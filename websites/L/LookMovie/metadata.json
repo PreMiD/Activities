@@ -10,12 +10,9 @@
     "en": "Watch all new and old movies on line in FHD quality and subtitles for free.",
     "nl": "Bekijk gratis alle nieuwe en oude films online in HD-kwaliteit en ondertitels."
   },
-  "url": [
-    "lookmovie2.to",
-    "playerwatchlm25.xyz"
-  ],
+  "url": "lookmovie2.to",
   "regExp": "^https?[:][/][/]((lookmovie[0-9]*[.][a-z]{2})|(playerwatch(lm)?[0-9]+[.]xyz))[/]",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LookMovie/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LookMovie/assets/thumbnail.png",
   "color": "#ffcc00",
