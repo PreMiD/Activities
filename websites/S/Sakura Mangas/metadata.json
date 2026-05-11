@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "458776046184169473",
+    "name": "Luscarvalho"
+  },
+  "service": "Sakura Mangas",
+  "description": {
+    "en": "Read manga online on Sakura Mangas",
+    "pt-br": "Leia mangás online no Sakura Mangas"
+  },
+  "url": ["www.sakuramangas.org", "sakuramangas.org"],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sakuramangas[.]org[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/8EhCZKg.png",
+  "thumbnail": "https://i.imgur.com/BPYoKf7.png",
+  "color": "#ea6db5",
+  "category": "anime",
+  "tags": [
+    "manga"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showButtons",
+      "title": "Show buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
