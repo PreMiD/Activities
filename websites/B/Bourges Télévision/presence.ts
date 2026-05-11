@@ -92,14 +92,15 @@ presence.on('UpdateData', async () => {
   }
   // Page : Direct
   else if (pathname.startsWith('/direct')) {
-    const isOffline = Array.from(document.querySelectorAll('h2')).some((el) =>
-      el.textContent?.includes('Nous ne diffusons pas')
+    const isOffline = Array.from(document.querySelectorAll('h2')).some(el =>
+      el.textContent?.includes('Nous ne diffusons pas'),
     )
 
     if (isOffline) {
       presenceData.details = (await strings).view
       presenceData.state = 'Direct (Hors ligne)'
-    } else {
+    }
+    else {
       presenceData.details = (await strings).watching
       presenceData.state = 'Le direct'
 
