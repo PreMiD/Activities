@@ -7,8 +7,8 @@
   },
   "service": "Deokwave",
   "description": {
-    "en": "Watch anime on Deokwave.",
-    "tr": "Deokwave'de anime izle."
+    "en": "Deokwave is Türkiye’s most comprehensive anime platform, where you can watch thousands of anime for free with 4K quality, Turkish subtitles, and an active community.",
+    "tr": "Deokwave Türkiye'nin en kapsamlı anime platformu 4K kalite, Türkçe altyazı ve aktif topluluk ile binlerce animeyi ücretsiz izle."
   },
   "url": "deokwave.com",
   "regExp": "^https?[:][/][/](deokwave[.]com)[/]",
