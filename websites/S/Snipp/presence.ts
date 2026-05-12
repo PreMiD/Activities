@@ -20,7 +20,7 @@ presence.on('UpdateData', async () => {
   if (document.location.hostname.startsWith('docs.')) {
     presenceData.state = 'Reading the docs'
     presenceData.smallImageKey = Assets.Search
-  } 
+  }
   else if (pathname === '/upload') {
     presenceData.state = 'Uploading a file'
     presenceData.smallImageKey = Assets.Uploading
@@ -37,11 +37,11 @@ presence.on('UpdateData', async () => {
     presenceData.detailsUrl = 'https://snipp.gg/discover'
   }
   else if (pathname.startsWith('/p/')) {
-    const title = document.querySelector("#__next > div > div.w-full.bg-transparent.relative.z-10 > section > div > div > div.relative.flex-1.min-w-0.rounded-3xl.bg-white\\/50.dark\\:bg-\\[\\#101010\\]\\/50.backdrop-blur.shadow-lg.p-6.transition.duration-300.outline.outline-white\\/5 > div.mt-4.flex.flex-col.gap-3 > div.flex.items-start.justify-between.gap-4 > h1")
-    const avatar: HTMLImageElement | null = document.querySelector("#__next > div > div.w-full.bg-transparent.relative.z-10 > section > div > div > div.relative.flex-1.min-w-0.rounded-3xl.bg-white\\/50.dark\\:bg-\\[\\#101010\\]\\/50.backdrop-blur.shadow-lg.p-6.transition.duration-300.outline.outline-white\\/5 > div.mt-4.flex.flex-col.gap-3 > div.flex.flex-col.sm\\:flex-row.sm\\:items-center.justify-between.gap-4.pt-4.border-t.border-black\\/10.dark\\:border-white\\/10 > div.flex.gap-3.items-center.min-w-0 > span > div > div > img")
-    const video: HTMLVideoElement | null = document.querySelector("#__next > div > div.w-full.bg-transparent.relative.z-10 > section > div > div > div.relative.flex-1.min-w-0.rounded-3xl.bg-white\\/50.dark\\:bg-\\[\\#101010\\]\\/50.backdrop-blur.shadow-lg.p-6.transition.duration-300.outline.outline-white\\/5 > div.relative > div > video")
-    const image: HTMLImageElement | null = document.querySelector("#__next > div > div.w-full.bg-transparent.relative.z-10 > section > div > div > div.relative.flex-1.min-w-0.rounded-3xl.bg-white\\/50.dark\\:bg-\\[\\#101010\\]\\/50.backdrop-blur.shadow-lg.p-6.transition.duration-300.outline.outline-white\\/5 > div.relative > div > img")
-    const author = document.querySelector("#__next > div > div.w-full.bg-transparent.relative.z-10 > section > div > div > div.relative.flex-1.min-w-0.rounded-3xl.bg-white\\/50.dark\\:bg-\\[\\#101010\\]\\/50.backdrop-blur.shadow-lg.p-6.transition.duration-300.outline.outline-white\\/5 > div.mt-4.flex.flex-col.gap-3 > div.flex.flex-col.sm\\:flex-row.sm\\:items-center.justify-between.gap-4.pt-4.border-t.border-black\\/10.dark\\:border-white\\/10 > div.flex.gap-3.items-center.min-w-0 > div > span:nth-child(2) > span > button > p")
+    const title = document.querySelector('#__next > div > div.w-full.bg-transparent.relative.z-10 > section > div > div > div.relative.flex-1.min-w-0.rounded-3xl.bg-white\\/50.dark\\:bg-\\[\\#101010\\]\\/50.backdrop-blur.shadow-lg.p-6.transition.duration-300.outline.outline-white\\/5 > div.mt-4.flex.flex-col.gap-3 > div.flex.items-start.justify-between.gap-4 > h1')
+    const avatar: HTMLImageElement | null = document.querySelector('#__next > div > div.w-full.bg-transparent.relative.z-10 > section > div > div > div.relative.flex-1.min-w-0.rounded-3xl.bg-white\\/50.dark\\:bg-\\[\\#101010\\]\\/50.backdrop-blur.shadow-lg.p-6.transition.duration-300.outline.outline-white\\/5 > div.mt-4.flex.flex-col.gap-3 > div.flex.flex-col.sm\\:flex-row.sm\\:items-center.justify-between.gap-4.pt-4.border-t.border-black\\/10.dark\\:border-white\\/10 > div.flex.gap-3.items-center.min-w-0 > span > div > div > img')
+    const video: HTMLVideoElement | null = document.querySelector('#__next > div > div.w-full.bg-transparent.relative.z-10 > section > div > div > div.relative.flex-1.min-w-0.rounded-3xl.bg-white\\/50.dark\\:bg-\\[\\#101010\\]\\/50.backdrop-blur.shadow-lg.p-6.transition.duration-300.outline.outline-white\\/5 > div.relative > div > video')
+    // const image: HTMLImageElement | null = document.querySelector('#__next > div > div.w-full.bg-transparent.relative.z-10 > section > div > div > div.relative.flex-1.min-w-0.rounded-3xl.bg-white\\/50.dark\\:bg-\\[\\#101010\\]\\/50.backdrop-blur.shadow-lg.p-6.transition.duration-300.outline.outline-white\\/5 > div.relative > div > img')
+    const author = document.querySelector('#__next > div > div.w-full.bg-transparent.relative.z-10 > section > div > div > div.relative.flex-1.min-w-0.rounded-3xl.bg-white\\/50.dark\\:bg-\\[\\#101010\\]\\/50.backdrop-blur.shadow-lg.p-6.transition.duration-300.outline.outline-white\\/5 > div.mt-4.flex.flex-col.gap-3 > div.flex.flex-col.sm\\:flex-row.sm\\:items-center.justify-between.gap-4.pt-4.border-t.border-black\\/10.dark\\:border-white\\/10 > div.flex.gap-3.items-center.min-w-0 > div > span:nth-child(2) > span > button > p')
     if (video) {
       if (!video.paused) {
         [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
@@ -51,17 +51,18 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = [
         {
           label: 'Watch on Snipp',
-          url: 'https://snipp.gg' + pathname,
+          url: `https://snipp.gg${pathname}`,
         },
       ]
-      presenceData.detailsUrl = 'https://snipp.gg' + pathname
-    } else {
+      presenceData.detailsUrl = `https://snipp.gg${pathname}`
+    }
+    else {
       presenceData.details = title ? `${title.textContent}` : 'Viewing a post'
       presenceData.largeImageKey = ActivityAssets.Logo
       presenceData.buttons = [
         {
           label: 'View on Snipp',
-          url: 'https://snipp.gg' + pathname,
+          url: `https://snipp.gg${pathname}`,
         },
       ]
     }
@@ -70,20 +71,20 @@ presence.on('UpdateData', async () => {
     presenceData.buttons = [
       {
         label: 'View on Snipp',
-        url: 'https://snipp.gg' + pathname,
+        url: `https://snipp.gg${pathname}`,
       },
     ]
   }
   else if (pathname.includes('/gallery')) {
     presenceData.state = 'Viewing gallery'
     presenceData.smallImageKey = Assets.Viewing
-    presenceData.detailsUrl = 'https://snipp.gg' + pathname
+    presenceData.detailsUrl = `https://snipp.gg${pathname}`
   }
   else if (pathname.includes('/u')) {
-    const username = document.querySelector("#__next > div > div.w-full.bg-transparent.relative.z-10 > section > div > div.relative.rounded-3xl.bg-white\\/50.dark\\:bg-\\[\\#101010\\]\\/50.backdrop-blur.shadow-lg.overflow-hidden > div.relative.px-6.pb-6.pt-4 > div.flex.flex-col.sm\\:flex-row.sm\\:items-center.gap-3 > div.flex.flex-col.items-start.gap-3.text-left.flex-1.min-w-0.w-full > div > span > h1")
+    const username = document.querySelector('#__next > div > div.w-full.bg-transparent.relative.z-10 > section > div > div.relative.rounded-3xl.bg-white\\/50.dark\\:bg-\\[\\#101010\\]\\/50.backdrop-blur.shadow-lg.overflow-hidden > div.relative.px-6.pb-6.pt-4 > div.flex.flex-col.sm\\:flex-row.sm\\:items-center.gap-3 > div.flex.flex-col.items-start.gap-3.text-left.flex-1.min-w-0.w-full > div > span > h1')
     presenceData.state = username ? `Viewing ${username.textContent}'s profile` : 'Viewing a profile'
     presenceData.smallImageKey = Assets.Viewing
-    presenceData.detailsUrl = 'https://snipp.gg' + pathname
+    presenceData.detailsUrl = `https://snipp.gg${pathname}`
   }
   else if (pathname.includes('/settings')) {
     const subpath = pathname.replace('/settings', '')
@@ -95,7 +96,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Reading
   }
   else if (pathname.includes('/support')) {
-    presenceData.state = "Contacting support"
+    presenceData.state = 'Contacting support'
     presenceData.smallImageKey = Assets.Question
   }
 
