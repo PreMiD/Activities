@@ -14,8 +14,8 @@
     "docs.railway.com",
     "station.railway.com"
   ],
-  "regExp": "^https?[:][/][/]((www|docs|station)[.])?railway[.]com",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]((www|docs|station)[.])?railway[.]com[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Railway/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Railway/assets/thumbnail.png",
   "color": "#B94CF6",

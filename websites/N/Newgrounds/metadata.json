@@ -14,8 +14,8 @@
     "newgrounds.com",
     "newgroundsradio.com"
   ],
-  "regExp": "^https?[:][/][/]((?:[a-z0-9]+\\.)?newgrounds\\.com|newgroundsradio\\.com)",
-  "version": "1.2.0",
+  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*newgrounds[.]com|newgroundsradio[.]com)[/]",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Newgrounds/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Newgrounds/assets/thumbnail.jpg",
   "color": "#f58a2f",

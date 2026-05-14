@@ -75,8 +75,8 @@ const pages: PageContext[] = [
         .filter(x => !!x && x.length > 1 && x[1])
         .map(x => capitalizeFirstLetter(x![1]!))
       data.state = `Browsing ${
-        isCoubPicks && activeTabTitle.match(/^(\w+)/g)
-          ? activeTabTitle.match(/^(\w+)/g)?.[0]
+        isCoubPicks && /^\w+/.test(activeTabTitle)
+          ? activeTabTitle.match(/^\w+/g)?.[0]
           : activeTabTitle
       }${
         (pageType?.length ?? 0) > 0
@@ -299,7 +299,7 @@ const presenceImageKeys = {
   PLAY: Assets.Play,
   PAUSE: Assets.Pause,
 }
-function getStrings(newLang?: string) {
+function getStrings() {
   return presence.getStrings(
     {
       browsing: 'general.browsing',
@@ -307,7 +307,6 @@ function getStrings(newLang?: string) {
       watchVideo: 'general.buttonWatchVideo',
       viewProfile: 'general.buttonViewProfile',
     },
-    newLang,
   )
 }
 let currentLang: string,
@@ -317,7 +316,7 @@ presence.on('UpdateData', async () => {
   const newLang = await presence.getSetting<string>('lang').catch(() => 'en')
   if (!localizedStrings || newLang !== currentLang) {
     currentLang = newLang
-    localizedStrings = await getStrings(newLang)
+    localizedStrings = await getStrings()
   }
   const query: { [key: string]: unknown } = getQuery()
   const context = pages.find(x => x.middleware(window, [query]))

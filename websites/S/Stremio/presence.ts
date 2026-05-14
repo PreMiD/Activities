@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -71,14 +71,14 @@ interface Video {
   endTimestamp?: number
 }
 
-function findVideo(presence: Presence): Video | null {
+function findVideo(): Video | null {
   const videoElement = document.querySelector<HTMLMediaElement>('video')
 
   if (videoElement) {
     const result: Video = { isEmbed: false, isPaused: videoElement.paused }
 
     if (!Number.isNaN(videoElement?.duration)) {
-      [result.startTimestamp, result.endTimestamp] = presence.getTimestampsfromMedia(videoElement)
+      [result.startTimestamp, result.endTimestamp] = getTimestampsFromMedia(videoElement)
     }
 
     return result
@@ -91,12 +91,12 @@ function findVideo(presence: Presence): Video | null {
       ),
     }
     const seekBar = document.querySelector('[class*="seek-bar-container"]');
-    [result.startTimestamp, result.endTimestamp] = presence.getTimestamps(
+    [result.startTimestamp, result.endTimestamp] = getTimestamps(
       Number(
-        presence.timestampFromFormat(seekBar?.firstElementChild?.textContent ?? ''),
+        timestampFromFormat(seekBar?.firstElementChild?.textContent ?? ''),
       ),
       Number(
-        presence.timestampFromFormat(seekBar?.lastElementChild?.textContent ?? ''),
+        timestampFromFormat(seekBar?.lastElementChild?.textContent ?? ''),
       ),
     )
 
@@ -144,7 +144,7 @@ presence.on('UpdateData', async () => {
   switch (appVersion) {
     case AppVersion.V4:
     case AppVersion.V5: {
-      const video = findVideo(presence)
+      const video = findVideo()
 
       if (privacy) {
         presenceData.state = video !== null ? 'Watching' : 'Browsing'

@@ -27,7 +27,7 @@ presence.on('UpdateData', async () => {
       const title = document.querySelector('.page-title > h1')?.textContent
       presenceData.details = 'Viewing help'
       if (title)
-        presenceData.state = title.replace(/^((Flat|Platform) -|Help:) /, '')
+        presenceData.state = title.replace(/^(?:(?:Flat|Platform) -|Help:) /, '')
       if (presenceData.state === 'Online Music Notation Software')
         presenceData.state = 'About Flat'
     }
@@ -39,7 +39,7 @@ presence.on('UpdateData', async () => {
   if (pathname === '/settings/upgrade')
     presenceData.details = 'Viewing upgrade options'
   if (pathname.startsWith('/community')) {
-    if (pathname.match(/^\/community\/popular(\/.+)?\/?$/)) {
+    if (/^\/community\/popular(?:\/.+)?\/?$/.test(pathname)) {
       presenceData.details = 'Viewing community scores'
       presenceData.state = `Since: ${
         document.querySelector('[data-cy="community-date-filter-btn"]')

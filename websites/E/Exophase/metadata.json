@@ -11,7 +11,7 @@
   },
   "url": "exophase.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*exophase[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Exophase/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Exophase/assets/thumbnail.png",
   "color": "#1E90FF",

@@ -12,7 +12,7 @@
   },
   "url": "www.bibliaonline.com.br",
   "regExp": "^https?[:][/][/](www[.])?bibliaonline[.]com[.]br[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/B%C3%ADblia%20On-line/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/B%C3%ADblia%20On-line/assets/thumbnail.png",
   "color": "#ee5350",

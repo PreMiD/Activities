@@ -67,7 +67,7 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (
-    appIcon?.match(/(word)|(onenote)|(microsoft365)|(ppt)|(excel)/g)
+    appIcon?.match(/word|onenote|microsoft365|ppt|excel/g)
   ) {
     const appName = appIcon
       .substring(appIcon.lastIndexOf('/') + 9)

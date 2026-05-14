@@ -14,7 +14,7 @@
     "jojo-news.com"
   ],
   "regExp": "^https?[:][/][/](jojowiki|jojo-news)[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/JoJo%27s%20Bizarre%20Encyclopedia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/JoJo%27s%20Bizarre%20Encyclopedia/assets/thumbnail.png",
   "color": "#ea0fa3",

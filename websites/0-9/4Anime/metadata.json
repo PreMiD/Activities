@@ -11,7 +11,7 @@
   },
   "url": "4anime.gg",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*4anime[.]gg[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/4Anime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/4Anime/assets/thumbnail.png",
   "color": "#000000",
@@ -22,5 +22,5 @@
     "streaming"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https:\\/\\/rapid-cloud\\.co\\/embed-2\\/v2\\/e-1\\/[A-Za-z0-9]+\\?.*$"
+  "iFrameRegExp": "^https?[:][/][/]rapid-cloud[.]co[/]embed-2[/]v2[/]e-1[/][A-Za-z0-9]+"
 }

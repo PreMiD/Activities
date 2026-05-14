@@ -94,5 +94,5 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = `Listeners: ${aqualisteners}`
   }
 
-  presence.setActivity(presenceData, true)
+  presence.setActivity(presenceData)
 })

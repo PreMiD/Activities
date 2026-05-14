@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "244563286257827840",
+    "name": "nykloon"
+  },
+  "service": "Anime Nexus",
+  "description": {
+    "en": "Anime Nexus is your ultimate destination for discovering, streaming, and discussing all things anime."
+  },
+  "url": "anime.nexus",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anime[.]nexus[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/bSgz75K.png",
+  "thumbnail": "https://i.imgur.com/lMeW3B0.png",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "video",
+    "anime",
+    "streaming"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "browsingActivity",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Browsing",
+      "icon": "fad fa-compass",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "titleAsPresence",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": true
+    }
+  ]
+}

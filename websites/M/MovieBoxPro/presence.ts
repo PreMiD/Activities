@@ -50,7 +50,7 @@ presence.on('UpdateData', async () => {
       episodeInfo = extractSeasonEpisode(metaDesc) || extractSeasonEpisode(document.title)
     }
 
-    presenceData.state = episodeInfo || (document.location.href.match(/tvshow|season/) ? 'Watching TV Show' : 'Watching Movie')
+    presenceData.state = episodeInfo || (/tvshow|season/.test(document.location.href) ? 'Watching TV Show' : 'Watching Movie')
 
     if (video.paused) {
       presenceData.smallImageKey = Assets.Pause

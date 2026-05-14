@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 let elapsed = Math.floor(Date.now() / 1000)
 let oldLang = 'en'
@@ -32,7 +32,6 @@ async function getStrings() {
       buttonWatchStream: 'general.buttonWatchStream',
       buttonWatchVideo: 'general.buttonWatchVideo',
     },
-    oldLang,
   )
 }
 
@@ -163,7 +162,7 @@ presence.on('UpdateData', async () => {
         delete presenceData.startTimestamp
 
         if (!paused) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(currentTime, duration)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, duration)
         }
 
         presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play

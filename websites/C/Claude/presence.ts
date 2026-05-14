@@ -53,9 +53,9 @@ presence.on('UpdateData', async () => {
   let wordCount = 0
   for (const element of messageElements) {
     const text = element.textContent
-      ?.replace(/(, )|(,\n)|(,)|(\. )|(\.)/g, ' ')
+      ?.replace(/, |,\n|,|\. |\./g, ' ')
       // eslint-disable-next-line regexp/no-dupe-disjunctions
-      ?.replace(/(\d*)|(\/)|(')|(,)|( )/g, '')
+      ?.replace(/\d*|[/', ]/g, '')
     wordCount += Array.from(
       new Intl.Segmenter(franc(text), { granularity: 'word' }).segment(text!),
     ).length

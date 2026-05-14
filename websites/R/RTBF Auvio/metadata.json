@@ -18,7 +18,7 @@
   },
   "url": "auvio.rtbf.be",
   "regExp": "^https?[:][/][/]auvio[.]rtbf[.]be[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RTBF%20Auvio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RTBF%20Auvio/assets/thumbnail.png",
   "color": "#cba10a",

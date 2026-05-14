@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1028528977410797628",
+    "name": "th3wwt"
+  },
+  "service": "ccLeaf",
+  "description": {
+    "en": "ccLeaf is an animation template platform where creators can quickly edit and export high-quality visuals without doing everything from scratch. It’s built for speed, simplicity, and clean results."
+  },
+  "url": ["ccleaf.com", "app.ccleaf.com"],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*ccleaf[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/fv1VJQR.png",
+  "thumbnail": "https://i.imgur.com/qhIVv23.png",
+  "color": "#000000",
+  "category": "other",
+  "tags": [
+    "animation"
+  ]
+}

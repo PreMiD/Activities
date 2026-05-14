@@ -170,12 +170,12 @@ presence.on('UpdateData', async () => {
         presenceData.details = `Editing ${
           search
             ? ` ${cfile[cfile.length - 1]?.replace(
-              /(:)|\d|(-)/g,
+              /[:\d\-]/g,
               '',
             )} (${document
               .querySelector<HTMLAnchorElement>('[title="Go to Line"]')
               ?.textContent
-              ?.replace(/\(|(\d*) selected\)/g, '')})`
+              ?.replace(/\(|\d* selected\)/g, '')})`
             : 'a sandbox'
         }`
         presenceData.state = `Workspace: ${document.title.split('-')[0]}`
@@ -183,13 +183,13 @@ presence.on('UpdateData', async () => {
           formats.includes(
             formatImg[formatImg.length - 1]!
             /* .toLowerCase() */
-              .replace(/(:)|\d|(-)/g, ''),
+              .replace(/[:\d\-]/g, ''),
           )
         ) {
           presenceData.largeImageKey = assets[
             `${formatImg[formatImg.length - 1]
               ?.toLowerCase()
-              .replace(/(:)|\d|(-)/g, '')}` as keyof typeof assets
+              .replace(/[:\d\-]/g, '')}` as keyof typeof assets
           ]
         }
         else {
