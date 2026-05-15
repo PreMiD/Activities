@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1009426635780542475",
+    "name": "Terousd"
+  },
+  "service": "Terousd",
+  "description": {
+    "en": "Terousd is a streaming platform for discovering and watching movies and TV series."
+  },
+  "url": "stream.terousd.online",
+  "regExp": "^https?[:][/][/]stream[.]terousd[.]online[/]",
+  "version": "1.0.0",
+  "logo": "https://stream.terousd.online/favicon.png",
+  "thumbnail": "https://i.imgur.com/wFP0q6E.png",
+  "color": "#141414",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "tv",
+    "streaming",
+    "video"
+  ],
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}
