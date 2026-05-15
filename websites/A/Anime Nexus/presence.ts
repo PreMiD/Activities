@@ -55,6 +55,7 @@ presence.on('UpdateData', async () => {
     && !Number.isNaN(duration)
     && pathname.includes('/watch/')
   ) {
+    console.log("aa")
     const scripts = document.querySelectorAll('script[type="application/ld+json"]')
 
     presenceData.largeImageText = ANIME_NEXUS
