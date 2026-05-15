@@ -42,7 +42,7 @@ presence.on('UpdateData', async () => {
   ])
 
   let video = false
-  const player = document.querySelector<HTMLVideoElement>('div[data-media-provider] video')
+  const player = document.querySelector<HTMLVideoElement>('video')
   if (player !== null && !Number.isNaN(player.duration)) {
     video = true
     currentTime = player.currentTime
@@ -55,6 +55,7 @@ presence.on('UpdateData', async () => {
     && !Number.isNaN(duration)
     && pathname.includes('/watch/')
   ) {
+    console.log("aa")
     const scripts = document.querySelectorAll('script[type="application/ld+json"]')
 
     presenceData.largeImageText = ANIME_NEXUS
