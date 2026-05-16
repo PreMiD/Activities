@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "OKISO",
+    "id": "274178934143451137"
+  },
+  "service": "OKISO",
+  "description": {
+    "en": "Shows what you're watching on okiso.net"
+  },
+  "url": [
+    "okiso.net",
+    "localhost"
+  ],
+  "regExp": ".*(okiso\\.net|localhost).*",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/LLE4SVZ.png",
+  "thumbnail": "https://i.imgur.com/LLE4SVZ.png",
+  "color": "#FF7EB3",
+  "category": "music",
+  "tags": [
+    "music",
+    "vtuber",
+    "streaming"
+  ]
+}
