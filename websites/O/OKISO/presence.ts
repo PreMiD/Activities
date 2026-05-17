@@ -11,15 +11,14 @@ enum ActivityAssets {
 presence.on('UpdateData', async () => {
 	const { pathname } = document.location
 
-	// @ts-ignore
-	const presenceData: PresenceData = {
+	const presenceData = {
 		largeImageKey: ActivityAssets.Logo,
 		largeImageText: 'okiso.net',
 		startTimestamp: browsingTimestamp,
 		buttons: [
 			{ label: 'Visit okiso.net', url: `https://okiso.net${pathname === '/' ? '' : pathname}` }
 		]
-	}
+	} as any
 
 	// ─── Home Page ───
 	if (pathname === '/') {
