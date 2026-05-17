@@ -11,15 +11,15 @@ enum ActivityAssets {
 presence.on('UpdateData', async () => {
 	const { pathname } = document.location
 
-	// Initialize basic presence
-	const presenceData = {
+	// @ts-ignore
+	const presenceData: PresenceData = {
 		largeImageKey: ActivityAssets.Logo,
 		largeImageText: 'okiso.net',
 		startTimestamp: browsingTimestamp,
 		buttons: [
 			{ label: 'Visit okiso.net', url: `https://okiso.net${pathname === '/' ? '' : pathname}` }
 		]
-	} as any
+	}
 
 	// ─── Home Page ───
 	if (pathname === '/') {
@@ -84,6 +84,22 @@ presence.on('UpdateData', async () => {
 	else {
 		presenceData.details = document.title || 'Browsing'
 		presenceData.state = 'okiso.net'
+	}
+
+	// ─── Global Music Player ───
+	const musicContainer = document.getElementById('spotify-embed-container-data')
+	const trackTitle = musicContainer?.getAttribute('data-premid-track-title')
+	
+	if (trackTitle) {
+		const artist = musicContainer?.getAttribute('data-premid-track-artist')
+		const paused = musicContainer?.getAttribute('data-premid-paused') === 'true'
+
+		// Override the main details if they are listening to music
+		presenceData.details = paused ? `Paused: ${trackTitle}` : `Listening to ${trackTitle}`
+		presenceData.state = `by ${artist || 'OKISO'}`
+		presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
+		presenceData.smallImageText = paused ? 'Paused' : 'Playing'
+		delete presenceData.startTimestamp // Remove browsing timestamp so it doesn't look like a long song
 	}
 
 	if (presenceData.details)
