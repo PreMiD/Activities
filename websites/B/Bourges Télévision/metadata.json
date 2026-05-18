@@ -11,7 +11,7 @@
     "fr": "Bourges Télévision est une chaîne de télévision locale couvrant l'actualité et la culture de Bourges et du Berry."
   },
   "url": "bourgestelevision.fr",
-  "regExp": "^https?://bourgestelevision\\.fr",
+  "regExp": "^https?[:][/][/]bourgestelevision[.]fr[/]",
   "version": "1.0.0",
   "logo": "https://i.ibb.co/yBY6V8RK/OAuth-Icon-512.png",
   "thumbnail": "https://bourgestelevision.fr/og-image.jpg",
