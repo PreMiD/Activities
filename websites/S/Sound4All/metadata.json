@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.9",
+  "author": {
+    "name": "rayro",
+    "id": "809060202473193513"
+  },
+  "contributors": [],
+  "service": "Sound4All",
+  "altnames": [],
+  "description": {
+    "en": "Personal music player, offline-first and free",
+    "fr": "Lecteur de musique personnel, offline-first et gratuit"
+  },
+  "url": "sound4all.vercel.app",
+  "regExp": "([a-z0-9-]+[.])*sound4all[.]vercel[.]app",
+  "version": "1.0.0",
+  "logo": "https://sound4all.vercel.app/icon",
+  "thumbnail": "https://sound4all.vercel.app/icon",
+  "color": "#fb5e7e",
+  "tags": [
+    "music",
+    "player",
+    "streaming",
+    "offline",
+    "pwa"
+  ],
+  "category": "music",
+  "iframe": false,
+  "settings": [
+    {
+      "id": "showCover",
+      "title": "Show song cover",
+      "icon": "fas fa-image",
+      "value": true
+    },
+    {
+      "id": "showTimestamps",
+      "title": "Show timestamps",
+      "icon": "fas fa-clock",
+      "value": true
+    }
+  ]
+}

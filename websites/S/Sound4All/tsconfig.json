@@ -1,0 +1,7 @@
+{
+  "extends": "../node_modules/@premid/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist"
+  },
+  "include": ["presence.ts", "iframe.ts"]
+}
