@@ -1,31 +1,31 @@
 const presence = new Presence({
-  clientId: "1234567890123456789", // Will be replaced by PreMiD during submission
-});
+  clientId: '1506049886175629322',
+})
 
-let lastTitle = "";
-let lastArtist = "";
-let lastCover = "";
-let lastDuration = 0;
-let lastCurrentTime = 0;
-let lastIsPlaying = false;
-let startTimestamp = 0;
-let endTimestamp = 0;
+enum ActivityAssets {
+  Logo = 'https://raw.githubusercontent.com/DevRayro/Activities/add-sound4all-presence/websites/S/Sound4All/assets/logo.png',
+}
 
-presence.on("UpdateData", async () => {
+let lastTitle = ''
+let lastArtist = ''
+let lastIsPlaying = false
+let startTimestamp = 0
+let endTimestamp = 0
+
+presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: "logo", // Sound4All logo
-    largeImageText: "Sound4All",
-  };
+    largeImageKey: ActivityAssets.Logo,
+    largeImageText: 'Sound4All',
+    type: ActivityType.Listening,
+  }
 
-  // Get player data from DOM or global state
-  const playerData = getPlayerData();
+  const playerData = getPlayerData()
 
   if (!playerData || !playerData.title) {
-    // No playback
-    presenceData.details = "Browsing";
-    presenceData.state = "Exploring library";
-    presence.setActivity(presenceData);
-    return;
+    presenceData.details = 'Browsing'
+    presenceData.state = 'Exploring library'
+    presence.setActivity(presenceData)
+    return
   }
 
   const {
@@ -35,114 +35,103 @@ presence.on("UpdateData", async () => {
     isPlaying,
     currentTime,
     duration,
-  } = playerData;
+  } = playerData
 
-  // Update timestamps only if track changed or play/pause toggled
   if (
-    title !== lastTitle ||
-    artist !== lastArtist ||
-    isPlaying !== lastIsPlaying
+    title !== lastTitle
+    || artist !== lastArtist
+    || isPlaying !== lastIsPlaying
   ) {
     if (isPlaying && duration > 0) {
-      const now = Date.now();
-      startTimestamp = now - currentTime * 1000;
-      endTimestamp = now + (duration - currentTime) * 1000;
-    } else {
-      startTimestamp = 0;
-      endTimestamp = 0;
+      const now = Date.now()
+      startTimestamp = now - currentTime * 1000
+      endTimestamp = now + (duration - currentTime) * 1000
+    }
+    else {
+      startTimestamp = 0
+      endTimestamp = 0
     }
 
-    lastTitle = title;
-    lastArtist = artist;
-    lastCover = coverUrl || "";
-    lastDuration = duration;
-    lastIsPlaying = isPlaying;
+    lastTitle = title
+    lastArtist = artist
+    lastIsPlaying = isPlaying
   }
 
-  // Update currentTime for progress bar
-  lastCurrentTime = currentTime;
+  presenceData.details = title
+  presenceData.state = artist
 
-  presenceData.details = title;
-  presenceData.state = artist;
-
-  // Song cover as small image
   if (coverUrl) {
-    presenceData.smallImageKey = coverUrl;
-    presenceData.smallImageText = "Cover";
+    presenceData.smallImageKey = coverUrl
+    presenceData.smallImageText = 'Cover'
   }
 
-  // Progress bar
   if (isPlaying && duration > 0) {
-    presenceData.startTimestamp = startTimestamp;
-    presenceData.endTimestamp = endTimestamp;
-  } else if (!isPlaying) {
-    // Show "Paused" instead of progress bar
-    presenceData.smallImageKey = "pause";
-    presenceData.smallImageText = "Paused";
+    presenceData.startTimestamp = startTimestamp
+    presenceData.endTimestamp = endTimestamp
+  }
+  else if (!isPlaying) {
+    presenceData.smallImageKey = Assets.Pause
+    presenceData.smallImageText = 'Paused'
   }
 
-  presence.setActivity(presenceData);
-});
+  presence.setActivity(presenceData)
+})
 
-/**
- * Get player data from DOM or global state
- * Adapted to Sound4All's HTML structure
- */
-function getPlayerData(): {
-  title: string;
-  artist: string;
-  coverUrl: string | null;
-  isPlaying: boolean;
-  currentTime: number;
-  duration: number;
-} | null {
+interface PlayerData {
+  title: string
+  artist: string
+  coverUrl: string | null
+  isPlaying: boolean
+  currentTime: number
+  duration: number
+}
+
+function getPlayerData(): PlayerData | null {
   try {
-    // Method 1: Try to get from Zustand store (if exposed globally)
-    // @ts-ignore
-    if (window.__SOUND4ALL_PLAYER_STATE__) {
-      // @ts-ignore
-      const state = window.__SOUND4ALL_PLAYER_STATE__;
-      const track = state.queue?.[state.index];
+    const globalState = (window as unknown as {
+      __SOUND4ALL_PLAYER_STATE__?: {
+        queue?: Array<{
+          title?: string
+          artist?: string
+          coverUrl?: string
+          durationSec?: number
+        }>
+        index?: number
+        isPlaying?: boolean
+        currentTime?: number
+        duration?: number
+      }
+    }).__SOUND4ALL_PLAYER_STATE__
+
+    if (globalState) {
+      const track = globalState.queue?.[globalState.index ?? 0]
       if (track) {
         return {
-          title: track.title || "Unknown Title",
-          artist: track.artist || "Unknown Artist",
+          title: track.title || 'Unknown Title',
+          artist: track.artist || 'Unknown Artist',
           coverUrl: track.coverUrl || null,
-          isPlaying: state.isPlaying || false,
-          currentTime: state.currentTime || 0,
-          duration: state.duration || track.durationSec || 0,
-        };
+          isPlaying: globalState.isPlaying || false,
+          currentTime: globalState.currentTime || 0,
+          duration: globalState.duration || track.durationSec || 0,
+        }
       }
     }
 
-    // Method 2: Parse DOM (fallback)
-    // Look for mini player or full player
-    const titleElement = document.querySelector(
-      ".truncate.text-sm.font-medium, .text-xl.font-bold.leading-tight"
-    );
-    const artistElement = document.querySelector(
-      ".truncate.text-xs.text-text-muted, .text-white\\/70.mt-1.truncate"
-    );
-    const playButton = document.querySelector(
-      'button[aria-label*="Pause"], button[aria-label*="Play"], button[aria-label*="Lecture"]'
-    );
-    const progressBar = document.querySelector<HTMLInputElement>(
-      'input[type="range"]'
-    );
-    const coverImg = document.querySelector<HTMLImageElement>(
-      "img[alt], .aspect-square img"
-    );
+    const titleElement = document.querySelector('.truncate.text-sm.font-medium, .text-xl.font-bold.leading-tight')
+    const artistElement = document.querySelector('.truncate.text-xs.text-text-muted, .text-white\\/70.mt-1.truncate')
+    const playButton = document.querySelector('button[aria-label*="Pause"], button[aria-label*="Play"], button[aria-label*="Lecture"]')
+    const progressBar = document.querySelector<HTMLInputElement>('input[type="range"]')
+    const coverImg = document.querySelector<HTMLImageElement>('img[alt], .aspect-square img')
 
-    if (!titleElement || !artistElement) {
-      return null;
-    }
+    if (!titleElement || !artistElement)
+      return null
 
-    const title = titleElement.textContent?.trim() || "Unknown Title";
-    const artist = artistElement.textContent?.trim() || "Unknown Artist";
-    const isPlaying = playButton?.getAttribute("aria-label")?.includes("Pause") || false;
-    const currentTime = progressBar ? parseFloat(progressBar.value) : 0;
-    const duration = progressBar ? parseFloat(progressBar.max) : 0;
-    const coverUrl = coverImg?.src || null;
+    const title = titleElement.textContent?.trim() || 'Unknown Title'
+    const artist = artistElement.textContent?.trim() || 'Unknown Artist'
+    const isPlaying = playButton?.getAttribute('aria-label')?.includes('Pause') || false
+    const currentTime = progressBar ? Number.parseFloat(progressBar.value) : 0
+    const duration = progressBar ? Number.parseFloat(progressBar.max) : 0
+    const coverUrl = coverImg?.src || null
 
     return {
       title,
@@ -151,9 +140,10 @@ function getPlayerData(): {
       isPlaying,
       currentTime,
       duration,
-    };
-  } catch (error) {
-    console.error("[Sound4All PreMiD] Error getting player data:", error);
-    return null;
+    }
+  }
+  catch (error) {
+    presence.error(`Error getting player data: ${error}`)
+    return null
   }
 }
