@@ -307,8 +307,7 @@ presence.on('UpdateData', async () => {
             presenceData.state = `Topics Read`
           else if (sub === 'pending')
             presenceData.state = `Pending Posts`
-          else presenceData.state = `All Activity of User: ${username}`
-          
+          else presenceData.state = `All Activity of User: ${username}` 
         }
         else if (paths[2] === 'invited') {
           const status = paths[3]
