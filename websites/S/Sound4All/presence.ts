@@ -118,19 +118,19 @@ function getPlayerData(): {
     // Method 2: Parse DOM (fallback)
     // Look for mini player or full player
     const titleElement = document.querySelector(
-      '[aria-label="Ouvrir le lecteur"] .truncate.text-sm.font-medium, .text-xl.font-bold.leading-tight'
+      ".truncate.text-sm.font-medium, .text-xl.font-bold.leading-tight"
     );
     const artistElement = document.querySelector(
-      '[aria-label="Ouvrir le lecteur"] .truncate.text-xs.text-text-muted, .text-white\\/70.mt-1.truncate'
+      ".truncate.text-xs.text-text-muted, .text-white\\/70.mt-1.truncate"
     );
     const playButton = document.querySelector(
-      '[aria-label="Pause"], [aria-label="Lecture"]'
+      'button[aria-label*="Pause"], button[aria-label*="Play"], button[aria-label*="Lecture"]'
     );
     const progressBar = document.querySelector<HTMLInputElement>(
-      'input[type="range"][aria-label="Progression"]'
+      'input[type="range"]'
     );
     const coverImg = document.querySelector<HTMLImageElement>(
-      '[aria-label="Ouvrir le lecteur"] img, .aspect-square img'
+      "img[alt], .aspect-square img"
     );
 
     if (!titleElement || !artistElement) {
@@ -139,7 +139,7 @@ function getPlayerData(): {
 
     const title = titleElement.textContent?.trim() || "Unknown Title";
     const artist = artistElement.textContent?.trim() || "Unknown Artist";
-    const isPlaying = playButton?.getAttribute("aria-label") === "Pause";
+    const isPlaying = playButton?.getAttribute("aria-label")?.includes("Pause") || false;
     const currentTime = progressBar ? parseFloat(progressBar.value) : 0;
     const duration = progressBar ? parseFloat(progressBar.max) : 0;
     const coverUrl = coverImg?.src || null;
