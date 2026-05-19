@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "371311292985901057",
+    "name": "str1tox"
+  },
+  "service": "Itaku",
+  "description": {
+    "en": "Itaku is an art-focused social platform where artists can share their work, accept commissions, and connect with other creators.",
+    "pl": "Itaku to platforma społecznościowa skupiona na sztuce, gdzie artyści mogą dzielić się swoją pracą, przyjmować zlecenia i łączyć się z innymi twórcami.",
+    "ru": "Itaku - это социальная платформа для художников, где они могут делиться своими работами, принимать заказы и общаться с другими авторами.",
+    "uk": "Itaku - це соціальна платформа для художників, де вони можуть ділитися своїми роботами, приймати замовлення та спілкуватися з іншими авторами."
+  },
+  "url": "itaku.ee",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*itaku[.]ee[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Itaku/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Itaku/assets/thumbnail.png",
+  "color": "#FF6B6B",
+  "category": "socials",
+  "tags": [
+    "social",
+    "art",
+    "gallery"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "showBrowsing",
+      "title": "Show Browsing",
+      "icon": "fas fa-compass",
+      "value": true
+    }
+  ]
+}

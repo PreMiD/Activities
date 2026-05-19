@@ -13,6 +13,10 @@
     {
       "name": "theusaf",
       "id": "193714715631812608"
+    },
+    {
+      "name": "shogun05",
+      "id": "524597801942777857"
     }
   ],
   "service": "MyAnimeList",
@@ -28,7 +32,7 @@
   },
   "url": "myanimelist.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*myanimelist[.]net[/]",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MyAnimeList/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MyAnimeList/assets/thumbnail.png",
   "color": "#2e51a2",
@@ -37,5 +41,19 @@
     "anime",
     "manga",
     "community"
+  ],
+  "settings": [
+    {
+      "id": "cover",
+      "title": "Show Cover",
+      "icon": "fas fa-images",
+      "value": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
   ]
 }

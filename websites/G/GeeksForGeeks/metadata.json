@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "973156162793005117",
+    "name": "beast_sk"
+  },
+  "service": "GeeksForGeeks",
+  "description": {
+    "en": "GeeksforGeeks is a computer science portal offering tutorials, coding problems, interview preparation, and courses on programming languages and data structures."
+  },
+  "url": "geeksforgeeks.org",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*geeksforgeeks[.]org[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GeeksForGeeks/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GeeksForGeeks/assets/thumbnail.png",
+  "color": "#2F8D46",
+  "category": "other",
+  "tags": [
+    "education",
+    "technology",
+    "coding"
+  ],
+  "settings": [
+    {
+      "id": "timestamp",
+      "title": "Show Timestamps",
+      "icon": "fas fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
+}

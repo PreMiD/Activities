@@ -25,7 +25,7 @@
     "estacio.saladeavaliacoes.com.br"
   ],
   "regExp": "^https?[:][/][/]((estudante|sia)[.]estacio[.]br|(estacio[.]saladeavaliacoes)[.]com[.]br)[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Est%C3%A1cio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Est%C3%A1cio/assets/thumbnail.png",
   "color": "#00C0F3",
@@ -39,7 +39,7 @@
     "distance-learning"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https://conteudo\\.ensineme\\.com\\.br/[^/]+/[^/]+\\?brand=estacio$",
+  "iFrameRegExp": "^https?[:][/][/]conteudo[.]ensineme[.]com[.]br/[^/]+/[^/]+\\?brand=estacio$",
   "settings": [
     {
       "id": "show-student-page",

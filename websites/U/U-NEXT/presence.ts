@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 import {
   clearLiveMetadata,
   fetchLiveMetadata,
@@ -101,7 +101,7 @@ presence.on('UpdateData', async () => {
   }
 
   //* Match /play/sid/ed and get ed
-  const watchingMediaId = path.match(/\/play\/(\w+)\/(\w+)/)
+  const watchingMediaId = path.match(/\/play\/(\w+)\/\w+/)
   if (watchingMediaId) {
     await fetchMetadata(watchingMediaId[1]!)
     const video = document.querySelector('video')
@@ -110,7 +110,7 @@ presence.on('UpdateData', async () => {
       return
 
     const { paused } = video
-    const [startTimestamp, endTimestamp] = presence.getTimestampsfromMedia(video)
+    const [startTimestamp, endTimestamp] = getTimestampsFromMedia(video)
 
     if (
       metadata?.data?.webfrontTitleStage.keyEpisodes.current
@@ -260,7 +260,7 @@ presence.on('UpdateData', async () => {
       return
 
     const { paused } = video
-    const [startTimestamp, endTimestamp] = presence.getTimestampsfromMedia(video)
+    const [startTimestamp, endTimestamp] = getTimestampsFromMedia(video)
 
     if (privacyMode) {
       return await presence.setActivity({

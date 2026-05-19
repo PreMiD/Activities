@@ -9,9 +9,9 @@
   "description": {
     "en": "Listen live to Symphony Radio — bringing you great music, live DJs, and feel-good vibes all day long."
   },
-  "url": "symphonyradio.co.uk",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*symphonyradio[.]co[.]uk[/]",
-  "version": "1.0.1",
+  "url": "symphonyrad.io",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*symphonyrad[.]io[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Symphony%20Radio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Symphony%20Radio/assets/thumbnail.png",
   "color": "#7C3AED",

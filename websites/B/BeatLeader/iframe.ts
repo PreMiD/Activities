@@ -29,7 +29,9 @@ if (document.location.href.includes('https://replay.beatleader.')) {
     if (coverURL?.startsWith('blob:')) {
       coverURL = await getCover(
         document
-          .querySelector<HTMLAnchorElement>('#songLink')!.href.split('/')[5]!,
+          .querySelector<HTMLAnchorElement>('#songLink')!
+          .href
+          .split('/')[5]!,
       )
 
       if (coverURL === null)

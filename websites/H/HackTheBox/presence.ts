@@ -1,7 +1,7 @@
 interface DashboardSettings {
   showRank: boolean
-  showGlobalRanking: boolean
   showFlags: boolean
+  showLevel: boolean
 }
 
 const presence = new Presence({
@@ -48,48 +48,43 @@ function getResourceName(index: number): string | null {
   return parts[index] ? decodeURIComponent(parts[index]) : null
 }
 
-function getDashboardStat(labelText: string): string | null {
-  const label = Array.from(document.getElementsByTagName('dt')).find(el =>
-    el.textContent?.includes(labelText),
-  )
-  return label?.nextElementSibling?.textContent?.trim() || null
-}
-
 function getHomePageDetails(settings: DashboardSettings) {
   const parts: string[] = []
 
   if (settings.showRank) {
-    const rank = document.querySelector('h3.htb-heading-xl')?.textContent
+    const rank = document.querySelector('#htb-xp-rank-card--title-214')?.textContent.trim()
     if (rank)
       parts.push(`Rank: '${rank}'`)
   }
 
-  if (settings.showGlobalRanking) {
-    const globalRank = getDashboardStat('Global Ranking')
-    if (globalRank)
-      parts.push(`Global: ${globalRank}`)
+  if (settings.showLevel) {
+    const level = document.querySelector('.htb-display-md')?.textContent.trim()
+    if (level)
+      parts.push(`Level ${level}`)
   }
+
   if (settings.showFlags) {
-    const flags = getDashboardStat('Flags')
+    const flags = Array.from(document.querySelectorAll('dt')).find(el => el.textContent?.trim() === 'Flags')?.nextElementSibling?.textContent?.trim() || null
     if (flags)
       parts.push(`Flags: ${flags}`)
   }
+
   return parts.length > 0 ? parts.join(' | ') : 'Browsing Dashboard'
 }
 
 function getMachineDetails() {
   const name = getResourceName(2) || 'Unknown Machine'
-  const statusEl = document.querySelector('.htb-status')
-  const statusText = statusEl?.textContent?.trim().toLowerCase() || 'offline'
+  const statusEl = document.querySelector('.htb-avatar.htb-pt-2')
+  const vpnEl = document.querySelector('.common-play-section-vpn-server-section > .htb-gap-8')
   const machineImg = document.querySelector('.avatar-icon-name-details img')
   const src = machineImg?.getAttribute('src')
 
   const avatar = (src && src.startsWith('http')) ? src : null
 
   return {
-    details: statusText.includes('online') ? `Playing Machine '${name}'` : `Looking at '${name}' Machine`,
-    state: statusText.includes('online')
-      ? `${statusEl?.previousElementSibling?.textContent?.trim() || 'Server'} - Online`
+    details: statusEl ? `Playing Machine '${name}'` : `Looking at '${name}' Machine`,
+    state: statusEl
+      ? `${vpnEl?.textContent?.trim() || 'Server'} - Online`
       : 'Status: Offline',
     avatar,
   }
@@ -104,16 +99,16 @@ function getProlabDetails() {
 }
 
 presence.on('UpdateData', async () => {
-  const [showRank, showGlobalRanking, showFlags] = await Promise.all([
+  const [showRank, showFlags, showLevel] = await Promise.all([
     presence.getSetting<boolean>('showRank'),
-    presence.getSetting<boolean>('showGlobalRanking'),
     presence.getSetting<boolean>('showFlags'),
+    presence.getSetting<boolean>('showLevel'),
   ])
 
   const settings: DashboardSettings = {
     showRank,
-    showGlobalRanking,
     showFlags,
+    showLevel,
   }
 
   const path = window.location.pathname

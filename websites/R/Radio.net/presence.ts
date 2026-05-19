@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '634124614544392193',
@@ -19,7 +19,7 @@ presence.on('UpdateData', async () => {
   oldLang = newLang
   newLang = await presence.getSetting<string>('lang').catch(() => 'en')
   if (!strings || oldLang !== newLang)
-    strings = await getStrings(newLang)
+    strings = await getStrings()
 
   if (host[0] === 'corporate') {
     // Corporate page
@@ -92,9 +92,9 @@ presence.on('UpdateData', async () => {
             .querySelector<HTMLDivElement>('.player__timing-wrap')
             ?.textContent
             ?.split('|') ?? []
-          const timestamps = presence.getTimestamps(
-            presence.timestampFromFormat(times[0] ?? ''),
-            presence.timestampFromFormat(times[1] ?? ''),
+          const timestamps = getTimestamps(
+            timestampFromFormat(times[0] ?? ''),
+            timestampFromFormat(times[1] ?? ''),
           )
 
           presenceData.details = document.querySelector<HTMLHeadingElement>('h1')?.textContent
@@ -153,7 +153,7 @@ presence.on('UpdateData', async () => {
   }
 })
 
-async function getStrings(lang: string) {
+async function getStrings() {
   return presence.getStrings(
     {
       play: 'general.playing',
@@ -161,6 +161,5 @@ async function getStrings(lang: string) {
       search: 'general.searching',
       browsing: 'general.browsing',
     },
-    lang,
   )
 }

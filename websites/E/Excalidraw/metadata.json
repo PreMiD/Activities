@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "itsyashbtw",
+    "id": "568021861871517716"
+  },
+  "service": "Excalidraw",
+  "description": {
+    "en": "Virtual whiteboard for sketching hand-drawn like diagrams"
+  },
+  "url": "excalidraw.com",
+  "regExp": "^https?[:][/][/]excalidraw[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Excalidraw/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Excalidraw/assets/thumbnail.png",
+  "color": "#6965db",
+  "category": "other",
+  "tags": [
+    "whiteboard",
+    "drawing",
+    "diagrams",
+    "sketching"
+  ]
+}

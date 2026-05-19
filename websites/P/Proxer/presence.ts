@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '776479405009666098',
@@ -31,7 +31,7 @@ presence.on('UpdateData', () => {
       e => e.textContent,
     )
     const maxEp = getByXpath('//*[@id=\'wContainer\']//*[@class=\'wEp\']', e =>
-      e.nextSibling?.textContent?.substr(1)?.trim() ?? '')
+      e.nextSibling?.textContent?.slice(1)?.trim() ?? '')
     const lang = getByXpath(
       '//*[@id=\'wContainer\']//*[@class=\'wLanguage\']',
       e => e.textContent,
@@ -41,7 +41,7 @@ presence.on('UpdateData', () => {
       presenceData.type = ActivityType.Watching
       if (!videoData.paused) {
         presenceData.details = 'Watching';
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(videoData.currentTime, videoData.duration)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(videoData.currentTime, videoData.duration)
       }
       else {
         presenceData.details = 'Paused'

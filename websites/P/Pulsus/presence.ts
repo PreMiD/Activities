@@ -1,4 +1,5 @@
 import type { dataObject, PageVars } from './types.js'
+import { getTimestamps } from 'premid'
 import { ActivityAssets, rankedImages, unrankedImages } from './assets.js'
 
 const presence = new Presence({
@@ -30,7 +31,7 @@ function getLevelPresence(presenceData: PresenceData) {
     && !data['Tt.paused']
     && !data['Tt.failed']
   ) {
-    presenceData.endTimestamp = presence.getTimestamps(
+    presenceData.endTimestamp = getTimestamps(
       (data['Tt.time'] / data['Tt.bpm']) * 60,
       (data['Tt.timeEnd'] / data['Tt.bpm']) * 60,
     )[1]

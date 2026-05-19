@@ -28,7 +28,7 @@
   },
   "url": "www.ifixit.com",
   "regExp": "^https?[:][/][/]^https://[a-z]+[.]ifixit[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/iFixit/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/iFixit/assets/thumbnail.jpg",
   "color": "#0071ba",

@@ -15,7 +15,7 @@
   },
   "url": "www.tving.com",
   "regExp": "^https?[:][/][/](www[.])?tving[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TVING/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TVING/assets/thumbnail.png",
   "color": "#FF143C",

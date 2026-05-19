@@ -260,8 +260,7 @@ export class RouteHandlers {
     const season = params.get('season')
     const episode = params.get('episode')
 
-    let animeTitle = Utils.getAnimeTitle()
-    animeTitle = animeTitle.replace(/\s*S\d+\s*B\d+$/i, '').trim()
+    const animeTitle = Utils.getAnimeTitle()
 
     const placeholders = {
       anime_title: animeTitle,

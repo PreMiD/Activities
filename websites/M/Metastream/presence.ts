@@ -41,7 +41,6 @@ presence.on('UpdateData', async () => {
   let smallImageText
   let startTimestamp = elapsed
   let endTimestamp
-  let playing = true
 
   const path = document.location.pathname
 
@@ -123,12 +122,10 @@ presence.on('UpdateData', async () => {
               if (play.href.baseVal.endsWith('pause')) {
                 smallImageKey = Assets.Play
                 smallImageText = (await strings).play
-                playing = true
               }
               else {
                 smallImageKey = Assets.Pause
                 smallImageText = (await strings).pause
-                playing = false
               }
             }
           }
@@ -150,6 +147,5 @@ presence.on('UpdateData', async () => {
       startTimestamp,
       endTimestamp,
     },
-    playing,
   )
 })

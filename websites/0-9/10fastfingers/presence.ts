@@ -1,3 +1,5 @@
+import { getTimestamps, timestampFromFormat } from 'premid'
+
 const presence = new Presence({
   clientId: '895022531868774451',
 })
@@ -8,14 +10,14 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/0-9/10fastfingers/assets/logo.png',
     startTimestamp: browsingTimestamp,
   }
-  const [start, end] = presence.getTimestamps(
-    presence.timestampFromFormat('00:00'),
-    presence.timestampFromFormat('1:00'),
+  const [start, end] = getTimestamps(
+    timestampFromFormat('00:00'),
+    timestampFromFormat('1:00'),
   )
   if (document.location.pathname === '/') {
     presenceData.details = 'In home page'
   }
-  else if (document.location.pathname.match(/\/typing-test\/.+\/top50/g)) {
+  else if (/\/typing-test\/.+\/top50/.test(document.location.pathname)) {
     presenceData.details = 'Viewing top 50'
   }
   else if (document.location.pathname.includes('/typing-test/')) {
@@ -93,7 +95,7 @@ presence.on('UpdateData', async () => {
     || document.location.pathname.includes('/widgets/')
   ) {
     const timer = document.querySelector('#timer')?.textContent
-    if (timer?.match(/([125]0?:0{2})|(0:30)/)) {
+    if (timer?.match(/[125]0?:0{2}|0:30/)) {
       presenceData.details = 'Waiting to start a custom typing test'
     }
     else if (timer === '0:00') {

@@ -14,7 +14,7 @@
     "www.spyke.social"
   ],
   "regExp": "^https?[:][/][/](www[.])?spyke[.]social[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Spyke/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Spyke/assets/thumbnail.png",
   "color": "#000000",

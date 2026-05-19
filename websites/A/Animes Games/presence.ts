@@ -1,3 +1,5 @@
+import { getTimestampsFromMedia } from 'premid'
+
 const presence = new Presence({
   clientId: '860857600203554816',
 })
@@ -93,7 +95,7 @@ presence.on('UpdateData', async () => {
             if (!Number.isNaN(episode))
               presenceData.state = `Episódio: ${episode}`
             if (video) {
-              [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
             }
 
             presenceData.buttons = [

@@ -13,12 +13,10 @@
   },
   "url": [
     "s.to",
-    "serienstream.sx",
-    "serien.sx",
     "serienstream.to"
   ],
-  "regExp": "^https?[:][/][/](s[.]to|serienstream[.]sx|serien[.]sx|serienstream[.]to)[/]",
-  "version": "1.7.0",
+  "regExp": "^https?[:][/][/](s[.]to|serienstream[.]to)[/]",
+  "version": "1.7.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/s.to/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/s.to/assets/thumbnail.png",
   "color": "#0000ff",

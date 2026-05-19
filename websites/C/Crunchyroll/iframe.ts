@@ -1,7 +1,10 @@
 const iframe = new iFrame()
 
-setInterval(() => {
-  const video = document.querySelector<HTMLVideoElement>('#player0') ?? document.querySelector<HTMLVideoElement>('#player_html5_api')
+iframe.on('UpdateData', () => {
+  const video
+    = document.querySelector<HTMLVideoElement>('video')
+      ?? document.querySelector<HTMLVideoElement>('#player0')
+      ?? document.querySelector<HTMLVideoElement>('#player_html5_api')
 
   if (video && !Number.isNaN(video.duration)) {
     iframe.send({
@@ -13,4 +16,4 @@ setInterval(() => {
       },
     })
   }
-}, 100)
+})

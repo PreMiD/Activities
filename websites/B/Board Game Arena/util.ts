@@ -41,27 +41,16 @@ function setCacheTime(key: string, time: number) {
   dataCacheTime[key] = time
 }
 
-// TODO: Remove or replace with newer function coming in v2.5
-function getPageVariable<T>(
+async function getPageVar<T>(
   variable: string,
   presence: Presence,
   isString = false,
-) {
-  const variablePath = variable.split('.')
-
-  // convert into legacy format
-  let legacyVariable = `${variablePath[0]}"]`
-  for (let i = 1; i < variablePath.length - 1; i++)
-    legacyVariable += `["${variablePath[i]}"]`
-
-  legacyVariable += `["${variablePath[variablePath.length - 1]}`
-
-  if (isString) {
-    // Hack to get around the bug with pageLetiable at the moment. (Add quotes around it)
-    legacyVariable += '"].replace(/(^|$)/g, \'"\').split()["0'
-  }
-
-  return presence.getPageletiable<T>(legacyVariable)
+): Promise<T> {
+  const result = await presence.getPageVariable<Record<string, T>>(variable)
+  const value = result[variable]
+  if (isString)
+    return String(value) as T
+  return value as T
 }
 
 export async function getMetadata<T>(
@@ -72,7 +61,7 @@ export async function getMetadata<T>(
   const now = Date.now()
   if (now - getCacheTime(key) > 1000) {
     setCacheTime(key, now)
-    const data = await getPageVariable<T>(`gameui.${key}`, presence, isString)
+    const data = await getPageVar<T>(`gameui.${key}`, presence, isString)
     setCachedItem(key, data)
     return data
   }

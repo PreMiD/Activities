@@ -23,7 +23,7 @@
     "mail.notion.so"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*notion[.](so|com|site)[/]",
-  "version": "2.0.2",
+  "version": "2.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Notion/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Notion/assets/thumbnail.png",
   "color": "#000000",

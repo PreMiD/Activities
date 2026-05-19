@@ -117,14 +117,14 @@ function simplifyKey(key: string): string {
   result = result.replace('Solo', '')
   if (
     (result.includes('-PinkPlay_Controllable')
-      && !result.match(/(?:Standard|OneSaber|Lawless)-PinkPlay_Controllable/))
-    || result.match(/(Horizontal|Vertical|Inverted|Inverse)/)
+      && !/(?:Standard|OneSaber|Lawless)-PinkPlay_Controllable/.test(result))
+    || /Horizontal|Vertical|Inverted|Inverse/.test(result)
   ) {
     result = result.replace('-PinkPlay_Controllable', '')
   }
   if (result.startsWith('Generated'))
     result = result.replace('Generated', '')
-  if (result.match(/(Horizontal|Vertical|Inverted|Inverse)/)) {
+  if (/Horizontal|Vertical|Inverted|Inverse/.test(result)) {
     let previous = ''
     while (previous !== result) {
       previous = result

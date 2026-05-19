@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '815947069117169684',
@@ -166,7 +166,7 @@ presence.on('UpdateData', async () => {
         episodeNumber = fullEpisodeName.split('.')[0]!
         episodeName = fullEpisodeName.split('.').slice(1).join('.')
         hasEpName = !episodeName.includes('EP.')
-        part = episodeName.match(/([1-9]\/[1-9])/g) ?? []
+        part = episodeName.match(/[1-9]\/[1-9]/g) ?? []
       }
 
       presenceData.details = document.querySelector('#series_title')?.textContent
@@ -192,7 +192,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = video.paused ? strings.pause : strings.play;
 
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
       if (buttonsOn) {
         presenceData.buttons = [

@@ -7,6 +7,7 @@ import { watch } from 'chokidar'
 import { build } from 'esbuild'
 import ora from 'ora'
 import { inc } from 'semver'
+import { getDmcaServices, isDmcaBlocked } from '../util/dmca.js'
 import {
   checkDomainDns,
   isValidDomain,
@@ -29,6 +30,7 @@ export interface ActivityMetadata {
   logo: string
   thumbnail: string
   url: string | string[]
+  regExp: string
   iframe?: boolean
   iFrameRegExp?: string
   description: Record<string, string>
@@ -156,6 +158,14 @@ export class ActivityCompiler {
 
         await this.ts.restart(this.compileAndSend.bind(this, { validate, zip, sarif }))
       }
+
+      // Handle string file and metadata.json changes
+      if (
+        event === 'change'
+        && (basename(path) === `${this.activity.service}.json` || basename(path) === 'metadata.json')
+      ) {
+        return this.compileAndSend({ validate, zip, sarif })
+      }
     })
 
     this.ts.watch(this.compileAndSend.bind(this, { validate, zip, sarif }))
@@ -171,6 +181,24 @@ export class ActivityCompiler {
 
   private async validate({ kill }: { kill: boolean }): Promise<boolean> {
     const metadata: ActivityMetadata = JSON.parse(await readFile(resolve(this.cwd, 'metadata.json'), 'utf-8'))
+
+    const dmcaServices = await getDmcaServices()
+    if (isDmcaBlocked(metadata.service, dmcaServices)) {
+      const message = `Activity "${metadata.service}" is on the DMCA blocklist and cannot be added or modified`
+      if (kill) {
+        exit(message)
+      }
+
+      error(message)
+      addSarifLog({
+        path: resolve(this.cwd, 'metadata.json'),
+        message,
+        ruleId: SarifRuleId.dmcaCheck,
+        position: await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'service'),
+      })
+      return false
+    }
+
     const libraryVersion: ActivityMetadata | null = await fetch(`https://api.premid.app/v6/activities${this.versionized ? `/v${metadata.apiVersion}` : ''}/${encodeURIComponent(metadata.service)}/metadata.json`).then(res => res.json()).catch(() => null)
 
     let serviceFolder: string
@@ -376,8 +404,59 @@ export class ActivityCompiler {
       valid = false
     }
 
-    // DNS validation for URLs
     const urls = Array.isArray(metadata.url) ? metadata.url : [metadata.url]
+
+    // regExp validation for URLs
+    {
+      let regex: RegExp | null = null
+      try {
+        regex = new RegExp(metadata.regExp)
+      }
+      catch {
+        const message = `Invalid regExp "${metadata.regExp}": failed to compile as a regular expression`
+        if (kill) {
+          exit(message)
+        }
+
+        error(message)
+        addSarifLog({
+          path: resolve(this.cwd, 'metadata.json'),
+          message,
+          ruleId: SarifRuleId.regExpUrlCheck,
+          position: await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'regExp'),
+        })
+        valid = false
+      }
+
+      if (regex) {
+        for (let i = 0; i < urls.length; i++) {
+          const url = urls[i]
+          const testUrl = `https://${url}/`
+          if (!regex.test(testUrl)) {
+            const message = `regExp "${metadata.regExp}" does not match URL "${testUrl}" (derived from url "${url}")`
+            if (kill) {
+              exit(message)
+            }
+
+            error(message)
+
+            const position = Array.isArray(metadata.url)
+              ? await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'url', i)
+              : await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'url')
+
+            addSarifLog({
+              path: resolve(this.cwd, 'metadata.json'),
+              message,
+              ruleId: SarifRuleId.regExpUrlCheck,
+              position,
+            })
+            valid = false
+          }
+        }
+      }
+    }
+
+    // DNS validation for URLs
 
     // Check all URLs in parallel for this activity
     const urlChecks = await Promise.all(

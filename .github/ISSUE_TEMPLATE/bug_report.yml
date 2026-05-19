@@ -1,6 +1,9 @@
 name: Bug Report
 description: Create a report to help us improve the PreMiD Store
-labels: [bug, needs-repro]
+labels:
+  - bug
+  - needs repro
+type: Bug
 body:
   - type: markdown
     attributes:

@@ -13,7 +13,7 @@
   },
   "url": "puhutv.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*puhutv[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/puhutv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/puhutv/assets/thumbnail.png",
   "color": "#232527",

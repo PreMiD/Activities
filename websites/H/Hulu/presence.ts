@@ -7,7 +7,7 @@ const strings = presence.getStrings({
   play: 'general.playing',
   pause: 'general.paused',
   live: 'general.live',
-  search: 'general.searching',
+  search: 'general.searchFor',
   viewMovie: 'general.viewMovie',
   viewCategory: 'general.viewCategory',
   viewGenre: 'general.viewGenre',
@@ -30,6 +30,14 @@ function capitalize(text: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
+function parseTimeString(timeStr: string): number {
+  return timeStr
+    .split(':')
+    .map(Number)
+    .reverse()
+    .reduce((total, value, index) => total + value * 60 ** index, 0)
+}
+
 let oldUrl: string, header, title, item
 
 enum ActivityAssets {
@@ -42,7 +50,6 @@ presence.on('UpdateData', async () => {
     startTimestamp: Math.floor(Date.now() / 1000),
     type: ActivityType.Watching,
   }
-  let video: HTMLVideoElement | null = null
 
   const { href, pathname: path } = window.location
   if (href !== oldUrl)
@@ -52,68 +59,65 @@ presence.on('UpdateData', async () => {
 
   switch (true) {
     case path.includes('/hub'):
-      header = document.querySelector('.Hub__title')
+      header = document.querySelector('.NavBar__item--selected')
       title = document.querySelector('.SimpleModalNav__title')
       presenceData.details = (await strings).viewCategory
-      if (header && title)
-        presenceData.state = `${presenceData.state} (${title.textContent})`
-      else if (header && !title)
+      if (header)
         presenceData.state = header.textContent
+      else if (title)
+        presenceData.state = title.textContent
       break
     case path.includes('/genre'):
-      header = document.querySelector('.Hub__title')
-      title = document.querySelector('.SimpleModalNav__title')
+      header = document.querySelector('.SimpleModalNav__title')
       presenceData.details = (await strings).viewGenre
-      if (header && title)
-        presenceData.state = `${presenceData.state} (${title.textContent})`
-      else if (header && !title)
+      if (header) {
         presenceData.state = header.textContent
+      }
       break
     case path.includes('/series'):
-      title = document.querySelector('.Masthead__title')
+      title = document.querySelector('.SimpleModalNav__title')
       item = document.querySelector('.Subnav__item.active')
       presenceData.details = (await strings).viewSeries
       if (title && item)
-        presenceData.state = `${presenceData.state}'s ${item.textContent}`
+        presenceData.state = `${title.textContent}: ${item.textContent}`
       else if (title && !item)
         presenceData.state = title.textContent
       break
     case path.includes('/movie'):
-      title = document.querySelector('.Masthead__title')
+      title = document.querySelector('.SimpleModalNav__title')
       item = document.querySelector('.Subnav__item.active')
       presenceData.details = (await strings).viewMovie
       if (title && item)
-        presenceData.state = `${presenceData.state}'s ${item.textContent}`
+        presenceData.state = `${title.textContent}: ${item.textContent}`
       else if (title && !item)
         presenceData.state = title.textContent
       break
     case path.includes('/network'): {
-      const brand = document.querySelector<HTMLImageElement>(
-        '.SimpleModalNav__brandImage',
-      )
+      const brand = (document.querySelector('.SimpleModalNav__brandImage')
+        ?? document.querySelector('.SimpleModalNav__title')) as HTMLImageElement | null
       item = document.querySelector('.Subnav__item.active')
       presenceData.details = (await strings).viewNetwork
       if (brand && item)
-        presenceData.state = `${brand.alt}'s ${item.textContent}`
+        presenceData.state = `${brand.alt}: ${item.textContent}`
       else if (brand && !item)
         presenceData.state = brand.alt
       break
     }
     case path.includes('/sports_episode'):
-      title = document.querySelector('.Masthead__title')
+      title = document.querySelector('.SimpleModalNav__title')
       item = document.querySelector('.Subnav__item.active')
       presenceData.details = (await strings).viewSportEpisode
       if (title && item)
-        presenceData.state = `${presenceData.state}'s ${item.textContent}`
+        presenceData.state = `${title.textContent}: ${item.textContent}`
       else if (title && !item)
         presenceData.state = title.textContent
       break
     case path.includes('/sports_team'):
-      title = document.querySelector('.Masthead__title')
+      title = document.querySelector('.SimpleModalNav__title')
       item = document.querySelector('.Subnav__item.active')
       presenceData.details = (await strings).viewSportTeam
       if (title && item)
-        presenceData.state = `${presenceData.state}'s ${item.textContent}`
+        presenceData.state = `${title.textContent}: ${item.textContent}`
       else if (title && !item)
         presenceData.state = title.textContent
       break
@@ -128,12 +132,14 @@ presence.on('UpdateData', async () => {
     }
     case path.includes('/live'): {
       const category = document.querySelector(
-        '.LiveGuide__filter-item--selected',
+        '[class*="LiveGuideFilters_LiveGuideFilterItemSelected__"]',
       )
-      title = document.querySelector('.ModalHeader__showname')
+      const title = document.querySelector(
+        '[class*="LiveGuideChannelKyber_isPlaying__"] img[class*="LiveGuideChannelKyber_logo__"]',
+      ) as HTMLImageElement | null
       presenceData.details = (await strings).watchingLive
       if (category && title)
-        presenceData.state = `${presenceData.state} (${title.textContent})`
+        presenceData.state = `${capitalize(category.textContent!)} (${title.alt})`
       else if (category && !title)
         presenceData.state = capitalize(category.textContent!)
       break
@@ -147,16 +153,38 @@ presence.on('UpdateData', async () => {
       if (item)
         presenceData.state = capitalize(item.textContent!)
       break
-    case path.includes('/watch'):
-      video = document.querySelector('.content-video-player')
-      if (video) {
-        title = document.querySelector('.metadata-area__second-line')
-        const content = document.querySelector('.metadata-area__third-line')
-        const timestamps = getTimestamps(
-          Math.floor(video.currentTime),
-          Math.floor(video.duration),
+    case path.includes('/watch'): {
+      const videoEl = document.querySelector('video#content-video-player')
+      if (videoEl) {
+        const title = document.querySelector(
+          '#web-player-app div.PlayerMetadata__titleText',
         )
-        const live = timestamps[1] === Infinity
+        const content = document.querySelector(
+          '#web-player-app div.PlayerMetadata__subTitle',
+        )
+
+        const currentTimeEl = document.querySelector(
+          '.Timeline__currentTimestamp',
+        )
+        const sliderEl = document.querySelector(
+          '.Timeline__slider[role="slider"]',
+        )
+        const playButton = document.querySelector(
+          '[data-testid="playButton"].PlayButton',
+        )
+        const liveIndicator = document.querySelector(
+          '.BottomUiControls__playbackControls div[aria-label*="LIVE"]',
+        )
+        const isPaused = !!playButton
+        const live = !!liveIndicator
+
+        const currentSeconds = currentTimeEl
+          ? parseTimeString(currentTimeEl.textContent!)
+          : 0
+        const durationSeconds = sliderEl
+          ? Number(sliderEl.getAttribute('aria-valuemax'))
+          : 0
+
         presenceData.details = (await strings).watching
         if (title) {
           presenceData.details = (await strings).onHulu
@@ -168,17 +196,21 @@ presence.on('UpdateData', async () => {
 
         presenceData.smallImageKey = live
           ? Assets.Live
-          : video.paused
+          : isPaused
             ? Assets.Pause
             : Assets.Play
         presenceData.smallImageText = live
           ? (await strings).live
-          : video.paused
+          : isPaused
             ? (await strings).pause
             : (await strings).play
-        if (!video.paused) {
-          presenceData.startTimestamp = timestamps[0]
-          presenceData.endTimestamp = timestamps[1]
+        if (live) {
+          presenceData.startTimestamp = Math.floor(Date.now() / 1000)
+          presenceData.endTimestamp = null
+        }
+        else if (!isPaused && !live) {
+          const timestamps = getTimestamps(currentSeconds, durationSeconds)
+          ;[presenceData.startTimestamp, presenceData.endTimestamp] = timestamps
         }
         else {
           presenceData.startTimestamp = null
@@ -187,7 +219,10 @@ presence.on('UpdateData', async () => {
         const seasonAndEpisode = content?.textContent?.match(/S(\d+) E(\d+)-/)
         if (seasonAndEpisode && seasonAndEpisode?.length > 2) {
           presenceData.largeImageText = `Season ${seasonAndEpisode[1]}, Episode ${seasonAndEpisode[2]}`
-          presenceData.state = content?.textContent?.replace(/S\d+ E\d+-/, '') as string
+          presenceData.state = content?.textContent
+            ?.replace(/^S\d+\s*E\d+[-–]\s*/i, '')
+            .replace(/\s*[•|].*$/, '')
+            .trim() as string
           presenceData.buttons = [
             {
               label: (await strings).buttonViewEpisode,
@@ -197,61 +232,10 @@ presence.on('UpdateData', async () => {
         }
       }
       else {
-        video = document.querySelector('video#content-video-player')
         presenceData.details = (await strings).viewWatchHistory
-        if (video) {
-          title = document.querySelector(
-            '#web-player-app div.PlayerMetadata__titleText',
-          )
-          const content = document.querySelector(
-            '#web-player-app div.PlayerMetadata__subTitle',
-          )
-          const timestamps = getTimestamps(
-            Math.floor(video.currentTime),
-            Math.floor(video.duration),
-          )
-          const live = timestamps[1] === Infinity
-          presenceData.details = (await strings).watching
-          if (title) {
-            presenceData.details = (await strings).onHulu
-            presenceData.name = title?.textContent as string | undefined
-          }
-
-          if (content?.textContent && content.textContent.length > 0)
-            presenceData.state = content.textContent
-
-          presenceData.smallImageKey = live
-            ? Assets.Live
-            : video.paused
-              ? Assets.Pause
-              : Assets.Play
-          presenceData.smallImageText = live
-            ? (await strings).live
-            : video.paused
-              ? (await strings).pause
-              : (await strings).play
-          if (!video.paused) {
-            presenceData.startTimestamp = timestamps[0]
-            presenceData.endTimestamp = timestamps[1]
-          }
-          else {
-            presenceData.startTimestamp = null
-            presenceData.endTimestamp = null
-          }
-          const seasonAndEpisode = content?.textContent?.match(/S(\d+) E(\d+)-/)
-          if (seasonAndEpisode && seasonAndEpisode?.length > 2) {
-            presenceData.largeImageText = `Season ${seasonAndEpisode[1]}, Episode ${seasonAndEpisode[2]}`
-            presenceData.state = content?.textContent?.replace(/S\d+ E\d+-/, '') as string
-            presenceData.buttons = [
-              {
-                label: (await strings).buttonViewEpisode,
-                url: href,
-              },
-            ]
-          }
-        }
       }
       break
+    }
   }
 
   presence.setActivity(

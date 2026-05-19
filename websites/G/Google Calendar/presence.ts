@@ -39,15 +39,19 @@ presence.on('UpdateData', async () => {
   }
   const privacy = await presence.getSetting<boolean>('privacy')
   const strings = await getStrings()
-  // eslint-disable-next-line regexp/no-unused-capturing-group
-  const date = document.title?.replace(/Google[\xA0 ](Calendar|Agenda) -/, '')?.replaceAll(',', ' -')?.trim()
+
+  const date = document.title?.replace(/Google[\xA0 ](?:Calendar|Agenda) -/, '')?.replaceAll(',', ' -')?.trim()
   const eventDialog = document.querySelector('div[role="dialog"]')
 
   if (document.location.pathname === '/') {
     presenceData.details = strings.home
   }
   else if (document.location.pathname.startsWith('/calendar/')) {
-    if (document.location.pathname.includes('/r/day')) {
+    if (eventDialog) {
+      presenceData.details = strings.viewingAnEvent
+      presenceData.state = privacy ? '' : eventDialog?.querySelector('span[role="heading"]')?.textContent || ''
+    }
+    else if (document.location.pathname.includes('/r/day')) {
       presenceData.details = strings.daySchedule
       presenceData.state = date
     }
@@ -69,10 +73,6 @@ presence.on('UpdateData', async () => {
     else if (document.location.pathname.includes('/r/customday')) {
       presenceData.details = strings.viewingScheduleOf
       presenceData.state = strings.customDays
-    }
-    else if (eventDialog) {
-      presenceData.details = strings.viewingAnEvent
-      presenceData.state = privacy ? '' : eventDialog?.querySelector('span[role="heading"]')?.textContent || ''
     }
     else if (document.location.pathname.includes('/r/eventedit')) {
       presenceData.details = strings.editingAnEvent
