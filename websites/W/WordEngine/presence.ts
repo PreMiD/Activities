@@ -7,9 +7,12 @@ enum ActivityAssets {
   Logo = 'https://i.imgur.com/aC8rYv5.png',
 }
 
-type ProgressCache = { goal: string | null, current: string | null }
+interface ProgressCache {
+  goal: string | null
+  current: string | null
+}
 
-type StoredProgressCache = {
+interface StoredProgressCache {
   data: ProgressCache
   key: string
 }
@@ -57,29 +60,34 @@ let cachedIsJa: boolean | null = null
 function loadCache(): void {
   try {
     const raw = localStorage.getItem(cacheKey)
-    if (!raw) return
+    if (!raw)
+      return
     const parsed = JSON.parse(raw) as { day?: StoredProgressCache | null, week?: StoredProgressCache | null }
     const currentDayKey = getDayKey()
     const currentWeekKey = getWeekKey()
     cachedDay = parsed.day?.key === currentDayKey ? parsed.day.data : null
     cachedWeek = parsed.week?.key === currentWeekKey ? parsed.week.data : null
-  } catch {
+  }
+  catch {
   }
 }
 
 function loadLanguageCache(): void {
   try {
     const raw = localStorage.getItem(languageKey)
-    if (raw === null) return
+    if (raw === null)
+      return
     cachedIsJa = raw === 'ja'
-  } catch {
+  }
+  catch {
   }
 }
 
 function saveLanguageCache(value: boolean): void {
   try {
     localStorage.setItem(languageKey, value ? 'ja' : 'en')
-  } catch {
+  }
+  catch {
   }
 }
 
@@ -90,7 +98,8 @@ function saveCache(): void {
       week: cachedWeek ? { data: cachedWeek, key: getWeekKey() } : null,
     })
     localStorage.setItem(cacheKey, payload)
-  } catch {
+  }
+  catch {
   }
 }
 
@@ -113,9 +122,10 @@ function getWeekKey(date = new Date()): string {
 function loadStartTimestamp(): number | null {
   try {
     const raw = sessionStorage.getItem(timestampKey)
-    const parsed = raw ? Number(raw) : NaN
+    const parsed = raw ? Number(raw) : Number.NaN
     return Number.isFinite(parsed) ? parsed : null
-  } catch {
+  }
+  catch {
     return null
   }
 }
@@ -123,14 +133,16 @@ function loadStartTimestamp(): number | null {
 function saveStartTimestamp(value: number): void {
   try {
     sessionStorage.setItem(timestampKey, String(value))
-  } catch {
+  }
+  catch {
   }
 }
 
 function clearSessionTimestamp(): void {
   try {
     sessionStorage.removeItem(timestampKey)
-  } catch {
+  }
+  catch {
   }
 }
 
@@ -138,7 +150,8 @@ loadCache()
 loadLanguageCache()
 
 function extractNumber(text: string | null): string | null {
-  if (!text) return null
+  if (!text)
+    return null
   const cleaned = text.replace(/[,\s]/g, '')
   const m = cleaned.match(/\d+/)
   return m ? m[0] : cleaned || null
@@ -151,20 +164,23 @@ function queryProgress(goalSelectors: string[], currentSelectors: string[]): Pro
   for (const s of goalSelectors) {
     const el = document.querySelector<HTMLElement>(s)
     if (el) {
-      goal = extractNumber((el.textContent || el.innerText || '').trim())
-      if (goal) break
+      goal = extractNumber((el.textContent || '').trim())
+      if (goal)
+        break
     }
   }
 
   for (const s of currentSelectors) {
     const el = document.querySelector<HTMLElement>(s)
     if (el) {
-      current = extractNumber((el.textContent || el.innerText || '').trim())
-      if (current) break
+      current = extractNumber((el.textContent || '').trim())
+      if (current)
+        break
     }
   }
 
-  if (!goal && !current) return { goal: null, current: null }
+  if (!goal && !current)
+    return { goal: null, current: null }
 
   return { goal: current, current: goal }
 }
@@ -179,11 +195,13 @@ presence.on('UpdateData', async () => {
     const enEl = document.getElementById('btSignInButtonCultureEn') as HTMLElement | null
     const isBold = (value: string): boolean => value === 'bold' || Number(value) >= 600
     const hasInlineBold = (el: HTMLElement | null): boolean => {
-      if (!el) return false
+      if (!el)
+        return false
       const inline = el.getAttribute('style') || ''
-      const match = inline.match(/font-weight\s*:\s*(\w+|\d+)/i)
+      const match = inline.match(/font-weight\s*:\s*([a-z]+|\d+)/i)
       const weight = match?.[1]
-      if (weight) return isBold(weight.toLowerCase())
+      if (weight)
+        return isBold(weight.toLowerCase())
       return isBold(getComputedStyle(el).fontWeight)
     }
 
@@ -211,8 +229,10 @@ presence.on('UpdateData', async () => {
 
   function getStudyMethod(isJa: boolean): string | null {
     const path = document.location.pathname.toLowerCase()
-    if (path.endsWith('/flashwords.html')) return isJa ? 'フラッシュワード' : 'Flash Words'
-    if (path.endsWith('/wordpanic.html')) return isJa ? 'ワードパニック' : 'Word Panic'
+    if (path.endsWith('/flashwords.html'))
+      return isJa ? 'フラッシュワード' : 'Flash Words'
+    if (path.endsWith('/wordpanic.html'))
+      return isJa ? 'ワードパニック' : 'Word Panic'
     return null
   }
 
@@ -226,7 +246,8 @@ presence.on('UpdateData', async () => {
     const hasCurrent = current !== null
     const hasGoal = goal !== null
     const parseCount = (value: string | null): number | null => {
-      if (!value) return null
+      if (!value)
+        return null
       const parsed = Number(value)
       return Number.isFinite(parsed) ? parsed : null
     }
@@ -236,32 +257,39 @@ presence.on('UpdateData', async () => {
     if (isJa) {
       const unit = '単語'
       if (hasCurrent && hasGoal) {
-        if (achieved) return `${label}: ${current} ${unit} (目標: ${goal}✅)`
+        if (achieved)
+          return `${label}: ${current} ${unit} (目標: ${goal} ✅)`
         return `${label}: ${current} ${unit} (目標: ${goal})`
       }
-      if (hasCurrent && !hasGoal) return `${label}: ${current} ${unit}`
-      if (!hasCurrent && hasGoal) return `${label}の目標: ${goal} ${unit}`
+      if (hasCurrent && !hasGoal)
+        return `${label}: ${current} ${unit}`
+      if (!hasCurrent && hasGoal)
+        return `${label}の目標: ${goal}`
       return `${label}のデータを読み込み中...`
     }
 
     const unitFor = (value: string | null): string => {
-      const parsed = value ? Number(value) : NaN
+      const parsed = value ? Number(value) : Number.NaN
       return Number.isFinite(parsed) && parsed === 1 ? 'Word' : 'Words'
     }
 
     if (hasCurrent && hasGoal) {
-      if (achieved) return `${label}: ${current} ${unitFor(current)} (Goal: ${goal}✅)`
+      if (achieved)
+        return `${label}: ${current} ${unitFor(current)} (Goal: ${goal} ✅)`
       return `${label}: ${current} ${unitFor(current)} (Goal: ${goal})`
     }
-    if (hasCurrent && !hasGoal) return `${label}: ${current} ${unitFor(current)}`
-    if (!hasCurrent && hasGoal) return `${label} Goal: ${goal} ${unitFor(goal)}`
+    if (hasCurrent && !hasGoal)
+      return `${label}: ${current} ${unitFor(current)}`
+    if (!hasCurrent && hasGoal)
+      return `${label} Goal: ${goal}`
     return `Loading ${label.toLowerCase()} data...`
   }
 
   const savedTimestamp = loadStartTimestamp()
   const startTimestamp = savedTimestamp ?? browsingTimestamp
   presenceData.startTimestamp = startTimestamp
-  if (!savedTimestamp) saveStartTimestamp(startTimestamp)
+  if (!savedTimestamp)
+    saveStartTimestamp(startTimestamp)
 
   if (isLoginPage()) {
     clearSessionTimestamp()
@@ -274,10 +302,12 @@ presence.on('UpdateData', async () => {
   const weekLabel = isJa ? '今週' : 'This Week'
 
   const { goal: weekGoal, current: weekCurrent } = queryProgress(WEEKLY_GOAL_SELECTORS, WEEKLY_CURRENT_SELECTORS)
-  if (weekGoal || weekCurrent) cachedWeek = { goal: weekGoal, current: weekCurrent }
+  if (weekGoal || weekCurrent)
+    cachedWeek = { goal: weekGoal, current: weekCurrent }
 
   const { goal: dayGoal, current: dayCurrent } = queryProgress(DAILY_GOAL_SELECTORS, DAILY_CURRENT_SELECTORS)
-  if (dayGoal || dayCurrent) cachedDay = { goal: dayGoal, current: dayCurrent }
+  if (dayGoal || dayCurrent)
+    cachedDay = { goal: dayGoal, current: dayCurrent }
 
   saveCache()
 
@@ -289,14 +319,19 @@ presence.on('UpdateData', async () => {
     const methodName = getStudyMethod(isJa)
     if (courseName && methodName) {
       presenceData.details = `${courseName} - ${methodName}`
-    } else if (dayText) {
+    }
+    else if (dayText) {
       presenceData.details = dayText
     }
 
-    if (weekText) presenceData.state = weekText
-  } else {
-    if (dayText) presenceData.details = dayText
-    if (weekText) presenceData.state = weekText
+    if (weekText)
+      presenceData.state = weekText
+  }
+  else {
+    if (dayText)
+      presenceData.details = dayText
+    if (weekText)
+      presenceData.state = weekText
   }
 
   presence.setActivity(presenceData)
