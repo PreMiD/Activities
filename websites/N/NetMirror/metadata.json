@@ -19,7 +19,7 @@
     "net52.cc",
     "netmirror.io"
   ],
-  "regExp": "^https?[:][/][/](www[.])?(net22|net52|netmirror)[.]cc|io[/]",
+  "regExp": "^https?[:][/][/](www[.])?(net22|net52|netmirror)[.](cc|io)[/]",
   "version": "1.0.0",
   "logo": "https://netmirror.io/images/icon-512.png",
   "thumbnail": "https://netmirror.io/images/app-screenshots/SS-HOME-MAIN.webp",
@@ -33,7 +33,7 @@
     "media"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*",
+  "iFrameRegExp": "^https?[:][/][/](www[.])?(net22|net52|netmirror)[.](cc|io)[/]",
   "settings": [
     {
       "id": "privacyMode",
