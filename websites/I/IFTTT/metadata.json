@@ -19,7 +19,7 @@
   },
   "url": "ifttt.com",
   "regExp": "^https?[:][/][/](ift[.]tt|((help|platform|status)[.]|)ifttt[.]com)[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/IFTTT/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/IFTTT/assets/thumbnail.png",
   "color": "#0d99fd",

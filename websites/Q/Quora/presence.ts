@@ -9,8 +9,8 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
 
-  if (document.location.hostname.match(/[A-Za-z]+\.quora\.com/)) {
-    if (document.location.hostname.match(/[A-Za-z]{4,}\.quora\.com/)) {
+  if (/[A-Za-z]+\.quora\.com/.test(document.location.hostname)) {
+    if (/[A-Za-z]{4,}\.quora\.com/.test(document.location.hostname)) {
       const taxonomy = document.querySelector(
         '#mainContent > div.q-flex.qu-alignItems--center.qu-flexWrap--wrap > div > span > span > a > span > span > span',
       )?.textContent
@@ -59,7 +59,7 @@ presence.on('UpdateData', async () => {
             presenceData.state = account
           }
           else if (
-            document.location.pathname.match(/^\/[A-Za-z0-9%-]+\/answer\//)
+            /^\/[A-Za-z0-9%-]+\/answer\//.test(document.location.pathname)
           ) {
             const question = document.querySelector(
               '#mainContent > div > div.q-box.qu-borderAll.qu-borderRadius--small.qu-borderColor--raised.qu-boxShadow--small.qu-bg--raised > div.q-box.qu-pt--medium.qu-px--medium.qu-pb--tiny > div.q-box.qu-mb--medium.qu-mt--small > div > span > span > a > div > div > div > div > span > span',
@@ -70,7 +70,7 @@ presence.on('UpdateData', async () => {
             presenceData.details = `Viewing ${account}'s answer for:`
             presenceData.state = question
           }
-          else if (document.location.pathname.match(/^\/[A-Z0-9%-]+/i)) {
+          else if (/^\/[A-Z0-9%-]+/i.test(document.location.pathname)) {
             const question = document.querySelector(
               '#mainContent > div.q-box.qu-borderBottom > div > div.q-text.qu-dynamicFontSize--xlarge.qu-bold.qu-color--gray_dark_dim.qu-passColorToLinks.qu-lineHeight--regular > span > span > div > div > div > span > span',
             )?.textContent

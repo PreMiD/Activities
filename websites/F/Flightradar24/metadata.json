@@ -16,7 +16,7 @@
     "careers.flightradar24.com"
   ],
   "regExp": "^https?[:][/][/](www|forum|my|careers)[.]flightradar24[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Flightradar24/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Flightradar24/assets/thumbnail.png",
   "color": "#f15a23",

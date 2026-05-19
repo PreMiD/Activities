@@ -12,7 +12,7 @@
   },
   "url": "www.tumblr.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tumblr[.]com[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tumblr/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tumblr/assets/thumbnail.png",
   "color": "#395976",

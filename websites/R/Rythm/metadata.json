@@ -20,15 +20,13 @@
     "zh-tw": "Rythm 是款 Discord 音樂機器人，提供網頁控制面板，你可以瀏覽曲目、在語音頻道控制播放，或直接在瀏覽器中管理佇列。"
   },
   "url": "rythm.fm",
-  "version": "1.1.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*rythm[.]fm[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/logo.gif",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/thumbnail.png",
   "color": "#147AFE",
   "category": "music",
-  "tags": [
-    "music",
-    "media"
-  ],
+  "tags": ["music", "media"],
   "settings": [
     {
       "id": "lang",
@@ -75,11 +73,7 @@
       "if": {
         "privacy": false
       },
-      "values": [
-        "Song Title",
-        "Artist Name",
-        "Activity Name"
-      ]
+      "values": ["Song Title", "Artist Name", "Activity Name"]
     },
     {
       "id": "largeImage",

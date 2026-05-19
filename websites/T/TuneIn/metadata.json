@@ -19,7 +19,7 @@
   },
   "url": "tunein.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tunein[.]com[/]",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TuneIn/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TuneIn/assets/thumbnail.png",
   "color": "#33B6A8",

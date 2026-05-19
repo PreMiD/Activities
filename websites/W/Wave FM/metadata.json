@@ -11,12 +11,9 @@
     "es": "Wave FM llega a la radio trayendo innovación con calidad y, sobre todo, lo mejor de los programas que conquistan a muchos amantes de la música adulta. ¡El pasado suena en tu onda!",
     "pt-br": "A Wave FM chega ao rádio trazendo inovação com qualidade e principalmente, o melhor da programação que conquista vários apaixonados pela música Adulta. O passado, toca na sua onda!"
   },
-  "url": [
-    "radiowavefm.com",
-    "wavefm.cl"
-  ],
-  "regExp": "^https?[:][/][/](radiowavefm[.]com|wavefm[.]cl)[/]",
-  "version": "1.1.0",
+  "url": "radiowavefm.com",
+  "regExp": "^https?[:][/][/]radiowavefm[.]com[/]",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wave%20FM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wave%20FM/assets/thumbnail.png",
   "color": "#3398C3",

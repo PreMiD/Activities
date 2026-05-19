@@ -23,7 +23,7 @@
   },
   "url": "globoplay.globo.com",
   "regExp": "^https?[:][/][/]globoplay[.]globo[.]com[/]",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/globoplay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/globoplay/assets/thumbnail.png",
   "color": "#ED1A37",

@@ -12,7 +12,7 @@
   },
   "url": "play.stan.com.au",
   "regExp": "^https?[:][/][/]play[.]stan[.]com[.]au[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stan/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stan/assets/thumbnail.png",
   "color": "#0173fa",

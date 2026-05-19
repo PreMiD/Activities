@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '896323132871299103',
@@ -61,7 +61,7 @@ presence.on('UpdateData', async () => {
       0,
       document.querySelector('h1')?.textContent?.lastIndexOf(' ') ?? 0,
     )} capítulo ${capt?.split(' ').pop()}`;
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
       Math.floor(video.currentTime),
       Math.floor(video.duration),
     )

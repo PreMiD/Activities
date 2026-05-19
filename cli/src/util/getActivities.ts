@@ -114,6 +114,7 @@ export async function getChangedActivities(): Promise<{
           logo: '',
           thumbnail: '',
           url: '',
+          regExp: '',
           version: '1.0.0',
           tags: [],
         },

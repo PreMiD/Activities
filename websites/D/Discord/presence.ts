@@ -404,9 +404,8 @@ presence.on('UpdateData', async () => {
 
       if (
         showCalls
-        && Array.from(document.querySelectorAll('div')).find(c =>
-          c.className?.includes('rtcConnectionStatus'),
-        )
+        && Array.from(document.querySelectorAll('div')).some(c =>
+          c.className?.includes('rtcConnectionStatus'))
       ) {
         if (privacy) {
           presenceData.details = strings.inCall
@@ -471,22 +470,20 @@ presence.on('UpdateData', async () => {
           presenceData.smallImageText = strings.browse
         }
         else if (
-          Array.from(document.querySelectorAll('div[aria-controls]')).find(c =>
+          Array.from(document.querySelectorAll('div[aria-controls]')).some(c =>
             Object.values(c.attributes).find(
               a => a.textContent === 'My Account-tab',
-            ),
-          )
+            ))
         ) {
           presenceData.details = strings.settings
           presenceData.smallImageKey = Assets.Reading
           presenceData.smallImageText = strings.browse
         }
         else if (
-          Array.from(document.querySelectorAll('div[aria-controls]')).find(c =>
+          Array.from(document.querySelectorAll('div[aria-controls]')).some(c =>
             Object.values(c.attributes).find(
               a => a.textContent === 'OVERVIEW-tab',
-            ),
-          )
+            ))
         ) {
           const server = Array.from(document.querySelectorAll('h1')).find(c =>
             c.className?.includes('name'),

@@ -271,40 +271,40 @@ const getStatus = setLoop(() => {
             }
           }
           else {
-            req.responseXML!.getElementsByName('filename')[0]
+            req.responseXML!.querySelectorAll('[name="filename"]')[0]
               ? (media.filename = decodeReq(
-                  req.responseXML!.getElementsByName('filename')[0]!,
+                  req.responseXML!.querySelectorAll('[name="filename"]')[0]!,
                 ) ?? undefined)
               : (media.filename = undefined)
-            req.responseXML!.getElementsByName('title')[0]
+            req.responseXML!.querySelectorAll('[name="title"]')[0]
               ? (media.title = decodeReq(
-                  req.responseXML!.getElementsByName('title')[0]!,
+                  req.responseXML!.querySelectorAll('[name="title"]')[0]!,
                 ) ?? undefined)
               : (media.title = undefined)
-            req.responseXML!.getElementsByName('showName')[0]
+            req.responseXML!.querySelectorAll('[name="showName"]')[0]
               ? (media.showName = decodeReq(
-                  req.responseXML!.getElementsByName('showName')[0]!,
+                  req.responseXML!.querySelectorAll('[name="showName"]')[0]!,
                 ) ?? undefined)
               : (media.showName = undefined)
-            req.responseXML!.getElementsByName('Type')[0]
+            req.responseXML!.querySelectorAll('[name="Type"]')[0]
               ? (media.Type = decodeReq(
-                  req.responseXML!.getElementsByName('Type')[0]!,
+                  req.responseXML!.querySelectorAll('[name="Type"]')[0]!,
                 ) ?? undefined)
               : (media.Type = undefined)
 
             if (
-              req.responseXML!.getElementsByName('artist')[0]
-              || req.responseXML!.getElementsByName('album')[0]
+              req.responseXML!.querySelectorAll('[name="artist"]')[0]
+              || req.responseXML!.querySelectorAll('[name="album"]')[0]
             ) {
               isSong = true
-              req.responseXML!.getElementsByName('artist')[0]
+              req.responseXML!.querySelectorAll('[name="artist"]')[0]
                 ? (media.artist = decodeReq(
-                    req.responseXML!.getElementsByName('artist')[0]!,
+                    req.responseXML!.querySelectorAll('[name="artist"]')[0]!,
                   ) ?? undefined)
                 : (media.artist = undefined)
-              req.responseXML!.getElementsByName('album')[0]
+              req.responseXML!.querySelectorAll('[name="album"]')[0]
                 ? (media.album = decodeReq(
-                    req.responseXML!.getElementsByName('album')[0]!,
+                    req.responseXML!.querySelectorAll('[name="album"]')[0]!,
                   ) ?? undefined)
                 : (media.album = undefined)
             }
@@ -314,22 +314,22 @@ const getStatus = setLoop(() => {
               media.album = undefined
             }
 
-            req.responseXML!.getElementsByName('track_number')[0]
+            req.responseXML!.querySelectorAll('[name="track_number"]')[0]
               ? (media.trackNumber = decodeReq(
-                  req.responseXML!.getElementsByName('track_number')[0]!,
+                  req.responseXML!.querySelectorAll('[name="track_number"]')[0]!,
                 ) ?? undefined)
               : (media.trackNumber = undefined)
 
             if (
-              req.responseXML!.getElementsByName('seasonNumber')[0]
-              && req.responseXML!.getElementsByName('episodeNumber')[0]
+              req.responseXML!.querySelectorAll('[name="seasonNumber"]')[0]
+              && req.responseXML!.querySelectorAll('[name="episodeNumber"]')[0]
             ) {
               isShow = true
               media.seasonNumber = decodeReq(
-                req.responseXML!.getElementsByName('seasonNumber')[0]!,
+                req.responseXML!.querySelectorAll('[name="seasonNumber"]')[0]!,
               ) ?? undefined
               media.episodeNumber = decodeReq(
-                req.responseXML!.getElementsByName('episodeNumber')[0]!,
+                req.responseXML!.querySelectorAll('[name="episodeNumber"]')[0]!,
               ) ?? undefined
             }
             else {

@@ -1,3 +1,5 @@
+import { getTimestamps, timestampFromFormat } from 'premid'
+
 const presence = new Presence({
   clientId: '869131200948756500',
 })
@@ -20,10 +22,10 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Listening to audio sample'
       if (current && total) {
         const [currTS, durTS] = [current, total].map(e =>
-          presence.timestampFromFormat(e.textContent!),
+          timestampFromFormat(e.textContent!),
         );
 
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(currTS!, durTS!)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currTS!, durTS!)
       }
     }
   }
@@ -71,9 +73,9 @@ presence.on('UpdateData', async () => {
 
         if (time && duration) {
           const [timeTS, durTS] = [time, duration].map(e =>
-            presence.timestampFromFormat(e.textContent!),
+            timestampFromFormat(e.textContent!),
           );
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(timeTS!, durTS!)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(timeTS!, durTS!)
         }
       }
       if (buttons) {
@@ -117,9 +119,9 @@ presence.on('UpdateData', async () => {
 
       if (time && duration) {
         const [timeTS, durTS] = [time, duration].map(e =>
-          presence.timestampFromFormat(e.textContent!),
+          timestampFromFormat(e.textContent!),
         );
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(timeTS!, durTS!)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(timeTS!, durTS!)
       }
     }
     if (buttons) {

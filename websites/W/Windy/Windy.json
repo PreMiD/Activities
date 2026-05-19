@@ -1,0 +1,286 @@
+{
+  "windy.browsingCategory": {
+    "message": "Browsing category",
+    "description": "Status for browsing a topic category"
+  },
+  "windy.community": {
+    "message": "Community",
+    "description": "Status for browsing the community forum"
+  },
+  "windy.exploring": {
+    "message": "Exploring",
+    "description": "General exploring state"
+  },
+  "windy.exploringHurricanes": {
+    "message": "Viewing hurricanes",
+    "description": "Hurricane tracking status"
+  },
+  "windy.globalMap": {
+    "message": "Global map",
+    "description": "Global map status"
+  },
+  "windy.layer": {
+    "message": "Layer",
+    "description": "Layer prefix"
+  },
+  "windy.layer_aerosol": {
+    "message": "Aerosol",
+    "description": "Aerosol layer name"
+  },
+  "windy.layer_aqi": {
+    "message": "Air quality index",
+    "description": "AQI layer name"
+  },
+  "windy.layer_cap": {
+    "message": "Weather warnings",
+    "description": "CAP layer name"
+  },
+  "windy.layer_cape": {
+    "message": "CAPE index",
+    "description": "CAPE layer name"
+  },
+  "windy.layer_cat": {
+    "message": "Clear air turbulence",
+    "description": "CAT layer name"
+  },
+  "windy.layer_cloudbase": {
+    "message": "Cloud base",
+    "description": "Cloud base layer name"
+  },
+  "windy.layer_clouds": {
+    "message": "Clouds",
+    "description": "Clouds layer name"
+  },
+  "windy.layer_cloudtop": {
+    "message": "Cloud top",
+    "description": "Cloud top layer name"
+  },
+  "windy.layer_co": {
+    "message": "CO concentration",
+    "description": "CO layer name"
+  },
+  "windy.layer_currents": {
+    "message": "Sea currents",
+    "description": "Currents layer name"
+  },
+  "windy.layer_dewpoint": {
+    "message": "Dew point",
+    "description": "Dew point layer name"
+  },
+  "windy.layer_drought": {
+    "message": "Drought monitor",
+    "description": "Drought layer name"
+  },
+  "windy.layer_dust": {
+    "message": "Dust mass",
+    "description": "Dust layer name"
+  },
+  "windy.layer_efi": {
+    "message": "Extreme forecast",
+    "description": "EFI layer name"
+  },
+  "windy.layer_fire": {
+    "message": "Fire danger",
+    "description": "Fire danger layer name"
+  },
+  "windy.layer_fog": {
+    "message": "Fog",
+    "description": "Fog layer name"
+  },
+  "windy.layer_freezing": {
+    "message": "Freezing altitude",
+    "description": "Freezing altitude layer name"
+  },
+  "windy.layer_gust": {
+    "message": "Wind gusts",
+    "description": "Gusts layer name"
+  },
+  "windy.layer_hclouds": {
+    "message": "High clouds",
+    "description": "High clouds layer name"
+  },
+  "windy.layer_hiking": {
+    "message": "Hiking map",
+    "description": "Hiking layer name"
+  },
+  "windy.layer_hurricanes": {
+    "message": "Hurricane tracker",
+    "description": "Hurricanes layer name"
+  },
+  "windy.layer_icing": {
+    "message": "Icing",
+    "description": "Icing layer name"
+  },
+  "windy.layer_lclouds": {
+    "message": "Low clouds",
+    "description": "Low clouds layer name"
+  },
+  "windy.layer_mclouds": {
+    "message": "Medium clouds",
+    "description": "Medium clouds layer name"
+  },
+  "windy.layer_no2": {
+    "message": "NO2",
+    "description": "NO2 layer name"
+  },
+  "windy.layer_ozone": {
+    "message": "Ozone layer",
+    "description": "Ozone layer name"
+  },
+  "windy.layer_ozoneLayer": {
+    "message": "Surface ozone",
+    "description": "Surface ozone layer name"
+  },
+  "windy.layer_pm2p5": {
+    "message": "PM2.5",
+    "description": "PM2.5 layer name"
+  },
+  "windy.layer_pressure": {
+    "message": "Pressure",
+    "description": "Pressure layer name"
+  },
+  "windy.layer_ptype": {
+    "message": "Precip type",
+    "description": "Precip type layer name"
+  },
+  "windy.layer_radar": {
+    "message": "Weather radar",
+    "description": "Radar layer name"
+  },
+  "windy.layer_rain": {
+    "message": "Rain, thunder",
+    "description": "Rain layer name"
+  },
+  "windy.layer_rainAccu": {
+    "message": "Rain accumulation",
+    "description": "Rain accumulation layer name"
+  },
+  "windy.layer_rh": {
+    "message": "Humidity",
+    "description": "Humidity layer name"
+  },
+  "windy.layer_satellite": {
+    "message": "Satellite",
+    "description": "Satellite layer name"
+  },
+  "windy.layer_seaTemp": {
+    "message": "Sea temperature",
+    "description": "Sea temperature layer name"
+  },
+  "windy.layer_snowAccu": {
+    "message": "New snow",
+    "description": "Snow accumulation layer name"
+  },
+  "windy.layer_snowcover": {
+    "message": "Snow depth",
+    "description": "Snow depth layer name"
+  },
+  "windy.layer_so2": {
+    "message": "SO2",
+    "description": "SO2 layer name"
+  },
+  "windy.layer_solar": {
+    "message": "Solar power",
+    "description": "Solar layer name"
+  },
+  "windy.layer_swell1": {
+    "message": "Swell",
+    "description": "Swell layer name"
+  },
+  "windy.layer_swell2": {
+    "message": "Swell 2",
+    "description": "Swell 2 layer name"
+  },
+  "windy.layer_swell3": {
+    "message": "Swell 3",
+    "description": "Swell 3 layer name"
+  },
+  "windy.layer_temp": {
+    "message": "Temperature",
+    "description": "Temperature layer name"
+  },
+  "windy.layer_thermals": {
+    "message": "Thermals",
+    "description": "Thermals layer name"
+  },
+  "windy.layer_thunder": {
+    "message": "Thunderstorms",
+    "description": "Thunderstorms layer name"
+  },
+  "windy.layer_tidal": {
+    "message": "Tidal currents",
+    "description": "Tidal currents layer name"
+  },
+  "windy.layer_uvindex": {
+    "message": "UV index",
+    "description": "UV layer name"
+  },
+  "windy.layer_visibility": {
+    "message": "Visibility",
+    "description": "Visibility layer name"
+  },
+  "windy.layer_wavepower": {
+    "message": "Wave power",
+    "description": "Wave power layer name"
+  },
+  "windy.layer_waves": {
+    "message": "Waves",
+    "description": "Waves layer name"
+  },
+  "windy.layer_wetbulb": {
+    "message": "Wet-bulb temp",
+    "description": "Wet-bulb layer name"
+  },
+  "windy.layer_wind": {
+    "message": "Wind",
+    "description": "Wind layer name"
+  },
+  "windy.layer_windAccu": {
+    "message": "Wind accumulation",
+    "description": "Wind accumulation layer name"
+  },
+  "windy.layer_wwaves": {
+    "message": "Wind waves",
+    "description": "Wind waves layer name"
+  },
+  "windy.localForecast": {
+    "message": "Local forecast",
+    "description": "Local forecast label"
+  },
+  "windy.mainMenu": {
+    "message": "Main Menu",
+    "description": "Main menu status"
+  },
+  "windy.modifyingSettings": {
+    "message": "Modifying configuration",
+    "description": "State when modifying settings"
+  },
+  "windy.navigating": {
+    "message": "Navigating",
+    "description": "Navigating menus state"
+  },
+  "windy.readingForum": {
+    "message": "Reading the forum",
+    "description": "General status for reading forum pages"
+  },
+  "windy.readingTopic": {
+    "message": "Viewing topic",
+    "description": "Status for viewing a specific topic"
+  },
+  "windy.settings": {
+    "message": "Settings",
+    "description": "Ajustments status"
+  },
+  "windy.stationFallback": {
+    "message": "Station",
+    "description": "Fallback for station name"
+  },
+  "windy.viewingStation": {
+    "message": "Viewing a station",
+    "description": "Station detail state"
+  },
+  "windy.weatherStation": {
+    "message": "Weather station",
+    "description": "Weather station header"
+  }
+}
