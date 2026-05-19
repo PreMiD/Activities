@@ -12,8 +12,8 @@
   "url": "anirose.to",
   "regExp": "^(https?:\\/\\/)?([a-z0-9-]+\\.)*anirose\\.to\\/?.*$",
   "version": "1.0.0",
-  "logo": "https://anirose.to/favicon.ico",
-  "thumbnail": "https://anirose.to/anigum-logo.png",
+  "logo": "https://github.com/CE-Timmer/PreMid-Extensions/blob/main/image_2026-05-20_000800002%20(1).png?raw=true",
+  "thumbnail": "https://github.com/CE-Timmer/PreMid-Extensions/blob/main/anigum-logo.png?raw=true",
   "color": "#000000",
   "category": "anime",
   "tags": [
