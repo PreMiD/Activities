@@ -6,7 +6,7 @@ export default antfu(
     formatters: true,
     typescript: true,
   },
-  ...eslintPluginJsonSchemaValidator.configs.base,
+  ...eslintPluginJsonSchemaValidator.configs['flat/base'],
   {
     rules: {
       'new-cap': [
