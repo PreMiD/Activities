@@ -1,0 +1,75 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1113849467695792140",
+    "name": "senkuthegreat"
+  },
+  "service": "NetMirror",
+  "altnames": [
+    "Net22.cc",
+    "Net Mirror",
+    "Netflix Mirror"
+  ],
+  "description": {
+    "en": "Net22.cc is the current browser portal for NetMirror, a streaming service for movies, TV series, anime, and live TV."
+  },
+  "url": [
+    "net22.cc",
+    "www.net22.cc",
+    "net52.cc",
+    "www.net52.cc",
+    "netmirror.io",
+    "www.netmirror.io"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?(net22|net52|netmirror)[.]cc|io[/]",
+  "version": "1.0.0",
+  "logo": "https://netmirror.io/images/icon-512.png",
+  "thumbnail": "https://netmirror.io/images/app-screenshots/SS-HOME-MAIN.webp",
+  "color": "#e11d48",
+  "category": "videos",
+  "tags": [
+    "streaming",
+    "movies",
+    "series",
+    "video",
+    "media"
+  ],
+  "iframe": true,
+  "iFrameRegExp": ".*",
+  "settings": [
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showTimestamps",
+      "title": "Show Video Timestamps",
+      "icon": "fas fa-stopwatch",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    }
+  ]
+}
