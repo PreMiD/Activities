@@ -6,7 +6,6 @@ const presence = new Presence({
 
 enum ActivityAssets {
   Logo = 'icon',
-  Small = 'icon',
 }
 
 let watchStartedAt = Math.floor(Date.now() / 1000)
@@ -34,7 +33,7 @@ presence.on(
 
 function extractAnimeTitle(title: string): string {
   return title
-    .replace(/\s*[\|\-]\s*AniRose.*$/i, '')
+    .replace(/\s*[|\-]\s*AniRose.*$/i, '')
     .replace(/^watch\s*[:\-]?\s*/i, '')
     .replace(/\s+(?:english\s+)?(?:sub|dub)(?:bed)?\b.*$/i, '')
     .replace(/\s+online\s+free.*$/i, '')
@@ -188,9 +187,9 @@ function getPageTitle(): string {
 
   const heading
     = document.querySelector('main h1')?.textContent
-    ?? document.querySelector('h1')?.textContent
-    ?? ogTitle
-    ?? document.title
+      ?? document.querySelector('h1')?.textContent
+      ?? ogTitle
+      ?? document.title
 
   return extractAnimeTitle(heading)
 }
@@ -202,7 +201,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     largeImageKey: ActivityAssets.Logo,
-    smallImageKey: ActivityAssets.Small,
+    smallImageKey: ActivityAssets.Logo,
     smallImageText: isWatching ? 'Watching' : 'Browsing',
   }
 
