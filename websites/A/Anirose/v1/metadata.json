@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 2,
+  "author": {
+    "id": "751077311545081877",
+    "name": "CE-Timmer"
+  },
+  "service": "Anirose",
+  "description": {
+    "en": "Anirose is a website for watching anime."
+  },
+  "url": "anirose.to",
+  "regExp": "^(https?:\\/\\/)?([a-z0-9-]+\\.)*anirose\\.to\\/?.*$",
+  "version": "1.0.0",
+  "logo": "https://anirose.to/favicon.ico",
+  "thumbnail": "https://anirose.to/anigum-logo.png",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "video"
+  ]
+}
