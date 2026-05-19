@@ -218,7 +218,7 @@ presence.on('UpdateData', async () => {
       const topicName = getText('a.fancy-title') || getText('a.topic-link span')
       const topicCreator = getText('article#post_1 .first.full-name a')
       if (topicName) {
-        presenceData.state = `Topic: ${topicName}${topicCreator ? ` by ${topicCreator}` : ''}`
+        presenceData.state = `Topic: "${topicName}${topicCreator ? `" by ${topicCreator}` : ''}`
       }
       else {
         presenceData.state = 'Viewing a Topic'
