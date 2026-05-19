@@ -19,9 +19,15 @@ let lastUrl = document.location.href
 let _urlCheckInterval: number | null = null
 
 enum ActivityAssets {
+<<<<<<< HEAD
   Logo = 'https://i.pinimg.com/736x/d2/22/6f/d2226f61410df21c007f4bb4b4528745.jpg',
   Home = 'https://i.pinimg.com/736x/8a/5c/86/8a5c869a837a70e13a13edcacc35c96b.jpg',
   Searching = 'https://i.pinimg.com/736x/b2/61/2a/b2612a911abcb68b5c2e0d9acb4679df.jpg',
+=======
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeDekho/assets/logo.jpg',
+  Home = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeDekho/assets/0.jpg',
+  Searching = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeDekho/assets/1.jpg',
+>>>>>>> b00d259213d10c22b99fb683250e41eb9819e762
 }
 const SmallImageAssets = {
   Play: Assets.Play as string,

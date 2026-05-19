@@ -14,15 +14,12 @@
     "en": "The place for your favorite movies & shows"
   },
   "url": [
-    "pstream.mov",
-    "beta.pstream.mov",
-    "mirror.pstream.mov",
+    "pstream.net",
     "movies.levrx.de",
-    "streamwatch.online",
-    "movies.samj.app"
+    "streamwatch.online"
   ],
-  "regExp": "^https?[:][/][/](?:(?:beta[.]|mirror[.])?pstream[.]mov|movies[.]levrx[.]de|streamwatch[.]online|movies[.]samj[.]app)[/]?",
-  "version": "1.4.0",
+  "regExp": "^https?[:][/][/](?:pstream[.]net|movies[.]levrx[.]de|streamwatch[.]online)[/]",
+  "version": "1.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
   "color": "#533670",

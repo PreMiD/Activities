@@ -37,20 +37,143 @@ function formatSlug(slug: string | undefined): string {
  * Attempts to retrieve a name/title from the DOM if the URL slug is insufficient.
  */
 function getNameFromDOM(): string | null {
+  const ignored = [
+    'RECOMMENDED FOR YOU',
+    'RECOMMENDED',
+    'SIMILAR CONTENT',
+    'YOU MAY ALSO LIKE',
+    'UP NEXT',
+    'VIDEO SOURCES',
+    'VIDEOSOURCES',
+    'VIDEO',
+    'SOURCES',
+    'SEASONS',
+    'EPISODES',
+    'WATCH PARTY',
+    'THEATER MODE',
+    'PREVIOUS EP',
+    'NEXT EP',
+    'PRIMESHOWS',
+    'HOME',
+    'MOVIES',
+    'TV SHOWS',
+    'TRENDING',
+    'SEARCH',
+    'PROFILE',
+    'LIVE TV',
+    'SPORTS',
+    'LOADING...',
+    'INITIALIZING...',
+    'ENJOY UNLIMITED STREAMING',
+    'CAST',
+    'REVIEWS',
+    'COMMENTS',
+    'NO RECOMMENDATIONS AVAILABLE',
+    'UNKNOWN',
+    'DETAILS',
+    'VIEW SHOW',
+    'VIEW MOVIE',
+    'WATCH NOW',
+  ]
+
   const selectors = [
+    // Highest priority: specific watch page elements from the JSX
+    'h1.text-shadow',
+    'h1.font-bold.text-white',
+    // Exact Banner Logo/Title
+    '.container .relative.z-10 h1',
+    '.container h1.text-2xl',
+    '.container h1.text-3xl',
+    '.container .relative img[alt]:not([alt="Primeshows"])',
+    // Metadata markers
+    '#Movie\\ Name',
+    '#TV\\ Shows\\ Name',
+    // Specific elements
+    '.watching-title',
+    '.player-title',
+    '.video-title',
+    '.content-title',
+    // Posters / Images
+    'img.poster[alt]',
+    'img[alt*="Poster"]',
+    'img[src*="poster"]',
+    // Breadcrumbs
+    '.breadcrumb-item.active',
+    '.breadcrumb span',
+    'nav[aria-label="Breadcrumb"] li:last-child',
+    // Generic Headings (lowest priority)
     'h1.text-white',
+    'h1.text-2xl',
+    'h1.text-3xl',
     '.movie-title',
     '.show-title',
     'h1',
-    'header h1',
-    '#Movie\\ Name',
-    '#TV\\ Shows\\ Name',
+    'h2',
+    'h3',
   ]
 
   for (const selector of selectors) {
-    const el = document.querySelector(selector)
-    if (el && el.textContent) {
-      return el.textContent.trim()
+    const elements = document.querySelectorAll(selector)
+    for (const el of Array.from(elements)) {
+      let text: any = el.textContent?.trim()
+
+      // If it's an image, get alt
+      if (el.tagName === 'IMG') {
+        text = el.getAttribute('alt')?.replace(/ Poster/gi, '')?.trim()
+      }
+
+      if (text && typeof text === 'string' && text.length > 2) {
+        // Aggressive normalization for comparison
+        const normalized = text.toUpperCase().replace(/[^A-Z0-9 ]/g, '').trim()
+        if (ignored.some(i => normalized.includes(i) || i.includes(normalized))) {
+          continue
+        }
+        // Filter out season/episode indicators if they are caught as title
+        if (/^S\d+\s?E\d+/.test(text) || /^Episode \d+/.test(text)) {
+          continue
+        }
+        if (text.length > 100) {
+          continue
+        }
+        return text
+      }
+    }
+  }
+
+  // Fallback: try to find a link that might contain the name in a sibling or parent
+  const activeLink = document.querySelector('a[href*="/tv/"], a[href*="/movies/"]')
+  if (activeLink && activeLink.textContent) {
+    const linkText = activeLink.textContent.trim()
+    if (linkText.length > 2 && !ignored.includes(linkText.toUpperCase())) {
+      return linkText
+    }
+  }
+
+  // Fallback: Meta tags
+  const ogTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content')
+  if (ogTitle && ogTitle.includes('Primeshows')) {
+    const cleaned = ogTitle.split(' - ')[0]?.replace('Watch ', '')?.trim()
+    if (cleaned && cleaned.length > 1 && !ignored.includes(cleaned.toUpperCase())) {
+      return cleaned
+    }
+  }
+
+  // Fallback: cleaning up document title
+  const docTitle = document.title
+  if (docTitle && docTitle.includes('Primeshows')) {
+    const cleaned = docTitle
+      .replace(/Primeshows/gi, '')
+      .replace(/Watch/gi, '')
+      .replace(/Online/gi, '')
+      .replace(/ - /g, '')
+      .replace(/ \| /g, '')
+      .replace(/ FREE/gi, '')
+      .replace(/ HD/gi, '')
+      .trim()
+
+    const normalizedCleaned = cleaned.toUpperCase().replace(/[^A-Z0-9 ]/g, '').trim()
+    if (cleaned.length > 0 && cleaned !== '-' && cleaned !== '|' && !ignored.some(i => normalizedCleaned.includes(i) || i.includes(normalizedCleaned))) {
+      return cleaned
     }
   }
 
@@ -84,9 +207,9 @@ function getReleaseDate(type: 'movie' | 'tv'): string {
   // Format long dates like "Sunday, October 12, 2014" to "October 2014"
   if (date !== 'N/A') {
     const dateParts = date.split(', ')
-    const p0 = dateParts[0]
-    const p1 = dateParts[1]
-    const p2 = dateParts[2]
+    const p0 = dateParts[0] ?? ''
+    const p1 = dateParts[1] ?? ''
+    const p2 = dateParts[2] ?? ''
 
     if (dateParts.length === 3 && p1 && p2) {
       date = `${p1} ${p2}`
@@ -240,7 +363,13 @@ presence.on('UpdateData', async () => {
     const match = pathname.match(/\/watch\/tv\/(\d+)/)
     if (match) {
       const tmdbId = match[1]
-      const showName = getNameFromDOM() || 'Unknown Show'
+      const showName = getNameFromDOM()
+      if (!showName || showName === 'Unknown Show') {
+        presenceData.details = `Watching TV Show 🍿`
+      }
+      else {
+        presenceData.details = `Watching ${showName} 🍿`
+      }
 
       const season = urlParams.get('season')
       const episode = urlParams.get('episode')
@@ -276,8 +405,13 @@ presence.on('UpdateData', async () => {
 
   // 4. Watch Movie: /watch/movie/{id}
   if (pathname.startsWith('/watch/movie/')) {
-    const movieName = getNameFromDOM() || 'Unknown Movie'
-    presenceData.details = `Watching ${movieName} 🎬`
+    const movieName = getNameFromDOM()
+    if (!movieName || movieName === 'Unknown Movie') {
+      presenceData.details = `Watching Movie 🎬`
+    }
+    else {
+      presenceData.details = `Watching ${movieName} 🎬`
+    }
     presenceData.state = `Enjoying Movie 🍿`
     presenceData.type = ActivityType.Watching
     presenceData.smallImageKey = Assets.Play

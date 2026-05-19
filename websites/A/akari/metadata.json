@@ -9,9 +9,9 @@
   "description": {
     "en": "Watch anime and series on akari, a private video streaming platform."
   },
-  "url": "a.rafasu.com",
-  "regExp": "^https?[:][/][/]a[.]rafasu[.]com[/]",
-  "version": "1.0.1",
+  "url": "akari.al",
+  "regExp": "^https?[:][/][/]akari[.]al[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/akari/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/akari/assets/thumbnail.png",
   "color": "#d4a0ff",

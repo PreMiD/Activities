@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '934826046824542279',
@@ -133,9 +133,9 @@ presence.on('UpdateData', async () => {
       // Intentional `delete` for pause boolean
       delete presenceData.startTimestamp
       if (!video.paused) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-          presence.timestampFromFormat(video.currentTime),
-          presence.timestampFromFormat(video.duration),
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+          timestampFromFormat(video.currentTime),
+          timestampFromFormat(video.duration),
         )
       }
 

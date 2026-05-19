@@ -35,7 +35,7 @@ function fnd() {
   path = window.location.pathname
   if (!path.endsWith('/'))
     path = `${path}/`
-  path = path.replace(/(\/[a-z]{2}|\/[a-z]{2}-[A-Z]{2})\//, '/')
+  path = path.replace(/(?:\/[a-z]{2}|\/[a-z]{2}-[A-Z]{2})\//, '/')
 
   if (path.includes('/live-map')) {
     start = document.querySelector<HTMLSpanElement>(

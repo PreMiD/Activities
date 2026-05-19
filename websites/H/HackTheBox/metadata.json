@@ -17,7 +17,7 @@
   },
   "url": "app.hackthebox.com",
   "regExp": "^https?[:][/][/]app[.]hackthebox[.]com[/]",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HackTheBox/assets/thumbnail.jpeg",
   "color": "#9fef00",
@@ -33,15 +33,15 @@
       "value": true
     },
     {
-      "id": "showGlobalRanking",
-      "title": "Show Global Ranking",
-      "icon": "fas fa-globe",
-      "value": true
-    },
-    {
       "id": "showFlags",
       "title": "Show owned flags",
       "icon": "fas fa-flag",
+      "value": true
+    },
+    {
+      "id": "showLevel",
+      "title": "Show Level",
+      "icon": "fas fa-arrow-up-right-dots",
       "value": true
     }
   ]

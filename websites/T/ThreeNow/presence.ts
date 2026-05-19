@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -30,7 +30,7 @@ presence.on('UpdateData', () => {
   }
   else if (document.location.pathname.includes('/shows/')) {
     if (document.querySelectorAll('.EpisodeSynopsis-subtitle').length >= 1) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(Math.floor(currentTime), Math.floor(duration))
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
       presenceData.state = document.querySelectorAll(
         '.EpisodeSynopsis-title',
       )[0]?.textContent

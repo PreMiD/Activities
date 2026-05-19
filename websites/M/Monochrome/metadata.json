@@ -10,8 +10,8 @@
     "en": "Monochrome is an open-source, privacy-respecting, ad-free TIDAL web UI, built on top of Hi-Fi."
   },
   "url": "monochrome.tf",
-  "regExp": "^https?:[/][/]monochrome[.](samidy[.]com|tf)([/]|$)",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]monochrome[.](samidy[.]com|tf)[/]",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Monochrome/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Monochrome/assets/thumbnail.png",
   "color": "#000000",
@@ -19,5 +19,24 @@
   "tags": [
     "music",
     "tidal"
+  ],
+  "settings": [
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 1,
+      "values": [
+        "Activity Name",
+        "Artist Name",
+        "Song Title"
+      ]
+    },
+    {
+      "id": "hidePaused",
+      "title": "Hide Paused",
+      "icon": "fad fa-pause-circle",
+      "value": false
+    }
   ]
 }

@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '643788489871196161',
@@ -117,7 +117,7 @@ presence.on('UpdateData', async () => {
     const episode = document.querySelector(
       '#main-wrapper > div.content-wrapper > div.title > h1 > span.tv-title-episode',
     )
-    const timestamps = presence.getTimestamps(
+    const timestamps = getTimestamps(
       Math.floor(_video.currentTime),
       Math.floor(_video.duration),
     )
@@ -148,7 +148,7 @@ presence.on('UpdateData', async () => {
     const episode = document.querySelector(
       '#main-wrapper > div.content-wrapper > div.title > h1 > span.tv-title-episode',
     )
-    const timestamps = presence.getTimestamps(
+    const timestamps = getTimestamps(
       Math.floor(video.currentTime),
       Math.floor(video.duration ?? 0),
     )

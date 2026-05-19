@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 type Functionlize<T> = {
   [P in keyof T]: () => T[P];
@@ -65,7 +65,7 @@ function router({
       path: /^\/mod\/hvp\/*/,
 
       run: () => {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
           Math.floor(video.currentTime),
           Math.floor(video.duration),
         )
@@ -213,5 +213,5 @@ presence.on('UpdateData', async () => {
   if (showTimestamp && route.endTimestamp)
     presenceData.endTimestamp = route.endTimestamp()
 
-  presence.setActivity(presenceData, route.playback ? route.playback() : false)
+  presence.setActivity(presenceData)
 })

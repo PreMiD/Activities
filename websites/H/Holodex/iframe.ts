@@ -9,7 +9,7 @@ iframe.on('UpdateData', async () => {
         thumbnail: document
           .querySelector('[class="ytp-title-channel-logo"]')
           ?.getAttribute('style')
-          ?.match(/http(s)?:\/\/.*-rj/g)?.[0]
+          ?.match(/https?:\/\/.*-rj/g)?.[0]
           ?.replace(/w=s88/g, 'w=s512')
           ?? 'https://cdn.rcd.gg/PreMiD/websites/H/Holodex/assets/logo.png',
       },

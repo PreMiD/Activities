@@ -11,7 +11,7 @@
   },
   "url": "comix.to",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*comix[.]to[/]",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "logo": "https://raw.githubusercontent.com/sirschubert/assets/refs/heads/main/assets/communityIcon_p626ghkfd91g1.png",
   "thumbnail": "https://styles.redditmedia.com/t5_4vwp6n/styles/bannerBackgroundImage_iye1rp7mj91g1.png",
   "color": "#000000",

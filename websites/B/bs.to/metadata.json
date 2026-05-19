@@ -13,8 +13,8 @@
     "vi": "Xem các sê-ri trực tuyến."
   },
   "url": "bs.to",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(bs|burningseries)[.][a-z0-9-]+",
-  "version": "1.4.0",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(bs|burningseries)([.][a-z]+)+[/]",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/bs.to/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/bs.to/assets/thumbnail.jpg",
   "color": "#ffffff",

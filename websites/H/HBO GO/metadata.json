@@ -26,7 +26,7 @@
     "www.hbogoasia.ph"
   ],
   "regExp": "^https?[:][/][/](www[.])?hbogo(asia)?[.](ro|com|cz|sk|my|id|ph)[/]",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20GO/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HBO%20GO/assets/thumbnail.png",
   "color": "#011921",

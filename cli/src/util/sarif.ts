@@ -18,6 +18,7 @@ export enum SarifRuleId {
   clientIdExistsCheck = 'client-id-exists-check',
   clientIdCheck = 'client-id-check',
   dnsCheck = 'dns-check',
+  regExpUrlCheck = 'regexp-url-check',
 }
 
 const sarifRules: Record<SarifRuleId, ReportingDescriptor> = {
@@ -117,6 +118,13 @@ const sarifRules: Record<SarifRuleId, ReportingDescriptor> = {
     name: 'DNS Check',
     shortDescription: {
       text: 'Validates that activity URLs have valid DNS records',
+    },
+  },
+  [SarifRuleId.regExpUrlCheck]: {
+    id: SarifRuleId.regExpUrlCheck,
+    name: 'RegExp URL Check',
+    shortDescription: {
+      text: 'Makes sure the `regExp` metadata property matches all URLs in the `url` field',
     },
   },
 }

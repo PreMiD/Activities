@@ -13,7 +13,7 @@
   },
   "url": "www.viu.com",
   "regExp": "^https?[:][/][/](www[.])?viu[.]com[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Viu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Viu/assets/thumbnail.png",
   "color": "#ffbf00",

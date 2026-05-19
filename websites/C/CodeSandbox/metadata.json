@@ -11,7 +11,7 @@
   },
   "url": "codesandbox.io",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*codesandbox[.]io[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CodeSandbox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CodeSandbox/assets/thumbnail.png",
   "color": "#1c1c1c",

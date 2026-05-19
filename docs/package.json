@@ -10,8 +10,8 @@
   },
   "devDependencies": {
     "vitepress": "^1.6.4",
-    "markdown-it": "^14.1.0",
-    "@types/node": "^24.9.2",
-    "typescript": "^5.9.3"
+    "markdown-it": "^14.1.1",
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.3"
   }
 }

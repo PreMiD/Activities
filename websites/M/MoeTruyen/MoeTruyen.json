@@ -1,0 +1,106 @@
+{
+  "moetruyen.account": {
+    "description": "Status text for account-related pages.",
+    "message": "Account"
+  },
+  "moetruyen.browsingForum": {
+    "description": "Status text for forum listing pages.",
+    "message": "Browsing Forum"
+  },
+  "moetruyen.browsingGroups": {
+    "description": "Status text for translation groups browsing pages.",
+    "message": "Browsing Groups"
+  },
+  "moetruyen.browsingManga": {
+    "description": "Status text for manga catalog pages.",
+    "message": "Browsing Manga"
+  },
+  "moetruyen.browsingNews": {
+    "description": "Status text for news listing pages.",
+    "message": "Browsing News"
+  },
+  "moetruyen.browsingSite": {
+    "description": "Default status text while navigating the website.",
+    "message": "Browsing MoeTruyen"
+  },
+  "moetruyen.buttonReadChapter": {
+    "description": "Button label to open a chapter from the manga detail page.",
+    "message": "Read Chapter"
+  },
+  "moetruyen.buttonReadThisChapter": {
+    "description": "Button label to open the currently reading chapter.",
+    "message": "Read This Chapter"
+  },
+  "moetruyen.buttonViewManga": {
+    "description": "Button label to open the manga detail page.",
+    "message": "View Manga"
+  },
+  "moetruyen.catalog": {
+    "description": "Status text shown while viewing the manga catalog.",
+    "message": "Catalog"
+  },
+  "moetruyen.history": {
+    "description": "Status text for reading history pages.",
+    "message": "History"
+  },
+  "moetruyen.messaging": {
+    "description": "Status text for message pages.",
+    "message": "Messaging"
+  },
+  "moetruyen.readingChapter": {
+    "description": "Fallback state text when chapter title is unavailable.",
+    "message": "Reading A Chapter"
+  },
+  "moetruyen.readingForum": {
+    "description": "Small status text for reading a forum post.",
+    "message": "Reading Forum"
+  },
+  "moetruyen.savedManga": {
+    "description": "Status text for saved manga pages.",
+    "message": "Saved Manga"
+  },
+  "moetruyen.siteName": {
+    "description": "Website name shown on homepage state.",
+    "message": "MoeTruyen"
+  },
+  "moetruyen.viewingAccountSettings": {
+    "description": "Details text for account settings pages.",
+    "message": "Viewing Account Settings"
+  },
+  "moetruyen.viewingDetails": {
+    "description": "Small status text for manga detail page.",
+    "message": "Viewing Details"
+  },
+  "moetruyen.viewingGroup": {
+    "description": "Small status text for group pages.",
+    "message": "Viewing Group"
+  },
+  "moetruyen.viewingManga": {
+    "description": "Details prefix text for manga detail page.",
+    "message": "Viewing Manga:"
+  },
+  "moetruyen.viewingMessages": {
+    "description": "Details text for message pages.",
+    "message": "Viewing Messages"
+  },
+  "moetruyen.viewingNewsPost": {
+    "description": "Details text for a specific news post page.",
+    "message": "Viewing News Post"
+  },
+  "moetruyen.viewingReadingHistory": {
+    "description": "Details text for reading history page.",
+    "message": "Viewing Reading History"
+  },
+  "moetruyen.viewingSavedManga": {
+    "description": "Details text for saved manga page.",
+    "message": "Viewing Saved Manga"
+  },
+  "moetruyen.viewingTranslationGroup": {
+    "description": "Details text for translation group pages.",
+    "message": "Viewing Translation Group"
+  },
+  "moetruyen.website": {
+    "description": "Fallback state text when page title is unavailable.",
+    "message": "Website"
+  }
+}

@@ -12,7 +12,7 @@
   },
   "url": "tioanime.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tioanime[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tio%20Anime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tio%20Anime/assets/thumbnail.png",
   "color": "#18142f",

@@ -19,7 +19,6 @@ async function getStrings() {
       view: 'general.view',
       viewPage: 'general.viewPage',
     },
-    await presence.getSetting<string>('lang').catch(() => 'ru'),
   )
 }
 

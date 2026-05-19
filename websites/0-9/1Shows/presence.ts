@@ -7,7 +7,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/logo.png',
+  Logo = 'https://i.imgur.com/GhoM28H.png',
 }
 
 presence.on('UpdateData', async () => {
@@ -34,6 +34,14 @@ presence.on('UpdateData', async () => {
     },
     '/profile': {
       details: 'Viewing Profile',
+      smallImageKey: Assets.Viewing,
+    },
+    '/login': {
+      details: 'Signing in',
+      smallImageKey: Assets.Viewing,
+    },
+    '/register': {
+      details: 'Creating an account',
       smallImageKey: Assets.Viewing,
     },
     '/tv': {
@@ -182,5 +190,5 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

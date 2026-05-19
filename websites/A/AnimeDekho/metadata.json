@@ -17,9 +17,15 @@
   },
   "url": "animedekho.app",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animedekho[.]app[/]",
+<<<<<<< HEAD
   "version": "1.0.0",
   "logo": "https://i.pinimg.com/736x/d2/22/6f/d2226f61410df21c007f4bb4b4528745.jpg",
   "thumbnail": "https://i.postimg.cc/J0KFnpck/image.png",
+=======
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeDekho/assets/logo.jpg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeDekho/assets/thumbnail.png",
+>>>>>>> b00d259213d10c22b99fb683250e41eb9819e762
   "color": "#23272A",
   "category": "anime",
   "tags": [

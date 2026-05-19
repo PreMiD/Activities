@@ -14,7 +14,7 @@
   },
   "url": "www.animelizm.com",
   "regExp": "^https?[:][/][/](www[.])?animelizm[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Animelizm/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Animelizm/assets/thumbnail.png",
   "color": "#0F62E0",

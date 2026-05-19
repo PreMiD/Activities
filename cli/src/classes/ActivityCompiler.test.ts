@@ -99,6 +99,7 @@ const mockMetadata = {
   logo: 'https://example.com/logo.png',
   thumbnail: 'https://example.com/thumbnail.png',
   url: 'hianime.to',
+  regExp: '^https?[:][/][/]([a-z0-9-]+[.])*hianime[.]to[/]',
   description: { en: 'Test' },
   tags: ['anime'],
 }
@@ -153,6 +154,114 @@ describe('activityCompiler DMCA check', () => {
     expect(mocks.addSarifLog).not.toHaveBeenCalledWith(
       expect.objectContaining({
         ruleId: 'dmca-check',
+      }),
+    )
+  })
+})
+
+describe('activityCompiler regExp URL check', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mocks.getDmcaServices.mockResolvedValue(new Set())
+    mocks.isDmcaBlocked.mockReturnValue(false)
+    vi.stubGlobal('fetch', vi.fn().mockImplementation((url: string) => {
+      if (url.includes('/locales')) {
+        return Promise.resolve({ json: () => Promise.resolve(['en']) })
+      }
+      return Promise.resolve({ json: () => Promise.resolve(null) })
+    }))
+  })
+
+  it('should pass when regExp matches single URL', async () => {
+    const metadata = { ...mockMetadata }
+    mocks.readFile.mockResolvedValue(JSON.stringify(metadata))
+
+    const { ActivityCompiler } = await import('./ActivityCompiler.js')
+    const compiler = new ActivityCompiler('/test/HiAnime', metadata, false)
+
+    await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
+
+    expect(mocks.addSarifLog).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        ruleId: 'regexp-url-check',
+      }),
+    )
+  })
+
+  it('should fail when regExp does not match URL', async () => {
+    const metadata = { ...mockMetadata, regExp: '^https?[:][/][/]example[.]com[/]' }
+    mocks.readFile.mockResolvedValue(JSON.stringify(metadata))
+
+    const { ActivityCompiler } = await import('./ActivityCompiler.js')
+    const compiler = new ActivityCompiler('/test/HiAnime', metadata, false)
+
+    const result = await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
+
+    expect(result).toBe(false)
+    expect(mocks.addSarifLog).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: expect.stringContaining('does not match URL'),
+        ruleId: 'regexp-url-check',
+      }),
+    )
+  })
+
+  it('should pass when regExp matches all URLs in array', async () => {
+    const metadata = {
+      ...mockMetadata,
+      url: ['tracker.gg', 'fortnitetracker.com'],
+      regExp: '^https?[:][/][/](tracker[.]gg|fortnitetracker[.]com)[/]',
+    }
+    mocks.readFile.mockResolvedValue(JSON.stringify(metadata))
+
+    const { ActivityCompiler } = await import('./ActivityCompiler.js')
+    const compiler = new ActivityCompiler('/test/HiAnime', metadata, false)
+
+    await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
+
+    expect(mocks.addSarifLog).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        ruleId: 'regexp-url-check',
+      }),
+    )
+  })
+
+  it('should fail for unmatched URLs in array', async () => {
+    const metadata = {
+      ...mockMetadata,
+      url: ['tracker.gg', 'fortnitetracker.com'],
+      regExp: '^https?[:][/][/]tracker[.]gg[/]',
+    }
+    mocks.readFile.mockResolvedValue(JSON.stringify(metadata))
+
+    const { ActivityCompiler } = await import('./ActivityCompiler.js')
+    const compiler = new ActivityCompiler('/test/HiAnime', metadata, false)
+
+    const result = await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
+
+    expect(result).toBe(false)
+    expect(mocks.addSarifLog).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: expect.stringContaining('fortnitetracker.com'),
+        ruleId: 'regexp-url-check',
+      }),
+    )
+  })
+
+  it('should fail for invalid regExp syntax', async () => {
+    const metadata = { ...mockMetadata, regExp: '[invalid' }
+    mocks.readFile.mockResolvedValue(JSON.stringify(metadata))
+
+    const { ActivityCompiler } = await import('./ActivityCompiler.js')
+    const compiler = new ActivityCompiler('/test/HiAnime', metadata, false)
+
+    const result = await compiler.compile({ kill: false, validate: true, preCheck: false, zip: false })
+
+    expect(result).toBe(false)
+    expect(mocks.addSarifLog).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: expect.stringContaining('Invalid regExp'),
+        ruleId: 'regexp-url-check',
       }),
     )
   })

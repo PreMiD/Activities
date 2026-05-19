@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -17,7 +17,7 @@ presence.on(
 )
 
 presence.on('UpdateData', () => {
-  const [startTimestamp, endTimestamp] = presence.getTimestamps(
+  const [startTimestamp, endTimestamp] = getTimestamps(
     Math.floor(currentTime),
     Math.floor(duration),
   )
