@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "205984221859151873",
+    "name": "senkuthegreat"
+  },
+  "service": "Senku Library",
+  "description": {
+    "en": "Show your study progress, active lectures, and AI tutor sessions on Senku Library!"
+  },
+  "url": "senku-library.vercel.app",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(senku-library[.]vercel[.]app|localhost:[0-9]+)[/]",
+  "version": "1.0.0",
+  "logo": "https://senku-library.vercel.app/favicon.png",
+  "thumbnail": "https://senku-library.vercel.app/favicon.png",
+  "color": "#3b82f6",
+  "category": "other",
+  "tags": [
+    "study",
+    "education",
+    "ai"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "youtube\\.com|youtube-nocookie\\.com",
+  "settings": [
+    {
+      "id": "showTimestamps",
+      "title": "Show timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}
