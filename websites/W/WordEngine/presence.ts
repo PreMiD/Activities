@@ -223,13 +223,39 @@ presence.on('UpdateData', async () => {
   }
 
   function formatProgress(label: string, current: string | null, goal: string | null, isJa: boolean): string {
-    const unit = isJa ? '単語' : 'Words'
     const hasCurrent = current !== null
     const hasGoal = goal !== null
-    if (hasCurrent && hasGoal) return `${label}: ${current}/${goal} ${unit}`
-    if (hasCurrent && !hasGoal) return `${label}: ${current} ${unit}`
-    if (!hasCurrent && hasGoal) return `${label}${isJa ? 'の目標' : ' Goal'}: ${goal} ${unit}`
-    return isJa ? `${label}のデータを読み込み中...` : `Loading ${label.toLowerCase()} data...`
+    const parseCount = (value: string | null): number | null => {
+      if (!value) return null
+      const parsed = Number(value)
+      return Number.isFinite(parsed) ? parsed : null
+    }
+    const currentCount = parseCount(current)
+    const goalCount = parseCount(goal)
+    const achieved = currentCount !== null && goalCount !== null && currentCount >= goalCount
+    if (isJa) {
+      const unit = '単語'
+      if (hasCurrent && hasGoal) {
+        if (achieved) return `${label}: ${current} ${unit} (目標: ${goal}✅)`
+        return `${label}: ${current} ${unit} (目標: ${goal})`
+      }
+      if (hasCurrent && !hasGoal) return `${label}: ${current} ${unit}`
+      if (!hasCurrent && hasGoal) return `${label}の目標: ${goal} ${unit}`
+      return `${label}のデータを読み込み中...`
+    }
+
+    const unitFor = (value: string | null): string => {
+      const parsed = value ? Number(value) : NaN
+      return Number.isFinite(parsed) && parsed === 1 ? 'Word' : 'Words'
+    }
+
+    if (hasCurrent && hasGoal) {
+      if (achieved) return `${label}: ${current} ${unitFor(current)} (Goal: ${goal}✅)`
+      return `${label}: ${current} ${unitFor(current)} (Goal: ${goal})`
+    }
+    if (hasCurrent && !hasGoal) return `${label}: ${current} ${unitFor(current)}`
+    if (!hasCurrent && hasGoal) return `${label} Goal: ${goal} ${unitFor(goal)}`
+    return `Loading ${label.toLowerCase()} data...`
   }
 
   const savedTimestamp = loadStartTimestamp()
