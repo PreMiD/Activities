@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "815861193242968084",
+    "name": "wea017net"
+  },
+  "service": "WordEngine",
+  "description": {
+    "en": "WordEngine is an online vocabulary learning service for improving English words.",
+    "ja": "WordEngineは、英単語の学習を効率的に進められるオンライン学習サービスです。"
+  },
+  "url": "wordengine.jp",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wordengine[.]jp[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/aC8rYv5.png",
+  "thumbnail": "https://i.imgur.com/TvOQJ28.png",
+  "color": "#1e73be",
+  "category": "other",
+  "tags": [
+    "study",
+    "education",
+    "learning"
+  ]
+}
