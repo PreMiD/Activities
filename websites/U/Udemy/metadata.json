@@ -5,6 +5,12 @@
     "name": "EGGSY",
     "id": "162969778699501569"
   },
+  "contributors": [
+    {
+      "name": "rikunz",
+      "id": "430729478151602183"
+    }
+  ],
   "service": "Udemy",
   "description": {
     "en": " Udemy is an online learning and teaching marketplace with over 100000 courses and 24 million students.",
@@ -13,7 +19,7 @@
   },
   "url": "www.udemy.com",
   "regExp": "^https?[:][/][/](www[.])?udemy[.]com[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/Udemy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/Udemy/assets/thumbnail.png",
   "color": "#a435f0",
