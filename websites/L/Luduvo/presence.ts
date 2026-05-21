@@ -130,6 +130,11 @@ presence.on('UpdateData', async () => {
     else if (paths[0] === 'inventory') {
       presenceData.state = 'Inventory'
     }
+    else if (paths[0] === 'gifts') {
+      const activeSelectionRaw = getText('button[aria-selected="true"][data-state="active"]')
+      const activeSelection = activeSelectionRaw.replace(/\s*\(\d+\)$/, '')
+      presenceData.state = activeSelection ? `Gifts ${activeSelection}` : 'Gifts'
+    }
     else if (paths[0] === 'trades') {
       presenceData.state = 'Trades'
     }
