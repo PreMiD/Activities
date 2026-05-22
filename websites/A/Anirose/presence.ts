@@ -259,8 +259,6 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     largeImageKey: ActivityAssets.Logo,
-    smallImageKey: ActivityAssets.Logo,
-    smallImageText: isWatching ? 'Watching' : 'Browsing',
   }
 
   const animeTitle = getPageTitle()
