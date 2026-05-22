@@ -19,10 +19,21 @@ presence.on('UpdateData', async () => {
   const tab = searchParams.get('tab')?.toLowerCase()
   const normalizedPathname = pathname.replace(/\/+$/, '') || '/'
 
-  const mangaName = document.querySelector('.title')?.textContent?.trim() || 'Manga'
-  const rawString = document.querySelector('.number')?.textContent?.trim()
-  const groupName = document.querySelector('.user-name')?.textContent?.trim()
-  const chapter = rawString?.split('/')[0]?.replace('Ch. ', '')?.trim()
+  const dataEl = document.getElementById('initial-data')
+  const data = dataEl ? JSON.parse(dataEl.textContent) : null
+
+  const mangaKey = data ? Object.keys(data.queries).find(k => k.includes('manga') && k.includes('detail')) : null
+  const manga = mangaKey && data ? data.queries[mangaKey] : null
+
+  const groupKey = data ? Object.keys(data.queries).find(k => k.includes('groups') && k.includes('detail')) : null
+  const group = groupKey && data ? data.queries[groupKey] : null
+
+  const mangaName = manga?.title || 'Manga'
+  const groupName = group?.name
+  const mangaPoster = manga?.poster?.large || manga?.poster?.medium
+
+  const chapterNum = data?.read?.chapterNumber
+  const chapter = chapterNum ? `Chapter: ${chapterNum}` : 'Reading'
 
   const getImg = (selector: string) => {
     const el = document.querySelector(selector)
@@ -31,7 +42,6 @@ presence.on('UpdateData', async () => {
   }
 
   const poster = getImg('.poster div img') || getImg('.poster img')
-  const readerPoster = getImg('.d-none img') || getImg('.reader-image img')
 
   if (pathname === '/') {
     presenceData.state = 'Stepping into magical world...'
@@ -46,6 +56,10 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname === '/groups/popular') {
     presenceData.details = 'Browsing popular groups...'
+    presenceData.smallImageKey = Assets.Search
+  }
+  else if (pathname === '/groups') {
+    presenceData.details = 'Browsing groups...'
     presenceData.smallImageKey = Assets.Search
   }
   else if (/\/groups\/\d+/.test(pathname)) {
@@ -99,23 +113,25 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = ActivityAssets.Settings
     }
   }
-  else if (pathname.includes('/browser')) {
-    presenceData.details = 'Searching for manga...'
+  else if (pathname.includes('/browse')) {
+    const searchQuery = searchParams.get('q') || ''
+    presenceData.details = searchQuery ? `Searching for "${searchQuery}"` : 'Searching for manga...'
     presenceData.smallImageKey = Assets.Search
   }
 
   if (pathname.includes('/title')) {
-    if (!rawString) {
+    const isReading = /\/title\/[\w-]+\/\d+/.test(pathname) || data?.read
+    if (!isReading) {
       presenceData.details = `Viewing "${mangaName}" mainpage`
-      presenceData.largeImageKey = poster || presenceData.largeImageKey
+      presenceData.largeImageKey = poster || mangaPoster || presenceData.largeImageKey
       presenceData.smallImageKey = Assets.Viewing
     }
     else {
       presenceData.details = mangaName
-      presenceData.state = `Chapter: ${chapter || 'Unknown'}`
-      presenceData.largeImageKey = readerPoster || poster || presenceData.largeImageKey
+      presenceData.state = chapter || 'Reading'
+      presenceData.largeImageKey = mangaPoster || poster || presenceData.largeImageKey
       presenceData.smallImageKey = Assets.Reading
-      presenceData.smallImageText = `Chapter: ${chapter}`
+      presenceData.smallImageText = 'Reading'
     }
   }
 
