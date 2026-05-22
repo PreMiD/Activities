@@ -49,11 +49,11 @@ function getEpisodeNumbers(): { current: string | null, total: string | null } {
       .map(node => node.textContent?.trim() ?? '')
       .find(text => /^Ep\s*\d+\s*\/\s*\d+/i.test(text))
 
-  const counterMatch = epCounter?.match(/^Ep\s*(\d+)\s*\/\s*(\d+)/i)
+  const counterMatch = epCounter?.match(/^Ep\s*(\d+)\s*\/\s*\d+/i)
   if (counterMatch) {
     return {
       current: currentFromUrl ?? counterMatch[1] ?? null,
-      total: counterMatch[2] ?? null,
+      total: null,
     }
   }
 
@@ -194,9 +194,67 @@ function getPageTitle(): string {
   return extractAnimeTitle(heading)
 }
 
+function getAnimeCover(): string | null {
+  const imageSelectors = [
+    // Preferred: poster in the details block below the player (the one you marked)
+    'main h1 ~ img',
+    'main h1 ~ div img',
+    'main h2 ~ img',
+    'main h2 ~ div img',
+    'main [class*="detail"] img',
+    'main [class*="info"] img',
+    'main [class*="poster"] img',
+    'main [class*="cover"] img',
+    // Secondary fallbacks
+    '.poster img',
+    '[class*="poster"] img',
+    '[class*="cover"] img',
+    'img[alt*="poster" i]',
+    'img[alt*="cover" i]',
+    'main img[src]',
+  ]
+
+  const candidates: string[] = []
+
+  for (const selector of imageSelectors) {
+    const imgs = document.querySelectorAll<HTMLImageElement>(selector)
+    for (const img of imgs) {
+      candidates.push(
+        img.currentSrc,
+        img.src,
+        img.getAttribute('data-src') ?? '',
+        img.getAttribute('data-lazy-src') ?? '',
+      )
+    }
+  }
+
+  candidates.push(
+    document.querySelector('meta[property="og:image"]')?.getAttribute('content') ?? '',
+    document.querySelector('meta[name="twitter:image"]')?.getAttribute('content') ?? '',
+  )
+
+  for (const raw of candidates) {
+    if (!raw) {
+      continue
+    }
+
+    const absolute = new URL(raw, location.origin).href
+    if (
+      /^https?:\/\//i.test(absolute)
+      && !/favicon|anigum-logo|\/logo(?:[._-]|$)/i.test(absolute)
+    ) {
+      return absolute
+    }
+  }
+
+  return null
+}
+
 presence.on('UpdateData', async () => {
   attachMessageListener()
-  const isWatching = /^\/watch$/i.test(location.pathname)
+  const pathname = location.pathname.toLowerCase()
+  const isWatching = pathname === '/watch'
+  const isBrowsingAnime = pathname === '/browse'
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
@@ -209,6 +267,10 @@ presence.on('UpdateData', async () => {
 
   if (isWatching) {
     presenceData.name = animeTitle || 'Anirose'
+    const animeCover = getAnimeCover()
+    if (animeCover) {
+      presenceData.largeImageKey = animeCover
+    }
 
     const watchState = getWatchEpisodeState()
     presenceData.details = watchState.state
@@ -260,7 +322,7 @@ presence.on('UpdateData', async () => {
   }
   else {
     presenceData.name = 'Anirose'
-    presenceData.details = 'Browsing Anirose'
+    presenceData.details = isBrowsingAnime ? 'Browsing Anime' : 'Browsing Anirose'
     presenceData.state = animeTitle
     lastEpisodeKey = null
     frameData = null

@@ -7,10 +7,10 @@
   },
   "service": "Anirose",
   "description": {
-    "en": "Anirose is a website for watching anime."
+    "en": "AniRose is a special website made for people who love watching anime. It is a place where you can find all your favorite shows and movies in one spot."
   },
   "url": "anirose.to",
-  "regExp": "^(https?:\\/\\/)?([a-z0-9-]+\\.)*anirose\\.to\\/?.*$",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anirose[.]to[/]",
   "version": "1.0.0",
   "logo": "https://raw.githubusercontent.com/CE-Timmer/PreMid-Extensions/main/image_2026-05-20_000800002%20(1)-resized-to-512x512.png",
   "thumbnail": "https://raw.githubusercontent.com/CE-Timmer/PreMid-Extensions/main/anigum-logo.png",
