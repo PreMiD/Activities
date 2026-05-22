@@ -11,7 +11,7 @@
   },
   "url": "www.protondb.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*protondb[.]com[/]",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://i.imgur.com/l4Z6mwH.png",
   "thumbnail": "https://i.imgur.com/dI94BPN.jpeg",
   "color": "#cfb53b",

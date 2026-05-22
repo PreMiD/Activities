@@ -18,7 +18,7 @@
   },
   "url": "voirdrama.to",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*voirdrama[.]to[/]",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://i.imgur.com/RkcVWHJ.png",
   "thumbnail": "https://i.imgur.com/ioAhLcH.png",
   "color": "#c41f32",

@@ -12,7 +12,7 @@
   },
   "url": "bourgestelevision.fr",
   "regExp": "^https?[:][/][/]bourgestelevision[.]fr[/]",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://i.ibb.co/yBY6V8RK/OAuth-Icon-512.png",
   "thumbnail": "https://bourgestelevision.fr/og-image.jpg",
   "color": "#E63329",

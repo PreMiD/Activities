@@ -12,7 +12,7 @@
   },
   "url": "deokwave.com",
   "regExp": "^https?[:][/][/](deokwave[.]com)[/]",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://i.imgur.com/SbmVetu.png",
   "thumbnail": "https://i.imgur.com/MoEBLvd.jpeg",
   "color": "#8b5cf6",
