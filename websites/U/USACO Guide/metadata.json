@@ -11,7 +11,7 @@
   },
   "url": "usaco.guide",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*usaco[.]guide[/]",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://i.imgur.com/oRapkfu.png",
   "thumbnail": "https://i.imgur.com/cxOe02L.jpeg",
   "color": "#1e90ff",

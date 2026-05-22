@@ -12,7 +12,7 @@
   },
   "url": "faceit.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*faceit[.]com[/]",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://i.imgur.com/n5ielUx.png",
   "thumbnail": "https://i.imgur.com/b68sdF6.png",
   "color": "#FF5500",
