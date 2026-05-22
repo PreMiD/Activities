@@ -1,7 +1,6 @@
 import type { ActivityMetadata } from './ActivityCompiler.js'
 import type { CdnAsset } from './AssetsManager.js'
 import { Blob, Buffer } from 'node:buffer'
-import { ReadStream } from 'node:fs'
 import { Readable } from 'node:stream'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { AssetsManager, AssetType, MimeType } from './AssetsManager.js'
