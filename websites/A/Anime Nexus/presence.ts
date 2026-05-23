@@ -42,7 +42,7 @@ presence.on('UpdateData', async () => {
   ])
 
   let video = false
-  const player = document.querySelector<HTMLVideoElement>('div[data-media-provider] video')
+  const player = document.querySelector<HTMLVideoElement>('video')
   if (player !== null && !Number.isNaN(player.duration)) {
     video = true
     currentTime = player.currentTime
