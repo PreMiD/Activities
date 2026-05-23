@@ -131,16 +131,15 @@ function detectPageRoute(): 'home' | 'search' | 'schedule' | 'anime' | 'watch' |
 }
 
 function getAnimeTitle(): string {
-  return (
-    cleanText(document.querySelector('h2[title]')?.textContent)
-    || getMetaContent('meta[property="og:title"]')
-      .replace(/^Watch\s+/i, '')
-      .replace(/\s+Episode\s+\d+\s+Online Free\s+\|\s+Re:ANIME$/i, '')
-    || cleanText(document.title)
-      .replace(/\s*-\s*Episode\s+\d+\s*\|\s*Re:ANIME$/i, '')
-      .replace(/\s*\|\s*Re:ANIME$/i, '')
-    || 'Re:ANIME'
-  )
+  const headingTitle = cleanText(document.querySelector('h2[title]')?.textContent)
+  const ogTitle = getMetaContent('meta[property="og:title"]')
+    .replace(/^Watch\s+/i, '')
+    .replace(/\s+Episode\s+\d+\s+Online Free\s+\|\s+Re:ANIME$/i, '')
+  const pageTitle = cleanText(document.title)
+    .replace(/\s*-\s*Episode\s+\d+\s*\|\s*Re:ANIME$/i, '')
+    .replace(/\s*\|\s*Re:ANIME$/i, '')
+
+  return headingTitle || ogTitle || pageTitle || 'Re:ANIME'
 }
 
 function getPoster(): string {
@@ -166,7 +165,7 @@ function getPoster(): string {
         url.protocol === 'https:'
         && !url.href.startsWith('data:')
         && !url.pathname.includes('/placeholder')
-        && /\.(png|jpe?g|webp|gif)$/i.test(url.pathname)
+        && /\.(?:png|jpe?g|webp|gif)$/i.test(url.pathname)
       ) {
         return url.href
       }
@@ -188,14 +187,16 @@ function getCurrentEpisodeLabel(): string {
   )
 
   if (activeCardLabel) {
-    const numberedEpisode = activeCardLabel.match(/^(\d+)\.\s*(.+)$/)
-    if (numberedEpisode?.[1] && numberedEpisode[2]) {
-      const [, episodeNumber, episodeTitle] = numberedEpisode
+    const separatorIndex = activeCardLabel.indexOf('. ')
+    if (separatorIndex > 0) {
+      const episodeNumber = activeCardLabel.slice(0, separatorIndex).trim()
+      const episodeTitle = activeCardLabel.slice(separatorIndex + 2).trim()
 
-      if (/^Episode\s+\d+$/i.test(episodeTitle))
+      if (/^\d+$/.test(episodeNumber) && /^Episode\s+\d+$/i.test(episodeTitle))
         return episodeTitle
 
-      return `Episode ${episodeNumber}: ${episodeTitle}`
+      if (/^\d+$/.test(episodeNumber) && episodeTitle)
+        return `Episode ${episodeNumber}: ${episodeTitle}`
     }
 
     return activeCardLabel
@@ -233,7 +234,7 @@ function getAnimeDetailUrl(): string | null {
   if (canonical.includes('/watch/')) {
     return canonical
       .replace('/watch/', '/anime/')
-      .replace(/[?].*$/, '')
+      .replace(/\?.*$/, '')
   }
 
   return null
