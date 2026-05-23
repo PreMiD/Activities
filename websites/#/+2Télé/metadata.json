@@ -7,13 +7,13 @@
   },
   "service": "+2Télé",
   "description": {
-    "en": "PreMiD Presence for +2Télé, a French television archives website.",
-    "fr": "Présence PreMiD pour +2Télé, un site d'archives de la télévision.",
-    "es": "Presencia de PreMiD para +2Télé, un sitio web de archivos de televisión francesa.",
     "de": "PreMiD-Präsenz für +2Télé, eine Website für französische Fernseharchive.",
-    "pt": "Presença do PreMiD para +2Télé, um site de arquivos de televisão francesa.",
+    "en": "PreMiD Presence for +2Télé, a French television archives website.",
+    "es": "Presencia de PreMiD para +2Télé, un sitio web de archivos de televisión francesa.",
+    "fr": "Présence PreMiD pour +2Télé, un site d'archives de la télévision.",
     "it": "Presenza di PreMiD per +2Télé, un sito web di archivi televisivi francesi.",
     "pl": "PreMiD Presence dla +2Télé, francuskiej witryny z archiwami telewizyjnymi.",
+    "pt": "Presença do PreMiD para +2Télé, um site de arquivos de televisão francesa.",
     "ro": "Prezență PreMiD pentru +2Télé, un site de arhive ale televiziunii franceze."
   },
   "url": "plus2tele.com",
