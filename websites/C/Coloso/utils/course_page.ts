@@ -6,9 +6,14 @@ export function getCreatorName(): string | undefined {
   return document.querySelector('[class="CreatorDisplaySection-module-scss-module__yZk2mG__baseText"]')?.textContent
 }
 
+let generatedImageSrc: string
 let generatedImage: string
 export function getCourseThumbnail(): Promise<string> | undefined {
   const imgSrc = document.querySelector('[class="catalog-cover__image"]')?.querySelector('img')?.src
+
+  if(imgSrc === generatedImageSrc) {
+    return Promise.resolve(generatedImage)
+  }
 
   if (imgSrc) {
     return new Promise((resolve) => {
@@ -43,6 +48,7 @@ export function getCourseThumbnail(): Promise<string> | undefined {
           .getContext('2d')
           ?.drawImage(img, offsetX, offsetY, newWidth, newHeight)
 
+        generatedImageSrc = imgSrc
         generatedImage = tempCanvas.toDataURL('image/png')
         resolve(generatedImage)
       }

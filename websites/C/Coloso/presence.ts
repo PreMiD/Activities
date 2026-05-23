@@ -26,11 +26,13 @@ presence.on('iFrameData', (data) => {
 })
 
 presence.on('UpdateData', async () => {
-  const showButtons = await presence.getSetting<boolean>('showButtons')
-  const showTimestamp = await presence.getSetting<boolean>('showTimestamp')
-  const showFavorite = await presence.getSetting<boolean>('showFavorite')
-  const favoriteCourseURL = await presence.getSetting<string>('favoriteCourseURL')
-  const privacyMode = await presence.getSetting<boolean>('privacyMode')
+  const [showButtons, showTimestamp, showFavorite, favoriteCourseURL, privacyMode] = await Promise.all([
+    presence.getSetting<boolean>('showButtons'),
+    presence.getSetting<boolean>('showTimestamp'),
+    presence.getSetting<boolean>('showFavorite'),
+    presence.getSetting<string>('favoriteCourseURL'),
+    presence.getSetting<boolean>('privacyMode')
+  ])
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
