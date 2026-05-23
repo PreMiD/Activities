@@ -1,7 +1,6 @@
 import type { ActivityMetadata } from './ActivityCompiler.js'
 import type { CdnAsset } from './AssetsManager.js'
 import { Buffer } from 'node:buffer'
-import { ReadStream } from 'node:fs'
 import { Readable } from 'node:stream'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { AssetsManager, AssetType, MimeType } from './AssetsManager.js'
@@ -21,14 +20,6 @@ const mocks = vi.hoisted(() => ({
   ),
   sharp: vi.fn(),
 
-  formData: vi.fn().mockImplementation(function () {
-    const appendSpy = vi.fn()
-    this.append = appendSpy
-    this.getHeaders = vi.fn().mockReturnValue({ 'content-type': 'multipart/form-data' })
-    this.getBuffer = vi.fn().mockReturnValue(Buffer.from('mock-buffer'))
-    //* Track the last appended values for assertions
-    this._lastAppended = () => appendSpy.mock.calls[appendSpy.mock.calls.length - 1]
-  }),
 }))
 
 //* Mock external dependencies
@@ -48,13 +39,6 @@ vi.mock('node:fs/promises', () => ({
   readFile: mocks.readFile,
   writeFile: mocks.writeFile,
 }))
-
-vi.mock('form-data', () => {
-  return {
-    __esModule: true,
-    default: mocks.formData,
-  }
-})
 
 const mockActivity: ActivityMetadata = {
   service: 'TestService',
@@ -466,19 +450,17 @@ describe('assetsManager', () => {
         expect.objectContaining({ method: 'POST' }),
       )
 
-      //* Verify FormData was used correctly
-      expect(mocks.formData).toHaveBeenCalledTimes(2)
-      const formInstances = mocks.formData.mock.results
-      expect(formInstances[0].value._lastAppended()).toEqual([
-        'file',
-        expect.any(ReadStream),
-        { contentType: MimeType.PNG },
-      ])
-      expect(formInstances[1].value._lastAppended()).toEqual([
-        'file',
-        expect.any(ReadStream),
-        { contentType: MimeType.JPG },
-      ])
+      //* Verify native FormData is passed to upload requests
+      const uploadCalls = mocks.got.mock.calls.filter(([, options]) => options?.method === 'POST')
+      expect(uploadCalls).toHaveLength(2)
+      expect(uploadCalls[0][1]).toEqual(expect.objectContaining({
+        body: expect.any(FormData),
+        headers: { Authorization: 'test-token' },
+      }))
+      expect(uploadCalls[1][1]).toEqual(expect.objectContaining({
+        body: expect.any(FormData),
+        headers: { Authorization: 'test-token' },
+      }))
 
       //* Verify file content updates
       expect(mocks.writeFile).toHaveBeenCalledWith(
@@ -850,7 +832,6 @@ describe('assetsManager', () => {
       //* Verify no uploads, deletions, or file updates occurred
       expect(mocks.got).not.toHaveBeenCalled()
       expect(mocks.got.delete).not.toHaveBeenCalled()
-      expect(mocks.formData).not.toHaveBeenCalled()
       expect(mocks.writeFile).not.toHaveBeenCalled()
     })
   })

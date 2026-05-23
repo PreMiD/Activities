@@ -4,9 +4,9 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { extname, join, resolve } from 'node:path'
 import process from 'node:process'
+import { blob } from 'node:stream/consumers'
 import { pipeline } from 'node:stream/promises'
 import * as core from '@actions/core'
-import FormData from 'form-data'
 import { globby } from 'globby'
 import got from 'got'
 import { inc } from 'semver'
@@ -554,15 +554,13 @@ export class AssetsManager {
           }), createWriteStream(tempFile))
 
           const form = new FormData()
-          form.append('file', createReadStream(tempFile), {
-            contentType: this.getMimeTypeFromExtension(this.getExtensionFromUrl(url).slice(1)),
-          })
+          const file = await blob(createReadStream(tempFile))
+          form.append('file', file as unknown as Blob, `asset${this.getExtensionFromUrl(url)}`)
 
           await got(newUrl, {
             method,
             headers: {
               Authorization: process.env.CDN_TOKEN,
-              ...form.getHeaders(),
             },
             body: form,
             retry: {
