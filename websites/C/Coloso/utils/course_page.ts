@@ -11,7 +11,7 @@ let generatedImage: string
 export function getCourseThumbnail(): Promise<string> | undefined {
   const imgSrc = document.querySelector('[class="catalog-cover__image"]')?.querySelector('img')?.src
 
-  if(imgSrc === generatedImageSrc) {
+  if (imgSrc === generatedImageSrc) {
     return Promise.resolve(generatedImage)
   }
 

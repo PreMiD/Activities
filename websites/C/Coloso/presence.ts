@@ -31,7 +31,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('showTimestamp'),
     presence.getSetting<boolean>('showFavorite'),
     presence.getSetting<string>('favoriteCourseURL'),
-    presence.getSetting<boolean>('privacyMode')
+    presence.getSetting<boolean>('privacyMode'),
   ])
 
   const presenceData: PresenceData = {
