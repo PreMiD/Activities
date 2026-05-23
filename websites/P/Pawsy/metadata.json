@@ -1,0 +1,23 @@
+{
+  "author": {
+    "id": "1117890204569718885",
+    "name": "rapositosa"
+  },
+  "service": "Pawsy",
+  "description": {
+    "en": "A community that offers REST APIs and other projects, completely free.",
+    "pt-br": "Uma comunidade que oferece APIs REST e outros projetos, totalmente gratuita."
+  },
+  "url": "pawsy.fun",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pawsy[.]fun[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/DZb1KAE.jpeg",
+  "thumbnail": "https://i.imgur.com/YRnNFnj.png",
+  "color": "#f4efeb",
+  "category": "other",
+  "tags": [
+    "discord",
+    "bot",
+    "api"
+  ]
+}

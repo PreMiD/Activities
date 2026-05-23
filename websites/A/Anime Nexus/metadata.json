@@ -11,7 +11,7 @@
   },
   "url": "anime.nexus",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anime[.]nexus[/]",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://i.imgur.com/bSgz75K.png",
   "thumbnail": "https://i.imgur.com/lMeW3B0.png",
   "color": "#000000",
