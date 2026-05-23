@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "!gatx",
+    "id": "199902444442877952"
+  },
+  "service": "+2Télé",
+  "description": {
+    "en": "PreMiD Presence for +2Télé, a French television archives website.",
+    "fr": "Présence PreMiD pour +2Télé, un site d'archives de la télévision.",
+    "es": "Presencia de PreMiD para +2Télé, un sitio web de archivos de televisión francesa.",
+    "de": "PreMiD-Präsenz für +2Télé, eine Website für französische Fernseharchive.",
+    "pt": "Presença do PreMiD para +2Télé, um site de arquivos de televisão francesa.",
+    "it": "Presenza di PreMiD per +2Télé, un sito web di archivi televisivi francesi.",
+    "pl": "PreMiD Presence dla +2Télé, francuskiej witryny z archiwami telewizyjnymi.",
+    "ro": "Prezență PreMiD pentru +2Télé, un site de arhive ale televiziunii franceze."
+  },
+  "url": "plus2tele.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*plus2tele[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/ZRjtGH0X/P6-T-PP-CGI-1-1.png",
+  "thumbnail": "https://i.ibb.co/q37P2sS1/P2-T-bannierev1.png",
+  "color": "#4F70CE",
+  "category": "videos",
+  "tags": [
+    "archives",
+    "television",
+    "replay",
+    "tv"
+  ]
+}

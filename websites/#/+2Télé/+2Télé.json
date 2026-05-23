@@ -1,0 +1,58 @@
+{
+  "plus2tele.accueil": {
+    "message": "Home",
+    "description": "Viewing home page"
+  },
+  "plus2tele.archivesList": {
+    "message": "Archives List",
+    "description": "Viewing list of archives"
+  },
+  "plus2tele.channelsList": {
+    "message": "Channels List",
+    "description": "Viewing list of channels"
+  },
+  "plus2tele.viewingChannel": {
+    "message": "Viewing channel: {0}",
+    "description": "Viewing a specific channel"
+  },
+  "plus2tele.agencesList": {
+    "message": "Agencies List",
+    "description": "Viewing list of agencies"
+  },
+  "plus2tele.viewingAgence": {
+    "message": "Viewing agency: {0}",
+    "description": "Viewing a specific agency"
+  },
+  "plus2tele.collectionsList": {
+    "message": "Collections List",
+    "description": "Viewing list of collections"
+  },
+  "plus2tele.viewingCollection": {
+    "message": "Viewing collection: {0}",
+    "description": "Viewing a specific collection"
+  },
+  "plus2tele.community": {
+    "message": "Community Presentation",
+    "description": "Viewing the community page"
+  },
+  "plus2tele.zapping": {
+    "message": "Zapping",
+    "description": "Viewing zapping (random archives)"
+  },
+  "plus2tele.watchingArchive": {
+    "message": "Watching an archive",
+    "description": "Watching/viewing a television archive"
+  },
+  "plus2tele.viewingProfile": {
+    "message": "Viewing {0}'s profile",
+    "description": "Viewing a member's profile"
+  },
+  "plus2tele.browsing": {
+    "message": "Browsing",
+    "description": "Generic browsing state"
+  },
+  "plus2tele.byAuthor": {
+    "message": "By {0}",
+    "description": "Author attribution text (e.g. By Soy Luciano)"
+  }
+}
