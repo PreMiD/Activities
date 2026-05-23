@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "680344713039052802",
+    "name": "Rayyy"
+  },
+  "service": "ReAnime",
+  "altnames": [
+    "Re:ANIME",
+    "ReAnime"
+  ],
+  "description": {
+    "en": "Re:ANIME is an anime streaming platform where you can browse series, explore episode details, and watch anime online."
+  },
+  "url": "reanime.to",
+  "regExp": "^https?[:][/][/]reanime[.]to[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/yjaL5qi.png",
+  "thumbnail": "https://i.imgur.com/sKRJo3W.png",
+  "color": "#C7FF00",
+  "category": "anime",
+  "tags": [
+    "anime"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "(flixcloud[.]cc[/]e[/]|flixcloud[.]cc[/]embed|kwik[.]si[/]e[/])",
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "description": "Display page buttons in the Discord activity"
+    }
+  ]
+}
