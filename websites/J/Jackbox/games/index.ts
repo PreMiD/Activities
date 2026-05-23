@@ -1,4 +1,5 @@
 import type { Game } from '../types.js'
+import * as bigsurvey from './Non-Pack/bigsurvey.js'
 import * as drawful2 from './Party Pack 1/drawful2.js'
 import * as drawful2international from './Party Pack 1/drawful2international.js'
 import * as drawful from './Party Pack 1/drawful.js'
@@ -109,4 +110,5 @@ export default {
   'risky-text': riskytext,
   'time-trivia': timetrivia,
   'us-them': usthem,
+  bigsurvey,
 } as Record<string, Game>

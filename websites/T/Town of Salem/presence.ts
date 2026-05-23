@@ -174,7 +174,7 @@ injectedLoggerScript.textContent = `
 document.head.appendChild(injectedLoggerScript)
 
 setInterval(async () => {
-  const logs: Log[] = await presence.getPageletiable('console"]["logs')
+  const logs: Log[] = (await presence.getPageVariable<{ 'console.logs': Log[] }>('console.logs'))['console.logs']
   let lastUnreadLogIndex = 0
   for (let i = logs.length - 1; i >= 0; i--) {
     if (logs[i]!.id === lastId) {

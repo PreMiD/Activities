@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Venøm",
@@ -11,7 +11,8 @@
     "nl": "Houd het een gezond merk. Bewustwording creëren over geestelijke gezondheid en tegelijkertijd een groeiende gemeenschap creëren van mensen die de boodschap van hoop verspreiden naar degenen die het nodig hebben. 20% van alle winst wordt gedoneerd aan liefdadigheidsinstellingen die gespecialiseerd zijn in onderzoek naar psychische aandoeningen, mensen met angst, depressie of andere psychische problemen ondersteunen."
   },
   "url": "keepitwholesome.com",
-  "version": "1.0.21",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*keepitwholesome[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Keep%20It%20Wholesome/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Keep%20It%20Wholesome/assets/thumbnail.png",
   "color": "#c98b29",

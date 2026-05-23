@@ -21,8 +21,8 @@ export async function updateAssets() {
     return exit(MESSAGES.ciOnly)
   }
 
-  //* Only run for PreMiD/Presences repository
-  if (github.context.repo.owner !== 'PreMiD' || github.context.repo.repo !== 'Presences') {
+  //* Only run for PreMiD/Activities repository
+  if (github.context.repo.owner !== 'PreMiD' || github.context.repo.repo !== 'Activities') {
     return success(MESSAGES.wrongRepository)
   }
 
@@ -139,7 +139,10 @@ export async function updateAssets() {
 
     if (tsAndJsonFiles.length > 0) {
       core.info('Running ESLint on changed files')
-      execSync(`npx eslint --fix ${tsAndJsonFiles.map(file => `"${file}"`).join(' ')}`)
+      try {
+        execSync(`npx eslint --fix ${tsAndJsonFiles.map(file => `"${file}"`).join(' ')}`)
+      }
+      catch {}
     }
 
     //* Eslint may have changed the files back to the original state, so we need to check again
@@ -159,18 +162,8 @@ export async function updateAssets() {
     core.info('Committing and pushing changes')
     execSync('git add .')
     execSync('git commit -m "chore: update assets"')
-
-    //* Fetch latest changes and attempt to push
-    try {
-      core.info('Fetching latest changes...')
-      execSync('git fetch')
-      execSync('git push --force-with-lease')
-    }
-    catch {
-      core.warning('Failed to push with --force-with-lease, attempting to rebase and retry...')
-      execSync('git pull --rebase')
-      execSync('git push --force-with-lease')
-    }
+    execSync('git pull --rebase')
+    execSync('git push')
 
     await octokit.rest.repos.createCommitStatus({
       ...context.repo,

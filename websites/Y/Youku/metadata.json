@@ -1,0 +1,79 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "noconversation_",
+    "id": "1244664905974681803"
+  },
+  "service": "Youku",
+  "description": {
+    "en": "Watch as much as you want on YOUKU! Here you will find a wide variety of TV shows, movies, anime, and more with subtitles in your preferred language. Enjoy!"
+  },
+  "url": "www.youku.tv",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*youku[.]tv[/]",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Youku/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Youku/assets/thumbnail.png",
+  "color": "#2fb3ff",
+  "category": "videos",
+  "tags": [
+    "video",
+    "streaming",
+    "chinese-drama"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false,
+      "description": "Hide the title and other details from your Discord status"
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Show elapsed or remaining time in the activity"
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-external-link-alt",
+      "value": true,
+      "description": "Display interactive buttons in the Discord Activity"
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover Art",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Use the show's poster as the large image when available"
+    },
+    {
+      "id": "showProgress",
+      "title": "Show Progress Percentage",
+      "icon": "fas fa-percentage",
+      "value": false,
+      "description": "Append a progress percentage to the state line while watching"
+    },
+    {
+      "id": "showVideoDetails",
+      "title": "Show Video Quality & Speed",
+      "icon": "fas fa-cog",
+      "value": true,
+      "description": "Append the current playback quality and speed to the state line"
+    },
+    {
+      "id": "compactMode",
+      "title": "Compact Mode",
+      "icon": "fas fa-compress",
+      "value": false,
+      "description": "Use shorter labels and truncate long titles"
+    }
+  ]
+}

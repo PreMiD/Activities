@@ -20,7 +20,7 @@ async function getStrings() {
       viewPage: 'general.viewPage',
       viewHome: 'general.viewHome',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

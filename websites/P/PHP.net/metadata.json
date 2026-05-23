@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "iLazlow",
@@ -13,7 +13,8 @@
     "php.net",
     "www.php.net"
   ],
-  "version": "1.0.14",
+  "regExp": "^https?[:][/][/](www[.])?php[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PHP.net/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PHP.net/assets/thumbnail.png",
   "color": "#8892BF",

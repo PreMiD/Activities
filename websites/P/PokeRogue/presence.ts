@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1238090575924826114',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -30,6 +30,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    name: 'PokeRogue',
   }
   const [timePer, gameDetails, gameStates] = await Promise.all([
     presence.getSetting<boolean>('timePer'),

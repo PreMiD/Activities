@@ -3,5 +3,21 @@
   "extends": [
     "github>Recodive/Recodive:renovate-config"
   ],
-  "automerge": false
+  "schedule": [
+    "* * * * 5"
+  ],
+  "automerge": false,
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch"
+    }
+  ]
 }

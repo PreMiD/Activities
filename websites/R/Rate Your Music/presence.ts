@@ -4,7 +4,7 @@ enum ActivityAssets {
 
 let browsingTimestamp: number
 const presence = new Presence({
-  clientId: '1213365863470866462',
+  clientId: '503557087041683458',
 })
 
 function updatePresence() {
@@ -14,6 +14,7 @@ function updatePresence() {
   let presenceData: PresenceData = {
     largeImageKey: ActivityAssets.logo,
     startTimestamp: browsingTimestamp,
+    name: 'Rate Your Music',
   }
 
   const { pathname } = document.location

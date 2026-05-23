@@ -1,7 +1,7 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
-  clientId: '840126038205923369',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -13,6 +13,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    name: 'Dumpert',
   }
   const { href, pathname } = window.location
   const [privacy, buttons, covers] = await Promise.all([
@@ -56,7 +57,7 @@ presence.on('UpdateData', async () => {
           ?.content ?? ActivityAssets.Logo
         presenceData.smallImageKey = video?.paused ? Assets.Pause : Assets.Play
         if (!video.paused) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
         }
         presenceData.buttons = [
           {

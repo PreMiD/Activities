@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({ clientId: '1125405319594512404' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -34,7 +34,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = videoEl?.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = videoEl?.paused ? 'Paused' : 'Playing'
     if (!videoEl?.paused) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(
         document.querySelector<HTMLVideoElement>('video')!,
       )
     }

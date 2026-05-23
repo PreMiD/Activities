@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '711871296346128395',
@@ -75,7 +75,7 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = strings.play;
         [presenceData.startTimestamp, presenceData.endTimestamp]
-          = presence.getTimestampsfromMedia(video)
+          = getTimestampsFromMedia(video)
       }
       else {
         presenceData.smallImageKey = Assets.Pause
@@ -136,12 +136,12 @@ presence.on('UpdateData', async () => {
     if (video && !video.paused) {
       presenceData.smallImageKey = Assets.Play
       presenceData.smallImageText = strings.play;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     }
     else {
       presenceData.smallImageKey = Assets.Pause
       presenceData.smallImageText = strings.pause;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video!)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video!)
     }
     presenceData.details = `Watching ${clipTitle?.[0]} to`
     presenceData.state = clipTitle?.[2]

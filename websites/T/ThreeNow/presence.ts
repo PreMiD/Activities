@@ -1,7 +1,7 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '691491207356088320',
+  clientId: '503557087041683458',
 })
 
 let currentTime: number, duration: number, paused: boolean
@@ -21,6 +21,7 @@ presence.on('iFrameData', (inc: unknown) => {
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/T/ThreeNow/assets/logo.png',
+    name: 'ThreeNow',
   }
 
   if (document.URL === 'https://www.threenow.co.nz/') {
@@ -29,7 +30,7 @@ presence.on('UpdateData', () => {
   }
   else if (document.location.pathname.includes('/shows/')) {
     if (document.querySelectorAll('.EpisodeSynopsis-subtitle').length >= 1) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(Math.floor(currentTime), Math.floor(duration))
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
       presenceData.state = document.querySelectorAll(
         '.EpisodeSynopsis-title',
       )[0]?.textContent

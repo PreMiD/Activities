@@ -7,71 +7,60 @@ const presence = new Presence({
 async function getStrings() {
   return presence.getStrings(
     {
-      accountSettings: 'osu!ppy.accountSettings',
-      beatMapListing: 'osu!ppy.beatMapListing',
-      beatMapLooking: 'osu!ppy.beatMapLooking',
-      beatMapPacks: 'osu!ppy.beatMapPacks',
+      accountSettings: 'osuppy.accountSettings',
+      beatMapListing: 'osuppy.beatMapListing',
+      beatMapLooking: 'osuppy.beatMapLooking',
+      beatMapPacks: 'osuppy.beatMapPacks',
       browsing: 'general.browsing',
       buttonReadArticle: 'general.buttonReadArticle',
-      buttonViewBeatmap: 'osu!ppy.buttonViewBeatmap',
+      buttonViewBeatmap: 'osuppy.buttonViewBeatmap',
       buttonViewProfile: 'general.buttonViewProfile',
-      changelog: 'osu!ppy.changelog',
-      chatting: 'osu!ppy.chatting',
-      contests: 'osu!ppy.contests',
-      countryRankings: 'osu!ppy.countryRankings',
-      downloads: 'premid.pageDownloads',
-      featuredArtists: 'osu!ppy.featuredArtists',
-      for: 'osu!ppy.for',
-      forums: 'osu!ppy.forums',
-      friendList: 'osu!ppy.friendList',
-      kudosuRankings: 'osu!ppy.kudosuRankings',
-      livestreams: 'osu!ppy.livestreams',
-      osuStore: 'osu!ppy.osuStore',
-      otherProfile: 'osu!ppy.otherProfile',
-      performanceRankings: 'osu!ppy.performanceRankings',
-      rank: 'osu!ppy.rank',
+      changelog: 'osuppy.changelog',
+      chatting: 'osuppy.chatting',
+      contests: 'osuppy.contests',
+      countryRankings: 'osuppy.countryRankings',
+      downloads: 'osuppy.pageDownloads',
+      featuredArtists: 'osuppy.featuredArtists',
+      for: 'osuppy.for',
+      forums: 'osuppy.forums',
+      friendList: 'osuppy.friendList',
+      kudosuRankings: 'osuppy.kudosuRankings',
+      livestreams: 'osuppy.livestreams',
+      osuStore: 'osuppy.osuStore',
+      otherProfile: 'osuppy.otherProfile',
+      performanceRankings: 'osuppy.performanceRankings',
+      rank: 'osuppy.rank',
       reading: 'general.reading',
       readingAnArticle: 'general.readingAnArticle',
       readingArticle: 'general.readingArticle',
-      readingForum: 'osu!ppy.readingForum',
+      readingForum: 'osuppy.readingForum',
       readingNews: 'general.readingNews',
-      scoreRankings: 'osu!ppy.scoreRankings',
+      scoreRankings: 'osuppy.scoreRankings',
       search: 'general.search',
       searchFor: 'general.searchFor',
-      spotlights: 'osu!ppy.spotlights',
-      support: 'osu!ppy.support',
-      theirProfile: 'osu!ppy.theirProfile',
-      tournaments: 'osu!ppy.tournaments',
-      unsupportedPage: 'osu!ppy.unsupportedPage',
-      viewing: 'general.viewing',
-      viewingForum: 'osu!ppy.viewingForum',
+      spotlights: 'osuppy.spotlights',
+      support: 'osuppy.support',
+      theirProfile: 'osuppy.theirProfile',
+      tournaments: 'osuppy.tournaments',
+      unsupportedPage: 'osuppy.unsupportedPage',
+      view: 'general.view',
+      viewingForum: 'osuppy.viewingForum',
       viewingHome: 'general.viewHome',
-      watchLists: 'osu!ppy.watchLists',
+      watchLists: 'osuppy.watchLists',
       wikiMainPage: 'general.wikiMainPage',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
   )
 }
-
-let strings: Awaited<ReturnType<typeof getStrings>>
-let oldLang: string | null = null
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/O/osu%20ppy/assets/logo.png',
   }
-  const [buttons, newLang] = await Promise.all([
-    presence.getSetting<boolean>('buttons'),
-    presence.getSetting<string>('lang'),
-  ])
+  const buttons = presence.getSetting<boolean>('buttons')
   const { pathname, href } = document.location
+  const strings = await getStrings()
 
-  if (oldLang !== newLang) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
-
-  if (pathname === '/home') {
+  if (pathname === '/' || pathname === '/home') {
     const inputSelected = document.querySelector<HTMLInputElement>('[type="search"]')
     if (inputSelected?.value) {
       presenceData.details = strings.searchFor
@@ -84,7 +73,7 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (pathname.startsWith('/home/download')) {
-    presenceData.details = strings.viewing
+    presenceData.details = strings.view
     presenceData.state = strings.downloads
     presenceData.smallImageKey = Assets.Search
   }
@@ -109,7 +98,7 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (pathname.startsWith('/home/support')) {
-    presenceData.details = strings.viewing
+    presenceData.details = strings.view
     presenceData.state = strings.support
     presenceData.smallImageKey = Assets.Search
   }
@@ -123,9 +112,7 @@ presence.on('UpdateData', async () => {
       const title = document.querySelector(
         '.beatmapset-header__details-text--title',
       )?.textContent
-      const diffName = document.querySelector(
-        '.beatmapset-header__diff-name',
-      )?.textContent
+      const diffName = `${document.querySelector('.beatmapset-header__diff-name')?.firstChild?.textContent} ${document.querySelector('.beatmapset-header__diff-name > span')?.textContent}`
       if (title && diffName) {
         const beatmapTitle = `${title} [${diffName}]`
         presenceData.details = strings.beatMapLooking
@@ -164,14 +151,14 @@ presence.on('UpdateData', async () => {
       ) {
         const selected = document.querySelector('div.u-ellipsis-overflow')
         presenceData.details = strings.browsing
-        presenceData.state = `${strings.performanceRankings} (${strings.for
-          .replace('{0}', `(${selected?.textContent})`)
-          .replace('{1}', `[${gamemode}]`)}`
+        presenceData.state = `${strings.performanceRankings} ${strings.for
+          .replace('{0}', `${selected?.textContent}`)
+          .replace('{1}', `${gamemode}`)}`
         presenceData.smallImageKey = Assets.Search
       }
       else {
         presenceData.details = strings.browsing
-        presenceData.state = `${strings.performanceRankings} [${gamemode}]`
+        presenceData.state = `${strings.performanceRankings} ${gamemode}`
         presenceData.smallImageKey = Assets.Search
       }
     }
@@ -187,7 +174,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.browsing
       presenceData.state = `${strings.scoreRankings.replace(
         '{0}',
-        `[${gamemode}]`,
+        `${gamemode}`,
       )}`
       presenceData.smallImageKey = Assets.Search
     }
@@ -195,7 +182,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.browsing
       presenceData.state = `${strings.countryRankings.replace(
         '{0}',
-        `[${gamemode}]`,
+        `${gamemode}`,
       )}`
       presenceData.smallImageKey = Assets.Search
     }
@@ -273,7 +260,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = selected.textContent
       presenceData.smallImageKey = Assets.Reading
     }
-    else if (pathname.includes('/Main_Page')) {
+    else if (pathname.includes('/Main_page')) {
       presenceData.details = strings.reading
       presenceData.state = strings.wikiMainPage
       presenceData.smallImageKey = Assets.Reading
@@ -288,23 +275,23 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (pathname.startsWith('/home/changelog')) {
-    presenceData.details = strings.viewing
+    presenceData.details = strings.view
     presenceData.state = strings.changelog
     presenceData.smallImageKey = Assets.Reading
   }
   else if (pathname.startsWith('/home/friends')) {
-    presenceData.details = strings.viewing
+    presenceData.details = strings.view
     presenceData.state = strings.friendList
     presenceData.smallImageKey = Assets.Reading
   }
   else if (pathname.startsWith('/home/follows')) {
-    presenceData.details = strings.viewing
+    presenceData.details = strings.view
     presenceData.state = strings.watchLists
     presenceData.smallImageKey = Assets.Reading
   }
   else if (pathname.startsWith('/users')) {
     const profileName = document.querySelector(
-      'a.simple-menu__header.simple-menu__header--link.js-current-user-cover > div',
+      '.profile-info__name > span',
     )?.textContent
     const rank = document.querySelector(
       'div:nth-child(1) > div.value-display__value > div',
@@ -313,7 +300,7 @@ presence.on('UpdateData', async () => {
       'div.profile-detail__values.profile-detail__values--grid > div:nth-child(2) > div.value-display__value > div',
     )?.textContent
     const profileRanking = `${strings.rank.replace('{0}', rank ?? '')} / ${pp}pp`
-    presenceData.details = document.querySelector('div.profile-info__info > h1 > span')
+    presenceData.details = document.querySelector('.user-card__username')
       ?.textContent === profileName
       ? strings.theirProfile.replace('{0}', profileName ?? '')
       : strings.otherProfile.replace('{0}', profileName ?? '')
@@ -327,7 +314,7 @@ presence.on('UpdateData', async () => {
     ]
   }
   else {
-    presenceData.details = strings.viewing
+    presenceData.details = strings.view
     presenceData.state = strings.unsupportedPage
   }
 

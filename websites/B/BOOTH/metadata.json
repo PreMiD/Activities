@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "881563425707282463",
+    "name": "nak_ymi"
+  },
+  "service": "BOOTH",
+  "description": {
+    "en": "BOOTH is a comprehensive creative market in collaboration with pixiv. You can easily create a shop for free, and we also provide product storage and shipping agency services!",
+    "ja": "BOOTH（ブース）とは、pixivと連携した、創作物の総合マーケットです。無料で簡単にショップを作成でき、商品の保管・発送代行サービスも提供しています！"
+  },
+  "url": "booth.pm",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*booth[.]pm[/]",
+  "version": "1.1.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BOOTH/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BOOTH/assets/thumbnail.png",
+  "color": "#FC4D50",
+  "category": "socials",
+  "tags": [
+    "shop"
+  ]
+}

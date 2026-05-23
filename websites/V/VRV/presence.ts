@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '640150336547454976',
@@ -12,7 +12,7 @@ enum ActivityAssets {
 async function getStrings() {
   return presence.getStrings(
     {
-      viewing: 'general.viewing',
+      view: 'general.view',
       play: 'general.playing',
       pause: 'general.paused',
       viewHome: 'general.viewHome',
@@ -22,7 +22,7 @@ async function getStrings() {
       searchFor: 'general.searchFor',
       search: 'general.search',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 
@@ -75,7 +75,7 @@ presence.on('UpdateData', async () => {
 
   switch (pathname.split('/')[1]) {
     case 'watch': {
-      presenceData.details = strings.viewing
+      presenceData.details = strings.view
       presenceData.smallImageKey = Assets.Reading
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('img.c-content-image')?.src
         ?? ActivityAssets.Logo
@@ -93,7 +93,7 @@ presence.on('UpdateData', async () => {
       if (iFrameVideo && !Number.isNaN(duration)) {
         presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = paused ? strings.pause : strings.play;
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(Math.floor(currentTime), Math.floor(duration))
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
 
         presenceData.details = season
           ? `${seriesName} - S${season.textContent?.split(' ')[1]} ${episode}`

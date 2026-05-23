@@ -1,0 +1,58 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1406771921999233068",
+    "name": "vormixy4"
+  },
+  "service": "Duel.com",
+  "description": {
+    "en": "Duel.com is a 100% RTP crypto casino and sportsbook that offers over 5,000 games from top providers, including slots, table games, and live dealer options."
+  },
+  "url": "duel.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*duel[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Duel.com/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Duel.com/assets/thumbnail.webp",
+  "color": "#1a2c4a",
+  "category": "games",
+  "tags": [
+    "casino",
+    "blackjack",
+    "crash",
+    "dice",
+    "gambling",
+    "duel",
+    "slots",
+    "plinko",
+    "keno",
+    "roulette",
+    "poker"
+  ],
+  "settings": [
+    {
+      "id": "showBal",
+      "title": "Display Balance",
+      "icon": "fad fa-coins",
+      "value": false
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Display Timestamp",
+      "icon": "fad fa-clock",
+      "value": true
+    },
+    {
+      "id": "showCurrentGame",
+      "title": "Display Current Game",
+      "icon": "fad fa-slot-machine",
+      "value": true
+    },
+    {
+      "id": "showGameProvider",
+      "title": "Display Game Provider",
+      "icon": "fad fa-provider",
+      "value": true
+    }
+  ]
+}

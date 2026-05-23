@@ -2,7 +2,7 @@ export interface Game {
   name: string
   logo: string
   getPresenceData: (
-    params: GameCallbackParams
+    params: GameCallbackParams,
   ) => Promise<PresenceData> | PresenceData
 }
 
@@ -26,6 +26,12 @@ export interface GamePlayerState {
   placeholder?: string
   choiceType?: string
   classes?: string[]
+  instructions?: string
+  goal?: string
+  options?: string[]
+  textEntry?: {
+    prompt: string
+  }
   [x: string]: unknown
 }
 

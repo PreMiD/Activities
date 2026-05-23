@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '800702121866559508',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -15,7 +15,7 @@ function sanitizeContent(content: string) {
   while (previousContent !== sanitizedContent) {
     previousContent = sanitizedContent
     sanitizedContent = sanitizedContent.replace(
-      /(<!-- {2})|( -->)|( HOST: )/g,
+      /<!-- {2}| -->| HOST: /g,
       '',
     )
   }
@@ -26,6 +26,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    name: 'Buienalarm',
   }
   const { pathname } = document.location
   const privacy = await presence.getSetting<number>('privacy')

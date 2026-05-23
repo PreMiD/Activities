@@ -1,20 +1,27 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
-    "id": "709704536821858304",
-    "name": "cyadine"
+    "id": "671037171611729920",
+    "name": "atom_skully"
   },
+  "contributors": [
+    {
+      "id": "709704536821858304",
+      "name": "cyadine"
+    }
+  ],
   "service": "Voirdrama",
   "description": {
-    "en": "Watch and download your Korean, Chinese, Japanese, and Asian dramas for free in HD and FHD with French dubbing (VF) and subtitles (VOSTFR) via streaming and direct download on VOIRDRAMA.COM and VOIRDRAMA.ORG.",
-    "fr": "Regarder et telecharger gratuitement vos dramas coréens chinois japonais asiatique en HD et FHD en VF et VOSTFR en streaming ddl sur VOIRDRAMA.COM VOIRDRAMA.ORG"
+    "en": "Watch and download for free your Korean, Chinese, Japanese, Asian dramas in HD and FHD in VF and VOSTFR in streaming ddl on voirdrama.to",
+    "fr": "Regarder et telecharger gratuitement vos dramas coréens chinois japonais asiatique en HD et FHD en VF et VOSTFR en streaming ddl sur voirdrama.to"
   },
-  "url": "voirdrama.org",
-  "version": "1.0.8",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Voirdrama/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Voirdrama/assets/thumbnail.png",
-  "color": "#c12035",
+  "url": "voirdrama.to",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*voirdrama[.]to[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/RkcVWHJ.png",
+  "thumbnail": "https://i.imgur.com/ioAhLcH.png",
+  "color": "#c41f32",
   "category": "videos",
   "tags": [
     "drama",
@@ -22,5 +29,29 @@
     "media"
   ],
   "iframe": true,
-  "iFrameRegExp": ".*"
+  "iFrameRegExp": "^https?[:][/][/](?:vidmoly[.]biz[/]embed[-]|f16px[.]com[/]e[/]|streamhide[.]to[/]e[/]|voe[.]sx[/]e[/]|streamtape[.]com[/]e[/]|my[.]mail[.]ru[/]video[/]embed[/]|(?:www[.])?yourupload[.]com[/]embed[/])",
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "timestamps",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
 }

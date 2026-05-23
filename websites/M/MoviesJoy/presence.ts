@@ -1,7 +1,7 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '1138058486262005863',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -31,7 +31,7 @@ function setCommonData(
     ?? ActivityAssets.Logo
   if (video?.exists) {
     if (!video.paused) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
     }
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = video.paused ? 'Paused' : 'Playing back'
@@ -43,6 +43,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    name: 'MoviesJoy',
   }
   const [privacy, buttons, covers] = await Promise.all([
     presence.getSetting<boolean>('privacy'),

@@ -1,9 +1,10 @@
 import type {
   Resolver,
 } from './util/index.js'
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia, StatusDisplayType } from 'premid'
 import {
   checkStringLanguage,
+  getMobileChapter,
   getQuerySelectors,
   getSetting,
   getThumbnail,
@@ -36,12 +37,19 @@ enum LogoMode {
   Channel = 2,
 }
 
+enum ShowListening {
+  Never = 0,
+  WhenMusic = 1,
+  Always = 2,
+}
+
 const nullResolver: Resolver = {
   isActive: () => true,
   getTitle: () => document.title,
   getUploader: () => '',
   getChannelURL: () => '',
   getVideoID: () => '',
+  isMusic: () => false,
 }
 
 presence.on('UpdateData', async () => {
@@ -58,6 +66,8 @@ presence.on('UpdateData', async () => {
     buttons,
     hideHome,
     hidePaused,
+    showListening,
+    displayType,
   ] = [
     getSetting<string>('lang', 'en'),
     getSetting<boolean>('privacy', true),
@@ -71,6 +81,8 @@ presence.on('UpdateData', async () => {
     getSetting<boolean>('buttons', true),
     getSetting<boolean>('hideHome', false),
     getSetting<boolean>('hidePaused', true),
+    getSetting<number>('showListening', 0),
+    getSetting<number>('displayType', 2),
   ]
   const { pathname, hostname, search, href } = document.location
   const isMobile = hostname === 'm.youtube.com'
@@ -138,38 +150,45 @@ presence.on('UpdateData', async () => {
       }
     }
 
+    let chapter = document.querySelector(selectors.chapterTitle)?.textContent
+    if (isMobile && !chapter) {
+      chapter = getMobileChapter(video.currentTime) ?? undefined
+    }
+
     if (logo === LogoMode.Channel) {
       pfp = resolver === youtubeMiniplayerResolver
         ? ''
         : document
-          .querySelector<HTMLImageElement>(selectors.videoChannelImage)
-          ?.src
-          .replace(/=s\d+/, '=s512')
+            .querySelector<HTMLImageElement>(selectors.videoChannelImage)
+            ?.src
+            .replace(/=s\d+/, '=s512')
     }
-    const unlistedPathElement = document.querySelector<SVGPathElement>(
-      'g#privacy_unlisted > path',
+    const unlistedVideo = !!(
+      document.querySelector('badge-shape[aria-label="Unlisted"], yt-icon[aria-label="Unlisted"], [aria-label="Unlisted"]')
+      || Array.from(document.querySelectorAll('yt-badge-supported-renderer path, ytd-badge-supported-renderer path, badge-shape path')).some(
+        path => path.getAttribute('d') === 'M9 18c.226 0 .448-.012.667-.037A8.001 8.001 0 018.07 16H7a4 4 0 110-8h2a4 4 0 014 4 2 2 0 001.668 1.973A5.999 5.999 0 009 6H7a6 6 0 100 12h2Zm8 0a6 6 0 100-12h-2c-.225 0-.448.012-.667.036A8 8 0 0115.93 8H17a4 4 0 110 8h-2a4 4 0 01-4-4 2 2 0 00-1.668-1.973A6 6 0 0015 18h2Z',
+      )
     )
-    const unlistedBadgeElement = document.querySelector<SVGPathElement>(
-      'h1.title+ytd-badge-supported-renderer path',
-    )
-    const unlistedVideo = unlistedPathElement
-      && unlistedBadgeElement
-      && unlistedPathElement?.getAttribute('d')
-      === unlistedBadgeElement?.getAttribute('d')
     const videoId = resolver.getVideoID()!
-    const [startTimestamp, endTimestamp] = presence.getTimestampsfromMedia(video)
+    const [startTimestamp, endTimestamp] = getTimestampsFromMedia(video)
+    const listening = showListening === ShowListening.Always
+      || (showListening === ShowListening.WhenMusic && resolver.isMusic())
     const presenceData: PresenceData = {
-      type: ActivityType.Watching,
+      type: listening
+        ? ActivityType.Listening
+        : ActivityType.Watching,
       details: vidDetail
         .replace('%title%', title.trim())
         .replace('%uploader%', uploaderName.trim())
         .replace('%playlistTitle%', playlistTitle.trim())
-        .replace('%playlistQueue%', playlistQueue?.trim() ?? ''),
+        .replace('%playlistQueue%', playlistQueue?.trim() ?? '')
+        .replace('%chapter%', chapter ?? ''),
       state: vidState
         .replace('%title%', title.trim())
         .replace('%uploader%', uploaderName.trim())
         .replace('%playlistTitle%', playlistTitle.trim())
-        .replace('%playlistQueue%', playlistQueue?.trim() ?? ''),
+        .replace('%playlistQueue%', playlistQueue?.trim() ?? '')
+        .replace('%chapter%', chapter ?? ''),
       largeImageKey: unlistedVideo || logo === LogoMode.YouTubeLogo || pfp === ''
         ? YouTubeAssets.Logo
         : logo === LogoMode.Thumbnail
@@ -267,6 +286,21 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = video.paused ? strings.pause : strings.play
     }
 
+    switch (displayType) {
+      case 0: {
+        presenceData.statusDisplayType = StatusDisplayType.Name
+        break
+      }
+      case 1: {
+        presenceData.statusDisplayType = StatusDisplayType.Details
+        break
+      }
+      case 2: {
+        presenceData.statusDisplayType = StatusDisplayType.State
+        break
+      }
+    }
+
     if (!presenceData.details)
       presence.setActivity()
     else presence.setActivity(presenceData)
@@ -331,7 +365,7 @@ presence.on('UpdateData', async () => {
         if (
           documentTitle.includes(
             document.querySelector(selectors.userName)?.textContent?.trim() ?? '',
-          )
+          ) && document.querySelector(selectors.userName)?.textContent
         ) {
           user = document.querySelector(selectors.userName)?.textContent
         }
@@ -346,7 +380,7 @@ presence.on('UpdateData', async () => {
         }
         // Get channel name from website's title
         else if (/\([^)]+\)/.test(documentTitle)) {
-          user = documentTitle.replace(/\(([^)]+)\)/, '')
+          user = documentTitle.replace(/\([^)]+\)/, '')
         }
         else {
           user = documentTitle
@@ -539,7 +573,7 @@ presence.on('UpdateData', async () => {
 
     if (!presenceData.details)
       presence.setActivity()
-    else presence.setActivity(presenceData, true)
+    else presence.setActivity(presenceData)
   }
   else if (hostname === 'studio.youtube.com') {
     const presenceData: PresenceData = {

@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '811965557184135179',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -9,6 +9,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/M/Mediafire/assets/logo.png',
     startTimestamp: browsingTimestamp,
+    name: 'Mediafire',
   }
   const { pathname, href, hostname } = document.location
   const buttons = await presence.getSetting<boolean>('buttons')

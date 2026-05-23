@@ -19,7 +19,7 @@ async function getStrings() {
       viewHome: 'general.viewHome',
       buttonViewPage: 'general.buttonViewPage',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 let strings: Awaited<ReturnType<typeof getStrings>>

@@ -48,12 +48,17 @@ function getShortsElement(): HTMLElement | null {
   )
 }
 
+function isMusic(): boolean {
+  return false
+}
+
 const resolver: Resolver = {
   isActive,
   getTitle,
   getUploader,
   getChannelURL,
   getVideoID,
+  isMusic,
 }
 
 export default resolver

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Coding",
@@ -11,7 +11,8 @@
     "nl": "Reis door de ruimte terwijl je naar geweldige muziek luistert op een website die is ontwikkeld door voormalige Discord-medewerkers en Senior Ratelimiter B1nzy!"
   },
   "url": "takeb1nzyto.space",
-  "version": "1.0.22",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*takeb1nzyto[.]space[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Take%20B1nzy%20To%20Space/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Take%20B1nzy%20To%20Space/assets/thumbnail.png",
   "color": "#060A22",

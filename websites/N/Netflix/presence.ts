@@ -1,5 +1,5 @@
 import type { ShowVideo } from './types.js'
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 import {
   clearMetadata,
   fetchMetadata,
@@ -31,7 +31,7 @@ async function getStrings() {
       seriesDisplayShort: 'netflix.seriesDisplay.short',
       movieDisplay: 'netflix.movieDisplay',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 let oldLang: string | null = null
@@ -111,7 +111,7 @@ presence.on('UpdateData', async () => {
       return
 
     const { paused } = video
-    const [startTimestamp, endTimestamp] = presence.getTimestampsfromMedia(video)
+    const [startTimestamp, endTimestamp] = getTimestampsFromMedia(video)
 
     if (metadata?.data?.video.type === 'show' && showSeries) {
       if (privacyMode) {

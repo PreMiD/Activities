@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1071912828027535462',
@@ -12,7 +12,7 @@ async function getStrings() {
   return presence.getStrings(
     {
       viewHome: 'general.viewHome',
-      viewing: 'general.viewing',
+      view: 'general.view',
       search: 'general.search',
       viewGenre: 'general.viewGenre',
       play: 'general.watchingVid',
@@ -23,7 +23,6 @@ async function getStrings() {
       watchingSeries: 'general.watchingSeries',
       viewPage: 'general.viewPage',
     },
-    await presence.getSetting<string>('lang').catch(() => 'pl'),
   )
 }
 
@@ -90,13 +89,13 @@ presence.on('UpdateData', async () => {
         || textContent('#series-page .info .title')
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.poster img')?.src
       presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = strings.viewing
+      presenceData.smallImageText = strings.view
 
       if (path[3]) {
         presenceData.details = strings.viewPage
         presenceData.state = textContent('.info .title')
         presenceData.smallImageKey = Assets.Viewing
-        presenceData.smallImageText = strings.viewing
+        presenceData.smallImageText = strings.view
 
         if (video.currentTime > 0) {
           if (!privacy) {
@@ -124,7 +123,7 @@ presence.on('UpdateData', async () => {
               delete presenceData.endTimestamp
             }
             else {
-              [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
             }
           }
           else {

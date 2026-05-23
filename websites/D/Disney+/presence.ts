@@ -1,26 +1,30 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, StatusDisplayType } from 'premid'
 
 //* I think this is a browser bug because the custom element does not have any properties when accessing it directly...
 
 let imageId: string | undefined
+let title: string | undefined
+let subtitle: string | undefined
 window.addEventListener('message', (e) => {
-  if (e.data.type === 'pmd-receive-image-id')
-    ({ imageId } = e.data as { imageId?: string })
+  if (e.data.type === 'pmd-receive-data')
+    ({ imageId, title, subtitle } = e.data as { imageId?: string, title?: string, subtitle?: string })
 })
 
 const script = document.createElement('script')
 script.textContent = `
 setInterval(() => {
-const images = document.querySelector("disney-web-player")?.mediaPlayer?.mediaPlaybackCriteria?.metadata?.images_experience?.standard?.tile
-ratios = Object.keys(images),
-goal = 100;
+const metadata = document.querySelector("disney-web-player")?.mediaPlayer?.mediaPlaybackCriteria?.metadata;
+const images = metadata?.images_experience?.standard?.tile;
+if (!images) return;
+const ratios = Object.keys(images);
+const goal = 100;
 
 const closest = ratios.reduce(function(prev, curr) {
 return (Math.abs((100 / curr) - goal) < Math.abs((100 / prev) - goal) ? curr : prev);
 });
 
-window.postMessage({ type: "pmd-receive-image-id", imageId: images?.[closest]?.imageId }, "*");
-}, 100);
+window.postMessage({ type: "pmd-receive-data", imageId: images?.[closest]?.imageId, title: metadata?.title?.text, subtitle: metadata?.subtitle?.text }, "*");
+}, 1000);
 `
 document.head.appendChild(script)
 
@@ -42,15 +46,12 @@ async function getStrings() {
       searchFor: 'general.searchFor',
       searchSomething: 'general.searchSomething',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
   )
 }
-let strings: Awaited<ReturnType<typeof getStrings>>
-let oldLang: string | null = null
 
 presence.on('UpdateData', async () => {
-  const [newLang, privacy, time, buttons] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
+  const [usePresenceName, privacy, time, buttons] = await Promise.all([
+    presence.getSetting<boolean>('usePresenceName'),
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('time'),
     presence.getSetting<number>('buttons'),
@@ -60,18 +61,14 @@ presence.on('UpdateData', async () => {
     partySize?: number
     partyMax?: number
   } = { startTimestamp: browsingTimestamp, type: ActivityType.Watching }
-
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
+  const strings = await getStrings()
 
   switch (true) {
     case /(?:www\.)?disneyplus\.com/.test(hostname): {
       presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/D/Disney%2B/assets/logo.png'
       switch (true) {
         case pathname.includes('play'): {
-          const video = document.querySelector<HTMLVideoElement>('video#hivePlayer')
+          const video = document.querySelector<HTMLVideoElement>('video[id^="hivePlayer"]')
 
           //* Wait for elements to load to prevent setactivity spam
           if (!video || !imageId)
@@ -81,17 +78,21 @@ presence.on('UpdateData', async () => {
           if (!privacy) {
             if (presenceData.startTimestamp)
               delete presenceData.startTimestamp
-            presenceData.details = document.querySelector(
-              '.title-field.body-copy',
-            )?.textContent
+
+            presenceData.details = title
+
+            presenceData.state = subtitle
+              ?.replace(/S\d+:E\d+ /, '')
+
+            usePresenceName
+              ? presenceData.statusDisplayType = StatusDisplayType.Details
+              : presenceData.statusDisplayType = StatusDisplayType.Name
 
             const { paused } = video
 
             if (!paused) {
-              const sliderEl = document.querySelector(
-                '.progress-bar .slider-container',
-              )
-              const timestamps = presence.getTimestamps(
+              const sliderEl = document.querySelector('progress-bar')?.shadowRoot?.querySelector('.progress-bar__thumb')
+              const timestamps = getTimestamps(
                 Number.parseInt(sliderEl?.getAttribute('aria-valuenow') ?? '0'),
                 Number.parseInt(sliderEl?.getAttribute('aria-valuemax') ?? '0'),
               )
@@ -103,17 +104,10 @@ presence.on('UpdateData', async () => {
               presenceData.smallImageText = strings.pause
             }
 
-            const parts = document
-              .querySelector('.subtitle-field')
-              ?.textContent
+            const parts = subtitle
               ?.match(/S(\d+):E(\d+) /)
             if (parts && parts.length > 2)
               presenceData.largeImageText = `Season ${parts[1]}, Episode ${parts[2]}`
-
-            presenceData.state = document
-              .querySelector('.subtitle-field')
-              ?.textContent
-              ?.replace(/S(\d+):E(\d+) /, '')
 
             presenceData.buttons = [
               {
@@ -184,7 +178,6 @@ presence.on('UpdateData', async () => {
           presenceData.details = privacy
             ? strings.browsing
             : 'Browsing their watchlist'
-
           break
         }
         case pathname.includes('series'): {
@@ -216,7 +209,7 @@ presence.on('UpdateData', async () => {
             ? 'Browsing videos'
             : `Viewing ${document.title
               ?.match(
-                /(pixar)|(marvel)|(star wars)|(national geographic)|(star)|(disney)/i,
+                /pixar|marvel|star wars|national geographic|star|disney/i,
               )?.[0]
               ?.toLowerCase()} content`
           break
@@ -245,7 +238,7 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/D/Disney%2B/assets/0.png'
 
       if (video && !Number.isNaN(video.duration)) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
         const title = document.querySelector(
           'h1.ON_IMAGE.BUTTON1_MEDIUM',
@@ -265,6 +258,9 @@ presence.on('UpdateData', async () => {
         else {
           presenceData.details = title
           presenceData.state = subtitle || 'Movie'
+          usePresenceName
+            ? presenceData.statusDisplayType = StatusDisplayType.Details
+            : presenceData.statusDisplayType = StatusDisplayType.Name
         }
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused
@@ -286,7 +282,7 @@ presence.on('UpdateData', async () => {
         }
 
         if (title)
-          presence.setActivity(presenceData, !video.paused)
+          presence.setActivity(presenceData)
       }
       break
     }

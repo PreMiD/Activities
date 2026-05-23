@@ -1,7 +1,7 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
-  clientId: '941627291304329226',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -13,6 +13,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    name: 'Videoland',
   }
   const { href } = document.location
   const [privacy, buttons, covers] = await Promise.all([
@@ -42,7 +43,7 @@ presence.on('UpdateData', async () => {
       ? 'Gepauzeerd'
       : 'Aan het afspelen'
     if (!video.paused) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     }
     presenceData.buttons = [
       {
@@ -51,7 +52,7 @@ presence.on('UpdateData', async () => {
       },
     ]
   }
-  else if (href.match(/\d{4}/g)) {
+  else if (/\d{4}/.test(href)) {
     presenceData.details = `Bekijkt: ${
       document
         .querySelector<HTMLMetaElement>('meta[property=\'og:title\']')

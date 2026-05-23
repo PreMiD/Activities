@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Luscarvalho",
@@ -14,7 +14,8 @@
     "slimeread.com",
     "www.slimeread.com"
   ],
-  "version": "1.0.8",
+  "regExp": "^https?[:][/][/](www[.])?slimeread[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SlimeRead/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SlimeRead/assets/thumbnail.png",
   "color": "#5794CE",

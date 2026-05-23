@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Striker",
@@ -12,7 +12,8 @@
     "nl": "Wattpad is een internetgemeenschap voor lezers en schrijvers om nieuwe, door gebruikers gegenereerde verhalen in verschillende genres te publiceren, waaronder klassiekers, algemene fictie, historische fictie, non-fictie, poëzie, fanfictie, spiritueel, humor en tienerfictie."
   },
   "url": "www.wattpad.com",
-  "version": "1.2.32",
+  "regExp": "^https?[:][/][/](www[.])?wattpad[.]com[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wattpad/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wattpad/assets/thumbnail.png",
   "color": "#FF6612",

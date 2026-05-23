@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, StatusDisplayType, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '608109837657702566',
@@ -23,8 +23,10 @@ function stripText(element: HTMLElement, id = 'None', log = true) {
 }
 
 presence.on('UpdateData', async () => {
+  const displayType = await presence.getSetting<number>('displayType')
   // Define presence data
   const presenceData: PresenceData = {
+    type: ActivityType.Listening,
     details: 'Browsing...',
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/Pandora/assets/logo.png',
   }
@@ -34,6 +36,18 @@ presence.on('UpdateData', async () => {
 
   // If the audio bar exists, assume we're listening to something
   if (document.querySelector('.Tuner__Audio__NowPlayingHitArea')) {
+    switch (displayType) {
+      case 0:
+        presenceData.statusDisplayType = StatusDisplayType.Name
+        break
+      case 1:
+        presenceData.statusDisplayType = StatusDisplayType.State
+        break
+      case 2:
+        presenceData.statusDisplayType = StatusDisplayType.Details
+        break
+    }
+
     // Fetch title and artist
     const title = document.querySelector<HTMLElement>(
       '.Tuner__Audio__TrackDetail__title',
@@ -79,11 +93,11 @@ presence.on('UpdateData', async () => {
         // If duration controls exist, set the timestamps and small image text appropriately
         if (timeElapsed && timeRemaining) {
           // Get timestamps
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-            presence.timestampFromFormat(
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+            timestampFromFormat(
               stripText(timeElapsed, 'Time Elapsed')!,
             ),
-            presence.timestampFromFormat(
+            timestampFromFormat(
               stripText(timeRemaining, 'Time Remaining')!,
             ),
           )

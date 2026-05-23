@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://github.com/PreMiD.png?size=2048" width="128px" style="max-width:100%;">
+    <img src="https://github.com/PreMiD.png?size=2048" alt="PreMiD logo" width="128px" style="max-width:100%;">
     <h3 style="font-size: 2rem; margin-bottom: 0">Activity Guidelines</h3>
     <h4 style="margin-top: 0">Revision 3.2</h4>
     <br />
@@ -60,7 +60,7 @@ Each activity has a descriptor file called `metadata.json`, the metadata has a s
 
 ```json
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "USER",
@@ -154,7 +154,7 @@ A list of fields and their rules are listed below:
 
 ### **`description`**
 
-- **All** activities are **required** to have an English description regardless of the website's prefered language.
+- **All** activities are **required** to have an English description regardless of the website's preferred language.
 - Do **not** try and translate the description yourself unless you know that language, translators will modify your `metadata.json` and change the descriptions if necessary.
 
 ### **`url`**
@@ -225,7 +225,7 @@ Here is a list of rules you must follow when writing your `presence.ts` file:
 - **Always** use `document.location` to get current location information rather than `window.location` or `location`.
 - All assets **must** have a resolution of `512x512` pixels. You can upsize it using a tool like [waifu2x](http://waifu2x.udp.jp/).
 - **Never** use custom functions when [native variants are available](https://docs.premid.app/dev/presence#files-explained); this makes sure fixes on the extension level also apply to your activities. You're free to use whatever you need if you do not find them listed in the docs.
-- It is **forbidden** to code activities for a site without adding support to its primary language (for e.g., a YouTube activity coded with support only for Portueguese and Japanese, but not English itself.)
+- It is **forbidden** to code activities for a site without adding support to its primary language (for e.g., a YouTube activity coded with support only for Portuguese and Japanese, but not English itself.)
 - The `smallImageKey` and `smallImageText` fields are intended to provide additional/secondary context (such as `playing/paused` for video sites, `browsing` for regular sites, and other cases) not to promote Discord profiles or anything unrelated to PreMiD.
 - When accessing cookies for stored data, please prefix the key with `PMD_`.
 - You may only make HTTP/HTTPS requests to `premid.app` or the activity website API. If you are using external domains, you will be required to explain why it is necessary. The only allowed API to make requests is the [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
@@ -262,7 +262,7 @@ The most important process of activity development is getting your activity on t
 
 <div>
   <h2 style="font-size: 2rem; margin-bottom: 0;">Activity Reviewers</h2>
-  <a href="https://github.com/Bas950"><img src="https://github.com/Bas950.png?size=2048" title="Bas950" width="48px" style="max-width:100%; border-radius: 50%;"/></a> <a href="https://github.com/theusaf"><img src="https://github.com/theusaf.png?size=2048" title="theusaf" width="48px" style="max-width:100%; border-radius: 50%;"/></a> <a href="https://github.com/Timeraa"><img src="https://github.com/Timeraa.png?size=2048" title="Timeraa" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
+  <a href="https://github.com/Bas950"><img src="https://github.com/Bas950.png?size=2048" alt="Bas950" title="Bas950" width="48px" style="max-width:100%; border-radius: 50%;"/></a> <a href="https://github.com/theusaf"><img src="https://github.com/theusaf.png?size=2048" alt="theusaf" title="theusaf" width="48px" style="max-width:100%; border-radius: 50%;"/></a> <a href="https://github.com/Timeraa"><img src="https://github.com/Timeraa.png?size=2048" alt="Timeraa" title="Timeraa" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
   <br />
 </div>
 
@@ -311,19 +311,19 @@ If you have some suggestions about our guidelines, you should contact us @ [PreM
 `Revision 3` of the guidelines was written and was contributed to by the following individuals:
 
 <div>
-<a href="https://github.com/PreMiD"><img src="https://github.com/PreMiD.png?size=2048" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
+<a href="https://github.com/PreMiD"><img src="https://github.com/PreMiD.png?size=2048" alt="PreMiD" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
 </div>
 
 `Revision 2` of the guidelines was written and was contributed to by the following individuals:
 
 <div>
-<a href="https://github.com/CobyPowers"><img src="https://github.com/CobyPowers.png?size=2048" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
+<a href="https://github.com/CobyPowers"><img src="https://github.com/CobyPowers.png?size=2048" alt="CobyPowers" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
 </div>
 
 `Revision 1` was maintained by the following individuals:
 
 <div>
-<a href="https://github.com/CobyPowers"><img src="https://github.com/CobyPowers.png?size=2048" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
-<a href="https://github.com/Bas950"><img src="https://github.com/Bas950.png?size=2048" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
-<a href="https://github.com/i1u5"><img src="https://github.com/i1u5.png?size=2048" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
+<a href="https://github.com/CobyPowers"><img src="https://github.com/CobyPowers.png?size=2048" alt="CobyPowers" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
+<a href="https://github.com/Bas950"><img src="https://github.com/Bas950.png?size=2048" alt="Bas950" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
+<a href="https://github.com/i1u5"><img src="https://github.com/i1u5.png?size=2048" alt="i1u5" width="48px" style="max-width:100%; border-radius: 50%;"/></a>
 </div>

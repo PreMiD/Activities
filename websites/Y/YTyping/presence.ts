@@ -39,7 +39,7 @@ function getTypePageInfo() {
   return { title, artist, image, videoId }
 }
 
-const largeImageKey = 'https://i.imgur.com/nnZqkNo.png'
+const largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/Y/YTyping/assets/logo.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 async function generatePresenceData() {

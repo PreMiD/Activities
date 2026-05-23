@@ -1,3 +1,5 @@
+import { ActivityType } from 'premid'
+
 const presence = new Presence({
   clientId: '640914619082211338',
 })
@@ -5,31 +7,23 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png',
+    largeImageKey: document.querySelector<HTMLImageElement>('#song-art')?.src || 'https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png',
     startTimestamp: browsingTimestamp,
+    type: ActivityType.Listening,
   }
 
-  presenceData.details = `${
-    document.querySelector('.player-artist-text')?.textContent
-  } - ${document.querySelector('.player-title-text')?.textContent}`
-  presenceData.state = document.querySelector('.live-name')?.textContent ?? 'AutoDJ'
+  const artistElement = document.getElementById('song-artist')
+  const titleElement = document.getElementById('song-title')
+  const presenterElement = document.getElementById('show-name')
 
-  presenceData.buttons = [
-    {
-      label: 'Tune into TFM',
-      url: 'https://truckers.fm/listen',
-    },
-  ]
+  const artist = artistElement?.textContent?.trim() || 'TruckersFM'
+  const title = titleElement?.textContent?.trim() || 'Loading...'
+  const presenter = presenterElement?.textContent?.trim() || 'TruckersFM'
 
-  const spotifyUrl = document
-    .querySelector('.player-artist-text a')
-    ?.getAttribute('href')
-  if (spotifyUrl) {
-    presenceData.buttons.push({
-      label: 'Listen on Spotify',
-      url: spotifyUrl,
-    })
-  }
+  presenceData.details = `${artist} - ${title}`
+  presenceData.state = presenter
+  presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/T/TruckersFM/assets/logo.png'
+  presenceData.smallImageText = 'TruckersFM'
 
   presence.setActivity(presenceData)
 })

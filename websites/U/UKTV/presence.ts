@@ -1,7 +1,7 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
-  clientId: '1002899869599551508',
+  clientId: '503557087041683458',
 })
 
 async function getStrings() {
@@ -11,7 +11,7 @@ async function getStrings() {
       pause: 'general.paused',
       browse: 'general.browsing',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 
@@ -21,6 +21,7 @@ let oldLang: string | null = null
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/U/UKTV/assets/logo.png',
+    name: 'UKTV',
   }
   const video = document.querySelector<HTMLVideoElement>('video')
   const { href, pathname } = document.location
@@ -68,7 +69,7 @@ presence.on('UpdateData', async () => {
       .trim()
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = video.paused ? strings.pause : strings.play;
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     if (covers) {
       presenceData.largeImageKey = document
         .querySelector('[id="longInfo"]')

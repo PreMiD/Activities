@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1329883342132351058',
@@ -91,13 +91,11 @@ presence.on('UpdateData', async () => {
     }
     case 'filmes': {
       if (path[2] && path[2] !== 'page') {
-        presenceData.details = (await strings).viewMovie
-        presenceData.state = textContent(
-          '.sheader > div:nth-child(2) > h1:nth-child(1)',
-        )
+        presenceData.name = textContent('.sheader > div:nth-child(2) > h1:nth-child(1)')
         presenceData.largeImageKey = getImage('.poster > img:nth-child(1)')
+        presenceData.details = 'No Pi Fansubs'
         if (iFrameVideo && !Number.isNaN(duration)) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
             Math.floor(currentTime),
             Math.floor(duration),
           )
@@ -124,16 +122,16 @@ presence.on('UpdateData', async () => {
       if (path[2] && path[2] !== 'page') {
         const match = textContent('.epih1')?.match(/(\d+)x(\d+)/)
 
-        presenceData.details = (await strings).viewSeries
-        presenceData.state = textContent('.epih1')?.replace(/: (\d+)x(\d+)/, '')
         presenceData.largeImageKey = getImage(
           '.mark-1 > div:nth-child(1) > img:nth-child(1)',
         )
+        presenceData.details = 'No Pi Fansubs'
+        presenceData.name = textContent('.epih1')?.replace(/: \d+x\d+/, '')
         presenceData.largeImageText = match
           ? `Season ${match[1]}, Episode ${match[2]}`
           : textContent('.epih1')
         if (iFrameVideo && !Number.isNaN(duration)) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
             Math.floor(currentTime),
             Math.floor(duration),
           )

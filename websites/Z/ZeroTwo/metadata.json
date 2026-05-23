@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Connor!",
@@ -12,7 +12,8 @@
     "ja": "「ダーリン・イン・ザ・フランキス」に登場するゼロツーをモチーフにした、Waifu Discordボットです。様々なシーンで使用できる機能や、たくさんの試せる機能があります。"
   },
   "url": "zerotwo.bot",
-  "version": "2.0.14",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*zerotwo[.]bot[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZeroTwo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZeroTwo/assets/thumbnail.png",
   "color": "#ff40ff",

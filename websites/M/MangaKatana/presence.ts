@@ -21,12 +21,12 @@ async function getStrings() {
       search: 'general.search',
       searchFor: 'general.searchFor',
       searchSomething: 'general.searchSomething',
-      viewing: 'general.viewing',
+      view: 'general.view',
       viewHome: 'general.viewHome',
       viewPage: 'general.viewPage',
       buttonViewPage: 'general.buttonViewPage',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 
@@ -136,7 +136,7 @@ presence.on('UpdateData', async () => {
           '#single_book .cover img',
         )?.src
         presenceData.smallImageKey = Assets.Viewing
-        presenceData.smallImageText = strings.viewing
+        presenceData.smallImageText = strings.view
         presenceData.buttons = [
           {
             label: strings.buttonViewPage,

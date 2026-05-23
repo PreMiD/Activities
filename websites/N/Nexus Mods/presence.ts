@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '683438933841018928',
+  clientId: '503557087041683458',
 })
 
 let presenceData: PresenceData
@@ -1027,6 +1027,7 @@ presence.on('UpdateData', () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/N/Nexus%20Mods/assets/logo.png',
     smallImageKey: Assets.Reading,
     startTimestamp: browsingTimestamp,
+    name: 'Nexus Mods',
   }
 
   // Main entry point

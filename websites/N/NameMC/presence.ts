@@ -26,14 +26,14 @@ async function getStrings() {
       viewSkins: 'namemc.viewSkins',
       viewEmoji: 'namemc.viewEmojis',
       viewProfile: 'general.viewProfile',
-      viewing: 'general.viewing',
+      view: 'general.view',
       privacy: 'general.privacy',
       search: 'general.searchFor',
       buttonViewServer: 'namemc.buttonViewServer',
       buttonViewProfile: 'general.buttonViewProfile',
       viewSkin: 'namemc.viewSkin',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 
@@ -145,7 +145,7 @@ presence.on('UpdateData', async () => {
       ],
     },
     '/privacy/': {
-      details: strings.viewing,
+      details: strings.view,
       state: strings.privacy,
     },
     '/search': {

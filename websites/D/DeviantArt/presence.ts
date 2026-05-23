@@ -25,6 +25,7 @@ const updateCallback = {
 /**
  * Initialize/reset presenceData.
  */
+
 function resetData(defaultData: PresenceData = {
   details: 'Viewing an unsupported page',
   largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/D/DeviantArt/assets/logo.png',
@@ -446,9 +447,7 @@ async function prepare(): Promise<void> {
                             else
                               presenceData.details = `Viewing a ${profileType}'s favourites`
                             if (profileType === 'user') {
-                              presenceData.state = `${
-                                document.querySelector('h2.uUWfu')?.textContent
-                              } by ${getName()}`
+                              presenceData.state = `${getName()}`
                             }
                             else if (
                               profileType === 'group'
@@ -459,9 +458,8 @@ async function prepare(): Promise<void> {
                             else if (
                               !document.querySelector('.gallery .active')
                             ) {
-                              presenceData.state = `${
-                                document.querySelector('.folder-title')
-                                  ?.textContent
+                              presenceData.state = `${document.querySelector('.folder-title')
+                                ?.textContent
                               } by ${getName(true)}`
                             }
                             else if (
@@ -573,8 +571,7 @@ async function prepare(): Promise<void> {
                             /* This part is only valid on the old theme. (not quite sure) */
                             if (currentPath[2]) {
                               presenceData.details = 'Viewing a badge'
-                              presenceData.state = `${
-                                document.querySelector('h3')?.textContent
+                              presenceData.state = `${document.querySelector('h3')?.textContent
                               } from ${getName()}`
                             }
                             else {
@@ -786,13 +783,12 @@ async function prepare(): Promise<void> {
                   ?.split(' - ')
                   ?.slice(0, -1)
                   ?.join(' - ')
-                presenceData.state = `${
-                  document
-                    .querySelector('title')
-                    ?.textContent
-                    ?.split(' - ')
-                    ?.pop()
-                    ?.split('\'s')[0]
+                presenceData.state = `${document
+                  .querySelector('title')
+                  ?.textContent
+                  ?.split(' - ')
+                  ?.pop()
+                  ?.split('\'s')[0]
                 } (sta.sh)`
                 if (presenceData.details === '')
                   throw new Error('No title found on Sta.sh')

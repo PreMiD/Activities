@@ -1,12 +1,13 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
-  clientId: '843060416208306196',
+  clientId: '503557087041683458',
 })
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/0-9/7plus/assets/logo.png',
+    name: '7plus',
   }
   const { pathname, href } = document.location
   const [privacy, buttons, covers] = await Promise.all([
@@ -97,7 +98,7 @@ presence.on('UpdateData', async () => {
             delete presenceData.endTimestamp
             presenceData.smallImageKey = Assets.Pause
           }
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
           presenceData.details = document.querySelector(
             '[class="vjs-top-bar-title"]',
           )?.textContent

@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '808758769424138252',
@@ -35,7 +35,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = video.paused
         ? (await strings).pause
         : (await strings).play;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
       presenceData.buttons = [
         {
@@ -79,8 +79,8 @@ presence.on('UpdateData', async () => {
       presenceData.state = `Looking at ${
         episode?.partOfSeries?.name ?? pathname?.includes('episode-')
           ? pathname
-            ?.match(/episode-\d*/g)?.[0]
-            ?.replace('episode-', 'episode ')
+              ?.match(/episode-\d*/g)?.[0]
+              ?.replace('episode-', 'episode ')
           : 'An episode'
       }`
       presenceData.details = title && title.length > 5 ? `${title?.[0]} - ${title?.[1]}` : title?.[0]

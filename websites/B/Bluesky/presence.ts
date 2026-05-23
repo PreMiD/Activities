@@ -4,7 +4,7 @@ const presence = new Presence({
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/B/Bluesky/assets/logo.jpg',
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/B/Bluesky/assets/logo.png',
   }
   const path = document.location.pathname.split('/')
   const [showUsername, showPost, showFeed] = await Promise.all([

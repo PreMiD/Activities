@@ -1,0 +1,110 @@
+{
+  "royaleapi.browseBlog": {
+    "description": "Browsing blog home page",
+    "message": "Browsing the Blog"
+  },
+  "royaleapi.browseDecks": {
+    "description": "Browsing decks",
+    "message": "Browsing Decks"
+  },
+  "royaleapi.browseBlogTag": {
+    "description": "Viewing articles categorized by a tag",
+    "message": "Browsing Articles by Tag"
+  },
+  "royaleapi.browseTournaments": {
+    "description": "Viewing list of tournaments",
+    "message": "Browsing Tournaments"
+  },
+  "royaleapi.browseClans": {
+    "description": "Browsing list of Clans",
+    "message": "Browsing Clans"
+  },
+  "royaleapi.browseCards": {
+    "description": "Browsing list of Cards",
+    "message": "Browsing Cards"
+  },
+  "royaleapi.buildingDeck": {
+    "description": "Building a deck of cards to check",
+    "message": "Building a Deck"
+  },
+  "royaleapi.browsePlayers": {
+    "description": "Browsing a list of players",
+    "message": "Browsing Players"
+  },
+  "royaleapi.browseStrategy": {
+    "description": "Browsing list of content regarding game strategy",
+    "message": "Browsing Strategy Guides"
+  },
+  "royaleapi.viewEvent": {
+    "description": "Viewing details about an event/league",
+    "message": "Viewing an Event"
+  },
+  "royaleapi.viewReplay": {
+    "description": "Viewing a Replay",
+    "message": "Viewing a Replay"
+  },
+  "royaleapi.viewTeam": {
+    "description": "Viewing an E-Sport team",
+    "message": "Viewing a Team"
+  },
+  "royaleapi.browseESports": {
+    "description": "Browsing content related to E-Sports",
+    "message": "Browsing E-Sports"
+  },
+  "royaleapi.buttonViewCard": {
+    "description": "Button message for viewing a card's details",
+    "message": "View Card"
+  },
+  "royaleapi.buttonViewPlayerGame": {
+    "description": "Button message to lead user to open player profile in game",
+    "message": "View Player In-Game"
+  },
+  "royaleapi.buttonViewClan": {
+    "description": "Button message for viewing clan details",
+    "message": "View Clan"
+  },
+  "royaleapi.buttonViewReplay": {
+    "description": "BUtton message to view a game replay",
+    "message": "View Replay"
+  },
+  "royaleapi.buttonViewEvent": {
+    "description": "Button to view an event",
+    "message": "View Event"
+  },
+  "royaleapi.buttonJoinTournament": {
+    "description": "Button to join tournament in game",
+    "message": "Join Tournamennt"
+  },
+  "royaleapi.buttonViewTeam": {
+    "description": "Button message to view an E-Sport team",
+    "message": "View Team"
+  },
+  "royaleapi.buttonUseDeck": {
+    "description": "Button message for opening the deck of cards in game",
+    "message": "Use Deck"
+  },
+  "royaleapi.buttonViewDeck": {
+    "description": "Button message for viewing a deck of cards",
+    "message": "View Deck"
+  },
+  "royaleapi.buttonViewClanGame": {
+    "description": "Button message for viewing clan details in game",
+    "message": "View Clan In-Game"
+  },
+  "royaleapi.viewClan": {
+    "description": "Viewing information about a Clan",
+    "message": "Viewing a Clan"
+  },
+  "royaleapi.viewCard": {
+    "description": "Viewing information about a Card",
+    "message": "Viewing a Card"
+  },
+  "royaleapi.viewDeck": {
+    "description": "Viewing a deck of cards",
+    "message": "Viewing a Deck"
+  },
+  "royaleapi.viewClanFamily": {
+    "description": "Viewing a network of related Clans and players",
+    "message": "Viewing a Clan's Family"
+  }
+}

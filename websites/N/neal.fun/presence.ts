@@ -22,6 +22,13 @@ presence.on('UpdateData', async () => {
   if (pathname.endsWith('/'))
     path.pop()
   switch (path[0]) {
+    case 'stimulation-clicker': {
+      presenceData.details = 'Playing: Stimulation Clicker'
+      const stimulation = document.querySelector('.main-stat-num')?.textContent || 0
+      const sps = Number.parseInt(document.querySelector('.main-stat-second .main-stat-inner')?.textContent || '0')
+      presenceData.state = `${stimulation} stimulation (${sps}/s)`
+      break
+    }
     case 'infinite-craft': {
       presenceData.details = 'Playing: Infinite Craft'
       presenceData.state = `Discovered ${

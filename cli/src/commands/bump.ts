@@ -1,12 +1,13 @@
 import type { ActivityMetadataAndFolder } from '../util/getActivities.js'
 import { writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
+import { search } from '@inquirer/prompts'
 import chalk from 'chalk'
-import inquirer from 'inquirer'
 import { compare, inc, valid } from 'semver'
 import { getActivities, getChangedActivities } from '../util/getActivities.js'
 import { getSingleActivity } from '../util/getSingleActivity.js'
 import { exit, info, prefix } from '../util/log.js'
+import { searchChoices } from '../util/searchChoices.js'
 
 export async function bump(service?: string, version?: string, {
   all = false,
@@ -60,11 +61,9 @@ async function bumpActivity(activity: ActivityMetadataAndFolder, version?: strin
         inc(activity.metadata.version, 'major')!,
       ]
 
-      const { selectedVersion } = await inquirer.prompt({
-        type: 'select',
-        name: 'selectedVersion',
+      const selectedVersion = await search({
         message: `Please select a version to bump ${activity.metadata.service} to`,
-        choices: validVersions,
+        source: input => searchChoices(validVersions.map(x => ({ name: x, value: x })), input),
       }).catch(() => exit('Something went wrong.'))
 
       if (!selectedVersion) {

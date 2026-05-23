@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "AsyncSenpai",
@@ -11,7 +11,8 @@
     "vi": "GeForce Now là thương hiệu của Nvidia cho dịch vụ game trên đám mây của họ."
   },
   "url": "play.geforcenow.com",
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/]play[.]geforcenow[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GeForce%20NOW/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GeForce%20NOW/assets/thumbnail.png",
   "color": "#76B918",

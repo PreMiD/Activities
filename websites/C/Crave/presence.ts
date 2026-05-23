@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1001288215388495953',
@@ -16,11 +16,11 @@ presence.on('UpdateData', async () => {
     // if contains video
     if (document.querySelector('.jw-icon-playback')?.ariaLabel !== 'Play') {
       // video is playing
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-        presence.timestampFromFormat(
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+        timestampFromFormat(
           document.querySelector('.jw-text-elapsed')?.textContent ?? '',
         ),
-        presence.timestampFromFormat(
+        timestampFromFormat(
           document.querySelector('.jw-text-duration')?.textContent ?? '',
         ),
       )

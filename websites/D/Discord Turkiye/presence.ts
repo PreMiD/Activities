@@ -1,4 +1,4 @@
-const presence = new Presence({ clientId: '890757020393816064' })
+const presence = new Presence({ clientId: '503557087041683458' })
 const startTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
@@ -6,6 +6,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/D/Discord%20Turkiye/assets/logo.png',
     details: 'Geziniyor',
     startTimestamp,
+    name: 'Discord Turkiye',
   }
   const { pathname } = document.location
   const privacyMode = await presence.getSetting('privacy_mode').catch(() => false)

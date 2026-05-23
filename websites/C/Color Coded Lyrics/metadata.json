@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "193714715631812608",
@@ -10,7 +10,8 @@
     "en": "Color-coded lyrics for songs from Korea, Japan, Taiwan, Thailand and China"
   },
   "url": "colorcodedlyrics.com",
-  "version": "1.0.11",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*colorcodedlyrics[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Color%20Coded%20Lyrics/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Color%20Coded%20Lyrics/assets/thumbnail.png",
   "color": "#755fbf",

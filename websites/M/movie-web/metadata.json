@@ -1,30 +1,25 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "705490775932403795",
     "name": "jordaar"
   },
   "service": "movie-web",
+  "altnames": [
+    "P-Stream",
+    "pstream"
+  ],
   "description": {
     "en": "The place for your favorite movies & shows"
   },
   "url": [
-    "pstream.org",
-    "beta.pstream.org",
-    "pseudo-flix.pro",
-    "mw.lonelil.com",
-    "mw.lonelil.ru",
-    "movies.levrx.lol",
+    "pstream.net",
     "movies.levrx.de",
-    "streamerflix.xyz",
-    "sudo-flix.fmovies0.cc",
-    "streamwatch.online",
-    "movies.samj.app",
-    "movie-site.tech"
+    "streamwatch.online"
   ],
-  "regExp": "(dev[.])?(movie-web[.]app)",
-  "version": "1.2.0",
+  "regExp": "^https?[:][/][/](?:pstream[.]net|movies[.]levrx[.]de|streamwatch[.]online)[/]",
+  "version": "1.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
   "color": "#533670",

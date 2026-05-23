@@ -1,7 +1,7 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '937290941285429311',
+  clientId: '503557087041683458',
 })
 const browingTimestamp = Math.floor(Date.now() / 1000)
 async function getStrings() {
@@ -16,7 +16,7 @@ async function getStrings() {
       viewCategory: 'general.viewCategory',
       search: 'general.searchFor',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 enum ActivityAssets {
@@ -28,6 +28,7 @@ let oldLang: string | null = null
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
+    name: 'Tubi',
   }
   const video = document.querySelector<HTMLVideoElement>('video')
   const search = document.querySelector<HTMLInputElement>('[type="search"]')
@@ -70,7 +71,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = video.paused
         ? strings.paused
         : strings.play;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
         Math.floor(video.currentTime),
         Math.floor(video.duration),
       )

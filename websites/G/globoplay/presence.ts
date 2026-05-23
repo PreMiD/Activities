@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '641394369651277834',
@@ -127,7 +127,7 @@ presence.on('UpdateData', async () => {
       }
 
       if (video && !Number.isNaN(video.duration)) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
           Math.floor(video.currentTime),
           Math.floor(video.duration),
         )
@@ -157,7 +157,7 @@ presence.on('UpdateData', async () => {
       )?.textContent
       const podcastCover = document.querySelector<HTMLImageElement>(
         'div.podcast-view__podcast-thumb > div > img',
-      )?.srcset.match(/(https.+\.(png|jpg)) 360w/)?.[1]
+      )?.srcset.match(/(https.+\.(?:png|jpg)) 360w/)?.[1]
       const podcastCoveralt = document.querySelector<HTMLImageElement>(
         'div.podcast-episode-view__thumb > div > img',
       )?.src
@@ -177,7 +177,7 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageKey = playingPodcastalt
             .querySelector<HTMLImageElement>('img')
             ?.srcset
-            .match(/(https.+\.(png|jpg)) 360w/)?.[1]
+            .match(/(https.+\.(?:png|jpg)) 360w/)?.[1]
 
           presenceData.details = podcastTitlealt
 
@@ -200,9 +200,9 @@ presence.on('UpdateData', async () => {
             )?.textContent
 
             if (currentTime && totalTime) {
-              [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-                presence.timestampFromFormat(currentTime),
-                presence.timestampFromFormat(totalTime),
+              [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+                timestampFromFormat(currentTime),
+                timestampFromFormat(totalTime),
               )
             }
           }
@@ -216,7 +216,7 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = playingPodcast
           .querySelector<HTMLImageElement>('img')
           ?.srcset
-          .match(/(https.+\.(png|jpg)) 360w/)?.[1]
+          .match(/(https.+\.(?:png|jpg)) 360w/)?.[1]
 
         presenceData.details = podcastTitle
 
@@ -239,9 +239,9 @@ presence.on('UpdateData', async () => {
           )?.textContent
 
           if (currentTime && totalTime) {
-            [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-              presence.timestampFromFormat(currentTime),
-              presence.timestampFromFormat(totalTime),
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+              timestampFromFormat(currentTime),
+              timestampFromFormat(totalTime),
             )
           }
         }

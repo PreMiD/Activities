@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Kozou",
@@ -11,12 +11,12 @@
       "id": "604182077088202784"
     },
     {
-      "name": "Dark_Ville",
-      "id": "638080361179512853"
-    },
-    {
       "name": "Arias800",
       "id": "341235976766488576"
+    },
+    {
+      "name": "ByZorks",
+      "id": "252147945011544065"
     }
   ],
   "service": "myCANAL",
@@ -26,7 +26,8 @@
     "nl": "Canal + is een Franse abonnementsaanbieder die is gekoppeld aan het kanaal met dezelfde naam. Het is eigendom van Vivendi met een aandeel van honderd procent."
   },
   "url": "www.canalplus.com",
-  "version": "2.0.17",
+  "regExp": "^https?[:][/][/](www[.])?canalplus[.]com[/]",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/myCANAL/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/myCANAL/assets/thumbnail.png",
   "color": "#000",
@@ -40,6 +41,12 @@
       "id": "cover",
       "title": "Show Cover",
       "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "useTitleAsName",
+      "title": "Use Show Title as Activity Name",
+      "icon": "fad fa-heading",
       "value": true
     }
   ]

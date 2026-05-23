@@ -50,6 +50,7 @@
 
   // Other settings
   "discord.enabled": false,
+  "vscord.enable": false,
   "yaml.schemas": {
     "https://json.schemastore.org/github-issue-config.json": "../.github/ISSUE_TEMPLATE/config.yml"
   }

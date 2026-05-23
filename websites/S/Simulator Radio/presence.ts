@@ -7,7 +7,6 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let currentTitle = 'Simulator Radio'
 let currentArtist = 'Your #1 Simulation Station'
-let currentListeners = 0
 let currentDj = 'Otto'
 
 function newStats(): void {
@@ -17,7 +16,6 @@ function newStats(): void {
         response.json().then((data) => {
           currentTitle = data.now_playing.title
           currentArtist = data.now_playing.artists
-          currentListeners = data.listeners
           currentDj = data.djs.now.displayname
         })
       }
@@ -31,7 +29,6 @@ let lastTimeStart = Math.floor(Date.now() / 1000)
 function pushMusicPresence(presenceData: PresenceData): void {
   presenceData.details = `${currentTitle} - ${currentArtist}`
   presenceData.state = `Listening to ${currentDj}`
-  presenceData.smallImageText = currentListeners !== 0 ? `Listeners: ${currentListeners}` : ''
   presenceData.smallImageKey = Assets.Play
 
   if (lastTitle !== currentTitle) {

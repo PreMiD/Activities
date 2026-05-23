@@ -1,7 +1,7 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '1249362206072635483',
+  clientId: '503557087041683458',
 })
 
 enum ActivityAssets {
@@ -34,6 +34,7 @@ presence.on(
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
+    name: 'AWTWA',
   } as PresenceData
   const { pathname, href } = document.location
 
@@ -77,7 +78,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Play
 
       if (!iFrameData?.paused) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(iFrameData.currentTime, iFrameData.duration)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(iFrameData.currentTime, iFrameData.duration)
       }
       presenceData.smallImageKey = iFrameData?.paused
         ? Assets.Pause

@@ -42,7 +42,7 @@ presence.on('UpdateData', async () => {
     case 'vehicles.html': {
       const type = pageTitle
       presenceData.details = `Browsing ${type}`
-      presenceData.state = document.querySelector<HTMLHeadingElement>('.stats-name')?.textContent
+      presenceData.state = document.querySelector<HTMLHeadingElement>('.stats-name, .stats__h-name')?.textContent
       presenceData.buttons = [
         {
           label: `View ${type.substring(0, type.length - 1)}`,

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Officer",
@@ -11,7 +11,8 @@
     "nl": "fnbr.co is gemaakt om te dienen als een directory voor Fortnite Cosmetics en te helpen bij het verspreiden van community bewustzijn van items binnen Fortnite Battle Royale."
   },
   "url": "fnbr.co",
-  "version": "1.4.22",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*fnbr[.]co[/]",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/fnbr.co/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/fnbr.co/assets/thumbnail.png",
   "color": "#761FA1",

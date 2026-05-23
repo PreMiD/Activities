@@ -1,7 +1,7 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
-  clientId: '1103408220921397349',
+  clientId: '503557087041683458',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -15,7 +15,7 @@ function getVideoStatus(presenceData: PresenceData, video: HTMLVideoElement) {
     delete presenceData.startTimestamp
   }
   else {
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     presenceData.smallImageKey = Assets.Play
     presenceData.smallImageText = 'playing'
   }
@@ -26,6 +26,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    name: 'ZEE5',
   }
   const { pathname } = document.location
 

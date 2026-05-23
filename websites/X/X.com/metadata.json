@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -20,7 +20,8 @@
     "twitter.com",
     "x.com"
   ],
-  "version": "1.1.8",
+  "regExp": "^https?[:][/][/](twitter[.]com|x[.]com)[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/thumbnail.png",
   "color": "#000000",
@@ -39,7 +40,11 @@
       "id": "privacy",
       "title": "Privacy Mode",
       "icon": "fad fa-user-secret",
-      "value": false
+      "value": 0,
+      "values": [
+        "Displays all details",
+        "Only displays browsing"
+      ]
     },
     {
       "id": "time",

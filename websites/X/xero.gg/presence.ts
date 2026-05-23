@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '775372570563182592',
+  clientId: '503557087041683458',
 })
 const strings = presence.getStrings({
   browsing: 'general.browsing',
@@ -12,6 +12,7 @@ function getTimeStamp() {
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/X/xero.gg/assets/logo.png',
+    name: 'xero.gg',
   }
   const showChat = await presence.getSetting<boolean>('showchat')
   const showProfile = await presence.getSetting<boolean>('showprofile')

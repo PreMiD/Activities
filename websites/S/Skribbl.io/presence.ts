@@ -1,3 +1,5 @@
+import { getTimestamps } from 'premid'
+
 const presence = new Presence({
   clientId: '808664560936026122',
 })
@@ -13,7 +15,7 @@ async function getStrings() {
       buttonJoinGame: 'skribbl.io.buttonJoinGame',
       viewHome: 'general.viewHome',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 
@@ -161,7 +163,7 @@ presence.on('UpdateData', async () => {
           if (/_/.test(currentWord))
             presenceData.state = `Current word: ${currentWord}`
         }
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(0, getTimeRemaining())
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(0, getTimeRemaining())
         break
       }
     }

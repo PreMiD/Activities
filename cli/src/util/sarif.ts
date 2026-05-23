@@ -4,6 +4,7 @@ import process from 'node:process'
 import { getCliPackageJson } from './getPackageJson.js'
 
 export enum SarifRuleId {
+  dmcaCheck = 'dmca-check',
   bumpCheck = 'bump-check',
   typeCheck = 'type-check',
   iframeCheck = 'iframe-check',
@@ -14,9 +15,20 @@ export enum SarifRuleId {
   imageMimeTypeCheck = 'image-mime-type-check',
   tagsCheck = 'tags-check',
   tagsServiceCheck = 'tags-service-check',
+  clientIdExistsCheck = 'client-id-exists-check',
+  clientIdCheck = 'client-id-check',
+  dnsCheck = 'dns-check',
+  regExpUrlCheck = 'regexp-url-check',
 }
 
 const sarifRules: Record<SarifRuleId, ReportingDescriptor> = {
+  [SarifRuleId.dmcaCheck]: {
+    id: SarifRuleId.dmcaCheck,
+    name: 'DMCA Check',
+    shortDescription: {
+      text: 'Makes sure the activity is not on the DMCA blocklist',
+    },
+  },
   [SarifRuleId.bumpCheck]: {
     id: SarifRuleId.bumpCheck,
     name: 'Bump Check',
@@ -85,6 +97,34 @@ const sarifRules: Record<SarifRuleId, ReportingDescriptor> = {
     name: 'Tags Service Check',
     shortDescription: {
       text: 'Makes sure the `tags` don\'t contain the service name',
+    },
+  },
+  [SarifRuleId.clientIdExistsCheck]: {
+    id: SarifRuleId.clientIdExistsCheck,
+    name: 'Client ID Exists Check',
+    shortDescription: {
+      text: 'Makes sure the `clientId` is set in the `presence.ts` file',
+    },
+  },
+  [SarifRuleId.clientIdCheck]: {
+    id: SarifRuleId.clientIdCheck,
+    name: 'Client ID Check',
+    shortDescription: {
+      text: 'Makes sure the `clientId` is an existing Discord Application ID',
+    },
+  },
+  [SarifRuleId.dnsCheck]: {
+    id: SarifRuleId.dnsCheck,
+    name: 'DNS Check',
+    shortDescription: {
+      text: 'Validates that activity URLs have valid DNS records',
+    },
+  },
+  [SarifRuleId.regExpUrlCheck]: {
+    id: SarifRuleId.regExpUrlCheck,
+    name: 'RegExp URL Check',
+    shortDescription: {
+      text: 'Makes sure the `regExp` metadata property matches all URLs in the `url` field',
     },
   },
 }

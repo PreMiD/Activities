@@ -1,0 +1,97 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "695839841287536701",
+    "name": "o0_ice_0o"
+  },
+  "service": "dcinside",
+  "altnames": [
+    "디시인사이드"
+  ],
+  "description": {
+    "en": "CONNECTING HEARTS! This is DCINSIDE.",
+    "ko": "CONNECTING HEARTS! 디시인사이드입니다."
+  },
+  "url": [
+    "dcinside.com",
+    "www.dcinside.com",
+    "gall.dcinside.com",
+    "gallog.dcinside.com",
+    "mall.dcinside.com",
+    "search.dcinside.com"
+  ],
+  "regExp": "^https?[:][/][/]((www|gall|gallog|mall|search)[.])?dcinside[.]com[/]",
+  "version": "1.1.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/dcinside/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/dcinside/assets/thumbnail.png",
+  "color": "#4b59a7",
+  "category": "socials",
+  "tags": [
+    "memes"
+  ],
+  "settings": [
+    {
+      "id": "fullactivity",
+      "title": "디시인사이드 내 활동 표시",
+      "icon": "fas fa-user-clock",
+      "value": true
+    },
+    {
+      "id": "showgallery",
+      "if": {
+        "fullactivity": true
+      },
+      "title": "갤러리 이름 표시",
+      "icon": "fas fa-list",
+      "value": true
+    },
+    {
+      "id": "showstatus",
+      "if": {
+        "fullactivity": true
+      },
+      "title": "갤러리 내 상태 표시",
+      "icon": "fas fa-chart-simple",
+      "value": true
+    },
+    {
+      "id": "showtitle",
+      "if": {
+        "fullactivity": true,
+        "showstatus": true
+      },
+      "title": "게시글 제목 표시",
+      "icon": "fas fa-quote-left",
+      "value": true
+    },
+    {
+      "id": "showwriting",
+      "if": {
+        "fullactivity": true,
+        "showstatus": true
+      },
+      "title": "글 작성 상태 표시",
+      "icon": "fas fa-pencil-alt",
+      "value": false
+    },
+    {
+      "id": "showsearch",
+      "if": {
+        "fullactivity": true
+      },
+      "title": "검색어 표시",
+      "icon": "fas fa-magnifying-glass",
+      "value": true
+    },
+    {
+      "id": "shownickname",
+      "if": {
+        "fullactivity": true
+      },
+      "title": "갤로그 닉네임 표시",
+      "icon": "fas fa-circle-user",
+      "value": false
+    }
+  ]
+}

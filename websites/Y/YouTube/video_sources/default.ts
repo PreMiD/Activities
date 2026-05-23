@@ -13,7 +13,7 @@ function getTitle(): string | undefined {
 
 function getUploader(): string | undefined {
   return getBaseSection()
-    ?.querySelector('ytd-video-owner-renderer .ytd-channel-name a')
+    ?.querySelector('a.ytd-video-description-infocards-section-renderer #title')
     ?.textContent
     ?.trim()
 }
@@ -29,12 +29,17 @@ export function getVideoID(): string | undefined {
 
 export function getChannelURL(): string | undefined {
   return getBaseSection()?.querySelector<HTMLAnchorElement>(
-    '#upload-info #channel-name a',
+    'a.ytd-video-description-infocards-section-renderer',
   )?.href
 }
 
 function getBaseSection(): HTMLElement | null {
   return document.querySelector('.ytd-page-manager:not([hidden])')
+}
+
+function isMusic(): boolean {
+  const microformat = JSON.parse(document.querySelector('#microformat script[type="application/ld+json"]')?.textContent || '{}')
+  return microformat?.genre === 'Music'
 }
 
 const resolver: Resolver = {
@@ -43,6 +48,7 @@ const resolver: Resolver = {
   getUploader,
   getChannelURL,
   getVideoID,
+  isMusic,
 }
 
 export default resolver

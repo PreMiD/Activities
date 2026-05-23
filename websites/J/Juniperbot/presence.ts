@@ -23,7 +23,7 @@ async function getStrings() {
       privacy: 'general.privacy',
       cookies: 'juniperbot.cookies',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

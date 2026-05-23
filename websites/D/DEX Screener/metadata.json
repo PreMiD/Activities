@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "695817459206324265",
@@ -10,7 +10,8 @@
     "en": "Realtime price charts and trading history on DEXes across Ethereum, BSC, Polygon, Avalanche, Fantom, Harmony, Cronos, Arbitrum, Optimism and more."
   },
   "url": "dexscreener.com",
-  "version": "1.0.3",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*dexscreener[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DEX%20Screener/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DEX%20Screener/assets/thumbnail.png",
   "color": "#111111",

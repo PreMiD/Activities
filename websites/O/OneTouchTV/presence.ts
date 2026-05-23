@@ -1,7 +1,7 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '1160179473044476017',
+  clientId: '503557087041683458',
 })
 
 interface iframeData {
@@ -27,6 +27,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/O/OneTouchTV/assets/logo.png',
     startTimestamp: timestampCheck.timestamp,
+    name: 'OneTouchTV',
   }
   const { href, pathname } = document.location
   const hash = href
@@ -93,7 +94,7 @@ presence.on('UpdateData', async () => {
         title = document
           .querySelector('title')
           ?.textContent
-          ?.replace(/( - )|(OneTouch TV)/g, '')
+          ?.replace(/ - |OneTouch TV/g, '')
       }
 
       if (title?.includes('Episode')) {
@@ -107,7 +108,7 @@ presence.on('UpdateData', async () => {
       if (video) {
         delete presenceData.startTimestamp
         if (!video.paused) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
         }
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.buttons = [{ label: 'Watch Video', url: href }]

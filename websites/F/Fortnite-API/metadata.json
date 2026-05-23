@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Leafage",
@@ -24,7 +24,8 @@
     "dash.fortnite-api.com",
     "fortnite-api.com"
   ],
-  "version": "5.4.27",
+  "regExp": "^https?[:][/][/](dash[.])?fortnite-api[.]com[/]",
+  "version": "5.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fortnite-API/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fortnite-API/assets/thumbnail.png",
   "color": "#8A96E9",

@@ -1,19 +1,40 @@
 const presence = new Presence({
   clientId: '1103931016525127792',
 })
+
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-presence.on('UpdateData', async () => {
-  const { pathname } = document.location
-  const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/%23/%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%B7%E3%83%A3%E3%82%A4%E3%83%8B%E3%83%BC%E3%82%AB%E3%83%A9%E3%83%BC%E3%82%BA/assets/logo.png',
-    startTimestamp: browsingTimestamp,
-    details: 'シャニマスをプレイ中',
+let iframeState: { pathname: string, hash: string } | null = null
+let lastDetails = ''
+
+presence.on('iFrameData', (data: any) => {
+  if (data && data.hash && data.hash.startsWith('#/')) {
+    iframeState = data
   }
+})
+
+presence.on('UpdateData', async () => {
+  const { pathname: parentPath, hash: parentHash } = document.location
+
+  const currentPath = iframeState?.pathname ?? parentPath
+  const currentHash = iframeState?.hash ?? parentHash
+
+  const cleanHash = currentHash ? currentHash.split('?')[0] : ''
+  const currentRoute = (cleanHash && cleanHash.length > 1) ? cleanHash.substring(1) : currentPath
+
+  const presenceData: PresenceData = {
+    name: 'シャニマス',
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/%23/%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%B7%E3%83%A3%E3%82%A4%E3%83%8B%E3%83%BC%E3%82%AB%E3%83%A9%E3%83%BC%E3%82%BA/assets/logo.png',
+    largeImageUrl: 'https://shinycolors.enza.fun/',
+    startTimestamp: browsingTimestamp,
+    detailsUrl: `https://shinycolors.enza.fun${currentRoute}`,
+  }
+
   const pathMap: Record<string, PresenceData> = {
     '/home': { details: 'ホーム画面' },
     '/present': { details: 'プレゼント' },
     '/shop': { details: 'ショップ' },
+    '/shop/premium': { details: 'プレミアムショップ' },
     '/shop/skin': { details: '衣装ショップ' },
     '/shop/game_event': { details: 'イベントショップ' },
     '/shop/money': { details: 'マニーショップ' },
@@ -57,49 +78,70 @@ presence.on('UpdateData', async () => {
     '/miniGamePortal': { details: 'ミニゲーム' },
     '/daifugo': { details: '大富豪をプレイ中' },
     '/characterProfile': { details: 'アイドルプロフィールを閲覧中' },
+    '/photo': { details: 'フォトモード' },
+    '/memoryBoost': { details: 'メモリーブースト' },
   }
-  const pathDetails = pathMap[pathname]?.details
+
+  const pathDetails = pathMap[currentRoute]?.details
   if (typeof pathDetails !== 'undefined') {
     presenceData.details = pathDetails
   }
-  else if (pathname.includes('/idolAlbum/')) {
+  else if (currentRoute.includes('/idolAlbum/')) {
     const idolNames: string[] = [
-      '真乃',
-      '灯織',
-      'めぐる',
-      '恋鐘',
-      '摩美々',
-      '咲耶',
-      '結華',
-      '霧子',
-      '果穂',
-      '智代子',
-      '樹里',
-      '凛世',
-      '夏葉',
-      '甘奈',
-      '甜花',
-      '千雪',
-      'あさひ',
-      '冬優子',
-      '愛依',
-      '透',
-      '円香',
-      '小糸',
-      '雛菜',
-      'にちか',
-      '美琴',
-      'ルカ',
-      '羽那',
-      'はるき',
+      '櫻木真乃',
+      '風野灯織',
+      '八宮めぐる',
+      '月岡恋鐘',
+      '田中摩美々',
+      '白瀬咲耶',
+      '三峰結華',
+      '幽谷霧子',
+      '小宮果穂',
+      '園田智代子',
+      '西城樹里',
+      '杜野凛世',
+      '有栖川夏葉',
+      '大崎甘奈',
+      '大崎甜花',
+      '桑山千雪',
+      '芹沢あさひ',
+      '黛冬優子',
+      '和泉愛依',
+      '浅倉透',
+      '樋口円香',
+      '福丸小糸',
+      '市川雛菜',
+      '七草にちか',
+      '緋田美琴',
+      '斑鳩ルカ',
+      '鈴木羽那',
+      '郁田はるき',
     ]
-    const albumIndex = Number(pathname.split('/')[2]) - 1
-    if (albumIndex >= 0 && albumIndex < idolNames.length)
+
+    const parts = currentRoute.split('/')
+    const idStr = parts[parts.length - 1]
+    const albumIndex = Number(idStr) - 1
+
+    if (albumIndex >= 0 && albumIndex < idolNames.length) {
       presenceData.details = `${idolNames[albumIndex]}のアルバムを閲覧中`
+    }
+
+    const oshiId = Number(idStr)
+    const oshiMap: Record<number, string> = {
+      91: '七草はづき',
+      801: 'ルビー',
+      802: '有馬かな',
+      803: 'MEMちょ',
+      804: '黒川あかね',
+    }
+    if (oshiMap[oshiId]) {
+      presenceData.details = `${oshiMap[oshiId]}のアルバムを閲覧中`
+    }
   }
-  for (const [index, idolName] of ['ルビー', '有馬かな', 'MEMちょ'].entries()) {
-    if (pathname === `/idolAlbum/${801 + index}`)
-      presenceData.details = `${idolName}のアルバムを閲覧中`
+
+  if (presenceData.details !== lastDetails) {
+    lastDetails = presenceData.details as string
   }
+
   presence.setActivity(presenceData)
 })

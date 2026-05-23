@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '813392002526871592',
@@ -13,7 +13,7 @@ async function getStrings() {
       searchSomething: 'general.searchSomething',
       buttonViewEpisode: 'general.buttonViewEpisode',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -70,14 +70,14 @@ presence.on('UpdateData', async () => {
       presenceData.details = title?.join('：')
       presenceData.state = episodeTitle;
 
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
       presenceData.largeImageKey = cover
         ? await shortenURL(
-          document.querySelector<HTMLImageElement>(
-            `img[alt='${title?.join('：')}']`,
-          )?.src ?? '',
-        )
+            document.querySelector<HTMLImageElement>(
+              `img[alt='${title?.join('：')}']`,
+            )?.src ?? '',
+          )
         : 'linetv_logo'
 
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play

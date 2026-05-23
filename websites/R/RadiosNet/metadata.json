@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "784546644766621746",
@@ -11,7 +11,8 @@
     "pt-br": "O agregador de rádios mais famoso da internet brasileira, em atividade desde 1997."
   },
   "url": "www.radios.com.br",
-  "version": "1.0.9",
+  "regExp": "^https?[:][/][/](www[.])?radios[.]com[.]br[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RadiosNet/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RadiosNet/assets/thumbnail.png",
   "color": "#005080",

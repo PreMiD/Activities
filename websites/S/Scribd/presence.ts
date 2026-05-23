@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1081552715609542686',
+  clientId: '503557087041683458',
 })
 const browsingStamp = Math.floor(Date.now() / 1000)
 
@@ -16,7 +16,6 @@ async function getStrings() {
       viewCategory: 'general.viewCategory',
       viewHome: 'general.viewHome',
     },
-    'en',
   )
 }
 function capitalizeFirstLetter(string: string | undefined | null) {
@@ -47,6 +46,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingStamp,
+    name: 'Scribd',
   }
   const { href, pathname } = document.location
   const [privacy, buttons, covers] = await Promise.all([
@@ -69,10 +69,10 @@ presence.on('UpdateData', async () => {
       ?.replace(/ /g, '') ?? '',
   ).replace('doc', 'document')
   const type = selected?.match(
-    /(everything)|(book)|(doc)|(podcast)|(sheeetmusic)|(snapshot)/g,
+    /everything|book|doc|podcast|sheeetmusic|snapshot/g,
   )
     ? true
-    : !!pathname.match(/(book)|(doc)|(podcast)|(sheetmusic)|(snapshot)/g)
+    : !!pathname.match(/book|doc|podcast|sheetmusic|snapshot/g)
   const search = document.querySelector<HTMLInputElement>('[type="search"]')
   const moduleList = document.querySelector(
     '[class*="Breadcrumbs-ds2-module_list__"]',
@@ -109,12 +109,12 @@ presence.on('UpdateData', async () => {
                       ?? selected
                         ?.replace(/doc/g, 'document')
                         .match(
-                          /(everything)|(book)|(document)|(podcast)|(snapshot)/g,
+                          /everything|book|document|podcast|snapshot/g,
                         )?.[0]
                         ?? pathname
                           .replace(/doc/g, 'document')
                           .match(
-                            /(everything)|(book)|(document)|(podcast)|(snapshot)/g,
+                            /everything|book|document|podcast|snapshot/g,
                           )?.[0],
               ),
             )}:`
@@ -208,8 +208,8 @@ presence.on('UpdateData', async () => {
           presenceData.details = privacy
             ? 'Reading a book'
             : document
-              .querySelector('[property="og:title"]')
-              ?.getAttribute('content')
+                .querySelector('[property="og:title"]')
+                ?.getAttribute('content')
           presenceData.state = capitalizeFirstLetter(
             document.querySelector('[class="page_counter"]')?.textContent,
           )

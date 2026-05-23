@@ -6,6 +6,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/Simkl/assets/logo.png',
 }
+
 function textContent(tags: string) {
   return document.querySelector(tags)?.textContent?.trim()
 }
@@ -66,11 +67,11 @@ presence.on('UpdateData', async () => {
             )
           }
           else if (path[4] && path[4].startsWith('review')) {
-            presenceData.details = `Reading a review of ${textContent(
-              'span.ajLinkInside',
+            presenceData.details = `Reading a ${textContent(
+              '#global_div > div.SimklHeaderBgShaddow > div > div > div.SimklTVReviewHeaderBottom > table > tbody > tr > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(1) > td',
             )}`
             presenceData.state = textContent(
-              '.SimklTVReviewHeaderBottom > table > tbody > tr > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td',
+              '#global_div > div.SimklHeaderBgShaddow > div > div > div.SimklTVReviewHeaderBottom > table > tbody > tr > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td',
             )
             presenceData.largeImageKey = getImage('.SimklTVReviewPoster')
           }
@@ -82,9 +83,7 @@ presence.on('UpdateData', async () => {
           else if (path[5] && path[5].startsWith('episode-')) {
             presenceData.details = textContent(
               'td.SimklTVDetailEpisodeDescTitle > h1',
-            )
-              ?.replace('Watch', '')
-              .replace('Online', '')
+            )?.replace('Watch', '')?.replace('Online', '')
             presenceData.largeImageKey = getImage('.SimklTVDetailEpisodeImage')
             delete presenceData.state
           }
@@ -132,16 +131,16 @@ presence.on('UpdateData', async () => {
               'td.SimklTVDetailEpisodeDescTitle > h1',
             )
               ?.replace('Watch', '')
-              .replace('Online', '')
+              ?.replace('Online', '')
             presenceData.largeImageKey = getImage('.SimklTVDetailEpisodeImage')
             delete presenceData.state
           }
           else if (path[4] && path[4].startsWith('review')) {
-            presenceData.details = `Reading a review of ${textContent(
-              'span.ajLinkInside',
+            presenceData.details = `Reading a ${textContent(
+              '#global_div > div.SimklHeaderBgShaddow > div > div > div.SimklTVReviewHeaderBottom > table > tbody > tr > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(1) > td',
             )}`
             presenceData.state = textContent(
-              '.SimklTVReviewHeaderBottom > table > tbody > tr > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td',
+              '#global_div > div.SimklHeaderBgShaddow > div > div > div.SimklTVReviewHeaderBottom > table > tbody > tr > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td',
             )
             presenceData.largeImageKey = getImage('.SimklTVReviewPoster')
           }
@@ -191,11 +190,11 @@ presence.on('UpdateData', async () => {
             '.SimklTVAboutTabsActive',
           )} tab`
           if (path[4] && path[4].startsWith('review')) {
-            presenceData.details = `Reading a review of ${textContent(
-              'span.ajLinkInside',
+            presenceData.details = `Reading a ${textContent(
+              '#global_div > div.SimklHeaderBgShaddow > div > div > div.SimklTVReviewHeaderBottom > table > tbody > tr > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(1) > td',
             )}`
             presenceData.state = textContent(
-              '.SimklTVReviewHeaderBottom > table > tbody > tr > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td',
+              '#global_div > div.SimklHeaderBgShaddow > div > div > div.SimklTVReviewHeaderBottom > table > tbody > tr > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr:nth-child(2) > td',
             )
             presenceData.largeImageKey = getImage('.SimklTVReviewPoster')
           }
@@ -243,7 +242,7 @@ presence.on('UpdateData', async () => {
     }
     case 'search': {
       presenceData.details = 'Searching for'
-      presenceData.state = decodeURIComponent(search.split('=')[2]!)
+      presenceData.state = decodeURIComponent(search?.split('=')[2] ?? '')
       break
     }
     case 'settings': {
@@ -369,7 +368,7 @@ presence.on('UpdateData', async () => {
           case 'list': {
             presenceData.details = 'On List:'
             presenceData.state = textContent(
-              'list-bottom-left-content-left-title > h1',
+              '#global_div > list-wrap > list > list-bottom > list-bottom-left > list-bottom-left-content > list-bottom-left-content-left > list-bottom-left-content-left-title > h1',
             )
             break
           }

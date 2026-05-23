@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "N0chteil ^^",
@@ -10,7 +10,8 @@
     "en": "The Los Angeles Times is a daily newspaper that started publishing in Los Angeles in 1881 and is now based in the adjacent suburb of El Segundo. It has the fifth-largest circulation in the U.S. and is the largest American newspaper not headquartered on the East Coast."
   },
   "url": "www.latimes.com",
-  "version": "1.0.13",
+  "regExp": "^https?[:][/][/](www[.])?latimes[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Los%20Angeles%20Times/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Los%20Angeles%20Times/assets/thumbnail.png",
   "color": "#ffffff",

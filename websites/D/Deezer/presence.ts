@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '607651992567021580',
@@ -29,22 +29,26 @@ async function getStrings() {
       viewArtist: 'general.buttonViewArtist',
       viewPodcast: 'general.buttonViewPodcast',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 
 presence.on('UpdateData', async () => {
   let presenceData: PresenceData = {
+    type: ActivityType.Listening,
     largeImageKey: ActivityAssets.Logo,
   }
   let strings = await getStrings()
   let paused = false
 
-  const [buttons, newLang, cover, browseInfo] = await Promise.all([
+  const [buttons, newLang, cover, browseInfo, artistAsTitle, showBrowsing, hidePaused] = await Promise.all([
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('browseInfo'),
+    presence.getSetting<boolean>('artistAsTitle'),
+    presence.getSetting<boolean>('showBrowsing'),
+    presence.getSetting<boolean>('hidePaused'),
   ])
   const { pathname, hostname } = document.location
   const remainingTest = document.querySelector(
@@ -91,11 +95,13 @@ presence.on('UpdateData', async () => {
       details: 'Looking at an artist',
     },
   }
-  for (const [path, data] of Object.entries(pages)) {
-    if (pathname.includes(path)) {
-      presenceData = { ...presenceData, ...data } as PresenceData
-      if (browseInfo || !remainingTest || remainingTest === '00:00')
-        return presence.setActivity(presenceData)
+  if (showBrowsing) {
+    for (const [path, data] of Object.entries(pages)) {
+      if (pathname.includes(path)) {
+        presenceData = { ...presenceData, ...data } as PresenceData
+        if (browseInfo || !remainingTest || remainingTest === '00:00')
+          return presence.setActivity(presenceData)
+      }
     }
   }
 
@@ -105,11 +111,11 @@ presence.on('UpdateData', async () => {
   const artistLink = document
     .querySelector('[data-testid="item_subtitle"] > a')
     ?.getAttribute('href')
-  const timestamps = presence.getTimestamps(
-    presence.timestampFromFormat(
+  const timestamps = getTimestamps(
+    timestampFromFormat(
       document.querySelector('[data-testid="elapsed_time"]')?.textContent ?? '',
     ),
-    presence.timestampFromFormat(
+    timestampFromFormat(
       document.querySelector('[data-testid="remaining_time"]')?.textContent ?? '',
     ),
   )
@@ -117,19 +123,37 @@ presence.on('UpdateData', async () => {
   if (document.querySelector('[data-testid="play_button_play"]'))
     paused = true
 
+  if (hidePaused && paused)
+    return presence.clearActivity()
+
   presenceData.details = document.querySelector(
     '[data-testid="item_title"]',
   )?.textContent
-  presenceData.state = document.querySelector(
-    '[data-testid="item_subtitle"]',
-  )?.textContent
+
+  const artistElements = [
+    ...document.querySelectorAll<HTMLAnchorElement>(
+      '[data-testid="item_subtitle"] a',
+    ),
+  ]
+  const joinedArtists = artistElements
+    .map(a => a.textContent?.trim())
+    .filter((t): t is string => Boolean(t))
+    .join(', ')
+
+  if (!artistAsTitle) {
+    presenceData.state = joinedArtists
+      || document.querySelector('[data-testid="item_subtitle"]')?.textContent
+  }
+
+  if (artistAsTitle && joinedArtists)
+    presenceData.name = joinedArtists
 
   presenceData.largeImageKey = cover
     ? document
       .querySelector('[data-testid="item_cover"]')
       ?.querySelector('img')
       ?.getAttribute('src')
-      ?.replace(/(264x264)|(48x48)/g, '512x512') ?? ActivityAssets.Logo
+      ?.replace(/264x264|48x48/g, '512x512') ?? ActivityAssets.Logo
     : ActivityAssets.Logo
   presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
   presenceData.smallImageText = paused ? strings.pause : strings.play;

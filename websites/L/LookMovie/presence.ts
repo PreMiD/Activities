@@ -1,7 +1,7 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
-  clientId: '934789855962083359',
+  clientId: '503557087041683458',
 })
 const browingTimestamp = Math.floor(Date.now() / 1000)
 async function getStrings() {
@@ -14,7 +14,7 @@ async function getStrings() {
       viewCategory: 'general.viewCategory',
       search: 'general.searchFor',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 
@@ -29,6 +29,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browingTimestamp,
+    name: 'LookMovie',
   }
   const video = document.querySelector<HTMLVideoElement>('video')
   const search = document.querySelector<HTMLInputElement>('[id="search_input"]')
@@ -81,7 +82,7 @@ presence.on('UpdateData', async () => {
 
     presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = video.paused ? strings.paused : strings.play;
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     presenceData.largeImageKey = document
       .querySelector('[id="longInfo"]')
       ?.firstElementChild

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "112732946774962176",
+    "name": "firecontroller1847"
+  },
+  "service": "The Church of Jesus Christ of Latter-day Saints",
+  "description": {
+    "en": "Discover a service-oriented, globally-connected Christian church that is led by a prophet of God and seeks to follow Jesus Christ and His restored gospel."
+  },
+  "url": [
+    "www.churchofjesuschrist.org",
+    "churchofjesuschrist.org"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?churchofjesuschrist[.]org[/]",
+  "version": "1.1.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Church%20of%20Jesus%20Christ%20of%20Latter-day%20Saints/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/The%20Church%20of%20Jesus%20Christ%20of%20Latter-day%20Saints/assets/thumbnail.jpeg",
+  "color": "#003058",
+  "category": "other",
+  "tags": [
+    "lds",
+    "church",
+    "scripture",
+    "bible",
+    "bom",
+    "mormon"
+  ]
+}

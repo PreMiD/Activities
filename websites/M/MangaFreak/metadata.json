@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "RisingSunLight",
@@ -11,7 +11,8 @@
     "fr": "Lisez des mangas et téléchargez-les gratuitement. Mangafreak a le dernier chapitre de tous vos mangas favoris. Lisez le dernier chapitre de mangas populaires comme Naruto, Boruto, One Piece et Bleach. Profitez de votre lecture. Lecteur de manga en ligne."
   },
   "url": "w13.mangafreak.net",
-  "version": "1.0.12",
+  "regExp": "^https?[:][/][/]w13[.]mangafreak[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaFreak/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaFreak/assets/thumbnail.png",
   "color": "#ed9912",

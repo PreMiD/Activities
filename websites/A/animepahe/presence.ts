@@ -17,7 +17,7 @@ async function getStrings() {
       episode: 'general.episode',
       watching: 'general.watching',
       watchingMovie: 'general.watchingMovie',
-      viewing: 'general.viewing',
+      view: 'general.view',
       viewGenre: 'general.viewGenre',
       viewCategory: 'general.viewCategory',
       viewPage: 'general.viewPage',
@@ -193,7 +193,7 @@ presence.on('UpdateData', async () => {
     strings = await getStrings()
   }
 
-  const viewing = strings.viewing.slice(0, -1)
+  const viewing = strings.view.slice(0, -1)
 
   switch (path[0]) {
     // homepage / browsing new releases

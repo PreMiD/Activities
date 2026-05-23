@@ -16,10 +16,9 @@ async function getStrings() {
       searchFor: 'general.searchFor',
       searchSomething: 'general.searchSomething',
       viewHome: 'general.viewHome',
-      viewing: 'general.viewing',
+      view: 'general.view',
       viewPage: 'general.viewPage',
     },
-    await presence.getSetting<string>('lang').catch(() => 'ru'),
   )
 }
 
@@ -63,14 +62,14 @@ presence.on('UpdateData', async () => {
     case 'feed':
       presenceData.details = privacy
         ? strings.viewHome
-        : `${strings.viewing} ${strings.chapter.toLowerCase()} ${textContent(
+        : `${strings.view} ${strings.chapter.toLowerCase()} ${textContent(
           '.tm-section-name__text',
         )}`
       presenceData.state = document.querySelector(
         '.tm-tabs__tab-link_active',
       )?.firstChild?.textContent
       presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = strings.viewing
+      presenceData.smallImageText = strings.view
 
       if (path[3] === 't') {
         presenceData.details = strings.reading
@@ -92,14 +91,14 @@ presence.on('UpdateData', async () => {
     case 'users':
       presenceData.details = privacy
         ? strings.viewHome
-        : `${strings.viewing} ${strings.chapter.toLowerCase()} ${textContent(
+        : `${strings.view} ${strings.chapter.toLowerCase()} ${textContent(
           '.tm-section-name__text',
         )}`
       presenceData.state = document.querySelector(
         '.tm-tabs__tab-link_active',
       )?.firstChild?.textContent
       presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = strings.viewing
+      presenceData.smallImageText = strings.view
 
       if (path[3]) {
         presenceData.details = `${strings.viewPage} ${
@@ -121,22 +120,22 @@ presence.on('UpdateData', async () => {
       break
 
     case 'auth':
-      presenceData.details = `${strings.viewing} ${textContent(
+      presenceData.details = `${strings.view} ${textContent(
         '.tm-section-name__text',
       )}`
       presenceData.state = textContent('.tm-tabs__tab-link_active')
       presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = strings.viewing
+      presenceData.smallImageText = strings.view
       break
 
     case 'hub':
-      presenceData.details = `${strings.viewing} хаб`
+      presenceData.details = `${strings.view} хаб`
       presenceData.state = textContent('.tm-hub-card__name span')
       presenceData.largeImageKey = document.querySelector<HTMLImageElement>(
         '.tm-entity-image__pic',
       )?.src
       presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = strings.viewing
+      presenceData.smallImageText = strings.view
       break
 
     case 'company':
@@ -150,7 +149,7 @@ presence.on('UpdateData', async () => {
         '.tm-company-card__header .tm-entity-image__pic',
       )?.src
       presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = strings.viewing
+      presenceData.smallImageText = strings.view
       presenceData.buttons = [
         {
           label: strings.buttonViewPage,

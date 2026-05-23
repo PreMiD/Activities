@@ -170,6 +170,12 @@ presence.on('UpdateData', async () => {
       break
     }
     default:
+      // Detecting if user went on incorrect language subdomain
+      if (document.location.hostname.split('.').shift()?.length === 2 && document.title.includes('Not found')) {
+        presenceData.details = 'Viewing an unsupported page'
+        break
+      }
+
       if (pathname === '/' || !pathname) {
         presenceData.details = 'Website Home'
       }
@@ -319,6 +325,7 @@ presence.on('UpdateData', async () => {
       else if (
         pathname.includes('/translate')
         || pathname.includes('/proofread')
+        || pathname.includes('/editor')
       ) {
         // Ensure the editor has loaded to prevent undefined text
         if (!document.querySelector('#crowdin-editor-wrapper'))
@@ -326,6 +333,8 @@ presence.on('UpdateData', async () => {
         const fileName = document.querySelector('.file-name')?.textContent
         const languageName = document.querySelector(
           '.language-name-wrapper.text-overflow',
+        )?.textContent ?? document.querySelector(
+          '.navbar-item--language',
         )?.textContent
 
         if (pathname.includes('/proofread'))

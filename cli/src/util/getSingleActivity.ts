@@ -1,9 +1,10 @@
 import type { ActivityMetadata } from '../classes/ActivityCompiler.js'
 import type { ActivityMetadataAndFolder } from './getActivities.js'
-import autocomplete from 'inquirer-autocomplete-standalone'
-import { exit } from '../util/log.js'
-import { mapActivityToChoice } from '../util/mapActivityToChoice.js'
+import { search } from '@inquirer/prompts'
 import { getActivities } from './getActivities.js'
+import { exit } from './log.js'
+import { mapActivityToChoice } from './mapActivityToChoice.js'
+import { searchChoices } from './searchChoices.js'
 
 export async function getSingleActivity(searchMessage: string, service?: string): Promise<ActivityMetadataAndFolder> {
   const activities = await getActivities()
@@ -11,16 +12,9 @@ export async function getSingleActivity(searchMessage: string, service?: string)
   let folder: string
   let versionized: boolean
   if (!service) {
-    ({ metadata, folder, versionized } = await autocomplete<ActivityMetadataAndFolder>({
+    ({ metadata, folder, versionized } = await search({
       message: searchMessage,
-      source: async (input) => {
-        if (!input) {
-          return activities.map(activity => mapActivityToChoice(activity))
-        }
-        return activities
-          .filter(({ metadata }) => metadata.service.toLowerCase().includes(input.toLowerCase()))
-          .map(activity => mapActivityToChoice(activity))
-      },
+      source: input => searchChoices(activities.map(activity => mapActivityToChoice(activity)), input),
     }))
   }
   else {
@@ -31,11 +25,9 @@ export async function getSingleActivity(searchMessage: string, service?: string)
     }
 
     if (sameServiceActivities.length > 1) {
-      ({ metadata, folder, versionized } = await autocomplete<ActivityMetadataAndFolder>({
+      ({ metadata, folder, versionized } = await search({
         message: searchMessage,
-        source: async () => {
-          return sameServiceActivities.map(activity => mapActivityToChoice(activity))
-        },
+        source: input => searchChoices(sameServiceActivities.map(activity => mapActivityToChoice(activity)), input),
       }))
     }
     else {

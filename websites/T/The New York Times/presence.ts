@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '813781191308083239',
@@ -92,7 +92,7 @@ presence.on('UpdateData', async () => {
         presenceData.state = `${podcast.textContent}: ${title}`
 
       if (audioPlayer && !Number.isNaN(audioPlayer.duration)) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(audioPlayer)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(audioPlayer)
 
         if (audioPlayer.paused) {
           delete presenceData.endTimestamp

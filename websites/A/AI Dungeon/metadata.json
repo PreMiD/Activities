@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "GURRMAN375D",
@@ -13,8 +13,8 @@
     "vi": "AI Dungeon là trò chơi thám hiểm mã nguồn mở sử dụng mẫu dự đoán văn bản GPT-2 được tạo từ OpenAI nhằm tạo ra vô vàn các câu truyện có kết mở."
   },
   "url": "play.aidungeon.io",
-  "regExp": "([a-z0-9-]+[.])*aidungeon[.]io[/]",
-  "version": "1.1.24",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*aidungeon[.]io[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AI%20Dungeon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AI%20Dungeon/assets/thumbnail.png",
   "color": "#484848",

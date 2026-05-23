@@ -1,12 +1,13 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '691534544301457449',
+  clientId: '503557087041683458',
 })
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/D/DuckDuckGo/assets/logo.png',
+    name: 'DuckDuckGo',
   }
 
   // Get search query from HTML form input.

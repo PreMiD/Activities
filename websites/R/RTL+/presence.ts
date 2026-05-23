@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1033504954763198545',
@@ -9,7 +9,7 @@ async function getStrings() {
       play: 'general.playing',
       pause: 'general.paused',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -42,7 +42,7 @@ presence.on('UpdateData', async () => {
 
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = video.paused ? strings.pause : strings.play;
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
       presenceData.buttons = [
         {
           label: 'View',

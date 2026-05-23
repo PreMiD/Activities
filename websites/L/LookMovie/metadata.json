@@ -1,9 +1,9 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
-    "name": "Dark_Ville",
-    "id": "638080361179512853"
+    "name": "PreMiD",
+    "id": "503557087041683458"
   },
   "service": "LookMovie",
   "description": {
@@ -12,11 +12,10 @@
   },
   "url": [
     "lookmovie2.to",
-    "lookmovies.ru",
     "playerwatchlm25.xyz"
   ],
-  "regExp": "(playerwatch[0-9]*.xyz)|(playerwatchlm[0-9]*.xyz)|(lookmovie[0-9]?[.][A-z]{2})",
-  "version": "1.5.13",
+  "regExp": "^https?[:][/][/]((lookmovie[0-9]*[.][a-z]{2})|(playerwatch(lm)?[0-9]+[.]xyz))[/]",
+  "version": "1.6.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LookMovie/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LookMovie/assets/thumbnail.png",
   "color": "#ffcc00",

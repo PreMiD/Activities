@@ -37,13 +37,13 @@ presence.on('UpdateData', async () => {
   if (document.location.host === 'hub.docker.com') {
     presenceData.startTimestamp = browsingTimestamp
 
-    if (document.location.pathname.match(/^\/(repositories)?$/)) {
+    if (/^\/(?:repositories)?$/.test(document.location.pathname)) {
       presenceData.details = 'Bowsing own repositories'
     }
-    else if (document.location.pathname.match(/^\/settings/)) {
+    else if (/^\/settings/.test(document.location.pathname)) {
       presenceData.details = 'On settings page'
     }
-    else if (document.location.pathname.match(/^\/search/)) {
+    else if (/^\/search/.test(document.location.pathname)) {
       url = new URL(document.location.href)
       params = url.searchParams
 
@@ -72,11 +72,11 @@ presence.on('UpdateData', async () => {
         }`
       }
     }
-    else if (document.location.pathname.match(/^\/orgs$/)) {
+    else if (/^\/orgs$/.test(document.location.pathname)) {
       presenceData.details = 'Browsing organizations'
     }
     else if (
-      document.location.pathname.match(/^\/orgs\/([^/]+)(?:\/([^/]+))?/)
+      /^\/orgs\/[^/]+(?:\/[^/]+)?/.test(document.location.pathname)
     ) {
       let [, name, tab] = document.location.pathname.match(
         /^\/orgs\/([^/]+)(?:\/([^/]+))?/,
@@ -85,7 +85,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = `On org ${tab}page`
       presenceData.state = `${name}`
     }
-    else if (document.location.pathname.match(/^\/_\/([^?]+)/)) {
+    else if (/^\/_\/[^?]+/.test(document.location.pathname)) {
       url = new URL(document.location.href)
       params = url.searchParams
 
@@ -97,7 +97,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = `${name}`
     }
     else if (
-      document.location.pathname.match(/^\/r\/([^/]+)\/([^/]+)(?:\/([^?]+))?/)
+      /^\/r\/[^/]+\/[^/]+(?:\/[^?]+)?/.test(document.location.pathname)
     ) {
       url = new URL(document.location.href)
       params = url.searchParams
@@ -114,7 +114,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = `${owner}/${name}`
     }
     else if (
-      document.location.pathname.match(/^\/layers\/([^/]+)\/([^/]+)\/([^/]+)/)
+      /^\/layers\/[^/]+\/[^/]+\/[^/]+/.test(document.location.pathname)
     ) {
       match = document.location.pathname.match(
         /^\/layers\/([^/]+)\/([^/]+)\/([^/]+)/,
@@ -137,7 +137,7 @@ presence.on('UpdateData', async () => {
       }
     }
     else if (
-      document.location.pathname.match(/^\/u\/([^/]+)(?:\/([^/]+))?/)
+      /^\/u\/[^/]+(?:\/[^/]+)?/.test(document.location.pathname)
     ) {
       tab = match[2] || 'repositories'
       presenceData.details = `On profile ${tab} page`;
@@ -145,10 +145,10 @@ presence.on('UpdateData', async () => {
         /^\/u\/([^/]+)(?:\/([^/]+))?/,
       ) ?? []
     }
-    else if (document.location.pathname.match(/^\/repository\/create/)) {
+    else if (/^\/repository\/create/.test(document.location.pathname)) {
       presenceData.details = 'Creating repository'
     }
-    else if (document.location.pathname.match(/^\/repository(?:\/([^/?]+))+/)) {
+    else if (/^\/repository(?:\/[^/?]+)+/.test(document.location.pathname)) {
       url = new URL(document.location.href)
       params = url.searchParams
 
@@ -166,13 +166,13 @@ presence.on('UpdateData', async () => {
 
       if (breadcrum && breadcrum.match(tab!))
         tab = 'general'
-      else if (document.location.pathname.match(/\/builds\//))
+      else if (/\/builds\//.test(document.location.pathname))
         tab = 'builds'
 
       presenceData.state = `${capitalize(tab!)}${page ? ` ${page}` : ''}`
     }
     else if (
-      document.location.pathname.match(/^\/support\/(doc)?(contact)?/)
+      /^\/support\/(?:doc)?(?:contact)?/.test(document.location.pathname)
     ) {
       match = document.location.pathname.match(
         /^\/support\/(doc)?(contact)?/,
@@ -188,7 +188,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Contact page'
       }
     }
-    else if (document.location.pathname.match(/^\/billing/)) {
+    else if (/^\/billing/.test(document.location.pathname)) {
       presenceData.details = 'Checking billing info'
     }
   }

@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '767402228825980929',
@@ -19,6 +19,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/Peacock/assets/logo.png',
     startTimestamp: elapsed,
+    type: ActivityType.Watching,
   }
 
   strings ??= await newStrings
@@ -46,7 +47,7 @@ presence.on('UpdateData', async () => {
     if (video) {
       const title = document.querySelector('.playback-header__title')
         || document.querySelector('.playback-metadata__container-title')
-      const timestamps = presence.getTimestamps(
+      const timestamps = getTimestamps(
         Math.floor(video.currentTime),
         Math.floor(video.duration),
       )

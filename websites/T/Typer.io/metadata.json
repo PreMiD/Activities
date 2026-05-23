@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Dzlandis",
@@ -10,7 +10,8 @@
     "en": "Online Multiplayer Typing Test - Improve your typing speed and race your friends. Practice on different texts and learn how to type faster."
   },
   "url": "typer.io",
-  "version": "1.0.19",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*typer[.]io[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Typer.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Typer.io/assets/thumbnail.png",
   "color": "#4e6edd",

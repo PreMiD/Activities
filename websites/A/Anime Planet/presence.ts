@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '818135576074387507',
@@ -22,7 +22,7 @@ async function getStrings() {
       viewManga: 'general.viewManga',
       buttonViewProfile: 'general.buttonViewProfile',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 const startsTime = Math.floor(Date.now() / 1000)
@@ -249,7 +249,7 @@ presence.on('UpdateData', async () => {
         `EP.${content.episode.ep} ${content.episode.title ?? ''}`,
       );
 
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(currentTime, duration)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, duration)
 
       presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = paused ? strings.pause : strings.play

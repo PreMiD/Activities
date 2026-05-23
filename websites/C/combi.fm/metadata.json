@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "323136330844471298",
+    "name": "omster"
+  },
+  "service": "combi.fm",
+  "description": {
+    "en": "combi.fm is a platform-agnostic music service for listening with friends."
+  },
+  "url": "combi.fm",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*combi[.]fm[/]",
+  "version": "1.1.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/combi.fm/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/combi.fm/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "music",
+  "tags": [
+    "music"
+  ],
+  "settings": [
+    {
+      "id": "title",
+      "title": "Listening to [title]",
+      "description": "Replace subject of `Listening to..` with the title",
+      "icon": "fad fa-pencil",
+      "value": false
+    },
+    {
+      "id": "artists",
+      "title": "Listening to [artists]",
+      "description": "Replace subject of `Listening to..` with the artists",
+      "icon": "fad fa-pencil",
+      "value": false
+    },
+    {
+      "id": "constant",
+      "title": "Constant Presence",
+      "description": "Display a constant presence, playing or paused.",
+      "icon": "fad fa-bookmark",
+      "value": false
+    },
+    {
+      "id": "friends",
+      "title": "Session Count",
+      "description": "Display how many people you are in a session with.",
+      "icon": "fad fa-group",
+      "value": false
+    },
+    {
+      "id": "clear",
+      "title": "Clear listening activity",
+      "description": "TEMPORARILY TURN ON IF PRESENCE IS STUCK",
+      "icon": "fad fa-stopwatch",
+      "value": false
+    }
+  ]
+}

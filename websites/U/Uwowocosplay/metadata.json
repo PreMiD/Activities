@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "202740603790819328",
@@ -10,7 +10,8 @@
     "en": "Uwowo is a professional cosplay costume brand focusing on the high quality anime and game costumes and wigs with affordable price."
   },
   "url": "uwowocosplay.com",
-  "version": "1.0.10",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*uwowocosplay[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/Uwowocosplay/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/Uwowocosplay/assets/thumbnail.png",
   "color": "#f17174",

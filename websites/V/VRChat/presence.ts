@@ -7,7 +7,7 @@ let profile: string
 
 function getUserName(): void {
   // Get your own username
-  const tempusername = document.querySelector('.user-info > h6')
+  const tempusername = document.querySelector('.leftbar')?.querySelector('a[href*="/user/"]')
   if (tempusername?.textContent)
     profile = tempusername.textContent
 }
@@ -18,12 +18,18 @@ async function getProfileDetails() {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/V/VRChat/assets/logo.png',
   }
   const privacymode = await presence.getSetting<boolean>('privacy')
-  const viewingprofilename = document.querySelector('div.col-md-12 > h2')?.textContent
+  const profileElement = document.querySelector('h2')
+  // Check if h2 contains "'s Profile"
+  let viewingprofilename = null
+  if (profileElement?.textContent?.includes('\'s Profile')) {
+    // If it does, get the username from the textContent
+    viewingprofilename = profileElement.textContent.split('\'s Profile')[0]
+  }
   if (privacymode === false) {
     if (
       document
         .querySelector(
-          'div.w-100.btn-group-lg.btn-group-vertical > button.btn.btn-primary',
+          '[aria-label="Unfriend"]',
         )
         ?.textContent
         ?.includes('Unfriend')
@@ -152,13 +158,25 @@ presence.on('UpdateData', async () => {
             presenceData.details = 'Viewing Profile'
             presence.setActivity(presenceData)
           }
+          else if (document.location.pathname.includes('/group')) {
+            /* Viewing Group */
+            presenceData.details = 'Viewing Group:'
+            if (privacymode === false) {
+              presenceData.state = document.querySelector('.home-content')?.querySelector('h2')?.textContent
+            }
+            else {
+              presenceData.details = 'Viewing a group'
+            }
+
+            presence.setActivity(presenceData)
+          }
           else if (document.location.pathname.includes('/search')) {
             /* Searching */
             if (!privacymode) {
               presenceData.details = 'Searching:'
               presenceData.state = window.location
                 .toString()
-                .substr(window.location.toString().lastIndexOf('/') + 1)
+                .slice(window.location.toString().lastIndexOf('/') + 1)
               presence.setActivity(presenceData)
             }
             else {
@@ -169,13 +187,11 @@ presence.on('UpdateData', async () => {
           else if (document.location.pathname.includes('/avatar')) {
             presenceData.details = 'Viewing Avatar:'
             if (privacymode === false) {
-              presenceData.state = `${
-                document.querySelector('div.col-12 > h3')?.textContent
-              } ${
-                document.querySelector(
-                  'div.col-12.col-md-8 > h4 > span > small',
-                )?.textContent
-              }`
+              const avatarName = document.querySelector('.home-content')?.querySelector('h2')?.textContent
+              const avatarCreator = Array.from(document.querySelector('.home-content')?.querySelectorAll('span') || []).find(
+                a => a.textContent?.includes('By'),
+              )?.querySelector('a')?.textContent
+              presenceData.state = `${avatarName} - ${avatarCreator}`
             }
             else {
               presenceData.details = 'Viewing an avatar'

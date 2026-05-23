@@ -13,7 +13,7 @@ async function getStrings() {
   return presence.getStrings(
     {
       viewHome: 'general.viewHome',
-      viewing: 'general.viewing',
+      view: 'general.view',
       search: 'general.search',
       searchFor: 'general.searchFor',
       store: 'general.store',
@@ -26,7 +26,7 @@ async function getStrings() {
       cookie: 'general.cookie',
       upload: 'youtube.upload',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 
@@ -91,7 +91,7 @@ presence.on('UpdateData', async () => {
               presenceData.details = strings.viewPage
               presenceData.state = textContent('.emote-name p')
               presenceData.smallImageKey = Assets.Viewing
-              presenceData.smallImageText = strings.viewing
+              presenceData.smallImageText = strings.view
 
               if (showEmotes) {
                 presenceData.largeImageKey = getImage(
@@ -110,7 +110,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = privacy ? strings.viewAnUser : strings.viewProfile
       presenceData.state = textContent('.user-card .username')
       presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = strings.viewing
+      presenceData.smallImageText = strings.view
 
       if (!privacy) {
         presenceData.largeImageKey = getImage('.user-card .user-picture-wrapper img') ?? ActivityAssets.Logo
@@ -122,7 +122,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.viewList
       presenceData.state = textContent('.emote-set-wrapper > div > div > h3')
       presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = strings.viewing
+      presenceData.smallImageText = strings.view
       break
 
     case 'inbox':
@@ -135,7 +135,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.viewPage
       presenceData.state = strings.store
       presenceData.smallImageKey = Assets.Viewing
-      presenceData.smallImageText = strings.viewing
+      presenceData.smallImageText = strings.view
       break
 
     case 'legal':

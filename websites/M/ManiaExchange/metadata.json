@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Hans5958",
@@ -31,7 +31,8 @@
     "trackmania.exchange",
     "blog.mania.exchange"
   ],
-  "version": "1.1.25",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(mania-exchange[.]com|mania[.]exchange|trackmania[.]exchange|item[.]exchange)[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/ManiaExchange/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/ManiaExchange/assets/thumbnail.png",
   "color": "#7ad5ff",

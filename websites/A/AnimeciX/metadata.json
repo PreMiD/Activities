@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "858743749240684564",
@@ -13,15 +13,27 @@
   ],
   "service": "AnimeciX",
   "description": {
-    "en": "Best Turkish anime watching website"
+    "en": "Best Turkish anime watching website",
+    "tr": "Türkiyenin en stabil anime izleme sitesi"
   },
-  "url": "animecix.net",
-  "version": "1.0.1",
+  "url": [
+    "animecix.net",
+    "anm.cx",
+    "animecix.tv",
+    "ecchicix.com"
+  ],
+  "regExp": "^https?[:][/][/](animecix[.]net|anm[.]cx|animecix[.]tv|ecchicix[.]com)[/]",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeciX/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeciX/assets/thumbnail.jpeg",
   "color": "#b6eafd",
   "category": "anime",
   "tags": [
-    "anime"
-  ]
+    "anime",
+    "dizi",
+    "turkish",
+    "movie"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?[:][/][/](anm[.]cx[/]secure[/]best-video|tau-video[.]xyz[/]embed|ok[.]ru[/]videoembed|drive[.]google[.]com[/]file[/]d|uqload[.]io|doodstream[.]com[/]e)[/]"
 }

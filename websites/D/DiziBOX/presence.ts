@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '643788489871196161',
@@ -80,10 +80,10 @@ presence.on('UpdateData', async () => {
         && document.querySelector('#search > div.title > h1 > span.text-muted')
           ?.textContent
           ? document
-            .querySelector('#search > div.title > h1 > span.text-muted')
-            ?.textContent
-            ?.replace('(', '')
-            .replace(')', '')
+              .querySelector('#search > div.title > h1 > span.text-muted')
+              ?.textContent
+              ?.replace('(', '')
+              .replace(')', '')
           : 'Belirsiz',
         smallImageKey: Assets.Search,
         startTimestamp: Math.floor(Date.now() / 1000),
@@ -117,7 +117,7 @@ presence.on('UpdateData', async () => {
     const episode = document.querySelector(
       '#main-wrapper > div.content-wrapper > div.title > h1 > span.tv-title-episode',
     )
-    const timestamps = presence.getTimestamps(
+    const timestamps = getTimestamps(
       Math.floor(_video.currentTime),
       Math.floor(_video.duration),
     )
@@ -148,7 +148,7 @@ presence.on('UpdateData', async () => {
     const episode = document.querySelector(
       '#main-wrapper > div.content-wrapper > div.title > h1 > span.tv-title-episode',
     )
-    const timestamps = presence.getTimestamps(
+    const timestamps = getTimestamps(
       Math.floor(video.currentTime),
       Math.floor(video.duration ?? 0),
     )

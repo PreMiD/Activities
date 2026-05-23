@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '802964241179082822',
@@ -15,12 +15,12 @@ async function getStrings() {
       viewSeries: 'general.buttonViewSeries',
       viewMovie: 'general.buttonViewMovie',
       watchEpisode: 'general.buttonViewEpisode',
-      viewing: 'general.viewing',
+      view: 'general.view',
       searching: 'general.searchFor',
       episode: 'general.episode',
       browse: 'general.browsing',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 
@@ -73,7 +73,7 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused ? 'Paused' : 'Playing'
         if (!video.paused) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(video.currentTime, video.duration)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
         }
         presenceData.buttons = [
           {
@@ -98,7 +98,7 @@ presence.on('UpdateData', async () => {
           ?.iterateNext()
           ?.textContent
           ?.match(/title_en:".{1,256}",/g)?.[0]
-          ?.replace(/(title_en:")|(",)/g, '')
+          ?.replace(/title_en:"|",/g, '')
       presenceData.state = document
         .querySelector('[name="og:title"]')
         ?.getAttribute('content')
@@ -115,27 +115,27 @@ presence.on('UpdateData', async () => {
       break
     }
     case pathname.includes('schedule'): {
-      presenceData.details = strings.viewing
+      presenceData.details = strings.view
       presenceData.state = 'The schedule'
       break
     }
     case pathname.includes('recent'): {
-      presenceData.details = strings.viewing
+      presenceData.details = strings.view
       presenceData.state = 'Recently added anime'
       break
     }
     case pathname.includes('popular'): {
-      presenceData.details = strings.viewing
+      presenceData.details = strings.view
       presenceData.state = 'Popular anime'
       break
     }
     case pathname.includes('anime'): {
-      presenceData.details = strings.viewing
+      presenceData.details = strings.view
       presenceData.state = 'All anime'
       break
     }
     case pathname.includes('trending'): {
-      presenceData.details = strings.viewing
+      presenceData.details = strings.view
       presenceData.state = 'Trending anime'
       break
     }

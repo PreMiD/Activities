@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 /*
  * The interfaces may have some things missing,
  * I've tried to set as many properties as I could find.
@@ -613,11 +613,11 @@ async function setPresenceByMediaId(mediaId: string): Promise<void> {
     const paused = mediaElement
       ? mediaElement.paused
       : document
-        .querySelector<HTMLSpanElement>(
-          '.nowPlayingBar .playPauseButton span',
-        )
-        ?.classList
-        .contains('play_arrow')
+          .querySelector<HTMLSpanElement>(
+            '.nowPlayingBar .playPauseButton span',
+          )
+          ?.classList
+          .contains('play_arrow')
 
     if (paused) {
       presenceData.smallImageKey = Assets.Pause
@@ -631,7 +631,7 @@ async function setPresenceByMediaId(mediaId: string): Promise<void> {
 
       // TODO: worth setting timestamps on remote playback? Requires WS connection
       if (mediaElement && (await presence.getSetting('showMediaTimestamps'))) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(mediaElement)
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(mediaElement)
       }
     }
   }
@@ -660,7 +660,7 @@ async function loggedIn(): Promise<void> {
 
   do {
     await sleep(125)
-    newApiClient = await presence.getPageletiable<ApiClient>('ApiClient')
+    newApiClient = (await presence.getPageVariable<{ ApiClient: ApiClient }>('ApiClient')).ApiClient
   } while (!apiClient._serverInfo.AccessToken)
 
   apiClient = newApiClient
@@ -871,7 +871,8 @@ async function updateData(): Promise<void> {
   // if jellyfin is detected init/update the presence status
   if (showPresence) {
     const largeImageKey = presenceData.largeImageKey as string
-    if (isPrivateIP(largeImageKey)) {
+    const forceLocalExtraction = await presence.getSetting<boolean>('localImageExtraction')
+    if (isNonPublicURL(largeImageKey) || forceLocalExtraction) {
       if (uploadedMediaCache.has(largeImageKey)) {
         presenceData.largeImageKey = uploadedMediaCache.get(largeImageKey)
       }
@@ -896,10 +897,16 @@ async function updateData(): Promise<void> {
   }
 }
 
-function isPrivateIP(ip: string): boolean {
-  return /^http:\/\/(?:192\.168\.|10\.|172\.(?:1[6-9]|2\d|3[01])\.|127\.0\.0\.1|localhost)/.test(
-    ip,
-  )
+function isNonPublicURL(url: string): boolean {
+  // Match RFC 1918 private IPs, CGNAT (100.64.0.0/10, used by Tailscale), and localhost (http or https)
+  if (/^https?:\/\/(?:192\.168\.|10\.|172\.(?:1[6-9]|2\d|3[01])\.|100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.|127\.0\.0\.1|localhost)/.test(url))
+    return true
+
+  // Match Tailscale domains (*.ts.net)
+  if (/^https?:\/\/[^/]+\.ts\.net(?:\/|:|$)/.test(url))
+    return true
+
+  return false
 }
 /**
  * Check if the presence should be initialized, if so start doing the magic

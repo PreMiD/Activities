@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '835732953844940822',
@@ -16,7 +16,7 @@ async function getStrings() {
       watchVideo: 'general.buttonWatchVideo',
       viewList: 'netflix.viewList',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 const data: {
@@ -121,7 +121,7 @@ presence.on('UpdateData', async () => {
             ? data.strings?.pause
             : data.strings?.play;
 
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 
           presenceData.buttons = [
             {

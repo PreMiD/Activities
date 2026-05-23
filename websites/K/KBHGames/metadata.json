@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "529707020937461760",
@@ -10,7 +10,8 @@
     "en": "KBH Games is a online gaming portal that provide a fast and easy way to play online games for free."
   },
   "url": "kbhgames.com",
-  "version": "1.0.5",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kbhgames[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KBHGames/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KBHGames/assets/thumbnail.jpeg",
   "color": "#000",

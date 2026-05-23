@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "RisingSunLight",
@@ -17,6 +17,10 @@
     {
       "name": "Kinue",
       "id": "634246091293851649"
+    },
+    {
+      "name": "momonnie",
+      "id": "278821688894947328"
     }
   ],
   "service": "pixiv",
@@ -27,8 +31,8 @@
     "vi": "pixiv là \"dịch vụ giao tiếp qua tranh ảnh\" nơi bạn có thể đăng và xem tác phẩm của mình. Có đa dạng các thể loại được đăng, với các nội dung của người dùng và các cuộc thi từ các nhà sản xuất."
   },
   "url": "www.pixiv.net",
-  "regExp": "([a-z0-9-]+[.])*pixiv[.]net[/]",
-  "version": "2.0.10",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pixiv[.]net[/]",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/pixiv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/pixiv/assets/thumbnail.png",
   "color": "#009cff",
@@ -40,10 +44,19 @@
   ],
   "settings": [
     {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
       "id": "buttons",
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
-      "value": true
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
     }
   ]
 }

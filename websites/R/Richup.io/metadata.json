@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "162969778699501569",
@@ -10,7 +10,8 @@
     "en": "A free online alternative to the board game Monopoly. Play with friends, strangers, or bots. No sign up or download is required!"
   },
   "url": "richup.io",
-  "version": "1.0.10",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*richup[.]io[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Richup.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Richup.io/assets/thumbnail.png",
   "color": "#16101D",

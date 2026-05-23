@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "!gatx",
+    "id": "199902444442877952"
+  },
+  "service": "Bourges Télévision",
+  "description": {
+    "en": "Bourges Télévision is a local television channel covering news and culture from Bourges and the Berry region in France.",
+    "fr": "Bourges Télévision est une chaîne de télévision locale couvrant l'actualité et la culture de Bourges et du Berry."
+  },
+  "url": "bourgestelevision.fr",
+  "regExp": "^https?[:][/][/]bourgestelevision[.]fr[/]",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/yBY6V8RK/OAuth-Icon-512.png",
+  "thumbnail": "https://bourgestelevision.fr/og-image.jpg",
+  "color": "#E63329",
+  "category": "videos",
+  "tags": [
+    "television",
+    "replay",
+    "france",
+    "news",
+    "local"
+  ],
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-external-link-alt",
+      "value": true
+    }
+  ]
+}

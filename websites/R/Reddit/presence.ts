@@ -28,7 +28,7 @@ async function getStrings() {
       streamButton: 'general.buttonWatchStream',
       insubreddit: 'In a subreddit',
     },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
+
   )
 }
 

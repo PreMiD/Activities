@@ -40,9 +40,9 @@ presence.on('UpdateData', async () => {
           },
           {
             label: 'View source',
-            url: (await presence.getPageletiable<string>(
+            url: (await presence.getPageVariable<{ 'jukeboxData.ogAudioURL': string }>(
               'jukeboxData.ogAudioURL',
-            )) || document.querySelector<HTMLAnchorElement>('#song-url')?.href || '',
+            ))['jukeboxData.ogAudioURL'] || document.querySelector<HTMLAnchorElement>('#song-url')?.href || '',
           },
         ]
       }
@@ -79,9 +79,9 @@ presence.on('UpdateData', async () => {
         ?.match(/(\d+):(\d+):(\d+)/)
         ?.map(x => +x) ?? []
       const totalSeconds = (hours ?? 0) * 3600 + (mins ?? 0) * 60 + (secs ?? 0)
-      const audioSource = await presence.getPageletiable<string>(
+      const audioSource = (await presence.getPageVariable<{ 'canonizerData.ogAudioURL': string }>(
         'canonizerData.ogAudioURL',
-      )
+      ))['canonizerData.ogAudioURL']
       if (
         (document.querySelector<SVGElement>('#tiles > svg')?.childElementCount ?? 0)
         > 5

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Eren",
@@ -12,7 +12,8 @@
     "tr": "Discord Bot List bir bot listesidir."
   },
   "url": "discordbotlist.com",
-  "version": "1.2.27",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*discordbotlist[.]com[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20Bot%20List/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20Bot%20List/assets/thumbnail.png",
   "color": "#10C0E7",

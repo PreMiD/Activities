@@ -1,18 +1,18 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
-    "id": "638080361179512853",
-    "name": "dark_ville"
+    "id": "503557087041683458",
+    "name": "PreMiD"
   },
   "service": "Doodstreams",
   "description": {
     "en": "Doodstream redefines video sharing with a commitment to unrivaled HLS streaming, unlimited bandwidth and seamless user experience.",
     "nl": "Doodstream herdefinieert het delen van video met een toewijding aan ongeëvenaarde HLS streaming, onbeperkte bandbreedte en naadloze gebruikerservaring."
   },
-  "url": "doods.pro",
-  "regExp": "((ww(w)?([0-9])?[.])?dood(s)?[.][a-z]*)|((ww(w)?([0-9])?[.])?doodstream[.][a-z]*([.][a-z]*)?)",
-  "version": "1.0.7",
+  "url": "doodstream.com.tr",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(dood|doods|doodstream)([.][a-z]+)+[/]",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Doodstreams/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Doodstreams/assets/thumbnail.png",
   "color": "#FF9900",

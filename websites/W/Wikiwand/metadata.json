@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Hans5958",
@@ -12,7 +12,8 @@
     "nl": "Wikiwand is een moderne reader voor web en mobiel, die de geweldige inhoud van Wikipedia optimaliseert voor een aanzienlijk verbeterde leeservaring."
   },
   "url": "www.wikiwand.com",
-  "version": "1.0.24",
+  "regExp": "^https?[:][/][/](www[.])?wikiwand[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wikiwand/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wikiwand/assets/thumbnail.jpg",
   "color": "#F7F6F5",

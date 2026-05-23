@@ -17,7 +17,7 @@ async function getStrings() {
     viewList: 'general.viewList',
     viewMovie: 'general.viewMovie',
     viewGenre: 'general.viewGenre',
-    viewing: 'general.viewing',
+    view: 'general.view',
     viewCategory: 'general.viewCategory',
     support: 'general.support',
     viewProfile: 'general.viewProfile',
@@ -124,7 +124,7 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'subscribe': {
-      presenceData.details = strings.viewing
+      presenceData.details = strings.view
       presenceData.state = strings.support
       break
     }
@@ -132,7 +132,7 @@ presence.on('UpdateData', async () => {
     case 'editorial-policy':
     case 'review-policy':
     case 'terms-and-conditions': {
-      presenceData.details = strings.viewing
+      presenceData.details = strings.view
       presenceData.state = document.querySelector('.section_title')
       break
     }

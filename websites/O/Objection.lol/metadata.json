@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "theusaf",
@@ -10,7 +10,8 @@
     "en": "An online ace attorney case maker and generator."
   },
   "url": "objection.lol",
-  "version": "1.0.13",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*objection[.]lol[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Objection.lol/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Objection.lol/assets/thumbnail.png",
   "color": "#050564",

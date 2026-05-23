@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1428056065840255027",
+    "name": "ahmanitsucks"
+  },
+  "service": "FlickyStream",
+  "description": {
+    "en": "A streaming platform for movies, TV shows, and anime."
+  },
+  "url": "flickystream.ru",
+  "regExp": "^https?[:][/][/](www[.])?flickystream[.]ru[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FlickyStream/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FlickyStream/assets/thumbnail.png",
+  "color": "#E53935",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "anime",
+    "tv"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Faelayis",
@@ -15,7 +15,8 @@
     "movie.trueid.net",
     "tv.trueid.net"
   ],
-  "version": "1.0.20",
+  "regExp": "^https?[:][/][/](home|movie|tv)[.]trueid[.]net[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TrueID/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TrueID/assets/thumbnail.jpg",
   "color": "#e0081a",
