@@ -10,11 +10,10 @@ let slideshow: Slideshow | null = null
 try {
 	slideshow = presence.createSlideshow()
 } catch {
-	// PreMiD runtime does not support createSlideshows so this catch is just for safety.
-	// the presence will just fallback to single slide mode if createSlideshow is not supported
+	// PreMiD runtime does not support createSlideshow
 }
 
-let oldSlideshowKey: string
+let oldSlideshowKey = ""
 
 function registerSlideshowKey(key: string): boolean {
 	if (oldSlideshowKey === key) return false
@@ -47,40 +46,28 @@ function sumProjectTimeToday(projectName: string, elapsedSeconds: number): strin
 
 	let totalSeconds = elapsedSeconds
 
-	const entries = todayGroup.querySelectorAll("time-tracker-entry, parent-tracker-entry")
-
-	for (const entry of entries) {
+	for (const entry of todayGroup.querySelectorAll("time-tracker-entry, parent-tracker-entry")) {
 		const entryProject = entry.querySelector(".cl-project-name span")?.textContent?.trim()
 		if (entryProject !== projectName) continue
 
-		const durationInput = entry.querySelector<HTMLInputElement>('[aria-label="Duration"], [aria-label="Duração"]')
-		const value = durationInput?.value?.trim()
+		const value = entry.querySelector<HTMLInputElement>('[aria-label="Duration"], [aria-label="Duração"]')?.value?.trim()
 		if (value) totalSeconds += parseElapsedToSeconds(value)
 	}
 
 	return totalSeconds > 0 ? secondsToHHMM(totalSeconds) : null
 }
 
-function buildSummaryText(daily: string | null, weekly: string | null): string {
-	return [
+function buildSummaryText(daily: string | null, weekly: string | null): string | null {
+	const parts = [
 		daily ? `${daily} today` : null,
 		weekly ? `${weekly} this week` : null,
-	].filter(Boolean).join("  •  ")
+	].filter(Boolean)
+	return parts.length > 0 ? parts.join("  •  ") : null
 }
 
 presence.on("UpdateData", async () => {
 	try {
 		const path = document.location.pathname
-
-		const presenceData: PresenceData = {
-			largeImageKey: "https://i.imgur.com/E0XR3mN.png",
-			startTimestamp: browsingTimestamp,
-			details: "Clockify",
-			state: "Browsing",
-			detailsUrl: document.location.href,
-			smallImageKey: Assets.Pause,
-			smallImageText: "Not tracking",
-		}
 
 		const weeklyRaw = document.querySelector("approval-header .cl-h2")?.textContent?.trim()
 		const weeklyFormatted = weeklyRaw ? formatDuration(weeklyRaw) : null
@@ -107,21 +94,16 @@ presence.on("UpdateData", async () => {
 				startTimestamp: liveStart,
 			}
 
-			const projectLine = [
-				`📁 | ${projectName}`,
-				projectTimeToday,
-			].filter(Boolean).join("  •  ")
-
 			const slideA: PresenceData = {
 				...sharedTracking,
-				details: `⏱️ | ${taskDescription ?? "Tracking time"}`,
-				state: projectLine,
+				details: `🔴 | ${taskDescription ?? "Tracking time"}`,
+				state: [`📁 | ${projectName}`, projectTimeToday].filter(Boolean).join("  •  "),
 			}
 			;(slideA as any).largeImageText = buildSummaryText(dailyFormatted, weeklyFormatted)
 
 			const slideB: PresenceData = {
 				...sharedTracking,
-				details: projectLine,
+				details: `📅 | ${dailyFormatted} tracked today`,
 				state: weeklyFormatted ? `📊 | ${weeklyFormatted} tracked this week` : undefined,
 			}
 			;(slideB as any).largeImageText = taskDescription ?? "Clockify"
@@ -136,35 +118,50 @@ presence.on("UpdateData", async () => {
 			return
 		}
 
+		const presenceData: PresenceData = {
+			largeImageKey: "https://i.imgur.com/E0XR3mN.png",
+			startTimestamp: browsingTimestamp,
+			details: "Clockify",
+			state: "Browsing",
+			detailsUrl: document.location.href,
+			smallImageKey: Assets.Pause,
+			smallImageText: "Not tracking",
+		}
+
 		if (path.startsWith("/tracker")) {
-			presenceData.details = "Clockify — Timer"
-			presenceData.state = "No active timer"
+			presenceData.details = "⏰ | Timer"
+			presenceData.state = "📁 | No active project being tracked"
+			presenceData.smallImageKey = Assets.Pause
+			presenceData.smallImageText = "Idle"
 		} else if (path.startsWith("/reports")) {
-			presenceData.details = "Clockify — Reports"
-			presenceData.state = dailyFormatted ? `${dailyFormatted} today` : "Reviewing reports"
+			presenceData.details = "📊 | Reports"
+			presenceData.state = dailyFormatted ? `⏱️ | ${dailyFormatted} tracked today` : "🔍 | Reviewing reports"
 			presenceData.smallImageKey = Assets.Viewing
-			presenceData.smallImageText = "Viewing reports"
+			presenceData.smallImageText = "Reviewing reports"
 			;(presenceData as any).largeImageText = buildSummaryText(dailyFormatted, weeklyFormatted)
 		} else if (path.startsWith("/projects")) {
-			presenceData.details = "Clockify — Projects"
-			presenceData.state = "Managing projects"
+			presenceData.details = "📁 | Projects"
+			presenceData.state = "⚙️ | Managing workspace projects"
 			presenceData.smallImageKey = Assets.Writing
 			presenceData.smallImageText = "Managing projects"
 		} else if (path.startsWith("/clients")) {
-			presenceData.details = "Clockify — Clients"
-			presenceData.state = "Viewing clients"
+			presenceData.details = "👥 | Clients"
+			presenceData.state = "🔍 | Viewing client information"
 			presenceData.smallImageKey = Assets.Reading
 			presenceData.smallImageText = "Viewing clients"
 		} else if (path.startsWith("/team")) {
-			presenceData.details = "Clockify — Team"
-			presenceData.state = "Viewing team activity"
+			presenceData.details = "🤝 | Team"
+			presenceData.state = "📈 | Reviewing team activity"
 			presenceData.smallImageKey = Assets.Reading
-			presenceData.smallImageText = "Viewing team"
+			presenceData.smallImageText = "Viewing team activity"
 		} else if (path.startsWith("/settings")) {
-			presenceData.details = "Clockify — Settings"
-			presenceData.state = "Configuring workspace"
+			presenceData.details = "⚙️ | Settings"
+			presenceData.state = "🛠️ | Configuring workspace"
 			presenceData.smallImageKey = Assets.Reading
 			presenceData.smallImageText = "Configuring settings"
+		} else {
+			presenceData.details = "🌐 | Workspace"
+			presenceData.state = "🔍 | Browsing Clockify"
 		}
 
 		const contentKey = `idle|${path}|${dailyFormatted}|${weeklyFormatted}`
@@ -181,11 +178,10 @@ presence.on("UpdateData", async () => {
 			if (dailyFormatted || weeklyFormatted) {
 				slideshow?.addSlide("totals", {
 					largeImageKey: "https://i.imgur.com/E0XR3mN.png",
-					details: dailyFormatted ? `${dailyFormatted} today` : "Clockify",
-					state: weeklyFormatted ? `${weeklyFormatted} tracked this week` : undefined,
+					details: dailyFormatted ? `📅 | ${dailyFormatted} today` : "📊 | Time Summary",
+					state: weeklyFormatted ? `📈 | ${weeklyFormatted} this week` : undefined,
 					detailsUrl: document.location.href,
 					smallImageKey: Assets.Pause,
-					smallImageText: "Not tracking",
 				}, 5000)
 			}
 		}
@@ -195,8 +191,8 @@ presence.on("UpdateData", async () => {
 		console.error("Clockify presence error:", err)
 		presence.setActivity({
 			largeImageKey: "https://i.imgur.com/E0XR3mN.png",
-			details: "Clockify",
-			state: "Browsing",
+			details: "🌐 | Clockify",
+			state: "🔍 | Browsing workspace",
 		})
 	}
 })
