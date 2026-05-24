@@ -7,6 +7,10 @@
     "message": "Archives List",
     "description": "Viewing list of archives"
   },
+  "plus2tele.searchingArchives": {
+    "message": "Searching archives: {0}",
+    "description": "Searching archives for a query"
+  },
   "plus2tele.channelsList": {
     "message": "Channels List",
     "description": "Viewing list of channels"

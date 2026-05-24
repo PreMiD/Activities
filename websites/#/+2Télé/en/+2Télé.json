@@ -5,6 +5,9 @@
   "plus2tele.archivesList": {
     "message": "Archives List"
   },
+  "plus2tele.searchingArchives": {
+    "message": "Searching archives: {0}"
+  },
   "plus2tele.channelsList": {
     "message": "Channels List"
   },

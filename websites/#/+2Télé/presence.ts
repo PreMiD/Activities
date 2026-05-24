@@ -55,6 +55,7 @@ presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
     accueil: 'plus2tele.accueil',
     archivesList: 'plus2tele.archivesList',
+    searchingArchives: 'plus2tele.searchingArchives',
     channelsList: 'plus2tele.channelsList',
     viewingChannel: 'plus2tele.viewingChannel',
     agencesList: 'plus2tele.agencesList',
@@ -92,7 +93,13 @@ presence.on('UpdateData', async () => {
   }
   else if (paths.length === 1 && firstSegment === 'archives') {
     // Archives List
-    presenceData.details = strings.archivesList
+    const query = new URL(href).searchParams.get('query')
+    if (query) {
+      presenceData.details = strings.searchingArchives.replace('{0}', query)
+    }
+    else {
+      presenceData.details = strings.archivesList
+    }
     presenceData.state = getArchivesListStats() || strings.browsing
   }
   else if (paths.length === 1 && firstSegment === 'channels') {
