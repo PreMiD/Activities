@@ -11,7 +11,7 @@
   },
   "url": "www.youku.tv",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*youku[.]tv[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Youku/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Youku/assets/thumbnail.png",
   "color": "#2fb3ff",
@@ -23,46 +23,57 @@
   ],
   "settings": [
     {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
       "id": "privacy",
       "title": "Privacy Mode",
       "icon": "fas fa-user-secret",
-      "value": false
+      "value": false,
+      "description": "Hide the title and other details from your Discord status"
     },
     {
       "id": "showTimestamp",
       "title": "Show Timestamp",
       "icon": "fas fa-clock",
-      "value": true
+      "value": true,
+      "description": "Show elapsed or remaining time in the activity"
     },
     {
       "id": "showButtons",
-      "title": "Show Watch Button",
+      "title": "Show Buttons",
       "icon": "fas fa-external-link-alt",
-      "value": true
+      "value": true,
+      "description": "Display interactive buttons in the Discord Activity"
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover Art",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Use the show's poster as the large image when available"
     },
     {
       "id": "showProgress",
       "title": "Show Progress Percentage",
       "icon": "fas fa-percentage",
-      "value": false
-    },
-    {
-      "id": "use24HourTime",
-      "title": "Use 24-Hour Time Format",
-      "icon": "fas fa-clock",
-      "value": false
+      "value": false,
+      "description": "Append a progress percentage to the state line while watching"
     },
     {
       "id": "showVideoDetails",
       "title": "Show Video Quality & Speed",
       "icon": "fas fa-cog",
-      "value": true
+      "value": true,
+      "description": "Append the current playback quality and speed to the state line"
     },
     {
       "id": "compactMode",
       "title": "Compact Mode",
       "icon": "fas fa-compress",
-      "value": false
+      "value": false,
+      "description": "Use shorter labels and truncate long titles"
     }
   ]
 }
