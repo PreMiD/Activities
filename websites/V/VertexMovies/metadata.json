@@ -7,10 +7,10 @@
   },
   "service": "VertexMovies",
   "description": {
-    "en": "Share what you're watching on VertexMovies with your friends on Discord!"
+    "en": "Watch Free Movies and TV Series Online in High Quality..."
   },
   "url": "vertexmovies.com",
-  "regExp": "(?i)^https?[:][/][/]([a-z0-9-]+[.])*vertexmovies[.](com|net)[/]",
+  "regExp": "^https?[:][/][/](www[.])?vertexmovies[.](com|net)[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/FV46abR.png",
   "thumbnail": "https://i.imgur.com/UELJRyw.jpeg",
