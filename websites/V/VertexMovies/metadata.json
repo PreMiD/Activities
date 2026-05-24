@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "version": "1.0.0",
+  "author": {
+    "id": "1418593821716906114",
+    "name": "VertexMovies Admin"
+  },
+  "service": "VertexMovies",
+  "description": {
+    "en": "Share what you're watching on VertexMovies with your friends on Discord!"
+  },
+  "url": "VertexMovies.com",
+  "regExp": "^https?[:][/][/]([a-zA-Z0-9-]+[.])*([vV][eE][rR][tT][eE][xX][mM][oO][vV][iI][eE][sS])[.]([cC][oO][mM]|[nN][eE][tT])[/]",
+  "logo": "https://i.imgur.com/FV46abR.png",
+  "thumbnail": "https://i.imgur.com/UELJRyw.jpeg",
+  "color": "#0C6BCB",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "series",
+    "anime",
+    "streaming"
+  ]
+}
