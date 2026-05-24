@@ -15,9 +15,9 @@
     "verycool-ttml-tool-trust.vercel.app"
   ],
   "regExp": "^https?[:][/][/](amll-ttml-tool(-test[.]vercel[.]app|[.]stevexmh[.]net)|verycool-ttml-tool-trust[.]vercel[.]app)[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/78zp1Xo.png",
-  "thumbnail": "https://i.imgur.com/u1ojO04.png",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AMLL%20TTML%20Tool/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AMLL%20TTML%20Tool/assets/thumbnail.png",
   "color": "#18a058",
   "category": "music",
   "tags": [

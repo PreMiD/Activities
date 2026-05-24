@@ -14,9 +14,9 @@
     "status.faucetcrypto.com"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*faucetcrypto[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/37tBbHi.jpeg",
-  "thumbnail": "https://faucetcrypto.com/banner-widget.jpg",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Faucet%20Crypto/assets/logo.jpeg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Faucet%20Crypto/assets/thumbnail.jpg",
   "color": "#50a2ff",
   "category": "other",
   "tags": [

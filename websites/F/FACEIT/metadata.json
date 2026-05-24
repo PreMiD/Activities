@@ -12,12 +12,16 @@
   },
   "url": "faceit.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*faceit[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/n5ielUx.png",
-  "thumbnail": "https://i.imgur.com/b68sdF6.png",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/thumbnail.png",
   "color": "#FF5500",
   "category": "games",
-  "tags": ["cs2", "csgo", "stats"],
+  "tags": [
+    "cs2",
+    "csgo",
+    "stats"
+  ],
   "settings": [
     {
       "id": "lang",

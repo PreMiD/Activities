@@ -8,7 +8,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://raw.githubusercontent.com/ikeblo/Activities/a2edab809/websites/F/Find%20A%20Grave/logo.png',
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/F/Find%20A%20Grave/assets/logo.png',
     startTimestamp: browsingTimestamp,
     type: ActivityType.Watching,
   }

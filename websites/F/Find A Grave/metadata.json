@@ -9,11 +9,18 @@
   "description": {
     "en": "Browse memorials, cemeteries and family history on Find A Grave."
   },
-  "url": ["findagrave.com", "pt.findagrave.com", "es.findagrave.com", "fr.findagrave.com", "de.findagrave.com", "it.findagrave.com"],
+  "url": [
+    "findagrave.com",
+    "pt.findagrave.com",
+    "es.findagrave.com",
+    "fr.findagrave.com",
+    "de.findagrave.com",
+    "it.findagrave.com"
+  ],
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*findagrave[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://raw.githubusercontent.com/ikeblo/Activities/a2edab809/websites/F/Find%20A%20Grave/logo.png",
-  "thumbnail": "https://raw.githubusercontent.com/ikeblo/Activities/35cfa747a/websites/F/Find%20A%20Grave/thumbnail.png",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Find%20A%20Grave/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Find%20A%20Grave/assets/thumbnail.png",
   "color": "#4a7c59",
   "category": "other",
   "tags": [
