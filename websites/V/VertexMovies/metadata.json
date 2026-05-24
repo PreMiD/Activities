@@ -10,7 +10,7 @@
     "en": "Share what you're watching on VertexMovies with your friends on Discord!"
   },
   "url": "vertexmovies.com",
-  "regExp": "^https?[:][/][/]([a-zA-Z0-9-]+[.])*([vV][eE][rR][tT][eE][xX][mM][oO][vV][iI][eE][sS])[.]([cC][oO][mM]|[nN][eE][tT])[/]",
+  "regExp": "(?i)^https?[:][/][/]([a-z0-9-]+[.])*vertexmovies[.](com|net)[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/FV46abR.png",
   "thumbnail": "https://i.imgur.com/UELJRyw.jpeg",
