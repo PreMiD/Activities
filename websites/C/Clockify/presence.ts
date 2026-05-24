@@ -6,24 +6,22 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-let slideshow: Slideshow | null = null
-try {
-  slideshow = presence.createSlideshow()
-}
-catch {
-  // PreMiD runtime does not support createSlideshow
-}
+const slideshow = presence.createSlideshow()
 
 let oldSlideshowKey = ''
+let cachedStartTimestamp: number | undefined
+let cachedStartKey: string | undefined
 
 // Custom function needed: PreMiD's createSlideshow() does not provide built-in
 // deduplication or change-detection for slide content. This function tracks key
 // changes so slides are rebuilt only when the underlying data actually changes,
 // preventing unnecessary flickering on every UpdateData tick.
 function registerSlideshowKey(key: string): boolean {
+  if (!slideshow)
+    return false
   if (oldSlideshowKey === key)
     return false
-  slideshow?.deleteAllSlides()
+  slideshow.deleteAllSlides()
   oldSlideshowKey = key
   return true
 }
@@ -34,10 +32,11 @@ function registerSlideshowKey(key: string): boolean {
 // that display the running stopwatch value as formatted text.
 function parseElapsedToSeconds(elapsed: string): number {
   const parts = elapsed.split(':').map(Number)
-  if (parts.length === 3)
-    return parts[0]! * 3600 + parts[1]! * 60 + parts[2]!
-  if (parts.length === 2)
-    return parts[0]! * 60 + parts[1]!
+  if ((parts.length === 3 || parts.length === 2) && parts.every(p => Number.isFinite(p))) {
+    return parts.length === 3
+      ? parts[0]! * 3600 + parts[1]! * 60 + parts[2]!
+      : parts[0]! * 60 + parts[1]!
+  }
   return 0
 }
 
@@ -74,8 +73,8 @@ function sumProjectTimeToday(projectName: string, elapsedSeconds: number): strin
     if (entryProject !== projectName)
       continue
 
-    const value = entry.querySelector<HTMLInputElement>('[aria-label="Duration"], [aria-label="Duração"]')?.value?.trim()
-    if (value)
+    const value = entry.querySelector<HTMLInputElement>('input:not([type="hidden"])')?.value?.trim()
+    if (value && /^\d{1,2}:\d{2}(?::\d{2})?$/.test(value))
       totalSeconds += parseElapsedToSeconds(value)
   }
 
@@ -112,6 +111,12 @@ presence.on('UpdateData', async () => {
       const seconds = parseElapsedToSeconds(elapsed)
       const projectTimeToday = projectName ? sumProjectTimeToday(projectName, seconds) : null
 
+      const startKey = `${taskDescription}|${projectName}`
+      if (cachedStartKey !== startKey) {
+        cachedStartKey = startKey
+        cachedStartTimestamp = seconds > 0 ? Math.floor(Date.now() / 1000) - seconds : undefined
+      }
+
       const sharedTracking: PresenceData = {
         largeImageKey: 'https://i.imgur.com/E0XR3mN.png',
         detailsUrl: document.location.href,
@@ -119,33 +124,33 @@ presence.on('UpdateData', async () => {
         smallImageText: 'Tracking time',
         statusDisplayType: StatusDisplayType.State,
       }
-      if (seconds > 0) {
-        sharedTracking.startTimestamp = Math.floor(Date.now() / 1000) - seconds
+      if (cachedStartTimestamp) {
+        sharedTracking.startTimestamp = cachedStartTimestamp
       }
 
       const slideA: PresenceData = {
         ...sharedTracking,
         details: `🔴 | ${taskDescription ?? 'Tracking time'}`,
-        state: [`📁 | ${projectName}`, projectTimeToday].filter(Boolean).join('  •  '),
+        state: [projectName ? `📁 | ${projectName}` : null, projectTimeToday].filter(Boolean).join('  •  '),
       }
-      ;(slideA as any).largeImageText = buildSummaryText(dailyFormatted, weeklyFormatted)
+      ;(slideA as unknown as { largeImageText: string | undefined }).largeImageText = buildSummaryText(dailyFormatted, weeklyFormatted) ?? undefined
 
       const slideB: PresenceData = {
         ...sharedTracking,
-        details: `📅 | ${dailyFormatted} tracked today`,
+        details: `📅 | ${dailyFormatted ?? '—'} tracked today`,
       }
+      ;(slideB as unknown as { largeImageText: string | undefined }).largeImageText = taskDescription ?? 'Clockify'
       if (weeklyFormatted) {
         slideB.state = `📊 | ${weeklyFormatted} tracked this week`
       }
-      ;(slideB as any).largeImageText = taskDescription ?? 'Clockify'
 
       const contentKey = `tracking|${taskDescription}|${projectName}|${projectTimeToday}|${dailyFormatted}|${weeklyFormatted}`
       if (registerSlideshowKey(contentKey)) {
-        slideshow?.addSlide('task', slideA, 5000)
-        slideshow?.addSlide('totals', slideB, 5000)
+        slideshow.addSlide('task', slideA, 5000)
+        slideshow.addSlide('totals', slideB, 5000)
       }
 
-      presence.setActivity(slideshow ?? slideA)
+      presence.setActivity(slideshow)
       return
     }
 
@@ -170,7 +175,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = dailyFormatted ? `⏱️ | ${dailyFormatted} tracked today` : '🔍 | Reviewing reports'
       presenceData.smallImageKey = Assets.Viewing
       presenceData.smallImageText = 'Reviewing reports'
-      ;(presenceData as any).largeImageText = buildSummaryText(dailyFormatted, weeklyFormatted)
+      ;(presenceData as unknown as { largeImageText: string | undefined }).largeImageText = buildSummaryText(dailyFormatted, weeklyFormatted) ?? undefined
     }
     else if (path.startsWith('/projects')) {
       presenceData.details = '📁 | Projects'
@@ -203,7 +208,7 @@ presence.on('UpdateData', async () => {
 
     const contentKey = `idle|${path}|${dailyFormatted}|${weeklyFormatted}`
     if (registerSlideshowKey(contentKey)) {
-      slideshow?.addSlide('page', {
+      slideshow.addSlide('page', {
         largeImageKey: presenceData.largeImageKey,
         details: presenceData.details,
         state: presenceData.state,
@@ -222,11 +227,11 @@ presence.on('UpdateData', async () => {
         if (weeklyFormatted) {
           totalsSlide.state = `📈 | ${weeklyFormatted} this week`
         }
-        slideshow?.addSlide('totals', totalsSlide, 5000)
+        slideshow.addSlide('totals', totalsSlide, 5000)
       }
     }
 
-    presence.setActivity(slideshow ?? presenceData)
+    presence.setActivity(slideshow)
   }
   catch (err) {
     console.error('Clockify presence error:', err)
