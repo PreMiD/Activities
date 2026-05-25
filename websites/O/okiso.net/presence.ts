@@ -34,7 +34,7 @@ presence.on('UpdateData', async () => {
     // Check for Modals
     const termsModal = document.querySelector('[data-premid-modal="terms"]')
     const contactModal = document.querySelector('[data-premid-modal="contact"]')
-    
+
     if (termsModal) {
       presenceData.details = 'Reading Content Terms'
       presenceData.state = 'Legal & Guidelines'
@@ -123,19 +123,19 @@ presence.on('UpdateData', async () => {
     presenceData.state = `by ${artist || 'OKISO'}`
     presenceData.smallImageKey = paused ? Assets.Pause : 'logo'
     presenceData.smallImageText = paused ? 'Paused' : 'okiso.net'
-    
+
     if (coverUrl) {
       presenceData.largeImageKey = coverUrl
       presenceData.largeImageText = trackTitle
     }
-    
+
     if (spotifyLink) {
       presenceData.buttons = [
         { label: 'Listen on Spotify', url: spotifyLink },
         { label: 'Join Discord', url: 'https://discord.gg/okiso' },
       ]
     }
-    
+
     delete presenceData.startTimestamp // Remove browsing timestamp so it doesn't look like a long song
   }
 
