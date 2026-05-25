@@ -30,7 +30,7 @@
       "title": "Details Line",
       "icon": "fas fa-info-circle",
       "description": "Text shown as the main Discord status line. Available: %title, %author, %page, %total",
-      "type": "text",
+    
       "placeholder": "%title",
       "value": "%title"
     },
@@ -39,7 +39,7 @@
       "title": "State Line",
       "icon": "fas fa-book-open",
       "description": "Text shown as the secondary Discord status line. Available: %title, %author, %page, %total",
-      "type": "text",
+  
       "placeholder": "Page %page of %total",
       "value": "Page %page of %total"
     }
