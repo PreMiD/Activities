@@ -6,7 +6,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://images.icon-icons.com/17/PNG/256/application_software_adobereader_acrobat_adobereader_pdf_aplicacion_1828.png',
+  Logo = 'https://imgur.com/ImZQntp.png',
 }
 
 type BookData = {
