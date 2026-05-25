@@ -4,7 +4,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/8EhCZKg.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/Sakura%20Mangas/assets/logo.png',
 }
 
 // Fetches an image and converts it to a base64 data URL, with caching.
