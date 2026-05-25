@@ -11,9 +11,9 @@
   },
   "url": "snipp.gg",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*snipp[.]gg[/]",
-  "version": "1.0.0",
-  "logo": "https://i.snipp.gg/4918533360320604/7752ca257a27f7badca8708e45daf998.png",
-  "thumbnail": "https://cdn.snipp.gg/banner.png",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Snipp/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Snipp/assets/thumbnail.png",
   "color": "#f0b100",
   "category": "socials",
   "tags": [
