@@ -10,7 +10,7 @@
     "en": "Shows what you're watching on okiso.net"
   },
   "url": "okiso.net",
-  "regExp": ".*okiso\\.net.*",
+  "regExp": "^https?[:][/][/](www[.])?okiso[.]net[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/0Qraju1.png",
   "thumbnail": "https://i.imgur.com/0Qraju1.png",

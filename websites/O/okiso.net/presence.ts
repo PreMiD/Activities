@@ -3,13 +3,13 @@ import { Assets, getTimestampsFromMedia } from 'premid'
 const presence = new Presence({ clientId: '1505219461152636949' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-presence.on('UpdateData', async () => {
+presence.on('UpdateData', () => {
   const { pathname } = document.location
 
   const releaseTitle = document.querySelector('[data-premid-release-title]')?.getAttribute('data-premid-release-title')
   const releaseCover = document.querySelector('[data-premid-release-cover]')?.getAttribute('data-premid-release-cover')
 
-  const presenceData: any = {
+  const presenceData: PresenceData = {
     type: 3, // ActivityType.Watching
     largeImageKey: 'https://i.imgur.com/0Qraju1.png',
     largeImageText: 'okiso.net',
@@ -121,7 +121,7 @@ presence.on('UpdateData', async () => {
     presenceData.type = 2 // ActivityType.Listening
     presenceData.details = paused ? `Paused: ${trackTitle}` : `Listening to ${trackTitle}`
     presenceData.state = `by ${artist || 'OKISO'}`
-    presenceData.smallImageKey = paused ? Assets.Pause : 'logo'
+    presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? 'Paused' : 'okiso.net'
 
     if (coverUrl) {
@@ -137,6 +137,7 @@ presence.on('UpdateData', async () => {
     }
 
     delete presenceData.startTimestamp // Remove browsing timestamp so it doesn't look like a long song
+    delete presenceData.endTimestamp
   }
 
   if (presenceData.details) {
