@@ -1,0 +1,27 @@
+{
+  "apiVersion": 1,
+  "author": {
+    "name": "Patty",
+    "id": "203181331964755968"
+  },
+  "service": "AnimeX",
+  "description": {
+    "en": "Watch anime online for free with English subbed and dubbed episodes in HD quality."
+  },
+  "url": "animex.one",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animex[.]one[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/QLfdRng.png",
+  "thumbnail": "https://i.imgur.com/UWAcwDI.png",
+  "color": "#E63946",
+  "category": "anime",
+  "tags": ["anime", "streaming"],
+  "settings": [
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fa-solid fa-clock",
+      "value": true
+    }
+  ]
+}
