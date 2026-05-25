@@ -146,7 +146,9 @@ function getPathSegments(): string[] {
 }
 
 function getStorySectionName(segments = getPathSegments()): string {
-  return storySectionLabels[segments[0]] ?? 'Hikâye'
+  const section = segments[0]
+
+  return section ? storySectionLabels[section] ?? 'Hikâye' : 'Hikâye'
 }
 
 function getVideo(): HTMLVideoElement | null {
@@ -292,7 +294,7 @@ presence.on('UpdateData', async () => {
   updatePageTimestamp()
 
   const segments = getPathSegments()
-  const section = segments[0]
+  const section = segments[0] ?? ''
   let presenceData: PresenceData
 
   if (storySections.has(section)) {
