@@ -252,8 +252,8 @@ async function updatePresence() {
     const currentPage = getCurrentPage()
     const totalPages = getTotalPages()
 
-    const detailsSetting = await presence.getSetting<unknown>('details')
-    const stateSetting = await presence.getSetting<unknown>('state')
+    const detailsSetting = await presence.getSetting<string>('details')
+    const stateSetting = await presence.getSetting<string>('state')
 
     const detailsTemplate = typeof detailsSetting === 'string' && detailsSetting.trim()
       ? detailsSetting
