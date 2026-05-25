@@ -10,7 +10,7 @@
     "en": "Adobe Acrobat is a family of application software and web services to view, create, manipulate, print and manage Portable Document Format (PDF) files."
   },
   "url": "acrobat.adobe.com",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*adobe[.]com[/]",
+  "regExp": "^https?[:][/][/]acrobat[.]adobe[.]com(?:[/]|$)",
   "version": "1.0.0",
   "logo": "https://imgur.com/ImZQntp.png",
   "thumbnail": "https://imgur.com/h47sjgu.png",
