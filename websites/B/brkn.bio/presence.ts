@@ -22,8 +22,10 @@ presence.on("UpdateData", async () => {
     'meta[property="og:title"]',
   );
 
-  const username =
-    ogTitle?.content?.split(" | ")[0]?.trim() || path.replace("/", "");
+  const rawTitle = String(ogTitle?.content || "");
+  const username = rawTitle.includes(" | ")
+    ? (rawTitle.split(" | ")[0] ?? "").trim()
+    : path.replace("/", "");
 
   const avatarEl = document.querySelector<HTMLImageElement>(
     'img[alt$=" avatar"]',
@@ -34,7 +36,6 @@ presence.on("UpdateData", async () => {
   const showTime = await presence.getSetting<boolean>("showTime");
 
   presenceData.details = username;
-  presenceData.state = "brkn.bio";
 
   if (avatarUrl) {
     presenceData.largeImageKey = avatarUrl;
