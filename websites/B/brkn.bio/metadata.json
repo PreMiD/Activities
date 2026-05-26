@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "author": {
+    "name": "afton77",
+    "id": "477255792878288898"
+  },
+  "contributors": [],
+  "service": "brkn.bio",
+  "altnames": [],
+  "description": {
+    "en": "Show your brkn.bio profile on Discord."
+  },
+  "url": "brkn.bio",
+  "regExp": "brkn\\.bio\\/[^\\/]+",
+  "version": "1.0.0",
+  "logo": "https://www.brkn.bio/favicon.ico",
+  "thumbnail": "https://www.brkn.bio/favicon.ico",
+  "color": "#ffffff",
+  "tags": ["profile", "biopage", "social"],
+  "category": "socials",
+  "settings": [
+    {
+      "id": "showButton",
+      "title": "Show profile button",
+      "icon": "fas fa-link",
+      "value": true
+    },
+    {
+      "id": "showTime",
+      "title": "Show time elapsed",
+      "icon": "fas fa-clock",
+      "value": true
+    }
+  ]
+}
