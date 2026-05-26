@@ -19,14 +19,14 @@ presence.on("UpdateData", async () => {
   }
 
   const ogTitle = document.querySelector<HTMLMetaElement>(
-    'meta[property="og:title"]'
+    'meta[property="og:title"]',
   );
-  const username = ogTitle
-    ? ogTitle.content.split(" | ")[0].trim()
-    : path.replace("/", "");
+
+  const username =
+    ogTitle?.content?.split(" | ")[0]?.trim() || path.replace("/", "");
 
   const avatarEl = document.querySelector<HTMLImageElement>(
-    'img[alt$=" avatar"]'
+    'img[alt$=" avatar"]',
   );
   const avatarUrl = avatarEl ? avatarEl.src : null;
 
