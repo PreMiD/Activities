@@ -1,0 +1,358 @@
+{
+  "cripsum.openingLootbox": {
+    "description": "Shown when the user is opening a lootbox",
+    "message": "Opening a lootbox"
+  },
+  "cripsum.justPulled": {
+    "description": "Shown after pulling an item from a lootbox. ' is the item name.",
+    "message": "Just pulled: "
+  },
+  "cripsum.testingLuck": {
+    "description": "Shown while the lootbox animation is playing",
+    "message": "Testing their luck"
+  },
+  "cripsum.readingArticle": {
+    "description": "Shown when reading an article. ' is the article title.",
+    "message": "Reading: "
+  },
+  "cripsum.readArticle": {
+    "description": "Label for the 'Read article' button",
+    "message": "Read article"
+  },
+  "cripsum.userProfile": {
+    "description": "Shown when viewing a user profile page",
+    "message": "User profile"
+  },
+  "cripsum.lookingAtProfile": {
+    "description": "Shown when viewing a specific user's profile.",
+    "message": "Looking at"
+  },
+  "cripsum.profile": {
+    "description": "profile",
+    "message": "profile"
+  },
+  "cripsum.stalkingProfiles": {
+    "description": "Shown when on a profile page but no username is found",
+    "message": "Stalking profiles"
+  },
+  "cripsum.visitProfile": {
+    "description": "Label for the 'Visit Profile' button",
+    "message": "Visit Profile"
+  },
+  "cripsum.watchingEdit": {
+    "description": "Shown when watching a specific edit. ' is the title.",
+    "message": "Watching: "
+  },
+  "cripsum.watchingEdits": {
+    "description": "Shown when on the edits page but no specific edit is active",
+    "message": "Watching edits"
+  },
+  "cripsum.listeningToTrack": {
+    "description": "Shown when an edit is playing but no music info is available",
+    "message": "Listening to the track"
+  },
+  "cripsum.editsGallery": {
+    "description": "Shown on the edits gallery page",
+    "message": "Edits Gallery"
+  },
+  "cripsum.choosingEdit": {
+    "description": "Shown when browsing the edits gallery without watching one",
+    "message": "Choosing an edit to watch"
+  },
+  "cripsum.duelLobby": {
+    "description": "Shown when in the Cripsum Duel lobby",
+    "message": "Cripsum Duel · Lobby"
+  },
+  "cripsum.searchingOpponent": {
+    "description": "Shown while matchmaking is active",
+    "message": "🔍 Searching for opponent..."
+  },
+  "cripsum.inLobby": {
+    "description": "Shown when in the lobby but not matchmaking",
+    "message": "In the lobby"
+  },
+  "cripsum.playNow": {
+    "description": "Label for the 'Play Now' button",
+    "message": "Play Now"
+  },
+  "cripsum.matchEnded": {
+    "description": "Shown when the result modal is visible but no title/kicker is found",
+    "message": "Match ended"
+  },
+  "cripsum.spectating": {
+    "description": "Shown in spectator mode. ' is player 1, ' is player 2.",
+    "message": "👁️ Spectating: "
+  },
+  "cripsum.vsOpponent": {
+    "description": "Shown during an active duel. ' is the opponent's name.",
+    "message": "⚔️ "
+  },
+  "cripsum.room": {
+    "description": "Small image tooltip showing the room code. ' is the room code.",
+    "message": "Room: "
+  },
+  "cripsum.opponent": {
+    "description": "Fallback label when the opponent's name is not found",
+    "message": "Opponent"
+  },
+  "cripsum.pickingTeam": {
+    "description": "Shown during the team-picking phase. ' is the counter (e.g. 1/3).",
+    "message": "📋 Picking team "
+  },
+  "cripsum.waitingOpponent": {
+    "description": "Shown when waiting for an opponent in the arena",
+    "message": "⏳ Waiting for an opponent"
+  },
+  "cripsum.inArena": {
+    "description": "Fallback shown when in the arena panel",
+    "message": "In the arena"
+  },
+  "cripsum.achievements": {
+    "description": "Shown when viewing the achievements page",
+    "message": "Achievements"
+  },
+  "cripsum.unlockedAchievements": {
+    "description": "Shown with unlock count. ' is unlocked, ' is total.",
+    "message": "Unlocked: "
+  },
+  "cripsum.huntingAchievements": {
+    "description": "Shown when on achievements page but no count is found",
+    "message": "Hunting for achievements"
+  },
+  "cripsum.goonGenerator": {
+    "description": "Shown on the Goon Generator page",
+    "message": "Goon Generator"
+  },
+  "cripsum.gooning": {
+    "description": "State shown on Goon Generator",
+    "message": "Gooning"
+  },
+  "cripsum.waifuQuiz": {
+    "description": "Shown on the Waifu Quiz page",
+    "message": "Waifu Quiz"
+  },
+  "cripsum.findingSoulmate": {
+    "description": "State shown on the Waifu Quiz page",
+    "message": "Finding their 2D soulmate"
+  },
+  "cripsum.smashOrPass": {
+    "description": "Shown on the Smash or Pass page",
+    "message": "Smash or Pass"
+  },
+  "cripsum.toughChoices": {
+    "description": "State shown on the Smash or Pass page",
+    "message": "Making very tough choices"
+  },
+  "cripsum.goonland": {
+    "description": "Shown on the Goonland landing page",
+    "message": "Goonland"
+  },
+  "cripsum.exploringGoonland": {
+    "description": "State shown on the Goonland landing page",
+    "message": "Exploring Goonland"
+  },
+  "cripsum.downloads": {
+    "description": "Shown on any download page",
+    "message": "Downloads"
+  },
+  "cripsum.downloadingFortnite": {
+    "description": "Shown when downloading Fortnite hacks",
+    "message": "Downloading Fortnite hacks"
+  },
+  "cripsum.downloadingOsu": {
+    "description": "Shown when downloading Osu!",
+    "message": "Downloading Osu!"
+  },
+  "cripsum.downloadingYoshukai": {
+    "description": "Shown when downloading the Yoshukai course",
+    "message": "Downloading the Yoshukai course"
+  },
+  "cripsum.downloadingStuff": {
+    "description": "Fallback shown on any other download page",
+    "message": "Downloading stuff"
+  },
+  "cripsum.store": {
+    "description": "Shown on the store page",
+    "message": "Store"
+  },
+  "cripsum.buyingStuff": {
+    "description": "State shown on the store page",
+    "message": "Buying dumb stuff"
+  },
+  "cripsum.applyingForTeam": {
+    "description": "Shown on the team application page",
+    "message": "Applying for the team"
+  },
+  "cripsum.sellingSoul": {
+    "description": "State shown on the team application page",
+    "message": "Selling their soul to Cripsum"
+  },
+  "cripsum.applyForTeam": {
+    "description": "Label for the 'Apply for the team' button",
+    "message": "Apply for the team"
+  },
+  "cripsum.profileEditor": {
+    "description": "Shown on the profile editor page",
+    "message": "Profile Editor"
+  },
+  "cripsum.editingProfile": {
+    "description": "State shown on the profile editor page",
+    "message": "Editing their profile"
+  },
+  "cripsum.aboutUs": {
+    "description": "Shown on the about us / chi siamo page",
+    "message": "About us"
+  },
+  "cripsum.lookingAtTeam": {
+    "description": "State shown on the chi siamo page",
+    "message": "Looking at the Cripsum team"
+  },
+  "cripsum.authentication": {
+    "description": "Shown on login/signup pages",
+    "message": "Authentication"
+  },
+  "cripsum.signingUp": {
+    "description": "State shown on the signup page",
+    "message": "Signing up"
+  },
+  "cripsum.loggingIn": {
+    "description": "State shown on the login page",
+    "message": "Logging in"
+  },
+  "cripsum.donations": {
+    "description": "Shown on the donations page",
+    "message": "Donations"
+  },
+  "cripsum.supportingCripsum": {
+    "description": "State shown on the donations page",
+    "message": "Supporting Cripsum"
+  },
+  "cripsum.gambling": {
+    "description": "Shown on the gambling page",
+    "message": "Gambling"
+  },
+  "cripsum.gamblingAway": {
+    "description": "State shown on the gambling page",
+    "message": "Gambling all their savings away"
+  },
+  "cripsum.merch": {
+    "description": "Shown on the merch page",
+    "message": "Merch"
+  },
+  "cripsum.buyingMerch": {
+    "description": "State shown on the merch page",
+    "message": "Buying Simone Tussi's merch"
+  },
+  "cripsum.legalStuff": {
+    "description": "Shown on privacy/TOS pages",
+    "message": "Legal stuff"
+  },
+  "cripsum.readingRules": {
+    "description": "State shown on privacy/TOS pages",
+    "message": "Reading the boring rules"
+  },
+  "cripsum.support": {
+    "description": "Shown on the support page",
+    "message": "Support"
+  },
+  "cripsum.lookingForHelp": {
+    "description": "State shown on the support page",
+    "message": "Looking for help"
+  },
+  "cripsum.notFound": {
+    "description": "Shown on the 404 page",
+    "message": "404 Not Found"
+  },
+  "cripsum.lookingForNothing": {
+    "description": "State shown on the 404 page",
+    "message": "Looking for something that doesn't exist"
+  },
+  "cripsum.quandel57": {
+    "description": "Shown on the Quandel57 page",
+    "message": "Quandel57"
+  },
+  "cripsum.lookingAtQuandel": {
+    "description": "State shown on the Quandel57 page",
+    "message": "Looking at the Quandel57 meme"
+  },
+  "cripsum.topRimasti": {
+    "description": "Shown on the Top Rimasti page",
+    "message": "Top Rimasti"
+  },
+  "cripsum.lookingAtRimasti": {
+    "description": "State shown on the Top Rimasti page",
+    "message": "Looking at the top rimasti"
+  },
+  "cripsum.shitposts": {
+    "description": "Shown on the shitpost page",
+    "message": "Shitposts"
+  },
+  "cripsum.lookingAtShitposts": {
+    "description": "State shown on the shitpost page",
+    "message": "Looking at shitposts"
+  },
+  "cripsum.globalChat": {
+    "description": "Shown on the global chat page",
+    "message": "Global Chat"
+  },
+  "cripsum.chatting": {
+    "description": "State shown on the global chat page",
+    "message": "Chatting with others"
+  },
+  "cripsum.inventory": {
+    "description": "Shown on the inventory page",
+    "message": "Inventory"
+  },
+  "cripsum.lookingAtInventory": {
+    "description": "State shown on the inventory page",
+    "message": "Looking at their inventory"
+  },
+  "cripsum.missions": {
+    "description": "Shown on the missions page",
+    "message": "Missions"
+  },
+  "cripsum.grindingMissions": {
+    "description": "State shown on the missions page",
+    "message": "Grinding dailies & weeklies"
+  },
+  "cripsum.banned": {
+    "description": "Shown on the banned page",
+    "message": "Bro got banned"
+  },
+  "cripsum.skillIssue": {
+    "description": "State shown on the banned page",
+    "message": "Skill issue tbh"
+  },
+  "cripsum.settings": {
+    "description": "Shown on the settings / impostazioni page",
+    "message": "Settings"
+  },
+  "cripsum.messingSetting": {
+    "description": "State shown on the settings page",
+    "message": "Messing with the settings"
+  },
+  "cripsum.adminPanel": {
+    "description": "Shown on the admin panel page",
+    "message": "Admin Panel"
+  },
+  "cripsum.inAdminPanel": {
+    "description": "State shown on the admin panel page",
+    "message": "In the admin panel"
+  },
+  "cripsum.exploringHomepage": {
+    "description": "Shown on the homepage",
+    "message": "Exploring the homepage"
+  },
+  "cripsum.welcomeToSite": {
+    "description": "State shown on the homepage",
+    "message": "Welcome to the site"
+  },
+  "cripsum.exploringCripsum": {
+    "description": "Fallback details shown on unknown pages",
+    "message": "Exploring Cripsum.com"
+  },
+  "cripsum.lookingForSecrets": {
+    "description": "Fallback state shown on unknown pages",
+    "message": "Looking for secrets"
+  }
+}

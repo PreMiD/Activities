@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "963536045180350474",
+    "name": "cripsum"
+  },
+  "service": "Cripsum.com",
+  "description": {
+    "en": "Cripsum.com is an ironic website where you can find games, memes, lootboxes, custom profiles, achievements, community posts, editing and many secrets to discover.",
+    "it": "Cripsum.com è un sito ironico dove puoi trovare giochi, meme, lootbox, profili custom, achievements, post della community, editing e tanti segreti da scoprire."
+  },
+  "url": "cripsum.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*cripsum[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/QfiBrJL.jpeg",
+  "thumbnail": "https://i.imgur.com/6ai8WUr.jpeg",
+  "color": "#230954",
+  "category": "other",
+  "tags": [
+    "memes",
+    "games",
+    "community",
+    "gacha"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}
