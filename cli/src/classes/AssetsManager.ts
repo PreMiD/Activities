@@ -1,12 +1,11 @@
 import type { ActivityMetadata } from './ActivityCompiler.js'
-import { createReadStream, createWriteStream } from 'node:fs'
+import { createWriteStream, openAsBlob } from 'node:fs'
 import { readFile, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { extname, join, resolve } from 'node:path'
 import process from 'node:process'
 import { pipeline } from 'node:stream/promises'
 import * as core from '@actions/core'
-import FormData from 'form-data'
 import { globby } from 'globby'
 import got from 'got'
 import { inc } from 'semver'
@@ -540,7 +539,8 @@ export class AssetsManager {
 
       await Promise.all(
         batch.map(async ([url, { url: newUrl, method }]) => {
-          const tempFile = join(tmpdir(), `premid-assetmanager-${Math.random().toString(36).substring(2, 15)}${this.getExtensionFromUrl(url)}`)
+          const tempFileName = `premid-assetmanager-${Math.random().toString(36).substring(2, 15)}${this.getExtensionFromUrl(url)}`
+          const tempFile = join(tmpdir(), tempFileName)
 
           core.info(`Uploading ${url} to ${newUrl}, method: ${method}`)
 
@@ -553,16 +553,16 @@ export class AssetsManager {
             },
           }), createWriteStream(tempFile))
 
-          const form = new FormData()
-          form.append('file', createReadStream(tempFile), {
-            contentType: this.getMimeTypeFromExtension(this.getExtensionFromUrl(url).slice(1)),
+          const data = await openAsBlob(tempFile, {
+            type: this.getMimeTypeFromExtension(this.getExtensionFromUrl(url).slice(1)),
           })
+          const form = new FormData()
+          form.append('file', data, tempFileName)
 
           await got(newUrl, {
             method,
             headers: {
               Authorization: process.env.CDN_TOKEN,
-              ...form.getHeaders(),
             },
             body: form,
             retry: {
