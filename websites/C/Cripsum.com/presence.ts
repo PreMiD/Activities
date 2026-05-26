@@ -282,30 +282,6 @@ presence.on('UpdateData', async () => {
     presenceData.state = unlocked ? `${strings.unlockedAchievements} ${unlocked}/${totalAchievements}` : strings.huntingAchievements
   }
 
-  else if (path.includes('goonland/goon-generator')) {
-    presenceData.details = strings.goonGenerator
-    presenceData.state = strings.gooning
-    presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.goonrpcimg')?.src
-  }
-
-  else if (path.includes('goonland/anime-girl-quiz')) {
-    presenceData.details = strings.waifuQuiz
-    presenceData.state = strings.findingSoulmate
-    presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.goonrpcimg')?.src
-  }
-
-  else if (path.includes('goonland/smash-or-pass')) {
-    presenceData.details = strings.smashOrPass
-    presenceData.state = strings.toughChoices
-    presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.goonrpcimg')?.src
-  }
-
-  else if (path.includes('goonland')) {
-    presenceData.details = strings.goonland
-    presenceData.state = strings.exploringGoonland
-    presenceData.largeImageKey = document.querySelector<HTMLImageElement>('.goonrpcimg')?.src
-  }
-
   else if (path.includes('download/fortnite')) {
     presenceData.details = strings.downloads
     presenceData.state = strings.downloadingFortnite
