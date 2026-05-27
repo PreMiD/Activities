@@ -18,7 +18,7 @@
     "it.findagrave.com"
   ],
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*findagrave[.]com[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Find%20A%20Grave/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Find%20A%20Grave/assets/thumbnail.png",
   "color": "#4a7c59",
