@@ -32,12 +32,7 @@
       "id": "privacyMode",
       "icon": "fas fa-user-secret",
       "title": "Privacy Mode",
-      "value": false
-    },
-    {
-      "id": "multilingual",
-      "type": "toggle",
-      "default": false,
+      "value": false,
       "allowURLOverrides": true
     }
   ]
