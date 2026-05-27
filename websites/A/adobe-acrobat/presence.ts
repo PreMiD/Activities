@@ -51,8 +51,15 @@ function parseBookString(raw: string): { title: string | null, author: string | 
   return { title, author }
 }
 
+function normalizeDocumentTitle(rawTitle: string): string {
+  return rawTitle
+    .replace(/\s*[-|•]\s*Adobe Acrobat(?:\s+Online)?\s*$/i, '')
+    .replace(/\s*::\s*Adobe Acrobat\s*$/i, '')
+    .trim()
+}
+
 function parseDocumentTitle() {
-  return parseBookString(document.title?.trim() ?? '')
+  return parseBookString(normalizeDocumentTitle(document.title?.trim() ?? ''))
 }
 
 function titleSimilarity(a: string, b: string): number {
@@ -179,6 +186,44 @@ function applyPlaceholders(
   return result.trim()
 }
 
+function cleanupUnresolvedPlaceholders(text: string): string {
+  return text
+    .replace(/%[a-z0-9_]+%?/gi, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+}
+
+function getCurrentPage(): string | undefined {
+  const selectors = [
+    '.PageNumberUI__pageNumberInputModern___jDxM-',
+    'input[aria-label*="Page"]',
+    'input[name="pageNumber"]',
+  ]
+
+  for (const selector of selectors) {
+    const value = (document.querySelector(selector) as HTMLInputElement | null)?.value?.trim()
+    if (value && /^\d+$/.test(value))
+      return value
+  }
+}
+
+function getTotalPages(): string | undefined {
+  const selectors = [
+    '.PageNumberUI__totalPagesModern___wcFXK',
+    '[class*="totalPages"]',
+    '[aria-label*="Total pages"]',
+  ]
+
+  for (const selector of selectors) {
+    const raw = document.querySelector(selector)?.textContent?.trim()
+    if (!raw)
+      continue
+    const match = raw.match(/\d+/)
+    if (match?.[0])
+      return match[0]
+  }
+}
+
 async function updatePresence() {
   checkForBookChange()
 
@@ -204,16 +249,18 @@ async function updatePresence() {
 
     presenceData.largeImageKey = currentCoverUrl
 
-    const currentPage = (
-      document.querySelector('.PageNumberUI__pageNumberInputModern___jDxM-') as HTMLInputElement | null
-    )?.value
+    const currentPage = getCurrentPage()
+    const totalPages = getTotalPages()
 
-    const totalPages = (
-      document.querySelector('.PageNumberUI__totalPagesModern___wcFXK') as HTMLDivElement | null
-    )?.textContent?.trim()
+    const detailsSetting = await presence.getSetting<string>('details')
+    const stateSetting = await presence.getSetting<string>('state')
 
-    const detailsTemplate = (await presence.getSetting<string>('details')) ?? '%title%'
-    const stateTemplate = (await presence.getSetting<string>('state')) ?? 'Page %page% of %total%'
+    const detailsTemplate = typeof detailsSetting === 'string' && detailsSetting.trim()
+      ? detailsSetting
+      : '%title%'
+    const stateTemplate = typeof stateSetting === 'string' && stateSetting.trim()
+      ? stateSetting
+      : 'Page %page% of %total%'
 
     const placeholders = {
       title: pdfTitle ?? undefined,
@@ -222,8 +269,11 @@ async function updatePresence() {
       total: totalPages ?? undefined,
     }
 
-    presenceData.details = applyPlaceholders(detailsTemplate, placeholders) || pdfTitle || 'Reading a PDF'
-    presenceData.state = applyPlaceholders(stateTemplate, placeholders)
+    const detailsText = cleanupUnresolvedPlaceholders(applyPlaceholders(detailsTemplate, placeholders))
+    const stateText = cleanupUnresolvedPlaceholders(applyPlaceholders(stateTemplate, placeholders))
+
+    presenceData.details = detailsText || pdfTitle || 'Reading a PDF'
+    presenceData.state = stateText || (currentPage && totalPages ? `Page ${currentPage} of ${totalPages}` : '')
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = 'Reading'
   }
