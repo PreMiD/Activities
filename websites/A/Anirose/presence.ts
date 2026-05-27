@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'icon',
+  Logo = 'https://raw.githubusercontent.com/CE-Timmer/PreMid-Extensions/main/image_2026-05-20_000800002%20(1)-resized-to-512x512.png',
 }
 
 let watchStartedAt = Math.floor(Date.now() / 1000)
