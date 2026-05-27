@@ -33,6 +33,12 @@
       "icon": "fas fa-user-secret",
       "title": "Privacy Mode",
       "value": false
+    },
+    {
+      "id": "urlOverrides",
+      "type": "toggle",
+      "default": false,
+      "allowURLOverrides": true
     }
   ]
 }
