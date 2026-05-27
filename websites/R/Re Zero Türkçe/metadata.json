@@ -7,8 +7,8 @@
   },
   "service": "Re:Zero Türkçe",
   "description": {
-    "en": "Discord Rich Presence activity for Re:Zero Türkçe.",
-    "tr": "Re:Zero Türkçe için Discord Rich Presence aktivitesi."
+    "en": "Read Re:Zero in Turkish! We quickly translate anime, manga, and light novel chapters into Turkish. Join the adventure and start reading!",
+    "tr": "Re:Zero Türkçe Novel Oku! Anime, manga ve novel bölümlerini hızla Türkçeye çeviriyoruz. Sen de bu maceraya ortak olmak için hemen okumaya başla!"
   },
   "url": "www.rezeroturkce.com",
   "regExp": "^https?[:][/][/]((www)[.])?rezeroturkce[.]com[/]",
