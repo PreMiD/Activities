@@ -35,7 +35,7 @@
       "value": false
     },
     {
-      "id": "urlOverrides",
+      "id": "multilingual",
       "type": "toggle",
       "default": false,
       "allowURLOverrides": true
