@@ -12,9 +12,9 @@
   },
   "url": "bourgestelevision.fr",
   "regExp": "^https?[:][/][/]bourgestelevision[.]fr[/]",
-  "version": "1.0.0",
-  "logo": "https://i.ibb.co/yBY6V8RK/OAuth-Icon-512.png",
-  "thumbnail": "https://bourgestelevision.fr/og-image.jpg",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bourges%20T%C3%A9l%C3%A9vision/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bourges%20T%C3%A9l%C3%A9vision/assets/thumbnail.jpg",
   "color": "#E63329",
   "category": "videos",
   "tags": [

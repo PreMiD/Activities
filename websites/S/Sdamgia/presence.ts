@@ -142,7 +142,7 @@ presence.on('UpdateData', async () => {
   const { pathname, hostname, search } = document.location
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://i.imgur.com/7uZXeCU.png',
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/S/Sdamgia/assets/logo.png',
   }
 
   // Special top-level subdomains

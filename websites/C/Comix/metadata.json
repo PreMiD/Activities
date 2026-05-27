@@ -5,15 +5,21 @@
     "id": "339316517558681610",
     "name": "firstoften"
   },
+  "contributors": [
+    {
+      "id": "932176594045378590",
+      "name": "niko_vax"
+    }
+  ],
   "service": "Comix",
   "description": {
     "en": "Next-Gen Manga Experience."
   },
   "url": "comix.to",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*comix[.]to[/]",
-  "version": "1.2.0",
-  "logo": "https://raw.githubusercontent.com/sirschubert/assets/refs/heads/main/assets/communityIcon_p626ghkfd91g1.png",
-  "thumbnail": "https://styles.redditmedia.com/t5_4vwp6n/styles/bannerBackgroundImage_iye1rp7mj91g1.png",
+  "version": "1.3.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Comix/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Comix/assets/logo.png",
   "color": "#000000",
   "category": "anime",
   "tags": [

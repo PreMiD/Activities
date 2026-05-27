@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/78zp1Xo.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AMLL%20TTML%20Tool/assets/logo.png',
 }
 
 const strings = presence.getStrings({
