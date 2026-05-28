@@ -1,4 +1,4 @@
-import { Assets, StatusDisplayType } from 'premid'
+import { Assets, StatusDisplayType, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1468581338117308446',
@@ -26,20 +26,6 @@ function registerSlideshowKey(key: string): boolean {
   return true
 }
 
-// Custom function needed: PreMiD's Activity class does not provide a built-in
-// method to parse human-readable duration strings ("HH:MM:SS" or "MM:SS") into
-// numeric seconds. This is necessary to compute elapsed time from DOM elements
-// that display the running stopwatch value as formatted text.
-function parseElapsedToSeconds(elapsed: string): number {
-  const parts = elapsed.split(':').map(Number)
-  if ((parts.length === 3 || parts.length === 2) && parts.every(p => Number.isFinite(p))) {
-    return parts.length === 3
-      ? parts[0]! * 3600 + parts[1]! * 60 + parts[2]!
-      : parts[0]! * 60 + parts[1]!
-  }
-  return 0
-}
-
 // Custom function needed: PreMiD does not expose a built-in formatter for
 // converting raw seconds into a "HH:MM hours" display string. This formatting
 // is required to present tracked time summaries in the activity state field.
@@ -49,11 +35,11 @@ function secondsToHHMM(seconds: number): string {
   return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} hours`
 }
 
-// Custom function needed: Combines parseElapsedToSeconds and secondsToHHMM with
-// input validation in a single step. No native PreMiD equivalent exists for
-// safely parsing DOM duration text and producing a formatted fallback.
+// Custom function needed: Combines timestampFromFormat and secondsToHHMM with
+// input validation in a single step. timestampFromFormat handles format parsing;
+// this wrapper adds safety for raw DOM text and produces a fallback for invalid input.
 function formatDuration(raw: string): string {
-  const seconds = parseElapsedToSeconds(raw)
+  const seconds = timestampFromFormat(raw)
   return Number.isNaN(seconds) || seconds <= 0 ? raw.trim() : secondsToHHMM(seconds)
 }
 
@@ -75,7 +61,7 @@ function sumProjectTimeToday(projectName: string, elapsedSeconds: number): strin
 
     const value = entry.querySelector<HTMLInputElement>('input:not([type="hidden"])')?.value?.trim()
     if (value && /^\d{1,2}:\d{2}(?::\d{2})?$/.test(value))
-      totalSeconds += parseElapsedToSeconds(value)
+      totalSeconds += timestampFromFormat(value)
   }
 
   return totalSeconds > 0 ? secondsToHHMM(totalSeconds) : null
@@ -108,7 +94,7 @@ presence.on('UpdateData', async () => {
       const taskDescription = document.querySelector<HTMLInputElement>('.cl-input-timetracker-main')?.title?.trim()
       const projectName = document.querySelector('.cl-project-name span')?.textContent?.trim()
 
-      const seconds = parseElapsedToSeconds(elapsed)
+      const seconds = timestampFromFormat(elapsed)
       const projectTimeToday = projectName ? sumProjectTimeToday(projectName, seconds) : null
 
       const startKey = `${taskDescription}|${projectName}`

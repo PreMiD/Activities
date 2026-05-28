@@ -11,7 +11,7 @@
     "pt-br": "Rastreie tempo e gerencie projetos com o Clockify."
   },
   "url": "clockify.me",
-  "regExp": "^https?:\\/\\/([a-z0-9-]+\\.)*clockify\\.me\\/",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*clockify[.]me[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/E0XR3mN.png",
   "thumbnail": "https://i.imgur.com/4fjcJ9L.png",
