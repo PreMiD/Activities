@@ -1,22 +1,24 @@
 {
-  "$schema": "https://raw.githubusercontent.com/PreMiD/schemas/main/metadata.schema.json",
+  "$schema": "https://schemas.premid.app/metadata/1.7",
   "author": {
     "id": "123456789012345678",
     "name": "Vxlancity"
   },
+  "service": "Megakino",
   "description": {
     "en": "Shows what you are watching on Megakino.",
     "de": "Zeigt, was du auf Megakino anschaust."
   },
-  "color": "#123456",
-  "category": "Anime",
-  "name": "Megakino",
-  "service": "Megakino",
-  "tags": [
-    "movies",
-    "series",
-    "kino"
-  ],
   "url": "megakino4.to",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Megakino/assets/logo.png",
+  "color": "#123456",
+  "tags": [
+    "kino",
+    "movies",
+    "series"
+  ],
+  "category": "videos",
+  "regExp": "([a-z0-9-]+[.])*(megakino4)[.]to",
+  "name": "Megakino"
 }
