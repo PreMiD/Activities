@@ -13,8 +13,8 @@
   "url": "basketball-reference.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*basketball-reference[.]com[/]",
   "version": "1.0.0",
-  "logo": "https://www.basketball-reference.com/favicon.ico",
-  "thumbnail": "https://www.basketball-reference.com/favicon.ico",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BasketballReference/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BasketballReference/assets/logo.png",
   "color": "#ff9900",
   "category": "other",
   "tags": [
