@@ -138,6 +138,9 @@ presence.on('UpdateData', async () => {
     else if (paths[0] === 'trades') {
       presenceData.state = 'Trades'
     }
+    else if (paths[0] === 'leaderboard') {
+      presenceData.state = 'Checking the RAP Leaderboard'
+    }
     else if (paths[0] === 'games') {
       const gameStatus = getGameData()
       if (gameStatus) {
