@@ -1,26 +1,26 @@
 {
-	"$schema": "https://schemas.premid.app/metadata/1.16",
-	"apiVersion": 1,
-	"author": {
-		"id": "1495950265998905409",
-		"name": "vituhas"
-	},
-	"service": "Basketball Reference",
-	"description": {
-		"en": "Displays your NBA stats, player profiles, and team rosters from Basketball Reference on Discord.",
-		"pt": "Mostra as estatísticas da NBA, perfis de jogadores e times do Basketball Reference no seu Discord."
-	},
-	"url": "basketball-reference.com",
-	"regExp": "^https?:[/][/]([a-z0-9-]+[.])*basketball-reference[.]com[/]",
-	"version": "1.0.0",
-	"logo": "https://i.imgur.com/7OIaOVU.png",
-	"thumbnail": "https://i.imgur.com/uZWtmoG.png",
-	"color": "#ff9900",
-	"category": "other",
-	"tags": [
-		"nba",
-		"basketball",
-		"sports",
-		"stats"
-	]
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1495950265998905409",
+    "name": "vituhas"
+  },
+  "service": "Basketball Reference",
+  "description": {
+    "en": "Displays your NBA stats, player profiles, and team rosters from Basketball Reference on Discord.",
+    "pt": "Mostra as estatísticas da NBA, perfis de jogadores e times do Basketball Reference no seu Discord."
+  },
+  "url": "basketball-reference.com",
+  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*basketball-reference[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/7OIaOVU.png",
+  "thumbnail": "https://i.imgur.com/uZWtmoG.png",
+  "color": "#ff9900",
+  "category": "other",
+  "tags": [
+    "nba",
+    "basketball",
+    "sports",
+    "stats"
+  ]
 }
