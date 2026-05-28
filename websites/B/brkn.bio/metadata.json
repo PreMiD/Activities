@@ -1,20 +1,20 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "afton77",
     "id": "477255792878288898"
   },
-  "contributors": [],
   "service": "brkn.bio",
   "description": {
-    "en": "Show your brkn.bio profile on Discord."
+    "en": "The ultimate bio link for creators and cyber-enthusiasts. Customise your profile, share your socials, and track your traffic for free.",
+    "pt": "O link de bio definitivo para criadores e entusiastas cibernéticos. Personalize seu perfil, compartilhe suas redes sociais e acompanhe seu tráfego gratuitamente."
   },
   "url": "brkn.bio",
-  "regExp": "brkn\\.bio\\/?[^\\/]*",
+  "regExp": "^https?[:][/][/]brkn[.]bio[/]",
   "version": "1.0.0",
-  "logo": "https://raw.githubusercontent.com/GustavoSilvadeCarvalho/Activities/main/websites/B/brkn.bio/logo.png",
-  "thumbnail": "https://raw.githubusercontent.com/GustavoSilvadeCarvalho/Activities/main/websites/B/brkn.bio/logo.png",
+  "logo": "https://i.imgur.com/vHHYr08.png",
+  "thumbnail": "https://i.imgur.com/ZNX1I19.png",
   "color": "#ffffff",
   "category": "socials",
   "tags": ["profile", "biopage", "social"],

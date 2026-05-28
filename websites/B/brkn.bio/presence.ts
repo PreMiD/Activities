@@ -6,7 +6,7 @@ const startTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'logo',
+    largeImageKey: 'https://i.imgur.com/vHHYr08.png',
     startTimestamp,
   }
 
@@ -14,7 +14,7 @@ presence.on('UpdateData', async () => {
   const isProfilePage = path.length > 1 && !path.includes('/settings')
 
   if (!isProfilePage) {
-    presence.setActivity()
+    presence.clearActivity()
     return
   }
 
@@ -32,8 +32,10 @@ presence.on('UpdateData', async () => {
   )
   const avatarUrl = avatarEl ? avatarEl.src : null
 
-  const showButton = await presence.getSetting<boolean>('showButton')
-  const showTime = await presence.getSetting<boolean>('showTime')
+  const [showButton, showTime] = await Promise.all([
+    presence.getSetting<boolean>('showButton'),
+    presence.getSetting<boolean>('showTime')
+  ]);
 
   presenceData.details = username
 
@@ -51,7 +53,7 @@ presence.on('UpdateData', async () => {
   if (showButton) {
     presenceData.buttons = [
       {
-        label: 'Ver perfil',
+        label: 'Ver Perfil',
         url: `https://www.brkn.bio${path}`,
       },
     ]
