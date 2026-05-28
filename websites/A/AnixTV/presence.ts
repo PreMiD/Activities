@@ -19,15 +19,15 @@ presence.on('UpdateData', async () => {
     presenceData.state = 'Home'
   }
   else if (pathname.includes('/anime-watch')) {
-    const title
-      = document.querySelector('.anis-title-detail .main-name')?.textContent?.trim()
-      || document.querySelector('meta[property="og:title"]')?.getAttribute('content')
-      || document.title
+    const title =
+        document.querySelector('.anis-title-detail .main-name')?.textContent?.trim()
+        || document.querySelector('meta[property="og:title"]')?.getAttribute('content')
+        || document.title
 
-    const episode
-      = document.querySelector('.ep-name')?.textContent?.trim()
-      || document.querySelector('.anis-ep-name')?.textContent?.trim()
-      || document.querySelector('.current-ep')?.textContent?.trim()
+    const episode =
+        document.querySelector('.ep-name')?.textContent?.trim()
+        || document.querySelector('.anis-ep-name')?.textContent?.trim()
+        || document.querySelector('.current-ep')?.textContent?.trim()
 
     const cover = document.querySelector('meta[property="og:image"]')?.getAttribute('content')
 
@@ -58,10 +58,10 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (pathname.includes('/anime-details')) {
-    const title
-      = document.querySelector('.anime-name')?.textContent?.trim()
-      || document.querySelector('meta[property="og:title"]')?.getAttribute('content')
-      || document.title
+    const title =
+        document.querySelector('.anime-name')?.textContent?.trim()
+        || document.querySelector('meta[property="og:title"]')?.getAttribute('content')
+        || document.title
 
     presenceData.details = 'Viewing anime details'
     presenceData.state = title || 'Unknown anime'
@@ -72,9 +72,9 @@ presence.on('UpdateData', async () => {
     presenceData.state = query ? `"${query}"` : undefined
   }
   else if (pathname.includes('/genre') || pathname.includes('/category')) {
-    const genre
-      = document.querySelector('.title')?.textContent?.trim()
-      || 'a genre'
+    const genre =
+        document.querySelector('.title')?.textContent?.trim()
+        || 'a genre'
     presenceData.details = 'Browsing by genre'
     presenceData.state = genre
   }
