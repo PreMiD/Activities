@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-const Logo = 'https://i.imgur.com/4lU3x0V.png'
+const Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/Asya%20Animeleri/assets/logo.png'
 
 interface PageInfo {
   animeName: string

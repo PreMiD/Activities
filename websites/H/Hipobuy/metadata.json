@@ -22,9 +22,9 @@
     "www.hipobuy.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?hipobuy[.]com[/]?",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/pyXT0kP.png",
-  "thumbnail": "https://i.imgur.com/yfEp1n3.png",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hipobuy/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hipobuy/assets/thumbnail.png",
   "color": "#FF6600",
   "category": "other",
   "tags": [

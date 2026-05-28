@@ -5,13 +5,13 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Settings = 'https://raw.githubusercontent.com/nikovaxx/Pics/refs/heads/main/Settings.png',
-  Notification = 'https://raw.githubusercontent.com/nikovaxx/Pics/refs/heads/main/Notification.png',
+  Settings = 'https://cdn.rcd.gg/PreMiD/websites/C/Comix/assets/0.png',
+  Notification = 'https://cdn.rcd.gg/PreMiD/websites/C/Comix/assets/1.png',
 }
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://raw.githubusercontent.com/sirschubert/assets/refs/heads/main/assets/communityIcon_p626ghkfd91g1.png',
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/C/Comix/assets/thumbnail.png',
   }
 
   const { pathname, search } = document.location
