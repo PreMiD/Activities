@@ -53,5 +53,11 @@
   "vscord.enable": false,
   "yaml.schemas": {
     "https://json.schemastore.org/github-issue-config.json": "../.github/ISSUE_TEMPLATE/config.yml"
-  }
+  },
+  "json.schemas": [
+    {
+      "fileMatch": ["**/metadata.json"],
+      "url": "https://schemas.premid.app/metadata/1.16"
+    }
+  ]
 }
