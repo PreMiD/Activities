@@ -11,14 +11,14 @@ presence.on('UpdateData', async () => {
   if (/^\/players\/[a-z]\/\w+\.html/.test(pathname)) {
     const playerName
       = (document.querySelector('h1[itemprop=\'name\']')?.textContent || '').trim()
-      || (document.title.split(' Stats')[0] || '').trim()
+        || (document.title.split(' Stats')[0] || '').trim()
     presenceData.details = 'Viewing player stats'
     presenceData.state = playerName
   }
   else if (/^\/teams\/[A-Z]+\/\d+\.html/.test(pathname)) {
     const teamName
       = (document.querySelector('h1')?.textContent || '').trim()
-      || (document.title.split(' Roster')[0] || '').trim()
+        || (document.title.split(' Roster')[0] || '').trim()
     presenceData.details = 'Viewing team stats'
     presenceData.state = teamName
   }
