@@ -22,7 +22,7 @@
   "regExp": "^https?[:][/][/](www[.])?(net22|net52|netmirror)[.](cc|io)[/]",
   "version": "1.0.0",
   "logo": "https://netmirror.io/images/icon-512.png",
-  "thumbnail": "https://netmirror.io/images/app-screenshots/SS-HOME-MAIN.webp",
+  "thumbnail": "https://netmirror.io/images/app-screenshots/SS-PLAYER-ACTIVE.webp",
   "color": "#e11d48",
   "category": "videos",
   "tags": [
