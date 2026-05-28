@@ -1,19 +1,19 @@
 const presence = new Presence({
   clientId: '1509466786779758674',
 })
- 
+
 const browsingTimestamp = Math.floor(Date.now() / 1000)
- 
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'logo',
     startTimestamp: browsingTimestamp,
     type: 3,
   }
- 
+
   const { pathname, search } = document.location
   const params = new URLSearchParams(search)
- 
+
   if (pathname === '/' || pathname === '/home') {
     presenceData.details = 'Browsing AnixTV'
     presenceData.state = 'Home'
@@ -22,24 +22,24 @@ presence.on('UpdateData', async () => {
     const title = document.querySelector('.anis-title-detail .main-name')?.textContent?.trim()
       || document.querySelector('meta[property="og:title"]')?.getAttribute('content')
       || document.title
- 
+
     const episode = document.querySelector('.ep-name')?.textContent?.trim()
       || document.querySelector('.anis-ep-name')?.textContent?.trim()
       || document.querySelector('.current-ep')?.textContent?.trim()
- 
+
     const cover = document.querySelector('meta[property="og:image"]')?.getAttribute('content')
- 
+
     presenceData.details = title ? `Watching: ${title}` : 'Watching an anime'
- 
+
     if (episode) {
       presenceData.state = episode
     }
- 
+
     if (cover && cover.startsWith('http')) {
       presenceData.smallImageKey = cover
       presenceData.smallImageText = title || 'AnixTV'
     }
- 
+
     const video = document.querySelector<HTMLVideoElement>('video')
     if (video && !video.paused && video.duration) {
       const [start, end] = [
@@ -59,7 +59,7 @@ presence.on('UpdateData', async () => {
     const title = document.querySelector('.anime-name')?.textContent?.trim()
       || document.querySelector('meta[property="og:title"]')?.getAttribute('content')
       || document.title
- 
+
     presenceData.details = 'Viewing anime details'
     presenceData.state = title || 'Unknown anime'
   }
@@ -77,7 +77,7 @@ presence.on('UpdateData', async () => {
   else {
     presenceData.details = 'Browsing AnixTV'
   }
- 
+
   if (presenceData.details) {
     presence.setActivity(presenceData)
   }
@@ -85,4 +85,3 @@ presence.on('UpdateData', async () => {
     presence.clearActivity()
   }
 })
- 
