@@ -13,7 +13,7 @@
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(senku-library[.]vercel[.]app|localhost:[0-9]+)[/]",
   "version": "1.0.0",
   "logo": "https://senku-library.vercel.app/favicon.png",
-  "thumbnail": "https://senku-library.vercel.app/favicon.png",
+  "thumbnail": "https://senku-library.vercel.app/premid/thumbnail.png",
   "color": "#3b82f6",
   "category": "other",
   "tags": [
