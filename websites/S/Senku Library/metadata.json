@@ -22,7 +22,7 @@
     "ai"
   ],
   "iframe": true,
-  "iFrameRegExp": "youtube\\.com|youtube-nocookie\\.com",
+  "iFrameRegExp": "youtube[.]com|youtube-nocookie[.]com",
   "settings": [
     {
       "id": "showTimestamps",
