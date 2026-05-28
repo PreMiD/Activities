@@ -11,18 +11,6 @@
     "description": "Shown while the lootbox animation is playing",
     "message": "Testing their luck"
   },
-  "cripsum.readingArticle": {
-    "description": "Shown when reading an article. ' is the article title.",
-    "message": "Reading: "
-  },
-  "cripsum.readArticle": {
-    "description": "Label for the 'Read article' button",
-    "message": "Read article"
-  },
-  "cripsum.userProfile": {
-    "description": "Shown when viewing a user profile page",
-    "message": "User profile"
-  },
   "cripsum.lookingAtProfile": {
     "description": "Shown when viewing a specific user's profile.",
     "message": "Looking at"
@@ -34,14 +22,6 @@
   "cripsum.stalkingProfiles": {
     "description": "Shown when on a profile page but no username is found",
     "message": "Stalking profiles"
-  },
-  "cripsum.visitProfile": {
-    "description": "Label for the 'Visit Profile' button",
-    "message": "Visit Profile"
-  },
-  "cripsum.watchingEdit": {
-    "description": "Shown when watching a specific edit. ' is the title.",
-    "message": "Watching: "
   },
   "cripsum.watchingEdits": {
     "description": "Shown when on the edits page but no specific edit is active",
@@ -119,38 +99,6 @@
     "description": "Shown when on achievements page but no count is found",
     "message": "Hunting for achievements"
   },
-  "cripsum.goonGenerator": {
-    "description": "Shown on the Goon Generator page",
-    "message": "Goon Generator"
-  },
-  "cripsum.gooning": {
-    "description": "State shown on Goon Generator",
-    "message": "Gooning"
-  },
-  "cripsum.waifuQuiz": {
-    "description": "Shown on the Waifu Quiz page",
-    "message": "Waifu Quiz"
-  },
-  "cripsum.findingSoulmate": {
-    "description": "State shown on the Waifu Quiz page",
-    "message": "Finding their 2D soulmate"
-  },
-  "cripsum.smashOrPass": {
-    "description": "Shown on the Smash or Pass page",
-    "message": "Smash or Pass"
-  },
-  "cripsum.toughChoices": {
-    "description": "State shown on the Smash or Pass page",
-    "message": "Making very tough choices"
-  },
-  "cripsum.goonland": {
-    "description": "Shown on the Goonland landing page",
-    "message": "Goonland"
-  },
-  "cripsum.exploringGoonland": {
-    "description": "State shown on the Goonland landing page",
-    "message": "Exploring Goonland"
-  },
   "cripsum.downloads": {
     "description": "Shown on any download page",
     "message": "Downloads"
@@ -170,10 +118,6 @@
   "cripsum.downloadingStuff": {
     "description": "Fallback shown on any other download page",
     "message": "Downloading stuff"
-  },
-  "cripsum.store": {
-    "description": "Shown on the store page",
-    "message": "Store"
   },
   "cripsum.buyingStuff": {
     "description": "State shown on the store page",

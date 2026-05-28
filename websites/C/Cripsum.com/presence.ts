@@ -23,14 +23,14 @@ async function getStrings() {
     openingLootbox: 'cripsum.openingLootbox',
     justPulled: 'cripsum.justPulled',
     testingLuck: 'cripsum.testingLuck',
-    readingArticle: 'cripsum.readingArticle',
-    readArticle: 'cripsum.readArticle',
-    userProfile: 'cripsum.userProfile',
+    readingArticle: 'general.reading',
+    readArticle: 'general.buttonReadArticle',
+    userProfile: 'general.viewAProfile',
     lookingAtProfile: 'cripsum.lookingAtProfile',
     profile: 'cripsum.profile',
     stalkingProfiles: 'cripsum.stalkingProfiles',
-    visitProfile: 'cripsum.visitProfile',
-    watchingEdit: 'cripsum.watchingEdit',
+    visitProfile: 'general.buttonViewProfile',
+    watchingEdit: 'general.watching',
     watchingEdits: 'cripsum.watchingEdits',
     listeningToTrack: 'cripsum.listeningToTrack',
     editsGallery: 'cripsum.editsGallery',
@@ -50,20 +50,12 @@ async function getStrings() {
     achievements: 'cripsum.achievements',
     unlockedAchievements: 'cripsum.unlockedAchievements',
     huntingAchievements: 'cripsum.huntingAchievements',
-    goonGenerator: 'cripsum.goonGenerator',
-    gooning: 'cripsum.gooning',
-    waifuQuiz: 'cripsum.waifuQuiz',
-    findingSoulmate: 'cripsum.findingSoulmate',
-    smashOrPass: 'cripsum.smashOrPass',
-    toughChoices: 'cripsum.toughChoices',
-    goonland: 'cripsum.goonland',
-    exploringGoonland: 'cripsum.exploringGoonland',
     downloads: 'cripsum.downloads',
     downloadingFortnite: 'cripsum.downloadingFortnite',
     downloadingOsu: 'cripsum.downloadingOsu',
     downloadingYoshukai: 'cripsum.downloadingYoshukai',
     downloadingStuff: 'cripsum.downloadingStuff',
-    store: 'cripsum.store',
+    store: 'general.store',
     buyingStuff: 'cripsum.buyingStuff',
     applyingForTeam: 'cripsum.applyingForTeam',
     sellingSoul: 'cripsum.sellingSoul',
@@ -112,16 +104,8 @@ async function getStrings() {
   })
 }
 
-let strings: Awaited<ReturnType<typeof getStrings>>
-let oldLang: string | null = null
-
 presence.on('UpdateData', async () => {
-  const newLang = await presence.getSetting<string>('lang').catch(() => 'en')
-
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
+  const strings = await getStrings()
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
