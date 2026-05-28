@@ -124,6 +124,36 @@ function getCoverImage(): string | undefined {
   return isUsableImage(metaImage) ? metaImage : undefined
 }
 
+async function processCoverImage(coverImage?: string): Promise<string | Blob | undefined> {
+  if (!coverImage) return undefined
+
+  if (coverImage.includes('imgcdn.kim') || coverImage.includes('img.nfmirrorcdn') || coverImage.includes('netmirror')) {
+    try {
+      const img = new Image()
+      img.crossOrigin = 'anonymous'
+      await new Promise((resolve, reject) => {
+        img.onload = resolve
+        img.onerror = reject
+        img.src = coverImage
+      })
+
+      const canvas = document.createElement('canvas')
+      canvas.width = img.naturalWidth
+      canvas.height = img.naturalHeight
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        ctx.drawImage(img, 0, 0)
+        const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve))
+        if (blob) return blob
+      }
+    } catch {
+      // Fallback
+    }
+  }
+
+  return coverImage
+}
+
 function getSearchQuery(): string | undefined {
   const params = new URLSearchParams(document.location.search)
   const query = ['q', 'query', 'search', 'keyword', 's']
@@ -327,21 +357,18 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = isPaused ? 'Paused' : 'Playing'
     delete presenceData.startTimestamp
 
-    let coverImage: string | undefined
+    let coverUrl: string | undefined
     if (isIframeVideo && videoData.seriesId) {
-      coverImage = `https://imgcdn.kim/poster/341/${videoData.seriesId}.jpg`
+      coverUrl = `https://imgcdn.kim/poster/341/${videoData.seriesId}.jpg`
     }
     else {
-      coverImage = getCoverImage()
+      coverUrl = getCoverImage()
     }
 
-    // Pirate CDNs block Discord's crawler. Wrap image in wsrv.nl proxy.
-    if (coverImage && (coverImage.includes('imgcdn.kim') || coverImage.includes('img.nfmirrorcdn') || coverImage.includes('netmirror'))) {
-      coverImage = `https://wsrv.nl/?url=${encodeURIComponent(coverImage)}`
-    }
+    const processedCover = await processCoverImage(coverUrl)
 
-    if (showCover && coverImage) {
-      presenceData.largeImageKey = coverImage
+    if (showCover && processedCover) {
+      presenceData.largeImageKey = processedCover as any
       presenceData.largeImageText = title
     }
 
@@ -395,20 +422,15 @@ presence.on('UpdateData', async () => {
       coverImage = getCoverImage() || ''
     }
 
-    // Pirate streaming CDNs often block Discord's image crawler (causing the ? icon).
-    // Let's use wsrv.nl Image Proxy, which is highly reliable,
-    // rarely blocked by Discord, and handles hotlinking well.
-    if (coverImage && (coverImage.includes('imgcdn.kim') || coverImage.includes('img.nfmirrorcdn') || coverImage.includes('netmirror'))) {
-      coverImage = `https://wsrv.nl/?url=${encodeURIComponent(coverImage)}`
-    }
+    const processedCover = await processCoverImage(coverImage)
 
     presenceData.details = titleText ? `Viewing ${titleText}` : 'Viewing details'
     presenceData.state = limitText(descriptionText) || 'Reading synopsis'
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = 'Viewing'
 
-    if (showCover && coverImage && isUsableImage(coverImage)) {
-      presenceData.largeImageKey = coverImage
+    if (showCover && processedCover && (processedCover instanceof Blob || isUsableImage(processedCover))) {
+      presenceData.largeImageKey = processedCover as any
       // Don't set largeImageText as per PreMiD guidelines since V2 unless requested, but V1 allows it
       presenceData.largeImageText = titleText || 'Details'
     }
@@ -427,19 +449,17 @@ presence.on('UpdateData', async () => {
 
   if (isDetailsPage(pathname)) {
     const title = getPageTitle()
-    let coverImage = getCoverImage()
+    const coverUrl = getCoverImage()
 
-    if (coverImage && (coverImage.includes('imgcdn.kim') || coverImage.includes('img.nfmirrorcdn') || coverImage.includes('netmirror'))) {
-      coverImage = `https://wsrv.nl/?url=${encodeURIComponent(coverImage)}`
-    }
+    const processedCover = await processCoverImage(coverUrl)
 
     presenceData.details = title ? 'Viewing title' : 'Viewing content'
     presenceData.state = limitText(title) ?? getSynopsis()
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = 'Viewing'
 
-    if (showCover && coverImage) {
-      presenceData.largeImageKey = coverImage
+    if (showCover && processedCover) {
+      presenceData.largeImageKey = processedCover as any
       presenceData.largeImageText = title
     }
 
