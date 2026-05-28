@@ -5,7 +5,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
-  const presenceData: PresenceData = {
+  const presenceData = {
     largeImageKey: 'logo',
     startTimestamp: browsingTimestamp,
     type: 3,
@@ -19,13 +19,15 @@ presence.on('UpdateData', async () => {
     presenceData.state = 'Home'
   }
   else if (pathname.includes('/anime-watch')) {
-    const title = document.querySelector('.anis-title-detail .main-name')?.textContent?.trim()
-      || document.querySelector('meta[property="og:title"]')?.getAttribute('content')
-      || document.title
+    const title =
+      document.querySelector('.anis-title-detail .main-name')?.textContent?.trim() ||
+      document.querySelector('meta[property="og:title"]')?.getAttribute('content') ||
+      document.title
 
-    const episode = document.querySelector('.ep-name')?.textContent?.trim()
-      || document.querySelector('.anis-ep-name')?.textContent?.trim()
-      || document.querySelector('.current-ep')?.textContent?.trim()
+    const episode =
+      document.querySelector('.ep-name')?.textContent?.trim() ||
+      document.querySelector('.anis-ep-name')?.textContent?.trim() ||
+      document.querySelector('.current-ep')?.textContent?.trim()
 
     const cover = document.querySelector('meta[property="og:image"]')?.getAttribute('content')
 
@@ -40,25 +42,22 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = title || 'AnixTV'
     }
 
-    const video = document.querySelector<HTMLVideoElement>('video')
+    const video = document.querySelector('video')
     if (video && !video.paused && video.duration) {
-      const [start, end] = [
-        Math.floor(Date.now() / 1000 - video.currentTime),
-        Math.floor(Date.now() / 1000 + (video.duration - video.currentTime)),
-      ]
-      presenceData.startTimestamp = start
-      presenceData.endTimestamp = end
+      presenceData.startTimestamp = Math.floor(Date.now() / 1000 - video.currentTime)
+      presenceData.endTimestamp = Math.floor(Date.now() / 1000 + (video.duration - video.currentTime))
     }
-    else if (video?.paused) {
+    else if (video && video.paused) {
       delete presenceData.startTimestamp
       presenceData.smallImageKey = 'pause'
       presenceData.smallImageText = 'Paused'
     }
   }
   else if (pathname.includes('/anime-details')) {
-    const title = document.querySelector('.anime-name')?.textContent?.trim()
-      || document.querySelector('meta[property="og:title"]')?.getAttribute('content')
-      || document.title
+    const title =
+      document.querySelector('.anime-name')?.textContent?.trim() ||
+      document.querySelector('meta[property="og:title"]')?.getAttribute('content') ||
+      document.title
 
     presenceData.details = 'Viewing anime details'
     presenceData.state = title || 'Unknown anime'
@@ -66,11 +65,10 @@ presence.on('UpdateData', async () => {
   else if (pathname.includes('/search') || search.includes('keyword=')) {
     const query = params.get('keyword') || ''
     presenceData.details = 'Searching for anime'
-    presenceData.state = query ? `"${query}"` : undefined
+    if (query) presenceData.state = `"${query}"`
   }
   else if (pathname.includes('/genre') || pathname.includes('/category')) {
-    const genre = document.querySelector('.title')?.textContent?.trim()
-      || 'a genre'
+    const genre = document.querySelector('.title')?.textContent?.trim() || 'a genre'
     presenceData.details = 'Browsing by genre'
     presenceData.state = genre
   }
