@@ -34,8 +34,8 @@ presence.on('UpdateData', async () => {
 
   const [showButton, showTime] = await Promise.all([
     presence.getSetting<boolean>('showButton'),
-    presence.getSetting<boolean>('showTime')
-  ]);
+    presence.getSetting<boolean>('showTime'),
+  ])
 
   presenceData.details = username
 
