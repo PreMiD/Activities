@@ -1,4 +1,4 @@
-import { Assets, getTimestampsFromMedia } from 'premid'
+import { Assets, getTimestampsFromMedia, ActivityType } from 'premid'
 
 const presence = new Presence({ clientId: '1505219461152636949' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -10,14 +10,10 @@ presence.on('UpdateData', () => {
   const releaseCover = document.querySelector('[data-premid-release-cover]')?.getAttribute('data-premid-release-cover')
 
   const presenceData: PresenceData = {
-    type: 3, // ActivityType.Watching
+    type: ActivityType.Watching,
     largeImageKey: 'https://i.imgur.com/0Qraju1.png',
     largeImageText: 'okiso.net',
-    startTimestamp: browsingTimestamp,
-    buttons: [
-      { label: 'Visit okiso.net', url: `https://okiso.net${pathname === '/' ? '' : pathname}` },
-      { label: 'Join Discord', url: 'https://discord.gg/okiso' },
-    ],
+    startTimestamp: browsingTimestamp
   }
 
   // ─── Global Overrides ───
@@ -118,7 +114,7 @@ presence.on('UpdateData', () => {
     const paused = musicContainer?.getAttribute('data-premid-paused') === 'true'
 
     // Override the main details if they are listening to music
-    presenceData.type = 2 // ActivityType.Listening
+    presenceData.type = ActivityType.Listening
     presenceData.details = paused ? `Paused: ${trackTitle}` : `Listening to ${trackTitle}`
     presenceData.state = `by ${artist || 'OKISO'}`
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
@@ -131,8 +127,7 @@ presence.on('UpdateData', () => {
 
     if (spotifyLink) {
       presenceData.buttons = [
-        { label: 'Listen on Spotify', url: spotifyLink },
-        { label: 'Join Discord', url: 'https://discord.gg/okiso' },
+        { label: 'Listen on Spotify', url: spotifyLink }
       ]
     }
 
@@ -144,6 +139,6 @@ presence.on('UpdateData', () => {
     presence.setActivity(presenceData)
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
   }
 })

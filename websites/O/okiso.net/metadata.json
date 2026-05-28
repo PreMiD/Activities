@@ -7,13 +7,13 @@
   },
   "service": "okiso.net",
   "description": {
-    "en": "Shows what you're watching on okiso.net"
+    "en": "The official creative archive and portfolio of VTuber and Producer OKISO."
   },
   "url": "okiso.net",
   "regExp": "^https?[:][/][/](www[.])?okiso[.]net[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/0Qraju1.png",
-  "thumbnail": "https://i.imgur.com/0Qraju1.png",
+  "thumbnail": "https://files.catbox.moe/0xklgv.png",
   "color": "#FF7EB3",
   "category": "music",
   "tags": [
