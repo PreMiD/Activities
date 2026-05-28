@@ -125,7 +125,8 @@ function getCoverImage(): string | undefined {
 }
 
 async function processCoverImage(coverImage?: string): Promise<string | Blob | undefined> {
-  if (!coverImage) return undefined
+  if (!coverImage)
+    return undefined
 
   if (coverImage.includes('imgcdn.kim') || coverImage.includes('img.nfmirrorcdn') || coverImage.includes('netmirror')) {
     try {
@@ -144,9 +145,11 @@ async function processCoverImage(coverImage?: string): Promise<string | Blob | u
       if (ctx) {
         ctx.drawImage(img, 0, 0)
         const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve))
-        if (blob) return blob
+        if (blob)
+          return blob
       }
-    } catch {
+    }
+    catch {
       // Fallback
     }
   }
