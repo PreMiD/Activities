@@ -1,4 +1,4 @@
-import { Assets, getTimestampsFromMedia, ActivityType } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({ clientId: '1505219461152636949' })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -13,7 +13,7 @@ presence.on('UpdateData', () => {
     type: ActivityType.Watching,
     largeImageKey: 'https://i.imgur.com/0Qraju1.png',
     largeImageText: 'okiso.net',
-    startTimestamp: browsingTimestamp
+    startTimestamp: browsingTimestamp,
   }
 
   // ─── Global Overrides ───
@@ -127,7 +127,7 @@ presence.on('UpdateData', () => {
 
     if (spotifyLink) {
       presenceData.buttons = [
-        { label: 'Listen on Spotify', url: spotifyLink }
+        { label: 'Listen on Spotify', url: spotifyLink },
       ]
     }
 
