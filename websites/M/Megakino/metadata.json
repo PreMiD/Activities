@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/PreMiD/schemas/main/metadata.schema.json",
+  "author": {
+    "id": "123456789012345678",
+    "name": "Vxlancity"
+  },
+  "description": {
+    "en": "Shows what you are watching on Megakino.",
+    "de": "Zeigt, was du auf Megakino anschaust."
+  },
+  "color": "#123456",
+  "category": "Anime",
+  "name": "Megakino",
+  "service": "megakino",
+  "tags": [
+    "movies",
+    "series",
+    "kino"
+  ],
+  "url": "megakino4.to",
+  "version": "1.0.0"
+}
