@@ -10,7 +10,7 @@
     "en": "Show your study progress, active lectures, and AI tutor sessions on Senku Library!"
   },
   "url": "senkulibrary.app",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(senku-library[.]vercel[.]app|localhost:[0-9]+)[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(senkulibrary[.]app)[/]",
   "version": "1.0.0",
   "logo": "https://senkulibrary.app/favicon.png",
   "thumbnail": "https://senkulibrary.app/premid/thumbnail.png",
