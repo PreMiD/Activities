@@ -85,7 +85,7 @@ presence.on('UpdateData', async () => {
 
   const prefixMap: Record<string, PresenceData> = {
     '/collaboFes/': { details: 'コラボフェス' },
-    '/produceMarathon/': { details: 'プロデュースイベント'},
+    '/produceMarathon/': { details: 'プロデュースイベント' },
   }
 
   const pathDetails = pathMap[currentRoute]?.details
