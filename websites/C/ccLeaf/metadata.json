@@ -9,11 +9,14 @@
   "description": {
     "en": "ccLeaf is an animation template platform where creators can quickly edit and export high-quality visuals without doing everything from scratch. It’s built for speed, simplicity, and clean results."
   },
-  "url": ["ccleaf.com", "app.ccleaf.com"],
+  "url": [
+    "ccleaf.com",
+    "app.ccleaf.com"
+  ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*ccleaf[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/fv1VJQR.png",
-  "thumbnail": "https://i.imgur.com/qhIVv23.png",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/ccLeaf/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/ccLeaf/assets/thumbnail.png",
   "color": "#000000",
   "category": "other",
   "tags": [

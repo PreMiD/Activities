@@ -1,281 +1,301 @@
-import { ActivityType, Assets, getTimestamps } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1487705643983835156',
 })
 
-let browsingTimestamp = Date.now()
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/Y/Youku/assets/0.png',
+}
+
+let browsingTimestamp = Math.floor(Date.now() / 1000)
 let wasWatchingVideo = false
-let lastVideoState: { paused: boolean, currentTime: number } | null = null
+
+async function getStrings() {
+  return presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    browse: 'general.browsing',
+    search: 'general.search',
+    watching: 'general.watching',
+    episode: 'general.episode',
+    watchVideo: 'general.buttonWatchVideo',
+    watchSeries: 'general.buttonWatchSeries',
+    viewPage: 'general.buttonViewPage',
+    watchingContent: 'youku.watchingContent',
+    browsingYouku: 'youku.browsingYouku',
+    homePage: 'youku.homePage',
+    searchingContent: 'youku.searchingContent',
+    lookingForVideos: 'youku.lookingForVideos',
+    browsingCategory: 'youku.browsingCategory',
+    exploringShows: 'youku.exploringShows',
+    exploringContent: 'youku.exploringContent',
+  })
+}
+
+let strings: Awaited<ReturnType<typeof getStrings>>
+let oldLang: string | null = null
+
+function findVideo(): HTMLVideoElement | null {
+  return document.querySelector<HTMLVideoElement>('video')
+    ?? document.querySelector<HTMLVideoElement>('.youku-player video')
+    ?? document.querySelector<HTMLVideoElement>('#player video')
+    ?? document.querySelector<HTMLVideoElement>('.prism-player video')
+}
+
+// Cache the portrait show poster keyed by showId so we don't re-fetch the
+// page variable on every UpdateData tick. Reset when the show changes.
+let cachedShowId: string | null = null
+let cachedShowPoster: string | null = null
+
+async function getPosterImage(): Promise<string | null> {
+  // Youku ships per-page bootstrap state on `window.__INITIAL_DATA__`.
+  // `data.data.data.extra.showImgV` is the show's portrait poster (the same
+  // artwork that appears on trending/grid cards). It's stable across episodes
+  // of the same show, so we cache it per showId.
+  try {
+    const page = await presence.getPageVariable<{
+      '__INITIAL_DATA__.showId': string
+      '__INITIAL_DATA__.data.data.data.extra.showImgV': string
+      '__INITIAL_DATA__.data.data.data.extra.showImg': string
+    }>(
+      '__INITIAL_DATA__.showId',
+      '__INITIAL_DATA__.data.data.data.extra.showImgV',
+      '__INITIAL_DATA__.data.data.data.extra.showImg',
+    )
+    const showId = page['__INITIAL_DATA__.showId']
+    if (showId && showId !== cachedShowId) {
+      cachedShowId = showId
+      cachedShowPoster = page['__INITIAL_DATA__.data.data.data.extra.showImgV']
+        || page['__INITIAL_DATA__.data.data.data.extra.showImg']
+        || null
+    }
+    if (cachedShowPoster)
+      return cachedShowPoster
+  }
+  catch {
+    // Page variable unavailable — fall through to meta-tag fallback.
+  }
+
+  // Fallback: per-episode 16:9 still from meta tags.
+  return document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content
+    ?? document.querySelector<HTMLMetaElement>('meta[itemprop="image"]')?.content
+    ?? document.querySelector<HTMLLinkElement>('link[rel="image_src"]')?.href
+    ?? null
+}
+
+function cleanTitle(raw: string | null | undefined): string {
+  if (!raw)
+    return ''
+  // Strip common Youku suffixes (with hyphen, en-dash, or underscore separator).
+  return raw.replace(/[\s\-_–]+(?:YOUKU|优酷)[\s\S]*$/i, '').trim()
+}
+
+function parseTitleAndEpisode(raw: string): { title: string, episode: number | null } {
+  // Youku title formats observed:
+  //   document.title (live-updates on SPA nav):
+  //     "Show Name Show Name NN-YOUKU-..."   → show=Show Name, episode=NN
+  //   og:title (stale on SPA nav, kept as fallback):
+  //     "Show Name 第N集 Show Name NN"        → show=Show Name, episode=N
+  //     "Show Name 第N集"                     → show=Show Name, episode=N
+  //   Plain:
+  //     "Show Name"                           → show=Show Name, episode=null
+
+  // Chinese episode marker — most explicit when present.
+  const cn = raw.match(/^([^第]*)第(\d+)集/)
+  if (cn) {
+    return {
+      title: cn[1]!.trim(),
+      episode: Number.parseInt(cn[2]!, 10),
+    }
+  }
+
+  // document.title pattern: trailing digits after the (often duplicated) show name.
+  const trailing = raw.match(/^(.*\S)\s+(\d{1,4})$/)
+  if (trailing) {
+    return {
+      title: dedupeShowName(trailing[1]!.trim()),
+      episode: Number.parseInt(trailing[2]!, 10),
+    }
+  }
+
+  return { title: dedupeShowName(raw), episode: null }
+}
+
+// Youku's document.title repeats the show name (e.g. "The Double The Double").
+// Collapse "X X" → "X" when both halves are identical.
+function dedupeShowName(text: string): string {
+  const mid = Math.floor(text.length / 2)
+  const a = text.slice(0, mid).trim()
+  const b = text.slice(mid).trim()
+  if (a && a === b)
+    return a
+  // Also handle "X X" where halves differ only by a leading space.
+  const halves = text.split(/\s+/)
+  if (halves.length >= 2 && halves.length % 2 === 0) {
+    const half = halves.length / 2
+    const left = halves.slice(0, half).join(' ')
+    const right = halves.slice(half).join(' ')
+    if (left === right)
+      return left
+  }
+  return text
+}
+
+function truncate(text: string, max: number): string {
+  return text.length > max ? `${text.slice(0, max - 1)}…` : text
+}
+
+function getVideoQuality(): string | null {
+  const sel = document.querySelector('.quality-selector .active, [data-quality].active, .video-quality .selected')
+  const text = sel?.textContent?.trim()
+  return text && /\d{3,4}p|HD|4K/i.test(text) ? text : null
+}
+
+function getPlaybackSpeed(video: HTMLVideoElement | null): string | null {
+  if (!video)
+    return null
+  const rate = video.playbackRate
+  return rate && rate !== 1 ? `${rate}x` : null
+}
 
 presence.on('UpdateData', async () => {
-  const [privacy, showTimestamp, showButtons, showProgress, , showVideoDetails, compactMode] = await Promise.all([
+  const [newLang, privacy, showTimestamp, showButtons, showCover, showProgress, showVideoDetails, compactMode] = await Promise.all([
+    presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('showTimestamp'),
     presence.getSetting<boolean>('showButtons'),
+    presence.getSetting<boolean>('showCover'),
     presence.getSetting<boolean>('showProgress'),
-    presence.getSetting<boolean>('use24HourTime'),
     presence.getSetting<boolean>('showVideoDetails'),
     presence.getSetting<boolean>('compactMode'),
   ])
 
-  // Enhanced video detection with multiple Youku-specific selectors
-  const video = document.querySelector<HTMLVideoElement>('video')
-    || document.querySelector<HTMLVideoElement>('.video-player video')
-    || document.querySelector<HTMLVideoElement>('[data-testid="video-player"] video')
-    || document.querySelector<HTMLVideoElement>('.youku-player video')
-    || document.querySelector<HTMLVideoElement>('#player video')
-    || document.querySelector<HTMLVideoElement>('.vjs-tech video') // Video.js player
-    || document.querySelector<HTMLVideoElement>('.prism-player video') // Aliplayer
-
-  // Enhanced title extraction and formatting
-  const metaTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content')
-    || document.querySelector('meta[name="title"]')?.getAttribute('content')
-    || document.querySelector('h1')?.textContent
-
-  let cleanTitle = metaTitle?.trim() || document.title.replace(/ - (?:YOUKU|优酷).*/i, '').trim()
-
-  // Better title formatting for mixed languages
-  if (cleanTitle) {
-    // Extract episode number if present
-    const episodeMatch = cleanTitle.match(/第(\d+)集/)
-    const episodeNumber = episodeMatch ? `Episode ${episodeMatch[1]}` : null
-
-    // Remove episode number from title for cleaner display
-    cleanTitle = cleanTitle.replace(/第\d+集/, '').trim()
-
-    // Remove duplicate titles (common in Chinese dramas)
-    const titleParts = cleanTitle.split(/\s+/)
-    const uniqueParts = titleParts.filter((part, index) => titleParts.indexOf(part) === index)
-    cleanTitle = uniqueParts.join(' ')
-
-    // Handle long titles - prioritize meaningful content
-    if (cleanTitle.length > 50) {
-      // Try to find a good breaking point
-      const breakPoint = cleanTitle.lastIndexOf(' ', 50)
-      if (breakPoint > 20)
-        cleanTitle = `${cleanTitle.substring(0, breakPoint)}...`
-      else
-        cleanTitle = `${cleanTitle.substring(0, 50)}...`
-    }
-
-    // Combine title and episode info
-    if (episodeNumber && !cleanTitle.includes(episodeNumber))
-      cleanTitle = `${cleanTitle} - ${episodeNumber}`
+  if (oldLang !== newLang || !strings) {
+    oldLang = newLang
+    strings = await getStrings()
   }
-  // Prioritize show cover art over video frames
-  const posterImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content')
-    || document.querySelector('meta[itemprop="image"]')?.getAttribute('content')
-    || document.querySelector('link[rel="image_src"]')?.getAttribute('content')
-    || document.querySelector('.show-poster img, .series-poster img, .drama-poster img')?.getAttribute('src')
-    || document.querySelector('img[src*="oss-process=image/resize"]')?.getAttribute('src')
-    || document.querySelector('.poster img, .cover img')?.getAttribute('src')
-    || document.querySelector('video')?.getAttribute('poster')
 
-  // Get episode/season info if available
-  const episodeInfo = document.querySelector('.episode-info, .season-info, [data-episode]')?.textContent?.trim()
+  const { pathname, href } = document.location
+  // Only treat as a watch page on known video paths so we don't latch onto
+  // homepage hero / autoplay previews. Youku.tv watch URLs look like
+  // /v/v_show/id_XXX.html — /v/ is the common prefix.
+  const isWatchPath = /^\/v\//i.test(pathname)
+  const video = isWatchPath ? findVideo() : null
 
-  const data: PresenceData = {
+  const isPlayingVideo = !!video
+    && (video.src !== '' || video.currentSrc !== '')
+    && video.duration > 0
+    && video.readyState >= 2
+    && !video.ended
+
+  const presenceData: PresenceData = {
     type: ActivityType.Watching,
-    largeImageKey: posterImage || 'https://cdn.rcd.gg/PreMiD/websites/Y/Youku/assets/0.png', // 512x512 Youku logo
+    largeImageKey: ActivityAssets.Logo,
     largeImageText: 'Youku',
   }
 
-  // Enhanced video validation with more flexible checks
-  const isValidVideo = video
-    && (video.src || video.currentSrc) // Check both src and currentSrc
-    && !Number.isNaN(video.duration)
-    && video.duration && video.duration > 0
-    && video.readyState >= 2 // HAVE_CURRENT_DATA or higher
-    && !video.ended
-    && video.readyState > 0 // Make sure it's actually loaded
+  if (isPlayingVideo) {
+    // document.title is the one source that updates on SPA episode navigation;
+    // og:title and h1 frequently go stale.
+    const rawTitle = document.title
+      || document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.content
+      || document.querySelector<HTMLMetaElement>('meta[name="title"]')?.content
+      || document.querySelector('h1')?.textContent
+      || ''
+    const { title, episode } = parseTitleAndEpisode(cleanTitle(rawTitle))
 
-  if (isValidVideo) {
-    const isPaused = video.paused || video.ended
-    const currentTime = Math.floor(video.currentTime)
-    const duration = Math.floor(video.duration)
+    const poster = showCover ? await getPosterImage() : null
+    if (poster)
+      presenceData.largeImageKey = poster
+    // Discord renders an "S{x}E{y}" badge when largeImageText matches the
+    // pattern "<word> <season>, <word> <episode>". We don't know the season,
+    // so default to 1.
+    if (episode !== null)
+      presenceData.largeImageText = `Season 1, Episode ${episode}`
 
-    // Always update timestamps for real-time progress
-    const stateChanged = !lastVideoState
-      || lastVideoState.paused !== isPaused
-      || Math.abs(lastVideoState.currentTime - currentTime) > 2 // Reduced threshold for more frequent updates
-
-    if (stateChanged || !isPaused)
-      lastVideoState = { paused: isPaused, currentTime }
-
-    data.details = privacy ? 'Watching Content' : (compactMode ? truncateTitle(cleanTitle, 35) : cleanTitle)
-    let stateText = isPaused ? 'Paused' : (episodeInfo || 'Watching Chinese Drama')
-
-    if (showVideoDetails && !privacy && !isPaused) {
-      const quality = getVideoQuality()
-      const speed = getPlaybackSpeed()
-      const details = []
-      if (quality)
-        details.push(quality)
-      if (speed && speed !== '1x')
-        details.push(speed)
-      if (details.length > 0)
-        stateText = `${stateText} • ${details.join(' • ')}`
-    }
-
-    data.state = stateText
-
-    if (!isPaused) {
-      data.smallImageKey = Assets.Play
-      if (showProgress) {
-        const progress = Math.floor((currentTime / duration) * 100)
-        data.smallImageText = `${progress}% • ${formatTime(currentTime, duration)}`
-      }
-      else {
-        data.smallImageText = formatTime(currentTime, duration)
-      }
-      // Always update timestamps for real-time progress when playing
-      if (showTimestamp)
-        [data.startTimestamp, data.endTimestamp] = getTimestamps(currentTime, duration)
+    if (privacy) {
+      presenceData.details = strings.watchingContent
     }
     else {
-      data.smallImageKey = Assets.Pause
-      data.smallImageText = `Paused • ${formatTime(currentTime, duration)}` // Keep timestamps when paused to show current position
+      presenceData.details = compactMode ? truncate(title, 35) : truncate(title, 128)
+      const stateParts: string[] = []
+      if (episode !== null)
+        stateParts.push(`${strings.episode} ${episode}`)
+      else
+        stateParts.push(strings.watching)
+
+      if (showVideoDetails && !video!.paused) {
+        const q = getVideoQuality()
+        if (q)
+          stateParts.push(q)
+        const s = getPlaybackSpeed(video)
+        if (s)
+          stateParts.push(s)
+      }
+
+      if (showProgress && !video!.paused && video!.duration > 0) {
+        const pct = Math.floor((video!.currentTime / video!.duration) * 100)
+        stateParts.push(`${pct}%`)
+      }
+
+      presenceData.state = stateParts.join(' • ')
+    }
+
+    if (!video!.paused) {
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = strings.play
+      if (showTimestamp) {
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video!)
+      }
+    }
+    else {
+      presenceData.smallImageKey = Assets.Pause
+      presenceData.smallImageText = strings.pause
     }
 
     wasWatchingVideo = true
   }
   else {
-    // Reset video state when no valid video found
     if (wasWatchingVideo) {
-      browsingTimestamp = Date.now()
+      browsingTimestamp = Math.floor(Date.now() / 1000)
       wasWatchingVideo = false
-      lastVideoState = null
     }
 
-    // Enhanced browsing detection
-    const currentUrl = window.location.href
-    const isHomePage = window.location.pathname === '/' || window.location.pathname === ''
-    const isSearchPage = currentUrl.includes('/search')
-      || currentUrl.includes('/search?')
-    const isCategoryPage = currentUrl.includes('/category')
-      || currentUrl.includes('/show/')
+    const isHomePage = pathname === '/' || pathname === ''
+    const isSearchPage = pathname.startsWith('/search') || pathname.startsWith('/soku')
+    const isCategoryPage = pathname.startsWith('/category') || pathname.startsWith('/show')
 
     if (isHomePage) {
-      data.details = compactMode ? 'Youku' : 'Browsing Youku'
-      data.state = 'Home Page'
+      presenceData.details = compactMode ? 'Youku' : strings.browsingYouku
+      presenceData.state = strings.homePage
     }
     else if (isSearchPage) {
-      data.details = compactMode ? 'Searching' : 'Searching Content'
-      data.state = 'Looking for videos'
+      presenceData.details = compactMode ? strings.search : strings.searchingContent
+      presenceData.state = strings.lookingForVideos
+      presenceData.smallImageKey = Assets.Search
     }
     else if (isCategoryPage) {
-      data.details = compactMode ? 'Browsing' : 'Browsing Category'
-      data.state = 'Exploring shows'
+      presenceData.details = compactMode ? strings.browse : strings.browsingCategory
+      presenceData.state = strings.exploringShows
     }
     else {
-      data.details = compactMode ? 'Youku' : 'Browsing Youku'
-      data.state = 'Exploring Content'
+      presenceData.details = compactMode ? 'Youku' : strings.browsingYouku
+      presenceData.state = strings.exploringContent
     }
 
     if (showTimestamp)
-      data.startTimestamp = browsingTimestamp
+      presenceData.startTimestamp = browsingTimestamp
   }
 
-  // Enhanced buttons with better labels
   if (showButtons && !privacy) {
-    const buttons: { label: string, url: string }[] = [
-      {
-        label: isValidVideo ? 'Watch Now' : 'View Page',
-        url: window.location.href,
-      },
-    ]
-
-    // Add series button if on a show page
-    const currentUrl2 = window.location.href
-    const seriesLink = document.querySelector('a[href*="/show/"]')?.getAttribute('href')
-    if (seriesLink && !currentUrl2.includes(seriesLink)) {
-      buttons.push({
-        label: 'View Series',
-        url: seriesLink.startsWith('http') ? seriesLink : `https://www.youku.tv${seriesLink}`,
-      })
-    }
-
-    // Convert array to tuple for PreMiD
-    if (buttons.length > 0)
-      data.buttons = [buttons[0], buttons[1]] as [ButtonData, ButtonData?]
+    const buttonLabel = isPlayingVideo
+      ? strings.watchVideo
+      : isWatchPath
+        ? strings.watchSeries
+        : strings.viewPage
+    presenceData.buttons = [{ label: buttonLabel, url: href }]
   }
 
-  presence.setActivity(data)
+  presence.setActivity(presenceData)
 })
-
-// Helper function to format time
-function formatTime(current: number, total: number): string {
-  const formatSeconds = (secs: number) => {
-    const hours = Math.floor(secs / 3600)
-    const minutes = Math.floor((secs % 3600) / 60)
-    const seconds = secs % 60
-
-    if (hours > 0)
-      return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`
-  }
-
-  return `${formatSeconds(current)} / ${formatSeconds(total)}`
-}
-
-// Helper function to truncate title
-function truncateTitle(title: string, maxLength: number): string {
-  return title.length > maxLength ? `${title.substring(0, maxLength - 3)}...` : title
-}
-
-// Helper function to get video quality
-function getVideoQuality(): string | null {
-  const qualitySelectors = [
-    '.quality-selector .active',
-    '[data-quality]',
-    '.video-quality .selected',
-  ]
-
-  for (const selector of qualitySelectors) {
-    const element = document.querySelector(selector)
-    if (element?.textContent) {
-      const quality = element.textContent.trim()
-      if (/\d{3,4}p|HD|4K/i.test(quality))
-        return quality
-    }
-  }
-
-  // Fallback: search for quality text in all elements
-  const allElements = document.querySelectorAll('*')
-  for (const element of allElements) {
-    const text = element.textContent?.trim()
-    if (text && /\d{3,4}p|HD|4K/i.test(text) && text.length < 10)
-      return text
-  }
-
-  return null
-}
-
-// Helper function to get playback speed
-function getPlaybackSpeed(): string | null {
-  const speedSelectors = [
-    '.speed-selector .active',
-    '[data-speed]',
-    '.playback-speed .selected',
-  ]
-
-  for (const selector of speedSelectors) {
-    const element = document.querySelector(selector)
-    if (element?.textContent) {
-      const speed = element.textContent.trim()
-      if (/\d+(?:\.\d+)?x/i.test(speed))
-        return speed
-    }
-  }
-
-  // Fallback: search for speed text in all elements
-  const allElements = document.querySelectorAll('*')
-  for (const element of allElements) {
-    const text = element.textContent?.trim()
-    if (text && /\d+(?:\.\d+)?x/i.test(text) && text.length < 10)
-      return text
-  }
-
-  return null
-}
