@@ -86,7 +86,7 @@ presence.on('UpdateData', async () => {
     else if (paths[0] === 'creator-guidelines') {
       presenceData.state = 'Creator Guidelines'
 	}
-    else if (paths[0] === 'verify-email')
+    else if (paths[0] === 'verify-email') {
       presenceData.state = 'Verifying Email'
 	}
     else if (paths[0] === 'auth') {
