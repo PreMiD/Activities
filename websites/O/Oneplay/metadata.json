@@ -11,11 +11,11 @@
   },
   "url": "oneplay.cz",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/D85p25p.png",
+  "logo": "https://i.imgur.com/cUdfHvP.jpeg",
   "thumbnail": "https://i.imgur.com/UBjP1k4.png",
   "color": "#0055FF",
   "category": "videos",
-  "tags": ["oneplay", "o2tv", "voyo", "streaming", "czech"],
+  "tags": ["o2tv", "voyo", "streaming", "czech"],
   "settings": [
     {
       "id": "showTimestamp",

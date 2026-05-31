@@ -1,41 +1,38 @@
-import { ActivityType, Presence, PresenceData, getTimestamps } from 'premid';
-
-const presence = new Presence({
-  clientId: '1510631384161452142'
-});
+import { Activity } from '@premid/types';
+import { getTimestamps } from 'premid';
 
 let browsingTimestamp: number = Math.floor(Date.now() / 1000);
 let watchingTimestamp: number = Math.floor(Date.now() / 1000);
 let wasWatching: boolean = false;
 
-enum ActivityAssets {
-  Logo = 'https://i.imgur.com/D85p25p.png'
-}
+
+const LOGO_URL = 'https://i.imgur.com/cUdfHvP.jpeg';
 
 presence.on('UpdateData', async () => {
   const showTimestamp = await presence.getSetting<boolean>('showTimestamp');
   const showDetails = await presence.getSetting<boolean>('showDetails');
-  const currentTitle: string = document.title;
+  const currentTitle: string = document.title || '';
 
-  const presenceData: PresenceData = {
-    largeImageKey: ActivityAssets.Logo,
+  const playerData: Activity = {
+    largeImageKey: LOGO_URL,
     largeImageText: 'Oneplay'
   };
 
-  if (currentTitle && currentTitle.includes('| Oneplay') && !currentTitle.startsWith('Hlavní') && !currentTitle.startsWith('Home')) {
+  if (currentTitle && currentTitle.includes('| Oneplay') && !currentTitle.startsWith('Oneplay - Sledujte filmy, seriály a sport online') && !currentTitle.startsWith('Home')) {
     if (!wasWatching) {
       watchingTimestamp = Math.floor(Date.now() / 1000);
       wasWatching = true;
     }
     
-    const cleanTitle: string = currentTitle.split('|')[0].trim();
-    presenceData.type = ActivityType.Watching; 
+    const titleParts = currentTitle.split('|');
+    const cleanTitle = titleParts[0] ? titleParts[0].trim() : 'Oneplay';
+    playerData.type = 3;
 
     if (showDetails) {
-      presenceData.details = cleanTitle;
-      presenceData.state = 'Watching a show';
+      playerData.details = cleanTitle;
+      playerData.state = 'Watching a show';
     } else {
-      presenceData.details = 'Watching Oneplay';
+      playerData.details = 'Watching Oneplay';
     }
 
     if (showTimestamp) {
@@ -43,17 +40,17 @@ presence.on('UpdateData', async () => {
       const isLiveStream = !!document.querySelector('[class*="live"], [class*="stream"], [class*="zive"]');
 
       if (video && !isLiveStream && isFinite(video.duration)) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+        [playerData.startTimestamp, playerData.endTimestamp] = getTimestamps(
           Math.floor(video.currentTime),
           Math.floor(video.duration)
         );
 
         if (video.paused) {
-          delete presenceData.startTimestamp;
-          delete presenceData.endTimestamp;
+          playerData.startTimestamp = undefined;
+          playerData.endTimestamp = undefined;
         }
       } else {
-        presenceData.startTimestamp = watchingTimestamp;
+        playerData.startTimestamp = watchingTimestamp;
       }
     }
   } else {
@@ -62,15 +59,15 @@ presence.on('UpdateData', async () => {
       wasWatching = false;
     }
     
-    presenceData.details = 'Browsing...';
+    playerData.details = 'Browsing...';
     
     if (showTimestamp) {
-      presenceData.startTimestamp = browsingTimestamp;
+      playerData.startTimestamp = browsingTimestamp;
     }
   }
 
-  if (presenceData.details) {
-    presence.setActivity(presenceData);
+  if (playerData.details) {
+    presence.setActivity(playerData);
   } else {
     presence.clearActivity();
   }
