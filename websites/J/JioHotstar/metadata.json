@@ -12,8 +12,8 @@
   "url": "hotstar.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*hotstar[.]com[/]",
   "version": "1.0.0",
-  "logo": "https://i.ibb.co/n8ntWBqP/unnamed.png",
-  "thumbnail": "https://cdn.jiostar.com/jiostar/wp-content/uploads/2025/08/JioStar_Logo.jpg",
+  "logo": "https://i.ibb.co/Gfs3F52W/unnamed-1.png",
+  "thumbnail": "https://i.ibb.co/d0KNM0g8/Jio-Hot-Star-1-1-1.png",
   "color": "#000000",
   "category": "videos",
   "tags": [
