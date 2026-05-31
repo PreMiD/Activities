@@ -1,10 +1,12 @@
-import { Activity } from '@premid/types';
-import { getTimestamps } from 'premid';
+import { Presence, PresenceData, getTimestamps } from 'premid';
+
+const presence = new Presence({
+  clientId: '1510631384161452142'
+});
 
 let browsingTimestamp: number = Math.floor(Date.now() / 1000);
 let watchingTimestamp: number = Math.floor(Date.now() / 1000);
 let wasWatching: boolean = false;
-
 
 const LOGO_URL = 'https://i.imgur.com/cUdfHvP.jpeg';
 
@@ -13,7 +15,7 @@ presence.on('UpdateData', async () => {
   const showDetails = await presence.getSetting<boolean>('showDetails');
   const currentTitle: string = document.title || '';
 
-  const playerData: Activity = {
+  const playerData: PresenceData = {
     largeImageKey: LOGO_URL,
     largeImageText: 'Oneplay'
   };
@@ -26,7 +28,7 @@ presence.on('UpdateData', async () => {
     
     const titleParts = currentTitle.split('|');
     const cleanTitle = titleParts[0] ? titleParts[0].trim() : 'Oneplay';
-    playerData.type = 3;
+    playerData.type = 3; // Odpovídá sledování videa
 
     if (showDetails) {
       playerData.details = cleanTitle;
