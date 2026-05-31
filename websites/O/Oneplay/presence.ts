@@ -1,8 +1,4 @@
-import { Presence, PresenceData, getTimestamps } from 'premid';
-
-const presence = new Presence({
-  clientId: '1510631384161452142'
-});
+import { getTimestamps } from 'premid';
 
 let browsingTimestamp: number = Math.floor(Date.now() / 1000);
 let watchingTimestamp: number = Math.floor(Date.now() / 1000);
@@ -15,9 +11,14 @@ presence.on('UpdateData', async () => {
   const showDetails = await presence.getSetting<boolean>('showDetails');
   const currentTitle: string = document.title || '';
 
-  const playerData: PresenceData = {
+  const playerData = {
     largeImageKey: LOGO_URL,
-    largeImageText: 'Oneplay'
+    largeImageText: 'Oneplay',
+    type: 3,
+    details: '',
+    state: undefined as string | undefined,
+    startTimestamp: undefined as number | undefined,
+    endTimestamp: undefined as number | undefined
   };
 
   if (currentTitle && currentTitle.includes('| Oneplay') && !currentTitle.startsWith('Oneplay - Sledujte filmy, seriály a sport online') && !currentTitle.startsWith('Home')) {
@@ -28,7 +29,7 @@ presence.on('UpdateData', async () => {
     
     const titleParts = currentTitle.split('|');
     const cleanTitle = titleParts[0] ? titleParts[0].trim() : 'Oneplay';
-    playerData.type = 3; // Odpovídá sledování videa
+    playerData.type = 3;
 
     if (showDetails) {
       playerData.details = cleanTitle;
