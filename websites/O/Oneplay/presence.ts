@@ -33,9 +33,9 @@ presence.on('UpdateData', async () => {
 
     if (showDetails) {
       presenceData.details = cleanTitle;
-      presenceData.state = 'Sleduje pořad';
+      presenceData.state = 'Watching a show';
     } else {
-      presenceData.details = 'Sleduje Oneplay';
+      presenceData.details = 'Watching Oneplay';
     }
 
     if (showTimestamp) {
@@ -62,7 +62,7 @@ presence.on('UpdateData', async () => {
       wasWatching = false;
     }
     
-    presenceData.details = 'Prohlíží nabídku';
+    presenceData.details = 'Browsing...';
     
     if (showTimestamp) {
       presenceData.startTimestamp = browsingTimestamp;
