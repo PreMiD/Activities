@@ -41,7 +41,7 @@ function getGameData(): string | null {
   if (!gameName)
     return null
   const gameCreator = getText('p[class*="text-muted-foreground"]').replace('by ', '')
-  return `Game: ${gameName}${gameCreator ? ` by ${gameCreator}` : ''}`
+  return `Viewing Game: ${gameName}${gameCreator ? ` by ${gameCreator}` : ''}`
 }
 
 presence.on('UpdateData', async () => {
@@ -67,7 +67,7 @@ presence.on('UpdateData', async () => {
   }
 
   // Main Site
-  else if (hostname === 'www.luduvo.com') {
+  else if (hostname === 'luduvo.com') {
     presenceData.name = 'Luduvo'
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = 'Browsing'
@@ -86,6 +86,9 @@ presence.on('UpdateData', async () => {
     else if (paths[0] === 'creator-guidelines') {
       presenceData.state = 'Creator Guidelines'
     }
+    else if (paths[0] === 'licenses') {
+      presenceData.state = 'Licenses'
+    }
     else if (paths[0] === 'verify-email') {
       presenceData.state = 'Verifying Email'
     }
@@ -100,7 +103,7 @@ presence.on('UpdateData', async () => {
         const displayName = getText('h1[class*="text-3xl"][class*="sm:text-5xl"][class*="font-bold"][class*="text-foreground"]')
         const username = getText('h1[class*="text-lg"][class*="sm:text-2xl"][class*="font-bold"][class*="text-muted-foreground"]')
         if (displayName) {
-          presenceData.state = `User: ${displayName} (${username})`.trim()
+          presenceData.state = `Viewing User: ${displayName} (${username})`.trim()
         }
         else {
           presenceData.state = 'Viewing a User\'s profile'
@@ -112,7 +115,7 @@ presence.on('UpdateData', async () => {
       }
       else if (paths[2] === 'inventory') {
         const inventoryUser = getText('h1[class*="text-5xl"][class*="font-bold"][class*="mb-4"][class*="text-center"][class*="sm:text-left"]')
-        presenceData.state = inventoryUser ? `Inventory of: ${inventoryUser}` : 'Inventory'
+        presenceData.state = inventoryUser ? `Viewing Inventory of: ${inventoryUser}` : 'Inventory'
       }
       else if (paths[2] === 'trade') {
         const inventoryTitle = getText('h2[class*="text-lg"][class*="font-semibold"]').replace('\'s Inventory', '')
@@ -173,16 +176,16 @@ presence.on('UpdateData', async () => {
         const groupName = getText('h1[class*="text-2xl"][class*="sm:text-5xl"][class*="font-bold"][class*="text-foreground"][class*="truncate"]')
         const groupCreator = getText('h2[class*="text-lg"][class*="sm:text-2xl"][class*="font-bold"][class*="text-muted-foreground"] a')
         if (groupName) {
-          presenceData.state = `Group: ${groupName}${groupCreator ? ` (by ${groupCreator})` : ''}`
+          presenceData.state = `Viewing Group: ${groupName}${groupCreator ? ` (by ${groupCreator})` : ''}`
         }
         else {
-          presenceData.state = 'Group'
+          presenceData.state = 'Viewing a Group'
         }
       }
     }
     else if (paths[0] === 'studio') {
-      const activeStudioTab = getText('button[class*="bg-primary/10"][class*="text-foreground"]')
-      presenceData.state = activeStudioTab ? `Studio: ${activeStudioTab}` : 'Studio'
+      const activeStudioTab = getText('button[class*="bg-accent"][class*="text-accent-foreground"] span')
+      presenceData.state = activeStudioTab ? `Studio (${activeStudioTab})` : 'Studio'
     }
     else if (paths[0] === 'store') {
       presenceData.state = 'Store'
@@ -237,7 +240,6 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Unread Topics'
     }
     else if (paths[0] === 't') {
-      // Tries fancy-title first, then topic-link if it reloaded into the longer format
       const topicName = getText('a.fancy-title') || getText('a.topic-link span')
       const topicCreator = getText('article#post_1 .first.full-name a')
       if (topicName) {
