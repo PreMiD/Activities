@@ -66,14 +66,29 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  // Alpha Tester Site
-  else if (hostname === 'alpha.luduvo.com') {
-    presenceData.name = 'Luduvo (Alpha)'
+  // Main Site
+  else if (hostname === 'www.luduvo.com') {
+    presenceData.name = 'Luduvo'
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = 'Browsing'
     if (!paths.length) {
       presenceData.state = 'Landing'
     }
+    else if (paths[0] === 'terms') {
+      presenceData.state = 'Terms of Service'
+	}
+    else if (paths[0] === 'privacy') {
+      presenceData.state = 'Privacy Policy'
+	}
+    else if (paths[0] === 'community-guidelines') {
+      presenceData.state = 'Community Guidelines'
+	}
+    else if (paths[0] === 'creator-guidelines') {
+      presenceData.state = 'Creator Guidelines'
+	}
+    else if (paths[0] === 'verify-email')
+      presenceData.state = 'Verifying Email'
+	}
     else if (paths[0] === 'auth') {
       presenceData.state = 'Signing In/Up'
     }
@@ -341,19 +356,6 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.state = 'Exploring...'
     }
-  }
-
-  // Main Page (https://luduvo.com)
-  else {
-    presenceData.name = 'Luduvo (Main)'
-    if (!paths.length)
-      presenceData.state = 'Landing'
-    else if (paths[0] === 'tos')
-      presenceData.state = 'Terms of Service'
-    else if (paths[0] === 'privacy')
-      presenceData.state = 'Privacy Policy'
-    else if (paths[0] === 'verify-email')
-      presenceData.state = 'Verifying Email'
   }
 
   if (privacy) {

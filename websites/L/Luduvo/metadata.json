@@ -12,7 +12,6 @@
   "url": [
     "api.luduvo.com",
     "www.luduvo.com",
-    "alpha.luduvo.com",
     "forum.luduvo.com"
   ],
   "regExp": "^https?[:][/][/]((api|www|alpha|forum)[.])?luduvo[.]com",
