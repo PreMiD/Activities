@@ -81,4 +81,3 @@ presence.on('UpdateData', async () => {
     presence.clearActivity()
   }
 })
-
