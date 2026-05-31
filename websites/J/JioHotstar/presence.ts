@@ -10,7 +10,7 @@ presence.on('UpdateData', async () => {
       type: ActivityType.Watching,
       details: 'Browsing',
       state: 'Home',
-      largeImageKey: 'https://pbs.twimg.com/profile_images/1982734390191898624/wxawHKIF_400x400.jpg',
+      largeImageKey: 'https://i.ibb.co/Gfs3F52W/unnamed-1.png',
       largeImageText: 'JioHotstar',
     })
 
