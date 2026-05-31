@@ -47,7 +47,7 @@ presence.on('UpdateData', async () => {
       if (video && !isLiveStream && Number.isFinite(video.duration)) {
         [playerData.startTimestamp, playerData.endTimestamp] = getTimestamps(
           Math.floor(video.currentTime),
-          Math.floor(video.duration)
+          Math.floor(video.duration),
         )
 
         if (video.paused) {
