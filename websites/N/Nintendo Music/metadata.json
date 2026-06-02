@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "135142639744843776",
+    "name": "espritorgue"
+  },
+  "service": "Nintendo Music",
+  "description": {
+    "en": "Nintendo Music is a streaming service by Nintendo that lets you listen to official video game soundtracks."
+  },
+  "url": "music.nintendo.com",
+  "regExp": "^https?[:][/][/]music[.]nintendo[.]com",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/eVpYUP0.png",
+  "thumbnail": "https://i.imgur.com/xc5urT9.png",
+  "color": "#FF0000",
+  "category": "music",
+  "tags": [
+    "music",
+    "nintendo",
+    "ost",
+    "soundtrack"
+  ],
+  "settings": [
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-eye",
+      "value": false
+    },
+    {
+      "id": "displayOrder",
+      "title": "Display Order",
+      "icon": "fas fa-bars",
+      "value": 0,
+      "values": ["Title - Album", "Album - Title"]
+    }
+  ]
+}
