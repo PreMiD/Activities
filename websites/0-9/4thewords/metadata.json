@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1382387301459558412",
+    "name": "ivan.shiratori"
+  },
+  "service": "4thewords",
+  "description": {
+    "en": "Playing 4thewords, a writing game where you write to defeat monsters and explore an adventure world."
+  },
+  "url": "4thewords.com",
+  "regExp": "^https?://(app\\.)?4thewords\\.com/",
+  "version": "1.0.0",
+  "logo": "https://4thewords.com/favicon.ico",
+  "thumbnail": "https://4thewords.com/favicon.ico",
+  "color": "#000000",
+  "category": "games",
+  "tags": [
+    "games"
+  ]
+}
