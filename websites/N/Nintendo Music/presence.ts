@@ -38,10 +38,12 @@ presence.on('UpdateData', async () => {
     if (showSongArt) {
       presenceData.largeImageKey = songArt
     }
-  } else if (pathname.includes('/search')) {
+  }
+  else if (pathname.includes('/search')) {
     presenceData.details = 'Searching...'
     presenceData.largeImageKey = NintendoMusicLogo
-  } else if (pathname.includes('/game')) {
+  }
+  else if (pathname.includes('/game')) {
     const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
     const gameName = parts[1]?.trim() || 'Nintendo'
     const mainTitle = document.querySelector('#main-column h1')?.textContent
@@ -53,7 +55,8 @@ presence.on('UpdateData', async () => {
     if (showSongArt) {
       presenceData.largeImageKey = albumArt
     }
-  } else if (pathname.includes('/user-playlist')) {
+  }
+  else if (pathname.includes('/user-playlist')) {
     const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
     const songName = parts[0]?.trim() || 'Unknown'
 
@@ -64,7 +67,8 @@ presence.on('UpdateData', async () => {
     if (showSongArt) {
       presenceData.largeImageKey = albumArt
     }
-  } else if (pathname.includes('/playlist')) {
+  }
+  else if (pathname.includes('/playlist')) {
     const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
     const songName = parts[0]?.trim() || 'Unknown'
 
@@ -75,13 +79,15 @@ presence.on('UpdateData', async () => {
     if (showSongArt) {
       presenceData.largeImageKey = albumArt
     }
-  } else if (pathname.includes('/my-music')) {
+  }
+  else if (pathname.includes('/my-music')) {
     const mainTitle = document.querySelector('#main-column h1')?.textContent
 
     presenceData.details = mainTitle
     presenceData.state = 'My Music'
     presenceData.startTimestamp = now
-  } else {
+  }
+  else {
     presenceData.details = 'Browsing Music...'
     presenceData.startTimestamp = now
   }
@@ -93,7 +99,8 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details) {
     presence.setActivity(presenceData)
-  } else {
+  }
+  else {
     presence.clearActivity()
   }
 
