@@ -7,8 +7,8 @@
   },
   "service": "Basketball Reference",
   "description": {
-    "en": "Displays your NBA stats, player profiles, and team rosters from Basketball Reference on Discord.",
-    "pt": "Mostra as estatísticas da NBA, perfis de jogadores e times do Basketball Reference no seu Discord."
+    "en": "Basketball Stats and History: Statistics, scores, and history for the NBA, ABA, WNBA, and top European competition.",
+    "pt": "Estatísticas e história do basquete: estatísticas, resultados e histórico da NBA, ABA, WNBA e das principais competições europeias."
   },
   "url": "basketball-reference.com",
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*basketball-reference[.]com[/]",
