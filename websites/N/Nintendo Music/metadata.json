@@ -14,7 +14,6 @@
     "it": "Mostra ciò che stai ascoltando su Nintendo Music sul tuo profilo Discord.",
     "nl": "Laat op je Discord-Profiel zien wat je naar luistert op Nintendo Music.",
     "ru": "Показывает, что ты слушаешь в Nintendo Music через свой профиль Discord.",
-    "sr": "Prikazuje šta slušaš na Nintendo Music na tvom Discord profilu."
   },
   "logo": "https://i.imgur.com/thYBiff.png",
   "regExp": "^https?://music\\.nintendo\\.com/",
