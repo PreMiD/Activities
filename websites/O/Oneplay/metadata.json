@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/PreMiD/Activities/main/website.schema.json",
   "apiVersion": 1,
   "author": {
     "name": "MrJaroslavik",
@@ -10,6 +11,7 @@
     "en": "Watch live TV, movies, and series on Oneplay."
   },
   "url": "oneplay.cz",
+  "regExp": "oneplay[.]cz",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/cUdfHvP.jpeg",
   "thumbnail": "https://i.imgur.com/UBjP1k4.png",
@@ -20,12 +22,14 @@
     {
       "id": "showTimestamp",
       "title": "Show Timestamp",
+      "icon": "fas fa-clock",
       "value": true,
       "description": "Show elapsed time since you started watching"
     },
     {
       "id": "showDetails",
       "title": "Show Details",
+      "icon": "fas fa-info-circle",
       "value": true,
       "description": "Display the specific title of the show"
     }
