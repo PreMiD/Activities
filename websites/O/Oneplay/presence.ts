@@ -1,4 +1,4 @@
-import { getTimestamps } from 'premid'
+import { ActivityType, PresenceData, getTimestamps } from 'premid'
 
 declare const presence: any
 
@@ -9,18 +9,17 @@ let wasWatching: boolean = false
 const LOGO_URL = 'https://i.imgur.com/cUdfHvP.jpeg'
 
 presence.on('UpdateData', async () => {
-  const showTimestamp = await presence.getSetting('showTimestamp')
-  const showDetails = await presence.getSetting('showDetails')
+  const [showTimestamp, showDetails] = await Promise.all([
+    presence.getSetting('showTimestamp'),
+    presence.getSetting('showDetails'),
+  ])
   const currentTitle: string = document.title || ''
 
-  const playerData = {
+  const playerData: PresenceData = {
     largeImageKey: LOGO_URL,
     largeImageText: 'Oneplay',
-    type: 3,
+    type: ActivityType.Watching,
     details: '',
-    state: undefined as string | undefined,
-    startTimestamp: undefined as number | undefined,
-    endTimestamp: undefined as number | undefined,
   }
 
   if (currentTitle && currentTitle.includes('| Oneplay') && !currentTitle.startsWith('Oneplay - Sledujte filmy, seriály a sport online') && !currentTitle.startsWith('Home')) {
@@ -31,13 +30,12 @@ presence.on('UpdateData', async () => {
 
     const titleParts = currentTitle.split('|')
     const cleanTitle = titleParts[0] ? titleParts[0].trim() : 'Oneplay'
-    playerData.type = 3
+    playerData.type = ActivityType.Watching
 
     if (showDetails) {
       playerData.details = cleanTitle
       playerData.state = 'Watching a show'
-    }
-    else {
+    } else {
       playerData.details = 'Watching Oneplay'
     }
 
@@ -52,16 +50,14 @@ presence.on('UpdateData', async () => {
         )
 
         if (video.paused) {
-          playerData.startTimestamp = undefined
-          playerData.endTimestamp = undefined
+          delete playerData.startTimestamp
+          delete playerData.endTimestamp
         }
-      }
-      else {
+      } else {
         playerData.startTimestamp = watchingTimestamp
       }
     }
-  }
-  else {
+  } else {
     if (wasWatching) {
       browsingTimestamp = Math.floor(Date.now() / 1000)
       wasWatching = false
@@ -76,8 +72,7 @@ presence.on('UpdateData', async () => {
 
   if (playerData.details) {
     presence.setActivity(playerData)
-  }
-  else {
+  } else {
     presence.clearActivity()
   }
 })
