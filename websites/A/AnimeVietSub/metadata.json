@@ -10,13 +10,11 @@
     "en": "Watch your favorite anime online with Vietnamese subtitles!",
     "vi": "Xem anime yêu thích của bạn trực tuyến với phụ đề tiếng Việt!"
   },
-  "url": [
-    "animevietsub.name"
-  ],
+  "url": "animevietsub.name",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animevietsub[s]?[.][a-z]+[/]",
   "version": "1.0.0",
-  "logo": "https://i.postimg.cc/mZjfTZGZ/anvs.png",
-  "thumbnail": "https://i.postimg.cc/mZjfTZGZ/anvs.png",
+  "logo": "https://i.postimg.cc/NfrMNCn3/anvs.png",
+  "thumbnail": "https://i.postimg.cc/NfrMNCn3/anvs.png",
   "color": "#4A90D9",
   "category": "anime",
   "tags": [

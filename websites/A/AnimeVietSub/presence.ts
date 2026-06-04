@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1264754447276310599',
 })
 
-let browsingTimestamp = parseInt(sessionStorage.getItem('PMD_browsing_time') || '0', 10)
+let browsingTimestamp = Number.parseInt(sessionStorage.getItem('PMD_browsing_time') || '0', 10)
 if (!browsingTimestamp || Number.isNaN(browsingTimestamp)) {
   browsingTimestamp = Math.floor(Date.now() / 1000)
   sessionStorage.setItem('PMD_browsing_time', browsingTimestamp.toString())
@@ -17,7 +17,7 @@ let iFrameData: {
 } | null = null
 
 enum ActivityAssets {
-  Logo = 'https://i.postimg.cc/mZjfTZGZ/anvs.png',
+  Logo = 'https://i.postimg.cc/NfrMNCn3/anvs.png',
 }
 
 presence.on(
@@ -64,11 +64,12 @@ function getAnimePoster(): string | undefined {
     'meta[name="twitter:image"]',
     'link[rel="image_src"]',
   ]
-  
+
   for (const selector of metaSelectors) {
     const meta = document.querySelector(selector)
     const content = meta?.getAttribute('content') || meta?.getAttribute('href')
-    if (content) return content
+    if (content)
+      return content
   }
 
   const imgSelectors = [
@@ -84,7 +85,8 @@ function getAnimePoster(): string | undefined {
 
   for (const selector of imgSelectors) {
     const img = document.querySelector<HTMLImageElement>(selector)
-    if (img?.src) return img.src
+    if (img?.src)
+      return img.src
   }
 
   return undefined
@@ -160,7 +162,8 @@ presence.on('UpdateData', async () => {
 
     if (poster) {
       presenceData.largeImageKey = poster
-    } else {
+    }
+    else {
       delete presenceData.largeImageKey
     }
 
@@ -173,21 +176,25 @@ presence.on('UpdateData', async () => {
       let epFormatted = ''
       if (/^\d+$/.test(epStr)) {
         epFormatted = `Tập: ${epStr}`
-      } else if (/^tập\s+/i.test(epStr)) {
+      }
+      else if (/^tập\s+/i.test(epStr)) {
         epFormatted = epStr.replace(/^tập\s*/i, 'Tập: ')
-      } else if (/^tập/i.test(epStr)) {
+      }
+      else if (/^tập/i.test(epStr)) {
         epFormatted = epStr.replace(/^tập/i, 'Tập: ')
-      } else {
+      }
+      else {
         epFormatted = `Tập: ${epStr}`
       }
 
       const seasonMatch = (title || '').match(/season\s*(\d+)|\b(\d+)(?:st|nd|rd|th)\s*season/i)
         || document.querySelector<HTMLImageElement>('.Objf img')?.alt.match(/season\s*(\d+)|\b(\d+)(?:st|nd|rd|th)\s*season/i)
-      
+
       if (seasonMatch) {
         const seasonNum = seasonMatch[1] || seasonMatch[2]
         stateText = `Mùa: ${seasonNum} ${epFormatted}`
-      } else {
+      }
+      else {
         stateText = epFormatted
       }
     }
@@ -245,13 +252,15 @@ presence.on('UpdateData', async () => {
 
     if (poster) {
       presenceData.largeImageKey = poster
-    } else {
+    }
+    else {
       delete presenceData.largeImageKey
     }
     if (title) {
       presenceData.details = title
       presenceData.state = 'Đang xem'
-    } else {
+    }
+    else {
       presenceData.details = 'Đang xem'
     }
 
@@ -278,7 +287,8 @@ presence.on('UpdateData', async () => {
     if (!firstSegment) {
       presenceData.details = 'Trang Chủ'
       presenceData.state = 'Đang tìm anime'
-    } else {
+    }
+    else {
       presenceData.details = pathMap[firstSegment] ?? 'Đang lướt web'
     }
 
@@ -298,11 +308,11 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = ActivityAssets.Logo
     delete presenceData.smallImageKey
     delete presenceData.smallImageText
-    
+
     // Override video timestamps with web browsing time to hide video length
     presenceData.startTimestamp = browsingTimestamp
     delete presenceData.endTimestamp
-    
+
     delete presenceData.buttons
   }
 
