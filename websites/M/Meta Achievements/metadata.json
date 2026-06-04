@@ -9,9 +9,9 @@
   "description": {
     "en": "This site turns Meta achievement data into a readable profile, a browsable achievement database, and a shareable gamercard."
   },
-  "url": "meta-achievements.notaglitch.net",
-  "regExp": "^https?[:][/][/]meta-achievements[.]notaglitch[.]net[/]",
-  "version": "1.1.0",
+  "url": "meta-achievements.org",
+  "regExp": "^https?[:][/][/]meta-achievements[.]org[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Meta%20Achievements/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Meta%20Achievements/assets/thumbnail.png",
   "color": "#0077ef",

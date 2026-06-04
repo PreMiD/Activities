@@ -12,12 +12,16 @@
   },
   "url": "deokwave.com",
   "regExp": "^https?[:][/][/](deokwave[.]com)[/]",
-  "version": "1.0.1",
-  "logo": "https://i.imgur.com/SbmVetu.png",
-  "thumbnail": "https://i.imgur.com/MoEBLvd.jpeg",
+  "version": "1.0.4",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deokwave/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deokwave/assets/thumbnail.jpeg",
   "color": "#8b5cf6",
   "category": "anime",
-  "tags": ["anime", "turkish", "streaming"],
+  "tags": [
+    "anime",
+    "turkish",
+    "streaming"
+  ],
   "settings": [
     {
       "id": "showEpisode",
