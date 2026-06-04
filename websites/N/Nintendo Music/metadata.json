@@ -6,12 +6,12 @@
   },
   "service": "Nintendo Music",
   "description": {
-    "de": "Zeigt, was du auf Nintendo Music hörst in deinem Discord-Profil an.",
-    "en": "Shows what you're listening to on Nintendo Music on your Discord profile.",
-    "es": "Muestra lo que estás escuchando en Nintendo Music en tu perfil de Discord.",
-    "it": "Mostra ciò che stai ascoltando su Nintendo Music sul tuo profilo Discord.",
-    "nl": "Laat op je Discord-Profiel zien wat je naar luistert op Nintendo Music.",
-    "ru": "Показывает, что ты слушаешь в Nintendo Music через свой профиль Discord."
+    "de": "Mit Nintendo Music kannst du überall eine Vielzahl von Nintendo-Melodien hören.",
+    "en": "With Nintendo Music, you can listen to a variety of Nintendo tunes anywhere.",
+    "es": "Con Nintendo Music, puedes escuchar una gran variedad de melodías de Nintendo en cualquier lugar.",
+    "it": "Con Nintendo Music, puoi ascoltare una varietà di brani Nintendo ovunque.",
+    "nl": "Met Nintendo Music kun je overal naar een verscheidenheid aan Nintendo-melodieën luisteren.",
+    "ru": "С Nintendo Music ты можешь слушать разнообразные мелодии Nintendo где угодно."
   },
   "url": "music.nintendo.com",
   "regExp": "^https?://music\\.nintendo\\.com/",
