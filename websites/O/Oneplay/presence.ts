@@ -1,4 +1,4 @@
-import { ActivityType, PresenceData, getTimestamps } from 'premid'
+import { ActivityType, getTimestamps } from 'premid'
 
 declare const presence: any
 
@@ -15,7 +15,7 @@ presence.on('UpdateData', async () => {
   ])
   const currentTitle: string = document.title || ''
 
-  const playerData: PresenceData = {
+  const playerData: any = {
     largeImageKey: LOGO_URL,
     largeImageText: 'Oneplay',
     type: ActivityType.Watching,
@@ -35,7 +35,8 @@ presence.on('UpdateData', async () => {
     if (showDetails) {
       playerData.details = cleanTitle
       playerData.state = 'Watching a show'
-    } else {
+    }
+    else {
       playerData.details = 'Watching Oneplay'
     }
 
@@ -53,11 +54,13 @@ presence.on('UpdateData', async () => {
           delete playerData.startTimestamp
           delete playerData.endTimestamp
         }
-      } else {
+      }
+      else {
         playerData.startTimestamp = watchingTimestamp
       }
     }
-  } else {
+  }
+  else {
     if (wasWatching) {
       browsingTimestamp = Math.floor(Date.now() / 1000)
       wasWatching = false
@@ -72,7 +75,8 @@ presence.on('UpdateData', async () => {
 
   if (playerData.details) {
     presence.setActivity(playerData)
-  } else {
+  }
+  else {
     presence.clearActivity()
   }
 })
