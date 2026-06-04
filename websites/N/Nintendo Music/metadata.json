@@ -1,12 +1,10 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "petkoslaw",
     "id": "1465968325749117041"
   },
-  "category": "music",
-  "color": "#FC2C00",
+  "service": "Nintendo Music",
   "description": {
     "de": "Zeigt, was du auf Nintendo Music hörst in deinem Discord-Profil an.",
     "en": "Shows what you're listening to on Nintendo Music on your Discord profile.",
@@ -15,34 +13,35 @@
     "nl": "Laat op je Discord-Profiel zien wat je naar luistert op Nintendo Music.",
     "ru": "Показывает, что ты слушаешь в Nintendo Music через свой профиль Discord."
   },
-  "logo": "https://i.imgur.com/thYBiff.png",
+  "url": "music.nintendo.com",
   "regExp": "^https?://music\\.nintendo\\.com/",
-  "service": "Nintendo Music",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/thYBiff.png",
+  "thumbnail": "https://i.imgur.com/iZwfPeX.png",
+  "color": "#FC2C00",
+  "category": "music",
+  "tags": [
+    "music",
+    "nintendo"
+  ],
   "settings": [
     {
       "id": "multiLanguage",
       "multiLanguage": true
     },
     {
-      "description": "Show the progress timestamps of a song.",
-      "icon": "fas fa-clock",
       "id": "showTimestamps",
       "title": "Show Timestamps",
-      "value": true
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Show the progress timestamps of a song."
     },
     {
-      "description": "Show the song artwork as the large image.",
-      "icon": "fas fa-image",
       "id": "showSongArt",
       "title": "Show Song Art",
-      "value": true
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Show the song artwork as the large image."
     }
-  ],
-  "tags": [
-    "music",
-    "nintendo"
-  ],
-  "thumbnail": "https://i.imgur.com/iZwfPeX.png",
-  "url": "music.nintendo.com",
-  "version": "1.0.0"
+  ]
 }

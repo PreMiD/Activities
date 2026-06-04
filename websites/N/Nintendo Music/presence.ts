@@ -35,8 +35,9 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = now - Math.floor(currentTime)
     presenceData.endTimestamp = now + Math.floor(duration - currentTime)
 
-    if (showSongArt)
+    if (showSongArt) {
       presenceData.largeImageKey = songArt
+    }
   } else if (pathname.includes('/search')) {
     presenceData.details = 'Searching...'
     presenceData.largeImageKey = NintendoMusicLogo
@@ -49,8 +50,9 @@ presence.on('UpdateData', async () => {
     presenceData.state = gameName
     presenceData.startTimestamp = now
 
-    if (showSongArt)
+    if (showSongArt) {
       presenceData.largeImageKey = albumArt
+    }
   } else if (pathname.includes('/user-playlist')) {
     const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
     const songName = parts[0]?.trim() || 'Unknown'
@@ -59,8 +61,9 @@ presence.on('UpdateData', async () => {
     presenceData.state = 'Personal Playlist'
     presenceData.startTimestamp = now
 
-    if (showSongArt)
+    if (showSongArt) {
       presenceData.largeImageKey = albumArt
+    }
   } else if (pathname.includes('/playlist')) {
     const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
     const songName = parts[0]?.trim() || 'Unknown'
@@ -69,8 +72,9 @@ presence.on('UpdateData', async () => {
     presenceData.state = 'Official Playlist'
     presenceData.startTimestamp = now
 
-    if (showSongArt)
+    if (showSongArt) {
       presenceData.largeImageKey = albumArt
+    }
   } else if (pathname.includes('/my-music')) {
     const mainTitle = document.querySelector('#main-column h1')?.textContent
 
@@ -87,8 +91,10 @@ presence.on('UpdateData', async () => {
     delete presenceData.endTimestamp
   }
 
-  if (presenceData.details)
+  if (presenceData.details) {
     presence.setActivity(presenceData)
-  else
+  } else {
     presence.clearActivity()
+  }
+
 })
