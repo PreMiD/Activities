@@ -11,7 +11,7 @@
     "en": "Watch live TV, movies, and series on Oneplay."
   },
   "url": "oneplay.cz",
-  "regExp": "^https?://(www\\.)?oneplay\\.cz"
+  "regExp": "^https?://(www\\.)?oneplay\\.cz",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/cUdfHvP.jpeg",
   "thumbnail": "https://i.imgur.com/UBjP1k4.png",
