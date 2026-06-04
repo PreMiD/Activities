@@ -1,119 +1,94 @@
-import { ActivityType } from "premid";
+import { ActivityType } from 'premid'
 
 const presence = new Presence({
-  clientId: '1511505666664038460'
+  clientId: '1511505666664038460',
 })
-const NintendoMusicLogo = 'https://imgur.com/thYBiff.png';
+const NintendoMusicLogo = 'https://i.imgur.com/thYBiff.png'
 
 presence.on('UpdateData', async () => {
-
-  // Get the current URL
   const { pathname } = document.location
-
-  // Getting stuff from the website
-  const title = document.title;
+  const title = document.title
   const audio = document.querySelector('audio')
-  const isPlaying = !!document.querySelector('[aria-label="Pause"]');
+  const isPlaying = !!document.querySelector('[aria-label="Pause"]')
   const currentTime = audio?.currentTime || 0
   const duration = audio?.duration || 0
   const now = Math.floor(Date.now() / 1000)
 
-  const songArt = document.querySelector<HTMLImageElement>('[aria-label="Playback panel"] img')?.src || NintendoMusicLogo;
-  const albumArt = document.querySelector<HTMLImageElement>('#main-column img')?.src || NintendoMusicLogo;
+  const songArt = document.querySelector<HTMLImageElement>('[aria-label="Playback panel"] img')?.src || NintendoMusicLogo
+  const albumArt = document.querySelector<HTMLImageElement>('#main-column img')?.src || NintendoMusicLogo
 
-  // settings
-  const showTimestamps = await presence.getSetting<boolean>("showTimestamps");
-  const showSongArt = await presence.getSetting<boolean>("showSongArt");
+  const showTimestamps = await presence.getSetting<boolean>('showTimestamps')
+  const showSongArt = await presence.getSetting<boolean>('showSongArt')
 
-  // Create the base presence data
   const presenceData: PresenceData = {
-    largeImageKey: NintendoMusicLogo, // Direct URL to the logo image
-    type: ActivityType.Listening
+    largeImageKey: NintendoMusicLogo,
+    type: ActivityType.Listening,
   }
 
-  // Update the state based on the current page
   if (isPlaying && title.includes(' - Nintendo Music')) {
+    const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
+    const songName = parts[0]?.trim() || 'Unknown'
+    const gameName = parts[1]?.trim() || 'Nintendo'
 
-    const full = title.replace(" - Nintendo Music", "").trim();
-    const parts = full.split(/[・·]/);
-    const songName = parts[0]?.trim() || "Unknown game";
-    const gameName = parts[1]?.trim() || "Nintendo";
-
-    presenceData.details = songName;
-    presenceData.state = gameName;
-    presenceData.startTimestamp = now - Math.floor(currentTime);
+    presenceData.details = songName
+    presenceData.state = gameName
+    presenceData.startTimestamp = now - Math.floor(currentTime)
     presenceData.endTimestamp = now + Math.floor(duration - currentTime)
 
-    if (showSongArt) presenceData.largeImageKey = songArt;
-
+    if (showSongArt)
+      presenceData.largeImageKey = songArt
   } else if (pathname.includes('/search')) {
-
-    presenceData.details = "Searching..."
-    presenceData.largeImageKey = NintendoMusicLogo;
-
+    presenceData.details = 'Searching...'
+    presenceData.largeImageKey = NintendoMusicLogo
   } else if (pathname.includes('/game')) {
-
-    const full = title.replace(" - Nintendo Music", "").trim();
-    const parts = full.split(/[・·]/);
-    const gameName = parts[1]?.trim() || "Nintendo";
+    const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
+    const gameName = parts[1]?.trim() || 'Nintendo'
     const mainTitle = document.querySelector('#main-column h1')?.textContent
 
-    presenceData.details = "Browsing " + mainTitle;
-    presenceData.state = gameName;
-    if (showSongArt) presenceData.largeImageKey = albumArt;
-    presenceData.startTimestamp = Math.floor(Date.now() / 1000);
+    presenceData.details = `Browsing ${mainTitle}`
+    presenceData.state = gameName
+    presenceData.startTimestamp = now
 
+    if (showSongArt)
+      presenceData.largeImageKey = albumArt
   } else if (pathname.includes('/user-playlist')) {
+    const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
+    const songName = parts[0]?.trim() || 'Unknown'
 
-    const full = title.replace(" - Nintendo Music", "").trim();
-    const parts = full.split(/[・·]/);
-    const songName = parts[0]?.trim() || "Unknown game";
+    presenceData.details = songName
+    presenceData.state = 'Personal Playlist'
+    presenceData.startTimestamp = now
 
-    presenceData.details = songName;
-    presenceData.state = "Personal Playlist";
-    if (showSongArt) presenceData.largeImageKey = albumArt;
-    presenceData.startTimestamp = Math.floor(Date.now() / 1000);
-
+    if (showSongArt)
+      presenceData.largeImageKey = albumArt
   } else if (pathname.includes('/playlist')) {
+    const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
+    const songName = parts[0]?.trim() || 'Unknown'
 
-    const full = title.replace(" - Nintendo Music", "").trim();
-    const parts = full.split(/[・·]/);
-    const songName = parts[0]?.trim() || "Unknown game";
+    presenceData.details = songName
+    presenceData.state = 'Official Playlist'
+    presenceData.startTimestamp = now
 
-    presenceData.details = songName;
-    presenceData.state = "Official Playlist";
-    if (showSongArt) presenceData.largeImageKey = albumArt;
-    presenceData.startTimestamp = Math.floor(Date.now() / 1000);
-
+    if (showSongArt)
+      presenceData.largeImageKey = albumArt
   } else if (pathname.includes('/my-music')) {
-
-    const full = title.replace(" - Nintendo Music", "").trim();
     const mainTitle = document.querySelector('#main-column h1')?.textContent
 
-    presenceData.details = mainTitle;
-    presenceData.state = "My Music";
-    presenceData.largeImageKey = NintendoMusicLogo;
-    presenceData.startTimestamp = Math.floor(Date.now() / 1000);
-
+    presenceData.details = mainTitle
+    presenceData.state = 'My Music'
+    presenceData.startTimestamp = now
   } else {
-
-    presenceData.details = "Browsing Music...";
-    presenceData.largeImageKey = NintendoMusicLogo;
-    presenceData.startTimestamp = Math.floor(Date.now() / 1000);
-
+    presenceData.details = 'Browsing Music...'
+    presenceData.startTimestamp = now
   }
 
-  // if the setting is off
   if (!showTimestamps) {
-    delete presenceData.startTimestamp;
-    delete presenceData.endTimestamp;
+    delete presenceData.startTimestamp
+    delete presenceData.endTimestamp
   }
 
-  // Set the activity
-  if (presenceData.details) {
+  if (presenceData.details)
     presence.setActivity(presenceData)
-  }
-  else {
+  else
     presence.clearActivity()
-  }
 })

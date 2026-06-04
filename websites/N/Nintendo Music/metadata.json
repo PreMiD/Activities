@@ -5,44 +5,45 @@
     "name": "petkoslaw",
     "id": "1465968325749117041"
   },
-  "service": "Nintendo Music",
-  "description": {
-    "en": "Shows what you're listening to on Nintendo Music on your Discord profile.",
-    "de": "Zeigt, was du auf Nintendo Music hörst in deinem Discord-Profil an.",
-    "it": "Mostra ciò che stai ascoltando su Nintendo Music sul tuo profilo Discord.",
-    "es": "Muestra lo que estás escuchando en Nintendo Music en tu perfil de Discord.",
-    "nl": "Laat op je Discord-Profiel zien wat je naar luistert op Nintendo Music.",
-    "ru": "Показывает, что ты слушаешь в Nintendo Music через свой профиль Discord."
-  },
-  "url": "music.nintendo.com",
-  "regExp": "^https?://music\\.nintendo\\.com/",
-  "version": "1.0.0",
-  "logo": "https://imgur.com/thYBiff.png",
-  "thumbnail": "https://imgur.com/iZwfPeX.png",
-  "color": "#FC2C00",
   "category": "music",
+  "color": "#FC2C00",
+  "description": {
+    "de": "Zeigt, was du auf Nintendo Music hörst in deinem Discord-Profil an.",
+    "en": "Shows what you're listening to on Nintendo Music on your Discord profile.",
+    "es": "Muestra lo que estás escuchando en Nintendo Music en tu perfil de Discord.",
+    "it": "Mostra ciò che stai ascoltando su Nintendo Music sul tuo profilo Discord.",
+    "nl": "Laat op je Discord-Profiel zien wat je naar luistert op Nintendo Music.",
+    "ru": "Показывает, что ты слушаешь в Nintendo Music через свой профиль Discord.",
+    "sr": "Prikazuje šta slušaš na Nintendo Music na tvom Discord profilu."
+  },
+  "logo": "https://i.imgur.com/thYBiff.png",
+  "regExp": "^https?://music\\.nintendo\\.com/",
+  "service": "Nintendo Music",
+  "settings": [
+    {
+      "id": "multiLanguage",
+      "multiLanguage": true
+    },
+    {
+      "description": "Show the progress timestamps of a song.",
+      "icon": "fas fa-clock",
+      "id": "showTimestamps",
+      "title": "Show Timestamps",
+      "value": true
+    },
+    {
+      "description": "Show the song artwork as the large image.",
+      "icon": "fas fa-image",
+      "id": "showSongArt",
+      "title": "Show Song Art",
+      "value": true
+    }
+  ],
   "tags": [
     "music",
     "nintendo"
   ],
-  "settings": [
-    {
-      "id": "showTimestamps",
-      "title": "Show Timestamps",
-      "icon": "fas fa-clock",
-      "value": true,
-      "description": "Show the progress timestamps of a song."
-    },
-    {
-      "id": "showSongArt",
-      "title": "Show Song Art",
-      "icon": "fas fa-image",
-      "value": true,
-      "description": "Show the song artwork as the large image."
-    },
-    {
-      "id": "multiLanguage",
-      "multiLanguage": true
-    }
-  ]
+  "thumbnail": "https://i.imgur.com/iZwfPeX.png",
+  "url": "music.nintendo.com",
+  "version": "1.0.0"
 }
