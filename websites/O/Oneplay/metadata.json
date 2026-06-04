@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/PreMiD/Activities/main/website.schema.json",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "MrJaroslavik",
