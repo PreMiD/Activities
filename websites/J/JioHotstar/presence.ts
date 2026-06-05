@@ -17,7 +17,7 @@ presence.on('UpdateData', async () => {
     return
   }
 
-  const video = document.querySelector<HTMLVideoElement>("video");
+  const video = document.querySelector<HTMLVideoElement>('video')
   if (!video) {
     presence.clearActivity()
     return
