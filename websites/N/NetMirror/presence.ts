@@ -124,37 +124,48 @@ function getCoverImage(): string | undefined {
   return isUsableImage(metaImage) ? metaImage : undefined
 }
 
+const coverImageCache = new Map<string, Promise<string | Blob | undefined>>()
+
 async function processCoverImage(coverImage?: string): Promise<string | Blob | undefined> {
   if (!coverImage)
     return undefined
 
-  if (coverImage.includes('imgcdn.kim') || coverImage.includes('img.nfmirrorcdn') || coverImage.includes('netmirror')) {
-    try {
-      const img = new Image()
-      img.crossOrigin = 'anonymous'
-      await new Promise((resolve, reject) => {
-        img.onload = resolve
-        img.onerror = reject
-        img.src = coverImage
-      })
+  let promise = coverImageCache.get(coverImage)
+  if (promise)
+    return promise
 
-      const canvas = document.createElement('canvas')
-      canvas.width = img.naturalWidth
-      canvas.height = img.naturalHeight
-      const ctx = canvas.getContext('2d')
-      if (ctx) {
-        ctx.drawImage(img, 0, 0)
-        const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve))
-        if (blob)
-          return blob
+  promise = (async () => {
+    if (coverImage.includes('imgcdn.kim') || coverImage.includes('img.nfmirrorcdn') || coverImage.includes('netmirror')) {
+      try {
+        const img = new Image()
+        img.crossOrigin = 'anonymous'
+        await new Promise((resolve, reject) => {
+          img.onload = resolve
+          img.onerror = reject
+          img.src = coverImage
+        })
+
+        const canvas = document.createElement('canvas')
+        canvas.width = img.naturalWidth
+        canvas.height = img.naturalHeight
+        const ctx = canvas.getContext('2d')
+        if (ctx) {
+          ctx.drawImage(img, 0, 0)
+          const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve))
+          if (blob)
+            return blob
+        }
+      }
+      catch {
+        // Fallback
       }
     }
-    catch {
-      // Fallback
-    }
-  }
 
-  return coverImage
+    return coverImage
+  })()
+
+  coverImageCache.set(coverImage, promise)
+  return promise
 }
 
 function getSearchQuery(): string | undefined {
