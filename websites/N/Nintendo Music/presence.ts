@@ -6,7 +6,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://music.nintendo.com/favicon.ico',
+  Logo = 'https://i.imgur.com/eVpYUP0.png',
 }
 
 presence.on('UpdateData', async () => {
