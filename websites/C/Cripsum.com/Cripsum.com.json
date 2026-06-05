@@ -4,8 +4,8 @@
     "message": "Opening a lootbox"
   },
   "cripsum.justPulled": {
-    "description": "Shown after pulling an item from a lootbox. ' is the item name.",
-    "message": "Just pulled: "
+    "description": "Shown after pulling an item from a lootbox. {{item}} is the item name.",
+    "message": "Just pulled: {{item}}"
   },
   "cripsum.testingLuck": {
     "description": "Shown while the lootbox animation is playing",
@@ -60,24 +60,24 @@
     "message": "Match ended"
   },
   "cripsum.spectating": {
-    "description": "Shown in spectator mode. ' is player 1, ' is player 2.",
-    "message": "👁️ Spectating: "
+    "description": "Shown in spectator mode. {{p1}} is player 1, {{p2}} is player 2.",
+    "message": "👁️ Spectating: {{p1}} VS {{p2}}"
   },
   "cripsum.vsOpponent": {
-    "description": "Shown during an active duel. ' is the opponent's name.",
-    "message": "⚔️ "
+    "description": "Shown during an active duel. {{opponent}} is the opponent's name.",
+    "message": "⚔️ {{opponent}}"
   },
   "cripsum.room": {
-    "description": "Small image tooltip showing the room code. ' is the room code.",
-    "message": "Room: "
+    "description": "Small image tooltip showing the room code. {{room}} is the room code.",
+    "message": "Room: {{room}}"
   },
   "cripsum.opponent": {
     "description": "Fallback label when the opponent's name is not found",
     "message": "Opponent"
   },
   "cripsum.pickingTeam": {
-    "description": "Shown during the team-picking phase. ' is the counter (e.g. 1/3).",
-    "message": "📋 Picking team "
+    "description": "Shown during the team-picking phase. {{counter}} is the counter (e.g. 1/3).",
+    "message": "📋 Picking team {{counter}}"
   },
   "cripsum.waitingOpponent": {
     "description": "Shown when waiting for an opponent in the arena",
@@ -92,8 +92,8 @@
     "message": "Achievements"
   },
   "cripsum.unlockedAchievements": {
-    "description": "Shown with unlock count. ' is unlocked, ' is total.",
-    "message": "Unlocked: "
+    "description": "Shown with unlock count. {{unlocked}} is unlocked, {{total}} is total.",
+    "message": "Unlocked: {{unlocked}}/{{total}}"
   },
   "cripsum.huntingAchievements": {
     "description": "Shown when on achievements page but no count is found",

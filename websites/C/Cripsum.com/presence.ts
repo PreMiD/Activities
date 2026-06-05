@@ -123,7 +123,7 @@ presence.on('UpdateData', async () => {
     const avatarImg = document.querySelector<HTMLImageElement>('.card-img-godo')?.src
 
     if (dropResult) {
-      presenceData.state = `${strings.justPulled} ${dropResult}`
+      presenceData.state = strings.justPulled.replace('{{item}}', dropResult)
       presenceData.largeImageKey = avatarImg
     }
     else {
@@ -225,7 +225,7 @@ presence.on('UpdateData', async () => {
       const p1 = document.querySelector('#playerName')?.textContent?.trim()
       const p2 = document.querySelector('#opponentName')?.textContent?.trim()
       const turn = document.querySelector('#turnLabel')?.textContent?.trim()
-      presenceData.state = `${strings.spectating} ${p1} VS ${p2}`
+      presenceData.state = strings.spectating.replace('{{p1}}', p1 ?? '').replace('{{p2}}', p2 ?? '')
       if (turn)
         presenceData.details = `Cripsum Duel · ${turn}`
     }
@@ -234,16 +234,17 @@ presence.on('UpdateData', async () => {
       const opponent = document.querySelector('#opponentName')?.textContent?.trim()
       const turn = document.querySelector('#turnLabel')?.textContent?.trim()
       const room = document.querySelector('#arenaRoomCode')?.textContent?.trim()
-      presenceData.state = `${strings.vsOpponent} ${opponent || strings.opponent}`
+      presenceData.state = strings.vsOpponent.replace('{{opponent}}', opponent || strings.opponent)
+      presenceData.smallImageKey = Assets.Play
       if (turn)
         presenceData.details = `Cripsum Duel · ${turn}`
       if (room && room !== '---')
-        presenceData.smallImageText = `${strings.room} ${room}`
+        presenceData.smallImageText = strings.room.replace('{{room}}', room)
     }
 
     else if (teamPanel && !teamPanel.hidden) {
       const counter = document.querySelector('#teamCounter')?.textContent?.trim()
-      presenceData.state = `${strings.pickingTeam} ${counter ?? '0/3'}`
+      presenceData.state = strings.pickingTeam.replace('{{counter}}', counter ?? '0/3')
     }
 
     else if (waitingPanel && !waitingPanel.hidden) {
@@ -263,7 +264,9 @@ presence.on('UpdateData', async () => {
     presenceData.details = strings.achievements
     const unlocked = document.querySelector('.statUnlocked')?.textContent
     const totalAchievements = document.querySelector('.statTotal')?.textContent
-    presenceData.state = unlocked ? `${strings.unlockedAchievements} ${unlocked}/${totalAchievements}` : strings.huntingAchievements
+    presenceData.state = unlocked
+      ? strings.unlockedAchievements.replace('{{unlocked}}', unlocked).replace('{{total}}', totalAchievements ?? '')
+      : strings.huntingAchievements
   }
 
   else if (path.includes('download/fortnite')) {
