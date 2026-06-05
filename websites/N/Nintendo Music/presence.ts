@@ -11,8 +11,9 @@ enum ActivityAssets {
 
 presence.on('UpdateData', async () => {
   // Retrieve Settings
-  const privacyMode = await presence.getSetting<boolean>('privacyMode')
-  const displayOrder = await presence.getSetting<number>('displayOrder')
+  const privacyModePromise = presence.getSetting<boolean>('privacyMode')
+  const displayOrderPromise = presence.getSetting<number>('displayOrder')
+  const [privacyMode, displayOrder] = await Promise.all([privacyModePromise, displayOrderPromise])
 
   // Create the base presence data
   const presenceData: PresenceData = {
