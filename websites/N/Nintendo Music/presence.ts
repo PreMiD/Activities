@@ -17,8 +17,10 @@ presence.on('UpdateData', async () => {
   const songArt = document.querySelector<HTMLImageElement>('[aria-label="Playback panel"] img')?.src || NintendoMusicLogo
   const albumArt = document.querySelector<HTMLImageElement>('#main-column img')?.src || NintendoMusicLogo
 
-  const showTimestamps = await presence.getSetting<boolean>('showTimestamps')
-  const showSongArt = await presence.getSetting<boolean>('showSongArt')
+  const [showTimestamps, showSongArt] = await Promise.all([
+    presence.getSetting<boolean>('showTimestamps'),
+    presence.getSetting<boolean>('showSongArt'),
+  ])
 
   const presenceData: PresenceData = {
     largeImageKey: NintendoMusicLogo,
