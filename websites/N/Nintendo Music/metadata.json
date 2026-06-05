@@ -10,7 +10,7 @@
     "en": "Nintendo Music is a streaming service by Nintendo that lets you listen to official video game soundtracks."
   },
   "url": "music.nintendo.com",
-  "regExp": "^https?[:][/][/]music[.]nintendo[.]com",
+  "regExp": "^https?[:][/][/]music[.]nintendo[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/eVpYUP0.png",
   "thumbnail": "https://i.imgur.com/xc5urT9.png",
