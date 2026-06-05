@@ -15,9 +15,9 @@
   },
   "url": "reanime.to",
   "regExp": "^https?[:][/][/]reanime[.]to[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/yjaL5qi.png",
-  "thumbnail": "https://i.imgur.com/yfwOAiE.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/thumbnail.png",
   "color": "#C7FF00",
   "category": "anime",
   "tags": [
