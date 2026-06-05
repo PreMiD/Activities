@@ -382,7 +382,7 @@ presence.on('UpdateData', async () => {
     const processedCover = await processCoverImage(coverUrl)
 
     if (showCover && processedCover) {
-      presenceData.largeImageKey = processedCover as any
+      presenceData.largeImageKey = processedCover
       presenceData.largeImageText = title
     }
 
@@ -444,7 +444,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = 'Viewing'
 
     if (showCover && processedCover && (processedCover instanceof Blob || isUsableImage(processedCover))) {
-      presenceData.largeImageKey = processedCover as any
+      presenceData.largeImageKey = processedCover
       // Don't set largeImageText as per PreMiD guidelines since V2 unless requested, but V1 allows it
       presenceData.largeImageText = titleText || 'Details'
     }
@@ -473,7 +473,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageText = 'Viewing'
 
     if (showCover && processedCover) {
-      presenceData.largeImageKey = processedCover as any
+      presenceData.largeImageKey = processedCover
       presenceData.largeImageText = title
     }
 
