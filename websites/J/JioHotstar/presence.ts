@@ -17,7 +17,7 @@ presence.on('UpdateData', async () => {
     return
   }
 
-  const video = document.querySelector('video') as HTMLVideoElement | null
+  const video = document.querySelector<HTMLVideoElement>("video");
   if (!video) {
     presence.clearActivity()
     return
@@ -38,7 +38,7 @@ presence.on('UpdateData', async () => {
     )?.getAttribute('content')
 
   const activity: PresenceData = {
-    type: 3 as any,
+    type: ActivityType.Watching,
     details: title,
     state: episode ?? 'Watching',
     largeImageKey: poster || 'JioHotstar',
