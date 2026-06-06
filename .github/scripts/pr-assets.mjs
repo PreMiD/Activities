@@ -16,6 +16,17 @@ const IMAGE_URL_RE = /https?:\/\/[^\s"'`)\]]+\.(?:png|jpe?g|gif|webp|svg|ico)(?:
 // GitHub caps comment bodies at 65536 characters.
 const MAX_COMMENT_LENGTH = 65000
 
+// DiMerP's opening lines — picked by PR number so the quip stays stable
+// across pushes to the same PR.
+const QUIPS = [
+  'Fresh pixels, hot off the CDN — I lined them all up for inspection. 👀',
+  'I fetched these assets so you don\'t have to. My hobbies include embedding images and silently judging diffs.',
+  'Behold, the gallery! Admission is free, but I do accept tips in the form of approvals.',
+  'Another day, another diff. Here\'s everything shiny I could dig out of this one.',
+  'I rummaged through the diff and found these. Finders keepers? No? Fine, they\'re yours.',
+  'Asset inspection complete. No pixels were harmed in the making of this comment. 🤖',
+]
+
 /**
  * Extract the activity folder key from a changed file path.
  * Example: websites/Y/YouTube/v2/presence.ts -> websites/Y/YouTube/v2
@@ -85,24 +96,25 @@ export function displayName(folder) {
 
 /**
  * Render the sticky comment body for the collected activities.
+ * The PR number keeps DiMerP's quip stable across pushes.
  */
-export function buildCommentBody(activities) {
+export function buildCommentBody(activities, pullNumber = 0) {
   if (activities.length === 0)
-    return `${COMMENT_MARKER}\nNo activity assets in this PR.`
+    return `${COMMENT_MARKER}\nNo activity assets in this PR. I looked everywhere. Twice. 🤖`
 
   const sections = activities.map((activity) => {
     const lines = [`### ${activity.name} (\`${activity.folder}\`) — ${activity.type}`, '']
 
     if (activity.type === 'deletion') {
-      lines.push('_Activity deleted in this PR._')
+      lines.push('_This activity is being sent to the shadow realm. Press F to pay respects. 🪦_')
       return lines.join('\n')
     }
 
     if (activity.metadataError)
-      lines.push('_⚠️ `metadata.json` could not be loaded — logo/thumbnail previews unavailable._', '')
+      lines.push('_⚠️ I couldn\'t load `metadata.json` — no logo/thumbnail previews, my crystal ball is in the shop._', '')
 
     if (activity.assets.length === 0) {
-      lines.push('_No asset URLs found in this change._')
+      lines.push('_No asset URLs found in this change — not a single pixel to show off._')
       return lines.join('\n')
     }
 
@@ -112,8 +124,9 @@ export function buildCommentBody(activities) {
     return lines.join('\n')
   })
 
-  const header = `${COMMENT_MARKER}\n## 🖼️ Activity asset preview\n`
-  const footer = '\n---\n<sub>Auto-generated — updates on each push.</sub>'
+  const quip = QUIPS[pullNumber % QUIPS.length]
+  const header = `${COMMENT_MARKER}\n## 🖼️ Activity asset preview\n\n_${quip}_\n`
+  const footer = '\n---\n<sub>Beep boop — I refresh this comment on every push, so no need to scroll. 🤖</sub>'
 
   let omitted = 0
   let body = [header, ...sections].join('\n')
@@ -178,7 +191,7 @@ async function upsertComment(github, context, core, activities) {
     return
   }
 
-  const body = buildCommentBody(activities)
+  const body = buildCommentBody(activities, context.payload.pull_request.number)
   if (existing) {
     await github.rest.issues.updateComment({
       owner: context.repo.owner,
