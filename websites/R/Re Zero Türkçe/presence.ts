@@ -11,7 +11,7 @@ let pageTimestamp = browsingTimestamp
 let previousUrl = document.location.href
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/KFcYFgO.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/R/Re%20Zero%20T%C3%BCrk%C3%A7e/assets/logo.png',
 }
 
 const storySections = new Set(['ana-hikaye', 'if-hikayeleri', 'yan-hikayeler'])

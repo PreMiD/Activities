@@ -12,9 +12,9 @@
   },
   "url": "www.rezeroturkce.com",
   "regExp": "^https?[:][/][/]((www)[.])?rezeroturkce[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/KFcYFgO.png",
-  "thumbnail": "https://i.imgur.com/v3N9aac.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Re%20Zero%20T%C3%BCrk%C3%A7e/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Re%20Zero%20T%C3%BCrk%C3%A7e/assets/thumbnail.png",
   "color": "#141414",
   "category": "anime",
   "tags": [
