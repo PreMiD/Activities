@@ -225,7 +225,6 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageText = strings.privacy
           }
           else {
-
             const buttonsSelector = '[class*=ActionButton] > div > span'
             if (!exist(buttonsSelector))
               document.onload = () => console.warn('Buttons not found, presence may need update to fit the new website design')
@@ -348,7 +347,6 @@ presence.on('UpdateData', async () => {
               slideshow.addSlide('poster-image', presenceDataPoster, 5000)
               slideshow.addSlide('channel-image', presenceData, 5000)
             }
-
           }
           break
         }
