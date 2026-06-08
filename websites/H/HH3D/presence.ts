@@ -1,7 +1,7 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '1511990578332827718',
+  clientId: '1513468333360550030',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -27,7 +27,8 @@ enum ActivityAssets {
 presence.on('iFrameData', (data) => {
   if (data.hasVideo) {
     iframeVideoData = data
-  } else {
+  }
+  else {
     iframeVideoData = null
   }
 })
@@ -36,13 +37,13 @@ async function updatePresence() {
   try {
     const video = document.querySelector('video')
     const { pathname, href } = document.location
-    
+
     // Nếu đổi tập phim thì reset lại thời gian dự phòng
     if (currentVideoUrl !== href) {
       currentVideoUrl = href
       fallbackStartTime = null
     }
-    
+
     const isWatchPage = pathname.includes('/phim/') || pathname.includes('/xem-phim/') || pathname.includes('/tap-') || document.querySelector('.watching') !== null
 
     const [newLang] = await Promise.all([
@@ -73,7 +74,8 @@ async function updatePresence() {
           if (data['@type'] === 'TVEpisode') {
             if (typeof data.image === 'string') {
               posterKey = data.image
-            } else if (data.video && typeof data.video.thumbnailUrl === 'string') {
+            }
+            else if (data.video && typeof data.video.thumbnailUrl === 'string') {
               posterKey = data.video.thumbnailUrl
             }
 
@@ -83,72 +85,78 @@ async function updatePresence() {
             if (data.episodeNumber) {
               schemaEpisode = `Tập ${data.episodeNumber}`
             }
-            
+
             if (data.duration || (data.video && data.video.duration)) {
               const rawDuration = data.duration || data.video.duration
               const match = rawDuration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/)
               if (match) {
-                const hours = parseInt(match[1] || '0', 10)
-                const minutes = parseInt(match[2] || '0', 10)
-                const seconds = parseInt(match[3] || '0', 10)
+                const hours = Number.parseInt(match[1] || '0', 10)
+                const minutes = Number.parseInt(match[2] || '0', 10)
+                const seconds = Number.parseInt(match[3] || '0', 10)
                 schemaDuration = (hours * 3600) + (minutes * 60) + seconds
               }
             }
             break
           }
-        } catch (e) {
-          // Bỏ qua lỗi
+        }
+        catch {
         }
       }
 
       if (posterKey === ActivityAssets.Logo) {
         const metaImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content')
         const domImage = document.querySelector('.film-info img, .movie-l-img img, .info-m-poster img, .m-thumb img')?.getAttribute('src')
-        
+
         if (metaImage) {
           posterKey = metaImage
-        } else if (domImage) {
+        }
+        else if (domImage) {
           posterKey = domImage
         }
       }
-      
+
       if (posterKey.startsWith('/')) {
         posterKey = window.location.origin + posterKey
       }
 
       const titleElement = document.querySelector('h1.entry-title, .movie-title h1, .title-film, h1, .film-info h1')
       const fullTitle = schemaTitle || titleElement?.textContent?.trim() || 'Đang xem Hoạt Hình 3D'
-      
+
       presenceData.details = fullTitle
       presenceData.largeImageText = fullTitle
-      
+
       let episodeText = schemaEpisode || ''
       let seasonText = ''
 
       if (fullTitle.toLowerCase().includes('season')) {
         const match = fullTitle.match(/season\s*\d+/i)
-        if (match) seasonText = ` - Phần ${match[0].replace(/season/i, '').trim()}`
-      } else if (fullTitle.toLowerCase().includes('phần')) {
+        if (match)
+          seasonText = ` - Phần ${match[0].replace(/season/i, '').trim()}`
+      }
+      else if (fullTitle.toLowerCase().includes('phần')) {
         const match = fullTitle.match(/phần\s*\d+/i)
-        if (match) seasonText = ` - ${match[0]}`
+        if (match)
+          seasonText = ` - ${match[0]}`
       }
 
       if (!episodeText) {
         const urlMatch = href.match(/tap-(\d+)/i) || href.match(/-ep-(\d+)/i) || href.match(/-tap-(\d+)/i)
-        
+
         if (urlMatch && urlMatch[1]) {
           episodeText = `Tập ${urlMatch[1]}`
-        } else {
+        }
+        else {
           const allActiveLinks = document.querySelectorAll('.list-episode a.active, ul.episodes a.active, .episodes a.active, .ep-item.active')
-          const epNode = Array.from(allActiveLinks).find(el => {
+          const epNode = Array.from(allActiveLinks).find((el) => {
             const text = el.textContent?.toLowerCase() || ''
             return !text.includes('phần') && !text.includes('season') && !text.includes('dự') && !text.includes('du') && !text.includes('thuyết')
           })
 
           if (epNode && epNode.textContent) {
-            let epNum = epNode.textContent.trim()
+            const epNum = epNode.textContent.trim()
             episodeText = /^\d+$/.test(epNum) ? `Tập ${epNum}` : epNum
-          } else {
+          }
+          else {
             episodeText = 'Đang xem'
           }
         }
@@ -166,13 +174,16 @@ async function updatePresence() {
         isPaused = video.paused
         currentTime = video.currentTime
         duration = video.duration
-        if (video.poster) videoPoster = video.poster
+        if (video.poster)
+          videoPoster = video.poster
         hasValidVideo = true
-      } else if (iframeVideoData && iframeVideoData.hasVideo) {
+      }
+      else if (iframeVideoData && iframeVideoData.hasVideo) {
         isPaused = iframeVideoData.paused
         currentTime = iframeVideoData.currentTime
         duration = iframeVideoData.duration
-        if (iframeVideoData.poster) videoPoster = iframeVideoData.poster
+        if (iframeVideoData.poster)
+          videoPoster = iframeVideoData.poster
         hasValidVideo = true
       }
 
@@ -185,10 +196,12 @@ async function updatePresence() {
           const timestamps = getTimestamps(currentTime, duration)
           presenceData.startTimestamp = timestamps[0]
           presenceData.endTimestamp = timestamps[1]
-        } else {
+        }
+        else {
           delete presenceData.endTimestamp
         }
-      } else if (schemaDuration > 0) {
+      }
+      else if (schemaDuration > 0) {
         // ĐÃ SỬA LỖI GIẬT LÙI THỜI GIAN Ở ĐÂY
         if (!isPaused) {
           if (!fallbackStartTime) {
@@ -197,10 +210,12 @@ async function updatePresence() {
           }
           presenceData.startTimestamp = fallbackStartTime
           presenceData.endTimestamp = fallbackStartTime + schemaDuration
-        } else {
+        }
+        else {
           delete presenceData.endTimestamp
         }
-      } else {
+      }
+      else {
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = 'Đang tải video...'
       }
@@ -213,17 +228,18 @@ async function updatePresence() {
         {
           label: 'HH3DSUB',
           url: window.location.origin,
-        }
+        },
       ]
-
-    } else {
+    }
+    else {
       presenceData.details = 'Đang lướt web'
       delete presenceData.startTimestamp
       delete presenceData.endTimestamp
     }
 
     presence.setActivity(presenceData)
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Lỗi:', error)
   }
 }
