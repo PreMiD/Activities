@@ -21,7 +21,7 @@ async function getStrings() {
 }
 
 enum ActivityAssets {
-  Logo = 'http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_160514_0_512.png',
+  Logo = 'http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_182625_0_logo_new_year_1.png',
 }
 
 presence.on('iFrameData', (data) => {

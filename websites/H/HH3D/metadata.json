@@ -25,6 +25,5 @@
     "3d",
     "donghua"
   ],
-  "iframe": true,
-  "iFrameRegExp": ".*"
+  "iframe": true
 }

@@ -20,7 +20,7 @@ async function getStrings() {
   })
 }
 
-const LOGO_URL = 'http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_163658_0_1000023100-removebg-preview.png'
+const LOGO_URL = 'http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_182259_0_1000023100-removebg-preview_1.png'
 
 presence.on('iFrameData', (data) => {
   iframeVideoData = data.hasVideo ? data : null
