@@ -17,12 +17,11 @@
     "nl": "Verbetering van de muziekbeleving wereldwijd."
   },
   "url": [
-    "musixmatch.com",
     "www.musixmatch.com",
     "curators.musixmatch.com"
   ],
   "regExp": "^https?[:][/][/]((www|curators)[.])?musixmatch[.]com[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Musixmatch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Musixmatch/assets/thumbnail.png",
   "color": "#FF3262",
