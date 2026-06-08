@@ -11,7 +11,7 @@
     "pt": "O link de bio definitivo para criadores e entusiastas cibernéticos. Personalize seu perfil, compartilhe suas redes sociais e acompanhe seu tráfego gratuitamente."
   },
   "url": "brkn.bio",
-  "regExp": "^https?://(www\\.)?brkn\\.bio/"
+  "regExp": "^https?[:][/][/](www[.])?brkn[.]bio[/]"
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/brkn.bio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/brkn.bio/assets/thumbnail.png",
