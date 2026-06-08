@@ -34,10 +34,21 @@ presence.on('UpdateData', () => {
 
   // Get creator name and profil pic
   const creatorNameElement = document.querySelector('header h1')
-  const creatorImageElement = document.querySelector('header img.rounded-full')
+  const creatorImageElement = document.querySelector('img.rounded-2xl.ring-grayscale-50')
 
   const creatorName = creatorNameElement?.textContent?.trim()
-  const creatorImageUrl = creatorImageElement?.getAttribute('src')
+
+  let creatorImageUrl = creatorImageElement?.getAttribute('src')
+
+  if (creatorImageUrl) {
+    if (!creatorImageUrl.startsWith('http')) {
+      creatorImageUrl = `https://tako.id${creatorImageUrl}`
+    }
+
+    if (creatorImageUrl.includes('dicebear.com') && creatorImageUrl.includes('/svg')) {
+      creatorImageUrl = creatorImageUrl.replace('/svg', '/png')
+    }
+  }
 
   // Help pages
   if (host.includes('help.tako.id')) {
@@ -109,6 +120,9 @@ presence.on('UpdateData', () => {
       else if (path.includes('/overlay/soundboard')) {
         presenceData.state = 'Configuring Soundboard'
       }
+      else if (path.includes('/overlay/songshare')) {
+        presenceData.state = 'Configuring Song Share'
+      }
       else if (path.includes('/overlay/milestone')) {
         presenceData.state = 'Configuring Milestones'
       }
@@ -120,6 +134,9 @@ presence.on('UpdateData', () => {
       }
       else if (path.includes('/overlay/gacha')) {
         presenceData.state = 'Configuring Gacha'
+      }
+      else if (path.includes('/overlay/vipqueue')) {
+        presenceData.state = 'Configuring VIP Queue'
       }
       else {
         presenceData.state = 'Viewing Overlay Manager'
@@ -141,8 +158,26 @@ presence.on('UpdateData', () => {
     else if (path.includes('/bans')) {
       presenceData.state = 'Blocking Users'
     }
+    else if (path.includes('/bio-link')) {
+      presenceData.state = 'Configuring Bio Link'
+    }
+    else if (path.includes('/team-members')) {
+      presenceData.state = 'Configuring Team Members'
+    }
+    else if (path.includes('/club')) {
+      presenceData.state = 'Configuring Club'
+    }
     else if (path.includes('/integrations')) {
       presenceData.state = 'Configuring Integrations'
+    }
+    else if (path.includes('/statistics')) {
+      presenceData.state = 'Checking Statistics'
+    }
+    else if (path.includes('/stickers')) {
+      presenceData.state = 'Configuring Custom Stickers'
+    }
+    else if (path.includes('/gift-units')) {
+      presenceData.state = 'Configuring Reward Units'
     }
     else if (path.includes('/auctions')) {
       presenceData.state = 'Configuring Auctions'
@@ -156,7 +191,8 @@ presence.on('UpdateData', () => {
   // Settings pages
   else if (
     path.includes('/settings')
-    || path.includes('/me')
+    || path === '/me'
+    || path.startsWith('/me/')
   ) {
     presenceData.details = 'Managing Account'
 
@@ -166,11 +202,86 @@ presence.on('UpdateData', () => {
     else if (path.includes('/sessions')) {
       presenceData.state = 'Checking Security Sessions'
     }
-    else if (path.includes('/me')) {
+    else if (path === '/me' || path.startsWith('/me/')) {
       presenceData.state = 'Viewing Profile Settings'
     }
     else {
       presenceData.state = 'Checking Settings'
+    }
+  }
+
+  // Club pages
+  else if (path.startsWith('/club')) {
+    if (path === '/club') {
+      presenceData.details = 'Exploring Clubs'
+
+      const searchParams = new URLSearchParams(location.search)
+      const tab = searchParams.get('tab')
+      const searchQuery = searchParams.get('search')
+      const page = searchParams.get('page')
+
+      presenceData.largeImageKey = ActivityAssets.Logo
+
+      if (searchQuery) {
+        presenceData.state = `Searching: ${searchQuery}`
+      }
+      else if (tab === 'owned') {
+        presenceData.state = 'Club I Own'
+      }
+      else if (tab === 'joined') {
+        presenceData.state = 'Club I Join'
+      }
+      else if (tab === 'create') {
+        presenceData.state = 'Creating a Club'
+      }
+
+      if (page) {
+        if (presenceData.state) {
+          presenceData.state += ` (Page ${page})`
+        }
+        else {
+          presenceData.state = `(Page ${page})`
+        }
+      }
+    }
+    // Club details
+    else {
+      const searchParams = new URLSearchParams(location.search)
+      const searchQuery = searchParams.get('search')
+      const page = searchParams.get('page')
+
+      if (path.includes('/members')) {
+        presenceData.details = 'Viewing Club Members'
+      }
+      else {
+        presenceData.details = 'Viewing Club'
+      }
+
+      presenceData.state = creatorName || primaryTitle || 'Unknown Club'
+
+      if (searchQuery) {
+        presenceData.state += ` | Searching: ${searchQuery}`
+      }
+
+      if (page) {
+        presenceData.state += ` (Page ${page})`
+      }
+
+      if (creatorImageUrl) {
+        presenceData.largeImageKey = creatorImageUrl
+        presenceData.smallImageKey = ActivityAssets.Logo
+      }
+
+      // Clean URL parameters for the button.
+      let clubBaseUrl = url.split('?')[0] || url
+      clubBaseUrl = clubBaseUrl.split('/members')[0] || clubBaseUrl
+
+      presenceData.buttons = [
+        {
+          label: 'View Club',
+          url: clubBaseUrl,
+        },
+      ]
     }
   }
 
@@ -184,10 +295,16 @@ presence.on('UpdateData', () => {
     }
 
     presenceData.smallImageKey = ActivityAssets.Logo
+
+    // Clean URL parameters for the button
+    let creatorBaseUrl = url.split('?')[0] || url
+    creatorBaseUrl = creatorBaseUrl.split('/auctions')[0] || creatorBaseUrl
+    creatorBaseUrl = creatorBaseUrl.split('/soundboard')[0] || creatorBaseUrl
+
     presenceData.buttons = [
       {
         label: 'View Creator',
-        url,
+        url: creatorBaseUrl,
       },
     ]
   }
@@ -198,27 +315,46 @@ presence.on('UpdateData', () => {
     const tab = searchParams.get('tab')
     const tags = searchParams.get('tags')
     const searchQuery = searchParams.get('search')
+    const page = searchParams.get('page')
 
     presenceData.details = 'Exploring Creators'
 
     if (searchQuery) {
       presenceData.state = `Searching: ${searchQuery}`
     }
+    else if (tags && tab) {
+      const cleanTag = formatTagSlug(tags)
+      presenceData.details = `Viewing Tag: ${cleanTag}`
+
+      if (tab === 'followed') {
+        presenceData.state = 'Followed Creators'
+      }
+      else if (tab === 'trending') {
+        presenceData.state = 'Trending Creators'
+      }
+      else if (tab === 'featured') {
+        presenceData.state = 'Featured Creators'
+      }
+    }
     else if (tab === 'followed') {
-      presenceData.state = 'Viewing Followed Creators'
+      presenceData.state = 'Followed'
     }
     else if (tab === 'trending') {
-      presenceData.state = 'Viewing Trending Creators'
+      presenceData.state = 'Trending'
     }
     else if (tab === 'featured') {
-      presenceData.state = 'Viewing Featured Creators'
+      presenceData.state = 'Featured'
     }
     else if (tags) {
       const cleanTag = formatTagSlug(tags)
       presenceData.state = `Viewing Tag: ${cleanTag}`
     }
     else {
-      presenceData.state = 'Viewing All Categories'
+      presenceData.state = 'All Categories'
+    }
+
+    if (page) {
+      presenceData.state += ` (Page ${page})`
     }
   }
 
