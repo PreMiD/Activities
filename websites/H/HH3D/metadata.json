@@ -25,5 +25,6 @@
     "3d",
     "donghua"
   ],
-  "iframe": true
+  "iframe": true,
+  "iFrameRegExp": "https?:\\/\\/(?:stream\\.googleapiscdn\\.com|.*\\.(?:mp4|m3u8|html)).*"
 }
