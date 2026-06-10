@@ -47,7 +47,6 @@ presence.on('UpdateData', async () => {
   }
   else {
     presenceData.details = 'Browsing Basketball Reference'
-    presenceData.state = 'basketball-reference.com'
   }
   if (presenceData.details)
     presence.setActivity(presenceData)
