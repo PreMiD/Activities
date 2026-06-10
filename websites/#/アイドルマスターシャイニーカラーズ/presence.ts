@@ -24,7 +24,7 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     name: 'シャニマス',
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/%23/%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%B7%E3%83%A3%E3%82%A4%E3%83%8B%E3%83%BC%E3%82%AB%E3%83%A9%E3%83%BC%E3%82%BA/assets/logo.png',
+    largeImageKey: 'https://i.imgur.com/tDBosAD.png',
     largeImageUrl: 'https://shinycolors.enza.fun/',
     startTimestamp: browsingTimestamp,
     detailsUrl: `https://shinycolors.enza.fun${currentRoute}`,
@@ -57,6 +57,7 @@ presence.on('UpdateData', async () => {
     '/idolRoad': { details: 'アイドルロード' },
     '/idolList': { details: 'アイドル一覧' },
     '/producerDesk': { details: 'Pデスク' },
+    '/producerDeskShop': { details: 'Pレベルショップ' },
     '/producerLevel': { details: 'Pレベル' },
     '/mission': { details: 'ミッションを閲覧中' },
     '/workActivity': { details: '営業' },
@@ -82,9 +83,22 @@ presence.on('UpdateData', async () => {
     '/memoryBoost': { details: 'メモリーブースト' },
   }
 
+  const prefixMap: Record<string, PresenceData> = {
+    '/collaboFes/': { details: 'コラボフェス' },
+    '/produceMarathon/': { details: 'プロデュースイベント' },
+  }
+
   const pathDetails = pathMap[currentRoute]?.details
+  const matchedPrefix = Object.keys(prefixMap).find(prefix => currentRoute.includes(prefix))
+
   if (typeof pathDetails !== 'undefined') {
     presenceData.details = pathDetails
+  }
+  else if (typeof matchedPrefix !== 'undefined') {
+    const prefixDetails = prefixMap[matchedPrefix]?.details
+    if (typeof prefixDetails !== 'undefined') {
+      presenceData.details = prefixDetails
+    }
   }
   else if (currentRoute.includes('/idolAlbum/')) {
     const idolNames: string[] = [
@@ -126,16 +140,16 @@ presence.on('UpdateData', async () => {
       presenceData.details = `${idolNames[albumIndex]}のアルバムを閲覧中`
     }
 
-    const oshiId = Number(idStr)
-    const oshiMap: Record<number, string> = {
+    const otherId = Number(idStr)
+    const otherMap: Record<number, string> = {
       91: '七草はづき',
       801: 'ルビー',
       802: '有馬かな',
       803: 'MEMちょ',
       804: '黒川あかね',
     }
-    if (oshiMap[oshiId]) {
-      presenceData.details = `${oshiMap[oshiId]}のアルバムを閲覧中`
+    if (otherMap[otherId]) {
+      presenceData.details = `${otherMap[otherId]}のアルバムを閲覧中`
     }
   }
 
