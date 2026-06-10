@@ -13,7 +13,7 @@
   "url": "basketball-reference.com",
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*basketball-reference[.]com[/]",
   "version": "1.0.0",
-  "logo": "https://imgur.com/oEUwrO8",
+  "logo": "https://i.imgur.com/oEUwrO8.png",
   "thumbnail": "https://i.imgur.com/uZWtmoG.png",
   "color": "#ff9900",
   "category": "other",
