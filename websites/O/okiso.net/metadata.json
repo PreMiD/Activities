@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "OKISO",
+    "id": "274178934143451137"
+  },
+  "service": "okiso.net",
+  "description": {
+    "en": "The official creative archive and portfolio of VTuber and Producer OKISO."
+  },
+  "url": "okiso.net",
+  "regExp": "^https?[:][/][/](www[.])?okiso[.]net[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/O/okiso.net/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/okiso.net/assets/thumbnail.png",
+  "color": "#FF7EB3",
+  "category": "music",
+  "tags": [
+    "music",
+    "vtuber",
+    "streaming"
+  ]
+}

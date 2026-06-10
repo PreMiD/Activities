@@ -29,27 +29,31 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  const video = document.querySelector<HTMLVideoElement>('#dv-web-player video')
+  const body = document.querySelector('body')
+  const bodyStyle = window.getComputedStyle(body!)
+
+  const video = document.querySelector<HTMLVideoElement>('div[id^=dv-web-player] video[src]')
+    || document.querySelector<HTMLVideoElement>('#dv-web-player video')
     || document.querySelector<HTMLVideoElement>('#dv-web-player .atvwebplayersdk-video-surface video')
     || document.querySelector<HTMLVideoElement>('video')
 
-  const title = document.querySelector('.atvwebplayersdk-player-container .fpqiyer .ffszj3z .f124tp54 h1')?.textContent || document.querySelector<HTMLImageElement>('.DVWebNode-detail-atf-wrapper picture img')?.alt
+  const title = document.querySelector('.atvwebplayersdk-player-container .fpqiyer .ffszj3z .f124tp54 h1')?.textContent || document.querySelector<HTMLImageElement>('.DVWebNode-detail-atf-wrapper picture img')?.alt || document.querySelector('.atvwebplayersdk-title-text')?.textContent || document.querySelector('h1[data-automation-id="title"]')?.textContent
 
-  const title2 = document.querySelector('.DVWebNode-detail-atf-wrapper .BaLbyy h1')?.textContent || document.querySelector<HTMLImageElement>('.DVWebNode-detail-atf-wrapper picture img')?.alt
+  const title2 = document.querySelector('.DVWebNode-detail-atf-wrapper .BaLbyy h1')?.textContent || document.querySelector<HTMLImageElement>('.DVWebNode-detail-atf-wrapper picture img')?.alt || document.querySelector('.atvwebplayersdk-title-text')?.textContent || document.querySelector('h1[data-automation-id="title"]')?.textContent
 
   const bannerImg = document.querySelector<HTMLImageElement>('main div[data-automation-id="hero-background"] img')?.src
 
-  const description = document.querySelector('div[class^=synopsis] > span')?.textContent
+  const subtitle = document.querySelector<HTMLElement>('.atvwebplayersdk-episode-info') || document.querySelector<HTMLElement>('.atvwebplayersdk-subtitle-text')
 
-  if (video && !video.className.includes('tst') && title) {
+  if (video && !video.className.includes('tst') && title && bodyStyle.overflow === 'hidden') {
     const contentTitle = title
     if (usePresenceName) {
       presenceData.name = contentTitle
     }
     presenceData.details = contentTitle
 
-    if (description && description.trim() !== contentTitle?.trim()) {
-      presenceData.state = description
+    if (subtitle && subtitle.textContent && subtitle.textContent.trim() !== contentTitle?.trim()) {
+      presenceData.state = subtitle.textContent
     }
 
     if (bannerImg && showCover) {
@@ -67,7 +71,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = (await strings).playing
     }
   }
-  else if (video && !video.className.includes('tst') && title2) {
+  else if (video && !video.className.includes('tst') && title2 && bodyStyle.overflow === 'hidden') {
     const contentTitle = title2
 
     if (usePresenceName) {
@@ -75,8 +79,8 @@ presence.on('UpdateData', async () => {
     }
     presenceData.details = contentTitle
 
-    if (description && description.trim() !== contentTitle?.trim()) {
-      presenceData.state = description
+    if (subtitle && subtitle.textContent && subtitle.textContent.trim() !== contentTitle?.trim()) {
+      presenceData.state = subtitle.textContent
     }
 
     if (bannerImg && showCover) {
@@ -94,10 +98,17 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = (await strings).playing
     }
   }
-
-  if (pathname.includes('/storefront')) {
+  else if (pathname.includes('/storefront') || pathname === '/') {
     presenceData.details = 'Viewing Home'
     presenceData.state = 'Browsing...'
+  }
+  else if (pathname.includes('/detail')) {
+    presenceData.details = 'Viewing page for:'
+    presenceData.state = title || title2 || 'Prime Video'
+
+    if (bannerImg && showCover) {
+      presenceData.largeImageKey = bannerImg
+    }
   }
   else if (pathname.includes('/movie')) {
     presenceData.details = 'Viewing Movies'
@@ -117,6 +128,10 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.includes('/kids/')) {
     presenceData.details = 'Viewing Movies for kids'
+    presenceData.state = 'Browsing...'
+  }
+  else if (pathname.includes('/livetv')) {
+    presenceData.details = 'Viewing Live TV'
     presenceData.state = 'Browsing...'
   }
   else if (pathname.includes('/search/') && document.querySelector('.av-refine-bar-summaries')) {
