@@ -10,8 +10,8 @@ const LOGO_URL = 'https://i.imgur.com/cUdfHvP.jpeg'
 
 presence.on('UpdateData', async () => {
   const [showTimestamp, showDetails] = await Promise.all([
-    presence.getSetting('showTimestamp'),
-    presence.getSetting('showDetails'),
+    presence.getSetting<boolean>('showTimestamp'),
+    presence.getSetting<boolean>('showDetails'),
   ])
   const currentTitle: string = document.title || ''
 
