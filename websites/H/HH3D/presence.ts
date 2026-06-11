@@ -1,17 +1,17 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '1513468333360550030',
+  clientId: '1511990578332827718',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-let strings: Awaited<ReturnType<typeof getStrings>>
+const _strings: Awaited<ReturnType<typeof getStrings>> | null = null
 let oldLang: string | null = null
 let iframeVideoData: any = null
 
 let fallbackStartTime: number | null = null
-let currentVideoUrl: string = ''
+let currentVideoUrl = ''
 
 async function getStrings() {
   return presence.getStrings({
@@ -21,41 +21,42 @@ async function getStrings() {
 }
 
 enum ActivityAssets {
-  Logo = 'http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_182625_0_logo_new_year_1.png',
+  Logo = 'http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_182259_0_1000023100-removebg-preview_1.png',
 }
 
 presence.on('iFrameData', (data) => {
-  if (data.hasVideo) {
-    iframeVideoData = data
-  }
-  else {
-    iframeVideoData = null
-  }
+  iframeVideoData = data.hasVideo ? data : null
 })
+
+function formatDuration(seconds: number): string {
+  if (!seconds || Number.isNaN(seconds))
+    return ''
+  const h = Math.floor(seconds / 3600)
+  const m = Math.floor((seconds % 3600) / 60)
+  const s = Math.floor(seconds % 60)
+  return h > 0
+    ? `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
+    : `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
+}
 
 async function updatePresence() {
   try {
     const video = document.querySelector('video')
     const { pathname, href } = document.location
 
-    // Nếu đổi tập phim thì reset lại thời gian dự phòng
     if (currentVideoUrl !== href) {
       currentVideoUrl = href
       fallbackStartTime = null
     }
 
-    const isWatchPage = pathname.includes('/phim/') || pathname.includes('/xem-phim/') || pathname.includes('/tap-') || document.querySelector('.watching') !== null
+    const isWatchPage = pathname.includes('/phim/') || pathname.includes('/xem-phim/') || href.includes('-tap-') || href.includes('/tap-')
+    const strings = await presence.getStrings({
+      play: 'general.playing',
+      pause: 'general.paused',
+      browsing: 'general.browsing',
+    })
 
-    const [newLang] = await Promise.all([
-      presence.getSetting<string>('lang').catch(() => 'en'),
-    ])
-
-    if (oldLang !== newLang || !strings) {
-      oldLang = newLang
-      strings = await getStrings()
-    }
-
-    const presenceData: PresenceData = {
+    const presenceData: any = {
       type: ActivityType.Watching,
       largeImageKey: ActivityAssets.Logo,
       startTimestamp: browsingTimestamp,
@@ -65,29 +66,37 @@ async function updatePresence() {
       let posterKey: string = ActivityAssets.Logo
       let schemaTitle: string | null = null
       let schemaEpisode: string | null = null
-      let schemaDuration: number = 0
+      let schemaDuration = 0
 
       const scripts = document.querySelectorAll('script[type="application/ld+json"]')
       for (const script of Array.from(scripts)) {
         try {
           const data = JSON.parse(script.textContent || '{}')
-          if (data['@type'] === 'TVEpisode') {
-            if (typeof data.image === 'string') {
-              posterKey = data.image
-            }
-            else if (data.video && typeof data.video.thumbnailUrl === 'string') {
-              posterKey = data.video.thumbnailUrl
-            }
 
-            if (data.partOfSeries && typeof data.partOfSeries.name === 'string') {
+          if (data['@type'] === 'BreadcrumbList' && data.itemListElement && data.itemListElement.length >= 3) {
+            schemaTitle = data.itemListElement[2].name
+          }
+
+          if (data['@type'] === 'TVEpisode' || data['@type'] === 'VideoObject') {
+            if (typeof data.image === 'string')
+              posterKey = data.image
+            else if (data.thumbnailUrl)
+              posterKey = data.thumbnailUrl
+            else if (data.video && typeof data.video.thumbnailUrl === 'string')
+              posterKey = data.video.thumbnailUrl
+
+            if (!schemaTitle && data.partOfSeries && typeof data.partOfSeries.name === 'string') {
               schemaTitle = data.partOfSeries.name
             }
-            if (data.episodeNumber) {
-              schemaEpisode = `Tập ${data.episodeNumber}`
+            else if (!schemaTitle && data.name && data['@type'] === 'VideoObject') {
+              schemaTitle = data.name
             }
 
-            if (data.duration || (data.video && data.video.duration)) {
-              const rawDuration = data.duration || data.video.duration
+            if (data.episodeNumber)
+              schemaEpisode = `Tập ${data.episodeNumber}`
+
+            const rawDuration = data.duration || (data.video && data.video.duration)
+            if (rawDuration) {
               const match = rawDuration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/)
               if (match) {
                 const hours = Number.parseInt(match[1] || '0', 10)
@@ -96,28 +105,25 @@ async function updatePresence() {
                 schemaDuration = (hours * 3600) + (minutes * 60) + seconds
               }
             }
-            break
           }
         }
         catch {
+          // Silently catch JSON parse errors
         }
       }
 
       if (posterKey === ActivityAssets.Logo) {
         const metaImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content')
-        const domImage = document.querySelector('.film-info img, .movie-l-img img, .info-m-poster img, .m-thumb img')?.getAttribute('src')
+        const domImage = document.querySelector('.film-info img, .movie-l-img img, .info-m-poster img, .m-thumb img, .film-poster img')?.getAttribute('src')
 
-        if (metaImage) {
+        if (metaImage)
           posterKey = metaImage
-        }
-        else if (domImage) {
+        else if (domImage)
           posterKey = domImage
-        }
       }
 
-      if (posterKey.startsWith('/')) {
+      if (posterKey && posterKey.startsWith('/'))
         posterKey = window.location.origin + posterKey
-      }
 
       const titleElement = document.querySelector('h1.entry-title, .movie-title h1, .title-film, h1, .film-info h1')
       const fullTitle = schemaTitle || titleElement?.textContent?.trim() || 'Đang xem Hoạt Hình 3D'
@@ -126,18 +132,7 @@ async function updatePresence() {
       presenceData.largeImageText = fullTitle
 
       let episodeText = schemaEpisode || ''
-      let seasonText = ''
-
-      if (fullTitle.toLowerCase().includes('season')) {
-        const match = fullTitle.match(/season\s*\d+/i)
-        if (match)
-          seasonText = ` - Phần ${match[0].replace(/season/i, '').trim()}`
-      }
-      else if (fullTitle.toLowerCase().includes('phần')) {
-        const match = fullTitle.match(/phần\s*\d+/i)
-        if (match)
-          seasonText = ` - ${match[0]}`
-      }
+      const seasonText = ''
 
       if (!episodeText) {
         const urlMatch = href.match(/tap-(\d+)/i) || href.match(/-ep-(\d+)/i) || href.match(/-tap-(\d+)/i)
@@ -146,7 +141,7 @@ async function updatePresence() {
           episodeText = `Tập ${urlMatch[1]}`
         }
         else {
-          const allActiveLinks = document.querySelectorAll('.list-episode a.active, ul.episodes a.active, .episodes a.active, .ep-item.active')
+          const allActiveLinks = document.querySelectorAll('.list-episode a.active, ul.episodes a.active, .episodes a.active, .ep-item.active, .btn-episode.active')
           const epNode = Array.from(allActiveLinks).find((el) => {
             const text = el.textContent?.toLowerCase() || ''
             return !text.includes('phần') && !text.includes('season') && !text.includes('dự') && !text.includes('du') && !text.includes('thuyết')
@@ -162,36 +157,35 @@ async function updatePresence() {
         }
       }
 
-      presenceData.state = `${episodeText}${seasonText}`
-
-      let isPaused: boolean = false
-      let currentTime: number = 0
-      let duration: number = 0
-      let hasValidVideo: boolean = false
-      let videoPoster: string = posterKey
+      let isPaused = false
+      let currentTime = 0
+      let duration = 0
+      let hasValidVideo = false
 
       if (video) {
         isPaused = video.paused
         currentTime = video.currentTime
         duration = video.duration
-        if (video.poster)
-          videoPoster = video.poster
         hasValidVideo = true
       }
       else if (iframeVideoData && iframeVideoData.hasVideo) {
         isPaused = iframeVideoData.paused
         currentTime = iframeVideoData.currentTime
         duration = iframeVideoData.duration
-        if (iframeVideoData.poster)
-          videoPoster = iframeVideoData.poster
+        if (!posterKey || posterKey === ActivityAssets.Logo) {
+          if (iframeVideoData.poster)
+            posterKey = iframeVideoData.poster
+        }
         hasValidVideo = true
       }
 
-      presenceData.largeImageKey = videoPoster
+      presenceData.largeImageKey = posterKey
       presenceData.smallImageKey = isPaused ? Assets.Pause : Assets.Play
-      presenceData.smallImageText = isPaused ? strings.pause : strings.play
+
+      let finalDurationToDisplay = 0
 
       if (hasValidVideo && !Number.isNaN(duration) && duration > 0) {
+        finalDurationToDisplay = duration
         if (!isPaused) {
           const timestamps = getTimestamps(currentTime, duration)
           presenceData.startTimestamp = timestamps[0]
@@ -202,12 +196,11 @@ async function updatePresence() {
         }
       }
       else if (schemaDuration > 0) {
-        // ĐÃ SỬA LỖI GIẬT LÙI THỜI GIAN Ở ĐÂY
+        finalDurationToDisplay = schemaDuration
         if (!isPaused) {
-          if (!fallbackStartTime) {
-            // Chỉ chốt thời gian 1 lần duy nhất khi bắt đầu xem
+          if (!fallbackStartTime)
             fallbackStartTime = Math.floor(Date.now() / 1000)
-          }
+
           presenceData.startTimestamp = fallbackStartTime
           presenceData.endTimestamp = fallbackStartTime + schemaDuration
         }
@@ -216,27 +209,26 @@ async function updatePresence() {
         }
       }
       else {
-        presenceData.smallImageKey = Assets.Play
+        presenceData.smallImageKey = Assets.Search
         presenceData.smallImageText = 'Đang tải video...'
       }
 
-      presenceData.buttons = [
-        {
-          label: 'Watch Video',
-          url: document.location.href,
-        },
-      ]
+      presenceData.state = `${episodeText}${seasonText}`
+
+      const baseStatusText = strings ? (isPaused ? strings.pause : strings.play) : (isPaused ? 'Tạm dừng' : 'Đang phát')
+      presenceData.smallImageText = finalDurationToDisplay > 0 ? `${baseStatusText} - Tổng: ${formatDuration(finalDurationToDisplay)}` : baseStatusText
     }
     else {
       presenceData.details = 'Đang lướt web'
+      presenceData.state = 'AnimevietSub'
       delete presenceData.startTimestamp
       delete presenceData.endTimestamp
     }
 
     presence.setActivity(presenceData)
   }
-  catch (error) {
-    console.error('Lỗi:', error)
+  catch (_e) {
+    console.error('Lỗi:', _e)
   }
 }
 
