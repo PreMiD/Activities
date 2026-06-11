@@ -1,27 +1,18 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '1511990578332827718',
+  clientId: '1513468333360550030',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-const _strings: Awaited<ReturnType<typeof getStrings>> | null = null
-let oldLang: string | null = null
 let iframeVideoData: any = null
 
 let fallbackStartTime: number | null = null
 let currentVideoUrl = ''
 
-async function getStrings() {
-  return presence.getStrings({
-    pause: 'general.paused',
-    play: 'general.playing',
-  })
-}
-
 enum ActivityAssets {
-  Logo = 'http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_182259_0_1000023100-removebg-preview_1.png',
+  Logo = 'http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_182625_0_logo_new_year_1.png',
 }
 
 presence.on('iFrameData', (data) => {
@@ -220,7 +211,7 @@ async function updatePresence() {
     }
     else {
       presenceData.details = 'Đang lướt web'
-      presenceData.state = 'AnimevietSub'
+      presenceData.state = 'HH3D'
       delete presenceData.startTimestamp
       delete presenceData.endTimestamp
     }
