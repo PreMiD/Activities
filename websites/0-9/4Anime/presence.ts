@@ -16,7 +16,7 @@ let isPaused = true
 
 let cacheEpisode: {
   text: string
-  episodeAnime: string | Element
+  episodeAnime: string
   nameAnime: string
   seasonAnime: string
   bannerImg: string | undefined | null
