@@ -11,7 +11,7 @@
     "id": "Alat sederhana, gratis, dan sumber terbuka untuk mengedit dan mengsinkronkan Lirik visual dengan format TTML"
   },
   "url": "composer.boidu.dev",
-  "regExp": "^https?[:][/][/](composer[.]boidu[.]dev)[/]",
+  "regExp": "^https?[:][/][/]composer[.]boidu[.]dev[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/EV6MBCV.png",
   "thumbnail": "https://i.imgur.com/cFB6l17.png",
