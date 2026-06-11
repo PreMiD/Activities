@@ -14,10 +14,10 @@
     "hh3dsub.ee",
     "hh3dsub.site"
   ],
-  "regExp": "^https?[:][/][/](www[.])?hh3dsub[.](ee|site)",
+  "regExp": "^https?[:][/][/](www[.])?hh3dsub[.](ee|site)[/]",
   "version": "1.0.0",
-  "logo": "http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_182625_0_logo_new_year_1.png",
-  "thumbnail": "http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_155854_0_hh3d.png",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HH3D/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HH3D/assets/thumbnail.png",
   "color": "#181818",
   "category": "anime",
   "tags": [
@@ -26,5 +26,5 @@
     "donghua"
   ],
   "iframe": true,
-  "iFrameRegExp": "https?:\\/\\/(?:stream\\.googleapiscdn\\.com|.*\\.(?:mp4|m3u8|html)).*"
+  "iFrameRegExp": "^https?[:][/][/](?:stream[.]googleapiscdn[.]com|.*[.](?:mp4|m3u8|html)).*"
 }

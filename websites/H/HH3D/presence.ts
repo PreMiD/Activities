@@ -225,10 +225,6 @@ async function updatePresence() {
           label: 'Watch Video',
           url: document.location.href,
         },
-        {
-          label: 'HH3DSUB',
-          url: window.location.origin,
-        },
       ]
     }
     else {

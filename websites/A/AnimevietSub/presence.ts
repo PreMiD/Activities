@@ -48,12 +48,11 @@ async function updatePresence() {
     }
 
     const isWatchPage = pathname.includes('/phim/') || pathname.includes('/xem-phim/') || href.includes('-tap-') || href.includes('/tap-')
-    const newLang = await presence.getSetting<string>('lang').catch(() => 'en')
-
-    if (oldLang !== newLang || !strings) {
-      oldLang = newLang
-      strings = await getStrings()
-    }
+    const strings = await presence.getStrings({
+      play: 'general.playing',
+      pause: 'general.paused',
+      browsing: 'general.browsing',
+    })
 
     const presenceData: any = {
       type: ActivityType.Watching,
@@ -211,22 +210,10 @@ async function updatePresence() {
         presenceData.smallImageText = 'Đang tải video...'
       }
 
-      // Đã loại bỏ phần timeString trong ngoặc
       presenceData.state = `${episodeText}${seasonText}`
 
       const baseStatusText = strings ? (isPaused ? strings.pause : strings.play) : (isPaused ? 'Tạm dừng' : 'Đang phát')
       presenceData.smallImageText = finalDurationToDisplay > 0 ? `${baseStatusText} - Tổng: ${formatDuration(finalDurationToDisplay)}` : baseStatusText
-
-      presenceData.buttons = [
-        {
-          label: 'Xem phim',
-          url: document.location.href,
-        },
-        {
-          label: 'AnimevietSub',
-          url: window.location.origin,
-        },
-      ]
     }
     else {
       presenceData.details = 'Đang lướt web'
