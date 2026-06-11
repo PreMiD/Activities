@@ -20,7 +20,9 @@ async function getStrings() {
   })
 }
 
-const LOGO_URL = 'http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_182259_0_1000023100-removebg-preview_1.png'
+enum ActivityAssets {
+  Logo = 'http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_182259_0_1000023100-removebg-preview_1.png',
+}
 
 presence.on('iFrameData', (data) => {
   iframeVideoData = data.hasVideo ? data : null
@@ -56,12 +58,12 @@ async function updatePresence() {
 
     const presenceData: any = {
       type: ActivityType.Watching,
-      largeImageKey: LOGO_URL,
+      largeImageKey: ActivityAssets.Logo,
       startTimestamp: browsingTimestamp,
     }
 
     if (isWatchPage) {
-      let posterKey: string = LOGO_URL
+      let posterKey: string = ActivityAssets.Logo
       let schemaTitle: string | null = null
       let schemaEpisode: string | null = null
       let schemaDuration = 0
@@ -109,7 +111,7 @@ async function updatePresence() {
         }
       }
 
-      if (posterKey === LOGO_URL) {
+      if (posterKey === ActivityAssets.Logo) {
         const metaImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content')
         const domImage = document.querySelector('.film-info img, .movie-l-img img, .info-m-poster img, .m-thumb img, .film-poster img')?.getAttribute('src')
 
@@ -169,7 +171,7 @@ async function updatePresence() {
         isPaused = iframeVideoData.paused
         currentTime = iframeVideoData.currentTime
         duration = iframeVideoData.duration
-        if (!posterKey || posterKey === LOGO_URL) {
+        if (!posterKey || posterKey === ActivityAssets.Logo) {
           if (iframeVideoData.poster)
             posterKey = iframeVideoData.poster
         }

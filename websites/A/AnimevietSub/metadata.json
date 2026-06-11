@@ -13,8 +13,8 @@
   "url": "animevietsub.by",
   "regExp": "^https?[:][/][/](www[.])?(animevietsub[.](by|name)|animeviet[.](com|vn|xyz))[/]",
   "version": "1.0.0",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimevietSub/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimevietSub/assets/thumbnail.png",
+  "logo": "http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_182259_0_1000023100-removebg-preview_1.png",
+  "thumbnail": "http://gsvr1.hypercore.vn:25767/uploads/580928016289366017_20260608_182404_0_thumbnail.png",
   "color": "#e00f0b",
   "category": "anime",
   "tags": [
