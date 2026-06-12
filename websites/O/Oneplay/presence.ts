@@ -1,6 +1,8 @@
 import { ActivityType, getTimestamps } from 'premid'
 
-declare const presence: any
+const presence = new Presence({
+  clientId: '1510631384161452142'
+})
 
 let browsingTimestamp: number = Math.floor(Date.now() / 1000)
 let watchingTimestamp: number = Math.floor(Date.now() / 1000)
