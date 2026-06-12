@@ -8,42 +8,32 @@ presence.on('UpdateData', async () => {
   const ogImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content')
 
   const defaultLogo = 'logo'
-  let state: string | undefined
-  let details: string | undefined
-  let largeImageKey: string = defaultLogo
-  let smallImageKey: string | undefined
-  let smallImageText: string | undefined
+  const presenceData: PresenceData = {
+    details: 'Hangar\'da Geziniyor',
+    largeImageKey: defaultLogo,
+    largeImageText: 'usehangar.gg',
+  }
 
   if (path === '/' || path === '/feed') {
-    state = 'Ana Sayfada'
-    details = 'Akış\'ı inceliyor'
+    presenceData.state = 'Ana Sayfada'
+    presenceData.details = 'Akış\'ı inceliyor'
   }
   else if (path.startsWith('/hub/')) {
     const hubName = title.split(' | ')[0] || 'Bir Hub'
-    state = 'Hub İnceliyor'
-    details = hubName
-    if (ogImage) largeImageKey = ogImage
-    smallImageKey = defaultLogo
-    smallImageText = 'Hangar'
+    presenceData.state = 'Hub İnceliyor'
+    presenceData.details = hubName
+    if (ogImage) presenceData.largeImageKey = ogImage
+    presenceData.smallImageKey = defaultLogo
+    presenceData.smallImageText = 'Hangar'
   }
   else if (path.startsWith('/profile/')) {
-    state = 'Bir profili'
-    details = 'inceliyor'
+    presenceData.state = 'Bir profili'
+    presenceData.details = 'inceliyor'
   }
   else if (path.startsWith('/post/')) {
-    state = 'Bir gönderiyi'
-    details = 'okuyor'
-  }
-  else {
-    details = 'Hangar\'da Geziniyor'
+    presenceData.state = 'Bir gönderiyi'
+    presenceData.details = 'okuyor'
   }
 
-  presence.setActivity({
-    state,
-    details,
-    largeImageKey,
-    largeImageText: 'usehangar.gg',
-    smallImageKey,
-    smallImageText,
-  })
+  presence.setActivity(presenceData)
 })
