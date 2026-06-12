@@ -4,17 +4,21 @@
     "id": "1003332362823802949",
     "name": "RuaLia"
   },
-  "category": "social",
+  "category": "socials",
+  "color": "#111111",
   "description": {
     "en": "Shows your current activity on the Hangar platform.",
     "tr": "Hangar platformundaki güncel aktivitenizi Discord'da gösterir."
   },
-  "name": "Hangar",
-  "color": "#111111",
+  "logo": "https://i.imgur.com/1234567.png",
+  "service": "Hangar",
+  "tags": [
+    "community",
+    "forum",
+    "hangar",
+    "socials"
+  ],
+  "thumbnail": "https://i.imgur.com/1234567.png",
   "url": "usehangar.gg",
-  "version": "1.0.0",
-  "logo": "icon.png",
-  "tags": ["social", "forum", "community", "hangar"],
-  "iframe": false,
-  "regexp": "usehangar\\.gg"
+  "version": "1.0.0"
 }
