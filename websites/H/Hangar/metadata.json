@@ -14,10 +14,10 @@
   "logo": "https://i.imgur.com/w5FbdFC.png",
   "thumbnail": "https://i.imgur.com/w5FbdFC.png",
   "color": "#111111",
+  "category": "socials",
   "tags": [
     "community",
     "forum",
     "socials"
-  ],
-  "category": "socials"
+  ]
 }
