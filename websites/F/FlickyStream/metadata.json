@@ -9,8 +9,8 @@
   "description": {
     "en": "A streaming platform for movies, TV shows, and anime."
   },
-  "url": "flickystream.ru",
-  "regExp": "^https?[:][/][/](www[.])?flickystream[.]ru[/]",
+  "url": "flickystream.su",
+  "regExp": "^https?[:][/][/](www[.])?flickystream[.]su[/]",
   "version": "1.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FlickyStream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FlickyStream/assets/thumbnail.png",
