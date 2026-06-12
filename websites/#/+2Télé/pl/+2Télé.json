@@ -1,0 +1,47 @@
+{
+  "plus2tele.accueil": {
+    "message": "Strona główna"
+  },
+  "plus2tele.archivesList": {
+    "message": "Lista archiwów"
+  },
+  "plus2tele.searchingArchives": {
+    "message": "Wyszukiwanie w archiwach: {0}"
+  },
+  "plus2tele.channelsList": {
+    "message": "Lista kanałów"
+  },
+  "plus2tele.viewingChannel": {
+    "message": "Przeglądanie kanału: {0}"
+  },
+  "plus2tele.agencesList": {
+    "message": "Lista agencji"
+  },
+  "plus2tele.viewingAgence": {
+    "message": "Przeglądanie agencji: {0}"
+  },
+  "plus2tele.collectionsList": {
+    "message": "Lista kolekcji"
+  },
+  "plus2tele.viewingCollection": {
+    "message": "Przeglądanie kolekcji: {0}"
+  },
+  "plus2tele.community": {
+    "message": "Prezentacja społeczności"
+  },
+  "plus2tele.zapping": {
+    "message": "Zapping"
+  },
+  "plus2tele.watchingArchive": {
+    "message": "Oglądanie archiwum"
+  },
+  "plus2tele.viewingProfile": {
+    "message": "Przeglądanie profilu użytkownika {0}"
+  },
+  "plus2tele.browsing": {
+    "message": "Przeglądanie"
+  },
+  "plus2tele.byAuthor": {
+    "message": "Przez {0}"
+  }
+}

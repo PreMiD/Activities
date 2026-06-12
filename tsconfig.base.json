@@ -2,6 +2,8 @@
   "extends": "@total-typescript/tsconfig/tsc/dom/library",
   "compilerOptions": {
     "typeRoots": ["@types"],
-    "types": ["premid"]
+    "types": ["premid"],
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   }
 }

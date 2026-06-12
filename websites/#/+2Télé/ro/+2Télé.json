@@ -1,0 +1,47 @@
+{
+  "plus2tele.accueil": {
+    "message": "Pagina principală"
+  },
+  "plus2tele.archivesList": {
+    "message": "Lista arhivelor"
+  },
+  "plus2tele.searchingArchives": {
+    "message": "Căutare în arhive: {0}"
+  },
+  "plus2tele.channelsList": {
+    "message": "Lista canalelor"
+  },
+  "plus2tele.viewingChannel": {
+    "message": "Vizualizare canal: {0}"
+  },
+  "plus2tele.agencesList": {
+    "message": "Lista agențiilor"
+  },
+  "plus2tele.viewingAgence": {
+    "message": "Vizualizare agenție: {0}"
+  },
+  "plus2tele.collectionsList": {
+    "message": "Lista colecțiilor"
+  },
+  "plus2tele.viewingCollection": {
+    "message": "Vizualizare colecție: {0}"
+  },
+  "plus2tele.community": {
+    "message": "Prezentarea comunității"
+  },
+  "plus2tele.zapping": {
+    "message": "Zapping"
+  },
+  "plus2tele.watchingArchive": {
+    "message": "Vizionarea unei arhive"
+  },
+  "plus2tele.viewingProfile": {
+    "message": "Vizualizarea profilului lui {0}"
+  },
+  "plus2tele.browsing": {
+    "message": "Navigare"
+  },
+  "plus2tele.byAuthor": {
+    "message": "De {0}"
+  }
+}
