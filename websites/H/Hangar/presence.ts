@@ -24,7 +24,9 @@ presence.on('UpdateData', async () => {
     const hubName = title.split(' | ')[0] || 'Bir Hub'
     presenceData.state = 'Hub İnceliyor'
     presenceData.details = hubName
-    if (ogImage) presenceData.largeImageKey = ogImage
+    if (ogImage) {
+      presenceData.largeImageKey = ogImage
+    }
     presenceData.smallImageKey = defaultLogo
     presenceData.smallImageText = 'Hangar'
   }
