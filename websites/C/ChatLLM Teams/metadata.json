@@ -16,9 +16,9 @@
   },
   "url": "apps.abacus.ai",
   "regExp": "^https?[:][/][/]apps[.]abacus[.]ai[/]",
-  "version": "1.0.1",
-  "logo": "https://play-lh.googleusercontent.com/O35u7LcmgKHsRpEQvHmT9ACfvDvP5S6HRIVmz-x-spUhojXIcnk0wbMEqaBSWPUJYQ?.png",
-  "thumbnail": "https://www.hrkatha.com/wp-content/uploads/2022/01/Abacus.png",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/ChatLLM%20Teams/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/ChatLLM%20Teams/assets/thumbnail.png",
   "color": "#4F46E5",
   "category": "other",
   "tags": [
