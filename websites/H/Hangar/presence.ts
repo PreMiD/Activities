@@ -1,5 +1,5 @@
 const presence: Presence = new Presence({
-  clientId: '1003332362823802949'
+  clientId: '1004301145348526090',
 })
 
 presence.on('UpdateData', async () => {
@@ -8,30 +8,42 @@ presence.on('UpdateData', async () => {
   const ogImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content')
 
   const defaultLogo = 'logo'
-  const presenceData: PresenceData = {
-    largeImageKey: defaultLogo,
-    largeImageText: 'usehangar.gg'
-  }
+  let state: string | undefined
+  let details: string | undefined
+  let largeImageKey: string = defaultLogo
+  let smallImageKey: string | undefined
+  let smallImageText: string | undefined
 
   if (path === '/' || path === '/feed') {
-    presenceData.state = 'Ana Sayfada'
-    presenceData.details = 'Akış\'ı inceliyor'
-  } else if (path.startsWith('/hub/')) {
+    state = 'Ana Sayfada'
+    details = 'Akış\'ı inceliyor'
+  }
+  else if (path.startsWith('/hub/')) {
     const hubName = title.split(' | ')[0] || 'Bir Hub'
-    presenceData.state = 'Hub İnceliyor'
-    presenceData.details = hubName
-    presenceData.largeImageKey = ogImage || defaultLogo
-    presenceData.smallImageKey = defaultLogo
-    presenceData.smallImageText = 'Hangar'
-  } else if (path.startsWith('/profile/')) {
-    presenceData.state = 'Bir profili'
-    presenceData.details = 'inceliyor'
-  } else if (path.startsWith('/post/')) {
-    presenceData.state = 'Bir gönderiyi'
-    presenceData.details = 'okuyor'
-  } else {
-    presenceData.details = 'Hangar\'da Geziniyor'
+    state = 'Hub İnceliyor'
+    details = hubName
+    if (ogImage) largeImageKey = ogImage
+    smallImageKey = defaultLogo
+    smallImageText = 'Hangar'
+  }
+  else if (path.startsWith('/profile/')) {
+    state = 'Bir profili'
+    details = 'inceliyor'
+  }
+  else if (path.startsWith('/post/')) {
+    state = 'Bir gönderiyi'
+    details = 'okuyor'
+  }
+  else {
+    details = 'Hangar\'da Geziniyor'
   }
 
-  presence.setActivity(presenceData)
+  presence.setActivity({
+    state,
+    details,
+    largeImageKey,
+    largeImageText: 'usehangar.gg',
+    smallImageKey,
+    smallImageText,
+  })
 })
