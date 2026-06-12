@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.8",
+  "author": {
+    "id": "1003332362823802949",
+    "name": "RuaLia"
+  },
+  "category": "social",
+  "description": {
+    "en": "Shows your current activity on the Hangar platform.",
+    "tr": "Hangar platformundaki güncel aktivitenizi Discord'da gösterir."
+  },
+  "name": "Hangar",
+  "color": "#111111",
+  "url": "usehangar.gg",
+  "version": "1.0.0",
+  "logo": "icon.png",
+  "tags": ["social", "forum", "community", "hangar"],
+  "iframe": false,
+  "regexp": "usehangar\\.gg"
+}
