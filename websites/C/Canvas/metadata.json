@@ -12,9 +12,10 @@
   "url": [
     "learn.canvas.net",
     "canvas.instructure.com",
-    "www.canvas.net"
+    "www.canvas.net",
+    "ilearn.gavilan.edu"
   ],
-  "regExp": "^https?[:][/][/]((learn|www)[.]canvas[.]net|canvas([.][a-z]+)+|([a-z0-9-]+[.])*instructure[.]com)[/]",
+  "regExp": "^https?[:][/][/]((learn|www)[.]canvas[.]net|canvas([.][a-z]+)+|([a-z0-9-]+[.])*instructure[.]com|ilearn[.]gavilan[.]edu)[/]",
   "version": "1.3.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Canvas/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Canvas/assets/thumbnail.png",
@@ -33,5 +34,6 @@
       "title": "Privacy Mode",
       "value": false
     }
-  ]
+  ],
+  "allowURLOverrides": true
 }
