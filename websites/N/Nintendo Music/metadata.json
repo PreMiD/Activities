@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "petkoslaw",
+    "id": "1465968325749117041"
+  },
+  "service": "Nintendo Music",
+  "description": {
+    "de": "Mit Nintendo Music kannst du überall eine Vielzahl von Nintendo-Melodien hören.",
+    "en": "With Nintendo Music, you can listen to a variety of Nintendo tunes anywhere.",
+    "es": "Con Nintendo Music, puedes escuchar una gran variedad de melodías de Nintendo en cualquier lugar.",
+    "it": "Con Nintendo Music, puoi ascoltare una varietà di brani Nintendo ovunque.",
+    "nl": "Met Nintendo Music kun je overal naar een verscheidenheid aan Nintendo-melodieën luisteren.",
+    "ru": "С Nintendo Music ты можешь слушать разнообразные мелодии Nintendo где угодно."
+  },
+  "url": "music.nintendo.com",
+  "regExp": "^https?[:][/][/]music[.]nintendo[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nintendo%20Music/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nintendo%20Music/assets/thumbnail.png",
+  "color": "#FC2C00",
+  "category": "music",
+  "tags": [
+    "music",
+    "nintendo"
+  ],
+  "settings": [
+    {
+      "id": "showTimestamps",
+      "title": "Show Timestamps",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Show the progress timestamps of a song."
+    },
+    {
+      "id": "showSongArt",
+      "title": "Show Song Art",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Show the song artwork as the large image."
+    }
+  ]
+}
