@@ -250,7 +250,7 @@ async function updatePresence() {
   }
   else {
     presenceData.details = 'Browsing Adobe Acrobat'
-    presenceData.state = ''
+    delete presenceData.state
   }
 
   presence.setActivity(presenceData)
