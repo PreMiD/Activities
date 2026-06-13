@@ -32,7 +32,7 @@
     "chalk": "^5.6.2",
     "chokidar": "^5.0.0",
     "discord-rpc": "^4.0.1",
-    "esbuild": "^0.28.0",
+    "esbuild": "^0.28.1",
     "gitdiff-parser": "^0.3.1",
     "globby": "^16.2.0",
     "got": "^15.0.3",
