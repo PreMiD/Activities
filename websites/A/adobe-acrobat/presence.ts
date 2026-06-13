@@ -204,9 +204,9 @@ async function updatePresence() {
 
     presenceData.largeImageKey = currentCoverUrl
 
-    const currentPage = (
-      document.querySelector('.PageNumberUI__pageNumberInputModern___jDxM-') as HTMLInputElement | null
-    )?.value
+    const currentPage = document.querySelector<HTMLInputElement>(
+  '[class*=PageNumberUI__pageNumberInputModern]'
+)?.value
 
     const totalPages = (
       document.querySelector('.PageNumberUI__totalPagesModern___wcFXK') as HTMLDivElement | null
