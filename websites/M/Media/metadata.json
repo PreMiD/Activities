@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "siq",
+    "id": "123456789012345678"
+  },
+  "service": "Media",
+  "description": {
+    "en": "Self-hosted media tracking platform for music, books, movies, games, and more."
+  },
+  "url": "media.siqnole.dev",
+  "regExp": "^(?:https?[:][/][/])?(?:www[.])?(?:media[.]siqnole[.]dev|localhost:5173)[/]",
+  "version": "1.0.0",
+  "logo": "https://media.siqnole.dev/mydia.png",
+  "thumbnail": "https://media.siqnole.dev/mydia.png",
+  "color": "#a688e8",
+  "category": "socials",
+  "tags": [
+    "tracking",
+    "ratings",
+    "entertainment"
+  ]
+}
