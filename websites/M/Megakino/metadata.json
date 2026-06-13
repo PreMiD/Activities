@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "123456789012345678",
+    "name": "Vxlancity"
+  },
+  "service": "Megakino",
+  "description": {
+    "de": "Zeigt, was du auf Megakino anschaust.",
+    "en": "Shows what you are watching on Megakino."
+  },
+  "url": "megakino4.to",
+  "regExp": "([a-z0-9-]+[.])*(megakino4)[.]to",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/DO1ttas.png",
+  "thumbnail": "https://i.imgur.com/DO1ttas.png",
+  "color": "#123456",
+  "category": "anime",
+  "tags": [
+    "kino",
+    "movies",
+    "series"
+  ]
+}
