@@ -29,40 +29,52 @@ presence.on('UpdateData', async () => {
   if (path.includes('/admin/inactivity_alerts')) {
     presenceData.details = 'Reviewing Creator Activity'
     presenceData.state = 'Inactivity Alerts'
-  } else if (path.includes('/admin/creators')) {
+  }
+  else if (path.includes('/admin/creators')) {
     presenceData.details = 'Managing Creators'
     presenceData.state = 'Creator Management'
-  } else if (path.includes('/admin/videos')) {
+  }
+  else if (path.includes('/admin/videos')) {
     presenceData.details = 'Managing Videos'
     presenceData.state = 'Video Library'
-  } else if (path.includes('/admin/seasons')) {
+  }
+  else if (path.includes('/admin/seasons')) {
     presenceData.details = 'Managing Seasons'
     presenceData.state = 'Season Management'
-  } else if (path.includes('/admin/gallery')) {
+  }
+  else if (path.includes('/admin/gallery')) {
     presenceData.details = 'Managing Gallery'
     presenceData.state = 'Media Library'
-  } else if (path.includes('/admin/changelogs')) {
+  }
+  else if (path.includes('/admin/changelogs')) {
     presenceData.details = 'Publishing Updates'
     presenceData.state = 'Changelog Manager'
-  } else if (path.includes('/admin/faq')) {
+  }
+  else if (path.includes('/admin/faq')) {
     presenceData.details = 'Managing Help Content'
     presenceData.state = 'FAQ Manager'
-  } else if (path.includes('/admin/logs')) {
+  }
+  else if (path.includes('/admin/logs')) {
     presenceData.details = 'Reviewing Site Activity'
     presenceData.state = 'Admin Logs'
-  } else if (path.includes('/admin/admins')) {
+  }
+  else if (path.includes('/admin/admins')) {
     presenceData.details = 'Managing Admin Accounts'
     presenceData.state = 'Access Control'
-  } else if (path.includes('/admin/visitors')) {
+  }
+  else if (path.includes('/admin/visitors')) {
     presenceData.details = 'Viewing Statistics'
     presenceData.state = 'Visitor Analytics'
-  } else if (path.includes('/admin/settings')) {
+  }
+  else if (path.includes('/admin/settings')) {
     presenceData.details = 'Managing Website'
     presenceData.state = 'Site Settings'
-  } else if (path.includes('/admin')) {
+  }
+  else if (path.includes('/admin')) {
     presenceData.details = 'Managing TubeCraft SMP'
     presenceData.state = 'Admin Dashboard'
-  } else if (path.startsWith('/creator/')) {
+  }
+  else if (path.startsWith('/creator/')) {
     const creatorSlug = path.split('/creator/')[1]?.split('/')[0] || 'unknown'
 
     const creatorName = document.querySelector('h1')?.textContent?.trim()
@@ -90,38 +102,48 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'Creator Profile'
         break
     }
-  } else if (path === '/' || path === '/index.php') {
+  }
+  else if (path === '/' || path === '/index.php') {
     presenceData.details = 'Viewing TubeCraft SMP'
     presenceData.state = 'Homepage'
-  } else if (path.includes('/creators')) {
+  }
+  else if (path.includes('/creators')) {
     presenceData.details = 'Browsing Creators'
     presenceData.state = 'TubeCraft SMP Community'
-  } else if (path.includes('/videos')) {
+  }
+  else if (path.includes('/videos')) {
     presenceData.details = 'Browsing Community Videos'
     presenceData.state = 'TubeCraft SMP Video Library'
-  } else if (path.includes('/seasons')) {
+  }
+  else if (path.includes('/seasons')) {
     presenceData.details = 'Exploring Seasons'
     presenceData.state = 'TubeCraft SMP History'
-  } else if (path.includes('/gallery')) {
+  }
+  else if (path.includes('/gallery')) {
     presenceData.details = 'Viewing Gallery'
     presenceData.state = 'Community Media'
-  } else if (path.includes('/faq')) {
+  }
+  else if (path.includes('/faq')) {
     presenceData.details = 'Reading Help Information'
     presenceData.state = 'Frequently Asked Questions'
     presenceData.smallImageKey = Assets.Reading
-  } else if (path.includes('/rules')) {
+  }
+  else if (path.includes('/rules')) {
     presenceData.details = 'Reading Community Rules'
     presenceData.state = 'TubeCraft SMP Guidelines'
     presenceData.smallImageKey = Assets.Reading
-  } else if (path.includes('/apply')) {
+  }
+  else if (path.includes('/apply')) {
     presenceData.details = 'Joining TubeCraft SMP'
     presenceData.state = 'Creator Application'
     presenceData.smallImageKey = Assets.Reading
-  } else if (path.includes('/changelogs')) {
+  }
+  else if (path.includes('/changelogs')) {
     presenceData.details = 'Reading Website Updates'
     presenceData.state = 'TubeCraft SMP Changelogs'
     presenceData.smallImageKey = Assets.Reading
-  } else {
+  }
+  else {
     presenceData.details = 'Browsing TubeCraft SMP'
     presenceData.state = document.title || 'TubeCraft SMP'
   }
