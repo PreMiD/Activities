@@ -1,41 +1,41 @@
 const presence = new Presence({
-  clientId: "1004301145348526090"
+  clientId: '1004301145348526090'
 })
 
 const startTimestamp = Math.floor(Date.now() / 1000)
 
-presence.on("UpdateData", async () => {
-  const title = document.title || "Hangar"
+presence.on('UpdateData', async () => {
+  const title = document.title || 'Hangar'
   const path = window.location.pathname
 
   const presenceData: PresenceData = {
     type: 3,
-    largeImageKey: "logo",
-    largeImageText: "usehangar.gg",
+    largeImageKey: 'logo',
+    largeImageText: 'usehangar.gg',
     startTimestamp,
-    details: "Browsing Hangar",
-    state: "Viewing pages"
+    details: 'Browsing Hangar',
+    state: 'Viewing pages'
   }
 
-  if (path === "/" || path === "/feed") {
-    presenceData.details = "Browsing the homepage"
-    presenceData.state = "Viewing the feed"
-  } else if (path.startsWith("/hub/")) {
-    const hubName = title.split(" | ")[0] || "A Hub"
+  if (path === '/' || path === '/feed') {
+    presenceData.details = 'Browsing the homepage'
+    presenceData.state = 'Viewing the feed'
+  } else if (path.startsWith('/hub/')) {
+    const hubName = title.split(' | ')[0] || 'A Hub'
 
-    presenceData.details = "Viewing a Hub"
+    presenceData.details = 'Viewing a Hub'
     presenceData.state = hubName
-    presenceData.smallImageKey = "logo"
-    presenceData.smallImageText = "Hangar"
-  } else if (path.startsWith("/profile/")) {
-    const user = title.split(" | ")[0] || "A profile"
+    presenceData.smallImageKey = 'logo'
+    presenceData.smallImageText = 'Hangar'
+  } else if (path.startsWith('/profile/')) {
+    const user = title.split(' | ')[0] || 'A profile'
 
-    presenceData.details = "Viewing a profile"
+    presenceData.details = 'Viewing a profile'
     presenceData.state = user
-  } else if (path.startsWith("/post/")) {
-    const postTitle = title.split(" | ")[0] || "A post"
+  } else if (path.startsWith('/post/')) {
+    const postTitle = title.split(' | ')[0] || 'A post'
 
-    presenceData.details = "Reading a post"
+    presenceData.details = 'Reading a post'
     presenceData.state = postTitle
   }
 
