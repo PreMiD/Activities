@@ -10,7 +10,7 @@
     "tr": "Hangar platformundaki güncel aktivitenizi Discord'da gösterir."
   },
   "url": "usehangar.gg",
-  "regExp": "^(?:www\\.)?usehangar\\.gg\\/?",
+  "regExp": "usehangar\\.gg",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/w5FbdFC.png",
   "thumbnail": "https://i.imgur.com/w5FbdFC.png",
