@@ -9,7 +9,7 @@
     "en": "Shows your current activity on the Hangar platform.",
     "tr": "Hangar platformundaki güncel aktivitenizi Discord'da gösterir."
   },
-  "url": "https://usehangar.gg",
+  "url": "usehangar.gg",
   "regExp": "^https?://(?:www\\.)?usehangar\\.gg/?",
   "version": "1.0.0",
   "thumbnail": "https://i.imgur.com/w5FbdFC.png",
