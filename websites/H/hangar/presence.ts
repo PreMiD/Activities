@@ -12,25 +12,28 @@ presence.on('UpdateData', async () => {
   const presenceData: any = {
     largeImageKey: defaultImage,
     largeImageText: 'usehangar.gg',
-    startTimestamp: startTimestamp,
+    startTimestamp,
     details: 'Hangar’da geziniyor',
-    state: 'Sayfaları inceliyor'
+    state: 'Sayfaları inceliyor',
   }
 
   if (path === '/' || path === '/feed') {
     presenceData.details = 'Ana sayfayı inceliyor'
     presenceData.state = 'Akışı geziyor'
-  } else if (path.startsWith('/hub/')) {
+  }
+  else if (path.startsWith('/hub/')) {
     const hubName = title.split(' | ')[0] || 'Bir Hub'
     presenceData.details = 'Bir Hub inceliyor'
     presenceData.state = hubName
     presenceData.smallImageKey = defaultImage
     presenceData.smallImageText = 'Hangar'
-  } else if (path.startsWith('/profile/')) {
+  }
+  else if (path.startsWith('/profile/')) {
     const user = title.split(' | ')[0] || 'Bir profili'
     presenceData.details = 'Bir profili inceliyor'
     presenceData.state = user
-  } else if (path.startsWith('/post/')) {
+  }
+  else if (path.startsWith('/post/')) {
     const postTitle = title.split(' | ')[0] || 'Bir gönderi'
     presenceData.details = 'Bir gönderiyi okuyor'
     presenceData.state = postTitle
