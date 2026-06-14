@@ -1,8 +1,6 @@
-import { Presence, PresenceData } from 'premid'
+import { Presence } from 'premid'
 
-const presence = new Presence({
-  clientId: '1004301145348526090',
-})
+const presence = new Presence()
 
 // Captured once when the extension initializes on your tab
 const startTimestamp = Math.floor(Date.now() / 1000)
@@ -12,8 +10,8 @@ presence.on('UpdateData', async () => {
   const title = document.title || 'Hangar'
   const path = window.location.pathname
 
-  // Safely default presence fields
-  const presenceData: PresenceData = {
+  // Safely default presence fields with required type constraints
+  const presenceData: any = {
     largeImageKey: defaultImage,
     largeImageText: 'usehangar.gg',
     startTimestamp: startTimestamp,
