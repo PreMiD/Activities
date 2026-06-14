@@ -13,8 +13,8 @@
   "regExp": "^https?:\\/\\/(?:www\\.)?usehangar\\.gg(?:\\/.*)?$",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/w5FbdFC.png",
-  "color": "#111111",
   "thumbnail": "https://i.imgur.com/w5FbdFC.png",
+  "color": "#111111",
   "category": "socials",
   "tags": [
     "community",
