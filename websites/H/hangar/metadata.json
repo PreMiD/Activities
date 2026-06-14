@@ -12,9 +12,13 @@
   "url": "usehangar.gg",
   "regExp": "^https?:\\/\\/(?:www\\.)?usehangar\\.gg(?:\\/.*)?$",
   "version": "1.0.0",
-  "color": "#111111",
-  "category": "socials",
   "logo": "https://i.imgur.com/w5FbdFC.png",
+  "color": "#111111",
   "thumbnail": "https://i.imgur.com/w5FbdFC.png",
-  "tags": ["community", "forum", "socials"]
+  "category": "socials",
+  "tags": [
+    "community",
+    "forum",
+    "socials"
+  ]
 }
