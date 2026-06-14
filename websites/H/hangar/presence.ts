@@ -1,6 +1,6 @@
-import { Presence } from 'premid'
+import { PresenceContext } from 'premid'
 
-const presence = new Presence()
+const presence = new PresenceContext()
 
 const startTimestamp = Math.floor(Date.now() / 1000)
 const defaultImage = 'logo'
