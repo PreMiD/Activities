@@ -12,10 +12,12 @@ jobs:
   pmd:
     name: Validate metadata and build
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       security-events: write
       actions: read
+
     steps:
       - uses: actions/checkout@v6
 
@@ -25,17 +27,11 @@ jobs:
           node-version-file: package.json
           cache: npm
 
-      - name: Install pmd
+      - name: Install dependencies
         run: npm ci
 
       - name: Validate metadata and build (changed files)
-        run: npx pmd build --changed --no-kill --validate --sarif
+        run: npx pmd build --changed --no-kill --validate
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
-
-      - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: pmd-results.sarif
-          wait-for-processing: true
