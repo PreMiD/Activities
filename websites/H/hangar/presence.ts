@@ -3,14 +3,14 @@ const presence = new Presence({
 })
 
 const startTimestamp = Math.floor(Date.now() / 1000)
-const defaultImage = "logo"
 
 presence.on("UpdateData", async () => {
   const title = document.title || "Hangar"
   const path = window.location.pathname
 
   const presenceData: PresenceData = {
-    largeImageKey: defaultImage,
+    type: 3,
+    largeImageKey: "logo",
     largeImageText: "usehangar.gg",
     startTimestamp,
     details: "Browsing Hangar",
@@ -25,7 +25,7 @@ presence.on("UpdateData", async () => {
 
     presenceData.details = "Viewing a Hub"
     presenceData.state = hubName
-    presenceData.smallImageKey = defaultImage
+    presenceData.smallImageKey = "logo"
     presenceData.smallImageText = "Hangar"
   } else if (path.startsWith("/profile/")) {
     const user = title.split(" | ")[0] || "A profile"
