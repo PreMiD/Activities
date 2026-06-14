@@ -1,4 +1,4 @@
-import Presence from 'premid'
+import { Presence } from 'premid'
 
 const presence = new (Presence as any)()
 
