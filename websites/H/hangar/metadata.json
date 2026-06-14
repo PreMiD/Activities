@@ -10,11 +10,15 @@
     "tr": "Hangar platformundaki güncel aktivitenizi Discord'da gösterir."
   },
   "url": "usehangar.gg",
-  "regExp": "usehangar\\.gg",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])?usehangar[.]gg[/]?",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/w5FbdFC.png",
   "thumbnail": "https://i.imgur.com/w5FbdFC.png",
   "color": "#111111",
   "category": "socials",
-  "tags": ["community", "forum", "socials"]
+  "tags": [
+    "community",
+    "forum",
+    "socials"
+  ]
 }
