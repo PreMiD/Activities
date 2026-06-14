@@ -5,16 +5,23 @@
     "id": "526822284694913042",
     "name": "Mido"
   },
+  "contributors": [
+    {
+      "name": "xDoritos",
+      "id": "432215088686956565"
+    }
+  ],
   "service": "Stigstream",
   "description": {
     "en": "Stream thousands of movies and TV shows on Stigstream. Watch the latest releases, classic films, and binge-worthy series with our premium streaming platform."
   },
   "url": [
     "stigstream.com",
-    "www.stigstream.com"
+    "www.stigstream.com",
+    "stigstream.ru"
   ],
-  "regExp": "^https?[:][/][/](www[.])?stigstream[.]com[/]",
-  "version": "1.1.1",
+  "regExp": "^https?[:][/][/](www[.])?stigstream[.](com|ru)[/]",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stigstream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stigstream/assets/thumbnail.png",
   "color": "#db0000",
