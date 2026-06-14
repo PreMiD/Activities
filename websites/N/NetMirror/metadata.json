@@ -7,7 +7,7 @@
   },
   "service": "NetMirror",
   "altnames": [
-    "Net22.cc",
+    "Net11.cc",
     "Netflix Mirror",
     "Net Mirror"
   ],
@@ -15,7 +15,7 @@
     "en": "Net22.cc is the current browser portal for NetMirror, a streaming service for movies, TV series, anime, and live TV."
   },
   "url": [
-    "net52.cc",
+    "net11.cc",
     "netmirror.io"
   ],
   "regExp": "^https?[:][/][/](www[.])?(net22|net52|netmirror)[.](cc|io)[/]",
