@@ -1,4 +1,4 @@
-import { PresenceContext } from 'premid'
+import { Presence, PresenceData } from 'premid'
 
 const presence = new Presence({
   clientId: '1004301145348526090',
