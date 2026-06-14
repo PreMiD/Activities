@@ -2,7 +2,6 @@ import { Presence } from 'premid'
 
 const presence = new Presence()
 
-// Captured once when the extension initializes on your tab
 const startTimestamp = Math.floor(Date.now() / 1000)
 const defaultImage = 'logo'
 
@@ -10,13 +9,12 @@ presence.on('UpdateData', async () => {
   const title = document.title || 'Hangar'
   const path = window.location.pathname
 
-  // Safely default presence fields with required type constraints
   const presenceData: any = {
     largeImageKey: defaultImage,
     largeImageText: 'usehangar.gg',
     startTimestamp: startTimestamp,
-    details: 'Hangar’da geziniyor', // Solid default fallback
-    state: 'Sayfaları inceliyor'   // Solid default fallback
+    details: 'Hangar’da geziniyor',
+    state: 'Sayfaları inceliyor'
   }
 
   if (path === '/' || path === '/feed') {
@@ -29,7 +27,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = defaultImage
     presenceData.smallImageText = 'Hangar'
   } else if (path.startsWith('/profile/')) {
-    const user = title.split(' | ')[0] || 'Bir profil'
+    const user = title.split(' | ')[0] || 'Bir profili'
     presenceData.details = 'Bir profili inceliyor'
     presenceData.state = user
   } else if (path.startsWith('/post/')) {
