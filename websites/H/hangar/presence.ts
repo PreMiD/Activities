@@ -20,7 +20,8 @@ presence.on('UpdateData', async () => {
   if (path === '/' || path === '/feed') {
     data.details = 'Browsing the homepage'
     data.state = 'Viewing the feed'
-  } else if (path.startsWith('/hub/')) {
+  }
+  else if (path.startsWith('/hub/')) {
     const hubName = title.split(' | ')[0] || 'A Hub'
 
     data = {
@@ -33,7 +34,8 @@ presence.on('UpdateData', async () => {
       smallImageKey: 'logo',
       smallImageText: 'Hangar',
     }
-  } else if (path.startsWith('/profile/')) {
+  }
+  else if (path.startsWith('/profile/')) {
     const user = title.split(' | ')[0] || 'A profile'
 
     data = {
@@ -44,7 +46,8 @@ presence.on('UpdateData', async () => {
       details: 'Viewing a profile',
       state: user,
     }
-  } else if (path.startsWith('/post/')) {
+  }
+  else if (path.startsWith('/post/')) {
     const postTitle = title.split(' | ')[0] || 'A post'
 
     data = {
