@@ -1,15 +1,15 @@
 {
   "$schema": "https://schemas.premid.app/metadata/1.8",
   "author": {
-    "id": "1003332362823802949",
+    "id": "10033323622823802949",
     "name": "RuaLia"
   },
-  "service": "Hangar",
+  "service": "hangar",
   "description": {
     "en": "Shows your current activity on the Hangar platform.",
     "tr": "Hangar platformundaki güncel aktivitenizi Discord'da gösterir."
   },
-  "url": "https://usehangar.gg",
+  "url": "usehangar.gg",
   "regExp": "^(?:www\\.)?usehangar\\.gg",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/w5FbdFC.png",
