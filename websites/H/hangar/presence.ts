@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1004301145348526090'
+  clientId: '1004301145348526090',
 })
 
 const startTimestamp = Math.floor(Date.now() / 1000)
@@ -8,60 +8,54 @@ presence.on('UpdateData', async () => {
   const title = document.title || 'Hangar'
   const path = window.location.pathname
 
-  let presenceData: PresenceData = {
-    type: ActivityType.Watching,
+  let data: PresenceData = {
+    type: 3,
     largeImageKey: 'logo',
     largeImageText: 'usehangar.gg',
     startTimestamp,
     details: 'Browsing Hangar',
-    state: 'Viewing pages'
+    state: 'Viewing pages',
   }
 
   if (path === '/' || path === '/feed') {
-    presenceData.details = 'Browsing the homepage'
-    presenceData.state = 'Viewing the feed'
-  }
-
-  else if (path.startsWith('/hub/')) {
+    data.details = 'Browsing the homepage'
+    data.state = 'Viewing the feed'
+  } else if (path.startsWith('/hub/')) {
     const hubName = title.split(' | ')[0] || 'A Hub'
 
-    presenceData = {
-      type: ActivityType.Watching,
+    data = {
+      type: 3,
       largeImageKey: 'logo',
       largeImageText: 'usehangar.gg',
       startTimestamp,
       details: 'Viewing a Hub',
       state: hubName,
       smallImageKey: 'logo',
-      smallImageText: 'Hangar'
+      smallImageText: 'Hangar',
     }
-  }
-
-  else if (path.startsWith('/profile/')) {
+  } else if (path.startsWith('/profile/')) {
     const user = title.split(' | ')[0] || 'A profile'
 
-    presenceData = {
-      type: ActivityType.Watching,
+    data = {
+      type: 3,
       largeImageKey: 'logo',
       largeImageText: 'usehangar.gg',
       startTimestamp,
       details: 'Viewing a profile',
-      state: user
+      state: user,
     }
-  }
-
-  else if (path.startsWith('/post/')) {
+  } else if (path.startsWith('/post/')) {
     const postTitle = title.split(' | ')[0] || 'A post'
 
-    presenceData = {
-      type: ActivityType.Watching,
+    data = {
+      type: 3,
       largeImageKey: 'logo',
       largeImageText: 'usehangar.gg',
       startTimestamp,
       details: 'Reading a post',
-      state: postTitle
+      state: postTitle,
     }
   }
 
-  presence.setActivity(presenceData)
+  presence.setActivity(data)
 })
