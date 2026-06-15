@@ -3,7 +3,7 @@
   "apiVersion": 1,
   "author": {
     "id": "378501743366897675",
-    "name": "ef337"
+    "name": "hackviser"
   },
   "service": "Hackviser",
   "description": {
@@ -12,9 +12,9 @@
   },
   "url": "hackviser.com",
   "regExp": "^https?[:][/][/]([a-zA-Z0-9-]+[.])*hackviser[.]com[/]",
-  "version": "1.0.3",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hackviser/assets/logo.jpeg",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hackviser/assets/thumbnail.webp",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/ns57qq7g/512x512.jpg",
+  "thumbnail": "https://github.com/user-attachments/assets/bf3d8382-4789-494e-802a-244f571bf676?v=.png",
   "color": "#00ff00",
   "category": "other",
   "tags": [
