@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "910875892417441823",
+    "name": "mukeenanyafiq"
+  },
+  "service": "Composer TTML",
+  "description": {
+    "en": "A simple, free, and open-sourced tool for editing and synchronizing visual Lyrics with TTML format",
+    "id": "Alat sederhana, gratis, dan sumber terbuka untuk mengedit dan mengsinkronkan Lirik visual dengan format TTML"
+  },
+  "url": "composer.boidu.dev",
+  "regExp": "^https?[:][/][/]composer[.]boidu[.]dev[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Composer%20TTML/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Composer%20TTML/assets/thumbnail.png",
+  "color": "#f20c32",
+  "category": "music",
+  "tags": [
+    "music",
+    "lyrics",
+    "lyric",
+    "ttml-making",
+    "ttml",
+    "lrc",
+    "elrc",
+    "blrc",
+    "betterlyrics"
+  ]
+}
