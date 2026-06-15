@@ -7,7 +7,7 @@ let elapsedSinceChange = 0
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://files.catbox.moe/vo1pq4.png',
+    largeImageKey: 'https://files.catbox.moe/oz8aca.png',
   }
 
   const showButtons = await presence.getSetting<boolean>('buttons')

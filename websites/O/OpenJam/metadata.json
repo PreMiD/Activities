@@ -13,11 +13,11 @@
     "fr": "Écoutez ensemble en temps réel. OpenJam est une plateforme de soirée d'écoute musicale synchronisée.",
     "pt": "Ouçam juntos em tempo real. OpenJam é uma plataforma de festa de audição musical sincronizada."
   },
-  "url": "openjam.app",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*openjam[.]app[/]",
+  "url": "openjamming.vercel.app",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*openjamming[.]vercel[.]app[/]",
   "version": "1.0.0",
-  "logo": "https://files.catbox.moe/vo1pq4.png",
-  "thumbnail": "https://files.catbox.moe/qqgesl.png",
+  "logo": "https://files.catbox.moe/oz8aca.png",
+  "thumbnail": "https://files.catbox.moe/oz8aca.png",
   "color": "#6366f1",
   "category": "music",
   "tags": [
