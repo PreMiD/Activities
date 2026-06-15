@@ -43,21 +43,11 @@ function getPageData(pathname: string): {
     }
   }
 
-  // ── Landing Page ────────────────────────────────────────────
-  if (pathname === '/') {
-    return {
-      page: 'landing',
-      details: 'Exploring Hackviser',
-      state: '',
-      sensitive: false,
-    }
-  }
-
   // ── Home ────────────────────────────────────────────────────
-  if (pathname.startsWith('/home')) {
+  if (pathname.startsWith('/home') || pathname === '/') {
     return {
       page: 'home',
-      details: 'Viewing Home Page',
+      details: 'Exploring Hackviser',
       state: '',
       sensitive: false,
     }
@@ -76,29 +66,10 @@ function getPageData(pathname: string): {
   // ── Academy ─────────────────────────────────────────────────
   if (pathname.startsWith('/academy')) {
     const subPage = extractPageTitle(pathname)
-
-    if (subPage && subPage !== 'Categories') {
-      if (pathname.includes('/trainings')) {
-        return {
-          page: 'academy',
-          details: 'Studying Subject',
-          state: subPage,
-          sensitive: false,
-        }
-      } else {
-        return {
-          page: 'academy',
-          details: 'Viewing Category',
-          state: subPage,
-          sensitive: false,
-        }
-      }
-    }
-
     return {
       page: 'academy',
       details: 'Exploring Academy',
-      state: '',
+      state: subPage ? `Studying: ${subPage}` : '',
       sensitive: false,
     }
   }
@@ -111,8 +82,8 @@ function getPageData(pathname: string): {
     const name = extractPageTitle(pathname)
     return {
       page: 'warmups',
-      details: name ? 'Solving Warmup' : 'Exploring Warmups',
-      state: name ? name : '',
+      details: 'Exploring Warmups',
+      state: name ? `Solving: ${name}` : '',
       sensitive: false,
     }
   }
@@ -125,8 +96,8 @@ function getPageData(pathname: string): {
     const name = extractPageTitle(pathname)
     return {
       page: 'scenarios',
-      details: name ? 'Solving Attack Scenario' : 'Exploring Scenarios',
-      state: name ? name : '',
+      details: 'Running Attack Scenarios',
+      state: name ? `Solving: ${name}` : '',
       sensitive: false,
     }
   }
@@ -168,7 +139,7 @@ function getPageData(pathname: string): {
     const labName = extractPageTitle(pathname)
     return {
       page: 'labs',
-      details: labName ? 'Solving Lab' : 'Exploring Labs',
+      details: 'Solving Labs',
       state: labName ? labName : '',
       sensitive: false,
     }
@@ -176,10 +147,9 @@ function getPageData(pathname: string): {
 
   // ── Support ─────────────────────────────────────────────────
   if (pathname.startsWith('/support')) {
-    const isOpening = pathname.includes('/open-ticket')
     return {
       page: 'support',
-      details: isOpening ? 'Creating a Support Ticket' : 'Thinking About Opening a Ticket',
+      details: 'Getting Support',
       state: '',
       sensitive: false,
     }
@@ -194,6 +164,19 @@ function getPageData(pathname: string): {
     return {
       page: 'learning',
       details: 'Mastering Cybersecurity Skills',
+      state: '',
+      sensitive: false,
+    }
+  }
+
+  // ── CTF / Challenges ────────────────────────────────────────
+  if (
+    pathname.startsWith('/ctf')
+    || pathname.startsWith('/challenges')
+  ) {
+    return {
+      page: 'ctf',
+      details: 'Capturing the Flag 🚩',
       state: '',
       sensitive: false,
     }
@@ -235,23 +218,9 @@ function getPageData(pathname: string): {
     || pathname.startsWith('/user')
     || pathname.startsWith('/settings')
   ) {
-    const parts = pathname.split('/').filter(p => p.length > 0)
-    const isSettings = pathname.includes('/settings')
-    
-    if (isSettings) {
-      return {
-        page: 'settings',
-        details: 'Configuring Preferences',
-        state: '',
-        sensitive: false,
-      }
-    }
-
-    const profileName = parts.length > 1 ? parts[1] : null
-
     return {
       page: 'profile',
-      details: profileName ? `Viewing ${profileName}'s Profile` : 'Viewing Own Profile',
+      details: 'Viewing Own Profile',
       state: '',
       sensitive: false,
     }
@@ -303,7 +272,7 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     startTimestamp,
-    largeImageKey: 'https://i.ibb.co/ns57qq7g/512x512.jpg',
+    largeImageKey: 'logo',
   }
 
   // 265. Satır: ESLint Brace Style Düzeltmesi
