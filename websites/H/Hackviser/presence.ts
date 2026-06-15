@@ -85,7 +85,8 @@ function getPageData(pathname: string): {
           state: subPage,
           sensitive: false,
         }
-      } else {
+      }
+      else {
         return {
           page: 'academy',
           details: 'Viewing Category',
@@ -112,7 +113,7 @@ function getPageData(pathname: string): {
     return {
       page: 'warmups',
       details: name ? 'Solving Warmup' : 'Exploring Warmups',
-      state: name ? name : '',
+      state: name || '',
       sensitive: false,
     }
   }
@@ -126,7 +127,7 @@ function getPageData(pathname: string): {
     return {
       page: 'scenarios',
       details: name ? 'Running Attack Scenario' : 'Exploring Scenarios',
-      state: name ? name : '',
+      state: name || '',
       sensitive: false,
     }
   }
@@ -169,7 +170,7 @@ function getPageData(pathname: string): {
     return {
       page: 'labs',
       details: labName ? 'Solving Lab' : 'Exploring Labs',
-      state: labName ? labName : '',
+      state: labName || '',
       sensitive: false,
     }
   }
@@ -237,7 +238,7 @@ function getPageData(pathname: string): {
   ) {
     const parts = pathname.split('/').filter(p => p.length > 0)
     const isSettings = pathname.includes('/settings')
-    
+
     if (isSettings) {
       return {
         page: 'settings',
@@ -300,7 +301,7 @@ presence.on('UpdateData', async () => {
     startTimestamp = Math.floor(Date.now() / 1000)
     lastPage = pageData.page
   }
-  
+
   const presenceData: PresenceData = {
     startTimestamp,
     largeImageKey: 'https://i.ibb.co/ns57qq7g/512x512.jpg',
