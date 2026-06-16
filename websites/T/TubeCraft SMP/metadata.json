@@ -10,7 +10,7 @@
     "en": "The official TubeCraft SMP community hub, featuring creator profiles, videos, seasons, galleries, updates, and community management tools."
   },
   "url": "tubecraftsmp.com",
-  "regExp": "^https?://([a-z0-9-]+\\.)*tubecraftsmp\\.com(/.*)?$",
+  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*tubecraftsmp[.]com[/]",
   "version": "1.0.0",
   "logo": "https://cdn.tubecraftsmp.com/assets/Tubecraft-Logo-Small.png",
   "thumbnail": "https://cdn.tubecraftsmp.com/assets/TubecraftSMP-Thumbnail.png",
