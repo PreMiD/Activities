@@ -7,7 +7,7 @@
   "service": "hangar",
   "description": {
     "en": "Shows your current activity on the Hangar platform.",
-    "tr": "Hangar platformundaki güncel aktivitenizi Discord'da gösterir."
+    "tr": "Hangar platformundaki güncel aktivitenizi Discord'da gösterir.",
   },
   "url": "usehangar.gg",
   "regExp": "^https?[:][/][/](www[.])?usehangar[.]gg[/]"
