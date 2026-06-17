@@ -11,7 +11,7 @@ presence.on('UpdateData', async () => {
   const path = window.location.pathname
 
   const data: PresenceData = {
-    type: ActivityType.Playing, 
+    type: ActivityType.Playing,
     largeImageKey: 'logo',
     startTimestamp,
     details: 'Browsing Hangar',
