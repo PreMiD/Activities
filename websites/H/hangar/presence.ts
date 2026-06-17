@@ -9,7 +9,10 @@ const startTimestamp = Math.floor(Date.now() / 1000)
 presence.on('UpdateData', async () => {
   const title = document.title || 'Hangar'
   const path = window.location.pathname
-  let data: PresenceData = {
+
+  
+  const data: PresenceData = {
+    type: ActivityType.Playing, // Displays as "Playing Hangar"
     largeImageKey: 'logo',
     largeImageText: 'usehangar.gg',
     startTimestamp,
@@ -17,6 +20,7 @@ presence.on('UpdateData', async () => {
     state: 'Viewing pages',
   }
 
+  
   if (path === '/' || path === '/feed') {
     data.details = 'Browsing the homepage'
     data.state = 'Viewing the feed'
@@ -24,41 +28,24 @@ presence.on('UpdateData', async () => {
   else if (path.startsWith('/hub/')) {
     const hubName = title.split(' | ')[0] || 'A Hub'
 
-    data = {
-      type: 3,
-      largeImageKey: 'logo',
-      largeImageText: 'usehangar.gg',
-      startTimestamp,
-      details: 'Viewing a Hub',
-      state: hubName,
-      smallImageKey: 'logo',
-      smallImageText: 'Hangar',
-    }
+    data.details = 'Viewing a Hub'
+    data.state = hubName
+    data.smallImageKey = 'logo'
+    data.smallImageText = 'Hangar'
   }
   else if (path.startsWith('/profile/')) {
     const user = title.split(' | ')[0] || 'A profile'
 
-    data = {
-      type: 3,
-      largeImageKey: 'logo',
-      largeImageText: 'usehangar.gg',
-      startTimestamp,
-      details: 'Viewing a profile',
-      state: user,
-    }
+    data.details = 'Viewing a profile'
+    data.state = user
   }
   else if (path.startsWith('/post/')) {
     const postTitle = title.split(' | ')[0] || 'A post'
 
-    data = {
-      type: 3,
-      largeImageKey: 'logo',
-      largeImageText: 'usehangar.gg',
-      startTimestamp,
-      details: 'Reading a post',
-      state: postTitle,
-    }
+    data.details = 'Reading a post'
+    data.state = postTitle
   }
 
+ 
   presence.setActivity(data)
 })
