@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1004301145348526090',
@@ -9,7 +9,6 @@ const startTimestamp = Math.floor(Date.now() / 1000)
 presence.on('UpdateData', async () => {
   const title = document.title || 'Hangar'
   const path = window.location.pathname
-
   let data: PresenceData = {
     ActivityType.Watching,
     largeImageKey: 'logo',
