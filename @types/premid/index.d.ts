@@ -458,6 +458,12 @@ declare global {
      */
     getActivity(): PresenceData
     /**
+     * @deprecated this does not clear the activity. This just displays an Activity with just a name and an icon.
+     *
+     * Use `Presence#clearActivity` instead.
+     */
+    setActivity(): Promise<void>
+    /**
      * Sets the presence activity and sends it to the application.
      * @param data PresenceData or Slideshow
      * @link https://docs.premid.app/dev/presence/class#setactivitypresencedata-boolean
