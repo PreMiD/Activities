@@ -18,12 +18,17 @@
   },
   "url": "asyaanimeleri.top",
   "regExp": "^https?[:][/][/]asyaanimeleri[.]top[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/4lU3x0V.png",
-  "thumbnail": "https://i.imgur.com/3Y6rAAg.png",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Asya%20Animeleri/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Asya%20Animeleri/assets/thumbnail.png",
   "color": "#e74c3c",
   "category": "anime",
-  "tags": ["anime", "donghua", "streaming", "turkish"],
+  "tags": [
+    "anime",
+    "donghua",
+    "streaming",
+    "turkish"
+  ],
   "settings": [
     {
       "id": "showEpisode",

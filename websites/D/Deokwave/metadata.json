@@ -7,17 +7,21 @@
   },
   "service": "Deokwave",
   "description": {
-    "en": "Watch anime on Deokwave.",
-    "tr": "Deokwave'de anime izle."
+    "en": "Deokwave is Türkiye’s most comprehensive anime platform, where you can watch thousands of anime for free with 4K quality, Turkish subtitles, and an active community.",
+    "tr": "Deokwave Türkiye'nin en kapsamlı anime platformu 4K kalite, Türkçe altyazı ve aktif topluluk ile binlerce animeyi ücretsiz izle."
   },
   "url": "deokwave.com",
   "regExp": "^https?[:][/][/](deokwave[.]com)[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/SbmVetu.png",
-  "thumbnail": "https://i.imgur.com/MoEBLvd.jpeg",
+  "version": "1.0.4",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deokwave/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deokwave/assets/thumbnail.jpeg",
   "color": "#8b5cf6",
   "category": "anime",
-  "tags": ["anime", "turkish", "streaming"],
+  "tags": [
+    "anime",
+    "turkish",
+    "streaming"
+  ],
   "settings": [
     {
       "id": "showEpisode",

@@ -17,7 +17,7 @@ const strings = presence.getStrings({
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://i.ibb.co/yBY6V8RK/OAuth-Icon-512.png',
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/B/Bourges%20T%C3%A9l%C3%A9vision/assets/logo.png',
     type: ActivityType.Watching,
     startTimestamp: browsingTimestamp,
   }

@@ -1,4 +1,6 @@
 {
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
   "author": {
     "id": "1117890204569718885",
     "name": "rapositosa"
@@ -10,9 +12,9 @@
   },
   "url": "pawsy.fun",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pawsy[.]fun[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/DZb1KAE.jpeg",
-  "thumbnail": "https://i.imgur.com/YRnNFnj.png",
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pawsy/assets/logo.jpeg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pawsy/assets/thumbnail.png",
   "color": "#f4efeb",
   "category": "other",
   "tags": [

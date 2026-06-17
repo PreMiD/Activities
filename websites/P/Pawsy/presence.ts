@@ -8,7 +8,7 @@ presence.on('UpdateData', () => {
   const { pathname, hash } = document.location
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://i.imgur.com/DZb1KAE.jpeg',
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/Pawsy/assets/logo.jpeg',
     startTimestamp: browsingTimestamp,
   }
 

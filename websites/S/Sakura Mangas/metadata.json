@@ -10,11 +10,14 @@
     "en": "Read manga online on Sakura Mangas",
     "pt-br": "Leia mangás online no Sakura Mangas"
   },
-  "url": ["www.sakuramangas.org", "sakuramangas.org"],
+  "url": [
+    "www.sakuramangas.org",
+    "sakuramangas.org"
+  ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sakuramangas[.]org[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/8EhCZKg.png",
-  "thumbnail": "https://i.imgur.com/BPYoKf7.png",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sakura%20Mangas/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sakura%20Mangas/assets/thumbnail.png",
   "color": "#ea6db5",
   "category": "anime",
   "tags": [
