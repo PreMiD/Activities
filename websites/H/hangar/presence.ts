@@ -9,7 +9,7 @@ presence.on('UpdateData', async () => {
   const path = window.location.pathname
 
   let data: PresenceData = {
-    type: 3,
+    ActivityType.Watching,
     largeImageKey: 'logo',
     largeImageText: 'usehangar.gg',
     startTimestamp,
