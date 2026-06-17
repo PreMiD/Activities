@@ -9,13 +9,13 @@ presence.on('UpdateData', async () => {
   const { pathname } = document.location
   const title = document.title
   const audio = document.querySelector('audio')
-  const isPlaying = !!document.querySelector('[aria-label="Pause"]')
-  const currentTime = audio?.currentTime || 0
-  const duration = audio?.duration || 0
+  const mediaSession = navigator.mediaSession
+  const isPlaying = mediaSession.playbackState === 'playing'
+  const currentTime = audio?.currentTime ?? 0
+  const duration = audio?.duration || 0 // NOTE: audio.duration is NaN before loadedmetadata fires
   const now = Math.floor(Date.now() / 1000)
 
-  const songArt = document.querySelector<HTMLImageElement>('[aria-label="Playback panel"] img')?.src || NintendoMusicLogo
-  const albumArt = document.querySelector<HTMLImageElement>('#main-column img')?.src || NintendoMusicLogo
+  const albumArt = document.querySelector<HTMLImageElement>('#main-column img')?.src ?? NintendoMusicLogo
 
   const [showTimestamps, showSongArt] = await Promise.all([
     presence.getSetting<boolean>('showTimestamps'),
@@ -27,10 +27,10 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Listening,
   }
 
-  if (isPlaying && title.includes(' - Nintendo Music')) {
-    const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
-    const songName = parts[0]?.trim() || 'Unknown'
-    const gameName = parts[1]?.trim() || 'Nintendo'
+  if (isPlaying && mediaSession?.metadata) {
+    const songArt = mediaSession.metadata.artwork?.[0]?.src ?? NintendoMusicLogo
+    const songName = mediaSession.metadata.title ?? 'Unknown'
+    const gameName = mediaSession.metadata.album ?? 'Nintendo'
 
     presenceData.details = songName
     presenceData.state = gameName
@@ -47,7 +47,7 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.includes('/game')) {
     const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
-    const gameName = parts[1]?.trim() || 'Nintendo'
+    const gameName = parts[1]?.trim() ?? 'Nintendo'
     const mainTitle = document.querySelector('#main-column h1')?.textContent
 
     presenceData.details = `Browsing ${mainTitle}`
@@ -60,7 +60,7 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.includes('/user-playlist')) {
     const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
-    const songName = parts[0]?.trim() || 'Unknown'
+    const songName = parts[0]?.trim() ?? 'Unknown'
 
     presenceData.details = songName
     presenceData.state = 'Personal Playlist'
@@ -72,7 +72,7 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.includes('/playlist')) {
     const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
-    const songName = parts[0]?.trim() || 'Unknown'
+    const songName = parts[0]?.trim() ?? 'Unknown'
 
     presenceData.details = songName
     presenceData.state = 'Official Playlist'

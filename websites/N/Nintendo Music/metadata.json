@@ -16,7 +16,7 @@
   },
   "url": "music.nintendo.com",
   "regExp": "^https?[:][/][/]music[.]nintendo[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nintendo%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nintendo%20Music/assets/thumbnail.png",
   "color": "#FC2C00",
