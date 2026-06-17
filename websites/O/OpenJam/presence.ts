@@ -11,8 +11,10 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://files.catbox.moe/oz8aca.png',
   }
 
-  const showButtons = await presence.getSetting<boolean>('buttons')
-  const showTimestamps = await presence.getSetting<boolean>('timestamps')
+  const [showButtons, showTimestamps] = await Promise.all([
+    presence.getSetting<boolean>('buttons'),
+    presence.getSetting<boolean>('timestamps'),
+  ])
   const path = document.location.pathname
 
   const roomMatch = path.match(/^\/room\/(.+)/)
