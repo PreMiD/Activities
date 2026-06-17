@@ -12,7 +12,7 @@ presence.on('UpdateData', async () => {
 
   const data: PresenceData = {
     type: ActivityType.Playing,
-    largeImageKey: 'logo',
+    largeImageKey: 'https://i.imgur.com/w5FbdFC.png',
     startTimestamp,
     details: 'Browsing Hangar',
     state: 'Viewing pages',
