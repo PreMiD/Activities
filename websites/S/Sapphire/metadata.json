@@ -1,0 +1,22 @@
+{
+  "apiVersion": 1,
+  "author": {
+    "id": "960971439996035083",
+    "name": "JuJuplayz"
+  },
+  "service": "Sapphire",
+  "description": {
+    "en": "A multi-purpose Discord Bot — Done Right. Fully customizable. Completely free."
+  },
+  "url": "sapph.xyz",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sapph[.]xyz",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/apPbYWb.png",
+  "thumbnail": "https://i.imgur.com/BIVbVuG.png",
+  "color": "#00a2ff",
+  "category": "other",
+  "tags": [
+    "bot",
+    "discord"
+  ]
+}
