@@ -10,17 +10,14 @@ presence.on('UpdateData', async () => {
   const title = document.title || 'Hangar'
   const path = window.location.pathname
 
-  
   const data: PresenceData = {
-    type: ActivityType.Playing, // Displays as "Playing Hangar"
+    type: ActivityType.Playing, 
     largeImageKey: 'logo',
-    largeImageText: 'usehangar.gg',
     startTimestamp,
     details: 'Browsing Hangar',
     state: 'Viewing pages',
   }
 
-  
   if (path === '/' || path === '/feed') {
     data.details = 'Browsing the homepage'
     data.state = 'Viewing the feed'
@@ -46,6 +43,5 @@ presence.on('UpdateData', async () => {
     data.state = postTitle
   }
 
- 
   presence.setActivity(data)
 })
