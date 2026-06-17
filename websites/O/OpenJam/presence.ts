@@ -3,6 +3,7 @@ const presence = new Presence({
 })
 
 let lastTrackTitle = ''
+let lastArtist = ''
 let elapsedSinceChange = 0
 
 presence.on('UpdateData', async () => {
@@ -21,30 +22,29 @@ presence.on('UpdateData', async () => {
     const trackTitleEl = document.querySelector('[data-presence="track-name"], .mp-track-title')
     const artistEl = document.querySelector('[data-presence="artist"], .mp-track-artist')
     const playBtn = document.querySelector<HTMLButtonElement>('.mp-play-btn-large')
+    const isPlaying = playBtn?.title === 'Pause'
 
-    if (playBtn && trackTitleEl && artistEl) {
-      const trackTitle = trackTitleEl.textContent?.trim() || ''
-      const artist = artistEl.textContent?.trim() || ''
-      const isPlaying = playBtn.title === 'Pause'
+    const trackTitle = trackTitleEl?.textContent?.trim() || ''
+    const artist = artistEl?.textContent?.trim() || ''
 
-      if (trackTitle && artist && trackTitle !== 'Nothing playing' && isPlaying) {
-        if (trackTitle !== lastTrackTitle) {
-          lastTrackTitle = trackTitle
-          elapsedSinceChange = Date.now()
-        }
-
-        presenceData.details = trackTitle.substring(0, 127)
-        presenceData.state = `by ${artist.substring(0, 120)}`
-
-        if (showTimestamps)
-          presenceData.startTimestamp = Math.floor(elapsedSinceChange / 1000)
+    if (trackTitle && artist && trackTitle !== 'Nothing playing' && isPlaying) {
+      if (trackTitle !== lastTrackTitle || artist !== lastArtist) {
+        lastTrackTitle = trackTitle
+        lastArtist = artist
+        elapsedSinceChange = Date.now()
       }
-      else {
-        presenceData.details = 'In a Jam Room'
-        presenceData.state = 'Waiting for music...'
+
+      presenceData.details = trackTitle.substring(0, 127)
+      presenceData.state = `by ${artist.substring(0, 120)}`
+
+      if (showTimestamps) {
+        presenceData.startTimestamp = Math.floor(elapsedSinceChange / 1000)
       }
     }
     else {
+      lastTrackTitle = ''
+      lastArtist = ''
+
       presenceData.details = 'In a Jam Room'
       presenceData.state = 'Waiting for music...'
     }
@@ -60,9 +60,9 @@ presence.on('UpdateData', async () => {
   }
   else {
     presenceData.details = 'Browsing OpenJam'
+    lastTrackTitle = ''
+    lastArtist = ''
   }
 
-  if (presenceData.details)
-    presence.setActivity(presenceData)
-  else presence.setActivity()
+  presence.setActivity(presenceData)
 })
