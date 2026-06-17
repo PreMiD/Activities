@@ -1,4 +1,5 @@
-import { ActivityType } from 'discord-api-types/v10';
+import { ActivityType } from 'premid'
+
 const presence = new Presence({
   clientId: '1004301145348526090',
 })
