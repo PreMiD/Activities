@@ -10,7 +10,7 @@
     "en": "A multi-purpose Discord Bot — Done Right. Fully customizable. Completely free."
   },
   "url": "sapph.xyz",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sapph[.]xyz",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sapph[.]xyz[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/apPbYWb.png",
   "thumbnail": "https://i.imgur.com/BIVbVuG.png",
