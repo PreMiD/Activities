@@ -1,3 +1,5 @@
+import { ActivityType } from 'premid'
+
 const presence = new Presence({ clientId: '1515251988646989854' })
 
 presence.on('UpdateData', () => {
@@ -19,6 +21,7 @@ presence.on('UpdateData', () => {
   const endTimestamp = endTimestampStr ? parseInt(endTimestampStr, 10) * 1000 : undefined
 
   presence.setActivity({
+    type: ActivityType.Watching,
     details,
     state,
     largeImageKey,
