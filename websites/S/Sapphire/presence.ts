@@ -531,7 +531,7 @@ else if (fullUrl.includes('/moderation/predefined-reasons')) {
     presenceData.state = 'Home'
   }
   else {
-    presenceData.details = 'general.browsing'
+    presenceData.details = 'Browsing'
     presenceData.state = 'Unknown page'
   }
 
