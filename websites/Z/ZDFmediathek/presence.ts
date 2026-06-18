@@ -104,7 +104,7 @@ function readOverlay(): VideoInfo | undefined {
       info.channel = token
   }
   // First token is the primary genre (skip subtitle/audio-description flags).
-  info.genre = tokens.find(t => !/^(UT|AD|F\d+|\d{4}|\d+\s*min)$/i.test(t) && !channelKey(t))
+  info.genre = tokens.find(t => !/^(?:UT|AD|F\d+|\d{4}|\d+\s*min)$/i.test(t) && !channelKey(t))
 
   return info
 }
@@ -188,7 +188,9 @@ presence.on('UpdateData', async () => {
     const fallbackTitle = info.title ?? ogTitle ?? document.title
 
     const hasMedia = !!video && !Number.isNaN(video.duration)
-    const live = !!video && !Number.isFinite(video.duration)
+    // Only treat as live once metadata has loaded, otherwise a NaN duration
+    // (still loading) would briefly flag a VOD as live.
+    const live = hasMedia && !Number.isFinite(video!.duration)
 
     presenceData.name = info.series ?? ogTitle ?? 'ZDFmediathek'
     presenceData.details = format(vidDetail || '%title%', info, fallbackTitle) || fallbackTitle
@@ -275,6 +277,7 @@ presence.on('UpdateData', async () => {
 
   // Privacy mode: only reveal that the user is on ZDFmediathek.
   if (privacy) {
+    presenceData.name = 'ZDFmediathek'
     presenceData.details = localized.browsing
     delete presenceData.state
     delete presenceData.smallImageKey
@@ -293,5 +296,5 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })
