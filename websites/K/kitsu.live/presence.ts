@@ -6,7 +6,7 @@ presence.on('UpdateData', () => {
   const el = document.getElementById('kitsu-presence-data')
 
   if (!el || !el.getAttribute('data-active')) {
-    presence.setActivity()
+    presence.clearActivity()
     return
   }
 
