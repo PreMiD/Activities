@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '1514205998523617280'
+  clientId: '1514205998523617280',
 })
 
 enum ActivityAssets {
