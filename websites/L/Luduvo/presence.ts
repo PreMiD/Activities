@@ -259,6 +259,9 @@ presence.on('UpdateData', async () => {
       else if (categoryName) {
         presenceData.state = `Category: ${categoryName}`
       }
+      else {
+        presenceData.state = 'Viewing a Category'
+      }
     }
     else if (paths[0] === 'tag') {
       const tagName = decodeURIComponent(paths[1] || '')
