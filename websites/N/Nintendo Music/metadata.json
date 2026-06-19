@@ -16,7 +16,7 @@
   },
   "url": "music.nintendo.com",
   "regExp": "^https?[:][/][/]music[.]nintendo[.]com[/]",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "logo": "https://i.imgur.com/thYBiff.png",
   "thumbnail": "https://i.imgur.com/iZwfPeX.png",
   "color": "#FC2C00",
@@ -39,6 +39,20 @@
       "icon": "fas fa-image",
       "value": true,
       "description": "Show the song artwork as the large image."
+    },
+    {
+      "id": "displayFormat",
+      "title": "Display Format",
+      "icon": "fas fa-paragraph",
+      "value": 0,
+      "values": ["Nintendo Music", "Song Name", "Soundtrack Name"]
+    },
+    {
+      "id": "marioKartTrackOrigin",
+      "title": "Display Racetrack Console Origin",
+      "icon": "fas fa-font",
+      "value": false,
+      "description": "For Mario Kart soundtracks, show which console a racetrack originates from if they don't already."
     }
   ]
 }
