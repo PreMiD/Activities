@@ -3,14 +3,14 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/apPbYWb.png'
+  Logo = 'https://i.imgur.com/apPbYWb.png',
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: ActivityAssets.Logo
+    largeImageKey: ActivityAssets.Logo,
   }
 
   const fullUrl = document.location.href
@@ -62,7 +62,7 @@ presence.on('UpdateData', async () => {
   }
   else if (fullUrl.includes('/auto-moderation/discord')) {
     presenceData.details = 'Viewing module'
-    presenceData.state = "Auto Moderation: Discord's built-in auto moderation"
+    presenceData.state = 'Auto Moderation: Discord’s built-in auto moderation'
   }
   else if (fullUrl.includes('/auto-moderation/advanced')) {
     presenceData.details = 'Viewing module'
@@ -92,7 +92,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing module'
     presenceData.state = 'Moderation: User reports'
   }
-else if (fullUrl.includes('/moderation/message-histories')) {
+  else if (fullUrl.includes('/moderation/message-histories')) {
     presenceData.details = 'Viewing module'
     presenceData.state = 'Moderation: Message Histories'
   }
@@ -112,7 +112,7 @@ else if (fullUrl.includes('/moderation/message-histories')) {
     presenceData.details = 'Viewing module'
     presenceData.state = 'Moderation: User notifications'
   }
-else if (fullUrl.includes('/moderation/predefined-reasons')) {
+  else if (fullUrl.includes('/moderation/predefined-reasons')) {
     presenceData.details = 'Viewing module'
     presenceData.state = 'Moderation: Predefined reasons'
   }
@@ -149,7 +149,7 @@ else if (fullUrl.includes('/moderation/predefined-reasons')) {
     presenceData.state = 'Logging: Settings'
   }
 
-// 2. DOCUMENTATION PATHS
+  // 2. DOCUMENTATION PATHS
   else if (fullUrl.includes('/#/overview')) {
     presenceData.details = 'Viewing documentation'
     presenceData.state = 'Overview'
@@ -215,7 +215,7 @@ else if (fullUrl.includes('/moderation/predefined-reasons')) {
     presenceData.state = 'Logging'
   }
 
-// 2.2. DOCUMENTATION: GUIDES
+  // 2.2. DOCUMENTATION: GUIDES
   else if (fullUrl.includes('/#/guides/guide-to-components')) {
     presenceData.details = 'Viewing documentation'
     presenceData.state = 'Guide: Components: Buttons & Menus'
@@ -341,7 +341,7 @@ else if (fullUrl.includes('/moderation/predefined-reasons')) {
     presenceData.state = 'Guides Overview'
   }
 
-// 2.3. DOCUMENTATION: FAQ
+  // 2.3. DOCUMENTATION: FAQ
   else if (fullUrl.includes('/#/faq/proof-verified-proof')) {
     presenceData.details = 'Viewing documentation'
     presenceData.state = 'FAQ: What is proof and verified proof?'
@@ -407,7 +407,7 @@ else if (fullUrl.includes('/moderation/predefined-reasons')) {
     presenceData.state = 'FAQ Overview'
   }
 
-// 2.4. DOCUMENTATION: TROUBLESHOOT
+  // 2.4. DOCUMENTATION: TROUBLESHOOT
   else if (fullUrl.includes('/#/troubleshoot/no-slash-commands')) {
     presenceData.details = 'Viewing documentation'
     presenceData.state = 'Troubleshoot: Slash commands not visible'
