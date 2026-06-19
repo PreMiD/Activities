@@ -524,7 +524,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Viewing page'
     presenceData.state = 'Custom Branding'
   }
-  
+
   // 5. HOME/ROOT FALLBACK
   else if (document.location.pathname === '/' || document.location.pathname.split('/').length === 2) {
     presenceData.details = 'Viewing page'
