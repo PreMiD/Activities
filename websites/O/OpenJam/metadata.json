@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "Chaitanyahoon",
+    "id": "161548359"
+  },
+  "service": "OpenJam",
+  "description": {
+    "de": "Gemeinsam in Echtzeit hören. OpenJam ist eine synchronisierte Musik-Hörparty-Plattform.",
+    "en": "Listen together in real-time. OpenJam is a synchronized music listening party platform.",
+    "es": "Escuchen juntos en tiempo real. OpenJam es una plataforma de fiestas de escucha musical sincronizadas.",
+    "fr": "Écoutez ensemble en temps réel. OpenJam est une plateforme de soirée d'écoute musicale synchronisée.",
+    "pt": "Ouçam juntos em tempo real. OpenJam é uma plataforma de festa de audição musical sincronizada."
+  },
+  "url": "openjam.fun",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*openjam[.]fun[/]",
+  "version": "1.0.0",
+  "logo": "https://files.catbox.moe/oz8aca.png",
+  "thumbnail": "https://files.catbox.moe/yjqyp3.png",
+  "color": "#6366f1",
+  "category": "music",
+  "tags": [
+    "music",
+    "spotify",
+    "youtube",
+    "listen-together",
+    "party",
+    "synchronized"
+  ],
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show Join Button",
+      "icon": "fas fa-link",
+      "value": true
+    },
+    {
+      "id": "timestamps",
+      "title": "Show Timestamps",
+      "icon": "fas fa-clock",
+      "value": true
+    }
+  ]
+}
