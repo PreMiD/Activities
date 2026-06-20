@@ -184,7 +184,7 @@ presence.on('UpdateData', async () => {
       }
     }
     else if (paths[0] === 'studio') {
-      const activeStudioTab = getText('button[class*="bg-accent"][class*="text-accent-foreground"] span')
+      const activeStudioTab = getText('button[class*="bg-accent"][class*="text-accent-foreground"] span') || getText('p.min-w-0.truncate.text-2xl.font-semibold')
       presenceData.state = activeStudioTab ? `Studio (${activeStudioTab})` : 'Studio'
     }
     else if (paths[0] === 'store') {
