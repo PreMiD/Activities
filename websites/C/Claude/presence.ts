@@ -42,7 +42,7 @@ presence.on('UpdateData', async () => {
   }
   const messageElements = Array.from(
     document.querySelectorAll(
-      'div[class*="font-user-message"],div[class*="font-claude-message"]',
+      'div[class*="font-user-message"],div[class*="font-claude-response"]',
     ),
   )
   const isTalking = messageElements
@@ -53,12 +53,11 @@ presence.on('UpdateData', async () => {
   let wordCount = 0
   for (const element of messageElements) {
     const text = element.textContent
-      ?.replace(/, |,\n|,|\. |\./g, ' ')
-      // eslint-disable-next-line regexp/no-dupe-disjunctions
-      ?.replace(/\d*|[/', ]/g, '')
+      ?.replace(/\n/g, ' ')
+      ?.trim()
     wordCount += Array.from(
       new Intl.Segmenter(franc(text), { granularity: 'word' }).segment(text!),
-    ).length
+    ).filter(segment => segment.isWordLike).length
   }
 
   if (pathname.split('/')[1] === 'chat') {
@@ -69,18 +68,17 @@ presence.on('UpdateData', async () => {
       )?.textContent
     }
     else {
-      presenceData.details = showTitle ? document.title : strings.talkingWithAI
+      presenceData.details = showTitle ? document.title.replace(' - Claude', '')?.trim() : strings.talkingWithAI
     }
     presenceData.state = isTalking
       ? strings.aiResponding
       : strings.conversationStats
           .replace(
             '{0}',
-            `${
-              messageElements.filter(e =>
-                e.classList.contains('font-user-message'),
-              ).length
-            }`,
+            `${Number(
+              document.querySelectorAll('div[class*="font-user-message"]')
+                .length,
+            )}`,
           )
           .replace('{1}', `${wordCount}`)
     presenceData.smallImageKey = isTalking ? ActivityAssets.Talking : null

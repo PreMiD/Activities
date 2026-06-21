@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "ReZeroTurkce",
+    "id": "852614422235971655"
+  },
+  "service": "Re:Zero Türkçe",
+  "description": {
+    "en": "Read Re:Zero in Turkish! We quickly translate anime, manga, and light novel chapters into Turkish. Join the adventure and start reading!",
+    "tr": "Re:Zero Türkçe Novel Oku! Anime, manga ve novel bölümlerini hızla Türkçeye çeviriyoruz. Sen de bu maceraya ortak olmak için hemen okumaya başla!"
+  },
+  "url": "www.rezeroturkce.com",
+  "regExp": "^https?[:][/][/]((www)[.])?rezeroturkce[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Re%20Zero%20T%C3%BCrk%C3%A7e/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Re%20Zero%20T%C3%BCrk%C3%A7e/assets/thumbnail.png",
+  "color": "#141414",
+  "category": "anime",
+  "tags": [
+    "re-zero",
+    "anime",
+    "manga",
+    "novel",
+    "turkish"
+  ]
+}
