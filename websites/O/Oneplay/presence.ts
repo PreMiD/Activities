@@ -10,12 +10,12 @@ const LOGO_URL = 'https://i.imgur.com/cUdfHvP.jpeg'
 
 presence.on('UpdateData', async () => {
   const [showTimestamp, showDetails] = await Promise.all([
-    presence.getSetting('showTimestamp') as Promise<boolean>,
-    presence.getSetting('showDetails') as Promise<boolean>,
+    presence.getSetting<boolean>('showTimestamp'),
+    presence.getSetting<boolean>('showDetails'),
   ])
   const currentTitle: string = document.title || ''
 
-  const playerData: any = {
+  const playerData: PresenceData = {
     largeImageKey: LOGO_URL,
     largeImageText: 'Oneplay',
     type: ActivityType.Watching,
