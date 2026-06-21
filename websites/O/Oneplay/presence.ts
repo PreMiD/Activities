@@ -2,7 +2,7 @@ import { ActivityType, getTimestamps } from 'premid'
 
 declare const presence: any
 
-const browsingTimestamp: number = Math.floor(Date.now() / 1000)
+let browsingTimestamp: number = Math.floor(Date.now() / 1000)
 let watchingTimestamp: number = Math.floor(Date.now() / 1000)
 let wasWatching: boolean = false
 
