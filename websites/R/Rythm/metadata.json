@@ -21,7 +21,7 @@
   },
   "url": "rythm.fm",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*rythm[.]fm[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/logo.gif",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/thumbnail.png",
   "color": "#147AFE",
@@ -41,7 +41,7 @@
     {
       "id": "hidePaused",
       "title": "Hide Paused",
-      "icon": "fa-regular fa-circle-pause",
+      "icon": "fa-solid fa-circle-pause",
       "value": false,
       "if": {
         "privacy": false
@@ -59,7 +59,7 @@
     {
       "id": "timesTamps",
       "title": "Hide Timestamps",
-      "icon": "fa-regular fa-hourglass",
+      "icon": "fa-solid fa-hourglass",
       "value": false,
       "if": {
         "privacy": false
