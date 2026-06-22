@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1173360524591906817",
+    "name": "y.qa31_"
+  },
+  "service": "Spicy AMLL Player",
+  "description": {
+    "en": "Spicy AMLL Player Web is an unofficial remake of the famous extension made for Spicetify, Spicy Lyrics for Apple Music Lyrics Similar Experience"
+  },
+  "url": ["spicyamll.online"],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*spicyamll[.]online([/].*)?$",
+  "version": "1.0.0",
+  "logo": "https://spicyamll.online/icon.png",
+  "thumbnail": "https://i.imgur.com/l5pP3g0.png",
+  "color": "#93254cff",
+  "category": "music",
+  "tags": [
+    "music",
+    "lyrics",
+    "amll",
+    "ttml",
+    "word-by-word-lyrics",
+    "genius",
+    "musixmatch",
+    "applemusic"
+  ]
+}
