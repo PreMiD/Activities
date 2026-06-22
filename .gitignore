@@ -2,6 +2,7 @@
 **/*.*js
 !cli/bin/**/*.*js
 !*.config.*js
+!.github/scripts/**/*.mjs
 websites/**/dist
 websites/**/tsconfig.json
 node_modules
