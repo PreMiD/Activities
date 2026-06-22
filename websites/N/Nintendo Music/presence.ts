@@ -13,8 +13,8 @@ const TrackOriginList: Record<string, Record<string, string>> = {
     'Airship Fortress': 'DS Airship Fortress',
     'DK Pass': 'DS DK Pass',
     'Sky-High Sundae': 'SW Sky-High Sundae',
-    "Wario's Galleon": "3DS Wario's Galleon",
-    "Wario's Shipyard": "3DS Wario's Shipyard",
+    'Wario\'s Galleon': '3DS Wario\'s Galleon',
+    'Wario\'s Shipyard': '3DS Wario\'s Shipyard',
     'Koopa Troopa Beach': 'SNES Koopa Troopa Beach',
     'Peach Beach': 'GCN Peach Beach',
     'Dino Dino Jungle': 'GCN Dino Dino Jungle',
@@ -28,8 +28,8 @@ const TrackOriginList: Record<string, Record<string, string>> = {
     'Airship Fortress (Intro)': 'DS Airship Fortress (Intro)',
     'DK Pass (Intro)': 'DS DK Pass (Intro)',
     'Sky-High Sundae (Intro)': 'SW Sky-High Sundae (Intro)',
-    "Wario's Galleon (Intro)": "3DS Wario's Galleon (Intro)",
-    "Wario's Shipyard (Intro)": "3DS Wario's Shipyard (Intro)",
+    'Wario\'s Galleon (Intro)': '3DS Wario\'s Galleon (Intro)',
+    'Wario\'s Shipyard (Intro)': '3DS Wario\'s Shipyard (Intro)',
     'Koopa Troopa Beach (Intro)': 'SNES Koopa Troopa Beach (Intro)',
     'Peach Beach (Intro)': 'GCN Peach Beach (Intro)',
     'Dino Dino Jungle (Intro)': 'GCN Dino Dino Jungle (Intro)',
@@ -56,7 +56,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('showTimestamps'),
     presence.getSetting<boolean>('showSongArt'),
     presence.getSetting<number>('displayFormat'),
-    presence.getSetting<boolean>('marioKartTrackOrigin')
+    presence.getSetting<boolean>('marioKartTrackOrigin'),
   ])
 
   const presenceData: PresenceData = {
@@ -96,7 +96,7 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (pathname.includes('/user-playlist')) {
-    const parts = title.replace(' - Nintendo Music', '').trim().split(/[/[・·]/)
+    const parts = title.replace(' - Nintendo Music', '').trim().split(/[・·]/)
     const songName = parts[0]?.trim() ?? 'Unknown'
 
     presenceData.details = songName
@@ -136,29 +136,29 @@ presence.on('UpdateData', async () => {
     delete presenceData.endTimestamp
   }
 
-  if (marioKartTrackOrigin) { 
-    const soundtrackName = presenceData.state;
-    const songName = presenceData.details;
+  if (marioKartTrackOrigin) {
+    const soundtrackName = presenceData.state
+    const songName = presenceData.details
     if (typeof soundtrackName === 'string' && typeof songName === 'string') {
-      const gameKey = soundtrackName as keyof typeof TrackOriginList;
-      const gameTrack = TrackOriginList[gameKey];
-      if (gameTrack && (songName in gameTrack)) {
+      const gameKey = soundtrackName as keyof typeof TrackOriginList
+      const gameTrack = TrackOriginList[gameKey]
+      if (gameTrack && songName in gameTrack) {
         const mappedTrackValue = (gameTrack as Record<string, string>)[songName]
-        presenceData.details = mappedTrackValue;
+        presenceData.details = mappedTrackValue
       }
-    } 
+    }
   }
 
-  switch(displayFormat) {
+  switch (displayFormat) {
     case 0:
       presenceData.statusDisplayType = StatusDisplayType.Details
-      break;
+      break
     case 1:
-      presenceData.statusDisplayType = StatusDisplayType.State;
-      break;
+      presenceData.statusDisplayType = StatusDisplayType.State
+      break
     case 2:
       presenceData.statusDisplayType = StatusDisplayType.Name
-      break;
+      break
   }
 
   if (presenceData.details) {
