@@ -45,7 +45,7 @@
       "title": "Display Format",
       "icon": "fas fa-paragraph",
       "value": 0,
-      "values": ["Nintendo Music", "Song Name", "Soundtrack Name"]
+      "values": ["Song Name", "Soundtrack Name", "Nintendo Music"]
     },
     {
       "id": "marioKartTrackOrigin",

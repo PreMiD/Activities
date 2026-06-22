@@ -151,13 +151,13 @@ presence.on('UpdateData', async () => {
 
   switch(displayFormat) {
     case 0:
-      presenceData.statusDisplayType = StatusDisplayType.Name
-      break;
-    case 1:
       presenceData.statusDisplayType = StatusDisplayType.Details
       break;
-    case 2:
+    case 1:
       presenceData.statusDisplayType = StatusDisplayType.State;
+      break;
+    case 2:
+      presenceData.statusDisplayType = StatusDisplayType.Name
       break;
   }
 
