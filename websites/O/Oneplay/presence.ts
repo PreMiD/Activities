@@ -1,6 +1,8 @@
 import { ActivityType, getTimestamps } from 'premid'
 
-declare const presence: any
+const presence = new Presence({
+  clientId: '1510631384161452142'
+})
 
 let browsingTimestamp: number = Math.floor(Date.now() / 1000)
 let watchingTimestamp: number = Math.floor(Date.now() / 1000)
@@ -10,8 +12,8 @@ const LOGO_URL = 'https://i.imgur.com/cUdfHvP.jpeg'
 
 presence.on('UpdateData', async () => {
   const [showTimestamp, showDetails] = await Promise.all([
-    presence.getSetting('showTimestamp') as Promise<boolean>,
-    presence.getSetting('showDetails') as Promise<boolean>,
+    presence.getSetting<boolean>('showTimestamp'),
+    presence.getSetting<boolean>('showDetails'),
   ])
   const currentTitle: string = document.title || ''
 
