@@ -1,5 +1,17 @@
 import { ActivityType, getTimestamps } from 'premid'
 
+declare const Presence: any
+
+interface PresenceData {
+  largeImageKey?: string
+  largeImageText?: string
+  type?: ActivityType
+  details?: string
+  state?: string
+  startTimestamp?: number
+  endTimestamp?: number
+}
+
 const presence = new Presence({
   clientId: '1510631384161452142',
 })
@@ -11,10 +23,8 @@ let wasWatching: boolean = false
 const LOGO_URL = 'https://i.imgur.com/cUdfHvP.jpeg'
 
 presence.on('UpdateData', async () => {
-  const [showTimestamp, showDetails] = await Promise.all([
-    presence.getSetting<boolean>('showTimestamp'),
-    presence.getSetting<boolean>('showDetails'),
-  ])
+  const showTimestamp = await presence.getSetting('showTimestamp') as boolean
+  const showDetails = await presence.getSetting('showDetails') as boolean
   const currentTitle: string = document.title || ''
 
   const playerData: PresenceData = {
@@ -47,10 +57,12 @@ presence.on('UpdateData', async () => {
       const isLiveStream = !!document.querySelector('[class*="live"], [class*="stream"], [class*="zive"]')
 
       if (video && !isLiveStream && Number.isFinite(video.duration)) {
-        [playerData.startTimestamp, playerData.endTimestamp] = getTimestamps(
+        const [start, end] = getTimestamps(
           Math.floor(video.currentTime),
           Math.floor(video.duration),
         )
+        playerData.startTimestamp = start
+        playerData.endTimestamp = end
 
         if (video.paused) {
           delete playerData.startTimestamp
