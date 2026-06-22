@@ -9,8 +9,8 @@
   "description": {
     "en": "Spicy AMLL Player Web is an unofficial remake of the famous extension made for Spicetify, Spicy Lyrics for Apple Music Lyrics Similar Experience"
   },
-  "url": ["spicyamll.online"],
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*spicyamll[.]online([/].*)?$",
+  "url": ["spicyamll.online", "spicy-amll-music-online.github.io/spicy-amll-player"],
+  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*spicyamll[.]online|spicy-amll-music-online[.]github[.]io[/]spicy-amll-player)([/].*)?$",
   "version": "1.0.0",
   "logo": "https://spicyamll.online/icon.png",
   "thumbnail": "https://i.imgur.com/l5pP3g0.png",
