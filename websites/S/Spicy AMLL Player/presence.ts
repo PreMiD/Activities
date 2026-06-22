@@ -176,7 +176,7 @@ presence.on('UpdateData', () => {
       data.buttons = [
         {
           label: 'Listen on Spicy Player',
-          url: `${location.origin}${location.pathname}#${songId}`,
+          url: `https://spicyamll.online/#${songId}`,
         },
         {
           label: 'Listen on Apple Music',
