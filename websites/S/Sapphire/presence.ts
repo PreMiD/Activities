@@ -9,7 +9,7 @@ enum ActivityAssets {
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 function getServerId(url: string): string | null {
-  const match = url.match(/\/(\d{17,19})(?:[\/?#]|$)/)
+  const match = url.match(/\/(\d{17,19})(?:[/?#]|$)/)
   return match ? (match[1] ?? null) : null
 }
 
