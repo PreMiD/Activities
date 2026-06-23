@@ -728,9 +728,10 @@ declare global {
      * }, userId)
      * @remarks
      * Added in extension 2.14. Older versions lack this method, so feature-detect
-     * before calling to avoid throwing on outdated extensions:
+     * with the bundled `supports` helper before calling:
      * ```ts
-     * if (typeof presence.execInPage === 'function') {
+     * import { supports } from 'premid'
+     * if (supports(presence, 'execInPage')) {
      *   const data = await presence.execInPage(() => window.appState)
      * }
      * ```
@@ -766,9 +767,10 @@ declare global {
      * })
      * @remarks
      * Added in extension 2.14. Older versions lack this method, so feature-detect
-     * before calling to avoid throwing on outdated extensions:
+     * with the bundled `supports` helper before calling:
      * ```ts
-     * if (typeof presence.onRequest === 'function') {
+     * import { supports } from 'premid'
+     * if (supports(presence, 'onRequest')) {
      *   presence.onRequest({ url: '/api/now-playing' }, (req) => { ... })
      * }
      * ```
@@ -909,8 +911,8 @@ declare global {
      * Run code in the iframe page's own realm and get its (serializable) return
      * value. See `Presence#execInPage` for the full contract.
      * @remarks
-     * Added in extension 2.14 — feature-detect with
-     * `typeof iframe.execInPage === 'function'` before calling so older
+     * Added in extension 2.14 — feature-detect with the bundled `supports`
+     * helper (`supports(iframe, 'execInPage')`) before calling so older
      * extensions don't throw.
      * @since 2.14
      */
