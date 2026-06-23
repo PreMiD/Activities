@@ -8,12 +8,47 @@ enum ActivityAssets {
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+function getServerId(url: string): string | null {
+  const match = url.match(/\/(\d{17,19})(?:\/|$|\?|#)/)
+  return match ? match[1] : null
+}
+
+function getServerInfo(): { name: string; icon: string } | null {
+    const iconEl = document.querySelector<HTMLImageElement>('.server img.icon');
+    const nameEl = document.querySelector<HTMLElement>('.server .server-name');
+
+    const icon = iconEl?.src || '';
+    const name = nameEl?.textContent?.trim() || '';
+
+    if (name || icon) {
+        return { name: name || 'Unknown Server', icon };
+    }
+
+    return null;
+}
+
 presence.on('UpdateData', async () => {
+  const rawUrl = document.location.href
+  const hostname = document.location.hostname
+  const isDashboard = hostname === 'dashboard.sapph.xyz'
+  const fullUrl = hostname === 'docs.sapph.xyz' ? rawUrl.replace('docs.sapph.xyz/', 'docs.sapph.xyz/#/') : rawUrl
+
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
   }
 
-  const fullUrl = document.location.href
+  const showServerInfo = await presence.getSetting<boolean>('showServerInfo')
+  const serverId = getServerId(rawUrl)
+
+  if (isDashboard && showServerInfo && serverId) {
+    const serverInfo = getServerInfo()
+    if (serverInfo) {
+      if (serverInfo.icon) {
+        presenceData.smallImageKey = serverInfo.icon
+      }
+      presenceData.smallImageText = serverInfo.name
+    }
+  }
 
   // 1. SPECIFIC SUB-PATHS
   if (fullUrl.includes('/reaction-roles/messages')) {
@@ -526,6 +561,16 @@ presence.on('UpdateData', async () => {
   }
 
   // 5. HOME/ROOT FALLBACK
+  else if (isDashboard) {
+    if (serverId) {
+      presenceData.details = 'Viewing dashboard'
+      presenceData.state = 'Server dashboard'
+    }
+    else {
+      presenceData.details = 'Viewing page'
+      presenceData.state = 'Dashboard'
+    }
+  }
   else if (document.location.pathname === '/' || document.location.pathname.split('/').length === 2) {
     presenceData.details = 'Viewing page'
     presenceData.state = 'Home'

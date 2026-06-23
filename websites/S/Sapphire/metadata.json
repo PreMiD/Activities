@@ -5,13 +5,23 @@
     "id": "960971439996035083",
     "name": "JuJuplayz"
   },
+  "contributors": [
+    {
+      "id": "299994785555546113",
+      "name": "TANK-49"
+    }
+  ],
   "service": "Sapphire",
   "description": {
     "en": "A multi-purpose Discord Bot — Done Right. Fully customizable. Completely free."
   },
-  "url": "sapph.xyz",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sapph[.]xyz[/]",
-  "version": "1.0.1",
+  "url": [
+    "sapph.xyz",
+    "dashboard.sapph.xyz",
+    "docs.sapph.xyz"
+  ],
+  "regExp": "^https?://([a-z0-9-]+\\.)*sapph\\.xyz",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sapphire/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sapphire/assets/thumbnail.png",
   "color": "#00a2ff",
@@ -19,5 +29,13 @@
   "tags": [
     "bot",
     "discord"
+  ],
+  "settings": [
+    {
+      "id": "showServerInfo",
+      "title": "Show Server Info",
+      "icon": "fas fa-server",
+      "value": true
+    }
   ]
 }
