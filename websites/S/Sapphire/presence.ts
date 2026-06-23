@@ -9,22 +9,22 @@ enum ActivityAssets {
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 function getServerId(url: string): string | null {
-  const match = url.match(/\/(\d{17,19})(?:\/|$|\?|#)/)
+  const match = url.match(/\/(\d{17,19})(?:[\/?#]|$)/)
   return match ? (match[1] ?? null) : null
 }
 
-function getServerInfo(): { name: string; icon: string } | null {
-    const iconEl = document.querySelector<HTMLImageElement>('.server img.icon');
-    const nameEl = document.querySelector<HTMLElement>('.server .server-name');
+function getServerInfo(): { name: string, icon: string } | null {
+  const iconEl = document.querySelector<HTMLImageElement>('.server img.icon')
+  const nameEl = document.querySelector<HTMLElement>('.server .server-name')
 
-    const icon = iconEl?.src || '';
-    const name = nameEl?.textContent?.trim() || '';
+  const icon = iconEl?.src || ''
+  const name = nameEl?.textContent?.trim() || ''
 
-    if (name || icon) {
-        return { name: name || 'Unknown Server', icon };
-    }
+  if (name || icon) {
+    return { name: name || 'Unknown Server', icon }
+  }
 
-    return null;
+  return null
 }
 
 presence.on('UpdateData', async () => {
