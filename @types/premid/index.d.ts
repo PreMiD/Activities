@@ -726,6 +726,14 @@ declare global {
      *   const s = window.spotifyPlayer.getCurrentState()
      *   return { id, title: s.track.name, paused: s.paused }
      * }, userId)
+     * @remarks
+     * Added in extension 2.14. Older versions lack this method, so feature-detect
+     * before calling to avoid throwing on outdated extensions:
+     * ```ts
+     * if (typeof presence.execInPage === 'function') {
+     *   const data = await presence.execInPage(() => window.appState)
+     * }
+     * ```
      * @since 2.14
      */
     execInPage<T = unknown>(
@@ -756,6 +764,14 @@ declare global {
      * presence.onRequest({ url: '/api/now-playing', method: 'GET' }, (req) => {
      *   const data = JSON.parse(req.responseBody ?? '{}')
      * })
+     * @remarks
+     * Added in extension 2.14. Older versions lack this method, so feature-detect
+     * before calling to avoid throwing on outdated extensions:
+     * ```ts
+     * if (typeof presence.onRequest === 'function') {
+     *   presence.onRequest({ url: '/api/now-playing' }, (req) => { ... })
+     * }
+     * ```
      * @since 2.14
      */
     onRequest(
@@ -892,6 +908,10 @@ declare global {
     /**
      * Run code in the iframe page's own realm and get its (serializable) return
      * value. See `Presence#execInPage` for the full contract.
+     * @remarks
+     * Added in extension 2.14 — feature-detect with
+     * `typeof iframe.execInPage === 'function'` before calling so older
+     * extensions don't throw.
      * @since 2.14
      */
     execInPage<T = unknown>(
