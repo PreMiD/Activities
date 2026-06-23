@@ -430,6 +430,56 @@ declare global {
   }
 
   /**
+   * Declarative, CSP-immune form of `Presence#execInPage` / `iFrame#execInPage`.
+   * Use instead of a closure when you only need to read a value or call a page
+   * function — it works even on pages whose CSP blocks `eval`.
+   * @since 2.14
+   */
+  interface ExecInPageSpec {
+    /** Dot-path to a value on `window` to read, e.g. `'player.track.name'`. */
+    get?: string
+    /** Dot-path to a page function to invoke, e.g. `'spotifyPlayer.getState'`. */
+    call?: string
+    /** Arguments passed to the `call` function (must be serializable). */
+    args?: unknown[]
+    /** Only keep these top-level keys of the result. */
+    pick?: string[]
+    /** Drop these top-level keys from the result. */
+    omit?: string[]
+  }
+
+  /**
+   * Filter for `Presence#onRequest`.
+   * @since 2.14
+   */
+  interface RequestFilter {
+    /** Match the request URL — substring (string) or pattern (RegExp). */
+    url?: string | RegExp
+    /** Match the HTTP method (case-insensitive). One or many. */
+    method?: string | string[]
+  }
+
+  /**
+   * Read-only snapshot of a captured request/response passed to an
+   * `Presence#onRequest` callback.
+   * @since 2.14
+   */
+  interface InterceptedRequest {
+    url: string
+    method: string
+    requestHeaders: Record<string, string>
+    requestBody: string | null
+    status: number
+    statusText: string
+    ok: boolean
+    responseHeaders: Record<string, string>
+    responseBody: string | null
+    /** URL of the frame the request originated from (page or iframe). */
+    frameUrl: string
+    timestamp: number
+  }
+
+  /**
    * Useful tools for developing presences
    * @link https://docs.premid.app/en/dev/presence/class
    */
@@ -663,6 +713,56 @@ declare global {
       ...variables: string[]
     ): Promise<T>
     /**
+     * Run code in the web page's own realm and get its (serializable) return value.
+     *
+     * Unlike `getPageVariable`, the function executes *inside the page*, so you
+     * can call the page's own functions and reshape the result — stripping
+     * non-serializable parts (streams, DOM nodes, circular refs) — before it is
+     * sent back. The return value must be JSON-serializable.
+     *
+     * The closure cannot reference activity-side variables; pass them as args.
+     * @example
+     * const track = await presence.execInPage((id) => {
+     *   const s = window.spotifyPlayer.getCurrentState()
+     *   return { id, title: s.track.name, paused: s.paused }
+     * }, userId)
+     * @since 2.14
+     */
+    execInPage<T = unknown>(
+      fn: (...args: any[]) => T | Promise<T>,
+      ...args: unknown[]
+    ): Promise<T>
+    /**
+     * Declarative, CSP-immune variant of `execInPage`. Reads a value (`get`) or
+     * calls a page function (`call`) and optionally strips fields — works even
+     * on pages whose CSP blocks `eval`.
+     * @example
+     * const paused = await presence.execInPage({ call: 'spotifyPlayer.isPaused' })
+     * @since 2.14
+     */
+    execInPage<T = unknown>(spec: ExecInPageSpec): Promise<T>
+    /**
+     * Read (never modify) requests the page makes via `fetch` or
+     * `XMLHttpRequest`, including requests made inside the activity's iframes.
+     * The callback receives a read-only snapshot of the request and its response.
+     *
+     * Interception runs from `document_start`; requests that complete before the
+     * activity registers a filter are replayed with request metadata only (no
+     * response body).
+     * @param filter Match by URL (substring or RegExp) and/or HTTP method.
+     * @param callback Invoked with each matching request.
+     * @returns Unsubscribe function.
+     * @example
+     * presence.onRequest({ url: '/api/now-playing', method: 'GET' }, (req) => {
+     *   const data = JSON.parse(req.responseBody ?? '{}')
+     * })
+     * @since 2.14
+     */
+    onRequest(
+      filter: RequestFilter,
+      callback: (request: InterceptedRequest) => void
+    ): () => void
+    /**
      * Sends data back to application
      * @param event Event
      */
@@ -789,6 +889,16 @@ declare global {
      * @since 2.0-BETA3
      */
     getUrl(): Promise<string>
+    /**
+     * Run code in the iframe page's own realm and get its (serializable) return
+     * value. See `Presence#execInPage` for the full contract.
+     * @since 2.14
+     */
+    execInPage<T = unknown>(
+      fn: (...args: any[]) => T | Promise<T>,
+      ...args: unknown[]
+    ): Promise<T>
+    execInPage<T = unknown>(spec: ExecInPageSpec): Promise<T>
     /**
      * Subscribe to events emitted by the extension
      * @param eventName
