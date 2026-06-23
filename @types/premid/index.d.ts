@@ -150,6 +150,18 @@ declare global {
      * @since 2.8.0
      */
     smallImageUrl?: string
+    /**
+     * Party info shown on Playing activities (e.g. "2 of 5").
+     *
+     * Only honored on `type: ActivityType.Playing`. `partyId` is optional —
+     * when omitted a stable fallback is generated.
+     * @since 2.14.0
+     */
+    party?: {
+      partyId?: string
+      partySize: number
+      maxPartySize: number
+    }
   }
 
   interface MediaPresenceData extends BasePresenceData {
