@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Encrypted",
@@ -9,6 +9,10 @@
     {
       "name": "Callum",
       "id": "506899274748133376"
+    },
+    {
+      "name": "Skully",
+      "id": "671037171611729920"
     }
   ],
   "service": "Google Docs",
@@ -22,14 +26,16 @@
     "zh-tw": "Google文件，是Google提供的網頁式辦公套件線上服務，包含文書處理（Google文件）、電子試算表（Google試算表）、簡報演示（Google簡報）和互動表單（Google表單）。用戶可線上免費建立和編輯檔案，同時與其他用戶共同協作。"
   },
   "url": "docs.google.com",
-  "regExp": "docs[.]google([.][a-z]+)+[/]",
-  "version": "1.4.37",
+  "regExp": "^https?[:][/][/]docs[.]google([.][a-z]+)+[/]",
+  "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/thumbnail.jpg",
   "color": "#3a404a",
   "category": "other",
   "tags": [
     "google",
+    "drawings",
+    "vids",
     "sheets",
     "slides",
     "forms",

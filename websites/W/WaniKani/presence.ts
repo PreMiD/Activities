@@ -122,17 +122,20 @@ presence.on('UpdateData', async () => {
         case '/':
         case '/dashboard':
         case '/login': {
-          const buttons = document.querySelector(
-            '.dashboard__lessons-and-reviews',
-          )?.children ?? []
-          if (buttons.length === 2) {
-            const lessonsText = document.querySelector<HTMLSpanElement>('.todays-lessons__count-text')!.textContent!
+          const lessons_widget = document.querySelector('.todays-lessons-widget')
+          const reviews_widget = document.querySelector('.reviews-widget')
+          if (!lessons_widget || !reviews_widget) {
+            presenceData.details = 'Browsing'
+            presenceData.state = 'Viewing Home Page'
+          }
+          else {
+            const lessonsText = document.querySelector<HTMLSpanElement>('.todays-lessons-widget__count-text')!.textContent!
             let lessons
             if (lessonsText.includes('Done'))
               lessons = 0
             else
               lessons = +lessonsText
-            const reviews = +document.querySelector<HTMLSpanElement>('.reviews-dashboard__count-text')!.textContent!
+            const reviews = +document.querySelector<HTMLSpanElement>('.reviews-widget__count-text')!.textContent!
             presenceData.details = 'Viewing Dashboard'
             presenceData.state = `${lessons} lessons | ${reviews} reviews`
             presenceData.smallImageText = document.querySelector<HTMLAnchorElement>(
@@ -176,10 +179,10 @@ presence.on('UpdateData', async () => {
             if (hideOnDone && lessons === 0 && reviews === 0)
               hideActivity = true
           }
-          else {
-            presenceData.details = 'Browsing'
-            presenceData.state = 'Viewing Home Page'
-          }
+          break
+        }
+        case '/dashboard-customization': {
+          presenceData.details = 'Customizing Dashboard'
           break
         }
         case '/subject-lessons/picker': {
@@ -221,7 +224,7 @@ presence.on('UpdateData', async () => {
           Object.assign(presenceData, getLessonPresence())
           break
         }
-        case pathname.match(/^\/(radicals|kanji|vocabulary)\/.+$/)?.input: {
+        case pathname.match(/^\/(?:radicals|kanji|vocabulary)\/.+$/)?.input: {
           const [, type] = pathname.split('/')
           let textDescription = document.querySelector<HTMLElement>(
             '.mnemonic-content',

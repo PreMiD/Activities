@@ -1,136 +1,140 @@
-import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '705139844883677224',
 })
+
 const strings = presence.getStrings({
   paused: 'general.paused',
   playing: 'general.playing',
 })
+
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/logo.png',
+}
+
 presence.on('UpdateData', async () => {
+  const { pathname } = document.location
+
+  const [usePresenceName, showCover] = await Promise.all([
+    presence.getSetting<boolean>('usePresenceName'),
+    presence.getSetting<boolean>('cover'),
+  ])
+
   const presenceData: PresenceData = {
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: browsingTimestamp,
     type: ActivityType.Watching,
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/logo.png',
   }
-  const usePresenceName = await presence.getSetting<boolean>('usePresenceName')
-  presenceData.startTimestamp = browsingTimestamp
-  const title = document.querySelector(
-    '.webPlayerSDKUiContainer > div > div > div > div:nth-child(2) > div > div:nth-child(4) > div > div:nth-child(2) > div:nth-child(2) > div > div > div > h1',
-  )?.textContent
-  || document.querySelector('.atvwebplayersdk-title-text')?.textContent
-  const title2 = document.querySelector('.av-detail-section > div > h1')?.textContent
-    || document.querySelector<HTMLImageElement>(
-      '.av-detail-section > div > h1 > div > img',
-    )?.alt
-  if (title || title2) {
-    let video = document.querySelector<HTMLVideoElement>(
-      '.scalingVideoContainer > div.scalingVideoContainerBottom > div > video',
-    ) || document.querySelector<HTMLVideoElement>('#dv-web-player video')
 
-    if (video === null || Number.isNaN(video.duration))
-      video = document.querySelector('video')
+  const body = document.querySelector('body')
+  const bodyStyle = window.getComputedStyle(body!)
 
-    if (video === null || Number.isNaN(video.duration))
-      video = document.querySelector('video:nth-child(2)')
+  const video = document.querySelector<HTMLVideoElement>('div[id^=dv-web-player] video[src]')
+    || document.querySelector<HTMLVideoElement>('#dv-web-player video')
+    || document.querySelector<HTMLVideoElement>('#dv-web-player .atvwebplayersdk-video-surface video')
+    || document.querySelector<HTMLVideoElement>('video')
 
-    const subtitle = document.querySelector<HTMLElement>(
-      '.webPlayerSDKUiContainer > div > div > div > div:nth-child(2) > div > div:nth-child(4) > div > div:nth-child(2) > div:nth-child(2) > div > div > div > h2',
-    )
-    || document.querySelector<HTMLElement>('.atvwebplayersdk-subtitle-text')
+  const title = document.querySelector('.atvwebplayersdk-player-container .fpqiyer .ffszj3z .f124tp54 h1')?.textContent || document.querySelector<HTMLImageElement>('.DVWebNode-detail-atf-wrapper picture img')?.alt || document.querySelector('.atvwebplayersdk-title-text')?.textContent || document.querySelector('h1[data-automation-id="title"]')?.textContent
 
-    if (video && title && !video.className.includes('tst')) {
-      presenceData.details = title
+  const title2 = document.querySelector('.DVWebNode-detail-atf-wrapper .BaLbyy h1')?.textContent || document.querySelector<HTMLImageElement>('.DVWebNode-detail-atf-wrapper picture img')?.alt || document.querySelector('.atvwebplayersdk-title-text')?.textContent || document.querySelector('h1[data-automation-id="title"]')?.textContent
 
-      if (usePresenceName)
-        presenceData.name = title
+  const bannerImg = document.querySelector<HTMLImageElement>('main div[data-automation-id="hero-background"] img')?.src
 
-      if (
-        subtitle
-        && subtitle.textContent
-        && subtitle.textContent.trim() !== title.trim()
-      ) {
-        presenceData.state = subtitle.textContent
-      }
+  const subtitle = document.querySelector<HTMLElement>('.atvwebplayersdk-episode-info') || document.querySelector<HTMLElement>('.atvwebplayersdk-subtitle-text')
 
-      if (video.paused) {
-        presenceData.smallImageKey = Assets.Pause
-        presenceData.smallImageText = (await strings).paused
-        delete presenceData.startTimestamp
-      }
-      else {
-        const [unformattedCurrentTime, unformattedDuration] = document
-          .querySelector('.atvwebplayersdk-timeindicator-text')
-          ?.textContent
-          ?.trim()
-          .split(' / ') ?? [];
-        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
-          timestampFromFormat(unformattedCurrentTime ?? ''),
-          timestampFromFormat(unformattedDuration ?? '')
-          + timestampFromFormat(unformattedCurrentTime ?? ''),
-        )
-        presenceData.smallImageKey = Assets.Play
-        presenceData.smallImageText = (await strings).playing
-      }
+  if (video && !video.className.includes('tst') && title && bodyStyle.overflow === 'hidden') {
+    const contentTitle = title
+    if (usePresenceName) {
+      presenceData.name = contentTitle
     }
-    else if (video && !video.className.includes('tst')) {
-      if (title2 !== '')
-        presenceData.details = title2
+    presenceData.details = contentTitle
 
-      if (usePresenceName)
-        presenceData.name = title2
+    if (subtitle && subtitle.textContent && subtitle.textContent.trim() !== contentTitle?.trim()) {
+      presenceData.state = subtitle.textContent
+    }
 
-      if (video.paused) {
-        presenceData.smallImageKey = Assets.Pause
-        presenceData.smallImageText = (await strings).paused
-        delete presenceData.startTimestamp
-      }
-      else {
-        const [unformattedCurrentTime, unformattedDuration] = document
-          .querySelector('.atvwebplayersdk-timeindicator-text')
-          ?.textContent
-          ?.trim()
-          .split(' / ') ?? [];
-        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
-          timestampFromFormat(unformattedCurrentTime ?? ''),
-          timestampFromFormat(unformattedDuration ?? '')
-          + timestampFromFormat(unformattedCurrentTime ?? ''),
-        )
-        presenceData.smallImageKey = Assets.Play
-        presenceData.smallImageText = (await strings).playing
-      }
+    if (bannerImg && showCover) {
+      presenceData.largeImageKey = bannerImg
     }
-    else if (title2) {
-      presenceData.details = 'Viewing:'
-      presenceData.state = title2
-    }
-    else if (document.location.pathname.includes('shop')) {
-      presenceData.details = 'Browsing the store...'
+
+    if (video.paused) {
+      presenceData.smallImageKey = Assets.Pause
+      presenceData.smallImageText = (await strings).paused
+      delete presenceData.startTimestamp
     }
     else {
-      presenceData.details = 'Browsing...'
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = (await strings).playing
     }
   }
-  else if (document.location.pathname.includes('/home/')) {
-    presenceData.details = 'Browsing...'
+  else if (video && !video.className.includes('tst') && title2 && bodyStyle.overflow === 'hidden') {
+    const contentTitle = title2
+
+    if (usePresenceName) {
+      presenceData.name = contentTitle
+    }
+    presenceData.details = contentTitle
+
+    if (subtitle && subtitle.textContent && subtitle.textContent.trim() !== contentTitle?.trim()) {
+      presenceData.state = subtitle.textContent
+    }
+
+    if (bannerImg && showCover) {
+      presenceData.largeImageKey = bannerImg
+    }
+
+    if (video.paused) {
+      presenceData.smallImageKey = Assets.Pause
+      presenceData.smallImageText = (await strings).paused
+      delete presenceData.startTimestamp
+    }
+    else {
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = (await strings).playing
+    }
   }
-  else if (document.location.pathname.includes('shop')) {
-    presenceData.details = 'Browsing the store...'
+  else if (pathname.includes('/storefront') || pathname === '/') {
+    presenceData.details = 'Viewing Home'
+    presenceData.state = 'Browsing...'
   }
-  else if (document.location.pathname.includes('/tv/')) {
-    presenceData.details = 'Browsing TV-Series'
+  else if (pathname.includes('/detail')) {
+    presenceData.details = 'Viewing page for:'
+    presenceData.state = title || title2 || 'Prime Video'
+
+    if (bannerImg && showCover) {
+      presenceData.largeImageKey = bannerImg
+    }
   }
-  else if (document.location.pathname.includes('/movie/')) {
-    presenceData.details = 'Browsing Movies'
+  else if (pathname.includes('/movie')) {
+    presenceData.details = 'Viewing Movies'
+    presenceData.state = 'Browsing...'
   }
-  else if (document.location.pathname.includes('/kids/')) {
-    presenceData.details = 'Browsing Movies for kids'
+  else if (pathname.includes('/tv')) {
+    presenceData.details = 'Viewing TV-Series'
+    presenceData.state = 'Browsing...'
   }
-  else if (
-    document.location.pathname.includes('/search/')
-    && document.querySelector('.av-refine-bar-summaries')
-  ) {
+  else if (pathname.includes('/sports')) {
+    presenceData.details = 'Viewing Sports'
+    presenceData.state = 'Browsing...'
+  }
+  else if (pathname.includes('/categories')) {
+    presenceData.details = 'Viewing Categories'
+    presenceData.state = 'Browsing...'
+  }
+  else if (pathname.includes('/kids/')) {
+    presenceData.details = 'Viewing Movies for kids'
+    presenceData.state = 'Browsing...'
+  }
+  else if (pathname.includes('/livetv')) {
+    presenceData.details = 'Viewing Live TV'
+    presenceData.state = 'Browsing...'
+  }
+  else if (pathname.includes('/search/') && document.querySelector('.av-refine-bar-summaries')) {
     presenceData.details = 'Searching for:';
     [presenceData.state] = document
       .querySelector('.av-refine-bar-summaries')
@@ -139,10 +143,13 @@ presence.on('UpdateData', async () => {
       ?.split(/[”"]/) ?? []
     presenceData.smallImageKey = Assets.Search
   }
-  else {
-    presenceData.details = 'Browsing a page'
+  else if (pathname.includes('/genre/')) {
+    presenceData.details = 'Viewing Genres'
+    presenceData.state = 'Browsing...'
   }
-  if (presenceData.details)
-    presence.setActivity(presenceData)
-  else presence.setActivity()
+  else if (pathname.includes('shop')) {
+    presenceData.details = 'Browsing the store...'
+  }
+
+  presence.setActivity(presenceData)
 })

@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '839150832036872213',
@@ -221,7 +221,7 @@ presence.on('UpdateData', async () => {
     if (urlpath.length === 2 || urlpath.length === 3) {
       presenceData.details = 'Home'
     }
-    else if (products.find(e => urlpath.includes(e))) {
+    else if (products.some(e => urlpath.includes(e))) {
       if (urlpath.includes('compare')) {
         presenceData.details = strings.comparing
         presenceData.state = document.title
@@ -242,7 +242,7 @@ presence.on('UpdateData', async () => {
         ]
       }
     }
-    else if (services.find(e => urlpath.includes(e))) {
+    else if (services.some(e => urlpath.includes(e))) {
       presenceData.details = strings.viewService
       presenceData.state = getPSName()
 
@@ -571,7 +571,7 @@ presence.on('UpdateData', async () => {
 
         presenceData.largeImageKey = ActivityAssets.AppleSupport
 
-        if (sProducts.find(e => urlpath.includes(e))) {
+        if (sProducts.some(e => urlpath.includes(e))) {
           presenceData.details = strings.support
           presenceData.state = document.querySelector('h1.pageTitle-heading')?.textContent
             || document.querySelector('h1#main-title')?.textContent
@@ -818,7 +818,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Apple Developer'
         presenceData.state = 'Home'
 
-        if (dPages.find(e => urlpath[1] === e)) {
+        if (dPages.includes(urlpath[1] ?? '')) {
           presenceData.state = document.querySelector(`a.ac-gn-link.ac-gn-link-${cpage}>span`)
             ?.textContent
             || document.querySelector('section.section-hero>h1.section-headline')
@@ -1084,7 +1084,7 @@ presence.on('UpdateData', async () => {
                 )?.textContent
 
                 if (vid) {
-                  [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(vid.currentTime, vid.duration)
+                  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(vid.currentTime, vid.duration)
 
                   if (!vid.paused) {
                     presenceData.smallImageKey = Assets.Play

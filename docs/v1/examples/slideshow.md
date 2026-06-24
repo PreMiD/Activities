@@ -205,13 +205,11 @@ In the `presence.ts` file, we:
 The example demonstrates three different approaches to managing slides based on the current page:
 
 1. **Gallery Page**: Creates a dynamic set of slides for each image
-
    - Clears all previous slides with `slideshow.deleteAllSlides()`
    - Creates a new slide for each image with unique IDs
    - Uses the spread operator (`...presenceData`) to maintain common properties
 
 2. **Profile Page**: Creates multiple slides showing different aspects of the profile
-
    - One slide for basic profile info
    - One slide for user level
    - One conditional slide for achievements (only if they exist)

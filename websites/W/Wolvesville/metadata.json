@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Vasilis",
@@ -56,7 +56,8 @@
     "voting.wolvesville.com",
     "app.wolvesville.com"
   ],
-  "version": "1.4.15",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wolvesville[.]com[/]",
+  "version": "1.5.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wolvesville/assets/thumbnail.png",
   "color": "#FF4181",
@@ -71,7 +72,7 @@
     {
       "id": "privacy",
       "title": "Privacy Mode",
-      "icon": "far fa-user-secret",
+      "icon": "fas fa-user-secret",
       "value": false
     },
     {
@@ -80,7 +81,7 @@
         "privacy": false
       },
       "title": "Hide Clan Tag",
-      "icon": "far fa-tag",
+      "icon": "fas fa-tag",
       "value": false
     },
     {
@@ -89,7 +90,7 @@
         "privacy": false
       },
       "title": "Hide Chat Recipient",
-      "icon": "far fa-comment-slash",
+      "icon": "fas fa-comment-slash",
       "value": false
     },
     {
@@ -98,7 +99,7 @@
         "privacy": false
       },
       "title": "Show Status",
-      "icon": "far fa-play-circle",
+      "icon": "fas fa-play-circle",
       "value": true
     },
     {
@@ -107,19 +108,19 @@
         "privacy": false
       },
       "title": "Hide Name When Invisible",
-      "icon": "far fa-ghost",
+      "icon": "fas fa-ghost",
       "value": false
     },
     {
       "id": "showTimestamp",
       "title": "Show Timestamp",
-      "icon": "far fa-stopwatch",
+      "icon": "fas fa-stopwatch",
       "value": true
     },
     {
       "id": "logo",
       "title": "Icon",
-      "icon": "far fa-images",
+      "icon": "fas fa-images",
       "value": 0,
       "values": [
         "Normal",

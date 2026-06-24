@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '972073369564483584',
@@ -120,12 +120,12 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = thumbnail
       presenceData.smallImageKey = playing ? Assets.Play : Assets.Pause
       if (playing) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-          presence.timestampFromFormat(
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+          timestampFromFormat(
             document.querySelector('.player-mobile-time-current-text')
               ?.textContent ?? '00:00',
           ),
-          presence.timestampFromFormat(
+          timestampFromFormat(
             document.querySelector('.player-mobile-time-total-text')
               ?.textContent ?? '00:00',
           ),

@@ -85,7 +85,7 @@ async function getEpisodeInfo(text: string) {
         bannerImg = ActivityAssets.Logo
       }
       else {
-        const fetchUrl = `https://witanime.world/anime/${encodeURIComponent(slugForFetch)}/`
+        const fetchUrl = `https://witanime.day/anime/${encodeURIComponent(slugForFetch)}/`
         const res = await fetch(fetchUrl, { credentials: 'include' })
         if (res.ok) {
           const html = await res.text()

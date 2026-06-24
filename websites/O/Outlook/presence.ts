@@ -30,9 +30,8 @@ presence.on('UpdateData', async () => {
   if (path.startsWith('/mail')) {
     if (
       document.querySelector<HTMLDivElement>(
-        '#ReadingPaneContainerId > div > div > div > div:nth-child(1) > div._3Ot6xv41uIO58lh-I36wdt > div:nth-child(1) > div > div._1LtJxmUY1w2weHRM-NvCf9 > div',
+        '#ReadingPaneContainerId .owaMailComposeEditorScrollContainer div[data-testid="ComposeSendButton"]',
       )
-      || path.includes('compose')
     ) {
       presenceData.details = strings.composingAnEmail
     }
@@ -40,7 +39,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.readingAnEmail
       if (await presence.getSetting<boolean>('title')) {
         presenceData.state = document.querySelector<HTMLSpanElement>(
-          '#ReadingPaneContainerId div._2bnn4NUZa-NanNIO4GItP0.allowTextSelection._3FNHkYLZYD6Y3-QNc7ZBo2 > span',
+          '#ReadingPaneContainerId #ConversationReadingPaneContainer div[role="heading"] span',
         )?.textContent
       }
     }

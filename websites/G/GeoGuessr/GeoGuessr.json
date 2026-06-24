@@ -3,6 +3,10 @@
     "description": "Shown below 'Duels' text (ex. Duels in the Master II Division)",
     "message": "in the {0} Division"
   },
+  "geoguessr.rating": {
+    "description": "Amount of rating the player has",
+    "message": "{0} Rating"
+  },
   "geoguessr.inMenu": {
     "description": "On menus / unsupported page",
     "message": "In menu"
@@ -22,6 +26,10 @@
   "geoguessr.inUnranked": {
     "description": "",
     "message": "in Unranked"
+  },
+  "geoguessr.unranked": {
+    "description": "",
+    "message": "Unranked"
   },
   "geoguessr.brRemaining": {
     "description": "Amount of players remaining in Battle Royale",
@@ -122,5 +130,17 @@
   "geoguessr.viewCommunity": {
     "description": "The /community page",
     "message": "Viewing community"
+  },
+  "geoguessr.spookyGuessr": {
+    "description": "Halloween 2025 gamemode",
+    "message": "SpookyGuessr"
+  },
+  "geoguessr.spookyGuessrDay": {
+    "description": "Halloween 2025 gamemode: Day number",
+    "message": "Day {0}"
+  },
+  "geoguessr.health": {
+    "description": "",
+    "message": "{0} health"
   }
 }

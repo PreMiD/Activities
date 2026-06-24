@@ -5,7 +5,7 @@ ytplrIframe.on('UpdateData', async () => {
     return
 
   ytplrIframe.send({
-    title: document.querySelector<HTMLAnchorElement>('div.ytp-title-text > a')
+    title: document.querySelector<HTMLAnchorElement>('a.ytmVideoInfoVideoTitle')
       ?.textContent,
     duration: videoElement.duration,
     currentTime: videoElement.currentTime,

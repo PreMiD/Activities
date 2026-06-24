@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -17,6 +17,10 @@
     {
       "name": "TsuKiZo",
       "id": "330333765891129346"
+    },
+    {
+      "name": "str1k3r",
+      "id": "689578653692198941"
     }
   ],
   "service": "Twitch",
@@ -50,7 +54,8 @@
     "devstatus.twitch.tv",
     "status.twitch.tv"
   ],
-  "version": "3.3.3",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*twitch[.]tv[/]",
+  "version": "3.5.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/thumbnail.png",
   "color": "#9146FF",
@@ -175,13 +180,15 @@
       "value": true
     },
     {
-      "id": "streamerTitle",
-      "if": {
-        "privacy": false
-      },
-      "title": "Show Streamer as Title",
-      "icon": "fas fa-user-large",
-      "value": true
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 2,
+      "values": [
+        "Activity Name",
+        "Details",
+        "State"
+      ]
     }
   ]
 }

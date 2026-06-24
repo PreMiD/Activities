@@ -1,64 +1,61 @@
-import { Assets } from 'premid'
-
-const presence = new Presence({
-  clientId: '1234098856376012860',
-})
-const pathArr = document.location.pathname.split('/')
-const browsingTimestamp = Math.floor(Date.now() / 1000)
-const pages: Record<string, PresenceData> = {
-  'liste-dramas': {
-    details: 'Visite la page :',
-    state: 'Listes de dramas',
-  },
-  'nouveaux-ajouts': {
-    details: 'Visite la page :',
-    state: 'Nouveaux dramas',
-  },
-}
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 let video = {
   duration: 0,
   currentTime: 0,
   paused: true,
 }
-let currentLang: string
-let strings: { [key: string]: string }
+
+const presence = new Presence({
+  clientId: '1234098856376012860',
+})
+
+const pathArr = document.location.pathname.split('/')
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+const pages: Record<string, PresenceData> = {
+  'liste-dramas': {
+    state: 'Listes de dramas',
+  },
+  'nouveaux-ajouts': {
+    state: 'Nouveaux dramas',
+  },
+}
 
 presence.on(
   'iFrameData',
-  (inc: unknown) => {
-    const data = inc as { duration: number, currentTime: number, paused: boolean }
+  (data: { duration: number, currentTime: number, paused: boolean }) => {
     if (data?.duration)
       video = data
   },
 )
 
 presence.on('UpdateData', async () => {
+  const strings = await presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    home: 'general.viewHome',
+    viewEpisode: 'general.buttonViewEpisode',
+    viewPage: 'general.viewPage',
+    browsing: 'general.browsing',
+    searchFor: 'general.searchFor',
+  })
+  const [privacyMode, showTimestamps, showButtons] = await Promise.all(
+    [
+      presence.getSetting<boolean>('privacy'),
+      presence.getSetting<boolean>('timestamps'),
+      presence.getSetting<boolean>('buttons'),
+    ],
+  )
+
   let presenceData: PresenceData = {
-    details: 'Page d\'accueil',
+    details: strings.home,
+    type: ActivityType.Watching,
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/V/Voirdrama/assets/logo.png',
     startTimestamp: browsingTimestamp,
   }
-  const newLang = await presence.getSetting<string>('lang').catch(() => 'en')
-  if (newLang !== currentLang) {
-    currentLang = newLang
-    strings = await presence.getStrings(
-      {
-        browsing: 'general.browsing',
-        watchingMovie: 'general.watchingMovie',
-        watchingSeries: 'general.watchingSeries',
-        buttonViewMovie: 'general.buttonViewMovie',
-        buttonViewSeries: 'general.buttonViewSeries',
-        buttonViewPage: 'general.buttonViewPage',
-        viewPage: 'general.viewPage',
-        playing: 'general.playing',
-        searching: 'general.search',
-        searchFor: 'general.searchFor',
-        play: 'general.playing',
-        pause: 'general.paused',
-      },
-      newLang,
-    )
+
+  if (privacyMode) {
+    presenceData.details = strings.browsing
   }
   switch (pathArr[1]) {
     case 'drama': {
@@ -67,12 +64,16 @@ presence.on('UpdateData', async () => {
       presenceData.state = document.querySelector(
         'div.post-title > h1',
       )?.textContent
+      if (privacyMode) {
+        delete presenceData.state
+        presenceData.details = strings.browsing
+      }
       if (
         !Number.isNaN(video.duration)
         && title
         && !!document.querySelector('li.active')
       ) {
-        const [startTimestamp, endTimestamp] = presence.getTimestamps(
+        const [startTimestamp, endTimestamp] = getTimestamps(
           video.currentTime,
           video.duration,
         )
@@ -93,7 +94,7 @@ presence.on('UpdateData', async () => {
           : strings.play
         presenceData.buttons = [
           {
-            label: 'Regarder l\'épisode',
+            label: strings.viewEpisode,
             url: document.location.href,
           },
           {
@@ -108,27 +109,43 @@ presence.on('UpdateData', async () => {
       }
       break
     }
-    case 'anime-genre':
-      presenceData.details = 'Visite la page :'
+    case 'drama-genre':
+      presenceData.details = strings.viewPage
       presenceData.state = `Listes drama du genre "${
         document.querySelector('h1')?.textContent
       }"`
+      if (privacyMode) {
+        delete presenceData.state
+        presenceData.details = strings.browsing
+      }
       break
     default:
       if (document.location.search.startsWith('?s')) {
-        presenceData.details = 'Recherche un drama :'
+        presenceData.details = strings.searchFor
         presenceData.state = new URLSearchParams(document.location.search).get(
           's',
         )
         presenceData.smallImageKey = Assets.Search
       }
       else if (Object.keys(pages).includes(pathArr[1]!)) {
-        presenceData = { ...presenceData, ...pages[pathArr[1]!] }
+        presenceData.details = strings.viewPage
+      }
+      presenceData = { ...presenceData, ...pages[pathArr[1]!] } as PresenceData
+      if (privacyMode) {
+        delete presenceData.state
+        delete presenceData.smallImageKey
+        presenceData.details = strings.browsing
       }
       break
   }
 
+  if (!showButtons || privacyMode)
+    delete presenceData.buttons
+  if (!showTimestamps) {
+    delete presenceData.startTimestamp
+    delete presenceData.endTimestamp
+  }
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

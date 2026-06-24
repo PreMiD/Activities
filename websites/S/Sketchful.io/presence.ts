@@ -56,7 +56,7 @@ presence.on('UpdateData', async () => {
       .querySelector('.gameDrawing')
       ?.closest('li')
 
-    presenceData.type = ActivityType.Competing
+    presenceData.type = ActivityType.Playing
     presenceData.state = `Round ${gameRound?.textContent} | ${myCharacter?.querySelector('.gameAvatarRank')?.textContent} with ${myCharacter?.querySelector('.gameAvatarScore')?.textContent}`
     if (gameTimeLeft > 0) {
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(0, gameTimeLeft)

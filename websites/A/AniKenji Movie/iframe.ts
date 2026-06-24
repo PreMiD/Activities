@@ -4,6 +4,12 @@ iframe.on('UpdateData', async () => {
   // Tìm kiếm thẻ video theo nhiều selector khác nhau
   // Danh sách selector cho các player phổ biến
   const videoSelectors = [
+    '.VideoPlayer',
+    '.Video iframe',
+    '.Video embed',
+    '.Video video',
+    '.Video object',
+    '.Video',
     '#dogevideo_html5_api',
     '#video-player',
     '#player_container > div.jw-wrapper.jw-reset > div.jw-media.jw-reset > video',
@@ -17,10 +23,10 @@ iframe.on('UpdateData', async () => {
     '#mgvideo_html5_api',
     '#player > div.jw-media.jw-reset > video',
     '#vstr > div.jw-wrapper.jw-reset > div.jw-media.jw-reset > video',
-    'player-style-2',
-    'streaming-sv',
-    'embed',
-    'm3u8',
+    '.player-style-2',
+    '.streaming-sv',
+    '.embed',
+    '.m3u8',
     '.jw-video', // JW Player general class
     '#jwplayer > div.jw-wrapper > div.jw-media > video',
     '.jw-video.jw-reset',
@@ -35,7 +41,6 @@ iframe.on('UpdateData', async () => {
     'iframe.vimeo iframe video',
 
     // Youtube Stream
-
     '.video-stream', // Youtube Embed
 
     // Selector Vimeo bổ sung

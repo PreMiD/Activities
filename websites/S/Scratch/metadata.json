@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Callum",
@@ -11,8 +11,8 @@
     "nl": "Scratch is een visuele programmeertaal op basis van blokken en een online gemeenschap die vooral op kinderen is gericht. Gebruikers van de site kunnen online projecten creëren met behulp van een blokachtige interface. De dienst is ontwikkeld door het MIT Media Lab, is vertaald in meer dan 70 talen, en wordt gebruikt in de meeste delen van de wereld."
   },
   "url": "scratch.mit.edu",
-  "regExp": "([a-z0-9-]+[.])*(scratch|scratchfoundation|scratch-wiki|donationpay|scratched[.]gse[.]harvard|scratchjr)[.](mit[.]edu|org|info|edu)[/]",
-  "version": "1.3.13",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(scratch|scratchfoundation|scratch-wiki|donationpay|scratched[.]gse[.]harvard|scratchjr)[.](mit[.]edu|org|info|edu)[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Scratch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Scratch/assets/thumbnail.png",
   "color": "#fc8c03",

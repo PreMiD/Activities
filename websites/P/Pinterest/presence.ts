@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '629428243061145640',
@@ -17,6 +17,7 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
   const { pathname, hostname, href } = document.location
+  const pathList = pathname.split('/').filter(Boolean)
   const buttons = await presence.getSetting<boolean>('buttons')
   const ideasHubPage = document.querySelector('[data-test-id="ideas-hub-page-header"]')
     || document.querySelector('[data-test-id="control-ideas-redesign-header"]')
@@ -45,12 +46,12 @@ presence.on('UpdateData', async () => {
       break
     }
     case !!document.querySelector(
-      '[data-layout-shift-boundary-id="ProfilePageContainer"]',
+      '[data-test-id="profile-name"]',
     ): {
       presenceData.details = 'Viewing profile of'
-      presenceData.state = document.querySelector(
+      presenceData.state = `${document.querySelector(
         '[data-test-id="profile-name"]',
-      )?.textContent
+      )?.textContent} (@${pathList[0]})`
       presenceData.buttons = [{ label: 'View Profile', url: href }]
       break
     }
@@ -70,7 +71,7 @@ presence.on('UpdateData', async () => {
       if (video && !Number.isNaN(video.duration)) {
         delete presenceData.startTimestamp
         if (!video.paused) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
         }
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused ? 'Paused' : 'Playing back'
@@ -126,12 +127,27 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Browsing through videos'
       break
     }
+    case pathname.startsWith('/today'): {
+      presenceData.details = 'Browsing today ideas'
+      if (pathList.length > 1)
+        presenceData.state = document.querySelector('div h1')?.textContent?.trim()
+      break
+    }
+    case pathname.startsWith('/idea-pin-builder'):
+    case pathname.startsWith('/pin-creation-tool'): {
+      presenceData.details = 'Creating a pin'
+      break
+    }
+    case pathname.startsWith('/collage-creation-tool'): {
+      presenceData.details = 'Creating a collage'
+      break
+    }
     case pathname === '/': {
       presenceData.details = 'Viewing the homepage'
       break
     }
     default: {
-      presenceData.details = 'Viewing an unknown page'
+      presenceData.details = 'Browsing...'
     }
   }
 

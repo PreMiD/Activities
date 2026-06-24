@@ -1,26 +1,30 @@
-import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, StatusDisplayType, timestampFromFormat } from 'premid'
 
 //* I think this is a browser bug because the custom element does not have any properties when accessing it directly...
 
 let imageId: string | undefined
+let title: string | undefined
+let subtitle: string | undefined
 window.addEventListener('message', (e) => {
-  if (e.data.type === 'pmd-receive-image-id')
-    ({ imageId } = e.data as { imageId?: string })
+  if (e.data.type === 'pmd-receive-data')
+    ({ imageId, title, subtitle } = e.data as { imageId?: string, title?: string, subtitle?: string })
 })
 
 const script = document.createElement('script')
 script.textContent = `
 setInterval(() => {
-const images = document.querySelector("disney-web-player")?.mediaPlayer?.mediaPlaybackCriteria?.metadata?.images_experience?.standard?.tile
-ratios = Object.keys(images),
-goal = 100;
+const metadata = document.querySelector("disney-web-player")?.mediaPlayer?.mediaPlaybackCriteria?.metadata;
+const images = metadata?.images_experience?.standard?.tile;
+if (!images) return;
+const ratios = Object.keys(images);
+const goal = 100;
 
 const closest = ratios.reduce(function(prev, curr) {
 return (Math.abs((100 / curr) - goal) < Math.abs((100 / prev) - goal) ? curr : prev);
 });
 
-window.postMessage({ type: "pmd-receive-image-id", imageId: images?.[closest]?.imageId }, "*");
-}, 100);
+window.postMessage({ type: "pmd-receive-data", imageId: images?.[closest]?.imageId, title: metadata?.title?.text, subtitle: metadata?.subtitle?.text }, "*");
+}, 1000);
 `
 document.head.appendChild(script)
 
@@ -64,7 +68,7 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = 'https://cdn.rcd.gg/PreMiD/websites/D/Disney%2B/assets/logo.png'
       switch (true) {
         case pathname.includes('play'): {
-          const video = document.querySelector<HTMLVideoElement>('video#hivePlayer')
+          const video = document.querySelector<HTMLVideoElement>('video[id^="hivePlayer"]')
 
           //* Wait for elements to load to prevent setactivity spam
           if (!video || !imageId)
@@ -74,21 +78,24 @@ presence.on('UpdateData', async () => {
           if (!privacy) {
             if (presenceData.startTimestamp)
               delete presenceData.startTimestamp
+
+            presenceData.details = title
+
+            presenceData.state = subtitle
+              ?.replace(/S\d+:E\d+ /, '')
+
             usePresenceName
-              ? presenceData.name = document.querySelector(
-                '.title-field.body-copy',
-              )?.textContent || 'Disney+'
-              : presenceData.details = document.querySelector(
-                '.title-field.body-copy',
-              )?.textContent
+              ? presenceData.statusDisplayType = StatusDisplayType.Details
+              : presenceData.statusDisplayType = StatusDisplayType.Name
 
             const { paused } = video
 
             if (!paused) {
-              const sliderEl = document.querySelector('progress-bar')?.shadowRoot?.querySelector('.progress-bar__thumb')
+              const allTime = document.querySelector('#app_body_content disney-web-player-ui progress-bar')?.shadowRoot?.querySelector('div[role="slider"]')?.getAttribute('aria-valuetext')?.split('of')[1]?.trim()
+              const remainingTime = document.querySelector('#app_body_content disney-web-player-ui time-remaining-indicator')?.shadowRoot?.querySelector('.time-remaining-indicator')?.textContent?.trim()
               const timestamps = getTimestamps(
-                Number.parseInt(sliderEl?.getAttribute('aria-valuenow') ?? '0'),
-                Number.parseInt(sliderEl?.getAttribute('aria-valuemax') ?? '0'),
+                Number(timestampFromFormat(allTime ?? '') - timestampFromFormat(remainingTime ?? '')) ?? '00:00',
+                timestampFromFormat(allTime ?? '00:00'),
               )
               presenceData.startTimestamp = timestamps[0]
               presenceData.endTimestamp = timestamps[1]
@@ -98,25 +105,10 @@ presence.on('UpdateData', async () => {
               presenceData.smallImageText = strings.pause
             }
 
-            const parts = document
-              .querySelector('.subtitle-field')
-              ?.textContent
+            const parts = subtitle
               ?.match(/S(\d+):E(\d+) /)
             if (parts && parts.length > 2)
               presenceData.largeImageText = `Season ${parts[1]}, Episode ${parts[2]}`
-
-            usePresenceName
-              ? presenceData.details = document
-                .querySelector('.subtitle-field')
-                ?.textContent
-                ?.replace(/S\d+:E\d+ /, '')
-                || document.querySelector(
-                  '.title-field.body-copy',
-                )?.textContent
-              : presenceData.state = document
-                .querySelector('.subtitle-field')
-                ?.textContent
-                ?.replace(/S\d+:E\d+ /, '')
 
             presenceData.buttons = [
               {
@@ -187,7 +179,6 @@ presence.on('UpdateData', async () => {
           presenceData.details = privacy
             ? strings.browsing
             : 'Browsing their watchlist'
-
           break
         }
         case pathname.includes('series'): {
@@ -266,8 +257,11 @@ presence.on('UpdateData', async () => {
             : strings.watchingMovie
         }
         else {
-          usePresenceName ? presenceData.name = title || 'Disney+' : presenceData.details = title
-          usePresenceName ? presenceData.details = subtitle || 'Movie' : presenceData.state = subtitle || 'Movie'
+          presenceData.details = title
+          presenceData.state = subtitle || 'Movie'
+          usePresenceName
+            ? presenceData.statusDisplayType = StatusDisplayType.Details
+            : presenceData.statusDisplayType = StatusDisplayType.Name
         }
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused

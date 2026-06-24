@@ -55,10 +55,10 @@ presence.on('UpdateData', async () => {
     const [, path] = document.location.pathname.match(
       /^\/([a-z.]+)/i,
     ) ?? []
-    if (path && Object.prototype.hasOwnProperty.call(URLMap, path)) {
+    if (path && Object.hasOwn(URLMap, path)) {
       const [details, state] = URLMap[path]!
-      presenceData.details = details instanceof Function ? details() : details
-      presenceData.state = state instanceof Function ? state() : state
+      presenceData.details = typeof details === 'function' ? details() : details
+      presenceData.state = typeof state === 'function' ? state() : state
     }
     else if (path?.endsWith('.jsp')) {
       presenceData.details = 'Viewing page'

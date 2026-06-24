@@ -1,6 +1,6 @@
+import type { ActivityMetadata } from './ActivityCompiler.js'
 import type { CdnAsset } from './AssetsManager.js'
-import { Buffer } from 'node:buffer'
-import { ReadStream } from 'node:fs'
+import { Blob, Buffer } from 'node:buffer'
 import { Readable } from 'node:stream'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { AssetsManager, AssetType, MimeType } from './AssetsManager.js'
@@ -19,15 +19,12 @@ const mocks = vi.hoisted(() => ({
     },
   ),
   sharp: vi.fn(),
-  formData: vi.fn().mockImplementation(() => {
-    const appendSpy = vi.fn()
-    return {
-      append: appendSpy,
-      getHeaders: vi.fn().mockReturnValue({ 'content-type': 'multipart/form-data' }),
-      getBuffer: vi.fn().mockReturnValue(Buffer.from('mock-buffer')),
-      //* Track the last appended values for assertions
-      _lastAppended: () => appendSpy.mock.calls[appendSpy.mock.calls.length - 1],
-    }
+
+  formData: vi.fn(class {
+    appendSpy = vi.fn()
+    append = this.appendSpy
+    //* Track the last appended values for assertions
+    _lastAppended = () => this.appendSpy.mock.calls[this.appendSpy.mock.calls.length - 1]
   }),
 }))
 
@@ -49,14 +46,9 @@ vi.mock('node:fs/promises', () => ({
   writeFile: mocks.writeFile,
 }))
 
-vi.mock('form-data', () => {
-  return {
-    __esModule: true,
-    default: mocks.formData,
-  }
-})
+vi.stubGlobal('FormData', mocks.formData)
 
-const mockActivity = {
+const mockActivity: ActivityMetadata = {
   service: 'TestService',
   apiVersion: 1,
   version: '1.0.0',
@@ -65,6 +57,9 @@ const mockActivity = {
   description: {
     en: 'Test description',
   },
+  tags: ['test', 'activity'],
+  url: '',
+  regExp: '',
 }
 
 describe('assetsManager', () => {
@@ -470,14 +465,21 @@ describe('assetsManager', () => {
       const formInstances = mocks.formData.mock.results
       expect(formInstances[0].value._lastAppended()).toEqual([
         'file',
-        expect.any(ReadStream),
-        { contentType: MimeType.PNG },
+        expect.any(Blob),
+        expect.any(String),
+      ])
+      expect(formInstances[0].value._lastAppended()[1].type).toEqual(MimeType.PNG)
+      expect(formInstances[0].value._lastAppended()).toEqual([
+        'file',
+        expect.any(Blob),
+        expect.any(String),
       ])
       expect(formInstances[1].value._lastAppended()).toEqual([
         'file',
-        expect.any(ReadStream),
-        { contentType: MimeType.JPG },
+        expect.any(Blob),
+        expect.any(String),
       ])
+      expect(formInstances[1].value._lastAppended()[1].type).toEqual(MimeType.JPG)
 
       //* Verify file content updates
       expect(mocks.writeFile).toHaveBeenCalledWith(

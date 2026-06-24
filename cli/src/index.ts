@@ -4,6 +4,7 @@ import process from 'node:process'
 import { cac } from 'cac'
 import { build } from './commands/build.js'
 import { bump } from './commands/bump.js'
+import { checkDns } from './commands/checkDns.js'
 import { newActivity } from './commands/new.js'
 import { release } from './commands/release.js'
 import { updateAssets } from './commands/updateAssets.js'
@@ -46,6 +47,13 @@ cli
   .option('--all', 'Bump all activities (Usage: bump "" [version] --all)')
   .option('--changed', 'Bump only changed activities (Usage: bump "" [version] --changed)')
   .action(bump)
+
+cli
+  .command('check-dns [activity]', 'Check DNS records for activity URLs')
+  .option('--all', 'Check all activities')
+  .option('--changed', 'Check only changed activities')
+  .option('--fix', 'Remove invalid URLs and activities')
+  .action(checkDns)
 
 cli
   .command('update-assets', 'Update assets for all activities in CI')

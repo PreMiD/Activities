@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '640561280800915456',
@@ -92,7 +92,7 @@ presence.on('UpdateData', async () => {
       min2 = min2 * 60
       time2 = min2 + sec2
 
-      const [startTimestamp, endTimestamp] = presence.getTimestamps(
+      const [startTimestamp, endTimestamp] = getTimestamps(
         time,
         time2,
       );
@@ -190,7 +190,7 @@ presence.on('UpdateData', async () => {
     min2 = min2 * 60
     time2 = min2 + sec2;
 
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(Math.floor(time), Math.floor(time2))
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(time), Math.floor(time2))
     presenceData.smallImageKey = Assets.Play
     presenceData.smallImageText = 'Playing'
     if (cover) {
@@ -267,7 +267,7 @@ presence.on('UpdateData', async () => {
     min2 = min2 * 60
     time2 = min2 + sec2;
 
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(Math.floor(time), Math.floor(time2))
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(time), Math.floor(time2))
     presenceData.smallImageKey = Assets.Play
     presenceData.smallImageText = 'Playing'
     if (cover) {

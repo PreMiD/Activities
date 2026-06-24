@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "756258832526868541",
@@ -10,7 +10,8 @@
     "en": "Codeberg is a non-profit, community-led organization that aims to help free and open source projects prosper by giving them a safe and friendly home."
   },
   "url": "codeberg.org",
-  "version": "1.0.6",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*codeberg[.]org[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Codeberg/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Codeberg/assets/thumbnail.png",
   "color": "#2185D0",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "1180088441459978261",
@@ -9,10 +9,12 @@
   "service": "Claude",
   "description": {
     "en": "Claude is a family of large language models developed by Anthropic. The first model was released in March 2023.\n\nThe Claude 3 family, released in March 2024, consists of three models: Haiku optimized for speed, Sonnet balancing capabilities and performance, and Opus designed for complex reasoning tasks. These models can process both text and images, with Claude 3 Opus demonstrating enhanced capabilities in areas like mathematics, programming, and logical reasoning compared to previous versions.",
+    "fr": "Claude est une famille de grands modèles de langage développée par Anthropic. Le premier modèle a été publié en mars 2023.\n\nLa famille Claude 3, publiée en mars 2024, se compose de trois modèles : Haiku optimisé pour la vitesse, Sonnet équilibrant capacités et performances, et Opus conçu pour les tâches de raisonnement complexes. Ces modèles peuvent traiter à la fois du texte et des images, avec Claude 3 Opus démontrant des capacités améliorées dans des domaines tels que les mathématiques, la programmation et le raisonnement logique par rapport aux versions précédentes.",
     "ja": "Claude（クロード）とは、Anthropic社が開発した大規模言語モデルを用いた対話型生成AIである。2023年3月14日に一般公開され、以降複数のバージョンがリリースされている。\n\n2024年3月に公開されたClaude 3 OpusはメンサのIQテストでIQスコア101を記録した。「フレンドリーで熱心な同僚」をコンセプトの一つとしている。"
   },
   "url": "claude.ai",
-  "version": "1.0.5",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*claude[.]ai[/]",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Claude/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Claude/assets/thumbnail.jpeg",
   "color": "#DA7756",

@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -66,9 +66,9 @@ presence.on('UpdateData', async () => {
       const duration = document.querySelector('#scrubberDuration')?.textContent
 
       if (elapsed !== '00:00' || duration !== '') {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-          presence.timestampFromFormat(elapsed ?? ''),
-          presence.timestampFromFormat(duration ?? ''),
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+          timestampFromFormat(elapsed ?? ''),
+          timestampFromFormat(duration ?? ''),
         )
       }
     }

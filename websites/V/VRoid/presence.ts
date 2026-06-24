@@ -66,6 +66,7 @@ function applyArtworkSlideshow(presenceData: PresenceData): void {
 let oldLang: string | null = null
 let currentTargetLang: string | null = null
 let oldPath: string | null = null
+// eslint-disable-next-line ts/no-deprecated -- ReturnType picks up a deprecated overload from the method's union signature; the runtime call below uses the non-deprecated form.
 let strings: Awaited<ReturnType<typeof presence.getStrings>> | null = null
 let fetchingStrings = false
 let stringFetchTimeout: number | null = null

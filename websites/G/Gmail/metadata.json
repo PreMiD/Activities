@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "RisingSunLight",
@@ -24,7 +24,8 @@
     "zh": "Gmail是Google开发的免费电子邮件服务。"
   },
   "url": "mail.google.com",
-  "version": "2.0.16",
+  "regExp": "^https?[:][/][/]mail[.]google[.]com[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Gmail/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Gmail/assets/thumbnail.png",
   "color": "#DD4B3E",

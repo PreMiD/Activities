@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "307473018597408768",
+    "name": "roo7k1d"
+  },
+  "service": "WOW TV",
+  "altnames": [
+    "WOW",
+    "WOWTV"
+  ],
+  "description": {
+    "de": "Mit WOW kannst Du jederzeit und überall unbegrenzt Serien, Filme und Live-Sport schauen.",
+    "en": "With WOW you can watch unlimited amounts of TV Shows, Movies and Live Sports anywhere and anytime."
+  },
+  "url": "wowtv.de",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wowtv[.]de[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WOW%20TV/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WOW%20TV/assets/thumbnail.png",
+  "color": "#00818a",
+  "category": "videos",
+  "tags": [
+    "wow",
+    "tv",
+    "sky",
+    "streaming",
+    "hbo",
+    "movies",
+    "shows",
+    "sports"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "time",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    }
+  ]
+}

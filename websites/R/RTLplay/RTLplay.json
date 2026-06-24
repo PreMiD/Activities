@@ -14,5 +14,25 @@
   "RTLplay.tvshow": {
     "description": "Category of media",
     "message": "TV Serie"
+  },
+  "RTLplay.viewlist": {
+    "description": "List as in their saved series/movies.",
+    "message": "Viewing their list"
+  },
+  "RTLplay.watchingAd": {
+    "description": "Used when a commercial is being played, most of the time before playing a media",
+    "message": "Currently watching an ad"
+  },
+  "RTLplay.privatePlay": {
+    "description": "Used when playing in privacy mode",
+    "message": "Private play"
+  },
+  "RTLplay.deferred": {
+    "description": "Used when a livestream is no longer live but with a delay. Often because the content has been paused or rewound.",
+    "message": "Deferred"
+  },
+  "RTLplay.on": {
+    "description": "Used to specify that content is on a channel or by default on Auvio. For example \"Iron Man on Auvio\"",
+    "message": "{0} on {1}"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Nekolen",
@@ -21,7 +21,8 @@
     "uk": "duelingnexus.com не має симулятора, а також відвідає багато навігацій."
   },
   "url": "duelingnexus.com",
-  "version": "1.5.27",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*duelingnexus[.]com[/]",
+  "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dueling%20Nexus/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dueling%20Nexus/assets/thumbnail.jpg",
   "color": "#FF4500",

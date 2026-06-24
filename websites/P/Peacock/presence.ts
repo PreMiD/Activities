@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '767402228825980929',
@@ -47,7 +47,7 @@ presence.on('UpdateData', async () => {
     if (video) {
       const title = document.querySelector('.playback-header__title')
         || document.querySelector('.playback-metadata__container-title')
-      const timestamps = presence.getTimestamps(
+      const timestamps = getTimestamps(
         Math.floor(video.currentTime),
         Math.floor(video.duration),
       )

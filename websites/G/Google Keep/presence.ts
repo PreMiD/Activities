@@ -8,9 +8,14 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Keep/assets/logo.png',
     startTimestamp: timer,
   }
-  const { hash, href } = document.location
-  const id = href.split('/')[4]
+  const { hash } = document.location
+  const id = hash.split('/')[1]
   const privacy = await presence.getSetting<boolean>('privacy')
+
+  const noteName = Array.from(
+    document.querySelectorAll<HTMLDivElement>('div[contenteditable="true"][role="textbox"]'),
+  ).find(div => div.style.display !== 'none')
+  ?? document.querySelector('body > div.VIpgJd-TUo6Hb.XKSfm-L9AdLc.eo9XGd > div > div.IZ65Hb-TBnied.zTETae-h1U9Be-hxXJme > div.IZ65Hb-s2gQvd > div.IZ65Hb-r4nke-haAclf > div.notranslate.IZ65Hb-YPqjbf.fmcmS-x3Eknd.vIzZGf-r4nke-YPqjbf')
 
   presenceData.details = 'Viewing Homepage'
   presenceData.state = 'Notes'
@@ -18,15 +23,9 @@ presence.on('UpdateData', async () => {
   switch (hash) {
     case `#LIST/${id}`: {
       if (!privacy) {
-        const listName = document.querySelector(
-          'body > div.notes-container.RfDI4d-sKfxWe > div.RfDI4d-Iu19ad > div.RfDI4d-bN97Pc.ogm-kpc > div.gkA7Yd-sKfxWe.ma6Yeb-r8s4j-gkA7Yd > div > div.IZ65Hb-n0tgWb.rymPhb.NYTeh-IT5dJd.RNfche > div.IZ65Hb-TBnied.zTETae-h1U9Be-hxXJme > div.IZ65Hb-s2gQvd > div.IZ65Hb-r4nke-haAclf > div.notranslate.IZ65Hb-YPqjbf.fmcmS-x3Eknd.r4nke-YPqjbf',
-        )
-        ?? document.querySelector(
-          'body > div.VIpgJd-TUo6Hb.XKSfm-L9AdLc.eo9XGd > div > div.IZ65Hb-TBnied.zTETae-h1U9Be-hxXJme > div.IZ65Hb-s2gQvd > div.IZ65Hb-r4nke-haAclf > div.notranslate.IZ65Hb-YPqjbf.fmcmS-x3Eknd.r4nke-YPqjbf',
-        )
         presenceData.details = 'Reading Tasks:'
-        if (listName?.textContent)
-          presenceData.state = listName.textContent
+        if (noteName?.textContent)
+          presenceData.state = noteName.textContent
         else
           presenceData.state = 'Untitled List'
       }
@@ -39,9 +38,6 @@ presence.on('UpdateData', async () => {
     }
     case `#NOTE/${id}`: {
       if (!privacy) {
-        const noteName = document.querySelector(
-          'body > div.VIpgJd-TUo6Hb.XKSfm-L9AdLc.eo9XGd > div > div.IZ65Hb-TBnied.zTETae-h1U9Be-hxXJme > div.IZ65Hb-s2gQvd > div.IZ65Hb-r4nke-haAclf > div.notranslate.IZ65Hb-YPqjbf.fmcmS-x3Eknd.r4nke-YPqjbf',
-        )
         presenceData.details = 'Reading a Note:'
         if (noteName?.textContent)
           presenceData.state = noteName.textContent

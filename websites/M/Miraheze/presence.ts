@@ -308,14 +308,16 @@ async function prepare(): Promise<void> {
 
         */
 
-        const mwConfig = await presence.getPageletiable<{
-          wgSiteName: string
-          wgAction: string
-          wgPageName: string
-          wgCanonicalNamespace: string
-          wgNamespaceNumber: number
-          wgIsMainPage: boolean
-        }>('mw"]["config"]["values')
+        const mwConfig = (await presence.getPageVariable<{
+          'mw.config.values': {
+            wgSiteName: string
+            wgAction: string
+            wgPageName: string
+            wgCanonicalNamespace: string
+            wgNamespaceNumber: number
+            wgIsMainPage: boolean
+          }
+        }>('mw.config.values'))['mw.config.values']
         const siteName = mwConfig.wgSiteName
         const actionResult = (): string =>
           getURLParam('action')

@@ -11,7 +11,6 @@ async function getStrings() {
       buttonViewPage: 'general.buttonViewPage',
       search: 'general.searchFor',
     },
-    await presence.getSetting<string>('lang').catch(() => 'de'),
   )
 }
 let strings: Awaited<ReturnType<typeof getStrings>>

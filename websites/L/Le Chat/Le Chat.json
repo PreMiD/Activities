@@ -14,5 +14,9 @@
   "leChat.askingQuestion": {
     "description": "Displayed when the user is asking a question.",
     "message": "Asking a question..."
+  },
+  "leChat.doingAiStuff": {
+    "description": "Displayed when the user is doing other things on the Le Chat site.",
+    "message": "Doing AI stuff..."
   }
 }

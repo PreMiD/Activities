@@ -13,8 +13,8 @@ enum Assets {
   Movie = 'https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/5.png',
   Anime = 'https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/6.png',
   Heart = 'https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/7.png',
-  Trending =
-  'https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/8.png',
+  Trending
+    = 'https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/8.png',
   Clock = 'https://cdn.rcd.gg/PreMiD/websites/F/FantomTv/assets/9.png',
 }
 
@@ -247,8 +247,8 @@ presence.on('UpdateData', async () => {
       && !document.getElementById('details-modal')!.classList.contains('hidden')
     ) {
       const movieTitle
-      = document.getElementById('details-title')?.textContent?.trim()
-        || 'Unknown Movie'
+        = document.getElementById('details-title')?.textContent?.trim()
+          || 'Unknown Movie'
       details = `Viewing details of ${movieTitle}`
       state = 'Checking out info, cast, and more!'
       const imgElement = document.querySelector<HTMLImageElement>('#details-backdrop')
@@ -292,8 +292,8 @@ presence.on('UpdateData', async () => {
       && !document.getElementById('profile-page-container')!.classList.contains('hidden')
     ) {
       const username
-    = document.getElementById('profile-username')?.textContent?.trim()
-      || 'Profile'
+        = document.getElementById('profile-username')?.textContent?.trim()
+          || 'Profile'
       details = `Viewing profile: ${username}`
       state = 'Checking out watch history & lists'
       const imgElement = document.querySelector<HTMLImageElement>('#profile-avatar')

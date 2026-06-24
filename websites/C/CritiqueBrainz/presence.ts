@@ -143,7 +143,7 @@ presence.on('UpdateData', () => {
     default: {
       presenceData.details = 'Browsing...'
       presenceData.state = document.title?.match(
-        /(.*?)( - CritiqueBrainz$|$)/,
+        /(.*?)(?: - CritiqueBrainz$|$)/,
       )?.[1]
     }
   }

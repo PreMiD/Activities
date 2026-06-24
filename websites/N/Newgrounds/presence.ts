@@ -49,6 +49,32 @@ presence.on('UpdateData', async () => {
     : null
   const buttons = await presence.getSetting<boolean>('buttons')
 
+  if (location.hostname === 'chat.newgrounds.com') {
+    presenceData.details = 'in Newgrounds Chat'
+    presenceData.smallImageKey = ActivityAssets.Forum
+    presenceData.smallImageText = 'Chat'
+
+    presence.setActivity(presenceData)
+    return
+  }
+
+  if (location.hostname === 'tv.newgrounds.com') {
+    presenceData.details = 'Watching NGTV'
+    presenceData.smallImageKey = ActivityAssets.MoviesPlay
+    presenceData.smallImageText = 'NGTV'
+    presence.setActivity(presenceData)
+    return
+  }
+
+  if (location.hostname === 'www.newgroundsradio.com') {
+    presenceData.details = 'Listening to NG Radio'
+    presenceData.smallImageKey = ActivityAssets.AudioPlay
+    presenceData.smallImageText = 'NG Radio'
+
+    presence.setActivity(presenceData)
+    return
+  }
+
   if (location.hostname !== 'www.newgrounds.com') {
     const userName = document.querySelector('.user-link')?.textContent
     presenceData.details = 'Viewing a user\'s profile'
@@ -317,6 +343,11 @@ presence.on('UpdateData', async () => {
   }
   else if (document.location.pathname.startsWith('/settings')) {
     presenceData.details = 'in Account Settings'
+  }
+  else if (document.location.pathname.startsWith('/radio')) {
+    presenceData.details = 'Listening to NG Radio'
+    presenceData.smallImageKey = ActivityAssets.AudioPlay
+    presenceData.smallImageText = 'NG Radio'
   }
   else if (document.location.pathname.startsWith('/confirmation')) {
     presenceData.details = 'in Requests'

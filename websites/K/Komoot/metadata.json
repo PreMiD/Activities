@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "N0chteil ^^",
@@ -17,7 +17,8 @@
     "www.komoot.es",
     "www.komoot.nl"
   ],
-  "version": "1.0.23",
+  "regExp": "^https?[:][/][/]www[.]komoot[.](com|de|fr|it|es|nl)[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Komoot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Komoot/assets/thumbnail.png",
   "color": "#FFFFFF",

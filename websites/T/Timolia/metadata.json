@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Lennart™",
@@ -11,8 +11,8 @@
     "en": "Timolia is one of the largest German Minecraft servers. Play unique minigames today!"
   },
   "url": "timolia.de",
-  "regExp": "([a-z0-9-]+[.])*timolia[.]de[/]",
-  "version": "1.0.23",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*timolia[.]de[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Timolia/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Timolia/assets/thumbnail.png",
   "color": "#6b6b6b",

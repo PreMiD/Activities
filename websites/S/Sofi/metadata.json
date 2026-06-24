@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Sarcaster!",
@@ -9,11 +9,9 @@
   "description": {
     "en": "Sofi is a fun card collecting game on discord. Play with millions of users globally. Collect, trade and battle in guilds. One of the most exciting ways to pass time on discord and engage your users. It has characters from all your favorite anime, kpop, game, webtoons and more."
   },
-  "url": [
-    "sofi.gg",
-    "gems.sofi.gg"
-  ],
-  "version": "1.0.15",
+  "url": "sofi.gg",
+  "regExp": "^https?[:][/][/]sofi[.]gg[/]",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sofi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sofi/assets/thumbnail.png",
   "color": "#EC91C8",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Qky",
@@ -11,7 +11,8 @@
     "id": "KaryaKarsa memudahkan fans untuk mendukung kreator favoritnya secara langsung dengan tip atau berlangganan secara bulanan untuk mendapatkan konten eksklusif. Dukung kreator favorit kamu untuk terus berkarya!"
   },
   "url": "karyakarsa.com",
-  "version": "1.0.18",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*karyakarsa[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KaryaKarsa/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KaryaKarsa/assets/thumbnail.png",
   "color": "#ff5569",

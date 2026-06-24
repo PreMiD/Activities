@@ -18,9 +18,7 @@ async function getStrings() {
 			buttonReadArticle: "general.buttonReadArticle",
 			buttonViewPage: "general.buttonViewPage",
 			buttonViewProfile: "general.buttonViewProfile",
-		},
-		await presence.getSetting<string>("lang").catch(() => "en")
-	);
+		});
 }
 function capitalizeFirstLetter(string: string) {
 	if (!string) return "Undefined";

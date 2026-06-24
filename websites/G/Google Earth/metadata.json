@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "193714715631812608",
@@ -10,7 +10,8 @@
     "en": "Explore worldwide satellite imagery and 3D buildings and terrain for hundreds of cities. Zoom to your house or anywhere else, then dive in for a 360° perspective with Street View. "
   },
   "url": "earth.google.com",
-  "version": "1.0.13",
+  "regExp": "^https?[:][/][/]earth[.]google[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Earth/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Earth/assets/thumbnail.jpg",
   "color": "#255FDB",

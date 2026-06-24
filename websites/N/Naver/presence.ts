@@ -1,3 +1,5 @@
+import { getTimestampsFromMedia } from 'premid'
+
 const presence = new Presence({
   clientId: '825307070584586250',
 })
@@ -34,19 +36,19 @@ enum MainAssets {
 
 function getServiceName(url = document.location.hostname): [string, string] | undefined {
   switch (true) {
-    case !!url.match(/tv\.naver\.([a-z0-9]+)/):
+    case !!url.match(/tv\.naver\.[a-z0-9]+/):
       return ['Naver TV', 'NAVER_TV']
-    case !!url.match(/comic\.naver\.([a-z0-9]+)/):
+    case !!url.match(/comic\.naver\.[a-z0-9]+/):
       return ['Naver Webtoon', 'NAVER_WEBTOON']
-    case !!url.match(/papago\.naver\.([a-z0-9]+)/):
+    case !!url.match(/papago\.naver\.[a-z0-9]+/):
       return ['Papago', 'NAVER_PAPAGO']
-    case !!url.match(/blog\.naver\.([a-z0-9]+)/):
+    case !!url.match(/blog\.naver\.[a-z0-9]+/):
       return ['Naver Blog', 'NAVER_BLOG']
-    case !!url.match(/cafe\.naver\.([a-z0-9]+)/):
+    case !!url.match(/cafe\.naver\.[a-z0-9]+/):
       return ['Naver Cafe', 'NAVER_CAFE']
-    case !!url.match(/(novel|series)\.naver\.([a-z0-9]+)/):
+    case !!url.match(/(?:novel|series)\.naver\.[a-z0-9]+/):
       return ['Naver Series', 'NAVER_SERIES']
-    case !!url.match(/([a-z]+)\.naver\.([a-z0-9]+)/):
+    case !!url.match(/[a-z]+\.naver\.[a-z0-9]+/):
       return ['Naver', 'NAVER']
     default:
       break
@@ -92,7 +94,7 @@ presence.on('UpdateData', async () => {
             '[data-role="videoEl"]',
           )!
           presenceData.details = 'Currently watching an ad';
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
           presenceData.smallImageKey = MainAssets.Play
           presenceData.smallImageText = 'Playing'
 
@@ -114,7 +116,7 @@ presence.on('UpdateData', async () => {
             ?.textContent
             ?.trim();
 
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
           presenceData.smallImageKey = MainAssets.Play
           presenceData.smallImageText = 'Playing'
 

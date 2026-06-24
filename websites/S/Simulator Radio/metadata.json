@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Pokey",
@@ -17,7 +17,8 @@
     "nl": "Simulator Radio: Uw #1 Simulatie Station"
   },
   "url": "simulatorradio.com",
-  "version": "1.5.22",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*simulatorradio[.]com[/]",
+  "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Simulator%20Radio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Simulator%20Radio/assets/thumbnail.png",
   "color": "#FB352A",

@@ -9,6 +9,7 @@ async function getStrings() {
     talkingWithAi: 'leChat.talkingWithAi',
     readingResponse: 'leChat.readingResponse',
     askingQuestion: 'leChat.askingQuestion',
+    doingAiStuff: 'leChat.doingAiStuff',
   })
 }
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -30,20 +31,22 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.includes('/chat/')) {
     presenceDetail = (showTitle
-      ? document.querySelector('a[aria-label="Open chat"]>div')?.textContent
-      : strings?.talkingWithAi) ?? ''
+      ? (document.title === 'Le Chat'
+          ? document.querySelector(`a[href="${pathname}"]>div`)?.textContent
+          : document.title)
+      : strings.talkingWithAi) ?? strings.talkingWithAi
   }
   else {
-    presenceDetail = strings.talkingWithAi
+    presenceDetail = strings.doingAiStuff
   }
 
   // Checking if the user is currently typing a question
-  if (document.querySelector('textarea')?.textContent !== '') {
+  if (document.querySelector('div[contenteditable="true"]')?.textContent !== '') {
     presenceState = strings.askingQuestion
   }
   else if (
     document.querySelector(
-      'div[class=\'flex h-fit w-full flex-col\'] > div:last-child[style*=\'transform:none\']',
+      'div[data-message-part-type="answer"]',
     )
   ) {
     presenceState = strings.readingResponse

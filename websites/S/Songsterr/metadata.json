@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "263735224221827072",
@@ -8,6 +8,7 @@
   "service": "Songsterr",
   "description": {
     "en": "Songsterr is one of the most popular sites to find and play guitar or any instrument's tabs.",
+    "fr": "Songsterr est l'un des sites les plus populaires pour trouver et jouer des tablatures de guitare ou de tout autre instrument.",
     "pl": "Songsterr to jedna z najpopularniejszych witryn do znajdowania i grania na gitarze lub tabsy dla dowolnego instrumentu",
     "tr": "Songsterr gitar ya da herhangi bir çalgının tablarını bulmak ya da çalmak için en popüler sitelerden birisi."
   },
@@ -15,7 +16,8 @@
     "www.songsterr.com",
     "songsterr.com"
   ],
-  "version": "1.0.13",
+  "regExp": "^https?[:][/][/](www[.])?songsterr[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Songsterr/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Songsterr/assets/thumbnail.png",
   "color": "#138CF6",

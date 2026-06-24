@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "id": "202740603790819328",
@@ -11,7 +11,8 @@
     "en": "Discover the world of the Warrior Cats and learn everything about the fantasy books!"
   },
   "url": "www.warriorcats.de",
-  "version": "1.0.10",
+  "regExp": "^https?[:][/][/](www[.])?warriorcats[.]de[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Warriorcats/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Warriorcats/assets/thumbnail.png",
   "color": "#ffffff",

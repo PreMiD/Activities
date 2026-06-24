@@ -19,7 +19,13 @@ async function getStrings() {
       browsingSheet: 'googledocs.browsingSheet',
       editingPresentation: 'googledocs.editingPresentation',
       browsingPresentation: 'googledocs.browsingPresentation',
-      vieiwngPresentation: 'googledocs.viewingPresentation',
+      viewingPresentation: 'googledocs.viewingPresentation',
+      editingVid: 'googledocs.editingVid',
+      viewingVid: 'googledocs.viewingVid',
+      browsingVid: 'googledocs.browsingVid',
+      editingDrawing: 'googledocs.editingDrawing',
+      viewingDrawing: 'googledocs.viewingDrawing',
+      browsingDrawing: 'googledocs.browsingDrawing',
     },
   )
 }
@@ -29,6 +35,8 @@ enum ActivityAssets {
   FormsLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/1.png',
   SheetsLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/2.png',
   SlidesLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/3.png',
+  VidsLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/4.png',
+  DrawingsLogo = 'https://cdn.rcd.gg/PreMiD/websites/G/Google%20Docs/assets/5.png',
 }
 
 presence.on('UpdateData', async () => {
@@ -44,6 +52,8 @@ presence.on('UpdateData', async () => {
     ?.replace(/(?:- )?Google[\xA0 ]Forms/, '')
     ?.replace(/(?:- )?Google[\xA0 ]Sheets/, '')
     ?.replace(/(?:- )?Google[\xA0 ]Slides/, '')
+    ?.replace(/(?:- )?Google[\xA0 ]Vids/, '')
+    ?.replace(/(?:- )?Google[\xA0 ]Drawings/, '')
     ?.trim()
 
   if (document.location.pathname.includes('/document')) {
@@ -80,7 +90,25 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.editingPresentation
     else if (document.location.pathname.includes('/presentation/u/'))
       presenceData.details = strings.browsingPresentation
-    else presenceData.details = strings.vieiwngPresentation
+    else presenceData.details = strings.viewingPresentation
+  }
+  else if (document.location.pathname.includes('/videos/')) {
+    presenceData.name = 'Google Vids'
+    presenceData.largeImageKey = ActivityAssets.VidsLogo
+    if (document.location.pathname.includes('/edit'))
+      presenceData.details = strings.editingVid
+    else if (document.location.pathname.includes('/videos/u/'))
+      presenceData.details = strings.browsingVid
+    else presenceData.details = strings.viewingVid
+  }
+  else if (document.location.pathname.includes('/drawings/')) {
+    presenceData.name = 'Google Drawings'
+    presenceData.largeImageKey = ActivityAssets.DrawingsLogo
+    if (document.location.pathname.includes('/edit'))
+      presenceData.details = strings.editingDrawing
+    else if (document.location.pathname.includes('/drawings/u/'))
+      presenceData.details = strings.browsingDrawing
+    else presenceData.details = strings.viewingDrawing
   }
 
   if (!privacy && title !== '')

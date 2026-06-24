@@ -1,3 +1,5 @@
+import { getTimestamps, timestampFromFormat } from 'premid'
+
 const presence = new Presence({
   clientId: '863345026498428968',
 })
@@ -50,9 +52,9 @@ presence.on('UpdateData', async () => {
           'div.w2g-player-menu.w2g-player > div.ui.inverted.tiny.menu > a > i.play',
         )
       ) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-          presence.timestampFromFormat(playerTime[0]?.textContent ?? ''),
-          presence.timestampFromFormat(playerTime[1]?.textContent ?? ''),
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+          timestampFromFormat(playerTime[0]?.textContent ?? ''),
+          timestampFromFormat(playerTime[1]?.textContent ?? ''),
         )
       }
       if (invite) {

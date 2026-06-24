@@ -8,7 +8,8 @@ export interface Settings {
   hidePaused: boolean
   showBrowsing: boolean
   privacyMode: boolean
-  showAsListening: boolean
+  displayType: number
+  links: boolean
 }
 
 export function updateSongTimestamps(
@@ -48,7 +49,8 @@ export async function getSettings(presence: Presence): Promise<Settings> {
     hidePaused,
     showBrowsing,
     privacyMode,
-    showAsListening,
+    displayType,
+    links,
   ] = await Promise.all([
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('timestamps'),
@@ -56,7 +58,8 @@ export async function getSettings(presence: Presence): Promise<Settings> {
     presence.getSetting<boolean>('hidePaused'),
     presence.getSetting<boolean>('browsing'),
     presence.getSetting<boolean>('privacy'),
-    presence.getSetting<boolean>('showAsListening'),
+    presence.getSetting<number>('displayType'),
+    presence.getSetting<boolean>('links'),
   ])
 
   return {
@@ -66,6 +69,7 @@ export async function getSettings(presence: Presence): Promise<Settings> {
     hidePaused,
     showBrowsing,
     privacyMode,
-    showAsListening,
+    displayType,
+    links,
   }
 }

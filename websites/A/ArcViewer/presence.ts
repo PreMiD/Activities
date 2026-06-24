@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '939893132156366860',
@@ -188,7 +188,7 @@ presence.on('UpdateData', async () => {
   }
 
   if (playing) {
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
       pageVars['soundStartTimes[0]']
       + (pageVars['audioCtx.currentTime'] - lastPlayed) * playbackSpeed,
       pageVars['clips[0].buffer.duration'] - pageVars['soundOffsets[0]'],

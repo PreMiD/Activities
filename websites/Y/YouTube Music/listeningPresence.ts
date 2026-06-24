@@ -1,7 +1,7 @@
 import type { MediaData, MediaDataGetter } from './dataGetter.js'
 import type { Strings } from './i18n.js'
 import type { Settings } from './utils.js'
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, StatusDisplayType } from 'premid'
 import { ActivityAssets } from './constants.js'
 
 export function createListeningPresence(
@@ -17,10 +17,11 @@ export function createListeningPresence(
     showButtons,
     showTimestamps,
     showCover,
-    showAsListening,
+    displayType,
   } = settings
 
   const albumArtistBtnLink = dataGetter.getAlbumArtistLink()
+  const artistLink = dataGetter.getArtistLink()
   const buttons: [ButtonData, ButtonData?] = [
     {
       label: strings.listenAlong,
@@ -37,14 +38,30 @@ export function createListeningPresence(
 
   const presenceData: PresenceData = {
     type: ActivityType.Listening,
-    name: showAsListening
-      ? mediaData.title
-      : 'YouTube Music',
     largeImageKey: showCover
       ? mediaData.artwork ?? ActivityAssets.Logo
       : ActivityAssets.Logo,
     details: mediaData.title,
     state: mediaData.artist,
+  }
+
+  if (settings.links) {
+    presenceData.detailsUrl = `https://music.youtube.com/watch?v=${watchID}`
+    if (albumArtistBtnLink) {
+      presenceData.largeImageUrl = albumArtistBtnLink
+    }
+    if (artistLink) {
+      presenceData.stateUrl = artistLink
+    }
+  }
+
+  switch (displayType) {
+    case 1:
+      presenceData.statusDisplayType = StatusDisplayType.State
+      break
+    case 2:
+      presenceData.statusDisplayType = StatusDisplayType.Details
+      break
   }
 
   if (mediaData.album) {
