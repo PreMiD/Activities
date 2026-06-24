@@ -26,7 +26,23 @@ presence.on('UpdateData', async () => {
   const path = window.location.pathname.toLowerCase()
   const params = new URLSearchParams(window.location.search)
 
-  if (path.includes('/admin/inactivity_alerts')) {
+  if (path.includes('/admin/application_settings')) {
+    presenceData.details = 'Configuring Applications'
+    presenceData.state = 'Application Settings'
+  }
+  else if (path.includes('/admin/applications')) {
+    presenceData.details = 'Reviewing Applications'
+    presenceData.state = 'Application Manager'
+  }
+  else if (path.includes('/admin/cdn')) {
+    presenceData.details = 'Viewing CDN Settings'
+    presenceData.state = 'CDN Configuration'
+  }
+  else if (path.includes('/admin/media')) {
+    presenceData.details = 'Viewing CDN Media'
+    presenceData.state = 'Media Library'
+  }
+  else if (path.includes('/admin/inactivity_alerts')) {
     presenceData.details = 'Reviewing Creator Activity'
     presenceData.state = 'Inactivity Alerts'
   }
@@ -44,7 +60,7 @@ presence.on('UpdateData', async () => {
   }
   else if (path.includes('/admin/gallery')) {
     presenceData.details = 'Managing Gallery'
-    presenceData.state = 'Media Library'
+    presenceData.state = 'Community Gallery'
   }
   else if (path.includes('/admin/changelogs')) {
     presenceData.details = 'Publishing Updates'
@@ -70,9 +86,17 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Managing Website'
     presenceData.state = 'Site Settings'
   }
+  else if (path.includes('/admin/smtp')) {
+    presenceData.details = 'Managing Email Delivery'
+    presenceData.state = 'SMTP Settings'
+  }
   else if (path.includes('/admin')) {
     presenceData.details = 'Managing TubeCraft SMP'
     presenceData.state = 'Admin Dashboard'
+  }
+  else if (path === '/account' || path.includes('/account')) {
+    presenceData.details = 'Viewing Personal Account'
+    presenceData.state = 'Account Dashboard'
   }
   else if (path.startsWith('/creator/')) {
     const creatorSlug = path.split('/creator/')[1]?.split('/')[0] || 'unknown'
@@ -134,7 +158,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Reading
   }
   else if (path.includes('/apply')) {
-    presenceData.details = 'Joining TubeCraft SMP'
+    presenceData.details = 'Viewing Applications'
     presenceData.state = 'Creator Application'
     presenceData.smallImageKey = Assets.Reading
   }
