@@ -74,7 +74,7 @@ presence.on('UpdateData', async () => {
       else {
         presenceData.details = 'Browsing'
         presenceData.state = document.title.match(
-          /^(.*?)( \| CloudConvert)?$/,
+          /^(.*?)(?: \| CloudConvert)?$/,
         )?.[1]
       }
     }

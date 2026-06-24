@@ -1,5 +1,5 @@
 import type { IFrameData, QueryParams } from './interfaces.js'
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1240164154682249227',
@@ -179,7 +179,7 @@ function getVideoDetails(
 function setTimestamps(presenceData: PresenceData): void {
   delete presenceData.startTimestamp
   if (!paused) {
-    [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(currentTime, duration)
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentTime, duration)
   }
   presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
 }

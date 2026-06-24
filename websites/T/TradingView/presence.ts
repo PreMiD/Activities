@@ -167,12 +167,12 @@ presence.on('UpdateData', async () => {
           ?.textContent
           ?.trim()
         // Full Chart Idea Page
-        || document
-          .querySelector(
-            'body > div.tv-main > div.tv-content > div > div > div:nth-child(1) > div.tv-chart-view__header > div.tv-chart-view__title.selectable > div > div.tv-chart-view__title-row.tv-chart-view__title-row--symbol.tv-chart-view__symbol.js-chart-view__symbol.js-chart-view__ticker.quote-ticker-inited > a:nth-child(1)',
-          )
-          ?.textContent
-          ?.trim()
+          || document
+            .querySelector(
+              'body > div.tv-main > div.tv-content > div > div > div:nth-child(1) > div.tv-chart-view__header > div.tv-chart-view__title.selectable > div > div.tv-chart-view__title-row.tv-chart-view__title-row--symbol.tv-chart-view__symbol.js-chart-view__symbol.js-chart-view__ticker.quote-ticker-inited > a:nth-child(1)',
+            )
+            ?.textContent
+            ?.trim()
     }
 
     if (title)

@@ -36,7 +36,7 @@ presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
   let pathArr = pathname.split('/')
 
-  if (SITE_LANGS.find(lang => lang === pathname.split('/')[1])) {
+  if (SITE_LANGS.includes(pathname.split('/')[1] ?? '')) {
     pathArr = ['', ...pathArr.slice(2)]
     if (pathArr.length === 1)
       pathArr = ['', '']

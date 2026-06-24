@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1120490012153237544",
+    "name": "Katsu"
+  },
+  "service": "OpenPlace",
+  "description": {
+    "en": "openplace is a collaborative, real-time pixel canvas layered over the world map, where anyone can paint and create art together."
+  },
+  "url": "openplace.live",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*openplace[.]live[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OpenPlace/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OpenPlace/assets/thumbnail.png",
+  "color": "#2e5cf1",
+  "category": "games",
+  "tags": [
+    "place",
+    "redditplace",
+    "game"
+  ],
+  "settings": [
+    {
+      "id": "coordinatesPrivacy",
+      "title": "Hide Coordinates",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "countryPrivacy",
+      "title": "Hide Country",
+      "icon": "fad fa-user-secret",
+      "value": false,
+      "if": {
+        "coordinatesPrivacy": true
+      }
+    }
+  ]
+}

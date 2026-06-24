@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -68,7 +68,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = document
         .querySelector('[aria-current="page"]')
         ?.textContent
-        ?.replace(/(New)|(Soon)|(Beta)/, '')
+        ?.replace(/New|Soon|Beta/, '')
       break
     }
     case pathname.includes('/leaderboard'): {
@@ -94,11 +94,11 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = isPlaying ? Assets.Play : Assets.Pause
         presenceData.smallImageText = isPlaying ? 'Playing' : 'Paused'
         if (isPlaying) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-            presence.timestampFromFormat(
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+            timestampFromFormat(
               document.querySelector('.time.t-left')?.textContent ?? '',
             ),
-            presence.timestampFromFormat(
+            timestampFromFormat(
               document.querySelector('.time.t-right')?.textContent ?? '',
             ),
           )

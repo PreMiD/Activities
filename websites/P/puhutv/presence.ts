@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '628341182581440531',
@@ -39,13 +39,13 @@ presence.on('UpdateData', async () => {
           '#widget_video_detail_3 > section.hero.hero--video-detay.hero--subpages > header > div > div.video-detay-header-content > h1',
         )
         ? document
-          .querySelector(
-            '#widget_video_detail_3 > section.hero.hero--video-detay.hero--subpages > header > div > div.video-detay-header-content > h1',
-          )
-          ?.textContent
-          ?.replace(`${title.outerHTML} `, '')
+            .querySelector(
+              '#widget_video_detail_3 > section.hero.hero--video-detay.hero--subpages > header > div > div.video-detay-header-content > h1',
+            )
+            ?.textContent
+            ?.replace(`${title.outerHTML} `, '')
         : null
-      const timestamps = presence.getTimestamps(
+      const timestamps = getTimestamps(
         Math.floor(video.currentTime),
         Math.floor(video.duration),
       )
@@ -63,11 +63,11 @@ presence.on('UpdateData', async () => {
               '#widget_serie_detail_tab_5 > section > div > div > div > div.kunye-content-left > div:nth-child(3)',
             )
               ? document
-                .querySelector<HTMLElement>(
-                  '#widget_serie_detail_tab_5 > section > div > div > div > div.kunye-content-left > div:nth-child(3)',
-                )
-                ?.textContent
-                ?.replace(/\n/g, ': ')
+                  .querySelector<HTMLElement>(
+                    '#widget_serie_detail_tab_5 > section > div > div > div > div.kunye-content-left > div:nth-child(3)',
+                  )
+                  ?.textContent
+                  ?.replace(/\n/g, ': ')
               : null
           }`,
         smallImageKey: video.paused ? Assets.Pause : Assets.Play,

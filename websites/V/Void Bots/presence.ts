@@ -43,7 +43,6 @@ presence.on('UpdateData', async () => {
         button1: getMeta('button_1_Label'),
         button2: getMeta('button_2_Label'),
       },
-      oldLang,
     )
   }
 

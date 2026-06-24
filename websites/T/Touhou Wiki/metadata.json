@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "fror",
@@ -11,8 +11,8 @@
     "nl": "Touhou Wiki behandelt de officiële spellen en materialen van het Touhou Project en alle door fans gemaakte spellen en media, samen met andere gerelateerde spellen die zijn ontwikkeld door de voormalige leden van Amusement Makers of in samenwerking met Team Shanghai Alice."
   },
   "url": "touhouwiki.net",
-  "regExp": "([a-z0-9-]+[.])*touhouwiki[.]net[/]",
-  "version": "1.3.25",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*touhouwiki[.]net[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Touhou%20Wiki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Touhou%20Wiki/assets/thumbnail.png",
   "color": "#9B0101",

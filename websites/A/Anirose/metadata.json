@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "751077311545081877",
+    "name": "CE-Timmer"
+  },
+  "service": "Anirose",
+  "description": {
+    "en": "AniRose is a special website made for people who love watching anime. It is a place where you can find all your favorite shows and movies in one spot."
+  },
+  "url": "anirose.to",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anirose[.]to[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anirose/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anirose/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "video"
+  ]
+}

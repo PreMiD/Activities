@@ -1,0 +1,98 @@
+{
+  "sncfconnect.arrival": {
+    "description": "Displayed when the user is viewing an arrival.",
+    "message": "Arrival: {0}"
+  },
+  "sncfconnect.departure": {
+    "description": "Displayed when the user is viewing a departure.",
+    "message": "Departure: {0}"
+  },
+  "sncfconnect.destination": {
+    "description": "Displayed when the user is viewing a destination.",
+    "message": "Destination: {0}"
+  },
+  "sncfconnect.origin": {
+    "description": "Displayed when the user is viewing an origin.",
+    "message": "Origin: {0}"
+  },
+  "sncfconnect.payingTickets": {
+    "description": "Displayed when the user is paying for their tickets.",
+    "message": "Paying for their tickets"
+  },
+  "sncfconnect.rateInbound": {
+    "description": "Displayed when the user is rating inbound journey options.",
+    "message": "Viewing the rate for the inbound journey:"
+  },
+  "sncfconnect.rateOutbound": {
+    "description": "Displayed when the user is rating outbound journey options.",
+    "message": "Viewing the rate for the outbound journey:"
+  },
+  "sncfconnect.ratesInbound": {
+    "description": "Displayed when the user is rating inbound journey options.",
+    "message": "Viewing the rates for an inbound journey"
+  },
+  "sncfconnect.ratesOutbound": {
+    "description": "Displayed when the user is rating outbound journey options.",
+    "message": "Viewing the rates for an outbound journey"
+  },
+  "sncfconnect.searchingItineraries": {
+    "description": "Displayed when the user is searching for itineraries.",
+    "message": "Searching for itineraries:"
+  },
+  "sncfconnect.searchingItinerariesInterstitial": {
+    "description": "Displayed when the user is searching for offers for an itinerary.",
+    "message": "Searching for offers for this itinerary..."
+  },
+  "sncfconnect.searchingItinerariesToALocation": {
+    "description": "Displayed when the user is searching for itineraries to a location.",
+    "message": "Searching for itineraries to a location"
+  },
+  "sncfconnect.viewingADepartureTimes": {
+    "description": "Displayed when the user is viewing the departure times at a station.",
+    "message": "Viewing the departure times at a station"
+  },
+  "sncfconnect.viewingAnArrivalTimes": {
+    "description": "Displayed when the user is viewing the arrival times at a station.",
+    "message": "Viewing the arrival times at a station"
+  },
+  "sncfconnect.viewingArrivalTimes": {
+    "description": "Displayed when the user is viewing the arrival times at the station.",
+    "message": "Viewing the arrival times at the station:"
+  },
+  "sncfconnect.viewingCart": {
+    "description": "Displayed when the user is viewing their cart.",
+    "message": "Viewing their cart"
+  },
+  "sncfconnect.viewingDepartureTimes": {
+    "description": "Displayed when the user is viewing the departure times at the station.",
+    "message": "Viewing the departure times at the station:"
+  },
+  "sncfconnect.viewingDetailsOfATicket": {
+    "description": "Displayed when the user is viewing the details of a ticket.",
+    "message": "Viewing the details of a ticket"
+  },
+  "sncfconnect.viewingDetailsOfAnItinerary": {
+    "description": "Displayed when the user is viewing details of an itinerary.",
+    "message": "Viewing details of an itinerary"
+  },
+  "sncfconnect.viewingDetailsOfTheItinerary": {
+    "description": "Displayed when the user is viewing itinerary details.",
+    "message": "Viewing the details of the itinerary:"
+  },
+  "sncfconnect.viewingDetailsOfTheTicket": {
+    "description": "Displayed when the user is viewing the details of a specific ticket.",
+    "message": "Viewing the details of the ticket:"
+  },
+  "sncfconnect.viewingStationTimetables": {
+    "description": "Displayed when the user is viewing station timetables.",
+    "message": "Viewing station timetables"
+  },
+  "sncfconnect.viewingTickets": {
+    "description": "Displayed when the user is viewing their tickets.",
+    "message": "Viewing their tickets"
+  },
+  "sncfconnect.viewingTrafficInfo": {
+    "description": "Displayed when the user is viewing traffic information.",
+    "message": "Viewing traffic information"
+  }
+}

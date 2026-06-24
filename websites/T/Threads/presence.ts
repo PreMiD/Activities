@@ -1,3 +1,5 @@
+import { Assets } from 'premid'
+
 const presence = new Presence({
   clientId: '1237798561739968513',
 })
@@ -20,21 +22,25 @@ presence.on('UpdateData', async () => {
 
   presenceData.details = 'Browsing...'
 
-  if (pathname.match('/following')) {
+  if (pathname.startsWith('/following')) {
     presenceData.state = 'Following feed'
   }
-  else if (pathname.match('/saved')) {
+  else if (pathname.startsWith('/saved')) {
     presenceData.state = 'Saved threads'
   }
-  else if (pathname.match('/liked')) {
+  else if (pathname.startsWith('/liked')) {
     presenceData.state = 'Liked threads'
   }
-  else if (pathname.match('/login') || pathname.match('/nonconsent')) {
+  else if (pathname.startsWith('/activity')) {
+    presenceData.state = 'Viewing activity'
+  }
+  else if (pathname.startsWith('/login') || pathname.startsWith('/nonconsent')) {
     presenceData.details = 'Logging in'
   }
-  else if (pathname.match('/search') && !privacy) {
+  else if (pathname.startsWith('/search') && !privacy) {
     presenceData.details = 'Searching for:'
     presenceData.state = new URLSearchParams(search).get('q')
+    presenceData.smallImageKey = Assets.Search
 
     if (!presenceData.state)
       presenceData.details = 'Search'
@@ -52,6 +58,7 @@ presence.on('UpdateData', async () => {
 
     if (pathname.split('/')[2] === 'post') {
       presenceData.details = 'Viewing a thread'
+      presenceData.smallImageKey = Assets.Viewing
 
       if (!privacy) {
         presenceData.buttons = [

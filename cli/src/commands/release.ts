@@ -6,6 +6,7 @@ import process from 'node:process'
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import isCI from 'is-ci'
+import { getDmcaServices, isDmcaBlocked } from '../util/dmca.js'
 import { getChangedActivities } from '../util/getActivities.js'
 import { getFolderLetter } from '../util/getFolderLetter.js'
 import { exit, MESSAGES, success } from '../util/log.js'
@@ -46,7 +47,16 @@ export async function release() {
 
   const apiUrl = process.env.API_URL || 'https://api.premid.app/v6'
 
-  const { changed, deleted } = await getChangedActivities()
+  const { changed: allChanged, deleted } = await getChangedActivities()
+
+  const dmcaServices = await getDmcaServices()
+  const changed = allChanged.filter((activity) => {
+    if (isDmcaBlocked(activity.metadata.service, dmcaServices)) {
+      core.warning(`Skipping DMCA-blocked activity: ${activity.metadata.service}`)
+      return false
+    }
+    return true
+  })
 
   core.info(`Found ${changed.length} changed activities, ${deleted.length} deleted activities`)
 

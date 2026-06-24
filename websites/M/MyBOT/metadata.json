@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Deivid",
@@ -18,7 +18,8 @@
     "nl": "MyBOT is een platform met verschillende handleidingen en tools in het Spaans, gericht op de ontwikkeling van apps / bots en inhoud voor gemeenschappen van Discord."
   },
   "url": "portalmybot.com",
-  "version": "1.3.29",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*portalmybot[.]com[/]",
+  "version": "1.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MyBOT/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MyBOT/assets/thumbnail.png",
   "color": "#00fef4",

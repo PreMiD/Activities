@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "milrak",
@@ -12,7 +12,8 @@
     "pt-br": "Baixe grátis na melhor plataforma de lançamento de Artistas independentes do Brasil. Shows, CDs Promocionais, Músicas, Vídeo Clipes, Instagram e novidades do Forró, Sertanejo, Axé e outros. Crie um Pefil grátis para sua Banda agora mesmo."
   },
   "url": "suamusica.com.br",
-  "version": "1.1.26",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*suamusica[.]com[.]br[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sua%20M%C3%BAsica/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sua%20M%C3%BAsica/assets/thumbnail.jpg",
   "color": "#1d94ca",

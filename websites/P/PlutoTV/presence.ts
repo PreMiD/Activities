@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '640292045117980713',
@@ -21,6 +21,7 @@ oldTitle = null
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/PlutoTV/assets/logo.png',
+    type: ActivityType.Watching,
   }
 
   if (document.location.hostname === 'pluto.tv') {
@@ -69,7 +70,7 @@ presence.on('UpdateData', async () => {
       )!
       const { currentTime, duration, paused } = video;
 
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(Math.floor(currentTime), Math.floor(duration))
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(Math.floor(currentTime), Math.floor(duration))
       if (!Number.isNaN(duration)) {
         presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = paused

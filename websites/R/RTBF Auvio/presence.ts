@@ -121,10 +121,10 @@ presence.on('UpdateData', async () => {
           ) // Must not match default auvio image https://ds.static.rtbf.be/default/image/770x770/default-auvio_0.jpg
             ? getChannel(channelName).logo
             : await getThumbnail(
-              coverArt,
-              cropPreset.squared,
-              getChannel(channelName).color,
-            )
+                coverArt,
+                cropPreset.squared,
+                getChannel(channelName).color,
+              )
           showData.largeImageText += ' - Radio'
 
           if (showData.state)
@@ -136,7 +136,7 @@ presence.on('UpdateData', async () => {
 
           const songData = structuredClone(presenceData) // Deep copy
 
-          if (secondLine.match(/\([^()]+\)(?!.*\([^()]+\))/)) {
+          if (/\([^()]+\)(?!.*\([^()]+\))/.test(secondLine)) {
             // If it has parentheses, it's probably a song.
             songData.details = secondLine
               .replace(/\([^()]+\)(?!.*\([^()]+\))/, '')
@@ -503,7 +503,7 @@ presence.on('UpdateData', async () => {
           }
 
           // LIVE MEDIA PLAYER
-          const liveDelay = video ? (Math.abs(Math.floor(new Date().getTime() / 1000 - video.currentTime))) : 0
+          const liveDelay = video ? (Math.abs(Math.floor(Date.now() / 1000 - video.currentTime))) : 0
           if (mediaType === 'LIVE'
             || (liveDelay < 3600) // Sometimes lives don't follow established codes
           ) {

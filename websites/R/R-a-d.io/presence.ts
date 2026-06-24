@@ -1,3 +1,5 @@
+import { getTimestamps, timestampFromFormat } from 'premid'
+
 const presence = new Presence({
   clientId: '1073136952905318401',
 })
@@ -72,11 +74,11 @@ presence.on('UpdateData', async () => {
     // Only add bottom row status and timestamp if playing
     if (presenceData.details === 'Playing') {
       presenceData.state = currentSong();
-      [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(
-        presence.timestampFromFormat(
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+        timestampFromFormat(
           document.querySelector('#progress-current')?.textContent ?? '',
         ),
-        presence.timestampFromFormat(
+        timestampFromFormat(
           document.querySelector('#progress-length')?.textContent ?? '',
         ),
       )
@@ -85,5 +87,5 @@ presence.on('UpdateData', async () => {
 
   // Update the presence with all the values from the presenceData object
   // Set second parameter to true since we provide timestamps according to PreMiD documentation
-  presence.setActivity(presenceData, presenceData.details === 'Playing')
+  presence.setActivity(presenceData)
 })

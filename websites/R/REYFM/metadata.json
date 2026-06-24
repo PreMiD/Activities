@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -13,10 +13,10 @@
   },
   "url": [
     "rey.fm",
-    "www.rey.fm",
-    "status.rey.fm"
+    "www.rey.fm"
   ],
-  "version": "1.4.16",
+  "regExp": "^https?[:][/][/](www[.])?rey[.]fm[/]",
+  "version": "1.5.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/REYFM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/REYFM/assets/thumbnail.png",
   "color": "#cd6ef4",

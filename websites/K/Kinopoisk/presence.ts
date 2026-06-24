@@ -1,9 +1,8 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1034799018980679680',
 })
-const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 async function getStrings() {
   return presence.getStrings(
@@ -12,11 +11,11 @@ async function getStrings() {
       pause: 'general.paused',
       view: 'general.view',
     },
-
   )
 }
 
 let strings: Awaited<ReturnType<typeof getStrings>>
+let contentType: string | null | undefined
 let contentTitle: string | null | undefined
 let contentSerieTitle: string | null | undefined
 
@@ -24,11 +23,13 @@ function textContent(tags: string) {
   return document.querySelector(tags)?.textContent?.trim()
 }
 
-function pageTitle(string: string) {
-  return document
+function pageTitle(string?: string): string | string[] {
+  const pageTitle = document
     .querySelector<HTMLTitleElement>('title')
-    ?.textContent
-    ?.split(string)
+    ?.textContent ?? ''
+  if (string)
+    return pageTitle.split(string)
+  return pageTitle
 }
 
 enum ActivityAssets {
@@ -41,9 +42,10 @@ presence.on('UpdateData', async () => {
     details: 'Где-то на сайте',
     smallImageText: 'Kinopoisk',
   }
-  const [privacy, time] = await Promise.all([
+  const [privacy, time, useActivityName] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('time'),
+    presence.getSetting<boolean>('useActivityName'),
   ])
   const { hostname, pathname } = document.location
 
@@ -63,18 +65,18 @@ presence.on('UpdateData', async () => {
           switch (pathname.split('/')[2]) {
             case 'categories':
               presenceData.details = 'Смотрит списки'
-              presenceData.state = textContent('.styles_activeCategory__mDu7i')
+              presenceData.state = textContent('a[aria-current="location"]')
               break
             case 'movies':
               presenceData.details = 'Смотрит список'
-              presenceData.state = textContent('.styles_title__jB8AZ')
+              presenceData.state = textContent('main > div:nth-of-type(1) h1')
               break
           }
           break
         case 'film':
           presenceData.details = 'Смотрит страницу фильма'
           if (!pathname.split('/')[3]) {
-            presenceData.state = textContent('.styles_title__65Zwx')
+            presenceData.state = textContent('h1 > span')
           }
           else {
             presenceData.state = `${textContent(
@@ -85,7 +87,7 @@ presence.on('UpdateData', async () => {
         case 'series':
           presenceData.details = 'Смотрит страницу сериала'
           if (!pathname.split('/')[3]) {
-            presenceData.state = textContent('.styles_title___itJ6 span')
+            presenceData.state = textContent('h1 > span')
           }
           else {
             presenceData.state = `${textContent(
@@ -96,12 +98,10 @@ presence.on('UpdateData', async () => {
         case 'name':
           presenceData.details = 'Смотрит страницу человека'
           if (!pathname.split('/')[3]) {
-            presenceData.state = pageTitle(' — ')?.[0]
+            presenceData.state = textContent('h1')
           }
           else {
-            presenceData.state = `${pageTitle(' — ')?.[0]} – ${
-              pageTitle(' — ')?.[1]
-            }`
+            presenceData.state = `${pageTitle(' — ')?.[0]} – ${pageTitle(' — ')?.[1]}`
           }
           break
         case 'media':
@@ -173,72 +173,108 @@ presence.on('UpdateData', async () => {
           break
         case 'user':
           presenceData.details = 'Смотрит профиль'
-          presenceData.state = pageTitle(':')?.[1]
-          break
-        case 'mykp':
-          presenceData.details = 'Смотрит свой профиль'
-          presenceData.state = pageTitle(':')?.[1]
+          presenceData.state = pageTitle() as string
           break
       }
       break
 
-    case 'hd.kinopoisk.ru':
+    case 'hd.kinopoisk.ru': {
+      presenceData.largeImageKey = ActivityAssets.Movies;
+      (presenceData as PresenceData).type = ActivityType.Watching
       presenceData.details = 'В онлайн-кинотеатре'
-      presenceData.largeImageKey = ActivityAssets.Movies
+      presenceData.state = textContent('div[data-tid="HeaderContentComponent"] a[aria-current="page"]')
 
-      if (document.querySelector('.FilmContent_wrapper__EicQU')) {
-        presenceData.details = `Смотрит информацию ${textContent(
-          '.FilmContent_wrapper__EicQU .TabList_root__Kwcez button',
-        )?.toLowerCase()}`
-        presenceData.state = document
-          .querySelector<HTMLImageElement>('.FilmContent_wrapper__EicQU img')
-          ?.alt
-          .replace('Смотреть', '')
-          .replace('фильм', '')
-        presenceData.smallImageKey = Assets.Viewing
+      const filmContents = document.querySelectorAll<HTMLDivElement>('div[data-tid="FilmContent"]')
+      const videoPlayerWrapper = document.querySelector<HTMLDivElement>('div[data-tid="ContentPlayerBody"]')
+        ?? document.querySelector<HTMLDivElement>('div[data-tid="PlayerView"]')
+
+      // Movies or Series previews
+      if (filmContents.length > 0) {
+        const lastFilmContent = filmContents[filmContents.length - 1]
+
+        if (lastFilmContent) {
+          const buttonElement = lastFilmContent.querySelector<HTMLButtonElement>('ul > li:first-child > button')
+          const typeContent = buttonElement?.textContent?.trim()?.toLowerCase()
+          const imgElement = lastFilmContent.querySelector<HTMLImageElement>('section h1 > img')
+          const imgAlt = imgElement?.alt
+            .replace('Смотреть', '')
+            .replace('фильм', '')
+
+          if (typeContent) {
+            presenceData.details = `Смотрит ${typeContent}`
+          }
+
+          if (imgAlt) {
+            presenceData.state = imgAlt
+          }
+
+          presenceData.smallImageKey = Assets.Viewing
+        }
       }
 
-      if (document.querySelector('.CrispySlideDown_fade_active__StELV')) {
-        presenceData.details = `Смотрит информацию ${textContent(
-          '.CrispySlideDown_fade_active__StELV .TabList_root__Kwcez button',
-        )?.toLowerCase()}`
-        presenceData.state = document
-          .querySelector<HTMLImageElement>(
-            '.CrispySlideDown_fade_active__StELV img',
-          )
-          ?.alt
-          .replace('Смотреть', '')
-          .replace('фильм', '')
-        presenceData.smallImageKey = Assets.Viewing
-      }
-
-      if (document.querySelector('.PlayerManager_body__rOEVd')) {
-        if (document.querySelector('.Meta_image__CXoKi')) {
-          contentTitle = document.querySelector<HTMLImageElement>('.Meta_image__CXoKi')?.alt
+      if (videoPlayerWrapper) {
+        // Movies or Series
+        if (videoPlayerWrapper.querySelector('div[data-tid="Image"] > img')) {
+          contentType = 'фильм'
+          contentTitle = videoPlayerWrapper.querySelector<HTMLImageElement>('div[data-tid="Meta"] div[data-tid="Image"] > img')?.alt
+        }
+        if (videoPlayerWrapper.querySelector('div[data-tid="Meta"] > div:last-child > div')) {
+          contentType = 'сериал'
+          contentSerieTitle = videoPlayerWrapper.querySelector<HTMLDivElement>('div[data-tid="Meta"] > div:last-child > div')?.textContent.trim()
         }
 
-        if (document.querySelector('.Meta_subtitle__jnooi'))
-          contentSerieTitle = textContent('.Meta_subtitle__jnooi')
-
-        if (contentTitle || contentSerieTitle) {
-          presenceData.details = `Смотрит ${
-            !privacy ? contentTitle : contentSerieTitle ? 'сериал' : 'фильм'
-          }`
-
-          const contentTimestamps = presence.getTimestampsfromMedia(
-            document.querySelector('video')!,
-          );
-
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestamps(contentTimestamps[0], contentTimestamps[1])
+        if (videoPlayerWrapper.querySelector('section[data-tid="ChannelPlayerMeta"]')) { // TV's
+          contentType = 'канал'
+          contentTitle = videoPlayerWrapper.querySelector<HTMLParagraphElement>('section[data-tid="ChannelPlayerMeta"] p[data-tid="Text"]')?.textContent.trim()
+          contentSerieTitle = videoPlayerWrapper.querySelector<HTMLParagraphElement>('section[data-tid="ChannelPlayerMeta"] > p')?.textContent?.trim()
+          if (!privacy)
+            presenceData.largeImageKey = videoPlayerWrapper.querySelector<HTMLImageElement>('.channel-icon')?.src ?? ActivityAssets.Movies
         }
-        else {
-          presenceData.details = 'Смотрит телеканал'
-          presenceData.startTimestamp = browsingTimestamp
+        else if (videoPlayerWrapper.querySelector('section[data-tid="SportEventPlayerMeta"]')) { // Sport VOD's
+          contentTitle = videoPlayerWrapper.querySelector<HTMLHeadingElement>('section[data-tid="SportEventPlayerMeta"] > header')?.textContent?.trim()
+          contentSerieTitle = [...videoPlayerWrapper.querySelectorAll<HTMLSpanElement>('section[data-tid="SportEventPlayerMeta"] div[data-tid="Scoreboard"] > span')].map(el => el.textContent.trim()).join(' - ')
+        }
+        else if (videoPlayerWrapper.querySelector('div[data-tid="HighlightPlayerMeta"]')) { // Sport Highlights
+          contentTitle = videoPlayerWrapper.querySelector<HTMLHeadingElement>('div[data-tid="HighlightPlayerMeta"] > h4')?.textContent?.trim()
+          contentSerieTitle = videoPlayerWrapper.querySelector<HTMLParagraphElement>('div[data-tid="HighlightPlayerMeta"] > h5')?.textContent.trim()
         }
 
-        isPaused = document.querySelector('.styles_play__lWZwM')
+        if (contentTitle) {
+          if (contentType)
+            presenceData.details = `Смотрит ${contentType}`
+          if (!privacy) {
+            if (useActivityName)
+              presenceData.name = contentTitle
 
-        presenceData.state = contentSerieTitle
+            presenceData.details = contentTitle
+            delete presenceData.state
+
+            if (contentSerieTitle) {
+              const [seasonNumber, episodeNumber, episodeTitle] = contentSerieTitle
+                .split(/[,.]\s*/)
+                .flatMap(x => Number.parseInt(x) || x)
+
+              if (seasonNumber && episodeNumber && episodeTitle) {
+                presenceData.details = useActivityName ? (episodeTitle as string) : contentTitle
+                presenceData.state = useActivityName
+                  ? `Сезон ${seasonNumber}, Эпизод ${episodeNumber}`
+                  : `S${seasonNumber}:E${episodeNumber} ${episodeTitle}`
+              }
+              else {
+                presenceData.state = contentSerieTitle
+              }
+            }
+          }
+
+          if (videoPlayerWrapper.querySelector<HTMLVideoElement>('video')) {
+            [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(
+              videoPlayerWrapper.querySelector<HTMLVideoElement>('video')!,
+            )
+          }
+        }
+
+        isPaused = videoPlayerWrapper.querySelector<HTMLButtonElement>('button[data-tid="PlayToggle"][aria-label="Смотреть"]')
+
         presenceData.smallImageKey = isPaused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = isPaused ? strings.pause : strings.play
 
@@ -248,13 +284,18 @@ presence.on('UpdateData', async () => {
         }
       }
       else {
+        contentType = null
         contentTitle = null
         contentSerieTitle = null
       }
       break
+    }
   }
 
-  if (privacy)
+  if (privacy) {
     delete presenceData.state
+    delete presenceData.startTimestamp
+    delete presenceData.endTimestamp
+  }
   presence.setActivity(presenceData)
 })

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "PreMiD",
@@ -20,7 +20,8 @@
     "mega.nz",
     "mega.io"
   ],
-  "version": "2.0.13",
+  "regExp": "^https?[:][/][/]mega[.](nz|io)[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MEGA/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MEGA/assets/thumbnail.png",
   "color": "#d90007",

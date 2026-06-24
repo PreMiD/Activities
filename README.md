@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://avatars3.githubusercontent.com/u/46326568?s=400&amp;u=15e4a4988014780288d30ffb969fd1569fec23e6&amp;v=4" width="128px" style="max-width:100%;">
+    <img src="https://avatars3.githubusercontent.com/u/46326568?s=400&amp;u=15e4a4988014780288d30ffb969fd1569fec23e6&amp;v=4" alt="PreMiD logo" width="128px" style="max-width:100%;">
     <h1>PreMiD Activities</h1>
 </div>
 
@@ -18,14 +18,12 @@ This repository contains the source code of all Activities that are available in
 Want to create your own Activity or modify an existing one? Great! Follow these simple steps:
 
 1. **Set up your development environment**
-
    - Install [Node.js](https://nodejs.org/) (version 20 or higher)
    - Clone this repository: `git clone https://github.com/PreMiD/Activities.git`
    - Navigate to the project directory: `cd Activities`
    - Install dependencies: `npm install`
 
 2. **Learn the basics**
-
    - Read our [documentation](https://docs.premid.app/) to understand how Activities work
    - Browse through existing Activities to see examples and best practices
 

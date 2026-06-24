@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "The Gamerzs",
@@ -10,7 +10,8 @@
     "en": "From your hobby to your career, your class notes to your final exam, your mood board to your runway show, padlets help you organize your life."
   },
   "url": "padlet.com",
-  "version": "1.0.22",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*padlet[.]com[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/padlet/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/padlet/assets/thumbnail.png",
   "color": "#303644",

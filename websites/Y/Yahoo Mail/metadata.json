@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "PreMiD",
@@ -19,7 +19,8 @@
     "zh": "雅虎邮箱是由雅虎营运的一款网络电子邮件（Webmail）服务，于1997年10月8日激活。雅虎邮箱是互联网上最大的网络电子邮件服务，有超过2.6亿的用户。"
   },
   "url": "mail.yahoo.com",
-  "version": "1.2.14",
+  "regExp": "^https?[:][/][/]mail[.]yahoo[.]com[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Yahoo%20Mail/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Yahoo%20Mail/assets/thumbnail.png",
   "color": "#6923D1",

@@ -29,31 +29,26 @@ export class PosterManager {
       return
 
     const backgroundImg
-            = bannerImage.style.background
-              || window.getComputedStyle(bannerImage).background
+      = bannerImage.style.background
+        || window.getComputedStyle(bannerImage).background
 
     const urlMatch = backgroundImg.match(/url\(["']?(.*?)["']?\)/)
     if (!urlMatch?.[1])
       return
 
-    this.savedPosterUrl = Utils.convertToLuiiUrl(
-      urlMatch[1],
-      'anime-details-banner',
-    )
+    this.savedPosterUrl = Utils.convertToAniziumde(urlMatch[1])
     this.seasonModeActive = false
   }
 
   private handleWatchPagePoster(): void {
     const animeImg
-            = document.querySelector<HTMLImageElement>('.image-box > img')?.src
+      = document.querySelector<HTMLImageElement>('.image-box > img')?.src
     if (!animeImg)
       return
 
-    const luiUrl = Utils.convertToLuiiUrl(animeImg, 'anime-poster')
-
     if (!this.seasonModeActive) {
       this.seasonModeActive = true
-      this.savedPosterUrl = luiUrl
+      this.savedPosterUrl = Utils.convertToAniziumde(animeImg)
     }
   }
 

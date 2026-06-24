@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Kubuś!",
@@ -13,7 +13,8 @@
     "vi": "Dịch vụ cung cấp VOD độc lập lớn nhất Phần Lan. Cung cấp phim và sê-ri chất lượng cao."
   },
   "url": "www.cda.pl",
-  "version": "2.0.13",
+  "regExp": "^https?[:][/][/](www[.])?cda[.]pl[/]",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/cda.pl/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/cda.pl/assets/thumbnail.png",
   "color": "#B22907",

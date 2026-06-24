@@ -177,7 +177,7 @@ presence.on('UpdateData', async () => {
       default: {
         presenceData.details = 'Browsing'
         presenceData.state = document.title.match(
-          /^(.*?)( \| The Weather Channel)?$/,
+          /^(.*?)(?: \| The Weather Channel)?$/,
         )?.[1]
         break
       }

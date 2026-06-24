@@ -104,5 +104,5 @@ presence.on('UpdateData', async () => {
     delete presenceData.state
   }
 
-  presence.setActivity(presenceData, true)
+  presence.setActivity(presenceData)
 })

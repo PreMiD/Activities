@@ -1,7 +1,7 @@
 import type {
   Resolver,
 } from './util/index.js'
-import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia, StatusDisplayType } from 'premid'
 import {
   checkStringLanguage,
   getMobileChapter,
@@ -67,6 +67,7 @@ presence.on('UpdateData', async () => {
     hideHome,
     hidePaused,
     showListening,
+    displayType,
   ] = [
     getSetting<string>('lang', 'en'),
     getSetting<boolean>('privacy', true),
@@ -81,6 +82,7 @@ presence.on('UpdateData', async () => {
     getSetting<boolean>('hideHome', false),
     getSetting<boolean>('hidePaused', true),
     getSetting<number>('showListening', 0),
+    getSetting<number>('displayType', 2),
   ]
   const { pathname, hostname, search, href } = document.location
   const isMobile = hostname === 'm.youtube.com'
@@ -161,16 +163,12 @@ presence.on('UpdateData', async () => {
             ?.src
             .replace(/=s\d+/, '=s512')
     }
-    const unlistedPathElement = document.querySelector<SVGPathElement>(
-      'g#privacy_unlisted > path',
+    const unlistedVideo = !!(
+      document.querySelector('badge-shape[aria-label="Unlisted"], yt-icon[aria-label="Unlisted"], [aria-label="Unlisted"]')
+      || Array.from(document.querySelectorAll('yt-badge-supported-renderer path, ytd-badge-supported-renderer path, badge-shape path')).some(
+        path => path.getAttribute('d') === 'M9 18c.226 0 .448-.012.667-.037A8.001 8.001 0 018.07 16H7a4 4 0 110-8h2a4 4 0 014 4 2 2 0 001.668 1.973A5.999 5.999 0 009 6H7a6 6 0 100 12h2Zm8 0a6 6 0 100-12h-2c-.225 0-.448.012-.667.036A8 8 0 0115.93 8H17a4 4 0 110 8h-2a4 4 0 01-4-4 2 2 0 00-1.668-1.973A6 6 0 0015 18h2Z',
+      )
     )
-    const unlistedBadgeElement = document.querySelector<SVGPathElement>(
-      'h1.title+ytd-badge-supported-renderer path',
-    )
-    const unlistedVideo = unlistedPathElement
-      && unlistedBadgeElement
-      && unlistedPathElement?.getAttribute('d')
-      === unlistedBadgeElement?.getAttribute('d')
     const videoId = resolver.getVideoID()!
     const [startTimestamp, endTimestamp] = getTimestampsFromMedia(video)
     const listening = showListening === ShowListening.Always
@@ -286,6 +284,21 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = YouTubeAssets.Shorts
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = video.paused ? strings.pause : strings.play
+    }
+
+    switch (displayType) {
+      case 0: {
+        presenceData.statusDisplayType = StatusDisplayType.Name
+        break
+      }
+      case 1: {
+        presenceData.statusDisplayType = StatusDisplayType.Details
+        break
+      }
+      case 2: {
+        presenceData.statusDisplayType = StatusDisplayType.State
+        break
+      }
     }
 
     if (!presenceData.details)

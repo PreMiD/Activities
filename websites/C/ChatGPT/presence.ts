@@ -57,9 +57,9 @@ presence.on('UpdateData', async () => {
     '[data-message-author-role="user"],[data-message-author-role="assistant"]',
   )) {
     const text = element.textContent
-      ?.replace(/(, )|(,\n)|(,)|(\. )|(\.)/g, ' ')
+      ?.replace(/, |,\n|,|\. |\./g, ' ')
       // eslint-disable-next-line regexp/no-dupe-disjunctions
-      .replace(/(\d*)|(\/)|(')|(,)|( )/g, '')
+      .replace(/\d*|[/', ]/g, '')
     if (text) {
       wordCount += text.split(' ').slice(2, text.split(' ').length).length
     }

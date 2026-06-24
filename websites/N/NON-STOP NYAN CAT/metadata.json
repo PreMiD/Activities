@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "sks316",
@@ -11,7 +11,8 @@
     "nl": "Eigenlijk gewoon een eindeloze Nyan Cat. Dat is alles wat er is."
   },
   "url": "www.nyan.cat",
-  "version": "1.1.26",
+  "regExp": "^https?[:][/][/](www[.])?nyan[.]cat[/]",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NON-STOP%20NYAN%20CAT/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NON-STOP%20NYAN%20CAT/assets/thumbnail.png",
   "color": "#0f4d8f",

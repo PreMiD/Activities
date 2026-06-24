@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "theusaf",
@@ -10,7 +10,8 @@
     "en": "TV Tropes, the all-devouring pop-culture wiki, catalogs and cross-references recurrent plot devices, archetypes, and tropes in all forms of media."
   },
   "url": "tvtropes.org",
-  "version": "1.0.21",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tvtropes[.]org[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TV%20Tropes/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TV%20Tropes/assets/thumbnail.png",
   "color": "#28323C",

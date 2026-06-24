@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { confirm, input, search } from '@inquirer/prompts'
 import chalk from 'chalk'
 import { Validator } from 'jsonschema'
+import { getDmcaServices, isDmcaBlocked } from '../util/dmca.js'
 import { getDiscordUser, getDiscordUserById } from '../util/getDiscordUser.js'
 import { getFolderLetter } from '../util/getFolderLetter.js'
 import { getSchema } from '../util/getSchema.js'
@@ -23,6 +24,11 @@ export async function newActivity(activity?: string) {
 
   if (!activity) {
     exit('Activity name is required')
+  }
+
+  const dmcaServices = await getDmcaServices()
+  if (isDmcaBlocked(activity, dmcaServices)) {
+    exit(`Activity "${activity}" is on the DMCA blocklist and cannot be created`)
   }
 
   const folderLetter = getFolderLetter(activity)
@@ -95,7 +101,7 @@ export async function newActivity(activity?: string) {
   }).catch(() => exit('Something went wrong.'))
 
   const metadata = {
-    $schema: 'https://schemas.premid.app/metadata/1.15',
+    $schema: 'https://schemas.premid.app/metadata/1.17',
     apiVersion: 1,
     author,
     service: activity,
@@ -103,6 +109,7 @@ export async function newActivity(activity?: string) {
       en: 'TODO',
     },
     url: 'google.com',
+    regExp: '^https?[:][/][/]([a-z0-9-]+[.])*google[.]com[/]',
     version: '1.0.0',
     logo: 'https://i.imgur.com/000000.png',
     thumbnail: 'https://i.imgur.com/000000.png',

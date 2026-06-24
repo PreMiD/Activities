@@ -34,9 +34,9 @@ class SakuraAIPresence {
     const settings = this.settingsManager.currentSettings
 
     const largeImage
-            = !settings?.privacy && settings?.showPosters && this.posterManager.posterUrl
-              ? this.posterManager.posterUrl
-              : Images.Logo
+      = !settings?.privacy && settings?.showPosters && this.posterManager.posterUrl
+        ? this.posterManager.posterUrl
+        : Images.Logo
     const presenceData: PresenceData = {
       largeImageKey: largeImage,
       startTimestamp: browsingTimestamp,

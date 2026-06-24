@@ -30,7 +30,7 @@ presence.on('UpdateData', async () => {
   // Genshin Impact
   if (
     href.includes('enka.network/u/')
-    && href.match(/enka\.network\/u\/(\d+)/)
+    && /enka\.network\/u\/\d+/.test(href)
   ) {
     const UID = href.match(/enka\.network\/u\/(\d+)/)![1]
     const characterName = document.querySelector('div.name')?.childNodes[0]?.nodeValue?.trim()
@@ -45,7 +45,7 @@ presence.on('UpdateData', async () => {
   // Honkai: Star Rail
   else if (
     href.includes('enka.network/hsr/')
-    && href.match(/enka\.network\/hsr\/(\d+)/)
+    && /enka\.network\/hsr\/\d+/.test(href)
   ) {
     const UID = href.match(/enka\.network\/hsr\/(\d+)/)![1]
     const characterName = document.querySelector('div.name')?.textContent
@@ -60,7 +60,7 @@ presence.on('UpdateData', async () => {
   // Zenless Zone Zero
   else if (
     href.includes('enka.network/zzz/')
-    && href.match(/enka\.network\/zzz\/(\d+)/)
+    && /enka\.network\/zzz\/\d+/.test(href)
   ) {
     const UID = href.match(/enka\.network\/zzz\/(\d+)/)![1]
     const characterName = document.querySelector('div.name')?.textContent
@@ -90,7 +90,7 @@ presence.on('UpdateData', async () => {
 
   // Profile
   else if (
-    href.match(/enka\.network\/u\/[^/]+/)
+    /enka\.network\/u\/[^/]+/.test(href)
   ) {
     const username = href.match(/enka\.network\/u\/([^/]+)/)![1]
     presenceData.details = 'Viewing a profile'
