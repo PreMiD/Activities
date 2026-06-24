@@ -184,7 +184,7 @@ presence.on('UpdateData', async () => {
       }
     }
     else if (paths[0] === 'studio') {
-      const activeStudioTab = getText('button[class*="bg-accent"][class*="text-accent-foreground"] span')
+      const activeStudioTab = getText('button[class*="bg-accent"][class*="text-accent-foreground"] span') || getText('p.min-w-0.truncate.text-2xl.font-semibold')
       presenceData.state = activeStudioTab ? `Studio (${activeStudioTab})` : 'Studio'
     }
     else if (paths[0] === 'store') {
@@ -243,17 +243,21 @@ presence.on('UpdateData', async () => {
       const topicName = getText('a.fancy-title') || getText('a.topic-link span')
       const topicCreator = getText('article#post_1 .first.full-name a')
       if (topicName) {
-        presenceData.state = `Topic: "${topicName}${topicCreator ? `" by ${topicCreator}` : ''}`
+        presenceData.state = `Topic: "${topicName}"${topicCreator ? ` by ${topicCreator}` : ''}`
       }
       else {
         presenceData.state = 'Viewing a Topic'
       }
     }
     else if (paths[0] === 'c') {
-      const categorySpan = document.querySelector('span.badge-category__name')
-      const categoryName = categorySpan?.textContent?.trim()
-      if (categoryName) {
-        presenceData.state = `Category: ${categoryName}`.trim()
+      const categoryName = document.querySelector('.category-breadcrumb__category-selector .badge-category__name')?.textContent?.trim()
+      const subcategoryName = document.querySelector('.category-breadcrumb__subcategory-selector .badge-category__name')?.textContent?.trim()
+
+      if (categoryName && subcategoryName) {
+        presenceData.state = `Category: ${categoryName} (${subcategoryName})`
+      }
+      else if (categoryName) {
+        presenceData.state = `Category: ${categoryName}`
       }
       else {
         presenceData.state = 'Viewing a Category'
