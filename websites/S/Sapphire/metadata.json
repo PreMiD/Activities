@@ -21,5 +21,14 @@
   "thumbnail": "https://cdn.discordapp.com/banners/678344927997853742/9851578ed3c468ba0809ad1385fb6011.webp?size=1024",
   "color": "#24b9fb",
   "category": "other",
-  "tags": ["discord", "bot", "logging", "automod"]
+  "tags": ["discord", "bot", "logging", "automod"],
+  "settings": [
+    {
+      "id": "lang",
+      "title": "Language",
+      "icon": "mdi-translate",
+      "values": ["English", "Hungarian"],
+      "value": 0
+    }
+  ]
 }
