@@ -749,9 +749,9 @@ declare global {
      * ```
      * @since 2.14
      */
-    execInPage<T = unknown>(
-      fn: (...args: any[]) => T | Promise<T>,
-      ...args: unknown[]
+    execInPage<T = unknown, A extends unknown[] = unknown[]>(
+      fn: (...args: A) => T | Promise<T>,
+      ...args: A
     ): Promise<T>
     /**
      * Declarative, CSP-immune variant of `execInPage`. Reads a value (`get`) or
@@ -928,9 +928,9 @@ declare global {
      * extensions don't throw.
      * @since 2.14
      */
-    execInPage<T = unknown>(
-      fn: (...args: any[]) => T | Promise<T>,
-      ...args: unknown[]
+    execInPage<T = unknown, A extends unknown[] = unknown[]>(
+      fn: (...args: A) => T | Promise<T>,
+      ...args: A
     ): Promise<T>
     execInPage<T = unknown>(spec: ExecInPageSpec): Promise<T>
     /**
