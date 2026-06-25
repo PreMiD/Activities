@@ -12,15 +12,15 @@ function getChapterTitle(): string {
   const title = titleMatch?.[1] ?? document.title
 
   // truncate long titles and add ellipsis on it
-  return title.length > 128 ? title.substring(0, 125) + '...' : title
+  return title.length > 128 ? `${title.substring(0, 125)}...` : title
 }
-  
+
 presence.on('UpdateData', async () => {
   const { pathname } = document.location
 
   const i18n = await presence.getStrings({
     browsing: 'general.browsing',
-    reading: 'general.reading'
+    reading: 'general.reading',
   })
 
   const presenceData: PresenceData = {
@@ -31,17 +31,21 @@ presence.on('UpdateData', async () => {
   if (pathname === '/' || pathname === '') {
     presenceData.details = i18n.browsing
     presenceData.state = 'Homepage'
-  } else if (pathname === '/table-of-content/' || pathname === '/table-of-content') {
+  }
+  else if (pathname === '/table-of-content/' || pathname === '/table-of-content') {
     presenceData.details = i18n.browsing
     presenceData.state = 'Table of Contents'
-  } else if (/^\/arc-\d+\/?$/.test(pathname)) {
+  }
+  else if (/^\/arc-\d+\/?$/.test(pathname)) {
     const arcNumber = pathname.match(/\d+/)?.[0]
     presenceData.details = i18n.browsing
     presenceData.state = arcNumber ? `Arc ${arcNumber}` : 'Browsing an arc'
-  } else if (/^\/\d{4}\/\d{2}\/\d{2}\/[^/]+\/?$/.test(pathname)) {
+  }
+  else if (/^\/\d{4}\/\d{2}\/\d{2}\/[^/]+\/?$/.test(pathname)) {
     presenceData.details = i18n.reading
     presenceData.state = getChapterTitle()
-  } else {
+  }
+  else {
     presence.clearActivity()
     return
   }
