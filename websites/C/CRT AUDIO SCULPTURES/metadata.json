@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.10",
+  "author": {
+    "name": "Mazin",
+    "id": "765119143745290280"
+  },
+  "service": "CRT // AUDIO SCULPTURES",
+  "altnames": [],
+  "description": {
+    "en": "Rich Presence for CRT // AUDIO SCULPTURES, a custom WebGL music player."
+  },
+  "url": "mzn-visuals.github.io/crt-audio-sculptures",
+  "regExp": "^https:\\/\\/mzn-visuals\\.github\\.io\\/crt-audio-sculptures\\/?.*",
+  "version": "1.0.0",
+  "logo": "https://dl.dropboxusercontent.com/scl/fi/1frrc96dnawl5c4w0hzu1/logo-crt.png?rlkey=4ffmgrqbcc84xxdx5x2cdh2ak&st=kkmc2go6",
+  "thumbnail": "https://dl.dropboxusercontent.com/scl/fi/1frrc96dnawl5c4w0hzu1/logo-crt.png?rlkey=4ffmgrqbcc84xxdx5x2cdh2ak&st=kkmc2go6",
+  "color": "#7DF9FF",
+  "tags": ["music", "player"],
+  "category": "music",
+  "iframe": false
+}
