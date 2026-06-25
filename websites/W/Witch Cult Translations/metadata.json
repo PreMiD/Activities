@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "348028456723939329",
+    "name": "randomchaffee"
+  },
+  "service": "Witch Cult Translations",
+  "description": {
+    "en": "Witch Cult Translations is a fan translation archive for the Re:Zero web novel"
+  },
+  "url": "witchculttranslation.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*witchculttranslation[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/sHlFaYG.png",
+  "thumbnail": "https://i.imgur.com/jfrYMuW.png",
+  "color": "#5B39A8",
+  "category": "other",
+  "tags": [
+    "rezero",
+    "webnovel",
+    "translations"
+  ],
+  "settings": [
+    {
+      "id": "multiLanguage",
+      "multiLanguage": true
+    }
+  ]
+}
