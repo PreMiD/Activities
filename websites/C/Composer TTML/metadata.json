@@ -15,7 +15,7 @@
     "composer.betterlyrics.org"
   ],
   "regExp": "^https?[:][/][/]composer[.](boidu[.]dev|betterlyrics[.]org)[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Composer%20TTML/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Composer%20TTML/assets/thumbnail.png",
   "color": "#f20c32",
