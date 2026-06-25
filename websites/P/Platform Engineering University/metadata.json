@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "263735224221827072",
+    "name": "AlperShal"
+  },
+  "service": "Platform Engineering University",
+  "description": {
+    "en": "The home for platform engineering learning and certifications."
+  },
+  "url": "university.platformengineering.org",
+  "regExp": "^https?[:][/][/]university[.]platformengineering[.]org[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/iNgO4NQ.png",
+  "thumbnail": "https://i.imgur.com/c6wvuf2.png",
+  "color": "#000000",
+  "category": "videos",
+  "tags": [
+    "education",
+    "course",
+    "learning",
+    "engineering",
+    "tutorial",
+    "devops",
+    "platform"
+  ]
+}
