@@ -10,7 +10,7 @@
     "en": "Rich Presence for CRT AUDIO SCULPTURES, a custom WebGL music player."
   },
   "url": "mzn-visuals.github.io",
-  "regExp": "^https:\\/\\/mzn-visuals\\.github\\.io\\/crt-audio-sculptures\\/?.*",
+  "regExp": "^https:\\/\\/mzn-visuals\\.github\\.io\\/(crt-audio-sculptures\\/?.*)?$",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/4OUP9S2.png",
   "thumbnail": "https://i.imgur.com/FelB3YG.png",
