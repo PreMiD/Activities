@@ -174,8 +174,8 @@ For pages whose Content-Security-Policy blocks `eval`, pass a declarative spec i
 | `get`    | `string`    | Dot-path to a value on `window` to read (e.g. `'player.track.name'`).    |
 | `call`   | `string`    | Dot-path to a page function to invoke (e.g. `'spotifyPlayer.getState'`). |
 | `args`   | `unknown[]` | Arguments passed to the `call` function (must be serializable).          |
-| `pick`   | `string[]`  | Keep only these top-level keys of the result.                            |
-| `omit`   | `string[]`  | Drop these top-level keys from the result.                               |
+| `pick`   | `string[]`  | Keep only these keys of the result. Dot-paths allowed (e.g. `'track.name'`). |
+| `omit`   | `string[]`  | Drop these keys from the result. Dot-paths allowed (e.g. `'track.art'`).  |
 
 ##### Example
 
@@ -188,6 +188,12 @@ const state = await presence.execInPage({
   call: 'spotifyPlayer.getState',
   pick: ['paused', 'position'],
 })
+
+// Dot-paths pull nested fields out of a call result
+const track = await presence.execInPage({
+  call: 'spotifyPlayer.getState',
+  pick: ['track.name', 'track.artist'],
+}) // → { track: { name, artist } }
 ```
 
 ### onRequest

@@ -454,9 +454,9 @@ declare global {
     call?: string
     /** Arguments passed to the `call` function (must be serializable). */
     args?: unknown[]
-    /** Only keep these top-level keys of the result. */
+    /** Keep only these keys of the result. Dot-paths allowed, e.g. `'track.name'`. */
     pick?: string[]
-    /** Drop these top-level keys from the result. */
+    /** Drop these keys from the result. Dot-paths allowed, e.g. `'track.art'`. */
     omit?: string[]
   }
 
