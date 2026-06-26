@@ -169,13 +169,13 @@ if (supports(presence, 'execInPage')) {
 
 For pages whose Content-Security-Policy blocks `eval`, pass a declarative spec instead of a closure. It reads a value or calls a page function by dot-path — no code evaluation, so it works under strict CSP.
 
-| Property | Type        | Description                                                              |
-| -------- | ----------- | ------------------------------------------------------------------------ |
-| `get`    | `string`    | Dot-path to a value on `window` to read (e.g. `'player.track.name'`).    |
-| `call`   | `string`    | Dot-path to a page function to invoke (e.g. `'spotifyPlayer.getState'`). |
-| `args`   | `unknown[]` | Arguments passed to the `call` function (must be serializable).          |
+| Property | Type        | Description                                                                  |
+| -------- | ----------- | ---------------------------------------------------------------------------- |
+| `get`    | `string`    | Dot-path to a value on `window` to read (e.g. `'player.track.name'`).        |
+| `call`   | `string`    | Dot-path to a page function to invoke (e.g. `'spotifyPlayer.getState'`).     |
+| `args`   | `unknown[]` | Arguments passed to the `call` function (must be serializable).              |
 | `pick`   | `string[]`  | Keep only these keys of the result. Dot-paths allowed (e.g. `'track.name'`). |
-| `omit`   | `string[]`  | Drop these keys from the result. Dot-paths allowed (e.g. `'track.art'`).  |
+| `omit`   | `string[]`  | Drop these keys from the result. Dot-paths allowed (e.g. `'track.art'`).     |
 
 ##### Example
 
