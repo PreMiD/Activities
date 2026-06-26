@@ -27,7 +27,7 @@ presence.on('UpdateData', async () => {
 
     data.details = 'Viewing a Hub'
     data.state = hubName
-    data.smallImageKey = 'logo'
+    data.smallImageKey = 'https://i.imgur.com/w5FbdFC.png'
     data.smallImageText = 'Hangar'
   }
   else if (path.startsWith('/profile/')) {
