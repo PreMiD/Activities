@@ -1,4 +1,4 @@
-import type { ComposerAudioDB, ComposerLyricsDB } from './types.js'
+import type { ComposerLyricsDB } from './types.js'
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
@@ -97,14 +97,13 @@ async function updatePresence() {
       const storeName = db.objectStoreNames.contains('projects') && 'projects'
       if (storeName) {
         const result: ComposerLyricsDB | null = await readDB(db, storeName, 'current')
-        const audio: ComposerAudioDB | null = await readDB(db, storeName, 'current-audio')
 
         if (result) {
           presenceData.details += ` | ${result.lines.length} lines`
-        }
+          presenceData.largeImageText = result.metadata.title
 
-        if (audio) {
-          presenceData.largeImageText = audio.name
+          presenceData.largeImageKey = result.audioSource?.kind === 'file' ? ActivityAssets.Logo : result.metadata.thumbnailDataUrl
+          presenceData.smallImageKey = result.audioSource?.kind === 'file' ? Assets.Writing : ActivityAssets.Logo
         }
       }
     }
