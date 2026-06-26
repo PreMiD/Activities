@@ -124,6 +124,153 @@ const {
 )
 ```
 
+### execInPage
+
+::: tip Requires extension 2.14+
+`execInPage` was added in extension **2.14**. Activities run on every installed version, so guard the call with the bundled [`supports`](/v1/api/utility-functions#supports) helper — on older extensions the method is missing, and feature-detecting lets it degrade gracefully instead of throwing.
+:::
+
+<!-- eslint-skip -->
+
+```typescript
+execInPage<T = unknown, A extends unknown[] = unknown[]>(fn: (...args: A) => T | Promise<T>, ...args: A): Promise<T>;
+execInPage<T = unknown>(spec: ExecInPageSpec): Promise<T>;
+```
+
+Runs code in the **web page's own realm** and resolves with its return value. Unlike [`getPageVariable`](#getpagevariable), which only reads a variable, `execInPage` runs a function _inside the page_ — so you can call the page's own functions and reshape the result before it is sent back to the activity.
+
+The return value must be **JSON-serializable**. Strip non-serializable parts (DOM nodes, streams, circular references) inside the function before returning.
+
+::: warning The closure is isolated
+The function is serialized and re-evaluated in the page, so it **cannot reference activity-side variables** (imports, closures, module scope). Pass any values it needs as trailing arguments — they are forwarded to the function with their types preserved.
+:::
+
+#### Function form
+
+##### Parameters
+
+- `fn`: A function executed in the page. Receives `...args` and returns a serializable value (or a promise of one).
+- `args`: Serializable values forwarded to `fn` as arguments.
+
+##### Example
+
+```typescript
+import { supports } from 'premid'
+
+if (supports(presence, 'execInPage')) {
+  const track = await presence.execInPage((userId) => {
+    const state = window.spotifyPlayer.getCurrentState()
+    return { userId, title: state.track.name, paused: state.paused }
+  }, currentUserId)
+}
+```
+
+#### Declarative form (`ExecInPageSpec`)
+
+For pages whose Content-Security-Policy blocks `eval`, pass a declarative spec instead of a closure. It reads a value or calls a page function by dot-path — no code evaluation, so it works under strict CSP.
+
+| Property | Type        | Description                                                                  |
+| -------- | ----------- | ---------------------------------------------------------------------------- |
+| `get`    | `string`    | Dot-path to a value on `window` to read (e.g. `'player.track.name'`).        |
+| `call`   | `string`    | Dot-path to a page function to invoke (e.g. `'spotifyPlayer.getState'`).     |
+| `args`   | `unknown[]` | Arguments passed to the `call` function (must be serializable).              |
+| `pick`   | `string[]`  | Keep only these keys of the result. Dot-paths allowed (e.g. `'track.name'`). |
+| `omit`   | `string[]`  | Drop these keys from the result. Dot-paths allowed (e.g. `'track.art'`).     |
+
+##### Example
+
+```typescript
+// Read a nested value
+const title = await presence.execInPage<string>({ get: 'player.track.name' })
+
+// Call a page function and keep only some fields of the result
+const state = await presence.execInPage({
+  call: 'spotifyPlayer.getState',
+  pick: ['paused', 'position'],
+})
+
+// Dot-paths pull nested fields out of a call result
+const track = await presence.execInPage({
+  call: 'spotifyPlayer.getState',
+  pick: ['track.name', 'track.artist'],
+}) // → { track: { name, artist } }
+```
+
+### onRequest
+
+::: tip Requires extension 2.14+
+`onRequest` was added in extension **2.14**. Guard the call with the bundled [`supports`](/v1/api/utility-functions#supports) helper so it degrades gracefully on older extensions.
+:::
+
+<!-- eslint-skip -->
+
+```typescript
+onRequest(filter: RequestFilter, callback: (request: InterceptedRequest) => void): () => void;
+```
+
+**Reads** (never modifies) requests the page makes via `fetch` or `XMLHttpRequest`, including requests made inside the activity's iframes. Use it to pull data straight from a site's own API responses instead of scraping the DOM.
+
+Interception runs from `document_start`. Requests that complete **before** your activity registers a filter are replayed to the callback with request metadata only — no `responseBody`.
+
+#### Parameters
+
+- `filter` (`RequestFilter`): Which requests to match. Omitting a field matches everything for that field.
+
+  | Property | Type                 | Description                                                     |
+  | -------- | -------------------- | --------------------------------------------------------------- |
+  | `url`    | `string \| RegExp`   | Match the request URL — substring (string) or pattern (RegExp). |
+  | `method` | `string \| string[]` | Match the HTTP method (case-insensitive). One or many.          |
+
+- `callback`: Invoked with an `InterceptedRequest` for each matching request.
+
+#### Returns
+
+An **unsubscribe** function. Call it to stop receiving requests (e.g. when the relevant page section is gone).
+
+#### InterceptedRequest
+
+A read-only snapshot of the request and its response passed to the callback:
+
+| Property          | Type                     | Description                                               |
+| ----------------- | ------------------------ | --------------------------------------------------------- |
+| `url`             | `string`                 | Request URL                                               |
+| `method`          | `string`                 | HTTP method                                               |
+| `requestHeaders`  | `Record<string, string>` | Request headers                                           |
+| `requestBody`     | `string \| null`         | Request body, if any                                      |
+| `status`          | `number`                 | Response status code                                      |
+| `statusText`      | `string`                 | Response status text                                      |
+| `ok`              | `boolean`                | `true` for 2xx responses                                  |
+| `responseHeaders` | `Record<string, string>` | Response headers                                          |
+| `responseBody`    | `string \| null`         | Response body (`null` for requests replayed at page load) |
+| `frameUrl`        | `string`                 | URL of the frame the request originated from              |
+| `timestamp`       | `number`                 | When the request completed (Unix ms)                      |
+
+#### Example
+
+```typescript
+import { supports } from 'premid'
+
+if (supports(presence, 'onRequest')) {
+  const unsubscribe = presence.onRequest(
+    { url: '/youtubei/v1/player', method: 'POST' },
+    (request) => {
+      if (!request.responseBody)
+        return
+
+      const { videoDetails } = JSON.parse(request.responseBody)
+      // videoDetails.title, videoDetails.author, videoDetails.lengthSeconds, ...
+    },
+  )
+
+  // Later, to stop listening:
+  // unsubscribe()
+}
+```
+
+::: warning Read-only
+`onRequest` can only observe requests — it cannot modify, block, or replay them. It is intended for reading data the page already fetches, not for making your own requests.
+:::
+
 ### getSetting
 
 <!-- eslint-skip -->
