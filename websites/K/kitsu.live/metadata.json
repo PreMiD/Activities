@@ -10,6 +10,7 @@
     "en": "kitsu.live is a premium anime streaming and manga reading platform."
   },
   "url": "kitsu.live",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kitsu[.]live[/]",
   "version": "1.0.0",
   "logo": "https://kitsu.live/favicon.png",
   "thumbnail": "https://kitsu.live/assets/hero_banner.png",
