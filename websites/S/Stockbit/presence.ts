@@ -76,6 +76,29 @@ presence.on('UpdateData', async () => {
           presenceData.details = 'In a stock screener'
           break
         }
+        case 'broker-activity': {
+          presenceData.details = 'Analyzing broker activity'
+          break
+        }
+        case 'broker-analysis': {
+          switch (pathList[1]) {
+            case 'broker': {
+              presenceData.details = 'Analyzing broker activity'
+              break
+            }
+            case 'stock': {
+              const buttonParagraphs = document.querySelectorAll('button p')
+              const symbolName = buttonParagraphs?.[0]?.textContent?.trim() || ''
+              const symbolFullName = buttonParagraphs?.[1]?.textContent?.trim() || ''
+              const symbolLogo = document.querySelector<HTMLImageElement>('img.ant-image-img')?.src
+              presenceData.smallImageKey = symbolLogo
+              presenceData.smallImageText = symbolFullName || symbolName
+              presenceData.details = 'Analyzing stock activity'
+              break
+            }
+          }
+          break
+        }
         case 'academy': {
           if (pathname.startsWith('/academy/modules')) {
             const moduleName = document.querySelector('meta[name="title"]')?.getAttribute('content') || ''
