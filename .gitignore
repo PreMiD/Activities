@@ -38,3 +38,4 @@ pmd-results.sarif
 # Coverage files
 coverage
 package-lock.json
+package-lock.json
