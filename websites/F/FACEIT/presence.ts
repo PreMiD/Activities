@@ -9,17 +9,17 @@ enum ActivityAssets {
   FaceIt = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/logo.png',
   CounterStrike = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/0.png',
   LevelUnranked = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/1.jpeg', // Have to find this one yet
-  LevelOne = 'https://i.imgur.com/DyExzdt.png',
-  LevelTwo = 'https://i.imgur.com/IgobSgN.png',
-  LevelThree = 'https://i.imgur.com/4fany8w.png',
-  LevelFour = 'https://i.imgur.com/pZcdHnt.png',
-  LevelFive = 'https://i.imgur.com/yhVZAAA.png',
-  LevelSix = 'https://i.imgur.com/n7aQqnL.png',
-  LevelSeven = 'https://i.imgur.com/AEdMweq.png',
-  LevelEight = 'https://i.imgur.com/YtXby35.png',
-  LevelNine = 'https://i.imgur.com/8ylxfwg.png',
-  LevelTen = 'https://i.imgur.com/fNAVG59.png',
-  LevelEleven = 'https://i.imgur.com/YDaaHND.png',
+  LevelOne = 'https://i.imgur.com/zfPjOpW.png',
+  LevelTwo = 'https://i.imgur.com/uGg07ME.png',
+  LevelThree = 'https://i.imgur.com/rBZNQw1.png',
+  LevelFour = 'https://i.imgur.com/332osDz.png',
+  LevelFive = 'https://i.imgur.com/r467Gdi.png',
+  LevelSix = 'https://i.imgur.com/QIokBiU.png',
+  LevelSeven = 'https://i.imgur.com/lpKwHTa.png',
+  LevelEight = 'https://i.imgur.com/LLrEhec.png',
+  LevelNine = 'https://i.imgur.com/QuVe40E.png',
+  LevelTen = 'https://i.imgur.com/H8bBSgU.png',
+  LevelEleven = 'https://i.imgur.com/P1QjPqd.png',
 }
 
 function getLevelAsset(level: string): string | null {
