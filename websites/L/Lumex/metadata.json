@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1288129332455149619",
+    "name": ".daniyt_th."
+  },
+  "service": "Lumex",
+  "description": {
+    "en": "Hi, I'm Lumex! I mainly handle moderation and will help you set up your server.",
+    "hu": "Szia, én Lumex vagyok! Főként moderálással foglalkozom, segítek felépíteni a szervered."
+  },
+  "url": ["https://lumex.hu", "https://status.lumex.hu"],
+  "regExp": "^https?://([a-z0-9-]+\\.)*(lumex\\.hu|status\\.lumex\\.hu)/",
+  "version": "1.0.0",
+  "logo": "https://cdn.discordapp.com/avatars/1498333732174827611/b07191c9a033296655b5409f1c10962c.webp",
+  "thumbnail": "https://cdn.discordapp.com/avatars/1498333732174827611/b07191c9a033296655b5409f1c10962c.webp",
+  "color": "#005fbe",
+  "category": "other",
+  "tags": ["bot", "automod", "logging"]
+}
