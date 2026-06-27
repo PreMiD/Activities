@@ -1,1 +1,14 @@
-
+{
+  "watchingMemorial": {
+    "message": "Vendo memorial: {name}"
+  },
+  "visitingCemetery": {
+    "message": "Visitando cemitério"
+  },
+  "searchingMemorials": {
+    "message": "Pesquisando memorials"
+  },
+  "browsing": {
+    "message": "Navegando no Find A Grave"
+  }
+}
