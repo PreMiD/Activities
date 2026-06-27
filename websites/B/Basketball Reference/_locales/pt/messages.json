@@ -1,1 +1,26 @@
-
+{
+  "viewingPlayer": {
+    "message": "Olhando estatísticas do jogador"
+  },
+  "viewingTeam": {
+    "message": "Olhando estatísticas do time"
+  },
+  "browsingSeason": {
+    "message": "Navegando na temporada"
+  },
+  "viewingBoxScore": {
+    "message": "Olhando placar do jogo"
+  },
+  "browsingLeaders": {
+    "message": "Navegando em líderes e recordes"
+  },
+  "browsingPlayoffs": {
+    "message": "Navegando nos playoffs"
+  },
+  "searching": {
+    "message": "Pesquisando"
+  },
+  "browsingHome": {
+    "message": "Navegando no Basketball Reference"
+  }
+}
