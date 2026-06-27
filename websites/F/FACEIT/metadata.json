@@ -12,7 +12,7 @@
   },
   "url": "faceit.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*faceit[.]com[/]",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/thumbnail.png",
   "color": "#FF5500",
