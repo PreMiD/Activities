@@ -1,1 +1,14 @@
-
+{
+  "watchingMemorial": {
+    "message": "Viewing memorial: {name}"
+  },
+  "visitingCemetery": {
+    "message": "Visiting cemetery"
+  },
+  "searchingMemorials": {
+    "message": "Searching memorials"
+  },
+  "browsing": {
+    "message": "Browsing Find A Grave"
+  }
+}
