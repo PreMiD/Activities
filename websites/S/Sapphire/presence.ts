@@ -270,8 +270,9 @@ type LangCode = keyof typeof LANG
 let currentLang: LangCode = 'en'
 
 async function loadLanguage() {
-  const lang = await presence.getSetting<string>('lang').catch(() => 'en')
-  currentLang = lang === 'hu' || lang === 'en' ? lang : 'en'
+  const langSetting = await presence.getSetting<number>('lang')
+  currentLang = langSetting === 1 ? 'hu' : 'en'
+
 }
 
 /* -----------------------------------------
