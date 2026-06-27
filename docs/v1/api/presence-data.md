@@ -32,6 +32,7 @@ Both extend the `BasePresenceData` interface, which contains the common properti
 | `smallImageUrl`    | `string \| null`                             | URL that is opened when clicking on the small image                                               |
 | `smallImageText`   | `string \| Node \| null`                     | Tooltip for the smallImageKey                                                                     |
 | `buttons`          | `[ButtonData, ButtonData?]`                  | Array of buttons (max 2)                                                                          |
+| `party`            | `PartyData`                                  | Party size shown on the activity, e.g. "2 of 5". Only honored on `ActivityType.Playing`           |
 
 ### Media-Specific Properties (MediaPresenceData)
 
@@ -55,6 +56,27 @@ The `ButtonData` interface defines the structure of buttons that can be added to
 | -------- | ------------------------------------- | ------------------- |
 | `label`  | `string \| Node \| null`              | Text for the button |
 | `url`    | `string \| HTMLAnchorElement \| null` | URL of button link  |
+
+## PartyData Interface
+
+The `party` property displays a party size on the activity, rendered by Discord as e.g. "2 of 5". It is only honored when `type` is `ActivityType.Playing`.
+
+| Property       | Type     | Description                                                             |
+| -------------- | -------- | ----------------------------------------------------------------------- |
+| `partyId`      | `string` | Optional identifier for the party. Generated automatically when omitted |
+| `partySize`    | `number` | Current number of members in the party                                  |
+| `maxPartySize` | `number` | Maximum number of members the party can hold                            |
+
+```typescript
+const presenceData: PresenceData = {
+  type: ActivityType.Playing,
+  details: 'In a match',
+  party: {
+    partySize: 2,
+    maxPartySize: 5
+  }
+}
+```
 
 ## ActivityType Enum
 

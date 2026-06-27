@@ -1,5 +1,6 @@
 import antfu from '@antfu/eslint-config'
 import eslintPluginJsonSchemaValidator from 'eslint-plugin-json-schema-validator'
+import premidPlugin from './eslint-rules/premid-plugin.mjs'
 
 export default antfu(
   {
@@ -72,6 +73,9 @@ export default antfu(
   },
   {
     files: ['websites/**/*.ts'],
+    plugins: {
+      premid: premidPlugin,
+    },
     languageOptions: {
       parser: await import('@typescript-eslint/parser'),
       parserOptions: {
@@ -80,6 +84,7 @@ export default antfu(
     },
     rules: {
       'ts/no-deprecated': 'error',
+      'premid/require-support-check': 'error',
     },
   },
 )
