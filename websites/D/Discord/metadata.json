@@ -20,7 +20,8 @@
     "tr": "Discord; ücretsiz, güvenli ve hem masaüstünüzde hem de telefonunuzda çalışan oyuncular için hepsi bir arada sesli ve yazılı sohbet uygulamasıdır.",
     "vi": "Phần mềm nhắn tin và trò chuyện tất cả trong một dành cho gamer. Miễn phí, bảo mật, và dùng được trên cả máy tính và điện thoại.",
     "zh": "Discord是一款专为电子游戏社区设计的免费网络实时通话软件与数字发行平台。",
-    "zh-tw": "Discord是一款專為電子遊戲社區設計的免費網路即時通話軟體與數位發行平台。"
+    "zh-tw": "Discord是一款專為電子遊戲社區設計的免費網路即時通話軟體與數位發行平台。",
+    "hu": "Ingyenes, biztonságos, asztali számítógépen és okostelefonon egyaránt használható, mindenre kiterjedő hang- és szöveges csevegőalkalmazás játékosok számára."
   },
   "url": "discord.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(discord[.]com|discord[.]gg|discordapp[.]com|discordmerch[.]com|discordstatus[.]com)[/]",
@@ -29,11 +30,7 @@
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord/assets/thumbnail.png",
   "color": "#7289DA",
   "category": "socials",
-  "tags": [
-    "chat",
-    "gaming",
-    "voice"
-  ],
+  "tags": ["chat", "gaming", "voice"],
   "settings": [
     {
       "id": "lang",
@@ -83,11 +80,7 @@
       "title": "Icon",
       "icon": "fab fa-discord",
       "value": 0,
-      "values": [
-        "White",
-        "Blurple",
-        "Black"
-      ]
+      "values": ["White", "Blurple", "Black"]
     }
   ]
 }
