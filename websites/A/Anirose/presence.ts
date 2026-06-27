@@ -33,7 +33,7 @@ presence.on(
 
 function extractAnimeTitle(title: string): string {
   return title
-    .replace(/\s*[|\-]\s*AniRose.*$/i, '')
+    .replace(/\s*[|\-]\s*(?:anirose|anigum).*$/i, '')
     .replace(/^watch\s*[:\-]?\s*/i, '')
     .replace(/\s+(?:english\s+)?(?:sub|dub)(?:bed)?\b.*$/i, '')
     .replace(/\s+online\s+free.*$/i, '')
