@@ -20,23 +20,30 @@ presence.on('UpdateData', async () => {
       ?? document.querySelector('h1')?.textContent?.trim()
       ?? 'Memorial'
     const dates = document.querySelector('.memorial-dates')?.textContent?.trim() ?? ''
-    presenceData.details = `Vendo memorial: ${name}`
+    
+    // Mudança aqui: Usa a tradução + o nome do memorial
+    presenceData.details = `${presence.getString('browsingMemorials')}: ${name}`
     presenceData.state = dates || 'Find A Grave'
   }
   else if (path.includes('/cemetery/')) {
     const name = document.querySelector('h1')?.textContent?.trim() ?? 'Cemitério'
-    presenceData.details = 'Visitando cemitério'
+    
+    // Mudança aqui: Usa a tradução
+    presenceData.details = presence.getString('browsingCemeteries')
     presenceData.state = name
   }
   else if (path.includes('/memorial') || path.includes('/search')) {
     const query = new URLSearchParams(document.location.search).get('firstname')
       ?? new URLSearchParams(document.location.search).get('lastname')
       ?? ''
-    presenceData.details = 'Pesquisando memorials'
+    
+    // Mudança aqui: Usa a tradução
+    presenceData.details = presence.getString('searchingMemorials')
     presenceData.state = query ? `"${query}"` : 'Find A Grave'
   }
   else {
-    presenceData.details = 'Navegando no Find A Grave'
+    // Mudança aqui: Usa a tradução
+    presenceData.details = presence.getString('browsingHome')
   }
 
   presence.setActivity(presenceData)
