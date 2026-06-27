@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-const defaultLogo = 'https://res.cloudinary.com/debvitdiw/image/upload/v1782274767/Nelvix.png'
+const defaultLogo = 'https://res.cloudinary.com/debvitdiw/image/upload/w_512,h_512,c_scale/v1782274767/Nelvix.png'
 
 const genreTranslations: Record<string, string> = {
   // Indonesian

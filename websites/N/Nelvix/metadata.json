@@ -13,7 +13,7 @@
   "url": "nelvix.xyz",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*nelvix[.]xyz[/]",
   "version": "1.0.0",
-  "logo": "https://res.cloudinary.com/debvitdiw/image/upload/v1782274767/Nelvix.png",
+  "logo": "https://res.cloudinary.com/debvitdiw/image/upload/w_512,h_512,c_scale/v1782274767/Nelvix.png",
   "thumbnail": "https://res.cloudinary.com/debvitdiw/image/upload/embeds/nelvix_dynamic_og.png",
   "color": "#e50914",
   "category": "video",
