@@ -21,14 +21,13 @@ presence.on('UpdateData', async () => {
       ?? 'Memorial'
     const dates = document.querySelector('.memorial-dates')?.textContent?.trim() ?? ''
 
-    const localizedBrowsing = await presence.getStrings({ string: 'browsingMemorials' })
-    presenceData.details = `${localizedBrowsing}: ${name}`
+    presenceData.details = `${presence.i18n.getString('browsingMemorials')}: ${name}`
     presenceData.state = dates || 'Find A Grave'
   }
   else if (path.includes('/cemetery/')) {
     const name = document.querySelector('h1')?.textContent?.trim() ?? 'Cemitério'
 
-    presenceData.details = await presence.getStrings({ string: 'browsingCemeteries' })
+    presenceData.details = presence.i18n.getString('browsingCemeteries')
     presenceData.state = name
   }
   else if (path.includes('/memorial') || path.includes('/search')) {
@@ -36,11 +35,11 @@ presence.on('UpdateData', async () => {
       ?? new URLSearchParams(document.location.search).get('lastname')
       ?? ''
 
-    presenceData.details = await presence.getStrings({ string: 'searchingMemorials' })
+    presenceData.details = presence.i18n.getString('searchingMemorials')
     presenceData.state = query ? `"${query}"` : 'Find A Grave'
   }
   else {
-    presenceData.details = await presence.getStrings({ string: 'browsingHome' })
+    presenceData.details = presence.i18n.getString('browsingHome')
   }
 
   presence.setActivity(presenceData)
