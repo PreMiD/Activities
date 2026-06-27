@@ -1,0 +1,10 @@
+{
+  "viewingPlayer": { "message": "Viewing player stats" },
+  "viewingTeam": { "message": "Viewing team stats" },
+  "browsingSeason": { "message": "Browsing season" },
+  "viewingBoxScore": { "message": "Viewing box score" },
+  "browsingLeaders": { "message": "Browsing leaders & records" },
+  "browsingPlayoffs": { "message": "Browsing playoffs" },
+  "searching": { "message": "Searching" },
+  "browsingHome": { "message": "Browsing Basketball Reference" }
+}
