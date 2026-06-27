@@ -206,7 +206,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Store'
     }
     else if (paths[0] === 'trust-safety') {
-      presenceData.state = 'Support Tickets'
+      presenceData.state = 'Trust & Safety'
     }
     else if (paths[0] === 'redeem') {
       presenceData.state = 'Redeeming a Code'
