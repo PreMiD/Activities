@@ -15,13 +15,13 @@ function getText(selector: string): string {
 
 // Function for getting the name/creator of a marketplace item
 function getItemData(): string | null {
-  const itemName = getText('h1[class*="text-3xl"][class*="md:text-4xl"][class*="xl:text-6xl"][class*="font-bold"][class*="break-words"]')
+  const itemName = getText('h1.text-3xl.font-bold.break-words.md\\:text-4xl.xl\\:text-6xl') || getText('h1[class*="text-3xl"][class*="font-bold"][class*="break-words"]')
   if (!itemName)
     return null
   const itemCreator = getText('a[class*="text-muted-foreground"][class*="mb-3"][class*="md:mb-4"]').replace('by ', '')
   const itemCategory = getCategory()
 
-  return `Item (${itemCategory}): ${itemName}${itemCreator ? ` by ${itemCreator}` : ''}`
+  return `Item (${itemCategory}): ${itemName}${itemCreator ? ` (by ${itemCreator})` : ''}`
 }
 
 // Function for getting the category of a marketplace item
@@ -37,11 +37,11 @@ function getCategory(): string {
 
 // Function for getting the name/creator of a game
 function getGameData(): string | null {
-  const gameName = getText('h1[class*="text-6xl"][class*="font-bold"][class*="mb-2"]')
+  const gameName = getText('h1[class*="text-6xl"][class*="font-bold"][class*="mb-2"]') || getText('h1.text-6xl.font-bold.mb-2')
   if (!gameName)
     return null
   const gameCreator = getText('p[class*="text-muted-foreground"]').replace('by ', '')
-  return `Viewing Game: ${gameName}${gameCreator ? ` by ${gameCreator}` : ''}`
+  return `Viewing Game: ${gameName}${gameCreator ? ` (by ${gameCreator})` : ''}`
 }
 
 presence.on('UpdateData', async () => {
@@ -100,22 +100,31 @@ presence.on('UpdateData', async () => {
     }
     else if (paths[0] === 'profile') {
       if (paths.length === 2) {
-        const displayName = getText('h1[class*="text-3xl"][class*="sm:text-5xl"][class*="font-bold"][class*="text-foreground"]')
-        const username = getText('h1[class*="text-lg"][class*="sm:text-2xl"][class*="font-bold"][class*="text-muted-foreground"]')
-        if (displayName) {
-          presenceData.state = `Viewing User: ${displayName} (${username})`.trim()
+        const gameStatus = getGameData()
+        const itemStatus = getItemData()
+        if (gameStatus) {
+          presenceData.state = gameStatus
+        }
+        else if (itemStatus) {
+          presenceData.state = itemStatus
         }
         else {
-          presenceData.state = 'Viewing a User\'s profile'
+          const displayName = getText('h1[class*="text-3xl"][class*="sm:text-5xl"][class*="font-bold"][class*="text-foreground"]')
+          const username = getText('h1[class*="text-lg"][class*="sm:text-2xl"][class*="font-bold"][class*="text-muted-foreground"]')
+          presenceData.state = displayName ? `Viewing User: ${displayName} (${username})`.trim() : 'Viewing a User\'s profile'
         }
       }
       else if (paths[2] === 'info') {
-        const infoTitle = getText('h1[class*="text-5xl"][class*="font-bold"][class*="mb-4"]')
-        presenceData.state = infoTitle ? `${infoTitle}` : 'User Info'
+        presenceData.state = 'Viewing a User\'s Friends/Following/Followers'
       }
       else if (paths[2] === 'inventory') {
-        const inventoryUser = getText('h1[class*="text-5xl"][class*="font-bold"][class*="mb-4"][class*="text-center"][class*="sm:text-left"]')
-        presenceData.state = inventoryUser ? `Viewing Inventory of: ${inventoryUser}` : 'Inventory'
+        const itemStatus = getItemData()
+        if (itemStatus) {
+          presenceData.state = itemStatus
+        }
+        else {
+          presenceData.state = 'Viewing a User\'s Inventory'
+        }
       }
       else if (paths[2] === 'trade') {
         const inventoryTitle = getText('h2[class*="text-lg"][class*="font-semibold"]').replace('\'s Inventory', '')
@@ -146,7 +155,13 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Messages'
     }
     else if (paths[0] === 'inventory') {
-      presenceData.state = 'Inventory'
+      const itemStatus = getItemData()
+      if (itemStatus) {
+        presenceData.state = itemStatus
+      }
+      else {
+        presenceData.state = 'Viewing Their Own Inventory'
+      }
     }
     else if (paths[0] === 'gifts') {
       const activeSelectionRaw = getText('button[aria-selected="true"][data-state="active"]')
