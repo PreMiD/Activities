@@ -21,15 +21,13 @@ presence.on('UpdateData', async () => {
       ?? 'Memorial'
     const dates = document.querySelector('.memorial-dates')?.textContent?.trim() ?? ''
     
-    // Mudança aqui: Usa a tradução + o nome do memorial
-    presenceData.details = `${presence.getString('browsingMemorials')}: ${name}`
+    presenceData.details = `${presence.getStrings('browsingMemorials')}: ${name}`
     presenceData.state = dates || 'Find A Grave'
   }
   else if (path.includes('/cemetery/')) {
     const name = document.querySelector('h1')?.textContent?.trim() ?? 'Cemitério'
     
-    // Mudança aqui: Usa a tradução
-    presenceData.details = presence.getString('browsingCemeteries')
+    presenceData.details = presence.getStrings('browsingCemeteries')
     presenceData.state = name
   }
   else if (path.includes('/memorial') || path.includes('/search')) {
@@ -37,13 +35,11 @@ presence.on('UpdateData', async () => {
       ?? new URLSearchParams(document.location.search).get('lastname')
       ?? ''
     
-    // Mudança aqui: Usa a tradução
-    presenceData.details = presence.getString('searchingMemorials')
+    presenceData.details = presence.getStrings('searchingMemorials')
     presenceData.state = query ? `"${query}"` : 'Find A Grave'
   }
   else {
-    // Mudança aqui: Usa a tradução
-    presenceData.details = presence.getString('browsingHome')
+    presenceData.details = presence.getStrings('browsingHome')
   }
 
   presence.setActivity(presenceData)
