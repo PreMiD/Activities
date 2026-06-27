@@ -1,8 +1,6 @@
 import { ActivityType } from 'premid'
 
-// NOTE: Since Discord proxies all status images, it cannot fetch local files (like localhost or media.siqnole.dev if it's local).
-// Replace the URL below with a publicly hosted URL of your logo (e.g. uploaded to Imgur or Discord CDN) to resolve "No Image".
-const APP_LOGO_URL = 'https://i.imgur.com/BGqdEko.png'
+const APP_LOGO_URL = 'https://media.siqnole.dev/mydia.png'
 
 const presence = new Presence({
   clientId: '1511807266913910855',
