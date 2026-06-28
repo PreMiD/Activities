@@ -36,6 +36,12 @@
       "title": "Show Server Info",
       "icon": "fas fa-server",
       "value": true
+    },
+    {
+      "id": "enablePrivacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
     }
   ]
 }
