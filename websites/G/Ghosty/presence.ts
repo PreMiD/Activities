@@ -1,13 +1,13 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '', // ide jön a Client ID
+  clientId: '1392901069956190280', // Ghosty ID
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = '', // ide jön a logó URL (pl. ghosty_logo)
+  Logo = 'https://images-ext-1.discordapp.net/external/zxeFfLcwtFrN41UxLJ54W0j5tzwKdh30j_tHShGU9bY/https/cdn.discordapp.com/avatars/1392901069956190280/ba825fe334c139e6c6b47d71ac47ed8e.webp',
 }
 
 presence.on('UpdateData', async () => {
