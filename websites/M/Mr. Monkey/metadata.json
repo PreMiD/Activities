@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1288129332455149619",
+    "name": "Daniyt_th"
+  },
+  "contributors": [
+    {
+      "id": "1189975703924510740",
+      "name": "𝔻𝕚𝕘𝕚 𝔽𝕒𝕟"
+    }
+  ],
+  "service": "Mr. Monkey",
+  "description": {
+    "en": "Hi! I'm mainly a moderation bot here to help you build the community.",
+    "hu": "Szia! Én egy főleg moderációs bot vagyok aki segít neked a közösség építésében."
+  },
+  "url": [
+    "mrmonkey.netlify.app",
+    "digifan.betteruptime.com",
+    "mrmonkey.upbot.app"
+  ],
+  "regExp": "^https?://([a-z0-9-]+\\.)*(mrmonkey\\.netlify\\.app|digifan\\.betteruptime\\.com|mrmonkey\\.upbot\\.app)/",
+  "version": "1.0.0",
+  "logo": "https://images-ext-1.discordapp.net/external/E5yBFq3coMlNuLztcRhixrIDMmfKOTL4aomRrTtbCLw/https/cdn.discordapp.com/avatars/1375761784060772432/9979fc9e1916697c0105b7385e76adb2.webp",
+  "thumbnail": "https://images-ext-1.discordapp.net/external/E5yBFq3coMlNuLztcRhixrIDMmfKOTL4aomRrTtbCLw/https/cdn.discordapp.com/avatars/1375761784060772432/9979fc9e1916697c0105b7385e76adb2.webp",
+  "color": "#dedcde",
+  "category": "other",
+  "tags": ["bot", "automod", "logging", "ticket"]
+}
