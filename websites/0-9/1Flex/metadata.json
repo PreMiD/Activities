@@ -1,0 +1,99 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "765521422399176725",
+    "name": "uyingoyen"
+  },
+  "service": "1Flex",
+  "description": {
+    "de": "Dein ultimatives Streaming-Ziel. Sieh Filme, TV-Shows, Live-TV und Sport an und spiele Games - alles an einem Ort. Kostenloses Streaming ohne Werbung.",
+    "en": "Your ultimate streaming destination. Watch movies, TV shows, live TV, sports, and play games - all in one place. Free streaming with no ads.",
+    "es": "Tu destino de streaming definitivo. Mira peliculas, series de TV, TV en vivo, deportes y juega - todo en un solo lugar. Streaming gratis sin anuncios.",
+    "fr": "Votre destination de streaming ultime. Regardez des films, des series TV, la TV en direct, du sport et jouez - tout au meme endroit. Streaming gratuit sans publicite.",
+    "id": "Destinasi streaming utama kamu. Tonton film, TV show, live TV, olahraga, dan mainkan game - semuanya di satu tempat. Streaming gratis tanpa iklan.",
+    "pt-br": "Seu destino definitivo de streaming. Assista a filmes, series de TV, TV ao vivo, esportes e jogue - tudo em um so lugar. Streaming gratis sem anuncios."
+  },
+  "url": "www.1flex.org",
+  "regExp": "^https?[:][/][/](www[.])?1flex[.]org[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/AlFarrizi-Studio/Activities/add-1flex-activity/websites/0-9/1Flex/assets/logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/AlFarrizi-Studio/Activities/add-1flex-activity/websites/0-9/1Flex/assets/thumbnail.png",
+  "color": "#141414",
+  "category": "videos",
+  "tags": [
+    "home",
+    "entertainment",
+    "video",
+    "watch-online",
+    "free-streaming",
+    "hd-streaming",
+    "movies",
+    "tv-shows",
+    "streaming",
+    "live-tv",
+    "sports-streaming",
+    "games",
+    "torrents",
+    "anime",
+    "watchlist",
+    "browse-by-language",
+    "search",
+    "more-info"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?[:][/][/](?!.*(?:youtube(?:-nocookie)?[.]com|youtu[.]be)).*(vidlink[.]pro|vidsrc|videasy[.]to|vidup[.]to|vidzee[.]wtf|vidrock[.]ru|vidplay|vidcloud|vidfast|vidora|vidjoy|embed|multiembed|2embed|autoembed|superembed|moviesapi|rabbitstream|megacloud|mcloud|upcloud|streamtape|filemoon|voe[.]sx|dood|mixdrop|streamwish|uqload|player|stream|hls|m3u8).*",
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-link",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showTimestamps",
+      "title": "Show Timestamps",
+      "icon": "fas fa-stopwatch",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "statusStyle",
+      "title": "Discord Status Line",
+      "icon": "fas fa-gamepad",
+      "value": 0,
+      "values": [
+        "Activity Name",
+        "Details",
+        "State"
+      ],
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
