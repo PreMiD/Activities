@@ -29,7 +29,11 @@
       "id": "lang",
       "title": "Language",
       "icon": "fa-language",
-      "values": ["English", "Hungarian", "German"],
+      "values": [
+        "English",
+        "Hungarian",
+        "German"
+      ],
       "value": 0
     }
   ]

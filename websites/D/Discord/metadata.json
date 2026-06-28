@@ -30,7 +30,11 @@
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord/assets/thumbnail.png",
   "color": "#7289DA",
   "category": "socials",
-  "tags": ["chat", "gaming", "voice"],
+  "tags": [
+    "chat",
+    "gaming",
+    "voice"
+  ],
   "settings": [
     {
       "id": "lang",
@@ -80,7 +84,11 @@
       "title": "Icon",
       "icon": "fab fa-discord",
       "value": 0,
-      "values": ["White", "Blurple", "Black"]
+      "values": [
+        "White",
+        "Blurple",
+        "Black"
+      ]
     }
   ]
 }

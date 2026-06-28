@@ -39,7 +39,10 @@
       "id": "lang",
       "title": "Language",
       "icon": "fa-language",
-      "values": ["English", "Hungarian"],
+      "values": [
+        "English",
+        "Hungarian"
+      ],
       "value": 0
     }
   ]
