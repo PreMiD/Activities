@@ -28,7 +28,7 @@
     {
       "id": "lang",
       "title": "Language",
-      "icon": "fa-language",
+      "icon": "fas fa-language",
       "values": [
         "English",
         "Hungarian",

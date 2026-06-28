@@ -8,7 +8,8 @@
   },
   "contributors": [
 
-    { "id": "974010025003614242",
+    {
+      "id": "974010025003614242",
       "name": "「 ✦ { Dantix } ✦ 」「 ˖᯽ ˖ 」"
     }
   ],
@@ -38,7 +39,7 @@
     {
       "id": "lang",
       "title": "Language",
-      "icon": "fa-language",
+      "icon": "fas fa-language",
       "values": [
         "English",
         "Hungarian"
