@@ -15,7 +15,8 @@
 
     "ghostybot.hu",
     "ghosty.instatus.com",
-    "ghostydcbot.hu"],
+    "ghostydcbot.hu"
+  ],
 
   "regExp": "^https?:\\/\\/(ghostybot\\.hu|ghosty\\.instatus\\.com|ghostydcbot\\.hu)(\\/.*)?$",
   "version": "1.0.0",
