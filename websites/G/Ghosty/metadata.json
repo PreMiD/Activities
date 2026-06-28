@@ -23,5 +23,11 @@
   "thumbnail": "https://i.postimg.cc/26LRP0Vw/b956a4c02b9dcdb27a47fc1c41ba047a-(Egyeni).jpg",
   "color": "#acaea4",
   "category": "other",
-  "tags": ["bot", "automod", "logging", "security", "hungarian"]
+  "tags": [
+    "bot",
+    "automod",
+    "logging",
+    "security",
+    "hungarian"
+  ]
 }

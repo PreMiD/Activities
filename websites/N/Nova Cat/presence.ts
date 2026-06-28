@@ -58,7 +58,6 @@ presence.on('UpdateData', async () => {
     presenceData.state = langKeys.state.status[lang]
   }
 
-
   if (presenceData.state)
     presence.setActivity(presenceData)
   else

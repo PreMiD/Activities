@@ -22,5 +22,9 @@
   "thumbnail": "https://i.postimg.cc/85fQqZjZ/b07191c9a033296655b5409f1c10962c-(Egyeni).jpg",
   "color": "#005fbe",
   "category": "other",
-  "tags": ["bot", "automod", "logging"]
+  "tags": [
+    "bot",
+    "automod",
+    "logging"
+  ]
 }

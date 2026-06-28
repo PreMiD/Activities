@@ -30,5 +30,10 @@
   "thumbnail": "https://i.postimg.cc/wvR8Sw7F/9979fc9e1916697c0105b7385e76adb2-(Egyeni).jpg",
   "color": "#dedcde",
   "category": "other",
-  "tags": ["bot", "automod", "logging", "ticket"]
+  "tags": [
+    "bot",
+    "automod",
+    "logging",
+    "ticket"
+  ]
 }
