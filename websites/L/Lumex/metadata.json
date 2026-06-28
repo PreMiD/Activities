@@ -10,7 +10,10 @@
     "en": "Hi, I'm Lumex! I mainly handle moderation and will help you set up your server.",
     "hu": "Szia, én Lumex vagyok! Főként moderálással foglalkozom, segítek felépíteni a szervered."
   },
-  "url": ["https://lumex.hu", "https://status.lumex.hu"],
+  "url": [
+    "lumex.hu",
+    "status.lumex.hu"
+  ],
   "regExp": "^https?://([a-z0-9-]+\\.)*(lumex\\.hu|status\\.lumex\\.hu)/",
   "version": "1.0.0",
   "logo": "https://cdn.discordapp.com/avatars/1498333732174827611/b07191c9a033296655b5409f1c10962c.webp",

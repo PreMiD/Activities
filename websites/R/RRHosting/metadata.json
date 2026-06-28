@@ -11,7 +11,10 @@
     "de": "Ein Hosting-Anbieter stellt kostenlose Discord-Bot- und Datenbankdienste zur Verfügung.",
     "hu": "Egy hosting ami ingyenes discord bot és adatbázis kínál."
   },
-  "url": ["rrhosting.eu", "panel.rrhosting.eu"],
+  "url": [
+    "rrhosting.eu",
+    "panel.rrhosting.eu"
+  ],
   "regExp": "^https?:\\/\\/(?:www\\.)?(rrhosting\\.eu|panel\\.rrhosting\\.eu)\\/.*$",
   "version": "1.0.0",
   "logo": "https://cdn.discordapp.com/avatars/1248748513769296034/79d084ccc1ea926d2aacb6b5fe300e96.webp",
