@@ -26,8 +26,8 @@
   ],
   "regExp": "^https?://([a-z0-9-]+\\.)*(mrmonkey\\.netlify\\.app|digifan\\.betteruptime\\.com|mrmonkey\\.upbot\\.app)/",
   "version": "1.0.0",
-  "logo": "https://i.postimg.cc/6pqRJZfq/9979fc9e1916697c0105b7385e76adb2.jpg",
-  "thumbnail": "https://i.postimg.cc/6pqRJZfq/9979fc9e1916697c0105b7385e76adb2.jpg",
+  "logo": "https://i.postimg.cc/wvR8Sw7F/9979fc9e1916697c0105b7385e76adb2-(Egyeni).jpg",
+  "thumbnail": "https://i.postimg.cc/wvR8Sw7F/9979fc9e1916697c0105b7385e76adb2-(Egyeni).jpg",
   "color": "#dedcde",
   "category": "other",
   "tags": ["bot", "automod", "logging", "ticket"]
