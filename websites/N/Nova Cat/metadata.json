@@ -30,7 +30,7 @@
     {
       "id": "lang",
       "title": "Language",
-      "icon": "mdi-translate",
+      "icon": "fa-language",
       "values": ["English", "Hungarian"],
       "value": 0
     }

@@ -26,7 +26,7 @@
     {
       "id": "lang",
       "title": "Language",
-      "icon": "fa-translate",
+      "icon": "fa-language",
       "values": ["English", "Hungarian", "German"],
       "value": 0
     }
