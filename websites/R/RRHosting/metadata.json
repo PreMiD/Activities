@@ -7,8 +7,8 @@
   },
   "service": "RRHosting",
   "description": {
-    "en": "A hosting provides free discord bot and database services.",
     "de": "Ein Hosting-Anbieter stellt kostenlose Discord-Bot- und Datenbankdienste zur Verfügung.",
+    "en": "A hosting provides free discord bot and database services.",
     "hu": "Egy hosting ami ingyenes discord bot és adatbázis kínál."
   },
   "url": [
