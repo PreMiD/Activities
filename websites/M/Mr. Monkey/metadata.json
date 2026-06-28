@@ -23,8 +23,8 @@
   ],
   "regExp": "^https?://([a-z0-9-]+\\.)*(mrmonkey\\.netlify\\.app|digifan\\.betteruptime\\.com|mrmonkey\\.upbot\\.app)/",
   "version": "1.0.0",
-  "logo": "https://images-ext-1.discordapp.net/external/E5yBFq3coMlNuLztcRhixrIDMmfKOTL4aomRrTtbCLw/https/cdn.discordapp.com/avatars/1375761784060772432/9979fc9e1916697c0105b7385e76adb2.webp",
-  "thumbnail": "https://images-ext-1.discordapp.net/external/E5yBFq3coMlNuLztcRhixrIDMmfKOTL4aomRrTtbCLw/https/cdn.discordapp.com/avatars/1375761784060772432/9979fc9e1916697c0105b7385e76adb2.webp",
+  "logo": "https://cdn.discordapp.com/attachments/1520831922396463185/1520832970230075432/9979fc9e1916697c0105b7385e76adb2.jpg",
+  "thumbnail": "https://cdn.discordapp.com/attachments/1520831922396463185/1520832971166658610/9979fc9e1916697c0105b7385e76adb2.jpg",
   "color": "#dedcde",
   "category": "other",
   "tags": ["bot", "automod", "logging", "ticket"]

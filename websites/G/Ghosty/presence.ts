@@ -7,7 +7,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://images-ext-1.discordapp.net/external/zxeFfLcwtFrN41UxLJ54W0j5tzwKdh30j_tHShGU9bY/https/cdn.discordapp.com/avatars/1392901069956190280/ba825fe334c139e6c6b47d71ac47ed8e.webp',
+  Logo = 'https://cdn.discordapp.com/attachments/1520831922396463185/1520832970645307412/b956a4c02b9dcdb27a47fc1c41ba047a.jpg',
 }
 
 presence.on('UpdateData', async () => {

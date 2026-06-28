@@ -7,7 +7,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://cdn.discordapp.com/avatars/1286628372033830934/0d15baabd2b461341345a896e3ba64ec.webp',
+  Logo = 'https://cdn.discordapp.com/attachments/1520831922396463185/1520832969139294248/0d15baabd2b461341345a896e3ba64ec.jpg,
 }
 
 const langKeys = {
