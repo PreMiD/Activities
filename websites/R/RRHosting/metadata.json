@@ -3,7 +3,7 @@
   "apiVersion": 1,
   "author": {
     "id": "1288129332455149619",
-    "name": ".daniyt_th."
+    "name": "Daniyt_th"
   },
   "service": "RRHosting",
   "description": {
@@ -11,12 +11,21 @@
     "de": "Ein Hosting-Anbieter stellt kostenlose Discord-Bot- und Datenbankdienste zur Verfügung.",
     "hu": "Egy hosting ami ingyenes discord bot és adatbázis kínál."
   },
-  "url": ["https://rrhosting.eu", "https://panel.rrhostinh.eu"],
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*google[.]com[/]",
+  "url": ["rrhosting.eu", "panel.rrhosting.eu"],
+  "regExp": "^https?:\\/\\/(?:www\\.)?(rrhosting\\.eu|panel\\.rrhosting\\.eu)\\/.*$",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/000000.png",
-  "thumbnail": "https://i.imgur.com/000000.png",
+  "logo": "https://cdn.discordapp.com/avatars/1248748513769296034/79d084ccc1ea926d2aacb6b5fe300e96.webp",
+  "thumbnail": "https://cdn.discordapp.com/banners/1248748513769296034/ffa8aa440ab04679e2c81ec717b74d3a.webp",
   "color": "#000000",
   "category": "other",
-  "tags": ["hosting"]
+  "tags": ["hosting"],
+  "settings": [
+    {
+      "id": "lang",
+      "title": "Language",
+      "icon": "fa-translate",
+      "values": ["English", "Hungarian", "German"],
+      "value": 0
+    }
+  ]
 }
