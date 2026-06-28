@@ -13,7 +13,7 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
-    details: 'Weboldal Vagy Státusz',
+    details: 'Böngészik',
     startTimestamp: browsingTimestamp,
   }
 
