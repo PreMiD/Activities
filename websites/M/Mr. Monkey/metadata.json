@@ -2,10 +2,12 @@
   "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
+
     "id": "1288129332455149619",
     "name": "Daniyt_th"
   },
   "contributors": [
+
     {
       "id": "1189975703924510740",
       "name": "𝔻𝕚𝕘𝕚 𝔽𝕒𝕟"
@@ -17,6 +19,7 @@
     "hu": "Szia! Én egy főleg moderációs bot vagyok aki segít neked a közösség építésében."
   },
   "url": [
+
     "mrmonkey.netlify.app",
     "digifan.betteruptime.com",
     "mrmonkey.upbot.app"
