@@ -12,8 +12,8 @@
   "url": "valour.gg",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(valour[.]gg)[/]",
   "version": "1.0.0",
-  "logo": "https://app.valour.gg/_content/Valour.Client/media/favicon/apple-touch-icon.png",
-  "thumbnail": "https://app.valour.gg/_content/Valour.Client/media/favicon/apple-touch-icon.png",
+  "logo": "https://app.valour.gg/_content/Valour.Client/media/logo/logo-square-512.png",
+  "thumbnail": "https://app.valour.gg/_content/Valour.Client/media/logo/wide/logo_wide_gradient.png",
   "color": "#00faff",
   "category": "socials",
   "tags": [
