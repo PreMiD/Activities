@@ -15,11 +15,10 @@
   },
   "url": [
     "pstream.net",
-    "movies.levrx.de",
     "streamwatch.online"
   ],
   "regExp": "^https?[:][/][/](?:pstream[.]net|movies[.]levrx[.]de|streamwatch[.]online)[/]",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
   "color": "#533670",
