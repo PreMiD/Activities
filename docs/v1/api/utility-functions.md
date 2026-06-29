@@ -108,6 +108,43 @@ const timeString = '01:30:45' // 1 hour, 30 minutes, 45 seconds
 const timeInSeconds = timestampFromFormat(timeString) // 5445
 ```
 
+## supports
+
+<!-- eslint-skip -->
+
+```typescript
+import { supports } from 'premid'
+
+function supports<T extends object, K extends keyof T>(target: T, feature: K): boolean
+```
+
+Checks whether the running PreMiD extension supports a given `Presence` / `iFrame` capability.
+
+Activities run across every extension version, so methods added in newer versions — such as [`execInPage`](/v1/api/presence-class#execinpage) and [`onRequest`](/v1/api/presence-class#onrequest) — may be missing on older installs, where calling them directly would throw. `supports` is bundled into your activity, so it works regardless of the extension version: feature-detect before calling.
+
+### Parameters
+
+- `target`: The `Presence` or `iFrame` instance to check
+- `feature`: Name of the method to check for
+
+### Returns
+
+- `true` when the capability is available on the running extension, otherwise `false`
+
+### Example
+
+<!-- eslint-skip -->
+
+```typescript
+import { supports } from 'premid'
+
+if (supports(presence, 'onRequest')) {
+  presence.onRequest({ url: '/api/now-playing' }, (request) => {
+    // ...
+  })
+}
+```
+
 ## Using Utility Functions in Activities
 
 These utility functions are particularly useful for media-related activities, where you need to calculate timestamps for videos or audio.

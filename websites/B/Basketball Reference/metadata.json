@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1495950265998905409",
+    "name": "vituhas"
+  },
+  "service": "Basketball Reference",
+  "description": {
+    "en": "Basketball Stats and History: Statistics, scores, and history for the NBA, ABA, WNBA, and top European competition.",
+    "pt": "Estatísticas e história do basquete: estatísticas, resultados e histórico da NBA, ABA, WNBA e das principais competições europeias."
+  },
+  "url": "basketball-reference.com",
+  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*basketball-reference[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Basketball%20Reference/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Basketball%20Reference/assets/thumbnail.png",
+  "color": "#ff9900",
+  "category": "other",
+  "tags": [
+    "nba",
+    "basketball",
+    "sports",
+    "stats"
+  ]
+}
