@@ -49,19 +49,26 @@ function getElapsedSeconds(timeStr?: string | null): number {
   return h * 3600 + m * 60 + s
 }
 
+function isActivePartySlot(slot: Element): boolean {
+  const hasAvatar = !!slot.querySelector('img[aria-label="avatar"]')
+  const isPendingInvite = !!slot.querySelector(
+    '[class*="Footer"], [data-testid="cancel-invite-button"]',
+  )
+
+  return hasAvatar && !isPendingInvite
+}
+
 function getPartySize(): { partySize: number, maxPartySize: number } | null {
   for (const container of document.querySelectorAll('[class*="CardContainer"]')) {
     const slots = Array.from(container.children).filter(child =>
-      child.matches('[class*="PlayerCardWrapper"]'),
+      !!child.querySelector('[data-playercard="true"]'),
     )
 
     if (!slots.length) {
       continue
     }
 
-    const partySize = slots.filter(slot =>
-      slot.querySelector('img[aria-label="avatar"]'),
-    ).length
+    const partySize = slots.filter(isActivePartySlot).length
 
     if (partySize > 0) {
       return { partySize, maxPartySize: slots.length }
