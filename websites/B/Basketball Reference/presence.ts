@@ -5,7 +5,6 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
-  // Fetch all translations asynchronously at the top using the official method
   const strings = await presence.getStrings({
     viewingPlayer: 'basketball_reference.viewingPlayer',
     viewingTeam: 'basketball_reference.viewingTeam',
@@ -13,8 +12,8 @@ presence.on('UpdateData', async () => {
     viewingBoxScore: 'basketball_reference.viewingBoxScore',
     browsingLeaders: 'basketball_reference.browsingLeaders',
     browsingPlayoffs: 'basketball_reference.browsingPlayoffs',
-    searching: 'basketball_reference.searching',
-    browsingHome: 'basketball_reference.browsingHome',
+    searching: 'general.search',
+    browsingHome: 'general.viewHome',
   })
 
   const presenceData: PresenceData = {
