@@ -11,7 +11,7 @@ presence.on('UpdateData', async () => {
     browsingMemorials: 'find_a_grave.browsingMemorials',
     browsingCemeteries: 'find_a_grave.browsingCemeteries',
     searchingMemorials: 'find_a_grave.searchingMemorials',
-    browsingHome: 'find_a_grave.browsingHome'
+    browsingHome: 'find_a_grave.browsingHome',
   })
 
   const presenceData: PresenceData = {
@@ -32,7 +32,6 @@ presence.on('UpdateData', async () => {
     presenceData.state = dates || 'Find A Grave'
   }
   else if (path.includes('/cemetery/')) {
-    // Mudado de 'Cemitério' para 'Cemetery'
     const name = document.querySelector('h1')?.textContent?.trim() ?? 'Cemetery'
 
     presenceData.details = strings.browsingCemeteries
