@@ -29,5 +29,11 @@
     "cemetery",
     "memorial",
     "graves"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
   ]
 }
