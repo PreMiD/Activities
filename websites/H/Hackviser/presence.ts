@@ -37,18 +37,28 @@ function getPageData(pathname: string): {
   ) {
     return {
       page: 'login',
-      details: 'Logging In',
+      details: 'Signing into Hackviser',
       state: '',
       sensitive: true,
     }
   }
 
+  // ── Landing Page ────────────────────────────────────────────
+  if (pathname === '/') {
+    return {
+      page: 'landing',
+      details: 'Exploring Hackviser',
+      state: '',
+      sensitive: false,
+    }
+  }
+
   // ── Home ────────────────────────────────────────────────────
-  if (pathname.startsWith('/home') || pathname === '/') {
+  if (pathname.startsWith('/home')) {
     return {
       page: 'home',
-      details: 'Home Page',
-      state: 'Viewing Home Page',
+      details: 'Viewing Home Page',
+      state: '',
       sensitive: false,
     }
   }
@@ -57,8 +67,8 @@ function getPageData(pathname: string): {
   if (pathname.startsWith('/dashboard')) {
     return {
       page: 'dashboard',
-      details: 'Dashboard',
-      state: 'Viewing Stats',
+      details: 'Reviewing Progress & Stats',
+      state: '',
       sensitive: false,
     }
   }
@@ -66,10 +76,30 @@ function getPageData(pathname: string): {
   // ── Academy ─────────────────────────────────────────────────
   if (pathname.startsWith('/academy')) {
     const subPage = extractPageTitle(pathname)
+
+    if (subPage && subPage !== 'Categories') {
+      if (pathname.includes('/trainings')) {
+        return {
+          page: 'academy',
+          details: 'Studying Course',
+          state: subPage,
+          sensitive: false,
+        }
+      }
+      else {
+        return {
+          page: 'academy',
+          details: 'Viewing Category',
+          state: subPage,
+          sensitive: false,
+        }
+      }
+    }
+
     return {
       page: 'academy',
-      details: 'Academy',
-      state: subPage || 'Browsing Categories',
+      details: 'Exploring Academy',
+      state: '',
       sensitive: false,
     }
   }
@@ -82,8 +112,8 @@ function getPageData(pathname: string): {
     const name = extractPageTitle(pathname)
     return {
       page: 'warmups',
-      details: 'Warmups',
-      state: name || 'Warming Up...',
+      details: name ? 'Solving Warmup' : 'Exploring Warmups',
+      state: name || '',
       sensitive: false,
     }
   }
@@ -96,8 +126,8 @@ function getPageData(pathname: string): {
     const name = extractPageTitle(pathname)
     return {
       page: 'scenarios',
-      details: 'Scenarios',
-      state: name || 'Running Scenario',
+      details: name ? 'Running Attack Scenario' : 'Exploring Scenarios',
+      state: name || '',
       sensitive: false,
     }
   }
@@ -110,8 +140,8 @@ function getPageData(pathname: string): {
     const name = extractPageTitle(pathname)
     return {
       page: 'missions',
-      details: 'Missions',
-      state: name || 'On a Mission',
+      details: 'Viewing Missions',
+      state: name ? `Mission: ${name}` : '',
       sensitive: false,
     }
   }
@@ -124,8 +154,8 @@ function getPageData(pathname: string): {
     const name = extractPageTitle(pathname)
     return {
       page: 'certifications',
-      details: 'Certifications',
-      state: name || 'Viewing Certifications',
+      details: 'Viewing Certifications',
+      state: name ? name.toUpperCase() : '',
       sensitive: false,
     }
   }
@@ -139,18 +169,19 @@ function getPageData(pathname: string): {
     const labName = extractPageTitle(pathname)
     return {
       page: 'labs',
-      details: 'Solving Labs',
-      state: labName || 'Hacking in Progress...',
+      details: labName ? 'Solving Lab' : 'Exploring Labs',
+      state: labName || '',
       sensitive: false,
     }
   }
 
   // ── Support ─────────────────────────────────────────────────
   if (pathname.startsWith('/support')) {
+    const isOpening = pathname.includes('/open-ticket')
     return {
       page: 'support',
-      details: 'Support',
-      state: 'Getting Support',
+      details: isOpening ? 'Creating a Support Ticket' : 'Thinking About Opening a Ticket',
+      state: '',
       sensitive: false,
     }
   }
@@ -163,21 +194,8 @@ function getPageData(pathname: string): {
   ) {
     return {
       page: 'learning',
-      details: 'Learning Paths',
-      state: 'Studying Cyber Security',
-      sensitive: false,
-    }
-  }
-
-  // ── CTF / Challenges ────────────────────────────────────────
-  if (
-    pathname.startsWith('/ctf')
-    || pathname.startsWith('/challenges')
-  ) {
-    return {
-      page: 'ctf',
-      details: 'CTF Challenge',
-      state: 'Capturing Flags',
+      details: 'Mastering Cybersecurity Skills',
+      state: '',
       sensitive: false,
     }
   }
@@ -186,8 +204,8 @@ function getPageData(pathname: string): {
   if (pathname.startsWith('/account/settings')) {
     return {
       page: 'settings',
-      details: 'Settings',
-      state: 'A few changes',
+      details: 'Configuring Account Settings',
+      state: '',
       sensitive: false,
     }
   }
@@ -196,8 +214,8 @@ function getPageData(pathname: string): {
   if (pathname.startsWith('/pricing-plans')) {
     return {
       page: 'pricing',
-      details: 'Pricing Plans',
-      state: 'Looking Pricing Plans',
+      details: 'Exploring Pricing Options',
+      state: '',
       sensitive: false,
     }
   }
@@ -206,8 +224,8 @@ function getPageData(pathname: string): {
   if (pathname.startsWith('/frequently-asked-questions')) {
     return {
       page: 'faq',
-      details: 'Frequently Asked Questions',
-      state: 'Looking for answers',
+      details: 'Reading the FAQ',
+      state: '',
       sensitive: false,
     }
   }
@@ -218,10 +236,24 @@ function getPageData(pathname: string): {
     || pathname.startsWith('/user')
     || pathname.startsWith('/settings')
   ) {
+    const parts = pathname.split('/').filter(p => p.length > 0)
+    const isSettings = pathname.includes('/settings')
+
+    if (isSettings) {
+      return {
+        page: 'settings',
+        details: 'Configuring Account Settings',
+        state: '',
+        sensitive: false,
+      }
+    }
+
+    const profileName = parts.length > 1 ? parts[1] : null
+
     return {
       page: 'profile',
-      details: 'Profile',
-      state: 'Viewing Profile',
+      details: profileName ? `Viewing ${profileName}'s Profile` : 'Viewing Own Profile',
+      state: '',
       sensitive: false,
     }
   }
@@ -234,8 +266,8 @@ function getPageData(pathname: string): {
   ) {
     return {
       page: 'leaderboard',
-      details: 'Leaderboard',
-      state: 'Checking Rankings',
+      details: 'Checking the Scoreboard',
+      state: '',
       sensitive: false,
     }
   }
@@ -244,8 +276,8 @@ function getPageData(pathname: string): {
   if (pathname.startsWith('/ticket')) {
     return {
       page: 'ticket',
-      details: 'Ticket',
-      state: 'Viewing Ticket',
+      details: 'Viewing a Support Ticket',
+      state: '',
       sensitive: false,
     }
   }
@@ -253,7 +285,7 @@ function getPageData(pathname: string): {
   // ── Default: browsing ───────────────────────────────────────
   return {
     page: 'browsing',
-    details: 'Browsing Platform',
+    details: 'Browsing Hackviser',
     state: '',
     sensitive: false,
   }
@@ -272,7 +304,7 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     startTimestamp,
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/H/Hackviser/assets/logo.jpeg',
+    largeImageKey: 'https://i.ibb.co/ns57qq7g/512x512.jpg',
   }
 
   // 265. Satır: ESLint Brace Style Düzeltmesi
