@@ -2,7 +2,6 @@
   "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
-
     "id": "1288129332455149619",
     "name": ".daniyt_th."
   },
@@ -12,14 +11,13 @@
     "hu": "Szia, én Lumex vagyok! Főként moderálással foglalkozom, segítek felépíteni a szervered."
   },
   "url": [
-
     "lumex.hu",
     "status.lumex.hu"
   ],
-  "regExp": "^https?://([a-z0-9-]+\\.)*(lumex\\.hu|status\\.lumex\\.hu)/",
+  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*(lumex[.]hu|status[.]lumex[.]hu)[/]",
   "version": "1.0.0",
-  "logo": "https://i.postimg.cc/85fQqZjZ/b07191c9a033296655b5409f1c10962c-(Egyeni).jpg",
-  "thumbnail": "https://i.postimg.cc/85fQqZjZ/b07191c9a033296655b5409f1c10962c-(Egyeni).jpg",
+  "logo": "https://cdn.discordapp.com/avatars/1498333732174827611/b07191c9a033296655b5409f1c10962c.webp",
+  "thumbnail": "https://i.postimg.cc/J7XYGmBm/image.png",
   "color": "#005fbe",
   "category": "other",
   "tags": [

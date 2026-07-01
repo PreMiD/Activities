@@ -2,7 +2,6 @@
   "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
-
     "id": "1288129332455149619",
     "name": "Daniyt_th"
   },
@@ -12,16 +11,14 @@
     "hu": "Egy magyar Discord bot, amely log, antinuke és antiraid rendszerrel rendelkezik."
   },
   "url": [
-
     "ghostybot.hu",
     "ghosty.instatus.com",
     "ghostydcbot.hu"
   ],
-
-  "regExp": "^https?:\\/\\/(ghostybot\\.hu|ghosty\\.instatus\\.com|ghostydcbot\\.hu)(\\/.*)?$",
+  "regExp": "^https?:[/][/](ghostybot[.]hu|ghosty[.]instatus[.]com|ghostydcbot[.]hu)[/]",
   "version": "1.0.0",
   "logo": "https://i.postimg.cc/26LRP0Vw/b956a4c02b9dcdb27a47fc1c41ba047a-(Egyeni).jpg",
-  "thumbnail": "https://i.postimg.cc/26LRP0Vw/b956a4c02b9dcdb27a47fc1c41ba047a-(Egyeni).jpg",
+  "thumbnail": "https://i.postimg.cc/L8pcH5yr/image.png",
   "color": "#acaea4",
   "category": "other",
   "tags": [
