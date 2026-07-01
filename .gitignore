@@ -39,4 +39,3 @@ pmd-results.sarif
 
 # Coverage files
 coverage
-*.zip 
