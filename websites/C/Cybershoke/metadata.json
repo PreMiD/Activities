@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "597800445271998465",
+    "name": "passion"
+  },
+  "service": "Cybershoke",
+  "description": {
+    "en": "Show your friends what CS2 servers, stats, or premium status you are viewing on CYBERSHOKE.",
+    "fr": "Affichez sur Discord vos serveurs CS2, statistiques ou avantages Premium consultés sur CYBERSHOKE."
+  },
+  "url": "cybershoke.net",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*cybershoke[.]net",
+  "version": "1.0.0",
+  "logo": "https://cybershoke.net/logo512.png",
+  "thumbnail": "https://cybershoke.net/logo512.png",
+  "color": "#ff5c00",
+  "category": "games",
+  "tags": [
+    "cs2",
+    "counterstrike"
+  ]
+}
