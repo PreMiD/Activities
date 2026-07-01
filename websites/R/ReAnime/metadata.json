@@ -13,9 +13,12 @@
   "description": {
     "en": "Re:ANIME is an anime streaming platform where you can browse series, explore episode details, and watch anime online."
   },
-  "url": "reanime.to",
-  "regExp": "^https?[:][/][/]reanime[.]to[/]",
-  "version": "1.0.1",
+  "url": [
+    "reanime.to",
+    "reanime.cz"
+  ],
+  "regExp": "^https?[:][/][/]reanime[.](to|cz)[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/thumbnail.png",
   "color": "#C7FF00",
@@ -26,6 +29,12 @@
   "iframe": true,
   "iFrameRegExp": "(flixcloud[.]cc[/]e[/]|flixcloud[.]cc[/]embed|kwik[.]si[/]e[/])",
   "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
     {
       "id": "buttons",
       "title": "Show Buttons",
