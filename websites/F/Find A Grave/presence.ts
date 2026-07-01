@@ -10,8 +10,8 @@ presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
     browsingMemorials: 'find_a_grave.browsingMemorials',
     browsingCemeteries: 'find_a_grave.browsingCemeteries',
-    searchingMemorials: 'find_a_grave.searchingMemorials',
-    browsingHome: 'find_a_grave.browsingHome',
+    searchingMemorials: 'general.search',
+    browsingHome: 'general.viewHome',
   })
 
   const presenceData: PresenceData = {
