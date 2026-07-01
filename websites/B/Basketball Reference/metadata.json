@@ -22,5 +22,11 @@
     "basketball",
     "sports",
     "stats"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
   ]
 }
