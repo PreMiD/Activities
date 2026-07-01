@@ -17,7 +17,7 @@
     "pstream.net",
     "streamwatch.online"
   ],
-  "regExp": "^https?[:][/][/](?:pstream[.]net|movies[.]levrx[.]de|streamwatch[.]online)[/]",
+  "regExp": "^https?[:][/][/](?:pstream[.]net|streamwatch[.]online)[/]",
   "version": "1.4.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
