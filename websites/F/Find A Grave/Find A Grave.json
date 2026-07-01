@@ -6,13 +6,5 @@
   "find_a_grave.browsingCemeteries": {
     "description": "When looking at a cemetery page",
     "message": "Browsing Cemeteries"
-  },
-  "find_a_grave.searchingMemorials": {
-    "description": "When searching for memorials",
-    "message": "Searching Memorials"
-  },
-  "find_a_grave.browsingHome": {
-    "description": "When on the main homepage",
-    "message": "Browsing Find A Grave"
   }
 }
