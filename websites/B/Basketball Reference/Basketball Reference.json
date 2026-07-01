@@ -22,13 +22,5 @@
   "basketball_reference.browsingPlayoffs": {
     "description": "Browsing playoff brackets and stats",
     "message": "Browsing playoffs"
-  },
-  "basketball_reference.searching": {
-    "description": "Using the search bar",
-    "message": "Searching"
-  },
-  "basketball_reference.browsingHome": {
-    "description": "Main page of the website",
-    "message": "Browsing Basketball Reference"
   }
 }
