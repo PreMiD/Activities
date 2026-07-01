@@ -7,7 +7,6 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
-  // Busca todas as traduções de uma vez seguindo a documentação oficial
   const strings = await presence.getStrings({
     browsingMemorials: 'find_a_grave.browsingMemorials',
     browsingCemeteries: 'find_a_grave.browsingCemeteries',
@@ -33,7 +32,8 @@ presence.on('UpdateData', async () => {
     presenceData.state = dates || 'Find A Grave'
   }
   else if (path.includes('/cemetery/')) {
-    const name = document.querySelector('h1')?.textContent?.trim() ?? 'Cemitério'
+    // Mudado de 'Cemitério' para 'Cemetery'
+    const name = document.querySelector('h1')?.textContent?.trim() ?? 'Cemetery'
 
     presenceData.details = strings.browsingCemeteries
     presenceData.state = name
