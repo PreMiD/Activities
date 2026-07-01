@@ -1,0 +1,34 @@
+{
+  "basketball_reference.viewingPlayer": {
+    "description": "Viewing player stats and profiles",
+    "message": "Viewing player stats"
+  },
+  "basketball_reference.viewingTeam": {
+    "description": "Viewing a specific team roster or stats",
+    "message": "Viewing team stats"
+  },
+  "basketball_reference.browsingSeason": {
+    "description": "Browsing a league season page",
+    "message": "Browsing season"
+  },
+  "basketball_reference.viewingBoxScore": {
+    "description": "Viewing a specific game box score",
+    "message": "Viewing box score"
+  },
+  "basketball_reference.browsingLeaders": {
+    "description": "Browsing league leaders and historical records",
+    "message": "Browsing leaders & records"
+  },
+  "basketball_reference.browsingPlayoffs": {
+    "description": "Browsing playoff brackets and stats",
+    "message": "Browsing playoffs"
+  },
+  "basketball_reference.searching": {
+    "description": "Using the search bar",
+    "message": "Searching"
+  },
+  "basketball_reference.browsingHome": {
+    "description": "Main page of the website",
+    "message": "Browsing Basketball Reference"
+  }
+}
