@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "425706045453893642",
+    "name": "instabilspielt"
+  },
+  "service": "MagentaTV Deutschland",
+  "description": {
+    "de": "Schaue Live-TV, Filme und Serien auf MagentaTV Deutschland.",
+    "en": "Watch live TV, movies and series on MagentaTV Germany."
+  },
+  "url": "www.magenta.tv",
+  "regExp": "^https?:\\/\\/([a-z0-9-]+\\.)*magenta\\.tv\\/.*$",
+  "version": "1.0.0",
+  "logo": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/cc/0e/46/cc0e4697-6748-4d0d-81b4-e882be3c7df6/Placeholder.mill/512x512.png",
+  "thumbnail": "https://www.telekom.de/resources/images/1292150/stage-s-2x.webp",
+  "color": "#E20074",
+  "category": "videos",
+  "tags": [
+    "tv",
+    "streaming",
+    "live-tv",
+    "vod",
+    "telekom"
+  ]
+}
