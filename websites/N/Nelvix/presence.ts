@@ -354,7 +354,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'Join Watch Party', url: document.location.href },
-        { label: 'Watch on Nelvix', url: document.location.href.replace(/\/watch-party\/[A-Za-z0-9].*$/, '') },
       ]
     }
 
