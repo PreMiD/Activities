@@ -225,6 +225,7 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     largeImageKey: defaultLogo,
+    type: ActivityType.Watching,
   }
 
   // Retrieve clean title from the custom hidden metadata element if available (for exact English titles), otherwise fallback
@@ -301,8 +302,6 @@ presence.on('UpdateData', async () => {
       titleOnly = showTitle.replace(/\s*\(\d{4}\)$/, '').trim()
     }
     const formattedTitle = year ? `${titleOnly} (${year})` : titleOnly
-
-    presenceData.type = ActivityType.Watching
 
     // State text
     let displayState = ''
@@ -394,8 +393,6 @@ presence.on('UpdateData', async () => {
 
     const movieState = [year, ratingText, genresText].filter(Boolean).join(' • ') || 'Movie'
 
-    presenceData.type = ActivityType.Watching
-
     if (usePresenceName) {
       presenceData.name = formattedTitle
       presenceData.details = 'Watching Movie'
@@ -463,8 +460,6 @@ presence.on('UpdateData', async () => {
     const displayEpisodeText = episodeName
       ? `S${season}:E${episode} - ${episodeName}`
       : `Season ${season} Episode ${episode}`
-
-    presenceData.type = ActivityType.Watching
 
     if (usePresenceName) {
       presenceData.name = formattedTitle
