@@ -1,0 +1,99 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "712745906876842025",
+    "name": "hanifhan1f"
+  },
+  "service": "Nelvix",
+  "description": {
+    "en": "Watch your favorite movies and TV shows on Nelvix.",
+    "id": "Tonton film dan acara TV favorit Anda di Nelvix."
+  },
+  "url": "nelvix.xyz",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*nelvix[.]xyz[/]",
+  "version": "1.0.0",
+  "logo": "https://res.cloudinary.com/debvitdiw/image/upload/w_512,h_512,c_scale/v1782274767/Nelvix.png",
+  "thumbnail": "https://res.cloudinary.com/debvitdiw/image/upload/embeds/nelvix_dynamic_og.png",
+  "color": "#e50914",
+  "category": "videos",
+  "tags": [
+    "movie",
+    "tv",
+    "streaming",
+    "video",
+    "entertainment"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "usePresenceName",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showBrowsing",
+      "title": "Show Browsing Status",
+      "icon": "fad fa-eye",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover",
+      "icon": "fad fa-image",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showMovies",
+      "title": "Show Movies",
+      "icon": "fad fa-film",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showShows",
+      "title": "Show Shows",
+      "icon": "fad fa-tv",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "time",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
