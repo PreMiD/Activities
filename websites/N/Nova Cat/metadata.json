@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1288129332455149619",
+    "name": "Daniyt_th"
+  },
+  "contributors": [
+    {
+      "id": "974010025003614242",
+      "name": "「 ✦ { Dantix } ✦ 」「 ˖᯽ ˖ 」"
+    }
+  ],
+  "service": "Nova Cat",
+  "description": {
+    "en": "A bot with moderation, youtube/twitch/tiktok notifier.",
+    "hu": "Egy bot moderációval, youtube/twitch/tiktok értesítővel."
+  },
+  "url": [
+    "novacat.eu",
+    "status.novacat.eu"
+  ],
+  "regExp": "^https?://([a-z0-9-]+\\.)*(novacat\\.eu|status\\.novacat\\.eu|v2\\.status\\.novacat\\.eu)/",
+  "version": "1.0.0",
+  "logo": "https://i.postimg.cc/SsYFwgJd/0d15baabd2b461341345a896e3ba64ec-(Egyeni).jpg",
+  "thumbnail": "https://cdn.discordapp.com/banners/1286628372033830934/a_987ad9224a57104525a97dda9c6d01f1.gif",
+  "color": "#270a48",
+  "category": "other",
+  "tags": [
+    "bot",
+    "moderation",
+    "ticket",
+    "automod"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "title": "Language",
+      "icon": "fas fa-language",
+      "values": [
+        "English",
+        "Hungarian"
+      ],
+      "value": 0
+    }
+  ]
+}
