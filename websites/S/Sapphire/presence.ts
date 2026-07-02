@@ -37,8 +37,10 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
   }
 
-  const showServerInfo = await presence.getSetting<boolean>('showServerInfo')
-  const enablePrivacyMode = await presence.getSetting<boolean>('enablePrivacyMode')
+  const [showServerInfo, enablePrivacyMode] = await Promise.all([
+    presence.getSetting<boolean>('showServerInfo'),
+    presence.getSetting<boolean>('enablePrivacyMode')
+  ])
   const serverId = getServerId(rawUrl)
 
   if (isDashboard && showServerInfo && serverId) {
