@@ -8,7 +8,7 @@ let elapsedSinceChange = 0
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/O/OpenJam/assets/logo.png',
+    largeImageKey: 'https://files.catbox.moe/oz8aca.png',
   }
 
   const [showButtons, showTimestamps] = await Promise.all([
@@ -41,6 +41,15 @@ presence.on('UpdateData', async () => {
 
       if (showTimestamps) {
         presenceData.startTimestamp = Math.floor(elapsedSinceChange / 1000)
+      }
+
+      // Dynamic Album Art
+      const artworkEl = document.querySelector<HTMLImageElement>('.mp-artwork-img, .mini-art')
+      const artworkUrl = artworkEl?.src || ''
+      if (artworkUrl && artworkUrl.startsWith('http') && !artworkUrl.includes('/logo.png')) {
+        presenceData.largeImageKey = artworkUrl
+        presenceData.smallImageKey = 'https://files.catbox.moe/oz8aca.png'
+        presenceData.smallImageText = 'OpenJam'
       }
     }
     else {
