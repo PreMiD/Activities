@@ -9,14 +9,14 @@
   "description": {
     "de": "Mit Nintendo Music kannst du überall eine Vielzahl von Nintendo-Melodien hören.",
     "en": "With Nintendo Music, you can listen to a variety of Nintendo tunes anywhere.",
-    "es": "Con Nintendo Music, puedes escuchar una gran variedad de melodías de Nintendo en cualquier lugar.",
+    "es": "Con Nintendo Music, puedes escuchar una gran variedad di melodías de Nintendo en cualquier lugar.",
     "it": "Con Nintendo Music, puoi ascoltare una varietà di brani Nintendo ovunque.",
     "nl": "Met Nintendo Music kun je overal naar een verscheidenheid aan Nintendo-melodieën luisteren.",
     "ru": "С Nintendo Music ты можешь слушать разнообразные мелодии Nintendo где угодно."
   },
   "url": "music.nintendo.com",
   "regExp": "^https?[:][/][/]music[.]nintendo[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nintendo%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nintendo%20Music/assets/thumbnail.png",
   "color": "#FC2C00",
@@ -39,6 +39,20 @@
       "icon": "fas fa-image",
       "value": true,
       "description": "Show the song artwork as the large image."
+    },
+    {
+      "id": "displayFormat",
+      "title": "Display Format",
+      "icon": "fas fa-paragraph",
+      "value": 0,
+      "values": ["Song Name", "Soundtrack Name", "Nintendo Music"]
+    },
+    {
+      "id": "marioKartTrackOrigin",
+      "title": "Display Racetrack Console Origin",
+      "icon": "fas fa-font",
+      "value": false,
+      "description": "For Mario Kart soundtracks, show which console a racetrack originates from if they don't already."
     }
   ]
 }
