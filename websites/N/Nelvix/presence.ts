@@ -223,7 +223,7 @@ presence.on('UpdateData', async () => {
   }
   const title = document.title
 
-  const presenceData: any = {
+  const presenceData: PresenceData = {
     largeImageKey: defaultLogo,
   }
 
