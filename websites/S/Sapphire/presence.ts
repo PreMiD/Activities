@@ -39,7 +39,7 @@ presence.on('UpdateData', async () => {
 
   const [showServerInfo, enablePrivacyMode] = await Promise.all([
     presence.getSetting<boolean>('showServerInfo'),
-    presence.getSetting<boolean>('enablePrivacyMode')
+    presence.getSetting<boolean>('enablePrivacyMode'),
   ])
   const serverId = getServerId(rawUrl)
 
