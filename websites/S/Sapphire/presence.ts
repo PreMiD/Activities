@@ -38,6 +38,7 @@ presence.on('UpdateData', async () => {
   }
 
   const showServerInfo = await presence.getSetting<boolean>('showServerInfo')
+  const enablePrivacyMode = await presence.getSetting<boolean>('enablePrivacyMode')
   const serverId = getServerId(rawUrl)
 
   if (isDashboard && showServerInfo && serverId) {
@@ -578,6 +579,14 @@ presence.on('UpdateData', async () => {
   else {
     presenceData.details = 'Browsing'
     presenceData.state = 'Unknown page'
+  }
+
+  // Privacy Mode Override
+  if (enablePrivacyMode) {
+    presenceData.details = hostname === 'docs.sapph.xyz' ? 'Browsing documentation' : 'Browsing dashboard'
+    delete presenceData.state
+    delete presenceData.smallImageKey
+    delete presenceData.smallImageText
   }
 
   // Add a timestamp
