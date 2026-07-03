@@ -198,12 +198,22 @@ presence.on('UpdateData', async () => {
       const isSimulcast = Boolean(simulcast) || iPlayer.episode?.live
       if (!iPlayerVideo.duration || isSimulcast || isLiveTimeline(iPlayerVideo)) {
         if (iPlayer.channel?.onAir || isSimulcast || isLiveTimeline(iPlayerVideo)) {
-          presenceData.details = (iPlayer.channel ?? iPlayer.episode)?.title
-          presenceData.state = strings.Live
+          if (usePresenceName) {
+            presenceData.name = iPlayer.episode?.title ?? presenceData.name
+            presenceData.details = iPlayer.episode?.subtitle?.match(/: (.*)/)?.[1]
+              ?? iPlayer.episode?.subtitle
+              ?? strings.Live
+            presenceData.state = iPlayer.episode?.subtitle ?? strings.Live
+          }
+          else {
+            presenceData.details = (iPlayer.channel ?? iPlayer.episode)?.title
+            presenceData.state = iPlayer.episode?.subtitle || strings.Live
+          }
 
           setCover(iPlayer.episode?.images?.standard)
 
           presenceData.smallImageKey = Assets.Live
+          presenceData.smallImageText = strings.Live
 
           if (simulcast?.startTime) {
             presenceData.startTimestamp = simulcast.startTime
