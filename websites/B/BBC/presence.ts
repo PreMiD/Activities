@@ -20,7 +20,7 @@ function getStrings() {
     {
       play: 'general.playing',
       pause: 'general.paused',
-      Live: 'general.Live',
+      Live: 'general.live',
       browse: 'general.browsing',
       searchSomething: 'general.searchSomething',
       viewTeam: 'twitch.viewTeam',
@@ -57,6 +57,17 @@ function formatChannelName(channelId?: string): string {
   return channelMap[channelId.toLowerCase()] || channelId.toUpperCase()
 }
 
+const LIVE_DURATION_THRESHOLD = 86400 * 30 // nothing on iPlayer is 30 days long
+function isEpochAnchored(value: number): boolean {
+  return Number.isFinite(value) && value > LIVE_DURATION_THRESHOLD
+}
+function isLiveTimeline(media: { duration: number, currentTime: number }): boolean {
+  // `duration` alone is ambiguous: MSE streams (live or VOD) can report
+  // Infinity while the seekable range is still unresolved. `currentTime`
+  // anchored to wall-clock epoch seconds is the reliable live signature.
+  return isEpochAnchored(media.currentTime) || isEpochAnchored(media.duration)
+}
+
 const serviceName = (() => {
   switch (location.pathname.split('/')[1]) {
     case 'iplayer':
@@ -90,6 +101,7 @@ let SoundMedia: MediaData = {
 }
 let iPlayer: IPlayerData
 let soundData: SoundData
+let lastPath: string | undefined
 
 presence.on('iFrameData', (data: IFrameData) => {
   if (data.audio)
@@ -126,7 +138,16 @@ presence.on('UpdateData', async () => {
     }
   }
   const handleVideo = () => {
-    presenceData.type = ActivityType.Watching;
+    presenceData.type = ActivityType.Watching
+
+    if (isLiveTimeline(VideoMedia)) {
+      presenceData.smallImageKey = Assets.Live
+      presenceData.smallImageText = strings.Live
+      delete presenceData.startTimestamp
+      delete presenceData.endTimestamp
+      return
+    }
+
     [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(VideoMedia.currentTime, VideoMedia.duration)
 
     presenceData.smallImageKey = VideoMedia.paused
@@ -144,9 +165,23 @@ presence.on('UpdateData', async () => {
 
   if (path.includes('/iplayer')) {
     presenceData.type = ActivityType.Watching
-    iPlayer ??= await presence
-      .getPageVariable('__IPLAYER_REDUX_STATE__')
-      .then(data => data.__IPLAYER_REDUX_STATE__) as IPlayerData
+    if (lastPath !== path) {
+      lastPath = path
+      const data = await presence.getPageVariable<Record<string, any>>(
+        '__IPLAYER_REDUX_STATE__.episode',
+        '__IPLAYER_REDUX_STATE__.versions',
+        '__IPLAYER_REDUX_STATE__.channel',
+        '__IPLAYER_REDUX_STATE__.header',
+        '__IPLAYER_REDUX_STATE__.relatedEpisodes',
+      )
+      iPlayer = {
+        episode: data['__IPLAYER_REDUX_STATE__.episode'],
+        versions: data['__IPLAYER_REDUX_STATE__.versions'],
+        channel: data['__IPLAYER_REDUX_STATE__.channel'],
+        header: data['__IPLAYER_REDUX_STATE__.header'],
+        relatedEpisodes: data['__IPLAYER_REDUX_STATE__.relatedEpisodes'],
+      } as IPlayerData
+    }
 
     let iPlayerVideo: HTMLVideoElement | MediaData | undefined = document
       .querySelector('smp-toucan-player')
@@ -159,14 +194,28 @@ presence.on('UpdateData', async () => {
       iPlayerVideo = VideoMedia
     // OD Programming:
     if (iPlayerVideo && path.includes('/iplayer/episode')) {
-      if (!iPlayerVideo.duration || iPlayer.episode?.Live) {
-        if (iPlayer.channel?.onAir || iPlayer.episode?.Live) {
+      const simulcast = iPlayer.versions?.find(version => version.kind === 'simulcast')
+      const isSimulcast = Boolean(simulcast) || iPlayer.episode?.live
+      if (!iPlayerVideo.duration || isSimulcast || isLiveTimeline(iPlayerVideo)) {
+        if (iPlayer.channel?.onAir || isSimulcast || isLiveTimeline(iPlayerVideo)) {
           presenceData.details = (iPlayer.channel ?? iPlayer.episode)?.title
           presenceData.state = strings.Live
 
           setCover(iPlayer.episode?.images?.standard)
 
           presenceData.smallImageKey = Assets.Live
+
+          if (simulcast?.startTime) {
+            presenceData.startTimestamp = simulcast.startTime
+            if (simulcast.endTime && simulcast.endTime > Math.floor(Date.now() / 1000))
+              presenceData.endTimestamp = simulcast.endTime
+            else
+              delete presenceData.endTimestamp
+          }
+          else {
+            delete presenceData.startTimestamp
+            delete presenceData.endTimestamp
+          }
         }
         else if (!iPlayer.channel) {
           setCover(
@@ -270,7 +319,6 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageText = strings.Live
 
         delete presenceData.startTimestamp
-        presenceData.startTimestamp = Date.now() // milliseconds
         delete presenceData.endTimestamp
       }
       else {
@@ -282,9 +330,15 @@ presence.on('UpdateData', async () => {
   }
   else if (path.includes('/sounds')) {
     presenceData.type = ActivityType.Listening
-    soundData ??= await presence
-      .getPageVariable('__PRELOADED_STATE__')
-      .then(data => data.__PRELOADED_STATE__) as SoundData
+    if (lastPath !== path) {
+      lastPath = path
+      const data = await presence.getPageVariable<Record<string, any>>(
+        '__PRELOADED_STATE__.programmes',
+      )
+      soundData = {
+        programmes: data['__PRELOADED_STATE__.programmes'],
+      } as SoundData
+    }
 
     if (path.includes('/play/')) {
       const isLive = path.includes('Live:')
@@ -815,7 +869,7 @@ interface IPlayerData {
   episode?: {
     title: string
     subtitle: string
-    Live: boolean
+    live: boolean
     images: {
       portrait?: string
       standard: string
@@ -826,6 +880,11 @@ interface IPlayerData {
       category: string
     }
   }
+  versions?: {
+    kind: string
+    startTime: number
+    endTime: number
+  }[]
   relatedEpisodes?: {
     count: number
     episodes: {
