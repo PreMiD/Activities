@@ -1,298 +1,49 @@
+import type { ApiClient, MediaInfo, Server } from './types.js'
 import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
-/*
- * The interfaces may have some things missing,
- * I've tried to set as many properties as I could find.
- */
 
-// #region Interfaces
-interface ApiClient {
-  enableAutomaticBitrateDetection: boolean
-  enableAutomaticNetworking: boolean
-  lastDetectedBitrate: number
-  lastDetectedBitrateTime: number // timestamp
-  lastFetch: number // timestamp
-  lastPlaybackProgressReport: number
-  lastPlaybackProgressReportTicks: number
-  manualAddressOnly: boolean
-  _appName: string
-  _appVersion: string
-  _currentUser: {
-    Configuration: {
-      AudioLanguagePreference: string
-      DisplayCollectionsView: boolean
-      DisplayMissingEpisodes: boolean
-      EnableLocalPassword: boolean
-      EnableNextEpisodeAutoPlay: boolean
-      HidePlayedInLatest: boolean
-      OrderedViews: string[]
-      PlayDefaultAudioTrack: boolean
-      RememberAudioSelections: boolean
-      RememberSubtitleSelections: boolean
-      SubtitleLanguagePreference: string
-      SubtitleMode: string
-    }
-    HasConfiguredEasyPassword: boolean
-    HasConfiguredPassword: boolean
-    HasPassword: boolean
-    Id: string
-    LastActivityDate: string // date, ex: "2020-05-30T21:51:23.9732162Z"
-    LastLoginDate: string // date, ex: "2020-05-30T21:51:23.9732162Z"
-    Name: string
-    Policy: {
-      AuthenticationProviderId: string
-      EnableAllChannels: boolean
-      EnableAllDevices: boolean
-      EnableAllFolders: boolean
-      EnableAudioPlaybackTranscoding: boolean
-      EnableContentDeletion: boolean
-      EnableContentDownloading: boolean
-      EnableLiveTvAccess: boolean
-      EnableLiveTvManagement: boolean
-      EnableMediaConversion: boolean
-      EnableMediaPlayback: boolean
-      EnablePlaybackRemuxing: boolean
-      EnablePublicSharing: boolean
-      EnableRemoteAccess: boolean
-      EnableRemoteControlOfOtherUsers: boolean
-      EnableSharedDeviceControl: boolean
-      EnableSyncTranscoding: boolean
-      EnableUserPreferenceAccess: boolean
-      EnableVideoPlaybackTranscoding: boolean
-      ForceRemoteSourceTranscoding: boolean
-      InvalidLoginAttemptCount: boolean
-      IsAdministrator: boolean
-      IsDisabled: boolean
-      IsHidden: boolean
-      LoginAttemptsBeforeLockout: number
-      PasswordResetProviderId: string
-      RemoteClientBitrateLimit: number
-    }
-    PrimaryImageAspectRatio: number
-    PrimaryImageTag: string
-    ServerId: string
-  }
-  _deviceId: string
-  _deviceName: string
-  _endPointInfo: {
-    IsInNetwork: boolean
-    IsLocal: boolean
-  }
-  _serverAddress: string
-  _serverInfo: Server
-  _serverVersion: string
-  _webSocket: {
-    binaryType: string
-    bufferedAmount: number
-    extensions: string
-    protocol: string
-    readyState: number
-    url: string
-  }
-}
-
-interface MediaStream {
-  Codec: string
-  TimeBase: string
-  CodecTimeBase: string
-  VideoRange: string
-  DisplayTitle: string
-  IsInterlaced: boolean
-  BitRate: number
-  RefFrames: number
-  IsDefault: boolean
-  IsForced: boolean
-  Height: number
-  Width: number
-  AverageFrameRate: number
-  RealFrameRate: number
-  Profile: string
-  Type: string
-  AspectRatio: string
-  Index: number
-  IsExternal: boolean
-  IsTextSubtitleStream: boolean
-  SupportsExternalStream: boolean
-  PixelFormat: string
-  Level: number
-}
-
-interface MediaSource {
-  Protocol: string
-  Id: string
-  Path: string
-  Type: string
-  Container: string
-  Size: number
-  Name: string
-  IsRemote: boolean
-  ETag: string
-  RunTimeTicks: number
-  ReadAtNativeFramerate: boolean
-  IgnoreDts: boolean
-  IgnoreIndex: boolean
-  GenPtsInput: boolean
-  SupportsTranscoding: true
-  SupportsDirectStream: boolean
-  SupportsDirectPlay: boolean
-  IsInfiniteStream: boolean
-  RequiresOpening: boolean
-  RequiresClosing: boolean
-  RequiresLooping: boolean
-  SupportsProbing: true
-  VideoType: string
-  MediaStreams: MediaStream[]
-  MediaAttachments: []
-  Formats: []
-  Bitrate: number
-  RequiredHttpHeaders: unknown
-  DefaultAudioStreamIndex: number
-}
-
-interface ExternalUrl {
-  Name: string
-  Url: string
-}
-
-interface Person {
-  Name: string
-  Id: string
-  Role: string
-  Type: string
-  PrimaryImageTag: string
-}
-
-interface UserData {
-  PlaybackPositionTicks: number
-  PlayCount: number
-  IsFavorite: boolean
-  LastPlayedDate: string // date, ex: "2020-05-30T21:51:23.9732162Z"
-  Played: boolean
-  Key: string
-}
-
-interface Chapter {
-  StartPositionTicks: number
-  Name: string
-  ImageDateModified: string // date, ex: "2020-05-30T21:51:23.9732162Z"
-}
-
-interface MediaInfo {
-  AlbumArtist: string
-  AlbumArtists: { Name: string, Id: string }[]
-  AlbumId: string
-  AlbumPrimaryImageTag: string
-  ArtistsItems: { Name: string, Id: string }[]
-  Artists: string[]
-  Name: string
-  OriginalTitle: string
-  ServerId: string
-  Id: string
-  Etag: string
-  DateCreated: string // date, ex: "2020-05-30T21:51:23.9732162Z"
-  CanDelete: boolean
-  CanDownload: boolean
-  HasSubtitles: boolean
-  Container: string
-  SortName: string
-  PremiereDate: string // date, ex: "2020-05-30T21:51:23.9732162Z"
-  ExternalUrls: ExternalUrl[]
-  MediaSources: MediaSource[]
-  Path: string
-  EnableMediaSourceDisplay: boolean
-  Overview: string
-  // TagLines: Array;
-  // Genres: Array;
-  CommunityRating: number
-  RunTimeTicks: number
-  PlayAccess: string
-  ProductionYear: number
-  IndexNumber: number
-  ParentIndexNumber: number
-  // RemoteTrailers: Array;
-  ProviderIds: {
-    Tvdb?: number
-  }
-  IsHD: boolean
-  IsFolder: boolean
-  ParentId: string
-  Type:
-    | 'Audio'
-    | 'MusicAlbum'
-    | 'MusicArtist'
-    | 'Movie'
-    | 'Series'
-    | 'Season'
-    | 'Episode'
-    | 'TvChannel'
-    | 'Person'
-  People: Person[]
-  // Studios: Array;
-  // GenreItems: Array;
-  ParentBackdropItemId: string
-  ParentBackdropImageTags: string[]
-  LocalTrailerCount: number
-  UserData: UserData
-  RecursiveItemCount: number
-  Status: string
-  SeriesName: string
-  SeriesId: string
-  SeasonId: string
-  SpecialFeatureCount: number
-  DisplayPreferencesId: string
-  // Tags: Array;
-  PrimaryImageAspectRatio: number
-  SeriesPrimaryImageTag: string
-  SeasonName: string
-  MediaStreams: MediaStream[]
-  VideoType: string
-  ImageTags: {
-    Primary: string
-  }
-  // BackdropImageTags: Array;
-  // ScreenshotImageTags: Array;
-  SeriesStudio: string
-  Chapters: Chapter[]
-  LocationType: string
-  MediaType: string
-  // LockedFields: Array;
-  LockData: boolean
-  Width: number
-  Height: number
-}
-
-interface Server {
-  AccessToken: string
-  DateLastAccessed: number // timestamp
-  Id: string
-  IsLocalServer: boolean
-  LastConnectionMode: number
-  LocalAddress: string
-  ManualAddress: string
-  Name: string
-  RemoteAddress: string
-  Type: 'Server'
-  UserId: string
-  manualAddressOnly: boolean
-}
-
-// #endregion
 enum ActivityAssets {
-  logo = 'https://cdn.rcd.gg/PreMiD/websites/J/Jellyfin/assets/logo.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/J/Jellyfin/assets/logo.png',
 }
+
 const JELLYFIN_URL = 'jellyfin.org'
-// all the presence art assets uploaded to discord
-const presenceData: PresenceData = {
-  largeImageKey: ActivityAssets.logo,
-  startTimestamp: Math.floor(Date.now() / 1000),
+
+const presence = new Presence({
+  clientId: '669359568391766018',
+})
+
+const CACHE_MAX = 50
+
+function cacheSet<K, V>(map: Map<K, V>, key: K, value: V): void {
+  if (map.size >= CACHE_MAX) {
+    const oldest = map.keys().next().value!
+    map.delete(oldest)
+  }
+  map.set(key, value)
 }
+
+const mediaInfoCache = new Map<string, MediaInfo>()
+const searchMediaCache = new Map<string, MediaInfo[]>()
+const uploadedMediaCache = new Map<string, string>()
 
 let apiClient: ApiClient
-let presence: Presence
 let wasLogin = false
 
-/**
- * Obtain the base name Url of the server
- */
+async function getStrings() {
+  return presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    browse: 'general.browsing',
+    watchingMovie: 'general.watchingMovie',
+    watchingSeries: 'general.watchingSeries',
+    listeningMusic: 'general.listeningMusic',
+    search: 'general.search',
+    live: 'general.live',
+  })
+}
+
+let oldLang: string | null = null
+let strings: Awaited<ReturnType<typeof getStrings>>
+
 function jellyfinBasenameUrl(): string {
   const { pathname } = location
 
@@ -302,9 +53,6 @@ function jellyfinBasenameUrl(): string {
   )}`
 }
 
-/**
- * Obtain the url of the primary image of a media given its id
- */
 function mediaPrimaryImage(mediaInfo: MediaInfo): string {
   let mediaId: string
 
@@ -322,27 +70,497 @@ function mediaPrimaryImage(mediaInfo: MediaInfo): string {
   return `${jellyfinBasenameUrl()}Items/${mediaId}/Images/Primary?fillHeight=256&fillWidth=256`
 }
 
-/**
- * Handle the presence when the audio player is active
- */
-async function handleAudioPlayback(): Promise<void> {
-  const regexResult = /\/Audio\/(\w+)\/universal/.exec(
-    document.querySelector('audio')?.src ?? '',
-  )
-
-  if (!regexResult) {
-    presence.error('Could not obtain audio itemId')
-    return
-  }
-
-  await setPresenceByMediaId(regexResult[1]!)
+function truncate(text: string, max = 128): string {
+  if (text.length <= max)
+    return text
+  return `${text.slice(0, max - 3)}...`
 }
 
-/**
- * Handle the presence while the user is in the official website
- */
-function handleOfficialWebsite(): void {
-  presenceData.details = 'At jellyfin.org'
+function isNonPublicURL(url: string): boolean {
+  if (/^https?:\/\/(?:192\.168\.|10\.|172\.(?:1[6-9]|2\d|3[01])\.|100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.|127\.0\.0\.1|localhost)/.test(url))
+    return true
+
+  if (/^https?:\/\/[^/]+\.ts\.net(?:\/|:|$)/.test(url))
+    return true
+
+  return false
+}
+
+async function resolveImageUrl(
+  url: string,
+  forceLocal: boolean,
+): Promise<string> {
+  if (!isNonPublicURL(url) && !forceLocal)
+    return url
+
+  if (uploadedMediaCache.has(url))
+    return uploadedMediaCache.get(url)!
+
+  try {
+    const res = await fetch(url)
+    const blob = await res.blob()
+
+    return await new Promise<string>((resolve) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(blob)
+      reader.onloadend = () => {
+        const result = reader.result as string
+        cacheSet(uploadedMediaCache, url, result)
+        resolve(result)
+      }
+    })
+  }
+  catch {
+    return ActivityAssets.Logo
+  }
+}
+
+function getUserId(): string {
+  try {
+    return apiClient._currentUser.Id
+  }
+  catch {
+    const servers: Server[] = JSON.parse(
+      localStorage.getItem('jellyfin_credentials') ?? '{}',
+    ).Servers
+
+    return (
+      servers.length === 1
+        ? servers[0]
+        : servers.find(
+            (s: Server) =>
+              s.Id
+              === new URLSearchParams(location.hash.split('?')[1]).get('serverId'),
+          )
+    )?.UserId ?? ''
+  }
+}
+
+function authHeaders(): Record<string, string> {
+  return {
+    'x-emby-authorization': `MediaBrowser Client="${apiClient._appName}",`
+      + `Device="${apiClient._deviceName}",`
+      + `DeviceId="${apiClient._deviceId}",`
+      + `Version="${apiClient._appVersion}",`
+      + `Token="${apiClient._serverInfo.AccessToken}"`,
+  }
+}
+
+async function obtainMediaInfo(itemId: string): Promise<MediaInfo | null> {
+  if (mediaInfoCache.has(itemId))
+    return mediaInfoCache.get(itemId)!
+
+  try {
+    const res = await fetch(
+      `${jellyfinBasenameUrl()}Users/${getUserId()}/Items/${itemId}`,
+      { credentials: 'include', headers: authHeaders() },
+    )
+    if (!res.ok)
+      return null
+
+    const mediaInfo: MediaInfo = await res.json()
+    cacheSet(mediaInfoCache, itemId, mediaInfo)
+
+    return mediaInfoCache.get(itemId)!
+  }
+  catch {
+    return null
+  }
+}
+
+async function searchMedia(searchTerm: string): Promise<MediaInfo[]> {
+  if (searchMediaCache.has(searchTerm))
+    return searchMediaCache.get(searchTerm)!
+
+  if (/- S\d+:E\d+ -/.test(searchTerm))
+    searchTerm = searchTerm.split(' - ').pop() ?? ''
+
+  searchTerm = searchTerm.replace(/\(\d{4}\)/, '').trim()
+
+  try {
+    const res = await fetch(
+      `${jellyfinBasenameUrl()}Users/${getUserId()}/Items/?searchTerm=${searchTerm}`
+      + '&IncludePeople=false&IncludeMedia=true&IncludeGenres=false&IncludeStudios=false'
+      + '&IncludeArtists=false&IncludeItemTypes=Movie,Episode&Limit=3'
+      + '&Fields=PrimaryImageAspectRatio%2CCanDelete%2CBasicSyncInfo%2CMediaSourceCount'
+      + '&Recursive=true&EnableTotalRecordCount=false&ImageTypeLimit=1',
+      { credentials: 'include', headers: authHeaders() },
+    )
+    if (!res.ok)
+      return []
+
+    const resJson = await res.json()
+    cacheSet(searchMediaCache, searchTerm, resJson.Items)
+
+    return searchMediaCache.get(searchTerm)!
+  }
+  catch {
+    return []
+  }
+}
+
+async function refreshApiClient(): Promise<void> {
+  apiClient ??= (
+    await presence.getPageVariable<Record<'ApiClient', ApiClient>>('ApiClient')
+  ).ApiClient
+}
+
+async function isJellyfinWebClient(): Promise<boolean> {
+  if (!apiClient)
+    await refreshApiClient()
+
+  return !!(
+    apiClient
+    && typeof apiClient === 'object'
+    && apiClient._appName === 'Jellyfin Web'
+  )
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise(res => setTimeout(res, ms))
+}
+
+async function loggedIn(): Promise<void> {
+  let newApiClient: ApiClient
+
+  do {
+    await sleep(125)
+    newApiClient = (await presence.getPageVariable<{ ApiClient: ApiClient }>('ApiClient')).ApiClient
+  } while (!apiClient._serverInfo.AccessToken)
+
+  apiClient = newApiClient
+}
+
+interface Settings {
+  lang: string
+  usePresenceName: boolean
+  showMediaTimestamps: boolean
+  showTimestamps: boolean
+  showCover: boolean
+  showSeries: boolean
+  showMovies: boolean
+  showMusic: boolean
+  showSmallImages: boolean
+  showBrowsingStatus: boolean
+  privacy: boolean
+  localImageExtraction: boolean
+}
+
+async function fetchSettings(): Promise<Settings> {
+  const [
+    lang,
+    usePresenceName,
+    showMediaTimestamps,
+    showTimestamps,
+    showCover,
+    showSeries,
+    showMovies,
+    showMusic,
+    showSmallImages,
+    showBrowsingStatus,
+    privacy,
+    localImageExtraction,
+  ] = await Promise.all([
+    presence.getSetting<string>('lang').catch(() => 'en'),
+    presence.getSetting<boolean>('usePresenceName'),
+    presence.getSetting<boolean>('showMediaTimestamps'),
+    presence.getSetting<boolean>('showTimestamps'),
+    presence.getSetting<boolean>('showCover'),
+    presence.getSetting<boolean>('showSeries'),
+    presence.getSetting<boolean>('showMovies'),
+    presence.getSetting<boolean>('showMusic'),
+    presence.getSetting<boolean>('showSmallImages'),
+    presence.getSetting<boolean>('showBrowsingStatus'),
+    presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('localImageExtraction'),
+  ])
+
+  return {
+    lang,
+    usePresenceName,
+    showMediaTimestamps,
+    showTimestamps,
+    showCover,
+    showSeries,
+    showMovies,
+    showMusic,
+    showSmallImages,
+    showBrowsingStatus,
+    privacy,
+    localImageExtraction,
+  }
+}
+
+async function getCoverUrl(
+  mediaInfo: MediaInfo,
+  settings: Settings,
+): Promise<string> {
+  if (!settings.showCover || settings.privacy)
+    return ActivityAssets.Logo
+
+  const imageUrl = mediaPrimaryImage(mediaInfo)
+  return resolveImageUrl(imageUrl, settings.localImageExtraction)
+}
+
+function getImdbButton(mediaInfo: MediaInfo): ButtonData | null {
+  const imdbId = mediaInfo.ProviderIds?.Imdb
+  if (!imdbId)
+    return null
+
+  return {
+    label: 'View on IMDb',
+    url: `https://www.imdb.com/title/${imdbId}`,
+  }
+}
+
+function getPlaybackState(): { paused: boolean, mediaElement: HTMLMediaElement | null } {
+  const mediaElement = document.querySelector<HTMLMediaElement>('audio, video')
+  const paused = mediaElement
+    ? mediaElement.paused
+    : !!document
+        .querySelector<HTMLSpanElement>(
+          '.nowPlayingBar .playPauseButton span',
+        )
+        ?.classList
+        .contains('play_arrow')
+
+  return { paused, mediaElement }
+}
+
+function applyPlaybackInfo(
+  presenceData: MediaPresenceData,
+  settings: Settings,
+): void {
+  const { paused, mediaElement } = getPlaybackState()
+
+  if (paused) {
+    if (settings.showSmallImages) {
+      presenceData.smallImageKey = Assets.Pause
+      presenceData.smallImageText = strings.pause
+    }
+  }
+  else {
+    if (settings.showSmallImages) {
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = strings.play
+    }
+
+    if (mediaElement && settings.showMediaTimestamps && !settings.privacy) {
+      [presenceData.startTimestamp, presenceData.endTimestamp]
+        = getTimestampsFromMedia(mediaElement)
+    }
+  }
+}
+
+async function buildMediaPresence(
+  mediaInfo: MediaInfo,
+  settings: Settings,
+): Promise<PresenceData | null> {
+  switch (mediaInfo.Type) {
+    case 'Audio': {
+      if (!settings.showMusic)
+        return null
+
+      if (settings.privacy) {
+        return {
+          type: ActivityType.Listening,
+          details: strings.listeningMusic,
+          largeImageKey: ActivityAssets.Logo,
+        }
+      }
+
+      const artist = mediaInfo.AlbumArtist ?? 'Unknown artist'
+      const albumParts = [artist]
+      if (mediaInfo.Genres?.length)
+        albumParts.push(mediaInfo.Genres.slice(0, 2).join(', '))
+
+      const presenceData: MediaPresenceData = {
+        type: ActivityType.Listening,
+        details: mediaInfo.Name ?? 'Unknown title',
+        state: albumParts.join(' • '),
+        largeImageKey: await getCoverUrl(mediaInfo, settings),
+      }
+
+      if (settings.usePresenceName)
+        presenceData.name = mediaInfo.Name
+
+      applyPlaybackInfo(presenceData, settings)
+      return presenceData
+    }
+
+    case 'Movie': {
+      if (!settings.showMovies)
+        return null
+
+      if (settings.privacy) {
+        return {
+          type: ActivityType.Watching,
+          details: strings.watchingMovie,
+          largeImageKey: ActivityAssets.Logo,
+        }
+      }
+
+      const parts: string[] = [`${mediaInfo.ProductionYear}`]
+      if (mediaInfo.Genres?.length)
+        parts.push(mediaInfo.Genres.slice(0, 2).join(', '))
+      if (mediaInfo.CommunityRating)
+        parts.push(`★ ${mediaInfo.CommunityRating.toFixed(1)}`)
+      const stateText = parts.join(' • ')
+
+      const overview = mediaInfo.Overview
+        ? truncate(mediaInfo.Overview)
+        : null
+
+      const presenceData: MediaPresenceData = {
+        type: ActivityType.Watching,
+        details: stateText,
+        state: overview ?? stateText,
+        largeImageKey: await getCoverUrl(mediaInfo, settings),
+        largeImageText: `${mediaInfo.Name} (${mediaInfo.ProductionYear})`,
+      }
+
+      if (settings.usePresenceName)
+        presenceData.name = mediaInfo.Name
+
+      const movieImdb = getImdbButton(mediaInfo)
+      if (movieImdb)
+        presenceData.buttons = [movieImdb]
+
+      applyPlaybackInfo(presenceData, settings)
+      return presenceData
+    }
+
+    case 'Episode': {
+      if (!settings.showSeries)
+        return null
+
+      if (settings.privacy) {
+        return {
+          type: ActivityType.Watching,
+          details: strings.watchingSeries,
+          largeImageKey: ActivityAssets.Logo,
+        }
+      }
+
+      const season = mediaInfo.ParentIndexNumber
+      const episode = mediaInfo.IndexNumber
+      const hasFilename = /[.\\/]/.test(mediaInfo.Name ?? '')
+      const epName = hasFilename
+        ? (season && episode ? `Episode ${episode}` : 'Episode')
+        : mediaInfo.Name
+
+      const overview = mediaInfo.Overview
+        ? truncate(mediaInfo.Overview)
+        : null
+
+      const presenceData: MediaPresenceData = {
+        type: ActivityType.Watching,
+        details: mediaInfo.SeriesName,
+        state: overview ?? epName,
+        largeImageKey: await getCoverUrl(mediaInfo, settings),
+      }
+
+      if (season && episode)
+        presenceData.largeImageText = `Season ${season}, Episode ${episode}`
+
+      if (settings.usePresenceName) {
+        presenceData.name = mediaInfo.SeriesName
+        presenceData.details = epName
+        presenceData.state = overview ?? epName
+      }
+
+      const episodeImdb = getImdbButton(mediaInfo)
+      if (episodeImdb)
+        presenceData.buttons = [episodeImdb]
+
+      applyPlaybackInfo(presenceData, settings)
+      return presenceData
+    }
+
+    case 'Series': {
+      if (!settings.showSeries)
+        return null
+
+      if (settings.privacy) {
+        return {
+          type: ActivityType.Watching,
+          details: strings.watchingSeries,
+          largeImageKey: ActivityAssets.Logo,
+        }
+      }
+
+      const presenceData: MediaPresenceData = {
+        type: ActivityType.Watching,
+        details: mediaInfo.Name,
+        state: `Series • ${mediaInfo.Status}`,
+        largeImageKey: await getCoverUrl(mediaInfo, settings),
+      }
+
+      if (settings.usePresenceName)
+        presenceData.name = mediaInfo.Name
+
+      applyPlaybackInfo(presenceData, settings)
+      return presenceData
+    }
+
+    case 'TvChannel': {
+      if (settings.privacy) {
+        return {
+          type: ActivityType.Watching,
+          details: 'Watching Live TV',
+          largeImageKey: ActivityAssets.Logo,
+        }
+      }
+
+      const presenceData: MediaPresenceData = {
+        type: ActivityType.Watching,
+        details: mediaInfo.Name ?? 'Live TV',
+        largeImageKey: await getCoverUrl(mediaInfo, settings),
+      }
+
+      if (settings.showSmallImages) {
+        presenceData.smallImageKey = Assets.Live
+        presenceData.smallImageText = strings.live
+      }
+
+      if (settings.usePresenceName)
+        presenceData.name = mediaInfo.Name
+
+      return presenceData
+    }
+
+    default: {
+      if (settings.privacy) {
+        return {
+          type: ActivityType.Watching,
+          details: strings.watchingMovie,
+          largeImageKey: ActivityAssets.Logo,
+        }
+      }
+
+      const presenceData: MediaPresenceData = {
+        type: ActivityType.Watching,
+        details: mediaInfo.Name,
+        largeImageKey: await getCoverUrl(mediaInfo, settings),
+      }
+
+      if (settings.usePresenceName)
+        presenceData.name = mediaInfo.Name
+
+      applyPlaybackInfo(presenceData, settings)
+      return presenceData
+    }
+  }
+}
+
+function handleOfficialWebsite(settings: Settings): PresenceData | null {
+  if (!settings.showBrowsingStatus)
+    return null
+
+  const presenceData: PresenceData = {
+    largeImageKey: ActivityAssets.Logo,
+    details: 'At jellyfin.org',
+  }
 
   switch (location.pathname) {
     case '/':
@@ -367,7 +585,6 @@ function handleOfficialWebsite(): void {
       presenceData.state = 'On contact page'
       break
     default:
-      // reading the docs
       if (location.pathname.indexOf('/docs/') === 0) {
         presenceData.state = `Reading the docs: ${document.title
           .split('|')[0]
@@ -375,580 +592,283 @@ function handleOfficialWebsite(): void {
         presenceData.smallImageKey = Assets.Reading
       }
   }
+
+  return presenceData
 }
 
-/**
- * Obtain the authenticated user id
- */
-function getUserId(): string {
-  try {
-    return apiClient._currentUser.Id
-  }
-  catch {
-    const servers: Server[] = JSON.parse(
-      localStorage.getItem('jellyfin_credentials') ?? '{}',
-    ).Servers
+async function handleItemDetails(settings: Settings): Promise<PresenceData | null> {
+  if (!settings.showBrowsingStatus)
+    return null
 
-    return (
-      servers.length === 1
-        ? servers[0]
-        : servers.find(
-            (s: Server) =>
-              s.Id
-              === new URLSearchParams(location.hash.split('?')[1]).get('serverId'),
-          )
-    )?.UserId ?? ''
-  }
-}
-
-/**
- * Cache performed mediaInfo
- */
-const mediaInfoCache = new Map<string, MediaInfo>()
-
-/**
- * Obtain media info given an itemId
- */
-async function obtainMediaInfo(itemId: string): Promise<MediaInfo> {
-  if (mediaInfoCache.has(itemId))
-    return mediaInfoCache.get(itemId)!
-
-  const res = await fetch(
-    `${jellyfinBasenameUrl()}Users/${getUserId()}/Items/${itemId}`,
-    {
-      credentials: 'include',
-      headers: {
-        'x-emby-authorization': `MediaBrowser Client="${apiClient._appName}",`
-          + `Device="${apiClient._deviceName}",`
-          + `DeviceId="${apiClient._deviceId}",`
-          + `Version="${apiClient._appVersion}",`
-          + `Token="${apiClient._serverInfo.AccessToken}"`,
-      },
-    },
-  )
-  const mediaInfo: MediaInfo = await res.json()
-
-  mediaInfoCache.set(itemId, mediaInfo)
-
-  return mediaInfoCache.get(itemId)!
-}
-
-/**
- * Cache performed media searches
- */
-const searchMediaCache = new Map<string, MediaInfo[]>()
-const uploadedMediaCache = new Map<string, string>()
-
-/**
- * Search Movie and Series given a term
- */
-async function searchMedia(searchTerm: string): Promise<MediaInfo[]> {
-  if (searchMediaCache.has(searchTerm))
-    return searchMediaCache.get(searchTerm)!
-
-  if (/- S\d+:E\d+ -/.test(searchTerm))
-    searchTerm = searchTerm.split(' - ').pop() ?? ''
-
-  // The API does not like the year in the search term
-  searchTerm = searchTerm.replace(/\(\d{4}\)/, '').trim()
-
-  const res = await fetch(
-    `${jellyfinBasenameUrl()}Users/${getUserId()}/Items/?searchTerm=${searchTerm}`
-    + '&IncludePeople=false&IncludeMedia=true&IncludeGenres=false&IncludeStudios=false'
-    + '&IncludeArtists=false&IncludeItemTypes=Movie,Episode&Limit=3'
-    + '&Fields=PrimaryImageAspectRatio%2CCanDelete%2CBasicSyncInfo%2CMediaSourceCount'
-    + '&Recursive=true&EnableTotalRecordCount=false&ImageTypeLimit=1',
-    {
-      credentials: 'include',
-      headers: {
-        'x-emby-authorization': `MediaBrowser Client="${apiClient._appName}",`
-          + `Device="${apiClient._deviceName}",`
-          + `DeviceId="${apiClient._deviceId}",`
-          + `Version="${apiClient._appVersion}",`
-          + `Token="${apiClient._serverInfo.AccessToken}"`,
-      },
-    },
-  )
-  const resJson = await res.json()
-
-  searchMediaCache.set(searchTerm, resJson.Items)
-
-  return searchMediaCache.get(searchTerm)!
-}
-
-/**
- * Handles the presence when the user is using the video player
- */
-async function handleVideoPlayback(): Promise<void> {
-  if (!document.querySelector('#videoOsdPage')) {
-    // elements not loaded yet
-    return
+  if (settings.privacy) {
+    return {
+      largeImageKey: ActivityAssets.Logo,
+      details: strings.browse,
+    }
   }
 
-  // title on the header
-  const [mediaInfo] = await searchMedia(
-    document.querySelector<HTMLHeadingElement>('h3.pageTitle')?.textContent ?? '',
-  )
-
-  if (mediaInfo) {
-    await setPresenceByMediaId(mediaInfo.Id)
-    return
-  }
-
-  // display generic info
-  presenceData.details = 'Watching:'
-  presenceData.state = 'Unknown Content'
-
-  if (!presenceData.state)
-    delete presenceData.state
-}
-
-/**
- * Handle the presence when the user is playing back content remotely
- */
-async function handleRemotePlayback(): Promise<void> {
-  const [, mediaId] = /\/Items\/(\w+)\/Images/.exec(
-    document.querySelector<HTMLDivElement>('.nowPlayingImage')?.style.backgroundImage ?? '',
-  ) ?? []
-
-  await setPresenceByMediaId(mediaId!)
-}
-
-/**
- * Handle the presence when the user is viewing the details of an item
- */
-async function handleItemDetails(): Promise<void> {
   const data = await obtainMediaInfo(
     new URLSearchParams(location.hash.split('?')[1]).get('id')!,
   )
 
   if (!data) {
-    presenceData.details = 'Browsing details of an item'
-    presenceData.state = 'Could not get item details'
-  }
-  else if (typeof data !== 'string') {
-    presenceData.details = `Browsing details of: ${data.Name}`
-
-    switch (data.Type) {
-      case 'Movie':
-        presenceData.state = `${data.Type} ─ ${data.OriginalTitle} (${data.ProductionYear})`
-        break
-      case 'Series':
-        presenceData.state = `${data.Type} ─ (${data.Status})`
-        break
-      case 'Season':
-        presenceData.state = `${data.Type} ─ ${data.SeriesName}`
-        break
-      case 'Episode':
-        presenceData.state = `${data.Type} ─ ${data.SeriesName} - ${data.SeasonName}`
-        break
-      case 'Person': {
-        let description = 'Description not available'
-
-        if (data.Overview) {
-          description = data.Overview.substring(0, 40)
-            + (data.Overview.length > 40 ? '...' : '')
-        }
-        presenceData.state = `${data.Type} ─ ${description}`
-        break
-      }
-      case 'MusicAlbum':
-        presenceData.state = `${data.Type} ─ ${data.RecursiveItemCount} songs`
-        break
-      case 'MusicArtist':
-      case 'TvChannel':
-        presenceData.state = `${data.Type} ─ No further information available`
-        break
-      default:
-        presenceData.state = 'No further information available'
+    return {
+      largeImageKey: ActivityAssets.Logo,
+      details: strings.browse,
     }
-
-    if (await presence.getSetting('showThumbnails'))
-      presenceData.largeImageKey = mediaPrimaryImage(data)
   }
-}
 
-/**
- * Sets a presence based on the given multimedia mediaId
- */
-async function setPresenceByMediaId(mediaId: string): Promise<void> {
-  const mediaInfo = await obtainMediaInfo(mediaId)
+  const presenceData: PresenceData = {
+    largeImageKey: ActivityAssets.Logo,
+    details: data.Name,
+  }
 
-  let title: string | undefined, subtitle: string | undefined
+  if (settings.showSmallImages) {
+    presenceData.smallImageKey = Assets.Viewing
+    presenceData.smallImageText = strings.browse
+  }
 
-  switch (mediaInfo.Type) {
-    case 'Audio':
-      presenceData.type = ActivityType.Listening
-      title = `Listening to ${mediaInfo.Name ?? 'Unknown title'}`
-      subtitle = `By ${mediaInfo.AlbumArtist ?? 'Unknown artist'}`
+  switch (data.Type) {
+    case 'Movie': {
+      const movieParts: string[] = [`${data.ProductionYear}`]
+      if (data.Genres?.length)
+        movieParts.push(data.Genres.slice(0, 2).join(', '))
+      if (data.CommunityRating)
+        movieParts.push(`★ ${data.CommunityRating.toFixed(1)}`)
+      presenceData.state = movieParts.join(' • ')
       break
-    case 'Movie':
-    case 'Series':
-      title = `Watching ${mediaInfo.Type}`
-      subtitle = mediaInfo.Name
+    }
+    case 'Series': {
+      const seriesParts: string[] = []
+      if (data.ProductionYear)
+        seriesParts.push(`${data.ProductionYear}`)
+      if (data.Genres?.length)
+        seriesParts.push(data.Genres.slice(0, 2).join(', '))
+      if (data.CommunityRating)
+        seriesParts.push(`★ ${data.CommunityRating.toFixed(1)}`)
+      presenceData.state = seriesParts.length
+        ? seriesParts.join(' • ')
+        : `Series • ${data.Status}`
       break
-    case 'Episode':
-      title = `Watching: ${mediaInfo.SeriesName}`
-      subtitle = `${/S\d+:E\d+/.exec(
-        document.querySelector<HTMLHeadingElement>('.pageTitle')?.textContent ?? '',
-      )} - ${mediaInfo.Name}`
+    }
+    case 'Season':
+      presenceData.details = data.SeriesName
+      presenceData.state = data.Name
       break
+    case 'Episode': {
+      presenceData.details = data.SeriesName
+      const isFilename = /[.\\/]/.test(data.Name ?? '')
+      const episodeName = isFilename ? null : data.Name
+      if (data.SeasonName && data.IndexNumber) {
+        presenceData.state = episodeName
+          ? `${data.SeasonName} • Episode ${data.IndexNumber} - ${episodeName}`
+          : `${data.SeasonName} • Episode ${data.IndexNumber}`
+      }
+      else {
+        presenceData.state = episodeName ?? data.SeasonName ?? 'Episode'
+      }
+      break
+    }
+    case 'MusicAlbum':
+      presenceData.state = `Album • ${data.RecursiveItemCount} songs`
+      break
+    case 'MusicArtist':
+      presenceData.state = 'Artist'
+      break
+    case 'Person': {
+      presenceData.state = data.Overview
+        ? truncate(data.Overview, 60)
+        : 'Person'
+      break
+    }
     case 'TvChannel':
-      presenceData.smallImageKey = Assets.Live
-      presenceData.smallImageText = 'Live TV'
+      presenceData.state = 'Live TV Channel'
       break
     default:
-      title = `Watching ${mediaInfo.Type}`
-      subtitle = mediaInfo.Name
+      presenceData.state = data.Type
   }
 
-  if (presenceData.type !== ActivityType.Listening)
-    presenceData.type = ActivityType.Watching
-
-  if (await presence.getSetting('showThumbnails'))
-    presenceData.largeImageKey = mediaPrimaryImage(mediaInfo)
-
-  if (mediaInfo.Type !== 'TvChannel') {
-    const mediaElement = document.querySelector<HTMLMediaElement>('audio, video')
-    const paused = mediaElement
-      ? mediaElement.paused
-      : document
-          .querySelector<HTMLSpanElement>(
-            '.nowPlayingBar .playPauseButton span',
-          )
-          ?.classList
-          .contains('play_arrow')
-
-    if (paused) {
-      presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = 'Paused'
-
-      delete presenceData.endTimestamp
-    }
-    else {
-      presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = 'Playing'
-
-      // TODO: worth setting timestamps on remote playback? Requires WS connection
-      if (mediaElement && (await presence.getSetting('showMediaTimestamps'))) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(mediaElement)
-      }
-    }
+  if (settings.showCover) {
+    const imageUrl = mediaPrimaryImage(data)
+    presenceData.largeImageKey = await resolveImageUrl(imageUrl, settings.localImageExtraction)
   }
 
-  presenceData.details = title
-  presenceData.state = subtitle
+  const imdbButton = getImdbButton(data)
+  if (imdbButton)
+    presenceData.buttons = [imdbButton]
 
-  if (!presenceData.state)
-    delete presenceData.state
+  return presenceData
 }
 
-/**
- * Suspend execution of code for an interval, see <https://manpage.me/?q=sleep>
- */
-function sleep(ms: number): Promise<void> {
-  return new Promise((res) => {
-    setTimeout(res, ms)
-  })
+async function handleAudioPlayback(settings: Settings): Promise<PresenceData | null> {
+  const regexResult = /\/Audio\/(\w+)\/universal/.exec(
+    document.querySelector('audio')?.src ?? '',
+  )
+
+  if (!regexResult) {
+    presence.error('Could not obtain audio itemId')
+    return null
+  }
+
+  const mediaInfo = await obtainMediaInfo(regexResult[1]!)
+  if (!mediaInfo)
+    return null
+
+  return buildMediaPresence(mediaInfo, settings)
 }
 
-/**
- * Refreshes the ApiClient object
- */
-async function loggedIn(): Promise<void> {
-  let newApiClient: ApiClient
+async function handleVideoPlayback(settings: Settings): Promise<PresenceData | null> {
+  if (!document.querySelector('#videoOsdPage'))
+    return null
 
-  do {
-    await sleep(125)
-    newApiClient = (await presence.getPageVariable<{ ApiClient: ApiClient }>('ApiClient')).ApiClient
-  } while (!apiClient._serverInfo.AccessToken)
+  const [mediaInfo] = await searchMedia(
+    document.querySelector<HTMLHeadingElement>('h3.pageTitle')?.textContent ?? '',
+  )
 
-  apiClient = newApiClient
+  if (mediaInfo) {
+    const info = await obtainMediaInfo(mediaInfo.Id)
+    if (!info)
+      return null
+
+    return buildMediaPresence(info, settings)
+  }
+
+  if (settings.privacy)
+    return { type: ActivityType.Watching, largeImageKey: ActivityAssets.Logo, details: strings.watchingMovie } as MediaPresenceData
+
+  return {
+    type: ActivityType.Watching,
+    largeImageKey: ActivityAssets.Logo,
+    details: 'Watching',
+    state: 'Unknown Content',
+  } as MediaPresenceData
 }
 
-/**
- * Handle the presence while the user is in the web client
- */
-async function handleWebClient(): Promise<void> {
+async function handleRemotePlayback(settings: Settings): Promise<PresenceData | null> {
+  const [, mediaId] = /\/Items\/(\w+)\/Images/.exec(
+    document.querySelector<HTMLDivElement>('.nowPlayingImage')?.style.backgroundImage ?? '',
+  ) ?? []
+
+  if (!mediaId)
+    return null
+
+  const mediaInfo = await obtainMediaInfo(mediaId)
+  if (!mediaInfo)
+    return null
+
+  return buildMediaPresence(mediaInfo, settings)
+}
+
+async function handleWebClient(settings: Settings): Promise<PresenceData | null> {
   const audioElement = document.body.querySelector<HTMLAudioElement>('audio')
   const nowPlayingBar = document.querySelector('.nowPlayingBar')
 
-  // audio player active
   if (
     audioElement
     && audioElement.classList.contains('mediaPlayerAudio')
     && audioElement.src
   ) {
-    await handleAudioPlayback()
-    return
+    return handleAudioPlayback(settings)
   }
-  else if (
+
+  if (
     nowPlayingBar
     && !nowPlayingBar.classList.contains('nowPlayingBar-hidden')
   ) {
-    await handleRemotePlayback()
-    return
+    return handleRemotePlayback(settings)
   }
-
-  presenceData.details = 'At web client'
-
-  // obtain the path, on the example would return "login.html"
-  // https://media.domain.tld/web/index.html#!/login.html?serverid=randomserverid
 
   const path = location.hash.split('?')[0]?.substring(2)
 
   if (path === 'login.html') {
     wasLogin = true
-    presenceData.state = 'Logging in'
   }
   else if (wasLogin) {
-    loggedIn()
+    loggedIn().catch(() => {})
     wasLogin = false
   }
 
+  if (path === 'video')
+    return handleVideoPlayback(settings)
+
+  if (path === 'details')
+    return handleItemDetails(settings)
+
+  if (!settings.showBrowsingStatus || settings.privacy)
+    return null
+
+  const presenceData: PresenceData = {
+    largeImageKey: ActivityAssets.Logo,
+    details: strings.browse,
+  }
+
+  if (settings.showSmallImages) {
+    presenceData.smallImageKey = Assets.Reading
+    presenceData.smallImageText = strings.browse
+  }
+
   switch (path) {
+    case 'login.html':
+      presenceData.state = 'Logging in'
+      break
     case 'home.html':
-      presenceData.state = 'At home'
+      presenceData.state = 'Home'
       break
     case 'search.html':
       presenceData.state = 'Searching'
-      presenceData.smallImageKey = Assets.Search
+      if (settings.showSmallImages) {
+        presenceData.smallImageKey = Assets.Search
+        presenceData.smallImageText = strings.search
+      }
       break
-
-      // user preferences
-    case 'mypreferencesmenu.html':
-    case 'myprofile.html': // profile
-    case 'mypreferencesdisplay.html': // display
-    case 'mypreferenceshome.html': // home
-    case 'mypreferencesplayback.html': // playback
-    case 'mypreferencessubtitles.html': // subtitles
-      presenceData.state = 'On user preferences'
-      break
-
-      // admin dashboard
-    case 'dashboard.html': // server section
-    case 'dashboardgeneral.html': // general
-    case 'userprofiles.html': // user profiles
-    case 'useredit.html': // editing user profile
-    case 'userlibraryaccess.html': // editing user profile > library access
-    case 'userparentalcontrol.html': // editing user profile > parental control
-    case 'userpassword.html': // editing user profile > password
-    case 'library.html': // managing library
-    case 'librarydisplay.html': // library display settings
-    case 'metadataimages.html': // library metadata settings
-    case 'metadatanfo.html': // library NFO settings
-    case 'encodingsettings.html': // encoding settings > transcoding
-    case 'playbackconfiguration.html': // encoding settings > resume
-    case 'streamingsettings.html': // encoding settings > streaming
-    case 'devices.html': // devices
-    case 'device.html': // editing device
-    case 'serveractivity.html': // server activity
-    case 'dlnasettings.html': // dlna settings > settings
-    case 'dlnaprofiles.html': // dlna settings > profiles
-    case 'dlnaprofile.html': // dlna settings > add profile
-    case 'livetvstatus.html': // manage live tv
-    case 'livetvtuner.html': // add/manage tv tuner
-    case 'livetvguideprovider.html': // add/manage tv guide provider
-    case 'livetvsettings.html': // live tv settings (dvr) // advanced section
-    case 'networking.html': // networking
-    case 'apikeys.html': // api keys
-    case 'log.html': // logs
-    case 'notificationsettings.html': // notification settings
-    case 'installedplugins.html': // plugins
-    case 'availableplugins.html': // plugins catalog
-    case 'scheduledtasks.html': // scheduled tasks
-    case 'configurationpage': // plugins configuration page
-      presenceData.state = 'On admin dashboard'
-      break
-
     case 'movies.html':
-      presenceData.state = 'Browsing movies'
+      presenceData.state = 'Movies'
       break
-
     case 'tv.html':
-      presenceData.state = 'Browsing tv series'
+      presenceData.state = 'TV Series'
       break
-
     case 'music.html':
-      presenceData.state = 'Browsing music'
+      presenceData.state = 'Music'
       break
-
     case 'livetv.html':
-      presenceData.state = 'Browsing Live TV'
+      presenceData.state = 'Live TV'
       break
-
-    case 'edititemmetadata.html':
-      presenceData.state = 'Editing media metadata'
-      break
-
-    case 'details':
-      await handleItemDetails()
-      break
-
-    case 'video':
-      await handleVideoPlayback()
-      break
-
     case 'nowplaying.html':
-      presenceData.state = 'Viewing the audio playlist'
+      presenceData.state = 'Audio Playlist'
+      break
+    default:
       break
   }
+
+  return presenceData
 }
 
-/**
- * Sets default values to the presenceData object
- */
-async function setDefaultsToPresence(): Promise<void> {
-  presenceData.largeImageKey = ActivityAssets.logo
+const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-  if (presenceData.smallImageKey)
-    delete presenceData.smallImageKey
+presence.on('UpdateData', async () => {
+  const settings = await fetchSettings()
 
-  if (presenceData.smallImageText)
-    delete presenceData.smallImageText
-
-  if (presenceData.state)
-    delete presenceData.state
-
-  if (presenceData.startTimestamp)
-    delete presenceData.startTimestamp
-
-  if (Number.isNaN(presenceData.endTimestamp as number))
-    delete presenceData.endTimestamp
-
-  if ((await presence.getSetting<boolean>('showTimestamps')) === false)
-    delete presenceData.startTimestamp
-}
-
-/**
- * Initializes the ApiClient object
- */
-async function refreshApiClient(): Promise<void> {
-  apiClient ??= (
-    await presence.getPageVariable<Record<'ApiClient', ApiClient>>('ApiClient')
-  ).ApiClient
-}
-
-/**
- * Imports the ApiClient variable and verifies that we are in the jellyfin web client
- */
-async function isJellyfinWebClient(): Promise<boolean> {
-  if (!apiClient)
-    await refreshApiClient()
-
-  if (
-    apiClient
-    && typeof apiClient === 'object'
-    && apiClient._appName
-    && apiClient._appName === 'Jellyfin Web'
-  ) {
-    return true
+  if (oldLang !== settings.lang) {
+    oldLang = settings.lang
+    strings = await getStrings()
   }
 
-  return false
-}
+  let presenceData: PresenceData | null = null
 
-/**
- * PreMiD tick function
- */
-async function updateData(): Promise<void> {
-  await setDefaultsToPresence()
-
-  let showPresence = false
-
-  // we are on the official jellyfin page
   if (location.host.toLowerCase() === JELLYFIN_URL) {
-    showPresence = true
-    handleOfficialWebsite()
-
-    // we are on the web client and has been verified
+    presenceData = handleOfficialWebsite(settings)
   }
   else if (await isJellyfinWebClient()) {
-    showPresence = true
-    await handleWebClient()
+    presenceData = await handleWebClient(settings)
   }
 
-  // if jellyfin is detected init/update the presence status
-  if (showPresence) {
-    const largeImageKey = presenceData.largeImageKey as string
-    const forceLocalExtraction = await presence.getSetting<boolean>('localImageExtraction')
-    if (isNonPublicURL(largeImageKey) || forceLocalExtraction) {
-      if (uploadedMediaCache.has(largeImageKey)) {
-        presenceData.largeImageKey = uploadedMediaCache.get(largeImageKey)
-      }
-      else {
-        await fetch(largeImageKey)
-          .then(res => res.blob())
-          .then((blob) => {
-            const reader = new FileReader()
-            reader.readAsDataURL(blob)
-            reader.onloadend = () => {
-              const result = reader.result as string
-              uploadedMediaCache.set(largeImageKey, result)
-              presenceData.largeImageKey = result
-            }
-          })
-      }
-    }
-
-    if (!presenceData.details)
-      presence.setActivity()
-    else presence.setActivity(presenceData)
-  }
-}
-
-function isNonPublicURL(url: string): boolean {
-  // Match RFC 1918 private IPs, CGNAT (100.64.0.0/10, used by Tailscale), and localhost (http or https)
-  if (/^https?:\/\/(?:192\.168\.|10\.|172\.(?:1[6-9]|2\d|3[01])\.|100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.|127\.0\.0\.1|localhost)/.test(url))
-    return true
-
-  // Match Tailscale domains (*.ts.net)
-  if (/^https?:\/\/[^/]+\.ts\.net(?:\/|:|$)/.test(url))
-    return true
-
-  return false
-}
-/**
- * Check if the presence should be initialized, if so start doing the magic
- */
-async function init(): Promise<void> {
-  let validPage = false
-  let infoMessage
-
-  // jellyfin website
-  if (location.host === JELLYFIN_URL) {
-    validPage = true
-    infoMessage = 'Jellyfin website detected'
-
-    // web client
-  }
-  else {
-    try {
-      for (const server of JSON.parse(
-        localStorage.getItem('jellyfin_credentials') ?? '{}',
-      ).Servers) {
-        // user has accessed in the last 30 seconds, should be enough for slow connections
-        if (
-          Date.now() - new Date(server.DateLastAccessed).getTime()
-          < 30 * 1000
-        ) {
-          validPage = true
-          infoMessage = 'Jellyfin web client detected'
-        }
-      }
-    }
-    catch {
-      validPage = false
-    }
+  if (!presenceData) {
+    presence.clearActivity()
+    return
   }
 
-  if (validPage) {
-    presence = new Presence({
-      clientId: '669359568391766018',
-    })
+  if (settings.showTimestamps && !presenceData.startTimestamp && !presenceData.endTimestamp)
+    presenceData.startTimestamp = browsingTimestamp
 
-    presence.info(infoMessage ?? '')
-    presence.on('UpdateData', updateData)
-  }
-}
-init()
+  presence.setActivity(presenceData)
+})
