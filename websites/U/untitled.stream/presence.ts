@@ -59,8 +59,11 @@ presence.on('UpdateData', async () => {
     details: title,
     largeImageText: subtitle,
     type: ActivityType.Listening,
-    largeImageKey: coverArt,
     statusDisplayType: StatusDisplayType.Details,
+  }
+
+  if (coverArt) {
+    presenceData.largeImageKey = await fetch(coverArt).then(res => res.blob())
   }
 
   if (libraryData?.project && lastProjectRef) {
