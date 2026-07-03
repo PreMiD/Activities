@@ -17,8 +17,8 @@
   "url": "www.1flex.org",
   "regExp": "^https?[:][/][/](www[.])?1flex[.]org[/]",
   "version": "1.0.0",
-  "logo": "https://imgur.com/etdu1L5.png",
-  "thumbnail": "https://imgur.com/r3cFlG5.png",
+  "logo": "https://i.imgur.com/etdu1L5.png",
+  "thumbnail": "https://i.imgur.com/r3cFlG5.png",
   "color": "#141414",
   "category": "videos",
   "tags": [
