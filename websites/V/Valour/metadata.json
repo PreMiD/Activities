@@ -1,0 +1,116 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "SkyJoshua",
+    "id": "633705563267661824"
+  },
+  "service": "Valour",
+  "description": {
+    "en": "Valour is a community social platform based on privacy and transparency."
+  },
+  "url": "valour.gg",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(valour[.]gg)[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Valour/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Valour/assets/thumbnail.png",
+  "color": "#00faff",
+  "category": "socials",
+  "tags": [
+    "chat",
+    "community"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "activityName",
+      "title": "Main Text",
+      "icon": "fas fa-font",
+      "value": 0,
+      "values": [
+        "Valour",
+        "Valour - Planet Name",
+        "Valour - Channel Name",
+        "Planet Name",
+        "Channel Name",
+        "Planet Name - Channel Name"
+      ]
+    },
+    {
+      "id": "largeImage",
+      "title": "Big Image",
+      "icon": "fas fa-image",
+      "value": 0,
+      "values": [
+        "Valour Logo",
+        "Channel Logo"
+      ]
+    },
+    {
+      "id": "smallImage",
+      "title": "Small Image",
+      "icon": "fas fa-user-circle",
+      "value": 1,
+      "values": [
+        "Disabled",
+        "Profile Picture",
+        "Channel Icon"
+      ]
+    },
+    {
+      "id": "smallImageText",
+      "title": "Small Image Text",
+      "icon": "fas fa-font",
+      "value": 1,
+      "values": [
+        "Disabled",
+        "Username",
+        "Channel Name"
+      ]
+    },
+    {
+      "id": "showPlanet",
+      "title": "Show Planet Name",
+      "icon": "fas fa-server",
+      "value": true
+    },
+    {
+      "id": "showChannel",
+      "title": "Show Channel Name",
+      "icon": "fas fa-hashtag",
+      "value": true
+    },
+    {
+      "id": "showDMs",
+      "title": "Show Direct Messages",
+      "icon": "fas fa-envelope",
+      "if": {
+        "showChannel": true
+      },
+      "value": true
+    },
+    {
+      "id": "showButton",
+      "title": "Show Open Valour Button",
+      "icon": "fas fa-link",
+      "value": true
+    },
+    {
+      "id": "showViewPlanetButton",
+      "title": "Show View Planet Button",
+      "icon": "fas fa-compass",
+      "value": true
+    },
+    {
+      "id": "perChannelTimestamp",
+      "title": "Per-Channel Timestamp",
+      "icon": "fas fa-stopwatch",
+      "value": false
+    }
+  ]
+}

@@ -12,8 +12,8 @@ interface IframeVideoState {
 }
 
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/logo.png',
-  Thumbnail = 'https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/0.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/0.png',
+  Thumbnail = 'https://cdn.rcd.gg/PreMiD/websites/R/ReAnime/assets/1.png',
 }
 
 let browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -78,7 +78,7 @@ function getResolvedPageUrl(): URL {
       return new URL(candidate, document.location.origin)
     }
     catch {
-      // ignore invalid URL candidates
+
     }
   }
 
@@ -139,7 +139,7 @@ function getAnimeTitle(): string {
     .replace(/\s*-\s*Episode\s+\d+\s*\|\s*Re:ANIME$/i, '')
     .replace(/\s*\|\s*Re:ANIME$/i, '')
 
-  return headingTitle || ogTitle || pageTitle || 'Re:ANIME'
+  return headingTitle || ogTitle || pageTitle || 'Re:Anime'
 }
 
 function getPoster(): string {
@@ -160,7 +160,6 @@ function getPoster(): string {
     try {
       const url = new URL(candidate)
 
-      // Prefer direct image files from stable CDNs; ignore placeholders/data URLs.
       if (
         url.protocol === 'https:'
         && !url.href.startsWith('data:')
@@ -171,7 +170,7 @@ function getPoster(): string {
       }
     }
     catch {
-      // ignore invalid URLs
+
     }
   }
 
@@ -210,7 +209,7 @@ function getCurrentEpisodeLabel(): string {
     return `Episode ${watchBoxLabel.replace(/^Episode\s*/i, '')}`
 
   const ep = new URLSearchParams(document.location.search).get('ep')
-  return ep ? `Episode ${ep}` : 'Watching anime'
+  return ep ? `Episode ${ep}` : 'Watching Anime'
 }
 
 function getWatchingStateLabel(episodeLabel: string): string {
@@ -219,7 +218,7 @@ function getWatchingStateLabel(episodeLabel: string): string {
   if (/^Episode\s+\d+/i.test(normalized))
     return `Watching ${normalized}`
 
-  return normalized ? `Watching ${normalized}` : 'Watching anime'
+  return normalized ? `Watching ${normalized}` : 'Watching Anime'
 }
 
 function getAnimeDetailUrl(): string | null {
@@ -279,7 +278,7 @@ presence.on('iFrameData', (data: IframeVideoState) => {
         return
     }
     catch {
-      // ignore parsing errors
+
     }
   }
 
@@ -447,9 +446,6 @@ function getPlaybackState(href: string): {
     }
   }
 
-  // Treat Re:ANIME's watch_progress as a checkpoint, not a live timer.
-  // We only trust big jumps (likely seeks/new checkpoints) and otherwise
-  // keep advancing locally to avoid backward timer snaps.
   if (now - lastPlaybackRead > 3000) {
     lastPlaybackRead = now
 
@@ -511,7 +507,10 @@ function getPlaybackState(href: string): {
 }
 
 presence.on('UpdateData', async () => {
-  const showButtons = await presence.getSetting<boolean>('buttons')
+  const [privacy, showButtons] = await Promise.all([
+    presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('buttons'),
+  ])
   const resolvedUrl = getResolvedPageUrl()
   const href = resolvedUrl.href
   const route = detectPageRoute()
@@ -535,10 +534,11 @@ presence.on('UpdateData', async () => {
   else if (route === 'search') {
     setMode('browse')
     const presenceData: PresenceData = {
-      largeImageKey: poster || ActivityAssets.Logo,
+      largeImageKey: ActivityAssets.Logo,
     }
     presenceData.details = 'Searching anime'
-    presenceData.state = getSearchQuery() || 'Looking for something to watch'
+    if (!privacy)
+      presenceData.state = getSearchQuery() || 'Looking for something to watch'
     presenceData.startTimestamp = browsingTimestamp
     presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = 'Searching'
@@ -549,7 +549,7 @@ presence.on('UpdateData', async () => {
   else if (route === 'schedule') {
     setMode('browse')
     const presenceData: PresenceData = {
-      largeImageKey: poster || ActivityAssets.Logo,
+      largeImageKey: ActivityAssets.Logo,
     }
     presenceData.details = 'Viewing schedule'
     presenceData.state = 'Upcoming releases'
@@ -563,15 +563,18 @@ presence.on('UpdateData', async () => {
   else if (route === 'anime') {
     setMode('detail')
     const presenceData: PresenceData = {
-      largeImageKey: poster || ActivityAssets.Logo,
+      largeImageKey: privacy
+        ? ActivityAssets.Logo
+        : poster || ActivityAssets.Logo,
     }
-    presenceData.details = animeTitle
-    presenceData.state = 'Viewing anime details'
+    presenceData.details = privacy ? 'Browsing anime' : animeTitle
+    if (!privacy)
+      presenceData.state = 'Viewing anime details'
     presenceData.startTimestamp = browsingTimestamp
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = 'Reading details'
 
-    if (showButtons) {
+    if (showButtons && !privacy) {
       presenceData.buttons = [
         {
           label: 'View Anime',
@@ -595,20 +598,21 @@ presence.on('UpdateData', async () => {
 
     const presenceData: PresenceData = {
       type: ActivityType.Watching,
-      largeImageKey: poster || ActivityAssets.Logo,
-      largeImageText: seasonEpisodeText || 'Re:ANIME',
-      details: animeTitle,
-      state: parts.join(' | '),
+      largeImageKey: privacy ? ActivityAssets.Logo : poster || ActivityAssets.Logo,
+      largeImageText: privacy ? 'Re:Anime' : seasonEpisodeText || 'Re:Anime',
+      details: privacy ? 'Watching Anime' : animeTitle,
       smallImageKey: paused ? Assets.Pause : Assets.Play,
       smallImageText: paused ? 'Paused' : 'Watching',
     }
+    if (!privacy)
+      presenceData.state = parts.join(' | ')
 
     if (!paused && currentTime > 0 && duration > 0) {
       [presenceData.startTimestamp, presenceData.endTimestamp]
         = getTimestamps(currentTime, duration)
     }
 
-    if (showButtons) {
+    if (showButtons && !privacy) {
       presenceData.buttons = [
         {
           label: 'Watch Episode',
@@ -629,10 +633,11 @@ presence.on('UpdateData', async () => {
   else {
     setMode('browse')
     const presenceData: PresenceData = {
-      largeImageKey: poster || ActivityAssets.Logo,
+      largeImageKey: ActivityAssets.Logo,
     }
     presenceData.details = 'Browsing Re:ANIME'
-    presenceData.state = cleanText(document.title) || 'Exploring'
+    if (!privacy)
+      presenceData.state = cleanText(document.title) || 'Exploring'
     presenceData.startTimestamp = browsingTimestamp
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = 'Browsing'
