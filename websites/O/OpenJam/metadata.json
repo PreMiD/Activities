@@ -15,9 +15,9 @@
   },
   "url": "openjam.fun",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*openjam[.]fun[/]",
-  "version": "1.0.0",
-  "logo": "https://files.catbox.moe/oz8aca.png",
-  "thumbnail": "https://files.catbox.moe/yjqyp3.png",
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OpenJam/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OpenJam/assets/thumbnail.png",
   "color": "#6366f1",
   "category": "music",
   "tags": [
