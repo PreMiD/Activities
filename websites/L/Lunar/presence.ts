@@ -1,6 +1,6 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
-let ready_to_use_posters = false
+const ready_to_use_posters = false
 
 const presence = new Presence({
   clientId: '1255462235958939689',

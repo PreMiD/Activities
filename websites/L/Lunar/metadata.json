@@ -9,10 +9,7 @@
   "description": {
     "en": "Lunar is a free platform to stream anime and read manga and light novels, with community features, playlists and more."
   },
-  "url": [
-    "lunaranime.ru",
-    "www.lunaranime.ru"
-  ],
+  "url": "lunaranime.ru",
   "regExp": "^https?[:][/][/](www[.])?lunaranime[.]ru[/]",
   "version": "1.0.0",
   "logo": "https://api.lunaranime.ru/static/rpc/icon.png",
