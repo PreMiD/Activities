@@ -17,7 +17,7 @@ function updateTimestamp(id: string): void {
 }
 
 enum ActivityAssets {
-  Logo = 'https://api.lunaranime.ru/static/rpc/icon.png?v=2',
+  Logo = 'https://api.lunaranime.ru/static/rpc/icon.png?v=3',
 }
 
 interface LunarActivity {
