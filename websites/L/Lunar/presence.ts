@@ -1,6 +1,6 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
-const ready_to_use_posters = false
+const ready_to_use_posters = true
 
 const presence = new Presence({
   clientId: '1255462235958939689',
@@ -171,9 +171,10 @@ presence.on('UpdateData', async () => {
 
   if (activity) {
     updateTimestamp(`${activity.type}:${activity.id}`)
+    const artwork = activity.cover || pageCover()
     const largeImageKey
-      = ready_to_use_posters && cover && activity.cover
-        ? activity.cover
+      = ready_to_use_posters && cover && artwork
+        ? artwork
         : ActivityAssets.Logo
 
     if (activity.type === 'anime') {
