@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "960971439996035083",
+    "name": "JuJuplayz"
+  },
+  "service": "appeal.gg",
+  "description": {
+    "en": "Discord punishment appeals standardized, for everyone."
+  },
+  "url": [
+    "appeal.gg",
+    "dashboard.appeal.gg"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*appeal[.]gg",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/afTdjN2.png",
+  "thumbnail": "https://i.imgur.com/acs3AjP.png",
+  "color": "#ffbb00",
+  "category": "other",
+  "tags": [
+    "bot",
+    "discord"
+  ],
+  "settings": [
+    {
+      "id": "showServerInfo",
+      "title": "Show Server Info",
+      "icon": "fas fa-server",
+      "value": true
+    },
+    {
+      "id": "enablePrivacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
+}
