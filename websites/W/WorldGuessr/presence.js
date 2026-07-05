@@ -6,8 +6,8 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
-    playingSingleplayer: 'worldguessr.playingSingleplayer',
-    playingMultiplayer: 'worldguessr.playingMultiplayer',
+    playingSingleplayer: 'playingSingleplayer',
+    playingMultiplayer: 'playingMultiplayer',
     browsingHome: 'general.viewHome',
   })
 
