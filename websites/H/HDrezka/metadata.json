@@ -20,9 +20,7 @@
     "rezka.ag",
     "hdrezka.ag",
     "rezka-ua.org",
-    "standby-rezka.tv",
     "rezka-ua.co",
-    "hdrezka.loan",
     "rezka-ua.pub"
   ],
   "regExp": "^https?[:][/][/](rezka[.]ag|hdrezka[.]ag|rezka-ua[.]org|standby-rezka[.]tv|rezka-ua[.]co|hdrezka[.]loan|rezka-ua[.]pub)[/]",
