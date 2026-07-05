@@ -15,7 +15,7 @@
     "knowledge-base.faucetcrypto.com"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*faucetcrypto[.]com[/]",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Faucet%20Crypto/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Faucet%20Crypto/assets/thumbnail.jpg",
   "color": "#50a2ff",
