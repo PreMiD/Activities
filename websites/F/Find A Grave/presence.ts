@@ -7,6 +7,13 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
+  const strings = await presence.getStrings({
+    browsingMemorials: 'find_a_grave.browsingMemorials',
+    browsingCemeteries: 'find_a_grave.browsingCemeteries',
+    searchingMemorials: 'general.search',
+    browsingHome: 'general.viewHome',
+  })
+
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/F/Find%20A%20Grave/assets/logo.png',
     startTimestamp: browsingTimestamp,
@@ -20,23 +27,26 @@ presence.on('UpdateData', async () => {
       ?? document.querySelector('h1')?.textContent?.trim()
       ?? 'Memorial'
     const dates = document.querySelector('.memorial-dates')?.textContent?.trim() ?? ''
-    presenceData.details = `Vendo memorial: ${name}`
+
+    presenceData.details = `${strings.browsingMemorials}: ${name}`
     presenceData.state = dates || 'Find A Grave'
   }
   else if (path.includes('/cemetery/')) {
-    const name = document.querySelector('h1')?.textContent?.trim() ?? 'Cemitério'
-    presenceData.details = 'Visitando cemitério'
+    const name = document.querySelector('h1')?.textContent?.trim() ?? 'Cemetery'
+
+    presenceData.details = strings.browsingCemeteries
     presenceData.state = name
   }
   else if (path.includes('/memorial') || path.includes('/search')) {
     const query = new URLSearchParams(document.location.search).get('firstname')
       ?? new URLSearchParams(document.location.search).get('lastname')
       ?? ''
-    presenceData.details = 'Pesquisando memorials'
+
+    presenceData.details = strings.searchingMemorials
     presenceData.state = query ? `"${query}"` : 'Find A Grave'
   }
   else {
-    presenceData.details = 'Navegando no Find A Grave'
+    presenceData.details = strings.browsingHome
   }
 
   presence.setActivity(presenceData)

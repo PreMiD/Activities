@@ -12,7 +12,7 @@
   },
   "url": "www.zdf.de",
   "regExp": "^https?[:][/][/](www[.])?zdf[.]de[/]",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZDFmediathek/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZDFmediathek/assets/thumbnail.jpg",
   "color": "#FE7405",
@@ -20,5 +20,92 @@
   "tags": [
     "videos",
     "livestreams"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false,
+      "description": "Hide what you are watching and only show that you are browsing ZDFmediathek."
+    },
+    {
+      "id": "hidePaused",
+      "title": "Hide on Pause",
+      "icon": "fad fa-pause-circle",
+      "value": false,
+      "if": {
+        "privacy": false
+      },
+      "description": "Clear the activity while the video is paused."
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover Image",
+      "icon": "fas fa-image",
+      "value": true,
+      "if": {
+        "privacy": false
+      },
+      "description": "Display the show's cover as the large image instead of the ZDF logo."
+    },
+    {
+      "id": "channelLogo",
+      "title": "Show Channel Logo as Small Icon",
+      "icon": "fas fa-tv",
+      "value": true,
+      "if": {
+        "privacy": false
+      },
+      "description": "Use the broadcaster's logo (ZDF, 3sat, ZDFneo, …) as the small icon while playing. When disabled, the classic play/pause icon is shown instead."
+    },
+    {
+      "id": "timestamps",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "description": "Show the elapsed and remaining time of the video."
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      },
+      "description": "Display interactive buttons in the Discord activity."
+    },
+    {
+      "id": "vidDetail",
+      "title": "Details (top line)",
+      "icon": "fas fa-comment-alt-edit",
+      "value": "%title%",
+      "if": {
+        "privacy": false
+      },
+      "placeholder": "Use %title%, %series%, %episode%, %genre%, %year%"
+    },
+    {
+      "id": "vidState",
+      "title": "State (bottom line)",
+      "icon": "fas fa-comment-alt-edit",
+      "value": "%series%",
+      "if": {
+        "privacy": false
+      },
+      "placeholder": "Same as top line, or use {0} to remove the row completely"
+    },
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 2,
+      "values": [
+        "Activity Name",
+        "Details",
+        "State"
+      ]
+    }
   ]
 }

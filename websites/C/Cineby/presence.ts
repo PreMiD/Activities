@@ -51,10 +51,9 @@ presence.on('UpdateData', async () => {
       const year = data.release_date?.split('-').shift()
       const runtime = data.runtime
 
-      if (useActivityName) {
+      if (useActivityName)
         presenceData.name = title
-        presenceData.details = title
-      }
+      presenceData.details = title
       const stateStr = [year, runtime != null ? `${runtime} min` : null]
         .filter(Boolean)
         .join(' • ')
@@ -66,7 +65,7 @@ presence.on('UpdateData', async () => {
       }
     }
     catch {
-      presenceData.details = 'Browsing'
+      presenceData.details = 'Watching a Movie'
     }
   }
   else if (type === 'tv' && contentId) {
@@ -95,7 +94,9 @@ presence.on('UpdateData', async () => {
       }
     }
     catch {
-      presenceData.details = 'Browsing'
+      presenceData.details = 'Watching a TV Show'
+      if (seasonNum && episodeNum)
+        presenceData.state = `S${seasonNum}:E${episodeNum}`
     }
   }
   else if (type === 'anime' && contentId) {
@@ -119,7 +120,9 @@ presence.on('UpdateData', async () => {
       }
     }
     catch {
-      presenceData.details = 'Browsing'
+      presenceData.details = 'Watching Anime'
+      if (episodeNum)
+        presenceData.state = `Episode ${episodeNum}`
     }
   }
   else {

@@ -36,7 +36,8 @@ export interface AnimeDetails {
 const cache: Map<string, unknown> = new Map()
 
 export class CinebyApi {
-  private static readonly BASE_URL = 'https://jumpfreedom.com/3'
+  private static readonly BASE_URL = 'https://api.themoviedb.org/3'
+  private static readonly API_KEY = '269890f657dddf4635473cf4cf456576'
   private static readonly ANIME_URL = 'https://api.videasy.net/hianime'
 
   public static async getCurrent<T>(pathname: string): Promise<T> {
@@ -45,8 +46,10 @@ export class CinebyApi {
 
     const [type, id] = pathname.split('/').slice(1)
     const response = await fetch(
-      `${this.BASE_URL}/${type}/${id}?language=en`,
+      `${this.BASE_URL}/${type}/${id}?language=en&api_key=${this.API_KEY}`,
     )
+    if (!response.ok)
+      throw new Error(`API error: ${response.status}`)
 
     if (type === 'tv') {
       const json = await response.json()
@@ -75,8 +78,10 @@ export class CinebyApi {
     const response = await fetch(
       `${this.BASE_URL}/tv/${id}/season/${season ?? 1}/episode/${
         episode ?? 1
-      }?language=en`,
+      }?language=en&api_key=${this.API_KEY}`,
     )
+    if (!response.ok)
+      throw new Error(`API error: ${response.status}`)
 
     return response.json()
   }
