@@ -1,0 +1,10 @@
+{
+  "worldguessr.playingSingleplayer": {
+    "description": "When the user is playing singleplayer mode",
+    "message": "Playing Singleplayer"
+  },
+  "worldguessr.playingMultiplayer": {
+    "description": "When the user is in a multiplayer room",
+    "message": "Playing Multiplayer"
+  }
+}
