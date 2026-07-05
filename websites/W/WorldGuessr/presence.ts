@@ -2,34 +2,40 @@ const presence = new Presence({
   clientId: '1523354893841072229',
 })
 
-const browsingTimestamp = Math.floor(Date.now() / 1000)
+let gameStartTime: number | null = null;
 
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
     playingSingleplayer: 'playingSingleplayer',
     playingMultiplayer: 'playingMultiplayer',
-    browsingHome: 'general.viewHome',
+    playingDaily: 'playingDaily',
+    browsingHome: 'browsingHome',
+    inAMatch: 'inAMatch',
   })
 
-  const presenceData = {
-    largeImageKey: 'https://i.imgur.com/s6GY1qt.png',
-    startTimestamp: browsingTimestamp,
+  const isPlaying = !!document.querySelector('.guessBtn')
+  const isMultiplayer = !!document.querySelector('.emoteReactionsParent')
+  const isDaily = document.location.href.includes('/daily')
+
+  if (!isPlaying) {
+    gameStartTime = null;
+  } else if (isPlaying && gameStartTime === null) {
+    gameStartTime = Math.floor(Date.now() / 1000);
   }
 
-  const { pathname } = document.location
+  const presenceData: any = {
+    largeImageKey: 'https://i.imgur.com/s6GY1qt.png',
+  }
 
-  if (pathname === '/' || pathname === '/index.html') {
-    presenceData.details = strings.browsingHome
-  } 
-  else if (pathname.startsWith('/room/')) {
-    const roomId = pathname.split('/room/')[1] || ''
-    presenceData.details = strings.playingMultiplayer
-    presenceData.state = `Sala: ${roomId}`
-  } 
-  else if (pathname.startsWith('/game') || pathname.startsWith('/play')) {
-    presenceData.details = strings.playingSingleplayer
-  } 
-  else {
+  if (isPlaying) {
+    if (isDaily) {
+      presenceData.details = strings.playingDaily
+    } else {
+      presenceData.details = isMultiplayer ? strings.playingMultiplayer : strings.playingSingleplayer
+    }
+    presenceData.state = strings.inAMatch
+    presenceData.startTimestamp = gameStartTime
+  } else {
     presenceData.details = strings.browsingHome
   }
 

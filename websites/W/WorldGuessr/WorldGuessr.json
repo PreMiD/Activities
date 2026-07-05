@@ -6,5 +6,17 @@
   "playingMultiplayer": {
     "description": "When the user is in a multiplayer room",
     "message": "Playing Multiplayer"
+  },
+  "playingDaily": {
+    "description": "When the user is playing the daily challenge",
+    "message": "Playing Daily"
+  },
+  "browsingHome": {
+    "description": "When the user is on the home page",
+    "message": "Viewing Home Page"
+  },
+  "inAMatch": {
+    "description": "Status when the user is currently in a game match",
+    "message": "In a match"
   }
 }
