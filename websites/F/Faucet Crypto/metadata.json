@@ -11,7 +11,8 @@
   },
   "url": [
     "faucetcrypto.com",
-    "status.faucetcrypto.com"
+    "status.faucetcrypto.com",
+    "knowledge-base.faucetcrypto.com"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*faucetcrypto[.]com[/]",
   "version": "1.0.3",

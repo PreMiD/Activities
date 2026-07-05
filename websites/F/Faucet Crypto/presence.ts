@@ -18,8 +18,6 @@ presence.on('UpdateData', async () => {
   // Status page
   if (hostname === 'status.faucetcrypto.com') {
     presenceData.details = 'Viewing Status Page'
-
-    // Check main status
     const mainStatus = document.querySelector('h1')?.textContent?.trim()
       || document.querySelector('.status')?.textContent?.trim()
 
@@ -35,59 +33,98 @@ presence.on('UpdateData', async () => {
 
     return presence.setActivity(presenceData)
   }
+
+  // Knowledge base page
+  if (hostname === 'knowledge-base.faucetcrypto.com') {
+    presenceData.details = 'Reading Knowledge base'
+    const title = document.querySelector('h1')?.textContent?.trim()
+    if (title)
+      presenceData.state = title
+    return presence.setActivity(presenceData)
+  }
+
   // Main site
   if (hostname !== 'faucetcrypto.com') {
     presenceData.details = 'Browsing FaucetCrypto'
     return presence.setActivity(presenceData)
   }
 
-  if (pathname === '/dashboard' || pathname.includes('/faucet-claim')) {
-    presenceData.details = 'Faucet Claim'
-
-    // Targets the button inside the mt-2 div
-    const claimButton = document.querySelector(
-      'div.mt-2 button[data-slot="base"], button[data-slot="base"]',
-    ) as HTMLButtonElement | null
-
-    if (claimButton) {
-      const rawText = claimButton.textContent || ''
-      const buttonText = rawText
-      const isDisabled = claimButton.disabled === true
-
-      if (isDisabled && (buttonText.includes('m') || buttonText.includes('s'))) {
-      // Cooldown active => shows timer like "00m 00s"
-        presenceData.state = `⏳ Next claim in: ${buttonText}`
-      }
-      else if (!isDisabled) {
-      // Button is enabled
-        presenceData.state = '✅ Ready to Claim!'
-      }
-    }
-  }
   // Home
   if (pathname === '/') {
     presenceData.details = 'Viewing Homepage'
     presenceData.state = 'Discovering ways to earn crypto'
   }
+
   // PTC
   else if (pathname.includes('/ptc')) {
-    presenceData.details = 'Viewing PTC Ads'
+    presenceData.details = 'Viewing PTC'
+    const ptcItem = Array.from(document.querySelectorAll('a')).find(
+      el => el.textContent?.toLowerCase().includes('ptc')
+        || el.getAttribute('aria-label')?.includes('ptc'),
+    )
+    const query = ptcItem?.textContent?.trim() || ''
+    const numberOnly = query.replace(/\D/g, '')
+    presenceData.state = `${numberOnly} available`
   }
   // Shortlinks
   else if (pathname.includes('/shortlinks')) {
     presenceData.details = 'Solving Shortlinks'
+    const shortlinksItem = Array.from(document.querySelectorAll('a')).find(
+      el => el.textContent?.toLowerCase().includes('shortlinks')
+        || el.getAttribute('aria-label')?.includes('shortlinks'),
+    )
+    const query = shortlinksItem?.textContent?.trim() || ''
+    const numberOnly = query.replace(/\D/g, '')
+    presenceData.state = `${numberOnly} available`
+  }
+  // Surveys
+  else if (pathname.includes('/surveys')) {
+    presenceData.details = 'Viewing Surveys'
+    const surveysItem = Array.from(document.querySelectorAll('a')).find(
+      el => el.textContent?.toLowerCase().includes('surveys')
+        || el.getAttribute('aria-label')?.includes('surveys'),
+    )
+    const query = surveysItem?.textContent?.trim() || ''
+    const numberOnly = query.replace(/\D/g, '')
+    presenceData.state = `${numberOnly} available`
+  }
+  // Offers
+  else if (pathname.includes('/offers')) {
+    presenceData.details = 'Viewing Offers'
+    const offersItem = Array.from(document.querySelectorAll('a')).find(
+      el => el.textContent?.toLowerCase().includes('offers')
+        || el.getAttribute('aria-label')?.includes('offers'),
+    )
+    const query = offersItem?.textContent?.trim() || ''
+    const numberOnly = query.replace(/\D/g, '')
+    presenceData.state = `${numberOnly} available`
   }
   // Offerwalls
   else if (pathname.includes('/offerwall')) {
     presenceData.details = 'Viewing Offerwalls'
   }
-  // Challenge
+  // Challenges
   else if (pathname.includes('/challenge')) {
-    presenceData.details = 'Viewing Challenge'
+    presenceData.details = 'Viewing Challenges'
+    const allH3Elements = document.querySelectorAll('h3')
+
+    // Counter for elements containing "100.00%"
+    let completedCount = 0
+    allH3Elements.forEach((h3) => {
+      const text = h3.textContent?.trim()
+      // Check if this h3 contains exactly "100.00%"
+      if (text && text.includes('100.00%')) {
+        completedCount++
+      }
+    })
+    presenceData.state = `${completedCount} completed`
   }
   // Contests
   else if (pathname.includes('/contest')) {
     presenceData.details = 'Viewing Contests'
+    const query = document.querySelector('#dashboard-sidebar-v-0 > div.flex.flex-col.gap-4.flex-1.overflow-y-auto.px-4.py-2 > div:nth-child(3) > nav > ul > li:nth-child(1) > a > span.group.ms-auto.inline-flex.gap-1\\.5.items-center > span > span')?.textContent?.trim()
+    if (query)
+      presenceData.state = `${query} available`
   }
   // Market
   else if (pathname.includes('/market')) {
@@ -128,6 +165,10 @@ presence.on('UpdateData', async () => {
   // Support
   else if (pathname.includes('/support')) {
     presenceData.details = 'Viewing Support Center'
+  }
+  // Dashboard
+  else if (pathname.includes('/dashboard')) {
+    presenceData.details = 'Viewing Dashboard'
   }
   // Default fallback
   else {
