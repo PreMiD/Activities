@@ -2,7 +2,7 @@ const presence = new Presence({
   clientId: '1523354893841072229',
 })
 
-let gameStartTime: number | null = null;
+let gameStartTime: number | null = null
 
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
@@ -18,9 +18,10 @@ presence.on('UpdateData', async () => {
   const isDaily = document.location.href.includes('/daily')
 
   if (!isPlaying) {
-    gameStartTime = null;
-  } else if (isPlaying && gameStartTime === null) {
-    gameStartTime = Math.floor(Date.now() / 1000);
+    gameStartTime = null
+  }
+  else if (isPlaying && gameStartTime === null) {
+    gameStartTime = Math.floor(Date.now() / 1000)
   }
 
   const presenceData: any = {
@@ -30,18 +31,21 @@ presence.on('UpdateData', async () => {
   if (isPlaying) {
     if (isDaily) {
       presenceData.details = strings.playingDaily
-    } else {
+    }
+    else {
       presenceData.details = isMultiplayer ? strings.playingMultiplayer : strings.playingSingleplayer
     }
     presenceData.state = strings.inAMatch
     presenceData.startTimestamp = gameStartTime
-  } else {
+  }
+  else {
     presenceData.details = strings.browsingHome
   }
 
   if (presenceData.details) {
     presence.setActivity(presenceData)
-  } else {
+  }
+  else {
     presence.clearActivity()
   }
 })
