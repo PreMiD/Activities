@@ -5,12 +5,13 @@ const presence = new Presence({
 let gameStartTime: number | null = null
 
 presence.on('UpdateData', async () => {
-  // Alterado aqui para seguir o formato exemplo.page exigido na documentação
+  // Adicionamos a propriedade viewHome aqui dentro seguindo o padrão
   const strings = await presence.getStrings({
     playingSingleplayer: 'worldguessr.playingSingleplayer',
     playingMultiplayer: 'worldguessr.playingMultiplayer',
     playingDaily: 'worldguessr.playingDaily',
     inAMatch: 'worldguessr.inAMatch',
+    viewHome: 'general.viewHome', 
   })
 
   const isPlaying = !!document.querySelector('.guessBtn')
@@ -39,7 +40,8 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = gameStartTime
   }
   else {
-    presenceData.details = 'general.viewHome'
+    // Agora usamos a variável mapeada em vez do texto fixo
+    presenceData.details = strings.viewHome
   }
 
   if (presenceData.details) {
