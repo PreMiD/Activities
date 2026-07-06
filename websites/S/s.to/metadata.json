@@ -11,12 +11,9 @@
     "en": "Stream more than 3500 Episodes by your favorite series for free!",
     "nl": "Stream meer dan 3500 afleveringen van je favorite serie gratis!"
   },
-  "url": [
-    "s.to",
-    "serienstream.to"
-  ],
+  "url": "serienstream.to",
   "regExp": "^https?[:][/][/](s[.]to|serienstream[.]to)[/]",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/s.to/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/s.to/assets/thumbnail.png",
   "color": "#0000ff",
