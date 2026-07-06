@@ -11,10 +11,6 @@
     "description": "When the user is playing the daily challenge",
     "message": "Playing Daily"
   },
-  "WorldGuessrBrowsingHome": {
-    "description": "When the user is on the home page",
-    "message": "Viewing Home Page"
-  },
   "WorldGuessrInAMatch": {
     "description": "Status when the user is currently in a game match",
     "message": "In a match"
