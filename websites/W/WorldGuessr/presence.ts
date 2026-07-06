@@ -6,11 +6,10 @@ let gameStartTime: number | null = null
 
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
-    playingSingleplayer: 'playingSingleplayer',
-    playingMultiplayer: 'playingMultiplayer',
-    playingDaily: 'playingDaily',
-    browsingHome: 'browsingHome',
-    inAMatch: 'inAMatch',
+    playingSingleplayer: 'WorldGuessrPlayingSingleplayer',
+    playingMultiplayer: 'WorldGuessrPlayingMultiplayer',
+    playingDaily: 'WorldGuessrPlayingDaily',
+    inAMatch: 'WorldGuessrInAMatch',
   })
 
   const isPlaying = !!document.querySelector('.guessBtn')
@@ -39,7 +38,7 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = gameStartTime
   }
   else {
-    presenceData.details = strings.browsingHome
+    presenceData.details = 'general.viewHome'
   }
 
   if (presenceData.details) {
