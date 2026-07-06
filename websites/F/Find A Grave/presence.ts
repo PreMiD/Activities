@@ -39,7 +39,7 @@ presence.on('UpdateData', async () => {
     if (header) {
       const childNodes = Array.from(header.childNodes)
       const textNode = childNodes.find(node => node.nodeType === Node.TEXT_NODE && node.textContent?.trim())
-      
+
       if (textNode && textNode.textContent) {
         name = textNode.textContent.trim()
       }
@@ -58,7 +58,7 @@ presence.on('UpdateData', async () => {
       .replace(/Veteran/gi, '')
       .replace(/\s+/g, ' ')
       .trim()
-      .replace(/\bV\b$/g, '')
+      .replace(/\s+V$/g, '')
 
     presenceData.details = name
     presenceData.state = dates ? `${strings.browsingMemorials} • ${dates}` : strings.browsingMemorials
