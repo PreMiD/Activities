@@ -10,9 +10,9 @@
     "en": "AnimeSaturn is a streaming website (italian subbed) where you can watch over 62000 episodes and 4200 anime for free",
     "it": "AnimeSaturn è una piattaforma di streaming dove puoi guardare oltre 62.000 episodi e 4200 anime gratuitamente"
   },
-  "url": "www.animesaturn.cx",
-  "regExp": "^https?[:][/][/](www[.])?animesaturn[.]cx[/]",
-  "version": "1.1.1",
+  "url": "www.animesaturn.net",
+  "regExp": "^https?[:][/][/](www[.])?animesaturn[.]net[/]",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeSaturn/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeSaturn/assets/thumbnail.png",
   "color": "#ddc6e8",
