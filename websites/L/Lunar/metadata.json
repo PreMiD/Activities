@@ -12,7 +12,7 @@
   "url": "lunaranime.ru",
   "regExp": "^https?[:][/][/](www[.])?lunaranime[.]ru[/]",
   "version": "1.0.0",
-  "logo": "https://api.lunaranime.ru/static/rpc/icon.png?v=3",
+  "logo": "https://api.lunaranime.ru/static/rpc/icon.png",
   "thumbnail": "https://api.lunaranime.ru/static/rpc/thumbnail.png",
   "color": "#895AF6",
   "category": "anime",
