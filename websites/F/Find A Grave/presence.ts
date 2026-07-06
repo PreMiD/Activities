@@ -31,7 +31,6 @@ presence.on('UpdateData', async () => {
 
   if (path.includes('/memorial/recently-added')) {
     presenceData.details = strings.recentlyAdded
-    presenceData.state = 'Find A Grave'
   }
   else if (path.includes('/memorial/')) {
     let name = document.querySelector('h1.memorial-name')?.textContent
@@ -44,8 +43,8 @@ presence.on('UpdateData', async () => {
     name = name
       .replace(/Memoriais famosos/gi, '')
       .replace(/Famous Memorials?/gi, '')
-      .replace(/V{3,}eterano\(a\)/gi, '')
-      .replace(/V{3,}eteran/gi, '')
+      .replace(/Veterano\(a\)/gi, '')
+      .replace(/Veteran/gi, '')
       .replace(/\s+/g, ' ')
       .trim()
 
@@ -58,37 +57,35 @@ presence.on('UpdateData', async () => {
       ?? ''
 
     presenceData.details = strings.searchingMemorials
-    presenceData.state = query ? `"${query}"` : 'Find A Grave'
+    if (query) {
+      presenceData.state = `"${query}"`
+    }
   }
   else if (path.includes('/cemetery')) {
     const name = document.querySelector('h1')?.textContent?.trim() ?? ''
 
     presenceData.details = strings.browsingCemeteries
-    presenceData.state = name && !path.endsWith('/cemetery') && !path.endsWith('/cemetery/') ? name : 'Find A Grave'
+    if (name && !path.endsWith('/cemetery') && !path.endsWith('/cemetery/')) {
+      presenceData.state = name
+    }
   }
   else if (path.includes('/contribute')) {
     presenceData.details = strings.contribute
-    presenceData.state = 'Find A Grave'
   }
   else if (path.includes('/famous-memorial')) {
     presenceData.details = strings.famousMemorials
-    presenceData.state = 'Find A Grave'
   }
   else if (path.includes('/new-listings')) {
     presenceData.details = strings.newListings
-    presenceData.state = 'Find A Grave'
   }
   else if (path.includes('/necrology')) {
     presenceData.details = strings.necrology
-    presenceData.state = 'Find A Grave'
   }
   else if (path.includes('/interesting-monument')) {
     presenceData.details = strings.interestingMonument
-    presenceData.state = 'Find A Grave'
   }
   else if (path.includes('/interesting-epitaph')) {
     presenceData.details = strings.interestingEpitaph
-    presenceData.state = 'Find A Grave'
   }
   else {
     presenceData.details = strings.browsingHome
