@@ -44,8 +44,8 @@ presence.on('UpdateData', async () => {
     name = name
       .replace(/Memoriais famosos/gi, '')
       .replace(/Famous Memorials?/gi, '')
-      .replace(/V{2,}Veterano\(a\)/gi, '')
-      .replace(/V{2,}Veteran/gi, '')
+      .replace(/V{3,}eterano\(a\)/gi, '')
+      .replace(/V{3,}eteran/gi, '')
       .replace(/\s+/g, ' ')
       .trim()
 
