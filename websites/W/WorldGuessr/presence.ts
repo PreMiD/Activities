@@ -24,7 +24,7 @@ presence.on('UpdateData', async () => {
     gameStartTime = Math.floor(Date.now() / 1000)
   }
 
-  const presenceData: any = {
+  const presenceData: PresenceData = {
     largeImageKey: 'https://i.imgur.com/s6GY1qt.png',
   }
 
