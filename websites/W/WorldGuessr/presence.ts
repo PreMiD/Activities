@@ -5,11 +5,12 @@ const presence = new Presence({
 let gameStartTime: number | null = null
 
 presence.on('UpdateData', async () => {
+  // Alterado aqui para seguir o formato exemplo.page exigido na documentação
   const strings = await presence.getStrings({
-    playingSingleplayer: 'WorldGuessrPlayingSingleplayer',
-    playingMultiplayer: 'WorldGuessrPlayingMultiplayer',
-    playingDaily: 'WorldGuessrPlayingDaily',
-    inAMatch: 'WorldGuessrInAMatch',
+    playingSingleplayer: 'worldguessr.playingSingleplayer',
+    playingMultiplayer: 'worldguessr.playingMultiplayer',
+    playingDaily: 'worldguessr.playingDaily',
+    inAMatch: 'worldguessr.inAMatch',
   })
 
   const isPlaying = !!document.querySelector('.guessBtn')
