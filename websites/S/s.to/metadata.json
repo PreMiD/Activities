@@ -12,7 +12,7 @@
     "nl": "Stream meer dan 3500 afleveringen van je favorite serie gratis!"
   },
   "url": "serienstream.to",
-  "regExp": "^https?[:][/][/](s[.]to|serienstream[.]to)[/]",
+  "regExp": "^https?[:][/][/]serienstream[.]to[/]",
   "version": "1.7.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/s.to/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/s.to/assets/thumbnail.png",
