@@ -39,16 +39,14 @@ presence.on('UpdateData', async () => {
       ?? 'Memorial'
     const dates = document.querySelector('.memorial-dates')?.textContent?.trim() ?? ''
 
-    // Substitui quebras de linha por espaços normais
     name = name.replace(/\s+/g, ' ').trim()
 
-    // Remove as tags mesmo que estejam coladas no nome do falecido
     name = name
       .replace(/Memoriais famosos/gi, '')
       .replace(/Famous Memorials?/gi, '')
       .replace(/V+Veterano\(a\)/gi, '')
       .replace(/V+Veteran/gi, '')
-      .replace(/\s+/g, ' ') // Remove espaços extras que sobrarem
+      .replace(/\s+/g, ' ')
       .trim()
 
     presenceData.details = name
@@ -64,7 +62,7 @@ presence.on('UpdateData', async () => {
   }
   else if (path.includes('/cemetery')) {
     const name = document.querySelector('h1')?.textContent?.trim() ?? ''
-    
+
     presenceData.details = strings.browsingCemeteries
     presenceData.state = name && !path.endsWith('/cemetery') && !path.endsWith('/cemetery/') ? name : 'Find A Grave'
   }
