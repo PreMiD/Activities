@@ -11,7 +11,7 @@ presence.on('UpdateData', async () => {
     playingMultiplayer: 'worldguessr.playingMultiplayer',
     playingDaily: 'worldguessr.playingDaily',
     inAMatch: 'worldguessr.inAMatch',
-    viewHome: 'general.viewHome', 
+    viewHome: 'general.viewHome',
   })
 
   const isPlaying = !!document.querySelector('.guessBtn')
