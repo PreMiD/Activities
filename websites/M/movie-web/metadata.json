@@ -15,7 +15,8 @@
   },
   "url": [
     "pstream.net",
-    "streamwatch.online"
+    "streamwatch.online",
+    "zstream.mov"
   ],
   "regExp": "^https?[:][/][/](?:pstream[.]net|streamwatch[.]online)[/]",
   "version": "1.4.3",
