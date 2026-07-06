@@ -33,12 +33,23 @@ presence.on('UpdateData', async () => {
     presenceData.details = strings.recentlyAdded
   }
   else if (path.includes('/memorial/')) {
-    let name = document.querySelector('h1.memorial-name')?.textContent
-      ?? document.querySelector('h1')?.textContent
-      ?? 'Memorial'
-    const dates = document.querySelector('.memorial-dates')?.textContent?.trim() ?? ''
+    const header = document.querySelector('h1.memorial-name') ?? document.querySelector('h1')
+    let name = ''
 
-    name = name.replace(/\s+/g, ' ').trim()
+    if (header) {
+      const childNodes = Array.from(header.childNodes)
+      const textNode = childNodes.find(node => node.nodeType === Node.TEXT_NODE && node.textContent?.trim())
+      
+      if (textNode && textNode.textContent) {
+        name = textNode.textContent.trim()
+      }
+    }
+
+    if (!name) {
+      name = header?.textContent?.trim() ?? 'Memorial'
+    }
+
+    const dates = document.querySelector('.memorial-dates')?.textContent?.trim() ?? ''
 
     name = name
       .replace(/Memoriais famosos/gi, '')
@@ -47,6 +58,7 @@ presence.on('UpdateData', async () => {
       .replace(/Veteran/gi, '')
       .replace(/\s+/g, ' ')
       .trim()
+      .replace(/\bV\b$/g, '')
 
     presenceData.details = name
     presenceData.state = dates ? `${strings.browsingMemorials} • ${dates}` : strings.browsingMemorials
