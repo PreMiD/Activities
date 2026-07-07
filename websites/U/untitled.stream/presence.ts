@@ -30,6 +30,20 @@ async function getProjectData(projectUrl: string): Promise<LibraryProject> {
   return data?.project ?? null
 }
 
+const cachedCoverArtBlobs = new Map<string, Blob>()
+
+async function getCoverArtBlob(imageUrl: URL) {
+  const cached = cachedCoverArtBlobs.get(imageUrl.pathname)
+  if (cached) {
+    return cached
+  }
+
+  const blob = await fetch(imageUrl.href).then(res => res.blob())
+  cachedCoverArtBlobs.set(imageUrl.pathname, blob)
+
+  return blob
+}
+
 function isPlaying() {
   const audioTag = document.querySelector<HTMLAudioElement>('body > audio')
 
@@ -52,7 +66,6 @@ presence.on('UpdateData', async () => {
 
   const title = getElementText('.playbar-title')
   const subtitle = getElementText('.playbar-subtitle')
-  const coverArt = document.querySelector<HTMLImageElement>('.bg-playbar img')?.src
 
   const presenceData: PresenceData = {
     name: '[untitled].stream',
@@ -62,8 +75,9 @@ presence.on('UpdateData', async () => {
     statusDisplayType: StatusDisplayType.Details,
   }
 
-  if (coverArt) {
-    presenceData.largeImageKey = await fetch(coverArt).then(res => res.blob())
+  const coverArtSrc = document.querySelector<HTMLImageElement>('.bg-playbar img')?.src
+  if (coverArtSrc) {
+    presenceData.largeImageKey = await getCoverArtBlob(new URL(coverArtSrc))
   }
 
   if (libraryData?.project && lastProjectRef) {
