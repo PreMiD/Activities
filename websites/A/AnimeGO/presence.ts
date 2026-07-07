@@ -1,4 +1,4 @@
-import { Assets, getTimestamps } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '935597176426491924',
@@ -6,17 +6,36 @@ const presence = new Presence({
 
 async function getStrings() {
   return presence.getStrings({
-    play: 'general.watchingVid',
+    play: 'general.watchingAnime',
     pause: 'general.paused',
   })
 }
 
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeGO/assets/logo.jpg',
+}
+
 let video = {
+  exists: false,
   duration: 0,
   currentTime: 0,
   paused: true,
 }
 let strings: Awaited<ReturnType<typeof getStrings>>
+
+function getCurrentTypeSpelling(typeContent?: string) {
+  switch (typeContent) {
+    case 'manga':
+      return 'манги'
+    case 'character':
+    case 'characters':
+      return 'персонажа'
+    case 'person':
+      return 'человека'
+    default:
+      return 'аниме'
+  }
+}
 
 presence.on(
   'iFrameData',
@@ -34,86 +53,66 @@ presence.on('UpdateData', async () => {
   ])
   const presenceData: PresenceData = {
     details: 'Где-то на сайте',
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeGO/assets/logo.jpg',
+    largeImageKey: ActivityAssets.Logo,
     smallImageText: 'AnimeGO',
-  }
-  const typeContent = document
-    .querySelector('meta[property=\'og:url\']')
-    ?.getAttribute('content')
-    ?.split('/')[3]
-  const typeCurrent = typeContent === 'anime'
-    ? 'аниме'
-    : typeContent === 'manga'
-      ? 'манги'
-      : typeContent === 'character' || typeContent === 'characters'
-        ? 'персонажа'
-        : 'человека'
+  } as PresenceData
+  const { pathname, href } = document.location
+  const currentType = getCurrentTypeSpelling(pathname.split('/')[1])
 
   if (!strings)
     strings = await getStrings()
 
-  if (document.location.pathname === '/') {
+  if (pathname === '/') {
     presenceData.details = 'На главной странице'
   }
   else if (
-    document.location.pathname === '/anime'
-    || document.location.pathname === '/manga'
-    || document.location.pathname === '/characters'
-    || /\/(?:anime|manga|characters)\/(?:season|genre|type|status|filter|studio|dubbing)\//.test(document.location.pathname)
+    pathname === '/anime' ||
+    pathname === '/manga' ||
+    pathname === '/characters' ||
+    /\/(?:anime|manga|characters)\/(?:season|genre|type|status|filter|studio|dubbing)\//.test(pathname)
   ) {
-    presenceData.details = `В поиске ${typeCurrent}`
-    if (!privacy) {
-      presenceData.state = document.querySelector(
-        '.entity-title#anime-list-title h1',
-      )?.textContent ?? ''
-    }
+    presenceData.details = `В поиске ${currentType}`
+    presenceData.state = document.querySelector('.entity__title h1')?.textContent
   }
   else if (
-    /\/(?:anime|manga|character|person)\//.test(document.location.pathname)
+    /\/(?:anime|manga|character|person)\//.test(pathname)
   ) {
-    const elementContent = typeContent === 'person' ? 'people' : typeContent
-    const titleContent = document.querySelector(
-      `.${elementContent}-title h1`,
-    )?.textContent ?? ''
-    const image = document
-      .querySelector<HTMLImageElement>(
-        `.${elementContent}-poster div:nth-child(2) img`,
-      )
-      ?.srcset
-      ?.split(' ')[0] ?? ''
-    presenceData.details = `Смотрит страницу ${typeCurrent}`
-    if (!privacy) {
-      presenceData.state = titleContent
-      if (logo) {
-        presenceData.largeImageKey = image
-        presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeGO/assets/logo.jpg'
-      }
-      if (buttons) {
-        presenceData.buttons = [
-          {
-            label: 'Открыть страницу',
-            url: document
-              .querySelector('meta[property=\'og:url\']')
-              ?.getAttribute('content') ?? '',
-          },
-        ]
-      }
-    }
+    const titleContent = document.querySelector<HTMLHeadElement>('.entity__title h1')?.textContent ??
+      document.querySelector<HTMLHeadElement>('.person__title h1')?.textContent ?? ''
+    const image = document.querySelector<HTMLImageElement>(`.entity__poster img`)?.src ??
+      document.querySelector<HTMLImageElement>(`.person__picture img`)?.src
 
-    if (video.duration) {
-      const selected = document.querySelector<HTMLSelectElement>(
-        'select[name=\'series\']',
-      )
-      const serie = `${selected?.options[selected?.selectedIndex]?.text} - ${
-        document.querySelector(
-          '.episode-info-item:nth-child(2) span:nth-child(2)',
-        )?.textContent ?? ''
-      }`
-      presenceData.details = `Смотрит ${privacy ? typeCurrent : titleContent}`
-      presenceData.state = privacy ? '' : serie
+    presenceData.details = `Смотрит страницу ${currentType}`
+    presenceData.state = titleContent
+    if (!privacy && logo && image) {
+      presenceData.largeImageKey = image
+      presenceData.smallImageKey = ActivityAssets.Logo
+    }
+    if (!privacy) {
+      presenceData.stateUrl = href
+      presenceData.largeImageUrl = href
+    }
+    presenceData.buttons = [
+      {
+        label: 'Открыть страницу',
+        url: href,
+      },
+    ]
+
+    if (video.exists) {
+      const selectEpisodes = document.querySelector<HTMLSelectElement>('select[name=\'series\']')
+      const currentEpisodeTitle = document.querySelector('.episode-info__name .episode-info__value')?.textContent
+      const serie = `${selectEpisodes?.options[selectEpisodes?.selectedIndex]?.text}${currentEpisodeTitle ? ` - ${currentEpisodeTitle}` : ''}`
+      presenceData.details = privacy ? `Смотрит ${currentType}` : titleContent
+      presenceData.state = serie
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
       presenceData.smallImageText = video.paused ? strings.pause : strings.play
+      delete presenceData.stateUrl
+      if (!privacy)
+        presenceData.detailsUrl = href
+
       if (time) {
+        presenceData.type = ActivityType.Watching
         if (video.paused) {
           delete presenceData.startTimestamp
           delete presenceData.endTimestamp
@@ -124,6 +123,12 @@ presence.on('UpdateData', async () => {
       }
     }
   }
+
+  if (privacy || !buttons)
+    delete presenceData.buttons
+
+  if (privacy)
+    delete presenceData.state
 
   presence.setActivity(presenceData)
 })
