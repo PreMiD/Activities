@@ -42,6 +42,15 @@ presence.on('UpdateData', async () => {
       if (showTimestamps) {
         presenceData.startTimestamp = Math.floor(elapsedSinceChange / 1000)
       }
+
+      // Dynamic Album Art
+      const artworkEl = document.querySelector<HTMLImageElement>('.mp-artwork-img, .mini-art')
+      const artworkUrl = artworkEl?.src || ''
+      if (artworkUrl && artworkUrl.startsWith('http') && !artworkUrl.includes('/logo.png')) {
+        presenceData.largeImageKey = artworkUrl
+        presenceData.smallImageKey = 'https://cdn.rcd.gg/PreMiD/websites/O/OpenJam/assets/logo.png'
+        presenceData.smallImageText = 'OpenJam'
+      }
     }
     else {
       lastTrackTitle = ''
