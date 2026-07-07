@@ -22,5 +22,53 @@
   "basketball_reference.browsingPlayoffs": {
     "description": "Browsing playoff brackets and stats",
     "message": "Browsing playoffs"
+  },
+  "basketball_reference.browsingTeams": {
+    "description": "Browsing the list of all teams",
+    "message": "Browsing teams list"
+  },
+  "basketball_reference.browsingLeagues": {
+    "description": "Browsing the history of all leagues",
+    "message": "Browsing leagues history"
+  },
+  "basketball_reference.browsingPlayers": {
+    "description": "Browsing the list of players by alphabet",
+    "message": "Browsing players list"
+  },
+  "basketball_reference.browsingWNBA": {
+    "description": "Browsing WNBA section",
+    "message": "Browsing WNBA"
+  },
+  "basketball_reference.browsingDraft": {
+    "description": "Browsing NBA draft history",
+    "message": "Browsing draft history"
+  },
+  "basketball_reference.browsingDraftYear": {
+    "description": "Browsing a specific NBA draft year",
+    "message": "Browsing the draft"
+  },
+  "basketball_reference.browsingStandings": {
+    "description": "Browsing team standings",
+    "message": "Browsing standings"
+  },
+  "basketball_reference.browsingAwards": {
+    "description": "Browsing NBA awards",
+    "message": "Browsing NBA awards"
+  },
+  "basketball_reference.browsingFrivStandings": {
+    "description": "Browsing historical standings timeline",
+    "message": "Browsing historical standings"
+  },
+  "basketball_reference.browsingAllStar": {
+    "description": "Browsing All-Star game history",
+    "message": "Browsing All-Star history"
+  },
+  "basketball_reference.browsingAllStarYear": {
+    "description": "Browsing a specific All-Star game match",
+    "message": "Browsing the"
+  },
+  "basketball_reference.browsingTeamDraft": {
+    "description": "Browsing a specific team draft history",
+    "message": "Browsing Team Draft"
   }
 }
