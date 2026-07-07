@@ -1,17 +1,17 @@
 {
-  "WorldGuessrPlayingSingleplayer": {
+  "worldguessr.singleplayer": {
     "description": "When the user is playing singleplayer mode",
     "message": "Playing Singleplayer"
   },
-  "WorldGuessrPlayingMultiplayer": {
+  "worldguessr.multiplayer": {
     "description": "When the user is in a multiplayer room",
     "message": "Playing Multiplayer"
   },
-  "WorldGuessrPlayingDaily": {
+  "worldguessr.daily": {
     "description": "When the user is playing the daily challenge",
     "message": "Playing Daily"
   },
-  "WorldGuessrInAMatch": {
+  "worldguessr.match": {
     "description": "Status when the user is currently in a game match",
     "message": "In a match"
   }
