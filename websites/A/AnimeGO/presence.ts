@@ -66,10 +66,10 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'На главной странице'
   }
   else if (
-    pathname === '/anime' ||
-    pathname === '/manga' ||
-    pathname === '/characters' ||
-    /\/(?:anime|manga|characters)\/(?:season|genre|type|status|filter|studio|dubbing)\//.test(pathname)
+    pathname === '/anime'
+    || pathname === '/manga'
+    || pathname === '/characters'
+    || /\/(?:anime|manga|characters)\/(?:season|genre|type|status|filter|studio|dubbing)\//.test(pathname)
   ) {
     presenceData.details = `В поиске ${currentType}`
     presenceData.state = document.querySelector('.entity__title h1')?.textContent
@@ -77,10 +77,10 @@ presence.on('UpdateData', async () => {
   else if (
     /\/(?:anime|manga|character|person)\//.test(pathname)
   ) {
-    const titleContent = document.querySelector<HTMLHeadElement>('.entity__title h1')?.textContent ??
-      document.querySelector<HTMLHeadElement>('.person__title h1')?.textContent ?? ''
-    const image = document.querySelector<HTMLImageElement>(`.entity__poster img`)?.src ??
-      document.querySelector<HTMLImageElement>(`.person__picture img`)?.src
+    const titleContent = document.querySelector<HTMLHeadElement>('.entity__title h1')?.textContent
+      ?? document.querySelector<HTMLHeadElement>('.person__title h1')?.textContent ?? ''
+    const image = document.querySelector<HTMLImageElement>(`.entity__poster img`)?.src
+      ?? document.querySelector<HTMLImageElement>(`.person__picture img`)?.src
 
     presenceData.details = `Смотрит страницу ${currentType}`
     presenceData.state = titleContent
