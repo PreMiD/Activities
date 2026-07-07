@@ -5,12 +5,12 @@ const presence = new Presence({
 let gameStartTime: number | null = null
 
 presence.on('UpdateData', async () => {
-  // Adicionamos a propriedade viewHome aqui dentro seguindo o padrão
+  // Atualizado para bater exatamente com as chaves minúsculas do WorldGuessr.json
   const strings = await presence.getStrings({
-    playingSingleplayer: 'worldguessr.playingSingleplayer',
-    playingMultiplayer: 'worldguessr.playingMultiplayer',
-    playingDaily: 'worldguessr.playingDaily',
-    inAMatch: 'worldguessr.inAMatch',
+    playingSingleplayer: 'worldguessr.singleplayer',
+    playingMultiplayer: 'worldguessr.multiplayer',
+    playingDaily: 'worldguessr.daily',
+    inAMatch: 'worldguessr.match',
     viewHome: 'general.viewHome',
   })
 
@@ -40,7 +40,6 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = gameStartTime
   }
   else {
-    // Agora usamos a variável mapeada em vez do texto fixo
     presenceData.details = strings.viewHome
   }
 
