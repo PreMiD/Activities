@@ -13,7 +13,7 @@
     "appeal.gg",
     "dashboard.appeal.gg"
   ],
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*appeal[.]gg",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*appeal[.]gg[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/hfCNjMe.png",
   "thumbnail": "https://i.imgur.com/acs3AjP.png",
