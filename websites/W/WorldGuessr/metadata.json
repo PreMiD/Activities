@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1495950265998905409",
+    "name": "vituhas"
+  },
+  "service": "WorldGuessr",
+  "description": {
+    "en": "Free alternative to GeoGuessr. Guess where you are in the world with Google Street View.",
+    "pt": "Alternativa gratuita ao GeoGuessr. Adivinhe onde você está no mundo usando o Google Street View."
+  },
+  "url": "worldguessr.com",
+  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*worldguessr[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WorldGuessr/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WorldGuessr/assets/thumbnail.png",
+  "color": "#22c55e",
+  "category": "games",
+  "tags": [
+    "geoguessr",
+    "game",
+    "maps"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}
