@@ -122,9 +122,13 @@ presence.on('UpdateData', async () => {
   // Contests
   else if (pathname.includes('/contest')) {
     presenceData.details = 'Viewing Contests'
-    const query = document.querySelector('#dashboard-sidebar-v-0 > div.flex.flex-col.gap-4.flex-1.overflow-y-auto.px-4.py-2 > div:nth-child(3) > nav > ul > li:nth-child(1) > a > span.group.ms-auto.inline-flex.gap-1\\.5.items-center > span > span')?.textContent?.trim()
-    if (query)
-      presenceData.state = `${query} available`
+    const contestsItem = Array.from(document.querySelectorAll('a')).find(
+      el => el.textContent?.toLowerCase().includes('contests')
+        || el.getAttribute('aria-label')?.includes('contests'),
+    )
+    const query = contestsItem?.textContent?.trim() || ''
+    const numberOnly = query.replace(/\D/g, '')
+    presenceData.state = `${numberOnly} available`
   }
   // Market
   else if (pathname.includes('/market')) {
