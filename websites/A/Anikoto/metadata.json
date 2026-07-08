@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "FLIXDTR",
+    "id": "537557377503985664"
+  },
+  "service": "Anikoto",
+  "description": {
+    "en": "Anikoto is an anime streaming website.",
+    "fr": "Anikoto est un site de streaming d'anime."
+  },
+  "url": "anikototv.to",
+  "regExp": "^https?://(www\\.)?anikototv\\.to/",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/3CY0qmm.png",
+  "thumbnail": "https://i.imgur.com/gRdHdau.png",
+  "color": "#26A3D6",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "video"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?://([^/]+\\.)?(vidtube\\.site|nekostream\\.[^/]+|megacloud\\.[^/]+|vidplay\\.[^/]+|myvidplay\\.[^/]+|dsvplay\\.[^/]+|vidsrc\\.[^/]+|vidstream\\.[^/]+|vidstreaming\\.[^/]+|vidcloud\\.[^/]+|rapid-cloud\\.[^/]+|filemoon\\.[^/]+|streamtape\\.[^/]+|dood(?:stream)?\\.[^/]+|mp4upload\\.[^/]+|streamsb\\.[^/]+|mcloud\\.[^/]+|rabbitstream\\.[^/]+|vidhide(?:vip)?\\.[^/]+|vidmoly\\.[^/]+|voe\\.[^/]+|uqload\\.[^/]+|streamwish\\.[^/]+|embedwish\\.[^/]+|mixdrop\\.[^/]+)/.*",
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fad fa-link",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showTimer",
+      "title": "Show Timer",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showExactDetails",
+      "title": "Show Exact Details",
+      "icon": "fad fa-info-circle",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
