@@ -55,7 +55,7 @@ presence.on('UpdateData', async () => {
     details: 'Где-то на сайте',
     largeImageKey: ActivityAssets.Logo,
     smallImageText: 'AnimeGO',
-  } as PresenceData
+  }
   const { pathname, href } = document.location
   const currentType = getCurrentTypeSpelling(pathname.split('/')[1])
 
@@ -112,7 +112,7 @@ presence.on('UpdateData', async () => {
         presenceData.detailsUrl = href
 
       if (time) {
-        presenceData.type = ActivityType.Watching
+        (presenceData as PresenceData).type = ActivityType.Watching
         if (video.paused) {
           delete presenceData.startTimestamp
           delete presenceData.endTimestamp
