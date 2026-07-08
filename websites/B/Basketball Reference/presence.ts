@@ -2,7 +2,7 @@ const presence = new Presence({
   clientId: '1509365921674952724',
 })
 
-const browsingTimestamp = Math.floor(Date.now() / 1000)
+let initialTimestamp: number | null = null
 
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
@@ -28,9 +28,13 @@ presence.on('UpdateData', async () => {
     browsingHome: 'general.viewHome',
   })
 
+  if (!initialTimestamp) {
+    initialTimestamp = Math.floor(Date.now() / 1000)
+  }
+
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/B/Basketball%20Reference/assets/logo.png',
-    startTimestamp: browsingTimestamp,
+    startTimestamp: initialTimestamp,
   }
 
   const { pathname } = document.location
