@@ -1,6 +1,6 @@
 enum PresenceClients {
   X = '802958757909889054',
-  Twitter = '1172850898624581652',
+  Twitter = '1524505445019029775',
 }
 
 let presence = new Presence({
@@ -25,7 +25,6 @@ function setClient(clientId: PresenceClients) {
   presence.clearActivity()
   if (presences[clientId]) {
     presence = presences[clientId]
-    presence.setActivity()
   }
   else {
     presence = new Presence({ clientId })
@@ -195,11 +194,14 @@ presence.on('UpdateData', async () => {
   }
 
   const presenceData: PresenceData = {
+    name: twitter
+      ? 'Twitter'
+      : 'X.com',
     details: title,
     state: info,
-    largeImageKey: !twitter
-      ? 'https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/0.png'
-      : 'https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/1.png',
+    largeImageKey: twitter
+      ? 'https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/1.png'
+      : 'https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/0.png',
   }
   if (privacy === 1) {
     delete presenceData.state
