@@ -9,7 +9,7 @@ const presence = new Presence({
 const LOGO_URL
   = 'https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/logo.png'
 const BASE_URL = 'https://www.cineby.at'
-const TMDB_IMG = 'https://image.tmdb.org/t/p/original'
+const TMDB_IMG = 'https://image.tmdb.org/t/p/w1280'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
@@ -48,20 +48,21 @@ presence.on('UpdateData', async () => {
       const data = await CinebyApi.getCurrent<MovieDetails>(pathname)
       const title = data.title ?? 'Movie'
       const posterPath = data.poster_path
+      const backdropPath = data.backdrop_path
       const year = data.release_date?.split('-').shift()
-      const runtime = data.runtime
+      const rating = data.vote_average?.toFixed(1)
 
       if (useActivityName)
         presenceData.name = title
       presenceData.details = title
-      const stateStr = [year, runtime != null ? `${runtime} min` : null]
+      const stateStr = [year, rating ? `⭐ ${rating}` : null]
         .filter(Boolean)
         .join(' • ')
       if (stateStr) {
         presenceData.state = stateStr
       }
-      if (showCover && posterPath) {
-        presenceData.largeImageKey = `${TMDB_IMG}${posterPath}`
+      if (showCover) {
+        presenceData.largeImageKey = `${TMDB_IMG}${backdropPath ?? posterPath}`
       }
     }
     catch {
