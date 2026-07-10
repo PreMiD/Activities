@@ -59,16 +59,16 @@
       "icon": "fas fa-compress-arrows-alt",
       "value": true
     },
-	{
+    {
       "id": "displayType",
       "title": "Status Display",
       "icon": "fad fa-user-edit",
       "value": 0,
-	  "values": [
-		"Activity name",
-		"Song",
-		"Artist"
-	  ]
+      "values": [
+        "Activity name",
+        "Song",
+        "Artist"
+      ]
     }
   ]
 }
