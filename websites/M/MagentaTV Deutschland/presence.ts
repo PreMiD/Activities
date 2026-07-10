@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 presence.on('UpdateData', async () => {
-  const video = document.querySelector('video')
+  const video = document.querySelector<HTMLVideoElement>('video')
 
   const title
     = document.querySelector('#PARAGRAPH-TITLE')
@@ -16,9 +16,7 @@ presence.on('UpdateData', async () => {
   if (!title)
     return presence.clearActivity()
 
-  const logoImage = document.querySelector(
-    '[id^="PARAGRAPH-LOGO"]',
-  ) as HTMLImageElement | null
+  const logoImage = document.querySelector<HTMLImageElement>('[id^="PARAGRAPH-LOGO"]')
 
   const logoUrl = logoImage?.src
     ?.replace(/x=\d+/, 'x=250')
@@ -32,7 +30,7 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
     largeImageKey:
       logoUrl
-      ?? 'https://www.telekom.de/resources/images/1066386/magenta-tv.png',
+      ?? 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/cc/0e/46/cc0e4697-6748-4d0d-81b4-e882be3c7df6/Placeholder.mill/512x512.png',
   }
 
   const parts = title.split(' - ')
@@ -66,7 +64,7 @@ presence.on('UpdateData', async () => {
     ]
   }
 
-  if (video instanceof HTMLVideoElement) {
+  if (video) {
     const { paused } = video
 
     presenceData.smallImageKey = isLive
