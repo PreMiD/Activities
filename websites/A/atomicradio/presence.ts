@@ -18,10 +18,7 @@ presence.on('UpdateData', () => {
   if (player && currentSpaceItem) {
     const currentSpace = JSON.parse(currentSpaceItem)
     presenceData.largeImageKey = currentSpace.current_track.artwork
-    presenceData.smallImageKey = player.querySelector<HTMLButtonElement>('[id*="-button"]')?.id
-      === 'play-button'
-      ? Assets.Play
-      : Assets.Pause
+    presenceData.smallImageKey = Assets.Play
     presenceData.details = currentSpace.current_track.title
     presenceData.state = currentSpace.current_track.artist
     presenceData.startTimestamp = Math.floor(new Date(currentSpace.current_track.startingAt).getTime() / 1000)
@@ -34,11 +31,8 @@ presence.on('UpdateData', () => {
       },
     ]
   }
-  else if (document.location.pathname === '/') {
-    presenceData.details = 'Browsing spaces...'
-  }
   else {
-    presenceData.details = `Browsing ${document.location.pathname.split('/').at(-1)}...`
+    presenceData.details = 'Browsing...'
   }
   if (presenceData.details)
     presence.setActivity(presenceData)
