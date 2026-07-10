@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestamps, timestampFromFormat, StatusDisplayType } from 'premid'
 
 const LOGO_URL = 'https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/logo.png'
 
@@ -21,11 +21,12 @@ presence.on('UpdateData', async () => {
   if (!document.querySelector('[data-test="track-info"]'))
     return presence.setActivity({ largeImageKey: LOGO_URL })
 
-  const [newLang, timestamps, cover, buttons] = await Promise.all([
+  const [newLang, timestamps, cover, buttons, displayType] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('timestamps'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('buttons'),
+	presence.getSetting<number>('displayType')
   ])
 
   if (oldLang !== newLang || !strings) {
@@ -98,6 +99,21 @@ presence.on('UpdateData', async () => {
         url: songTitle?.href ?? '',
       },
     ]
+  }
+  console.log('displayType:', displayType)
+  switch (displayType) {
+	case 0: {
+	  presenceData.statusDisplayType = StatusDisplayType.Name
+	  break
+	}
+	case 1: {
+	  presenceData.statusDisplayType = StatusDisplayType.Details
+	  break
+	}
+	case 2: {
+	  presenceData.statusDisplayType = StatusDisplayType.State
+	  break
+	}
   }
 
   if (!timestamps)
