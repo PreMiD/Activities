@@ -118,8 +118,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/allstar/')) {
     const allStarYear = pathname.match(/\/allstar\/(\d{4})/)?.[1]
     if (allStarYear) {
-      presenceData.details = strings.browsingAllStarYear
-      presenceData.state = `All-Star Game ${allStarYear}`
+      // Modificado para passar o ano dinamicamente no details
+      presenceData.details = strings.browsingAllStarYear(allStarYear)
+      presenceData.state = 'All-Star Game'
     }
     else {
       presenceData.details = strings.browsingAllStar
@@ -128,8 +129,9 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/draft/')) {
     const draftYear = pathname.match(/_(\d{4})\.html/)?.[1]
     if (draftYear) {
-      presenceData.details = strings.browsingDraftYear
-      presenceData.state = `NBA Draft ${draftYear}`
+      // Modificado também para seguir o mesmo padrão
+      presenceData.details = strings.browsingDraftYear(draftYear)
+      presenceData.state = 'NBA Draft'
     }
     else {
       presenceData.details = strings.browsingDraft
