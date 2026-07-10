@@ -1,16 +1,7 @@
-enum PresenceClients {
-  X = '802958757909889054',
-  Twitter = '1524505445019029775',
-}
-
-let presence = new Presence({
-  clientId: PresenceClients.X,
+const presence = new Presence({
+  clientId: '802958757909889054',
 })
-let twitterCheck: boolean
 
-const presences: { [key in PresenceClients]?: Presence } = {
-  [PresenceClients.X]: presence,
-}
 function capitalize(text: string): string {
   return text
     .replace(/[[{(_)}\]]/g, ' ')
@@ -19,18 +10,6 @@ function capitalize(text: string): string {
       return str.charAt(0).toUpperCase() + str.slice(1)
     })
     .join(' ')
-}
-
-function setClient(clientId: PresenceClients) {
-  presence.clearActivity()
-  if (presences[clientId]) {
-    presence = presences[clientId]
-  }
-  else {
-    presence = new Presence({ clientId })
-    presences[clientId] = presence
-  }
-  presence.info('Switched presence client!')
 }
 
 function stripText(element: HTMLElement, id = 'None', log = true): string | null {
@@ -90,15 +69,6 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('time'),
     presence.getSetting<boolean>('twitter'),
   ])
-
-  if (!twitter && twitterCheck !== twitter) {
-    twitterCheck = twitter
-    setClient(PresenceClients.X)
-  }
-  else if (twitterCheck !== twitter) {
-    twitterCheck = twitter
-    setClient(PresenceClients.Twitter)
-  }
 
   if (oldLang !== newLang || !strings) {
     oldLang = newLang
