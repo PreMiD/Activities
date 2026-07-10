@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, timestampFromFormat, StatusDisplayType } from 'premid'
+import { ActivityType, Assets, getTimestamps, StatusDisplayType, timestampFromFormat } from 'premid'
 
 const LOGO_URL = 'https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/logo.png'
 
@@ -26,7 +26,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('timestamps'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('buttons'),
-	presence.getSetting<number>('displayType')
+    presence.getSetting<number>('displayType'),
   ])
 
   if (oldLang !== newLang || !strings) {
@@ -100,20 +100,20 @@ presence.on('UpdateData', async () => {
       },
     ]
   }
-  console.log('displayType:', displayType)
+
   switch (displayType) {
-	case 0: {
-	  presenceData.statusDisplayType = StatusDisplayType.Name
-	  break
-	}
-	case 1: {
-	  presenceData.statusDisplayType = StatusDisplayType.Details
-	  break
-	}
-	case 2: {
-	  presenceData.statusDisplayType = StatusDisplayType.State
-	  break
-	}
+    case 0: {
+      presenceData.statusDisplayType = StatusDisplayType.Name
+      break
+    }
+    case 1: {
+      presenceData.statusDisplayType = StatusDisplayType.Details
+      break
+    }
+    case 2: {
+      presenceData.statusDisplayType = StatusDisplayType.State
+      break
+    }
   }
 
   if (!timestamps)
