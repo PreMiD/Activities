@@ -12,7 +12,7 @@ const TrackOriginList: Record<string, Record<string, string>> = {
     'Wario Stadium': 'N64 Wario Stadium',
     'Airship Fortress': 'DS Airship Fortress',
     'DK Pass': 'DS DK Pass',
-    'Sky-High Sundae': 'SW Sky-High Sundae',
+    'Sky-High Sundae': 'Tour Sky-High Sundae',
     'Wario\'s Galleon': '3DS Wario\'s Galleon',
     'Wario\'s Shipyard': '3DS Wario\'s Shipyard',
     'Koopa Troopa Beach': 'SNES Koopa Troopa Beach',
@@ -27,7 +27,7 @@ const TrackOriginList: Record<string, Record<string, string>> = {
     'Wario Stadium (Intro)': 'N64 Wario Stadium (Intro)',
     'Airship Fortress (Intro)': 'DS Airship Fortress (Intro)',
     'DK Pass (Intro)': 'DS DK Pass (Intro)',
-    'Sky-High Sundae (Intro)': 'SW Sky-High Sundae (Intro)',
+    'Sky-High Sundae (Intro)': 'Tour Sky-High Sundae (Intro)',
     'Wario\'s Galleon (Intro)': '3DS Wario\'s Galleon (Intro)',
     'Wario\'s Shipyard (Intro)': '3DS Wario\'s Shipyard (Intro)',
     'Koopa Troopa Beach (Intro)': 'SNES Koopa Troopa Beach (Intro)',
@@ -38,6 +38,58 @@ const TrackOriginList: Record<string, Record<string, string>> = {
     'Toad\'s Factory (Intro)': 'Wii Toad\'s Factory (Intro)',
     'Mario Circuit (Intro)': 'SNES Mario Circuit (Intro)',
   },
+}
+
+const classicFormattingList: Record<string, string> = {
+    'Donut Plains (Super Mario Kart)': 'SNES Donut Plains',
+    'Ghost Valley (Super Mario Kart)': 'SNES Ghost Valley',
+    'Bowser Castle (Super Mario Kart)': 'SNES Bowser Castle',
+    'Choco Island (Super Mario Kart)': 'SNES Choco Island',
+    'Choco Island (Fusion) (Super Mario Kart)': 'SNES Donut Plains (Fusion)',
+    'Choco Island (Bossa Nova) (Super Mario Kart)': 'SNES Donut Plains (Bossa Nova)',
+    'Koopa Beach (Super Mario Kart)': 'SNES Koopa Beach',
+    'Vanilla Lake (Super Mario Kart)': 'SNES Vanilla Lake',
+    'Rainbow Road (Super Mario Kart)': 'SNES Rainbow Road',
+    'Battle Course (Super Mario Kart)': 'SNES Battle Course',
+    'Moo Moo Farm (Mario Kart 64)': 'N64 Moo Moo Farm',
+    'Koopa Troopa Beach (Mario Kart 64)': 'N64 Koopa Troopa Beach',
+    'Koopa Troopa Beach (Electro) (Mario Kart)': 'N64 Koopa Troopa Beach (Electro)',
+    'Kalimari Desert (Mario Kart 64)': 'N64 Kalimari Desert',
+    'Toad\'s Turnpike (Mario Kart 64)': 'N64 Toad\'s Turnpike',
+    'Frappe Snowland (Jazz Fusion) (Mario Kart 64)': 'N64 Frappe Snowland',
+    'Frappe Snowland (Soul) (Mario Kart 64)': 'N64 Frappe Snowland (Soul)',
+    'DK\'s Jungle Parkway (Mario Kart 64)': 'N64 DK\'s Jungle Parkway',
+    'Rainbow Road (Mario Kart 64)': 'N64 Rainbow Road',
+    'Battle Course (Mario Kart 64)': 'N64 Battle Course',
+    'Battle Course (Mario Kart: Double Dash!!)': 'GCN Battle Course',
+    'Figure-8 Circuit (Mario Kart DS)': 'DS Figure-8 Circuit',
+    'Yoshi Falls (Mario Kart DS)': 'DS Yoshi Falls',
+    'Cheek Cheep Beach (Mario Kart DS)': 'DS Cheep Cheep Beach',
+    'Luigi\'s Mansion (Mario Kart DS)': 'DS Luigi\'s Mansion',
+    'Delfino Square (Mario Kart DS)': 'DS Delfino Square',
+    'Waluigi Pinball (Rock) (Mario Kart DS)': 'DS Waluigi Pinball',
+    'Waluigi Pinball (Funk) (Mario Kart DS)': 'DS Waluigi Pinball (Funk)',
+    'Shroom Ridge (Mario Kart DS)': 'DS Shroom Ridge',
+    'Tick-Tock Clock (Mario Kart DS)': 'DS Tick-Tock Clock',
+    'Peach Gardens (Mario Kart DS)': 'DS Peach Gardens',
+    'Rainbow Road (Mario Kart DS)': 'DS Rainbow Road',
+    'Battle Course (Mario Kart DS)': 'DS Battle Course',
+    'Luigi Circuit (Mario Kart Wii)': 'Wii Luigi Circuit',
+    'Mushroom Gorge (Mario Kart Wii)': 'Wii Mushroom Gorge',
+    'Coconut Mall (Mario Kart Wii)': 'Wii Coconut Mall',
+    'DK\'s Snowboard Cross (Mario Kart Wii)': 'Wii DK\'s Snowboard Cross',
+    'Wario\'s Gold Mine (Mario Kart Wii)': 'Wii Wario\'s Gold Mine',
+    'Daisy Circuit (Acoustic) (Mario Kart Wii)': 'Wii Daisy Circuit',
+    'Daisy Circuit (Electro) (Mario Kart Wii)': 'Wii Daisy Circuit (Electro)',
+    'Maple Treeway (Mario Kart Wii)': 'Wii Maple Treeway',
+    'Grumble Volcano (Mario Kart Wii)': 'Wii Grumble Volcano',
+    'Dry Dry Ruins (Mario Kart Wii)': 'Wii Dry Dry Ruins',
+    'Moonview Highway (Mario Kart Wii)': 'Wii Moonview Highway',
+    'Rainbow Road (Mario Kart) Wii': 'Wii Rainbow Road',
+    'Chain Chomp Roulette (Mario Kart Wii)': 'Wii Chain Chomp Roulette',
+    'Delfino Pier (Mario Kart Wii)': 'Wii Delfino Pier',
+    'Thwomp Desert (Mario Kart Wii)': 'Wii Thwomp Desert',
+    'Battle Stadium (Mario Kart 8 Deluxe)': 'SW Battle Stadium',
 }
 
 presence.on('UpdateData', async () => {
@@ -52,11 +104,12 @@ presence.on('UpdateData', async () => {
 
   const albumArt = document.querySelector<HTMLImageElement>('#main-column img')?.src ?? NintendoMusicLogo
 
-  const [showTimestamps, showSongArt, displayFormat, marioKartTrackOrigin] = await Promise.all([
+  const [showTimestamps, showSongArt, displayFormat, marioKartTrackOrigin, classicFormattingMKW] = await Promise.all([
     presence.getSetting<boolean>('showTimestamps'),
     presence.getSetting<boolean>('showSongArt'),
     presence.getSetting<number>('displayFormat'),
     presence.getSetting<boolean>('marioKartTrackOrigin'),
+    presence.getSetting<boolean>('classicFormattingMKW'),
   ])
 
   const presenceData: PresenceData = {
@@ -145,6 +198,16 @@ presence.on('UpdateData', async () => {
       if (gameTrack && songName in gameTrack) {
         const mappedTrackValue = (gameTrack as Record<string, string>)[songName]
         presenceData.details = mappedTrackValue
+      }
+    }
+  }
+
+  if (classicFormattingMKW) {
+    const songName = presenceData.details
+    if (typeof songName === 'string') {
+      const mappedTrack = classicFormattingList[songName]
+      if (mappedTrack) {
+        presenceData.details = mappedTrack
       }
     }
   }

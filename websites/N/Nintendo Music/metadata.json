@@ -16,7 +16,7 @@
   },
   "url": "music.nintendo.com",
   "regExp": "^https?[:][/][/]music[.]nintendo[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nintendo%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nintendo%20Music/assets/thumbnail.png",
   "color": "#FC2C00",
@@ -53,6 +53,13 @@
       "icon": "fas fa-font",
       "value": false,
       "description": "For Mario Kart soundtracks, show which console a racetrack originates from if they don't already."
+    },
+    {
+      "id": "classicFormattingMKW",
+      "title": "Classic Soundtrack Formatting",
+      "icon": "fas fa-font",
+      "value": false,
+      "description": "For Mario Kart World, format retro soundtrack names in a classic way. (Example: Mario Circuit (Super Mario Kart) -> SNES Mario Circuit)"
     }
   ]
 }
