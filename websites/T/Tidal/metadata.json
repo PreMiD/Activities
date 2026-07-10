@@ -28,7 +28,7 @@
     "tidal.com"
   ],
   "regExp": "^https?[:][/][/](listen[.])?tidal[.]com[/]",
-  "version": "3.3.1",
+  "version": "3.3.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tidal/assets/thumbnail.png",
   "color": "#000000",
@@ -58,6 +58,17 @@
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
       "value": true
+    },
+	{
+      "id": "displayType",
+      "title": "Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 0,
+	  "values": [
+		"Activity name",
+		"Song",
+		"Artist"
+	  ]
     }
   ]
 }
