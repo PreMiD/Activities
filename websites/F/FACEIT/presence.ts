@@ -9,17 +9,17 @@ enum ActivityAssets {
   FaceIt = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/logo.png',
   CounterStrike = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/0.png',
   LevelUnranked = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/1.jpeg', // Have to find this one yet
-  LevelOne = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/2.jpeg',
-  LevelTwo = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/3.jpeg',
-  LevelThree = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/4.jpeg',
-  LevelFour = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/5.jpeg',
-  LevelFive = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/6.jpeg',
-  LevelSix = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/7.jpeg',
-  LevelSeven = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/8.jpeg',
-  LevelEight = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/9.jpeg',
-  LevelNine = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/10.jpeg',
-  LevelTen = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/11.jpeg',
-  LevelEleven = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/12.jpeg',
+  LevelOne = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/2.png',
+  LevelTwo = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/3.png',
+  LevelThree = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/4.png',
+  LevelFour = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/5.png',
+  LevelFive = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/6.png',
+  LevelSix = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/7.png',
+  LevelSeven = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/8.png',
+  LevelEight = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/9.png',
+  LevelNine = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/10.png',
+  LevelTen = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/11.png',
+  LevelEleven = 'https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/12.png',
 }
 
 function getLevelAsset(level: string): string | null {
@@ -49,6 +49,85 @@ function getElapsedSeconds(timeStr?: string | null): number {
   return h * 3600 + m * 60 + s
 }
 
+function isActivePartySlot(slot: Element): boolean {
+  const hasAvatar = !!slot.querySelector('img[aria-label="avatar"]')
+  const isPendingInvite = !!slot.querySelector(
+    '[class*="Footer"], [data-testid="cancel-invite-button"]',
+  )
+
+  return hasAvatar && !isPendingInvite
+}
+
+function getPartySize(): { partySize: number, maxPartySize: number } | null {
+  for (const container of document.querySelectorAll('[class*="CardContainer"]')) {
+    const slots = Array.from(container.children).filter(child =>
+      !!child.querySelector('[data-playercard="true"]'),
+    )
+
+    if (!slots.length) {
+      continue
+    }
+
+    const partySize = slots.filter(isActivePartySlot).length
+
+    if (partySize > 0) {
+      return { partySize, maxPartySize: slots.length }
+    }
+  }
+
+  return null
+}
+
+function getSkillLevelAsset(container: Element | null | undefined): string | null {
+  const skillSvg = container?.querySelector('svg[class*="SkillIcon"]')
+  let titleText = ''
+
+  if (skillSvg) {
+    titleText = skillSvg.querySelector('title')?.textContent?.toLowerCase() || ''
+    if (!titleText) {
+      titleText = skillSvg.getAttribute('aria-label')?.toLowerCase() || ''
+    }
+  }
+
+  const levelMatch = titleText.match(/\d+/)
+  return getLevelAsset(levelMatch?.[0] ?? 'unranked')
+}
+
+function getElo(container: Element | null | undefined): number {
+  const eloElement = container?.querySelector(
+    '[class*="EloText"], [class*="Subtitle__Holder"], [class*="LevelAndElo"], [class*="SkillLevel__Elo"]',
+  )
+  const eloText = eloElement?.textContent || ''
+
+  return Number(eloText.replace(/\D/g, '')) || 0
+}
+
+function getSelfPartyUser(): { levelAsset: string | null, elo: number } | null {
+  for (const container of document.querySelectorAll('[class*="CardContainer"]')) {
+    const slots = Array.from(container.children).filter(child =>
+      child.matches('[class*="PlayerCardWrapper"]')
+      && child.querySelector('img[aria-label="avatar"]')
+      && child.querySelector('[class*="Nickname"]'),
+    )
+
+    if (!slots.length) {
+      continue
+    }
+
+    const nonKickableSlots = slots.filter(slot =>
+      !slot.querySelector('button[aria-label="Kick"], [data-testid="close-icon"][aria-label="Kick"]'),
+    )
+    const selfSlot = nonKickableSlots.length === 1 ? nonKickableSlots[0] : slots[0]
+
+    return {
+      levelAsset: getSkillLevelAsset(selfSlot),
+      elo: getElo(selfSlot),
+    }
+  }
+
+  return null
+}
+
 // Whether the given (user) element is the logged in user.
 // FACEIT marks the logged in user with an orange color in
 // the match overview page.
@@ -68,47 +147,34 @@ function getSelfUser(): { team: 1 | 2 | null, levelAsset: string | null, elo: nu
       if (isSelfUser(nick)) {
         const isT1 = area.getAttribute('name') === 'roster1' || area === document.querySelectorAll('table')[0]
         const container = nick.closest('[class*="styles__Holder"], [class*="RosterItem"], tr')
-        const skillSvg = container?.querySelector('svg[class*="SkillIcon"]')
-        let titleText = ''
-
-        if (skillSvg) {
-          titleText = skillSvg.querySelector('title')?.textContent?.toLowerCase() || ''
-          if (!titleText) {
-            titleText = skillSvg.getAttribute('aria-label')?.toLowerCase() || ''
-          }
-        }
-
-        let levelKey = 'unranked'
-        const levelMatch = titleText.match(/\d+/)
-        if (levelMatch) {
-          levelKey = levelMatch[0]
-        }
-
-        const eloElement = container?.querySelector('[class*="Subtitle__Holder"], [class*="LevelAndElo"], [class*="SkillLevel__Elo"]')
-        const eloText = eloElement?.textContent || ''
-        const elo = Number(eloText.replace(/\D/g, '')) || 0
 
         return {
           team: (isT1 ? 1 : 2) as 1 | 2,
-          levelAsset: getLevelAsset(levelKey),
-          elo,
+          levelAsset: getSkillLevelAsset(container),
+          elo: getElo(container),
         }
       }
     }
   }
+
   return { team: null, levelAsset: null, elo: 0 }
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings(stringMap)
+  const [showElo, showParty, ingameFormat, showBrowsing] = await Promise.all([
+    presence.getSetting<boolean>('showElo'),
+    presence.getSetting<boolean>('showParty'),
+    presence.getSetting<number>('gameFormat'),
+    presence.getSetting<boolean>('browsing'),
+  ])
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.FaceIt,
     startTimestamp: browsingTimestamp,
   }
 
-  const showBrowsing = await presence.getSetting<boolean>('browsing')
   if (showBrowsing) {
     presenceData.details = strings.browsingHome
   }
@@ -137,9 +203,9 @@ presence.on('UpdateData', async () => {
       const username = pathname.split('/')[2]
       const gameAction = pathname.split('/')[4] ?? null
 
-      let details = `${strings.viewingProfile} @${username}`
+      let details = `${strings.viewingProfile}: ${username}`
       if (gameAction === 'history') {
-        details = `${strings.viewingMatchHistory} @${username}`
+        details = `${strings.viewingMatchHistory}: ${username}`
       }
       presenceData.details = details
     }
@@ -153,27 +219,43 @@ presence.on('UpdateData', async () => {
   // Handle non-browsing states
   if (pathname.startsWith('/matchmaking')) {
     presenceData.details = strings.inLobby
-    const playArea = document.querySelector('div[name="playbutton"]')
-
-    if (playArea) {
-      const timer = Array.from(playArea.querySelectorAll('span')).find(s => /\d{2}:\d{2}/.test(s.textContent ?? ''))
-      const timerText = timer?.textContent?.trim() ?? null
-      if (timerText) {
-        presenceData.details = `${strings.inQueue}`
-        presenceData.startTimestamp = Math.floor(Date.now() / 1000) - getElapsedSeconds(timerText)
+    if (showElo) {
+      const partyUser = getSelfPartyUser()
+      if (partyUser) {
+        presenceData.smallImageKey = partyUser.levelAsset
+        presenceData.smallImageText = partyUser.elo > 0
+          ? `${strings.elo}: ${partyUser.elo}`
+          : strings.unranked
       }
+    }
+
+    if (showParty) {
+      const party = getPartySize()
+      if (party) {
+        presenceData.state = strings.inParty
+        presenceData.party = party
+      }
+    }
+
+    // Look for the countdown timer anywhere on the page
+    const timer = Array.from(document.querySelectorAll('span')).find(s => /\d{2}:\d{2}/.test(s.textContent ?? ''))
+    const timerText = timer?.textContent?.trim() ?? null
+    if (timerText) {
+      presenceData.details = `${strings.inQueue}`
+      presenceData.startTimestamp = Math.floor(Date.now() / 1000) - getElapsedSeconds(timerText)
     }
   }
   else if (pathname.includes('/room/')) {
     const { team, levelAsset, elo } = getSelfUser()
     const vetoContainer = document.querySelector('[data-testid="matchroomVeto"]')
 
-    presenceData.smallImageKey = levelAsset ?? (team ? Assets.Live : null)
-    presenceData.smallImageText = team && elo > 0 ? `${strings.elo}: ${elo}` : (team ? strings.unranked : null)
+    presenceData.smallImageKey = !showElo ? null : levelAsset ?? (team ? Assets.Live : null)
+    presenceData.smallImageText = !showElo ? null : elo > 0 ? `${strings.elo}: ${elo}` : (team ? strings.unranked : null)
 
     // Veto Phase
     if (vetoContainer) {
-      presenceData.details = team ? strings.vetoingMaps : strings.watchingVeto
+      presenceData.details = strings.matchroom
+      presenceData.state = team ? strings.vetoingMaps : strings.watchingVeto
     }
     else { // Match Phase
       const mapImg = document.querySelector<HTMLImageElement>('img[class*="SelectedMapIcon"]')
@@ -199,12 +281,23 @@ presence.on('UpdateData', async () => {
 
         if (team) { // We are playing
           presenceData.details = isFinished
-            ? `${strings.matchResults} - ${mapName}`
+            ? `${strings.matchResults}`
             : `${strings.playing} on ${mapName}`
 
           // Live Match
           if (timerText && /\d{2}:\d{2}/.test(timerText)) {
-            presenceData.name = 'Counter-Strike 2'
+            switch (ingameFormat) {
+              case 0:
+                presenceData.name = `FACEIT: Counter-Strike 2`
+                break
+              case 1:
+                presenceData.name = `Counter-Strike 2`
+                break
+              case 2:
+                presenceData.name = 'FACEIT'
+                break
+            }
+
             presenceData.type = ActivityType.Competing
             presenceData.state = `${strings.competitive} ${scoreDisplay}`
             presenceData.startTimestamp = Math.floor(Date.now() / 1000) - getElapsedSeconds(timerText)
@@ -215,6 +308,7 @@ presence.on('UpdateData', async () => {
             if (isFinished) {
               const didIWin = (team === 1 && t1.win) || (team === 2 && t2.win)
               resultLabel = didIWin ? strings.won : strings.lost
+              resultLabel += ` on ${mapName}`
             }
 
             presenceData.state = `${resultLabel} ${scoreDisplay}`
@@ -225,11 +319,11 @@ presence.on('UpdateData', async () => {
           const isLive = !!(timerText && /\d{2}:\d{2}/.test(timerText))
 
           presenceData.details = isFinished
-            ? `${strings.matchResults} - ${mapName}`
+            ? `${strings.matchResults}`
             : `${strings.watching} ${mapName}`
 
           const resultLabel = isFinished ? strings.finished : strings.inWarmup
-          presenceData.state = isLive ? `${strings.competitive} ${scoreDisplay}` : `${resultLabel} ${scoreDisplay}`
+          presenceData.state = isLive ? `${strings.competitive} ${scoreDisplay}` : `${resultLabel} ${mapName} ${scoreDisplay}`
 
           if (isLive) {
             presenceData.startTimestamp = Math.floor(Date.now() / 1000) - getElapsedSeconds(timerText)

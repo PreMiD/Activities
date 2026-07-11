@@ -18,7 +18,7 @@ function getKnownDuration(video: HTMLVideoElement): number {
     }
   }
   catch {
-    // ignore
+
   }
 
   try {
@@ -29,7 +29,7 @@ function getKnownDuration(video: HTMLVideoElement): number {
     }
   }
   catch {
-    // ignore
+
   }
 
   return Number.NaN
@@ -101,7 +101,7 @@ function sendVideoState(): void {
     })
   }
   catch {
-    // ignore
+
   }
 }
 

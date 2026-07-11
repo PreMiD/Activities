@@ -7,11 +7,19 @@ function removeExpiredPrivacyOverwrites(array?: VPArray) {
     return []
   return array.filter(entry => entry.ttl > Date.now())
 }
+function safeParse(raw: string | null): VPArray {
+  try {
+    return JSON.parse(raw ?? '[]')
+  }
+  catch {
+    return []
+  }
+}
 let perVideoPrivacyArray: VPArray = removeExpiredPrivacyOverwrites(
-  JSON.parse(localStorage.getItem('pmdEnablePrivacy') ?? '[]'),
+  safeParse(localStorage.getItem('pmdEnablePrivacy')),
 )
 let perVideoNonPrivacyArray: VPArray = removeExpiredPrivacyOverwrites(
-  JSON.parse(localStorage.getItem('pmdDisablePrivacy') ?? '[]'),
+  safeParse(localStorage.getItem('pmdDisablePrivacy')),
 )
 
 localStorage.setItem('pmdEnablePrivacy', JSON.stringify(perVideoPrivacyArray))

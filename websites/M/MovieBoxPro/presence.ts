@@ -12,7 +12,7 @@ function extractSeasonEpisode(text: string | null | undefined): string | null {
 }
 
 presence.on('UpdateData', async () => {
-  const video = document.querySelector('video')
+  const video = [...document.querySelectorAll('video')].find(v => v.src)
   const rawTitle = document.querySelector('.movie_title')?.textContent.trim() ?? null
 
   const presenceData: any = {

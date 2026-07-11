@@ -21,7 +21,7 @@
     "docs.sapph.xyz"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sapph[.]xyz[/]",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sapphire/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sapphire/assets/thumbnail.png",
   "color": "#00a2ff",
@@ -36,6 +36,12 @@
       "title": "Show Server Info",
       "icon": "fas fa-server",
       "value": true
+    },
+    {
+      "id": "enablePrivacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
     }
   ]
 }
