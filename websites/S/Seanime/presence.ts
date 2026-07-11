@@ -2,7 +2,7 @@ import { ActivityType, Assets, getTimestamps, StatusDisplayType, timestampFromFo
 
 // Define assets outside the update loop
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/glQ9FOt.png',
+  Logo = 'https://i.imgur.com/fOBSkdo.png',
 }
 
 const presence = new Presence({
