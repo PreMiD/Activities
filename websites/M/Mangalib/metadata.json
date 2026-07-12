@@ -7,7 +7,7 @@
   },
   "contributors": [
     {
-      "name": "Kitosight",
+      "name": "Keita",
       "id": "437154602626973697"
     }
   ],
@@ -17,8 +17,8 @@
     "AnimeLib"
   ],
   "description": {
-    "en": "Also includes support for RanobeLib and AnimeLib. Lib - sites for reading manga, ranobe and watching anime in Russian.",
-    "ru": "Также включает поддержку активностей для RanobeLib и AnimeLib. Lib - сайты для чтения манги, ранобэ и просмотра аниме на русском языке."
+    "en": "MangaLib, RanobeLib, and AnimeLib are also supported. These are Russian-language websites for reading manga and light novels, as well as watching anime.",
+    "ru": "Также поддерживаются MangaLib, RanobeLib и AnimeLib. Это русскоязычные платформы для чтения манги и ранобэ, а также для просмотра аниме."
   },
   "url": [
     "mangalib.me",
@@ -34,7 +34,7 @@
     "v5.animelib.org"
   ],
   "regExp": "^https?[:][/][/](mangalib[.]me|mangalib[.]org|ranobelib[.]me|(v1)[.]novelslib[.]me|anilib[.]me|((v1|v2|v3|v4|v5)[.])?animelib[.]org)[/]",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Mangalib/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Mangalib/assets/thumbnail.jpeg",
   "color": "#ff8c00",
@@ -63,7 +63,7 @@
       "value": true
     },
     {
-      "id": "titleAsPresence",
+      "id": "animeTitleAsPresence",
       "title": "Отображать аниме в статусе",
       "icon": "fad fa-user-edit",
       "if": {
