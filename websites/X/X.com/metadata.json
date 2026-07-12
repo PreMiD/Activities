@@ -21,7 +21,7 @@
     "x.com"
   ],
   "regExp": "^https?[:][/][/](twitter[.]com|x[.]com)[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/X/X.com/assets/thumbnail.png",
   "color": "#000000",
@@ -54,7 +54,7 @@
     },
     {
       "id": "twitter",
-      "title": "Enable twitter",
+      "title": "Enable Twitter",
       "icon": "fad fa-user-secret",
       "value": false
     }
