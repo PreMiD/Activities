@@ -10,6 +10,7 @@ enum ActivityAssets {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
+    name: 'Homestuck: Beyond Canon',
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
   }
