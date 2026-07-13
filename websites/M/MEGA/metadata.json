@@ -16,12 +16,9 @@
     "en": "Secure Cloud Storage and Communication. Privacy by Design.",
     "nl": "Veilige cloudopslag en communicatie. Privacy door ontwerp."
   },
-  "url": [
-    "mega.nz",
-    "mega.io"
-  ],
+  "url": "mega.io",
   "regExp": "^https?[:][/][/]mega[.](nz|io)[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MEGA/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MEGA/assets/thumbnail.png",
   "color": "#d90007",

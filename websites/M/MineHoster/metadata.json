@@ -10,12 +10,9 @@
     "de": "MineHoster ist ein deutscher Minecraft-Server-Hosting-Anbieter mit leistungsstarken Gameservern und erweitertem Verwaltungspanel.",
     "en": "MineHoster is a German Minecraft server hosting provider offering high-performance game servers with an advanced management panel."
   },
-  "url": [
-    "mine-hoster.de",
-    "gamepanel.mine-hoster.de"
-  ],
+  "url": "gamepanel.mine-hoster.de",
   "regExp": "^https?[:][/][/](www[.])?((gamepanel[.])?mine-hoster[.]de)[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MineHoster/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MineHoster/assets/thumbnail.png",
   "color": "#3B82F6",

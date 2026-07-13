@@ -10,12 +10,9 @@
     "en": "The Discord Bot - Configure moderation, leveling, Twitch alerts and much more with the most easy-to-use dashboard!",
     "nl": "De Discord Bot - Configureer moderatie, nivellering, Twitch-waarschuwingen en nog veel meer met het meest gebruiksvriendelijke dashboard!"
   },
-  "url": [
-    "mee6.xyz",
-    "help.mee6.xyz"
-  ],
+  "url": "mee6.xyz",
   "regExp": "^https?[:][/][/](help[.])?mee6[.]xyz[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MEE6/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MEE6/assets/thumbnail.png",
   "color": "#60d1f6",
