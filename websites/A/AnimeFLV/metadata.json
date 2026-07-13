@@ -24,7 +24,7 @@
     "www3.animeflv.net",
     "animeflv.ac"
   ],
-  "regExp": "^https?[:][/][/]((www[0-9]*)[.]animeflv[.]net|animeflv[.]ac|animeflv[.]ru)[/]",
+  "regExp": "^https?[:][/][/]((www[0-9]*)[.]animeflv[.]net|animeflv[.]ac)[/]",
   "version": "1.2.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeFLV/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeFLV/assets/thumbnail.png",

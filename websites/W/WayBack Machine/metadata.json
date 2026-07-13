@@ -12,10 +12,11 @@
   },
   "url": [
     "archive.org",
-    "web.archive.org"
+    "web.archive.org",
+    "www.web.archive.org"
   ],
   "regExp": "^https?[:][/][/]((web|www[.]web)[.])?archive[.]org[/]",
-  "version": "1.2.1",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WayBack%20Machine/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WayBack%20Machine/assets/thumbnail.png",
   "color": "#AD2E37",

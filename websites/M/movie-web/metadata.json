@@ -14,7 +14,7 @@
     "en": "The place for your favorite movies & shows"
   },
   "url": "streamwatch.online",
-  "regExp": "^https?[:][/][/](?:pstream[.]net|streamwatch[.]online)[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*streamwatch[.]online[/]",
   "version": "1.4.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
