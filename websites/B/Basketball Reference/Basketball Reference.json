@@ -43,8 +43,8 @@
     "description": "Browsing NBA draft history",
     "message": "Browsing draft history"
   },
-  "basketball_reference.browsingDraftYear": {
-    "description": "Browsing a specific NBA draft year",
+  "basketball_reference.browsingYear": {
+    "description": "Browsing a specific draft year or All-Star game",
     "message": "Browsing the {0}"
   },
   "basketball_reference.browsingStandings": {
@@ -62,10 +62,6 @@
   "basketball_reference.browsingAllStar": {
     "description": "Browsing All-Star game history",
     "message": "Browsing All-Star history"
-  },
-  "basketball_reference.browsingAllStarYear": {
-    "description": "Browsing a specific All-Star game match",
-    "message": "Browsing the {0}"
   },
   "basketball_reference.browsingTeamDraft": {
     "description": "Browsing a specific team draft history",
