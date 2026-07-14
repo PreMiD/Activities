@@ -8,10 +8,10 @@ export enum ActivityAssets {
 }
 
 const dataCache = new Map<string, { data: unknown, expires: number }>()
-const imageCache = new Map<string, string | HTMLImageElement>()
-const pendingImage = new Map<string, Promise<string | HTMLImageElement>>()
+const blobCache = new Map<string, Blob>()
+const pendingBlob = new Map<string, Promise<Blob | undefined>>()
 const CACHE_TTL = 60_000
-const IMAGE_TIMEOUT_MS = 2500
+const FETCH_TIMEOUT_MS = 4000
 
 export async function fetchCached<T>(key: string, fetcher: () => Promise<T | null>): Promise<T | null> {
   const cached = dataCache.get(key)
@@ -85,25 +85,6 @@ export function getProfileImageFromDom(): string | undefined {
   return undefined
 }
 
-export function getCoverImageFromDom(): HTMLImageElement | undefined {
-  const selectors = [
-    'img[src*="/cover"]',
-    'img[src*="cover.jpg"]',
-    'img[src*="cover.png"]',
-    'img[src*="anilist.co"]',
-    '[class*="MuiPaper"] img',
-    'main img[alt]',
-  ]
-
-  for (const selector of selectors) {
-    const img = document.querySelector<HTMLImageElement>(selector)
-    if (img?.complete && img.naturalWidth > 40)
-      return img
-  }
-
-  return undefined
-}
-
 export function parsePathSegments(pathname: string): string[] {
   return pathname.split('/').filter(Boolean)
 }
@@ -143,104 +124,127 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T | undefined>
   })
 }
 
-async function fetchAniListCover(title?: string): Promise<string | undefined> {
-  if (!title)
-    return undefined
+function loadImage(url: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.decoding = 'async'
+    img.referrerPolicy = 'strict-origin-when-cross-origin'
+    img.onload = () => resolve(img)
+    img.onerror = () => reject(new Error('image load failed'))
+    img.src = url
+  })
+}
 
+/** Resize / flatten (incl. GIF) to a Discord-friendly JPEG blob. */
+async function toJpegBlob(source: Blob | HTMLImageElement, maxSize = 512): Promise<Blob | undefined> {
   try {
-    const response = await fetch('https://graphql.anilist.co', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        query: `query ($search: String) {
-          Media(search: $search, type: ANIME) {
-            coverImage { extraLarge large }
-          }
-        }`,
-        variables: { search: title },
-      }),
-    })
-
-    if (!response.ok)
-      return undefined
-
-    const json = await response.json() as {
-      data?: { Media?: { coverImage?: { extraLarge?: string, large?: string } } }
+    let img: HTMLImageElement
+    if (source instanceof HTMLImageElement) {
+      img = source
+    }
+    else {
+      const objectUrl = URL.createObjectURL(source)
+      try {
+        img = await loadImage(objectUrl)
+      }
+      finally {
+        URL.revokeObjectURL(objectUrl)
+      }
     }
 
-    return json.data?.Media?.coverImage?.extraLarge
-      || json.data?.Media?.coverImage?.large
-      || undefined
+    if (!img.naturalWidth || !img.naturalHeight)
+      return undefined
+
+    const scale = Math.min(1, maxSize / Math.max(img.naturalWidth, img.naturalHeight))
+    const width = Math.max(1, Math.round(img.naturalWidth * scale))
+    const height = Math.max(1, Math.round(img.naturalHeight * scale))
+    const canvas = document.createElement('canvas')
+    canvas.width = width
+    canvas.height = height
+    const ctx = canvas.getContext('2d')
+    if (!ctx)
+      return undefined
+
+    ctx.fillStyle = '#000'
+    ctx.fillRect(0, 0, width, height)
+    ctx.drawImage(img, 0, 0, width, height)
+
+    return await new Promise((resolve) => {
+      canvas.toBlob(blob => resolve(blob || undefined), 'image/jpeg', 0.86)
+    })
   }
   catch {
     return undefined
   }
 }
 
-function loadImageElement(url: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const img = new Image()
-    img.decoding = 'async'
-    img.referrerPolicy = 'no-referrer-when-downgrade'
-    img.onload = () => resolve(img)
-    img.onerror = () => reject(new Error('image failed'))
-    img.src = url
-  })
+/**
+ * Curl-equivalent: fetch image bytes in-page (site referer), return JPEG Blob.
+ * Discord cannot fetch BunnyCDN URLs directly (403).
+ */
+export async function fetchCoverBlob(url: string): Promise<Blob | undefined> {
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'omit',
+      referrerPolicy: 'strict-origin-when-cross-origin',
+      headers: {
+        Accept: 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+      },
+    })
+
+    if (response.ok) {
+      const blob = await response.blob()
+      if (blob.size > 100) {
+        const jpeg = await toJpegBlob(blob)
+        if (jpeg)
+          return jpeg
+      }
+    }
+  }
+  catch {
+    // fall through to <img> path
+  }
+
+  try {
+    const img = await loadImage(url)
+    return await toJpegBlob(img)
+  }
+  catch {
+    return undefined
+  }
 }
 
 /**
- * Prefer Discord-safe public URLs / already-loaded DOM images.
- * BunnyCDN remote URLs 403 for Discord — use DOM element so PreMiD uploads locally.
- * Never block UpdateData longer than IMAGE_TIMEOUT_MS.
+ * Always returns a Blob (or logo URL). Uses cache so UpdateData is not blocked twice.
  */
 export async function resolveCoverImage(
-  title?: string,
+  _title?: string,
   ...candidates: Array<string | undefined>
-): Promise<string | HTMLImageElement> {
-  const fromDom = getCoverImageFromDom()
-  if (fromDom)
-    return fromDom
-
+): Promise<string | Blob> {
   const urls = [...candidates, getOgImage()]
     .map(normalizeUrl)
     .filter((url): url is string => Boolean(url))
 
   for (const url of urls) {
-    // Public CDNs Discord can fetch directly
-    if (/anilist\.co|cdn\.rcd\.gg|imgur\.com|discordapp|media\.discordapp/i.test(url)) {
-      imageCache.set(url, url)
-      return url
-    }
-
-    const cached = imageCache.get(url)
+    const cached = blobCache.get(url)
     if (cached)
       return cached
 
-    let pending = pendingImage.get(url)
+    let pending = pendingBlob.get(url)
     if (!pending) {
-      pending = (async () => {
-        const img = await withTimeout(loadImageElement(url), IMAGE_TIMEOUT_MS)
-        if (img && img.naturalWidth > 0) {
-          imageCache.set(url, img)
-          return img
-        }
-        return ActivityAssets.Logo
-      })()
-      pendingImage.set(url, pending)
+      pending = fetchCoverBlob(url).then((blob) => {
+        if (blob)
+          blobCache.set(url, blob)
+        return blob
+      })
+      pendingBlob.set(url, pending)
     }
 
-    const result = await withTimeout(pending, IMAGE_TIMEOUT_MS)
-    if (result && result !== ActivityAssets.Logo)
-      return result
-  }
-
-  const aniList = await withTimeout(fetchAniListCover(title), IMAGE_TIMEOUT_MS)
-  if (aniList) {
-    imageCache.set(`anilist:${title}`, aniList)
-    return aniList
+    const blob = await withTimeout(pending, FETCH_TIMEOUT_MS)
+    if (blob)
+      return blob
   }
 
   return ActivityAssets.Logo

@@ -98,11 +98,42 @@ function getProfileTabLabel(tab: string | undefined, localized: PresenceStrings)
 }
 
 function getVideoElement(): HTMLVideoElement | null {
-  const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('video'))
-  return videos.find(video => video.readyState > 0 || !Number.isNaN(video.duration) || video.currentSrc)
-    ?? document.querySelector<HTMLVideoElement>('#video-container video')
-    ?? document.querySelector<HTMLVideoElement>('video.plyr')
+  const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('#video-container video, video.plyr, video'))
+  return videos.find(video => Boolean(video.currentSrc || video.src) || video.readyState > 0)
     ?? null
+}
+
+let lastCurrentTime = -1
+let lastCurrentTimeAt = 0
+let frozenTicks = 0
+let lastMediaKey = ''
+
+/** Detect pause even when HTMLVideoElement.paused is unreliable (some players). */
+function isVideoPaused(video: HTMLVideoElement): boolean {
+  if (video.ended)
+    return true
+
+  if (video.paused)
+    return true
+
+  const now = Date.now()
+  const current = video.currentTime
+
+  if (lastCurrentTime >= 0 && Math.abs(current - lastCurrentTime) < 0.08) {
+    if (now - lastCurrentTimeAt >= 700)
+      frozenTicks += 1
+  }
+  else {
+    frozenTicks = 0
+    lastCurrentTime = current
+    lastCurrentTimeAt = now
+  }
+
+  // ~2 presence ticks without progression => treat as paused
+  if (frozenTicks >= 2)
+    return true
+
+  return false
 }
 
 function applyWatchPlayback(
@@ -110,26 +141,26 @@ function applyWatchPlayback(
   settings: PluginSettings,
   video: HTMLVideoElement | null,
 ): void {
-  if (!video) {
-    delete presenceData.startTimestamp
-    delete presenceData.endTimestamp
-    return
-  }
+  delete presenceData.startTimestamp
+  delete presenceData.endTimestamp
 
-  const paused = video.paused || video.ended
+  if (!video)
+    return
+
+  const paused = isVideoPaused(video)
   const hasDuration = Number.isFinite(video.duration) && video.duration > 0
 
-  if (settings.showSmallImages) {
-    presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
-    presenceData.smallImageText = paused ? strings.pause : strings.play
+  // Always show play/pause on watch page
+  presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
+  presenceData.smallImageText = paused ? strings.pause : strings.play
+
+  if (!settings.showSmallImages) {
+    delete presenceData.smallImageKey
+    delete presenceData.smallImageText
   }
 
   if (settings.showTimestamp && !paused && hasDuration) {
     [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
-  }
-  else {
-    delete presenceData.startTimestamp
-    delete presenceData.endTimestamp
   }
 }
 
@@ -293,6 +324,15 @@ presence.on('UpdateData', async () => {
       const video = getVideoElement()
       const animeUrl = `${BASE_URL}/anime/${anime?.slug || anime?._id || animeId}`
       const episodeUrl = `${BASE_URL}/watch/${anime?.slug || anime?._id || animeId}?season=${seasonNumber}&episode=${episodeNumber}`
+
+      // Reset freeze detector when episode changes
+      const mediaKey = `${animeId}:${seasonNumber}:${episodeNumber}:${video?.currentSrc || ''}`
+      if (mediaKey !== lastMediaKey) {
+        lastMediaKey = mediaKey
+        lastCurrentTime = -1
+        lastCurrentTimeAt = 0
+        frozenTicks = 0
+      }
 
       presenceData.type = ActivityType.Watching
       presenceData.details = title
