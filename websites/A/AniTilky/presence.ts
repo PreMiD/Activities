@@ -14,7 +14,6 @@ import {
   getProfileUsernameFromDom,
   parsePathSegments,
   resolvePresenceImage,
-  resolvePresenceImageAsync,
 } from './functions/helpers.js'
 import { getStrings, PROFILE_TABS, type PresenceStrings } from './functions/strings.js'
 
@@ -242,7 +241,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.ownProfile
       presenceData.state = userInfo?.username || getProfileTabLabel(tab, strings) || strings.viewPage
       if (settings.showCover) {
-        presenceData.largeImageKey = await resolvePresenceImageAsync(
+        presenceData.largeImageKey = resolvePresenceImage(
           userInfo?.profileImage,
           getProfileImageUrl(),
         )
@@ -271,7 +270,7 @@ presence.on('UpdateData', async () => {
       }
 
       if (settings.showCover) {
-        presenceData.largeImageKey = await resolvePresenceImageAsync(
+        presenceData.largeImageKey = resolvePresenceImage(
           userInfo?.profileImage,
           getProfileImageUrl(),
         )
@@ -309,7 +308,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = formatEpisodeState(seasonNumber, episodeNumber, episode?.title)
 
       if (settings.showCover) {
-        presenceData.largeImageKey = await resolvePresenceImageAsync(
+        presenceData.largeImageKey = resolvePresenceImage(
           anime?.coverImage,
           anime?.bannerImage,
         )
@@ -335,7 +334,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = title
 
       if (settings.showCover) {
-        presenceData.largeImageKey = await resolvePresenceImageAsync(
+        presenceData.largeImageKey = resolvePresenceImage(
           anime?.coverImage,
           anime?.bannerImage,
         )

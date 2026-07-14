@@ -7,21 +7,36 @@ export enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AniTilky/assets/logo.png',
 }
 
+/** GIFs above this are flattened to JPEG — PreMiD silently drops multi‑MB GIFs. */
+const MAX_GIF_BYTES = 400_000
+const MAX_IMAGE_EDGE = 512
 const dataCache = new Map<string, { data: unknown, expires: number }>()
 const blobCache = new Map<string, Blob>()
-const inflight = new Map<string, Promise<Blob | undefined>>()
-const CACHE_TTL = 60_000
+const inflight = new Set<string>()
+const failedUrls = new Set<string>()
+const CACHE_TTL = 120_000
+const API_TIMEOUT_MS = 1200
+
+let logoBlob: Blob | undefined
+let logoPrefetchStarted = false
 
 export async function fetchCached<T>(key: string, fetcher: () => Promise<T | null>): Promise<T | null> {
   const cached = dataCache.get(key)
   if (cached && cached.expires > Date.now())
     return cached.data as T
 
-  const data = await fetcher()
-  if (data)
-    dataCache.set(key, { data, expires: Date.now() + CACHE_TTL })
-
-  return data
+  try {
+    const data = await Promise.race([
+      fetcher(),
+      new Promise<null>(resolve => window.setTimeout(() => resolve(null), API_TIMEOUT_MS)),
+    ])
+    if (data)
+      dataCache.set(key, { data, expires: Date.now() + CACHE_TTL })
+    return data
+  }
+  catch {
+    return null
+  }
 }
 
 export function getAnimeTitle(anime?: Anime | null): string | undefined {
@@ -63,25 +78,19 @@ export function getProfileUsernameFromDom(): string | undefined {
 }
 
 export function getProfileImageUrl(): string | undefined {
-  const selectors = [
-    'img[src*="profile-images"]',
-    'img[src*="b-cdn.net"][src*="profile"]',
-    '[class*="MuiAvatar"] img',
-  ]
+  const images = Array.from(document.querySelectorAll<HTMLImageElement>(
+    '.MuiAvatar-img, img[src*="profile-images"], img[src*="b-cdn.net"][src*="profile"]',
+  ))
 
-  for (const selector of selectors) {
-    const img = document.querySelector<HTMLImageElement>(selector)
-    const src = img?.currentSrc || img?.src
-    if (src && !src.startsWith('data:'))
+  images.sort((a, b) => (b.naturalWidth * b.naturalHeight) - (a.naturalWidth * a.naturalHeight))
+
+  for (const img of images) {
+    const src = img.currentSrc || img.src
+    if (src && !src.startsWith('data:') && !/logo|placeholder/i.test(src))
       return src
   }
 
   return undefined
-}
-
-export function getOgImage(): string | undefined {
-  return document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content
-    || document.querySelector<HTMLMetaElement>('meta[name="twitter:image"]')?.content
 }
 
 export function parsePathSegments(pathname: string): string[] {
@@ -112,14 +121,117 @@ function isGifUrl(url: string): boolean {
   return /\.gif(?:$|\?)/i.test(url)
 }
 
-/**
- * BunnyCDN needs a site Referer (curl -e anitilky.com). Browser fetch from the page works.
- * Return raw Blob — GIF stays GIF, everything else kept as fetched (or JPEG if mistyped).
- */
+function loadImage(url: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.decoding = 'async'
+    img.crossOrigin = 'anonymous'
+    img.referrerPolicy = 'origin'
+    img.onload = () => resolve(img)
+    img.onerror = () => reject(new Error('img failed'))
+    img.src = url
+  })
+}
+
+async function imageFromBlobOrBuffer(source: Blob | ArrayBuffer): Promise<HTMLImageElement | undefined> {
+  const blob = source instanceof Blob ? source : new Blob([source])
+  const objectUrl = URL.createObjectURL(blob)
+  try {
+    return await loadImage(objectUrl)
+  }
+  catch {
+    return undefined
+  }
+  finally {
+    URL.revokeObjectURL(objectUrl)
+  }
+}
+
+async function toJpegBlob(
+  source: HTMLImageElement | Blob | ArrayBuffer,
+  fallbackUrl?: string,
+): Promise<Blob | undefined> {
+  try {
+    let img: HTMLImageElement | undefined
+
+    if (source instanceof HTMLImageElement) {
+      img = source
+    }
+    else {
+      img = await imageFromBlobOrBuffer(source)
+      if (!img && fallbackUrl)
+        img = await loadImage(fallbackUrl).catch(() => undefined)
+    }
+
+    if (!img?.naturalWidth && fallbackUrl)
+      img = await loadImage(fallbackUrl).catch(() => undefined)
+
+    if (!img?.naturalWidth)
+      return undefined
+
+    const scale = Math.min(1, MAX_IMAGE_EDGE / Math.max(img.naturalWidth, img.naturalHeight))
+    const width = Math.max(1, Math.round(img.naturalWidth * scale))
+    const height = Math.max(1, Math.round(img.naturalHeight * scale))
+    const canvas = document.createElement('canvas')
+    canvas.width = width
+    canvas.height = height
+    const ctx = canvas.getContext('2d')
+    if (!ctx)
+      return undefined
+
+    ctx.fillStyle = '#111'
+    ctx.fillRect(0, 0, width, height)
+    ctx.drawImage(img, 0, 0, width, height)
+
+    return await new Promise(resolve =>
+      canvas.toBlob(b => resolve(b || undefined), 'image/jpeg', 0.9),
+    )
+  }
+  catch {
+    return undefined
+  }
+}
+
+async function ensureLogoBlob(): Promise<Blob | undefined> {
+  if (logoBlob)
+    return logoBlob
+
+  if (!logoPrefetchStarted) {
+    logoPrefetchStarted = true
+    void (async () => {
+      try {
+        const response = await fetch(ActivityAssets.Logo, { mode: 'cors', credentials: 'omit' })
+        if (response.ok) {
+          const blob = await response.blob()
+          if (blob.size > 100) {
+            logoBlob = blob.type.startsWith('image/') ? blob : await toJpegBlob(blob)
+            return
+          }
+        }
+      }
+      catch {
+        // ignore — CDN string still works as fallback
+      }
+
+      try {
+        logoBlob = await toJpegBlob(await loadImage(ActivityAssets.Logo))
+      }
+      catch {
+        // keep ActivityAssets.Logo string
+      }
+    })()
+  }
+
+  return logoBlob
+}
+
+void ensureLogoBlob()
+
+/** curl-style BunnyCDN fetch (needs site referer). GIFs → JPEG. */
 async function curlImageBlob(url: string): Promise<Blob | undefined> {
   try {
     const controller = new AbortController()
-    const timer = window.setTimeout(() => controller.abort(), 5000)
+    const timer = window.setTimeout(() => controller.abort(), 10000)
 
     const response = await fetch(url, {
       method: 'GET',
@@ -135,8 +247,10 @@ async function curlImageBlob(url: string): Promise<Blob | undefined> {
 
     window.clearTimeout(timer)
 
-    if (!response.ok)
-      return undefined
+    if (!response.ok) {
+      const img = await loadImage(url).catch(() => undefined)
+      return img ? toJpegBlob(img) : undefined
+    }
 
     const buffer = await response.arrayBuffer()
     if (buffer.byteLength < 100)
@@ -144,42 +258,62 @@ async function curlImageBlob(url: string): Promise<Blob | undefined> {
 
     const headerType = (response.headers.get('content-type') || '').split(';')[0]!.trim().toLowerCase()
     const wantGif = isGifUrl(url) || headerType === 'image/gif'
-    const type = wantGif
-      ? 'image/gif'
-      : (headerType.startsWith('image/') ? headerType : 'image/jpeg')
 
-    return new Blob([buffer], { type })
+    // GIFs (esp. large ones) fail PreMiD upload → always prefer JPEG
+    if (wantGif) {
+      const jpeg = await toJpegBlob(buffer, url)
+      if (jpeg)
+        return jpeg
+    }
+
+    const type = headerType.startsWith('image/') ? headerType : 'image/jpeg'
+    const blob = new Blob([buffer], { type })
+
+    if (buffer.byteLength > MAX_GIF_BYTES || buffer.byteLength > 1_500_000) {
+      const jpeg = await toJpegBlob(blob, url)
+      if (jpeg)
+        return jpeg
+    }
+
+    return blob
   }
   catch {
-    return undefined
+    const img = await loadImage(url).catch(() => undefined)
+    return img ? toJpegBlob(img) : undefined
   }
 }
 
-function ensureBlobFetch(url: string): void {
-  if (blobCache.has(url) || inflight.has(url))
+function prefetchBlob(url: string): void {
+  if (blobCache.has(url) || inflight.has(url) || failedUrls.has(url))
     return
 
-  const job = curlImageBlob(url).then((blob) => {
+  inflight.add(url)
+  void curlImageBlob(url).then((blob) => {
+    inflight.delete(url)
     if (blob)
       blobCache.set(url, blob)
-    inflight.delete(url)
-    return blob
+    else
+      failedUrls.add(url)
   }).catch(() => {
     inflight.delete(url)
-    return undefined
+    failedUrls.add(url)
   })
+}
 
-  inflight.set(url, job)
+function fallbackLogo(): string | Blob {
+  return logoBlob || ActivityAssets.Logo
 }
 
 /**
- * Non-blocking: return cached Blob immediately, otherwise Logo and prefetch in background.
- * Next UpdateData tick will show the BunnyCDN image / GIF.
+ * Sync — never blocks UpdateData.
+ * Cached BunnyCDN blob, otherwise logo (blob if ready, else CDN URL).
  */
 export function resolvePresenceImage(
   ...candidates: Array<string | undefined>
 ): string | Blob {
-  const urls = [...candidates, getOgImage()]
+  void ensureLogoBlob()
+
+  const urls = candidates
     .map(normalizeUrl)
     .filter((url): url is string => Boolean(url))
 
@@ -190,41 +324,7 @@ export function resolvePresenceImage(
   }
 
   for (const url of urls)
-    ensureBlobFetch(url)
+    prefetchBlob(url)
 
-  return ActivityAssets.Logo
-}
-
-/** Optional short wait used once when we already have an inflight fetch. */
-export async function resolvePresenceImageAsync(
-  ...candidates: Array<string | undefined>
-): Promise<string | Blob> {
-  const urls = [...candidates, getOgImage()]
-    .map(normalizeUrl)
-    .filter((url): url is string => Boolean(url))
-
-  for (const url of urls) {
-    const cached = blobCache.get(url)
-    if (cached)
-      return cached
-  }
-
-  for (const url of urls)
-    ensureBlobFetch(url)
-
-  // Wait briefly for the first candidate only (does not hang presence forever)
-  const first = urls[0]
-  if (first) {
-    const pending = inflight.get(first)
-    if (pending) {
-      const blob = await Promise.race([
-        pending,
-        new Promise<undefined>(resolve => window.setTimeout(() => resolve(undefined), 1200)),
-      ])
-      if (blob)
-        return blob
-    }
-  }
-
-  return ActivityAssets.Logo
+  return fallbackLogo()
 }
