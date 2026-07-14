@@ -93,6 +93,5 @@ presence.on('UpdateData', async () => {
   else {
     presenceData.buttons = [playButton]
   }
-  presenceData.setActivity
   presence.setActivity(presenceData)
 })
