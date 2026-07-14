@@ -10,7 +10,6 @@ import {
   formatEpisodeState,
   getAnimeTitle,
   getPageTitle,
-  getProfileImageFromDom,
   getProfileUsernameFromDom,
   parsePathSegments,
   resolveCoverImage,
@@ -60,34 +59,6 @@ async function getSettings(): Promise<PluginSettings> {
   }
 }
 
-async function applyCover(
-  presenceData: PresenceData,
-  showCover: boolean,
-  title?: string,
-  ...candidates: Array<string | undefined>
-): Promise<void> {
-  if (!showCover) {
-    presenceData.largeImageKey = ActivityAssets.Logo
-    return
-  }
-
-  presenceData.largeImageKey = await resolveCoverImage(title, ...candidates)
-}
-
-async function applyProfileCover(
-  presenceData: PresenceData,
-  showCover: boolean,
-  ...candidates: Array<string | undefined>
-): Promise<void> {
-  if (!showCover) {
-    presenceData.largeImageKey = ActivityAssets.Logo
-    return
-  }
-
-  // Keep animated GIFs for user avatars
-  presenceData.largeImageKey = await resolveProfileImage(...candidates)
-}
-
 function applyButtons(
   presenceData: PresenceData,
   settings: PluginSettings,
@@ -114,8 +85,7 @@ function getProfileTabLabel(tab: string | undefined, localized: PresenceStrings)
 
 function getVideoElement(): HTMLVideoElement | null {
   const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('#video-container video, video.plyr, video'))
-  return videos.find(video => Boolean(video.currentSrc || video.src) || video.readyState > 0)
-    ?? null
+  return videos.find(video => Boolean(video.currentSrc || video.src) || video.readyState > 0) ?? null
 }
 
 let lastCurrentTime = -1
@@ -123,12 +93,8 @@ let lastCurrentTimeAt = 0
 let frozenTicks = 0
 let lastMediaKey = ''
 
-/** Detect pause even when HTMLVideoElement.paused is unreliable (some players). */
 function isVideoPaused(video: HTMLVideoElement): boolean {
-  if (video.ended)
-    return true
-
-  if (video.paused)
+  if (video.ended || video.paused)
     return true
 
   const now = Date.now()
@@ -144,11 +110,7 @@ function isVideoPaused(video: HTMLVideoElement): boolean {
     lastCurrentTimeAt = now
   }
 
-  // ~2 presence ticks without progression => treat as paused
-  if (frozenTicks >= 2)
-    return true
-
-  return false
+  return frozenTicks >= 2
 }
 
 function applyWatchPlayback(
@@ -165,18 +127,13 @@ function applyWatchPlayback(
   const paused = isVideoPaused(video)
   const hasDuration = Number.isFinite(video.duration) && video.duration > 0
 
-  // Always show play/pause on watch page
-  presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
-  presenceData.smallImageText = paused ? strings.pause : strings.play
-
-  if (!settings.showSmallImages) {
-    delete presenceData.smallImageKey
-    delete presenceData.smallImageText
+  if (settings.showSmallImages) {
+    presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
+    presenceData.smallImageText = paused ? strings.pause : strings.play
   }
 
-  if (settings.showTimestamp && !paused && hasDuration) {
+  if (settings.showTimestamp && !paused && hasDuration)
     [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
-  }
 }
 
 presence.on('UpdateData', async () => {
@@ -283,12 +240,8 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = strings.ownProfile
       presenceData.state = userInfo?.username || getProfileTabLabel(tab, strings) || strings.viewPage
-      await applyProfileCover(
-        presenceData,
-        settings.showCover,
-        userInfo?.profileImage,
-        getProfileImageFromDom(),
-      )
+      if (settings.showCover)
+        presenceData.largeImageKey = resolveProfileImage()
 
       applyButtons(presenceData, settings, [
         { label: (strings.viewProfile || 'Profile Git').slice(0, 32), url: `${BASE_URL}/profile` },
@@ -312,12 +265,8 @@ presence.on('UpdateData', async () => {
           presenceData.state = `${presenceData.state} · ${tabLabel}`
       }
 
-      await applyProfileCover(
-        presenceData,
-        settings.showCover,
-        userInfo?.profileImage,
-        getProfileImageFromDom(),
-      )
+      if (settings.showCover)
+        presenceData.largeImageKey = resolveProfileImage()
 
       applyButtons(presenceData, settings, [
         { label: (strings.viewProfile || 'Profile Git').slice(0, 32), url: `${BASE_URL}/u/${username}` },
@@ -338,7 +287,6 @@ presence.on('UpdateData', async () => {
       const animeUrl = `${BASE_URL}/anime/${anime?.slug || anime?._id || animeId}`
       const episodeUrl = `${BASE_URL}/watch/${anime?.slug || anime?._id || animeId}?season=${seasonNumber}&episode=${episodeNumber}`
 
-      // Reset freeze detector when episode changes
       const mediaKey = `${animeId}:${seasonNumber}:${episodeNumber}:${video?.currentSrc || ''}`
       if (mediaKey !== lastMediaKey) {
         lastMediaKey = mediaKey
@@ -351,13 +299,14 @@ presence.on('UpdateData', async () => {
       presenceData.details = title
       presenceData.state = formatEpisodeState(seasonNumber, episodeNumber, episode?.title)
 
-      await applyCover(
-        presenceData,
-        settings.showCover,
-        title,
-        anime?.coverImage,
-        anime?.bannerImage,
-      )
+      if (settings.showCover) {
+        try {
+          presenceData.largeImageKey = await resolveCoverImage(title)
+        }
+        catch {
+          presenceData.largeImageKey = ActivityAssets.Logo
+        }
+      }
 
       applyWatchPlayback(presenceData, settings, video)
 
@@ -377,13 +326,15 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = strings.viewingAnime
       presenceData.state = title
-      await applyCover(
-        presenceData,
-        settings.showCover,
-        title,
-        anime?.coverImage,
-        anime?.bannerImage,
-      )
+
+      if (settings.showCover) {
+        try {
+          presenceData.largeImageKey = await resolveCoverImage(title)
+        }
+        catch {
+          presenceData.largeImageKey = ActivityAssets.Logo
+        }
+      }
 
       applyButtons(presenceData, settings, [
         { label: 'Anime Sayfası', url: animeUrl },

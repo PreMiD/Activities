@@ -8,10 +8,8 @@ export enum ActivityAssets {
 }
 
 const dataCache = new Map<string, { data: unknown, expires: number }>()
-const blobCache = new Map<string, Blob>()
-const pendingBlob = new Map<string, Promise<Blob | undefined>>()
+const coverCache = new Map<string, string>()
 const CACHE_TTL = 60_000
-const FETCH_TIMEOUT_MS = 4000
 
 export async function fetchCached<T>(key: string, fetcher: () => Promise<T | null>): Promise<T | null> {
   const cached = dataCache.get(key)
@@ -39,11 +37,6 @@ export function findEpisode(season: AnimeSeason | undefined, episodeNumber: numb
   return season?.episodes?.find(e => Number(e.episodeNumber) === Number(episodeNumber))
 }
 
-export function getOgImage(): string | undefined {
-  return document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content
-    || document.querySelector<HTMLMetaElement>('meta[name="twitter:image"]')?.content
-}
-
 export function getPageTitle(): string {
   return document.title
     .replace(/\s*\|\s*ANITILKY.*$/i, '')
@@ -68,7 +61,7 @@ export function getProfileUsernameFromDom(): string | undefined {
     || getStoredUsername()
 }
 
-export function getProfileImageFromDom(): string | undefined {
+export function getProfileImageElement(): HTMLImageElement | undefined {
   const selectors = [
     'img[src*="profile-images"]',
     'img[src*="b-cdn.net"][src*="profile"]',
@@ -77,9 +70,26 @@ export function getProfileImageFromDom(): string | undefined {
 
   for (const selector of selectors) {
     const img = document.querySelector<HTMLImageElement>(selector)
-    const src = img?.currentSrc || img?.src
-    if (src && !src.startsWith('data:') && img && img.naturalWidth > 0)
-      return src
+    if (img?.complete && img.naturalWidth > 0)
+      return img
+  }
+
+  return undefined
+}
+
+export function getCoverImageElement(): HTMLImageElement | undefined {
+  const selectors = [
+    'img[src*="cover.jpg"]',
+    'img[src*="cover.png"]',
+    'img[src*="/cover"]',
+    'img[src*="anilist.co"]',
+    '[class*="MuiPaper"] img',
+  ]
+
+  for (const selector of selectors) {
+    const img = document.querySelector<HTMLImageElement>(selector)
+    if (img?.complete && img.naturalWidth > 40)
+      return img
   }
 
   return undefined
@@ -98,137 +108,48 @@ export function formatEpisodeState(
   return episodeTitle ? `${base} — ${episodeTitle}` : base
 }
 
-function normalizeUrl(url?: string | null): string | undefined {
-  if (!url)
+async function fetchAniListCover(title?: string): Promise<string | undefined> {
+  if (!title)
     return undefined
-  try {
-    return new URL(url, document.location.origin).href
-  }
-  catch {
-    return undefined
-  }
-}
 
-function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T | undefined> {
-  return new Promise((resolve) => {
-    const timer = window.setTimeout(() => resolve(undefined), ms)
-    promise
-      .then((value) => {
-        window.clearTimeout(timer)
-        resolve(value)
-      })
-      .catch(() => {
-        window.clearTimeout(timer)
-        resolve(undefined)
-      })
-  })
-}
-
-function loadImage(url: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const img = new Image()
-    img.decoding = 'async'
-    img.referrerPolicy = 'strict-origin-when-cross-origin'
-    img.onload = () => resolve(img)
-    img.onerror = () => reject(new Error('image load failed'))
-    img.src = url
-  })
-}
-
-/** Resize / flatten (incl. GIF) to a Discord-friendly JPEG blob. */
-async function toJpegBlob(source: Blob | HTMLImageElement, maxSize = 512): Promise<Blob | undefined> {
-  try {
-    let img: HTMLImageElement
-    if (source instanceof HTMLImageElement) {
-      img = source
-    }
-    else {
-      const objectUrl = URL.createObjectURL(source)
-      try {
-        img = await loadImage(objectUrl)
-      }
-      finally {
-        URL.revokeObjectURL(objectUrl)
-      }
-    }
-
-    if (!img.naturalWidth || !img.naturalHeight)
-      return undefined
-
-    const scale = Math.min(1, maxSize / Math.max(img.naturalWidth, img.naturalHeight))
-    const width = Math.max(1, Math.round(img.naturalWidth * scale))
-    const height = Math.max(1, Math.round(img.naturalHeight * scale))
-    const canvas = document.createElement('canvas')
-    canvas.width = width
-    canvas.height = height
-    const ctx = canvas.getContext('2d')
-    if (!ctx)
-      return undefined
-
-    ctx.fillStyle = '#000'
-    ctx.fillRect(0, 0, width, height)
-    ctx.drawImage(img, 0, 0, width, height)
-
-    return await new Promise((resolve) => {
-      canvas.toBlob(blob => resolve(blob || undefined), 'image/jpeg', 0.86)
-    })
-  }
-  catch {
-    return undefined
-  }
-}
-
-/**
- * Curl-equivalent: fetch image bytes in-page (site referer).
- * GIFs stay animated when preserveGif=true; otherwise flatten to JPEG for Discord.
- */
-export async function fetchCoverBlob(
-  url: string,
-  options: { preserveGif?: boolean } = {},
-): Promise<Blob | undefined> {
-  const preserveGif = options.preserveGif === true
-    || /\.gif(?:$|\?)/i.test(url)
+  const cached = coverCache.get(`anilist:${title}`)
+  if (cached)
+    return cached
 
   try {
-    const response = await fetch(url, {
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'omit',
-      referrerPolicy: 'strict-origin-when-cross-origin',
+    const controller = new AbortController()
+    const timer = window.setTimeout(() => controller.abort(), 2000)
+    const response = await fetch('https://graphql.anilist.co', {
+      method: 'POST',
+      signal: controller.signal,
       headers: {
-        Accept: 'image/avif,image/webp,image/apng,image/gif,image/*,*/*;q=0.8',
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
+      body: JSON.stringify({
+        query: `query ($search: String) {
+          Media(search: $search, type: ANIME) {
+            coverImage { extraLarge large }
+          }
+        }`,
+        variables: { search: title },
+      }),
     })
+    window.clearTimeout(timer)
 
-    if (response.ok) {
-      const blob = await response.blob()
-      if (blob.size > 100) {
-        const isGif = blob.type === 'image/gif'
-          || (preserveGif && /\.gif(?:$|\?)/i.test(url))
+    if (!response.ok)
+      return undefined
 
-        if (isGif) {
-          return blob.type === 'image/gif'
-            ? blob
-            : new Blob([await blob.arrayBuffer()], { type: 'image/gif' })
-        }
-
-        const jpeg = await toJpegBlob(blob)
-        if (jpeg)
-          return jpeg
-      }
+    const json = await response.json() as {
+      data?: { Media?: { coverImage?: { extraLarge?: string, large?: string } } }
     }
-  }
-  catch {
-    // fall through
-  }
+    const cover = json.data?.Media?.coverImage?.extraLarge
+      || json.data?.Media?.coverImage?.large
 
-  // Animated GIF cannot be rebuilt from <img> draw — only static fallback
-  if (preserveGif)
-    return undefined
+    if (cover)
+      coverCache.set(`anilist:${title}`, cover)
 
-  try {
-    const img = await loadImage(url)
-    return await toJpegBlob(img)
+    return cover
   }
   catch {
     return undefined
@@ -236,51 +157,26 @@ export async function fetchCoverBlob(
 }
 
 /**
- * Always returns a Blob (or logo URL). Uses cache so UpdateData is not blocked twice.
+ * Safe covers only:
+ * - Already-loaded DOM <img> (PreMiD uploads locally)
+ * - AniList public CDN URL (Discord can fetch)
+ * - Logo fallback
+ * Never use BunnyCDN URLs as strings (Discord 403) and never block on blobs.
  */
 export async function resolveCoverImage(
-  _title?: string,
-  ...candidates: Array<string | undefined>
-): Promise<string | Blob> {
-  return resolveImageBlob(candidates, false)
-}
+  title?: string,
+): Promise<string | HTMLImageElement> {
+  const fromDom = getCoverImageElement()
+  if (fromDom)
+    return fromDom
 
-/** Profile avatars: keep animated GIFs intact. */
-export async function resolveProfileImage(
-  ...candidates: Array<string | undefined>
-): Promise<string | Blob> {
-  return resolveImageBlob(candidates, true)
-}
-
-async function resolveImageBlob(
-  candidates: Array<string | undefined>,
-  preserveGif: boolean,
-): Promise<string | Blob> {
-  const cachePrefix = preserveGif ? 'gif:' : 'still:'
-  const urls = [...candidates, preserveGif ? undefined : getOgImage()]
-    .map(normalizeUrl)
-    .filter((url): url is string => Boolean(url))
-
-  for (const url of urls) {
-    const cacheKey = cachePrefix + url
-    const cached = blobCache.get(cacheKey)
-    if (cached)
-      return cached
-
-    let pending = pendingBlob.get(cacheKey)
-    if (!pending) {
-      pending = fetchCoverBlob(url, { preserveGif }).then((blob) => {
-        if (blob)
-          blobCache.set(cacheKey, blob)
-        return blob
-      })
-      pendingBlob.set(cacheKey, pending)
-    }
-
-    const blob = await withTimeout(pending, FETCH_TIMEOUT_MS)
-    if (blob)
-      return blob
-  }
+  const aniList = await fetchAniListCover(title)
+  if (aniList)
+    return aniList
 
   return ActivityAssets.Logo
+}
+
+export function resolveProfileImage(): string | HTMLImageElement {
+  return getProfileImageElement() || ActivityAssets.Logo
 }
