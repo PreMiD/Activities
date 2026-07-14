@@ -1,0 +1,23 @@
+{
+  "apiVersion": 1,
+  "author": {
+    "name": "error.4.04",
+    "id": "692495122025152583"
+  },
+  "service": "404Anime",
+  "description": {
+    "en": "Anime streaming watch activity for 404Anime."
+  },
+  "url": "404anime.ca",
+  "regExp": "^https?[:][/][/]404anime[.]ca[/]",
+  "version": "1.0.0",
+  "logo": "https://404anime.ca/logo.png",
+  "thumbnail": "https://404anime.ca/og-image.png",
+  "color": "#facc15",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "video",
+    "streaming"
+  ]
+}
