@@ -10,6 +10,8 @@ export enum ActivityAssets {
 
 const cache = new Map<string, { data: unknown, expires: number }>()
 const CACHE_TTL = 60_000
+const imageElementCache = new Map<string, HTMLImageElement>()
+const aniListCoverCache = new Map<string, string | null>()
 
 export async function fetchCached<T>(key: string, fetcher: () => Promise<T | null>): Promise<T | null> {
   const cached = cache.get(key)
@@ -46,8 +48,152 @@ export function getPageTitle(): string {
   return document.title.replace(/\s*\|\s*ANITILKY.*$/i, '').trim()
 }
 
-export function resolveCoverImage(preferred?: string, fallback?: string): string {
-  return preferred || fallback || getOgImage() || ActivityAssets.Logo
+function normalizeUrl(url?: string | null): string | undefined {
+  if (!url)
+    return undefined
+  try {
+    return new URL(url, document.location.origin).href
+  }
+  catch {
+    return undefined
+  }
+}
+
+function isUsableImage(img: HTMLImageElement): boolean {
+  return Boolean(img.complete && img.naturalWidth > 0 && img.naturalHeight > 0)
+}
+
+function matchesCoverUrl(src: string, candidates: string[]): boolean {
+  return candidates.some(candidate => candidate && (src === candidate || src.includes(candidate) || candidate.includes(src)))
+}
+
+/**
+ * BunnyCDN blocks Discord/PreMiD remote fetches (403). Prefer an already-loaded
+ * DOM image so PreMiD can upload it as a blob instead of re-fetching the URL.
+ */
+export function getCoverImageElement(...candidates: Array<string | undefined>): HTMLImageElement | undefined {
+  const normalized = candidates.map(normalizeUrl).filter((url): url is string => Boolean(url))
+  const urls = [...normalized, normalizeUrl(getOgImage())].filter((url): url is string => Boolean(url))
+
+  for (const url of urls) {
+    const cached = imageElementCache.get(url)
+    if (cached && isUsableImage(cached))
+      return cached
+  }
+
+  const selectors = [
+    'img[src*="cover"]',
+    'img[src*="banner"]',
+    'img[src*="b-cdn.net"]',
+    'img[src*="anilist"]',
+    'main img',
+    '[class*="MuiPaper"] img',
+    'img[alt]',
+  ]
+
+  for (const selector of selectors) {
+    const images = document.querySelectorAll<HTMLImageElement>(selector)
+    for (const img of images) {
+      const src = normalizeUrl(img.currentSrc || img.src)
+      if (!src || !isUsableImage(img))
+        continue
+      if (urls.length === 0 || matchesCoverUrl(src, urls) || /cover|banner|poster|anilist|b-cdn/i.test(src)) {
+        imageElementCache.set(src, img)
+        return img
+      }
+    }
+  }
+
+  for (const url of urls) {
+    let img = imageElementCache.get(url)
+    if (!img) {
+      img = new Image()
+      img.decoding = 'async'
+      img.referrerPolicy = 'strict-origin-when-cross-origin'
+      img.src = url
+      imageElementCache.set(url, img)
+    }
+    if (isUsableImage(img))
+      return img
+  }
+
+  return undefined
+}
+
+/**
+ * Public AniList CDN covers work with Discord; BunnyCDN covers usually do not.
+ */
+export async function fetchAniListCover(title?: string): Promise<string | undefined> {
+  if (!title)
+    return undefined
+
+  const key = title.toLowerCase()
+  if (aniListCoverCache.has(key))
+    return aniListCoverCache.get(key) || undefined
+
+  try {
+    const response = await fetch('https://graphql.anilist.co', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query: `
+          query ($search: String) {
+            Media(search: $search, type: ANIME) {
+              coverImage {
+                extraLarge
+                large
+              }
+            }
+          }
+        `,
+        variables: { search: title },
+      }),
+    })
+
+    if (!response.ok) {
+      aniListCoverCache.set(key, null)
+      return undefined
+    }
+
+    const json = await response.json() as {
+      data?: {
+        Media?: {
+          coverImage?: {
+            extraLarge?: string
+            large?: string
+          }
+        }
+      }
+    }
+
+    const cover = json.data?.Media?.coverImage?.extraLarge || json.data?.Media?.coverImage?.large || null
+    aniListCoverCache.set(key, cover)
+    return cover || undefined
+  }
+  catch {
+    aniListCoverCache.set(key, null)
+    return undefined
+  }
+}
+
+export async function resolveCoverImage(
+  preferred?: string,
+  fallback?: string,
+  title?: string,
+): Promise<string | HTMLImageElement> {
+  const element = getCoverImageElement(preferred, fallback)
+  if (element)
+    return element
+
+  const aniListCover = await fetchAniListCover(title)
+  if (aniListCover)
+    return aniListCover
+
+  // Avoid sending BunnyCDN URLs directly — Discord gets 403.
+  return ActivityAssets.Logo
 }
 
 export function getStoredUsername(): string | undefined {

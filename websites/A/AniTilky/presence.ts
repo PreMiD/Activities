@@ -58,10 +58,19 @@ async function getSettings(): Promise<PluginSettings> {
   }
 }
 
-function applyCover(presenceData: PresenceData, showCover: boolean, image?: string): void {
-  presenceData.largeImageKey = showCover
-    ? resolveCoverImage(image)
-    : ActivityAssets.Logo
+async function applyCover(
+  presenceData: PresenceData,
+  showCover: boolean,
+  preferred?: string,
+  fallback?: string,
+  title?: string,
+): Promise<void> {
+  if (!showCover) {
+    presenceData.largeImageKey = ActivityAssets.Logo
+    return
+  }
+
+  presenceData.largeImageKey = await resolveCoverImage(preferred, fallback, title)
 }
 
 function applyButtons(
@@ -92,7 +101,6 @@ function setBrowsingActivity(presenceData: PresenceData, settings: PluginSetting
   presenceData.startTimestamp = browsingTimestamp
   presenceData.smallImageKey = Assets.Reading
   presenceData.smallImageText = strings.browse
-  applyCover(presenceData, false)
   delete presenceData.state
 
   if (!settings.showBrowsingStatus)
@@ -216,7 +224,7 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = strings.ownProfile
       presenceData.state = userInfo?.username || getProfileTabLabel(tab, strings) || strings.viewPage
-      applyCover(presenceData, settings.showCover, userInfo?.profileImage)
+      await applyCover(presenceData, settings.showCover, userInfo?.profileImage)
 
       if (settings.showSmallImages && userInfo?.profileImage) {
         presenceData.smallImageKey = userInfo.profileImage
@@ -245,7 +253,7 @@ presence.on('UpdateData', async () => {
           presenceData.state = `${presenceData.state} · ${tabLabel}`
       }
 
-      applyCover(presenceData, settings.showCover, userInfo?.profileImage)
+      await applyCover(presenceData, settings.showCover, userInfo?.profileImage)
 
       if (settings.showSmallImages && userInfo?.profileImage) {
         presenceData.smallImageKey = userInfo.profileImage
@@ -278,7 +286,13 @@ presence.on('UpdateData', async () => {
         episode?.title,
       )
 
-      applyCover(presenceData, settings.showCover, anime?.bannerImage || anime?.coverImage)
+      await applyCover(
+        presenceData,
+        settings.showCover,
+        anime?.coverImage,
+        anime?.bannerImage,
+        title,
+      )
 
       if (anime)
         presenceData.largeImageText = [anime.type, anime.status].filter(Boolean).join(' · ')
@@ -309,7 +323,7 @@ presence.on('UpdateData', async () => {
         },
       ])
 
-      return presence.setActivity(presenceData, Boolean(video && !video.paused))
+      return presence.setActivity(presenceData)
     }
 
     case /^\/anime\/[^/]+$/.test(pathname): {
@@ -319,7 +333,13 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = strings.viewingAnime
       presenceData.state = title
-      applyCover(presenceData, settings.showCover, anime?.coverImage || anime?.bannerImage)
+      await applyCover(
+        presenceData,
+        settings.showCover,
+        anime?.coverImage,
+        anime?.bannerImage,
+        title,
+      )
 
       if (anime) {
         const genrePreview = anime.genres?.slice(0, 2).join(', ')
