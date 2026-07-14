@@ -4,7 +4,7 @@ export const BASE_URL = 'https://anitilky.com'
 export const API_URL = 'https://api.anitilky.com/api'
 
 export enum ActivityAssets {
-  Logo = 'https://raw.githubusercontent.com/hyqanxd/Presences/pr-screenshots/anitilky-v2/.pr-screenshots-anitilky/logo-512.png',
+  Logo = 'https://i.imgur.com/VKFPRHd.png',
 }
 
 /** GIFs above this are flattened to JPEG — PreMiD silently drops multi‑MB GIFs. */
