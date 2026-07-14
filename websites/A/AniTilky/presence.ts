@@ -67,10 +67,10 @@ function applyCover(presenceData: PresenceData, showCover: boolean, image?: stri
 function applyButtons(
   presenceData: PresenceData,
   settings: PluginSettings,
-  buttons?: PresenceButton[],
+  buttons?: ButtonData[],
 ): void {
   if (settings.showButtons && !settings.privacy && buttons?.length)
-    presenceData.buttons = buttons.slice(0, 2)
+    presenceData.buttons = buttons.slice(0, 2) as [ButtonData, ButtonData?]
 }
 
 function getProfileTabLabel(tab: string | undefined, localized: PresenceStrings): string | undefined {
@@ -114,7 +114,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-  }
+  } as PresenceData
 
   if (settings.privacy) {
     const video = getVideoElement()
@@ -239,8 +239,11 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = strings.viewingProfile
       presenceData.state = userInfo?.username || username
-      if (tab)
-        presenceData.largeImageText = getProfileTabLabel(tab, strings)
+      if (tab) {
+        const tabLabel = getProfileTabLabel(tab, strings)
+        if (tabLabel)
+          presenceData.state = `${presenceData.state} · ${tabLabel}`
+      }
 
       applyCover(presenceData, settings.showCover, userInfo?.profileImage)
 

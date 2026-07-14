@@ -1,5 +1,3 @@
-import type { Presence } from 'premid'
-
 export interface PresenceStrings {
   play: string
   pause: string

@@ -5,7 +5,7 @@ export const API_URL = 'https://api.anitilky.com/api'
 
 export enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AniTilky/assets/logo.png',
-  Thumbnail = 'https://cdn.rcd.gg/PreMiD/websites/A/AniTilky/assets/thumbnail.png',
+  Thumbnail = 'https://cdn.rcd.gg/PreMiD/websites/A/AniTilky/assets/logo.png',
 }
 
 const cache = new Map<string, { data: unknown, expires: number }>()
