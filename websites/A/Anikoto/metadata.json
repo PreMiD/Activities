@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "467289851012841474",
+    "name": "dovjay"
+  },
+  "service": "Anikoto",
+  "description": {
+    "en": "AniKoto is a free anime streaming destination where fans can watch high-quality anime series and movies with English subtitles or dubbed audio. With a constantly growing collection, discovering your favorite anime takes just a moment."
+  },
+  "url": "anikototv.to",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anikototv[.]to[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/FYh2IFE.png",
+  "thumbnail": "https://i.imgur.com/WeU62dg.png",
+  "color": "#26A3D6",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "video",
+    "iframe"
+  ]
+}
