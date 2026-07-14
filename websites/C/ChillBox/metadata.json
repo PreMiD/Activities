@@ -13,7 +13,7 @@
   "url": "chillbox.cc",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*chillbox[.]cc[/]",
   "version": "1.0.0",
-  "logo": "https://chillbox.cc/apple-touch-icon.png",
+  "logo": "https://chillbox.cc/premid/logo-512.png",
   "thumbnail": "https://chillbox.cc/og-image.png",
   "color": "#facc15",
   "category": "games",

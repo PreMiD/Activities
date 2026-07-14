@@ -1,5 +1,5 @@
 enum ActivityAssets {
-  Logo = 'https://chillbox.cc/apple-touch-icon.png',
+  Logo = 'https://chillbox.cc/premid/logo-512.png',
 }
 
 const presence = new Presence({
@@ -75,20 +75,24 @@ presence.on('UpdateData', async () => {
     presenceData.state = `${cb.players}/${cb.maxPlayers}`
   if (cb.matchStartTs)
     presenceData.startTimestamp = Math.floor(cb.matchStartTs / 1000)
-  const buttons: [ButtonData, ...ButtonData[]] = [
-    {
-      label: s.play,
-      url: cb.gameId ? `https://chillbox.cc/g/${cb.gameId}` : 'https://chillbox.cc/',
-    },
-  ]
+  const playButton: ButtonData = {
+    label: s.play,
+    url: cb.gameId ? `https://chillbox.cc/g/${cb.gameId}` : 'https://chillbox.cc/',
+  }
   // Watch button ONLY when the user themselves is on /watch: since they are watching
   // via this link, the room is watchable; we never expose other people's rooms.
   if (cb.page === 'watch' && cb.gameId && cb.roomId) {
-    buttons.push({
-      label: s.watchBtn,
-      url: `https://chillbox.cc/g/${cb.gameId}/watch/${cb.roomId}`,
-    })
+    presenceData.buttons = [
+      playButton,
+      {
+        label: s.watchBtn,
+        url: `https://chillbox.cc/g/${cb.gameId}/watch/${cb.roomId}`,
+      },
+    ]
   }
-  presenceData.buttons = buttons
+  else {
+    presenceData.buttons = [playButton]
+  }
+  presenceData.setActivity
   presence.setActivity(presenceData)
 })
