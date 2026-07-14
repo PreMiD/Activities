@@ -14,6 +14,7 @@ import {
   getProfileUsernameFromDom,
   parsePathSegments,
   resolveCoverImage,
+  resolveProfileImage,
 } from './functions/helpers.js'
 import { getStrings, PROFILE_TABS, type PresenceStrings } from './functions/strings.js'
 
@@ -71,6 +72,20 @@ async function applyCover(
   }
 
   presenceData.largeImageKey = await resolveCoverImage(title, ...candidates)
+}
+
+async function applyProfileCover(
+  presenceData: PresenceData,
+  showCover: boolean,
+  ...candidates: Array<string | undefined>
+): Promise<void> {
+  if (!showCover) {
+    presenceData.largeImageKey = ActivityAssets.Logo
+    return
+  }
+
+  // Keep animated GIFs for user avatars
+  presenceData.largeImageKey = await resolveProfileImage(...candidates)
 }
 
 function applyButtons(
@@ -268,10 +283,9 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = strings.ownProfile
       presenceData.state = userInfo?.username || getProfileTabLabel(tab, strings) || strings.viewPage
-      await applyCover(
+      await applyProfileCover(
         presenceData,
         settings.showCover,
-        userInfo?.username,
         userInfo?.profileImage,
         getProfileImageFromDom(),
       )
@@ -298,10 +312,9 @@ presence.on('UpdateData', async () => {
           presenceData.state = `${presenceData.state} · ${tabLabel}`
       }
 
-      await applyCover(
+      await applyProfileCover(
         presenceData,
         settings.showCover,
-        userInfo?.username,
         userInfo?.profileImage,
         getProfileImageFromDom(),
       )

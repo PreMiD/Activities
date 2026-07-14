@@ -179,10 +179,16 @@ async function toJpegBlob(source: Blob | HTMLImageElement, maxSize = 512): Promi
 }
 
 /**
- * Curl-equivalent: fetch image bytes in-page (site referer), return JPEG Blob.
- * Discord cannot fetch BunnyCDN URLs directly (403).
+ * Curl-equivalent: fetch image bytes in-page (site referer).
+ * GIFs stay animated when preserveGif=true; otherwise flatten to JPEG for Discord.
  */
-export async function fetchCoverBlob(url: string): Promise<Blob | undefined> {
+export async function fetchCoverBlob(
+  url: string,
+  options: { preserveGif?: boolean } = {},
+): Promise<Blob | undefined> {
+  const preserveGif = options.preserveGif === true
+    || /\.gif(?:$|\?)/i.test(url)
+
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -190,13 +196,22 @@ export async function fetchCoverBlob(url: string): Promise<Blob | undefined> {
       credentials: 'omit',
       referrerPolicy: 'strict-origin-when-cross-origin',
       headers: {
-        Accept: 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+        Accept: 'image/avif,image/webp,image/apng,image/gif,image/*,*/*;q=0.8',
       },
     })
 
     if (response.ok) {
       const blob = await response.blob()
       if (blob.size > 100) {
+        const isGif = blob.type === 'image/gif'
+          || (preserveGif && /\.gif(?:$|\?)/i.test(url))
+
+        if (isGif) {
+          return blob.type === 'image/gif'
+            ? blob
+            : new Blob([await blob.arrayBuffer()], { type: 'image/gif' })
+        }
+
         const jpeg = await toJpegBlob(blob)
         if (jpeg)
           return jpeg
@@ -204,8 +219,12 @@ export async function fetchCoverBlob(url: string): Promise<Blob | undefined> {
     }
   }
   catch {
-    // fall through to <img> path
+    // fall through
   }
+
+  // Animated GIF cannot be rebuilt from <img> draw — only static fallback
+  if (preserveGif)
+    return undefined
 
   try {
     const img = await loadImage(url)
@@ -223,23 +242,39 @@ export async function resolveCoverImage(
   _title?: string,
   ...candidates: Array<string | undefined>
 ): Promise<string | Blob> {
-  const urls = [...candidates, getOgImage()]
+  return resolveImageBlob(candidates, false)
+}
+
+/** Profile avatars: keep animated GIFs intact. */
+export async function resolveProfileImage(
+  ...candidates: Array<string | undefined>
+): Promise<string | Blob> {
+  return resolveImageBlob(candidates, true)
+}
+
+async function resolveImageBlob(
+  candidates: Array<string | undefined>,
+  preserveGif: boolean,
+): Promise<string | Blob> {
+  const cachePrefix = preserveGif ? 'gif:' : 'still:'
+  const urls = [...candidates, preserveGif ? undefined : getOgImage()]
     .map(normalizeUrl)
     .filter((url): url is string => Boolean(url))
 
   for (const url of urls) {
-    const cached = blobCache.get(url)
+    const cacheKey = cachePrefix + url
+    const cached = blobCache.get(cacheKey)
     if (cached)
       return cached
 
-    let pending = pendingBlob.get(url)
+    let pending = pendingBlob.get(cacheKey)
     if (!pending) {
-      pending = fetchCoverBlob(url).then((blob) => {
+      pending = fetchCoverBlob(url, { preserveGif }).then((blob) => {
         if (blob)
-          blobCache.set(url, blob)
+          blobCache.set(cacheKey, blob)
         return blob
       })
-      pendingBlob.set(url, pending)
+      pendingBlob.set(cacheKey, pending)
     }
 
     const blob = await withTimeout(pending, FETCH_TIMEOUT_MS)
