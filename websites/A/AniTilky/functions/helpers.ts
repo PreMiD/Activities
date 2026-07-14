@@ -8,7 +8,8 @@ export enum ActivityAssets {
 }
 
 const dataCache = new Map<string, { data: unknown, expires: number }>()
-const coverCache = new Map<string, string>()
+const blobCache = new Map<string, Blob>()
+const inflight = new Map<string, Promise<Blob | undefined>>()
 const CACHE_TTL = 60_000
 
 export async function fetchCached<T>(key: string, fetcher: () => Promise<T | null>): Promise<T | null> {
@@ -61,7 +62,7 @@ export function getProfileUsernameFromDom(): string | undefined {
     || getStoredUsername()
 }
 
-export function getProfileImageElement(): HTMLImageElement | undefined {
+export function getProfileImageUrl(): string | undefined {
   const selectors = [
     'img[src*="profile-images"]',
     'img[src*="b-cdn.net"][src*="profile"]',
@@ -70,29 +71,17 @@ export function getProfileImageElement(): HTMLImageElement | undefined {
 
   for (const selector of selectors) {
     const img = document.querySelector<HTMLImageElement>(selector)
-    if (img?.complete && img.naturalWidth > 0)
-      return img
+    const src = img?.currentSrc || img?.src
+    if (src && !src.startsWith('data:'))
+      return src
   }
 
   return undefined
 }
 
-export function getCoverImageElement(): HTMLImageElement | undefined {
-  const selectors = [
-    'img[src*="cover.jpg"]',
-    'img[src*="cover.png"]',
-    'img[src*="/cover"]',
-    'img[src*="anilist.co"]',
-    '[class*="MuiPaper"] img',
-  ]
-
-  for (const selector of selectors) {
-    const img = document.querySelector<HTMLImageElement>(selector)
-    if (img?.complete && img.naturalWidth > 40)
-      return img
-  }
-
-  return undefined
+export function getOgImage(): string | undefined {
+  return document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content
+    || document.querySelector<HTMLMetaElement>('meta[name="twitter:image"]')?.content
 }
 
 export function parsePathSegments(pathname: string): string[] {
@@ -108,75 +97,134 @@ export function formatEpisodeState(
   return episodeTitle ? `${base} — ${episodeTitle}` : base
 }
 
-async function fetchAniListCover(title?: string): Promise<string | undefined> {
-  if (!title)
+function normalizeUrl(url?: string | null): string | undefined {
+  if (!url)
     return undefined
-
-  const cached = coverCache.get(`anilist:${title}`)
-  if (cached)
-    return cached
-
   try {
-    const controller = new AbortController()
-    const timer = window.setTimeout(() => controller.abort(), 2000)
-    const response = await fetch('https://graphql.anilist.co', {
-      method: 'POST',
-      signal: controller.signal,
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        query: `query ($search: String) {
-          Media(search: $search, type: ANIME) {
-            coverImage { extraLarge large }
-          }
-        }`,
-        variables: { search: title },
-      }),
-    })
-    window.clearTimeout(timer)
-
-    if (!response.ok)
-      return undefined
-
-    const json = await response.json() as {
-      data?: { Media?: { coverImage?: { extraLarge?: string, large?: string } } }
-    }
-    const cover = json.data?.Media?.coverImage?.extraLarge
-      || json.data?.Media?.coverImage?.large
-
-    if (cover)
-      coverCache.set(`anilist:${title}`, cover)
-
-    return cover
+    return new URL(url, document.location.origin).href
   }
   catch {
     return undefined
   }
 }
 
-/**
- * Safe covers only:
- * - Already-loaded DOM <img> (PreMiD uploads locally)
- * - AniList public CDN URL (Discord can fetch)
- * - Logo fallback
- * Never use BunnyCDN URLs as strings (Discord 403) and never block on blobs.
- */
-export async function resolveCoverImage(
-  title?: string,
-): Promise<string | HTMLImageElement> {
-  const fromDom = getCoverImageElement()
-  if (fromDom)
-    return fromDom
+function isGifUrl(url: string): boolean {
+  return /\.gif(?:$|\?)/i.test(url)
+}
 
-  const aniList = await fetchAniListCover(title)
-  if (aniList)
-    return aniList
+/**
+ * BunnyCDN needs a site Referer (curl -e anitilky.com). Browser fetch from the page works.
+ * Return raw Blob — GIF stays GIF, everything else kept as fetched (or JPEG if mistyped).
+ */
+async function curlImageBlob(url: string): Promise<Blob | undefined> {
+  try {
+    const controller = new AbortController()
+    const timer = window.setTimeout(() => controller.abort(), 5000)
+
+    const response = await fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'omit',
+      referrer: `${BASE_URL}/`,
+      referrerPolicy: 'origin',
+      signal: controller.signal,
+      headers: {
+        Accept: 'image/gif,image/webp,image/avif,image/apng,image/*,*/*;q=0.8',
+      },
+    })
+
+    window.clearTimeout(timer)
+
+    if (!response.ok)
+      return undefined
+
+    const buffer = await response.arrayBuffer()
+    if (buffer.byteLength < 100)
+      return undefined
+
+    const headerType = (response.headers.get('content-type') || '').split(';')[0]!.trim().toLowerCase()
+    const wantGif = isGifUrl(url) || headerType === 'image/gif'
+    const type = wantGif
+      ? 'image/gif'
+      : (headerType.startsWith('image/') ? headerType : 'image/jpeg')
+
+    return new Blob([buffer], { type })
+  }
+  catch {
+    return undefined
+  }
+}
+
+function ensureBlobFetch(url: string): void {
+  if (blobCache.has(url) || inflight.has(url))
+    return
+
+  const job = curlImageBlob(url).then((blob) => {
+    if (blob)
+      blobCache.set(url, blob)
+    inflight.delete(url)
+    return blob
+  }).catch(() => {
+    inflight.delete(url)
+    return undefined
+  })
+
+  inflight.set(url, job)
+}
+
+/**
+ * Non-blocking: return cached Blob immediately, otherwise Logo and prefetch in background.
+ * Next UpdateData tick will show the BunnyCDN image / GIF.
+ */
+export function resolvePresenceImage(
+  ...candidates: Array<string | undefined>
+): string | Blob {
+  const urls = [...candidates, getOgImage()]
+    .map(normalizeUrl)
+    .filter((url): url is string => Boolean(url))
+
+  for (const url of urls) {
+    const cached = blobCache.get(url)
+    if (cached)
+      return cached
+  }
+
+  for (const url of urls)
+    ensureBlobFetch(url)
 
   return ActivityAssets.Logo
 }
 
-export function resolveProfileImage(): string | HTMLImageElement {
-  return getProfileImageElement() || ActivityAssets.Logo
+/** Optional short wait used once when we already have an inflight fetch. */
+export async function resolvePresenceImageAsync(
+  ...candidates: Array<string | undefined>
+): Promise<string | Blob> {
+  const urls = [...candidates, getOgImage()]
+    .map(normalizeUrl)
+    .filter((url): url is string => Boolean(url))
+
+  for (const url of urls) {
+    const cached = blobCache.get(url)
+    if (cached)
+      return cached
+  }
+
+  for (const url of urls)
+    ensureBlobFetch(url)
+
+  // Wait briefly for the first candidate only (does not hang presence forever)
+  const first = urls[0]
+  if (first) {
+    const pending = inflight.get(first)
+    if (pending) {
+      const blob = await Promise.race([
+        pending,
+        new Promise<undefined>(resolve => window.setTimeout(() => resolve(undefined), 1200)),
+      ])
+      if (blob)
+        return blob
+    }
+  }
+
+  return ActivityAssets.Logo
 }

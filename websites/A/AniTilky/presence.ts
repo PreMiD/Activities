@@ -10,10 +10,11 @@ import {
   formatEpisodeState,
   getAnimeTitle,
   getPageTitle,
+  getProfileImageUrl,
   getProfileUsernameFromDom,
   parsePathSegments,
-  resolveCoverImage,
-  resolveProfileImage,
+  resolvePresenceImage,
+  resolvePresenceImageAsync,
 } from './functions/helpers.js'
 import { getStrings, PROFILE_TABS, type PresenceStrings } from './functions/strings.js'
 
@@ -240,8 +241,12 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = strings.ownProfile
       presenceData.state = userInfo?.username || getProfileTabLabel(tab, strings) || strings.viewPage
-      if (settings.showCover)
-        presenceData.largeImageKey = resolveProfileImage()
+      if (settings.showCover) {
+        presenceData.largeImageKey = await resolvePresenceImageAsync(
+          userInfo?.profileImage,
+          getProfileImageUrl(),
+        )
+      }
 
       applyButtons(presenceData, settings, [
         { label: (strings.viewProfile || 'Profile Git').slice(0, 32), url: `${BASE_URL}/profile` },
@@ -265,8 +270,12 @@ presence.on('UpdateData', async () => {
           presenceData.state = `${presenceData.state} · ${tabLabel}`
       }
 
-      if (settings.showCover)
-        presenceData.largeImageKey = resolveProfileImage()
+      if (settings.showCover) {
+        presenceData.largeImageKey = await resolvePresenceImageAsync(
+          userInfo?.profileImage,
+          getProfileImageUrl(),
+        )
+      }
 
       applyButtons(presenceData, settings, [
         { label: (strings.viewProfile || 'Profile Git').slice(0, 32), url: `${BASE_URL}/u/${username}` },
@@ -300,12 +309,10 @@ presence.on('UpdateData', async () => {
       presenceData.state = formatEpisodeState(seasonNumber, episodeNumber, episode?.title)
 
       if (settings.showCover) {
-        try {
-          presenceData.largeImageKey = await resolveCoverImage(title)
-        }
-        catch {
-          presenceData.largeImageKey = ActivityAssets.Logo
-        }
+        presenceData.largeImageKey = await resolvePresenceImageAsync(
+          anime?.coverImage,
+          anime?.bannerImage,
+        )
       }
 
       applyWatchPlayback(presenceData, settings, video)
@@ -328,12 +335,10 @@ presence.on('UpdateData', async () => {
       presenceData.state = title
 
       if (settings.showCover) {
-        try {
-          presenceData.largeImageKey = await resolveCoverImage(title)
-        }
-        catch {
-          presenceData.largeImageKey = ActivityAssets.Logo
-        }
+        presenceData.largeImageKey = await resolvePresenceImageAsync(
+          anime?.coverImage,
+          anime?.bannerImage,
+        )
       }
 
       applyButtons(presenceData, settings, [
