@@ -63,14 +63,13 @@ async function applyCover(
   showCover: boolean,
   preferred?: string,
   fallback?: string,
-  title?: string,
 ): Promise<void> {
   if (!showCover) {
     presenceData.largeImageKey = ActivityAssets.Logo
     return
   }
 
-  presenceData.largeImageKey = await resolveCoverImage(preferred, fallback, title)
+  presenceData.largeImageKey = await resolveCoverImage(preferred, fallback)
 }
 
 function applyButtons(
@@ -291,7 +290,6 @@ presence.on('UpdateData', async () => {
         settings.showCover,
         anime?.coverImage,
         anime?.bannerImage,
-        title,
       )
 
       if (anime)
@@ -338,7 +336,6 @@ presence.on('UpdateData', async () => {
         settings.showCover,
         anime?.coverImage,
         anime?.bannerImage,
-        title,
       )
 
       if (anime) {
