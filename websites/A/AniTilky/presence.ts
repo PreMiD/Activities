@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 import type { PluginSettings } from './types.js'
 import { fetchAnime } from './functions/fetchAnime.js'
 import { fetchUser } from './functions/fetchUser.js'
@@ -62,20 +62,32 @@ async function getSettings(): Promise<PluginSettings> {
 async function applyCover(
   presenceData: PresenceData,
   showCover: boolean,
+  title?: string,
   ...candidates: Array<string | undefined>
 ): Promise<void> {
-  presenceData.largeImageKey = showCover
-    ? await resolveCoverImage(...candidates)
-    : ActivityAssets.Logo
+  if (!showCover) {
+    presenceData.largeImageKey = ActivityAssets.Logo
+    return
+  }
+
+  presenceData.largeImageKey = await resolveCoverImage(title, ...candidates)
 }
 
 function applyButtons(
   presenceData: PresenceData,
   settings: PluginSettings,
-  buttons?: ButtonData[],
+  buttons: ButtonData[],
 ): void {
-  if (settings.showButtons && !settings.privacy && buttons?.length)
-    presenceData.buttons = buttons.slice(0, 2) as [ButtonData, ButtonData?]
+  if (!settings.showButtons || settings.privacy || !buttons.length)
+    return
+
+  const valid = buttons
+    .filter(button => typeof button.label === 'string' && button.label.length > 0 && button.label.length <= 32)
+    .filter(button => typeof button.url === 'string' && /^https?:\/\//.test(button.url))
+    .slice(0, 2)
+
+  if (valid.length)
+    presenceData.buttons = valid as [ButtonData, ButtonData?]
 }
 
 function getProfileTabLabel(tab: string | undefined, localized: PresenceStrings): string | undefined {
@@ -86,9 +98,39 @@ function getProfileTabLabel(tab: string | undefined, localized: PresenceStrings)
 }
 
 function getVideoElement(): HTMLVideoElement | null {
-  return document.querySelector<HTMLVideoElement>('#video-container video')
+  const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('video'))
+  return videos.find(video => video.readyState > 0 || !Number.isNaN(video.duration) || video.currentSrc)
+    ?? document.querySelector<HTMLVideoElement>('#video-container video')
     ?? document.querySelector<HTMLVideoElement>('video.plyr')
-    ?? document.querySelector<HTMLVideoElement>('video')
+    ?? null
+}
+
+function applyWatchPlayback(
+  presenceData: PresenceData,
+  settings: PluginSettings,
+  video: HTMLVideoElement | null,
+): void {
+  if (!video) {
+    delete presenceData.startTimestamp
+    delete presenceData.endTimestamp
+    return
+  }
+
+  const paused = video.paused || video.ended
+  const hasDuration = Number.isFinite(video.duration) && video.duration > 0
+
+  if (settings.showSmallImages) {
+    presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
+    presenceData.smallImageText = paused ? strings.pause : strings.play
+  }
+
+  if (settings.showTimestamp && !paused && hasDuration) {
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+  }
+  else {
+    delete presenceData.startTimestamp
+    delete presenceData.endTimestamp
+  }
 }
 
 presence.on('UpdateData', async () => {
@@ -107,8 +149,7 @@ presence.on('UpdateData', async () => {
   } as PresenceData
 
   if (settings.privacy) {
-    const video = getVideoElement()
-    if (pathname.startsWith('/watch/') && video && !Number.isNaN(video.duration)) {
+    if (pathname.startsWith('/watch/')) {
       return presence.setActivity({
         type: ActivityType.Watching,
         details: strings.privacyWatching,
@@ -125,14 +166,6 @@ presence.on('UpdateData', async () => {
     }
 
     return presence.clearActivity()
-  }
-
-  if (pathname.startsWith('/manga')) {
-    if (!settings.showBrowsingStatus)
-      return presence.clearActivity()
-
-    presenceData.details = strings.browse
-    return presence.setActivity(presenceData)
   }
 
   switch (true) {
@@ -207,12 +240,13 @@ presence.on('UpdateData', async () => {
       await applyCover(
         presenceData,
         settings.showCover,
+        userInfo?.username,
         userInfo?.profileImage,
         getProfileImageFromDom(),
       )
 
       applyButtons(presenceData, settings, [
-        { label: strings.viewProfile, url: `${BASE_URL}/profile` },
+        { label: (strings.viewProfile || 'Profile Git').slice(0, 32), url: `${BASE_URL}/profile` },
       ])
       break
     }
@@ -236,88 +270,71 @@ presence.on('UpdateData', async () => {
       await applyCover(
         presenceData,
         settings.showCover,
+        userInfo?.username,
         userInfo?.profileImage,
         getProfileImageFromDom(),
       )
 
       applyButtons(presenceData, settings, [
-        { label: strings.viewProfile, url: `${BASE_URL}/u/${username}` },
+        { label: (strings.viewProfile || 'Profile Git').slice(0, 32), url: `${BASE_URL}/u/${username}` },
       ])
       break
     }
 
-    case /^\/watch\/[^/]+$/.test(pathname): {
+    case pathname.startsWith('/watch/'): {
       const animeId = segments[1] || ''
       const params = new URLSearchParams(search)
-      const seasonNumber = Number.parseInt(params.get('season') || '1', 10)
-      const episodeNumber = Number.parseInt(params.get('episode') || '1', 10)
+      const seasonNumber = Number.parseInt(params.get('season') || '1', 10) || 1
+      const episodeNumber = Number.parseInt(params.get('episode') || '1', 10) || 1
       const anime = await fetchAnime(animeId)
       const season = findSeason(anime, seasonNumber)
       const episode = findEpisode(season, episodeNumber)
       const title = getAnimeTitle(anime) || getPageTitle() || 'AniTilky'
       const video = getVideoElement()
+      const animeUrl = `${BASE_URL}/anime/${anime?.slug || anime?._id || animeId}`
+      const episodeUrl = `${BASE_URL}/watch/${anime?.slug || anime?._id || animeId}?season=${seasonNumber}&episode=${episodeNumber}`
 
       presenceData.type = ActivityType.Watching
       presenceData.details = title
-      presenceData.state = formatEpisodeState(
-        strings.seasonEpisode,
-        seasonNumber,
-        episodeNumber,
-        episode?.title,
-      )
+      presenceData.state = formatEpisodeState(seasonNumber, episodeNumber, episode?.title)
 
       await applyCover(
         presenceData,
         settings.showCover,
+        title,
         anime?.coverImage,
         anime?.bannerImage,
       )
 
-      if (video && !Number.isNaN(video.duration)) {
-        const { paused } = video
-        if (settings.showSmallImages) {
-          presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
-          presenceData.smallImageText = paused ? strings.pause : strings.play
-        }
-
-        if (settings.showTimestamp && !paused) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = presence.getTimestampsfromMedia(video)
-        }
-        else {
-          delete presenceData.startTimestamp
-        }
-      }
-      else {
-        delete presenceData.startTimestamp
-      }
+      applyWatchPlayback(presenceData, settings, video)
 
       applyButtons(presenceData, settings, [
-        { label: strings.watchEpisode, url: href },
-        {
-          label: strings.viewSeries,
-          url: `${BASE_URL}/anime/${anime?.slug || anime?._id || animeId}`,
-        },
+        { label: 'Bölüme Git', url: episodeUrl || href },
+        { label: 'Anime Sayfası', url: animeUrl },
       ])
 
       return presence.setActivity(presenceData)
     }
 
-    case /^\/anime\/[^/]+$/.test(pathname): {
+    case pathname.startsWith('/anime/'): {
       const animeId = segments[1] || ''
       const anime = await fetchAnime(animeId)
       const title = getAnimeTitle(anime) || getPageTitle() || 'AniTilky'
+      const animeUrl = `${BASE_URL}/anime/${anime?.slug || anime?._id || animeId}`
 
       presenceData.details = strings.viewingAnime
       presenceData.state = title
       await applyCover(
         presenceData,
         settings.showCover,
+        title,
         anime?.coverImage,
         anime?.bannerImage,
       )
 
       applyButtons(presenceData, settings, [
-        { label: strings.viewSeries, url: `${BASE_URL}/anime/${anime?.slug || anime?._id || animeId}` },
+        { label: 'Anime Sayfası', url: animeUrl },
+        { label: 'İzlemeye Git', url: `${BASE_URL}/watch/${anime?.slug || anime?._id || animeId}` },
       ])
       break
     }

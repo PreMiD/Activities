@@ -8,8 +8,10 @@ export enum ActivityAssets {
 }
 
 const dataCache = new Map<string, { data: unknown, expires: number }>()
-const blobCache = new Map<string, Blob>()
+const imageCache = new Map<string, string | HTMLImageElement>()
+const pendingImage = new Map<string, Promise<string | HTMLImageElement>>()
 const CACHE_TTL = 60_000
+const IMAGE_TIMEOUT_MS = 2500
 
 export async function fetchCached<T>(key: string, fetcher: () => Promise<T | null>): Promise<T | null> {
   const cached = dataCache.get(key)
@@ -30,11 +32,11 @@ export function getAnimeTitle(anime?: Anime | null): string | undefined {
 }
 
 export function findSeason(anime: Anime | null | undefined, seasonNumber: number): AnimeSeason | undefined {
-  return anime?.seasons?.find(s => s.seasonNumber === seasonNumber)
+  return anime?.seasons?.find(s => Number(s.seasonNumber) === Number(seasonNumber))
 }
 
 export function findEpisode(season: AnimeSeason | undefined, episodeNumber: number): AnimeEpisode | undefined {
-  return season?.episodes?.find(e => e.episodeNumber === episodeNumber)
+  return season?.episodes?.find(e => Number(e.episodeNumber) === Number(episodeNumber))
 }
 
 export function getOgImage(): string | undefined {
@@ -43,7 +45,10 @@ export function getOgImage(): string | undefined {
 }
 
 export function getPageTitle(): string {
-  return document.title.replace(/\s*\|\s*ANITILKY.*$/i, '').trim()
+  return document.title
+    .replace(/\s*\|\s*ANITILKY.*$/i, '')
+    .replace(/\s*Türkçe.*$/i, '')
+    .trim()
 }
 
 export function getStoredUsername(): string | undefined {
@@ -68,14 +73,32 @@ export function getProfileImageFromDom(): string | undefined {
     'img[src*="profile-images"]',
     'img[src*="b-cdn.net"][src*="profile"]',
     '[class*="MuiAvatar"] img',
-    'main img[alt]',
   ]
 
   for (const selector of selectors) {
     const img = document.querySelector<HTMLImageElement>(selector)
     const src = img?.currentSrc || img?.src
-    if (src && !src.includes('data:') && img && img.naturalWidth > 0)
+    if (src && !src.startsWith('data:') && img && img.naturalWidth > 0)
       return src
+  }
+
+  return undefined
+}
+
+export function getCoverImageFromDom(): HTMLImageElement | undefined {
+  const selectors = [
+    'img[src*="/cover"]',
+    'img[src*="cover.jpg"]',
+    'img[src*="cover.png"]',
+    'img[src*="anilist.co"]',
+    '[class*="MuiPaper"] img',
+    'main img[alt]',
+  ]
+
+  for (const selector of selectors) {
+    const img = document.querySelector<HTMLImageElement>(selector)
+    if (img?.complete && img.naturalWidth > 40)
+      return img
   }
 
   return undefined
@@ -86,15 +109,11 @@ export function parsePathSegments(pathname: string): string[] {
 }
 
 export function formatEpisodeState(
-  template: string,
   season: number,
   episode: number,
   episodeTitle?: string,
 ): string {
-  const base = template
-    .replace('{0}', String(season))
-    .replace('{1}', String(episode))
-
+  const base = `S${season} E${episode}`
   return episodeTitle ? `${base} — ${episodeTitle}` : base
 }
 
@@ -109,89 +128,119 @@ function normalizeUrl(url?: string | null): string | undefined {
   }
 }
 
-function loadImage(url: string): Promise<HTMLImageElement> {
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T | undefined> {
+  return new Promise((resolve) => {
+    const timer = window.setTimeout(() => resolve(undefined), ms)
+    promise
+      .then((value) => {
+        window.clearTimeout(timer)
+        resolve(value)
+      })
+      .catch(() => {
+        window.clearTimeout(timer)
+        resolve(undefined)
+      })
+  })
+}
+
+async function fetchAniListCover(title?: string): Promise<string | undefined> {
+  if (!title)
+    return undefined
+
+  try {
+    const response = await fetch('https://graphql.anilist.co', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query: `query ($search: String) {
+          Media(search: $search, type: ANIME) {
+            coverImage { extraLarge large }
+          }
+        }`,
+        variables: { search: title },
+      }),
+    })
+
+    if (!response.ok)
+      return undefined
+
+    const json = await response.json() as {
+      data?: { Media?: { coverImage?: { extraLarge?: string, large?: string } } }
+    }
+
+    return json.data?.Media?.coverImage?.extraLarge
+      || json.data?.Media?.coverImage?.large
+      || undefined
+  }
+  catch {
+    return undefined
+  }
+}
+
+function loadImageElement(url: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image()
     img.decoding = 'async'
-    img.referrerPolicy = 'strict-origin-when-cross-origin'
+    img.referrerPolicy = 'no-referrer-when-downgrade'
     img.onload = () => resolve(img)
-    img.onerror = () => reject(new Error('image load failed'))
+    img.onerror = () => reject(new Error('image failed'))
     img.src = url
   })
 }
 
-async function blobFromCanvas(img: HTMLImageElement): Promise<Blob | undefined> {
-  try {
-    const canvas = document.createElement('canvas')
-    canvas.width = img.naturalWidth
-    canvas.height = img.naturalHeight
-    const ctx = canvas.getContext('2d')
-    if (!ctx)
-      return undefined
-
-    ctx.drawImage(img, 0, 0)
-    return await new Promise((resolve) => {
-      canvas.toBlob(blob => resolve(blob || undefined), 'image/jpeg', 0.92)
-    })
-  }
-  catch {
-    return undefined
-  }
-}
-
-async function blobFromUrl(url: string): Promise<Blob | undefined> {
-  try {
-    const response = await fetch(url, {
-      mode: 'cors',
-      credentials: 'omit',
-      referrerPolicy: 'strict-origin-when-cross-origin',
-    })
-    if (response.ok) {
-      const blob = await response.blob()
-      if (blob.type.startsWith('image/') && blob.size > 100) {
-        // Discord RPC handles static images more reliably than GIFs
-        if (blob.type === 'image/gif') {
-          const img = await loadImage(url)
-          return (await blobFromCanvas(img)) || blob
-        }
-        return blob
-      }
-    }
-  }
-  catch {
-    // fall through to canvas path
-  }
-
-  try {
-    const img = await loadImage(url)
-    return await blobFromCanvas(img)
-  }
-  catch {
-    return undefined
-  }
-}
-
 /**
- * BunnyCDN blocks Discord remote fetches (403 without site referer).
- * Always download in-page and return a Blob for PreMiD to upload.
+ * Prefer Discord-safe public URLs / already-loaded DOM images.
+ * BunnyCDN remote URLs 403 for Discord — use DOM element so PreMiD uploads locally.
+ * Never block UpdateData longer than IMAGE_TIMEOUT_MS.
  */
 export async function resolveCoverImage(
+  title?: string,
   ...candidates: Array<string | undefined>
-): Promise<string | Blob> {
+): Promise<string | HTMLImageElement> {
+  const fromDom = getCoverImageFromDom()
+  if (fromDom)
+    return fromDom
+
   const urls = [...candidates, getOgImage()]
     .map(normalizeUrl)
     .filter((url): url is string => Boolean(url))
 
   for (const url of urls) {
-    const cached = blobCache.get(url)
+    // Public CDNs Discord can fetch directly
+    if (/anilist\.co|cdn\.rcd\.gg|imgur\.com|discordapp|media\.discordapp/i.test(url)) {
+      imageCache.set(url, url)
+      return url
+    }
+
+    const cached = imageCache.get(url)
     if (cached)
       return cached
 
-    const blob = await blobFromUrl(url)
-    if (blob) {
-      blobCache.set(url, blob)
-      return blob
+    let pending = pendingImage.get(url)
+    if (!pending) {
+      pending = (async () => {
+        const img = await withTimeout(loadImageElement(url), IMAGE_TIMEOUT_MS)
+        if (img && img.naturalWidth > 0) {
+          imageCache.set(url, img)
+          return img
+        }
+        return ActivityAssets.Logo
+      })()
+      pendingImage.set(url, pending)
     }
+
+    const result = await withTimeout(pending, IMAGE_TIMEOUT_MS)
+    if (result && result !== ActivityAssets.Logo)
+      return result
+  }
+
+  const aniList = await withTimeout(fetchAniListCover(title), IMAGE_TIMEOUT_MS)
+  if (aniList) {
+    imageCache.set(`anilist:${title}`, aniList)
+    return aniList
   }
 
   return ActivityAssets.Logo
