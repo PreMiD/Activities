@@ -1,5 +1,6 @@
-import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
+import type { PresenceStrings } from './functions/strings.js'
 import type { PluginSettings } from './types.js'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 import { fetchAnime } from './functions/fetchAnime.js'
 import { fetchUser } from './functions/fetchUser.js'
 import {
@@ -15,7 +16,7 @@ import {
   parsePathSegments,
   resolvePresenceImage,
 } from './functions/helpers.js'
-import { getStrings, PROFILE_TABS, type PresenceStrings } from './functions/strings.js'
+import { getStrings, PROFILE_TABS } from './functions/strings.js'
 
 const presence = new Presence({
   clientId: '1124065204200820786',

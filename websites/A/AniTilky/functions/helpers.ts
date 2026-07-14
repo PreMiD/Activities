@@ -28,7 +28,7 @@ export async function fetchCached<T>(key: string, fetcher: () => Promise<T | nul
   try {
     const data = await Promise.race([
       fetcher(),
-      new Promise<null>(resolve => window.setTimeout(() => resolve(null), API_TIMEOUT_MS)),
+      new Promise<null>(resolve => window.setTimeout(resolve, API_TIMEOUT_MS, null)),
     ])
     if (data)
       dataCache.set(key, { data, expires: Date.now() + CACHE_TTL })

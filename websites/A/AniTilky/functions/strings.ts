@@ -31,9 +31,7 @@ export interface PresenceStrings {
   privacyBrowsing: string
 }
 
-const SITE_STRINGS: Record<'en' | 'tr', Omit<PresenceStrings,
-  'play' | 'pause' | 'browse' | 'search' | 'viewPage' | 'viewSeries' | 'watchEpisode' | 'watchingSeries'
->> = {
+const SITE_STRINGS: Record<'en' | 'tr', Omit<PresenceStrings, 'play' | 'pause' | 'browse' | 'search' | 'viewPage' | 'viewSeries' | 'watchEpisode' | 'watchingSeries'>> = {
   en: {
     viewProfile: 'View profile',
     seasonEpisode: 'Season {0} · Episode {1}',
@@ -86,26 +84,21 @@ const SITE_STRINGS: Record<'en' | 'tr', Omit<PresenceStrings,
 
 export async function getStrings(presence: Presence, lang: string): Promise<PresenceStrings> {
   const normalized = lang.startsWith('tr') ? 'tr' : 'en'
-  const general = await presence.getStrings(
-    {
-      play: 'general.playing',
-      pause: 'general.paused',
-      browse: 'general.browsing',
-      search: 'general.search',
-      viewPage: 'general.viewPage',
-      viewSeries: 'general.buttonViewSeries',
-      watchEpisode: 'general.buttonViewEpisode',
-      watchingSeries: 'general.watchingSeries',
-    },
-    lang,
-  )
+  const general = await presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    browse: 'general.browsing',
+    search: 'general.search',
+    viewPage: 'general.viewPage',
+    viewSeries: 'general.buttonViewSeries',
+    watchEpisode: 'general.buttonViewEpisode',
+    watchingSeries: 'general.watchingSeries',
+  })
 
   return { ...general, ...SITE_STRINGS[normalized] }
 }
 
-export type ProfileTabKey = keyof Pick<PresenceStrings,
-  'tabPosts' | 'tabMedia' | 'tabWatchlist' | 'tabFavorites' | 'tabHistory'
->
+export type ProfileTabKey = keyof Pick<PresenceStrings, 'tabPosts' | 'tabMedia' | 'tabWatchlist' | 'tabFavorites' | 'tabHistory'>
 
 export const PROFILE_TABS: Record<string, ProfileTabKey> = {
   posts: 'tabPosts',
