@@ -10,6 +10,7 @@ import {
   formatEpisodeState,
   getAnimeTitle,
   getPageTitle,
+  getProfileImageFromDom,
   getProfileUsernameFromDom,
   parsePathSegments,
   resolveCoverImage,
@@ -61,15 +62,11 @@ async function getSettings(): Promise<PluginSettings> {
 async function applyCover(
   presenceData: PresenceData,
   showCover: boolean,
-  preferred?: string,
-  fallback?: string,
+  ...candidates: Array<string | undefined>
 ): Promise<void> {
-  if (!showCover) {
-    presenceData.largeImageKey = ActivityAssets.Logo
-    return
-  }
-
-  presenceData.largeImageKey = await resolveCoverImage(preferred, fallback)
+  presenceData.largeImageKey = showCover
+    ? await resolveCoverImage(...candidates)
+    : ActivityAssets.Logo
 }
 
 function applyButtons(
@@ -92,20 +89,6 @@ function getVideoElement(): HTMLVideoElement | null {
   return document.querySelector<HTMLVideoElement>('#video-container video')
     ?? document.querySelector<HTMLVideoElement>('video.plyr')
     ?? document.querySelector<HTMLVideoElement>('video')
-}
-
-function setBrowsingActivity(presenceData: PresenceData, settings: PluginSettings): void {
-  presenceData.details = strings.browse
-  presenceData.largeImageKey = ActivityAssets.Logo
-  presenceData.startTimestamp = browsingTimestamp
-  presenceData.smallImageKey = Assets.Reading
-  presenceData.smallImageText = strings.browse
-  delete presenceData.state
-
-  if (!settings.showBrowsingStatus)
-    presence.clearActivity()
-  else
-    presence.setActivity(presenceData)
 }
 
 presence.on('UpdateData', async () => {
@@ -144,15 +127,18 @@ presence.on('UpdateData', async () => {
     return presence.clearActivity()
   }
 
-  if (pathname.startsWith('/manga'))
-    return setBrowsingActivity(presenceData, settings)
+  if (pathname.startsWith('/manga')) {
+    if (!settings.showBrowsingStatus)
+      return presence.clearActivity()
+
+    presenceData.details = strings.browse
+    return presence.setActivity(presenceData)
+  }
 
   switch (true) {
     case pathname === '/': {
       presenceData.details = 'AniTilky'
       presenceData.state = strings.home
-      presenceData.smallImageKey = Assets.Reading
-      presenceData.smallImageText = strings.browse
       break
     }
 
@@ -160,15 +146,12 @@ presence.on('UpdateData', async () => {
       const searchValue = document.querySelector<HTMLInputElement>('input[type="text"], input[type="search"]')?.value?.trim()
       presenceData.details = strings.animeList
       presenceData.state = searchValue || strings.browse
-      presenceData.smallImageKey = Assets.Search
-      presenceData.smallImageText = searchValue ? strings.search : strings.viewPage
       break
     }
 
     case pathname === '/schedule' || pathname === '/takvim': {
       presenceData.details = strings.schedule
       presenceData.state = strings.viewPage
-      presenceData.smallImageKey = Assets.Reading
       break
     }
 
@@ -186,7 +169,6 @@ presence.on('UpdateData', async () => {
 
     case pathname === '/settings': {
       presenceData.details = strings.settings
-      presenceData.smallImageKey = Assets.Viewing
       break
     }
 
@@ -209,7 +191,6 @@ presence.on('UpdateData', async () => {
     case pathname.startsWith('/admin'): {
       presenceData.details = strings.admin
       presenceData.state = getPageTitle() || strings.viewPage
-      presenceData.type = ActivityType.Playing
       break
     }
 
@@ -223,12 +204,12 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = strings.ownProfile
       presenceData.state = userInfo?.username || getProfileTabLabel(tab, strings) || strings.viewPage
-      await applyCover(presenceData, settings.showCover, userInfo?.profileImage)
-
-      if (settings.showSmallImages && userInfo?.profileImage) {
-        presenceData.smallImageKey = userInfo.profileImage
-        presenceData.smallImageText = userInfo.username
-      }
+      await applyCover(
+        presenceData,
+        settings.showCover,
+        userInfo?.profileImage,
+        getProfileImageFromDom(),
+      )
 
       applyButtons(presenceData, settings, [
         { label: strings.viewProfile, url: `${BASE_URL}/profile` },
@@ -252,12 +233,12 @@ presence.on('UpdateData', async () => {
           presenceData.state = `${presenceData.state} · ${tabLabel}`
       }
 
-      await applyCover(presenceData, settings.showCover, userInfo?.profileImage)
-
-      if (settings.showSmallImages && userInfo?.profileImage) {
-        presenceData.smallImageKey = userInfo.profileImage
-        presenceData.smallImageText = userInfo.username
-      }
+      await applyCover(
+        presenceData,
+        settings.showCover,
+        userInfo?.profileImage,
+        getProfileImageFromDom(),
+      )
 
       applyButtons(presenceData, settings, [
         { label: strings.viewProfile, url: `${BASE_URL}/u/${username}` },
@@ -291,9 +272,6 @@ presence.on('UpdateData', async () => {
         anime?.coverImage,
         anime?.bannerImage,
       )
-
-      if (anime)
-        presenceData.largeImageText = [anime.type, anime.status].filter(Boolean).join(' · ')
 
       if (video && !Number.isNaN(video.duration)) {
         const { paused } = video
@@ -338,19 +316,19 @@ presence.on('UpdateData', async () => {
         anime?.bannerImage,
       )
 
-      if (anime) {
-        const genrePreview = anime.genres?.slice(0, 2).join(', ')
-        presenceData.largeImageText = [anime.type, anime.status, genrePreview].filter(Boolean).join(' · ')
-      }
-
       applyButtons(presenceData, settings, [
         { label: strings.viewSeries, url: `${BASE_URL}/anime/${anime?.slug || anime?._id || animeId}` },
       ])
       break
     }
 
-    default:
-      return setBrowsingActivity(presenceData, settings)
+    default: {
+      if (!settings.showBrowsingStatus)
+        return presence.clearActivity()
+
+      presenceData.details = strings.browse
+      break
+    }
   }
 
   if (presenceData.details)
