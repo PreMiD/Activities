@@ -14,16 +14,23 @@
   "service": "YummyAnime",
   "description": {
     "en": "Free anime streaming site with user lists and community features.",
-    "ru": "Сайт для бесплатного просмотра аниме, ведения списков и общения."
+    "ru": "Сайт для бесплатного просмотра аниме, ведения списков и общения.",
+    "uk": "Сайт для безкоштовного перегляду аніме, ведення списків та спілкування."
   },
   "url": "yummyani.me",
   "regExp": "^https?[:][/][/](www[.])?(old[.])?(new[.])?(en[.])?(ru[.])?(uk[.])?yummy-?ani[.]me[/]",
   "version": "1.0.6",
-  "logo": "https://cdn.discordapp.com/app-icons/1140596411956744202/700f41b1c8625eebefee5019d82b1287.png?size=1024",
+  "logo": "https://i.imgur.com/397AqsF.png",
   "thumbnail": "https://i.imgur.com/oSSfWiA.png",
   "color": "#FF6666",
   "category": "anime",
   "tags": ["anime", "video"],
   "iframe": true,
-  "iFrameRegExp": "(kodik[.](info|cc|biz|online)|kodikplayer[.]com|aniqit[.]com|alloha[.]yani[.]tv|player[.]cdnvideohub[.]com|iframeCVH[.]html|vkuker[.]net)"
+  "iFrameRegExp": "(kodik[.](info|cc|biz|online)|kodikplayer[.]com|aniqit[.]com|alloha[.]yani[.]tv|player[.]cdnvideohub[.]com|iframeCVH[.]html|vkuker[.]net)",
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
 }
