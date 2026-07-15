@@ -17,7 +17,7 @@
   },
   "url": "letterboxd.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*letterboxd[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Letterboxd/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Letterboxd/assets/thumbnail.png",
   "color": "#202830",
@@ -31,7 +31,7 @@
   ],
   "settings": [
     {
-      "id": "showButtons",
+      "id": "show_buttons",
       "title": "Show Buttons",
       "icon": "fad fa-compress-arrows-alt",
       "value": true
