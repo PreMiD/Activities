@@ -702,17 +702,20 @@ presence.on('UpdateData', async () => {
   }
   if (privacyMode) {
     presenceData.details = 'Browsing'
-    
-    if (presenceData.state) delete presenceData.state
-    if (presenceData.buttons) delete presenceData.buttons
-    if (presenceData.smallImageKey) delete presenceData.smallImageKey
-    
-    // Fallback to default branding logos so game/profile images don't leak
+
+    if (presenceData.state)
+      delete presenceData.state
+    if (presenceData.buttons)
+      delete presenceData.buttons
+    if (presenceData.smallImageKey)
+      delete presenceData.smallImageKey
     if (hostname === 'devforum.roblox.com') {
       presenceData.largeImageKey = ActivityAssets.DeveloperLogo
-    } else if (hostname === 'create.roblox.com') {
+    }
+    else if (hostname === 'create.roblox.com') {
       presenceData.largeImageKey = ActivityAssets.CreateLogo
-    } else {
+    }
+    else {
       presenceData.largeImageKey = ActivityAssets.Logo
     }
   }
