@@ -9,6 +9,12 @@
   "description": {
     "en": "The social network for film lovers."
   },
+  "contributors": [
+    {
+      "id": "960971439996035083",
+      "name": "JuJuplayz"
+    }
+  ],
   "url": "letterboxd.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*letterboxd[.]com[/]",
   "version": "1.1.0",
@@ -25,8 +31,9 @@
   ],
   "settings": [
     {
-      "id": "show_buttons",
-      "title": "Show buttons",
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fad fa-compress-arrows-alt",
       "value": true
     }
   ]
