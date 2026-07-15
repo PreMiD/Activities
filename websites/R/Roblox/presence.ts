@@ -13,10 +13,11 @@ enum ActivityAssets {
 let devImage = false
 
 presence.on('UpdateData', async () => {
-  const [buttons, imagesEnabled, onlyDevForums] = await Promise.all([
+  const [buttons, imagesEnabled, onlyDevForums, privacyMode] = await Promise.all([
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('images'),
     presence.getSetting<boolean>('only-devforum'),
+    presence.getSetting<boolean>('privacy-mode'),
   ])
   const presenceData: PresenceData = {
     details: 'Unknown page',
@@ -699,7 +700,22 @@ presence.on('UpdateData', async () => {
       break
     }
   }
-
+  if (privacyMode) {
+    presenceData.details = 'Browsing'
+    
+    if (presenceData.state) delete presenceData.state
+    if (presenceData.buttons) delete presenceData.buttons
+    if (presenceData.smallImageKey) delete presenceData.smallImageKey
+    
+    // Fallback to default branding logos so game/profile images don't leak
+    if (hostname === 'devforum.roblox.com') {
+      presenceData.largeImageKey = ActivityAssets.DeveloperLogo
+    } else if (hostname === 'create.roblox.com') {
+      presenceData.largeImageKey = ActivityAssets.CreateLogo
+    } else {
+      presenceData.largeImageKey = ActivityAssets.Logo
+    }
+  }
   if (!buttons && presenceData.buttons)
     delete presenceData.buttons
   if (
