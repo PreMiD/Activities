@@ -19,14 +19,11 @@
   "url": "yummyani.me",
   "regExp": "^https?[:][/][/](www[.])?(old[.])?(new[.])?(en[.])?(ru[.])?(uk[.])?yummy-?ani[.]me[/]",
   "version": "1.0.6",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.jpeg",
+  "logo": "https://cdn.discordapp.com/app-icons/1140596411956744202/700f41b1c8625eebefee5019d82b1287.png?size=1024",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/thumbnail.png",
   "color": "#FF5722",
   "category": "anime",
-  "tags": [
-    "anime",
-    "video"
-  ],
+  "tags": ["anime", "video"],
   "iframe": true,
   "iFrameRegExp": "(kodik[.](info|cc|biz|online)|kodikplayer[.]com|aniqit[.]com|alloha[.]yani[.]tv|player[.]cdnvideohub[.]com|iframeCVH[.]html|vkuker[.]net)"
 }
