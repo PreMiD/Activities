@@ -5,19 +5,13 @@
     "id": "324468886357540865",
     "name": "Skaytacium"
   },
-  "contributors": [
-    {
-      "id": "960971439996035083",
-      "name": "JuJuplayz"
-    }
-  ],
   "service": "Letterboxd",
   "description": {
     "en": "The social network for film lovers."
   },
   "url": "letterboxd.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*letterboxd[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Letterboxd/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Letterboxd/assets/thumbnail.png",
   "color": "#202830",
