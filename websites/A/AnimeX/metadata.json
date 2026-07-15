@@ -11,7 +11,7 @@
   },
   "url": "animex.one",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animex[.]one[/]",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeX/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeX/assets/thumbnail.png",
   "color": "#E63946",
@@ -26,6 +26,22 @@
       "title": "Show Timestamp",
       "icon": "fa-solid fa-clock",
       "value": true
+    },
+    {
+      "id": "displayType",
+      "title": "Pick status display",
+      "icon": "fad fa-user-edit",
+      "value": 0,
+      "values": [
+        "Activity Name",
+        "Anime Name"
+      ]
+    },
+    {
+      "id": "hideSubType",
+      "title": "Hide Sub option",
+      "icon": "fad fa-subtitles-slash",
+      "value": false
     }
   ]
 }
