@@ -481,10 +481,14 @@ presence.on('UpdateData', async () => {
   const profileUserId = getProfileUserId(pathname)
   if (profileUserId) {
     const nickname = getProfileNickname()
-    presenceData.details = nickname
-      ? `${strings.watchingProfilePrefix} ${nickname}`
-      : strings.watchingProfileGeneric
-    presenceData.state = ''
+    if (nickname) {
+      presenceData.details = nickname
+      presenceData.state = strings.watchingProfilePrefix
+    }
+    else {
+      presenceData.details = strings.watchingProfileGeneric
+      presenceData.state = ''
+    }
     presenceData.largeImageKey = getProfileAvatarUrl(profileUserId)
     delete presenceData.smallImageKey
     delete presenceData.smallImageText

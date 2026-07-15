@@ -8,8 +8,8 @@
     "message": "Choosing anime"
   },
   "yummyanime.watchingProfilePrefix": {
-    "description": "Prefix for viewing a profile",
-    "message": "Viewing profile:"
+    "description": "Viewing a profile",
+    "message": "Viewing profile"
   },
   "yummyanime.watchingProfileGeneric": {
     "description": "Generic viewing profile string",
@@ -45,7 +45,7 @@
   },
   "yummyanime.preparingEpisodePrefix": {
     "description": "Prefix for preparing to watch an episode",
-    "message": "Preparing to watch:"
+    "message": "Preparing to watch episode"
   },
   "yummyanime.readingDescription": {
     "description": "Shown when reading an anime description",
