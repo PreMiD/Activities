@@ -17,9 +17,9 @@
     "ru": "Сайт для бесплатного просмотра аниме, ведения списков и общения.",
     "uk": "Сайт для безкоштовного перегляду аніме, ведення списків та спілкування."
   },
-  "url": "yummyani.me",
+  "url": ["yummyani.me", "yummy-ani.me"],
   "regExp": "^https?[:][/][/](www[.])?(old[.])?(new[.])?(en[.])?(ru[.])?(uk[.])?yummy-?ani[.]me[/]",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "logo": "https://i.imgur.com/397AqsF.png",
   "thumbnail": "https://i.imgur.com/oSSfWiA.png",
   "color": "#FF6666",

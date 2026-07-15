@@ -1,0 +1,54 @@
+{
+  "yummyanime.mainPage": {
+    "description": "Shown when the user is on the homepage",
+    "message": "On the homepage"
+  },
+  "yummyanime.choosingAnime": {
+    "description": "Shown when the user is choosing anime",
+    "message": "Choosing anime"
+  },
+  "yummyanime.watchingProfilePrefix": {
+    "description": "Prefix for viewing a profile",
+    "message": "Viewing profile:"
+  },
+  "yummyanime.watchingProfileGeneric": {
+    "description": "Generic viewing profile string",
+    "message": "Viewing a user's profile"
+  },
+  "yummyanime.onSite": {
+    "description": "Shown when browsing the site",
+    "message": "On YummyAnime"
+  },
+  "yummyanime.watchingAnime": {
+    "description": "Shown when watching anime",
+    "message": "Watching anime"
+  },
+  "yummyanime.watchingEpisodePrefix": {
+    "description": "Prefix for watching an episode",
+    "message": "Watching episode"
+  },
+  "yummyanime.watchingNoEpisode": {
+    "description": "Shown when watching a video without an episode number",
+    "message": "Watching"
+  },
+  "yummyanime.pausedEpisodePrefix": {
+    "description": "Prefix for a paused episode",
+    "message": "Episode"
+  },
+  "yummyanime.pausedEpisodeSuffix": {
+    "description": "Suffix for a paused episode",
+    "message": "(Paused)"
+  },
+  "yummyanime.pausedNoEpisode": {
+    "description": "Shown when a video without an episode number is paused",
+    "message": "Paused"
+  },
+  "yummyanime.preparingEpisodePrefix": {
+    "description": "Prefix for preparing to watch an episode",
+    "message": "Preparing to watch:"
+  },
+  "yummyanime.readingDescription": {
+    "description": "Shown when reading an anime description",
+    "message": "Reading description"
+  }
+}

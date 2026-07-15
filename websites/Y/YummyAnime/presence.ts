@@ -1,13 +1,16 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '1045800378228281345',
+  clientId: '1140596411956744202',
 })
 
 interface VideoState {
   duration: number
   currentTime: number
   paused: boolean
+}
+
+interface IframeData extends VideoState {
   referrer?: string
 }
 
@@ -19,7 +22,7 @@ let iframeVideo: VideoState = {
 
 let lastPathname = document.location.pathname
 
-presence.on('iFrameData', (data: VideoState) => {
+presence.on('iFrameData', (data: IframeData) => {
   if (data.referrer) {
     try {
       const refUrl = new URL(data.referrer)
@@ -37,90 +40,8 @@ presence.on('iFrameData', (data: VideoState) => {
     duration: data.duration ?? 0,
     currentTime: data.currentTime ?? 0,
     paused: data.paused ?? true,
-    referrer: data.referrer,
   }
 })
-
-// localization
-
-type LocaleKey = 'ru' | 'en' | 'uk'
-
-interface Strings {
-  mainPage: string
-  choosingAnime: string
-  watchingProfilePrefix: string
-  watchingProfileGeneric: string
-  onSite: string
-  watchingAnime: string
-  watchingEpisodePrefix: string
-  watchingNoEpisode: string
-  playingSmallText: string
-  pausedEpisodePrefix: string
-  pausedEpisodeSuffix: string
-  pausedNoEpisode: string
-  pausedSmallText: string
-  preparingEpisodePrefix: string
-  readingDescription: string
-}
-
-const translations: Record<LocaleKey, Strings> = {
-  ru: {
-    mainPage: 'На главной странице',
-    choosingAnime: 'Выбирает аниме',
-    watchingProfilePrefix: 'Смотрит профиль пользователя',
-    watchingProfileGeneric: 'Смотрит профиль пользователя',
-    onSite: 'На сайте YummyAnime',
-    watchingAnime: 'Смотрит аниме',
-    watchingEpisodePrefix: 'Смотрит серию:',
-    watchingNoEpisode: 'Смотрит видео',
-    playingSmallText: 'Воспроизведение',
-    pausedEpisodePrefix: 'Серия',
-    pausedEpisodeSuffix: '(Пауза)',
-    pausedNoEpisode: 'На паузе',
-    pausedSmallText: 'Пауза',
-    preparingEpisodePrefix: 'Готовится к просмотру:',
-    readingDescription: 'Читает описание',
-  },
-  en: {
-    mainPage: 'On the homepage',
-    choosingAnime: 'Choosing anime',
-    watchingProfilePrefix: 'Viewing profile:',
-    watchingProfileGeneric: 'Viewing a user\'s profile',
-    onSite: 'On YummyAnime',
-    watchingAnime: 'Watching anime',
-    watchingEpisodePrefix: 'Watching episode',
-    watchingNoEpisode: 'Watching',
-    playingSmallText: 'Playing',
-    pausedEpisodePrefix: 'Episode',
-    pausedEpisodeSuffix: '(Paused)',
-    pausedNoEpisode: 'Paused',
-    pausedSmallText: 'Paused',
-    preparingEpisodePrefix: 'Preparing to watch:',
-    readingDescription: 'Reading description',
-  },
-  uk: {
-    mainPage: 'На головній сторінці',
-    choosingAnime: 'Обирає аніме',
-    watchingProfilePrefix: 'Переглядає профіль користувача:',
-    watchingProfileGeneric: 'Переглядає профіль користувача',
-    onSite: 'На сайті YummyAnime',
-    watchingAnime: 'Дивиться аніме',
-    watchingEpisodePrefix: 'Дивиться серію:',
-    watchingNoEpisode: 'Дивиться відео',
-    playingSmallText: 'Відтворення',
-    pausedEpisodePrefix: 'Серія',
-    pausedEpisodeSuffix: '(Пауза)',
-    pausedNoEpisode: 'На паузі',
-    pausedSmallText: 'Пауза',
-    preparingEpisodePrefix: 'Готується до перегляду:',
-    readingDescription: 'Читає опис',
-  },
-}
-
-async function getStrings(): Promise<Strings> {
-  const lang = (await presence.getSetting<string>('lang')) ?? 'ru'
-  return translations[lang as LocaleKey] ?? translations.ru
-}
 
 function getKnownDuration(video: HTMLVideoElement): number {
   const d = video.duration
@@ -312,65 +233,34 @@ function getActiveEpisode(pathname: string, search: string): string {
       return text
   }
 
-  const aria = document.querySelector(
-    '[aria-current="true"], [aria-selected="true"]',
-  )
-  if (aria) {
-    const text = aria.textContent?.trim()
-    const num = text?.match(/\d+/)
-    if (num)
-      return num[0]
-  }
-
-  const newSiteVersion = document.querySelector(
+  const activeSelectors = [
     'div.wB div[data-selected="1"]',
-  )
-  if (newSiteVersion) {
-    const text = newSiteVersion.textContent?.trim()
-    const match = text?.match(/(\d+)/)
-    if (match && match[1])
-      return match[1]
-  }
-
-  const containers = [
-    '.episodes-container',
-    '.episodes-list',
-    '.series-list',
-    '[class*="episodes"]',
-    '[class*="series"]',
+    '[aria-current="true"]',
+    '[aria-selected="true"]',
+    '[aria-current="page"]',
+    '[data-selected="1"]',
+    '[data-active="true"]',
+    '[data-current="true"]',
+    '.episodes-container .active',
+    '.episodes-list .active',
+    '.series-list .active',
+    '[class*="episode"][class*="active"]',
+    '[class*="Episode"][class*="Active"]',
   ]
 
-  for (const selector of containers) {
-    const container = document.querySelector(selector)
-    if (container) {
-      const active = container.querySelector(
-        '.active, .selected, .current, [class*="active"], [class*="selected"]',
-      )
-      if (active) {
-        const text = active.textContent?.trim()
-        const num = text?.match(/\d+/)
+  for (const sel of activeSelectors) {
+    const el = document.querySelector(sel)
+    if (el) {
+      const text = el.textContent?.trim()
+      if (text && text.length < 20) {
+        if (/^\d+$/.test(text))
+          return text
+        const num = text.match(/\d+/)
         if (num)
           return num[0]
       }
     }
   }
-
-  const allActive = document.querySelectorAll('.active, .selected, .current')
-  for (const el of allActive) {
-    const text = el.textContent?.trim()
-    if (!text || text.length > 20)
-      continue
-
-    if (/^\d+$/.test(text))
-      return text
-
-    const m = text.match(
-      /^(?:series|ep|episode|серия|выпуск)?\s*(\d+)\s*(?:series|ep|episode|серия|выпуск)?$/i,
-    )
-    if (m?.[1])
-      return m[1]
-  }
-
   return ''
 }
 
@@ -490,27 +380,72 @@ function applyPosterImage(presenceData: Record<string, unknown>): void {
 function isPlayerBlockInView(): boolean {
   const selectors = [
     '#video',
+    'video',
     '[class*="Player"]',
     '[class*="player"]',
-    'video',
+    '[class*="VideoContainer"]',
+    '[class*="video-container"]',
+    '[id*="player"]',
+    '[id*="video"]',
   ]
+  const viewHeight = Math.max(
+    document.documentElement.clientHeight,
+    window.innerHeight,
+  )
   for (const sel of selectors) {
-    const el = document.querySelector(sel)
-    if (!el)
-      continue
-    const rect = el.getBoundingClientRect()
-    const viewHeight = Math.max(
-      document.documentElement.clientHeight,
-      window.innerHeight,
-    )
-    if (!(rect.bottom < 0 || rect.top - viewHeight >= 0))
-      return true
+    const els = document.querySelectorAll(sel)
+    for (const el of els) {
+      const rect = el.getBoundingClientRect()
+      if (rect.width < 400 || rect.height < 200)
+        continue
+      const centerY = rect.top + rect.height / 2
+      if (centerY > 0 && centerY < viewHeight) {
+        return true
+      }
+    }
+  }
+
+  const iframes = document.querySelectorAll('iframe')
+  for (const iframe of iframes) {
+    const src = iframe.src || iframe.getAttribute('data-src') || ''
+    if (
+      src.includes('video')
+      || src.includes('player')
+      || src.includes('stream')
+      || src.includes('yani')
+      || src.includes('sibnet')
+      || src.includes('vk.com')
+    ) {
+      const rect = iframe.getBoundingClientRect()
+      if (rect.width < 400 || rect.height < 200)
+        continue
+      const centerY = rect.top + rect.height / 2
+      if (centerY > 0 && centerY < viewHeight) {
+        return true
+      }
+    }
   }
   return false
 }
 
 presence.on('UpdateData', async () => {
-  const strings = await getStrings()
+  const strings = await presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    mainPage: 'yummyanime.mainPage',
+    choosingAnime: 'yummyanime.choosingAnime',
+    watchingProfilePrefix: 'yummyanime.watchingProfilePrefix',
+    watchingProfileGeneric: 'yummyanime.watchingProfileGeneric',
+    onSite: 'yummyanime.onSite',
+    watchingAnime: 'yummyanime.watchingAnime',
+    watchingEpisodePrefix: 'yummyanime.watchingEpisodePrefix',
+    watchingNoEpisode: 'yummyanime.watchingNoEpisode',
+    pausedEpisodePrefix: 'yummyanime.pausedEpisodePrefix',
+    pausedEpisodeSuffix: 'yummyanime.pausedEpisodeSuffix',
+    pausedNoEpisode: 'yummyanime.pausedNoEpisode',
+    preparingEpisodePrefix: 'yummyanime.preparingEpisodePrefix',
+    readingDescription: 'yummyanime.readingDescription',
+  })
 
   if (lastPathname !== document.location.pathname) {
     lastPathname = document.location.pathname
@@ -529,8 +464,15 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  if (pathname === '/' || pathname === '/index.html') {
+  if (pathname === '/') {
     presenceData.details = strings.mainPage
+    presenceData.state = strings.choosingAnime
+    presence.setActivity(presenceData)
+    return
+  }
+
+  if (pathname.startsWith('/catalog') && !pathname.includes('/item/')) {
+    presenceData.details = strings.onSite
     presenceData.state = strings.choosingAnime
     presence.setActivity(presenceData)
     return
@@ -595,7 +537,7 @@ presence.on('UpdateData', async () => {
       }
 
       presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = strings.playingSmallText
+      presenceData.smallImageText = strings.play
     }
     else {
       presenceData.state = currentEpisode
@@ -606,7 +548,7 @@ presence.on('UpdateData', async () => {
       delete presenceData.endTimestamp
 
       presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = strings.pausedSmallText
+      presenceData.smallImageText = strings.pause
     }
   }
   else {
