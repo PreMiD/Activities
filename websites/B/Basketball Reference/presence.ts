@@ -17,12 +17,11 @@ presence.on('UpdateData', async () => {
     browsingPlayers: 'basketball_reference.browsingPlayers',
     browsingWNBA: 'basketball_reference.browsingWNBA',
     browsingDraft: 'basketball_reference.browsingDraft',
-    browsingDraftYear: 'basketball_reference.browsingDraftYear',
+    browsingYear: 'basketball_reference.browsingYear',
     browsingStandings: 'basketball_reference.browsingStandings',
     browsingAwards: 'basketball_reference.browsingAwards',
     browsingFrivStandings: 'basketball_reference.browsingFrivStandings',
     browsingAllStar: 'basketball_reference.browsingAllStar',
-    browsingAllStarYear: 'basketball_reference.browsingAllStarYear',
     browsingTeamDraft: 'basketball_reference.browsingTeamDraft',
     searching: 'general.search',
     browsingHome: 'general.viewHome',
@@ -118,8 +117,7 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/allstar/')) {
     const allStarYear = pathname.match(/\/allstar\/(\d{4})/)?.[1]
     if (allStarYear) {
-      // Corrigido para fazer o replace na string nativa do TypeScript
-      presenceData.details = strings.browsingAllStarYear.replace('{0}', allStarYear)
+      presenceData.details = strings.browsingYear.replace('{0}', allStarYear)
       presenceData.state = 'All-Star Game'
     }
     else {
@@ -129,8 +127,7 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/draft/')) {
     const draftYear = pathname.match(/_(\d{4})\.html/)?.[1]
     if (draftYear) {
-      // Corrigido para fazer o replace na string nativa do TypeScript
-      presenceData.details = strings.browsingDraftYear.replace('{0}', draftYear)
+      presenceData.details = strings.browsingYear.replace('{0}', draftYear)
       presenceData.state = 'NBA Draft'
     }
     else {
