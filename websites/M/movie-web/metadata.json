@@ -18,8 +18,8 @@
     "streamwatch.online",
     "zstream.mov"
   ],
-  "regExp": "^https?[:][/][/](?:pstream[.]net|streamwatch[.]online)[/]",
-  "version": "1.4.3",
+  "regExp": "^https?[:][/][/](?:pstream[.]net|streamwatch[.]online|zstream[.]mov)[/]",
+  "version": "1.4.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/movie-web/assets/thumbnail.png",
   "color": "#533670",
