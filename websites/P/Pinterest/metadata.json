@@ -19,7 +19,7 @@
   },
   "url": "www.pinterest.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pinterest([.][a-z]+)+[/]",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pinterest/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pinterest/assets/thumbnail.jpg",
   "color": "#cc2127",
@@ -29,6 +29,12 @@
     "imageboard"
   ],
   "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
     {
       "id": "buttons",
       "title": "Show Buttons",
