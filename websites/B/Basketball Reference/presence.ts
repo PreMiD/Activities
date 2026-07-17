@@ -2,7 +2,7 @@ const presence = new Presence({
   clientId: '1509365921674952724',
 })
 
-const browsingTimestamp = Math.floor(Date.now() / 1000)
+let initialTimestamp: number | null = null
 
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
@@ -12,13 +12,28 @@ presence.on('UpdateData', async () => {
     viewingBoxScore: 'basketball_reference.viewingBoxScore',
     browsingLeaders: 'basketball_reference.browsingLeaders',
     browsingPlayoffs: 'basketball_reference.browsingPlayoffs',
+    browsingTeams: 'basketball_reference.browsingTeams',
+    browsingLeagues: 'basketball_reference.browsingLeagues',
+    browsingPlayers: 'basketball_reference.browsingPlayers',
+    browsingWNBA: 'basketball_reference.browsingWNBA',
+    browsingDraft: 'basketball_reference.browsingDraft',
+    browsingYear: 'basketball_reference.browsingYear',
+    browsingStandings: 'basketball_reference.browsingStandings',
+    browsingAwards: 'basketball_reference.browsingAwards',
+    browsingFrivStandings: 'basketball_reference.browsingFrivStandings',
+    browsingAllStar: 'basketball_reference.browsingAllStar',
+    browsingTeamDraft: 'basketball_reference.browsingTeamDraft',
     searching: 'general.search',
     browsingHome: 'general.viewHome',
   })
 
+  if (!initialTimestamp) {
+    initialTimestamp = Math.floor(Date.now() / 1000)
+  }
+
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/B/Basketball%20Reference/assets/logo.png',
-    startTimestamp: browsingTimestamp,
+    startTimestamp: initialTimestamp,
   }
 
   const { pathname } = document.location
@@ -30,12 +45,27 @@ presence.on('UpdateData', async () => {
     presenceData.details = strings.viewingPlayer
     presenceData.state = playerName
   }
+  else if (/^\/teams\/[A-Z]+\/draft\.html/.test(pathname)) {
+    const teamAcronym = pathname.match(/\/teams\/([A-Z]+)\/draft\.html/)?.[1] || ''
+    const teamDraftName
+      = (document.querySelector('h1')?.textContent || '').trim()
+        || document.title.replace(' Franchise Index', '').trim()
+        || `${teamAcronym} Draft History`
+
+    presenceData.details = strings.browsingTeamDraft
+    presenceData.state = teamDraftName
+  }
   else if (/^\/teams\/[A-Z]+\/\d+\.html/.test(pathname)) {
     const teamName
       = (document.querySelector('h1')?.textContent || '').trim()
         || (document.title.split(' Roster')[0] || '').trim()
     presenceData.details = strings.viewingTeam
     presenceData.state = teamName
+  }
+  else if (pathname.includes('_standings.html')) {
+    const standingsYear = pathname.match(/NBA_(\d{4})_standings\.html/)?.[1] || ''
+    presenceData.details = strings.browsingStandings
+    presenceData.state = `NBA ${standingsYear}`
   }
   else if (/^\/leagues\/NBA_\d+\.html/.test(pathname)) {
     const season = pathname.match(/NBA_(\d+)/)?.[1] || ''
@@ -59,6 +89,50 @@ presence.on('UpdateData', async () => {
     const query = new URLSearchParams(document.location.search).get('search') || ''
     presenceData.details = strings.searching
     presenceData.state = `"${query}"`
+  }
+  else if (pathname.startsWith('/teams/')) {
+    presenceData.details = strings.browsingTeams
+  }
+  else if (pathname.startsWith('/leagues/')) {
+    presenceData.details = strings.browsingLeagues
+  }
+  else if (pathname.startsWith('/players/')) {
+    presenceData.details = strings.browsingPlayers
+  }
+  else if (pathname.startsWith('/wnba/')) {
+    presenceData.details = strings.browsingWNBA
+  }
+  else if (pathname.startsWith('/awards/')) {
+    presenceData.details = strings.browsingAwards
+    if (pathname !== '/awards/' && pathname !== '/awards/index.html') {
+      const awardName = (document.querySelector('h1')?.textContent || '').trim()
+      if (awardName) {
+        presenceData.state = awardName
+      }
+    }
+  }
+  else if (pathname.startsWith('/friv/standings.fcgi')) {
+    presenceData.details = strings.browsingFrivStandings
+  }
+  else if (pathname.startsWith('/allstar/')) {
+    const allStarYear = pathname.match(/\/allstar\/(\d{4})/)?.[1]
+    if (allStarYear) {
+      presenceData.details = strings.browsingYear.replace('{0}', allStarYear)
+      presenceData.state = 'All-Star Game'
+    }
+    else {
+      presenceData.details = strings.browsingAllStar
+    }
+  }
+  else if (pathname.startsWith('/draft/')) {
+    const draftYear = pathname.match(/_(\d{4})\.html/)?.[1]
+    if (draftYear) {
+      presenceData.details = strings.browsingYear.replace('{0}', draftYear)
+      presenceData.state = 'NBA Draft'
+    }
+    else {
+      presenceData.details = strings.browsingDraft
+    }
   }
   else {
     presenceData.details = strings.browsingHome
