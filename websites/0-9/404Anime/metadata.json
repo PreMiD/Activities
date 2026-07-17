@@ -7,7 +7,7 @@
   },
   "service": "404Anime",
   "description": {
-    "en": "Anime streaming watch activity for 404Anime."
+    "en": "404Anime is a free, ad-free anime streaming website where you can watch subbed and dubbed anime online."
   },
   "url": "404anime.ca",
   "regExp": "^https?[:][/][/]404anime[.]ca[/]",
