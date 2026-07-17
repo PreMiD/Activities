@@ -52,7 +52,7 @@ presence.on('UpdateData', async () => {
     presenceData.type = ActivityType.Watching
     presenceData.details = title
     presenceData.state = episodeText
-    presenceData.largeImageKey = posterUrl || 'https://example.com/logo.png'
+    presenceData.largeImageKey = posterUrl || ActivityAssets.Logo
     presenceData.largeImageText = title
 
     // Use an elapsed timer since we cannot read the iframe's internal video timeline
@@ -73,7 +73,7 @@ presence.on('UpdateData', async () => {
     }
 
     // Build the Browsing state
-    presenceData.largeImageKey = 'https://example.com/logo.png'
+    presenceData.largeImageKey = ActivityAssets.Logo
     presenceData.largeImageText = 'Anikoto'
     presenceData.details = 'Browsing Anime'
     presenceData.state = 'Looking for something to watch'
