@@ -10,8 +10,14 @@
     "en": "Anikoto is an anime streaming website.",
     "fr": "Anikoto est un site de streaming d'anime."
   },
-  "url": "anikototv.to",
-  "regExp": "^https?[:][/][/](www[.])?anikototv[.]to[/]",
+  "url": [
+    "anikototv.to",
+    "anikoto.cz",
+    "anikoto.me",
+    "anikoto.net",
+    "anikototv.se"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?(anikototv[.]to|anikoto[.]cz|anikoto[.]me|anikoto[.]net|anikototv[.]se)[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/3CY0qmm.png",
   "thumbnail": "https://i.imgur.com/gRdHdau.png",
@@ -23,7 +29,7 @@
     "video"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https?[:][/][/]([^/]+[.])?(vidtube[.]site|nekostream[.][^/]+|megacloud[.][^/]+|vidplay[.][^/]+|myvidplay[.][^/]+|dsvplay[.][^/]+|vidsrc[.][^/]+|vidstream[.][^/]+|vidstreaming[.][^/]+|vidcloud[.][^/]+|rapid-cloud[.][^/]+|filemoon[.][^/]+|streamtape[.][^/]+|dood(?:stream)?[.][^/]+|mp4upload[.][^/]+|streamsb[.][^/]+|mcloud[.][^/]+|rabbitstream[.][^/]+|vidhide(?:vip)?[.][^/]+|vidmoly[.][^/]+|voe[.][^/]+|uqload[.][^/]+|streamwish[.][^/]+|embedwish[.][^/]+|mixdrop[.][^/]+)[/].*",
+  "iFrameRegExp": "^https?[:][/][/]([^/]+[.])?(vidtube[.]site|megaplay[.]buzz|vidwish[.]live|nekostream[.][^/]+|megacloud[.][^/]+|vidplay[.][^/]+|myvidplay[.][^/]+|dsvplay[.][^/]+|vidsrc[.][^/]+|vidstream[.][^/]+|vidstreaming[.][^/]+|vidcloud[.][^/]+|rapid-cloud[.][^/]+|filemoon[.][^/]+|streamtape[.][^/]+|dood(?:stream)?[.][^/]+|mp4upload[.][^/]+|streamsb[.][^/]+|mcloud[.][^/]+|rabbitstream[.][^/]+|vidhide(?:vip)?[.][^/]+|vidmoly[.][^/]+|voe[.][^/]+|uqload[.][^/]+|streamwish[.][^/]+|embedwish[.][^/]+|mixdrop[.][^/]+)[/].*",
   "settings": [
     {
       "id": "privacy",
