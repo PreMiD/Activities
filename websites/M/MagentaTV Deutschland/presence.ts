@@ -5,10 +5,13 @@ const presence = new Presence({
 })
 
 presence.on('UpdateData', async () => {
+  const isMagentaMusik = location.hostname.includes('magentamusik.de')
+
   const video = document.querySelector<HTMLVideoElement>('video')
 
-  const title
-    = document.querySelector('#PARAGRAPH-TITLE')
+  const title = isMagentaMusik
+    ? document.title.trim()
+    : document.querySelector('#PARAGRAPH-TITLE')
       ?.textContent
       ?.trim()
       || document.title.replace('MagentaTV - ', '').trim()
@@ -18,19 +21,22 @@ presence.on('UpdateData', async () => {
 
   const logoImage = document.querySelector<HTMLImageElement>('[id^="PARAGRAPH-LOGO"]')
 
-  const logoUrl = logoImage?.src
-    ?.replace(/x=\d+/, 'x=250')
-    ?.replace(/y=\d+/, 'y=250')
-    ?.replace('ar=keep', 'ar=ignore')
+  const logoUrl = isMagentaMusik
+    ? 'https://i.ibb.co/Gf51vGdb/Magenta-Musik.png'
+    : logoImage?.src
+      ?.replace(/x=\d+/, 'x=250')
+      ?.replace(/y=\d+/, 'y=250')
+      ?.replace('ar=keep', 'ar=ignore')
+      ?? 'https://i.ibb.co/JjPZDjqb/Magenta-TV.png'
 
   const isLive
-    = document.querySelector('#PLAYER-PREVIOUS-CHANNEL') !== null
+    = !isMagentaMusik
+      && document.querySelector('#PLAYER-PREVIOUS-CHANNEL') !== null
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     largeImageKey:
-      logoUrl
-      ?? 'https://cdn.rcd.gg/PreMiD/websites/M/MagentaTV%20Deutschland/assets/logo.png',
+      logoUrl,
   }
 
   const parts = title.split(' - ')
@@ -49,11 +55,15 @@ presence.on('UpdateData', async () => {
 
     if (isLive)
       presenceData.state = 'Live TV'
+
+    if (isMagentaMusik) {
+      presenceData.name = 'MagentaMusik'
+    }
   }
 
-  const detailsLink = document.querySelector<HTMLAnchorElement>(
-    '#PLAYER-INFO-DETAILS',
-  )
+  const detailsLink = isMagentaMusik
+    ? document.querySelector<HTMLLinkElement>('link[rel="canonical"]')
+    : document.querySelector<HTMLAnchorElement>('#PLAYER-INFO-DETAILS')
 
   if (detailsLink?.href) {
     presenceData.buttons = [
@@ -74,8 +84,7 @@ presence.on('UpdateData', async () => {
         : Assets.Play
 
     if (!paused) {
-      const [startTimestamp, endTimestamp]
-        = getTimestampsFromMedia(video)
+      const [startTimestamp, endTimestamp] = getTimestampsFromMedia(video)
 
       presenceData.startTimestamp = startTimestamp
       presenceData.endTimestamp = endTimestamp

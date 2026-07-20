@@ -7,13 +7,16 @@
   },
   "service": "MagentaTV Deutschland",
   "description": {
-    "de": "Schaue Live-TV, Filme und Serien auf MagentaTV Deutschland.",
-    "en": "Watch live TV, movies and series on MagentaTV Germany."
+    "de": "Erlebe Live-TV, Filme und Serien auf MagentaTV Deutschland sowie Konzerte, Livestreams und exklusive Musik-Events mit MagentaMusik.",
+    "en": "Experience live TV, movies and series on MagentaTV Germany alongside concerts, livestreams and exclusive music events with MagentaMusik."
   },
-  "url": "www.magenta.tv",
-  "regExp": "^https?:[/][/]([a-z0-9-]+[.])*magenta[.]tv[/]",
-  "version": "1.0.1",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MagentaTV%20Deutschland/assets/logo.png",
+  "url": [
+    "www.magenta.tv",
+    "www.magentamusik.de"
+  ],
+  "regExp": "^https?:\\/\\/([a-z0-9-]+\\.)*(magenta\\.tv|magentamusik\\.de)\\/.*",
+  "version": "1.1.0",
+  "logo": "https://i.ibb.co/JjPZDjqb/Magenta-TV.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MagentaTV%20Deutschland/assets/thumbnail.webp",
   "color": "#E20074",
   "category": "videos",
