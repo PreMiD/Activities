@@ -5,6 +5,12 @@
     "name": "Kedi",
     "id": "238668511222693888"
   },
+  "contributors": [
+    {
+      "name": "hash.king",
+      "id": "608311692644057088"
+    }
+  ],
   "service": "Peacock",
   "description": {
     "en": "Watch TV shows and movies online with Peacock. Stream iconic shows and movies, exclusive Peacock originals, live news and sports and more.",
@@ -15,7 +21,7 @@
     "peacocktv.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?peacocktv[.]com[/]",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Peacock/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Peacock/assets/thumbnail.png",
   "color": "#FCCC12",

@@ -15,7 +15,7 @@ let strings: Awaited<typeof newStrings>
 presence.on('UpdateData', async () => {
   let extra = '...'
 
-  const path = window.location.pathname
+  const path = document.location.pathname
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/P/Peacock/assets/logo.png',
     startTimestamp: elapsed,
@@ -41,24 +41,25 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Searching...'
 
   if (path.includes('/watch/playback') || path.includes('/watch/asset')) {
-    const video = document.querySelector<HTMLVideoElement>(
-      '.video-player-component video',
-    )
+    const video = document.querySelector<HTMLVideoElement>('#core-video-shaka')
+      || document.querySelector<HTMLVideoElement>('.video-player-component video')
     if (video) {
-      const title = document.querySelector('.playback-header__title')
+      const title = document.querySelector('[data-testid="metadata-title"]')
+        || document.querySelector('.playback-header__title')
         || document.querySelector('.playback-metadata__container-title')
       const timestamps = getTimestamps(
         Math.floor(video.currentTime),
         Math.floor(video.duration),
       )
       const live = timestamps[1] === Infinity
-      const desc = document.querySelector(
-        '.playback-metadata__container-episode-metadata-info',
-      )
-      || document.querySelector('.playback-metadata__container-description')
-      || document.querySelector(
-        '.swiper-slide-active .playlist-item-overlay__container-title',
-      )
+      const desc = document.querySelector('[data-testid="metadata-description"]')
+        || document.querySelector(
+          '.playback-metadata__container-episode-metadata-info',
+        )
+        || document.querySelector('.playback-metadata__container-description')
+        || document.querySelector(
+          '.swiper-slide-active .playlist-item-overlay__container-title',
+        )
 
       if (desc)
         presenceData.state = desc.textContent
