@@ -52,7 +52,7 @@ function getVideoFallback(): Pick<
   }
 }
 
-async function getBridgeData(): Promise<Anime404PremidPresence | null> {
+async function fetchBridgeData(): Promise<Anime404PremidPresence | null> {
   if (supports(presence, 'execInPage')) {
     try {
       const data = await presence.execInPage<Anime404PremidPresence | null>({
@@ -77,6 +77,35 @@ async function getBridgeData(): Promise<Anime404PremidPresence | null> {
   catch {
     return null
   }
+}
+
+// UpdateData fires far more often than the execInPage/getPageVariable round
+// trip can complete, so awaiting it inline on every tick backs up and the
+// extension starts skipping updates ("UpdateData execution is too slow").
+// Poll the bridge on our own slower cadence instead, and let UpdateData
+// read the cached result synchronously — decouples the update tick rate
+// from bridge latency entirely.
+let bridgeCache: Anime404PremidPresence | null = null
+let bridgePollInFlight = false
+
+function pollBridgeData(): void {
+  if (bridgePollInFlight)
+    return
+  bridgePollInFlight = true
+  fetchBridgeData()
+    .then((data) => {
+      bridgeCache = data
+    })
+    .finally(() => {
+      bridgePollInFlight = false
+    })
+}
+
+pollBridgeData()
+setInterval(pollBridgeData, 1000)
+
+function getBridgeData(): Anime404PremidPresence | null {
+  return bridgeCache
 }
 
 function applyPlayback(
@@ -163,8 +192,8 @@ function getBrowsingState(pathname: string): string {
   return 'Exploring 404Anime'
 }
 
-presence.on('UpdateData', async () => {
-  const bridge = await getBridgeData()
+presence.on('UpdateData', () => {
+  const bridge = getBridgeData()
   const fallback = getVideoFallback()
   const data = {
     ...fallback,
