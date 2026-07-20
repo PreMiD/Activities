@@ -37,6 +37,11 @@ function isNodeServer(name: string): boolean {
   return /^Node \d+ - .+$/.test(name)
 }
 
+// Kürzt lange Server-/Node-Namen für die kompakte Discord-Anzeige.
+function truncate(text: string, max: number): string {
+  return text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text
+}
+
 function isBotPath(subPath: string): boolean {
   return ['/knowledge', '/blacklist', '/channels', '/profile', '/access', '/memory'].some(
     p => subPath.startsWith(p),
@@ -51,11 +56,14 @@ function isNodeManagerPath(subPath: string): boolean {
 
 // Liest Server-Status aus aria-label des ServerStatusBadge DOM-Elements.
 // ServerStatusBadge rendert: <div role="img" aria-label="Online|Offline|...">
+// Panel-Texte sind z.B. "Server läuft" — "Server "-Präfix entfernt, da details
+// bereits mit "Server: <Name>" beginnt (sonst "Server: X · Server läuft").
 function getServerStatus(): string | null {
-  return (
-    document.querySelector<HTMLElement>('div[role="img"][aria-label]')
-      ?.getAttribute('aria-label') ?? null
-  )
+  const label = document.querySelector<HTMLElement>('div[role="img"][aria-label]')
+    ?.getAttribute('aria-label')
+  if (!label)
+    return null
+  return label.replace(/^Server\s+/i, '')
 }
 
 // Zählt Server-Rows im Node-Manager-Dashboard.
@@ -191,20 +199,20 @@ presence.on('UpdateData', async () => {
 
     if (isBotPath(subPath)) {
       presenceData.details = showServerName && serverName
-        ? `Discord Bot: ${serverName}`
+        ? `Discord Bot: ${truncate(serverName, 40)}`
         : 'Discord Bot'
       presenceData.state = getBotAction(subPath)
     }
     else if (isNodeManagerPath(subPath) || (serverName !== null && isNodeServer(serverName))) {
       presenceData.details = showServerName && serverName
-        ? `Node Manager: ${serverName}`
+        ? `Node Manager: ${truncate(serverName, 40)}`
         : 'Node Manager'
       presenceData.state = getNodeAction(subPath)
     }
     else {
       let details = showServerName && serverName
-        ? `Server: ${serverName}`
-        : 'Server verwalten'
+        ? `Server: ${truncate(serverName, 40)}`
+        : 'Server'
 
       if (showStatus && showServerName) {
         const status = getServerStatus()
