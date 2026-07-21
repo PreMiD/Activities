@@ -4,6 +4,7 @@ const presence = new Presence({
   clientId: '1142417275966738503',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1_000)
+const heartbeatAttribute = 'data-premid-extension-heartbeat'
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/RWdxBEH.png',
@@ -24,6 +25,10 @@ function lireNombre(value: string | undefined): number | null {
 }
 
 function mettreAJourActivite(): void {
+  // Le site utilise ce signal local pour ne plus proposer PreMiD lorsque
+  // l'activité HeiwaStream est déjà réellement chargée par l'extension.
+  document.documentElement.setAttribute(heartbeatAttribute, String(Date.now()))
+
   const data = document.documentElement.dataset
   const title = data.premidWatching
 
