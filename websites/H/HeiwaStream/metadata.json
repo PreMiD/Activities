@@ -16,8 +16,8 @@
   ],
   "regExp": "^https?[:][/][/](?:www[.])?(?:heiwastream[.]fr|zelyon[.]xyz)(?:[/]|$)",
   "version": "1.0.0",
-  "logo": "https://zelyon.xyz/icon-512.png",
-  "thumbnail": "https://zelyon.xyz/icon-512.png",
+  "logo": "https://i.imgur.com/RWdxBEH.png",
+  "thumbnail": "https://i.imgur.com/VRtNGUH.png",
   "color": "#e6a91a",
   "category": "videos",
   "tags": [

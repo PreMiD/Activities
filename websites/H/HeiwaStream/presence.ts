@@ -6,7 +6,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1_000)
 
 enum ActivityAssets {
-  Logo = 'https://zelyon.xyz/icon-512.png',
+  Logo = 'https://i.imgur.com/RWdxBEH.png',
 }
 
 const supportedHosts = new Set([
