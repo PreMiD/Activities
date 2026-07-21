@@ -14,7 +14,7 @@
     "www.magenta.tv",
     "www.magentamusik.de"
   ],
-  "regExp": "^https?:\\/\\/([a-z0-9-]+\\.)*(magenta\\.tv|magentamusik\\.de)\\/.*",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(magenta[.]tv|magentamusik[.]de)[/]",
   "version": "1.1.0",
   "logo": "https://i.ibb.co/JjPZDjqb/Magenta-TV.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MagentaTV%20Deutschland/assets/thumbnail.webp",

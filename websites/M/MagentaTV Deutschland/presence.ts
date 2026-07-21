@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 presence.on('UpdateData', async () => {
-  const isMagentaMusik = location.hostname.includes('magentamusik.de')
+  const isMagentaMusik = document.location.hostname.includes('magentamusik.de')
 
   const video = document.querySelector<HTMLVideoElement>('video')
 
