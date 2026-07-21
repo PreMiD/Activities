@@ -101,8 +101,8 @@
       "value": true
     },
     {
-      "id": "showViewPlanetButton",
-      "title": "Show View Planet Button",
+      "id": "showJoinPlanetButton",
+      "title": "Show Join Planet Button",
       "icon": "fas fa-compass",
       "value": true
     },
