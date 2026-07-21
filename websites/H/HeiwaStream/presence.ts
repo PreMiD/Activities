@@ -23,7 +23,7 @@ function lireNombre(value: string | undefined): number | null {
   return Number.isFinite(parsed) && parsed >= 0 ? parsed : null
 }
 
-presence.on('UpdateData', async () => {
+function mettreAJourActivite(): void {
   const data = document.documentElement.dataset
   const title = data.premidWatching
 
@@ -81,4 +81,42 @@ presence.on('UpdateData', async () => {
   }
 
   presence.setActivity(presenceData)
+}
+
+let miseAJourPlanifiee = false
+
+function planifierMiseAJour(): void {
+  if (miseAJourPlanifiee)
+    return
+
+  miseAJourPlanifiee = true
+  queueMicrotask(() => {
+    miseAJourPlanifiee = false
+    mettreAJourActivite()
+  })
+}
+
+presence.on('UpdateData', mettreAJourActivite)
+
+// Le lecteur est une modale React : l'URL ne change pas lorsqu'il s'ouvre.
+// On observe donc directement le pont DOM afin que Discord reflète aussitôt
+// le contenu, la lecture/pause et le timecode, sans attendre le cycle PreMiD.
+new MutationObserver(planifierMiseAJour).observe(document.documentElement, {
+  attributes: true,
+  attributeFilter: [
+    'data-premid-watching',
+    'data-premid-episode',
+    'data-premid-media-type',
+    'data-premid-provider',
+    'data-premid-language',
+    'data-premid-quality',
+    'data-premid-poster',
+    'data-premid-media-url',
+    'data-premid-position',
+    'data-premid-duration',
+    'data-premid-state',
+    'data-premid-page',
+    'data-premid-page-url',
+    'data-premid-since',
+  ],
 })
