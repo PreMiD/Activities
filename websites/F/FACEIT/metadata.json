@@ -12,7 +12,7 @@
   },
   "url": "faceit.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*faceit[.]com[/]",
-  "version": "1.0.3",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FACEIT/assets/thumbnail.png",
   "color": "#FF5500",
@@ -31,8 +31,34 @@
       "id": "browsing",
       "title": "Show Browsing",
       "icon": "fad fa-compass",
-      "description": "Hide homepage, parties, profile etc.",
+      "description": "Show homepage, parties, profile etc.",
       "value": true
+    },
+    {
+      "id": "showElo",
+      "title": "Show Elo",
+      "icon": "fad fa-star",
+      "description": "Show your own elo icon.",
+      "value": true
+    },
+    {
+      "id": "showParty",
+      "title": "Show Party",
+      "icon": "fad fa-users",
+      "description": "Show your party information.",
+      "value": true
+    },
+    {
+      "id": "gameFormat",
+      "title": "Presence Name",
+      "icon": "fas fa-gamepad",
+      "description": "Only when in-game.",
+      "value": 0,
+      "values": [
+        "FACEIT: Counter-Strike 2",
+        "Counter-Strike 2",
+        "FACEIT"
+      ]
     }
   ]
 }

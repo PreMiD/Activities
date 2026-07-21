@@ -15,7 +15,7 @@
     "forum.luduvo.com"
   ],
   "regExp": "^https?[:][/][/]((api|forum)[.])?luduvo[.]com",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Luduvo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Luduvo/assets/thumbnail.png",
   "color": "#d20a2e",

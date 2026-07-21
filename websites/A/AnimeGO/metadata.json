@@ -2,7 +2,7 @@
   "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
-    "name": "SHISEN",
+    "name": "shisen",
     "id": "257151906038677504"
   },
   "service": "AnimeGO",
@@ -15,7 +15,7 @@
     "animego.me"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9]+[.])?animego([.][a-z]+)+[/]",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeGO/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeGO/assets/thumbnail.png",
   "color": "#ff5c57",

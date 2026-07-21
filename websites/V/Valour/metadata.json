@@ -11,9 +11,9 @@
   },
   "url": "valour.gg",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(valour[.]gg)[/]",
-  "version": "1.0.0",
-  "logo": "https://app.valour.gg/_content/Valour.Client/media/logo/logo-square-512.png",
-  "thumbnail": "https://app.valour.gg/_content/Valour.Client/media/logo/wide/logo_wide_gradient.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Valour/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Valour/assets/thumbnail.png",
   "color": "#00faff",
   "category": "socials",
   "tags": [
@@ -89,7 +89,9 @@
       "id": "showDMs",
       "title": "Show Direct Messages",
       "icon": "fas fa-envelope",
-      "if": { "showChannel": true },
+      "if": {
+        "showChannel": true
+      },
       "value": true
     },
     {

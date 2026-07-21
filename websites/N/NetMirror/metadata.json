@@ -14,12 +14,9 @@
   "description": {
     "en": "Net11.cc is the current browser portal for NetMirror, a streaming service for movies, TV series, anime, and live TV."
   },
-  "url": [
-    "net11.cc",
-    "netmirror.io"
-  ],
-  "regExp": "^https?[:][/][/](www[.])?(net11|net52|netmirror)[.](cc|io)[/]",
-  "version": "1.0.1",
+  "url": "netmirror.io",
+  "regExp": "^https?[:][/][/](www[.])?netmirror[.]io[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NetMirror/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NetMirror/assets/thumbnail.webp",
   "color": "#e11d48",

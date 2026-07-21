@@ -1,4 +1,4 @@
-import type { AgeRestriction, Author, Cover } from './common.js'
+import type { AgeRestriction, Author, ContentType, Cover } from './common.js'
 
 export interface ReviewData {
   id: number
@@ -11,5 +11,5 @@ interface Relation {
   rus_name: string
   eng_name: string
   cover: Cover
-  ageRestriction: AgeRestriction
+  ageRestriction: AgeRestriction<ContentType>
 }

@@ -2,7 +2,7 @@ const presence = new Presence({
   clientId: '1520858859302813766',
 })
 
-const LOGO = 'https://app.valour.gg/_content/Valour.Client/media/logo/logo-square-512.png'
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/V/Valour/assets/logo.png'
 
 const SESSION_START = Math.floor(Date.now() / 1000)
 

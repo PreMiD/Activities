@@ -17,7 +17,7 @@
   },
   "url": "www.cineby.at",
   "regExp": "^https?[:][/][/](www[.])?cineby[.]at[/]",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/thumbnail.png",
   "color": "#fb0013",

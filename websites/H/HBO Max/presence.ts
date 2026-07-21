@@ -69,8 +69,6 @@ function getTitleInfo(usePresenceName: boolean) {
     const isMovie = episodeItem.attributes.videoType === 'MOVIE'
     const s = episodeItem.attributes.seasonNumber
     const e = episodeItem.attributes.episodeNumber
-    const episodeDesc = getDescription(episodeItem)
-    const showDesc = getDescription(showItem)
 
     return {
       name: usePresenceName ? showItem.attributes.name : 'Max',

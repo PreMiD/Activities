@@ -2,10 +2,14 @@
   "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
-    "name": "alexbcberio",
-    "id": "202915432175239169"
+    "name": "hashking710",
+    "id": "608311692644057088"
   },
   "contributors": [
+    {
+      "name": "alexbcberio",
+      "id": "202915432175239169"
+    },
     {
       "name": "Bas950",
       "id": "241278257335500811"
@@ -18,7 +22,7 @@
   },
   "url": "jellyfin.org",
   "regExp": "^https?[:][/][/](jellyfin[.]org|.*[/]web[/](index[.]html)?#)[/]",
-  "version": "1.10.4",
+  "version": "1.11.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Jellyfin/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Jellyfin/assets/thumbnail.png",
   "color": "#00698c",
@@ -27,34 +31,90 @@
     "video",
     "movie",
     "tv",
-    "media"
+    "media",
+    "music"
   ],
   "settings": [
     {
-      "id": "showMediaTimestamps",
-      "title": "Show media timestamps",
-      "icon": "fad fa-play",
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "usePresenceName",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showBrowsingStatus",
+      "title": "Show Browsing Status",
+      "icon": "fad fa-book-reader",
       "value": true
     },
     {
+      "id": "showCover",
+      "title": "Show Cover Art",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showMovies",
+      "title": "Show Movies",
+      "icon": "fad fa-camera-movie",
+      "value": true
+    },
+    {
+      "id": "showSeries",
+      "title": "Show Series",
+      "icon": "fad fa-film",
+      "value": true
+    },
+    {
+      "id": "showMusic",
+      "title": "Show Music",
+      "icon": "fad fa-music",
+      "value": true
+    },
+    {
+      "id": "showSmallImages",
+      "title": "Show Small Images",
+      "icon": "fad fa-pause",
+      "value": true
+    },
+    {
+      "id": "showMediaTimestamps",
+      "title": "Show Media Timestamps",
+      "icon": "fad fa-play",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
       "id": "showTimestamps",
-      "title": "Show timestamps",
+      "title": "Show Elapsed Time",
       "icon": "fad fa-stopwatch",
       "value": true
     },
     {
-      "id": "showThumbnails",
-      "title": "Show thumbnails",
-      "icon": "fad fa-image",
-      "value": true
-    },
-    {
       "id": "localImageExtraction",
-      "title": "Force local image extraction",
+      "title": "Force Local Image Extraction",
       "icon": "fad fa-download",
       "value": false,
       "if": {
-        "showThumbnails": true
+        "showCover": true
       }
     }
   ],
