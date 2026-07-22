@@ -24,6 +24,19 @@ function lireNombre(value: string | undefined): number | null {
   return Number.isFinite(parsed) && parsed >= 0 ? parsed : null
 }
 
+function lireUrlHeiwa(value: string | undefined): string | null {
+  if (!value)
+    return null
+
+  try {
+    const url = new URL(value)
+    return url.protocol === 'https:' && supportedHosts.has(url.hostname) ? url.href : null
+  }
+  catch {
+    return null
+  }
+}
+
 function mettreAJourActivite(): void {
   // Le site utilise ce signal local pour ne plus proposer PreMiD lorsque
   // l'activité HeiwaStream est déjà réellement chargée par l'extension.
@@ -70,14 +83,25 @@ function mettreAJourActivite(): void {
     smallImageText: stateLabel,
   }
 
-  if (data.premidMediaUrl) {
-    try {
-      const mediaUrl = new URL(data.premidMediaUrl)
-      if (mediaUrl.protocol === 'https:' && supportedHosts.has(mediaUrl.hostname))
-        presenceData.detailsUrl = mediaUrl.href
-    }
-    catch {
-      // Une URL invalide est simplement ignorée.
+  const mediaUrl = lireUrlHeiwa(data.premidMediaUrl)
+  const pageUrl = lireUrlHeiwa(data.premidPageUrl)
+  const contentType = data.premidContentType
+  const isMovie = contentType === 'movie' || data.premidMediaType === 'movie'
+  const detailsUrl = pageUrl ?? mediaUrl
+
+  if (detailsUrl)
+    presenceData.detailsUrl = detailsUrl
+
+  if (isMovie && mediaUrl) {
+    presenceData.buttons = [{ label: 'Watch Movie', url: mediaUrl }]
+  }
+  else if (data.premidEpisode && mediaUrl) {
+    presenceData.buttons = [{ label: 'Watch Episode', url: mediaUrl }]
+    if (pageUrl && pageUrl !== mediaUrl) {
+      presenceData.buttons.push({
+        label: contentType === 'anime' ? 'View Anime' : 'View Series',
+        url: pageUrl,
+      })
     }
   }
 
@@ -112,6 +136,7 @@ new MutationObserver(planifierMiseAJour).observe(document.documentElement, {
     'data-premid-watching',
     'data-premid-episode',
     'data-premid-media-type',
+    'data-premid-content-type',
     'data-premid-provider',
     'data-premid-language',
     'data-premid-quality',
