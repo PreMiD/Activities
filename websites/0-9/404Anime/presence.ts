@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, supports } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -52,60 +52,31 @@ function getVideoFallback(): Pick<
   }
 }
 
-async function fetchBridgeData(): Promise<Anime404PremidPresence | null> {
-  if (supports(presence, 'execInPage')) {
-    try {
-      const data = await presence.execInPage<Anime404PremidPresence | null>({
-        get: '__SANIME_PREMID__',
-      })
-
-      if (data?.animeTitle || data?.episode)
-        return data
-    }
-    catch {
-      // Fall back to the older variable reader below.
-    }
-  }
-
-  try {
-    const page = await presence.getPageVariable<{
-      __SANIME_PREMID__?: Anime404PremidPresence | null
-    }>('__SANIME_PREMID__')
-
-    return page.__SANIME_PREMID__ ?? null
-  }
-  catch {
-    return null
-  }
-}
-
-// UpdateData fires far more often than the execInPage/getPageVariable round
-// trip can complete, so awaiting it inline on every tick backs up and the
-// extension starts skipping updates ("UpdateData execution is too slow").
-// Poll the bridge on our own slower cadence instead, and let UpdateData
-// read the cached result synchronously — decouples the update tick rate
-// from bridge latency entirely.
-let bridgeCache: Anime404PremidPresence | null = null
-let bridgePollInFlight = false
-
-function pollBridgeData(): void {
-  if (bridgePollInFlight)
-    return
-  bridgePollInFlight = true
-  fetchBridgeData()
-    .then((data) => {
-      bridgeCache = data
-    })
-    .finally(() => {
-      bridgePollInFlight = false
-    })
-}
-
-pollBridgeData()
-setInterval(pollBridgeData, 1000)
-
 function getBridgeData(): Anime404PremidPresence | null {
-  return bridgeCache
+  const el = document.getElementById('s-anime-premid')
+  if (!el)
+    return null
+
+  const d = el.dataset
+  if (!d.animeTitle && !d.episode)
+    return null
+
+  return {
+    page: d.page,
+    mediaType: d.mediaType as Anime404PremidPresence['mediaType'],
+    animeId: d.animeId ? Number(d.animeId) : undefined,
+    animeTitle: d.animeTitle,
+    episode: d.episode ? Number(d.episode) : undefined,
+    season: d.season ? Number(d.season) : undefined,
+    episodeTitle: d.episodeTitle ?? null,
+    audio: d.audio as Anime404PremidPresence['audio'],
+    server: d.server,
+    cover: d.cover ?? null,
+    url: d.url,
+    currentTime: d.currentTime ? Number(d.currentTime) : undefined,
+    duration: d.duration ? Number(d.duration) : undefined,
+    paused: d.paused === 'true',
+  }
 }
 
 function applyPlayback(
