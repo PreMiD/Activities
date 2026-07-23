@@ -63,7 +63,7 @@ function mettreAJourActivite(): void {
   const playbackState = data.premidState ?? 'playing'
   const position = lireNombre(data.premidPosition)
   const duration = lireNombre(data.premidDuration)
-  const metadata = [data.premidEpisode, data.premidProvider, data.premidLanguage, data.premidQuality]
+  const metadata = [data.premidSeason, data.premidEpisode, data.premidLanguage]
     .filter(Boolean)
     .join(' · ')
   const stateLabel = playbackState === 'paused'
@@ -135,6 +135,7 @@ new MutationObserver(planifierMiseAJour).observe(document.documentElement, {
   attributeFilter: [
     'data-premid-watching',
     'data-premid-episode',
+    'data-premid-season',
     'data-premid-media-type',
     'data-premid-content-type',
     'data-premid-provider',

@@ -15,7 +15,7 @@
     "zelyon.xyz"
   ],
   "regExp": "^https?[:][/][/](?:www[.])?(?:heiwastream[.]fr|zelyon[.]xyz)(?:[/]|$)",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HeiwaStream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HeiwaStream/assets/thumbnail.png",
   "color": "#e6a91a",
