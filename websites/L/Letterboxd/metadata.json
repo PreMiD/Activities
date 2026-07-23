@@ -33,6 +33,7 @@
     {
       "id": "show_buttons",
       "title": "Show buttons",
+      "icon": "fas fa-compress-arrows-alt",
       "value": true
     }
   ]
