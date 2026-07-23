@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "uzipayx",
+    "id": "327216187199062027"
+  },
+  "service": "ChillBox",
+  "description": {
+    "en": "ChillBox — free multiplayer mini-games in the browser: Croco, Corridor, Checkers, Beachball, Bomberman. Shows the game you play, score and match timer.",
+    "ru": "ChillBox — бесплатные мультиплеерные мини-игры в браузере: Крокодил, Коридор, Шашки, Бичбол, Бомбермен. Показывает игру, счёт и таймер матча."
+  },
+  "url": "chillbox.cc",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*chillbox[.]cc[/]",
+  "version": "1.0.0",
+  "logo": "https://chillbox.cc/premid/logo-512.png",
+  "thumbnail": "https://chillbox.cc/og-image.png",
+  "color": "#facc15",
+  "category": "games",
+  "tags": [
+    "games",
+    "multiplayer",
+    "browser-games"
+  ]
+}
