@@ -1,0 +1,254 @@
+{
+  "1flex.brandTagline": {
+    "description": "Short premium tagline shown as image tooltip.",
+    "message": "1Flex - Stream Movies, TV Shows, Live TV & Games"
+  },
+  "1flex.privacy": {
+    "description": "Shown when privacy mode is enabled.",
+    "message": "Enjoying 1Flex"
+  },
+  "1flex.privacyState": {
+    "description": "Privacy mode state text.",
+    "message": "Privacy Mode enabled"
+  },
+  "1flex.homePremium": {
+    "description": "Premium style home page status.",
+    "message": "Browsing 1Flex Homepage"
+  },
+  "1flex.homeCinematic": {
+    "description": "Cinematic style home page status.",
+    "message": "Curating tonight's watchlist"
+  },
+  "1flex.homeState": {
+    "description": "Home page state.",
+    "message": "In the Home Menu"
+  },
+  "1flex.searching": {
+    "description": "Searching content status.",
+    "message": "Searching the 1Flex catalog"
+  },
+  "1flex.searchIdle": {
+    "description": "Shown when the search page is open without a query.",
+    "message": "Exploring search results"
+  },
+  "1flex.movieBrowse": {
+    "description": "Browsing movie catalog.",
+    "message": "Browsing Movies"
+  },
+  "1flex.moviePick": {
+    "description": "Movie browsing state.",
+    "message": "Choosing a movie"
+  },
+  "1flex.showBrowse": {
+    "description": "Browsing TV shows.",
+    "message": "Browsing TV Shows"
+  },
+  "1flex.showPick": {
+    "description": "TV show browsing state.",
+    "message": "Choosing a series"
+  },
+  "1flex.liveDetails": {
+    "description": "Live TV details.",
+    "message": "Watching Live TV"
+  },
+  "1flex.liveState": {
+    "description": "Live TV state.",
+    "message": "Choosing a live channel"
+  },
+  "1flex.sportsDetails": {
+    "description": "Sports browsing status.",
+    "message": "Browsing Sports"
+  },
+  "1flex.sportsState": {
+    "description": "Sports browsing state.",
+    "message": "Choosing sports content"
+  },
+  "1flex.gamesDetails": {
+    "description": "Games status.",
+    "message": "Browsing Games"
+  },
+  "1flex.gamesState": {
+    "description": "Games state.",
+    "message": "Choosing a game to play"
+  },
+  "1flex.torrentDetails": {
+    "description": "Torrent page status.",
+    "message": "Browsing Torrents"
+  },
+  "1flex.torrentState": {
+    "description": "Torrent page state.",
+    "message": "Searching download links"
+  },
+  "1flex.languageDetails": {
+    "description": "Browse by language page status.",
+    "message": "Browsing by Languages"
+  },
+  "1flex.languageState": {
+    "description": "Browse by language page state.",
+    "message": "Choosing a language"
+  },
+  "1flex.myListDetails": {
+    "description": "My List page status.",
+    "message": "Viewing My List"
+  },
+  "1flex.myListState": {
+    "description": "My List page state.",
+    "message": "Watchlist and favorites"
+  },
+  "1flex.animeDetails": {
+    "description": "Anime menu status.",
+    "message": "Browsing Anime"
+  },
+  "1flex.animeState": {
+    "description": "Anime menu state.",
+    "message": "Opening the anime catalog"
+  },
+  "1flex.profile": {
+    "description": "Profile page status.",
+    "message": "Viewing Profile"
+  },
+  "1flex.login": {
+    "description": "Login page status.",
+    "message": "Signing in to 1Flex"
+  },
+  "1flex.movieDetails": {
+    "description": "Viewing movie details.",
+    "message": "Viewing Movie Details"
+  },
+  "1flex.showDetails": {
+    "description": "Viewing show details.",
+    "message": "Viewing Series Details"
+  },
+  "1flex.moreInfo": {
+    "description": "Viewing the More Info modal for a movie or series.",
+    "message": "Viewing More Info"
+  },
+  "1flex.watchMovie": {
+    "description": "Watching a movie.",
+    "message": "Movie"
+  },
+  "1flex.watchShow": {
+    "description": "Watching a series.",
+    "message": "Series"
+  },
+  "1flex.query": {
+    "description": "Search query prefix.",
+    "message": "Query"
+  },
+  "1flex.languageLabel": {
+    "description": "Language filter label.",
+    "message": "Language"
+  },
+  "1flex.genreLabel": {
+    "description": "Genre filter label.",
+    "message": "Genre"
+  },
+  "1flex.categoryLabel": {
+    "description": "Category filter label.",
+    "message": "Category"
+  },
+  "1flex.countryLabel": {
+    "description": "Country filter label.",
+    "message": "Country"
+  },
+  "1flex.providerLabel": {
+    "description": "Provider, network, or channel filter label.",
+    "message": "Provider"
+  },
+  "1flex.sortLabel": {
+    "description": "Sort filter label.",
+    "message": "Sort"
+  },
+  "1flex.paused": {
+    "description": "Paused media.",
+    "message": "Paused in the Cinema Suite"
+  },
+  "1flex.buffering": {
+    "description": "Shown when the active stream is loading or buffering.",
+    "message": "Buffering"
+  },
+  "1flex.sportsStream": {
+    "description": "Watching a sports stream.",
+    "message": "Sports Stream"
+  },
+  "1flex.streamingState": {
+    "description": "Generic streaming state.",
+    "message": "Streaming on 1Flex"
+  },
+  "1flex.nowPlaying": {
+    "description": "Prefix when a video is playing.",
+    "message": "Playing"
+  },
+  "1flex.nowPaused": {
+    "description": "Prefix when a video is paused.",
+    "message": "Paused"
+  },
+  "1flex.seasonEpisode": {
+    "description": "Season and episode line, variables: {0}=season, {1}=episode.",
+    "message": "Season {0} - Episode {1}"
+  },
+  "1flex.released": {
+    "description": "Release year prefix.",
+    "message": "Released"
+  },
+  "1flex.description": {
+    "description": "Overview prefix.",
+    "message": "Description"
+  },
+  "1flex.unknownEpisode": {
+    "description": "Fallback for an episode without a known title.",
+    "message": "Episode"
+  },
+  "1flex.contentFallback": {
+    "description": "Fallback title when content title cannot be detected.",
+    "message": "1Flex Content"
+  },
+  "1flex.downloadLinks": {
+    "description": "Viewing download links modal.",
+    "message": "Viewing Download Links"
+  },
+  "1flex.in1Flex": {
+    "description": "Generic state for content inside 1Flex.",
+    "message": "Inside 1Flex"
+  },
+  "1flex.progress": {
+    "description": "Prefix for watch progress.",
+    "message": "Watch Time"
+  },
+  "1flex.buttonOpen": {
+    "description": "Button label to open 1Flex.",
+    "message": "Open 1Flex"
+  },
+  "1flex.buttonSearch": {
+    "description": "Button label for search.",
+    "message": "Search on 1Flex"
+  },
+  "1flex.buttonWatch": {
+    "description": "Button label for watching content.",
+    "message": "Watch on 1Flex"
+  },
+  "1flex.buttonLive": {
+    "description": "Button label for live TV.",
+    "message": "Watch Live TV"
+  },
+  "1flex.buttonGames": {
+    "description": "Button label for games.",
+    "message": "Play on 1Flex"
+  },
+  "1flex.buttonTorrent": {
+    "description": "Button label for torrent page.",
+    "message": "Open Torrent"
+  },
+  "1flex.buttonMyList": {
+    "description": "Button label for My List page.",
+    "message": "Open My List"
+  },
+  "1flex.buttonLanguages": {
+    "description": "Button label for Browse by Languages page.",
+    "message": "Browse Languages"
+  },
+  "1flex.buttonAnime": {
+    "description": "Button label for Anime menu.",
+    "message": "Open Anime"
+  }
+}
