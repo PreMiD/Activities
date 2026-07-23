@@ -441,7 +441,6 @@ presence.on('UpdateData', async () => {
     watchingEpisodePrefix: 'general.viewEpisode',
     watchingNoEpisode: 'general.watchingVid',
     pausedEpisodePrefix: 'general.episode',
-    pausedEpisodeSuffix: 'yummyanime.pausedEpisodeSuffix',
     pausedNoEpisode: 'general.paused',
     preparingEpisodePrefix: 'yummyanime.preparingEpisodePrefix',
     readingDescription: 'yummyanime.readingDescription',
@@ -545,7 +544,7 @@ presence.on('UpdateData', async () => {
     }
     else {
       presenceData.state = currentEpisode
-        ? `${strings.pausedEpisodePrefix} ${currentEpisode} ${strings.pausedEpisodeSuffix}`
+        ? `${strings.pausedEpisodePrefix} ${currentEpisode} (${strings.pause})`
         : strings.pausedNoEpisode
 
       delete presenceData.startTimestamp
