@@ -1,5 +1,5 @@
 import type { AnimeData } from './api/models/anime.js'
-import type { AgeRestriction } from './api/models/common.js'
+import type { AgeRestriction, ContentType } from './api/models/common.js'
 import type { MangaData } from './api/models/manga.js'
 import type { RanobeData } from './api/models/ranobe.js'
 import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia } from 'premid'
@@ -19,7 +19,7 @@ interface IFrameVideo {
 
 const lib = new Lib()
 
-function isPrivacyMode(setting: boolean, ageRestriction?: AgeRestriction) {
+function isPrivacyMode(setting: boolean, ageRestriction?: AgeRestriction<ContentType>) {
   return setting || ageRestriction?.id === 5
 }
 
@@ -48,9 +48,14 @@ type RouteName
     | 'faq'
     | 'messages'
     | 'downloads'
+    | 'cards'
 
 let iFrameVideo: IFrameVideo | null = null
 let currentDub: string
+/**
+ * This is only used when the title is licensed or restricted to check if it is an adult content (labeled as RX which is hentai here), but vulnerable to unusual user actions (such as a direct jump to watching the title)
+ */
+let currentAgeRestriction: string
 
 presence.on('iFrameData', (data: unknown) => {
   iFrameVideo = data as typeof iFrameVideo
@@ -78,7 +83,7 @@ presence.on('UpdateData', async () => {
   const [privacySetting, buttonsSetting, titleSetting] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('buttons'),
-    presence.getSetting<boolean>('titleAsPresence'),
+    presence.getSetting<boolean>('animeTitleAsPresence'),
   ])
 
   switch (siteId) {
@@ -128,6 +133,7 @@ presence.on('UpdateData', async () => {
     switch (siteId) {
       case SiteId.MangaLib: {
         const { name, rus_name, cover, ageRestriction, toast } = <MangaData>data
+
         if (isPrivacyMode(privacySetting, ageRestriction) || toast) {
           setPrivacyMode(presenceData)
           break
@@ -147,6 +153,7 @@ presence.on('UpdateData', async () => {
       }
       case SiteId.RanobeLib: {
         const { name, rus_name, cover, ageRestriction, toast } = <RanobeData> data
+
         if (isPrivacyMode(privacySetting, ageRestriction) || toast) {
           setPrivacyMode(presenceData)
           break
@@ -209,6 +216,11 @@ presence.on('UpdateData', async () => {
             presenceData.state = 'Очередной аниме персонаж...'
           }
           else {
+            if (isPrivacyMode(privacySetting)) {
+              setPrivacyMode(presenceData)
+              break
+            }
+
             const character = await lib.getCharacter(slug, siteId)
             const { name, rus_name, cover } = character.data
 
@@ -232,6 +244,11 @@ presence.on('UpdateData', async () => {
       }
       case 'franchise': {
         if (pathnameParts[3]) {
+          if (isPrivacyMode(privacySetting)) {
+            setPrivacyMode(presenceData)
+            break
+          }
+
           const name = document.querySelector('h1')
           const altName = document.querySelector('h2')
 
@@ -257,6 +274,11 @@ presence.on('UpdateData', async () => {
         const id = pathnameParts[3]
 
         if (id) {
+          if (isPrivacyMode(privacySetting)) {
+            setPrivacyMode(presenceData)
+            break
+          }
+
           if (document.querySelector('h1')) {
             presenceData.details = 'Страница вопросов и ответов'
             presenceData.state = document.querySelector('h1')?.textContent ?? ''
@@ -276,6 +298,11 @@ presence.on('UpdateData', async () => {
       }
       case 'news': {
         if (pathnameParts[3]) {
+          if (isPrivacyMode(privacySetting)) {
+            setPrivacyMode(presenceData)
+            break
+          }
+
           const avatar = document
             .querySelector('.user-inline')
             ?.querySelector<HTMLImageElement>('.avatar.is-rounded')
@@ -317,6 +344,11 @@ presence.on('UpdateData', async () => {
             const person = await lib.getPerson(slug, siteId)
             const { name: mainName, rus_name, alt_name, cover } = person.data
 
+            if (isPrivacyMode(privacySetting)) {
+              setPrivacyMode(presenceData)
+              break
+            }
+
             const name = rus_name !== ''
               ? rus_name
               : alt_name !== ''
@@ -353,7 +385,6 @@ presence.on('UpdateData', async () => {
             const collection = await lib.getCollection(id, siteId)
             const { name, user, type, adult } = collection.data
 
-            // Show collection viewing in privacy mode if it's enabled, or enforce it when collection was marked as for adults
             if (privacySetting || adult) {
               setPrivacyMode(presenceData)
               break
@@ -402,6 +433,11 @@ presence.on('UpdateData', async () => {
             const user = await lib.getUser(id, siteId)
             const { username, avatar } = user.data
 
+            if (isPrivacyMode(privacySetting)) {
+              setPrivacyMode(presenceData)
+              break
+            }
+
             presenceData.details = 'Страница пользователя'
             presenceData.state = username
             presenceData.largeImageKey = avatar.adjusted
@@ -432,10 +468,7 @@ presence.on('UpdateData', async () => {
             const review = await lib.getReview(id, siteId)
             const { title, user, related } = review.data
 
-            // Show review reading in privacy mode if it's enabled, or enforce it when related anime is RX rated
-            if (
-              isPrivacyMode(privacySetting, related.ageRestriction)
-            ) {
+            if (isPrivacyMode(privacySetting, related.ageRestriction)) {
               setPrivacyMode(presenceData)
               break
             }
@@ -471,6 +504,11 @@ presence.on('UpdateData', async () => {
             const name = document.querySelector('.cover__wrap')?.parentElement?.nextSibling?.textContent
             const coverSrc = document.querySelector<HTMLImageElement>('.cover__img')?.src
 
+            if (isPrivacyMode(privacySetting)) {
+              setPrivacyMode(presenceData)
+              break
+            }
+
             if (name && coverSrc) {
               presenceData.details = 'Страница команды'
               presenceData.state = name
@@ -504,9 +542,15 @@ presence.on('UpdateData', async () => {
             const publisher = await lib.getPublisher(slug, siteId)
             const { name, rus_name, cover } = publisher.data
 
+            if (isPrivacyMode(privacySetting)) {
+              setPrivacyMode(presenceData)
+              break
+            }
+
             presenceData.details = 'Страница издателя'
             presenceData.state = `${rus_name || name} (${name})`
             presenceData.largeImageKey = cover.adjusted
+            presenceData.smallImageKey = switchLogo(siteId)
             presenceData.buttons = [
               {
                 label: 'Открыть издателя',
@@ -518,6 +562,37 @@ presence.on('UpdateData', async () => {
         else {
           presenceData.details = 'Страница издетелей'
           presenceData.state = 'Их так много...'
+        }
+        break
+      }
+      case 'cards': {
+        const slug = pathnameParts[3]
+
+        if (slug) {
+          const { data } = await lib.getCard(slug, siteId)
+          const { name: cardName, cover: cardCover, media, rank } = data
+          const { name: mediaName, rus_name, cover: mediaCover } = media[0]!
+
+          if (isPrivacyMode(privacySetting)) {
+            setPrivacyMode(presenceData)
+            break
+          }
+
+          presenceData.details = `Просматривает ${rank.name}-ранг карточку ${cardName}`
+          presenceData.state = `Из тайтла ${rus_name || mediaName}`
+          presenceData.largeImageKey = cardCover.adjusted
+          presenceData.smallImageKey = mediaCover.adjusted
+          presenceData.buttons = [
+            {
+              label: 'Открыть карточку',
+              url: cleanUrl(href),
+            },
+          ]
+        }
+        else {
+          presenceData.details = 'Просматривает карточки'
+          presenceData.state = 'А какая самая редкая?'
+          presenceData.largeImageText = switchLogo(siteId)
         }
         break
       }
@@ -569,6 +644,11 @@ presence.on('UpdateData', async () => {
               const coverSrc = document.querySelector<HTMLImageElement>('.cover__img')?.src
 
               if (title && coverSrc) {
+                if (currentAgeRestriction === 'RX (18+)') {
+                  setPrivacyMode(presenceData)
+                  break
+                }
+
                 titleSetting
                   ? (presenceData.name = title)
                   : (presenceData.details = title)
@@ -638,8 +718,15 @@ presence.on('UpdateData', async () => {
           if (toast) {
             const title = document.querySelector('h1')?.textContent
             const coverSrc = document.querySelector<HTMLImageElement>('.cover__img')?.src
+            const ageRestriction = document.querySelector<HTMLAnchorElement>('a[data-type="restriction"]')?.textContent
 
-            if (title && coverSrc) {
+            if (title && coverSrc && ageRestriction) {
+              if (ageRestriction === 'RX (18+)') {
+                currentAgeRestriction = ageRestriction
+                setPrivacyMode(presenceData)
+                break
+              }
+
               presenceData.details = 'Страница аниме'
               presenceData.state = `${title}`
               presenceData.largeImageKey = assurePd(coverSrc, siteId)
@@ -653,6 +740,11 @@ presence.on('UpdateData', async () => {
             }
           }
           else {
+            if (isPrivacyMode(privacySetting)) {
+              setPrivacyMode(presenceData)
+              break
+            }
+
             presenceData.details = 'Страница аниме'
             presenceData.state = `${rus_name !== '' ? rus_name : name}`
             presenceData.largeImageKey = cover.adjusted
@@ -673,23 +765,24 @@ presence.on('UpdateData', async () => {
 
         if (slug) {
           const { data } = await lib.getTitle<RanobeData>(slug, siteId)
+          const { name, rus_name, cover, ageRestriction, toast } = data
 
-          if (data.toast) {
+          if (isPrivacyMode(privacySetting, ageRestriction) || toast) {
             setPrivacyMode(presenceData)
+            break
           }
-          else {
-            presenceData.details = 'Страница манги'
-            presenceData.state = `${data.rus_name !== '' ? data.rus_name : data.name}`
-            presenceData.largeImageKey = data.cover.adjusted
-            presenceData.smallImageKey = switchLogo(siteId)
 
-            presenceData.buttons = [
-              {
-                label: 'Открыть мангу',
-                url: cleanUrl(href),
-              },
-            ]
-          }
+          presenceData.details = 'Страница манги'
+          presenceData.state = `${rus_name !== '' ? rus_name : name}`
+          presenceData.largeImageKey = cover.adjusted
+          presenceData.smallImageKey = switchLogo(siteId)
+
+          presenceData.buttons = [
+            {
+              label: 'Открыть мангу',
+              url: cleanUrl(href),
+            },
+          ]
         }
         break
       }
@@ -698,23 +791,24 @@ presence.on('UpdateData', async () => {
 
         if (slug) {
           const { data } = await lib.getTitle<RanobeData>(slug, siteId)
+          const { name, rus_name, cover, ageRestriction, toast } = data
 
-          if (data.toast) {
+          if (isPrivacyMode(privacySetting, ageRestriction) || toast) {
             setPrivacyMode(presenceData)
+            break
           }
-          else {
-            presenceData.details = 'Страница ранобэ'
-            presenceData.state = `${data.rus_name !== '' ? data.rus_name : data.name}`
-            presenceData.largeImageKey = data.cover.adjusted
-            presenceData.smallImageKey = switchLogo(siteId)
 
-            presenceData.buttons = [
-              {
-                label: 'Открыть ранобэ',
-                url: cleanUrl(href),
-              },
-            ]
-          }
+          presenceData.details = 'Страница ранобэ'
+          presenceData.state = `${rus_name !== '' ? rus_name : name}`
+          presenceData.largeImageKey = cover.adjusted
+          presenceData.smallImageKey = switchLogo(siteId)
+
+          presenceData.buttons = [
+            {
+              label: 'Открыть ранобэ',
+              url: cleanUrl(href),
+            },
+          ]
         }
         break
       }

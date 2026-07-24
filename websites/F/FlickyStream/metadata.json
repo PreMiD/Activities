@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "1428056065840255027",
@@ -9,9 +9,9 @@
   "description": {
     "en": "A streaming platform for movies, TV shows, and anime."
   },
-  "url": "flickystream.su",
-  "regExp": "^https?[:][/][/](www[.])?flickystream[.]su[/]",
-  "version": "1.0.2",
+  "url": "flickystream.dad",
+  "regExp": "^https?[:][/][/](www[.])?flickystream[.]dad[/]",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FlickyStream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FlickyStream/assets/thumbnail.png",
   "color": "#E53935",

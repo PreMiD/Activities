@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "error.4.04",
+    "id": "692495122025152583"
+  },
+  "service": "404Anime",
+  "description": {
+    "en": "404Anime is a free, ad-free anime streaming website where you can watch subbed and dubbed anime online."
+  },
+  "url": "404anime.ca",
+  "regExp": "^https?[:][/][/]404anime[.]ca[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/404Anime/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/404Anime/assets/thumbnail.png",
+  "color": "#facc15",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "video",
+    "streaming"
+  ]
+}

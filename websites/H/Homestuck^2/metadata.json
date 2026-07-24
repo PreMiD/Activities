@@ -7,14 +7,14 @@
   },
   "service": "Homestuck^2",
   "description": {
-    "en": "The Homestuck^2 website hosts the official continuation of the popular MSPaintAdventure Homestuck and all Patreon-driven bonus content."
+    "en": "The Beyond Canon website hosts Homestuck: Beyond Canon, the official continuation of Homestuck, along with news and bonus content for supporters."
   },
   "url": [
-    "www.homestuck2.com",
-    "homestuck2.com"
+    "www.beyondcanon.com",
+    "beyondcanon.com"
   ],
-  "regExp": "^https?[:][/][/](www[.])?homestuck2[.]com[/]",
-  "version": "1.1.0",
+  "regExp": "^https?[:][/][/](www[.])?beyondcanon[.]com[/]",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Homestuck%5E2/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Homestuck%5E2/assets/thumbnail.png",
   "color": "#f2a400",
@@ -22,7 +22,7 @@
   "tags": [
     "webcomic",
     "comic",
-    "homestuck-2",
+    "beyondcanon",
     "andrew-hussie",
     "mspaintadventures"
   ]
