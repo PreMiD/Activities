@@ -1,13 +1,16 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '1045800378228281345',
+  clientId: '1140596411956744202',
 })
 
 interface VideoState {
   duration: number
   currentTime: number
   paused: boolean
+}
+
+interface IframeData extends VideoState {
   referrer?: string
 }
 
@@ -19,7 +22,7 @@ let iframeVideo: VideoState = {
 
 let lastPathname = document.location.pathname
 
-presence.on('iFrameData', (data: VideoState) => {
+presence.on('iFrameData', (data: IframeData) => {
   if (data.referrer) {
     try {
       const refUrl = new URL(data.referrer)
@@ -37,7 +40,6 @@ presence.on('iFrameData', (data: VideoState) => {
     duration: data.duration ?? 0,
     currentTime: data.currentTime ?? 0,
     paused: data.paused ?? true,
-    referrer: data.referrer,
   }
 })
 
@@ -165,6 +167,45 @@ function isAnimeItemPage(pathname: string): boolean {
   )
 }
 
+function getProfileUserId(pathname: string): string | null {
+  const match = pathname.match(/^\/users\/id(\d+)\/?$/i)
+  return match?.[1] ?? null
+}
+
+function getProfileNickname(): string {
+  const nick = document.querySelector('span.k2[data-tooltip-id="old-nicks-t"]')
+  return nick?.textContent?.trim() ?? ''
+}
+
+function getSvgImageHref(el: SVGImageElement): string | null {
+  return el.getAttribute('href') || el.getAttribute('xlink:href')
+}
+
+function findProfileAvatarSvgImage(): SVGImageElement | null {
+  const images = document.querySelectorAll<SVGImageElement>('image')
+  for (const img of images) {
+    const href = getSvgImageHref(img)
+    if (!href)
+      continue
+    if (href.includes('/users/big/') || href.includes('DefaultAva')) {
+      return img
+    }
+  }
+  return null
+}
+
+function getProfileAvatarUrl(userId: string): string {
+  const svgImg = findProfileAvatarSvgImage()
+  if (svgImg) {
+    const href = getSvgImageHref(svgImg)
+    if (href)
+      return resolveAbsoluteUrl(href)
+  }
+
+  // fallback
+  return `https://static.yani.tv/users/big/${userId}.webp`
+}
+
 function episodeFromUrl(pathname: string, search: string): string {
   const params = new URLSearchParams(search)
   for (const key of ['episode', 'ep', 'serie', 's']) {
@@ -192,65 +233,34 @@ function getActiveEpisode(pathname: string, search: string): string {
       return text
   }
 
-  const aria = document.querySelector(
-    '[aria-current="true"], [aria-selected="true"]',
-  )
-  if (aria) {
-    const text = aria.textContent?.trim()
-    const num = text?.match(/\d+/)
-    if (num)
-      return num[0]
-  }
-
-  const newSiteVersion = document.querySelector(
+  const activeSelectors = [
     'div.wB div[data-selected="1"]',
-  )
-  if (newSiteVersion) {
-    const text = newSiteVersion.textContent?.trim()
-    const match = text?.match(/(\d+)/)
-    if (match && match[1])
-      return match[1]
-  }
-
-  const containers = [
-    '.episodes-container',
-    '.episodes-list',
-    '.series-list',
-    '[class*="episodes"]',
-    '[class*="series"]',
+    '[aria-current="true"]',
+    '[aria-selected="true"]',
+    '[aria-current="page"]',
+    '[data-selected="1"]',
+    '[data-active="true"]',
+    '[data-current="true"]',
+    '.episodes-container .active',
+    '.episodes-list .active',
+    '.series-list .active',
+    '[class*="episode"][class*="active"]',
+    '[class*="Episode"][class*="Active"]',
   ]
 
-  for (const selector of containers) {
-    const container = document.querySelector(selector)
-    if (container) {
-      const active = container.querySelector(
-        '.active, .selected, .current, [class*="active"], [class*="selected"]',
-      )
-      if (active) {
-        const text = active.textContent?.trim()
-        const num = text?.match(/\d+/)
+  for (const sel of activeSelectors) {
+    const el = document.querySelector(sel)
+    if (el) {
+      const text = el.textContent?.trim()
+      if (text && text.length < 20) {
+        if (/^\d+$/.test(text))
+          return text
+        const num = text.match(/\d+/)
         if (num)
           return num[0]
       }
     }
   }
-
-  const allActive = document.querySelectorAll('.active, .selected, .current')
-  for (const el of allActive) {
-    const text = el.textContent?.trim()
-    if (!text || text.length > 20)
-      continue
-
-    if (/^\d+$/.test(text))
-      return text
-
-    const m = text.match(
-      /^(?:series|ep|episode|серия|выпуск)?\s*(\d+)\s*(?:series|ep|episode|серия|выпуск)?$/i,
-    )
-    if (m?.[1])
-      return m[1]
-  }
-
   return ''
 }
 
@@ -370,26 +380,72 @@ function applyPosterImage(presenceData: Record<string, unknown>): void {
 function isPlayerBlockInView(): boolean {
   const selectors = [
     '#video',
+    'video',
     '[class*="Player"]',
     '[class*="player"]',
-    'video',
+    '[class*="VideoContainer"]',
+    '[class*="video-container"]',
+    '[id*="player"]',
+    '[id*="video"]',
   ]
+  const viewHeight = Math.max(
+    document.documentElement.clientHeight,
+    window.innerHeight,
+  )
   for (const sel of selectors) {
-    const el = document.querySelector(sel)
-    if (!el)
-      continue
-    const rect = el.getBoundingClientRect()
-    const viewHeight = Math.max(
-      document.documentElement.clientHeight,
-      window.innerHeight,
-    )
-    if (!(rect.bottom < 0 || rect.top - viewHeight >= 0))
-      return true
+    const els = document.querySelectorAll(sel)
+    for (const el of els) {
+      const rect = el.getBoundingClientRect()
+      if (rect.width < 400 || rect.height < 200)
+        continue
+      const centerY = rect.top + rect.height / 2
+      if (centerY > 0 && centerY < viewHeight) {
+        return true
+      }
+    }
+  }
+
+  const iframes = document.querySelectorAll('iframe')
+  for (const iframe of iframes) {
+    const src = iframe.src || iframe.getAttribute('data-src') || ''
+    if (
+      src.includes('video')
+      || src.includes('player')
+      || src.includes('stream')
+      || src.includes('yani')
+      || src.includes('sibnet')
+      || src.includes('vk.com')
+    ) {
+      const rect = iframe.getBoundingClientRect()
+      if (rect.width < 400 || rect.height < 200)
+        continue
+      const centerY = rect.top + rect.height / 2
+      if (centerY > 0 && centerY < viewHeight) {
+        return true
+      }
+    }
   }
   return false
 }
 
 presence.on('UpdateData', async () => {
+  const strings = await presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    mainPage: 'general.viewHome',
+    choosingAnime: 'yummyanime.choosingAnime',
+    watchingProfilePrefix: 'general.viewAProfile',
+    watchingProfileGeneric: 'general.viewAProfile',
+    onSite: 'general.browsing',
+    watchingAnime: 'general.watchingAnime',
+    watchingEpisodePrefix: 'general.viewEpisode',
+    watchingNoEpisode: 'general.watchingVid',
+    pausedEpisodePrefix: 'general.episode',
+    pausedNoEpisode: 'general.paused',
+    preparingEpisodePrefix: 'yummyanime.preparingEpisodePrefix',
+    readingDescription: 'yummyanime.readingDescription',
+  })
+
   if (lastPathname !== document.location.pathname) {
     lastPathname = document.location.pathname
     iframeVideo = {
@@ -402,21 +458,48 @@ presence.on('UpdateData', async () => {
   const { pathname, search } = document.location
 
   const presenceData: Record<string, unknown> = {
-    largeImageKey:
-      'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.jpeg',
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.png',
     largeImageText: 'YummyAnime',
     type: ActivityType.Watching,
   }
 
-  if (pathname === '/' || pathname === '/index.html') {
-    presenceData.details = 'На главной странице'
-    presenceData.state = 'Выбирает аниме'
+  if (pathname === '/') {
+    presenceData.details = strings.mainPage
+    presenceData.state = strings.choosingAnime
+    presence.setActivity(presenceData)
+    return
+  }
+
+  if (pathname.startsWith('/catalog') && !pathname.includes('/item/')) {
+    presenceData.details = strings.onSite
+    presenceData.state = strings.choosingAnime
+    presence.setActivity(presenceData)
+    return
+  }
+
+  const profileUserId = getProfileUserId(pathname)
+  if (profileUserId) {
+    const nickname = getProfileNickname()
+    if (nickname) {
+      presenceData.details = nickname
+      presenceData.state = strings.watchingProfilePrefix
+    }
+    else {
+      presenceData.details = strings.watchingProfileGeneric
+      presenceData.state = ''
+    }
+    presenceData.largeImageKey = getProfileAvatarUrl(profileUserId)
+    delete presenceData.smallImageKey
+    delete presenceData.smallImageText
+    delete presenceData.startTimestamp
+    delete presenceData.endTimestamp
+
     presence.setActivity(presenceData)
     return
   }
 
   if (!isAnimeItemPage(pathname)) {
-    presenceData.details = 'На сайте YummyAnime'
+    presenceData.details = strings.onSite
 
     const pageTitle = document.querySelector('h1')?.textContent?.trim()
 
@@ -434,7 +517,7 @@ presence.on('UpdateData', async () => {
   const titleHeader = document.querySelector('h1')
   if (titleHeader)
     presenceData.details = titleHeader.textContent?.trim()
-  else presenceData.details = 'Смотрит аниме'
+  else presenceData.details = strings.watchingAnime
 
   applyPosterImage(presenceData)
 
@@ -444,32 +527,31 @@ presence.on('UpdateData', async () => {
   if (playback && (playback.duration > 0 || !playback.paused)) {
     if (!playback.paused) {
       presenceData.state = currentEpisode
-        ? `Смотрит серию: ${currentEpisode}`
-        : 'Смотрит видео'
+        ? `${strings.watchingEpisodePrefix} ${currentEpisode}`
+        : strings.watchingNoEpisode
 
       if (playback.duration > 0) {
         [presenceData.startTimestamp, presenceData.endTimestamp]
           = getTimestamps(playback.currentTime, playback.duration)
       }
       else {
-        // Длительность неизвестна, показываем только прошедшее время
         presenceData.startTimestamp = Date.now() - playback.currentTime * 1000
         delete presenceData.endTimestamp
       }
 
       presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = 'Воспроизведение'
+      presenceData.smallImageText = strings.play
     }
     else {
       presenceData.state = currentEpisode
-        ? `Серия ${currentEpisode} (Пауза)`
-        : 'На паузе'
+        ? `${strings.pausedEpisodePrefix} ${currentEpisode} (${strings.pause})`
+        : strings.pausedNoEpisode
 
       delete presenceData.startTimestamp
       delete presenceData.endTimestamp
 
       presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = 'Пауза'
+      presenceData.smallImageText = strings.pause
     }
   }
   else {
@@ -477,8 +559,8 @@ presence.on('UpdateData', async () => {
     delete presenceData.smallImageText
 
     if (currentEpisode && isPlayerBlockInView())
-      presenceData.state = `Готовится к просмотру: ${currentEpisode}`
-    else presenceData.state = 'Читает описание'
+      presenceData.state = `${strings.preparingEpisodePrefix} ${currentEpisode}`
+    else presenceData.state = strings.readingDescription
 
     delete presenceData.startTimestamp
     delete presenceData.endTimestamp

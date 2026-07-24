@@ -14,19 +14,29 @@
   "service": "YummyAnime",
   "description": {
     "en": "Free anime streaming site with user lists and community features.",
-    "ru": "Сайт для бесплатного просмотра аниме, ведения списков и общения."
+    "ru": "Сайт для бесплатного просмотра аниме, ведения списков и общения.",
+    "uk": "Сайт для безкоштовного перегляду аніме, ведення списків та спілкування."
   },
-  "url": "yummyani.me",
-  "regExp": "^https?[:][/][/](www[.])?(old[.])?(en[.])?(ru[.])?yummyani[.]me[/]",
-  "version": "1.0.6",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.jpeg",
+  "url": [
+    "yummyani.me",
+    "yummy-ani.me"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?(old[.])?(new[.])?(en[.])?(ru[.])?(uk[.])?yummy-?ani[.]me[/]",
+  "version": "1.1.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/thumbnail.png",
-  "color": "#FF5722",
+  "color": "#FF6666",
   "category": "anime",
   "tags": [
     "anime",
     "video"
   ],
   "iframe": true,
-  "iFrameRegExp": "(kodik[.](info|cc|biz|online)|kodikplayer[.]com|aniqit[.]com|alloha[.]yani[.]tv|player[.]cdnvideohub[.]com|iframeCVH[.]html|vkuker[.]net)"
+  "iFrameRegExp": "(kodik[.](info|cc|biz|online)|kodikplayer[.]com|aniqit[.]com|alloha[.]yani[.]tv|player[.]cdnvideohub[.]com|iframeCVH[.]html|vkuker[.]net)",
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
 }
