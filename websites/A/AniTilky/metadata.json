@@ -1,26 +1,99 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
-    "name": "hakanxd",
-    "id": "725520758117498881"
+    "name": "hakanxd2",
+    "id": "726522818522775564"
   },
   "service": "AniTilky",
   "description": {
-    "en": "Watch Turkish dubbed and subtitled anime, track your progress, and discover new series.",
-    "tr": "Türkçe dublajlı ve altyazılı anime izle, ilerlemenizi takip edin ve yeni seriler keşfedin."
+    "de": "Schau türkisch synchronisierte und untertitelte Anime, verfolge deinen Fortschritt und entdecke neue Serien auf AniTilky.",
+    "en": "Watch Turkish dubbed and subtitled anime, track your progress, and explore the community on AniTilky.",
+    "fr": "Regardez des anime doublés et sous-titrés en turc, suivez votre progression et découvrez de nouvelles séries sur AniTilky.",
+    "nl": "Bekijk Turks nagesynchroniseerde en ondertitelde anime, volg je voortgang en ontdek nieuwe series op AniTilky.",
+    "pt-br": "Assista anime dublado e legendado em turco, acompanhe seu progresso e descubra novas séries no AniTilky.",
+    "ro": "Urmărește anime dublat și subtitrat în turcă, urmărește progresul tău și descoperă serii noi pe AniTilky.",
+    "tr": "Türkçe dublajlı ve altyazılı anime izle, ilerlemenizi takip edin ve yeni seriler keşfedin.",
+    "uk": "Дивіться аніме з турецьким дубляжем і субтитрами, відстежуйте прогрес і відкривайте нові серіали на AniTilky.",
+    "vi": "Xem anime lồng tiếng và phụ đề tiếng Thổ Nhĩ Kỳ, theo dõi tiến trình và khám phá cộng đồng trên AniTilky."
   },
-  "url": "anitilky.xyz",
-  "regExp": "^https?[:][/][/]anitilky[.]xyz[/]",
-  "version": "1.1.1",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniTilky/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniTilky/assets/thumbnail.png",
-  "color": "#FF6B6B",
+  "url": [
+    "anitilky.com",
+    "www.anitilky.com"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?anitilky[.]com[/]",
+  "version": "2.0.0",
+  "logo": "https://i.imgur.com/9us39uh.png",
+  "thumbnail": "https://i.imgur.com/spC11yQ.png",
+  "color": "#ff6a00",
   "category": "anime",
   "tags": [
     "anime",
     "video",
     "streaming",
     "turkish"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showBrowsingStatus",
+      "title": "Show Browsing Status",
+      "icon": "fad fa-book-reader",
+      "value": true
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover Art",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showSmallImages",
+      "title": "Show Status Icons",
+      "icon": "fad fa-pause",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-external-link-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showProfiles",
+      "title": "Show Profile Activity",
+      "icon": "fad fa-user-circle",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
   ]
 }
