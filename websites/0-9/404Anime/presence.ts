@@ -163,13 +163,6 @@ function getBrowsingState(pathname: string): string {
   return 'Exploring 404Anime'
 }
 
-// Skip resending identical presence data every tick — UpdateData fires
-// repeatedly even when nothing changed (e.g. idling on a browse page, or a
-// video ticking forward by sub-second amounts each poll). Discord's client
-// ticks elapsed/remaining time forward on its own once a timestamp is set, so
-// re-sending on every call isn't needed; only a real change (episode, pause
-// state, page, or the viewer seeking more than a few seconds) should push an
-// update to the desktop app.
 let lastSent: PresenceData | null = null
 const TIMESTAMP_TOLERANCE_SEC = 3
 
