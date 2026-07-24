@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "990316096244572204",
+    "name": "iRedX"
+  },
+  "service": "Scribble Hub",
+  "description": {
+    "en": "Scribble Hub is a popular online self-publishing platform dedicated to original web stories, serialized novels, and fanfiction."
+  },
+  "url": [
+    "www.scribblehub.com",
+    "www.scribblehubforum.com"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(scribblehub|scribblehubforum)[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/S7M6V6kV/SH.png",
+  "thumbnail": "https://i.ibb.co/Y77FYtDD/image.png",
+  "color": "#3399CC",
+  "category": "other",
+  "tags": [
+    "novels",
+    "books",
+    "reading",
+    "writing"
+  ]
+}
