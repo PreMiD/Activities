@@ -1,0 +1,96 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "hash.king",
+    "id": "608311692644057088"
+  },
+  "service": "Velora",
+  "description": {
+    "en": "Velora is a creator-first live streaming platform with ultra-low latency and powerful chat tools."
+  },
+  "url": [
+    "velora.tv",
+    "www.velora.tv"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?velora[.]tv[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/6t0ss9m.png",
+  "thumbnail": "https://i.imgur.com/JluLFp2.jpeg",
+  "color": "#FFD700",
+  "category": "videos",
+  "tags": [
+    "streaming",
+    "live",
+    "video",
+    "gaming"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showBrowsingStatus",
+      "title": "Show Browsing Status",
+      "icon": "fad fa-book-reader",
+      "value": true
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover Art",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": { "privacy": false }
+    },
+    {
+      "id": "usePresenceName",
+      "title": "Show Streamer as Presence Name",
+      "icon": "fad fa-user-edit",
+      "value": true,
+      "if": { "privacy": false }
+    },
+    {
+      "id": "showCategory",
+      "title": "Show Category",
+      "icon": "fas fa-gamepad",
+      "value": true,
+      "if": { "privacy": false }
+    },
+    {
+      "id": "showViewerCount",
+      "title": "Show Viewer Count",
+      "icon": "fas fa-eye",
+      "value": true,
+      "if": { "privacy": false }
+    },
+    {
+      "id": "showTimestamps",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "if": { "privacy": false }
+    },
+    {
+      "id": "showSmallImage",
+      "title": "Show Live Icon",
+      "icon": "fad fa-podcast",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Watch Stream Button",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": { "privacy": false }
+    },
+    {
+      "id": "showDashboardStatus",
+      "title": "Show Dashboard Status",
+      "icon": "fas fa-user-shield",
+      "value": false
+    }
+  ]
+}
