@@ -1,5 +1,6 @@
 export interface Details {
   poster_path?: string
+  backdrop_path?: string
 }
 
 export interface TvDetails extends Details {
@@ -20,6 +21,7 @@ export interface MovieDetails extends Details {
   title?: string
   release_date?: string
   runtime?: number
+  vote_average?: number
 }
 
 export interface AnimeDetails {
