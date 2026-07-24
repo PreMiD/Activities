@@ -3,10 +3,6 @@
     "description": "Shown when the user is choosing anime",
     "message": "Choosing anime"
   },
-  "yummyanime.onSite": {
-    "description": "Shown when browsing the site",
-    "message": "On YummyAnime"
-  },
   "yummyanime.preparingEpisodePrefix": {
     "description": "Prefix for preparing to watch an episode",
     "message": "Preparing to watch episode:"
