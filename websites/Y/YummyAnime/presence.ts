@@ -444,6 +444,9 @@ presence.on('UpdateData', async () => {
     pausedNoEpisode: 'general.paused',
     preparingEpisodePrefix: 'yummyanime.preparingEpisodePrefix',
     readingDescription: 'yummyanime.readingDescription',
+    viewProfileButton: 'general.buttonViewProfile',
+    watchAnimeButton: 'general.buttonWatchAnime',
+    openSiteButton: 'yummyanime.openSiteButton'
   })
   const showButtons = await presence.getSetting<boolean>('showButtons')
 
@@ -467,8 +470,8 @@ presence.on('UpdateData', async () => {
   if (showButtons) {
     presenceData.buttons = [
       {
-        label: 'Open site',
-        url: document.location.href,
+        label: strings.openSiteButton,
+        url: document.location.origin,
       },
     ]
   }
@@ -508,7 +511,7 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         {
-          label: 'View profile',
+          label: strings.viewProfileButton,
           url: document.location.href,
         },
       ]
@@ -547,7 +550,7 @@ presence.on('UpdateData', async () => {
   if (showButtons) {
     presenceData.buttons = [
       {
-        label: 'Watch anime',
+        label: strings.watchAnimeButton,
         url: document.location.href,
       },
     ]
