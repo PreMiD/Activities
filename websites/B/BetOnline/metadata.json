@@ -10,7 +10,7 @@
     "en": "BetOnline.ag is a leading online sportsbook offering sports betting, live betting, casino games, poker, esports wagering, and horse racing."
   },
   "url": "betonline.ag",
-  "regExp": "^https?[:][/][/](www[.])?betonline[.]ag[/]?",
+  "regExp": "^https?[:][/][/](www[.])?betonline[.]ag[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/TYwcsZL.png",
   "thumbnail": "https://i.imgur.com/CaikyHW.png",
