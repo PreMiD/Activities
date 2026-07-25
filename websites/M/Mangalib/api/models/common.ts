@@ -31,13 +31,24 @@ export interface Cover {
   adjusted: Blob
 }
 
-export type AgeRestriction
-  = | { id: 0, label: 'Нет' }
-    | { id: 1, label: '6+' }
-    | { id: 2, label: '12+' }
-    | { id: 3, label: '16+' }
-    | { id: 4, label: '18+' }
-    | { id: 5, label: '18+ (RX)' }
+export type ContentType = 'anime' | 'manga'
+
+export type AgeRestriction<T extends ContentType>
+  = T extends 'manga'
+    ? (
+      | { id: 1, label: '6+' }
+      | { id: 2, label: '12+' }
+      | { id: 3, label: '16+' }
+      | { id: 4, label: '18+' }
+      | { id: 5, label: '18+ (RX)' }
+      )
+    : (
+      | { id: 1, label: 'PG' }
+      | { id: 2, label: 'PG-13' }
+      | { id: 3, label: 'R-17' }
+      | { id: 4, label: 'R+' }
+      | { id: 5, label: 'RX (18+)' }
+      )
 
 export type Status
   = | { id: 1, label: 'Онгоинг' }

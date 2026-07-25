@@ -3,6 +3,7 @@
 !cli/bin/**/*.*js
 !*.config.*js
 !.github/scripts/**/*.mjs
+!eslint-rules/**/*.mjs
 websites/**/dist
 websites/**/tsconfig.json
 node_modules

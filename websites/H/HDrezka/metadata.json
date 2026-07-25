@@ -22,10 +22,11 @@
     "rezka-ua.org",
     "standby-rezka.tv",
     "rezka-ua.co",
-    "hdrezka.loan"
+    "hdrezka.loan",
+    "rezka-ua.pub"
   ],
-  "regExp": "^https?[:][/][/](rezka[.]ag|hdrezka[.]ag|rezka-ua[.]org|standby-rezka[.]tv|rezka-ua[.]co|hdrezka[.]loan)[/]",
-  "version": "1.3.1",
+  "regExp": "^https?[:][/][/](rezka[.]ag|hdrezka[.]ag|rezka-ua[.]org|standby-rezka[.]tv|rezka-ua[.]co|hdrezka[.]loan|rezka-ua[.]pub)[/]",
+  "version": "1.3.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HDrezka/assets/thumbnail.jpeg",
   "color": "#DA3D36",
