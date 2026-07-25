@@ -39,12 +39,12 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-  }
+  } as PresenceData
 
   if (pathname.startsWith('/anime/watch')) {
     if (privacy) {
       presenceData.details = 'Watching anime'
-      presenceData.type = ActivityType.Watching
+      ;(presenceData as PresenceData).type = ActivityType.Watching
     }
     else {
       const { anime, episode } = parseWatchTitle(document.title)
@@ -57,7 +57,7 @@ presence.on('UpdateData', async () => {
 
       presenceData.details = anime
       presenceData.state = episodeLabel || 'Watching'
-      presenceData.type = ActivityType.Watching
+      ;(presenceData as PresenceData).type = ActivityType.Watching
       presenceData.name = anime
 
       const cover = getCover()
