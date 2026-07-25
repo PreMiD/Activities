@@ -189,7 +189,7 @@ function findProfileAvatarSvgImage(): SVGImageElement | null {
     const href = getSvgImageHref(img)
     if (!href)
       continue
-    if (href.includes('/users/big/') || href.includes('DefaultAva') || href.includes('no-photo'))  {
+    if (href.includes('/users/big/') || href.includes('DefaultAva') || href.includes('no-photo')) {
       return img
     }
   }
@@ -448,7 +448,7 @@ presence.on('UpdateData', async () => {
     readingDescription: 'yummyanime.readingDescription',
     viewProfileButton: 'general.buttonViewProfile',
     watchAnimeButton: 'general.buttonWatchAnime',
-    openSiteButton: 'yummyanime.openSiteButton'
+    openSiteButton: 'yummyanime.openSiteButton',
   })
   const showButtons = await presence.getSetting<boolean>('showButtons')
 
