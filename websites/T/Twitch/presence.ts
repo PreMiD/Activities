@@ -543,10 +543,7 @@ presence.on('UpdateData', async () => {
               ?.textContent
           const game = getElement('a[data-a-target=\'stream-game-link\']')
             || 'Just Chatting'
-          const profilePic = document
-            .querySelector<HTMLImageElement>(
-                '.channel-info-content .tw-avatar > img',
-            )
+          const profilePic = document.querySelector<HTMLImageElement>('.channel-info-content .tw-avatar > img')
             ?.src
             ?.replace(/-\d{1,2}x\d{1,2}/, '-600x600')
             ?? (logoArr[logo] || ActivityAssets.Logo)
@@ -983,9 +980,7 @@ presence.on('UpdateData', async () => {
   if (privacy || !buttons)
     delete presenceData.buttons
 
-    if (presenceData.details) {
+    if (presenceData.details)
         presence.setActivity(presenceData)
-    } else {
-        presence.clearActivity()
-    }
+    else presence.clearActivity()
 })
