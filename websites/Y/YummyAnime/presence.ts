@@ -1,7 +1,7 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/397AqsF.png'
+  Logo = 'https://i.imgur.com/397AqsF.png',
 }
 
 const presence = new Presence({
@@ -300,7 +300,7 @@ function posterUrlForDiscord(raw: string): string {
   return resolveAbsoluteUrl(raw)
 }
 
-function applyPrivacy(data: Record<string, unknown>, strings: Record<string, string>,): void {
+function applyPrivacy(data: Record<string, unknown>, strings: Record<string, string>): void {
   data.details = 'YummyAnime'
   delete data.state
   data.largeImageKey = ActivityAssets.Logo
@@ -312,8 +312,8 @@ function applyPrivacy(data: Record<string, unknown>, strings: Record<string, str
   data.buttons = [
     {
       label: strings.openSiteButton,
-      url: document.location.origin
-    }
+      url: document.location.origin,
+    },
   ]
 }
 
@@ -505,7 +505,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = strings.choosingAnime
     if (isPrivacy) {
       applyPrivacy(presenceData, strings)
-  }
+    }
     presence.setActivity(presenceData)
     return
   }
@@ -515,7 +515,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = strings.choosingAnime
     if (isPrivacy) {
       applyPrivacy(presenceData, strings)
-  }
+    }
     presence.setActivity(presenceData)
     return
   }
@@ -547,9 +547,9 @@ presence.on('UpdateData', async () => {
       ]
     }
 
-   if (isPrivacy) {
-    applyPrivacy(presenceData, strings)
-  }
+    if (isPrivacy) {
+      applyPrivacy(presenceData, strings)
+    }
 
     presence.setActivity(presenceData)
     return
