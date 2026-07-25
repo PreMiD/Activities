@@ -174,6 +174,8 @@ function getProfileUserId(pathname: string): string | null {
 
 function getProfileNickname(): string {
   const nick = document.querySelector('span.k2[data-tooltip-id="old-nicks-t"]')
+    ?? document.querySelector('div.block-title span.second-marker')
+
   return nick?.textContent?.trim() ?? ''
 }
 
@@ -187,7 +189,7 @@ function findProfileAvatarSvgImage(): SVGImageElement | null {
     const href = getSvgImageHref(img)
     if (!href)
       continue
-    if (href.includes('/users/big/') || href.includes('DefaultAva')) {
+    if (href.includes('/users/big/') || href.includes('DefaultAva') || href.includes('no-photo'))  {
       return img
     }
   }
