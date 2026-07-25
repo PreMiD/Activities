@@ -38,6 +38,12 @@
     {
       "id": "lang",
       "multiLanguage": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "value": true,
+      "description": "Show buttons in discord activity."
     }
   ]
 }

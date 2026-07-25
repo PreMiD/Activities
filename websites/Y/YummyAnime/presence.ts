@@ -463,6 +463,13 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
+  presenceData.buttons = [
+    {
+      label: 'Open site',
+      url: document.location.href,
+    },
+  ]
+
   if (pathname === '/') {
     presenceData.details = strings.mainPage
     presenceData.state = strings.choosingAnime
@@ -489,11 +496,18 @@ presence.on('UpdateData', async () => {
       presenceData.state = ''
     }
     presenceData.largeImageKey = getProfileAvatarUrl(profileUserId)
+
     delete presenceData.smallImageKey
     delete presenceData.smallImageText
     delete presenceData.startTimestamp
     delete presenceData.endTimestamp
 
+    presenceData.buttons = [
+      {
+        label: 'View profile',
+        url: document.location.href,
+      },
+    ]
     presence.setActivity(presenceData)
     return
   }
@@ -523,6 +537,13 @@ presence.on('UpdateData', async () => {
 
   const currentEpisode = getActiveEpisode(pathname, search)
   const playback = getPlaybackVideo()
+
+  presenceData.buttons = [
+    {
+      label: 'Watch anime',
+      url: document.location.href,
+    },
+  ]
 
   if (playback && (playback.duration > 0 || !playback.paused)) {
     if (!playback.paused) {
