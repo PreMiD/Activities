@@ -36,14 +36,14 @@
   "iFrameRegExp": "(kodik[.](info|cc|biz|online)|kodikplayer[.]com|aniqit[.]com|alloha[.]yani[.]tv|player[.]cdnvideohub[.]com|iframeCVH[.]html|vkuker[.]net)",
   "settings": [
     {
-      "id": "lang",
-      "multiLanguage": true
-    },
-    {
       "id": "showButtons",
       "title": "Show Buttons",
-      "value": true,
-      "description": "Show buttons in discord activity."
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "lang",
+      "multiLanguage": true
     }
   ]
 }

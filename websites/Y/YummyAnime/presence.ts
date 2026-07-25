@@ -445,6 +445,7 @@ presence.on('UpdateData', async () => {
     preparingEpisodePrefix: 'yummyanime.preparingEpisodePrefix',
     readingDescription: 'yummyanime.readingDescription',
   })
+  const showButtons = await presence.getSetting<boolean>('showButtons')
 
   if (lastPathname !== document.location.pathname) {
     lastPathname = document.location.pathname
@@ -463,12 +464,14 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  presenceData.buttons = [
-    {
-      label: 'Open site',
-      url: document.location.href,
-    },
-  ]
+  if (showButtons) {
+    presenceData.buttons = [
+      {
+        label: 'Open site',
+        url: document.location.href,
+      },
+    ]
+  }
 
   if (pathname === '/') {
     presenceData.details = strings.mainPage
@@ -502,12 +505,15 @@ presence.on('UpdateData', async () => {
     delete presenceData.startTimestamp
     delete presenceData.endTimestamp
 
-    presenceData.buttons = [
-      {
-        label: 'View profile',
-        url: document.location.href,
-      },
-    ]
+    if (showButtons) {
+      presenceData.buttons = [
+        {
+          label: 'View profile',
+          url: document.location.href,
+        },
+      ]
+    }
+
     presence.setActivity(presenceData)
     return
   }
@@ -538,12 +544,14 @@ presence.on('UpdateData', async () => {
   const currentEpisode = getActiveEpisode(pathname, search)
   const playback = getPlaybackVideo()
 
-  presenceData.buttons = [
-    {
-      label: 'Watch anime',
-      url: document.location.href,
-    },
-  ]
+  if (showButtons) {
+    presenceData.buttons = [
+      {
+        label: 'Watch anime',
+        url: document.location.href,
+      },
+    ]
+  }
 
   if (playback && (playback.duration > 0 || !playback.paused)) {
     if (!playback.paused) {
