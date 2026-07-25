@@ -26,7 +26,7 @@
     "new.yummy-ani.me"
   ],
   "regExp": "^https?[:][/][/](www[.])?(old[.])?(new[.])?(en[.])?(ru[.])?(uk[.])?yummy-?ani[.]me[/]",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "logo": "https://i.imgur.com/397AqsF.png",
   "thumbnail": "https://i.imgur.com/oSSfWiA.png",
   "color": "#FF6666",
