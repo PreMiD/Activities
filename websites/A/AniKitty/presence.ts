@@ -15,9 +15,16 @@ function parseWatchTitle(raw: string): { anime: string, episode: string | null }
   if (!cleaned || /^anikitty$/i.test(cleaned))
     return { anime: 'Anime', episode: null }
 
-  const match = cleaned.match(/^(.*?)\s*[—–-]\s*(Episode\s+\d+)\s*$/i)
-  if (match?.[1] && match[2])
-    return { anime: match[1].trim(), episode: match[2].trim() }
+  const separators = [' — ', ' – ', ' - '] as const
+  for (const sep of separators) {
+    const index = cleaned.lastIndexOf(sep)
+    if (index === -1)
+      continue
+    const anime = cleaned.slice(0, index).trim()
+    const episode = cleaned.slice(index + sep.length).trim()
+    if (anime && /^Episode\s+\d+$/i.test(episode))
+      return { anime, episode }
+  }
 
   return { anime: cleaned, episode: null }
 }
