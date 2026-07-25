@@ -14,7 +14,7 @@
     "anikitty.online"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])?(anikitty[.]moe|anikitty[.]online)[/]",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://anikitty.moe/anikitty-logo.png",
   "thumbnail": "https://anikitty.moe/og-share.png",
   "color": "#ffffff",

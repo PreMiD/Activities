@@ -12,11 +12,14 @@ enum ActivityAssets {
 
 function parseWatchTitle(raw: string): { anime: string, episode: string | null } {
   const cleaned = raw.replace(/\s*\|\s*AniKitty\s*$/i, '').trim()
+  if (!cleaned || /^anikitty$/i.test(cleaned))
+    return { anime: 'Anime', episode: null }
+
   const match = cleaned.match(/^(.*?)\s*[—–-]\s*(Episode\s+\d+)\s*$/i)
-  if (match?.[1] && match[2]) {
+  if (match?.[1] && match[2])
     return { anime: match[1].trim(), episode: match[2].trim() }
-  }
-  return { anime: cleaned || 'Anime', episode: null }
+
+  return { anime: cleaned, episode: null }
 }
 
 function getCover(): string | null {
@@ -27,38 +30,57 @@ function getCover(): string | null {
   )
 }
 
+function applyVideoState(
+  presenceData: PresenceData,
+  video: HTMLVideoElement,
+  showTimestamps: boolean,
+): void {
+  const duration = video.duration
+  const currentTime = video.currentTime
+  const hasDuration = Number.isFinite(duration) && duration > 0
+
+  if (video.paused || video.ended) {
+    presenceData.smallImageKey = Assets.Pause
+    presenceData.smallImageText = 'Paused'
+    delete presenceData.startTimestamp
+    delete presenceData.endTimestamp
+    return
+  }
+
+  presenceData.smallImageKey = Assets.Play
+  presenceData.smallImageText = 'Playing'
+
+  if (showTimestamps && hasDuration && Number.isFinite(currentTime)) {
+    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
+  }
+}
+
 presence.on('UpdateData', async () => {
-  const [privacy, showTimestamps, showCover, showButtons] = await Promise.all([
-    presence.getSetting<boolean>('privacy'),
-    presence.getSetting<boolean>('timestamps'),
-    presence.getSetting<boolean>('cover'),
-    presence.getSetting<boolean>('buttons'),
-  ])
+  const privacy = await presence.getSetting<boolean>('privacy').catch(() => false)
+  const showTimestamps = await presence.getSetting<boolean>('timestamps').catch(() => true)
+  const showCover = await presence.getSetting<boolean>('cover').catch(() => true)
+  const showButtons = await presence.getSetting<boolean>('buttons').catch(() => true)
 
   const { pathname, href, search } = document.location
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
+    details: 'Browsing AniKitty',
   } as PresenceData
 
   if (pathname.startsWith('/anime/watch')) {
+    ;(presenceData as PresenceData).type = ActivityType.Watching
+
     if (privacy) {
       presenceData.details = 'Watching anime'
-      ;(presenceData as PresenceData).type = ActivityType.Watching
     }
     else {
       const { anime, episode } = parseWatchTitle(document.title)
-      const params = new URLSearchParams(search)
-      const episodeParam = params.get('episode')
-      const episodeFromUrl = episodeParam?.match(/(\d+)/)?.[1]
-      const episodeLabel
-        = episode
-          || (episodeFromUrl ? `Episode ${episodeFromUrl}` : null)
+      const episodeFromUrl = new URLSearchParams(search).get('episode')?.match(/(\d+)/)?.[1]
+      const episodeLabel = episode || (episodeFromUrl ? `Episode ${episodeFromUrl}` : null)
 
       presenceData.details = anime
       presenceData.state = episodeLabel || 'Watching'
-      ;(presenceData as PresenceData).type = ActivityType.Watching
-      presenceData.name = anime
 
       const cover = getCover()
       if (showCover && cover) {
@@ -68,34 +90,24 @@ presence.on('UpdateData', async () => {
       }
 
       const video = document.querySelector('video')
-      if (video && video.readyState > 0) {
-        if (video.paused) {
-          presenceData.smallImageKey = Assets.Pause
-          presenceData.smallImageText = 'Paused'
-          delete presenceData.startTimestamp
-          delete presenceData.endTimestamp
-        }
-        else {
-          presenceData.smallImageKey = Assets.Play
-          presenceData.smallImageText = 'Playing'
-          if (showTimestamps) {
-            [presenceData.startTimestamp, presenceData.endTimestamp]
-              = getTimestampsFromMedia(video)
-          }
-        }
-      }
+      if (video && video.readyState > 0)
+        applyVideoState(presenceData, video, showTimestamps)
 
       if (showButtons) {
         presenceData.buttons = [
           {
             label: 'Watch on AniKitty',
-            url: href,
+            url: href.split('#')[0]!,
           },
         ]
       }
     }
   }
-  else if (pathname.startsWith('/anime/') && pathname !== '/anime' && !pathname.startsWith('/anime/watch')) {
+  else if (
+    pathname.startsWith('/anime/')
+    && pathname !== '/anime'
+    && !pathname.startsWith('/anime/watch')
+  ) {
     if (privacy) {
       presenceData.details = 'Browsing anime'
     }
@@ -106,16 +118,18 @@ presence.on('UpdateData', async () => {
           || 'Anime'
       presenceData.details = 'Viewing anime'
       presenceData.state = title
+
       const cover = getCover()
       if (showCover && cover) {
         presenceData.largeImageKey = cover
         presenceData.smallImageKey = ActivityAssets.Logo
       }
+
       if (showButtons) {
         presenceData.buttons = [
           {
             label: 'View Anime',
-            url: href,
+            url: href.split('#')[0]!,
           },
         ]
       }
@@ -125,7 +139,9 @@ presence.on('UpdateData', async () => {
     presenceData.details = privacy ? 'Searching' : 'Searching for anime'
     presenceData.smallImageKey = Assets.Search
     if (!privacy) {
-      const q = new URLSearchParams(search).get('q') || new URLSearchParams(search).get('query')
+      const q
+        = new URLSearchParams(search).get('q')
+          || new URLSearchParams(search).get('query')
       if (q)
         presenceData.state = q
     }
@@ -156,16 +172,14 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/history')) {
     presenceData.details = 'Viewing watch history'
   }
-  else if (pathname.startsWith('/settings') || pathname.startsWith('/messages') || pathname.startsWith('/chat')) {
+  else if (
+    pathname.startsWith('/settings')
+    || pathname.startsWith('/messages')
+    || pathname.startsWith('/chat')
+  ) {
     presence.clearActivity()
     return
   }
-  else {
-    presenceData.details = 'Browsing AniKitty'
-  }
 
-  if (presenceData.details)
-    presence.setActivity(presenceData)
-  else
-    presence.clearActivity()
+  presence.setActivity(presenceData)
 })
