@@ -7,7 +7,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://anikitty.moe/anikitty-logo.png',
+  Logo = 'https://anikitty.moe/icon-512x512.png',
 }
 
 function parseWatchTitle(raw: string): { anime: string, episode: string | null } {
