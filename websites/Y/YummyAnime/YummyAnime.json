@@ -10,5 +10,9 @@
   "yummyanime.readingDescription": {
     "description": "Shown when reading an anime description",
     "message": "Reading description"
+  },
+  "yummyanime.openSiteButton": {
+    "description": "Button for open main page of site.",
+    "message": "Open Site"
   }
 }
