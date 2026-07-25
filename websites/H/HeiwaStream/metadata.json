@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "heiwafr",
+    "id": "1086606341990256650"
+  },
+  "service": "HeiwaStream",
+  "description": {
+    "en": "Browse movies, series and anime available on HeiwaStream.",
+    "fr": "Parcourez les films, séries et animés disponibles sur HeiwaStream."
+  },
+  "url": [
+    "heiwastream.fr",
+    "zelyon.xyz"
+  ],
+  "regExp": "^https?[:][/][/](?:www[.])?(?:heiwastream[.]fr|zelyon[.]xyz)(?:[/]|$)",
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HeiwaStream/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HeiwaStream/assets/thumbnail.png",
+  "color": "#e6a91a",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "series",
+    "anime"
+  ]
+}

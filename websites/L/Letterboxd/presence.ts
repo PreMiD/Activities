@@ -35,6 +35,44 @@ function filterIterable<T extends Element>(
   return Array.from(itr).find((element, ind) => fnc(element, ind))
 }
 
+interface FilmSchema {
+  name?: string
+  year?: string
+  director?: string
+  rating?: number
+  poster?: string
+}
+
+function getFilmSchema(): FilmSchema {
+  const movieJsonScript = filterIterable(
+    document.querySelectorAll('script[type="application/ld+json"]'),
+    val => val?.textContent?.includes('"@type":"Movie"') ?? false,
+  )
+
+  if (!movieJsonScript?.textContent)
+    return {}
+
+  try {
+    const movieJson = JSON.parse(
+      movieJsonScript.textContent
+        .replace('/* <![CDATA[ */', '')
+        .replace('/* ]]> */', '')
+        .trim(),
+    )
+
+    return {
+      name: movieJson.name,
+      year: movieJson.dateCreated?.slice(0, 4),
+      director: movieJson.director?.[0]?.name,
+      rating: movieJson.aggregateRating?.ratingValue,
+      poster: movieJson.image,
+    }
+  }
+  catch {
+    return {}
+  }
+}
+
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/L/Letterboxd/assets/logo.png',
 }
@@ -94,7 +132,7 @@ presence.on('UpdateData', async () => {
             '.title-1.prettify',
           )[0] as HTMLHeadingElement
         ).textContent?.replace(
-          path[0] === 'director' ? 'FILMS DIRECTED BY\n' : 'FILMS STARRING\n',
+          path[0] === 'director' ? 'Films directed by\n' : 'Films starring\n',
           '',
         )
         const pfp = (
@@ -176,21 +214,14 @@ presence.on('UpdateData', async () => {
           switch (path[1]) {
             default: {
               if (path[2]) {
-                if (path[2] === 'trailer') {
-                  const header = document.querySelector(
-                    '#featured-film-header',
-                  )
-                  const title = clarifyString(
-                    header?.firstElementChild?.textContent ?? '',
-                  )
+                const film = getFilmSchema()
+                const title = clarifyString(film.name ?? '')
+                const year = film.year ?? 'Unknown year'
 
+                if (path[2] === 'trailer') {
                   presenceData.details = 'Viewing the trailer of...'
-                  presenceData.state = `${title}, ${
-                    header?.lastElementChild?.firstElementChild
-                      ?.firstElementChild
-                      ?.textContent
-                  }`
-                  presenceData.largeImageKey = getImageURLByAlt(title)
+                  presenceData.state = `${title}, ${year}`
+                  presenceData.largeImageKey = film.poster ?? getImageURLByAlt(title)
                   presenceData.smallImageKey = ActivityAssets.Logo
                   delete presenceData.startTimestamp
                   presenceData.buttons = [
@@ -198,64 +229,43 @@ presence.on('UpdateData', async () => {
                   ]
                 }
                 else {
-                  const title = document.querySelectorAll(
-                    '.contextual-title',
-                  )[0]?.firstElementChild?.firstElementChild
-                    ?.nextElementSibling
-                  const year = title?.nextElementSibling
-                    ?.firstElementChild
-                    ?.textContent
-
                   switch (path[2]) {
                     case 'members':
-                      presenceData.details = `Viewing people who have seen ${title?.textContent}, ${year}`
+                      presenceData.details = `Viewing people who have seen ${title}, ${year}`
                       break
                     case 'fans':
-                      presenceData.details = `Viewing fans of ${title?.textContent}, ${year}`
+                      presenceData.details = `Viewing fans of ${title}, ${year}`
                       break
                     case 'likes':
-                      presenceData.details = `Viewing people who have liked ${title?.textContent}, ${year}`
+                      presenceData.details = `Viewing people who have liked ${title}, ${year}`
                       break
                     case 'ratings':
-                      presenceData.details = `Viewing ratings of ${title?.textContent}, ${year}`
+                      presenceData.details = `Viewing ratings of ${title}, ${year}`
                       break
                     case 'reviews':
-                      presenceData.details = `Viewing reviews of ${title?.textContent}, ${year}`
+                      presenceData.details = `Viewing reviews of ${title}, ${year}`
                       break
                     case 'lists':
-                      presenceData.details = `Viewing lists that include ${title?.textContent}, ${year}`
+                      presenceData.details = `Viewing lists that include ${title}, ${year}`
                       break
                   }
 
-                  presenceData.buttons = generateButtonText(
-                    presenceData.details as string,
-                  )
-                  presenceData.largeImageKey = getImageURLByAlt(
-                    clarifyString(title?.textContent ?? ''),
-                  )
+                  presenceData.buttons = generateButtonText(presenceData.details as string)
+                  presenceData.largeImageKey = film.poster ?? getImageURLByAlt(title)
                   presenceData.smallImageKey = ActivityAssets.Logo
                 }
               }
               else {
-                const header = document.querySelector('#featured-film-header')
-                const title = clarifyString(
-                  header?.firstElementChild?.textContent ?? '',
-                )
+                const film = getFilmSchema()
+                const title = clarifyString(film.name ?? '')
+                const year = film.year ?? 'Unknown year'
 
-                presenceData.details = `${title}, ${
-                  header?.lastElementChild?.firstElementChild
-                    ?.firstElementChild
-                    ?.textContent
-                }`
-                presenceData.state = `By ${
-                  header?.lastElementChild?.lastElementChild
-                    ?.firstElementChild
-                    ?.textContent
-                }`
+                presenceData.details = `${title}, ${year}`
+                presenceData.state = `By ${film?.director ?? 'Unknown'}`
                 presenceData.buttons = [
                   { label: `View ${title}`, url: window.location.href },
                 ]
-                presenceData.largeImageKey = getImageURLByAlt(title)
+                presenceData.largeImageKey = film.poster ?? getImageURLByAlt(title)
                 presenceData.smallImageKey = ActivityAssets.Logo
                 break
               }
@@ -268,6 +278,14 @@ presence.on('UpdateData', async () => {
       default:
         if (path[1]) {
           switch (path[1]) {
+            case 'diary':
+              presenceData.details = 'Viewing their diary'
+              presenceData.buttons = generateButtonText(presenceData.details)
+              break
+            case 'reviews':
+              presenceData.details = 'Viewing their reviewed films'
+              presenceData.buttons = generateButtonText(presenceData.details)
+              break
             case 'watchlist':
               presenceData.details = 'Viewing their watchlist'
               presenceData.buttons = generateButtonText(presenceData.details)
@@ -446,35 +464,44 @@ presence.on('UpdateData', async () => {
             }
 
             case 'film': {
-              const title = clarifyString(
-                (
-                  document.querySelectorAll('.film-title-wrapper')[0]
-                    ?.firstElementChild as HTMLAnchorElement
-                )?.textContent ?? '',
+              const reviewJsonScript = filterIterable(
+                document.querySelectorAll('script[type="application/ld+json"]'),
+                val => val?.textContent?.includes('"@type":"Review"') ?? false,
               )
-              const rater = filterIterable(
-                document.querySelectorAll('span'),
-                (val) => {
-                  if (val?.getAttribute('itemprop') === 'name')
-                    return true
-                  return false
-                },
-              )?.textContent
-              const rating = filterIterable(
-                document.querySelectorAll('span'),
-                (val) => {
-                  if (val?.className?.startsWith('rating rating-large'))
-                    return true
-                  return false
-                },
-              )?.textContent
+
+              let title = ''
+              let rater: string | undefined
+              let ratingValue: number | undefined
+              let poster: string | undefined
+
+              if (reviewJsonScript?.textContent) {
+                try {
+                  const reviewJson = JSON.parse(
+                    reviewJsonScript.textContent
+                      .replace('/* <![CDATA[ */', '')
+                      .replace('/* ]]> */', '')
+                      .trim(),
+                  )
+
+                  title = clarifyString(reviewJson.itemReviewed?.name ?? '')
+                  rater = reviewJson.author?.[0]?.name
+                  ratingValue = reviewJson.reviewRating?.ratingValue
+                  poster = reviewJson.itemReviewed?.image
+                }
+                catch { }
+              }
+
+              const rating = ratingValue === undefined
+                ? 'Not rated'
+                : '★'.repeat(Math.floor(ratingValue))
+                  + (ratingValue % 1 !== 0 ? '½' : '')
 
               presenceData.details = `Review of ${title}`
-              presenceData.state = `By ${rater} (${rating})`
+              presenceData.state = `By ${rater ?? 'Unknown'} (${rating})`
               presenceData.buttons = [
                 { label: 'View review', url: window.location.href },
               ]
-              presenceData.largeImageKey = getImageURLByAlt(title)
+              presenceData.largeImageKey = poster ?? getImageURLByAlt(title)
               presenceData.smallImageKey = getImageURLByAlt(rater ?? '')
               presenceData.smallImageText = rater
 
@@ -484,6 +511,8 @@ presence.on('UpdateData', async () => {
 
           if (
             [
+              'diary',
+              'reviews',
               'watchlist',
               'films',
               'activity',
