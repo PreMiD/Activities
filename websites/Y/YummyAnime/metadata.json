@@ -24,7 +24,6 @@
     "old.yummy-ani.me",
     "new.yummyani.me",
     "new.yummy-ani.me"
-    "yummy-ani.me"
   ],
   "regExp": "^https?[:][/][/](www[.])?(old[.])?(new[.])?(en[.])?(ru[.])?(uk[.])?yummy-?ani[.]me[/]",
   "version": "1.2.0",

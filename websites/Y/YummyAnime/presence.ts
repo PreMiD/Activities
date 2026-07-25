@@ -1,7 +1,7 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/397AqsF.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.png',
 }
 
 const presence = new Presence({
