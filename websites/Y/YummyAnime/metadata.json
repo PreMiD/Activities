@@ -44,6 +44,12 @@
     {
       "id": "lang",
       "multiLanguage": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy mode",
+      "icon": "fas fa-user-secret",
+      "value": false
     }
   ]
 }

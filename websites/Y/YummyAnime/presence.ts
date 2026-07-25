@@ -1,5 +1,9 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
+enum ActivityAssets {
+  Logo = 'https://i.imgur.com/397AqsF.png'
+}
+
 const presence = new Presence({
   clientId: '1140596411956744202',
 })
@@ -296,6 +300,23 @@ function posterUrlForDiscord(raw: string): string {
   return resolveAbsoluteUrl(raw)
 }
 
+function applyPrivacy(data: Record<string, unknown>, strings: Record<string, string>,): void {
+  data.details = 'YummyAnime'
+  delete data.state
+  data.largeImageKey = ActivityAssets.Logo
+  data.largeImageText = 'YummyAnime'
+  delete data.smallImageKey
+  delete data.smallImageText
+  delete data.startTimestamp
+  delete data.endTimestamp
+  data.buttons = [
+    {
+      label: strings.openSiteButton,
+      url: document.location.origin
+    }
+  ]
+}
+
 function imgEffectiveSrc(img: HTMLImageElement): string {
   return (
     img.getAttribute('src')
@@ -451,6 +472,7 @@ presence.on('UpdateData', async () => {
     openSiteButton: 'yummyanime.openSiteButton'
   })
   const showButtons = await presence.getSetting<boolean>('showButtons')
+  const isPrivacy = await presence.getSetting<boolean>('privacyMode')
 
   if (lastPathname !== document.location.pathname) {
     lastPathname = document.location.pathname
@@ -464,7 +486,7 @@ presence.on('UpdateData', async () => {
   const { pathname, search } = document.location
 
   const presenceData: Record<string, unknown> = {
-    largeImageKey: 'https://i.imgur.com/397AqsF.png',
+    largeImageKey: ActivityAssets.Logo,
     largeImageText: 'YummyAnime',
     type: ActivityType.Watching,
   }
@@ -481,6 +503,9 @@ presence.on('UpdateData', async () => {
   if (pathname === '/') {
     presenceData.details = strings.mainPage
     presenceData.state = strings.choosingAnime
+    if (isPrivacy) {
+      applyPrivacy(presenceData, strings)
+  }
     presence.setActivity(presenceData)
     return
   }
@@ -488,6 +513,9 @@ presence.on('UpdateData', async () => {
   if (pathname.startsWith('/catalog') && !pathname.includes('/item/')) {
     presenceData.details = strings.onSite
     presenceData.state = strings.choosingAnime
+    if (isPrivacy) {
+      applyPrivacy(presenceData, strings)
+  }
     presence.setActivity(presenceData)
     return
   }
@@ -518,6 +546,10 @@ presence.on('UpdateData', async () => {
         },
       ]
     }
+
+   if (isPrivacy) {
+    applyPrivacy(presenceData, strings)
+  }
 
     presence.setActivity(presenceData)
     return
@@ -598,6 +630,10 @@ presence.on('UpdateData', async () => {
 
     delete presenceData.startTimestamp
     delete presenceData.endTimestamp
+  }
+
+  if (isPrivacy) {
+    applyPrivacy(presenceData, strings)
   }
 
   presence.setActivity(presenceData)
