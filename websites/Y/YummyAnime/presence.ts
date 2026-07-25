@@ -558,7 +558,7 @@ presence.on('UpdateData', async () => {
     ]
   }
 
-  if (playback && (playback.duration > 0 || !playback.paused)) {
+  if (playback && (playback.currentTime > 0 || !playback.paused)) {
     if (!playback.paused) {
       presenceData.state = currentEpisode
         ? `${strings.watchingEpisodePrefix} ${currentEpisode}`
