@@ -19,6 +19,7 @@ presence.on('UpdateData', async () => {
     viewACategory: 'general.viewACategory',
     viewAPage: 'general.viewAPage',
     view: 'general.view',
+    listenAlong: 'general.buttonListenAlong',
   })
 
 
@@ -26,12 +27,10 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
     type: ActivityType.Listening,
   }
+  const pageTitle = document.querySelector('[class*="breadcrumbs_breadcrumbs_"] li:last-child > span')?.textContent?.trim() || 'Unknown Page';
+
   if (document.location.pathname.includes('/katalog') || document.location.pathname.includes('/catalog')) {
-    const navs = document.querySelectorAll('nav');
-    // get nav with class breadcrumbs_breadcrumbs_xxxx where xxxx is a random string
-    const nav = Array.from(navs).find(nav => nav.className.startsWith('breadcrumbs_breadcrumbs_'));
-    const catalogTitle = nav?.querySelector('li:last-child > span')?.textContent?.trim();
-    presenceData.details = `${strings.viewACategory} ${catalogTitle}`
+    presenceData.details = `${strings.viewACategory} ${pageTitle}`;
   }
   else if (document.location.pathname.includes('/audiobook')) {
     const title = document.querySelector('[class*="product-top_title"]')?.textContent?.trim();
@@ -58,6 +57,7 @@ presence.on('UpdateData', async () => {
     const currentTime = parseFloat(slider?.getAttribute('aria-valuenow') || '0');
     const duration = parseFloat(slider?.getAttribute('aria-valuemax') || '0');
 
+
     if (isPlaying) {
       //playing audiobook
       //replace {0} {1} with empty line and {2} with author
@@ -75,7 +75,16 @@ presence.on('UpdateData', async () => {
       presenceData.details = `${strings.view} ${title}`
       presenceData.state = `Author: ${author}`
     }
+
   }
+  else if (document.location.pathname.includes('polka') || document.location.pathname.includes('shelf')) {
+      //shelf page
+      presenceData.details = `${strings.browse} ${pageTitle}`;
+    }
+    else if (document.location.pathname.includes('cykl') || document.location.pathname.includes('cycle')) {
+      //search page
+      presenceData.details = `${strings.browse} ${pageTitle}`;
+    }
   else {
     //main page
     presenceData.details = strings.viewAPage;
