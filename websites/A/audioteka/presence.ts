@@ -1,4 +1,4 @@
-import { Assets, ActivityType } from 'premid'
+import { ActivityType } from 'premid'
 
 const presence = new Presence({
   clientId: '1530841436822437999',
@@ -36,28 +36,42 @@ presence.on('UpdateData', async () => {
   else if (document.location.pathname.includes('/audiobook')) {
     const title = document.querySelector('[class*="product-top_title"]')?.textContent?.trim();
     const author = document.querySelector('[class*="authors_author"]')?.textContent?.trim();
+    const coverImage = document.querySelector('[class*="product-top_cover"] img') as HTMLImageElement | null;
+
+    if (coverImage) {
+      presenceData.largeImageKey = coverImage.src;
+    }
 
     //check if audiobook is playing by checking the play/pause button
-    const buttons = document.querySelectorAll('button[class*="controls_control"]')
-    const controlButton = Array.from(buttons).find(btn => {
-      const label = btn.getAttribute('aria-label')
-      const href = btn.querySelector('use')?.getAttribute('href') || ''
-      return label === 'Odtwórz' || label === 'Pauza' || href.includes('play') || href.includes('pause')
-    })
+    const controlButtons = Array.from(document.querySelectorAll('button[class*="controls_control"]'));
+    const playButton = controlButtons.find(btn => {
+      const label = btn.getAttribute('aria-label');
+      const iconHref = btn.querySelector('use')?.getAttribute('href') || '';
+      return label === 'Odtwórz' || label === 'Pauza' || iconHref.includes('play') || iconHref.includes('pause');
+    });
 
-    const ariaLabel = controlButton?.getAttribute('aria-label')
-    const svgHref = controlButton?.querySelector('use')?.getAttribute('href') || ''
-    const isPlaying = ariaLabel === 'Pauza' || svgHref.includes('pause')
+    const isPlaying = playButton?.getAttribute('aria-label') === 'Pauza' 
+                   || playButton?.querySelector('use')?.getAttribute('href')?.includes('pause');
+
+    //slider element
+    const slider = document.querySelector('span[role="slider"]');
+    const currentTime = parseFloat(slider?.getAttribute('aria-valuenow') || '0');
+    const duration = parseFloat(slider?.getAttribute('aria-valuemax') || '0');
 
     if (isPlaying) {
       //playing audiobook
       //replace {0} {1} with empty line and {2} with author
       presenceData.details = (strings.listen).replace('{0}', '\n').replace('{1}', title || '');
       presenceData.state = `Author: ${author}`;
+      if (duration > 0) {
+        const now = Math.floor(Date.now() / 1000); // Aktualny czas w sekundach uniksowych
+        presenceData.startTimestamp = Math.floor(now - currentTime); // Kiedy zaczął się ten moment utworu
+        presenceData.endTimestamp = Math.floor(now + (duration - currentTime)); // Kiedy utwór się skończy
+      }
+
     }
     else {
-
-      //not playing audiobook, just viewing page
+      //not playing audiobook, just viewing audiobook page
       presenceData.details = `${strings.view} ${title}`
       presenceData.state = `Author: ${author}`
     }
