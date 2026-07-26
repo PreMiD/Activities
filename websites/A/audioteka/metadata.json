@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "427376246058385408",
+    "name": "randalthor_"
+  },
+  "service": "audioteka",
+  "description": {
+    "en": "Displays what you are listening to on audioteka.",
+    "pl": "Wyświetla, czego słuchasz w serwisie audioteka."
+  },
+  "url": "audioteka.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*audioteka[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/S9OoDcl.png",
+  "thumbnail": "https://i.imgur.com/80ijveT.png",
+  "color": "#000000",
+  "category": "other",
+  "tags": [
+    "books",
+    "audio",
+    "audiobooks"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}
