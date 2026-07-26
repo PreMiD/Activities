@@ -19,7 +19,7 @@
   },
   "url": "www.udemy.com",
   "regExp": "^https?[:][/][/](www[.])?udemy[.]com[/]",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/Udemy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/Udemy/assets/thumbnail.png",
   "color": "#a435f0",
@@ -27,5 +27,13 @@
   "tags": [
     "course",
     "learning"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
   ]
 }
