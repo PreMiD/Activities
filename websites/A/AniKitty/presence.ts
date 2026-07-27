@@ -73,7 +73,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
     details: 'Browsing AniKitty',
-  } as PresenceData
+  }
 
   if (pathname.startsWith('/anime/watch')) {
     ;(presenceData as PresenceData).type = ActivityType.Watching
