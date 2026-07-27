@@ -1,10 +1,10 @@
 import {
-    ActivityType,
-    Assets,
-    getTimestamps,
-    getTimestampsFromMedia,
-    StatusDisplayType,
-    timestampFromFormat
+  ActivityType,
+  Assets,
+  getTimestamps,
+  getTimestampsFromMedia,
+  StatusDisplayType,
+  timestampFromFormat,
 } from 'premid'
 
 let elapsed = Math.floor(Date.now() / 1000)
@@ -535,7 +535,7 @@ presence.on('UpdateData', async () => {
 
         if (showVideo && !live) {
           //* Video or Clips
-            const title = getElement('title')?.replace(' - Twitch', '')
+          const title = getElement('title')?.replace(' - Twitch', '')
           const uploader = document.querySelector('.channel-info-content h1')?.textContent
             ?? document
               .querySelector('[class*="metadata-layout__support"]')
@@ -980,7 +980,10 @@ presence.on('UpdateData', async () => {
   if (privacy || !buttons)
     delete presenceData.buttons
 
-    if (presenceData.details)
-        presence.setActivity(presenceData)
-    else presence.clearActivity()
+  if (presenceData.details) {
+    presence.setActivity(presenceData)
+  }
+  else {
+    presence.clearActivity()
+  }
 })
