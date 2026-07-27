@@ -12,7 +12,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     startTimestamp: browsingTimestamp,
-    largeImageKey: logoUrl,
+    largeImageKey: 'logo',
     largeImageText: 'Next Toppers',
   }
 
