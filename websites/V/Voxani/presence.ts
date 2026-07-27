@@ -51,7 +51,8 @@ function getNameFromTitle(slugName: string): string {
   // New format: starts with "Watch " and contains " Online Free"
   if (title.startsWith('Watch ') && title.includes(' Online Free')) {
     const titleName = title.replace(/^Watch\s+/i, '').split(/\s+Online Free/i)[0]?.trim() || ''
-    if (!titleName) return ''
+    if (!titleName)
+      return ''
     const a = titleName.toLowerCase().replace(/[^a-z0-9]/g, '')
     const b = slugName.toLowerCase().replace(/[^a-z0-9]/g, '')
     return (a && b && a.includes(b.slice(0, 8))) ? titleName : ''
@@ -67,11 +68,12 @@ function getNameFromTitle(slugName: string): string {
 }
 
 function cleanTabText(raw: string): string {
-  if (!raw) return ''
+  if (!raw)
+    return ''
   let text = raw.trim()
 
   // 1. Remove trailing numbers / count badges like "51", "(51)", "[51]"
-  text = text.replace(/[\s\d()\[\]]+$/g, '').trim()
+  text = text.replace(/[\s\d()[\]]+$/g, '').trim()
 
   // 2. Remove duplicated words caused by sr-only text / icon labels (e.g. "WatchingWatching" -> "Watching")
   const half = Math.floor(text.length / 2)
@@ -81,14 +83,22 @@ function cleanTabText(raw: string): string {
 
   // 3. Normalize known tab names
   const lower = text.toLowerCase()
-  if (lower.includes('watching')) return 'Watching'
-  if (lower.includes('completed')) return 'Completed'
-  if (lower.includes('plan')) return 'Plan to Watch'
-  if (lower.includes('hold')) return 'On Hold'
-  if (lower.includes('dropped')) return 'Dropped'
-  if (lower.includes('for you')) return 'For You'
-  if (lower.includes('ai rec') || lower.includes('recommendation')) return 'AI Recs'
-  if (lower === 'all') return 'All'
+  if (lower.includes('watching'))
+    return 'Watching'
+  if (lower.includes('completed'))
+    return 'Completed'
+  if (lower.includes('plan'))
+    return 'Plan to Watch'
+  if (lower.includes('hold'))
+    return 'On Hold'
+  if (lower.includes('dropped'))
+    return 'Dropped'
+  if (lower.includes('for you'))
+    return 'For You'
+  if (lower.includes('ai rec') || lower.includes('recommendation'))
+    return 'AI Recs'
+  if (lower === 'all')
+    return 'All'
 
   return text
 }
@@ -112,11 +122,13 @@ function resetEmbedState() {
 }
 
 function parseEmbedMessage(data: unknown): any {
-  if (!data) return null
+  if (!data)
+    return null
   if (typeof data === 'string') {
     try {
       return JSON.parse(data)
-    } catch {
+    }
+    catch {
       return { event: data }
     }
   }
@@ -146,18 +158,21 @@ function getEmbedNumber(payload: any, keys: string[]): number | null {
   for (const key of keys) {
     const value = payload?.[key] ?? nested?.[key]
     const numberValue = Number(value)
-    if (Number.isFinite(numberValue) && numberValue >= 0) return numberValue
+    if (Number.isFinite(numberValue) && numberValue >= 0)
+      return numberValue
   }
   return null
 }
 
 function ensureEmbedListener() {
-  if (embedListenerAttached) return
+  if (embedListenerAttached)
+    return
   embedListenerAttached = true
 
   window.addEventListener('message', (event: MessageEvent) => {
     const payload = parseEmbedMessage(event.data)
-    if (!payload) return
+    if (!payload)
+      return
 
     const eventName = getEmbedEventName(payload)
     const current = getEmbedNumber(payload, ['currentTime', 'current_time', 'current', 'time', 'seconds', 'position'])
@@ -187,7 +202,6 @@ function ensureEmbedListener() {
     }
   })
 }
-
 
 presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
@@ -256,7 +270,7 @@ presence.on('UpdateData', async () => {
       if (!video.paused && video.readyState > 0) {
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = 'Playing'
-        if (isFinite(video.duration) && video.duration > 0) {
+        if (Number.isFinite(video.duration) && video.duration > 0) {
           // Full progress bar: start + end timestamps
           ;[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
             Math.floor(video.currentTime),
@@ -290,7 +304,8 @@ presence.on('UpdateData', async () => {
         try {
           embedIframe.contentWindow.postMessage({ command: 'getTime' }, '*')
           embedIframe.contentWindow.postMessage({ command: 'getStatus' }, '*')
-        } catch { /* ignore cross-origin restrictions */ }
+        }
+        catch { /* ignore cross-origin restrictions */ }
       }
 
       // If playing status hasn't received a time update in > 4s, treat as paused
