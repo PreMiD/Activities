@@ -1,4 +1,6 @@
 {
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
   "author": {
     "name": "Klaze",
     "id": "klazerotto_1125"
@@ -8,10 +10,10 @@
     "en": "Attending class on Next Toppers"
   },
   "url": "nexttoppers.com",
-  "regExp": "^https?:\\/\\/(?:www\\.)?nexttoppers\\.com",
+  "regExp": "^https?[:][/][/](www[.])?nexttoppers[.]com[/]",
   "version": "1.0.0",
   "logo": "https://play-lh.googleusercontent.com/QXszaiUECWDTaY9IMT-Ligsh8xcRRjyTXefomzW98SM5aftooi0KOv_7O0uzem8cYhyFWBiGpIrfC_zDddbz2g",
-  "thumbnail": "https://play-lh.googleusercontent.com/QXszaiUECWDTaY9IMT-Ligsh8xcRRjyTXefomzW98SM5aftooi0KOv_7O0uzem8cYhyFWBiGpIrfC_zDddbz2g",
+  "thumbnail": "https://i.imgur.com/NfGW7mM.png",
   "color": "#00bcd4",
   "category": "other",
   "tags": ["education"]

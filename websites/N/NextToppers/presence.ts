@@ -1,23 +1,38 @@
-// Import directly from the premid package
 import { ActivityType } from 'premid';
 
 const presence = new Presence({
-  clientId: '1527271319954001940' // Replace with your actual Client ID!
+  clientId: '1527271319954001940'
 });
 
 const browsingTimestamp = Math.floor(Date.now() / 1000);
-const logoUrl = 'https://play-lh.googleusercontent.com/QXszaiUECWDTaY9IMT-Ligsh8xcRRjyTXefomzW98SM5aftooi0KOv_7O0uzem8cYhyFWBiGpIrfC_zDddbz2g'; // Your image URL
+const logoUrl = 'https://play-lh.googleusercontent.com/QXszaiUECWDTaY9IMT-Ligsh8xcRRjyTXefomzW98SM5aftooi0KOv_7O0uzem8cYhyFWBiGpIrfC_zDddbz2g';
 
 presence.on('UpdateData', async () => {
+  const { pathname } = document.location;
+  
   const presenceData: PresenceData = {
-    // This will now resolve perfectly using PreMiD's official enum!
-    type: ActivityType.Watching, 
-    details: 'Next Toppers',
-    state: 'Attending class',
+    type: ActivityType.Watching,
     startTimestamp: browsingTimestamp,
-    largeImageKey: logoUrl,        
-    largeImageText: 'Next Toppers' 
+    largeImageKey: logoUrl,
+    largeImageText: 'Next Toppers'
   };
+
+  if (pathname.includes('/product/our-courses') || pathname.includes('/courses')) {
+    presenceData.details = 'Browsing Courses';
+    presenceData.state = 'Exploring study material';
+  } else if (pathname.includes('/live-classes') || pathname.includes('/live')) {
+    presenceData.details = 'Watching Live Class';
+    presenceData.state = 'Attending class';
+  } else if (pathname.includes('/my-profile') || pathname.includes('/profile')) {
+    presenceData.details = 'Viewing Profile';
+    presenceData.state = 'Account Settings';
+  } else if (pathname.includes('/blogs') || pathname.includes('/blog')) {
+    presenceData.details = 'Reading Blogs';
+    presenceData.state = 'Articles & Updates';
+  } else {
+    presenceData.details = 'Browsing Next Toppers';
+    presenceData.state = document.title || 'Attending class';
+  }
 
   presence.setActivity(presenceData);
 });
