@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps } from 'premid'
+import { ActivityType, Assets, getTimestamps, supports } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -31,19 +31,15 @@ function truncate(value: string, max = 128): string {
   return value.length > max ? `${value.slice(0, max - 1)}...` : value
 }
 
-function getVideoFallback(): Pick<
+function getLivePlayback(): Pick<
   Anime404PremidPresence,
   'currentTime' | 'duration' | 'paused'
 > {
   const video = document.querySelector<HTMLVideoElement>('video')
 
-  if (!video) {
-    return {
-      currentTime: 0,
-      duration: 0,
-      paused: true,
-    }
-  }
+  // No video: contribute nothing, so the cached bridge values stand.
+  if (!video)
+    return {}
 
   return {
     currentTime: Number.isFinite(video.currentTime) ? video.currentTime : 0,
@@ -52,31 +48,96 @@ function getVideoFallback(): Pick<
   }
 }
 
-function getBridgeData(): Anime404PremidPresence | null {
-  const el = document.getElementById('s-anime-premid')
-  if (!el)
-    return null
+async function fetchBridgeData(): Promise<Anime404PremidPresence | null> {
+  if (supports(presence, 'execInPage')) {
+    try {
+      const data = await presence.execInPage<Anime404PremidPresence | null>({
+        get: '__SANIME_PREMID__',
+      })
 
-  const d = el.dataset
-  if (!d.animeTitle && !d.episode)
-    return null
-
-  return {
-    page: d.page,
-    mediaType: d.mediaType as Anime404PremidPresence['mediaType'],
-    animeId: d.animeId ? Number(d.animeId) : undefined,
-    animeTitle: d.animeTitle,
-    episode: d.episode ? Number(d.episode) : undefined,
-    season: d.season ? Number(d.season) : undefined,
-    episodeTitle: d.episodeTitle ?? null,
-    audio: d.audio as Anime404PremidPresence['audio'],
-    server: d.server,
-    cover: d.cover ?? null,
-    url: d.url,
-    currentTime: d.currentTime ? Number(d.currentTime) : undefined,
-    duration: d.duration ? Number(d.duration) : undefined,
-    paused: d.paused === 'true',
+      if (data?.animeTitle || data?.episode)
+        return data
+    }
+    catch {
+      // Fall back to the older variable reader below.
+    }
   }
+
+  try {
+    const page = await presence.getPageVariable<{
+      __SANIME_PREMID__?: Anime404PremidPresence | null
+    }>('__SANIME_PREMID__')
+
+    return page.__SANIME_PREMID__ ?? null
+  }
+  catch {
+    return null
+  }
+}
+
+// Cached, and only re-read on a URL change or when the page rewrites
+// `<body data-premid>`. Position comes off the <video> element instead.
+let bridgeCache: Anime404PremidPresence | null = null
+let bridgeReadInFlight = false
+let bridgeReadStale = false
+let lastBridgeRead = 0
+let lastHref = document.location.href
+const RETRY_MS = 2000
+
+function refreshBridgeData(): void {
+  // A change during a read means that read is already out of date, so queue
+  // one more rather than dropping it.
+  if (bridgeReadInFlight) {
+    bridgeReadStale = true
+    return
+  }
+
+  bridgeReadInFlight = true
+  lastBridgeRead = Date.now()
+  fetchBridgeData()
+    .then((data) => {
+      bridgeCache = data
+    })
+    .finally(() => {
+      bridgeReadInFlight = false
+      if (bridgeReadStale) {
+        bridgeReadStale = false
+        refreshBridgeData()
+      }
+    })
+}
+
+function watchForChanges(): void {
+  new MutationObserver(refreshBridgeData).observe(document.body, {
+    attributes: true,
+    attributeFilter: ['data-premid'],
+  })
+  refreshBridgeData()
+}
+
+if (document.body)
+  watchForChanges()
+else
+  document.addEventListener('DOMContentLoaded', watchForChanges, { once: true })
+
+function getBridgeData(): Anime404PremidPresence | null {
+  if (document.location.href !== lastHref) {
+    lastHref = document.location.href
+    refreshBridgeData()
+  }
+
+  // Self-heal: the page can publish before the observer is attached, and a
+  // read can land before the data exists. Retry while a player is on screen
+  // but the cache is still empty. Once it fills, this stops.
+  else if (
+    !bridgeCache
+    && document.querySelector('video')
+    && Date.now() - lastBridgeRead > RETRY_MS
+  ) {
+    refreshBridgeData()
+  }
+
+  return bridgeCache
 }
 
 function applyPlayback(
@@ -185,11 +246,10 @@ function activityChanged(next: PresenceData, prev: PresenceData | null): boolean
 }
 
 presence.on('UpdateData', () => {
-  const bridge = getBridgeData()
-  const fallback = getVideoFallback()
+  // Live playback overrides the cached bridge's stale position.
   const data = {
-    ...fallback,
-    ...bridge,
+    ...getBridgeData(),
+    ...getLivePlayback(),
   }
 
   const isWatchPage = document.location.pathname.includes('/watch/')
