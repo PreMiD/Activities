@@ -7,8 +7,8 @@
   },
   "service": "audioteka",
   "description": {
-    "en": "Displays what you are listening to on audioteka.",
-    "pl": "Wyświetla, czego słuchasz w serwisie audioteka."
+    "en": "Audioteka is a polish online audiobook service which allows users to purchase, download and stream audiobooks, audio dramas or podcasts.",
+    "pl": "Audioteka to polski serwis audioboków online, pozwalający użytkownikom na zakup, pobieranie oraz strumieniowanie audiobooków, audioseriali oraz podcastów. "
   },
   "url": "audioteka.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*audioteka[.]com[/]",
