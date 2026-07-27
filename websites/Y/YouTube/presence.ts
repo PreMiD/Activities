@@ -89,6 +89,19 @@ presence.on('UpdateData', async () => {
   const { pathname, hostname, search, href } = document.location
   const isMobile = hostname === 'm.youtube.com'
   const selectors = getQuerySelectors(isMobile)
+  const isSearchPage = pathname.includes('/results')
+    || (
+      pathname.includes('/search')
+      && (
+        pathname.includes('/@')
+        || pathname.includes('/channel')
+        || pathname.includes('/c')
+        || pathname.includes('/user')
+      )
+    )
+
+  if (isSearchPage && !showSearch)
+    return presence.clearActivity()
 
   // Update strings if user selected another language.
   if (!checkStringLanguage(newLang))
@@ -555,9 +568,6 @@ presence.on('UpdateData', async () => {
         break
       }
     }
-
-    if (searching && !showSearch)
-      return presence.clearActivity()
 
     if (privacy) {
       if (searching) {
