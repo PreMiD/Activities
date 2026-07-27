@@ -8,7 +8,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 const logoUrl = 'https://i.imgur.com/o588YlC.png'
 
 presence.on('UpdateData', async () => {
-  const { pathname } = document.location
+  const pathname = document.location.pathname
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
