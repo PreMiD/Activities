@@ -10,13 +10,13 @@
     "en": "Fun and interactive online games with friends! Play Bomb Party and Pop Sauce with your friends and other players online. Join a game or create your own room to play with friends!"
   },
   "url": "jklm.fun",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*jklm[.]fun([/][A-Z0-9-]+)*[/]?",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*jklm[.]fun[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/9AZcuaz.png",
   "thumbnail": "https://i.imgur.com/1Z0R8vc.png",
   "color": "#000000",
   "category": "games",
-  "tags": ["jklm", "bombparty", "popsauce", "games", "multiplayer"],
+  "tags": ["bombparty", "popsauce", "games", "multiplayer"],
   "iframe": true,
   "iFrameRegExp": "^https:[/][/]phoenix[.]jklm[.]fun[/]games[/].*",
   "settings": [
