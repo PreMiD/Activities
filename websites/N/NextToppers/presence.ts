@@ -6,13 +6,17 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+enum ActivityAssets {
+  Logo = 'https://i.imgur.com/9YKfQ6M.png',
+}
+
 presence.on('UpdateData', async () => {
   const pathname = document.location.pathname
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     startTimestamp: browsingTimestamp,
-    largeImageKey: 'logo',
+    largeImageKey: ActivityAssets.Logo,
     largeImageText: 'Next Toppers',
   }
 
