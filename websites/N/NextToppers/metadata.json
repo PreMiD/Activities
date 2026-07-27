@@ -7,12 +7,12 @@
   },
   "service": "NextToppers",
   "description": {
-    "en": "Attending class on Next Toppers"
+    "en": "India's leading online learning platform for Class 9–12 students, offering live classes, comprehensive notes, and test series."
   },
   "url": "nexttoppers.com",
   "regExp": "^https?[:][/][/](www[.])?nexttoppers[.]com[/]",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/o588YlC.png",
+  "logo": "https://i.imgur.com/9YKfQ6M.png",
   "thumbnail": "https://i.imgur.com/NfGW7mM.png",
   "color": "#00bcd4",
   "category": "other",
