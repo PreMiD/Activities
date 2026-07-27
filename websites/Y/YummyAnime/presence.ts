@@ -301,7 +301,7 @@ function posterUrlForDiscord(raw: string): string {
 }
 
 function applyPrivacy(data: Record<string, unknown>, strings: Record<string, string>): void {
-  data.details = 'YummyAnime'
+  data.details = strings.onSite
   delete data.state
   data.largeImageKey = ActivityAssets.Logo
   data.largeImageText = 'YummyAnime'
@@ -309,12 +309,7 @@ function applyPrivacy(data: Record<string, unknown>, strings: Record<string, str
   delete data.smallImageText
   delete data.startTimestamp
   delete data.endTimestamp
-  data.buttons = [
-    {
-      label: strings.openSiteButton,
-      url: document.location.origin,
-    },
-  ]
+  delete data.buttons
 }
 
 function imgEffectiveSrc(img: HTMLImageElement): string {
@@ -469,10 +464,12 @@ presence.on('UpdateData', async () => {
     readingDescription: 'yummyanime.readingDescription',
     viewProfileButton: 'general.buttonViewProfile',
     watchAnimeButton: 'general.buttonWatchAnime',
-    openSiteButton: 'yummyanime.openSiteButton',
+    viewPageButton: 'general.buttonViewPage',
   })
-  const showButtons = await presence.getSetting<boolean>('showButtons')
-  const isPrivacy = await presence.getSetting<boolean>('privacyMode')
+  const [showButtons, isPrivacy] = await Promise.all([
+    presence.getSetting<boolean>('showButtons'),
+    presence.getSetting<boolean>('privacyMode'),
+  ])
 
   if (lastPathname !== document.location.pathname) {
     lastPathname = document.location.pathname
@@ -491,15 +488,6 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  if (showButtons) {
-    presenceData.buttons = [
-      {
-        label: strings.openSiteButton,
-        url: document.location.origin,
-      },
-    ]
-  }
-
   if (pathname === '/') {
     presenceData.details = strings.mainPage
     presenceData.state = strings.choosingAnime
@@ -508,6 +496,15 @@ presence.on('UpdateData', async () => {
     }
     presence.setActivity(presenceData)
     return
+  }
+
+  if (showButtons) {
+    presenceData.buttons = [
+      {
+        label: strings.viewPageButton,
+        url: document.location.href,
+      },
+    ]
   }
 
   if (pathname.startsWith('/catalog') && !pathname.includes('/item/')) {
