@@ -13,7 +13,7 @@
     "anikitty.moe",
     "anikitty.online"
   ],
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])?(anikitty[.]moe|anikitty[.]online)[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(anikitty[.]moe|anikitty[.]online)[/]",
   "version": "1.0.0",
   "logo": "https://anikitty.moe/icon-512x512.png",
   "thumbnail": "https://anikitty.moe/og-share.png",
