@@ -29,7 +29,7 @@ presence.on('UpdateData', async () => {
   else if (document.location.pathname.includes('/audiobook')) {
     const title = document.querySelector('[class*="product-top_title"]')?.textContent?.trim()
     const author = document.querySelector('[class*="authors_author"]')?.textContent?.trim()
-    const coverImage = document.querySelector<HTMLImageElement>('[class*="product-top_cover"] img');
+    const coverImage = document.querySelector<HTMLImageElement>('[class*="product-top_cover"] img')
 
     if (coverImage) {
       presenceData.largeImageKey = coverImage.src
