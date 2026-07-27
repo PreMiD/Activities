@@ -65,6 +65,7 @@ presence.on('UpdateData', async () => {
     logo,
     buttons,
     hideHome,
+    showSearch,
     hidePaused,
     showListening,
     displayType,
@@ -80,6 +81,7 @@ presence.on('UpdateData', async () => {
     getSetting<number>('largeImage', 0),
     getSetting<boolean>('buttons', true),
     getSetting<boolean>('hideHome', false),
+    getSetting<boolean>('showSearch', true),
     getSetting<boolean>('hidePaused', true),
     getSetting<number>('showListening', 0),
     getSetting<number>('displayType', 2),
@@ -553,6 +555,9 @@ presence.on('UpdateData', async () => {
         break
       }
     }
+
+    if (searching && !showSearch)
+      return presence.clearActivity()
 
     if (privacy) {
       if (searching) {
