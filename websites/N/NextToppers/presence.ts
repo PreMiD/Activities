@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-const logoUrl = 'https://i.imgur.com/bPIp2eO.png'
+const logoUrl = 'https://i.imgur.com/o588YlC.png'
 
 presence.on('UpdateData', async () => {
   const { pathname } = document.location
