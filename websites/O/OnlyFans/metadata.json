@@ -1,0 +1,60 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "deloskiytbackup",
+    "id": "100000000000000000"
+  },
+  "service": "OnlyFans",
+  "description": {
+    "en": "Shows detailed activity on OnlyFans in Discord Rich Presence.",
+    "pl": "Wyświetla szczegółową aktywność z serwisu OnlyFans w Discord Rich Presence."
+  },
+  "url": [
+    "onlyfans.com",
+    "www.onlyfans.com"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?onlyfans[.]com",
+  "version": "1.2.0",
+  "logo": "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/onlyfans.png",
+  "thumbnail": "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/onlyfans.png",
+  "color": "#00aff0",
+  "category": "other",
+  "tags": [
+    "social",
+    "media",
+    "onlyfans"
+  ],
+  "settings": [
+    {
+      "id": "showProfileName",
+      "title": "Pokaż nazwę profilu twórcy",
+      "icon": "fas fa-user",
+      "value": true
+    },
+    {
+      "id": "showCreatorAvatar",
+      "title": "Pokaż zdjęcie profilowe/awatar twórcy",
+      "icon": "fas fa-image",
+      "value": true
+    },
+    {
+      "id": "showProfileButton",
+      "title": "Pokaż przycisk z linkiem do profilu w Discord",
+      "icon": "fas fa-link",
+      "value": true
+    },
+    {
+      "id": "showTimestamps",
+      "title": "Pokaż czas spędzony na stronie",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Tryb dyskretny (ukrywaj nazwy profilu)",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
+}
