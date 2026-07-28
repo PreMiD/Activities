@@ -24,13 +24,9 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Browsing Courses'
     presenceData.state = 'Exploring study material'
   }
-  else if (pathname.includes('/live-classes') || pathname.includes('/live')) {
-    presenceData.details = 'Watching Live Class'
-    presenceData.state = 'Attending class'
-  }
-  else if (pathname.includes('/play')) {
-    presenceData.details = 'Watching Recorded Class'
-    presenceData.state = 'Studying lecture'
+  else if (pathname.includes('/play') || pathname.includes('/live')) {
+    presenceData.details = 'Attending Class'
+    presenceData.state = 'Watching lecture'
   }
   else if (pathname.includes('/my-profile') || pathname.includes('/profile')) {
     presenceData.details = 'Viewing Profile'
