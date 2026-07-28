@@ -17,7 +17,7 @@
   },
   "url": "voxani.live",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*voxani[.]live[/]",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Voxani/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Voxani/assets/thumbnail.png",
   "color": "#000000",
