@@ -12,8 +12,8 @@
   "url": "anime3rb.com",
   "regExp": "^https?:\\/\\/(?:www\\.)?anime3rb\\.com\\/",
   "version": "1.0.0",
-  "logo": "https://imgur.com/Cm2uVbf",
-  "thumbnail": "https://imgur.com/A19xn84",
+  "logo": "https://i.imgur.com/Cm2uVbf.png",
+  "thumbnail": "https://i.imgur.com/A19xn84.png",
   "color": "#151515",
   "category": "anime",
   "tags": ["anime", "arabic", "streaming"]
