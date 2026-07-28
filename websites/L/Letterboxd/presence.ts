@@ -17,7 +17,8 @@ function getLoggedInUser(): string | undefined {
 
 // Fixed type signature to accept string | Node | null
 function generateButtonText(text?: string | Node | null): [ButtonData] {
-  if (!text) return [{ label: '', url: document.location.href }]
+  if (!text)
+    return [{ label: '', url: document.location.href }]
   const str = typeof text === 'string' ? text : text.textContent ?? ''
   return [
     {
@@ -35,7 +36,8 @@ function clarifyString(str: string): string {
 }
 
 function getImageURLByAlt(alt: string): string | undefined {
-  if (!alt) return undefined
+  if (!alt)
+    return undefined
   return Array.from(document.querySelectorAll('img')).find(
     img => img.alt === alt,
   )?.src
@@ -138,7 +140,8 @@ presence.on('UpdateData', async () => {
       case 'director': {
         const name = document
           .querySelectorAll('.title-1.prettify')[0]
-          ?.textContent?.replace(
+          ?.textContent
+          ?.replace(
             path[0] === 'director' ? /Films directed by\n?/i : /Films starring\n?/i,
             '',
           )
