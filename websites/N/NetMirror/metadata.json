@@ -7,16 +7,16 @@
   },
   "service": "NetMirror",
   "altnames": [
-    "Net11.cc",
+    "Net77.cc",
     "Netflix Mirror",
     "Net Mirror"
   ],
   "description": {
-    "en": "Net11.cc is the current browser portal for NetMirror, a streaming service for movies, TV series, anime, and live TV."
+    "en": "Net77.cc is the current browser portal for NetMirror, a streaming service for movies, TV series, anime, and live TV."
   },
-  "url": "netmirror.io",
-  "regExp": "^https?[:][/][/](www[.])?netmirror[.]io[/]",
-  "version": "1.0.2",
+  "url": "netmirror.gg",
+  "regExp": "^https?[:][/][/](www[.])?(net77|netmirror)[.](cc|gg)[/]",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NetMirror/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NetMirror/assets/thumbnail.webp",
   "color": "#e11d48",
@@ -29,7 +29,7 @@
     "media"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https?[:][/][/](www[.])?(net11|net52|netmirror)[.](cc|io)[/]",
+  "iFrameRegExp": "^https?[:][/][/](www[.])?(net11|net77|net52|netmirror)[.](cc|io)[/]",
   "settings": [
     {
       "id": "privacyMode",

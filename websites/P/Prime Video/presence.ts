@@ -15,12 +15,88 @@ enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/logo.png',
 }
 
+let cacheUrl: { thumbnailUrl: string, type: number } | null = null
+let generatedImage: string
+export async function getThumbnail(thumbnailUrl: string, type: number): Promise<string> {
+  if (cacheUrl?.thumbnailUrl === thumbnailUrl && cacheUrl.type === type)
+    return generatedImage
+
+  if (type !== 0 && type !== 1) {
+    return new Promise((resolve) => {
+      const img = new Image()
+      img.crossOrigin = 'anonymous'
+      img.src = thumbnailUrl
+      img.onload = () => resolve(thumbnailUrl)
+      img.onerror = () => resolve(thumbnailUrl)
+    })
+  }
+
+  return new Promise((resolve) => {
+    const img = new Image()
+    const wh = 320
+    img.crossOrigin = 'anonymous'
+    img.src = thumbnailUrl
+
+    img.onload = () => {
+      const tempCanvas = document.createElement('canvas')
+      tempCanvas.width = wh
+      tempCanvas.height = wh
+      const ctx = tempCanvas.getContext('2d')
+
+      if (ctx) {
+        let sx = 0
+        let sy = 0
+        let sw = img.width
+        let sh = img.height
+
+        if (type === 0) {
+          const cropSize = 600
+          sw = Math.min(cropSize, img.width)
+          sh = Math.min(cropSize, img.height)
+
+          sx = Math.max(0, img.width - sw)
+          sy = Math.max(0, (img.height - sh) / 2)
+        }
+
+        let newWidth: number
+        let newHeight: number
+        let offsetX: number
+        let offsetY: number
+
+        if (sw > sh) {
+          newWidth = wh
+          newHeight = (wh / sw) * sh
+          offsetX = 0
+          offsetY = (wh - newHeight) / 2
+        }
+        else {
+          newHeight = wh
+          newWidth = (wh / sh) * sw
+          offsetX = (wh - newWidth) / 2
+          offsetY = 0
+        }
+
+        ctx.drawImage(img, sx, sy, sw, sh, offsetX, offsetY, newWidth, newHeight)
+      }
+
+      cacheUrl = { thumbnailUrl, type }
+      generatedImage = tempCanvas.toDataURL('image/png')
+      resolve(generatedImage)
+    }
+
+    img.onerror = () => {
+      resolve(thumbnailUrl)
+    }
+  })
+}
+
 presence.on('UpdateData', async () => {
   const { pathname } = document.location
 
-  const [usePresenceName, showCover] = await Promise.all([
+  const [usePresenceName, showCover, imageType] = await Promise.all([
     presence.getSetting<boolean>('usePresenceName'),
     presence.getSetting<boolean>('cover'),
+    presence.getSetting<number>('imageType'),
   ])
 
   const presenceData: PresenceData = {
@@ -57,7 +133,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (bannerImg && showCover) {
-      presenceData.largeImageKey = bannerImg
+      presenceData.largeImageKey = await getThumbnail(bannerImg, imageType)
     }
 
     if (video.paused) {
@@ -84,7 +160,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (bannerImg && showCover) {
-      presenceData.largeImageKey = bannerImg
+      presenceData.largeImageKey = await getThumbnail(bannerImg, imageType)
     }
 
     if (video.paused) {
@@ -107,7 +183,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = title || title2 || 'Prime Video'
 
     if (bannerImg && showCover) {
-      presenceData.largeImageKey = bannerImg
+      presenceData.largeImageKey = await getThumbnail(bannerImg, imageType)
     }
   }
   else if (pathname.includes('/movie')) {

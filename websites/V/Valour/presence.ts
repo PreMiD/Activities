@@ -183,7 +183,7 @@ presence.on('UpdateData', async () => {
     smallImageMode,
     smallImageTextMode,
     showButton,
-    showViewPlanetButton,
+    showJoinPlanetButton,
     largeImageMode,
     perChannelTimestamp,
     activityNameMode,
@@ -195,7 +195,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<number>('smallImage'),
     presence.getSetting<number>('smallImageText'),
     presence.getSetting<boolean>('showButton'),
-    presence.getSetting<boolean>('showViewPlanetButton'),
+    presence.getSetting<boolean>('showJoinPlanetButton'),
     presence.getSetting<number>('largeImage'),
     presence.getSetting<boolean>('perChannelTimestamp'),
     presence.getSetting<number>('activityName'),
@@ -274,8 +274,8 @@ presence.on('UpdateData', async () => {
   };
 
   const openValourButton = showButton ? { label: 'Open Valour', url: document.URL } : undefined
-  const viewPlanetButton = showViewPlanetButton && tab?.planetId && await isPlanetDiscoverable(tab.planetId)
-    ? { label: 'View Planet', url: `https://app.valour.gg/planet/${tab.planetId}` }
+  const viewPlanetButton = showJoinPlanetButton && tab?.planetId && await isPlanetDiscoverable(tab.planetId)
+    ? { label: 'Join Planet', url: `https://app.valour.gg/D/${tab.planetId}` }
     : undefined
 
   if (openValourButton && viewPlanetButton)
