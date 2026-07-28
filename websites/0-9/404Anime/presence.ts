@@ -224,27 +224,6 @@ function getBrowsingState(pathname: string): string {
   return 'Exploring 404Anime'
 }
 
-let lastSent: PresenceData | null = null
-const TIMESTAMP_TOLERANCE_SEC = 3
-
-function activityChanged(next: PresenceData, prev: PresenceData | null): boolean {
-  if (!prev)
-    return true
-
-  const fields: (keyof PresenceData)[] = ['details', 'state', 'largeImageKey', 'largeImageText', 'smallImageKey', 'smallImageText']
-  if (fields.some(key => next[key] !== prev[key]))
-    return true
-
-  if ((next.startTimestamp == null) !== (prev.startTimestamp == null))
-    return true
-  if ((next.endTimestamp == null) !== (prev.endTimestamp == null))
-    return true
-
-  const startDiff = Math.abs(Number(next.startTimestamp ?? 0) - Number(prev.startTimestamp ?? 0))
-  const endDiff = Math.abs(Number(next.endTimestamp ?? 0) - Number(prev.endTimestamp ?? 0))
-  return startDiff > TIMESTAMP_TOLERANCE_SEC || endDiff > TIMESTAMP_TOLERANCE_SEC
-}
-
 presence.on('UpdateData', () => {
   // Live playback overrides the cached bridge's stale position.
   const data = {
@@ -301,8 +280,5 @@ presence.on('UpdateData', () => {
     presenceData.smallImageText = 'Browsing'
   }
 
-  if (activityChanged(presenceData, lastSent)) {
-    lastSent = presenceData
-    presence.setActivity(presenceData)
-  }
+  presence.setActivity(presenceData)
 })
