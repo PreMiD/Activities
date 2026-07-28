@@ -1,5 +1,9 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.png',
+}
+
 const presence = new Presence({
   clientId: '1140596411956744202',
 })
@@ -174,6 +178,8 @@ function getProfileUserId(pathname: string): string | null {
 
 function getProfileNickname(): string {
   const nick = document.querySelector('span.k2[data-tooltip-id="old-nicks-t"]')
+    ?? document.querySelector('div.block-title span.second-marker')
+
   return nick?.textContent?.trim() ?? ''
 }
 
@@ -187,7 +193,7 @@ function findProfileAvatarSvgImage(): SVGImageElement | null {
     const href = getSvgImageHref(img)
     if (!href)
       continue
-    if (href.includes('/users/big/') || href.includes('DefaultAva')) {
+    if (href.includes('/users/big/') || href.includes('DefaultAva') || href.includes('no-photo')) {
       return img
     }
   }
@@ -292,6 +298,18 @@ function isSkippableImageUrl(url: string): boolean {
 
 function posterUrlForDiscord(raw: string): string {
   return resolveAbsoluteUrl(raw)
+}
+
+function applyPrivacy(data: Record<string, unknown>, strings: Record<string, string>): void {
+  data.details = strings.onSite
+  delete data.state
+  data.largeImageKey = ActivityAssets.Logo
+  data.largeImageText = 'YummyAnime'
+  delete data.smallImageKey
+  delete data.smallImageText
+  delete data.startTimestamp
+  delete data.endTimestamp
+  delete data.buttons
 }
 
 function imgEffectiveSrc(img: HTMLImageElement): string {
@@ -444,7 +462,14 @@ presence.on('UpdateData', async () => {
     pausedNoEpisode: 'general.paused',
     preparingEpisodePrefix: 'yummyanime.preparingEpisodePrefix',
     readingDescription: 'yummyanime.readingDescription',
+    viewProfileButton: 'general.buttonViewProfile',
+    watchAnimeButton: 'general.buttonWatchAnime',
+    viewPageButton: 'general.buttonViewPage',
   })
+  const [showButtons, isPrivacy] = await Promise.all([
+    presence.getSetting<boolean>('showButtons'),
+    presence.getSetting<boolean>('privacyMode'),
+  ])
 
   if (lastPathname !== document.location.pathname) {
     lastPathname = document.location.pathname
@@ -458,7 +483,7 @@ presence.on('UpdateData', async () => {
   const { pathname, search } = document.location
 
   const presenceData: Record<string, unknown> = {
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.png',
+    largeImageKey: ActivityAssets.Logo,
     largeImageText: 'YummyAnime',
     type: ActivityType.Watching,
   }
@@ -466,13 +491,28 @@ presence.on('UpdateData', async () => {
   if (pathname === '/') {
     presenceData.details = strings.mainPage
     presenceData.state = strings.choosingAnime
+    if (isPrivacy) {
+      applyPrivacy(presenceData, strings)
+    }
     presence.setActivity(presenceData)
     return
+  }
+
+  if (showButtons) {
+    presenceData.buttons = [
+      {
+        label: strings.viewPageButton,
+        url: document.location.href,
+      },
+    ]
   }
 
   if (pathname.startsWith('/catalog') && !pathname.includes('/item/')) {
     presenceData.details = strings.onSite
     presenceData.state = strings.choosingAnime
+    if (isPrivacy) {
+      applyPrivacy(presenceData, strings)
+    }
     presence.setActivity(presenceData)
     return
   }
@@ -489,10 +529,24 @@ presence.on('UpdateData', async () => {
       presenceData.state = ''
     }
     presenceData.largeImageKey = getProfileAvatarUrl(profileUserId)
+
     delete presenceData.smallImageKey
     delete presenceData.smallImageText
     delete presenceData.startTimestamp
     delete presenceData.endTimestamp
+
+    if (showButtons) {
+      presenceData.buttons = [
+        {
+          label: strings.viewProfileButton,
+          url: document.location.href,
+        },
+      ]
+    }
+
+    if (isPrivacy) {
+      applyPrivacy(presenceData, strings)
+    }
 
     presence.setActivity(presenceData)
     return
@@ -524,7 +578,16 @@ presence.on('UpdateData', async () => {
   const currentEpisode = getActiveEpisode(pathname, search)
   const playback = getPlaybackVideo()
 
-  if (playback && (playback.duration > 0 || !playback.paused)) {
+  if (showButtons) {
+    presenceData.buttons = [
+      {
+        label: strings.watchAnimeButton,
+        url: document.location.href,
+      },
+    ]
+  }
+
+  if (playback && (playback.currentTime > 0 || !playback.paused)) {
     if (!playback.paused) {
       presenceData.state = currentEpisode
         ? `${strings.watchingEpisodePrefix} ${currentEpisode}`
@@ -564,6 +627,10 @@ presence.on('UpdateData', async () => {
 
     delete presenceData.startTimestamp
     delete presenceData.endTimestamp
+  }
+
+  if (isPrivacy) {
+    applyPrivacy(presenceData, strings)
   }
 
   presence.setActivity(presenceData)
