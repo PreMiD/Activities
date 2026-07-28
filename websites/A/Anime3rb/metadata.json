@@ -2,8 +2,8 @@
   "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
-    "name": "nando",
-    "id": "1530277199087931392"
+    "name": "Bassam",
+    "id": "1206658241006932040"
   },
   "service": "Anime3rb",
   "description": {
@@ -12,8 +12,8 @@
   "url": "anime3rb.com",
   "regExp": "^https?:\\/\\/(?:www\\.)?anime3rb\\.com\\/",
   "version": "1.0.0",
-  "logo": "https://cdn.rcd.gg/PreMiD/resources/question.png",
-  "thumbnail": "https://placehold.co/1280x720/151515/FFFFFF.png",
+  "logo": "https://imgur.com/Cm2uVbf",
+  "thumbnail": "https://imgur.com/A19xn84",
   "color": "#151515",
   "category": "anime",
   "tags": ["anime", "arabic", "streaming"]
