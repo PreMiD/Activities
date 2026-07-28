@@ -19,10 +19,14 @@
   },
   "url": [
     "yummyani.me",
-    "yummy-ani.me"
+    "yummy-ani.me",
+    "old.yummyani.me",
+    "old.yummy-ani.me",
+    "new.yummyani.me",
+    "new.yummy-ani.me"
   ],
   "regExp": "^https?[:][/][/](www[.])?(old[.])?(new[.])?(en[.])?(ru[.])?(uk[.])?yummy-?ani[.]me[/]",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/thumbnail.png",
   "color": "#FF6666",
@@ -32,11 +36,23 @@
     "video"
   ],
   "iframe": true,
-  "iFrameRegExp": "(kodik[.](info|cc|biz|online)|kodikplayer[.]com|aniqit[.]com|alloha[.]yani[.]tv|player[.]cdnvideohub[.]com|iframeCVH[.]html|vkuker[.]net)",
+  "iFrameRegExp": "(kodik[.](info|cc|biz|online)|kodikplayer[.]com|aniqit[.]com|alloha[.]yani[.]tv|player[.]cdnvideohub[.]com|iframeCVH[.]html|vkuker[.]net|player[.]aksor[.]tv|yummyplayer[.]me)",
   "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
     {
       "id": "lang",
       "multiLanguage": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy mode",
+      "icon": "fas fa-user-secret",
+      "value": false
     }
   ]
 }
