@@ -10,10 +10,29 @@ enum ActivityAssets {
   Logo = 'https://anikitty.moe/icon-512x512.png',
 }
 
-function parseWatchTitle(raw: string): { anime: string, episode: string | null } {
+/** Discord truncates these hard — keep cards clean. */
+const DETAILS_MAX = 128
+const STATE_MAX = 128
+
+interface WatchInfo {
+  anime: string
+  episodeNumber: number | null
+  episodeTitle: string | null
+  seasonNumber: number | null
+  poster: string | null
+}
+
+function clip(text: string, max: number): string {
+  const t = text.replace(/\s+/g, ' ').trim()
+  if (t.length <= max)
+    return t
+  return `${t.slice(0, max - 1).trimEnd()}…`
+}
+
+function parseWatchTitle(raw: string): { anime: string, episodeNumber: number | null } {
   const cleaned = raw.replace(/\s*\|\s*AniKitty\s*$/i, '').trim()
   if (!cleaned || /^anikitty$/i.test(cleaned))
-    return { anime: 'Anime', episode: null }
+    return { anime: 'Anime', episodeNumber: null }
 
   const separators = [' — ', ' – ', ' - '] as const
   for (const sep of separators) {
@@ -22,92 +41,179 @@ function parseWatchTitle(raw: string): { anime: string, episode: string | null }
       continue
     const anime = cleaned.slice(0, index).trim()
     const episode = cleaned.slice(index + sep.length).trim()
-    if (anime && /^Episode\s+\d+$/i.test(episode))
-      return { anime, episode }
+    const num = episode.match(/Episode\s+(\d+)/i)?.[1]
+    if (anime && num)
+      return { anime, episodeNumber: Number(num) }
   }
 
-  return { anime: cleaned, episode: null }
+  return { anime: cleaned, episodeNumber: null }
 }
 
-function getCover(): string | null {
+function readWatchInfo(search: string): WatchInfo {
+  const hook = document.querySelector('#anikitty-presence')
+  const fromHook = {
+    anime: hook?.getAttribute('data-anikitty-title')?.trim() || '',
+    episodeNumber: Number(hook?.getAttribute('data-anikitty-episode') || '') || null,
+    episodeTitle: hook?.getAttribute('data-anikitty-episode-title')?.trim() || null,
+    seasonNumber: Number(hook?.getAttribute('data-anikitty-season') || '') || null,
+    poster: hook?.getAttribute('data-anikitty-poster')?.trim() || null,
+  }
+
+  const media = navigator.mediaSession?.metadata
+  const fromMedia = {
+    anime: media?.artist?.trim() || '',
+    episodeTitle: media?.title?.trim() || null,
+  }
+
+  const fromTitle = parseWatchTitle(document.title)
+  const episodeFromUrl = new URLSearchParams(search).get('episode')?.match(/(\d+)/)?.[1]
+  const episodeNumber
+    = fromHook.episodeNumber
+      || fromTitle.episodeNumber
+      || (episodeFromUrl ? Number(episodeFromUrl) : null)
+
+  let episodeTitle = fromHook.episodeTitle || fromMedia.episodeTitle
+  // Drop generic "Episode N" titles — use chip + state fallback instead
+  if (episodeTitle && /^episode\s*\d+$/i.test(episodeTitle))
+    episodeTitle = null
+
+  return {
+    anime: fromHook.anime || fromMedia.anime || fromTitle.anime || 'Anime',
+    episodeNumber,
+    episodeTitle,
+    seasonNumber: fromHook.seasonNumber,
+    poster:
+      fromHook.poster
+      || document.querySelector('meta[property="og:image"]')?.getAttribute('content')
+      || document.querySelector('meta[name="twitter:image"]')?.getAttribute('content')
+      || null,
+  }
+}
+
+/** Matches Crunchyroll-style chip text Discord shows under the card. */
+function episodeChip(info: WatchInfo): string | null {
+  if (!info.episodeNumber)
+    return null
+  if (info.seasonNumber)
+    return `Season ${info.seasonNumber}, Episode ${info.episodeNumber}`
+  return `Episode ${info.episodeNumber}`
+}
+
+function episodeState(info: WatchInfo): string {
+  if (info.episodeTitle)
+    return info.episodeTitle
+  if (info.episodeNumber)
+    return `Episode ${info.episodeNumber}`
+  return 'Watching'
+}
+
+function isPrivatePath(pathname: string): boolean {
   return (
-    document.querySelector('meta[property="og:image"]')?.getAttribute('content')
-    || document.querySelector('meta[name="twitter:image"]')?.getAttribute('content')
-    || null
+    pathname.startsWith('/admin')
+    || pathname.startsWith('/settings')
+    || pathname.startsWith('/messages')
+    || pathname.startsWith('/chat')
+    || pathname.startsWith('/link-discord')
+    || pathname.startsWith('/api/')
   )
 }
 
-function applyVideoState(
-  presenceData: PresenceData,
-  video: HTMLVideoElement,
-  showTimestamps: boolean,
-): void {
-  const duration = video.duration
-  const currentTime = video.currentTime
-  const hasDuration = Number.isFinite(duration) && duration > 0
+presence.on('UpdateData', async () => {
+  const { pathname, href, search } = document.location
 
-  if (video.paused || video.ended) {
-    presenceData.smallImageKey = Assets.Pause
-    presenceData.smallImageText = 'Paused'
-    delete presenceData.startTimestamp
-    delete presenceData.endTimestamp
+  // Never leak admin / account chrome into Discord
+  if (isPrivatePath(pathname)) {
+    presence.clearActivity()
     return
   }
 
-  presenceData.smallImageKey = Assets.Play
-  presenceData.smallImageText = 'Playing'
+  const [privacy, showTimestamps, showCover, showButtons, titleAsPresence, hideWhenPaused]
+    = await Promise.all([
+      presence.getSetting<boolean>('privacy').catch(() => false),
+      presence.getSetting<boolean>('timestamps').catch(() => true),
+      presence.getSetting<boolean>('cover').catch(() => true),
+      presence.getSetting<boolean>('buttons').catch(() => true),
+      presence.getSetting<boolean>('titleAsPresence').catch(() => false),
+      presence.getSetting<boolean>('hideWhenPaused').catch(() => false),
+    ])
 
-  if (showTimestamps && hasDuration && Number.isFinite(currentTime)) {
-    [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
-  }
-}
-
-presence.on('UpdateData', async () => {
-  const privacy = await presence.getSetting<boolean>('privacy').catch(() => false)
-  const showTimestamps = await presence.getSetting<boolean>('timestamps').catch(() => true)
-  const showCover = await presence.getSetting<boolean>('cover').catch(() => true)
-  const showButtons = await presence.getSetting<boolean>('buttons').catch(() => true)
-
-  const { pathname, href, search } = document.location
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    details: 'Browsing AniKitty',
-  }
+  } as PresenceData
 
   if (pathname.startsWith('/anime/watch')) {
-    ;(presenceData as PresenceData).type = ActivityType.Watching
+    presenceData.type = ActivityType.Watching
 
     if (privacy) {
       presenceData.details = 'Watching anime'
+      presence.setActivity(presenceData)
+      return
+    }
+
+    const info = readWatchInfo(search)
+    const chip = episodeChip(info)
+    const video = document.querySelector('video')
+    const hasVideo = Boolean(
+      video && video.readyState > 0 && Number.isFinite(video.duration) && video.duration > 0,
+    )
+    const paused = hasVideo ? video!.paused || video!.ended : false
+
+    if (paused && hideWhenPaused) {
+      presence.clearActivity()
+      return
+    }
+
+    // Crunchyroll-style card:
+    // Watching AniKitty
+    // [poster]  Solo Leveling
+    //           Episode title / Episode N
+    //           ⏱ time   📄 Season X, Episode Y
+    //           [ Watch ]
+    if (titleAsPresence)
+      presenceData.name = clip(info.anime, DETAILS_MAX)
+    else
+      presenceData.details = clip(info.anime, DETAILS_MAX)
+
+    presenceData.state = clip(episodeState(info), STATE_MAX)
+
+    if (showCover && info.poster)
+      presenceData.largeImageKey = info.poster
+    if (chip)
+      presenceData.largeImageText = chip
+
+    if (hasVideo) {
+      presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
+      presenceData.smallImageText = paused ? 'Paused' : 'Playing'
+
+      if (paused) {
+        delete presenceData.startTimestamp
+        delete presenceData.endTimestamp
+      }
+      else if (showTimestamps) {
+        [presenceData.startTimestamp, presenceData.endTimestamp]
+          = getTimestampsFromMedia(video!)
+      }
+      else {
+        delete presenceData.startTimestamp
+        delete presenceData.endTimestamp
+      }
     }
     else {
-      const { anime, episode } = parseWatchTitle(document.title)
-      const episodeFromUrl = new URLSearchParams(search).get('episode')?.match(/(\d+)/)?.[1]
-      const episodeLabel = episode || (episodeFromUrl ? `Episode ${episodeFromUrl}` : null)
+      // Still show the card while the stream loads
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = 'Loading'
+      delete presenceData.startTimestamp
+      delete presenceData.endTimestamp
+    }
 
-      presenceData.details = anime
-      presenceData.state = episodeLabel || 'Watching'
-
-      const cover = getCover()
-      if (showCover && cover) {
-        presenceData.largeImageKey = cover
-        presenceData.smallImageKey = ActivityAssets.Logo
-        presenceData.smallImageText = 'AniKitty'
-      }
-
-      const video = document.querySelector('video')
-      if (video && video.readyState > 0)
-        applyVideoState(presenceData, video, showTimestamps)
-
-      if (showButtons) {
-        presenceData.buttons = [
-          {
-            label: 'Watch on AniKitty',
-            url: href.split('#')[0]!,
-          },
-        ]
-      }
+    if (showButtons) {
+      presenceData.buttons = [
+        {
+          label: 'Watch',
+          url: href.split('#')[0]!,
+        },
+      ]
     }
   }
   else if (
@@ -120,18 +226,19 @@ presence.on('UpdateData', async () => {
     }
     else {
       const title
-        = document.querySelector('h1')?.textContent?.trim()
+        = document.querySelector('#anikitty-presence')?.getAttribute('data-anikitty-title')?.trim()
+          || document.querySelector('h1')?.textContent?.trim()
           || document.title.replace(/\s*\|\s*AniKitty\s*$/i, '').trim()
           || 'Anime'
       presenceData.details = 'Viewing anime'
-      presenceData.state = title
-
-      const cover = getCover()
+      presenceData.state = clip(title, STATE_MAX)
+      const cover
+        = document.querySelector('meta[property="og:image"]')?.getAttribute('content') || null
       if (showCover && cover) {
         presenceData.largeImageKey = cover
         presenceData.smallImageKey = ActivityAssets.Logo
+        presenceData.smallImageText = 'AniKitty'
       }
-
       if (showButtons) {
         presenceData.buttons = [
           {
@@ -150,7 +257,7 @@ presence.on('UpdateData', async () => {
         = new URLSearchParams(search).get('q')
           || new URLSearchParams(search).get('query')
       if (q)
-        presenceData.state = q
+        presenceData.state = clip(q, STATE_MAX)
     }
   }
   else if (pathname.startsWith('/schedule')) {
@@ -170,7 +277,7 @@ presence.on('UpdateData', async () => {
     if (!privacy) {
       const user = pathname.split('/')[2]
       if (user)
-        presenceData.state = decodeURIComponent(user)
+        presenceData.state = clip(decodeURIComponent(user), STATE_MAX)
     }
   }
   else if (pathname === '/' || pathname.startsWith('/home')) {
@@ -179,11 +286,11 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/history')) {
     presenceData.details = 'Viewing watch history'
   }
-  else if (
-    pathname.startsWith('/settings')
-    || pathname.startsWith('/messages')
-    || pathname.startsWith('/chat')
-  ) {
+  else if (pathname.startsWith('/new') || pathname.startsWith('/community')) {
+    presenceData.details = 'Browsing AniKitty'
+  }
+  else {
+    // Unknown routes — don't invent status (avoids leaking odd pages)
     presence.clearActivity()
     return
   }

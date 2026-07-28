@@ -55,6 +55,21 @@
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
       "value": true
+    },
+    {
+      "id": "titleAsPresence",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": false
+    },
+    {
+      "id": "hideWhenPaused",
+      "title": "Hide When Paused",
+      "icon": "fad fa-pause",
+      "value": false
     }
   ]
 }
