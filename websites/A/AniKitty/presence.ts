@@ -90,7 +90,6 @@ function readWatchInfo(search: string): WatchInfo {
   }
 }
 
-/** Matches Crunchyroll-style chip text Discord shows under the card. */
 function episodeChip(info: WatchInfo): string | null {
   if (!info.episodeNumber)
     return null
@@ -164,12 +163,6 @@ presence.on('UpdateData', async () => {
       return
     }
 
-    // Crunchyroll-style card:
-    // Watching AniKitty
-    // [poster]  Solo Leveling
-    //           Episode title / Episode N
-    //           ⏱ time   📄 Season X, Episode Y
-    //           [ Watch ]
     if (titleAsPresence)
       presenceData.name = clip(info.anime, DETAILS_MAX)
     else
