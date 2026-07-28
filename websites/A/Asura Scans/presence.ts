@@ -7,6 +7,9 @@ const CHAPTER_CONTAINER_SELECTORS = [
   'div.py-4.mx-5.md\\:mx-0.flex.flex-col.items-center.justify-center',
   'div.py-8.-mx-5.md\\:mx-0.flex.flex-col.items-center.justify-center',
 ]
+const COMIC_PATH_PATTERN = /^\/(?:comics|series)\/[^/]+\/?$/i
+const CHAPTER_PATH_PATTERN = /^\/(?:comics|series)\/[^/]+\/chapter\/([^/]+)\/?$/i
+const USER_PATH_PATTERN = /^\/user\/([^/]+)\/?$/i
 
 interface Comic {
   title: string
@@ -22,6 +25,7 @@ const comic: Comic = {
 
 presence.on('UpdateData', async () => {
   const { pathname, href } = window.location
+
   const presenceData: PresenceData = {
     startTimestamp: browsingTimestamp,
     largeImageKey: ASURA_SCANS_LOGO,
@@ -48,12 +52,19 @@ presence.on('UpdateData', async () => {
     return
   }
 
-  if (onComicOrChapterPage(pathname) && isNewComic(href, comic)) {
-    comic.url = href.split('/chapter')[0]!
-    comic.title = document.title?.split('Chapter')[0]?.trim()?.split(' - ')[0]?.trim() ?? ''
+  if (onComicOrChapterPage(pathname)) {
+    const newComic = isNewComic(href, comic)
+    comic.url = getComicURL(href)
+    comic.title = getComicTitle() || comic.title
 
     if (displayCover) {
-      comic.image = (await getComicImage(comic.url)) ?? ASURA_SCANS_LOGO
+      const pageImage = getMetaContent('og:image')
+      if (pageImage) {
+        comic.image = pageImage
+      }
+      else if (newComic || comic.image === ASURA_SCANS_LOGO) {
+        comic.image = (await getComicImage(comic.url)) ?? ASURA_SCANS_LOGO
+      }
     }
     else {
       comic.image = ASURA_SCANS_LOGO
@@ -61,34 +72,37 @@ presence.on('UpdateData', async () => {
   }
 
   if (onChapterPage(pathname)) {
-    presenceData.details = comic.title || document.title
+    presenceData.details = comic.title || getComicTitle()
     presenceData.largeImageKey = comic.image || ASURA_SCANS_LOGO
 
     if (displayButtons) {
       presenceData.buttons = [
         {
           label: 'Visit Comic Page',
-          url: comic.url || href.split('/chapter')[0]!,
+          url: comic.url || getComicURL(href),
+        },
+        {
+          label: 'Visit Chapter',
+          url: href,
         },
       ]
     }
 
     if (displayChapter) {
       const progress = displayPercentage ? getChapterProgress() : null
+      const chapterNumber = getChapterNumber(pathname)
+      const chapterTitle = getChapterTitle(chapterNumber)
 
-      presenceData.state = `Chapter ${getChapterNumber()} ${progress !== null ? ` - ${progress}%` : ''}`
-      if (displayButtons) {
-        presenceData.buttons?.push({
-          label: 'Visit Chapter',
-          url: href,
-        })
-      }
+      presenceData.state = [
+        `Chapter ${chapterNumber}${chapterTitle ? `: ${chapterTitle}` : ''}`,
+        progress !== null ? `${progress}%` : '',
+      ].filter(Boolean).join(' • ')
     }
   }
   else if (onComicHomePage(pathname)) {
-    presenceData.details = 'Viewing Comic Home Page'
+    presenceData.details = comic.title || getComicTitle()
     presenceData.largeImageKey = comic.image || ASURA_SCANS_LOGO
-    presenceData.state = comic.title || document.title
+    presenceData.state = 'Viewing Comic Home Page'
 
     if (displayButtons) {
       presenceData.buttons = [
@@ -99,10 +113,33 @@ presence.on('UpdateData', async () => {
       ]
     }
   }
+  else if (onUserPage(pathname)) {
+    const userName = getUserName(pathname)
+    presenceData.details = 'Viewing User Profile'
+    presenceData.state = userName
+
+    if (displayCover) {
+      presenceData.largeImageKey = getUserImage()
+      presenceData.largeImageText = userName
+    }
+
+    if (displayButtons) {
+      presenceData.buttons = [
+        {
+          label: 'Visit Profile',
+          url: href,
+        },
+      ]
+    }
+  }
   else if (pathname.startsWith('/bookmark')) {
     presenceData.details = 'Viewing Bookmarks'
   }
-  else if (pathname.startsWith('/series')) {
+  else if (
+    pathname.startsWith('/browse')
+    || pathname === '/comics'
+    || pathname.startsWith('/series')
+  ) {
     presenceData.details = 'Viewing Comic List'
   }
   else if (pathname === '/') {
@@ -116,30 +153,133 @@ presence.on('UpdateData', async () => {
   if (presenceData.details)
     presence.setActivity(presenceData)
   else
-    presence.setActivity()
+    presence.clearActivity()
 })
 
 function onComicOrChapterPage(path: string) {
-  return /\/series\/[a-z0-9-].*$/i.test(path)
+  return onComicHomePage(path) || onChapterPage(path)
 }
 
 function onComicHomePage(path: string) {
-  return /\/series\/[a-z0-9-]+\/?$/i.test(path)
+  return COMIC_PATH_PATTERN.test(path)
 }
 
 function onChapterPage(path: string) {
-  return /\/series\/[a-z0-9-]+\/chapter\/\d+\/?$/i.test(path)
+  return CHAPTER_PATH_PATTERN.test(path)
+}
+
+function onUserPage(path: string) {
+  return USER_PATH_PATTERN.test(path)
 }
 
 function isNewComic(path: string, comic: Comic) {
-  return comic.url !== path.split('/chapter')[0]
+  return comic.url !== getComicURL(path)
 }
 
-function getChapterNumber() {
-  return document.title.split('Chapter')[1]?.split('-')[0]?.trim() ?? ''
+function getComicURL(path: string) {
+  const url = new URL(path)
+  url.pathname = url.pathname.replace(/\/chapter\/[^/]+\/?$/i, '')
+  url.search = ''
+  url.hash = ''
+  return url.href.replace(/\/$/, '')
+}
+
+function getMetaContent(property: string) {
+  return document
+    .querySelector<HTMLMetaElement>(`meta[property="${property}"]`)
+    ?.content
+    .trim() ?? ''
+}
+
+function getComicTitle() {
+  const pageTitle = getMetaContent('og:title') || document.title
+  const siteSeparator = pageTitle.toLowerCase().lastIndexOf('| asura scans')
+  const titleWithoutSite = siteSeparator === -1
+    ? pageTitle
+    : pageTitle.slice(0, siteSeparator)
+  const chapterSeparator = titleWithoutSite.toLowerCase().lastIndexOf(' chapter ')
+
+  return (chapterSeparator === -1
+    ? titleWithoutSite
+    : titleWithoutSite.slice(0, chapterSeparator)).trim()
+}
+
+function getChapterNumber(path: string) {
+  const pathChapter = CHAPTER_PATH_PATTERN.exec(path)?.[1]
+  if (pathChapter) {
+    try {
+      return decodeURIComponent(pathChapter)
+    }
+    catch {
+      return pathChapter
+    }
+  }
+
+  const chapterSeparator = document.title.toLowerCase().lastIndexOf(' chapter ')
+  if (chapterSeparator === -1)
+    return 'Unknown'
+
+  return document.title
+    .slice(chapterSeparator + ' chapter '.length)
+    .split(' - ')[0]
+    ?.split(' | ')[0]
+    ?.trim() || 'Unknown'
+}
+
+function getChapterTitle(chapterNumber: string) {
+  const separator = ` Chapter ${chapterNumber} - `
+
+  for (const script of document.querySelectorAll<HTMLScriptElement>(
+    'script[type="application/ld+json"]',
+  )) {
+    try {
+      const data = JSON.parse(script.textContent ?? '{}') as {
+        '@type'?: unknown
+        'headline'?: unknown
+      }
+      if (data['@type'] !== 'Article' || typeof data.headline !== 'string')
+        continue
+
+      return data.headline.split(separator)[1]?.trim() ?? ''
+    }
+    catch {}
+  }
+
+  return ''
+}
+
+function getUserName(path: string) {
+  const pageTitle = getMetaContent('og:title') || document.title
+  const profileSuffix = pageTitle.toLowerCase().lastIndexOf('\'s profile')
+  if (profileSuffix !== -1)
+    return pageTitle.slice(0, profileSuffix).trim()
+
+  const pathName = USER_PATH_PATTERN.exec(path)?.[1]
+  if (!pathName)
+    return 'Unknown User'
+
+  try {
+    return decodeURIComponent(pathName)
+  }
+  catch {
+    return pathName
+  }
+}
+
+function getUserImage() {
+  const profileImage = document.querySelector<HTMLImageElement>(
+    '.profile-page img[onerror*="default-pp"]',
+  )
+
+  return profileImage?.src || ASURA_SCANS_LOGO
 }
 
 function getChapterContainer(): HTMLElement | null {
+  const currentReader = document.querySelector<HTMLElement>('[data-page]')?.parentElement
+  if (currentReader) {
+    return currentReader
+  }
+
   for (const selector of CHAPTER_CONTAINER_SELECTORS) {
     const el = document.querySelector<HTMLElement>(selector)
     if (el) {
