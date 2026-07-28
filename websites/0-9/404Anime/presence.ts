@@ -245,7 +245,9 @@ presence.on('UpdateData', () => {
     type: ActivityType.Watching,
     largeImageKey: data.cover || ActivityAssets.Logo,
     largeImageText: data.episode
-      ? `Season 1, Episode ${data.episode}`
+      ? data.season
+        ? `Season ${data.season}, Episode ${data.episode}`
+        : `Episode ${data.episode}`
       : '404Anime',
   }
 
@@ -253,17 +255,15 @@ presence.on('UpdateData', () => {
     presenceData.details = truncate(
       episodeLabel ? `${title} - ${episodeLabel}` : title,
     )
-    presenceData.state = truncate(
-      [
-        data.mediaType === 'movie'
-          ? 'Movie'
-          : data.mediaType === 'tv'
-            ? data.episodeTitle || 'TV Episode'
-            : data.audio ? data.audio.toUpperCase() : null,
-      ]
-        .filter(Boolean)
-        .join(' - '),
-    )
+    // Episode title was previously shown only for `tv`, so anime lost it even
+    // though the site publishes one. Pair it with the audio track instead.
+    const stateParts = data.mediaType === 'movie'
+      ? ['Movie']
+      : [
+          data.episodeTitle || (data.mediaType === 'tv' ? 'TV Episode' : null),
+          data.audio ? data.audio.toUpperCase() : null,
+        ]
+    presenceData.state = truncate(stateParts.filter(Boolean).join(' - '))
 
     applyPlayback(
       presenceData,
