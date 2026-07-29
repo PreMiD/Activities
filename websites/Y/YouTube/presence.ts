@@ -65,6 +65,7 @@ presence.on('UpdateData', async () => {
     logo,
     buttons,
     hideHome,
+    showSearch,
     hidePaused,
     showListening,
     displayType,
@@ -80,6 +81,7 @@ presence.on('UpdateData', async () => {
     getSetting<number>('largeImage', 0),
     getSetting<boolean>('buttons', true),
     getSetting<boolean>('hideHome', false),
+    getSetting<boolean>('showSearch', true),
     getSetting<boolean>('hidePaused', true),
     getSetting<number>('showListening', 0),
     getSetting<number>('displayType', 2),
@@ -87,6 +89,19 @@ presence.on('UpdateData', async () => {
   const { pathname, hostname, search, href } = document.location
   const isMobile = hostname === 'm.youtube.com'
   const selectors = getQuerySelectors(isMobile)
+  const isSearchPage = pathname.includes('/results')
+    || (
+      pathname.includes('/search')
+      && (
+        pathname.includes('/@')
+        || pathname.includes('/channel')
+        || pathname.includes('/c')
+        || pathname.includes('/user')
+      )
+    )
+
+  if (isSearchPage && !showSearch)
+    return presence.clearActivity()
 
   // Update strings if user selected another language.
   if (!checkStringLanguage(newLang))
