@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1527271319954001940',
@@ -20,13 +20,33 @@ presence.on('UpdateData', async () => {
     largeImageText: 'Next Toppers',
   }
 
+  // Target the lecture title (h3.mt-2) or fallback heading elements
+  const pageHeading = document.querySelector('h3.mt-2, h3, h1, h2')?.textContent?.trim()
+
   if (pathname.includes('/product/our-courses') || pathname.includes('/courses')) {
     presenceData.details = 'Browsing Courses'
-    presenceData.state = 'Exploring study material'
+    presenceData.state = pageHeading || 'Exploring study material'
   }
   else if (pathname.includes('/play') || pathname.includes('/live')) {
     presenceData.details = 'Attending Class'
-    presenceData.state = 'Watching lecture'
+    presenceData.state = pageHeading || 'Watching lecture'
+
+    // Look for active video element for live timestamps
+    const video = document.querySelector<HTMLVideoElement>('video')
+    if (video && !video.paused) {
+      delete presenceData.startTimestamp
+      if (video.duration && !Number.isNaN(video.duration)) {
+        const [start, end] = getTimestamps(
+          Math.floor(video.currentTime),
+          Math.floor(video.duration),
+        )
+        presenceData.startTimestamp = start
+        presenceData.endTimestamp = end
+      }
+      else {
+        presenceData.startTimestamp = Math.floor(Date.now() / 1000 - video.currentTime)
+      }
+    }
   }
   else if (pathname.includes('/my-profile') || pathname.includes('/profile')) {
     presenceData.details = 'Viewing Profile'
@@ -34,11 +54,11 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.includes('/blogs') || pathname.includes('/blog')) {
     presenceData.details = 'Reading Blogs'
-    presenceData.state = 'Articles & Updates'
+    presenceData.state = pageHeading || 'Articles & Updates'
   }
   else {
     presenceData.details = 'Browsing Next Toppers'
-    presenceData.state = document.title || 'Attending class'
+    presenceData.state = pageHeading || 'Exploring site'
   }
 
   presence.setActivity(presenceData)
