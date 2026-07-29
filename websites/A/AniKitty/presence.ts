@@ -139,7 +139,7 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-  } as PresenceData
+  }
 
   if (pathname.startsWith('/anime/watch')) {
     presenceData.type = ActivityType.Watching
