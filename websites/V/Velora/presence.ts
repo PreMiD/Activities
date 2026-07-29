@@ -98,7 +98,7 @@ presence.on('UpdateData', async () => {
     presence.setActivity({
       largeImageKey: ActivityAssets.Logo,
       startTimestamp: browsingTimestamp,
-      details: 'Browsing Velora',
+      details: 'Browsing...',
     })
   }
 })
@@ -121,7 +121,7 @@ async function updateActivity(): Promise<void> {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    details: 'Browsing Velora',
+    details: 'Browsing...',
   }
 
   if (firstSegment === 'dashboard') {
@@ -197,9 +197,9 @@ async function updateActivity(): Promise<void> {
       const format = detectStreamFormat()
       presenceData.smallImageKey = Assets.Live
       presenceData.smallImageText = format === 'webrtc'
-        ? 'Live — Ultra Low Latency (WebRTC)'
+        ? 'Ultra Low Latency (WebRTC)'
         : format === 'll-hls'
-          ? 'Live — Low Latency (LL-HLS)'
+          ? 'Low Latency (LL-HLS)'
           : 'Live'
     }
 
@@ -218,7 +218,6 @@ async function updateActivity(): Promise<void> {
     }
   }
   else {
-    presenceData.details = 'Browsing Velora'
     if (!privacy) {
       if (usePresenceName) {
         presenceData.name = channel.displayName
