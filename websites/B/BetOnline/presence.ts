@@ -257,7 +257,7 @@ presence.on('UpdateData', async () => {
   if (showButtons)
     presenceData.buttons = [{ label: 'View on BetOnline', url: href }]
 
-  if (presenceData.details !== undefined)
+  if (presenceData.details)
     presence.setActivity(presenceData)
   else
     presence.clearActivity()
