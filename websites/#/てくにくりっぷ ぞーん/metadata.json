@@ -11,7 +11,7 @@
     "ja": "てくにくりっぷ ぞーんでどんな音MADを見ているかシェアしよう！"
   },
   "url": "zone.techniclip.com",
-  "regExp": "(zone\\.)?techniclip\\.com",
+  "regExp": "^https?[:][/][/](zone[.])?techniclip[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/UotUexK.png",
   "thumbnail": "https://i.imgur.com/hyrMiVK.jpeg",
