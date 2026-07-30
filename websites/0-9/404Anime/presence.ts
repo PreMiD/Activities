@@ -31,19 +31,15 @@ function truncate(value: string, max = 128): string {
   return value.length > max ? `${value.slice(0, max - 1)}...` : value
 }
 
-function getVideoFallback(): Pick<
+function getLivePlayback(): Pick<
   Anime404PremidPresence,
   'currentTime' | 'duration' | 'paused'
 > {
   const video = document.querySelector<HTMLVideoElement>('video')
 
-  if (!video) {
-    return {
-      currentTime: 0,
-      duration: 0,
-      paused: true,
-    }
-  }
+  // No video: contribute nothing, so the cached bridge values stand.
+  if (!video)
+    return {}
 
   return {
     currentTime: Number.isFinite(video.currentTime) ? video.currentTime : 0,
@@ -52,7 +48,7 @@ function getVideoFallback(): Pick<
   }
 }
 
-async function getBridgeData(): Promise<Anime404PremidPresence | null> {
+async function fetchBridgeData(): Promise<Anime404PremidPresence | null> {
   if (supports(presence, 'execInPage')) {
     try {
       const data = await presence.execInPage<Anime404PremidPresence | null>({
@@ -77,6 +73,71 @@ async function getBridgeData(): Promise<Anime404PremidPresence | null> {
   catch {
     return null
   }
+}
+
+// Cached, and only re-read on a URL change or when the page rewrites
+// `<body data-premid>`. Position comes off the <video> element instead.
+let bridgeCache: Anime404PremidPresence | null = null
+let bridgeReadInFlight = false
+let bridgeReadStale = false
+let lastBridgeRead = 0
+let lastHref = document.location.href
+const RETRY_MS = 2000
+
+function refreshBridgeData(): void {
+  // A change during a read means that read is already out of date, so queue
+  // one more rather than dropping it.
+  if (bridgeReadInFlight) {
+    bridgeReadStale = true
+    return
+  }
+
+  bridgeReadInFlight = true
+  lastBridgeRead = Date.now()
+  fetchBridgeData()
+    .then((data) => {
+      bridgeCache = data
+    })
+    .finally(() => {
+      bridgeReadInFlight = false
+      if (bridgeReadStale) {
+        bridgeReadStale = false
+        refreshBridgeData()
+      }
+    })
+}
+
+function watchForChanges(): void {
+  new MutationObserver(refreshBridgeData).observe(document.body, {
+    attributes: true,
+    attributeFilter: ['data-premid'],
+  })
+  refreshBridgeData()
+}
+
+if (document.body)
+  watchForChanges()
+else
+  document.addEventListener('DOMContentLoaded', watchForChanges, { once: true })
+
+function getBridgeData(): Anime404PremidPresence | null {
+  if (document.location.href !== lastHref) {
+    lastHref = document.location.href
+    refreshBridgeData()
+  }
+
+  // Self-heal: the page can publish before the observer is attached, and a
+  // read can land before the data exists. Retry while a player is on screen
+  // but the cache is still empty. Once it fills, this stops.
+  else if (
+    !bridgeCache
+    && document.querySelector('video')
+    && Date.now() - lastBridgeRead > RETRY_MS
+  ) {
+    refreshBridgeData()
+  }
+
+  return bridgeCache
 }
 
 function applyPlayback(
@@ -163,12 +224,11 @@ function getBrowsingState(pathname: string): string {
   return 'Exploring 404Anime'
 }
 
-presence.on('UpdateData', async () => {
-  const bridge = await getBridgeData()
-  const fallback = getVideoFallback()
+presence.on('UpdateData', () => {
+  // Live playback overrides the cached bridge's stale position.
   const data = {
-    ...fallback,
-    ...bridge,
+    ...getBridgeData(),
+    ...getLivePlayback(),
   }
 
   const isWatchPage = document.location.pathname.includes('/watch/')
@@ -185,7 +245,9 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
     largeImageKey: data.cover || ActivityAssets.Logo,
     largeImageText: data.episode
-      ? `Season 1, Episode ${data.episode}`
+      ? data.season
+        ? `Season ${data.season}, Episode ${data.episode}`
+        : `Episode ${data.episode}`
       : '404Anime',
   }
 
@@ -193,17 +255,15 @@ presence.on('UpdateData', async () => {
     presenceData.details = truncate(
       episodeLabel ? `${title} - ${episodeLabel}` : title,
     )
-    presenceData.state = truncate(
-      [
-        data.mediaType === 'movie'
-          ? 'Movie'
-          : data.mediaType === 'tv'
-            ? data.episodeTitle || 'TV Episode'
-            : data.audio ? data.audio.toUpperCase() : null,
-      ]
-        .filter(Boolean)
-        .join(' - '),
-    )
+    // Episode title was previously shown only for `tv`, so anime lost it even
+    // though the site publishes one. Pair it with the audio track instead.
+    const stateParts = data.mediaType === 'movie'
+      ? ['Movie']
+      : [
+          data.episodeTitle || (data.mediaType === 'tv' ? 'TV Episode' : null),
+          data.audio ? data.audio.toUpperCase() : null,
+        ]
+    presenceData.state = truncate(stateParts.filter(Boolean).join(' - '))
 
     applyPlayback(
       presenceData,

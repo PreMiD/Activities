@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, StatusDisplayType, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '503557087041683458',
@@ -26,49 +26,26 @@ function getAppVersion(hostname: string) {
   }
 }
 
-function _eval(js: string): Promise<any> {
-  return new Promise((resolve, reject) => {
-    try {
-      const eventName = 'PreMiD_Stremio'
-      const script = document.createElement('script')
-
-      window.addEventListener(
-        eventName,
-        (data) => {
-          script.remove()
-          resolve((data as CustomEvent).detail)
-        },
-        { once: true },
-      )
-      script.id = eventName
-      script.appendChild(
-        document.createTextNode(`
-        var core = window.services.core;
-        var result = ${js};
-
-        if (result instanceof Promise) {
-          result.then((awaitedResult) => {
-            window.dispatchEvent(new CustomEvent("${eventName}", { detail: awaitedResult }));
-          });
-        } else {
-          window.dispatchEvent(new CustomEvent("${eventName}", { detail: result }));
-        }
-      `),
-      )
-
-      document.head.appendChild(script)
-    }
-    catch (err) {
-      reject(err)
-    }
-  })
-}
-
 interface Video {
   isEmbed: boolean
   isPaused: boolean
   startTimestamp?: number
   endTimestamp?: number
+}
+
+interface RecentLibraryItem {
+  _id: string
+  _mtime: string
+  name: string
+  poster: string
+  type: 'movie' | 'series' | 'channel'
+  state?: {
+    video_id: string
+  }
+}
+
+interface RecentLibraryStorage {
+  items: Record<string, RecentLibraryItem>
 }
 
 function findVideo(): Video | null {
@@ -324,6 +301,8 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageKey = Assets.Pause
             presenceData.smallImageText = 'Paused'
             presenceData.state = 'Paused'
+            delete presenceData.endTimestamp
+            presenceData.startTimestamp = browsingTimestamp
           }
           else {
             presenceData.smallImageKey = Assets.Play
@@ -347,21 +326,41 @@ presence.on('UpdateData', async () => {
               ?.getAttribute('data-image') ?? ActivityAssets.Logo
           }
           else {
-            const playerState = await _eval(
-              'core.transport.getState(\'player\')',
+            const mediaSession = navigator.mediaSession
+            const mediaMetadata = mediaSession.metadata
+            const recentLibrary = JSON.parse(localStorage.library_recent) as RecentLibraryStorage
+            const mostRecent = Object.values(recentLibrary.items).reduce<RecentLibraryItem | null>(
+              (latest, item) =>
+                !latest || item._mtime > latest._mtime ? item : latest,
+              null,
             )
-            if (playerState?.metaItem?.type?.toLowerCase() === 'ready') {
-              const {
-                metaItem: { content },
-                seriesInfo,
-                title,
-              } = playerState
-              metaUrl = `${window.location.origin}/#/detail/${content.type}/${content.id}`
-              if (content.type === 'series')
-                metaUrl += `/${content.id}:${seriesInfo.season}:${seriesInfo.episode}`
-              presenceData.largeImageKey = content.poster ?? ActivityAssets.Logo
-              presenceData.name = content.name
-              presenceData.details = title.replace(`${content.name} -`, '') ?? 'Player'
+
+            if (mediaSession?.playbackState !== 'none') {
+              if (mediaSession?.playbackState === 'paused') {
+                presenceData.smallImageKey = Assets.Pause
+                presenceData.smallImageText = 'Paused'
+                presenceData.state = 'Paused'
+                delete presenceData.endTimestamp
+                presenceData.startTimestamp = browsingTimestamp
+              }
+              else {
+                presenceData.smallImageKey = Assets.Play
+                presenceData.smallImageText = 'Playing'
+                presenceData.state = 'Watching'
+              }
+
+              metaUrl = `${window.location.origin}/#/detail/${mostRecent?.type}/${mostRecent?._id}`
+              presenceData.largeImageKey = mostRecent?.poster ?? ActivityAssets.Logo
+              presenceData.statusDisplayType = StatusDisplayType.Details
+              if (mostRecent?.type === 'series') {
+                metaUrl += `/${mostRecent?.state?.video_id}`
+                presenceData.details = mostRecent?.name
+                presenceData.state = mediaMetadata?.title
+                presenceData.largeImageText = `Season ${mostRecent?.state?.video_id.split(':')[1]}, Episode ${mostRecent?.state?.video_id.split(':')[2]}`
+              }
+              else {
+                presenceData.details = mediaMetadata?.title
+              }
             }
           }
           if (metaUrl) {

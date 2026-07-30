@@ -9,6 +9,10 @@
     {
       "name": "entraptaa",
       "id": "153980822670671872"
+    },
+    {
+      "name": "JuJuplayz",
+      "id": "960971439996035083"
     }
   ],
   "service": "Letterboxd",
@@ -17,7 +21,7 @@
   },
   "url": "letterboxd.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*letterboxd[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Letterboxd/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Letterboxd/assets/thumbnail.png",
   "color": "#202830",
@@ -32,9 +36,15 @@
   "settings": [
     {
       "id": "show_buttons",
-      "title": "Show buttons",
+      "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
       "value": true
+    },
+    {
+      "id": "privacy_mode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
     }
   ]
 }
