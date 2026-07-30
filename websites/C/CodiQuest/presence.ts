@@ -1,8 +1,6 @@
 import { ActivityType } from 'premid'
 
 const presence = new Presence({
-  // Public Discord application/client ID for CodiQuest. Never place its client
-  // secret or a bot token in this activity.
   clientId: '1532069734961647827',
 })
 
