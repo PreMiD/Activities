@@ -1,7 +1,7 @@
 import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
-  clientId: '1460489830478778554', // Create an app on Discord Developer Portal to get this
+  clientId: '1460489830478778554',
 })
 
 presence.on('UpdateData', async () => {
