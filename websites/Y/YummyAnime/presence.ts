@@ -1,8 +1,33 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
+enum ListStatusId {
+	Watching = 0,
+	Planned = 1,
+	Watched = 2,
+	Abandoned = 3,
+	Favorites = 4,
+	Postponed = 5,
+}
+
+
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.png',
+  Watching = 'https://i.imgur.com/RbKyqas.png',
+  Planned = 'https://i.imgur.com/UrJqULa.png',
+  Watched = 'https://i.imgur.com/UTslBQc.png',
+  Abandoned = 'https://i.imgur.com/R25r95R.png',
+  Postponed = 'https://i.imgur.com/TuZMiAY.png',
+  Favorites = 'https://i.imgur.com/ENn2etE.png'
 }
+
+const listStatusAssetMap: Record<ListStatusId, ActivityAssets> = {
+	[ListStatusId.Watching]: ActivityAssets.Watching,
+	[ListStatusId.Planned]: ActivityAssets.Planned,
+	[ListStatusId.Watched]: ActivityAssets.Watched,
+	[ListStatusId.Abandoned]: ActivityAssets.Abandoned,
+	[ListStatusId.Favorites]: ActivityAssets.Favorites,
+	[ListStatusId.Postponed]: ActivityAssets.Postponed,
+};
 
 const presence = new Presence({
   clientId: '1140596411956744202',
@@ -46,6 +71,20 @@ presence.on('iFrameData', (data: IframeData) => {
     paused: data.paused ?? true,
   }
 })
+
+function getSelectedListStatusAsset(): ActivityAssets | null {
+	const selected = document.querySelector<HTMLElement>(
+		'[data-tooltip-id="anime-lists-tooltip"][style*="--color"]'
+	);
+
+	if (!selected) return null; 
+
+	const id = Number(selected.dataset.id);
+	if (Number.isNaN(id) || !(id in listStatusAssetMap)) return null;
+
+	return listStatusAssetMap[id as ListStatusId];
+}
+
 
 function getKnownDuration(video: HTMLVideoElement): number {
   const d = video.duration
@@ -618,7 +657,10 @@ presence.on('UpdateData', async () => {
     }
   }
   else {
-    delete presenceData.smallImageKey
+    const smallImageKey = getSelectedListStatusAsset()
+    if (smallImageKey) {
+      presenceData.smallImageKey = smallImageKey;
+    }
     delete presenceData.smallImageText
 
     if (currentEpisode && isPlayerBlockInView())
