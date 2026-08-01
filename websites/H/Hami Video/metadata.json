@@ -1,0 +1,90 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "Baidairay",
+    "id": "774619334646824960"
+  },
+
+  "service": "Hami Video",
+  "altnames": ["HamiVideo", "中華電信 Hami Video", "hamivideo"],
+  "description": {
+    "en": "Automatically shows what you're watching on Hami Video — movies, TV series, anime, documentaries, kids' content, variety shows, and live or replayed sports.",
+    "zh_TW": "自動顯示您正在 Hami Video 觀看的內容，包含電影、影集、動漫、紀錄片、兒童內容、綜藝節目，以及運動賽事直播或重播。"
+  },
+  "url": ["hamivideo.hinet.net", "www.hamivideo.hinet.net"],
+  "regExp": "^https:\\/\\/(?:www\\.)?hamivideo\\.hinet\\.net\\/.*$",
+  "version": "1.0.0",
+  "logo": "img/logo.png",
+  "thumbnail": "img/logo.png",
+  "color": "#EE1B58",
+  "category": "videos",
+  "tags": ["video", "streaming", "movies", "tv", "anime", "documentary", "kids", "variety", "sports", "taiwan", "hinet", "live"],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false,
+      "description": "Hide titles, episode info, poster art, and buttons — only shows that you're watching something"
+    },
+    {
+      "id": "showTitle",
+      "title": "Show Title",
+      "icon": "fas fa-heading",
+      "value": true,
+      "description": "Show the movie or series title",
+      "if": { "privacyMode": false }
+    },
+    {
+      "id": "showEpisodeNumber",
+      "title": "Show Episode Number",
+      "icon": "fas fa-list-ol",
+      "value": true,
+      "description": "Show the season/episode number (e.g. S01E05)",
+      "if": { "privacyMode": false }
+    },
+    {
+      "id": "showEpisodeTitle",
+      "title": "Show Episode Title",
+      "icon": "fas fa-closed-captioning",
+      "value": true,
+      "description": "Show the episode's own title, if available",
+      "if": { "privacyMode": false }
+    },
+    {
+      "id": "showLiveBadge",
+      "title": "Show Live Badge",
+      "icon": "fas fa-broadcast-tower",
+      "value": true,
+      "description": "Show a LIVE badge as the small image during live broadcasts",
+      "if": { "privacyMode": false }
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "description": "Show the \"Watch on Hami Video\" button",
+      "if": { "privacyMode": false }
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Show elapsed/remaining playback time"
+    },
+    {
+      "id": "showPauseState",
+      "title": "Show Pause State",
+      "icon": "fas fa-pause",
+      "value": true,
+      "description": "Update the presence to show \"Paused\" when playback is paused"
+    }
+  ]
+}
