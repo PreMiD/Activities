@@ -744,7 +744,7 @@ function isHomepage(pathname: string): boolean {
 }
 
 function isCategoryBrowsePage(pathname: string): boolean {
-  return /\/(category|channel|list)\//i.test(pathname)
+  return /\/(?:category|channel|list)\//i.test(pathname)
 }
 
 function isAnimeBrowsePage(pathname: string): boolean {

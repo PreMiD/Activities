@@ -7,14 +7,14 @@
   },
 
   "service": "Hami Video",
-  "altnames": ["HamiVideo", "中華電信 Hami Video", "hamivideo"],
+  "altnames": ["HamiVideo", "台灣大哥大 Hami Video", "中華電信 Hami Video", "hamivideo"],
   "description": {
     "en": "Automatically shows what you're watching on Hami Video — movies, TV series, anime, documentaries, kids' content, variety shows, and live or replayed sports.",
-    "zh_TW": "自動顯示您正在 Hami Video 觀看的內容，包含電影、影集、動漫、紀錄片、兒童內容、綜藝節目，以及運動賽事直播或重播。"
+    "zh-TW": "自動顯示您正在 Hami Video 觀看的內容，包含電影、影集、動漫、紀錄片、兒童內容、綜藝節目，以及運動賽事直播或重播。"
   },
-  "url": ["hamivideo.hinet.net", "www.hamivideo.hinet.net"],
+  "url": ["hamivideo.hinet.net"],
   "regExp": "^https:\\/\\/(?:www\\.)?hamivideo\\.hinet\\.net\\/.*$",
-  "version": "1.0.0",
+  "version": "1.3.0",
   "logo": "img/logo.png",
   "thumbnail": "img/logo.png",
   "color": "#EE1B58",
