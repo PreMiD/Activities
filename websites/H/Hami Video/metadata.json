@@ -9,8 +9,7 @@
   "service": "Hami Video",
   "altnames": ["HamiVideo", "台灣大哥大 Hami Video", "中華電信 Hami Video", "hamivideo"],
   "description": {
-    "en": "Automatically shows what you're watching on Hami Video — movies, TV series, anime, documentaries, kids' content, variety shows, and live or replayed sports.",
-    "zh-TW": "自動顯示您正在 Hami Video 觀看的內容，包含電影、影集、動漫、紀錄片、兒童內容、綜藝節目，以及運動賽事直播或重播。"
+    "en": "Automatically shows what you're watching on Hami Video — movies, TV series, anime, documentaries, kids' content, variety shows, and live or replayed sports."
   },
   "url": ["hamivideo.hinet.net"],
   "regExp": "^https:\\/\\/(?:www\\.)?hamivideo\\.hinet\\.net\\/.*$",
@@ -21,10 +20,6 @@
   "category": "videos",
   "tags": ["video", "streaming", "movies", "tv", "anime", "documentary", "kids", "variety", "sports", "taiwan", "hinet", "live"],
   "settings": [
-    {
-      "id": "lang",
-      "multiLanguage": true
-    },
     {
       "id": "privacyMode",
       "title": "Privacy Mode",
