@@ -42,7 +42,7 @@
   },
   "url": "www.crunchyroll.com",
   "regExp": "^https?[:][/][/](www[.])?crunchyroll[.]com[/]",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Crunchyroll/assets/thumbnail.png",
   "color": "#f47521",
@@ -51,6 +51,8 @@
     "video",
     "anime"
   ],
+  "iframe": true,
+  "iFrameRegExp": "^https?:[/][/]static[.]crunchyroll[.]com[/]",
   "settings": [
     {
       "id": "lang",

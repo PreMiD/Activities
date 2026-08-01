@@ -1,0 +1,90 @@
+{
+  "faceit.parties": {
+    "description": "Shown when the user is in the party finder section of the website.",
+    "message": "Browsing Parties"
+  },
+  "faceit.track": {
+    "description": "Shown when the user is viewing their FACEIT stats.",
+    "message": "Browsing Track Statistics"
+  },
+  "faceit.rank": {
+    "description": "Shown when the user is viewing the leaderboards.",
+    "message": "Browsing Rank Leaderboards"
+  },
+  "faceit.feed": {
+    "description": "Shown when the user is viewing their social feed.",
+    "message": "Browsing Social Feed"
+  },
+  "faceit.clubs": {
+    "description": "Shown when the user is viewing the clubs page.",
+    "message": "Browsing Clubs"
+  },
+  "faceit.club": {
+    "description": "Shown when the user is viewing a specific club.",
+    "message": "Viewing Club"
+  },
+  "faceit.matchhistory": {
+    "description": "Shown when the user is viewing their match history.",
+    "message": "Viewing Match History"
+  },
+  "faceit.inlobby": {
+    "description": "Shown when the user is in a matchmaking lobby.",
+    "message": "In Matchmaking Lobby"
+  },
+  "faceit.queuing": {
+    "description": "Shown when the user is queuing for a match.",
+    "message": "In Queue"
+  },
+  "faceit.vetoing": {
+    "description": "Shown when the user is vetoing maps before a match.",
+    "message": "[Matchroom] Vetoing Maps"
+  },
+  "faceit.watchingVeto": {
+    "description": "Shown when the user is watching the veto process before a match.",
+    "message": "[Matchroom] Watching Veto"
+  },
+  "faceit.warmup": {
+    "description": "Shown when the user is in the warmup phase of a match.",
+    "message": "In Warmup"
+  },
+  "faceit.competitive": {
+    "description": "Shown when the user is in the competitive phase of a match.",
+    "message": "Competitive"
+  },
+  "faceit.elo": {
+    "description": "Tooltip that shows the user's ELO rating.",
+    "message": "ELO"
+  },
+  "faceit.unranked": {
+    "description": "Tooltip that shows when the user is unranked.",
+    "message": "Unranked"
+  },
+  "faceit.unknownMap": {
+    "description": "Tooltip that shows when the map being played is unknown.",
+    "message": "Unknown Map"
+  },
+  "faceit.unknownClub": {
+    "description": "Tooltip that shows when the club being viewed is unknown.",
+    "message": "Unknown Club"
+  },
+  "faceit.won": {
+    "description": "Shown when the user has won a match.",
+    "message": "Won"
+  },
+  "faceit.lost": {
+    "description": "Shown when the user has lost a match.",
+    "message": "Lost"
+  },
+  "faceit.finished": {
+    "description": "Shown when the match was finished.",
+    "message": "Finished"
+  },
+  "faceit.matchResults": {
+    "description": "Shown when the user is viewing the results of a match.",
+    "message": "Viewing Match Results"
+  },
+  "faceit.matchroom": {
+    "description": "Button label for viewing the matchroom of a match.",
+    "message": "Matchroom"
+  }
+}

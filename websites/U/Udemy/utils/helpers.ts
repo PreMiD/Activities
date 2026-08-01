@@ -4,10 +4,9 @@ export function getVideoInfo() {
   const video = document.querySelector('video')
   if (!video || video.readyState === 0)
     return null
-
-  const courseTitle = document.querySelector('h1[data-purpose=course-header-title] a')?.textContent || UNKNOWN_COURSE
+  const courseTitle = document.querySelector('h1[data-purpose=course-header-title] a')?.textContent || document.querySelector('#content-drawer-curriculum > div > div:nth-child(2) > a > h3')?.textContent || UNKNOWN_COURSE
   const currentLecture = document.querySelector('div[data-purpose="curriculum-item-viewer-content"] section')?.ariaLabel?.split(', ')?.[1]?.match(/\d+:\s*.+/)?.[0] || document.querySelector('li[class*=curriculum-item-link--is-current] span > span')
-    ?.textContent || UNKNOWN_LECTURE
+    ?.textContent || document.querySelector('div[data-testid="curriculum-navigation"] h2')?.textContent || UNKNOWN_LECTURE
 
   return {
     title: courseTitle,
@@ -20,9 +19,7 @@ export function getVideoInfo() {
 }
 
 export function getCourseInfo() {
-  return (
-    document.querySelector('h1[data-purpose="lead-title"]')?.textContent || UNKNOWN_COURSE
-  )
+  return document.querySelector('nav[aria-label="Course topics"]')?.parentElement?.querySelector('h1')?.textContent || UNKNOWN_COURSE
 }
 
 export function normalizePath(pathname: string) {

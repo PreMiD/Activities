@@ -9,6 +9,10 @@
     {
       "name": "The Gamerzs",
       "id": "730142125181894657"
+    },
+    {
+      "name": "cian",
+      "id": "834863623595229247"
     }
   ],
   "service": "eBay",
@@ -16,22 +20,32 @@
     "en": "Buy and sell electronics, cars, fashion apparel, collectibles, sporting goods, digital cameras, baby items, coupons, and everything else on eBay, the world's online marketplace.",
     "nl": "Koop en verkoop elektronica, auto's, mode, verzamelobjecten, sportartikelen, digitale camera's, babyartikelen, kortingsbonnen en al het andere op eBay, 's werelds online marktplaats."
   },
-  "url": "www.ebay.com",
+  "url": [
+    "www.ebay.com",
+    "www.ebay.co.uk"
+  ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*ebay([.][a-z]+)+[/]",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/eBay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/eBay/assets/thumbnail.png",
   "color": "#e53238",
   "category": "other",
   "tags": [
     "store",
-    "shopping"
+    "shopping",
+    "livestream"
   ],
   "settings": [
     {
       "id": "buttons",
       "title": "Show Buttons",
       "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "showLiveDetails",
+      "title": "Show Live Details",
+      "icon": "fas fa-broadcast-tower",
       "value": true
     }
   ]

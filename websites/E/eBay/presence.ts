@@ -84,6 +84,76 @@ presence.on('UpdateData', async () => {
 
           break
         }
+        case 'ebaylive': {
+          // eBay Live (livestreams) — e.g. /ebaylive/events/<id>/stream
+          const parts = location.pathname.split('/').filter(Boolean)
+          // parts[0] === 'ebaylive', parts[1] === 'events' | 'schedule' | etc., parts[2] === id, parts[3] === 'stream'
+          const subPage = parts[1]
+
+          if (subPage === 'events' && parts[2]) {
+            // Individual livestream page
+            const title
+              = document.querySelector('meta[property="og:title"]')?.getAttribute('content')?.trim()
+                ?? document.querySelector('h1')?.textContent?.trim()
+                ?? document.title?.replace(/\s*\|\s*eBay.*$/i, '').trim()
+                ?? 'Livestream'
+
+            // Try to grab the seller / host name from the "About" panel
+            const host
+              = document.querySelector<HTMLAnchorElement>('a[href*="/usr/"]')?.textContent?.trim()
+                ?? document.querySelector<HTMLAnchorElement>('a[href*="/str/"]')?.textContent?.trim()
+                ?? document.querySelector('[data-testid="host-name"]')?.textContent?.trim()
+                ?? ''
+
+            // Try to grab the stream thumbnail / poster image
+            const thumbnail
+              = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content
+                ?? document.querySelector<HTMLMetaElement>('meta[name="twitter:image"]')?.content
+                ?? document.querySelector<HTMLVideoElement>('video')?.poster
+                ?? ''
+
+            const showLiveDetails = await presence.getSetting<boolean>('showLiveDetails')
+
+            if (showLiveDetails) {
+              presenceData.details = 'Watching a livestream:'
+              presenceData.state = host ? `${title} — by ${host}` : title
+              if (thumbnail)
+                presenceData.largeImageKey = thumbnail
+              presenceData.smallImageKey = Assets.Live
+
+              const sellerUrl = document.querySelector<HTMLAnchorElement>(
+                'a[href*="/usr/"], a[href*="/str/"]',
+              )?.href
+
+              presenceData.buttons = host && sellerUrl
+                ? [
+                    { label: 'Watch Stream', url: location.href },
+                    { label: 'View Seller', url: sellerUrl },
+                  ]
+                : [
+                    { label: 'Watch Stream', url: location.href },
+                  ]
+            }
+            else {
+              // Privacy / minimal mode — just say they're watching eBay Live
+              presenceData.details = 'Watching an eBay livestream'
+            }
+          }
+          else if (subPage === 'schedule') {
+            presenceData.details = 'eBay Live'
+            presenceData.state = 'Browsing the schedule'
+          }
+          else if (!subPage) {
+            // /ebaylive homepage
+            presenceData.details = 'Browsing eBay Live'
+            presenceData.state = 'Livestreams'
+          }
+          else {
+            presenceData.details = 'eBay Live'
+            presenceData.state = subPage
+          }
+          break
+        }
         default:
           if (location.pathname.includes('/myb/')) {
             presenceData.details = 'Viewing their:'

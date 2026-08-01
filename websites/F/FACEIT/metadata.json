@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "244563286257827840",
+    "name": "nykloon"
+  },
+  "service": "FACEIT",
+  "description": {
+    "de": "Die führende Drittanbieter-Wettbewerbsplattform für beliebte Shooter-Spiele, hauptsächlich bekannt für Counter-Strike 2.",
+    "en": "The leading third-party competitive platform for popular shooter games, primarily known for Counter-Strike 2."
+  },
+  "url": "faceit.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*faceit[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/n5ielUx.png",
+  "thumbnail": "https://i.imgur.com/b68sdF6.png",
+  "color": "#FF5500",
+  "category": "games",
+  "tags": ["cs2", "csgo", "stats"],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "browsing",
+      "title": "Show Browsing",
+      "icon": "fad fa-compass",
+      "description": "Hide homepage, parties, profile etc.",
+      "value": true
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "441580459663818752",
+    "name": "masonmxllen"
+  },
+  "service": "USACO Guide",
+  "description": {
+    "en": "The USACO Guide provides a comprehensive, organized roadmap carefully designed and crafted for USACO contestants – available to everyone, for free."
+  },
+  "url": "usaco.guide",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*usaco[.]guide[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/oRapkfu.png",
+  "thumbnail": "https://i.imgur.com/cxOe02L.jpeg",
+  "color": "#1e90ff",
+  "category": "other",
+  "tags": [
+    "education",
+    "coding",
+    "competition",
+    "usaco"
+  ]
+}
