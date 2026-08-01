@@ -11,7 +11,7 @@
   },
   "url": "fridg3.org",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*fridg3[.]org[/]",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/fridg3.org/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/fridg3.org/assets/thumbnail.jpg",
   "color": "#3c7895",

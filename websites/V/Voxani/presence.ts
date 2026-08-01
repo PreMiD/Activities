@@ -14,6 +14,11 @@ function normalizeWatchSlug(raw: string): string {
   if (!value)
     return ''
 
+  if (value.startsWith('legacy:')) {
+    const params = new URLSearchParams(value.slice('legacy:'.length))
+    value = params.get('default') || value
+  }
+
   if (value.startsWith('kenjitsu:')) {
     const params = new URLSearchParams(value.slice('kenjitsu:'.length))
     value = params.get('kaido') || params.get('default') || params.get('anizone') || value
@@ -39,25 +44,173 @@ function formatSlug(raw: string): string {
 }
 
 // helper: try to pull a clean anime name from document.title
+// Title format: "Watch {Name} Online Free — Stream in HD — Voxani"
+//            or "Watch {Name} Online Free — English Sub & Dub — Voxani"
 function getNameFromTitle(slugName: string): string {
-  if (!document.title.includes(' - Watch Online'))
+  const title = document.title
+  // New format: starts with "Watch " and contains " Online Free"
+  if (title.startsWith('Watch ') && title.includes(' Online Free')) {
+    const titleName = title.replace(/^Watch\s+/i, '').split(/\s+Online Free/i)[0]?.trim() || ''
+    if (!titleName)
+      return ''
+    const a = titleName.toLowerCase().replace(/[^a-z0-9]/g, '')
+    const b = slugName.toLowerCase().replace(/[^a-z0-9]/g, '')
+    return (a && b && a.includes(b.slice(0, 8))) ? titleName : ''
+  }
+  // Legacy format fallback: "Name - Watch Online"
+  if (title.includes(' - Watch Online')) {
+    const titleName = title.split(' - Watch Online')[0]?.trim() || ''
+    const a = titleName.toLowerCase().replace(/[^a-z0-9]/g, '')
+    const b = slugName.toLowerCase().replace(/[^a-z0-9]/g, '')
+    return (a && b && a.includes(b.slice(0, 8))) ? titleName : ''
+  }
+  return ''
+}
+
+function cleanTabText(raw: string): string {
+  if (!raw)
     return ''
-  const titleName = document.title.split(' - Watch Online')[0]?.trim() || ''
-  const a = titleName.toLowerCase().replace(/[^a-z0-9]/g, '')
-  const b = slugName.toLowerCase().replace(/[^a-z0-9]/g, '')
-  return (a && b && a.includes(b.slice(0, 8))) ? titleName : ''
+  let text = raw.trim()
+
+  // 1. Remove trailing numbers / count badges like "51", "(51)", "[51]"
+  text = text.replace(/[\s\d()[\]]+$/g, '').trim()
+
+  // 2. Remove duplicated words caused by sr-only text / icon labels (e.g. "WatchingWatching" -> "Watching")
+  const half = Math.floor(text.length / 2)
+  if (half >= 3 && text.slice(0, half).toLowerCase() === text.slice(half).toLowerCase()) {
+    text = text.slice(0, half)
+  }
+
+  // 3. Normalize known tab names
+  const lower = text.toLowerCase()
+  if (lower.includes('watching'))
+    return 'Watching'
+  if (lower.includes('completed'))
+    return 'Completed'
+  if (lower.includes('plan'))
+    return 'Plan to Watch'
+  if (lower.includes('hold'))
+    return 'On Hold'
+  if (lower.includes('dropped'))
+    return 'Dropped'
+  if (lower.includes('for you'))
+    return 'For You'
+  if (lower.includes('ai rec') || lower.includes('recommendation'))
+    return 'AI Recs'
+  if (lower === 'all')
+    return 'All'
+
+  return text
 }
 
 let browsingTimestamp = Math.floor(Date.now() / 1000)
 let lastPath = ''
 
+// ── Embed Player (Player4Me) postMessage Tracking ───────────────────────────
+let embedCurrentTime = 0
+let embedDuration = 0
+let embedIsPlaying = false
+let lastEmbedTimeUpdate = 0
+let embedListenerAttached = false
+let lastEmbedSrc = ''
+
+function resetEmbedState() {
+  embedCurrentTime = 0
+  embedDuration = 0
+  embedIsPlaying = false
+  lastEmbedTimeUpdate = 0
+}
+
+function parseEmbedMessage(data: unknown): any {
+  if (!data)
+    return null
+  if (typeof data === 'string') {
+    try {
+      return JSON.parse(data)
+    }
+    catch {
+      return { event: data }
+    }
+  }
+  return typeof data === 'object' ? data : null
+}
+
+function getEmbedEventName(payload: any): string {
+  const nested = typeof payload?.data === 'object' ? payload.data : null
+  return String(
+    payload?.event
+    || payload?.type
+    || payload?.name
+    || payload?.action
+    || payload?.message
+    || payload?.playerStatus
+    || payload?.status
+    || nested?.event
+    || nested?.type
+    || nested?.playerStatus
+    || nested?.status
+    || '',
+  ).toLowerCase()
+}
+
+function getEmbedNumber(payload: any, keys: string[]): number | null {
+  const nested = typeof payload?.data === 'object' ? payload.data : null
+  for (const key of keys) {
+    const value = payload?.[key] ?? nested?.[key]
+    const numberValue = Number(value)
+    if (Number.isFinite(numberValue) && numberValue >= 0)
+      return numberValue
+  }
+  return null
+}
+
+function ensureEmbedListener() {
+  if (embedListenerAttached)
+    return
+  embedListenerAttached = true
+
+  window.addEventListener('message', (event: MessageEvent) => {
+    const payload = parseEmbedMessage(event.data)
+    if (!payload)
+      return
+
+    const eventName = getEmbedEventName(payload)
+    const current = getEmbedNumber(payload, ['currentTime', 'current_time', 'current', 'time', 'seconds', 'position'])
+    const total = getEmbedNumber(payload, ['duration', 'durationSeconds', 'duration_seconds', 'total'])
+
+    if (current != null) {
+      if (current > embedCurrentTime + 0.1 || Math.abs(current - embedCurrentTime) > 2) {
+        embedIsPlaying = true
+        lastEmbedTimeUpdate = Date.now()
+      }
+      embedCurrentTime = current
+    }
+
+    if (total != null && total > 0) {
+      embedDuration = total
+    }
+
+    if (['playing', 'play'].includes(eventName)) {
+      embedIsPlaying = true
+      lastEmbedTimeUpdate = Date.now()
+    }
+    else if (['paused', 'pause'].includes(eventName)) {
+      embedIsPlaying = false
+    }
+    else if (['ended', 'end', 'complete', 'completed', 'finish', 'finished'].includes(eventName)) {
+      embedIsPlaying = false
+    }
+  })
+}
+
 presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
-  const showButtons = await presence.getSetting<boolean>('showButtons')
+  const showButtons = await presence.getSetting<boolean>('showPresenceButtons')
 
   // reset timer on SPA navigation
   if (pathname !== lastPath) {
     browsingTimestamp = Math.floor(Date.now() / 1000)
+    resetEmbedState()
     lastPath = pathname
   }
 
@@ -70,17 +223,20 @@ presence.on('UpdateData', async () => {
 
   // watch page
   if (pathname.startsWith('/watch/')) {
-    const video = document.querySelector<HTMLVideoElement>('video')
+    // Target only the main player video, not the hidden thumbnail video (which has preload="none")
+    const video = document.querySelector<HTMLVideoElement>('video:not([preload="none"])')
     delete presenceData.smallImageKey
     delete presenceData.smallImageText
 
     const slugName = formatSlug(pathname.split('/')[2] || '')
     const animeName = getNameFromTitle(slugName)
-      || document.querySelector('div.flex-1.min-w-0.text-right > span.font-medium')?.textContent?.trim()
+      // Fallback: anime title button in the WatchPage header (lines 1168-1175 WatchPage.tsx)
+      || document.querySelector<HTMLButtonElement>('button.font-semibold.text-left.text-foreground')?.textContent?.trim()
       || slugName || 'Anime'
 
+    // data-poster is set by React after hydration; guard against empty string from SSR initial render
     const poster = document.querySelector('[data-poster]')?.getAttribute('data-poster')
-    if (poster)
+    if (poster && poster.startsWith('http'))
       presenceData.largeImageKey = poster
 
     presenceData.name = animeName
@@ -106,21 +262,82 @@ presence.on('UpdateData', async () => {
     }
 
     // playback state
-    if (video && video.readyState > 0) {
-      if (!video.paused) {
+    // Detect embed source: if no native <video> is present, check for <iframe>
+    const embedIframe = document.querySelector<HTMLIFrameElement>('iframe')
+    const isEmbedSource = !video && Boolean(embedIframe)
+
+    if (video) {
+      if (!video.paused && video.readyState > 0) {
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = 'Playing'
-        ;[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
-          Math.floor(video.currentTime),
-          Math.floor(video.duration),
-        )
+        if (Number.isFinite(video.duration) && video.duration > 0) {
+          // Full progress bar: start + end timestamps
+          ;[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+            Math.floor(video.currentTime),
+            Math.floor(video.duration),
+          )
+        }
+        else {
+          // Duration not yet loaded — show elapsed video time counting up
+          presenceData.startTimestamp = Math.floor(Date.now() / 1000) - Math.floor(video.currentTime)
+        }
       }
       else {
         presenceData.smallImageKey = Assets.Pause
         presenceData.smallImageText = 'Paused'
+        // Show position in episode where user paused
+        if (video.currentTime > 0)
+          presenceData.startTimestamp = Math.floor(Date.now() / 1000) - Math.floor(video.currentTime)
+      }
+    }
+    else if (isEmbedSource) {
+      ensureEmbedListener()
+
+      const currentSrc = embedIframe?.getAttribute('src') || ''
+      if (currentSrc && currentSrc !== lastEmbedSrc) {
+        resetEmbedState()
+        lastEmbedSrc = currentSrc
+      }
+
+      // Actively poll iframe for fresh getTime / getStatus
+      if (embedIframe?.contentWindow) {
+        try {
+          embedIframe.contentWindow.postMessage({ command: 'getTime' }, '*')
+          embedIframe.contentWindow.postMessage({ command: 'getStatus' }, '*')
+        }
+        catch { /* ignore cross-origin restrictions */ }
+      }
+
+      // If playing status hasn't received a time update in > 4s, treat as paused
+      if (embedIsPlaying && lastEmbedTimeUpdate > 0 && Date.now() - lastEmbedTimeUpdate > 4000) {
+        embedIsPlaying = false
+      }
+
+      if (embedDuration > 0 && embedCurrentTime >= 0) {
+        if (embedIsPlaying) {
+          presenceData.smallImageKey = Assets.Play
+          presenceData.smallImageText = 'Playing'
+          ;[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+            Math.floor(embedCurrentTime),
+            Math.floor(embedDuration),
+          )
+        }
+        else {
+          presenceData.smallImageKey = Assets.Pause
+          presenceData.smallImageText = 'Paused'
+          if (embedCurrentTime > 0) {
+            presenceData.startTimestamp = Math.floor(Date.now() / 1000) - Math.floor(embedCurrentTime)
+          }
+        }
+      }
+      else {
+        presenceData.smallImageKey = Assets.Play
+        presenceData.smallImageText = 'Streaming'
+        presenceData.startTimestamp = browsingTimestamp
       }
     }
     else {
+      // Video not yet loaded
       presenceData.startTimestamp = browsingTimestamp
     }
 
@@ -159,7 +376,7 @@ presence.on('UpdateData', async () => {
   else if (pathname.startsWith('/trending')) {
     // find the active timeframe tab
     const activeBtn = document.querySelector('button[class*="bg-primary"]')
-    const txt = activeBtn?.textContent?.trim() || ''
+    const txt = cleanTabText(activeBtn?.textContent?.trim() || '')
     presenceData.details = 'Trending Anime'
     presenceData.state = ['Today', 'This Week', 'This Month', 'All Time'].includes(txt) ? txt : 'What\'s Hot Right Now'
     presenceData.startTimestamp = browsingTimestamp
@@ -183,17 +400,21 @@ presence.on('UpdateData', async () => {
     presenceData.state = userName ? `@${userName}` : 'My Profile'
     presenceData.startTimestamp = browsingTimestamp
 
-  // my lists (favorites)
+  // my lists / favorites
   }
-  else if (pathname.startsWith('/favorites')) {
-    // active tab: mobile uses data-state, desktop uses bg-primary/bg-white class
+  else if (pathname.startsWith('/favorites') || pathname.startsWith('/my-lists')) {
+    // active tab: mobile uses data-state, desktop uses bg-white class
     const activeTab = document.querySelector('[data-state="active"]')
       ?? document.querySelector('button[class*="bg-primary"][class*="text-primary-foreground"]')
       ?? document.querySelector('button[class*="bg-white"][class*="text-black"]')
-    const tab = activeTab?.textContent?.trim() || ''
+    const rawTab = activeTab?.textContent?.trim() || ''
+    const tab = cleanTabText(rawTab)
+    const isFavorites = pathname.startsWith('/favorites')
 
     presenceData.details = 'Browsing Library'
-    presenceData.state = tab ? `My Lists · ${tab}` : 'My Lists'
+    presenceData.state = tab
+      ? `${isFavorites ? 'Favorites' : 'My Lists'} · ${tab}`
+      : (isFavorites ? 'Favorites' : 'My Lists')
     presenceData.startTimestamp = browsingTimestamp
 
   // collections (uses radix Tabs with data-state + desktop sidebar buttons)
@@ -203,7 +424,8 @@ presence.on('UpdateData', async () => {
     // desktop: sidebar button with bg-primary class
     const mobileActive = document.querySelector('[role="tablist"] [data-state="active"]')
     const desktopActive = document.querySelector('button[class*="bg-primary"][class*="text-primary-foreground"]')
-    const tab = mobileActive?.textContent?.trim() || desktopActive?.textContent?.trim() || ''
+    const rawTab = mobileActive?.textContent?.trim() || desktopActive?.textContent?.trim() || ''
+    const tab = cleanTabText(rawTab)
 
     presenceData.details = 'Browsing Library'
     presenceData.state = tab ? `Collections · ${tab}` : 'Collections'
@@ -248,13 +470,6 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Browsing Community'
       presenceData.state = activeNav?.textContent?.trim() || 'Exploring Discussions'
     }
-    presenceData.startTimestamp = browsingTimestamp
-
-  // watch together
-  }
-  else if (pathname.startsWith('/isshoni')) {
-    presenceData.details = 'IsshoNi'
-    presenceData.state = 'Watch Together'
     presenceData.startTimestamp = browsingTimestamp
 
   // character page
@@ -333,16 +548,9 @@ presence.on('UpdateData', async () => {
   ) {
     return presence.clearActivity()
 
-  // home feed
+  // home / landing page (/ is the main app; /home redirects to /)
   }
-  else if (pathname.startsWith('/home')) {
-    presenceData.details = 'Looking for Anime'
-    presenceData.state = 'Browsing Home'
-    presenceData.startTimestamp = browsingTimestamp
-
-  // landing page
-  }
-  else if (pathname === '/') {
+  else if (pathname === '/' || pathname.startsWith('/home')) {
     presenceData.details = 'Looking for Anime'
     presenceData.state = 'Browsing Voxani'
     presenceData.startTimestamp = browsingTimestamp

@@ -108,18 +108,14 @@ presence.on('UpdateData', async () => {
               presenceData.state = `${
                 document.querySelector('.player-name')?.textContent
               } (${
-                Array.from(
-                  document.querySelector('.number-price')?.childNodes ?? [],
-                ).find(node => node.nodeName === '#text')?.textContent
+                document.querySelector('div.prices > span > span:nth-child(2)')?.textContent
               })`
             }
             else if (accountValue === 1) {
               presenceData.state = `${
                 document.querySelector('.player-name')?.textContent
               } (${
-                Array.from(
-                  document.querySelector('.number-price-lowest')?.childNodes ?? [],
-                ).find(node => node.nodeName === '#text')?.textContent
+                document.querySelector('b > span:nth-child(2)')?.textContent
               })`
             }
             presenceData.buttons = [

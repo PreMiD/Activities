@@ -33,7 +33,6 @@
     "chokidar": "^5.0.0",
     "discord-rpc": "^4.0.1",
     "esbuild": "^0.28.0",
-    "form-data": "^4.0.5",
     "gitdiff-parser": "^0.3.1",
     "globby": "^16.2.0",
     "got": "^15.0.3",

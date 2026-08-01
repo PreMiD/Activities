@@ -27,7 +27,9 @@ presence.on('UpdateData', async () => {
     talkingInTemporaryChat: 'gemini.talkingInTemporaryChat',
     talkingWithAI: 'gemini.talkingWithAI',
     thinkingOfPrompt: 'gemini.thinkingOfPrompt',
-    viewTheirGeneratedStuff: 'gemini.viewTheirGeneratedStuff',
+    viewTheirLibrary: 'gemini.viewTheirLibrary',
+    importMemoryToGemini: 'gemini.importMemoryToGemini',
+    viewUsageLimits: 'gemini.viewUsageLimits',
   })
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -48,9 +50,7 @@ presence.on('UpdateData', async () => {
       // Check the selected conversation
       if (!privacy) {
         presenceData.details = showTitle
-          ? document.querySelector(
-            '[data-test-id="conversation-title"]',
-          )?.textContent ?? strings.talkingWithAI
+          ? document.title?.replace('- Google Gemini', '')?.trim() ?? strings.talkingWithAI
           : strings.talkingWithAI
 
         // Show word count for messages
@@ -92,8 +92,8 @@ presence.on('UpdateData', async () => {
       }
 
       break
-    case /\/mystuff$/.test(pathname):
-      presenceData.details = strings.viewTheirGeneratedStuff
+    case /\/library$/.test(pathname):
+      presenceData.details = strings.viewTheirLibrary
       break
     case /\/gems\/create$/.test(pathname):
       presenceData.details = strings.createGem
@@ -124,6 +124,12 @@ presence.on('UpdateData', async () => {
       break
     case /\/apps$/.test(pathname):
       presenceData.details = strings.manageConnectedApps
+      break
+    case /\/import$/.test(pathname):
+      presenceData.details = strings.importMemoryToGemini
+      break
+    case /\/usage$/.test(pathname):
+      presenceData.details = strings.viewUsageLimits
       break
     case /\/app$/.test(pathname):
     case /\/gem\/[^/]+$/.test(pathname): {

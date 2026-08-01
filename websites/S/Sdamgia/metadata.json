@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "563801028139679755",
+    "name": "cookiexzero"
+  },
+  "service": "Sdamgia",
+  "description": {
+    "en": "A website to help students prepare for all types of state exams in Russia."
+  },
+  "url": "sdamgia.ru",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*sdamgia[.]ru[/]",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sdamgia/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sdamgia/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "other",
+  "tags": [
+    "education"
+  ]
+}

@@ -23,7 +23,9 @@ enum ActivityAssets {
 function normalizePath(pathname: string): string {
   if (!pathname)
     return '/'
-  const normalized = pathname.replace(/\/+$/, '')
+  const normalized = pathname
+    .replace(/\/(?:index\.php|index\.html)$/i, '')
+    .replace(/\/+$/, '')
   return normalized === '' ? '/' : normalized
 }
 
@@ -38,8 +40,11 @@ function getDetailsPath(pathname: string): string {
   if (pathname.startsWith('/music'))
     return 'Listening to music'
 
+  if (pathname.startsWith('/others/frdgbeats'))
+    return 'frdgBeats'
+
   // For toast bot, show "Toast Discord Bot"
-  if (pathname === '/others/toast-discord-bot')
+  if (pathname.startsWith('/others/toast-discord-bot'))
     return 'Toast Discord Bot'
 
   // For specific post views, show the post type
@@ -47,16 +52,16 @@ function getDetailsPath(pathname: string): string {
     return 'Viewing feed post'
   if (pathname.startsWith('/journal/posts/'))
     return 'Viewing journal post'
-  if (pathname.startsWith('/email/newsletter/release/'))
-    return 'Viewing newsletter post'
+  if (pathname.startsWith('/chat/') && pathname !== '/chat')
+    return 'Private chat'
+  if (pathname.startsWith('/others/mdpaste/s/'))
+    return 'Viewing mdpaste'
 
-  // For non-post feed/journal/newsletter, collapse to main page
+  // For non-post feed/journal paths, collapse to main page
   if (pathname.startsWith('/feed'))
     return '/feed/'
   if (pathname.startsWith('/journal'))
     return '/journal/'
-  if (pathname.startsWith('/email/newsletter'))
-    return '/email/newsletter/'
 
   return ensureTrailingSlash(pathname)
 }
@@ -88,23 +93,6 @@ function getJournalPostTitle(): string {
   const metaOg = cleanText(document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.content)
   if (metaOg)
     return cleanSiteTitle(metaOg)
-
-  return cleanSiteTitle(document.title)
-}
-
-function getNewsletterReleaseTitle(): string {
-  const releaseRoot = document.getElementById('newsletter-release-html')
-  if (releaseRoot) {
-    const scopedHeading = releaseRoot.querySelector<HTMLElement>('h1, h2, .newsletter-title, .title')
-    const scopedHeadingText = cleanText(scopedHeading?.textContent)
-    if (scopedHeadingText)
-      return scopedHeadingText
-
-    const scopedTitleTag = releaseRoot.querySelector('title')
-    const scopedTitleText = cleanSiteTitle(scopedTitleTag?.textContent)
-    if (scopedTitleText)
-      return scopedTitleText
-  }
 
   return cleanSiteTitle(document.title)
 }
@@ -163,7 +151,38 @@ function getToastStreamName(): string {
   return raw
 }
 
-function getStatusForPath(pathname: string): string {
+function getWikiPageTitle(): string {
+  const heading = cleanText(document.querySelector<HTMLElement>('.wiki-content h1, #content h1, h1')?.textContent)
+  if (heading)
+    return heading
+
+  const page = new URLSearchParams(document.location.search).get('page')
+  return cleanText(page)
+}
+
+function getMdpasteTitle(): string {
+  const title = cleanText(document.getElementById('paste-title')?.textContent)
+  if (title && !/^mdpaste$/i.test(title))
+    return title
+
+  const heading = getDocumentHeadingText()
+  if (heading && !/^mdpaste$/i.test(heading))
+    return heading
+
+  return ''
+}
+
+function getFrdgBeatsProjectName(): string {
+  const projectName = cleanText((document.getElementById('fb-project-name') as HTMLInputElement | null)?.value)
+  if (projectName)
+    return projectName
+
+  return cleanText(document.querySelector<HTMLElement>('.fb-app-title')?.textContent)
+}
+
+function getStatusForPath(pathname: string, search: string): string {
+  const searchParams = new URLSearchParams(search)
+
   if (pathname === '/')
     return 'On the homepage'
 
@@ -193,37 +212,46 @@ function getStatusForPath(pathname: string): string {
     return title || 'Untitled journal entry'
   }
 
-  if (pathname === '/email')
-    return 'Writing an email'
-  if (pathname === '/email/newsletter')
-    return 'Browsing newsletters'
-  if (pathname.startsWith('/email/newsletter/create/preview'))
-    return 'Previewing a newsletter'
-  if (pathname === '/email/newsletter/create')
-    return 'Building a newsletter'
-  if (pathname.startsWith('/email/newsletter/release/')) {
-    const title = getNewsletterReleaseTitle()
-    return title || 'Untitled newsletter'
-  }
-  if (pathname.startsWith('/email/newsletter/preview'))
-    return 'Previewing a newsletter release'
-  if (pathname.startsWith('/email/mailinglist/subscribe'))
-    return 'Subscribing to the mailing list'
-  if (pathname.startsWith('/email/mailinglist/unsubscribe'))
-    return 'Unsubscribing from the mailing list'
-
   if (pathname === '/music') {
     const nowPlaying = getMiniPlayerNowPlaying()
     return nowPlaying || 'Browsing the music library'
   }
 
+  if (pathname === '/contact')
+    return searchParams.get('dashboard') === '1' ? 'Reviewing contact submissions' : 'Sending a message'
+
+  if (pathname === '/chat')
+    return 'Managing private chats'
+  if (pathname.startsWith('/chat/'))
+    return 'In a private chat'
+
   if (pathname === '/others')
     return 'Browsing other pages'
+  if (pathname === '/others/mdpaste')
+    return 'Creating a markdown paste'
+  if (pathname.startsWith('/others/mdpaste/s/')) {
+    const title = getMdpasteTitle()
+    return title || 'Reading a markdown paste'
+  }
   if (pathname === '/others/off-topic-archive')
     return 'Exploring the #off-topic archive'
+  if (pathname === '/others/minecraft-archive')
+    return 'Browsing the Minecraft archive'
+  if (pathname === '/others/fridge-builds-websites')
+    return 'Checking out custom websites'
   if (pathname === '/others/toast-discord-bot') {
     const streamName = getToastStreamName()
     return streamName || 'Toast Discord Bot offline'
+  }
+  if (pathname === '/others/toast-discord-bot/messages')
+    return 'Managing Toast DMs'
+  if (pathname === '/others/frdgbeats') {
+    const projectName = getFrdgBeatsProjectName()
+    return projectName ? `Making music: ${projectName}` : 'Making music in frdgBeats'
+  }
+  if (pathname.startsWith('/others/frdgbeats/wiki')) {
+    const pageTitle = getWikiPageTitle()
+    return pageTitle ? `Reading ${pageTitle}` : 'Reading frdgBeats docs'
   }
 
   if (pathname === '/gallery')
@@ -246,6 +274,10 @@ function getStatusForPath(pathname: string): string {
     return 'Viewing formatting reference'
   if (pathname === '/formatting/example_page')
     return 'Viewing an example page'
+  if (pathname === '/wiki') {
+    const pageTitle = getWikiPageTitle()
+    return pageTitle ? `Reading ${pageTitle}` : 'Reading the developer wiki'
+  }
 
   if (pathname === '/account')
     return 'Managing account access'
@@ -259,6 +291,21 @@ function getStatusForPath(pathname: string): string {
     return 'Updating account password'
   if (pathname === '/account/change-password')
     return 'Changing account password'
+  if (pathname === '/account/link-discord')
+    return 'Linking Discord'
+  if (pathname === '/account/admin')
+    return 'Managing accounts'
+  if (pathname === '/account/admin/edit')
+    return 'Editing an account'
+
+  if (pathname === '/error/403')
+    return '403 forbidden'
+  if (pathname === '/error/404')
+    return '404 not found'
+  if (pathname === '/error/50x')
+    return 'Server error page'
+  if (pathname === '/error/wip')
+    return 'Waiting for maintenance'
 
   if (pathname.startsWith('/api/'))
     return 'Using API endpoints'
@@ -274,7 +321,7 @@ function getStatusForPath(pathname: string): string {
 
 presence.on('UpdateData', async () => {
   // Get the current URL
-  const { pathname } = document.location
+  const { pathname, search } = document.location
   const normalizedPath = normalizePath(pathname)
 
   const detailsPath = getDetailsPath(normalizedPath)
@@ -295,7 +342,7 @@ presence.on('UpdateData', async () => {
     largeImageKey,
     details,
     startTimestamp: browsingTimestamp, // Show elapsed time
-    state: getStatusForPath(normalizedPath),
+    state: getStatusForPath(normalizedPath, search),
   }
 
   // Set the activity

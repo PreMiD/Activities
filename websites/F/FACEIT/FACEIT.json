@@ -29,7 +29,7 @@
   },
   "faceit.inlobby": {
     "description": "Shown when the user is in a matchmaking lobby.",
-    "message": "In Matchmaking Lobby"
+    "message": "In Competitive Lobby"
   },
   "faceit.queuing": {
     "description": "Shown when the user is queuing for a match.",
@@ -37,11 +37,11 @@
   },
   "faceit.vetoing": {
     "description": "Shown when the user is vetoing maps before a match.",
-    "message": "[Matchroom] Vetoing Maps"
+    "message": "Vetoing Maps"
   },
   "faceit.watchingVeto": {
     "description": "Shown when the user is watching the veto process before a match.",
-    "message": "[Matchroom] Watching Veto"
+    "message": "Watching Veto"
   },
   "faceit.warmup": {
     "description": "Shown when the user is in the warmup phase of a match.",
@@ -81,10 +81,14 @@
   },
   "faceit.matchResults": {
     "description": "Shown when the user is viewing the results of a match.",
-    "message": "Viewing Match Results"
+    "message": "Match Results"
   },
   "faceit.matchroom": {
     "description": "Button label for viewing the matchroom of a match.",
     "message": "Matchroom"
+  },
+  "faceit.inParty": {
+    "description": "Shown when the user is in a party.",
+    "message": "In Party"
   }
 }

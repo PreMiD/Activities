@@ -18,9 +18,9 @@
   },
   "url": "voirdrama.to",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*voirdrama[.]to[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/RkcVWHJ.png",
-  "thumbnail": "https://i.imgur.com/ioAhLcH.png",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Voirdrama/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Voirdrama/assets/thumbnail.png",
   "color": "#c41f32",
   "category": "videos",
   "tags": [

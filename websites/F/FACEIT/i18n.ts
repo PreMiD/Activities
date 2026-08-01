@@ -28,4 +28,5 @@ export const stringMap = {
   unknownClub: 'faceit.unknownClub',
   matchResults: 'faceit.matchResults',
   matchroom: 'faceit.matchroom',
+  inParty: 'faceit.inParty',
 }

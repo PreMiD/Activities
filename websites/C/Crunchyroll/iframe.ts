@@ -5,6 +5,7 @@ iframe.on('UpdateData', () => {
     = document.querySelector<HTMLVideoElement>('video')
       ?? document.querySelector<HTMLVideoElement>('#player0')
       ?? document.querySelector<HTMLVideoElement>('#player_html5_api')
+      ?? document.querySelector<HTMLVideoElement>('#bitmovinplayer-video-null')
 
   if (video && !Number.isNaN(video.duration)) {
     iframe.send({

@@ -27,6 +27,13 @@ presence.on('UpdateData', async () => {
     about: 'recodive.about',
     team: 'recodive.team',
     contact: 'recodive.contact',
+    manageAccount: 'recodive.manageAccount',
+    editingSecuritySettings: 'recodive.editingSecuritySettings',
+    viewingBillingInformation: 'recodive.viewingBillingInformation',
+    editingAccountSettings: 'recodive.editingAccountSettings',
+    login: 'recodive.login',
+    register: 'recodive.register',
+    forgotPassword: 'recodive.forgotPassword',
   })
 
   const presenceData: PresenceData = {
@@ -86,6 +93,24 @@ presence.on('UpdateData', async () => {
           presenceData.state += strings.legal
           break
       }
+      break
+    case pathname.includes('/account'):
+      presenceData.details = strings.manageAccount
+      if (pathname.includes('/security'))
+        presenceData.state = strings.editingSecuritySettings
+      else if (pathname.includes('/billing'))
+        presenceData.state = strings.viewingBillingInformation
+      else
+        presenceData.state = strings.editingAccountSettings
+      break
+    case pathname.includes('/login'):
+      presenceData.details = strings.login
+      break
+    case pathname.includes('/register'):
+      presenceData.details = strings.register
+      break
+    case pathname.includes('/forgot-password'):
+      presenceData.details = strings.forgotPassword
       break
     default:
       presenceData.details = strings.home

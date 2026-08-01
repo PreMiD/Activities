@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, StatusDisplayType } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, StatusDisplayType, timestampFromFormat } from 'premid'
 
 //* I think this is a browser bug because the custom element does not have any properties when accessing it directly...
 
@@ -91,10 +91,11 @@ presence.on('UpdateData', async () => {
             const { paused } = video
 
             if (!paused) {
-              const sliderEl = document.querySelector('progress-bar')?.shadowRoot?.querySelector('.progress-bar__thumb')
+              const allTime = document.querySelector('#app_body_content disney-web-player-ui progress-bar')?.shadowRoot?.querySelector('div[role="slider"]')?.getAttribute('aria-valuetext')?.split('of')[1]?.trim()
+              const remainingTime = document.querySelector('#app_body_content disney-web-player-ui time-remaining-indicator')?.shadowRoot?.querySelector('.time-remaining-indicator')?.textContent?.trim()
               const timestamps = getTimestamps(
-                Number.parseInt(sliderEl?.getAttribute('aria-valuenow') ?? '0'),
-                Number.parseInt(sliderEl?.getAttribute('aria-valuemax') ?? '0'),
+                Number(timestampFromFormat(allTime ?? '') - timestampFromFormat(remainingTime ?? '')) ?? '00:00',
+                timestampFromFormat(allTime ?? '00:00'),
               )
               presenceData.startTimestamp = timestamps[0]
               presenceData.endTimestamp = timestamps[1]
