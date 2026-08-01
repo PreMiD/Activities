@@ -1083,9 +1083,9 @@ presence.on('UpdateData', async () => {
         // back to whatever the player has cached, then finally the logo.
         ? (ogImage ?? currentMediaThumb)
         : (currentMediaThumb
-            ?? ogImage
-            ?? getAttr('.player-info__poster img', 'src')
-            ?? getAttr('.vod-poster img', 'src'))
+          ?? ogImage
+          ?? getAttr('.player-info__poster img', 'src')
+          ?? getAttr('.vod-poster img', 'src'))
 
     const poster = cacheArtwork(contentPk, rawPoster)
     const pageUrl = currentPageUrl()
