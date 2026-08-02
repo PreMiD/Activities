@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia, StatusDisplayType } from 'premid'
 
 const presence = new Presence({
   clientId: '1490262611995000872',
@@ -199,6 +199,7 @@ function listeningPresence(
 ): PresenceData {
   const presenceData: PresenceData = {
     type: ActivityType.Listening,
+    statusDisplayType: StatusDisplayType.Details,
     largeImageKey: thumbnail ?? ActivityAssets.Logo,
     details: title,
     smallImageKey: playing ? Assets.Play : Assets.Pause,
