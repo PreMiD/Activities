@@ -126,23 +126,11 @@ presence.on('UpdateData', async () => {
   // so only it falls back to the isolated DOM compatibility adapter.
   const bridgeSnapshot = readSnapshot()
   const snapshot = bridgeSnapshot ?? readLegacySnapshot()
-  const repository = bridgeSnapshot
-    ? {
-        label: 'View fork',
-        url: 'https://github.com/NaeNaeTart/NaeNae-AMLL-TTML-TOOL',
-      }
-    : {
-        label: 'View original',
-        url: 'https://github.com/Steve-xmh/amll-ttml-tool',
-      }
   const currentStrings = await strings
   const presenceData: PresenceData = {
     type: ActivityType.Listening,
     largeImageKey: ActivityAssets.Logo,
     largeImageText: 'AMLL TTML Tool',
-    buttons: [
-      repository,
-    ],
   }
 
   const subject = snapshot.title || 'Untitled lyrics'
