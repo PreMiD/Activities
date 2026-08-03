@@ -18,7 +18,7 @@ presence.on('UpdateData', async () => {
     const singleAuthor = document.querySelector('.vp-channel-name')?.textContent?.trim()
     const multiAuthors = Array.from(document.querySelectorAll('.vp-author-names a')).map(el => el.textContent?.trim()).filter(Boolean).join(', ')
     const authorName = singleAuthor || multiAuthors || 'Unknown Author'
-    const player = document.querySelector<HTMLVideoElement('video')
+    const player = document.querySelector<HTMLVideoElement>('video')
 
     // Try to get video thumbnail from og:image or video poster
     const ogImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content')
