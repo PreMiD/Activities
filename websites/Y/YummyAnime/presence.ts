@@ -1,7 +1,31 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
+enum ListStatusId {
+  Watching = 0,
+  Planned = 1,
+  Watched = 2,
+  Abandoned = 3,
+  Favorites = 4,
+  Postponed = 5,
+}
+
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.png',
+  Watching = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/0.png',
+  Planned = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/1.png',
+  Watched = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/2.png',
+  Abandoned = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/3.png',
+  Postponed = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/4.png',
+  Favorites = 'https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/5.png',
+}
+
+const listStatusAssetMap: Record<ListStatusId, ActivityAssets> = {
+  [ListStatusId.Watching]: ActivityAssets.Watching,
+  [ListStatusId.Planned]: ActivityAssets.Planned,
+  [ListStatusId.Watched]: ActivityAssets.Watched,
+  [ListStatusId.Abandoned]: ActivityAssets.Abandoned,
+  [ListStatusId.Favorites]: ActivityAssets.Favorites,
+  [ListStatusId.Postponed]: ActivityAssets.Postponed,
 }
 
 const presence = new Presence({
@@ -46,6 +70,43 @@ presence.on('iFrameData', (data: IframeData) => {
     paused: data.paused ?? true,
   }
 })
+
+function getSelectedListStatusAsset(): ActivityAssets | null {
+  const elements = document.querySelectorAll<HTMLElement>(
+    '[data-tooltip-id="anime-lists-tooltip"][style*="--color"]',
+  )
+
+  if (!elements.length)
+    return null
+
+  const activeIds: ListStatusId[] = []
+  elements.forEach((el) => {
+    const id = Number(el.dataset.id)
+    if (!Number.isNaN(id) && id in listStatusAssetMap) {
+      activeIds.push(id as ListStatusId)
+    }
+  })
+
+  if (activeIds.length === 0)
+    return null
+
+  const priorityOrder: ListStatusId[] = [
+    ListStatusId.Favorites,
+    ListStatusId.Watching,
+    ListStatusId.Planned,
+    ListStatusId.Postponed,
+    ListStatusId.Abandoned,
+    ListStatusId.Watched,
+  ]
+
+  for (const status of priorityOrder) {
+    if (activeIds.includes(status)) {
+      return listStatusAssetMap[status]
+    }
+  }
+
+  return null
+}
 
 function getKnownDuration(video: HTMLVideoElement): number {
   const d = video.duration
@@ -618,7 +679,10 @@ presence.on('UpdateData', async () => {
     }
   }
   else {
-    delete presenceData.smallImageKey
+    const smallImageKey = getSelectedListStatusAsset()
+    if (smallImageKey) {
+      presenceData.smallImageKey = smallImageKey
+    }
     delete presenceData.smallImageText
 
     if (currentEpisode && isPlayerBlockInView())
