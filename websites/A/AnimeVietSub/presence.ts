@@ -1,7 +1,126 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
+import {
+  getEpisodeKey,
+  getEpisodePrivacy,
+  isPrivacyCommandMessage,
+  parsePrivacyOverrides,
+  PRIVACY_MESSAGE_SOURCE,
+  toggleEpisodePrivacy,
+} from './privacy.js'
+import { ensurePrivacyButton, removePrivacyButton } from './privacyUi.js'
 
 const presence = new Presence({
   clientId: '1264754447276310599',
+})
+
+const privacyStorageKey = 'pmdAnimeVietSubPrivacyOverrides'
+const privacyFrames = new Set<Window>()
+let currentEpisodeKey = ''
+let currentEpisodePrivacy = false
+let currentPrivacyButtonShown = true
+let lastBroadcastEpisodeKey = ''
+let lastBroadcastPrivacy: boolean | null = null
+let lastBroadcastPrivacyButtonShown: boolean | null = null
+
+function readPrivacyOverrides() {
+  return parsePrivacyOverrides(localStorage.getItem(privacyStorageKey))
+}
+
+function sendPrivacyState(
+  target: Window,
+  privateMode: boolean,
+  privacyButtonShown: boolean,
+): void {
+  target.postMessage({
+    source: PRIVACY_MESSAGE_SOURCE,
+    type: 'state',
+    privateMode,
+    privacyButtonShown,
+  }, '*')
+}
+
+function broadcastPrivacyState(
+  privateMode: boolean,
+  privacyButtonShown: boolean,
+  force = false,
+): void {
+  if (!force
+    && lastBroadcastEpisodeKey === currentEpisodeKey
+    && lastBroadcastPrivacy === privateMode
+    && lastBroadcastPrivacyButtonShown === privacyButtonShown) {
+    return
+  }
+
+  lastBroadcastEpisodeKey = currentEpisodeKey
+  lastBroadcastPrivacy = privateMode
+  lastBroadcastPrivacyButtonShown = privacyButtonShown
+  for (const frame of privacyFrames) {
+    try {
+      sendPrivacyState(frame, privateMode, privacyButtonShown)
+    }
+    catch {
+      privacyFrames.delete(frame)
+    }
+  }
+}
+
+function toggleCurrentEpisodePrivacy(): void {
+  const overrides = toggleEpisodePrivacy(
+    false,
+    currentEpisodeKey,
+    readPrivacyOverrides(),
+  )
+  localStorage.setItem(privacyStorageKey, JSON.stringify(overrides))
+  currentEpisodePrivacy = getEpisodePrivacy(
+    false,
+    currentEpisodeKey,
+    overrides,
+  )
+  if (currentPrivacyButtonShown)
+    ensurePrivacyButton(document, currentEpisodePrivacy, toggleCurrentEpisodePrivacy)
+  broadcastPrivacyState(currentEpisodePrivacy, currentPrivacyButtonShown, true)
+}
+
+async function sendInitialPrivacyState(target: Window): Promise<void> {
+  currentPrivacyButtonShown = await presence.getSetting<boolean>('privacy-shown')
+  currentEpisodeKey = getEpisodeKey(document.location.pathname, document.location.search)
+  currentEpisodePrivacy = getEpisodePrivacy(
+    false,
+    currentEpisodeKey,
+    readPrivacyOverrides(),
+  )
+  sendPrivacyState(target, currentEpisodePrivacy, currentPrivacyButtonShown)
+}
+
+window.addEventListener('message', (event) => {
+  if (!isPrivacyCommandMessage(event.data) || !event.source || !isWatchPage())
+    return
+
+  const target = event.source as Window
+  privacyFrames.add(target)
+
+  if (event.data.type === 'request-state') {
+    void sendInitialPrivacyState(target)
+    return
+  }
+
+  currentEpisodeKey = getEpisodeKey(document.location.pathname, document.location.search)
+
+  if (currentPrivacyButtonShown) {
+    const overrides = toggleEpisodePrivacy(
+      false,
+      currentEpisodeKey,
+      readPrivacyOverrides(),
+    )
+    localStorage.setItem(privacyStorageKey, JSON.stringify(overrides))
+  }
+
+  currentEpisodePrivacy = getEpisodePrivacy(
+    false,
+    currentEpisodeKey,
+    readPrivacyOverrides(),
+  )
+  sendPrivacyState(target, currentEpisodePrivacy, currentPrivacyButtonShown)
 })
 
 let browsingTimestamp = Number.parseInt(sessionStorage.getItem('PMD_browsing_time') || '0', 10)
@@ -153,9 +272,23 @@ presence.on('UpdateData', async () => {
 
   const { pathname, href } = document.location
   const buttons = await presence.getSetting<boolean>('buttons')
-  const privateMode = await presence.getSetting<boolean>('privateMode')
+  const privacyButtonShown = await presence.getSetting<boolean>('privacy-shown')
+  const watchPage = isWatchPage()
+  const detailPage = isDetailPage()
 
-  if (isWatchPage()) {
+  currentPrivacyButtonShown = privacyButtonShown
+  currentEpisodeKey = getEpisodeKey(pathname, document.location.search)
+  currentEpisodePrivacy = watchPage
+    ? getEpisodePrivacy(false, currentEpisodeKey, readPrivacyOverrides())
+    : false
+
+  if (watchPage) {
+    if (privacyButtonShown)
+      ensurePrivacyButton(document, currentEpisodePrivacy, toggleCurrentEpisodePrivacy)
+    else
+      removePrivacyButton(document)
+    broadcastPrivacyState(currentEpisodePrivacy, privacyButtonShown)
+
     const title = getAnimeTitle()
     const episode = getEpisodeName()
     const poster = getAnimePoster()
@@ -246,7 +379,7 @@ presence.on('UpdateData', async () => {
       ]
     }
   }
-  else if (isDetailPage()) {
+  else if (detailPage) {
     const title = getAnimeTitle()
     const poster = getAnimePoster()
 
@@ -302,7 +435,7 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  if (privateMode && (isWatchPage() || isDetailPage())) {
+  if (currentEpisodePrivacy && (watchPage || detailPage)) {
     presenceData.details = 'Đang xem Anime'
     delete presenceData.state
     presenceData.largeImageKey = ActivityAssets.Logo
