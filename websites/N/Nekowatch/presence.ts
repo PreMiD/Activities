@@ -5,9 +5,7 @@ const presence = new Presence({
 })
 
 const siteStartTimestamp = Math.floor(Date.now() / 1000)
-enum ActivityAssets {
-  Logo = 'https://i.imgur.com/LtP6hmP.jpeg',
-}
+let pauseStartTimestamp: number | null = null
 
 function formatAnimeSlug(slug: string | null): string | null {
   if (!slug)
@@ -17,10 +15,18 @@ function formatAnimeSlug(slug: string | null): string | null {
     .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
     .join(' ')
 }
-function getAnimeTitleFromDOM(): string | null {
-  const titleElem = document.querySelector('#info-title, #aa-name')
-  if (titleElem && titleElem.textContent?.trim()) {
-    return titleElem.textContent.trim()
+function getAnimeTitleFromDOM(pathname: string): string | null {
+  if (pathname === '/info.html') {
+    const titleElem = document.querySelector('#info-title')
+    if (titleElem && titleElem.textContent?.trim()) {
+      return titleElem.textContent.trim()
+    }
+  }
+  if (pathname === '/anime.html') {
+    const titleElem = document.querySelector('#aa-name')
+    if (titleElem && titleElem.textContent?.trim()) {
+      return titleElem.textContent.trim()
+    }
   }
   return null
 }
@@ -41,36 +47,44 @@ function parseTimeToSeconds(timeStr: string | null): number | null {
   return null
 }
 
-function getCoverImageFromDOM(epNum?: string, lang?: string, isProfile?: boolean): string | null {
-  if (isProfile) {
+function getCoverImageFromDOM(pathname: string, isProfile?: boolean): string | null {
+  if (isProfile || pathname === '/profile.html') {
     const avatarImg = document.querySelector<HTMLImageElement>('img[src*="user/avatar/"], img[alt*="avatar"]')
     const src = avatarImg?.src || avatarImg?.getAttribute('src')
     if (src && src.startsWith('http'))
       return src
   }
 
-  const posterDiv = document.querySelector<HTMLElement>('#aa-poster')
-  if (posterDiv) {
-    const style = posterDiv.style.backgroundImage
-    const match = style?.match(/url\((['"]?)(.*?)\1\)/)
-    const src = match ? match[2] : null
-    if (src && src.startsWith('http'))
-      return src
+  if (pathname === '/anime.html') {
+    const posterDiv = document.querySelector<HTMLElement>('#aa-poster')
+    if (posterDiv) {
+      const style = posterDiv.style.backgroundImage
+      const match = style?.match(/url\((['"]?)(.*?)\1\)/)
+      const src = match ? match[2] : null
+      if (src && src.startsWith('http'))
+        return src
+    }
   }
 
-  const infoPoster = document.querySelector<HTMLImageElement>('#info-poster-img')
-  if (infoPoster) {
-    const src = infoPoster.src || infoPoster.getAttribute('src')
-    if (src && src.startsWith('http'))
-      return src
+  if (pathname === '/info.html') {
+    const infoPoster = document.querySelector<HTMLImageElement>('#info-poster-img')
+    if (infoPoster) {
+      const src = infoPoster.getAttribute('data-nw-last-good-src')
+        || infoPoster.getAttribute('data-nw-motion-source')
+        || infoPoster.src
+        || infoPoster.getAttribute('src')
+      if (src && src.startsWith('http'))
+        return src
+    }
   }
 
   const coverImg = document.querySelector<HTMLImageElement>('img[src*="anilistcdn/media/anime/cover/"]')
+    || document.querySelector<HTMLImageElement>('img[data-nw-last-good-src*="anilistcdn"]')
     || document.querySelector<HTMLImageElement>('img[data-nimg="fill"]')
     || document.querySelector<HTMLImageElement>('img[src*="screencap"]')
     || document.querySelector<HTMLImageElement>('img[src*="episode"]')
     || document.querySelector<HTMLImageElement>('img[class*="object-cover"]')
-  const src = coverImg?.src || coverImg?.getAttribute('src')
+  const src = coverImg?.src || coverImg?.getAttribute('src') || coverImg?.getAttribute('data-nw-last-good-src')
   return src && src.startsWith('http') ? src : null
 }
 presence.on('UpdateData', async () => {
@@ -95,7 +109,7 @@ presence.on('UpdateData', async () => {
   }
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
-    largeImageKey: ActivityAssets.Logo,
+    largeImageKey: 'https://i.imgur.com/LtP6hmP.jpeg',
     startTimestamp: siteStartTimestamp,
   }
   switch (true) {
@@ -174,23 +188,21 @@ presence.on('UpdateData', async () => {
     }
     case pathname === '/profile.html': {
       presenceData.details = 'Nekowatch'
-      const avatarImg = document.querySelector<HTMLImageElement>('img[src*="user/avatar/"], img[alt*="avatar"]')
-      const altText = avatarImg?.getAttribute('alt') || ''
-      const username = altText.toLowerCase().endsWith(' avatar') ? altText.slice(0, -7).trim() : null
+      const usernameElem = document.querySelector('.anilist-profile-name')
+      const username = usernameElem?.textContent?.trim() || null
       presenceData.state = username ? `Viewing ${username}'s Profile` : 'Viewing Profile'
 
-      const coverUrl = getCoverImageFromDOM(undefined, undefined, true)
+      const coverUrl = getCoverImageFromDOM(pathname, true)
       if (coverUrl) {
         presenceData.largeImageKey = coverUrl
       }
       break
     }
     case pathname === '/info.html': {
-      const animeTitle = getAnimeTitleFromDOM()
-      const coverUrl = getCoverImageFromDOM()
+      const animeTitle = getAnimeTitleFromDOM(pathname)
       presenceData.details = 'Viewing Anime Info'
       presenceData.state = animeTitle || 'Reading Details & Overview'
-      presenceData.largeImageKey = coverUrl || ActivityAssets.Logo
+      presenceData.largeImageKey = 'https://i.imgur.com/LtP6hmP.jpeg'
       if (showButtons) {
         presenceData.buttons = [
           {
@@ -204,8 +216,8 @@ presence.on('UpdateData', async () => {
     case pathname === '/anime.html': {
       const epNum = searchParams.get('ep') ?? '1'
       const lang = searchParams.get('audio') ?? ''
-      const showTitle = getAnimeTitleFromDOM() || 'Anime'
-      const coverUrl = getCoverImageFromDOM()
+      const showTitle = getAnimeTitleFromDOM(pathname) || 'Anime'
+      const coverUrl = getCoverImageFromDOM(pathname)
       let epLine = `Episode ${epNum}`
       if (lang) {
         epLine += ` [${lang.charAt(0).toUpperCase() + lang.slice(1)}]`
@@ -220,21 +232,26 @@ presence.on('UpdateData', async () => {
         presenceData.details = showTitle
         presenceData.state = epLine
       }
-      presenceData.largeImageKey = coverUrl || ActivityAssets.Logo
+      presenceData.largeImageKey = coverUrl || 'https://i.imgur.com/LtP6hmP.jpeg'
 
-      const video = document.querySelector('video')
+      const videos = Array.from(document.querySelectorAll('video'))
+      const video = videos.find(v => v.src && !v.src.startsWith('blob:') && v.src.startsWith('http'))
+        || videos.find(v => v.src)
+        || videos[0]
+        || null
       const isPaused = video ? video.paused : true
 
+      const timeSpans = Array.from(document.querySelectorAll('span[class*="font-medium"][class*="tracking-wide"]'))
+      const currentTimeText = timeSpans[0]?.textContent || null
+      const durationText = timeSpans[1]?.textContent || null
+
+      const elementTime = parseTimeToSeconds(currentTimeText) ?? video?.currentTime ?? 0
+      const elementDuration = parseTimeToSeconds(durationText) ?? video?.duration ?? 0
+
       if (!isPaused) {
+        pauseStartTimestamp = null
         delete presenceData.smallImageKey
         delete presenceData.smallImageText
-
-        const timeSpans = Array.from(document.querySelectorAll('span[class*="font-medium"][class*="tracking-wide"]'))
-        const currentTimeText = timeSpans[0]?.textContent || null
-        const durationText = timeSpans[1]?.textContent || null
-
-        const elementTime = parseTimeToSeconds(currentTimeText) ?? video?.currentTime ?? 0
-        const elementDuration = parseTimeToSeconds(durationText) ?? video?.duration ?? 0
 
         if (elementDuration > 0) {
           const [start, end] = getTimestamps(elementTime, elementDuration)
@@ -250,7 +267,10 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = 'Paused'
 
-        presenceData.startTimestamp = siteStartTimestamp
+        if (!pauseStartTimestamp) {
+          pauseStartTimestamp = Math.floor(Date.now() / 1000)
+        }
+        presenceData.startTimestamp = pauseStartTimestamp
         delete presenceData.endTimestamp
       }
 
@@ -265,11 +285,11 @@ presence.on('UpdateData', async () => {
       break
     }
     default: {
-      const animeTitle = getAnimeTitleFromDOM()
-      const coverUrl = getCoverImageFromDOM()
+      const animeTitle = getAnimeTitleFromDOM(pathname)
+      const coverUrl = getCoverImageFromDOM(pathname)
       presenceData.details = getString('browsing', 'Browsing...')
       presenceData.state = animeTitle ? `${getString('viewing', 'Viewing')} ${animeTitle}` : 'Exploring Catalog'
-      presenceData.largeImageKey = coverUrl || ActivityAssets.Logo
+      presenceData.largeImageKey = coverUrl || 'https://i.imgur.com/LtP6hmP.jpeg'
       if (showButtons) {
         presenceData.buttons = [
           {
