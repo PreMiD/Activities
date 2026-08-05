@@ -176,8 +176,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Nekowatch'
       const avatarImg = document.querySelector<HTMLImageElement>('img[src*="user/avatar/"], img[alt*="avatar"]')
       const altText = avatarImg?.getAttribute('alt') || ''
-      const match = altText.match(/^(.+?)\s+avatar$/i)
-      const username = match && match[1] ? match[1].trim() : null
+      const username = altText.toLowerCase().endsWith(' avatar') ? altText.slice(0, -7).trim() : null
       presenceData.state = username ? `Viewing ${username}'s Profile` : 'Viewing Profile'
 
       const coverUrl = getCoverImageFromDOM(undefined, undefined, true)
