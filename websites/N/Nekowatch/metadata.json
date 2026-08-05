@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "q_wo2",
+    "id": "1238250053836079160"
+  },
+  "service": "Nekowatch",
+  "description": {
+    "en": "Stream your presence from Nekowatch to your friends on Discord.",
+    "ja": "Nekowatchからあなたの存在をDiscordの友達にストリーミングしましょう。"
+  },
+  "url": "nekowatch.xyz",
+  "regExp": "^https?[:][/][/](www[.])?nekowatch[.]xyz[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/LtP6hmP.jpeg",
+  "thumbnail": "https://i.imgur.com/Q7jwfg0.png",
+  "color": "#6366f1",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming"
+  ],
+  "settings": [
+    {
+      "id": "multiLanguage",
+      "title": "Multi-language support",
+      "icon": "fas fa-language",
+      "value": true
+    },
+    {
+      "id": "showAnimeAsTitle",
+      "title": "Use anime name as header",
+      "icon": "fas fa-heading",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "title": "Show buttons",
+      "icon": "fas fa-link",
+      "value": true
+    }
+  ]
+}
