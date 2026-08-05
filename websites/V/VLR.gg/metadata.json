@@ -1,0 +1,69 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "hash.king",
+    "id": "608311692644057088"
+  },
+  "service": "VLR.gg",
+  "description": {
+    "en": "VLR.gg is the leading source for Valorant esports coverage - competitive news, match schedules, results, team rankings, and stats."
+  },
+  "url": [
+    "vlr.gg",
+    "www.vlr.gg"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?vlr[.]gg[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/AHGI3y5.png",
+  "thumbnail": "https://i.imgur.com/jVdJagm.png",
+  "color": "#da626c",
+  "category": "games",
+  "tags": [
+    "esports",
+    "valorant",
+    "news",
+    "matches"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showBrowsingStatus",
+      "title": "Show Browsing Status",
+      "icon": "fad fa-book-reader",
+      "value": true
+    },
+    {
+      "id": "showScore",
+      "title": "Show Match Score",
+      "icon": "fas fa-trophy",
+      "value": true,
+      "if": { "privacy": false }
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover Art",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": { "privacy": false }
+    },
+    {
+      "id": "showSmallImage",
+      "title": "Show Status Icon",
+      "icon": "fad fa-podcast",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": { "privacy": false }
+    }
+  ]
+}
