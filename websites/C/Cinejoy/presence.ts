@@ -77,7 +77,7 @@ presence.on('UpdateData', async () => {
         presenceData.largeImageKey = `${TMDB_IMG}${posterPath}`
       }
     }
-    catch (err) {
+    catch {
       presenceData.details = 'Watching Cinejoy'
     }
   }
