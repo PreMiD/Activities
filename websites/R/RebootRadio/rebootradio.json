@@ -1,0 +1,14 @@
+{
+  "rebootradio.listening": {
+    "description": "Shown when listening to Reboot Radio",
+    "message": "Listening to Reboot"
+  },
+  "rebootradio.live": {
+    "description": "Shown when a presenter is live",
+    "message": "Live with {0}"
+  },
+  "rebootradio.autodj": {
+    "description": "Shown when AutoDJ is playing",
+    "message": "Reboot"
+  }
+}
