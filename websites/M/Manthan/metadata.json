@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1040637807670075432",
+    "name": "emsuregot"
+  },
+  "service": "Manthan",
+  "description": {
+    "en": "Independent digital news platform covering India, Assam, and global stories."
+  },
+  "url": "manthanind.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])?manthanind[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://ik.imagekit.io/rhs5tvh3k/tr:w-512,h-512/transparent%20(5).png",
+  "thumbnail": "https://ik.imagekit.io/rhs5tvh3k/movie%20stills%20(7).png",
+  "color": "#0d0d0d",
+  "category": "other",
+  "tags": ["news", "india", "assam", "journalism", "editorial"]
+}
