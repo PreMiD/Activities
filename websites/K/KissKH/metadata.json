@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "Jeazzzz",
+    "id": "1259853916707749982"
+  },
+  "service": "KissKH",
+  "description": {
+    "en": "Watch Asian dramas and movies on KissKH."
+  },
+  "url": "kisskh.do",
+  "regExp": "^https?[:][/][/]kisskh[.]do[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/AEHpeDm.png",
+  "thumbnail": "https://i.imgur.com/AEHpeDm.png",
+  "color": "#1976D2",
+  "category": "videos",
+  "tags": [
+    "drama",
+    "movies",
+    "series"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?[:][/][/](([^/]+[.])?(kisskh[.]do|kisskh[.]co|kisskh[.]id)|[^/]*(streamtape|filemoon|vidmoly|dood)[^/]*)[/]"
+}
