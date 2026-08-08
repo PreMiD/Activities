@@ -17,6 +17,6 @@ Rich Presence for **Manthan**, an independent digital news platform covering Ind
 - /
 - /latest
 - /feed
-- /feed/*
-- /article/*
+- /feed/\*
+- /article/\*
 - /about
