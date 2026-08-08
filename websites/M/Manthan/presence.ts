@@ -86,10 +86,6 @@ presence.on("UpdateData", async () => {
 					label: "Read Story",
 					url: href,
 				},
-				{
-					label: "Visit Manthan",
-					url: "https://manthanind.com",
-				},
 			];
 			break;
 
@@ -104,10 +100,6 @@ presence.on("UpdateData", async () => {
 				{
 					label: strings.readButton,
 					url: href,
-				},
-				{
-					label: "Visit Manthan",
-					url: "https://manthanind.com",
 				},
 			];
 			break;
