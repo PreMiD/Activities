@@ -82,15 +82,102 @@ const getStrings = presence.getStrings({
   viewing: 'general.viewing',
 })
 
-presence.on('UpdateData', async () => {
-  const { pathname, href, search } = document.location
-  const searchParams = new URLSearchParams(search)
+interface PageMetadata {
+  useMultiLanguage: string | boolean | undefined
+  showAnimeAsTitle: boolean | undefined
+  showButtons: boolean | undefined
+  showEpTitle: boolean | undefined
+  animeTitle: string | null
+  username: string | null
+  coverUrlProfile: string | null
+  coverUrlAnime: string | null
+  coverUrlDefault: string | null
+  epTitleText: string | null
+}
+
+const dataCache = new Map<string, PageMetadata>()
+
+async function getPageData(urlStr: string): Promise<PageMetadata> {
+  const cached = dataCache.get(urlStr)
+  if (cached)
+    return cached
+
+  const url = new URL(urlStr)
+  const { pathname } = url
+
   const [useMultiLanguage, showAnimeAsTitle, showButtons, showEpTitle] = await Promise.all([
     presence.getSetting<string | boolean>('multiLanguage'),
     presence.getSetting<boolean>('showAnimeAsTitle'),
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('showEpTitle'),
   ])
+
+  const animeTitle = getAnimeTitleFromDOM(pathname)
+
+  const usernameElem = document.querySelector('.anilist-profile-name')
+  const username = usernameElem?.textContent?.trim() || null
+
+  const coverUrlProfile = getCoverImageFromDOM(pathname, true)
+  const coverUrlAnime = getCoverImageFromDOM(pathname)
+  const coverUrlDefault = getCoverImageFromDOM(pathname)
+
+  const activeEpBtn = document.querySelector('.ep-item.active, button[aria-current="episode"]')
+  const epTitleFromAttr = activeEpBtn?.getAttribute('data-ep-title')
+  const epTitleText = epTitleFromAttr || document.querySelector('.ep-item-title')?.textContent?.trim() || null
+
+  const data: PageMetadata = {
+    useMultiLanguage,
+    showAnimeAsTitle,
+    showButtons,
+    showEpTitle,
+    animeTitle,
+    username,
+    coverUrlProfile,
+    coverUrlAnime,
+    coverUrlDefault,
+    epTitleText,
+  }
+
+  dataCache.set(urlStr, data)
+  return data
+}
+
+presence.on('UpdateData', async () => {
+  const { pathname, href, search } = document.location
+  const searchParams = new URLSearchParams(search)
+
+  let cached = dataCache.get(href)
+
+  const isProfile = pathname === '/profile' || pathname === '/profile.html'
+  const isInfo = pathname === '/info' || pathname === '/info.html'
+  const isAnime = pathname === '/anime' || pathname === '/anime.html'
+
+  const needsUpdate = !cached
+    || (isProfile && !cached.username && document.querySelector('.anilist-profile-name'))
+    || (isProfile && !cached.coverUrlProfile && getCoverImageFromDOM(pathname, true))
+    || (isInfo && !cached.animeTitle && getAnimeTitleFromDOM(pathname))
+    || (isAnime && !cached.animeTitle && getAnimeTitleFromDOM(pathname))
+    || (isAnime && !cached.coverUrlAnime && getCoverImageFromDOM(pathname))
+    || (isAnime && cached.showEpTitle && !cached.epTitleText && (document.querySelector('.ep-item.active, button[aria-current="episode"]') || document.querySelector('.ep-item-title')))
+
+  if (needsUpdate) {
+    dataCache.delete(href)
+    cached = await getPageData(href)
+  }
+
+  const {
+    useMultiLanguage,
+    showAnimeAsTitle,
+    showButtons,
+    showEpTitle,
+    animeTitle,
+    username,
+    coverUrlProfile,
+    coverUrlAnime,
+    coverUrlDefault,
+    epTitleText,
+  } = cached!
+
   const rawStrings = await getStrings
   const getString = (key: keyof typeof rawStrings, fallback: string) => {
     if (!useMultiLanguage)
@@ -208,20 +295,17 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Viewing Feedback Page'
       break
     }
-    case pathname === '/profile' || pathname === '/profile.html': {
+    case isProfile: {
       presenceData.details = 'Nekowatch'
-      const usernameElem = document.querySelector('.anilist-profile-name')
-      const username = usernameElem?.textContent?.trim() || null
       presenceData.state = username ? `Viewing ${username}'s Profile` : 'Viewing Profile'
 
-      const coverUrl = getCoverImageFromDOM(pathname, true)
+      const coverUrl = coverUrlProfile
       if (coverUrl) {
         presenceData.largeImageKey = coverUrl
       }
       break
     }
-    case pathname === '/info' || pathname === '/info.html': {
-      const animeTitle = getAnimeTitleFromDOM(pathname)
+    case isInfo: {
       presenceData.details = 'Viewing Anime Info'
       presenceData.state = animeTitle || 'Reading Details & Overview'
 
@@ -237,19 +321,16 @@ presence.on('UpdateData', async () => {
       }
       break
     }
-    case pathname === '/anime' || pathname === '/anime.html': {
+    case isAnime: {
       const epNum = searchParams.get('ep') ?? '1'
       const lang = searchParams.get('audio') ?? ''
-      const showTitle = getAnimeTitleFromDOM(pathname) || 'Anime'
-      const coverUrl = getCoverImageFromDOM(pathname)
+      const showTitle = animeTitle || 'Anime'
+      const coverUrl = coverUrlAnime
 
       let epTitle = ''
       if (showEpTitle) {
-        const activeEpBtn = document.querySelector('.ep-item.active, button[aria-current="episode"]')
-        const epTitleFromAttr = activeEpBtn?.getAttribute('data-ep-title')
-        const epTitleFromDOM = epTitleFromAttr || document.querySelector('.ep-item-title')?.textContent?.trim() || null
-        if (epTitleFromDOM && epTitleFromDOM !== epNum) {
-          epTitle = ` - ${epTitleFromDOM}`
+        if (epTitleText && epTitleText !== epNum) {
+          epTitle = ` - ${epTitleText}`
         }
       }
 
@@ -320,11 +401,9 @@ presence.on('UpdateData', async () => {
       break
     }
     default: {
-      const animeTitle = getAnimeTitleFromDOM(pathname)
-      const coverUrl = getCoverImageFromDOM(pathname)
       presenceData.details = getString('browsing', 'Browsing...')
       presenceData.state = animeTitle ? `${getString('viewing', 'Viewing')} ${animeTitle}` : 'Exploring Catalog'
-      presenceData.largeImageKey = coverUrl || 'https://i.imgur.com/LtP6hmP.jpeg'
+      presenceData.largeImageKey = coverUrlDefault || 'https://i.imgur.com/LtP6hmP.jpeg'
       if (showButtons) {
         presenceData.buttons = [
           {
