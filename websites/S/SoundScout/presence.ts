@@ -27,6 +27,12 @@ presence.on('UpdateData', async () => {
   if (metadata?.title) {
     const isPlaying = navigator.mediaSession.playbackState === 'playing'
       || Boolean(audio && !audio.paused)
+
+    if (!isPlaying) {
+      presence.clearActivity()
+      return
+    }
+
     const trackUrl = document.querySelector<HTMLAnchorElement>(
       '[data-testid="player-bar"] a[href^="/player/music/"]',
     )?.href
@@ -38,8 +44,8 @@ presence.on('UpdateData', async () => {
     presenceData.state = metadata.artist || 'Unknown artist'
     presenceData.largeImageKey = metadata.artwork[0]?.src
       || ActivityAssets.Logo
-    presenceData.smallImageKey = isPlaying ? Assets.Play : Assets.Pause
-    presenceData.smallImageText = isPlaying ? 'Playing' : 'Paused'
+    presenceData.smallImageKey = Assets.Play
+    presenceData.smallImageText = 'Playing'
 
     delete presenceData.startTimestamp
 
@@ -53,8 +59,7 @@ presence.on('UpdateData', async () => {
       : Number(seekSlider?.max)
 
     if (
-      isPlaying
-      && Number.isFinite(currentTime)
+      Number.isFinite(currentTime)
       && Number.isFinite(duration)
       && duration > 0
     ) {
@@ -65,6 +70,12 @@ presence.on('UpdateData', async () => {
     if (trackUrl) {
       presenceData.detailsUrl = trackUrl
       presenceData.largeImageUrl = trackUrl
+      presenceData.buttons = [
+        {
+          label: 'Listen on SoundScout',
+          url: trackUrl,
+        },
+      ]
     }
     if (artistUrl)
       presenceData.stateUrl = artistUrl
