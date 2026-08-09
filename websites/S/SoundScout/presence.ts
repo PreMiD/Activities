@@ -25,6 +25,9 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Listening,
   }
   const { href, pathname } = document.location
+
+  // SoundScout exposes metadata through Media Session, while playback timing
+  // can fall back to the controls in its persistent player bar.
   const playerBar = document.querySelector<HTMLElement>('[data-testid="player-bar"]')
   const audio = playerBar?.querySelector<HTMLAudioElement>('audio')
     ?? document.querySelector<HTMLAudioElement>('audio')
@@ -37,6 +40,7 @@ presence.on('UpdateData', async () => {
     const isPlaying = navigator.mediaSession.playbackState === 'playing'
       || Boolean(audio && !audio.paused)
 
+    // Clear paused tracks so an abandoned tab does not leave a stale activity.
     if (!isPlaying) {
       presence.clearActivity()
       return
@@ -56,6 +60,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Play
     presenceData.smallImageText = 'Playing'
 
+    // Replace the browsing timer with synchronized progress for active media.
     delete presenceData.startTimestamp
 
     const currentTime = audio?.currentTime
@@ -106,6 +111,7 @@ presence.on('UpdateData', async () => {
         break
       }
       case pathname.startsWith('/player/explore/'): {
+        // Detail routes can contain UUIDs, so prefer the rendered page heading.
         const pathParts = pathname.split('/').filter(Boolean)
         const category = pathParts[2] ?? 'music'
         const selection = pathParts[3]
@@ -136,6 +142,8 @@ presence.on('UpdateData', async () => {
           '[data-testid="artist-hero"]',
         )
         const artistName = artistHero?.querySelector('h1')?.textContent?.trim()
+
+        // Artist portraits are CSS backgrounds rather than image elements.
         const artistImage = getBackgroundImageUrl(
           artistHero?.querySelector<HTMLElement>(
             '[aria-hidden="true"] [style*="background-image"]',
