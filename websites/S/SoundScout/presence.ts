@@ -9,6 +9,10 @@ enum ActivityAssets {
   Logo = 'https://i.imgur.com/qk0dkl9.png',
 }
 
+function getBackgroundImageUrl(element: HTMLElement | null) {
+  return element?.style.backgroundImage.match(/^url\(["']?(.*?)["']?\)$/)?.[1]
+}
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -104,7 +108,25 @@ presence.on('UpdateData', async () => {
         break
       }
       case pathname.includes('/artists/'): {
-        presenceData.state = 'Viewing an artist'
+        const artistHero = document.querySelector<HTMLElement>(
+          '[data-testid="artist-hero"]',
+        )
+        const artistName = artistHero?.querySelector('h1')?.textContent?.trim()
+        const artistImage = getBackgroundImageUrl(
+          artistHero?.querySelector<HTMLElement>(
+            '[aria-hidden="true"] [style*="background-image"]',
+          ) ?? null,
+        )
+
+        presenceData.state = artistName
+          ? `Viewing ${artistName}`
+          : 'Viewing an artist'
+
+        if (artistImage) {
+          presenceData.largeImageKey = artistImage
+          presenceData.largeImageText = artistName
+          presenceData.largeImageUrl = href
+        }
         break
       }
       case pathname.includes('/releases/'): {
