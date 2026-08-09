@@ -13,6 +13,11 @@ function getBackgroundImageUrl(element: HTMLElement | null) {
   return element?.style.backgroundImage.match(/^url\(["']?(.*?)["']?\)$/)?.[1]
 }
 
+function getPageName() {
+  return document.querySelector('main h1')?.textContent?.trim()
+    || document.title.split('·')[0]?.trim()
+}
+
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -96,11 +101,26 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'Searching for music'
         break
       }
-      case pathname.includes('/explore/genres/'):
-      case pathname.includes('/explore/moods/'):
-      case pathname.includes('/explore/activities/'):
-      case pathname.includes('/explore/instruments/'): {
-        presenceData.state = `Exploring ${pathname.split('/').at(-1)?.replaceAll('-', ' ')}`
+      case pathname.startsWith('/player/explore/'): {
+        const pathParts = pathname.split('/').filter(Boolean)
+        const category = pathParts[2] ?? 'music'
+        const selection = pathParts[3]
+        const collectionTypes: Record<string, string> = {
+          activities: 'activity',
+          genres: 'genre',
+          instruments: 'instrument',
+          keys: 'key',
+          moods: 'mood',
+          themes: 'theme',
+        }
+        const pathLabel = selection
+          ? decodeURIComponent(selection).replaceAll('-', ' ')
+          : undefined
+        const collectionName = getPageName() || pathLabel
+
+        presenceData.state = selection && collectionName
+          ? `Browsing ${collectionTypes[category] ?? category}: ${collectionName}`
+          : `Browsing ${category}`
         break
       }
       case pathname.includes('/music/'): {
@@ -132,8 +152,18 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'Viewing a release'
         break
       }
-      case pathname.includes('/playlists/'): {
-        presenceData.state = 'Viewing a playlist'
+      case pathname === '/player/playlists':
+      case pathname === '/player/my-playlists': {
+        presenceData.state = 'Browsing playlists'
+        break
+      }
+      case pathname.startsWith('/player/playlists/'):
+      case pathname.startsWith('/player/my-playlists/'): {
+        const playlistName = getPageName()
+
+        presenceData.state = playlistName
+          ? `Browsing playlist: ${playlistName}`
+          : 'Browsing a playlist'
         break
       }
       default: {
