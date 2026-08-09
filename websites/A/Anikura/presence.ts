@@ -136,7 +136,7 @@ presence.on('UpdateData', async () => {
   const { pathname, href, search } = document.location
   const searchParams = new URLSearchParams(search)
   const [useMultiLanguage, showAnimeAsTitle, showButtons, showEpTitle] = await Promise.all([
-    presence.getSetting<boolean>('multiLanguage'),
+    presence.getSetting<string | boolean>('multiLanguage'),
     presence.getSetting<boolean>('showAnimeAsTitle'),
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('showEpTitle'),

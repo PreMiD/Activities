@@ -27,7 +27,7 @@
       "title": "Multi-language support",
       "icon": "fas fa-language",
       "multiLanguage": true,
-      "value": true
+      "value": "en"
     },
     {
       "id": "showAnimeAsTitle",
