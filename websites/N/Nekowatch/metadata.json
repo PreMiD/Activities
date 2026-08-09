@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "q_wo2",
+    "id": "1238250053836079160"
+  },
+  "service": "Nekowatch",
+  "description": {
+    "en": "Discover anime, browse schedules, track episodes, manage your watchlist, and continue watching across devices with NekoWatch.",
+    "ja": "NekoWatchで、アニメを見つけ、スケジュールを閲覧し、エピソードを追いかけ、ウォッチリストを管理し、デバイス間で視聴を続けましょう。"
+  },
+  "url": "nekowatch.xyz",
+  "regExp": "^https?[:][/][/](www[.])?nekowatch[.]xyz[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/LtP6hmP.jpeg",
+  "thumbnail": "https://i.imgur.com/Q7jwfg0.png",
+  "color": "#6366f1",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming"
+  ],
+  "settings": [
+    {
+      "id": "multiLanguage",
+      "title": "Multi-language support",
+      "icon": "fas fa-language",
+      "multiLanguage": true,
+      "value": "en"
+    },
+    {
+      "id": "showAnimeAsTitle",
+      "title": "Use anime name as header",
+      "icon": "fas fa-heading",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "title": "Show buttons",
+      "icon": "fas fa-link",
+      "value": true
+    },
+    {
+      "id": "showEpTitle",
+      "title": "Show episode title / chapter",
+      "icon": "fas fa-file-alt",
+      "value": true
+    }
+  ]
+}
