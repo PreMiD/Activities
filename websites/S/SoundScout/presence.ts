@@ -101,6 +101,10 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'Searching for music'
         break
       }
+      case pathname === '/player/my-library': {
+        presenceData.state = 'Browsing favorites'
+        break
+      }
       case pathname.startsWith('/player/explore/'): {
         const pathParts = pathname.split('/').filter(Boolean)
         const category = pathParts[2] ?? 'music'
