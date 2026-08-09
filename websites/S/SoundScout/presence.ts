@@ -1,0 +1,118 @@
+import { ActivityType, Assets, getTimestamps } from 'premid'
+
+const presence = new Presence({
+  clientId: '1535996328230780938',
+})
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+enum ActivityAssets {
+  Logo = 'https://i.imgur.com/qk0dkl9.png',
+}
+
+presence.on('UpdateData', async () => {
+  const presenceData: PresenceData = {
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: browsingTimestamp,
+    type: ActivityType.Listening,
+  }
+  const { href, pathname } = document.location
+  const playerBar = document.querySelector<HTMLElement>('[data-testid="player-bar"]')
+  const audio = playerBar?.querySelector<HTMLAudioElement>('audio')
+    ?? document.querySelector<HTMLAudioElement>('audio')
+  const seekSlider = playerBar?.querySelector<HTMLInputElement>(
+    'input[aria-label="Seek"]',
+  )
+  const metadata = navigator.mediaSession.metadata
+
+  if (metadata?.title) {
+    const isPlaying = navigator.mediaSession.playbackState === 'playing'
+      || Boolean(audio && !audio.paused)
+    const trackUrl = document.querySelector<HTMLAnchorElement>(
+      '[data-testid="player-bar"] a[href^="/player/music/"]',
+    )?.href
+    const artistUrl = document.querySelector<HTMLAnchorElement>(
+      '[data-testid="player-bar"] a[href^="/player/artists/"]',
+    )?.href
+
+    presenceData.details = metadata.title
+    presenceData.state = metadata.artist || 'Unknown artist'
+    presenceData.largeImageKey = metadata.artwork[0]?.src
+      || ActivityAssets.Logo
+    presenceData.smallImageKey = isPlaying ? Assets.Play : Assets.Pause
+    presenceData.smallImageText = isPlaying ? 'Playing' : 'Paused'
+
+    delete presenceData.startTimestamp
+
+    const currentTime = audio?.currentTime
+      ?? seekSlider?.valueAsNumber
+      ?? Number.NaN
+    const audioDuration = audio?.duration
+    const duration = audioDuration !== undefined
+      && Number.isFinite(audioDuration)
+      ? audioDuration
+      : Number(seekSlider?.max)
+
+    if (
+      isPlaying
+      && Number.isFinite(currentTime)
+      && Number.isFinite(duration)
+      && duration > 0
+    ) {
+      [presenceData.startTimestamp, presenceData.endTimestamp]
+        = getTimestamps(currentTime, duration)
+    }
+
+    if (trackUrl) {
+      presenceData.detailsUrl = trackUrl
+      presenceData.largeImageUrl = trackUrl
+    }
+    if (artistUrl)
+      presenceData.stateUrl = artistUrl
+  }
+  else {
+    presenceData.details = 'Browsing SoundScout'
+
+    switch (true) {
+      case pathname === '/player': {
+        presenceData.state = 'Exploring music'
+        break
+      }
+      case pathname.includes('/search'): {
+        presenceData.state = 'Searching for music'
+        break
+      }
+      case pathname.includes('/explore/genres/'):
+      case pathname.includes('/explore/moods/'):
+      case pathname.includes('/explore/activities/'):
+      case pathname.includes('/explore/instruments/'): {
+        presenceData.state = `Exploring ${pathname.split('/').at(-1)?.replaceAll('-', ' ')}`
+        break
+      }
+      case pathname.includes('/music/'): {
+        presenceData.state = 'Viewing a track'
+        break
+      }
+      case pathname.includes('/artists/'): {
+        presenceData.state = 'Viewing an artist'
+        break
+      }
+      case pathname.includes('/releases/'): {
+        presenceData.state = 'Viewing a release'
+        break
+      }
+      case pathname.includes('/playlists/'): {
+        presenceData.state = 'Viewing a playlist'
+        break
+      }
+      default: {
+        presenceData.state = 'Exploring music'
+      }
+    }
+
+    presenceData.detailsUrl = href
+  }
+
+  if (presenceData.details)
+    presence.setActivity(presenceData)
+  else presence.clearActivity()
+})
