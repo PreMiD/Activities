@@ -124,7 +124,6 @@ presence.on('UpdateData', async () => {
 
         if (artistImage) {
           presenceData.largeImageKey = artistImage
-          presenceData.largeImageText = artistName
           presenceData.largeImageUrl = href
         }
         break
