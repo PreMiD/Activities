@@ -12,7 +12,8 @@ enum ActivityAssets {
 function formatAnimeSlug(slug: string | null): string | null {
   if (!slug)
     return null
-  return slug
+  const cleanedSlug = slug.replace(/-[a-z0-9]{5}$/i, '')
+  return cleanedSlug
     .split('-')
     .map(w => w.charAt(0).toUpperCase() + w.slice(1))
     .join(' ')
@@ -98,6 +99,7 @@ function getCoverImageFromDOM(epNum?: string, lang?: string, isProfile?: boolean
     const src = avatarImg?.src || avatarImg?.getAttribute('src')
     if (src && src.startsWith('http'))
       return src
+    return null
   }
 
   if (epNum) {
@@ -108,7 +110,7 @@ function getCoverImageFromDOM(epNum?: string, lang?: string, isProfile?: boolean
     const activeImg = activeLink?.querySelector('img')
     if (activeImg) {
       const src = activeImg.src || activeImg.getAttribute('src')
-      if (src && src.startsWith('http'))
+      if (src && src.startsWith('http') && !src.includes('/avatars/'))
         return src
     }
   }
@@ -123,8 +125,9 @@ function getCoverImageFromDOM(epNum?: string, lang?: string, isProfile?: boolean
     || document.querySelector<HTMLImageElement>('img._coverImg_2wrhc_89')
     || document.querySelector<HTMLImageElement>('img[class*="_coverImg_"]')
   const src = coverImg?.src || coverImg?.getAttribute('src')
-  return src && src.startsWith('http') ? src : null
+  return src && src.startsWith('http') && !src.includes('/avatars/') ? src : null
 }
+
 const getStrings = presence.getStrings({
   browsing: 'general.browsing',
   searching: 'general.searching',
@@ -132,15 +135,112 @@ const getStrings = presence.getStrings({
   viewing: 'general.viewing',
 })
 
-presence.on('UpdateData', async () => {
-  const { pathname, href, search } = document.location
+interface PageMetadata {
+  useMultiLanguage: string | boolean | undefined
+  showAnimeAsTitle: boolean | undefined
+  showButtons: boolean | undefined
+  showEpTitle: boolean | undefined
+  animeTitle: string | null
+  chapter: string | null
+  subtitleLang: string | null
+  epTitle: string | null
+  followersCount: string | null
+  followingCount: string | null
+  coverUrlProfile: string | null
+  coverUrlWatch: string | null
+  coverUrlDefault: string | null
+}
+
+const dataCache = new Map<string, PageMetadata>()
+
+async function getPageData(urlStr: string): Promise<PageMetadata> {
+  const cached = dataCache.get(urlStr)
+  if (cached)
+    return cached
+
+  const url = new URL(urlStr)
+  const { pathname, search } = url
   const searchParams = new URLSearchParams(search)
+
   const [useMultiLanguage, showAnimeAsTitle, showButtons, showEpTitle] = await Promise.all([
     presence.getSetting<string | boolean>('multiLanguage'),
     presence.getSetting<boolean>('showAnimeAsTitle'),
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('showEpTitle'),
   ])
+
+  const animeTitle = getAnimeTitleFromDOM()
+  const { chapter, subtitleLang } = getChapterOrSubtitleFromDOM()
+  const epTitle = getEpisodeTitleFromDOM()
+  const followersCount = getFollowersCountFromDOM()
+  const followingCount = getFollowingCountFromDOM()
+
+  const isProfile = pathname.startsWith('/@') || pathname === '/profile'
+  const epNum = searchParams.get('ep') ?? '1'
+  const lang = searchParams.get('lang') ?? ''
+
+  const coverUrlProfile = getCoverImageFromDOM(undefined, undefined, isProfile)
+  const coverUrlWatch = getCoverImageFromDOM(epNum, lang)
+  const coverUrlDefault = getCoverImageFromDOM()
+
+  const data: PageMetadata = {
+    useMultiLanguage,
+    showAnimeAsTitle,
+    showButtons,
+    showEpTitle,
+    animeTitle,
+    chapter,
+    subtitleLang,
+    epTitle,
+    followersCount,
+    followingCount,
+    coverUrlProfile,
+    coverUrlWatch,
+    coverUrlDefault,
+  }
+
+  dataCache.set(urlStr, data)
+  return data
+}
+
+presence.on('UpdateData', async () => {
+  const { pathname, href, search } = document.location
+  const searchParams = new URLSearchParams(search)
+
+  let cached = dataCache.get(href)
+
+  const isWatch = /\/watch\/\d+\/[^?/#]+/i.test(pathname)
+  const isAnime = /\/anime\/\d+\/[^?/#]+/i.test(pathname)
+  const isProfile = pathname === '/profile' || pathname.startsWith('/@')
+
+  const needsUpdate = !cached
+    || (isWatch && !cached.animeTitle && getAnimeTitleFromDOM())
+    || (isWatch && !cached.epTitle && getEpisodeTitleFromDOM())
+    || (isWatch && !cached.coverUrlWatch && getCoverImageFromDOM(searchParams.get('ep') ?? '1', searchParams.get('lang') ?? ''))
+    || (isAnime && !cached.animeTitle && getAnimeTitleFromDOM())
+    || (isProfile && !cached.coverUrlProfile && getCoverImageFromDOM(undefined, undefined, true))
+
+  if (needsUpdate) {
+    dataCache.delete(href)
+    cached = await getPageData(href)
+  }
+
+  const {
+    useMultiLanguage,
+    showAnimeAsTitle,
+    showButtons,
+    showEpTitle,
+    animeTitle,
+    chapter,
+    subtitleLang,
+    epTitle,
+    followersCount,
+    followingCount,
+    coverUrlProfile,
+    coverUrlWatch,
+    coverUrlDefault,
+  } = cached!
+
   const rawStrings = await getStrings
   const getString = (key: keyof typeof rawStrings, fallback: string) => {
     if (!useMultiLanguage)
@@ -148,6 +248,7 @@ presence.on('UpdateData', async () => {
     const val = rawStrings[key]
     return val && !val.startsWith('general.') ? val : fallback
   }
+
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     largeImageKey: ActivityAssets.Logo,
@@ -227,11 +328,11 @@ presence.on('UpdateData', async () => {
 
         let subText = ''
         if (tab === 'followers') {
-          const count = getFollowersCountFromDOM()
+          const count = followersCount
           subText = ` (Followers${count ? `: ${count}` : ''})`
         }
         else if (tab === 'following') {
-          const count = getFollowingCountFromDOM()
+          const count = followingCount
           subText = ` (Following${count ? `: ${count}` : ''})`
         }
         else if (tab) {
@@ -247,7 +348,7 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'Viewing Profile'
       }
 
-      const coverUrl = getCoverImageFromDOM(undefined, undefined, isProfile || pathname === '/profile')
+      const coverUrl = coverUrlProfile
       if (coverUrl) {
         presenceData.largeImageKey = coverUrl
       }
@@ -265,12 +366,12 @@ presence.on('UpdateData', async () => {
       presenceData.state = query ? `${searchingStr} "${query}"` : `${searchingStr}...`
       break
     }
-    case /\/anime\/\d+\/[^?/#]+/i.test(pathname): {
+    case isAnime: {
       const infoMatch = pathname.match(/\/anime\/\d+\/([^?/#]+)/i)
-      const animeTitle = getAnimeTitleFromDOM() || (infoMatch && infoMatch[1] ? formatAnimeSlug(infoMatch[1]) : null)
-      const coverUrl = getCoverImageFromDOM()
-      presenceData.details = animeTitle ? `${getString('viewing', 'Viewing')} ${animeTitle}` : 'Browsing Anime Info'
-      presenceData.state = animeTitle ? 'Reading Details & Overview' : 'Exploring Info Catalog'
+      const finalAnimeTitle = animeTitle || (infoMatch && infoMatch[1] ? formatAnimeSlug(infoMatch[1]) : null)
+      const coverUrl = coverUrlDefault
+      presenceData.details = finalAnimeTitle ? `${getString('viewing', 'Viewing')} ${finalAnimeTitle}` : 'Browsing Anime Info'
+      presenceData.state = finalAnimeTitle ? 'Reading Details & Overview' : 'Exploring Info Catalog'
       presenceData.largeImageKey = coverUrl || ActivityAssets.Logo
       if (showButtons) {
         presenceData.buttons = [
@@ -282,14 +383,12 @@ presence.on('UpdateData', async () => {
       }
       break
     }
-    case /\/watch\/\d+\/[^?/#]+/i.test(pathname): {
+    case isWatch: {
       const watchMatch = pathname.match(/\/watch\/\d+\/([^?/#]+)/i)
       const epNum = searchParams.get('ep') ?? '1'
       const lang = searchParams.get('lang') ?? ''
-      const showTitle = getAnimeTitleFromDOM() || (watchMatch && watchMatch[1] ? formatAnimeSlug(watchMatch[1]) : null) || 'Anime'
-      const epTitle = getEpisodeTitleFromDOM()
-      const { chapter, subtitleLang } = getChapterOrSubtitleFromDOM()
-      const coverUrl = getCoverImageFromDOM(epNum, lang)
+      const showTitle = animeTitle || (watchMatch && watchMatch[1] ? formatAnimeSlug(watchMatch[1]) : null) || 'Anime'
+      const coverUrl = coverUrlWatch || coverUrlDefault
       let epLine = `Episode ${epNum}`
       const finalEpTitle = showEpTitle ? epTitle : null
       if (showEpTitle && (chapter || finalEpTitle)) {
@@ -355,10 +454,10 @@ presence.on('UpdateData', async () => {
     }
     default: {
       const catalogMatch = pathname.match(/\/(?:anime|watch)\/\d+\/([^?/#]+)/i)
-      const animeTitle = getAnimeTitleFromDOM() || (catalogMatch && catalogMatch[1] ? formatAnimeSlug(catalogMatch[1]) : null)
-      const coverUrl = getCoverImageFromDOM()
+      const finalAnimeTitle = animeTitle || (catalogMatch && catalogMatch[1] ? formatAnimeSlug(catalogMatch[1]) : null)
+      const coverUrl = coverUrlDefault
       presenceData.details = getString('browsing', 'Browsing...')
-      presenceData.state = animeTitle ? `${getString('viewing', 'Viewing')} ${animeTitle}` : 'Exploring Catalog'
+      presenceData.state = finalAnimeTitle ? `${getString('viewing', 'Viewing')} ${finalAnimeTitle}` : 'Exploring Catalog'
       presenceData.largeImageKey = coverUrl || ActivityAssets.Logo
       if (showButtons) {
         presenceData.buttons = [
