@@ -7,8 +7,8 @@
   },
   "service": "Anikura",
   "description": {
-    "en": "Stream your presence from Anikura to your friends on Discord.",
-    "ja": "Anikuraからあなたの存在をDiscordの友達にストリーミングしましょう。"
+    "en": "Watch anime free online — sub and dub, continue watching, and a growing catalog.",
+    "ja": "アニメ無料オンライン視聴 — 字幕付きと吹替付き、続きから視聴、拡大し続けるカタログ。"
   },
   "url": "anikura.club",
   "regExp": "^https?[:][/][/](www[.])?anikura[.]club[/]",
@@ -26,6 +26,7 @@
       "id": "multiLanguage",
       "title": "Multi-language support",
       "icon": "fas fa-language",
+      "multiLanguage": true,
       "value": true
     },
     {

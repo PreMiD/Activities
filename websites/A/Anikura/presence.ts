@@ -125,6 +125,13 @@ function getCoverImageFromDOM(epNum?: string, lang?: string, isProfile?: boolean
   const src = coverImg?.src || coverImg?.getAttribute('src')
   return src && src.startsWith('http') ? src : null
 }
+const getStrings = presence.getStrings({
+  browsing: 'general.browsing',
+  searching: 'general.searching',
+  viewHome: 'general.viewHome',
+  viewing: 'general.viewing',
+})
+
 presence.on('UpdateData', async () => {
   const { pathname, href, search } = document.location
   const searchParams = new URLSearchParams(search)
@@ -134,12 +141,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('showEpTitle'),
   ])
-  const rawStrings = await presence.getStrings({
-    browsing: 'general.browsing',
-    searching: 'general.searching',
-    viewHome: 'general.viewHome',
-    viewing: 'general.viewing',
-  })
+  const rawStrings = await getStrings
   const getString = (key: keyof typeof rawStrings, fallback: string) => {
     if (!useMultiLanguage)
       return fallback
