@@ -15,6 +15,7 @@ function formatAnimeSlug(slug: string | null): string | null {
     .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
     .join(' ')
 }
+
 function getAnimeTitleFromDOM(pathname: string): string | null {
   if (pathname === '/info' || pathname === '/info.html') {
     const titleElem = document.querySelector('#info-title')
@@ -30,6 +31,7 @@ function getAnimeTitleFromDOM(pathname: string): string | null {
   }
   return null
 }
+
 function parseTimeToSeconds(timeStr: string | null): number | null {
   if (!timeStr)
     return null
@@ -48,8 +50,10 @@ function parseTimeToSeconds(timeStr: string | null): number | null {
 }
 
 function getCoverImageFromDOM(pathname: string, isProfile?: boolean): string | null {
-  if (isProfile || pathname === '/profile' || pathname === '/profile.html') {
-    const avatarImg = document.querySelector<HTMLImageElement>('img[src*="user/avatar/"], img[data-nw-last-good-src*="user/avatar/"], img[alt*="avatar"]')
+  if (isProfile || pathname.startsWith('/@') || pathname === '/profile' || pathname === '/profile.html') {
+    const avatarImg = document.querySelector<HTMLImageElement>(
+      'img.nw-profile-avatar-img, img[src*="discordapp.com/avatars/"], img[src*="user/avatar/"], img[data-nw-last-good-src*="avatars"]',
+    )
     const src = avatarImg?.getAttribute('data-nw-last-good-src') || avatarImg?.src || avatarImg?.getAttribute('src')
     if (src && src.startsWith('http'))
       return src
@@ -75,6 +79,26 @@ function getCoverImageFromDOM(pathname: string, isProfile?: boolean): string | n
   const src = coverImg?.src || coverImg?.getAttribute('src') || coverImg?.getAttribute('data-nw-last-good-src')
   return src && src.startsWith('http') ? src : null
 }
+
+function getStreakNumber(): string | null {
+  const streakContainer = document.querySelector('#nw-profile-streak')
+  if (streakContainer?.getAttribute('data-streak-value')) {
+    return streakContainer.getAttribute('data-streak-value')
+  }
+
+  const streakElem = document.querySelector('.nw-streak-value')
+  if (!streakElem?.textContent)
+    return null
+
+  const match = streakElem.textContent.match(/\d+/)
+  return match ? match[0] : null
+}
+
+function hasProfileBadges(): boolean {
+  const badgeElems = document.querySelectorAll('.nw-profile-badge')
+  return badgeElems.length > 0
+}
+
 const getStrings = presence.getStrings({
   browsing: 'general.browsing',
   searching: 'general.searching',
@@ -83,10 +107,6 @@ const getStrings = presence.getStrings({
 })
 
 interface PageMetadata {
-  useMultiLanguage: string | boolean | undefined
-  showAnimeAsTitle: boolean | undefined
-  showButtons: boolean | undefined
-  showEpTitle: boolean | undefined
   animeTitle: string | null
   username: string | null
   coverUrlProfile: string | null
@@ -105,17 +125,16 @@ async function getPageData(urlStr: string): Promise<PageMetadata> {
   const url = new URL(urlStr)
   const { pathname } = url
 
-  const [useMultiLanguage, showAnimeAsTitle, showButtons, showEpTitle] = await Promise.all([
-    presence.getSetting<string | boolean>('multiLanguage'),
-    presence.getSetting<boolean>('showAnimeAsTitle'),
-    presence.getSetting<boolean>('buttons'),
-    presence.getSetting<boolean>('showEpTitle'),
-  ])
-
   const animeTitle = getAnimeTitleFromDOM(pathname)
 
-  const usernameElem = document.querySelector('.anilist-profile-name')
-  const username = usernameElem?.textContent?.trim() || null
+  let username: string | null = null
+  if (pathname.startsWith('/@')) {
+    username = pathname.split('/')[1]?.replace('@', '') || null
+  }
+  if (!username) {
+    const usernameElem = document.querySelector('.nw-profile-name, .anilist-profile-name')
+    username = usernameElem?.textContent?.trim() || null
+  }
 
   const coverUrlProfile = getCoverImageFromDOM(pathname, true)
   const coverUrlAnime = getCoverImageFromDOM(pathname)
@@ -126,10 +145,6 @@ async function getPageData(urlStr: string): Promise<PageMetadata> {
   const epTitleText = epTitleFromAttr || document.querySelector('.ep-item-title')?.textContent?.trim() || null
 
   const data: PageMetadata = {
-    useMultiLanguage,
-    showAnimeAsTitle,
-    showButtons,
-    showEpTitle,
     animeTitle,
     username,
     coverUrlProfile,
@@ -146,19 +161,32 @@ presence.on('UpdateData', async () => {
   const { pathname, href, search } = document.location
   const searchParams = new URLSearchParams(search)
 
+  const [
+    useMultiLanguage,
+    showAnimeAsTitle,
+    showButtons,
+    showEpTitle,
+    showProfileStreak,
+  ] = await Promise.all([
+    presence.getSetting<string | boolean>('multiLanguage'),
+    presence.getSetting<boolean>('showAnimeAsTitle'),
+    presence.getSetting<boolean>('buttons'),
+    presence.getSetting<boolean>('showEpTitle'),
+    presence.getSetting<boolean>('showProfileStreak'),
+  ])
+
   let cached = dataCache.get(href)
 
-  const isProfile = pathname === '/profile' || pathname === '/profile.html'
+  const isProfile = pathname.startsWith('/@') || pathname === '/profile' || pathname === '/profile.html'
   const isInfo = pathname === '/info' || pathname === '/info.html'
   const isAnime = pathname === '/anime' || pathname === '/anime.html'
 
   const needsUpdate = !cached
-    || (isProfile && !cached.username && document.querySelector('.anilist-profile-name'))
+    || (isProfile && !cached.username)
     || (isProfile && !cached.coverUrlProfile && getCoverImageFromDOM(pathname, true))
     || (isInfo && !cached.animeTitle && getAnimeTitleFromDOM(pathname))
     || (isAnime && !cached.animeTitle && getAnimeTitleFromDOM(pathname))
     || (isAnime && !cached.coverUrlAnime && getCoverImageFromDOM(pathname))
-    || (isAnime && cached.showEpTitle && !cached.epTitleText && (document.querySelector('.ep-item.active, button[aria-current="episode"]') || document.querySelector('.ep-item-title')))
 
   if (needsUpdate) {
     dataCache.delete(href)
@@ -166,10 +194,6 @@ presence.on('UpdateData', async () => {
   }
 
   const {
-    useMultiLanguage,
-    showAnimeAsTitle,
-    showButtons,
-    showEpTitle,
     animeTitle,
     username,
     coverUrlProfile,
@@ -185,17 +209,68 @@ presence.on('UpdateData', async () => {
     const val = rawStrings[key]
     return val && !val.startsWith('general.') ? val : fallback
   }
+
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     largeImageKey: 'https://i.imgur.com/LtP6hmP.jpeg',
     startTimestamp: siteStartTimestamp,
   }
+
   switch (true) {
     case pathname === '/' || pathname === '/home': {
       presenceData.details = 'Nekowatch'
       presenceData.state = getString('viewHome', 'On Homepage')
       break
     }
+
+    case isProfile: {
+      presenceData.details = username ? `User: @${username}` : 'Viewing Profile'
+
+      const isEditing = Boolean(document.querySelector('#nw-edit-title'))
+
+      if (isEditing) {
+        presenceData.state = 'Editing Profile'
+      }
+      else {
+        const tab = searchParams.get('tab')
+        let stateText = 'Viewing Profile'
+
+        if (tab === 'activity') {
+          stateText = 'Viewing Activity'
+        }
+        else if (tab === 'comments') {
+          stateText = 'Viewing Comments'
+        }
+
+        if (hasProfileBadges()) {
+          stateText += ' • ⭐'
+        }
+
+        if (showProfileStreak !== false) {
+          const streakNum = getStreakNumber()
+          if (streakNum) {
+            stateText += ` • 🔥 ${streakNum}`
+          }
+        }
+
+        presenceData.state = stateText
+      }
+
+      if (coverUrlProfile) {
+        presenceData.largeImageKey = coverUrlProfile
+      }
+
+      if (showButtons) {
+        presenceData.buttons = [
+          {
+            label: 'View Profile',
+            url: href,
+          },
+        ]
+      }
+      break
+    }
+
     case pathname === '/browse' || pathname === '/browse.html': {
       presenceData.details = 'Nekowatch'
       const q = searchParams.get('q')
@@ -239,76 +314,10 @@ presence.on('UpdateData', async () => {
       presenceData.state = filters.length > 0 ? filters.join(' • ') : 'All Anime'
       break
     }
-    case pathname === '/circles': {
-      presenceData.details = 'Nekowatch'
-      presenceData.state = 'Watching in Circles'
-      break
-    }
-    case pathname === '/schedule' || pathname === '/schedule.html': {
-      presenceData.details = 'Nekowatch'
-      presenceData.state = 'Checking Release Schedule'
-      break
-    }
-    case pathname === '/changelog' || pathname === '/changelog.html': {
-      presenceData.details = 'Nekowatch'
-      presenceData.state = 'Reading Changelog'
-      break
-    }
-    case pathname === '/about' || pathname === '/about.html': {
-      presenceData.details = 'Nekowatch'
-      presenceData.state = 'Reading About Page'
-      break
-    }
-    case pathname === '/status' || pathname === '/status.html': {
-      presenceData.details = 'Nekowatch'
-      presenceData.state = 'Checking Server Status'
-      break
-    }
-    case pathname === '/settings' || pathname === '/settings.html': {
-      presenceData.details = 'Nekowatch'
-      presenceData.state = 'Viewing Settings'
-      break
-    }
-    case pathname === '/privacy' || pathname === '/privacy.html': {
-      presenceData.details = 'Nekowatch'
-      presenceData.state = 'Reading Privacy Policy'
-      break
-    }
-    case pathname === '/terms' || pathname === '/terms.html': {
-      presenceData.details = 'Nekowatch'
-      presenceData.state = 'Reading Terms of Service'
-      break
-    }
-    case pathname === '/dmca' || pathname === '/dmca.html': {
-      presenceData.details = 'Nekowatch'
-      presenceData.state = 'Reading DMCA Policy'
-      break
-    }
-    case pathname === '/donate': {
-      presenceData.details = 'Nekowatch'
-      presenceData.state = 'Viewing Donation Page'
-      break
-    }
 
-    case pathname === '/feedback': {
-      presenceData.details = 'Nekowatch'
-      presenceData.state = 'Viewing Feedback Page'
-      break
-    }
-    case isProfile: {
-      presenceData.details = 'Nekowatch'
-      presenceData.state = username ? `Viewing ${username}'s Profile` : 'Viewing Profile'
-
-      const coverUrl = coverUrlProfile
-      if (coverUrl) {
-        presenceData.largeImageKey = coverUrl
-      }
-      break
-    }
     case isInfo: {
       presenceData.details = 'Viewing Anime Info'
       presenceData.state = animeTitle || 'Reading Details & Overview'
-
       presenceData.largeImageKey = 'https://i.imgur.com/LtP6hmP.jpeg'
 
       if (showButtons) {
@@ -321,6 +330,7 @@ presence.on('UpdateData', async () => {
       }
       break
     }
+
     case isAnime: {
       const epNum = searchParams.get('ep') ?? '1'
       const lang = searchParams.get('audio') ?? ''
@@ -328,16 +338,15 @@ presence.on('UpdateData', async () => {
       const coverUrl = coverUrlAnime
 
       let epTitle = ''
-      if (showEpTitle) {
-        if (epTitleText && epTitleText !== epNum) {
-          epTitle = ` - ${epTitleText}`
-        }
+      if (showEpTitle && epTitleText && epTitleText !== epNum) {
+        epTitle = ` - ${epTitleText}`
       }
 
       let epLine = `Episode ${epNum}${epTitle}`
       if (lang) {
         epLine += ` [${lang.charAt(0).toUpperCase() + lang.slice(1)}]`
       }
+
       if (showAnimeAsTitle && showTitle) {
         presenceData.name = showTitle
         presenceData.details = epLine
@@ -348,6 +357,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = showTitle
         presenceData.state = epLine
       }
+
       presenceData.largeImageKey = coverUrl || 'https://i.imgur.com/LtP6hmP.jpeg'
 
       const videos = Array.from(document.querySelectorAll('video'))
@@ -400,6 +410,7 @@ presence.on('UpdateData', async () => {
       }
       break
     }
+
     default: {
       presenceData.details = getString('browsing', 'Browsing...')
       presenceData.state = animeTitle ? `${getString('viewing', 'Viewing')} ${animeTitle}` : 'Exploring Catalog'
@@ -415,5 +426,6 @@ presence.on('UpdateData', async () => {
       break
     }
   }
+
   presence.setActivity(presenceData)
 })

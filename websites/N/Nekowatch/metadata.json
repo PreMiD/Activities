@@ -46,6 +46,12 @@
       "title": "Show episode title / chapter",
       "icon": "fas fa-file-alt",
       "value": true
+    },
+    {
+      "id": "showProfileStreak",
+      "title": "Show streak when on profile",
+      "icon": "fas fa-fire",
+      "value": true
     }
   ]
 }
