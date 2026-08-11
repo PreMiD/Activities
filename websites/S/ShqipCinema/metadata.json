@@ -33,13 +33,6 @@
       "description": "Show a Rich Presence while browsing regular ShqipCinema pages."
     },
     {
-      "id": "useActivityName",
-      "title": "Show Anime/Movie as Activity",
-      "icon": "fad fa-user-edit",
-      "value": true,
-      "description": "Use the current anime or movie title as the Discord activity name."
-    },
-    {
       "id": "showCover",
       "title": "Show Cover",
       "icon": "fas fa-images",
