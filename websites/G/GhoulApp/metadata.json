@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Bluenchanter",
+    "id": "107164966972321792"
+  },
+  "service": "GhoulApp",
+  "description": {
+    "de": "GhoulApp ist eine Anwendung zur Charaktererstellung und Chronikverwaltung für Vampire: The Masquerade.",
+    "en": "GhoulApp is a character creator and chronicle management application for Vampire: The Masquerade.",
+    "es": "GhoulApp es una aplicación para crear personajes y gestionar crónicas de Vampire: The Masquerade.",
+    "fr": "GhoulApp est une application de création de personnages et de gestion de chroniques pour Vampire: The Masquerade.",
+    "tr": "GhoulApp, Vampire: The Masquerade için karakter oluşturma ve kronik yönetimi uygulamasıdır."
+  },
+  "url": "ghoulapp.com",
+  "regExp": "^https?[:][/][/](?:www[.])?ghoulapp[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/Iz99bsW.png",
+  "thumbnail": "https://i.imgur.com/teyiTDA.png",
+  "color": "#DC2626",
+  "category": "games",
+  "tags": [
+    "ttrpg",
+    "vampire-the-masquerade",
+    "vtm",
+    "roleplaying",
+    "tabletop"
+  ],
+  "settings": [
+    {
+      "id": "showChronicleName",
+      "title": "Show chronicle name",
+      "icon": "fa-solid fa-book",
+      "value": false,
+      "description": "Display the current chronicle name in Discord"
+    },
+    {
+      "id": "showEdition",
+      "title": "Show edition",
+      "icon": "fa-solid fa-book-open",
+      "value": true,
+      "description": "Display the active game edition"
+    },
+    {
+      "id": "showRole",
+      "title": "Show table role",
+      "icon": "fa-solid fa-user-tag",
+      "value": false,
+      "description": "Display your role in the current chronicle"
+    }
+  ]
+}
