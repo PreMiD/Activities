@@ -181,6 +181,8 @@ presence.on('UpdateData', async () => {
   const isInfo = pathname === '/info' || pathname === '/info.html'
   const isAnime = pathname === '/anime' || pathname === '/anime.html'
 
+  let buttonLabel: string | null = null
+
   const needsUpdate = !cached
     || (isProfile && !cached.username)
     || (isProfile && !cached.coverUrlProfile && getCoverImageFromDOM(pathname, true))
@@ -217,7 +219,7 @@ presence.on('UpdateData', async () => {
   }
 
   switch (true) {
-    case pathname === '/' || pathname === '/home': {
+    case pathname === '/' || pathname === '/home' || pathname === '/home.html': {
       presenceData.details = 'Nekowatch'
       presenceData.state = getString('viewHome', 'On Homepage')
       break
@@ -261,12 +263,7 @@ presence.on('UpdateData', async () => {
       }
 
       if (showButtons) {
-        presenceData.buttons = [
-          {
-            label: 'View Profile',
-            url: href,
-          },
-        ]
+        buttonLabel = 'View Profile'
       }
       break
     }
@@ -321,12 +318,7 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = 'https://i.imgur.com/LtP6hmP.jpeg'
 
       if (showButtons) {
-        presenceData.buttons = [
-          {
-            label: 'View Info',
-            url: href,
-          },
-        ]
+        buttonLabel = 'View Info'
       }
       break
     }
@@ -401,30 +393,37 @@ presence.on('UpdateData', async () => {
       }
 
       if (showButtons) {
-        presenceData.buttons = [
-          {
-            label: 'Watch Episode',
-            url: href,
-          },
-        ]
+        buttonLabel = 'Watch Episode'
       }
       break
     }
 
     default: {
-      presenceData.details = getString('browsing', 'Browsing...')
-      presenceData.state = animeTitle ? `${getString('viewing', 'Viewing')} ${animeTitle}` : 'Exploring Catalog'
-      presenceData.largeImageKey = coverUrlDefault || 'https://i.imgur.com/LtP6hmP.jpeg'
-      if (showButtons) {
-        presenceData.buttons = [
-          {
-            label: 'View Page',
-            url: href,
-          },
-        ]
+      const pageName = pathname.replace(/^\//, '').replace('.html', '')
+      if (pageName) {
+        presenceData.details = 'Nekowatch'
+        const formattedPage = pageName
+          .split(/[-_]/)
+          .map(w => w.toUpperCase() === 'DMCA' ? 'DMCA' : (w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()))
+          .join(' ')
+        presenceData.state = `Viewing ${formattedPage}`
       }
+      else {
+        presenceData.details = getString('browsing', 'Browsing...')
+        presenceData.state = animeTitle ? `${getString('viewing', 'Viewing')} ${animeTitle}` : 'Exploring Catalog'
+      }
+      presenceData.largeImageKey = coverUrlDefault || 'https://i.imgur.com/LtP6hmP.jpeg'
       break
     }
+  }
+
+  if (showButtons && buttonLabel) {
+    presenceData.buttons = [
+      {
+        label: buttonLabel,
+        url: href,
+      },
+    ]
   }
 
   presence.setActivity(presenceData)
