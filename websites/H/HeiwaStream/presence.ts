@@ -60,7 +60,6 @@ function mettreAJourActivite(): void {
       presenceData.detailsUrl = pageUrl
       presenceData.stateUrl = pageUrl
       presenceData.largeImageUrl = pageUrl
-      presenceData.buttons = [{ label: 'Open HeiwaStream', url: pageUrl }]
     }
 
     presence.setActivity(presenceData)
