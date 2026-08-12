@@ -19,6 +19,7 @@ interface PresenceSnapshot {
   positionSeconds: number
   durationSeconds: number
   playbackRate: number
+  projectElapsedSeconds?: number
 }
 
 const strings = presence.getStrings({
@@ -159,6 +160,11 @@ presence.on('UpdateData', async () => {
   else if (snapshot.durationSeconds > 0) {
     presenceData.smallImageKey = Assets.Pause
     presenceData.smallImageText = currentStrings.paused
+    if (snapshot.projectElapsedSeconds)
+      presenceData.startTimestamp = Math.floor(Date.now() / 1000 - snapshot.projectElapsedSeconds)
+  }
+  else if (snapshot.projectElapsedSeconds) {
+    presenceData.startTimestamp = Math.floor(Date.now() / 1000 - snapshot.projectElapsedSeconds)
   }
 
   presence.setActivity(presenceData)
