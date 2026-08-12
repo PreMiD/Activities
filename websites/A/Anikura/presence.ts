@@ -175,7 +175,7 @@ async function getPageData(urlStr: string): Promise<PageMetadata> {
   const followersCount = getFollowersCountFromDOM()
   const followingCount = getFollowingCountFromDOM()
 
-  const isProfile = pathname.startsWith('/@') || pathname === '/profile'
+  const isProfile = pathname.startsWith('/@') || pathname === '/social'
   const epNum = searchParams.get('ep') ?? '1'
   const lang = searchParams.get('lang') ?? ''
 
@@ -211,7 +211,9 @@ presence.on('UpdateData', async () => {
 
   const isWatch = /\/watch\/\d+\/[^?/#]+/i.test(pathname)
   const isAnime = /\/anime\/\d+\/[^?/#]+/i.test(pathname)
-  const isProfile = pathname === '/profile' || pathname.startsWith('/@')
+  const isProfile = pathname === '/social' || pathname.startsWith('/@')
+
+  let buttonLabel: string | null = null
 
   const needsUpdate = !cached
     || (isWatch && !cached.animeTitle && getAnimeTitleFromDOM())
@@ -318,10 +320,10 @@ presence.on('UpdateData', async () => {
       }
       break
     }
-    case pathname === '/profile' || pathname.startsWith('/@'): {
+    case pathname === '/social' || pathname.startsWith('/@'): {
       presenceData.details = 'Anikura'
-      const isProfile = pathname.startsWith('/@')
-      if (isProfile) {
+      const isActualProfile = pathname.startsWith('/@')
+      if (isActualProfile) {
         const username = pathname.replace('/@', '')
         const view = searchParams.get('view')
         const tab = searchParams.get('tab')
@@ -345,18 +347,48 @@ presence.on('UpdateData', async () => {
         presenceData.state = `Viewing ${username}'s Profile${subText}`
       }
       else {
-        presenceData.state = 'Viewing Profile'
+        const view = searchParams.get('view')
+        const tab = searchParams.get('tab')
+        const lib = searchParams.get('lib')
+
+        let stateText = 'Viewing Social'
+        if (view) {
+          if (view === 'library') {
+            let libText = ''
+            if (lib) {
+              libText = lib === 'mal' || lib === 'anilist' ? lib.toUpperCase() : formatAnimeSlug(lib) || ''
+            }
+            let tabText = ''
+            if (tab) {
+              tabText = ` • ${formatAnimeSlug(tab)}`
+            }
+            stateText = `Viewing Social Library${libText ? ` (${libText})` : ''}${tabText}`
+          }
+          else {
+            stateText = `Viewing Social ${formatAnimeSlug(view)}`
+          }
+        }
+        presenceData.state = stateText
       }
 
       const coverUrl = coverUrlProfile
       if (coverUrl) {
         presenceData.largeImageKey = coverUrl
       }
+      if (showButtons) {
+        buttonLabel = isActualProfile ? 'View Profile' : 'View Social'
+      }
       break
     }
     case pathname === '/membership': {
       presenceData.details = 'Anikura'
       presenceData.state = 'Viewing Membership'
+      break
+    }
+    case pathname === '/settings': {
+      presenceData.details = 'Anikura'
+      const tab = searchParams.get('tab')
+      presenceData.state = tab ? `Editing Settings (${formatAnimeSlug(tab)})` : 'Editing Settings'
       break
     }
     case pathname.includes('/search') || searchParams.has('query') || searchParams.has('q'): {
@@ -374,12 +406,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = finalAnimeTitle ? 'Reading Details & Overview' : 'Exploring Info Catalog'
       presenceData.largeImageKey = coverUrl || ActivityAssets.Logo
       if (showButtons) {
-        presenceData.buttons = [
-          {
-            label: 'View Info',
-            url: href,
-          },
-        ]
+        buttonLabel = 'View Info'
       }
       break
     }
@@ -443,12 +470,7 @@ presence.on('UpdateData', async () => {
       }
 
       if (showButtons) {
-        presenceData.buttons = [
-          {
-            label: 'Watch Episode',
-            url: href,
-          },
-        ]
+        buttonLabel = 'Watch Episode'
       }
       break
     }
@@ -459,16 +481,17 @@ presence.on('UpdateData', async () => {
       presenceData.details = getString('browsing', 'Browsing...')
       presenceData.state = finalAnimeTitle ? `${getString('viewing', 'Viewing')} ${finalAnimeTitle}` : 'Exploring Catalog'
       presenceData.largeImageKey = coverUrl || ActivityAssets.Logo
-      if (showButtons) {
-        presenceData.buttons = [
-          {
-            label: 'View Page',
-            url: href,
-          },
-        ]
-      }
       break
     }
   }
+  if (showButtons && buttonLabel) {
+    presenceData.buttons = [
+      {
+        label: buttonLabel,
+        url: href,
+      },
+    ]
+  }
+
   presence.setActivity(presenceData)
 })
