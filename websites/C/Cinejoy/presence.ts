@@ -8,7 +8,7 @@ const TMDB_KEY = '8476a7ab80ad76f0936744df0430e67c'
 const TMDB_IMG = 'https://image.tmdb.org/t/p/w500'
 
 enum ActivityAssets {
-  Logo = 'https://cinejoy.to/favicon.ico',
+  Logo = 'https://i.imgur.com/3wpcyto.png',
 }
 
 function parsePath() {
