@@ -11,11 +11,15 @@
     "zh": "Apple Music 风格歌词逐字 TTML 编辑与时间轴制作工具"
   },
   "url": [
+    "briangriff.in",
     "amll-ttml-tool.stevexmh.net",
-    "verycool-ttml-tool-trust.vercel.app"
+    "tool.amll.dev",
+    "verycool-ttml-tool-trust.vercel.app",
+    "ttml.tx24.dev",
+    "tool.knightryry.xyz"
   ],
-  "regExp": "^https?[:][/][/](amll-ttml-tool(-test[.]vercel[.]app|[.]stevexmh[.]net)|verycool-ttml-tool-trust[.]vercel[.]app)[/]",
-  "version": "1.0.3",
+  "regExp": "^https?[:][/][/](?:briangriff[.]in|amll-ttml-tool(?:-test[.]vercel[.]app|[.]stevexmh[.]net)|tool[.]amll[.]dev|verycool-ttml-tool-trust[.]vercel[.]app|ttml[.]tx24[.]dev|tool[.]knightryry[.]xyz)(?:[/]|$)",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AMLL%20TTML%20Tool/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AMLL%20TTML%20Tool/assets/thumbnail.png",
   "color": "#18a058",

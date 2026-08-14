@@ -5,13 +5,19 @@
     "name": "VocalZero",
     "id": "223891083724193792"
   },
+  "contributors": [
+    {
+      "name": "InstabilSpielt",
+      "id": "425706045453893642"
+    }
+  ],
   "service": "atomicradio",
   "description": {
     "en": "The future of radio is here. Experience 12 Spaces with non-stop music you'll love."
   },
   "url": "atomic.radio",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*atomic[.]radio[/]",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/atomicradio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/atomicradio/assets/thumbnail.jpg",
   "color": "#a9f923",

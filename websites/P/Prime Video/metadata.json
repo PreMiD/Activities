@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -29,7 +29,7 @@
   },
   "url": "primevideo.com",
   "regExp": "^https?[:][/][/]((([a-z0-9-]+[.])*amazon([.][a-z]+)+[/]((-[/])?(([a-z0-9]+)[/])?)?(Prime-Video|Prime-Instant-Video|Amazon-Video|gp[/]video))|([a-z0-9-]+[.])*primevideo([.][a-z]+)+)[/]",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/thumbnail.jpg",
   "color": "#FFFFFF",
@@ -51,6 +51,20 @@
       "title": "Show Cover",
       "icon": "fad fa-images",
       "value": true
+    },
+    {
+      "id": "imageType",
+      "title": "Image",
+      "description": "Select the part of the image you want to display. On Prime Video, the main content is usually displayed on the right side of the image.",
+      "icon": "fad fa-images",
+      "value": 0,
+      "values": [
+        "Right Side",
+        "Entire"
+      ],
+      "if": {
+        "cover": true
+      }
     }
   ]
 }

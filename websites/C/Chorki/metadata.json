@@ -10,9 +10,9 @@
     "bn": "চরকি - বাংলাদেশী ওয়েব সিরিজ এবং সিনেমার স্ট্রিমিং প্ল্যাটফর্ম",
     "en": "Chorki - Bangladeshi streaming platform for original Bengali shows and movies"
   },
-  "url": "www.chorki.com",
-  "regExp": "^https?[:][/][/](www[.])?chorki[.]com[/]",
-  "version": "1.1.0",
+  "url": "www.chorki.net",
+  "regExp": "^https?[:][/][/](www[.])?chorki[.]net[/]",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Chorki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Chorki/assets/thumbnail.png",
   "color": "#E50914",

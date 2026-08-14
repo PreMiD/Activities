@@ -5,6 +5,12 @@
     "name": "joerkig",
     "id": "205984221859151873"
   },
+  "contributors": [
+    {
+      "name": "entraptaa",
+      "id": "153980822670671872"
+    }
+  ],
   "service": "SteamDB",
   "altnames": [
     "Steam Database"
@@ -18,7 +24,7 @@
     "steamstat.us"
   ],
   "regExp": "^https?[:][/][/](steamdb[.]info|steamstat[.]us)[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SteamDB/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SteamDB/assets/thumbnail.png",
   "color": "#3871C8",

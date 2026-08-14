@@ -74,7 +74,7 @@
     "m.youtube.com"
   ],
   "regExp": "^https?[:][/][/](www|studio|m)[.]youtube[.]com[/]",
-  "version": "6.3.3",
+  "version": "6.4.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube/assets/thumbnail.jpg",
   "color": "#E40813",
@@ -190,6 +190,12 @@
       "title": "Hide Homepage",
       "icon": "fad fa-user-secret",
       "value": false
+    },
+    {
+      "id": "showSearch",
+      "title": "Show Search Activity",
+      "icon": "fas fa-search",
+      "value": true
     },
     {
       "id": "showListening",

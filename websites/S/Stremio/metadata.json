@@ -9,6 +9,10 @@
     {
       "name": "Sleeyax",
       "id": "226037514954080257"
+    },
+    {
+      "name": "joerkig",
+      "id": "205984221859151873"
     }
   ],
   "service": "Stremio",
@@ -24,7 +28,7 @@
     "stremio.crun.zip"
   ],
   "regExp": "^https?[:][/][/]((www|web)[.]stremio[.]com|(app|web)[.]strem[.]io|(stremio)[.]crun[.]zip)[/]",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stremio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stremio/assets/thumbnail.png",
   "color": "#7b5bf5",

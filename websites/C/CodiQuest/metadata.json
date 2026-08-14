@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Codima Studios",
+    "id": "268870067465355268"
+  },
+  "service": "CodiQuest",
+  "description": {
+    "en": "A text-forward fantasy RPG built around deliberate combat and a complete crafter and gatherer career."
+  },
+  "url": "codiquest.online",
+  "regExp": "^https?[:][/][/](www[.])?codiquest[.]online[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CodiQuest/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CodiQuest/assets/thumbnail.png",
+  "color": "#E2B95C",
+  "category": "games",
+  "tags": [
+    "fantasy",
+    "rpg",
+    "mmorpg"
+  ],
+  "settings": [
+    {
+      "id": "showLocation",
+      "title": "Show location",
+      "icon": "fas fa-map-marker-alt",
+      "value": true,
+      "description": "Show the current room or destination"
+    },
+    {
+      "id": "showCharacter",
+      "title": "Show class and level",
+      "icon": "fas fa-user-shield",
+      "value": false,
+      "description": "Show class and level without revealing the character name"
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show activity time",
+      "icon": "fas fa-stopwatch",
+      "value": true,
+      "description": "Show time spent on the current kind of activity"
+    },
+    {
+      "id": "showParty",
+      "title": "Show party size",
+      "icon": "fas fa-users",
+      "value": true,
+      "description": "Show party size while grouped"
+    }
+  ]
+}
