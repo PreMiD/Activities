@@ -13,7 +13,7 @@ const INVALID_SERVER_CODES = new Set(['FO', 'TH', 'ME', 'SE', 'AC', 'WH', 'IN', 
 
 function getServerInfo(pathname: string): ServerInfo | null {
   // Must match exact 2-letter segment (e.g. /forum/en/ or /forum/de_2/) and NOT words like /forum/forums/
-  const match = pathname.match(/\/forum\/([a-zA-Z]{2})(?:_(\d+))?(?=\/|$)/i)
+  const match = pathname.match(/\/forum\/([a-z]{2})(?:_(\d+))?(?=\/|$)/i)
   if (match && match[1]) {
     const code = match[1].toUpperCase()
     if (!INVALID_SERVER_CODES.has(code)) {
