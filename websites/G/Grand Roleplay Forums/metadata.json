@@ -12,8 +12,8 @@
   "url": "gta5grand.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gta5grand[.]com(/.*)?",
   "version": "1.0.0",
-  "logo": "https://images.weserv.nl/?url=https://i.ibb.co/9kWBpZ8Q/image.png&w=512&h=512&output=png",
-  "thumbnail": "https://images.weserv.nl/?url=https://i.ibb.co/9kWBpZ8Q/image.png",
+  "logo": "https://i.ibb.co/rW0b3Dz/512.png",
+  "thumbnail": "https://i.ibb.co/Nn3wMVVh/grandrp-1.png",
   "color": "#ff4500",
   "category": "games",
   "tags": [
