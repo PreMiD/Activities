@@ -11,15 +11,15 @@
   },
   "url": "myskill.id",
   "regExp": "^https?:\\/\\/([a-z0-9-]+\\.)*myskill\\.id",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/oRZP3Px.png",
-  "thumbnail": "https://i.imgur.com/oRZP3Px.png",
+  "version": "1.0.1",
+  "logo": "https://i.imgur.com/oFcPqIk.png",
+  "thumbnail": "https://i.imgur.com/oFcPqIk.png",
   "color": "#000000",
   "category": "other",
   "tags": [
     "education",
     "learning",
     "course",
-    "myskill"
+    "study"
   ]
 }
