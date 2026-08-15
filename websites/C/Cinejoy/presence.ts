@@ -11,7 +11,7 @@ enum ActivityAssets {
   Logo = 'https://i.imgur.com/3wpcyto.png',
 }
 
-function parsePath() {
+function parseMediaPath() {
   const path = document.location.pathname
   const parts = path.split('/').filter(Boolean)
 
@@ -32,6 +32,32 @@ function parsePath() {
   const episode = episodePart?.match(/\d+/)?.[0]
 
   return { type, tmdbId, season, episode }
+}
+
+function getStaticPageInfo(): { details: string, state?: string } {
+  const parts = document.location.pathname.split('/').filter(Boolean)
+
+  if (parts.length === 0)
+    return { details: 'Browsing Cinejoy', state: 'On the home page' }
+
+  switch (parts[0]) {
+    case 'movies':
+      return { details: 'Browsing Cinejoy', state: 'Browsing Movies' }
+    case 'series':
+      return { details: 'Browsing Cinejoy', state: 'Browsing TV Shows' }
+    case 'lists':
+      return { details: 'Browsing Cinejoy', state: 'Viewing My List' }
+    case 'continue-watching':
+      return { details: 'Browsing Cinejoy', state: 'Viewing Continue Watching' }
+    case 'shorts':
+      return { details: 'Browsing Cinejoy', state: 'Watching Shorts' }
+    case 'settings':
+      return { details: 'Browsing Cinejoy', state: 'In Settings' }
+    case 'search':
+      return { details: 'Browsing Cinejoy', state: 'Searching' }
+    default:
+      return { details: 'Browsing Cinejoy' }
+  }
 }
 
 let cache: { key: string, details: any } | null = null
@@ -55,21 +81,21 @@ presence.on('UpdateData', async () => {
     details: 'Browsing Cinejoy',
   }
 
-  const parsed = parsePath()
+  const parsedMedia = parseMediaPath()
   const video = document.querySelector('video')
 
-  if (parsed) {
+  if (parsedMedia) {
     try {
-      const data = await getTmdbDetails(parsed.type, parsed.tmdbId)
+      const data = await getTmdbDetails(parsedMedia.type, parsedMedia.tmdbId)
       const title = data.title ?? data.name ?? 'Unknown'
       const posterPath = data.poster_path
 
       presenceData.details = title
 
-      if (parsed.type === 'tv' && parsed.season && parsed.episode) {
-        presenceData.state = `S${parsed.season}:E${parsed.episode}`
+      if (parsedMedia.type === 'tv' && parsedMedia.season && parsedMedia.episode) {
+        presenceData.state = `S${parsedMedia.season}:E${parsedMedia.episode}`
       }
-      else if (parsed.type === 'movie' && data.release_date) {
+      else if (parsedMedia.type === 'movie' && data.release_date) {
         presenceData.state = data.release_date.split('-')[0]
       }
 
@@ -79,6 +105,13 @@ presence.on('UpdateData', async () => {
     }
     catch {
       presenceData.details = 'Watching Cinejoy'
+    }
+  }
+  else {
+    const pageInfo = getStaticPageInfo()
+    presenceData.details = pageInfo.details
+    if (pageInfo.state) {
+      presenceData.state = pageInfo.state
     }
   }
 
