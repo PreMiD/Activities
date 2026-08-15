@@ -1,21 +1,25 @@
-import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, StatusDisplayType, timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, StatusDisplayType } from 'premid'
 
 //* I think this is a browser bug because the custom element does not have any properties when accessing it directly...
 
 let imageId: string | undefined
 let title: string | undefined
 let subtitle: string | undefined
+let playheadPositionMs: number | undefined
+let programDurationMs: number | undefined
 window.addEventListener('message', (e) => {
   if (e.data.type === 'pmd-receive-data')
-    ({ imageId, title, subtitle } = e.data as { imageId?: string, title?: string, subtitle?: string })
+    ({ imageId, title, subtitle, playheadPositionMs, programDurationMs } = e.data as { imageId?: string, title?: string, subtitle?: string, playheadPositionMs?: number, programDurationMs?: number })
 })
 
 const script = document.createElement('script')
 script.textContent = `
 setInterval(() => {
-const metadata = document.querySelector("disney-web-player")?.mediaPlayer?.mediaPlaybackCriteria?.metadata;
+const mediaPlayer = document.querySelector("disney-web-player")?.mediaPlayer;
+const metadata = mediaPlayer?.mediaPlaybackCriteria?.metadata;
 const images = metadata?.images_experience?.standard?.tile;
 if (!images) return;
+const timelineInfo = mediaPlayer?.timeline?.info;
 const ratios = Object.keys(images);
 const goal = 100;
 
@@ -23,7 +27,7 @@ const closest = ratios.reduce(function(prev, curr) {
 return (Math.abs((100 / curr) - goal) < Math.abs((100 / prev) - goal) ? curr : prev);
 });
 
-window.postMessage({ type: "pmd-receive-data", imageId: images?.[closest]?.imageId, title: metadata?.title?.text, subtitle: metadata?.subtitle?.text }, "*");
+window.postMessage({ type: "pmd-receive-data", imageId: images?.[closest]?.imageId, title: metadata?.title?.text, subtitle: metadata?.subtitle?.text, playheadPositionMs: timelineInfo?.playheadPositionMs, programDurationMs: timelineInfo?.programDurationMs }, "*");
 }, 1000);
 `
 document.head.appendChild(script)
@@ -91,14 +95,11 @@ presence.on('UpdateData', async () => {
             const { paused } = video
 
             if (!paused) {
-              const allTime = document.querySelector('#app_body_content disney-web-player-ui progress-bar')?.shadowRoot?.querySelector('div[role="slider"]')?.getAttribute('aria-valuetext')?.split('of')[1]?.trim()
-              const remainingTime = document.querySelector('#app_body_content disney-web-player-ui time-remaining-indicator')?.shadowRoot?.querySelector('.time-remaining-indicator')?.textContent?.trim()
-              const timestamps = getTimestamps(
-                Number(timestampFromFormat(allTime ?? '') - timestampFromFormat(remainingTime ?? '')) ?? '00:00',
-                timestampFromFormat(allTime ?? '00:00'),
-              )
-              presenceData.startTimestamp = timestamps[0]
-              presenceData.endTimestamp = timestamps[1]
+              if (playheadPositionMs && programDurationMs) {
+                const timestamps = getTimestamps(playheadPositionMs / 1000, programDurationMs / 1000)
+                presenceData.startTimestamp = timestamps[0]
+                presenceData.endTimestamp = timestamps[1]
+              }
             }
             else {
               presenceData.smallImageKey = Assets.Pause
@@ -299,5 +300,5 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })
