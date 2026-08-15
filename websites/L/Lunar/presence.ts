@@ -17,7 +17,7 @@ function updateTimestamp(id: string): void {
 }
 
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/L/Lunar/assets/logo.png',
+  Logo = 'https://api.lunarx.to/static/rpc/icon.png?v=3',
 }
 
 interface LunarActivity {
@@ -160,6 +160,7 @@ presence.on('UpdateData', async () => {
     updateTimestamp('privacy')
     presence.setActivity({
       largeImageKey: ActivityAssets.Logo,
+      largeImageText: 'lunarx.to',
       details: 'Browsing Lunar',
       startTimestamp: currentTimestamp,
     })
@@ -183,7 +184,10 @@ presence.on('UpdateData', async () => {
         details: activity.title,
         state: activity.meta,
         largeImageKey,
-        largeImageText: activity.title,
+        largeImageText:
+          largeImageKey === ActivityAssets.Logo
+            ? 'lunarx.to'
+            : activity.title,
         smallImageKey: Assets.Play,
         smallImageText: 'Watching',
         startTimestamp: currentTimestamp,
@@ -221,7 +225,7 @@ presence.on('UpdateData', async () => {
           { label: 'Watch on Lunar', url: href },
           {
             label: 'View Anime',
-            url: `https://lunaranime.ru/anime/${activity.id}`,
+            url: `https://lunarx.to/anime/${activity.id}`,
           },
         ]
       }
@@ -234,6 +238,10 @@ presence.on('UpdateData', async () => {
       details: activity.title,
       state: activity.meta,
       largeImageKey,
+      largeImageText:
+        largeImageKey === ActivityAssets.Logo
+          ? 'lunarx.to'
+          : activity.title,
       smallImageKey: Assets.Reading,
       smallImageText:
         activity.type === 'manga' ? 'Reading Manga' : 'Reading Novel',
@@ -245,7 +253,7 @@ presence.on('UpdateData', async () => {
         { label: 'Read on Lunar', url: href },
         {
           label: activity.type === 'manga' ? 'View Series' : 'View Novel',
-          url: `https://lunaranime.ru/${activity.type}/${activity.id}`,
+          url: `https://lunarx.to/${activity.type}/${activity.id}`,
         },
       ]
     }
@@ -261,6 +269,7 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
+    largeImageText: 'lunarx.to',
     details: 'Browsing Lunar',
   }
 
@@ -316,8 +325,10 @@ presence.on('UpdateData', async () => {
     presenceData.state = pageTitle() ?? titleFromSlug(slug)
     presenceData.smallImageKey = Assets.Viewing
     const detailCover = pageCover()
-    if (ready_to_use_posters && cover && detailCover)
+    if (ready_to_use_posters && cover && detailCover) {
       presenceData.largeImageKey = detailCover
+      presenceData.largeImageText = pageTitle() ?? titleFromSlug(slug)
+    }
     if (buttons) {
       presenceData.buttons = [
         { label: 'View on Lunar', url: href },

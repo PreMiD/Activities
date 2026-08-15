@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "alex",
@@ -9,11 +9,11 @@
   "description": {
     "en": "Lunar is a free platform to stream anime and read manga and light novels, with community features, playlists and more."
   },
-  "url": "lunaranime.ru",
-  "regExp": "^https?[:][/][/](www[.])?lunaranime[.]ru[/]",
-  "version": "1.0.1",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Lunar/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Lunar/assets/thumbnail.png",
+  "url": "lunarx.to",
+  "regExp": "^https?[:][/][/](www[.])?lunarx[.]to[/]",
+  "version": "1.0.0",
+  "logo": "https://api.lunarx.to/static/rpc/icon.png?v=3",
+  "thumbnail": "https://api.lunarx.to/static/rpc/thumbnail.png",
   "color": "#895AF6",
   "category": "anime",
   "tags": [
