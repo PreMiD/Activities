@@ -56,8 +56,7 @@ presence.on('UpdateData', async () => {
     name: 'Grand Roleplay Forums',
   }
 
-  const pathname = document.location.pathname
-  const search = document.location.search
+  const { pathname, search } = document.location  
 
   const serverInfo = getServerInfo(pathname)
   const serverPrefix = (showServer && serverInfo) ? `${serverInfo.display} • ` : ''
