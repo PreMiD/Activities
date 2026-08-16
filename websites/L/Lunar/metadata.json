@@ -12,8 +12,8 @@
   "url": "lunarx.to",
   "regExp": "^https?[:][/][/](www[.])?lunarx[.]to[/]",
   "version": "1.0.1",
-  "logo": "https://api.lunarx.to/static/rpc/icon.png",
-  "thumbnail": "https://api.lunarx.to/static/rpc/thumbnail.png",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Lunar/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Lunar/assets/thumbnail.png",
   "color": "#895AF6",
   "category": "anime",
   "tags": [
