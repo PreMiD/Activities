@@ -47,8 +47,10 @@ function getServerInfo(pathname: string): ServerInfo | null {
 }
 
 presence.on('UpdateData', async () => {
-  const privacy = await presence.getSetting<boolean>('privacy')
-  const showServer = await presence.getSetting<boolean>('showServer')
+  const [privacy, showServer] = await Promise.all([
+    presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('showServer'),
+  ])
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
