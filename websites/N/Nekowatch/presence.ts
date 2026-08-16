@@ -16,6 +16,76 @@ function formatAnimeSlug(slug: string | null): string | null {
     .join(' ')
 }
 
+function getAnimeIdFromPathname(pathname: string): string | null {
+  if (typeof pathname !== 'string')
+    return null
+  const match = pathname.match(/\/(?:watch|anime)\/(\d+)/)
+  return match?.[1] ?? null
+}
+
+interface AniListMedia {
+  title: {
+    english?: string
+    romaji?: string
+    userPreferred?: string
+  }
+  coverImage: {
+    extraLarge?: string
+    large?: string
+  }
+}
+
+const aniListCache = new Map<number, AniListMedia | null>()
+
+async function fetchAniListMedia(animeId: number): Promise<AniListMedia | null> {
+  const cached = aniListCache.get(animeId)
+  if (cached !== undefined) {
+    return cached
+  }
+
+  try {
+    const query = `
+      query ($id: Int) {
+        Media (id: $id, type: ANIME) {
+          title {
+            english
+            romaji
+            userPreferred
+          }
+          coverImage {
+            extraLarge
+            large
+          }
+        }
+      }
+    `
+    const response = await fetch('https://graphql.anilist.co', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { id: animeId },
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error(`AniList API returned ${response.status}`)
+    }
+
+    const result = await response.json()
+    const media = result?.data?.Media || null
+    aniListCache.set(animeId, media)
+    return media
+  }
+  catch {
+    aniListCache.set(animeId, null)
+    return null
+  }
+}
+
 function getAnimeTitleFromDOM(pathname: string): string | null {
   if (pathname === '/info' || pathname === '/info.html') {
     const titleElem = document.querySelector('#info-title')
@@ -33,11 +103,13 @@ function getAnimeTitleFromDOM(pathname: string): string | null {
 }
 
 function parseTimeToSeconds(timeStr: string | null): number | null {
-  if (!timeStr)
+  if (!timeStr) {
     return null
+  }
   const parts = timeStr.trim().split(':').map(Number)
-  if (parts.some(Number.isNaN))
+  if (parts.some(Number.isNaN)) {
     return null
+  }
   if (parts.length === 2) {
     const [minutes = 0, seconds = 0] = parts
     return minutes * 60 + seconds
@@ -55,8 +127,9 @@ function getCoverImageFromDOM(pathname: string, isProfile?: boolean): string | n
       'img.nw-profile-avatar-img, img[src*="discordapp.com/avatars/"], img[src*="user/avatar/"], img[data-nw-last-good-src*="avatars"]',
     )
     const src = avatarImg?.getAttribute('data-nw-last-good-src') || avatarImg?.src || avatarImg?.getAttribute('src')
-    if (src && src.startsWith('http'))
+    if (src && src.startsWith('http')) {
       return src
+    }
   }
 
   if (pathname === '/anime' || pathname === '/anime.html') {
@@ -65,19 +138,13 @@ function getCoverImageFromDOM(pathname: string, isProfile?: boolean): string | n
       const style = posterDiv.style.backgroundImage
       const match = style?.match(/url\((['"]?)(.*?)\1\)/)
       const src = match ? match[2] : null
-      if (src && src.startsWith('http'))
+      if (src && src.startsWith('http')) {
         return src
+      }
     }
   }
 
-  const coverImg = document.querySelector<HTMLImageElement>('img[src*="anilistcdn/media/anime/cover/"]')
-    || document.querySelector<HTMLImageElement>('img[data-nw-last-good-src*="anilistcdn"]')
-    || document.querySelector<HTMLImageElement>('img[data-nimg="fill"]')
-    || document.querySelector<HTMLImageElement>('img[src*="screencap"]')
-    || document.querySelector<HTMLImageElement>('img[src*="episode"]')
-    || document.querySelector<HTMLImageElement>('img[class*="object-cover"]')
-  const src = coverImg?.src || coverImg?.getAttribute('src') || coverImg?.getAttribute('data-nw-last-good-src')
-  return src && src.startsWith('http') ? src : null
+  return null
 }
 
 function getStreakNumber(): string | null {
@@ -87,15 +154,27 @@ function getStreakNumber(): string | null {
   }
 
   const streakElem = document.querySelector('.nw-streak-value')
-  if (!streakElem?.textContent)
-    return null
+  if (streakElem?.textContent) {
+    const match = streakElem.textContent.match(/\d+/)
+    if (match) {
+      return match[0]
+    }
+  }
 
-  const match = streakElem.textContent.match(/\d+/)
-  return match ? match[0] : null
+  const spans = Array.from(document.querySelectorAll('span'))
+  const streakSpan = spans.find(span => span.textContent?.toLowerCase().includes('streak'))
+  if (streakSpan?.textContent) {
+    const match = streakSpan.textContent.match(/\d+/)
+    if (match) {
+      return match[0]
+    }
+  }
+
+  return null
 }
 
 function hasProfileBadges(): boolean {
-  const badgeElems = document.querySelectorAll('.nw-profile-badge')
+  const badgeElems = document.querySelectorAll('.nw-profile-badge, [data-profile-badge]')
   return badgeElems.length > 0
 }
 
@@ -116,6 +195,64 @@ interface PageMetadata {
 }
 
 const dataCache = new Map<string, PageMetadata>()
+// Owner confirmed i can use this method to get watching data.
+let latestWatchData: any = null
+
+if (typeof window !== 'undefined') {
+  const scriptId = 'nekowatch-fetch-interceptor'
+  if (!document.getElementById(scriptId)) {
+    const script = document.createElement('script')
+    script.id = scriptId
+    script.textContent = `
+      (function() {
+        const originalFetch = window.fetch;
+        window.fetch = async function(...args) {
+          const response = await originalFetch(...args);
+          try {
+            const url = args[0];
+            if (typeof url === 'string' && url.includes('sync_own_watch_progress')) {
+              const options = args[1];
+              if (options && options.body) {
+                const bodyText = typeof options.body === 'string' ? options.body : new TextDecoder().decode(options.body);
+                const payload = JSON.parse(bodyText);
+                if (payload && payload.p_items && payload.p_items[0]) {
+                  window.dispatchEvent(new CustomEvent('nekowatch-progress-sync', { detail: payload.p_items[0] }));
+                }
+              }
+            }
+          } catch (e) {
+          }
+          return response;
+        };
+      })();
+    `
+    document.documentElement.appendChild(script)
+    script.remove()
+  }
+
+  window.addEventListener('nekowatch-progress-sync', (event: any) => {
+    latestWatchData = event.detail
+    if (latestWatchData) {
+      const currentId = getAnimeIdFromPathname(document.location.pathname)
+      const isWatch = document.location.pathname.startsWith('/watch/')
+      if (isWatch && currentId && String(latestWatchData.anime_id) === currentId) {
+        const cached = dataCache.get(document.location.href)
+        if (cached) {
+          if (latestWatchData.anime_title) {
+            cached.animeTitle = latestWatchData.anime_title
+          }
+          if (latestWatchData.poster_url && (!cached.coverUrlAnime || (!cached.coverUrlAnime.includes('artworks.thetvdb.com') && !cached.coverUrlAnime.includes('screencap')))) {
+            cached.coverUrlAnime = latestWatchData.poster_url
+            cached.coverUrlDefault = latestWatchData.poster_url
+          }
+          if (latestWatchData.episode_title) {
+            cached.epTitleText = latestWatchData.episode_title
+          }
+        }
+      }
+    }
+  })
+}
 
 async function getPageData(urlStr: string): Promise<PageMetadata> {
   const cached = dataCache.get(urlStr)
@@ -125,8 +262,12 @@ async function getPageData(urlStr: string): Promise<PageMetadata> {
   const url = new URL(urlStr)
   const { pathname } = url
 
-  const animeTitle = getAnimeTitleFromDOM(pathname)
+  const currentId = getAnimeIdFromPathname(pathname)
+  const isWatch = pathname.startsWith('/watch/')
+  const currentEp = url.searchParams.get('episode') ?? url.searchParams.get('ep') ?? '1'
+  const useSync = latestWatchData && isWatch && currentId && String(latestWatchData.anime_id) === currentId && String(latestWatchData.episode) === String(currentEp)
 
+  let animeTitle = getAnimeTitleFromDOM(pathname)
   let username: string | null = null
   if (pathname.startsWith('/@')) {
     username = pathname.split('/')[1]?.replace('@', '') || null
@@ -137,12 +278,68 @@ async function getPageData(urlStr: string): Promise<PageMetadata> {
   }
 
   const coverUrlProfile = getCoverImageFromDOM(pathname, true)
-  const coverUrlAnime = getCoverImageFromDOM(pathname)
-  const coverUrlDefault = getCoverImageFromDOM(pathname)
+  let coverUrlAnime = getCoverImageFromDOM(pathname)
+  let coverUrlDefault = getCoverImageFromDOM(pathname)
 
-  const activeEpBtn = document.querySelector('.ep-item.active, button[aria-current="episode"]')
-  const epTitleFromAttr = activeEpBtn?.getAttribute('data-ep-title')
-  const epTitleText = epTitleFromAttr || document.querySelector('.ep-item-title')?.textContent?.trim() || null
+  if (currentId) {
+    const media = await fetchAniListMedia(Number.parseInt(currentId))
+    if (media) {
+      animeTitle = media.title.english || media.title.userPreferred || media.title.romaji || animeTitle
+      if (media.coverImage.extraLarge || media.coverImage.large) {
+        coverUrlAnime = media.coverImage.extraLarge || media.coverImage.large || ''
+        coverUrlDefault = coverUrlAnime
+      }
+    }
+  }
+
+  let epTitleText: string | null = null
+  let epCoverUrl: string | null = null
+
+  if (isWatch) {
+    const epNum = url.searchParams.get('episode') ?? url.searchParams.get('ep') ?? '1'
+    const epButtons = Array.from(document.querySelectorAll('button'))
+    const activeEpBtn = epButtons.find((btn) => {
+      const pTags = btn.querySelectorAll('p')
+      return Array.from(pTags).some((p) => {
+        const text = p.textContent?.trim().toLowerCase() || ''
+        return text === `episode ${epNum}` || text === `ep ${epNum}`
+      })
+    })
+
+    if (activeEpBtn) {
+      const pTags = Array.from(activeEpBtn.querySelectorAll('p'))
+      const titleP = pTags.find((p) => {
+        const text = p.textContent?.trim().toLowerCase() || ''
+        return !text.startsWith('episode') && !text.startsWith('ep')
+      })
+      epTitleText = titleP?.textContent?.trim() || null
+
+      const img = activeEpBtn.querySelector('img')
+      epCoverUrl = img?.src || img?.getAttribute('src') || null
+    }
+  }
+
+  if (epCoverUrl) {
+    coverUrlAnime = epCoverUrl
+    coverUrlDefault = epCoverUrl
+  }
+
+  if (useSync && pathname.startsWith('/watch/')) {
+    if (latestWatchData.poster_url && !epCoverUrl) {
+      coverUrlAnime = latestWatchData.poster_url
+      coverUrlDefault = latestWatchData.poster_url
+    }
+  }
+
+  const activeEpBtnLegacy = document.querySelector('.ep-item.active, button[aria-current="episode"]')
+  const epTitleFromAttr = activeEpBtnLegacy?.getAttribute('data-ep-title')
+  if (!epTitleText) {
+    epTitleText = epTitleFromAttr || document.querySelector('.ep-item-title')?.textContent?.trim() || null
+  }
+
+  if (useSync && pathname.startsWith('/watch/')) {
+    epTitleText = latestWatchData.episode_title || epTitleText
+  }
 
   const data: PageMetadata = {
     animeTitle,
@@ -178,17 +375,33 @@ presence.on('UpdateData', async () => {
   let cached = dataCache.get(href)
 
   const isProfile = pathname.startsWith('/@') || pathname === '/profile' || pathname === '/profile.html'
-  const isInfo = pathname === '/info' || pathname === '/info.html'
-  const isAnime = pathname === '/anime' || pathname === '/anime.html'
+  const isInfo = pathname === '/info' || pathname === '/info.html' || pathname.startsWith('/anime/')
+  const isAnime = pathname === '/anime' || pathname === '/anime.html' || pathname.startsWith('/watch/')
+  const isWatch = pathname.startsWith('/watch/')
+
+  const currentId = getAnimeIdFromPathname(pathname)
+  const currentEp = searchParams.get('episode') ?? searchParams.get('ep') ?? '1'
+  const useSync = latestWatchData && isWatch && currentId && String(latestWatchData.anime_id) === currentId && String(latestWatchData.episode) === String(currentEp)
 
   let buttonLabel: string | null = null
+
+  const hasEpisodeButtons = Boolean(document.querySelector('button img[src*="artworks.thetvdb.com"], button img[src*="screencap"]'))
+  const needsWatchImageUpdate = isWatch
+    && hasEpisodeButtons
+    && cached
+    && (!cached.coverUrlAnime || (!cached.coverUrlAnime.includes('artworks.thetvdb.com') && !cached.coverUrlAnime.includes('screencap')))
+  const needsWatchTitleUpdate = isWatch
+    && cached
+    && !cached.epTitleText
 
   const needsUpdate = !cached
     || (isProfile && !cached.username)
     || (isProfile && !cached.coverUrlProfile && getCoverImageFromDOM(pathname, true))
     || (isInfo && !cached.animeTitle && getAnimeTitleFromDOM(pathname))
-    || (isAnime && !cached.animeTitle && getAnimeTitleFromDOM(pathname))
-    || (isAnime && !cached.coverUrlAnime && getCoverImageFromDOM(pathname))
+    || (isAnime && !cached.animeTitle && ((useSync && latestWatchData?.anime_title) || getAnimeTitleFromDOM(pathname)))
+    || (isAnime && !cached.coverUrlAnime && ((useSync && latestWatchData?.poster_url) || getCoverImageFromDOM(pathname)))
+    || needsWatchImageUpdate
+    || needsWatchTitleUpdate
 
   if (needsUpdate) {
     dataCache.delete(href)
@@ -234,15 +447,7 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'Editing Profile'
       }
       else {
-        const tab = searchParams.get('tab')
         let stateText = 'Viewing Profile'
-
-        if (tab === 'activity') {
-          stateText = 'Viewing Activity'
-        }
-        else if (tab === 'comments') {
-          stateText = 'Viewing Comments'
-        }
 
         if (hasProfileBadges()) {
           stateText += ' • ⭐'
@@ -268,7 +473,7 @@ presence.on('UpdateData', async () => {
       break
     }
 
-    case pathname === '/browse' || pathname === '/browse.html': {
+    case pathname === '/browse' || pathname === '/browse.html' || pathname === '/search' || pathname === '/search.html': {
       presenceData.details = 'Nekowatch'
       const q = searchParams.get('q')
       const sort = searchParams.get('sort')
@@ -277,6 +482,7 @@ presence.on('UpdateData', async () => {
       const format = searchParams.get('format')
       const year = searchParams.get('year')
       const audio = searchParams.get('audio')
+      const genre = searchParams.get('genre')
 
       presenceData.details = q ? `Searching: "${q}"` : 'Browsing Catalog'
 
@@ -291,6 +497,8 @@ presence.on('UpdateData', async () => {
         filters.push(formatAnimeSlug(status) || '')
       if (audio)
         filters.push(formatAnimeSlug(audio) || '')
+      if (genre)
+        filters.push(formatAnimeSlug(genre) || '')
 
       let sortText = ''
       if (sort === 'SCORE_DESC')
@@ -315,16 +523,16 @@ presence.on('UpdateData', async () => {
     case isInfo: {
       presenceData.details = 'Viewing Anime Info'
       presenceData.state = animeTitle || 'Reading Details & Overview'
-      presenceData.largeImageKey = 'https://i.imgur.com/LtP6hmP.jpeg'
+      presenceData.largeImageKey = coverUrlAnime || coverUrlDefault || 'https://i.imgur.com/LtP6hmP.jpeg'
 
       if (showButtons) {
-        buttonLabel = 'View Info'
+        buttonLabel = 'View Anime'
       }
       break
     }
 
     case isAnime: {
-      const epNum = searchParams.get('ep') ?? '1'
+      const epNum = searchParams.get('episode') ?? searchParams.get('ep') ?? '1'
       const lang = searchParams.get('audio') ?? ''
       const showTitle = animeTitle || 'Anime'
       const coverUrl = coverUrlAnime
@@ -363,8 +571,12 @@ presence.on('UpdateData', async () => {
       const currentTimeText = timeSpans[0]?.textContent || null
       const durationText = timeSpans[1]?.textContent || null
 
-      const elementTime = parseTimeToSeconds(currentTimeText) ?? video?.currentTime ?? 0
-      const elementDuration = parseTimeToSeconds(durationText) ?? video?.duration ?? 0
+      const elementTime = parseTimeToSeconds(currentTimeText)
+        ?? video?.currentTime
+        ?? (useSync && isWatch ? latestWatchData.progress_seconds : 0)
+      const elementDuration = parseTimeToSeconds(durationText)
+        ?? video?.duration
+        ?? (useSync && isWatch ? latestWatchData.duration_seconds : 0)
 
       if (!isPaused) {
         pauseStartTimestamp = null
