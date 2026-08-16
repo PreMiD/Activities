@@ -16,10 +16,12 @@
     "tool.amll.dev",
     "verycool-ttml-tool-trust.vercel.app",
     "ttml.tx24.dev",
-    "tool.knightryry.xyz"
+    "tool.knightryry.xyz",
+    "tool.community.spicylyrics.org",
+    "ttmltool.community.reel.peak.reelcertified.meow.spicylyrics.org"
   ],
-  "regExp": "^https?[:][/][/](?:briangriff[.]in|amll-ttml-tool(?:-test[.]vercel[.]app|[.]stevexmh[.]net)|tool[.]amll[.]dev|verycool-ttml-tool-trust[.]vercel[.]app|ttml[.]tx24[.]dev|tool[.]knightryry[.]xyz)(?:[/]|$)",
-  "version": "1.1.0",
+  "regExp": "^https?[:][/][/](?:briangriff[.]in|amll-ttml-tool(?:-test[.]vercel[.]app|[.]stevexmh[.]net)|tool[.]amll[.]dev|verycool-ttml-tool-trust[.]vercel[.]app|ttml[.]tx24[.]dev|tool[.]knightryry[.]xyz|tool[.]community[.]spicylyrics[.]org|ttmltool[.]community[.]reel[.]peak[.]reelcertified[.]meow[.]spicylyrics[.]org)(?:[/]|$)",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AMLL%20TTML%20Tool/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AMLL%20TTML%20Tool/assets/thumbnail.png",
   "color": "#18a058",
