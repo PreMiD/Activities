@@ -14,9 +14,12 @@
     "ru": "Будьте на связи и планируйте свои действия. Решайте поставленные задачи сообща и успевайте больше на работе, в школе и дома благодаря Microsoft Teams.",
     "vi": "Kết nối và quản lý. Đạt được nhiều hơn cùng nhau trong công việc, trường học, cuộc sống với Microsoft Teams."
   },
-  "url": "teams.microsoft.com",
+  "url": [
+    "teams.live.com",
+    "teams.microsoft.com"
+  ],
   "regExp": "^https?[:][/][/]((teams)[.]live[.]com|(teams)[.]microsoft[.]com)[/]",
-  "version": "1.2.2",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Microsoft%20Teams/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Microsoft%20Teams/assets/thumbnail.png",
   "color": "#4A51BA",
