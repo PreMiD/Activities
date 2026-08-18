@@ -17,9 +17,10 @@
     "movix.chat",
     "movix.golf",
     "movix.cloud",
+    "movix.fun",
     "movix.online"
   ],
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(movix[.]cash|movix[.]show|movix[.]date|movix[.]chat|movix[.]golf|movix[.]cloud|movix[.]online)[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(movix[.]cash|movix[.]show|movix[.]date|movix[.]chat|movix[.]golf|movix[.]cloud|movix[.]online|movix[.]fun)[/]",
   "version": "1.0.6",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/thumbnail.png",
