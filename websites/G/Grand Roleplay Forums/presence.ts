@@ -22,7 +22,6 @@ function getServerInfo(pathname: string): ServerInfo | null {
       const info: ServerInfo = { serverName, display: serverName }
 
       try {
-        sessionStorage.setItem('gta5grand_server', JSON.stringify(info))
         localStorage.setItem('gta5grand_server', JSON.stringify(info))
       }
       catch {
@@ -34,7 +33,7 @@ function getServerInfo(pathname: string): ServerInfo | null {
   }
 
   try {
-    const cached = sessionStorage.getItem('gta5grand_server') || localStorage.getItem('gta5grand_server')
+    const cached = localStorage.getItem('gta5grand_server')
     if (cached) {
       return JSON.parse(cached) as ServerInfo
     }
