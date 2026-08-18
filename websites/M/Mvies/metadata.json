@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1484721686111584507",
+    "name": "furdudedev"
+  },
+  "service": "Mvies",
+  "description": {
+    "en": "Watch movies and TV shows for free on Mvies. Ad-free streaming with high-quality sources."
+  },
+  "url": "movies.killallchickens.org",
+  "regExp": "^https?[:][/][/]movies[.]killallchickens[.]org[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/S68fzWN.png",
+  "thumbnail": "https://i.imgur.com/ksytL7B.png",
+  "color": "#cc0000",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "tv"
+  ]
+}
