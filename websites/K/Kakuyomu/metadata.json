@@ -12,8 +12,8 @@
   "url": "kakuyomu.jp",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])?kakuyomu[.]jp[/]",
   "version": "1.0.0",
-  "logo": "https://i.postimg.cc/JhcZ6VyH/kakuyomu.png",
-  "thumbnail": "https://i.postimg.cc/JhcZ6VyH/kakuyomu.png",
+  "logo": "https://i.postimg.cc/HnHybSWR/kakuyomu.png",
+  "thumbnail": "https://i.postimg.cc/HnHybSWR/kakuyomu.png",
   "color": "#1782c5",
   "category": "other",
   "tags": [
