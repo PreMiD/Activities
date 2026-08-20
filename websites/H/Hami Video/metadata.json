@@ -12,7 +12,7 @@
     "en": "Automatically shows what you're watching on Hami Video — movies, TV series, anime, documentaries, kids' content, variety shows, and live or replayed sports."
   },
   "url": "hamivideo.hinet.net",
-  "regExp": "^https:\\/\\/(?:www\\.)?hamivideo\\.hinet\\.net\\/.*$",
+  "regExp": "^https[:][/][/](?:www[.])?hamivideo[.]hinet[.]net[/].*$",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/eCsBmqZ.png",
   "thumbnail": "https://i.imgur.com/pUTIwh1.jpeg",
