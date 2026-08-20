@@ -23,7 +23,42 @@ presence.on('UpdateData', async () => {
   }
   const pageTitle = document.querySelector('[class*="breadcrumbs_breadcrumbs_"] li:last-child > span')?.textContent?.trim() || 'Unknown Page'
 
-  if (document.location.pathname.includes('/katalog') || document.location.pathname.includes('/catalog')) {
+  // check if audiobook is playing by checking the play/pause button
+  const controlButtons = Array.from(document.querySelectorAll('button[class*="controls_control"]'))
+  const playButton = controlButtons.find((btn) => {
+    const label = btn.getAttribute('aria-label')
+    const iconHref = btn.querySelector('use')?.getAttribute('href') || ''
+    return label === 'Odtwórz' || label === 'Pauza' || iconHref.includes('play') || iconHref.includes('pause')
+  })
+
+  const isPlaying = playButton?.getAttribute('aria-label') === 'Pauza'
+    || playButton?.querySelector('use')?.getAttribute('href')?.includes('pause')
+
+  if (isPlaying) {
+    const slider = document.querySelector('span[role="slider"]')
+    const currentTime = Number.parseFloat(slider?.getAttribute('aria-valuenow') || '0')
+    const duration = Number.parseFloat(slider?.getAttribute('aria-valuemax') || '0')
+
+    const author = document.querySelector('[class*="author_link"]')?.textContent?.trim() || ''
+    const title = document.querySelector('[class*="content-compact_title"]')?.textContent?.trim() || ''
+
+    const coverImage = document.querySelector<HTMLImageElement>('img[class*="cover_image_"]')
+    if (coverImage) {
+      presenceData.largeImageKey = coverImage.src
+    }
+
+    // playing audiobook
+    // replace {0} {1} with empty line and {2} with author
+    presenceData.details = (strings.listen).replace('{0}', '\n').replace('{1}', title || '')
+    presenceData.state = `Author: ${author}`
+    if (duration > 0) {
+      const now = Math.floor(Date.now() / 1000)
+      presenceData.startTimestamp = Math.floor(now - currentTime)
+      presenceData.endTimestamp = Math.floor(now + (duration - currentTime))
+    }
+  }
+
+  else if (document.location.pathname.includes('/katalog') || document.location.pathname.includes('/catalog')) {
     presenceData.details = `${strings.viewACategory} ${pageTitle}`
   }
   else if (document.location.pathname.includes('/audiobook')) {
@@ -35,38 +70,8 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = coverImage.src
     }
 
-    // check if audiobook is playing by checking the play/pause button
-    const controlButtons = Array.from(document.querySelectorAll('button[class*="controls_control"]'))
-    const playButton = controlButtons.find((btn) => {
-      const label = btn.getAttribute('aria-label')
-      const iconHref = btn.querySelector('use')?.getAttribute('href') || ''
-      return label === 'Odtwórz' || label === 'Pauza' || iconHref.includes('play') || iconHref.includes('pause')
-    })
-
-    const isPlaying = playButton?.getAttribute('aria-label') === 'Pauza'
-      || playButton?.querySelector('use')?.getAttribute('href')?.includes('pause')
-
-    // slider element
-    const slider = document.querySelector('span[role="slider"]')
-    const currentTime = Number.parseFloat(slider?.getAttribute('aria-valuenow') || '0')
-    const duration = Number.parseFloat(slider?.getAttribute('aria-valuemax') || '0')
-
-    if (isPlaying) {
-      // playing audiobook
-      // replace {0} {1} with empty line and {2} with author
-      presenceData.details = (strings.listen).replace('{0}', '\n').replace('{1}', title || '')
-      presenceData.state = `Author: ${author}`
-      if (duration > 0) {
-        const now = Math.floor(Date.now() / 1000) // Aktualny czas w sekundach uniksowych
-        presenceData.startTimestamp = Math.floor(now - currentTime) // Kiedy zaczął się ten moment utworu
-        presenceData.endTimestamp = Math.floor(now + (duration - currentTime)) // Kiedy utwór się skończy
-      }
-    }
-    else {
-      // not playing audiobook, just viewing audiobook page
-      presenceData.details = `${strings.view} ${title}`
-      presenceData.state = `Author: ${author}`
-    }
+    presenceData.details = `${strings.view} ${title}`
+    presenceData.state = `Author: ${author}`
   }
   else if (document.location.pathname.includes('polka') || document.location.pathname.includes('shelf')) {
     // shelf page

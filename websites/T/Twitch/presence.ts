@@ -474,7 +474,8 @@ presence.on('UpdateData', async () => {
           streamerinfo = getElement('.stream-info-card p > a')
         }
 
-        presenceData.state = streamerinfo
+        if (!privacy)
+          presenceData.state = streamerinfo
 
         if (getElement('.modview-dock-widget p') !== 'Offline') {
           presenceData.smallImageKey = Assets.Live

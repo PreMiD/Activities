@@ -32,10 +32,10 @@
       "value": true
     },
     {
-      "id": "privateMode",
-      "title": "Chế Độ Riêng Tư",
-      "icon": "fas fa-user-secret",
-      "value": false
+      "id": "privacy-shown",
+      "title": "Privacy Overwrite Button",
+      "icon": "fad fa-eye-low-vision",
+      "value": true
     }
   ]
 }
