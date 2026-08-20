@@ -5,8 +5,8 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets { // Other default assets can be found at index.d.ts
-  Logo = '',
+enum ActivityAssets {
+  Logo = 'https://i.postimg.cc/02PJvrT8/KACTwitch-Banner.png',
 }
 
 function getEpisodeInfo(title: string | null | undefined): {
