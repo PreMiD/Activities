@@ -108,7 +108,6 @@ presence.on('UpdateData', async () => {
         presenceData.state = document
           .querySelector('.title-name')
           ?.textContent
-          ?.replace(/<[^>]+>/g, '')
         presenceData.buttons = [{ label: 'View Person', url: href }]
       }
     }
@@ -123,7 +122,6 @@ presence.on('UpdateData', async () => {
         presenceData.state = document
           .querySelectorAll('.normal_header')[2]
           ?.textContent
-          ?.replace(/<[^>]+>/g, '')
         presenceData.buttons = [{ label: 'View Character', url: href }]
       }
     }

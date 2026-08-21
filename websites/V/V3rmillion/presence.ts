@@ -21,7 +21,7 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
   }
   presenceData.startTimestamp = browsingTimestamp
-  if (document.location.hostname.includes('v3rmillion.net')) {
+  if (document.location.hostname === 'v3rmillion.net' || document.location.hostname.endsWith('.v3rmillion.net')) {
     /* Home Page */
     if (
       document.location.pathname.includes('index.php')

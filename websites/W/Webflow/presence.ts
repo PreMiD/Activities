@@ -7,26 +7,26 @@ presence.on('UpdateData', async () => {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/W/Webflow/assets/logo.png',
   }
 
-  if (document.location.hostname.includes('preview.webflow.com')) {
+  if (document.location.hostname === 'preview.webflow.com') {
     presenceData.details = 'Viewing project preview'
     presenceData.state = document.title.replace('Webflow - ', '')
   }
-  else if (document.location.hostname.includes('university.webflow.com')) {
+  else if (document.location.hostname === 'university.webflow.com') {
     presenceData.details = 'Webflow University'
   }
-  else if (document.location.hostname.includes('ebooks.webflow.com')) {
+  else if (document.location.hostname === 'ebooks.webflow.com') {
     presenceData.details = 'Webflow Ebooks'
   }
-  else if (document.location.hostname.includes('forum.webflow.com')) {
+  else if (document.location.hostname === 'forum.webflow.com') {
     presenceData.details = 'Reading Forums'
   }
-  else if (document.location.hostname.includes('experts.webflow.com')) {
+  else if (document.location.hostname === 'experts.webflow.com') {
     presenceData.details = 'Viewing Webflow Experts'
   }
-  else if (document.location.hostname.includes('wishlist.webflow.com')) {
+  else if (document.location.hostname === 'wishlist.webflow.com') {
     presenceData.details = 'Browsing Webflow Wishlist'
   }
-  else if (document.location.hostname.includes('status.webflow.com')) {
+  else if (document.location.hostname === 'status.webflow.com') {
     presenceData.details = 'Viewing Status Page'
   }
   else if (document.location.pathname === '/') {
