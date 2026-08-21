@@ -171,6 +171,6 @@ presence.on('UpdateData', async () => {
     presenceData.state = 'Hytale Server Hosting'
   }
   if (!presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

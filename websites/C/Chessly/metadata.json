@@ -11,7 +11,7 @@
   },
   "url": "chessly.com",
   "regExp": "^https?[:][/][/]chessly[.]com[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Chessly/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Chessly/assets/thumbnail.png",
   "color": "#d1007e",

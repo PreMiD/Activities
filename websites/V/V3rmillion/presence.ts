@@ -101,7 +101,7 @@ presence.on('UpdateData', async () => {
   if (!presenceData.details) {
     presence.error('Unable to determine location.')
 
-    presence.setActivity()
+    presence.clearActivity()
   }
   else {
     presence.setActivity(presenceData)

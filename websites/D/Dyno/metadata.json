@@ -12,7 +12,7 @@
   },
   "url": "dyno.gg",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*dyno[.]gg[/]",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dyno/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dyno/assets/thumbnail.png",
   "color": "#337fd5",
