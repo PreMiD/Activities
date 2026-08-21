@@ -5,6 +5,12 @@
     "name": "Bas950",
     "id": "241278257335500811"
   },
+"contributors": [
+    {
+      "name": "JuJuplayz",
+      "id": "960971439996035083"
+    }
+  ],
   "service": "Amazon",
   "description": {
     "en": "Online shopping from the earth's biggest selection of books, magazines, music, DVDs, videos, electronics, computers, software, apparel & accessories, shoes, jewelry, tools & hardware, housewares, furniture, sporting goods, beauty & personal care, broadband & dsl, gourmet food & just about anything else.",
@@ -16,7 +22,7 @@
   },
   "url": "www.amazon.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*amazon([.][a-z]+)+[/](?!(-[/]([a-z0-9]+)[/])?(Prime-Video|Prime-Instant-Video|Amazon-Video|gp[/]video))",
-  "version": "1.6.1",
+  "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Amazon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Amazon/assets/thumbnail.png",
   "color": "#ff9900",
@@ -24,5 +30,13 @@
   "tags": [
     "store",
     "shopping"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
   ]
 }
