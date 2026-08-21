@@ -126,8 +126,7 @@ presence.on('UpdateData', async () => {
   // general.viewing + Help Center
   else if (document.querySelector('#searchDropdownBox')) {
     const dropdown = document
-      .querySelector('#searchDropdownBox')!
-      .getAttribute('data-nav-selected')!
+      .querySelector('#searchDropdownBox')!.getAttribute('data-nav-selected')!
     const dropdownplus1 = +dropdown + 1
     const dropdownfinal = `#searchDropdownBox > option:nth-child(${dropdownplus1})`
     const dropdowninnertext = document.querySelector<HTMLElement>(dropdownfinal)?.textContent
@@ -136,6 +135,13 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Browsing category:' // general.viewCategory
       presenceData.state = dropdowninnertext
     }
+  }
+
+  if (await presence.getSetting<boolean>('privacy')) {
+    presenceData.details = 'Browsing Amazon'
+    delete presenceData.state
+    delete presenceData.smallImageKey
+    delete presenceData.smallImageText
   }
 
   if (presenceData.details)
