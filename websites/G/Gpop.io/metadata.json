@@ -14,6 +14,7 @@
     "es": "Gpop.io (GamePop) es un juego de ritmo gratuito en el navegador donde juegas, creas y compartes niveles sincronizados con canciones de YouTube."
   },
   "url": "gpop.io",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gpop[.]io[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/G6q4Taa.png",
   "thumbnail": "https://i.imgur.com/yvkew31.png",

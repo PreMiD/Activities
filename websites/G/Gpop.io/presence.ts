@@ -6,7 +6,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://gpop.io/assets/main/logow.png',
+  Logo = 'https://i.imgur.com/G6q4Taa.png',
 }
 
 type PlayState = 'playing' | 'waiting' | 'starting' | 'restart' | 'results'
