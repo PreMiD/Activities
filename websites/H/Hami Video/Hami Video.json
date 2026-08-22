@@ -1,16 +1,4 @@
 {
-  "hamivideo.watchingMovie": {
-    "description": "Shown as the details line while watching a movie",
-    "message": "Watching Movie"
-  },
-  "hamivideo.watchingSeries": {
-    "description": "Shown as the details line while watching a TV series episode",
-    "message": "Watching TV Series"
-  },
-  "hamivideo.watchingAnime": {
-    "description": "Shown as the details line while watching an anime episode",
-    "message": "Watching Anime"
-  },
   "hamivideo.watchingDocumentary": {
     "description": "Shown as the details line while watching a documentary",
     "message": "Watching Documentary"
@@ -91,29 +79,13 @@
     "description": "Shown as the state line for a live sports broadcast when no event name could be parsed",
     "message": "LIVE Event"
   },
-  "hamivideo.browsingCategory": {
-    "description": "Shown while browsing a content category listing",
-    "message": "Browsing Category"
-  },
   "hamivideo.browsingAnime": {
     "description": "Shown while browsing the anime section",
     "message": "Browsing Anime"
   },
-  "hamivideo.searching": {
-    "description": "Shown while searching, followed by the search keyword",
-    "message": "Searching"
-  },
   "hamivideo.watchButton": {
     "description": "Button label linking to the movie/show on Hami Video",
     "message": "Watch on Hami Video"
-  },
-  "hamivideo.watchEpisodeButton": {
-    "description": "Button label linking to the currently playing episode",
-    "message": "Watch Episode"
-  },
-  "hamivideo.viewSeriesButton": {
-    "description": "Button label linking to the series' homepage",
-    "message": "View Series"
   },
   "hamivideo.watchLiveButton": {
     "description": "Button label linking to the current live sports broadcast",

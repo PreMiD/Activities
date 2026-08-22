@@ -86,46 +86,17 @@ function getVideoElement(): HTMLVideoElement | null {
 }
 
 /**
- * Best-effort lookup of a dotted path on `window` (e.g.
- * `myPlayer.cast.currentMediaTitle`), used as a fallback when the page
- * variable bridge doesn't have a value. Never throws — any failure (missing
- * segment, non-object intermediate value, etc.) simply resolves to
- * `undefined` so callers can keep falling back to DOM/meta lookups.
- */
-function readWindowPath<T>(path: string): T | undefined {
-  try {
-    let current: unknown = window as unknown as Record<string, unknown>
-    for (const segment of path.split('.')) {
-      if (current === null || typeof current !== 'object')
-        return undefined
-      current = (current as Record<string, unknown>)[segment]
-    }
-    return current as T | undefined
-  }
-  catch {
-    return undefined
-  }
-}
-
-/**
  * `getPageVariable` is only ever called with a single key at a time, per
  * variable, as it is used across the current Activities repository.
- *
- * Robustness: if the page-variable bridge doesn't have the value (returns
- * `undefined`), we fall back to reading the same dotted path directly off
- * `window`, since some Hami Video player builds expose the identical data
- * as a plain global instead of (or in addition to) the bridge. This never
- * throws — a missing value just flows through as `undefined`, same as
- * before, so every existing call site's own DOM/meta fallback chain still
- * behaves exactly as it did.
  */
 async function getPageVar<T = string>(key: string): Promise<T | undefined> {
   const data = await presence.getPageVariable<Record<string, T>>(key)
   const value = data?.[key]
+
   if (value !== undefined)
     return value
 
-  return readWindowPath<T>(key)
+  return undefined
 }
 
 function getElement(query: string): string | undefined {
@@ -165,9 +136,9 @@ async function getStrings() {
     live: 'general.live',
     season: 'general.season',
     episode: 'general.episode',
-    watchingMovie: 'hamivideo.watchingMovie',
-    watchingSeries: 'hamivideo.watchingSeries',
-    watchingAnime: 'hamivideo.watchingAnime',
+    watchingMovie: 'general.watchingMovie',
+    watchingSeries: 'general.watchingSeries',
+    watchingAnime: 'general.watchingAnime',
     watchingDocumentary: 'hamivideo.watchingDocumentary',
     watchingKids: 'hamivideo.watchingKids',
     watchingVariety: 'hamivideo.watchingVariety',
@@ -188,12 +159,12 @@ async function getStrings() {
     watchingVolleyball: 'hamivideo.watchingVolleyball',
     watchingEsports: 'hamivideo.watchingEsports',
     liveEventFallback: 'hamivideo.liveEventFallback',
-    browsingCategory: 'hamivideo.browsingCategory',
+    browsingCategory: 'general.viewACategory',
     browsingAnime: 'hamivideo.browsingAnime',
-    searching: 'hamivideo.searching',
+    searching: 'general.search',
     watchButton: 'hamivideo.watchButton',
-    watchEpisodeButton: 'hamivideo.watchEpisodeButton',
-    viewSeriesButton: 'hamivideo.viewSeriesButton',
+    watchEpisodeButton: 'general.buttonViewEpisode',
+    viewSeriesButton: 'general.buttonViewSeries',
     watchLiveButton: 'hamivideo.watchLiveButton',
     watchReplayButton: 'hamivideo.watchReplayButton',
   })
@@ -744,7 +715,7 @@ function isHomepage(pathname: string): boolean {
 }
 
 function isCategoryBrowsePage(pathname: string): boolean {
-  return /\/(?:category|channel|list)\//i.test(pathname)
+  return /\/(category|channel|list)\//i.test(pathname)
 }
 
 function isAnimeBrowsePage(pathname: string): boolean {
@@ -1083,9 +1054,9 @@ presence.on('UpdateData', async () => {
         // back to whatever the player has cached, then finally the logo.
         ? (ogImage ?? currentMediaThumb)
         : (currentMediaThumb
-          ?? ogImage
-          ?? getAttr('.player-info__poster img', 'src')
-          ?? getAttr('.vod-poster img', 'src'))
+            ?? ogImage
+            ?? getAttr('.player-info__poster img', 'src')
+            ?? getAttr('.vod-poster img', 'src'))
 
     const poster = cacheArtwork(contentPk, rawPoster)
     const pageUrl = currentPageUrl()
