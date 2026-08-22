@@ -261,7 +261,7 @@ presence.on('UpdateData', async () => {
     isInGame = false
   if (isInGame)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })
 
 interface AgoniaPlayerState {

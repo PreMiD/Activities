@@ -15,7 +15,7 @@
     "play.waipu.tv"
   ],
   "regExp": "^https?[:][/][/](play[.])?waipu[.]tv[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Waipu.tv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Waipu.tv/assets/thumbnail.png",
   "color": "#009652",

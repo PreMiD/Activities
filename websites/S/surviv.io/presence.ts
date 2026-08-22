@@ -73,6 +73,6 @@ presence.on('UpdateData', async () => {
     }${gamemode}`
   }
   if (!presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

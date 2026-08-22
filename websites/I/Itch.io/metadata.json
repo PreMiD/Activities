@@ -12,7 +12,7 @@
   },
   "url": "itch.io",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*itch[.]io[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Itch.io/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Itch.io/assets/thumbnail.png",
   "color": "#e22c78",

@@ -22,11 +22,10 @@
   },
   "url": [
     "g.tobyjas.dev",
-    "g.jsemtobias.cz",
-    "tobyjas.lol"
+    "g.jsemtobias.cz"
   ],
-  "regExp": "^https?[:][/][/](g[.])?(tobyjas[.]dev|jsemtobias[.]cz|tobyjas[.]lol)[/]darkout[/]",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/](g[.])?(tobyjas[.]dev|jsemtobias[.]cz)[/]darkout[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DARK.OUT/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DARK.OUT/assets/thumbnail.png",
   "color": "#000000",
