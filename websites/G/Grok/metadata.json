@@ -5,6 +5,12 @@
     "id": "1180088441459978261",
     "name": "kohnoselami"
   },
+  "contributors": [
+    {
+      "name": "caffeinepx",
+      "id": "1217564834825109604"
+    }
+  ],
   "service": "Grok",
   "description": {
     "en": "Grok is a generative artificial intelligence chatbot developed by xAI. Based on the large language model (LLM) of the same name, it was launched in 2023 as an initiative by Elon Musk. The chatbot is advertised as having a \"sense of humor\" and direct access to X, formerly known as Twitter.",
@@ -12,10 +18,10 @@
   },
   "url": "grok.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*grok[.]com[/]",
-  "version": "1.1.2",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Grok/assets/logo.png",
+  "version": "1.2.0",
+  "logo": "https://grok.com/images/android-chrome-512x512.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Grok/assets/thumbnail.png",
-  "color": "#1D1E20",
+  "color": "#050505",
   "category": "other",
   "tags": [
     "ai",
@@ -33,6 +39,12 @@
       "id": "showTitle",
       "title": "Show chat title",
       "icon": "fa-solid fa-message-quote",
+      "value": true
+    },
+    {
+      "id": "showLastPrompt",
+      "title": "Show last prompt",
+      "icon": "fa-solid fa-reply",
       "value": true
     }
   ]
