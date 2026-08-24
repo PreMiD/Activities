@@ -31,6 +31,14 @@ const actionLabels: Record<string, string> = {
   behavior: 'Observing the behavior of...',
 }
 
+const getStartedTopics: Record<string, string> = {
+  'anti-phishing-anti-fraud-brand-monitoring': 'Anti-Phishing & Brand Monitoring',
+  'vulnerability-management': 'Vulnerability Management',
+  'advanced-hunting': 'Advanced Hunting',
+  'automatic-security-telemetry-enrichment': 'Security Telemetry Enrichment',
+  'incident-response-and-forensic-analysis': 'Incident Response & Forensics',
+}
+
 presence.on('UpdateData', () => {
   const pathname = document.location.pathname.replace(/\/+$/, '')
   const presenceData: PresenceData = {
@@ -152,6 +160,13 @@ presence.on('UpdateData', () => {
       }
       else if (pathname.includes('/graph-overview')) {
         presenceData.details = 'Viewing graph overview...'
+      }
+      else if (pathname.includes('/getstarted')) {
+        presenceData.details = 'Getting started...'
+        const topicKey = pathname.split('/')[2] || ''
+        if (getStartedTopics[topicKey]) {
+          presenceData.state = getStartedTopics[topicKey]
+        }
       }
       else if (pathname.startsWith('/graph')) {
         presenceData.details = 'Viewing a graph...'
