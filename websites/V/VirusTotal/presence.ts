@@ -115,22 +115,6 @@ presence.on('UpdateData', () => {
       presenceData.details = 'Browsing community buzz...'
       break
     }
-    case '/gui/services-overview': {
-      presenceData.details = 'Viewing services overview...'
-      break
-    }
-    case '/gui/intelligence-overview': {
-      presenceData.details = 'Viewing intelligence overview...'
-      break
-    }
-    case '/gui/hunting-overview': {
-      presenceData.details = 'Viewing hunting overview...'
-      break
-    }
-    case '/gui/graph-overview': {
-      presenceData.details = 'Viewing graph overview...'
-      break
-    }
     default: {
       if (pathname.includes('/gui/user/')) {
         const user = queryShadowText([
@@ -155,6 +139,18 @@ presence.on('UpdateData', () => {
         else {
           presenceData.details = user ? `Viewing ${user}'s profile` : 'Viewing a profile'
         }
+      }
+      else if (pathname.includes('/services-overview')) {
+        presenceData.details = 'Viewing services overview...'
+      }
+      else if (pathname.includes('/intelligence-overview')) {
+        presenceData.details = 'Viewing intelligence overview...'
+      }
+      else if (pathname.includes('/hunting-overview')) {
+        presenceData.details = 'Viewing hunting overview...'
+      }
+      else if (pathname.includes('/graph-overview')) {
+        presenceData.details = 'Viewing graph overview...'
       }
       else if (pathname.startsWith('/graph')) {
         presenceData.details = 'Viewing a graph...'
