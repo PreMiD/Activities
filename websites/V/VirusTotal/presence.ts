@@ -86,6 +86,7 @@ presence.on('UpdateData', () => {
       presenceData.details = 'Creating an IOC collection...'
       break
     }
+    case '/gui/contact-us/customer-success':
     case '/gui/contact-us': {
       presenceData.details = 'Contacting support...'
       break
