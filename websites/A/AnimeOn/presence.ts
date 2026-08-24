@@ -189,7 +189,10 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
         presenceData.smallImageText = video.paused ? paused : playing
 
-        if (!video.paused) {
+        if (video.paused) {
+          delete presenceData.startTimestamp
+        }
+        else {
           const [start, end] = getTimestampsFromMedia(video)
           presenceData.startTimestamp = start
           presenceData.endTimestamp = end
@@ -346,10 +349,11 @@ presence.on('UpdateData', async () => {
   //* Privacy Mode has to leave nothing behind that says what is being watched.
   if (privacy) {
     presenceData.largeImageKey = ActivityAssets.Logo
-    presenceData.details = browsing
-    delete presenceData.state
     delete presenceData.smallImageKey
     delete presenceData.smallImageText
+    presenceData.details = browsing
+    delete presenceData.state
+    presenceData.startTimestamp = browsingTimestamp
     delete presenceData.endTimestamp
     buttonLabel = null
   }
