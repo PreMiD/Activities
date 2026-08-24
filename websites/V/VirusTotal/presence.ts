@@ -156,6 +156,9 @@ presence.on('UpdateData', () => {
           presenceData.details = user ? `Viewing ${user}'s profile` : 'Viewing a profile'
         }
       }
+      else if (pathname.startsWith('/graph')) {
+        presenceData.details = 'Viewing a graph...'
+      }
       else if (pathname.includes('/gui/top-users')) {
         presenceData.details = 'Viewing top users...'
       }
