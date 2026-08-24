@@ -23,7 +23,7 @@ function queryShadowText(selectors: string[]): string | undefined {
 }
 
 const actionLabels: Record<string, string> = {
-  detection: 'Viewing detections of...',
+  detection: 'Viewing detections from...',
   details: 'Viewing details of...',
   relations: 'Viewing relations of...',
   community: 'Reading comments of...',
