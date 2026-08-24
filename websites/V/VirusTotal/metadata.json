@@ -16,9 +16,8 @@
     "de": "Überprüfe deine Dateien für deine Sicherheit",
     "en": "Check every Software for your safety",
     "ga": "Seiceáil gach Bogearraí le haghaidh do shábháilteachta",
-    "hi": "अपनी सुरक्षा के लिए हर सॉफ्टवेयर की जाँच करें",
-    "nl": "Controleer elke software op uw veiligheid",
-    "ur": "اپنی حفاظت کے لیے ہر سافٹ ویئر کو چیک کریں"
+    "hi-in": "अपनी सुरक्षा के लिए हर सॉफ्टवेयर की जाँच करें",
+    "nl": "Controleer elke software op uw veiligheid"
   },
   "url": "www.virustotal.com",
   "regExp": "^https?[:][/][/](www[.])?virustotal[.]com[/]",
