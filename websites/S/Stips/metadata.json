@@ -16,11 +16,10 @@
   },
   "url": [
     "stips.co.il",
-    "www.stips.co.il",
-    "stipscdn-stips.netdna-ssl.com"
+    "www.stips.co.il"
   ],
   "regExp": "^https?[:][/][/]((stips|www[.]stips)[.]co[.]il|(stipscdn-stips)[.]netdna-ssl[.]com)[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stips/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stips/assets/thumbnail.png",
   "color": "#04d09d",
