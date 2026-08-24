@@ -171,6 +171,9 @@ presence.on('UpdateData', () => {
       else if (pathname.startsWith('/graph')) {
         presenceData.details = 'Viewing a graph...'
       }
+      else if (pathname.includes('/gui/collection/')) {
+        presenceData.details = 'Viewing an IOC collection...'
+      }
       else if (pathname.includes('/gui/top-users')) {
         presenceData.details = 'Viewing top users...'
       }
