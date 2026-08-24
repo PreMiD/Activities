@@ -7,10 +7,12 @@ function queryShadowText(selectors: string[]): string | undefined {
 
   for (let i = 0; i < selectors.length; i++) {
     const selector = selectors[i]
-    if (!current || !selector) return undefined
+    if (!current || !selector)
+      return undefined
 
     const el: Element | null = current.querySelector(selector)
-    if (!el) return undefined
+    if (!el)
+      return undefined
 
     if (i === selectors.length - 1) {
       return el.textContent?.trim() || undefined
