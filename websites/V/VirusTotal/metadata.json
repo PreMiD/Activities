@@ -5,22 +5,32 @@
     "name": "MauriceX",
     "id": "268768664411439115"
   },
+  "contributors": [
+    {
+      "name": "falcon",
+      "id": "603228801337393172"
+    }
+  ],
   "service": "VirusTotal",
   "description": {
     "de": "Überprüfe deine Dateien für deine Sicherheit",
     "en": "Check every Software for your safety",
     "ga": "Seiceáil gach Bogearraí le haghaidh do shábháilteachta",
-    "nl": "Controleer elke software op uw veiligheid"
+    "hi": "अपनी सुरक्षा के लिए हर सॉफ्टवेयर की जाँच करें",
+    "nl": "Controleer elke software op uw veiligheid",
+    "ur": "اپنی حفاظت کے لیے ہر سافٹ ویئر کو چیک کریں"
   },
   "url": "www.virustotal.com",
   "regExp": "^https?[:][/][/](www[.])?virustotal[.]com[/]",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VirusTotal/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VirusTotal/assets/thumbnail.png",
   "color": "#397eff",
   "category": "other",
   "tags": [
     "safety",
-    "virus-check"
+    "virus-check",
+    "security",
+    "cybersecurity"
   ]
 }
