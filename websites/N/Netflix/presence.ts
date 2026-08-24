@@ -35,6 +35,57 @@ async function getStrings() {
 
 let oldLang: string | null = null
 let strings: Awaited<ReturnType<typeof getStrings>>
+let browsingTimestamp: number | null = null
+
+const GENRE_MAP: Record<string, string> = {
+  34399: 'Films',
+  801362: 'Action Films',
+  7442: 'Adventure Films',
+  3063: 'Anime Films',
+  89844: 'Award-Winning Films',
+  90139: 'Blockbuster Films',
+  6548: 'Comedy Films',
+  5824: 'Crime Films',
+  2243108: 'Documentaries',
+  5763: 'Drama Films',
+  89708: 'European Films',
+  9744: 'Fantasy Films',
+  58886: 'German Films',
+  8711: 'Horror Films',
+  7077: 'Independent Films',
+  78367: 'International Films',
+  783: 'Kids & Family',
+  52852: 'Music & Musicals',
+  8883: 'Romantic Films',
+  3276033: 'Sci-Fi Films',
+  3345391: 'Short Films & Documentaries',
+  4370: 'Sport Films',
+  11559: 'Stand-Up Comedy',
+  8933: 'Thriller Films',
+  83: 'Series',
+  10673: 'Action & Adventure Series',
+  6721: 'Anime Series',
+  52117: 'British Series',
+  10375: 'Comedy Series',
+  26146: 'Crime Series',
+  10105: 'Documentary Series',
+  11714: 'Drama Series',
+  82900738: 'Netflix Emmy® Collection',
+  89663: 'European Series',
+  65198: 'German Series',
+  83059: 'Horror Series',
+  1195213: 'International Series',
+  27346: 'Kids TV',
+  4366: 'Mystery Series',
+  2070390: 'Reality, Variety & Chat Shows',
+  26156: 'Romantic Series',
+  1372: 'Sci-Fi & Fantasy Series',
+  52780: 'Science & Nature Series',
+  25788: 'Sport Series',
+  60951: 'Teen Series',
+  89811: 'Thriller Series',
+  72404: 'US Series',
+}
 
 presence.on('UpdateData', async () => {
   const [
@@ -69,7 +120,6 @@ presence.on('UpdateData', async () => {
   const path = document.location.href
   const watchingMediaId = path.match(/\/watch\/(\d+)/)
 
-  // 1. ACTIVE PLAYBACK (Resets browsing timer when starting a video)
   if (watchingMediaId) {
     browsingTimestamp = null
     await fetchMetadata(watchingMediaId[1]!)
@@ -181,7 +231,6 @@ presence.on('UpdateData', async () => {
     return presence.clearActivity()
   }
 
-  // 2. BROWSING STATES (Maintain continuous timestamp across all browsing)
   if (!browsingTimestamp)
     browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -268,55 +317,3 @@ presence.on('UpdateData', async () => {
   browsingTimestamp = null
   return presence.clearActivity()
 })
-
-let browsingTimestamp: number | null = null
-
-const GENRE_MAP: Record<string, string> = {
-  '34399': 'Films',
-  '801362': 'Action Films',
-  '7442': 'Adventure Films',
-  '3063': 'Anime Films',
-  '89844': 'Award-Winning Films',
-  '90139': 'Blockbuster Films',
-  '6548': 'Comedy Films',
-  '5824': 'Crime Films',
-  '2243108': 'Documentaries',
-  '5763': 'Drama Films',
-  '89708': 'European Films',
-  '9744': 'Fantasy Films',
-  '58886': 'German Films',
-  '8711': 'Horror Films',
-  '7077': 'Independent Films',
-  '78367': 'International Films',
-  '783': 'Kids & Family',
-  '52852': 'Music & Musicals',
-  '8883': 'Romantic Films',
-  '3276033': 'Sci-Fi Films',
-  '3345391': 'Short Films & Documentaries',
-  '4370': 'Sport Films',
-  '11559': 'Stand-Up Comedy',
-  '8933': 'Thriller Films',
-  '83': 'Series',
-  '10673': 'Action & Adventure Series',
-  '6721': 'Anime Series',
-  '52117': 'British Series',
-  '10375': 'Comedy Series',
-  '26146': 'Crime Series',
-  '10105': 'Documentary Series',
-  '11714': 'Drama Series',
-  '82900738': 'Netflix EmmyÂ® Collection',
-  '89663': 'European Series',
-  '65198': 'German Series',
-  '83059': 'Horror Series',
-  '1195213': 'International Series',
-  '27346': 'Kids TV',
-  '4366': 'Mystery Series',
-  '2070390': 'Reality, Variety & Chat Shows',
-  '26156': 'Romantic Series',
-  '1372': 'Sci-Fi & Fantasy Series',
-  '52780': 'Science & Nature Series',
-  '25788': 'Sport Series',
-  '60951': 'Teen Series',
-  '89811': 'Thriller Series',
-  '72404': 'US Series',
-}
