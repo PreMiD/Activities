@@ -6,7 +6,6 @@ const presence = new Presence({
 
 presence.info('Tome presence initialized')
 
-const SITE_URL = 'https://www.tome.qzz.io'
 const defaultLogo = 'https://i.imgur.com/IgwRllE.png'
 let browsingTimestamp = Math.floor(Date.now() / 1000)
 let lastUrl = ''
