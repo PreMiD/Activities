@@ -44,8 +44,8 @@ presence.on('UpdateData', async () => {
     const overviewTitle = document.querySelector('.watch-overview-title')?.textContent?.trim()
     const breadcrumbTitles = document.querySelectorAll('.watch-breadcrumbs .watch-bc-title')
     const breadcrumbTitle = breadcrumbTitles.length > 1 ? breadcrumbTitles[1]?.textContent?.trim() : null
-    const docTitle = document.title.replace(/\s*[—–-]\s*Tomes?.*$/i, '').trim()
-    const animeTitle = overviewTitle || breadcrumbTitle || (docTitle !== 'Tomes' ? docTitle : '') || 'Anime'
+    const docTitle = document.title.replace(/\s*[—–-]\s*Tome.*$/i, '').trim()
+    const animeTitle = overviewTitle || breadcrumbTitle || (docTitle !== 'Tomes' && docTitle !== 'Tome' ? docTitle : '') || 'Anime'
 
     const bcEp = document.querySelector('.watch-bc-ep')?.textContent?.trim()
     const currentCardTitle = document.querySelector('.watch-ep-card.current .watch-ep-card-title, .watch-ep-row.current .watch-ep-row-title')?.textContent?.trim()
@@ -73,11 +73,9 @@ presence.on('UpdateData', async () => {
     }
 
     let isPlaying = false
-    let isPaused = false
 
     if (video && !Number.isNaN(video.duration) && video.duration > 0) {
       isPlaying = !video.paused && !video.ended
-      isPaused = video.paused || video.ended
 
       if (isPlaying) {
         const [start, end] = getTimestampsFromMedia(video)
@@ -93,7 +91,6 @@ presence.on('UpdateData', async () => {
     }
     else if (iframeVideoData && !Number.isNaN(iframeVideoData.duration) && iframeVideoData.duration > 0) {
       isPlaying = !iframeVideoData.paused && !iframeVideoData.ended
-      isPaused = iframeVideoData.paused || !!iframeVideoData.ended
 
       if (isPlaying) {
         const [start, end] = getTimestamps(iframeVideoData.currentTime, iframeVideoData.duration)

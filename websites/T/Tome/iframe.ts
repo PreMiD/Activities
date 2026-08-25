@@ -11,4 +11,3 @@ iframe.on('UpdateData', async () => {
     })
   }
 })
-
