@@ -30,6 +30,15 @@ async function getStrings() {
     seriesDisplayFull: 'netflix.seriesDisplay.full',
     seriesDisplayShort: 'netflix.seriesDisplay.short',
     movieDisplay: 'netflix.movieDisplay',
+    searching: 'netflix.searching',
+    searchingFor: 'netflix.searchingFor',
+    myList: 'netflix.myList',
+    latest: 'netflix.latest',
+    games: 'netflix.games',
+    originalAudio: 'netflix.originalAudio',
+    audio: 'netflix.audio',
+    subtitles: 'netflix.subtitles',
+    browsingGenre: 'netflix.browsingGenre',
   })
 }
 
@@ -275,25 +284,25 @@ presence.on('UpdateData', async () => {
 
     if (pathname.startsWith('/search')) {
       const query = url.searchParams.get('q')
-      details = query ? `Searching for ${query}` : 'Searching'
+      details = query ? strings.searchingFor.replace('{0}', query) : strings.searching
     }
     else if (pathname.includes('/my-list')) {
-      details = 'Viewing My List'
+      details = strings.myList
     }
     else if (pathname.includes('/latest')) {
-      details = 'Browsing New & Popular'
+      details = strings.latest.replace('{0}', ' ')
     }
     else if (pathname.includes('/games')) {
-      details = 'Browsing Games'
+      details = strings.games
     }
     else if (pathname.includes('/browse/original-audio')) {
-      details = 'Browsing by Original Language'
+      details = strings.originalAudio
     }
     else if (pathname.includes('/browse/audio')) {
-      details = 'Browsing by Dubbing'
+      details = strings.audio
     }
     else if (pathname.includes('/browse/subtitles')) {
-      details = 'Browsing by Subtitles'
+      details = strings.subtitles
     }
     else if (pathname.includes('/browse/genre/')) {
       const genreId = pathname.split('/browse/genre/')[1]?.split('?')[0]?.replace('/', '')
@@ -301,7 +310,7 @@ presence.on('UpdateData', async () => {
       const domGenre = document.querySelector('.genre-title, .header-title, h1')?.textContent?.trim()
 
       const genreName = mappedGenre || domGenre
-      details = genreName ? `Browsing ${genreName}` : strings.browse
+      details = genreName ? strings.browsingGenre.replace('{0}', genreName) : strings.browse
     }
 
     return await presence.setActivity({
