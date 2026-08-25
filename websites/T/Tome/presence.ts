@@ -39,7 +39,9 @@ presence.on('UpdateData', async () => {
   }
 
   if (pathname.startsWith('/watch')) {
-    const video = document.querySelector<HTMLVideoElement>('video.art-video, .artplayer-host video, video')
+    const video = document.querySelector<HTMLVideoElement>('video.art-video')
+      ?? document.querySelector<HTMLVideoElement>('.artplayer-host video')
+      ?? document.querySelector<HTMLVideoElement>('video')
 
     const overviewTitle = document.querySelector('.watch-overview-title')?.textContent?.trim()
     const breadcrumbTitles = document.querySelectorAll('.watch-breadcrumbs .watch-bc-title')
@@ -63,7 +65,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = animeTitle.slice(0, 128)
     presenceData.state = `${episodeText} • Tome`.slice(0, 128)
 
-    if (coverImage && (coverImage.startsWith('http://') || coverImage.startsWith('https://')) && !coverImage.endsWith('.svg')) {
+    if (coverImage && (coverImage.startsWith('http://') || coverImage.startsWith('https://')) && !/\.svg(?:\$|\?)/i.test(coverImage)) {
       presenceData.largeImageKey = coverImage
       presenceData.largeImageText = `${animeTitle} • Watching on Tome`.slice(0, 128)
     }
