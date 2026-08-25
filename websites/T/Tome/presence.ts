@@ -135,10 +135,6 @@ presence.on('UpdateData', async () => {
         label: 'Explore Library',
         url: href,
       },
-      {
-        label: 'Visit Tome',
-        url: SITE_URL,
-      },
     ]
     presence.setActivity(presenceData)
     return
