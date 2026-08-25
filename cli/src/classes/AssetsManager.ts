@@ -202,8 +202,39 @@ export class AssetsManager {
           },
         })
       }
+
+      //* Activities can also reference clientIds through enum members, e.g.
+      //* enum PresenceClients { Reddit = '609…' } with clientId: PresenceClients.Reddit.
+      //* Every member of a referenced enum is a clientId the activity can use.
+      const referencedEnums = new Set<string>()
+      for (const reference of content.matchAll(/clientId:\s*(\w+)\.\w+/g)) {
+        referencedEnums.add(reference[1])
+      }
+
+      for (const enumName of referencedEnums) {
+        const enumDeclaration = content.match(new RegExp(`enum\\s+${enumName}\\s*\\{[^}]*\\}`))
+        if (!enumDeclaration) {
+          continue
+        }
+
+        for (const member of enumDeclaration[0].matchAll(/['"](\d+)['"]/g)) {
+          const index = (enumDeclaration.index ?? 0) + member.index + 1
+          const line = content.substring(0, index).split('\n').length
+          const column = index - content.lastIndexOf('\n', index) - 1
+          clientIds.push({
+            clientId: member[1],
+            location: {
+              filePath: file,
+              line,
+              column,
+            },
+          })
+        }
+      }
     }
-    return clientIds
+    return clientIds.filter(
+      (clientId, index) => clientIds.findIndex(other => other.clientId === clientId.clientId) === index,
+    )
   }
 
   async getAssets(): Promise<Asset[]> {

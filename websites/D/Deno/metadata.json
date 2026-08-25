@@ -22,7 +22,7 @@
     "denostatus.com"
   ],
   "regExp": "^https?[:][/][/]((docs[.])?deno[.]com|denostatus[.]com)[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deno/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deno/assets/thumbnail.webp",
   "color": "#f9f9f9",

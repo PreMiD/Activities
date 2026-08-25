@@ -302,7 +302,7 @@ presence.on('UpdateData', async () => {
         presence.setActivity(presenceData)
       }
       else {
-        presence.setActivity()
+        presence.clearActivity()
       }
 
       break
@@ -329,6 +329,6 @@ presence.on('UpdateData', async () => {
       break
     }
     default:
-      presence.setActivity()
+      presence.clearActivity()
   }
 })

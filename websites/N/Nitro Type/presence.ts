@@ -309,7 +309,7 @@ presence.on('UpdateData', async () => {
   if (!presenceData.details) {
     presence.error('no presence!')
 
-    presence.setActivity()
+    presence.clearActivity()
   }
   else {
     presence.setActivity(presenceData)

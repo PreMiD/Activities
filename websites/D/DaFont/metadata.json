@@ -12,7 +12,7 @@
   },
   "url": "www.dafont.com",
   "regExp": "^https?[:][/][/](www[.])?dafont[.]com[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DaFont/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DaFont/assets/thumbnail.jpg",
   "color": "#eb4034",
