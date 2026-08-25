@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "mrcparadise",
+    "id": "428174425993510923"
+  },
+  "service": "Tome",
+  "description": {
+    "en": "Experience streaming anime on Tome — The Grand Anime Library."
+  },
+  "url": [
+    "tome.qzz.io",
+    "www.tome.qzz.io"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tome[.]qzz[.]io[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/IgwRllE.png",
+  "thumbnail": "https://i.imgur.com/9JD0T75.png",
+  "color": "#e5a93b",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "manga",
+    "library",
+    "music"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "https?[:][/][/]([a-z0-9-]+[.])*tome[.]qzz[.]io|kwik[.]si"
+}
