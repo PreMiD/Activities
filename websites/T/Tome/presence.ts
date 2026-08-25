@@ -116,10 +116,6 @@ presence.on('UpdateData', async () => {
         label: 'Watch on Tome',
         url: href,
       },
-      {
-        label: 'Visit Tome',
-        url: SITE_URL,
-      },
     ]
 
     presence.setActivity(presenceData)
