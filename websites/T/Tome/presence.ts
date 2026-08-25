@@ -148,12 +148,6 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = 'Shelf'
     presenceData.startTimestamp = browsingTimestamp
-    presenceData.buttons = [
-      {
-        label: 'Visit Tome',
-        url: SITE_URL,
-      },
-    ]
     presence.setActivity(presenceData)
     return
   }
