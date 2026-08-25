@@ -85,16 +85,8 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? strings.pause : strings.play
 
-    presenceData.startTimestamp = Math.floor(Date.now() / 1000) - timestampFromFormat(document
-          .querySelector('div.sXaGQzYs9WqImj2uxDCBs > span:nth-child(1)')!
-          .textContent!
-          .match(/[0-9:]+/)![0],
-    )
-    presenceData.endTimestamp = Math.floor(Date.now() / 1000) + timestampFromFormat(document
-          .querySelector('div.sXaGQzYs9WqImj2uxDCBs > span:nth-child(2)')!
-          .textContent!
-          .match(/[0-9:]+/)![0],
-      )
+    presenceData.startTimestamp = Math.floor(Date.now() / 1000) - timestampFromFormat(document.querySelector('div.sXaGQzYs9WqImj2uxDCBs > span:nth-child(1)')!.textContent!.match(/[0-9:]+/)![0],)
+    presenceData.endTimestamp = Math.floor(Date.now() / 1000) + timestampFromFormat(document.querySelector('div.sXaGQzYs9WqImj2uxDCBs > span:nth-child(2)')!.textContent!.match(/[0-9:]+/)![0],)
 
     if (cover) {
       presenceData.largeImageKey = navigator.mediaSession.metadata.artwork[0]?.src
