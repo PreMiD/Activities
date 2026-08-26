@@ -7,8 +7,8 @@ const presence = new Presence({
 async function getStrings() {
   return presence.getStrings(
     {
-      play: 'Playing',
-      pause: 'Paused',
+      play: 'general.playing',
+      pause: 'general.paused',
       viewPlaylist: 'general.buttonViewPlaylist',
       viewArtist: 'general.buttonViewArtist',
     },
