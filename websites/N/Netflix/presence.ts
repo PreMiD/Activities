@@ -21,6 +21,8 @@ async function getStrings() {
     play: 'general.playing',
     pause: 'general.paused',
     browse: 'general.browsing',
+    search: 'general.search',
+    searchFor: 'general.searchFor',
     watchingMovie: 'general.watchingMovie',
     watchingSeries: 'general.watchingSeries',
     viewSeries: 'general.buttonViewSeries',
@@ -30,8 +32,6 @@ async function getStrings() {
     seriesDisplayFull: 'netflix.seriesDisplay.full',
     seriesDisplayShort: 'netflix.seriesDisplay.short',
     movieDisplay: 'netflix.movieDisplay',
-    searching: 'netflix.searching',
-    searchingFor: 'netflix.searchingFor',
     myList: 'netflix.myList',
     latest: 'netflix.latest',
     games: 'netflix.games',
@@ -284,7 +284,7 @@ presence.on('UpdateData', async () => {
 
     if (pathname.startsWith('/search')) {
       const query = url.searchParams.get('q')
-      details = query ? strings.searchingFor.replace('{0}', query) : strings.searching
+      details = query ? `${strings.searchFor} ${query}` : strings.search
     }
     else if (pathname.includes('/my-list')) {
       details = strings.myList
