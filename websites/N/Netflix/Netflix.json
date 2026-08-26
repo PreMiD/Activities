@@ -27,14 +27,6 @@
     "description": "Shown when watching a movie, example: 2024 • 120 minutes",
     "message": "{0} • {1} minutes"
   },
-  "netflix.searching": {
-    "description": "Shown when searching without a search term",
-    "message": "Searching"
-  },
-  "netflix.searchingFor": {
-    "description": "Shown when searching with a query",
-    "message": "Searching for {0}"
-  },
   "netflix.myList": {
     "description": "Shown when viewing My List",
     "message": "Viewing My List"
