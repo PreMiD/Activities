@@ -14,9 +14,9 @@
     "www.tome.qzz.io"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tome[.]qzz[.]io[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/IgwRllE.png",
-  "thumbnail": "https://i.imgur.com/9JD0T75.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tome/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tome/assets/thumbnail.png",
   "color": "#e5a93b",
   "category": "anime",
   "tags": [

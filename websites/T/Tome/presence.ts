@@ -6,7 +6,7 @@ const presence = new Presence({
 
 presence.info('Tome presence initialized')
 
-const defaultLogo = 'https://i.imgur.com/IgwRllE.png'
+const defaultLogo = 'https://cdn.rcd.gg/PreMiD/websites/T/Tome/assets/logo.png'
 let browsingTimestamp = Math.floor(Date.now() / 1000)
 let lastUrl = ''
 
