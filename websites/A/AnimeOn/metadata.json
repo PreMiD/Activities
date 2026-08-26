@@ -15,9 +15,9 @@
     "v1.animeon.co"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animeon[.](cc|co)[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/wDr0XrH.png",
-  "thumbnail": "https://i.imgur.com/GywaVPX.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeOn/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeOn/assets/thumbnail.png",
   "color": "#8B5CF6",
   "category": "anime",
   "tags": [

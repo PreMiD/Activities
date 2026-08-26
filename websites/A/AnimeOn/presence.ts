@@ -29,7 +29,7 @@ const strings = presence.getStrings({
 })
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/wDr0XrH.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimeOn/assets/logo.png',
 }
 
 function text(selector: string): string | null {
