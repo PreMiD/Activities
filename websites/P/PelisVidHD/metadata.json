@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1211178949137399829",
+    "name": "SandrixHD"
+  },
+  "service": "PelisVidHD",
+  "description": {
+    "es": "Plataforma de streaming de películas y series gratis con la mejor calidad y cientos de titulos disponibles para verlo ahora.",
+    "en": "Free movie and series streaming platform with the best quality and hundreds of titles available to watch now."
+  },
+  "url": "pelisvidhd.icu",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pelisvidhd[.]icu[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/RQ28HKd.png",
+  "thumbnail": "https://i.imgur.com/vVzwIrm.jpeg",
+  "color": "#FF0000",
+  "category": "movies",
+  "tags": [
+    "peliculas",
+    "series",
+    "streaming",
+    "anime"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "(streamtape[.]com|mixdropjmk[.]pw|netuplayer[.]top|dood[.]ws|d-s[.]io|[a-z0-9]+[.](com|net|org|ws|pw|top|io|to))"
+}
