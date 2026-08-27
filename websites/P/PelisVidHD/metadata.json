@@ -7,8 +7,8 @@
   },
   "service": "PelisVidHD",
   "description": {
-    "es": "Plataforma de streaming de películas y series gratis con la mejor calidad y cientos de titulos disponibles para verlo ahora.",
-    "en": "Free movie and series streaming platform with the best quality and hundreds of titles available to watch now."
+    "en": "Free movie and series streaming platform with the best quality and hundreds of titles available to watch now.",
+    "es": "Plataforma de streaming de películas y series gratis con la mejor calidad y cientos de titulos disponibles para verlo ahora."
   },
   "url": "pelisvidhd.icu",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pelisvidhd[.]icu[/]",
@@ -16,7 +16,7 @@
   "logo": "https://i.imgur.com/RQ28HKd.png",
   "thumbnail": "https://i.imgur.com/vVzwIrm.jpeg",
   "color": "#FF0000",
-  "category": "movies",
+  "category": "videos",
   "tags": [
     "peliculas",
     "series",
@@ -24,5 +24,5 @@
     "anime"
   ],
   "iframe": true,
-  "iFrameRegExp": "(streamtape[.]com|mixdropjmk[.]pw|netuplayer[.]top|dood[.]ws|d-s[.]io|[a-z0-9]+[.](com|net|org|ws|pw|top|io|to))"
+  "iFrameRegExp": "(tonplayer[.]space|unlimplay[.]com|nsrplay[.]space|vimeus[.]com|embed69[.]org|verhdlink[.]cam|warezcdn[.]lat|superflixapi[.]pro|pomfy[.]stream|mgeb[.]top|betterflix[.]lat|primesrc[.]me|vidcore[.]org|vaplayer[.]ru|viduki[.]net|2embed[.]online|frembed[.]casa)"
 }

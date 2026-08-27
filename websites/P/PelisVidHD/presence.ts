@@ -1,7 +1,7 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: '1489867723029741670', // Client ID de tu app en Discord Developer Portal
+  clientId: 'TU_CLIENT_ID_AQUI', // Client ID de tu app en Discord Developer Portal
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -37,7 +37,7 @@ let cachedYear: string | null = null
 function getYear(): string | null {
   const metaEl = document.querySelector('#heroMeta')
   const text = metaEl?.textContent ?? ''
-  const match = text.match(/\b(19|20)\d{2}\b/)
+  const match = text.match(/\b(?:19|20)\d{2}\b/)
   if (match) {
     cachedYear = match[0]
     return cachedYear
@@ -202,7 +202,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Iniciando sesión'
     presenceData.state = 'PelisVidHD'
   }
-  else if (path.includes('/signup')) {
+  else if (path.includes('/register')) {
     // Pantalla de registro
     iFrameVideoData = null
     presenceData.smallImageKey = Assets.Search
@@ -213,7 +213,7 @@ presence.on('UpdateData', async () => {
     // Portada / explorando el catálogo
     iFrameVideoData = null
     presenceData.smallImageKey = Assets.Search
-    presenceData.details = 'Explorando la página principal'
+    presenceData.details = 'Explorando el catálogo'
     presenceData.state = 'PelisVidHD'
   }
 
