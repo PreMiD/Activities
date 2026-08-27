@@ -306,7 +306,7 @@ presence.on('UpdateData', async () => {
       }
 
       //* Only offer the invite when something is actually on; otherwise it leads nowhere.
-      if (showJoinButton && title)
+      if (showJoinButton !== false && title)
         buttonLabel = pathname === '/together' ? 'Join Stream' : 'Join Room'
       break
     }
@@ -348,7 +348,7 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  if (!showBrowsingStatus && !watching)
+  if (showBrowsingStatus === false && !watching)
     return presence.clearActivity()
 
   //* Privacy Mode has to leave nothing behind that says what is being watched.
