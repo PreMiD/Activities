@@ -125,12 +125,13 @@ function togetherStream(): { title: string | null, line: string | null } {
 presence.on('UpdateData', async () => {
   const { pathname, href, search } = document.location
   const searchParams = new URLSearchParams(search)
-  const [showTimestamps, showCover, showButtons, showJoinButton, privacy] = await Promise.all([
+  const [showTimestamps, showCover, showButtons, showJoinButton, privacy, showBrowsingStatus] = await Promise.all([
     presence.getSetting<boolean>('timestamps'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('joinButton'),
     presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('showBrowsingStatus'),
   ])
   const {
     browsing,
@@ -161,6 +162,8 @@ presence.on('UpdateData', async () => {
     startTimestamp: browsingTimestamp,
   }
   let buttonLabel: string | null = null
+  //* With Show Browsing Status off, only the player survives.
+  let watching = false
 
   switch (true) {
     case pathname === '/': {
@@ -183,6 +186,7 @@ presence.on('UpdateData', async () => {
 
         const epLine = [number && `${episode} ${number}`, dub].filter(Boolean).join(' • ')
 
+        watching = true
         presenceData.details = title
         if (epLine)
           presenceData.state = epLine
@@ -267,7 +271,7 @@ presence.on('UpdateData', async () => {
       //* /together itself cannot be paused, its only control is "Остановить эфир",
       //* which tears the element back down to the stills, but a room host can pause,
       //* and there the element stays mounted reporting paused.
-      const watching = video !== null && video.readyState > 0
+      watching = video !== null && video.readyState > 0
       const streamPaused = watching && video?.paused === true
 
       if (streamPaused) {
@@ -302,9 +306,7 @@ presence.on('UpdateData', async () => {
       }
 
       //* Only offer the invite when something is actually on; otherwise it leads nowhere.
-      //* An extension that has not picked the setting up yet reports undefined, so the
-      //* declared default of true has to survive that.
-      if (showJoinButton !== false && title)
+      if (showJoinButton && title)
         buttonLabel = pathname === '/together' ? 'Join Stream' : 'Join Room'
       break
     }
@@ -345,6 +347,9 @@ presence.on('UpdateData', async () => {
       break
     }
   }
+
+  if (!showBrowsingStatus && !watching)
+    return presence.clearActivity()
 
   //* Privacy Mode has to leave nothing behind that says what is being watched.
   if (privacy) {
