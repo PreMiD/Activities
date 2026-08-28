@@ -6,7 +6,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.postimg.cc/wB7mrPS2/chicken-ICON-BLKBG.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/M/Mvies/assets/logo.png',
 }
 
 function getEpisodeInfo(title: string | null | undefined): {
