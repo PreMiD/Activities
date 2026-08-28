@@ -1,7 +1,7 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  clientId: 'TU_CLIENT_ID_AQUI', // Client ID de tu app en Discord Developer Portal
+  clientId: '1489867723029741670', // Client ID de tu app en Discord Developer Portal
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -213,15 +213,13 @@ presence.on('UpdateData', async () => {
     // Portada / explorando el catálogo
     iFrameVideoData = null
     presenceData.smallImageKey = Assets.Search
-    presenceData.details = 'Explorando el catálogo'
+    presenceData.details = 'Explorando la página principal'
     presenceData.state = 'PelisVidHD'
   }
 
   if (enFicha) {
-    // Discord a veces no muestra un solo botón; con 2 se ve más consistente.
     presenceData.buttons = [
       { label: 'Ver ahora', url: window.location.href },
-      { label: 'Ir a PelisVidHD', url: 'https://pelisvidhd.icu' },
     ]
   }
 
