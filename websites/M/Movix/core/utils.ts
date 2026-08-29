@@ -19,7 +19,10 @@ import {
   RELEASE_TAG_PATTERN,
   SAFE_BUTTON_RULES,
   SITE_NAME,
+  SOURCE_EDGE_SEPARATOR_PATTERN,
   SOURCE_LABEL_SEPARATOR_PATTERN,
+  SOURCE_URL_PREFIX_PATTERN,
+  SOURCE_URL_TOKEN_PATTERN,
   STRIP_SITE_NAME_PATTERN,
   TMDB_IMAGE_BASE,
   WATCH_ANIME_PATH_PATTERN,
@@ -798,6 +801,13 @@ export function formatWatchSourceLabel(value: unknown): string {
     return ''
   }
 
+  if (
+    SOURCE_URL_PREFIX_PATTERN.test(normalized)
+    || normalized.includes('://')
+  ) {
+    return getEmbedSourceLabelFromUrl(normalized)
+  }
+
   const lowered = normalized.toLowerCase().replace(WHITESPACE_PATTERN, '_')
   if (WATCH_SOURCE_LABEL_MAP[lowered]) {
     return WATCH_SOURCE_LABEL_MAP[lowered]
@@ -814,7 +824,9 @@ export function formatWatchSourceDisplay(label: unknown, detail: unknown): strin
     return ''
   }
 
-  const sourceDetail = normalizeText(detail)
+  const sourceDetail = normalizeText(
+    normalizeText(detail).replace(SOURCE_URL_TOKEN_PATTERN, ' '),
+  ).replace(SOURCE_EDGE_SEPARATOR_PATTERN, '')
   if (!sourceDetail) {
     return `Via ${sourceLabel}`
   }
@@ -882,7 +894,9 @@ export function getEmbedSourceLabelFromUrl(value: unknown): string {
   }
 
   try {
-    const hostname = new URL(normalized).hostname.replace(WWW_PREFIX_PATTERN, '')
+    const hostname = new URL(
+      normalized.includes('://') ? normalized : `https://${normalized}`,
+    ).hostname.replace(WWW_PREFIX_PATTERN, '')
     const root = hostname.split('.')[0] || ''
     return formatWatchSourceLabel(root)
   }

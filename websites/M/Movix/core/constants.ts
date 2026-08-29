@@ -72,6 +72,10 @@ export const WATCH_TITLE_TRAILER_PATTERN = /trailer background/i
 export const WATCH_TITLE_SKIP_PATTERN = /^[-+]\d+s$/i
 export const WATCH_TITLE_ZOOM_PATTERN = /^zoom [+-]$/i
 export const SOURCE_LABEL_SEPARATOR_PATTERN = /^[:\s-]+/
+export const SOURCE_URL_TOKEN_PATTERN
+  = /(?:https?:\/\/|www\.)\S+|\b[a-z0-9-]+(?:\.[a-z]{2,})+\/\S*/gi
+export const SOURCE_URL_PREFIX_PATTERN = /^(?:https?:\/\/|www\.)/i
+export const SOURCE_EDGE_SEPARATOR_PATTERN = /^[\s:,-]+|[\s:,-]+$/g
 export const RELEASE_TAG_PATTERN = /\s*SORTI(?:E|ES|S)?[.!]*$/i
 export const QUOTED_TEXT_PATTERNS = [
   /\u00AB([^\u00AB\u00BB]+)\u00BB/,
