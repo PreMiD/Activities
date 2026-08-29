@@ -26,8 +26,6 @@
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/thumbnail.png",
   "color": "#dc2626",
   "category": "videos",
-  "iframe": true,
-  "iFrameRegExp": ".*",
   "tags": [
     "movies",
     "series",
@@ -35,6 +33,8 @@
     "watchparty",
     "streaming"
   ],
+  "iframe": true,
+  "iFrameRegExp": ".*",
   "allowURLOverrides": true,
   "settings": [
     {

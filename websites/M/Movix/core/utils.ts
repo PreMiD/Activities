@@ -5,7 +5,6 @@ import type {
   WatchContext,
 } from './types.js'
 import { ActivityType } from 'premid'
-import { format, s } from './strings.js'
 import {
   FALLBACK_LOGO,
   HTTPS_URL_PATTERN,
@@ -37,6 +36,7 @@ import {
   WORD_SEPARATOR_PATTERN,
   WWW_PREFIX_PATTERN,
 } from './constants.js'
+import { format, s } from './strings.js'
 
 const IFRAME_PLAYBACK_MAX_AGE_MS = 10_000
 
