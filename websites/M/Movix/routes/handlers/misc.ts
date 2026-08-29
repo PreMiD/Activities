@@ -1,8 +1,6 @@
 import type { RoutePresenceContext } from '../types.js'
 import {
   ROUTE_LIST_PATTERN,
-  ROUTE_VIP_GIFT_PATTERN,
-  ROUTE_VIP_INVOICE_PATTERN,
   ROUTE_WRAPPED_PATTERN,
 } from '../../core/constants.js'
 import { format, s } from '../../core/strings.js'
@@ -135,48 +133,6 @@ export async function handleMiscRoutes(
         String(
           firstNonEmpty(getText('h2'), getText('h1'), s().linkSubmission),
         ),
-        pageImage,
-      ),
-    )
-  }
-
-  if (pathname === '/vip') {
-    return finalizeRoutePresence(
-      context,
-      createPagePresence(s().viewVip, '', pageImage),
-    )
-  }
-
-  if (pathname === '/vip/don') {
-    return finalizeRoutePresence(
-      context,
-      createPagePresence(s().makeDonation, '', pageImage),
-    )
-  }
-
-  const vipInvoiceMatch = pathname.match(ROUTE_VIP_INVOICE_PATTERN)
-  if (vipInvoiceMatch) {
-    const invoiceId = getMatchPart(vipInvoiceMatch, 1)
-
-    return finalizeRoutePresence(
-      context,
-      createPagePresence(
-        s().viewInvoice,
-        format(s().invoiceId, shortenId(invoiceId)),
-        pageImage,
-      ),
-    )
-  }
-
-  const vipGiftMatch = pathname.match(ROUTE_VIP_GIFT_PATTERN)
-  if (vipGiftMatch) {
-    const giftId = getMatchPart(vipGiftMatch, 1)
-
-    return finalizeRoutePresence(
-      context,
-      createPagePresence(
-        s().viewGift,
-        format(s().giftId, shortenId(giftId)),
         pageImage,
       ),
     )

@@ -69,12 +69,6 @@ export interface PresenceStrings {
   myRequests: string
   submitLink: string
   linkSubmission: string
-  viewVip: string
-  makeDonation: string
-  viewInvoice: string
-  invoiceId: string
-  viewGift: string
-  giftId: string
   viewAbout: string
   readPrivacy: string
   readTerms: string
@@ -188,12 +182,6 @@ const FR: PresenceStrings = {
   myRequests: 'Mes demandes',
   submitLink: 'Soumet un lien au Wishboard',
   linkSubmission: 'Soumission de lien',
-  viewVip: 'Consulte l\'espace VIP',
-  makeDonation: 'Effectue un don VIP',
-  viewInvoice: 'Consulte une facture VIP',
-  invoiceId: 'Facture {0}',
-  viewGift: 'Consulte un cadeau VIP',
-  giftId: 'Cadeau {0}',
   viewAbout: 'Consulte la page À propos',
   readPrivacy: 'Lit la politique de confidentialité',
   readTerms: 'Lit les conditions d\'utilisation',
@@ -307,12 +295,6 @@ const EN: PresenceStrings = {
   myRequests: 'My requests',
   submitLink: 'Submitting a link to the Wishboard',
   linkSubmission: 'Link submission',
-  viewVip: 'Viewing the VIP area',
-  makeDonation: 'Making a VIP donation',
-  viewInvoice: 'Viewing a VIP invoice',
-  invoiceId: 'Invoice {0}',
-  viewGift: 'Viewing a VIP gift',
-  giftId: 'Gift {0}',
   viewAbout: 'Viewing the About page',
   readPrivacy: 'Reading the privacy policy',
   readTerms: 'Reading the terms of service',
