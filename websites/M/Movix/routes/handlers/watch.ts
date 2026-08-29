@@ -29,15 +29,13 @@ export async function handleWatchRoutes(
   const { pathname, pageImage, contentImage } = context
 
   if (WATCH_MOVIE_PATH_PATTERN.test(pathname)) {
-    const title = getWatchTitle('Film mystère')
+    const title = getWatchTitle('Film')
 
     return finalizeRoutePresence(
       context,
       createWatchingPresence({
         title,
-        playingText: 'lecture en cours, canapé en surchauffe',
-        pausedText: 'pause stratégique, le drame attend',
-        waitingText: 'cherche la bonne source sans paniquer',
+        privacyDetails: 'Regarde un film',
         image: contentImage,
       }),
       { allowPageTimestamp: false },
@@ -48,9 +46,9 @@ export async function handleWatchRoutes(
   if (watchTvMatch) {
     const season = getMatchPart(watchTvMatch, 2)
     const episode = getMatchPart(watchTvMatch, 3)
-    const rawTitle = getWatchTitle('Série mystère')
+    const rawTitle = getWatchTitle('Série')
     const title
-      = rawTitle.replace(EPISODE_CODE_SUFFIX_PATTERN, '').trim() || 'Série mystère'
+      = rawTitle.replace(EPISODE_CODE_SUFFIX_PATTERN, '').trim() || 'Série'
 
     return finalizeRoutePresence(
       context,
@@ -58,9 +56,7 @@ export async function handleWatchRoutes(
         title,
         season,
         episode,
-        playingText: 'binge hors de contrôle',
-        pausedText: 'pause très dramatique',
-        waitingText: 'sélectionne une source avec panique élégante',
+        privacyDetails: 'Regarde une série',
         image: contentImage,
       }),
       { allowPageTimestamp: false },
@@ -71,9 +67,9 @@ export async function handleWatchRoutes(
   if (watchAnimeMatch) {
     const season = getMatchPart(watchAnimeMatch, 2)
     const episode = getMatchPart(watchAnimeMatch, 3)
-    const rawTitle = getWatchTitle('Anime mystère')
+    const rawTitle = getWatchTitle('Anime')
     const title
-      = rawTitle.replace(EPISODE_CODE_SUFFIX_PATTERN, '').trim() || 'Anime mystère'
+      = rawTitle.replace(EPISODE_CODE_SUFFIX_PATTERN, '').trim() || 'Anime'
 
     return finalizeRoutePresence(
       context,
@@ -81,9 +77,7 @@ export async function handleWatchRoutes(
         title,
         season,
         episode,
-        playingText: 'anime en cours, théorie du fanclub activée',
-        pausedText: 'pause technique, hype toujours intacte',
-        waitingText: 'cherche son épisode comme un héros secondaire',
+        privacyDetails: 'Regarde un anime',
         image: contentImage,
       }),
       { allowPageTimestamp: false },
@@ -94,16 +88,12 @@ export async function handleWatchRoutes(
     const title = firstNonEmpty(
       getText('h2'),
       getText('h1'),
-      'Création de WatchParty',
+      'Nouvelle WatchParty',
     )
 
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Prépare une WatchParty comme un maître de cérémonie chaotique',
-        String(title),
-        pageImage,
-      ),
+      createPagePresence('Crée une WatchParty', String(title), pageImage),
     )
   }
 
@@ -121,11 +111,7 @@ export async function handleWatchRoutes(
       context,
       createSpecificPagePresence(
         String(roomTitle),
-        [
-          'Salon WatchParty en ébullition 💬',
-          'WatchParty pilotée comme un chaos organisé 🎉',
-          'Salle commune tenue d\'une main très popcorn 🍿',
-        ],
+        'Participe à une WatchParty',
         contentImage === FALLBACK_LOGO ? pageImage : contentImage,
       ),
     )
@@ -137,20 +123,12 @@ export async function handleWatchRoutes(
     const state = joinCode
       ? `Code ${safeDecode(joinCode).toUpperCase()}`
       : String(
-          firstNonEmpty(
-            getText('h2'),
-            getText('h1'),
-            'Rejoindre une WatchParty',
-          ),
+          firstNonEmpty(getText('h2'), getText('h1'), 'Saisie du code'),
         )
 
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Essaie d\'entrer dans une WatchParty sans rater le code',
-        state,
-        pageImage,
-      ),
+      createPagePresence('Rejoint une WatchParty', state, pageImage),
     )
   }
 
@@ -158,8 +136,8 @@ export async function handleWatchRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Fouille les salons WatchParty comme un videur curieux',
-        String(firstNonEmpty(getText('h1'), 'Liste des salons WatchParty')),
+        'Parcourt les salons WatchParty',
+        String(firstNonEmpty(getText('h1'), 'Salons publics')),
         pageImage,
       ),
     )
@@ -172,10 +150,7 @@ export async function handleWatchRoutes(
       context,
       createWatchingPresence({
         title,
-        playingText:
-          'programme en cours, télécommande officiellement au chômage',
-        pausedText: 'pause stratégique du direct',
-        waitingText: 'cherche le bon flux avec dignité',
+        privacyDetails: 'Regarde France.tv',
         image: contentImage,
       }),
       { allowPageTimestamp: false },

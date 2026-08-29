@@ -1,4 +1,3 @@
-export type VariantText = string | readonly string[]
 export type TmdbMediaType = 'movie' | 'tv'
 
 export interface TmdbMediaSummary {

@@ -1,3 +1,4 @@
+import { setPrivacyMode } from './core/utils.js'
 import { buildRoutePresence } from './routes/buildRoutePresence.js'
 
 const presence = new Presence({
@@ -18,10 +19,13 @@ async function getBooleanSetting(
 }
 
 presence.on('UpdateData', async () => {
-  const [showTimestamp, showButtons] = await Promise.all([
+  const [showTimestamp, showButtons, privacyMode] = await Promise.all([
     getBooleanSetting('showTimestamp', true),
     getBooleanSetting('showButtons', false),
+    getBooleanSetting('privacyMode', false),
   ])
+
+  setPrivacyMode(privacyMode)
 
   const presenceData = await buildRoutePresence(showTimestamp, showButtons)
 

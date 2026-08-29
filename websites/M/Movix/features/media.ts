@@ -69,36 +69,20 @@ async function fetchTmdbMediaSummary(
   return request
 }
 
-function getCinegraphVariants(type: string): readonly string[] {
+function getCinegraphState(type: string): string {
   if (type === 'movie') {
-    return [
-      'Connexions d\'un film passées au scanner 🕸️',
-      'Univers d\'un film disséqué dans CinéGraph 🎬',
-      'Réseau d\'un film analysé comme un dossier secret 🧠',
-    ]
+    return 'Explore les connexions d\'un film dans CinéGraph'
   }
 
   if (type === 'tv') {
-    return [
-      'Connexions d\'une série passées au scanner 🕸️',
-      'Univers d\'une série disséqué dans CinéGraph 📺',
-      'Réseau d\'une série analysé comme un complot premium 🧠',
-    ]
+    return 'Explore les connexions d\'une série dans CinéGraph'
   }
 
   if (type === 'person') {
-    return [
-      'Connexions d\'une personne passées au scanner 👤',
-      'Carrière disséquée dans CinéGraph 🎭',
-      'Réseau créatif observé comme un tableau d\'enquête 🕵️',
-    ]
+    return 'Explore les connexions d\'une personne dans CinéGraph'
   }
 
-  return [
-    'Cartographie ciné en cours dans CinéGraph 🧠',
-    'Connexions ciné passées au scanner 🕸️',
-    'Univers Movix disséqué comme un dossier top secret 🧪',
-  ]
+  return 'Explore CinéGraph'
 }
 
 export async function getCinegraphContext(pageTitle: string, pageImage: string) {
@@ -162,6 +146,6 @@ export async function getCinegraphContext(pageTitle: string, pageImage: string) 
   return {
     title: String(title),
     image: firstNonEmpty(image, pageImage),
-    variants: getCinegraphVariants(graphType),
+    state: getCinegraphState(graphType),
   }
 }

@@ -1,4 +1,5 @@
 import type { RoutePresenceContext } from '../types.js'
+import { Assets } from 'premid'
 import {
   ROUTE_COLLECTION_PATTERN,
   ROUTE_DOWNLOAD_PATTERN,
@@ -29,35 +30,28 @@ export async function handleCatalogRoutes(
   if (pathname === '/') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Farfouille l\'accueil comme un critique sous caféine',
-        'Accueil Movix',
-        pageImage,
-      ),
+      createPagePresence('Parcourt la page d\'accueil', 'Accueil', pageImage),
     )
   }
 
   if (pathname === '/search') {
     const query = getSearchParam('q')
-
-    return finalizeRoutePresence(
-      context,
-      createPagePresence(
-        'Traque la perle rare avec un calme très relatif',
-        query ? `Recherche : ${query}` : 'Recherche globale',
-        pageImage,
-      ),
+    const presenceData = createPagePresence(
+      'Effectue une recherche',
+      query ? `Recherche : ${query}` : 'Recherche globale',
+      pageImage,
     )
+
+    presenceData.smallImageKey = Assets.Search
+    presenceData.smallImageText = 'Recherche'
+
+    return finalizeRoutePresence(context, presenceData)
   }
 
   if (pathname === '/movies') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Passe le catalogue films au rayon X',
-        'Catalogue films',
-        pageImage,
-      ),
+      createPagePresence('Parcourt le catalogue de films', 'Films', pageImage),
     )
   }
 
@@ -65,8 +59,8 @@ export async function handleCatalogRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Collectionne les séries sans finir les précédentes',
-        'Catalogue séries',
+        'Parcourt le catalogue de séries',
+        'Séries',
         pageImage,
       ),
     )
@@ -76,8 +70,8 @@ export async function handleCatalogRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Fouille les collections comme un conservateur insomniaque',
-        pageTitle || 'Collections Movix',
+        'Parcourt les collections',
+        pageTitle || 'Collections',
         pageImage,
       ),
     )
@@ -92,11 +86,7 @@ export async function handleCatalogRoutes(
       context,
       createSpecificPagePresence(
         collectionTitle,
-        [
-          'Collection passée au scanner 🗂️',
-          'Saga observée avec un sérieux disproportionné 🎞️',
-          'Collection inspectée comme un trésor du canapé 📚',
-        ],
+        'Consulte une collection',
         pageImage,
       ),
     )
@@ -111,11 +101,7 @@ export async function handleCatalogRoutes(
       context,
       createSpecificPagePresence(
         movieTitle,
-        [
-          'Fiche film sous la loupe 🎬',
-          'Film inspecté comme un dossier brûlant 🍿',
-          'Autopsie ciné en cours sur Movix 🎞️',
-        ],
+        'Consulte la fiche d\'un film',
         contentImage,
       ),
     )
@@ -130,11 +116,7 @@ export async function handleCatalogRoutes(
       context,
       createSpecificPagePresence(
         showTitle,
-        [
-          'Fiche série sous surveillance 📺',
-          'Série inspectée comme un complot à cliffhangers 🍿',
-          'Binge en préparation devant la fiche série 🎞️',
-        ],
+        'Consulte la fiche d\'une série',
         contentImage,
       ),
     )
@@ -155,16 +137,8 @@ export async function handleCatalogRoutes(
       createSpecificPagePresence(
         String(title),
         contentType === 'movie'
-          ? [
-              'Téléchargement film en préparation ⬇️',
-              'Plan B cinéma armé jusqu\'aux dents 📦',
-              'Mode furtif: aucun spoiler autorisé 🕶️',
-            ]
-          : [
-              'Téléchargement série en préparation ⬇️',
-              'Plan B binge prêt à décoller 📺',
-              'Rechargement stratégique des buffers 🔄',
-            ],
+          ? 'Prépare le téléchargement d\'un film'
+          : 'Prépare le téléchargement d\'une série',
         contentImage,
       ),
     )
@@ -172,15 +146,12 @@ export async function handleCatalogRoutes(
 
   if (pathname === '/debrid') {
     const provider = getSearchParam('provider')
-    const state = provider
-      ? `Debrid via ${provider}`
-      : 'Atelier anti-liens capricieux'
 
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Dompte des liens récalcitrants à mains nues',
-        state,
+        'Utilise le débrideur de liens',
+        provider ? `Service : ${provider}` : 'Débridage de liens',
         pageImage,
       ),
     )
@@ -194,7 +165,7 @@ export async function handleCatalogRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Trie le chaos par genre parce qu\'il le peut',
+        'Parcourt le catalogue par genre',
         pageTitle || `${mediaLabel} par genre`,
         pageImage,
       ),
@@ -205,8 +176,8 @@ export async function handleCatalogRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Laisse le destin choisir quelle idée brillante',
-        pageTitle || 'Roulette Movix',
+        'Utilise la roulette de suggestions',
+        pageTitle || 'Sélection aléatoire',
         pageImage,
       ),
     )
@@ -222,7 +193,7 @@ export async function handleCatalogRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Retourne un catalogue provider dans tous les sens',
+        'Parcourt le catalogue d\'une plateforme',
         pageTitle || `${providerName} - ${mediaLabel}`,
         pageImage,
       ),
@@ -236,7 +207,7 @@ export async function handleCatalogRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Espionne un provider avec une curiosité très assumée',
+        'Consulte une plateforme',
         getProviderName(providerId),
         pageImage,
       ),
@@ -246,33 +217,21 @@ export async function handleCatalogRoutes(
   if (pathname === '/auth' || pathname === '/auth/google') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Négocie avec l\'authentification sans perdre la face',
-        'Connexion en cours',
-        pageImage,
-      ),
+      createPagePresence('Se connecte', 'Connexion', pageImage),
     )
   }
 
   if (pathname === '/create-account' || pathname === '/link-bip39/create') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Forge un compte comme un druide numérique',
-        'Création de compte',
-        pageImage,
-      ),
+      createPagePresence('Crée un compte', 'Création de compte', pageImage),
     )
   }
 
   if (pathname === '/login-bip39' || pathname === '/link-bip39') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Récite sa phrase magique sans cligner des yeux',
-        'Connexion BIP39',
-        pageImage,
-      ),
+      createPagePresence('Se connecte', 'Connexion BIP39', pageImage),
     )
   }
 
@@ -285,11 +244,7 @@ export async function handleCatalogRoutes(
       context,
       createSpecificPagePresence(
         personTitle,
-        [
-          'Filmo disséquée comme un détective du générique 🎭',
-          'Carrière passée au scanner plan par plan 🎬',
-          'Profil ciné observé comme une archive sacrée 📚',
-        ],
+        'Consulte la fiche d\'une personne',
         pageImage,
       ),
     )
@@ -298,11 +253,7 @@ export async function handleCatalogRoutes(
   if (pathname === '/profile') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Range son profil puis dérange tout à nouveau',
-        'Profil utilisateur',
-        pageImage,
-      ),
+      createPagePresence('Consulte son profil', 'Profil utilisateur', pageImage),
     )
   }
 
@@ -310,8 +261,8 @@ export async function handleCatalogRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Surveille ses alertes comme une tour de contrôle du binge',
-        pageTitle || 'Mes alertes',
+        'Consulte ses alertes',
+        pageTitle || 'Alertes',
         pageImage,
       ),
     )
@@ -324,15 +275,16 @@ export async function handleCatalogRoutes(
       pageTitle,
       'Live TV',
     )
-
-    return finalizeRoutePresence(
-      context,
-      createPagePresence(
-        'Zappe plus vite que la télécommande ne l\'accepte',
-        String(liveTitle),
-        pageImage,
-      ),
+    const presenceData = createPagePresence(
+      'Regarde la TV en direct',
+      String(liveTitle),
+      pageImage,
     )
+
+    presenceData.smallImageKey = Assets.Live
+    presenceData.smallImageText = 'En direct'
+
+    return finalizeRoutePresence(context, presenceData)
   }
 
   return null

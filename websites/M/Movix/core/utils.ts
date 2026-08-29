@@ -1,5 +1,5 @@
-import type { VariantText, WatchContext } from './types.js'
-import { ActivityType } from 'premid'
+import type { WatchContext } from './types.js'
+import { ActivityType, Assets } from 'premid'
 import {
   FALLBACK_LOGO,
   HTTPS_URL_PATTERN,
@@ -27,16 +27,18 @@ import {
   WORD_SEPARATOR_PATTERN,
   WWW_PREFIX_PATTERN,
 } from './constants.js'
-import {
-  PAGE_DETAIL_VARIANTS,
-  WATCH_ENDED_VARIANTS,
-  WATCH_PAUSED_VARIANTS,
-  WATCH_PLAYING_VARIANTS,
-  WATCH_WAITING_VARIANTS,
-} from './variants.js'
 
 let lastRouteKey = ''
 let lastRouteStartedAt = Date.now()
+let privacyModeEnabled = false
+
+export function setPrivacyMode(enabled: boolean): void {
+  privacyModeEnabled = enabled
+}
+
+export function isPrivacyModeEnabled(): boolean {
+  return privacyModeEnabled
+}
 
 export function normalizeText(value: unknown): string {
   return String(value ?? '')
@@ -311,40 +313,6 @@ export function getRouteStartedAt(): number {
   return lastRouteStartedAt
 }
 
-export function hashString(value: string): number {
-  let hash = 0
-
-  for (let index = 0; index < value.length; index += 1) {
-    hash = (hash << 5) - hash + value.charCodeAt(index)
-    hash |= 0
-  }
-
-  return Math.abs(hash)
-}
-
-export function pickVariant(seed: string, variants: readonly string[]): string {
-  const cleanVariants = variants
-    .map(variant => normalizeText(variant))
-    .filter(Boolean)
-
-  if (cleanVariants.length === 0) {
-    return ''
-  }
-
-  return cleanVariants[hashString(seed) % cleanVariants.length] || ''
-}
-
-export function findVariantsForPath(
-  pathname: string,
-  collection: Array<{ pattern: RegExp, variants: readonly string[] }>,
-): readonly string[] | undefined {
-  return collection.find(entry => entry.pattern.test(pathname))?.variants
-}
-
-export function resolveVariantText(value: VariantText, seed: string): string {
-  return Array.isArray(value) ? pickVariant(seed, value) : normalizeText(value)
-}
-
 export function getPageTitle(): string {
   const title = firstNonEmpty(
     getText('main h1'),
@@ -394,6 +362,7 @@ export function getSafeButtons(
 ): [ButtonData, ButtonData?] | undefined {
   if (
     !enabled
+    || privacyModeEnabled
     || !SAFE_BUTTON_PATTERNS.some(pattern => pattern.test(pathname))
   ) {
     return undefined
@@ -433,9 +402,9 @@ export function finalizePresence(
   }
 
   presenceData.details = truncate(presenceData.details)
-  presenceData.state = truncate(presenceData.state)
+  presenceData.state = truncate(presenceData.state) || undefined
 
-  if (!presenceData.details || !presenceData.state) {
+  if (!presenceData.details) {
     return null
   }
 
@@ -463,158 +432,97 @@ export function finalizePresence(
 }
 
 export function createPagePresence(
-  details: VariantText,
-  state: VariantText,
+  details: string,
+  state: string,
   image?: string,
 ) {
-  const presenceData = buildBasePresence(image)
-  const seed = `${document.location.pathname}${document.location.search}`
-  const routeDetails = Array.isArray(details)
-    ? details
-    : findVariantsForPath(document.location.pathname, PAGE_DETAIL_VARIANTS)
-      || details
+  if (privacyModeEnabled) {
+    const presenceData = buildBasePresence(FALLBACK_LOGO)
+    presenceData.details = normalizeText(details)
+    return presenceData
+  }
 
-  presenceData.details = resolveVariantText(routeDetails, `${seed}:details`)
-  presenceData.state = resolveVariantText(state, `${seed}:state`)
+  const presenceData = buildBasePresence(image)
+
+  presenceData.details = normalizeText(details)
+  presenceData.state = normalizeText(state)
   return presenceData
 }
 
 export function createWatchingPresence(options: {
   title: string
   displayTitle?: string
-  playingText: VariantText
-  pausedText: VariantText
-  waitingText: VariantText
-  embedText?: VariantText
-  endedText?: VariantText
+  privacyDetails?: string
   season?: string
   episode?: string
   image?: string
-  statePrefix?: string
 }) {
-  const presenceData = buildBasePresence(options.image)
+  const privacy = privacyModeEnabled
+  const presenceData = buildBasePresence(privacy ? FALLBACK_LOGO : options.image)
   const video = getCurrentVideoElement()
   const season = normalizeText(options.season)
   const episode = normalizeText(options.episode)
   const routeWatchMediaType = getWatchMediaTypeForPath(document.location.pathname)
-  const useSimpleWatchRoute = Boolean(routeWatchMediaType)
-  const details = normalizeText(
-    options.displayTitle
-    || (routeWatchMediaType
-      ? getFormattedWatchTitle(
-          options.title,
-          routeWatchMediaType,
-          season,
-          episode,
-        )
-      : options.title),
-  )
+  const details = privacy
+    ? normalizeText(options.privacyDetails) || 'Regarde un contenu'
+    : normalizeText(
+        options.displayTitle
+        || (routeWatchMediaType
+          ? getFormattedWatchTitle(
+              options.title,
+              routeWatchMediaType,
+              season,
+              episode,
+            )
+          : options.title),
+      )
   const prefix
-    = options.statePrefix !== undefined
-      ? options.statePrefix
-      : useSimpleWatchRoute
-        ? ''
-        : season && episode
-          ? `S${season}E${episode} - `
-          : ''
-  const seed = `${document.location.pathname}:${details}:${season}:${episode}`
-  const waitingVariant = useSimpleWatchRoute
-    ? 'Selection de la source'
-    : Array.isArray(options.waitingText)
-      ? options.waitingText
-      : findVariantsForPath(document.location.pathname, WATCH_WAITING_VARIANTS)
-        || options.waitingText
-  const playingVariant = useSimpleWatchRoute
-    ? 'Lecture en cours'
-    : Array.isArray(options.playingText)
-      ? options.playingText
-      : findVariantsForPath(document.location.pathname, WATCH_PLAYING_VARIANTS)
-        || options.playingText
-  const pausedVariant = useSimpleWatchRoute
-    ? 'En pause'
-    : Array.isArray(options.pausedText)
-      ? options.pausedText
-      : findVariantsForPath(document.location.pathname, WATCH_PAUSED_VARIANTS)
-        || options.pausedText
-  const endedVariant = useSimpleWatchRoute
-    ? 'Lecture terminee'
-    : Array.isArray(options.endedText)
-      ? options.endedText
-      : findVariantsForPath(document.location.pathname, WATCH_ENDED_VARIANTS)
-        || options.endedText
-        || 'Le generique approche, personne ne bouge'
-  const waitingText = resolveVariantText(
-    waitingVariant,
-    `${seed}:waiting`,
-  )
-  const playingText = resolveVariantText(
-    playingVariant,
-    `${seed}:playing`,
-  )
-  const pausedText = resolveVariantText(
-    pausedVariant,
-    `${seed}:paused`,
-  )
-  const embedText = resolveVariantText(
-    options.embedText || 'Lecteur embed actif',
-    `${seed}:embed`,
-  )
-  const endedText = resolveVariantText(
-    Array.isArray(options.endedText)
-      ? options.endedText
-      : findVariantsForPath(document.location.pathname, WATCH_ENDED_VARIANTS)
-        || options.endedText
-        || 'Le générique approche, personne ne bouge',
-    `${seed}:ended`,
-  )
-
-  const watchEndedText = useSimpleWatchRoute
-    ? resolveVariantText(endedVariant, `${seed}:ended:simple`)
-    : endedText
+    = !routeWatchMediaType && season && episode ? `S${season}E${episode} - ` : ''
   const watchContext = getWatchContext()
   const activeEmbedFrame = getActiveEmbedFrame()
-  const embedSourceLabel = getActiveEmbedSourceLabel(activeEmbedFrame)
-  const selectedSourceLabel = formatWatchSourceLabel(watchContext.sourceLabel)
-  const embedSourceDisplay = formatWatchSourceDisplay(
-    embedSourceLabel,
-    watchContext.sourceDetail,
-  )
-  const selectedSourceDisplay = formatWatchSourceDisplay(
-    watchContext.sourceLabel,
-    watchContext.sourceDetail,
-  )
-  const embedSourceState = formatWatchSourceState(
-    embedSourceLabel,
-    watchContext.sourceDetail,
-  )
-  const selectedSourceState = formatWatchSourceState(
-    watchContext.sourceLabel,
-    watchContext.sourceDetail,
-  )
-  const hoverEpisodeLabel = getWatchEpisodeHoverLabel(season, episode)
+  const embedSourceLabel = privacy
+    ? ''
+    : getActiveEmbedSourceLabel(activeEmbedFrame)
+  const selectedSourceLabel = privacy
+    ? ''
+    : formatWatchSourceLabel(watchContext.sourceLabel)
+  const selectedSourceDisplay = privacy
+    ? ''
+    : formatWatchSourceDisplay(watchContext.sourceLabel, watchContext.sourceDetail)
+  const embedSourceState = privacy
+    ? ''
+    : formatWatchSourceState(embedSourceLabel, watchContext.sourceDetail)
+  const selectedSourceState = privacy
+    ? ''
+    : formatWatchSourceState(watchContext.sourceLabel, watchContext.sourceDetail)
+  const hoverEpisodeLabel = privacy
+    ? ''
+    : getWatchEpisodeHoverLabel(season, episode)
 
   presenceData.type = ActivityType.Watching
   presenceData.details = details || options.title
-  presenceData.state = `${prefix}${waitingText}`
-
-  if (hoverEpisodeLabel) {
-    presenceData.largeImageText = hoverEpisodeLabel
-  }
-  else {
-    presenceData.largeImageText = 'Lecture en cours'
-  }
+  presenceData.state = `${prefix}Sélection de la source`
+  presenceData.smallImageKey = Assets.Search
+  presenceData.smallImageText = 'Sélection de la source'
+  presenceData.largeImageText = hoverEpisodeLabel || SITE_NAME
 
   if (video && Number.isFinite(video.duration) && video.duration > 0) {
     if (video.ended) {
-      presenceData.state = `${prefix}${watchEndedText}`
+      presenceData.state = `${prefix}Lecture terminée`
+      presenceData.smallImageKey = Assets.Stop
+      presenceData.smallImageText = 'Lecture terminée'
     }
     else if (video.paused) {
       presenceData.state = selectedSourceDisplay
         ? `En pause - ${selectedSourceDisplay}`
-        : `${prefix}${pausedText}`
+        : `${prefix}En pause`
+      presenceData.smallImageKey = Assets.Pause
+      presenceData.smallImageText = 'En pause'
     }
     else {
-      presenceData.state = selectedSourceDisplay || `${prefix}${playingText}`
+      presenceData.state = selectedSourceDisplay || `${prefix}Lecture en cours`
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = 'Lecture en cours'
       presenceData.startTimestamp
         = Date.now() - Math.floor(video.currentTime * 1000)
       presenceData.endTimestamp
@@ -623,11 +531,11 @@ export function createWatchingPresence(options: {
     }
   }
   else if (activeEmbedFrame || embedSourceLabel) {
-    presenceData.state = embedSourceLabel
-      ? embedSourceState
-      : embedSourceDisplay || embedText
+    presenceData.state = embedSourceState || 'Lecture via un lecteur externe'
+    presenceData.smallImageKey = Assets.Play
+    presenceData.smallImageText = 'Lecture en cours'
   }
-  else if (useSimpleWatchRoute && selectedSourceLabel) {
+  else if (selectedSourceLabel) {
     presenceData.state = selectedSourceState
   }
 
@@ -1023,19 +931,23 @@ export function extractQuotedText(value: unknown): string {
 
 export function createSpecificPagePresence(
   details: string,
-  state: VariantText,
+  state: string,
   image?: string,
-  seedSuffix?: string,
 ) {
   const subject = normalizeText(details)
   if (!subject) {
     return null
   }
 
+  if (privacyModeEnabled) {
+    const presenceData = buildBasePresence(FALLBACK_LOGO)
+    presenceData.details = normalizeText(state) || 'Navigue sur Movix'
+    return presenceData
+  }
+
   const presenceData = buildBasePresence(image)
-  const seed = `${document.location.pathname}${document.location.search}:${normalizeText(seedSuffix) || subject}`
 
   presenceData.details = subject
-  presenceData.state = resolveVariantText(state, `${seed}:state`)
+  presenceData.state = normalizeText(state)
   return presenceData
 }

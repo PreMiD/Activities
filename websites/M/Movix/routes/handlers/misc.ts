@@ -26,8 +26,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Demande au site de choisir à sa place, aveu touchant',
-        pageTitle || 'Suggestions personnalisées',
+        'Consulte les suggestions personnalisées',
+        pageTitle || 'Suggestions',
         pageImage,
       ),
     )
@@ -37,7 +37,7 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Équipe son navigateur pour boxer les hosters relous',
+        'Consulte la page de l\'extension',
         pageTitle || 'Extension Movix',
         pageImage,
       ),
@@ -53,11 +53,7 @@ export async function handleMiscRoutes(
       context,
       createSpecificPagePresence(
         listTitle,
-        [
-          'Liste publique inspectée avec gravité 📋',
-          'Sélection passée au peigne fin 🍽️',
-          'Compilation ciné dégustée comme un menu secret 🗃️',
-        ],
+        'Consulte une liste publique',
         pageImage,
       ),
     )
@@ -67,8 +63,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Parcourt les listes publiques comme un brocanteur du streaming',
-        pageTitle || 'Catalogue des listes publiques',
+        'Parcourt les listes publiques',
+        pageTitle || 'Catalogue des listes',
         pageImage,
       ),
     )
@@ -77,11 +73,7 @@ export async function handleMiscRoutes(
   if (pathname === '/dmca') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Lit la DMCA, oui ça arrive vraiment',
-        'Section juridique',
-        pageImage,
-      ),
+      createPagePresence('Consulte les informations légales', 'DMCA', pageImage),
     )
   }
 
@@ -89,8 +81,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Traîne dans l\'admin avec beaucoup trop de boutons',
-        'Console admin',
+        'Utilise la console d\'administration',
+        'Administration',
         pageImage,
       ),
     )
@@ -99,22 +91,14 @@ export async function handleMiscRoutes(
   if (pathname === '/profile-selection') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Choisit un profil comme si Netflix observait',
-        'Sélection de profil',
-        pageImage,
-      ),
+      createPagePresence('Sélectionne un profil', '', pageImage),
     )
   }
 
   if (pathname === '/profile-management') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Bidouille les profils avec une autorité discutable',
-        'Gestion des profils',
-        pageImage,
-      ),
+      createPagePresence('Gère ses profils', '', pageImage),
     )
   }
 
@@ -122,8 +106,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Vote sur le Wishboard comme un ministre du catalogue',
-        pageTitle || 'Wishboard',
+        'Parcourt le Wishboard',
+        pageTitle || 'Demandes de la communauté',
         pageImage,
       ),
     )
@@ -133,8 +117,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Dépose une requête avec l\'espoir d\'être exaucé',
-        String(firstNonEmpty(getText('h1'), 'Nouvelle demande Wishboard')),
+        'Rédige une demande Wishboard',
+        String(firstNonEmpty(getText('h1'), 'Nouvelle demande')),
         pageImage,
       ),
     )
@@ -144,8 +128,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Surveille ses requêtes comme des actions en bourse',
-        String(firstNonEmpty(getText('h1'), 'Mes demandes Wishboard')),
+        'Consulte ses demandes Wishboard',
+        String(firstNonEmpty(getText('h1'), 'Mes demandes')),
         pageImage,
       ),
     )
@@ -155,7 +139,7 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Soumet un lien pour sauver le catalogue à mains nues',
+        'Soumet un lien au Wishboard',
         String(
           firstNonEmpty(getText('h2'), getText('h1'), 'Soumission de lien'),
         ),
@@ -167,22 +151,14 @@ export async function handleMiscRoutes(
   if (pathname === '/vip') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Examine le VIP avec un regard de mécène stratégique',
-        'Espace VIP',
-        pageImage,
-      ),
+      createPagePresence('Consulte l\'espace VIP', '', pageImage),
     )
   }
 
   if (pathname === '/vip/don') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Sort la carte bleue avec un panache douteux',
-        'Don VIP',
-        pageImage,
-      ),
+      createPagePresence('Effectue un don VIP', '', pageImage),
     )
   }
 
@@ -193,7 +169,7 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Contemple une facture VIP, romance moderne',
+        'Consulte une facture VIP',
         `Facture ${shortenId(invoiceId)}`,
         pageImage,
       ),
@@ -207,7 +183,7 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Déballe un cadeau VIP sans papier brillant',
+        'Consulte un cadeau VIP',
         `Cadeau ${shortenId(giftId)}`,
         pageImage,
       ),
@@ -217,33 +193,21 @@ export async function handleMiscRoutes(
   if (pathname === '/about') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Raconte l\'histoire de Movix comme une légende locale',
-        pageTitle || 'À propos de Movix',
-        pageImage,
-      ),
+      createPagePresence('Consulte la page À propos', '', pageImage),
     )
   }
 
   if (pathname === '/privacy') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Lit la politique de confidentialité avec un courage rare',
-        'Politique de confidentialité',
-        pageImage,
-      ),
+      createPagePresence('Lit la politique de confidentialité', '', pageImage),
     )
   }
 
   if (pathname === '/terms-of-service' || pathname === '/terms') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Traverse les CGU armé d\'un café très serré',
-        'Conditions d\'utilisation',
-        pageImage,
-      ),
+      createPagePresence('Lit les conditions d\'utilisation', '', pageImage),
     )
   }
 
@@ -254,7 +218,7 @@ export async function handleMiscRoutes(
       context,
       createSpecificPagePresence(
         graphContext.title,
-        graphContext.variants,
+        graphContext.state,
         graphContext.image,
       ),
     )
@@ -263,11 +227,7 @@ export async function handleMiscRoutes(
   if (pathname === '/settings') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Tripatouille les réglages jusqu\'à friser la perfection',
-        'Réglages Movix',
-        pageImage,
-      ),
+      createPagePresence('Configure ses préférences', '', pageImage),
     )
   }
 
@@ -275,8 +235,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Scrute le top 10 comme un analyste de canapé',
-        pageTitle || 'Top 10 Movix',
+        'Consulte le top 10',
+        pageTitle || 'Top 10',
         pageImage,
       ),
     )
@@ -286,7 +246,7 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Fouille France.tv sans télécommande et sans honte',
+        'Parcourt France.tv',
         String(firstNonEmpty(getText('h2'), pageTitle, 'France.tv')),
         pageImage,
       ),
@@ -308,11 +268,7 @@ export async function handleMiscRoutes(
       context,
       createSpecificPagePresence(
         programTitle,
-        [
-          'Fiche France.tv sous inspection 🇫🇷',
-          'Programme France.tv étudié avec un sérieux républicain 📺',
-          'France.tv passé au microscope télévisuel 🎬',
-        ],
+        'Consulte un programme France.tv',
         contentImage,
       ),
     )
@@ -323,26 +279,18 @@ export async function handleMiscRoutes(
     const wrappedYear = getMatchPart(wrappedMatch, 1)
     const state = wrappedYear
       ? `Wrapped ${wrappedYear}`
-      : String(firstNonEmpty(getText('h1'), 'Wrapped Movix'))
+      : String(firstNonEmpty(getText('h1'), 'Wrapped'))
 
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Relit son année ciné comme un bilan existentiel',
-        state,
-        pageImage,
-      ),
+      createPagePresence('Consulte son récapitulatif annuel', state, pageImage),
     )
   }
 
   if (pathname === '*' || pathname === '/404') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'S\'est perdu dans Movix, ce qui était statistiquement évitable',
-        '404 - page introuvable',
-        pageImage,
-      ),
+      createPagePresence('Page introuvable', 'Erreur 404', pageImage),
     )
   }
 
