@@ -20,7 +20,7 @@ import {
   SAFE_BUTTON_RULES,
   SITE_NAME,
   SOURCE_EDGE_SEPARATOR_PATTERN,
-  SOURCE_LABEL_SEPARATOR_PATTERN,
+  SOURCE_SEGMENT_SPLIT_PATTERN,
   SOURCE_URL_PREFIX_PATTERN,
   SOURCE_URL_TOKEN_PATTERN,
   STRIP_SITE_NAME_PATTERN,
@@ -818,40 +818,80 @@ export function formatWatchSourceLabel(value: unknown): string {
     .replace(WORD_INITIAL_PATTERN, character => character.toUpperCase())
 }
 
+function segmentWords(value: string): string[] {
+  return value
+    .toLowerCase()
+    .replace(WORD_SEPARATOR_PATTERN, ' ')
+    .split(' ')
+    .filter(Boolean)
+}
+
+function isSegmentContained(segment: string, other: string): boolean {
+  if (segment.length >= other.length) {
+    return false
+  }
+
+  const otherWords = segmentWords(other)
+  return segmentWords(segment).every(word => otherWords.includes(word))
+}
+
 export function formatWatchSourceDisplay(label: unknown, detail: unknown): string {
   const sourceLabel = formatWatchSourceLabel(label)
   if (!sourceLabel) {
     return ''
   }
 
-  const sourceDetail = normalizeText(
+  const labelWords = segmentWords(sourceLabel).join(' ')
+  const strippedDetail = normalizeText(
     normalizeText(detail).replace(SOURCE_URL_TOKEN_PATTERN, ' '),
-  ).replace(SOURCE_EDGE_SEPARATOR_PATTERN, '')
-  if (!sourceDetail) {
-    return `Via ${sourceLabel}`
+  )
+
+  const segments: string[] = []
+  for (const rawSegment of strippedDetail.split(SOURCE_SEGMENT_SPLIT_PATTERN)) {
+    let segment = normalizeText(
+      rawSegment.replace(SOURCE_EDGE_SEPARATOR_PATTERN, ''),
+    )
+    if (!segment) {
+      continue
+    }
+
+    const segmentLower = segmentWords(segment).join(' ')
+    if (!segmentLower || segmentLower === labelWords) {
+      continue
+    }
+
+    if (segmentLower.startsWith(`${labelWords} `)) {
+      segment = normalizeText(segment.slice(sourceLabel.length))
+      if (!segment) {
+        continue
+      }
+    }
+
+    segments.push(segment)
   }
 
-  const normalizedLabel = sourceLabel
-    .toLowerCase()
-    .replace(WORD_SEPARATOR_PATTERN, ' ')
-    .trim()
-  const loweredDetail = sourceDetail.toLowerCase()
-  const detailSuffix = loweredDetail.startsWith(normalizedLabel)
-    ? sourceDetail.slice(sourceLabel.length)
-    : sourceDetail
-  const cleanedDetail = detailSuffix
-    .replace(SOURCE_LABEL_SEPARATOR_PATTERN, '')
-    .trim()
-  const normalizedDetail = cleanedDetail
-    .toLowerCase()
-    .replace(WORD_SEPARATOR_PATTERN, ' ')
-    .trim()
+  const kept: string[] = []
+  segments.forEach((segment, index) => {
+    const lower = segment.toLowerCase()
+    const isRedundant = segments.some((other, otherIndex) => {
+      if (otherIndex === index) {
+        return false
+      }
 
-  if (!cleanedDetail || normalizedDetail === normalizedLabel) {
-    return sourceLabel
-  }
+      if (lower === other.toLowerCase()) {
+        return otherIndex < index
+      }
 
-  return `${sourceLabel} - ${cleanedDetail}`
+      return isSegmentContained(segment, other)
+    })
+
+    if (!isRedundant && !kept.some(entry => entry.toLowerCase() === lower)) {
+      kept.push(segment)
+    }
+  })
+
+  const cleanedDetail = kept.join(' - ')
+  return cleanedDetail ? `${sourceLabel} - ${cleanedDetail}` : sourceLabel
 }
 
 export function formatWatchSourceState(label: unknown, detail: unknown): string {
