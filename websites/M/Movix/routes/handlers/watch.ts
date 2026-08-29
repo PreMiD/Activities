@@ -2,6 +2,7 @@ import type { RoutePresenceContext } from '../types.js'
 import { ActivityType } from 'premid'
 import {
   EPISODE_CODE_SUFFIX_PATTERN,
+  FALLBACK_LOGO,
   ROUTE_FTV_WATCH_PATTERN,
   ROUTE_WATCHPARTY_JOIN_PATTERN,
   ROUTE_WATCHPARTY_ROOM_PATTERN,
@@ -19,7 +20,6 @@ import {
   getAttribute,
   getMatchPart,
   getPartyContext,
-  getSiteLogo,
   getText,
   getWatchTitle,
   isImageUrlAllowed,
@@ -115,7 +115,7 @@ export async function handleWatchRoutes(
     const roomId = getMatchPart(watchpartyRoomMatch, 1)
     const party = getPartyContext()
     const fallbackImage
-      = contentImage === getSiteLogo() ? pageImage : contentImage
+      = contentImage === FALLBACK_LOGO ? pageImage : contentImage
 
     if (party.title && !isPrivacyModeEnabled()) {
       const episodeCode

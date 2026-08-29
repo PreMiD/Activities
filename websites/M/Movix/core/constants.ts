@@ -1,4 +1,15 @@
 export const SITE_NAME = 'Movix'
+export const CDN_ASSETS_BASE
+  = 'https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets'
+export const FALLBACK_LOGO = `${CDN_ASSETS_BASE}/logo.png`
+
+export const PRESENCE_ICONS = {
+  play: `${CDN_ASSETS_BASE}/play.png`,
+  pause: `${CDN_ASSETS_BASE}/pause.png`,
+  stop: `${CDN_ASSETS_BASE}/stop.png`,
+  search: `${CDN_ASSETS_BASE}/search.png`,
+  live: `${CDN_ASSETS_BASE}/live.png`,
+} as const
 export const TMDB_API_BASE = 'https://api.themoviedb.org/3'
 export const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p'
 export const TMDB_API_KEY = 'f3d757824f08ea2cff45eb8f47ca3a1e'

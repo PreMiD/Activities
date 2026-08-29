@@ -7,11 +7,13 @@ import type {
 import { ActivityType } from 'premid'
 import { format, s } from './strings.js'
 import {
+  FALLBACK_LOGO,
   HTTPS_URL_PATTERN,
   LEADING_EPISODE_LABEL_PATTERN,
   LEADING_EPISODE_NUMBER_PATTERN,
   NON_BREAKING_SPACE_PATTERN,
   ONLY_EPISODE_NUMBER_PATTERN,
+  PRESENCE_ICONS,
   PROVIDER_NAMES,
   QUOTED_TEXT_PATTERNS,
   RELEASE_TAG_PATTERN,
@@ -34,16 +36,6 @@ import {
 } from './constants.js'
 
 const IFRAME_PLAYBACK_MAX_AGE_MS = 10_000
-
-export function getSiteLogo(): string {
-  return `${document.location.origin}/movix512.png`
-}
-
-export function getPresenceIcon(
-  name: 'play' | 'pause' | 'stop' | 'search' | 'live',
-): string {
-  return `${document.location.origin}/premid/${name}.png`
-}
 
 let lastRouteKey = ''
 let lastRouteStartedAt = Date.now()
@@ -387,7 +379,7 @@ export function getPageTitle(): string {
 
 export function getPageImage(mode: 'logo' | 'content' = 'logo'): string {
   if (mode === 'logo') {
-    return getSiteLogo()
+    return FALLBACK_LOGO
   }
 
   const candidates
@@ -401,9 +393,9 @@ export function getPageImage(mode: 'logo' | 'content' = 'logo'): string {
           getAttribute('img[alt*="poster" i]', 'src'),
           getAttribute('img[src*="tmdb.org"][src*="/w500"]', 'src'),
           getAttribute('img[src*="tmdb.org"][src*="/original"]', 'src'),
-          getSiteLogo(),
+          FALLBACK_LOGO,
         ]
-      : [getSiteLogo()]
+      : [FALLBACK_LOGO]
 
   for (const candidate of candidates) {
     const absolute = toAbsoluteUrl(candidate)
@@ -412,7 +404,7 @@ export function getPageImage(mode: 'logo' | 'content' = 'logo'): string {
     }
   }
 
-  return getSiteLogo()
+  return FALLBACK_LOGO
 }
 
 export function getSafeButtons(
@@ -445,8 +437,8 @@ export function buildBasePresence(image?: string): PresenceData {
   return {
     name: SITE_NAME,
     largeImageKey: posterEnabled
-      ? image || getPageImage() || getSiteLogo()
-      : getSiteLogo(),
+      ? image || getPageImage() || FALLBACK_LOGO
+      : FALLBACK_LOGO,
   }
 }
 
@@ -487,7 +479,7 @@ export function finalizePresence(
   }
 
   if (!presenceData.largeImageKey) {
-    presenceData.largeImageKey = getSiteLogo()
+    presenceData.largeImageKey = FALLBACK_LOGO
   }
 
   return presenceData
@@ -499,7 +491,7 @@ export function createPagePresence(
   image?: string,
 ) {
   if (privacyModeEnabled) {
-    const presenceData = buildBasePresence(getSiteLogo())
+    const presenceData = buildBasePresence(FALLBACK_LOGO)
     presenceData.details = normalizeText(details)
     return presenceData
   }
@@ -520,7 +512,7 @@ export function createWatchingPresence(options: {
   image?: string
 }) {
   const privacy = privacyModeEnabled
-  const presenceData = buildBasePresence(privacy ? getSiteLogo() : options.image)
+  const presenceData = buildBasePresence(privacy ? FALLBACK_LOGO : options.image)
   const video = getCurrentVideoElement()
   const season = normalizeText(options.season)
   const episode = normalizeText(options.episode)
@@ -567,26 +559,26 @@ export function createWatchingPresence(options: {
   presenceData.type = ActivityType.Watching
   presenceData.details = details || options.title
   presenceData.state = `${prefix}${s().sourceSelection}`
-  presenceData.smallImageKey = getPresenceIcon('search')
+  presenceData.smallImageKey = PRESENCE_ICONS.search
   presenceData.smallImageText = s().sourceSelection
   presenceData.largeImageText = hoverEpisodeLabel || SITE_NAME
 
   if (video && Number.isFinite(video.duration) && video.duration > 0) {
     if (video.ended) {
       presenceData.state = `${prefix}${s().ended}`
-      presenceData.smallImageKey = getPresenceIcon('stop')
+      presenceData.smallImageKey = PRESENCE_ICONS.stop
       presenceData.smallImageText = s().ended
     }
     else if (video.paused) {
       presenceData.state = selectedSourceDisplay
         ? `${s().paused} - ${selectedSourceDisplay}`
         : `${prefix}${s().paused}`
-      presenceData.smallImageKey = getPresenceIcon('pause')
+      presenceData.smallImageKey = PRESENCE_ICONS.pause
       presenceData.smallImageText = s().paused
     }
     else {
       presenceData.state = selectedSourceDisplay || `${prefix}${s().playing}`
-      presenceData.smallImageKey = getPresenceIcon('play')
+      presenceData.smallImageKey = PRESENCE_ICONS.play
       presenceData.smallImageText = s().playing
       presenceData.startTimestamp
         = Date.now() - Math.floor(video.currentTime * 1000)
@@ -602,12 +594,12 @@ export function createWatchingPresence(options: {
       presenceData.state = embedSourceDisplay
         ? `${s().paused} - ${embedSourceDisplay}`
         : `${prefix}${s().paused}`
-      presenceData.smallImageKey = getPresenceIcon('pause')
+      presenceData.smallImageKey = PRESENCE_ICONS.pause
       presenceData.smallImageText = s().paused
     }
     else if (embedPlayback) {
       presenceData.state = embedSourceDisplay || `${prefix}${s().playing}`
-      presenceData.smallImageKey = getPresenceIcon('play')
+      presenceData.smallImageKey = PRESENCE_ICONS.play
       presenceData.smallImageText = s().playing
       presenceData.startTimestamp
         = Date.now() - Math.floor(embedPlayback.currentTime * 1000)
@@ -622,7 +614,7 @@ export function createWatchingPresence(options: {
     }
     else {
       presenceData.state = embedSourceState || s().externalPlayer
-      presenceData.smallImageKey = getPresenceIcon('play')
+      presenceData.smallImageKey = PRESENCE_ICONS.play
       presenceData.smallImageText = s().playing
     }
   }
@@ -1076,7 +1068,7 @@ export function createSpecificPagePresence(
   }
 
   if (privacyModeEnabled) {
-    const presenceData = buildBasePresence(getSiteLogo())
+    const presenceData = buildBasePresence(FALLBACK_LOGO)
     presenceData.details = normalizeText(state) || s().browseMovix
     return presenceData
   }
