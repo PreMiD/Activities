@@ -100,7 +100,7 @@ export async function handleCatalogRoutes(
 
     return finalizeRoutePresence(
       context,
-      createSpecificPagePresence(movieTitle, s().viewMovie, contentImage),
+      createPagePresence(s().viewMovie, movieTitle, contentImage),
     )
   }
 
@@ -111,7 +111,7 @@ export async function handleCatalogRoutes(
 
     return finalizeRoutePresence(
       context,
-      createSpecificPagePresence(showTitle, s().viewSeries, contentImage),
+      createPagePresence(s().viewSeries, showTitle, contentImage),
     )
   }
 
