@@ -102,11 +102,28 @@ export async function handleWatchRoutes(
   }
 
   if (pathname === '/watchparty/create') {
-    const title = firstNonEmpty(getText('h2'), getText('h1'), s().newParty)
+    const party = getPartyContext()
+    const episodeCode
+      = party.season && party.episode ? `S${party.season}E${party.episode}` : ''
+    const partyTitle = party.title
+      ? episodeCode
+        ? `${party.title} - ${episodeCode}`
+        : party.title
+      : ''
+    const title
+      = partyTitle
+        || String(firstNonEmpty(getText('h2'), getText('h1'), s().newParty))
+    const partyPoster = toAbsoluteUrl(party.poster)
 
     return finalizeRoutePresence(
       context,
-      createPagePresence(s().createParty, String(title), pageImage),
+      createPagePresence(
+        s().createParty,
+        title,
+        partyPoster && isImageUrlAllowed(partyPoster)
+          ? partyPoster
+          : pageImage,
+      ),
     )
   }
 
