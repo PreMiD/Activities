@@ -126,9 +126,9 @@ export async function handleCatalogRoutes(
 
     return finalizeRoutePresence(
       context,
-      createSpecificPagePresence(
-        String(title),
+      createPagePresence(
         contentType === 'movie' ? s().downloadMovie : s().downloadSeries,
+        String(title),
         contentImage,
       ),
     )
