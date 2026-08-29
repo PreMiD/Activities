@@ -4,7 +4,7 @@ import type {
   PartyContext,
   WatchContext,
 } from './types.js'
-import { ActivityType, Assets } from 'premid'
+import { ActivityType } from 'premid'
 import { format, s } from './strings.js'
 import {
   FALLBACK_LOGO,
@@ -13,6 +13,7 @@ import {
   LEADING_EPISODE_NUMBER_PATTERN,
   NON_BREAKING_SPACE_PATTERN,
   ONLY_EPISODE_NUMBER_PATTERN,
+  PRESENCE_ICONS,
   PROVIDER_NAMES,
   QUOTED_TEXT_PATTERNS,
   RELEASE_TAG_PATTERN,
@@ -558,26 +559,26 @@ export function createWatchingPresence(options: {
   presenceData.type = ActivityType.Watching
   presenceData.details = details || options.title
   presenceData.state = `${prefix}${s().sourceSelection}`
-  presenceData.smallImageKey = Assets.Search
+  presenceData.smallImageKey = PRESENCE_ICONS.search
   presenceData.smallImageText = s().sourceSelection
   presenceData.largeImageText = hoverEpisodeLabel || SITE_NAME
 
   if (video && Number.isFinite(video.duration) && video.duration > 0) {
     if (video.ended) {
       presenceData.state = `${prefix}${s().ended}`
-      presenceData.smallImageKey = Assets.Stop
+      presenceData.smallImageKey = PRESENCE_ICONS.stop
       presenceData.smallImageText = s().ended
     }
     else if (video.paused) {
       presenceData.state = selectedSourceDisplay
         ? `${s().paused} - ${selectedSourceDisplay}`
         : `${prefix}${s().paused}`
-      presenceData.smallImageKey = Assets.Pause
+      presenceData.smallImageKey = PRESENCE_ICONS.pause
       presenceData.smallImageText = s().paused
     }
     else {
       presenceData.state = selectedSourceDisplay || `${prefix}${s().playing}`
-      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageKey = PRESENCE_ICONS.play
       presenceData.smallImageText = s().playing
       presenceData.startTimestamp
         = Date.now() - Math.floor(video.currentTime * 1000)
@@ -593,12 +594,12 @@ export function createWatchingPresence(options: {
       presenceData.state = embedSourceDisplay
         ? `${s().paused} - ${embedSourceDisplay}`
         : `${prefix}${s().paused}`
-      presenceData.smallImageKey = Assets.Pause
+      presenceData.smallImageKey = PRESENCE_ICONS.pause
       presenceData.smallImageText = s().paused
     }
     else if (embedPlayback) {
       presenceData.state = embedSourceDisplay || `${prefix}${s().playing}`
-      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageKey = PRESENCE_ICONS.play
       presenceData.smallImageText = s().playing
       presenceData.startTimestamp
         = Date.now() - Math.floor(embedPlayback.currentTime * 1000)
@@ -613,7 +614,7 @@ export function createWatchingPresence(options: {
     }
     else {
       presenceData.state = embedSourceState || s().externalPlayer
-      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageKey = PRESENCE_ICONS.play
       presenceData.smallImageText = s().playing
     }
   }

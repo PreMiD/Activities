@@ -1,6 +1,6 @@
 import type { RoutePresenceContext } from '../types.js'
-import { Assets } from 'premid'
 import {
+  PRESENCE_ICONS,
   ROUTE_COLLECTION_PATTERN,
   ROUTE_DOWNLOAD_PATTERN,
   ROUTE_GENRE_PATTERN,
@@ -46,7 +46,7 @@ export async function handleCatalogRoutes(
       pageImage,
     )
 
-    presenceData.smallImageKey = Assets.Search
+    presenceData.smallImageKey = PRESENCE_ICONS.search
     presenceData.smallImageText = s().searchLabel
 
     return finalizeRoutePresence(context, presenceData)
@@ -264,7 +264,7 @@ export async function handleCatalogRoutes(
       livePoster && isImageUrlAllowed(livePoster) ? livePoster : pageImage,
     )
 
-    presenceData.smallImageKey = Assets.Live
+    presenceData.smallImageKey = PRESENCE_ICONS.live
     presenceData.smallImageText = s().live
 
     return finalizeRoutePresence(context, presenceData)

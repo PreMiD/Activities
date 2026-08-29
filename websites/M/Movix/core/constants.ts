@@ -1,6 +1,14 @@
 export const SITE_NAME = 'Movix'
 export const FALLBACK_SITE_URL = 'https://movix.tax'
 export const FALLBACK_LOGO = `${FALLBACK_SITE_URL}/movix512.png`
+
+export const PRESENCE_ICONS = {
+  play: `${FALLBACK_SITE_URL}/premid/play.png`,
+  pause: `${FALLBACK_SITE_URL}/premid/pause.png`,
+  stop: `${FALLBACK_SITE_URL}/premid/stop.png`,
+  search: `${FALLBACK_SITE_URL}/premid/search.png`,
+  live: `${FALLBACK_SITE_URL}/premid/live.png`,
+} as const
 export const TMDB_API_BASE = 'https://api.themoviedb.org/3'
 export const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p'
 export const TMDB_API_KEY = 'f3d757824f08ea2cff45eb8f47ca3a1e'
