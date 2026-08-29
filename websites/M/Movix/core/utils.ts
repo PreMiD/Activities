@@ -1,4 +1,9 @@
-import type { VariantText, WatchContext } from './types.js'
+import type {
+  IframePlayback,
+  LiveTvContext,
+  PartyContext,
+  WatchContext,
+} from './types.js'
 import { ActivityType } from 'premid'
 import {
   FALLBACK_LOGO,
@@ -7,12 +12,16 @@ import {
   LEADING_EPISODE_NUMBER_PATTERN,
   NON_BREAKING_SPACE_PATTERN,
   ONLY_EPISODE_NUMBER_PATTERN,
+  PRESENCE_ICONS,
   PROVIDER_NAMES,
   QUOTED_TEXT_PATTERNS,
   RELEASE_TAG_PATTERN,
-  SAFE_BUTTON_PATTERNS,
+  SAFE_BUTTON_RULES,
   SITE_NAME,
-  SOURCE_LABEL_SEPARATOR_PATTERN,
+  SOURCE_EDGE_SEPARATOR_PATTERN,
+  SOURCE_SEGMENT_SPLIT_PATTERN,
+  SOURCE_URL_PREFIX_PATTERN,
+  SOURCE_URL_TOKEN_PATTERN,
   STRIP_SITE_NAME_PATTERN,
   TMDB_IMAGE_BASE,
   WATCH_ANIME_PATH_PATTERN,
@@ -27,16 +36,63 @@ import {
   WORD_SEPARATOR_PATTERN,
   WWW_PREFIX_PATTERN,
 } from './constants.js'
-import {
-  PAGE_DETAIL_VARIANTS,
-  WATCH_ENDED_VARIANTS,
-  WATCH_PAUSED_VARIANTS,
-  WATCH_PLAYING_VARIANTS,
-  WATCH_WAITING_VARIANTS,
-} from './variants.js'
+import { format, s } from './strings.js'
+
+const IFRAME_PLAYBACK_MAX_AGE_MS = 10_000
 
 let lastRouteKey = ''
 let lastRouteStartedAt = Date.now()
+let privacyModeEnabled = false
+let posterEnabled = true
+let iframePlayback: IframePlayback | null = null
+let iframePlaybackAt = 0
+
+export function setPrivacyMode(enabled: boolean): void {
+  privacyModeEnabled = enabled
+}
+
+export function isPrivacyModeEnabled(): boolean {
+  return privacyModeEnabled
+}
+
+export function setPosterEnabled(enabled: boolean): void {
+  posterEnabled = enabled
+}
+
+export function setIframePlayback(data: unknown): void {
+  if (!data || typeof data !== 'object') {
+    return
+  }
+
+  const candidate = data as Partial<IframePlayback>
+  if (
+    typeof candidate.currentTime !== 'number'
+    || typeof candidate.duration !== 'number'
+    || typeof candidate.paused !== 'boolean'
+    || !Number.isFinite(candidate.duration)
+    || candidate.duration <= 0
+  ) {
+    return
+  }
+
+  iframePlayback = {
+    currentTime: candidate.currentTime,
+    duration: candidate.duration,
+    paused: candidate.paused,
+  }
+  iframePlaybackAt = Date.now()
+}
+
+export function getIframePlayback(): IframePlayback | null {
+  if (
+    !iframePlayback
+    || Date.now() - iframePlaybackAt > IFRAME_PLAYBACK_MAX_AGE_MS
+  ) {
+    return null
+  }
+
+  return iframePlayback
+}
 
 export function normalizeText(value: unknown): string {
   return String(value ?? '')
@@ -311,40 +367,6 @@ export function getRouteStartedAt(): number {
   return lastRouteStartedAt
 }
 
-export function hashString(value: string): number {
-  let hash = 0
-
-  for (let index = 0; index < value.length; index += 1) {
-    hash = (hash << 5) - hash + value.charCodeAt(index)
-    hash |= 0
-  }
-
-  return Math.abs(hash)
-}
-
-export function pickVariant(seed: string, variants: readonly string[]): string {
-  const cleanVariants = variants
-    .map(variant => normalizeText(variant))
-    .filter(Boolean)
-
-  if (cleanVariants.length === 0) {
-    return ''
-  }
-
-  return cleanVariants[hashString(seed) % cleanVariants.length] || ''
-}
-
-export function findVariantsForPath(
-  pathname: string,
-  collection: Array<{ pattern: RegExp, variants: readonly string[] }>,
-): readonly string[] | undefined {
-  return collection.find(entry => entry.pattern.test(pathname))?.variants
-}
-
-export function resolveVariantText(value: VariantText, seed: string): string {
-  return Array.isArray(value) ? pickVariant(seed, value) : normalizeText(value)
-}
-
 export function getPageTitle(): string {
   const title = firstNonEmpty(
     getText('main h1'),
@@ -392,10 +414,12 @@ export function getSafeButtons(
   pathname: string,
   enabled: boolean,
 ): [ButtonData, ButtonData?] | undefined {
-  if (
-    !enabled
-    || !SAFE_BUTTON_PATTERNS.some(pattern => pattern.test(pathname))
-  ) {
+  if (!enabled || privacyModeEnabled) {
+    return undefined
+  }
+
+  const rule = SAFE_BUTTON_RULES.find(entry => entry.pattern.test(pathname))
+  if (!rule) {
     return undefined
   }
 
@@ -406,7 +430,7 @@ export function getSafeButtons(
 
   return [
     {
-      label: 'Voir la page',
+      label: s()[rule.label],
       url,
     },
   ]
@@ -415,7 +439,9 @@ export function getSafeButtons(
 export function buildBasePresence(image?: string): PresenceData {
   return {
     name: SITE_NAME,
-    largeImageKey: image || getPageImage() || FALLBACK_LOGO,
+    largeImageKey: posterEnabled
+      ? image || getPageImage() || FALLBACK_LOGO
+      : FALLBACK_LOGO,
   }
 }
 
@@ -433,9 +459,9 @@ export function finalizePresence(
   }
 
   presenceData.details = truncate(presenceData.details)
-  presenceData.state = truncate(presenceData.state)
+  presenceData.state = truncate(presenceData.state) || undefined
 
-  if (!presenceData.details || !presenceData.state) {
+  if (!presenceData.details) {
     return null
   }
 
@@ -463,158 +489,100 @@ export function finalizePresence(
 }
 
 export function createPagePresence(
-  details: VariantText,
-  state: VariantText,
+  details: string,
+  state: string,
   image?: string,
 ) {
-  const presenceData = buildBasePresence(image)
-  const seed = `${document.location.pathname}${document.location.search}`
-  const routeDetails = Array.isArray(details)
-    ? details
-    : findVariantsForPath(document.location.pathname, PAGE_DETAIL_VARIANTS)
-      || details
+  if (privacyModeEnabled) {
+    const presenceData = buildBasePresence(FALLBACK_LOGO)
+    presenceData.details = normalizeText(details)
+    return presenceData
+  }
 
-  presenceData.details = resolveVariantText(routeDetails, `${seed}:details`)
-  presenceData.state = resolveVariantText(state, `${seed}:state`)
+  const presenceData = buildBasePresence(image)
+
+  presenceData.details = normalizeText(details)
+  presenceData.state = normalizeText(state)
   return presenceData
 }
 
 export function createWatchingPresence(options: {
   title: string
   displayTitle?: string
-  playingText: VariantText
-  pausedText: VariantText
-  waitingText: VariantText
-  embedText?: VariantText
-  endedText?: VariantText
+  privacyDetails?: string
   season?: string
   episode?: string
   image?: string
-  statePrefix?: string
 }) {
-  const presenceData = buildBasePresence(options.image)
+  const privacy = privacyModeEnabled
+  const presenceData = buildBasePresence(privacy ? FALLBACK_LOGO : options.image)
   const video = getCurrentVideoElement()
   const season = normalizeText(options.season)
   const episode = normalizeText(options.episode)
   const routeWatchMediaType = getWatchMediaTypeForPath(document.location.pathname)
-  const useSimpleWatchRoute = Boolean(routeWatchMediaType)
-  const details = normalizeText(
-    options.displayTitle
-    || (routeWatchMediaType
-      ? getFormattedWatchTitle(
-          options.title,
-          routeWatchMediaType,
-          season,
-          episode,
-        )
-      : options.title),
-  )
+  const details = privacy
+    ? normalizeText(options.privacyDetails) || s().watchContent
+    : normalizeText(
+        options.displayTitle
+        || (routeWatchMediaType
+          ? getFormattedWatchTitle(
+              options.title,
+              routeWatchMediaType,
+              season,
+              episode,
+            )
+          : options.title),
+      )
   const prefix
-    = options.statePrefix !== undefined
-      ? options.statePrefix
-      : useSimpleWatchRoute
-        ? ''
-        : season && episode
-          ? `S${season}E${episode} - `
-          : ''
-  const seed = `${document.location.pathname}:${details}:${season}:${episode}`
-  const waitingVariant = useSimpleWatchRoute
-    ? 'Selection de la source'
-    : Array.isArray(options.waitingText)
-      ? options.waitingText
-      : findVariantsForPath(document.location.pathname, WATCH_WAITING_VARIANTS)
-        || options.waitingText
-  const playingVariant = useSimpleWatchRoute
-    ? 'Lecture en cours'
-    : Array.isArray(options.playingText)
-      ? options.playingText
-      : findVariantsForPath(document.location.pathname, WATCH_PLAYING_VARIANTS)
-        || options.playingText
-  const pausedVariant = useSimpleWatchRoute
-    ? 'En pause'
-    : Array.isArray(options.pausedText)
-      ? options.pausedText
-      : findVariantsForPath(document.location.pathname, WATCH_PAUSED_VARIANTS)
-        || options.pausedText
-  const endedVariant = useSimpleWatchRoute
-    ? 'Lecture terminee'
-    : Array.isArray(options.endedText)
-      ? options.endedText
-      : findVariantsForPath(document.location.pathname, WATCH_ENDED_VARIANTS)
-        || options.endedText
-        || 'Le generique approche, personne ne bouge'
-  const waitingText = resolveVariantText(
-    waitingVariant,
-    `${seed}:waiting`,
-  )
-  const playingText = resolveVariantText(
-    playingVariant,
-    `${seed}:playing`,
-  )
-  const pausedText = resolveVariantText(
-    pausedVariant,
-    `${seed}:paused`,
-  )
-  const embedText = resolveVariantText(
-    options.embedText || 'Lecteur embed actif',
-    `${seed}:embed`,
-  )
-  const endedText = resolveVariantText(
-    Array.isArray(options.endedText)
-      ? options.endedText
-      : findVariantsForPath(document.location.pathname, WATCH_ENDED_VARIANTS)
-        || options.endedText
-        || 'Le générique approche, personne ne bouge',
-    `${seed}:ended`,
-  )
-
-  const watchEndedText = useSimpleWatchRoute
-    ? resolveVariantText(endedVariant, `${seed}:ended:simple`)
-    : endedText
+    = !routeWatchMediaType && season && episode ? `S${season}E${episode} - ` : ''
   const watchContext = getWatchContext()
   const activeEmbedFrame = getActiveEmbedFrame()
-  const embedSourceLabel = getActiveEmbedSourceLabel(activeEmbedFrame)
-  const selectedSourceLabel = formatWatchSourceLabel(watchContext.sourceLabel)
-  const embedSourceDisplay = formatWatchSourceDisplay(
-    embedSourceLabel,
-    watchContext.sourceDetail,
-  )
-  const selectedSourceDisplay = formatWatchSourceDisplay(
-    watchContext.sourceLabel,
-    watchContext.sourceDetail,
-  )
-  const embedSourceState = formatWatchSourceState(
-    embedSourceLabel,
-    watchContext.sourceDetail,
-  )
-  const selectedSourceState = formatWatchSourceState(
-    watchContext.sourceLabel,
-    watchContext.sourceDetail,
-  )
-  const hoverEpisodeLabel = getWatchEpisodeHoverLabel(season, episode)
+  const embedSourceLabel = privacy
+    ? ''
+    : getActiveEmbedSourceLabel(activeEmbedFrame)
+  const selectedSourceLabel = privacy
+    ? ''
+    : formatWatchSourceLabel(watchContext.sourceLabel)
+  const selectedSourceDisplay = privacy
+    ? ''
+    : formatWatchSourceDisplay(watchContext.sourceLabel, watchContext.sourceDetail)
+  const embedSourceDisplay = privacy
+    ? ''
+    : formatWatchSourceDisplay(embedSourceLabel, watchContext.sourceDetail)
+  const embedSourceState = privacy
+    ? ''
+    : formatWatchSourceState(embedSourceLabel, watchContext.sourceDetail)
+  const selectedSourceState = privacy
+    ? ''
+    : formatWatchSourceState(watchContext.sourceLabel, watchContext.sourceDetail)
+  const hoverEpisodeLabel = privacy
+    ? ''
+    : getWatchEpisodeHoverLabel(season, episode)
 
   presenceData.type = ActivityType.Watching
   presenceData.details = details || options.title
-  presenceData.state = `${prefix}${waitingText}`
-
-  if (hoverEpisodeLabel) {
-    presenceData.largeImageText = hoverEpisodeLabel
-  }
-  else {
-    presenceData.largeImageText = 'Lecture en cours'
-  }
+  presenceData.state = `${prefix}${s().sourceSelection}`
+  presenceData.smallImageKey = PRESENCE_ICONS.search
+  presenceData.smallImageText = s().sourceSelection
+  presenceData.largeImageText = hoverEpisodeLabel || SITE_NAME
 
   if (video && Number.isFinite(video.duration) && video.duration > 0) {
     if (video.ended) {
-      presenceData.state = `${prefix}${watchEndedText}`
+      presenceData.state = `${prefix}${s().ended}`
+      presenceData.smallImageKey = PRESENCE_ICONS.stop
+      presenceData.smallImageText = s().ended
     }
     else if (video.paused) {
       presenceData.state = selectedSourceDisplay
-        ? `En pause - ${selectedSourceDisplay}`
-        : `${prefix}${pausedText}`
+        ? `${s().paused} - ${selectedSourceDisplay}`
+        : `${prefix}${s().paused}`
+      presenceData.smallImageKey = PRESENCE_ICONS.pause
+      presenceData.smallImageText = s().paused
     }
     else {
-      presenceData.state = selectedSourceDisplay || `${prefix}${playingText}`
+      presenceData.state = selectedSourceDisplay || `${prefix}${s().playing}`
+      presenceData.smallImageKey = PRESENCE_ICONS.play
+      presenceData.smallImageText = s().playing
       presenceData.startTimestamp
         = Date.now() - Math.floor(video.currentTime * 1000)
       presenceData.endTimestamp
@@ -623,11 +591,37 @@ export function createWatchingPresence(options: {
     }
   }
   else if (activeEmbedFrame || embedSourceLabel) {
-    presenceData.state = embedSourceLabel
-      ? embedSourceState
-      : embedSourceDisplay || embedText
+    const embedPlayback = getIframePlayback()
+
+    if (embedPlayback && embedPlayback.paused) {
+      presenceData.state = embedSourceDisplay
+        ? `${s().paused} - ${embedSourceDisplay}`
+        : `${prefix}${s().paused}`
+      presenceData.smallImageKey = PRESENCE_ICONS.pause
+      presenceData.smallImageText = s().paused
+    }
+    else if (embedPlayback) {
+      presenceData.state = embedSourceDisplay || `${prefix}${s().playing}`
+      presenceData.smallImageKey = PRESENCE_ICONS.play
+      presenceData.smallImageText = s().playing
+      presenceData.startTimestamp
+        = Date.now() - Math.floor(embedPlayback.currentTime * 1000)
+      presenceData.endTimestamp
+        = Date.now()
+          + Math.max(
+            0,
+            Math.floor(
+              (embedPlayback.duration - embedPlayback.currentTime) * 1000,
+            ),
+          )
+    }
+    else {
+      presenceData.state = embedSourceState || s().externalPlayer
+      presenceData.smallImageKey = PRESENCE_ICONS.play
+      presenceData.smallImageText = s().playing
+    }
   }
-  else if (useSimpleWatchRoute && selectedSourceLabel) {
+  else if (selectedSourceLabel) {
     presenceData.state = selectedSourceState
   }
 
@@ -756,10 +750,62 @@ export function getWatchContext(): WatchContext {
   }
 }
 
+export function getPartyContext(): PartyContext {
+  const element = document.querySelector('[data-premid-party-context]')
+
+  if (!(element instanceof HTMLElement)) {
+    return {
+      title: '',
+      mediaType: '',
+      season: '',
+      episode: '',
+      poster: '',
+      participants: 0,
+    }
+  }
+
+  const participants = Number.parseInt(
+    element.getAttribute('data-premid-party-participants') || '',
+    10,
+  )
+
+  return {
+    title: normalizeText(element.getAttribute('data-premid-party-title')),
+    mediaType: normalizeText(
+      element.getAttribute('data-premid-party-media-type'),
+    ),
+    season: normalizeText(element.getAttribute('data-premid-party-season')),
+    episode: normalizeText(element.getAttribute('data-premid-party-episode')),
+    poster: normalizeText(element.getAttribute('data-premid-party-poster')),
+    participants:
+      Number.isFinite(participants) && participants > 0 ? participants : 0,
+  }
+}
+
+export function getLiveTvContext(): LiveTvContext {
+  const element = document.querySelector('[data-premid-live-context]')
+
+  if (!(element instanceof HTMLElement)) {
+    return { channel: '', poster: '' }
+  }
+
+  return {
+    channel: normalizeText(element.getAttribute('data-premid-channel')),
+    poster: normalizeText(element.getAttribute('data-premid-channel-poster')),
+  }
+}
+
 export function formatWatchSourceLabel(value: unknown): string {
   const normalized = normalizeText(value)
   if (!normalized) {
     return ''
+  }
+
+  if (
+    SOURCE_URL_PREFIX_PATTERN.test(normalized)
+    || normalized.includes('://')
+  ) {
+    return getEmbedSourceLabelFromUrl(normalized)
   }
 
   const lowered = normalized.toLowerCase().replace(WHITESPACE_PATTERN, '_')
@@ -772,38 +818,80 @@ export function formatWatchSourceLabel(value: unknown): string {
     .replace(WORD_INITIAL_PATTERN, character => character.toUpperCase())
 }
 
+function segmentWords(value: string): string[] {
+  return value
+    .toLowerCase()
+    .replace(WORD_SEPARATOR_PATTERN, ' ')
+    .split(' ')
+    .filter(Boolean)
+}
+
+function isSegmentContained(segment: string, other: string): boolean {
+  if (segment.length >= other.length) {
+    return false
+  }
+
+  const otherWords = segmentWords(other)
+  return segmentWords(segment).every(word => otherWords.includes(word))
+}
+
 export function formatWatchSourceDisplay(label: unknown, detail: unknown): string {
   const sourceLabel = formatWatchSourceLabel(label)
   if (!sourceLabel) {
     return ''
   }
 
-  const sourceDetail = normalizeText(detail)
-  if (!sourceDetail) {
-    return `Via ${sourceLabel}`
+  const labelWords = segmentWords(sourceLabel).join(' ')
+  const strippedDetail = normalizeText(
+    normalizeText(detail).replace(SOURCE_URL_TOKEN_PATTERN, ' '),
+  )
+
+  const segments: string[] = []
+  for (const rawSegment of strippedDetail.split(SOURCE_SEGMENT_SPLIT_PATTERN)) {
+    let segment = normalizeText(
+      rawSegment.replace(SOURCE_EDGE_SEPARATOR_PATTERN, ''),
+    )
+    if (!segment) {
+      continue
+    }
+
+    const segmentLower = segmentWords(segment).join(' ')
+    if (!segmentLower || segmentLower === labelWords) {
+      continue
+    }
+
+    if (segmentLower.startsWith(`${labelWords} `)) {
+      segment = normalizeText(segment.slice(sourceLabel.length))
+      if (!segment) {
+        continue
+      }
+    }
+
+    segments.push(segment)
   }
 
-  const normalizedLabel = sourceLabel
-    .toLowerCase()
-    .replace(WORD_SEPARATOR_PATTERN, ' ')
-    .trim()
-  const loweredDetail = sourceDetail.toLowerCase()
-  const detailSuffix = loweredDetail.startsWith(normalizedLabel)
-    ? sourceDetail.slice(sourceLabel.length)
-    : sourceDetail
-  const cleanedDetail = detailSuffix
-    .replace(SOURCE_LABEL_SEPARATOR_PATTERN, '')
-    .trim()
-  const normalizedDetail = cleanedDetail
-    .toLowerCase()
-    .replace(WORD_SEPARATOR_PATTERN, ' ')
-    .trim()
+  const kept: string[] = []
+  segments.forEach((segment, index) => {
+    const lower = segment.toLowerCase()
+    const isRedundant = segments.some((other, otherIndex) => {
+      if (otherIndex === index) {
+        return false
+      }
 
-  if (!cleanedDetail || normalizedDetail === normalizedLabel) {
-    return sourceLabel
-  }
+      if (lower === other.toLowerCase()) {
+        return otherIndex < index
+      }
 
-  return `${sourceLabel} - ${cleanedDetail}`
+      return isSegmentContained(segment, other)
+    })
+
+    if (!isRedundant && !kept.some(entry => entry.toLowerCase() === lower)) {
+      kept.push(segment)
+    }
+  })
+
+  const cleanedDetail = kept.join(' - ')
+  return cleanedDetail ? `${sourceLabel} - ${cleanedDetail}` : sourceLabel
 }
 
 export function formatWatchSourceState(label: unknown, detail: unknown): string {
@@ -846,7 +934,9 @@ export function getEmbedSourceLabelFromUrl(value: unknown): string {
   }
 
   try {
-    const hostname = new URL(normalized).hostname.replace(WWW_PREFIX_PATTERN, '')
+    const hostname = new URL(
+      normalized.includes('://') ? normalized : `https://${normalized}`,
+    ).hostname.replace(WWW_PREFIX_PATTERN, '')
     const root = hostname.split('.')[0] || ''
     return formatWatchSourceLabel(root)
   }
@@ -1002,7 +1092,7 @@ export function getWatchMediaTypeForPath(
 }
 
 export function getProviderName(providerId: string): string {
-  return PROVIDER_NAMES[providerId] || `Provider ${providerId}`
+  return PROVIDER_NAMES[providerId] || format(s().platformId, providerId)
 }
 
 export function extractQuotedText(value: unknown): string {
@@ -1021,21 +1111,51 @@ export function extractQuotedText(value: unknown): string {
   return ''
 }
 
+export function applyVideoPlaybackToPresence(presenceData: PresenceData): void {
+  const video = getCurrentVideoElement()
+
+  if (!video || !Number.isFinite(video.duration) || video.duration <= 0) {
+    return
+  }
+
+  if (video.ended) {
+    presenceData.smallImageKey = PRESENCE_ICONS.stop
+    presenceData.smallImageText = s().ended
+  }
+  else if (video.paused) {
+    presenceData.smallImageKey = PRESENCE_ICONS.pause
+    presenceData.smallImageText = s().paused
+  }
+  else {
+    presenceData.smallImageKey = PRESENCE_ICONS.play
+    presenceData.smallImageText = s().playing
+    presenceData.startTimestamp
+      = Date.now() - Math.floor(video.currentTime * 1000)
+    presenceData.endTimestamp
+      = Date.now()
+        + Math.max(0, Math.floor((video.duration - video.currentTime) * 1000))
+  }
+}
+
 export function createSpecificPagePresence(
   details: string,
-  state: VariantText,
+  state: string,
   image?: string,
-  seedSuffix?: string,
 ) {
   const subject = normalizeText(details)
   if (!subject) {
     return null
   }
 
+  if (privacyModeEnabled) {
+    const presenceData = buildBasePresence(FALLBACK_LOGO)
+    presenceData.details = normalizeText(state) || s().browseMovix
+    return presenceData
+  }
+
   const presenceData = buildBasePresence(image)
-  const seed = `${document.location.pathname}${document.location.search}:${normalizeText(seedSuffix) || subject}`
 
   presenceData.details = subject
-  presenceData.state = resolveVariantText(state, `${seed}:state`)
+  presenceData.state = normalizeText(state)
   return presenceData
 }
