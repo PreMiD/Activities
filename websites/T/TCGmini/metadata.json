@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "AdriXan",
+    "id": "273923977267773441"
+  },
+  "service": "TCGmini",
+  "description": {
+    "en": "TCGmini is a free fan-made simulator for Pokémon TCG Pocket. Search cards, build decks, play matches, check the meta and create tier lists.",
+    "es": "TCGmini es un simulador gratuito hecho por fans para Pokémon TCG Pocket. Busca cartas, crea mazos, juega partidas, consulta el meta y elabora tier lists.",
+    "fr": "TCGmini est un simulateur gratuit créé par des fans pour Pokémon TCG Pocket. Recherchez des cartes, créez des decks, jouez des matchs, consultez le meta et créez des tier lists.",
+    "it": "TCGmini è un simulatore gratuito creato dai fan per Pokémon TCG Pocket. Cerca carte, crea mazzi, gioca partite, consulta il meta e crea tier list.",
+    "ja": "TCGminiは『ポケモンカードゲーム Pocket』のファンが開発した無料シミュレーターです。カードを検索し、デッキを構築し、対戦をプレイし、メタを確認し、ティアリストを作成できます。",
+    "ko": "TCGmini는 포켓몬 카드게임 포켓(Pokémon TCG Pocket)을 위한 무료 팬 메이드 시뮬레이터입니다. 카드를 검색하고, 덱을 구성하고, 대전을 플레이하고, 메타를 확인하고, 티어리스트를 만들 수 있습니다.",
+    "pt": "TCGmini é um simulador gratuito feito por fãs para Pokémon TCG Pocket. Pesquise cartas, monte decks, jogue partidas, consulte o meta e crie tier lists."
+  },
+  "url": "tcgmini.com",
+  "regExp": "^https?[:][/][/](www[.])?tcgmini[.]com[/]",
+  "version": "1.1.0",
+  "logo": "https://i.imgur.com/X2ajM8R.png",
+  "thumbnail": "https://i.imgur.com/NPYiipr.png",
+  "color": "#111118",
+  "category": "games",
+  "tags": [
+    "tcgmini",
+    "pokemon",
+    "pokemon-tcg-pocket",
+    "tcg",
+    "card-game"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}
