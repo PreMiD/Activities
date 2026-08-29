@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://tcgmini.com/icon-192.png',
+  Logo = 'https://i.imgur.com/Ks9Sgo1.png',
 }
 
 // TCGmini is a single-page app: the router changes `document.location.pathname`
