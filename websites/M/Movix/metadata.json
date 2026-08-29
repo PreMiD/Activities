@@ -21,7 +21,7 @@
     "movix.online"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(movix[.]cash|movix[.]show|movix[.]date|movix[.]chat|movix[.]golf|movix[.]cloud|movix[.]online|movix[.]fun)[/]",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/thumbnail.png",
   "color": "#dc2626",
@@ -62,7 +62,7 @@
       "id": "showButtons",
       "title": "Show Buttons",
       "icon": "fas fa-link",
-      "value": false,
+      "value": true,
       "description": "Add a button for supported deep pages when the URL uses HTTPS."
     },
     {

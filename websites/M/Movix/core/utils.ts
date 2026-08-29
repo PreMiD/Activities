@@ -1057,6 +1057,32 @@ export function extractQuotedText(value: unknown): string {
   return ''
 }
 
+export function applyVideoPlaybackToPresence(presenceData: PresenceData): void {
+  const video = getCurrentVideoElement()
+
+  if (!video || !Number.isFinite(video.duration) || video.duration <= 0) {
+    return
+  }
+
+  if (video.ended) {
+    presenceData.smallImageKey = PRESENCE_ICONS.stop
+    presenceData.smallImageText = s().ended
+  }
+  else if (video.paused) {
+    presenceData.smallImageKey = PRESENCE_ICONS.pause
+    presenceData.smallImageText = s().paused
+  }
+  else {
+    presenceData.smallImageKey = PRESENCE_ICONS.play
+    presenceData.smallImageText = s().playing
+    presenceData.startTimestamp
+      = Date.now() - Math.floor(video.currentTime * 1000)
+    presenceData.endTimestamp
+      = Date.now()
+        + Math.max(0, Math.floor((video.duration - video.currentTime) * 1000))
+  }
+}
+
 export function createSpecificPagePresence(
   details: string,
   state: string,

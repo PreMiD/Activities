@@ -12,6 +12,7 @@ import {
 } from '../../core/constants.js'
 import { format, s } from '../../core/strings.js'
 import {
+  applyVideoPlaybackToPresence,
   buildBasePresence,
   createPagePresence,
   createSpecificPagePresence,
@@ -103,25 +104,36 @@ export async function handleWatchRoutes(
 
   if (pathname === '/watchparty/create') {
     const party = getPartyContext()
-    const episodeCode
+    let episodeCode
       = party.season && party.episode ? `S${party.season}E${party.episode}` : ''
-    const partyTitle = party.title
+
+    if (!episodeCode) {
+      const badgeMatch = (document.body.textContent || '').match(
+        /\bS(\d{1,2})\s?E(\d{1,3})\b/,
+      )
+      if (badgeMatch) {
+        episodeCode = `S${badgeMatch[1]}E${badgeMatch[2]}`
+      }
+    }
+
+    const baseTitle
+      = party.title || String(firstNonEmpty(getText('h2'), getText('h1'), ''))
+    const title = baseTitle
       ? episodeCode
-        ? `${party.title} - ${episodeCode}`
-        : party.title
-      : ''
-    const title
-      = partyTitle
-        || String(firstNonEmpty(getText('h2'), getText('h1'), s().newParty))
-    const partyPoster = toAbsoluteUrl(party.poster)
+        ? `${baseTitle} - ${episodeCode}`
+        : baseTitle
+      : s().newParty
+    const posterCandidate = toAbsoluteUrl(
+      party.poster || getAttribute('img[src*="image.tmdb.org"]', 'src'),
+    )
 
     return finalizeRoutePresence(
       context,
       createPagePresence(
         s().createParty,
         title,
-        partyPoster && isImageUrlAllowed(partyPoster)
-          ? partyPoster
+        posterCandidate && isImageUrlAllowed(posterCandidate)
+          ? posterCandidate
           : pageImage,
       ),
     )
@@ -158,6 +170,8 @@ export async function handleWatchRoutes(
               : format(s().participantsMany, party.participants)
           }`
           : s().inParty
+
+      applyVideoPlaybackToPresence(presenceData)
 
       return finalizeRoutePresence(context, presenceData)
     }
