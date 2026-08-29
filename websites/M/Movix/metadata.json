@@ -21,11 +21,13 @@
     "movix.online"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(movix[.]cash|movix[.]show|movix[.]date|movix[.]chat|movix[.]golf|movix[.]cloud|movix[.]online|movix[.]fun)[/]",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/thumbnail.png",
   "color": "#dc2626",
   "category": "videos",
+  "iframe": true,
+  "iFrameRegExp": ".*",
   "tags": [
     "movies",
     "series",
@@ -35,6 +37,20 @@
   ],
   "allowURLOverrides": true,
   "settings": [
+    {
+      "id": "lang",
+      "title": "Display Language",
+      "icon": "fas fa-language",
+      "value": 0,
+      "values": ["Français", "English"]
+    },
+    {
+      "id": "showPoster",
+      "title": "Show Poster",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Show the media poster as the large image instead of the Movix logo."
+    },
     {
       "id": "showTimestamp",
       "title": "Show Timestamp",

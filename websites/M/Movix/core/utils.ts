@@ -1,5 +1,11 @@
-import type { WatchContext } from './types.js'
+import type {
+  IframePlayback,
+  LiveTvContext,
+  PartyContext,
+  WatchContext,
+} from './types.js'
 import { ActivityType, Assets } from 'premid'
+import { format, s } from './strings.js'
 import {
   FALLBACK_LOGO,
   HTTPS_URL_PATTERN,
@@ -10,7 +16,7 @@ import {
   PROVIDER_NAMES,
   QUOTED_TEXT_PATTERNS,
   RELEASE_TAG_PATTERN,
-  SAFE_BUTTON_PATTERNS,
+  SAFE_BUTTON_RULES,
   SITE_NAME,
   SOURCE_LABEL_SEPARATOR_PATTERN,
   STRIP_SITE_NAME_PATTERN,
@@ -28,9 +34,14 @@ import {
   WWW_PREFIX_PATTERN,
 } from './constants.js'
 
+const IFRAME_PLAYBACK_MAX_AGE_MS = 10_000
+
 let lastRouteKey = ''
 let lastRouteStartedAt = Date.now()
 let privacyModeEnabled = false
+let posterEnabled = true
+let iframePlayback: IframePlayback | null = null
+let iframePlaybackAt = 0
 
 export function setPrivacyMode(enabled: boolean): void {
   privacyModeEnabled = enabled
@@ -38,6 +49,45 @@ export function setPrivacyMode(enabled: boolean): void {
 
 export function isPrivacyModeEnabled(): boolean {
   return privacyModeEnabled
+}
+
+export function setPosterEnabled(enabled: boolean): void {
+  posterEnabled = enabled
+}
+
+export function setIframePlayback(data: unknown): void {
+  if (!data || typeof data !== 'object') {
+    return
+  }
+
+  const candidate = data as Partial<IframePlayback>
+  if (
+    typeof candidate.currentTime !== 'number'
+    || typeof candidate.duration !== 'number'
+    || typeof candidate.paused !== 'boolean'
+    || !Number.isFinite(candidate.duration)
+    || candidate.duration <= 0
+  ) {
+    return
+  }
+
+  iframePlayback = {
+    currentTime: candidate.currentTime,
+    duration: candidate.duration,
+    paused: candidate.paused,
+  }
+  iframePlaybackAt = Date.now()
+}
+
+export function getIframePlayback(): IframePlayback | null {
+  if (
+    !iframePlayback
+    || Date.now() - iframePlaybackAt > IFRAME_PLAYBACK_MAX_AGE_MS
+  ) {
+    return null
+  }
+
+  return iframePlayback
 }
 
 export function normalizeText(value: unknown): string {
@@ -360,11 +410,12 @@ export function getSafeButtons(
   pathname: string,
   enabled: boolean,
 ): [ButtonData, ButtonData?] | undefined {
-  if (
-    !enabled
-    || privacyModeEnabled
-    || !SAFE_BUTTON_PATTERNS.some(pattern => pattern.test(pathname))
-  ) {
+  if (!enabled || privacyModeEnabled) {
+    return undefined
+  }
+
+  const rule = SAFE_BUTTON_RULES.find(entry => entry.pattern.test(pathname))
+  if (!rule) {
     return undefined
   }
 
@@ -375,7 +426,7 @@ export function getSafeButtons(
 
   return [
     {
-      label: 'Voir la page',
+      label: s()[rule.label],
       url,
     },
   ]
@@ -384,7 +435,9 @@ export function getSafeButtons(
 export function buildBasePresence(image?: string): PresenceData {
   return {
     name: SITE_NAME,
-    largeImageKey: image || getPageImage() || FALLBACK_LOGO,
+    largeImageKey: posterEnabled
+      ? image || getPageImage() || FALLBACK_LOGO
+      : FALLBACK_LOGO,
   }
 }
 
@@ -464,7 +517,7 @@ export function createWatchingPresence(options: {
   const episode = normalizeText(options.episode)
   const routeWatchMediaType = getWatchMediaTypeForPath(document.location.pathname)
   const details = privacy
-    ? normalizeText(options.privacyDetails) || 'Regarde un contenu'
+    ? normalizeText(options.privacyDetails) || s().watchContent
     : normalizeText(
         options.displayTitle
         || (routeWatchMediaType
@@ -489,6 +542,9 @@ export function createWatchingPresence(options: {
   const selectedSourceDisplay = privacy
     ? ''
     : formatWatchSourceDisplay(watchContext.sourceLabel, watchContext.sourceDetail)
+  const embedSourceDisplay = privacy
+    ? ''
+    : formatWatchSourceDisplay(embedSourceLabel, watchContext.sourceDetail)
   const embedSourceState = privacy
     ? ''
     : formatWatchSourceState(embedSourceLabel, watchContext.sourceDetail)
@@ -501,28 +557,28 @@ export function createWatchingPresence(options: {
 
   presenceData.type = ActivityType.Watching
   presenceData.details = details || options.title
-  presenceData.state = `${prefix}Sélection de la source`
+  presenceData.state = `${prefix}${s().sourceSelection}`
   presenceData.smallImageKey = Assets.Search
-  presenceData.smallImageText = 'Sélection de la source'
+  presenceData.smallImageText = s().sourceSelection
   presenceData.largeImageText = hoverEpisodeLabel || SITE_NAME
 
   if (video && Number.isFinite(video.duration) && video.duration > 0) {
     if (video.ended) {
-      presenceData.state = `${prefix}Lecture terminée`
+      presenceData.state = `${prefix}${s().ended}`
       presenceData.smallImageKey = Assets.Stop
-      presenceData.smallImageText = 'Lecture terminée'
+      presenceData.smallImageText = s().ended
     }
     else if (video.paused) {
       presenceData.state = selectedSourceDisplay
-        ? `En pause - ${selectedSourceDisplay}`
-        : `${prefix}En pause`
+        ? `${s().paused} - ${selectedSourceDisplay}`
+        : `${prefix}${s().paused}`
       presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = 'En pause'
+      presenceData.smallImageText = s().paused
     }
     else {
-      presenceData.state = selectedSourceDisplay || `${prefix}Lecture en cours`
+      presenceData.state = selectedSourceDisplay || `${prefix}${s().playing}`
       presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = 'Lecture en cours'
+      presenceData.smallImageText = s().playing
       presenceData.startTimestamp
         = Date.now() - Math.floor(video.currentTime * 1000)
       presenceData.endTimestamp
@@ -531,9 +587,35 @@ export function createWatchingPresence(options: {
     }
   }
   else if (activeEmbedFrame || embedSourceLabel) {
-    presenceData.state = embedSourceState || 'Lecture via un lecteur externe'
-    presenceData.smallImageKey = Assets.Play
-    presenceData.smallImageText = 'Lecture en cours'
+    const embedPlayback = getIframePlayback()
+
+    if (embedPlayback && embedPlayback.paused) {
+      presenceData.state = embedSourceDisplay
+        ? `${s().paused} - ${embedSourceDisplay}`
+        : `${prefix}${s().paused}`
+      presenceData.smallImageKey = Assets.Pause
+      presenceData.smallImageText = s().paused
+    }
+    else if (embedPlayback) {
+      presenceData.state = embedSourceDisplay || `${prefix}${s().playing}`
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = s().playing
+      presenceData.startTimestamp
+        = Date.now() - Math.floor(embedPlayback.currentTime * 1000)
+      presenceData.endTimestamp
+        = Date.now()
+          + Math.max(
+            0,
+            Math.floor(
+              (embedPlayback.duration - embedPlayback.currentTime) * 1000,
+            ),
+          )
+    }
+    else {
+      presenceData.state = embedSourceState || s().externalPlayer
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = s().playing
+    }
   }
   else if (selectedSourceLabel) {
     presenceData.state = selectedSourceState
@@ -661,6 +743,51 @@ export function getWatchContext(): WatchContext {
     sourceDetail: normalizeText(
       element.getAttribute('data-premid-source-detail'),
     ),
+  }
+}
+
+export function getPartyContext(): PartyContext {
+  const element = document.querySelector('[data-premid-party-context]')
+
+  if (!(element instanceof HTMLElement)) {
+    return {
+      title: '',
+      mediaType: '',
+      season: '',
+      episode: '',
+      poster: '',
+      participants: 0,
+    }
+  }
+
+  const participants = Number.parseInt(
+    element.getAttribute('data-premid-party-participants') || '',
+    10,
+  )
+
+  return {
+    title: normalizeText(element.getAttribute('data-premid-party-title')),
+    mediaType: normalizeText(
+      element.getAttribute('data-premid-party-media-type'),
+    ),
+    season: normalizeText(element.getAttribute('data-premid-party-season')),
+    episode: normalizeText(element.getAttribute('data-premid-party-episode')),
+    poster: normalizeText(element.getAttribute('data-premid-party-poster')),
+    participants:
+      Number.isFinite(participants) && participants > 0 ? participants : 0,
+  }
+}
+
+export function getLiveTvContext(): LiveTvContext {
+  const element = document.querySelector('[data-premid-live-context]')
+
+  if (!(element instanceof HTMLElement)) {
+    return { channel: '', poster: '' }
+  }
+
+  return {
+    channel: normalizeText(element.getAttribute('data-premid-channel')),
+    poster: normalizeText(element.getAttribute('data-premid-channel-poster')),
   }
 }
 
@@ -910,7 +1037,7 @@ export function getWatchMediaTypeForPath(
 }
 
 export function getProviderName(providerId: string): string {
-  return PROVIDER_NAMES[providerId] || `Provider ${providerId}`
+  return PROVIDER_NAMES[providerId] || format(s().platformId, providerId)
 }
 
 export function extractQuotedText(value: unknown): string {
@@ -941,7 +1068,7 @@ export function createSpecificPagePresence(
 
   if (privacyModeEnabled) {
     const presenceData = buildBasePresence(FALLBACK_LOGO)
-    presenceData.details = normalizeText(state) || 'Navigue sur Movix'
+    presenceData.details = normalizeText(state) || s().browseMovix
     return presenceData
   }
 

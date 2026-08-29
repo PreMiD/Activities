@@ -1,4 +1,5 @@
 import type { RoutePresenceContext } from '../types.js'
+import { ActivityType } from 'premid'
 import {
   EPISODE_CODE_SUFFIX_PATTERN,
   FALLBACK_LOGO,
@@ -9,18 +10,25 @@ import {
   WATCH_MOVIE_PATH_PATTERN,
   WATCH_TV_PATH_PATTERN,
 } from '../../core/constants.js'
+import { format, s } from '../../core/strings.js'
 import {
+  buildBasePresence,
   createPagePresence,
   createSpecificPagePresence,
   createWatchingPresence,
   firstNonEmpty,
   getAttribute,
   getMatchPart,
+  getPartyContext,
   getText,
   getWatchTitle,
+  isImageUrlAllowed,
+  isPrivacyModeEnabled,
   safeDecode,
   shortenId,
+  toAbsoluteUrl,
 } from '../../core/utils.js'
+import { getWatchTmdbSummary } from '../../features/media.js'
 import { finalizeRoutePresence } from '../helpers.js'
 
 export async function handleWatchRoutes(
@@ -28,15 +36,18 @@ export async function handleWatchRoutes(
 ): Promise<PresenceData | null> {
   const { pathname, pageImage, contentImage } = context
 
-  if (WATCH_MOVIE_PATH_PATTERN.test(pathname)) {
-    const title = getWatchTitle('Film')
+  const watchMovieMatch = pathname.match(WATCH_MOVIE_PATH_PATTERN)
+  if (watchMovieMatch) {
+    const movieId = getMatchPart(watchMovieMatch, 1)
+    const tmdbSummary = await getWatchTmdbSummary('movie', movieId)
+    const title = getWatchTitle(tmdbSummary?.title || s().fallbackMovie)
 
     return finalizeRoutePresence(
       context,
       createWatchingPresence({
         title,
-        privacyDetails: 'Regarde un film',
-        image: contentImage,
+        privacyDetails: s().watchMovie,
+        image: tmdbSummary?.image || contentImage,
       }),
       { allowPageTimestamp: false },
     )
@@ -44,11 +55,14 @@ export async function handleWatchRoutes(
 
   const watchTvMatch = pathname.match(WATCH_TV_PATH_PATTERN)
   if (watchTvMatch) {
+    const showId = getMatchPart(watchTvMatch, 1)
     const season = getMatchPart(watchTvMatch, 2)
     const episode = getMatchPart(watchTvMatch, 3)
-    const rawTitle = getWatchTitle('Série')
+    const tmdbSummary = await getWatchTmdbSummary('tv', showId)
+    const rawTitle = getWatchTitle(tmdbSummary?.title || s().fallbackSeries)
     const title
-      = rawTitle.replace(EPISODE_CODE_SUFFIX_PATTERN, '').trim() || 'Série'
+      = rawTitle.replace(EPISODE_CODE_SUFFIX_PATTERN, '').trim()
+        || s().fallbackSeries
 
     return finalizeRoutePresence(
       context,
@@ -56,8 +70,8 @@ export async function handleWatchRoutes(
         title,
         season,
         episode,
-        privacyDetails: 'Regarde une série',
-        image: contentImage,
+        privacyDetails: s().watchSeries,
+        image: tmdbSummary?.image || contentImage,
       }),
       { allowPageTimestamp: false },
     )
@@ -65,11 +79,14 @@ export async function handleWatchRoutes(
 
   const watchAnimeMatch = pathname.match(WATCH_ANIME_PATH_PATTERN)
   if (watchAnimeMatch) {
+    const animeId = getMatchPart(watchAnimeMatch, 1)
     const season = getMatchPart(watchAnimeMatch, 2)
     const episode = getMatchPart(watchAnimeMatch, 3)
-    const rawTitle = getWatchTitle('Anime')
+    const tmdbSummary = await getWatchTmdbSummary('tv', animeId)
+    const rawTitle = getWatchTitle(tmdbSummary?.title || s().fallbackAnime)
     const title
-      = rawTitle.replace(EPISODE_CODE_SUFFIX_PATTERN, '').trim() || 'Anime'
+      = rawTitle.replace(EPISODE_CODE_SUFFIX_PATTERN, '').trim()
+        || s().fallbackAnime
 
     return finalizeRoutePresence(
       context,
@@ -77,43 +94,67 @@ export async function handleWatchRoutes(
         title,
         season,
         episode,
-        privacyDetails: 'Regarde un anime',
-        image: contentImage,
+        privacyDetails: s().watchAnime,
+        image: tmdbSummary?.image || contentImage,
       }),
       { allowPageTimestamp: false },
     )
   }
 
   if (pathname === '/watchparty/create') {
-    const title = firstNonEmpty(
-      getText('h2'),
-      getText('h1'),
-      'Nouvelle WatchParty',
-    )
+    const title = firstNonEmpty(getText('h2'), getText('h1'), s().newParty)
 
     return finalizeRoutePresence(
       context,
-      createPagePresence('Crée une WatchParty', String(title), pageImage),
+      createPagePresence(s().createParty, String(title), pageImage),
     )
   }
 
   const watchpartyRoomMatch = pathname.match(ROUTE_WATCHPARTY_ROOM_PATTERN)
   if (watchpartyRoomMatch) {
     const roomId = getMatchPart(watchpartyRoomMatch, 1)
+    const party = getPartyContext()
+    const fallbackImage
+      = contentImage === FALLBACK_LOGO ? pageImage : contentImage
+
+    if (party.title && !isPrivacyModeEnabled()) {
+      const episodeCode
+        = party.season && party.episode
+          ? `S${party.season}E${party.episode}`
+          : ''
+      const partyPoster = toAbsoluteUrl(party.poster)
+      const presenceData = buildBasePresence(
+        partyPoster && isImageUrlAllowed(partyPoster)
+          ? partyPoster
+          : fallbackImage,
+      )
+
+      presenceData.type = ActivityType.Watching
+      presenceData.details = episodeCode
+        ? `${party.title} - ${episodeCode}`
+        : party.title
+      presenceData.state
+        = party.participants > 0
+          ? `${s().inParty} - ${
+            party.participants === 1
+              ? s().participantsOne
+              : format(s().participantsMany, party.participants)
+          }`
+          : s().inParty
+
+      return finalizeRoutePresence(context, presenceData)
+    }
+
     const roomTitle = firstNonEmpty(
       getAttribute('h1[title]', 'title'),
       getText('h1'),
       getText('h2'),
-      `Salon ${shortenId(roomId)}`,
+      format(s().roomId, shortenId(roomId)),
     )
 
     return finalizeRoutePresence(
       context,
-      createSpecificPagePresence(
-        String(roomTitle),
-        'Participe à une WatchParty',
-        contentImage === FALLBACK_LOGO ? pageImage : contentImage,
-      ),
+      createSpecificPagePresence(String(roomTitle), s().inParty, fallbackImage),
     )
   }
 
@@ -121,14 +162,12 @@ export async function handleWatchRoutes(
   if (watchpartyJoinMatch) {
     const joinCode = getMatchPart(watchpartyJoinMatch, 1)
     const state = joinCode
-      ? `Code ${safeDecode(joinCode).toUpperCase()}`
-      : String(
-          firstNonEmpty(getText('h2'), getText('h1'), 'Saisie du code'),
-        )
+      ? format(s().codeValue, safeDecode(joinCode).toUpperCase())
+      : String(firstNonEmpty(getText('h2'), getText('h1'), s().codeEntry))
 
     return finalizeRoutePresence(
       context,
-      createPagePresence('Rejoint une WatchParty', state, pageImage),
+      createPagePresence(s().joinParty, state, pageImage),
     )
   }
 
@@ -136,21 +175,21 @@ export async function handleWatchRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Parcourt les salons WatchParty',
-        String(firstNonEmpty(getText('h1'), 'Salons publics')),
+        s().browseRooms,
+        String(firstNonEmpty(getText('h1'), s().publicRooms)),
         pageImage,
       ),
     )
   }
 
   if (ROUTE_FTV_WATCH_PATTERN.test(pathname)) {
-    const title = getWatchTitle('Programme France.tv')
+    const title = getWatchTitle(s().fallbackFtv)
 
     return finalizeRoutePresence(
       context,
       createWatchingPresence({
         title,
-        privacyDetails: 'Regarde France.tv',
+        privacyDetails: s().watchFtv,
         image: contentImage,
       }),
       { allowPageTimestamp: false },

@@ -6,6 +6,7 @@ import {
   ROUTE_VIP_INVOICE_PATTERN,
   ROUTE_WRAPPED_PATTERN,
 } from '../../core/constants.js'
+import { format, s } from '../../core/strings.js'
 import {
   createPagePresence,
   createSpecificPagePresence,
@@ -26,8 +27,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Consulte les suggestions personnalisées',
-        pageTitle || 'Suggestions',
+        s().viewSuggestions,
+        pageTitle || s().suggestions,
         pageImage,
       ),
     )
@@ -37,8 +38,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Consulte la page de l\'extension',
-        pageTitle || 'Extension Movix',
+        s().viewExtension,
+        pageTitle || s().extension,
         pageImage,
       ),
     )
@@ -47,15 +48,11 @@ export async function handleMiscRoutes(
   const listMatch = pathname.match(ROUTE_LIST_PATTERN)
   if (listMatch) {
     const listId = getMatchPart(listMatch, 1)
-    const listTitle = pageTitle || `Liste ${shortenId(listId)}`
+    const listTitle = pageTitle || format(s().listId, shortenId(listId))
 
     return finalizeRoutePresence(
       context,
-      createSpecificPagePresence(
-        listTitle,
-        'Consulte une liste publique',
-        pageImage,
-      ),
+      createSpecificPagePresence(listTitle, s().viewList, pageImage),
     )
   }
 
@@ -63,8 +60,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Parcourt les listes publiques',
-        pageTitle || 'Catalogue des listes',
+        s().browseLists,
+        pageTitle || s().listCatalog,
         pageImage,
       ),
     )
@@ -73,32 +70,28 @@ export async function handleMiscRoutes(
   if (pathname === '/dmca') {
     return finalizeRoutePresence(
       context,
-      createPagePresence('Consulte les informations légales', 'DMCA', pageImage),
+      createPagePresence(s().viewLegal, s().dmca, pageImage),
     )
   }
 
   if (pathname === '/admin') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Utilise la console d\'administration',
-        'Administration',
-        pageImage,
-      ),
+      createPagePresence(s().useAdmin, s().administration, pageImage),
     )
   }
 
   if (pathname === '/profile-selection') {
     return finalizeRoutePresence(
       context,
-      createPagePresence('Sélectionne un profil', '', pageImage),
+      createPagePresence(s().selectProfile, '', pageImage),
     )
   }
 
   if (pathname === '/profile-management') {
     return finalizeRoutePresence(
       context,
-      createPagePresence('Gère ses profils', '', pageImage),
+      createPagePresence(s().manageProfiles, '', pageImage),
     )
   }
 
@@ -106,8 +99,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Parcourt le Wishboard',
-        pageTitle || 'Demandes de la communauté',
+        s().browseWishboard,
+        pageTitle || s().communityRequests,
         pageImage,
       ),
     )
@@ -117,8 +110,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Rédige une demande Wishboard',
-        String(firstNonEmpty(getText('h1'), 'Nouvelle demande')),
+        s().writeRequest,
+        String(firstNonEmpty(getText('h1'), s().newRequest)),
         pageImage,
       ),
     )
@@ -128,8 +121,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Consulte ses demandes Wishboard',
-        String(firstNonEmpty(getText('h1'), 'Mes demandes')),
+        s().viewRequests,
+        String(firstNonEmpty(getText('h1'), s().myRequests)),
         pageImage,
       ),
     )
@@ -139,9 +132,9 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Soumet un lien au Wishboard',
+        s().submitLink,
         String(
-          firstNonEmpty(getText('h2'), getText('h1'), 'Soumission de lien'),
+          firstNonEmpty(getText('h2'), getText('h1'), s().linkSubmission),
         ),
         pageImage,
       ),
@@ -151,14 +144,14 @@ export async function handleMiscRoutes(
   if (pathname === '/vip') {
     return finalizeRoutePresence(
       context,
-      createPagePresence('Consulte l\'espace VIP', '', pageImage),
+      createPagePresence(s().viewVip, '', pageImage),
     )
   }
 
   if (pathname === '/vip/don') {
     return finalizeRoutePresence(
       context,
-      createPagePresence('Effectue un don VIP', '', pageImage),
+      createPagePresence(s().makeDonation, '', pageImage),
     )
   }
 
@@ -169,8 +162,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Consulte une facture VIP',
-        `Facture ${shortenId(invoiceId)}`,
+        s().viewInvoice,
+        format(s().invoiceId, shortenId(invoiceId)),
         pageImage,
       ),
     )
@@ -183,8 +176,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Consulte un cadeau VIP',
-        `Cadeau ${shortenId(giftId)}`,
+        s().viewGift,
+        format(s().giftId, shortenId(giftId)),
         pageImage,
       ),
     )
@@ -193,21 +186,21 @@ export async function handleMiscRoutes(
   if (pathname === '/about') {
     return finalizeRoutePresence(
       context,
-      createPagePresence('Consulte la page À propos', '', pageImage),
+      createPagePresence(s().viewAbout, '', pageImage),
     )
   }
 
   if (pathname === '/privacy') {
     return finalizeRoutePresence(
       context,
-      createPagePresence('Lit la politique de confidentialité', '', pageImage),
+      createPagePresence(s().readPrivacy, '', pageImage),
     )
   }
 
   if (pathname === '/terms-of-service' || pathname === '/terms') {
     return finalizeRoutePresence(
       context,
-      createPagePresence('Lit les conditions d\'utilisation', '', pageImage),
+      createPagePresence(s().readTerms, '', pageImage),
     )
   }
 
@@ -227,18 +220,14 @@ export async function handleMiscRoutes(
   if (pathname === '/settings') {
     return finalizeRoutePresence(
       context,
-      createPagePresence('Configure ses préférences', '', pageImage),
+      createPagePresence(s().configureSettings, '', pageImage),
     )
   }
 
   if (pathname === '/top10') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(
-        'Consulte le top 10',
-        pageTitle || 'Top 10',
-        pageImage,
-      ),
+      createPagePresence(s().viewTop10, pageTitle || s().top10, pageImage),
     )
   }
 
@@ -246,8 +235,8 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(
-        'Parcourt France.tv',
-        String(firstNonEmpty(getText('h2'), pageTitle, 'France.tv')),
+        s().browseFtv,
+        String(firstNonEmpty(getText('h2'), pageTitle, s().ftv)),
         pageImage,
       ),
     )
@@ -260,7 +249,7 @@ export async function handleMiscRoutes(
       firstNonEmpty(
         getText('h1'),
         pageTitle,
-        `Programme ${shortenId(programId)}`,
+        format(s().programId, shortenId(programId)),
       ),
     )
 
@@ -268,7 +257,7 @@ export async function handleMiscRoutes(
       context,
       createSpecificPagePresence(
         programTitle,
-        'Consulte un programme France.tv',
+        s().viewFtvProgram,
         contentImage,
       ),
     )
@@ -278,19 +267,19 @@ export async function handleMiscRoutes(
   if (wrappedMatch) {
     const wrappedYear = getMatchPart(wrappedMatch, 1)
     const state = wrappedYear
-      ? `Wrapped ${wrappedYear}`
-      : String(firstNonEmpty(getText('h1'), 'Wrapped'))
+      ? format(s().wrappedYear, wrappedYear)
+      : String(firstNonEmpty(getText('h1'), s().wrapped))
 
     return finalizeRoutePresence(
       context,
-      createPagePresence('Consulte son récapitulatif annuel', state, pageImage),
+      createPagePresence(s().viewWrapped, state, pageImage),
     )
   }
 
   if (pathname === '*' || pathname === '/404') {
     return finalizeRoutePresence(
       context,
-      createPagePresence('Page introuvable', 'Erreur 404', pageImage),
+      createPagePresence(s().notFound, s().error404, pageImage),
     )
   }
 

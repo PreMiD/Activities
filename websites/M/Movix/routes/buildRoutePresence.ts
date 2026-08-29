@@ -1,4 +1,5 @@
 import type { RoutePresenceHandler } from './types.js'
+import { s } from '../core/strings.js'
 import { createPagePresence } from '../core/utils.js'
 import { handleCatalogRoutes } from './handlers/catalog.js'
 import { handleMiscRoutes } from './handlers/misc.js'
@@ -27,7 +28,7 @@ export async function buildRoutePresence(
   return finalizeRoutePresence(
     context,
     createPagePresence(
-      'Navigue sur Movix',
+      s().browseMovix,
       context.pageTitle || '',
       context.pageImage,
     ),

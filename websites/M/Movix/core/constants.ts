@@ -17,20 +17,35 @@ export const PROVIDER_NAMES: Record<string, string> = {
   531: 'Paramount+',
 }
 
-export const SAFE_BUTTON_PATTERNS = [
-  /^\/collection\/[^/]+$/i,
-  /^\/movie\/[^/]+$/i,
-  /^\/tv\/[^/]+$/i,
-  /^\/download\/[^/]+\/[^/]+$/i,
-  /^\/genre\/[^/]+\/[^/]+$/i,
-  /^\/provider\/[^/]+\/[^/]+(?:\/[^/]+)?$/i,
-  /^\/person\/[^/]+$/i,
-  /^\/watchparty\/room\/[^/]+$/i,
-  /^\/list\/[^/]+$/i,
-  /^\/vip\/invoice\/[^/]+$/i,
-  /^\/vip\/cadeau\/[^/]+$/i,
-  /^\/ftv\/info\/[^/]+$/i,
-  /^\/wrapped(?:\/[^/]+)?$/i,
+export type SafeButtonLabel = 'btnViewPage' | 'btnWatch' | 'btnJoinRoom'
+
+export const SAFE_BUTTON_RULES: Array<{
+  pattern: RegExp
+  label: SafeButtonLabel
+}> = [
+  { pattern: /^\/watch\/movie\/[^/]+$/i, label: 'btnWatch' },
+  { pattern: /^\/watch\/tv\/[^/]+\/s\/[^/]+\/e\/[^/]+$/i, label: 'btnWatch' },
+  {
+    pattern: /^\/watch\/anime\/[^/]+\/season\/[^/]+\/episode\/[^/]+$/i,
+    label: 'btnWatch',
+  },
+  { pattern: /^\/ftv\/watch\/[^/]+$/i, label: 'btnWatch' },
+  { pattern: /^\/watchparty\/room\/[^/]+$/i, label: 'btnJoinRoom' },
+  { pattern: /^\/collection\/[^/]+$/i, label: 'btnViewPage' },
+  { pattern: /^\/movie\/[^/]+$/i, label: 'btnViewPage' },
+  { pattern: /^\/tv\/[^/]+$/i, label: 'btnViewPage' },
+  { pattern: /^\/download\/[^/]+\/[^/]+$/i, label: 'btnViewPage' },
+  { pattern: /^\/genre\/[^/]+\/[^/]+$/i, label: 'btnViewPage' },
+  {
+    pattern: /^\/provider\/[^/]+\/[^/]+(?:\/[^/]+)?$/i,
+    label: 'btnViewPage',
+  },
+  { pattern: /^\/person\/[^/]+$/i, label: 'btnViewPage' },
+  { pattern: /^\/list\/[^/]+$/i, label: 'btnViewPage' },
+  { pattern: /^\/vip\/invoice\/[^/]+$/i, label: 'btnViewPage' },
+  { pattern: /^\/vip\/cadeau\/[^/]+$/i, label: 'btnViewPage' },
+  { pattern: /^\/ftv\/info\/[^/]+$/i, label: 'btnViewPage' },
+  { pattern: /^\/wrapped(?:\/[^/]+)?$/i, label: 'btnViewPage' },
 ]
 
 export const NON_BREAKING_SPACE_PATTERN = /\u00A0/g
@@ -55,9 +70,9 @@ export const QUOTED_TEXT_PATTERNS = [
   /"([^"]+)"/,
   /'([^']+)'/,
 ]
-export const WATCH_MOVIE_PATH_PATTERN = /^\/watch\/movie\/[^/]+$/i
-export const WATCH_TV_PATH_PATTERN = /^\/watch\/tv\/[^/]+\/s\/[^/]+\/e\/[^/]+$/i
-export const WATCH_ANIME_PATH_PATTERN = /^\/watch\/anime\/[^/]+\/season\/[^/]+\/episode\/[^/]+$/i
+export const WATCH_MOVIE_PATH_PATTERN = /^\/watch\/movie\/([^/]+)$/i
+export const WATCH_TV_PATH_PATTERN = /^\/watch\/tv\/([^/]+)\/s\/([^/]+)\/e\/([^/]+)$/i
+export const WATCH_ANIME_PATH_PATTERN = /^\/watch\/anime\/([^/]+)\/season\/([^/]+)\/episode\/([^/]+)$/i
 export const ROUTE_COLLECTION_PATTERN = /^\/collection\/([^/]+)$/i
 export const ROUTE_MOVIE_PATTERN = /^\/movie\/([^/]+)$/i
 export const ROUTE_TV_PATTERN = /^\/tv\/([^/]+)$/i

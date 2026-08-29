@@ -1,5 +1,6 @@
 import type { TmdbMediaSummary, TmdbMediaType } from '../core/types.js'
 import { TMDB_API_BASE, TMDB_API_KEY } from '../core/constants.js'
+import { getLanguage, s } from '../core/strings.js'
 import {
   extractQuotedText,
   firstNonEmpty,
@@ -23,7 +24,8 @@ async function fetchTmdbMediaSummary(
     return null
   }
 
-  const cacheKey = `${type}:${mediaId}`
+  const language = getLanguage() === 'en' ? 'en-US' : 'fr-FR'
+  const cacheKey = `${type}:${mediaId}:${language}`
   const cachedPromise = tmdbMediaCache.get(cacheKey)
   if (cachedPromise) {
     return cachedPromise
@@ -33,7 +35,7 @@ async function fetchTmdbMediaSummary(
     try {
       const url = new URL(`${TMDB_API_BASE}/${type}/${mediaId}`)
       url.searchParams.set('api_key', TMDB_API_KEY)
-      url.searchParams.set('language', 'fr-FR')
+      url.searchParams.set('language', language)
 
       const response = await fetch(url.toString())
       if (!response.ok) {
@@ -69,20 +71,32 @@ async function fetchTmdbMediaSummary(
   return request
 }
 
+export async function getWatchTmdbSummary(
+  type: TmdbMediaType,
+  id: string,
+): Promise<TmdbMediaSummary | null> {
+  const numericId = (normalizeText(id).match(/^\d+/) || [''])[0]
+  if (!numericId) {
+    return null
+  }
+
+  return fetchTmdbMediaSummary(type, numericId)
+}
+
 function getCinegraphState(type: string): string {
   if (type === 'movie') {
-    return 'Explore les connexions d\'un film dans CinéGraph'
+    return s().cinegraphMovie
   }
 
   if (type === 'tv') {
-    return 'Explore les connexions d\'une série dans CinéGraph'
+    return s().cinegraphSeries
   }
 
   if (type === 'person') {
-    return 'Explore les connexions d\'une personne dans CinéGraph'
+    return s().cinegraphPerson
   }
 
-  return 'Explore CinéGraph'
+  return s().cinegraph
 }
 
 export async function getCinegraphContext(pageTitle: string, pageImage: string) {

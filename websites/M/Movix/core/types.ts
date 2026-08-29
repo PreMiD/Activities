@@ -14,3 +14,23 @@ export interface WatchContext {
   sourceLabel: string
   sourceDetail: string
 }
+
+export interface PartyContext {
+  title: string
+  mediaType: string
+  season: string
+  episode: string
+  poster: string
+  participants: number
+}
+
+export interface LiveTvContext {
+  channel: string
+  poster: string
+}
+
+export interface IframePlayback {
+  currentTime: number
+  duration: number
+  paused: boolean
+}
