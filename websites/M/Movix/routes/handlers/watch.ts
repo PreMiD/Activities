@@ -3,7 +3,6 @@ import { ActivityType } from 'premid'
 import {
   EPISODE_CODE_SUFFIX_PATTERN,
   FALLBACK_LOGO,
-  ROUTE_FTV_WATCH_PATTERN,
   ROUTE_WATCHPARTY_JOIN_PATTERN,
   ROUTE_WATCHPARTY_ROOM_PATTERN,
   WATCH_ANIME_PATH_PATTERN,
@@ -210,20 +209,6 @@ export async function handleWatchRoutes(
         String(firstNonEmpty(getText('h1'), s().publicRooms)),
         pageImage,
       ),
-    )
-  }
-
-  if (ROUTE_FTV_WATCH_PATTERN.test(pathname)) {
-    const title = getWatchTitle(s().fallbackFtv)
-
-    return finalizeRoutePresence(
-      context,
-      createWatchingPresence({
-        title,
-        privacyDetails: s().watchFtv,
-        image: contentImage,
-      }),
-      { allowPageTimestamp: false },
     )
   }
 

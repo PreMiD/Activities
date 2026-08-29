@@ -1,6 +1,5 @@
 import type { RoutePresenceContext } from '../types.js'
 import {
-  ROUTE_FTV_INFO_PATTERN,
   ROUTE_LIST_PATTERN,
   ROUTE_VIP_GIFT_PATTERN,
   ROUTE_VIP_INVOICE_PATTERN,
@@ -21,7 +20,7 @@ import { finalizeRoutePresence } from '../helpers.js'
 export async function handleMiscRoutes(
   context: RoutePresenceContext,
 ): Promise<PresenceData | null> {
-  const { pathname, pageTitle, pageImage, contentImage } = context
+  const { pathname, pageTitle, pageImage } = context
 
   if (pathname === '/suggestion') {
     return finalizeRoutePresence(
@@ -228,38 +227,6 @@ export async function handleMiscRoutes(
     return finalizeRoutePresence(
       context,
       createPagePresence(s().viewTop10, pageTitle || s().top10, pageImage),
-    )
-  }
-
-  if (pathname === '/ftv') {
-    return finalizeRoutePresence(
-      context,
-      createPagePresence(
-        s().browseFtv,
-        String(firstNonEmpty(getText('h2'), pageTitle, s().ftv)),
-        pageImage,
-      ),
-    )
-  }
-
-  const ftvInfoMatch = pathname.match(ROUTE_FTV_INFO_PATTERN)
-  if (ftvInfoMatch) {
-    const programId = getMatchPart(ftvInfoMatch, 1)
-    const programTitle = String(
-      firstNonEmpty(
-        getText('h1'),
-        pageTitle,
-        format(s().programId, shortenId(programId)),
-      ),
-    )
-
-    return finalizeRoutePresence(
-      context,
-      createSpecificPagePresence(
-        programTitle,
-        s().viewFtvProgram,
-        contentImage,
-      ),
     )
   }
 

@@ -38,7 +38,6 @@ export const SAFE_BUTTON_RULES: Array<{
     pattern: /^\/watch\/anime\/[^/]+\/season\/[^/]+\/episode\/[^/]+$/i,
     label: 'btnWatch',
   },
-  { pattern: /^\/ftv\/watch\/[^/]+$/i, label: 'btnWatch' },
   { pattern: /^\/watchparty\/room\/[^/]+$/i, label: 'btnJoinRoom' },
   { pattern: /^\/collection\/[^/]+$/i, label: 'btnViewPage' },
   { pattern: /^\/movie\/[^/]+$/i, label: 'btnViewPage' },
@@ -53,7 +52,6 @@ export const SAFE_BUTTON_RULES: Array<{
   { pattern: /^\/list\/[^/]+$/i, label: 'btnViewPage' },
   { pattern: /^\/vip\/invoice\/[^/]+$/i, label: 'btnViewPage' },
   { pattern: /^\/vip\/cadeau\/[^/]+$/i, label: 'btnViewPage' },
-  { pattern: /^\/ftv\/info\/[^/]+$/i, label: 'btnViewPage' },
   { pattern: /^\/wrapped(?:\/[^/]+)?$/i, label: 'btnViewPage' },
 ]
 
@@ -99,7 +97,5 @@ export const ROUTE_WATCHPARTY_JOIN_PATTERN = /^\/watchparty\/join(?:\/([^/]+))?$
 export const ROUTE_LIST_PATTERN = /^\/list\/([^/]+)$/i
 export const ROUTE_VIP_INVOICE_PATTERN = /^\/vip\/invoice\/([^/]+)$/i
 export const ROUTE_VIP_GIFT_PATTERN = /^\/vip\/cadeau\/([^/]+)$/i
-export const ROUTE_FTV_INFO_PATTERN = /^\/ftv\/info\/([^/]+)$/i
-export const ROUTE_FTV_WATCH_PATTERN = /^\/ftv\/watch\/[^/]+$/i
 export const ROUTE_WRAPPED_PATTERN = /^\/wrapped(?:\/([^/]+))?$/i
 export const EPISODE_CODE_SUFFIX_PATTERN = /\s*-\s*S\d+E\d+$/i

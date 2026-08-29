@@ -85,10 +85,6 @@ export interface PresenceStrings {
   configureSettings: string
   viewTop10: string
   top10: string
-  browseFtv: string
-  ftv: string
-  viewFtvProgram: string
-  programId: string
   viewWrapped: string
   wrapped: string
   wrappedYear: string
@@ -114,12 +110,10 @@ export interface PresenceStrings {
   watchMovie: string
   watchSeries: string
   watchAnime: string
-  watchFtv: string
   watchContent: string
   fallbackMovie: string
   fallbackSeries: string
   fallbackAnime: string
-  fallbackFtv: string
   btnViewPage: string
   btnWatch: string
   btnJoinRoom: string
@@ -210,10 +204,6 @@ const FR: PresenceStrings = {
   configureSettings: 'Configure ses préférences',
   viewTop10: 'Consulte le top 10',
   top10: 'Top 10',
-  browseFtv: 'Parcourt France.tv',
-  ftv: 'France.tv',
-  viewFtvProgram: 'Consulte le programme France.tv',
-  programId: 'Programme {0}',
   viewWrapped: 'Consulte son récapitulatif annuel',
   wrapped: 'Wrapped',
   wrappedYear: 'Wrapped {0}',
@@ -239,12 +229,10 @@ const FR: PresenceStrings = {
   watchMovie: 'Regarde un film',
   watchSeries: 'Regarde une série',
   watchAnime: 'Regarde un anime',
-  watchFtv: 'Regarde France.tv',
   watchContent: 'Regarde un contenu',
   fallbackMovie: 'Film',
   fallbackSeries: 'Série',
   fallbackAnime: 'Anime',
-  fallbackFtv: 'Programme France.tv',
   btnViewPage: 'Voir la page',
   btnWatch: 'Regarder',
   btnJoinRoom: 'Rejoindre le salon',
@@ -335,10 +323,6 @@ const EN: PresenceStrings = {
   configureSettings: 'Configuring preferences',
   viewTop10: 'Viewing the top 10',
   top10: 'Top 10',
-  browseFtv: 'Browsing France.tv',
-  ftv: 'France.tv',
-  viewFtvProgram: 'Viewing the France.tv program',
-  programId: 'Program {0}',
   viewWrapped: 'Viewing their yearly recap',
   wrapped: 'Wrapped',
   wrappedYear: 'Wrapped {0}',
@@ -364,12 +348,10 @@ const EN: PresenceStrings = {
   watchMovie: 'Watching a movie',
   watchSeries: 'Watching a TV show',
   watchAnime: 'Watching an anime',
-  watchFtv: 'Watching France.tv',
   watchContent: 'Watching content',
   fallbackMovie: 'Movie',
   fallbackSeries: 'TV show',
   fallbackAnime: 'Anime',
-  fallbackFtv: 'France.tv program',
   btnViewPage: 'View page',
   btnWatch: 'Watch',
   btnJoinRoom: 'Join the room',
