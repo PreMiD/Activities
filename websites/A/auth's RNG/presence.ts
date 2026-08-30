@@ -15,11 +15,11 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
     smallImageKey: Assets.Play,
     startTimestamp: browsingTimestamp,
-    details: "auth's RNG",
+    details: 'auth\'s RNG',
     state: 'Playing',
     buttons: [
       {
-        label: "play auth's RNG!",
+        label: 'play auth\'s RNG!',
         url: 'https://authsrng.xyz',
       },
     ],
