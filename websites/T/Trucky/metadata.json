@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "lucassalee",
+    "id": "705701599137234954"
+  },
+  "service": "Trucky",
+  "description": {
+    "en": "Trucky is the ultimate companion app and platform for virtual truckers in ETS2, ATS and TruckersMP.",
+    "es": "Trucky es la aplicación complementaria y plataforma para camioneros virtuales en ETS2, ATS y TruckersMP."
+  },
+  "url": [
+    "truckyapp.com",
+    "hub.truckyapp.com",
+    "map.truckyapp.com",
+    "dashboard.truckyapp.com",
+    "truckymods.io"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(truckyapp[.]com|truckymods[.]io)[/]",
+  "version": "1.0.0",
+  "logo": "https://screen-mp.com/uploads/images/f138ec30-1dcc-4ac1-a320-56343d8ead64.png",
+  "thumbnail": "https://screen-mp.com/uploads/images/f138ec30-1dcc-4ac1-a320-56343d8ead64.png",
+  "color": "#A51745",
+  "category": "games",
+  "tags": [
+    "trucky",
+    "ets2",
+    "ats",
+    "truckersmp",
+    "trucking",
+    "euro-truck-simulator-2",
+    "american-truck-simulator",
+    "vtc",
+    "telemetry",
+    "mods"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    }
+  ]
+}
