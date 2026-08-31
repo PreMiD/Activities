@@ -160,7 +160,7 @@ presence.on('UpdateData', async () => {
       type: ActivityType.Playing,
     }
 
-    const { pathname } = window.location
+    const { pathname } = document.location
 
     switch (pathname) {
       case '/': {
@@ -334,7 +334,7 @@ presence.on('UpdateData', async () => {
       presenceData.buttons = [
         {
           label: strings.buttonViewPage,
-          url: window.location.href,
+          url: document.location.href,
         },
       ]
     }
