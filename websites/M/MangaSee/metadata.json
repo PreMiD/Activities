@@ -10,12 +10,9 @@
     "en": "Read free manga online. Read the latest chapters of Tower of God, One Piece, Onepunch-Man, Berserk, Boku no Hero Academia, Naruto.",
     "nl": "Lees gratis manga online. Lees de laatste hoofdstukken van Tower of God, One Piece, Onepunch Man, Berserk, Boku no Hero Academia, Naruto."
   },
-  "url": [
-    "www.mangasee123.com",
-    "mangasee123.com"
-  ],
+  "url": "www.mangasee123.com",
   "regExp": "^https?[:][/][/](www[.])?mangasee123[.]com[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaSee/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaSee/assets/thumbnail.png",
   "color": "#6488be",
