@@ -13,8 +13,6 @@
   "url": [
     "truckyapp.com",
     "hub.truckyapp.com",
-    "map.truckyapp.com",
-    "dashboard.truckyapp.com",
     "truckymods.io"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(truckyapp[.]com|truckymods[.]io)[/]",
@@ -24,7 +22,6 @@
   "color": "#A51745",
   "category": "games",
   "tags": [
-    "trucky",
     "ets2",
     "ats",
     "truckersmp",
