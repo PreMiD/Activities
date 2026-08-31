@@ -11,7 +11,7 @@ function cleanText(text: string | null | undefined): string {
   if (!text)
     return ''
   return text
-    .replace(/\s*[-|–—]\s*(Trucky|TruckyApp|TruckyMods|VTC Hub|The Virtual Trucker Companion).*$/i, '')
+    .replace(/\s*[-|–—]\s*(?:Trucky|TruckyApp|TruckyMods|VTC Hub|The Virtual Trucker Companion).*$/i, '')
     .trim()
 }
 
@@ -300,7 +300,7 @@ presence.on('UpdateData', async () => {
     }
     // --- USER / DRIVER PROFILE (e.g. /user/175669) ---
     else if (pathname.includes('/user/')) {
-      const userIdMatch = pathname.match(/\/user\/([0-9a-zA-Z_-]+)/i)
+      const userIdMatch = pathname.match(/\/user\/([\w-]+)/i)
       const userId = userIdMatch ? userIdMatch[1] : ''
       const userName = findUserName()
 
