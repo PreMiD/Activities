@@ -77,7 +77,7 @@ function getNodeServerCount(): number {
 
 function getServerAction(subPath: string): string {
   if (subPath === '/' || subPath === '')
-    return 'Verwaltet Konsole'
+    return 'In der Konsole'
   if (subPath.startsWith('/files/edit') || subPath.startsWith('/files/new'))
     return 'Bearbeitet Dateien'
   if (subPath.startsWith('/files'))
@@ -95,7 +95,7 @@ function getServerAction(subPath: string): string {
   if (subPath.startsWith('/minecraft/bedrock-addons'))
     return 'Verwaltet Bedrock-Addons'
   if (subPath.startsWith('/minecraft/properties'))
-    return 'Bearbeitet Server-Einstellungen'
+    return 'Konfiguriert Server'
   if (subPath.startsWith('/minecraft/versions'))
     return 'Wechselt Server-Version'
   if (subPath.startsWith('/bedrock-support'))
@@ -107,9 +107,9 @@ function getServerAction(subPath: string): string {
   if (subPath.startsWith('/subdomain'))
     return 'Konfiguriert Subdomains'
   if (subPath.startsWith('/schedules/') && subPath.length > '/schedules/'.length)
-    return 'Bearbeitet Automatisierung'
+    return 'Bearbeitet Aufgaben'
   if (subPath.startsWith('/schedules'))
-    return 'Verwaltet Automatisierungen'
+    return 'Verwaltet Aufgaben'
   if (subPath.startsWith('/users'))
     return 'Verwaltet Zugänge'
   if (subPath.startsWith('/startup'))
@@ -117,9 +117,9 @@ function getServerAction(subPath: string): string {
   if (subPath.startsWith('/settings'))
     return 'Verwaltet Einstellungen'
   if (subPath.startsWith('/Statistics'))
-    return 'Analysiert Statistiken'
+    return 'Prüft Statistiken'
   if (subPath.startsWith('/activity'))
-    return 'Prüft Aktivitätslogs'
+    return 'Liest Aktivitätslogs'
   if (subPath.startsWith('/picoclaw'))
     return 'Verwaltet PicoClaw'
   return 'Im Panel'
@@ -143,7 +143,7 @@ function getNodeAction(subPath: string): string {
 
 function getBotAction(subPath: string): string {
   if (subPath === '/' || subPath === '')
-    return 'Bot-Übersicht'
+    return 'Auf der Bot-Übersicht'
   if (subPath.startsWith('/knowledge'))
     return 'Trainiert Wissensdatenbank'
   if (subPath.startsWith('/blacklist'))
@@ -161,18 +161,18 @@ function getBotAction(subPath: string): string {
   if (subPath.startsWith('/memory'))
     return 'Verwaltet Bot-Memory'
   if (subPath.startsWith('/settings'))
-    return 'Bot-Einstellungen'
+    return 'Konfiguriert Bot'
   return 'Verwaltet Bot'
 }
 
 function getAccountAction(pathname: string): string {
   if (pathname.includes('/activity'))
-    return 'Account-Aktivität'
+    return 'Prüft Account-Logs'
   if (pathname.includes('/snippets'))
-    return 'Command Snippets'
+    return 'Verwaltet Snippets'
   if (pathname.includes('/data-export'))
-    return 'DSGVO-Datenauskunft'
-  return 'Account-Einstellungen'
+    return 'Im DSGVO-Export'
+  return 'Verwaltet Account'
 }
 
 presence.on('UpdateData', async () => {
