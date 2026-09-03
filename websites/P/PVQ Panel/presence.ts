@@ -77,102 +77,102 @@ function getNodeServerCount(): number {
 
 function getServerAction(subPath: string): string {
   if (subPath === '/' || subPath === '')
-    return 'In der Konsole'
+    return 'Viewing Console'
   if (subPath.startsWith('/files/edit') || subPath.startsWith('/files/new'))
-    return 'Bearbeitet Dateien'
+    return 'Editing Files'
   if (subPath.startsWith('/files'))
-    return 'Verwaltet Dateien'
+    return 'Managing Files'
   if (subPath.startsWith('/databases'))
-    return 'Verwaltet Datenbanken'
+    return 'Managing Databases'
   if (subPath.startsWith('/backups'))
-    return 'Verwaltet Backups'
+    return 'Managing Backups'
   if (subPath.startsWith('/minecraft-plugins'))
-    return 'Installiert Plugins'
+    return 'Installing Plugins'
   if (subPath.startsWith('/modpacks'))
-    return 'Durchsucht Modpacks'
+    return 'Browsing Modpacks'
   if (subPath.startsWith('/players'))
-    return 'Verwaltet Spieler'
+    return 'Managing Players'
   if (subPath.startsWith('/minecraft/bedrock-addons'))
-    return 'Verwaltet Bedrock-Addons'
+    return 'Managing Bedrock Addons'
   if (subPath.startsWith('/minecraft/properties'))
-    return 'Konfiguriert Server'
+    return 'Configuring Server'
   if (subPath.startsWith('/minecraft/versions'))
-    return 'Wechselt Server-Version'
+    return 'Changing Server Version'
   if (subPath.startsWith('/bedrock-support'))
-    return 'Konfiguriert Bedrock'
+    return 'Configuring Bedrock'
   if (subPath.startsWith('/network'))
-    return 'Verwaltet Port-Freigaben'
+    return 'Managing Ports'
   if (subPath.startsWith('/proxy'))
-    return 'Konfiguriert Proxy'
+    return 'Configuring Proxy'
   if (subPath.startsWith('/subdomain'))
-    return 'Konfiguriert Subdomains'
+    return 'Configuring Subdomains'
   if (subPath.startsWith('/schedules/') && subPath.length > '/schedules/'.length)
-    return 'Bearbeitet Aufgaben'
+    return 'Editing Schedules'
   if (subPath.startsWith('/schedules'))
-    return 'Verwaltet Aufgaben'
+    return 'Managing Schedules'
   if (subPath.startsWith('/users'))
-    return 'Verwaltet Zugänge'
+    return 'Managing Users'
   if (subPath.startsWith('/startup'))
-    return 'Konfiguriert Startup'
+    return 'Configuring Startup'
   if (subPath.startsWith('/settings'))
-    return 'Verwaltet Einstellungen'
+    return 'Managing Settings'
   if (subPath.startsWith('/Statistics'))
-    return 'Prüft Statistiken'
+    return 'Viewing Statistics'
   if (subPath.startsWith('/activity'))
-    return 'Liest Aktivitätslogs'
+    return 'Viewing Activity Logs'
   if (subPath.startsWith('/picoclaw'))
-    return 'Verwaltet PicoClaw'
-  return 'Im Panel'
+    return 'Managing PicoClaw'
+  return 'In Panel'
 }
 
 function getNodeAction(subPath: string): string {
   if (subPath === '/' || subPath === '') {
     const count = getNodeServerCount()
-    return count > 0 ? `Verwaltet ${count} Server` : 'Verwaltet Node'
+    return count > 0 ? `Managing ${count} Servers` : 'Managing Node'
   }
   if (subPath.startsWith('/firewall'))
-    return 'Konfiguriert Firewall'
+    return 'Configuring Firewall'
   if (subPath.startsWith('/system-logs'))
-    return 'Liest System-Logs'
+    return 'Viewing System Logs'
   if (subPath.startsWith('/node-users'))
-    return 'Verwaltet Node-Nutzer'
+    return 'Managing Node Users'
   if (subPath.startsWith('/api-control'))
-    return 'Verwaltet API-Keys'
-  return 'Verwaltet Node'
+    return 'Managing API Keys'
+  return 'Managing Node'
 }
 
 function getBotAction(subPath: string): string {
   if (subPath === '/' || subPath === '')
-    return 'Auf der Bot-Übersicht'
+    return 'In Bot Overview'
   if (subPath.startsWith('/knowledge'))
-    return 'Trainiert Wissensdatenbank'
+    return 'Training Knowledgebase'
   if (subPath.startsWith('/blacklist'))
-    return 'Verwaltet Blacklist'
+    return 'Managing Blacklist'
   if (subPath.startsWith('/channels'))
-    return 'Konfiguriert Kanäle'
+    return 'Configuring Channels'
   if (subPath.startsWith('/profile'))
-    return 'Bearbeitet Bot-Profil'
+    return 'Editing Bot Profile'
   if (subPath.startsWith('/logs'))
-    return 'Liest Bot-Logs'
+    return 'Viewing Bot Logs'
   if (subPath.startsWith('/access'))
-    return 'Verwaltet Bot-Zugang'
+    return 'Managing Bot Access'
   if (subPath.startsWith('/activity'))
-    return 'Prüft Bot-Aktivität'
+    return 'Viewing Bot Activity'
   if (subPath.startsWith('/memory'))
-    return 'Verwaltet Bot-Memory'
+    return 'Managing Bot Memory'
   if (subPath.startsWith('/settings'))
-    return 'Konfiguriert Bot'
-  return 'Verwaltet Bot'
+    return 'Configuring Bot'
+  return 'Managing Bot'
 }
 
 function getAccountAction(pathname: string): string {
   if (pathname.includes('/activity'))
-    return 'Prüft Account-Logs'
+    return 'Viewing Account Logs'
   if (pathname.includes('/snippets'))
-    return 'Verwaltet Snippets'
+    return 'Managing Snippets'
   if (pathname.includes('/data-export'))
-    return 'Im DSGVO-Export'
-  return 'Verwaltet Account'
+    return 'In GDPR Export'
+  return 'Managing Account'
 }
 
 presence.on('UpdateData', async () => {
