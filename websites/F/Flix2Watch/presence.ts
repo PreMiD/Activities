@@ -11,17 +11,39 @@ enum ActivityAssets {
 }
 
 function pageState(pathname: string): string {
-  if (pathname === '/') return 'Browsing the homepage'
-  if (pathname.startsWith('/movies')) return 'Browsing movies'
-  if (pathname.startsWith('/tv')) return 'Browsing TV shows'
-  if (pathname.startsWith('/genres')) return 'Browsing genres'
-  if (pathname.startsWith('/leaderboard')) return 'Viewing the leaderboard'
-  if (pathname.startsWith('/profile')) return 'Viewing a profile'
-  if (pathname.startsWith('/favorites')) return 'Viewing favorites'
-  if (pathname.startsWith('/notifications')) return 'Checking notifications'
-  if (pathname.startsWith('/support')) return 'Viewing support'
-  if (pathname.startsWith('/account')) return 'Managing their account'
-  if (pathname.startsWith('/staff')) return 'Managing Flix2Watch'
+  if (pathname === '/')
+    return 'Browsing the homepage'
+
+  if (pathname.startsWith('/movies'))
+    return 'Browsing movies'
+
+  if (pathname.startsWith('/tv'))
+    return 'Browsing TV shows'
+
+  if (pathname.startsWith('/genres'))
+    return 'Browsing genres'
+
+  if (pathname.startsWith('/leaderboard'))
+    return 'Viewing the leaderboard'
+
+  if (pathname.startsWith('/profile'))
+    return 'Viewing a profile'
+
+  if (pathname.startsWith('/favorites'))
+    return 'Viewing favorites'
+
+  if (pathname.startsWith('/notifications'))
+    return 'Checking notifications'
+
+  if (pathname.startsWith('/support'))
+    return 'Viewing support'
+
+  if (pathname.startsWith('/account'))
+    return 'Managing their account'
+
+  if (pathname.startsWith('/staff'))
+    return 'Managing Flix2Watch'
+
   return 'Browsing Flix2Watch'
 }
 
@@ -35,10 +57,10 @@ presence.on('UpdateData', async () => {
   const bridge = document.querySelector<HTMLElement>('#f2w-premid-state')
 
   if (pathname.startsWith('/watch')) {
-    const title =
-      bridge?.dataset.title?.trim()
-      || document.querySelector('#detail-title')?.textContent?.trim()
-      || 'Loading title…'
+    const title
+      = bridge?.dataset.title?.trim()
+        || document.querySelector('#detail-title')?.textContent?.trim()
+        || 'Loading title…'
 
     const mediaType = bridge?.dataset.mediaType === 'tv' ? 'tv' : 'movie'
     const status = bridge?.dataset.status || 'watching'

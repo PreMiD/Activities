@@ -13,6 +13,7 @@
     "flix2watch.com",
     "www.flix2watch.com"
   ],
+  "regExp": "^https:\\/\\/(?:www\\.)?flix2watch\\.com\\/.*$",
   "version": "1.0.0",
   "logo": "https://flix2watch.com/flix2watch-premid-logo-512-v231.png",
   "thumbnail": "https://flix2watch.com/flix2watch-share-v214.png",
@@ -49,6 +50,5 @@
       "icon": "fas fa-image",
       "value": true
     }
-  ],
-  "regExp": "^https:\\/\\/(?:www\\.)?flix2watch\\.com\\/.*$"
+  ]
 }
