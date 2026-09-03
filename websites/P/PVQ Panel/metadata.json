@@ -14,7 +14,7 @@
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pv-q[.]de[/]",
   "version": "1.0.0",
   "logo": "https://pv-q.de/favicons/pvq-icon-maskable-512x512.png",
-  "thumbnail": "https://pv-q.de/favicons/pvq-icon-maskable-512x512.png",
+  "thumbnail": "https://i.imgur.com/9sGJnp4.png",
   "color": "#3b82f6",
   "category": "other",
   "tags": ["gameserver", "panel"],
