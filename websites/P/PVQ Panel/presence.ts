@@ -193,7 +193,7 @@ presence.on('UpdateData', async () => {
 
   const { pathname } = document.location
 
-  const serverMatch = pathname.match(/^\/server\/(?:[a-f0-9-]+)(\/.*)?$/i)
+  const serverMatch = pathname.match(/^\/server\/[a-f0-9-]+(\/.*)?$/i)
 
   if (serverMatch) {
     const subPath = serverMatch[1] || '/'
