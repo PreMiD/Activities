@@ -8,7 +8,7 @@ const presence = new Presence({
 
 const LOGO_URL
   = 'https://cdn.rcd.gg/PreMiD/websites/C/Cineby/assets/logo.png'
-const BASE_URL = 'https://www.cineby.sc'
+const BASE_URL = 'https://www.cineby.at'
 const TMDB_IMG = 'https://image.tmdb.org/t/p/original'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -51,10 +51,9 @@ presence.on('UpdateData', async () => {
       const year = data.release_date?.split('-').shift()
       const runtime = data.runtime
 
-      if (useActivityName) {
+      if (useActivityName)
         presenceData.name = title
-        presenceData.details = title
-      }
+      presenceData.details = title
       const stateStr = [year, runtime != null ? `${runtime} min` : null]
         .filter(Boolean)
         .join(' • ')
@@ -66,7 +65,7 @@ presence.on('UpdateData', async () => {
       }
     }
     catch {
-      presenceData.details = 'Browsing'
+      presenceData.details = 'Watching a Movie'
     }
   }
   else if (type === 'tv' && contentId) {
@@ -95,7 +94,9 @@ presence.on('UpdateData', async () => {
       }
     }
     catch {
-      presenceData.details = 'Browsing'
+      presenceData.details = 'Watching a TV Show'
+      if (seasonNum && episodeNum)
+        presenceData.state = `S${seasonNum}:E${episodeNum}`
     }
   }
   else if (type === 'anime' && contentId) {
@@ -119,7 +120,9 @@ presence.on('UpdateData', async () => {
       }
     }
     catch {
-      presenceData.details = 'Browsing'
+      presenceData.details = 'Watching Anime'
+      if (episodeNum)
+        presenceData.state = `Episode ${episodeNum}`
     }
   }
   else {

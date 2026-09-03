@@ -33,7 +33,7 @@
     "blog.crowdin.com"
   ],
   "regExp": "^https?[:][/][/]((support|store|status|blog|[a-z]{2})[.])?crowdin[.]com[/]",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Crowdin/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Crowdin/assets/thumbnail.png",
   "color": "#2e3340",
@@ -49,7 +49,7 @@
     {
       "id": "showProject",
       "title": "Show project names",
-      "icon": "fa-regular fa-tag",
+      "icon": "fa-solid fa-tag",
       "value": true
     },
     {

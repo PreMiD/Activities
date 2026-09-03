@@ -1,4 +1,11 @@
-import { ActivityType, Assets, getTimestamps, getTimestampsFromMedia, StatusDisplayType, timestampFromFormat } from 'premid'
+import {
+  ActivityType,
+  Assets,
+  getTimestamps,
+  getTimestampsFromMedia,
+  StatusDisplayType,
+  timestampFromFormat,
+} from 'premid'
 
 let elapsed = Math.floor(Date.now() / 1000)
 let prevUrl = document.location.href
@@ -467,7 +474,8 @@ presence.on('UpdateData', async () => {
           streamerinfo = getElement('.stream-info-card p > a')
         }
 
-        presenceData.state = streamerinfo
+        if (!privacy)
+          presenceData.state = streamerinfo
 
         if (getElement('.modview-dock-widget p') !== 'Offline') {
           presenceData.smallImageKey = Assets.Live
@@ -528,9 +536,7 @@ presence.on('UpdateData', async () => {
 
         if (showVideo && !live) {
           //* Video or Clips
-          const title = getElement('[data-a-target="stream-title"]')
-            ?.split('•')
-            .shift()
+          const title = getElement('title')?.replace(' - Twitch', '')
           const uploader = document.querySelector('.channel-info-content h1')?.textContent
             ?? document
               .querySelector('[class*="metadata-layout__support"]')
@@ -538,10 +544,7 @@ presence.on('UpdateData', async () => {
               ?.textContent
           const game = getElement('a[data-a-target=\'stream-game-link\']')
             || 'Just Chatting'
-          const profilePic = document
-            .querySelector<HTMLImageElement>(
-              '.channel-info-content .tw-avatar > .tw-image',
-            )
+          const profilePic = document.querySelector<HTMLImageElement>('.channel-info-content .tw-avatar > img')
             ?.src
             ?.replace(/-\d{1,2}x\d{1,2}/, '-600x600')
             ?? (logoArr[logo] || ActivityAssets.Logo)
@@ -978,7 +981,10 @@ presence.on('UpdateData', async () => {
   if (privacy || !buttons)
     delete presenceData.buttons
 
-  if (presenceData.details)
+  if (presenceData.details) {
     presence.setActivity(presenceData)
-  else presence.clearActivity()
+  }
+  else {
+    presence.clearActivity()
+  }
 })

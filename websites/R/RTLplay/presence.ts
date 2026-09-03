@@ -225,12 +225,12 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageText = strings.privacy
           }
           else {
-            const buttonsSelector = '[class*=ActionButton-module-scss-module] > div > span'
+            const buttonsSelector = '[class*=ActionButton] > div > span'
             if (!exist(buttonsSelector))
               console.warn('Buttons not found, presence may need update to fit the new website design')
 
             const buttons = document.querySelectorAll(buttonsSelector)
-            if (document.querySelector('[class*=AdBreakStats-module-scss-module] > span')) {
+            if (document.querySelector('[class*=AdBreakStats] > span')) {
               presenceData.smallImageKey = localizedAssets.Ad
               presenceData.smallImageText = strings.watchingAd
             }
@@ -239,7 +239,7 @@ presence.on('UpdateData', async () => {
               presenceData.smallImageKey = Assets.Pause
               presenceData.smallImageText = strings.pause
             }
-            else if (buttons[2]?.textContent.toLowerCase() === 'retour au live') {
+            else if (buttons[1]?.textContent.toLowerCase() === 'retour au live') {
               // State deferred
               presenceData.smallImageKey = ActivityAssets.Deferred
               presenceData.smallImageText = strings.deferred
@@ -250,20 +250,14 @@ presence.on('UpdateData', async () => {
               presenceData.smallImageText = strings.live
             }
 
-            const items = Array.from(document.querySelectorAll<HTMLAnchorElement>('[class*=LiveChannelsItem-module-scss-module] [class*=link]'))
-            const livestreamIdx = items.findIndex((el) => {
-              const href = el.getAttribute('href') || ''
-              if (!href)
-                return false
-              return new URL(href, window.location.origin).pathname === pathname
-            })
-            const livestreamItems = document.querySelectorAll('[class*=LiveChannelsItem-module-scss-module] [class*=title]')
+            const mediaNameSelector = '[class*=BroadcastInfo] [class*=title]'
+            const mediaNameElement = document.querySelector(mediaNameSelector)
             if (
               !useChannelName
-              && (livestreamItems[livestreamIdx])
+              && exist(mediaNameSelector)
               && !['contact', 'bel'].includes(pathParts[3]!) // Radio show name are not relevant
             ) {
-              presenceData.name = livestreamItems[livestreamIdx]?.textContent || ''
+              presenceData.name = mediaNameElement?.textContent?.trim() || ''
             }
             else {
               presenceData.name = getChannel(pathParts[3]!).name
@@ -272,7 +266,7 @@ presence.on('UpdateData', async () => {
             presenceData.type = getChannel(pathParts[3]!).type
 
             presenceData.state = strings.watchingLive
-            presenceData.details = livestreamItems[livestreamIdx]?.textContent || ''
+            presenceData.details = mediaNameElement?.textContent?.trim() || ''
 
             if (['contact', 'bel'].includes(pathParts[3]!)) {
               // Songs played in the livestream are the same as the audio radio ones but with video clips
@@ -304,7 +298,7 @@ presence.on('UpdateData', async () => {
             }
 
             if (useTimestamps) {
-              const timeStatSelector = '[class*=TimeStat-module-scss-module]'
+              const timeStatSelector = '[class*=TimeStat]'
               if (exist(timeStatSelector)) {
                 // Video method: Uses video viewing statistics near play button if displayed
                 [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
@@ -336,6 +330,22 @@ presence.on('UpdateData', async () => {
                   url: href, // We are not redirecting directly to the raw video stream, it's only the media page
                 },
               ]
+            }
+
+            const mediaImageSelector = '[class*=BroadcastDetail] [class*=heroImage] > img'
+            const mediaDescriptionSelector = '[class*=BroadcastInfo] [class*=description]'
+
+            if (exist(mediaImageSelector) && usePoster) {
+              const presenceDataPoster = structuredClone(presenceData)
+              presenceDataPoster.largeImageText = document.querySelector(mediaDescriptionSelector)?.textContent?.trim() || ''
+              presenceDataPoster.largeImageKey = await getThumbnail(
+                document.querySelector(mediaImageSelector)?.getAttribute('src') ?? '',
+                ActivityAssets.Animated,
+                cropPreset.horizontal,
+              )
+
+              slideshow.addSlide('poster-image', presenceDataPoster, 5000)
+              slideshow.addSlide('channel-image', presenceData, 5000)
             }
           }
           break

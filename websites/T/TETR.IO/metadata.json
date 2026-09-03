@@ -13,7 +13,7 @@
   },
   "url": "tetr.io",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tetr[.]io[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TETR.IO/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TETR.IO/assets/thumbnail.jpg",
   "color": "#142472",

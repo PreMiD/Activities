@@ -19,7 +19,7 @@
     "v2ex.com"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*v2ex[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/V2EX/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/V2EX/assets/thumbnail.png",
   "color": "#aab0c6",

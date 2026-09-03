@@ -15,13 +15,13 @@ function getText(selector: string): string {
 
 // Function for getting the name/creator of a marketplace item
 function getItemData(): string | null {
-  const itemName = getText('h1[class*="text-3xl"][class*="md:text-4xl"][class*="xl:text-6xl"][class*="font-bold"][class*="break-words"]')
+  const itemName = getText('h1.text-3xl.font-bold.break-words.md\\:text-4xl.xl\\:text-6xl') || getText('h1[class*="text-3xl"][class*="font-bold"][class*="break-words"]')
   if (!itemName)
     return null
   const itemCreator = getText('a[class*="text-muted-foreground"][class*="mb-3"][class*="md:mb-4"]').replace('by ', '')
   const itemCategory = getCategory()
 
-  return `Item (${itemCategory}): ${itemName}${itemCreator ? ` by ${itemCreator}` : ''}`
+  return `Item (${itemCategory}): ${itemName}${itemCreator ? ` (by ${itemCreator})` : ''}`
 }
 
 // Function for getting the category of a marketplace item
@@ -37,11 +37,11 @@ function getCategory(): string {
 
 // Function for getting the name/creator of a game
 function getGameData(): string | null {
-  const gameName = getText('h1[class*="text-6xl"][class*="font-bold"][class*="mb-2"]')
+  const gameName = getText('h1[class*="text-6xl"][class*="font-bold"][class*="mb-2"]') || getText('h1.text-6xl.font-bold.mb-2')
   if (!gameName)
     return null
   const gameCreator = getText('p[class*="text-muted-foreground"]').replace('by ', '')
-  return `Game: ${gameName}${gameCreator ? ` by ${gameCreator}` : ''}`
+  return `Viewing Game: ${gameName}${gameCreator ? ` (by ${gameCreator})` : ''}`
 }
 
 presence.on('UpdateData', async () => {
@@ -66,13 +66,31 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  // Alpha Tester Site
-  else if (hostname === 'alpha.luduvo.com') {
-    presenceData.name = 'Luduvo (Alpha)'
+  // Main Site
+  else if (hostname === 'luduvo.com') {
+    presenceData.name = 'Luduvo'
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = 'Browsing'
     if (!paths.length) {
       presenceData.state = 'Landing'
+    }
+    else if (paths[0] === 'terms') {
+      presenceData.state = 'Terms of Service'
+    }
+    else if (paths[0] === 'privacy') {
+      presenceData.state = 'Privacy Policy'
+    }
+    else if (paths[0] === 'community-guidelines') {
+      presenceData.state = 'Community Guidelines'
+    }
+    else if (paths[0] === 'creator-guidelines') {
+      presenceData.state = 'Creator Guidelines'
+    }
+    else if (paths[0] === 'licenses') {
+      presenceData.state = 'Licenses'
+    }
+    else if (paths[0] === 'verify-email') {
+      presenceData.state = 'Verifying Email'
     }
     else if (paths[0] === 'auth') {
       presenceData.state = 'Signing In/Up'
@@ -82,22 +100,31 @@ presence.on('UpdateData', async () => {
     }
     else if (paths[0] === 'profile') {
       if (paths.length === 2) {
-        const displayName = getText('h1[class*="text-3xl"][class*="sm:text-5xl"][class*="font-bold"][class*="text-foreground"]')
-        const username = getText('h1[class*="text-lg"][class*="sm:text-2xl"][class*="font-bold"][class*="text-muted-foreground"]')
-        if (displayName) {
-          presenceData.state = `User: ${displayName} (${username})`.trim()
+        const gameStatus = getGameData()
+        const itemStatus = getItemData()
+        if (gameStatus) {
+          presenceData.state = gameStatus
+        }
+        else if (itemStatus) {
+          presenceData.state = itemStatus
         }
         else {
-          presenceData.state = 'Viewing a User\'s profile'
+          const displayName = getText('h1[class*="text-3xl"][class*="sm:text-5xl"][class*="font-bold"][class*="text-foreground"]')
+          const username = getText('h1[class*="text-lg"][class*="sm:text-2xl"][class*="font-bold"][class*="text-muted-foreground"]')
+          presenceData.state = displayName ? `Viewing User: ${displayName} (${username})`.trim() : 'Viewing a User\'s profile'
         }
       }
       else if (paths[2] === 'info') {
-        const infoTitle = getText('h1[class*="text-5xl"][class*="font-bold"][class*="mb-4"]')
-        presenceData.state = infoTitle ? `${infoTitle}` : 'User Info'
+        presenceData.state = 'Viewing a User\'s Friends/Following/Followers'
       }
       else if (paths[2] === 'inventory') {
-        const inventoryUser = getText('h1[class*="text-5xl"][class*="font-bold"][class*="mb-4"][class*="text-center"][class*="sm:text-left"]')
-        presenceData.state = inventoryUser ? `Inventory of: ${inventoryUser}` : 'Inventory'
+        const itemStatus = getItemData()
+        if (itemStatus) {
+          presenceData.state = itemStatus
+        }
+        else {
+          presenceData.state = 'Viewing a User\'s Inventory'
+        }
       }
       else if (paths[2] === 'trade') {
         const inventoryTitle = getText('h2[class*="text-lg"][class*="font-semibold"]').replace('\'s Inventory', '')
@@ -128,7 +155,13 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Messages'
     }
     else if (paths[0] === 'inventory') {
-      presenceData.state = 'Inventory'
+      const itemStatus = getItemData()
+      if (itemStatus) {
+        presenceData.state = itemStatus
+      }
+      else {
+        presenceData.state = 'Viewing Their Own Inventory'
+      }
     }
     else if (paths[0] === 'gifts') {
       const activeSelectionRaw = getText('button[aria-selected="true"][data-state="active"]')
@@ -137,6 +170,9 @@ presence.on('UpdateData', async () => {
     }
     else if (paths[0] === 'trades') {
       presenceData.state = 'Trades'
+    }
+    else if (paths[0] === 'leaderboard') {
+      presenceData.state = 'RAP Leaderboard'
     }
     else if (paths[0] === 'games') {
       const gameStatus = getGameData()
@@ -155,22 +191,22 @@ presence.on('UpdateData', async () => {
         const groupName = getText('h1[class*="text-2xl"][class*="sm:text-5xl"][class*="font-bold"][class*="text-foreground"][class*="truncate"]')
         const groupCreator = getText('h2[class*="text-lg"][class*="sm:text-2xl"][class*="font-bold"][class*="text-muted-foreground"] a')
         if (groupName) {
-          presenceData.state = `Group: ${groupName}${groupCreator ? ` (by ${groupCreator})` : ''}`
+          presenceData.state = `Viewing Group: ${groupName}${groupCreator ? ` (by ${groupCreator})` : ''}`
         }
         else {
-          presenceData.state = 'Group'
+          presenceData.state = 'Viewing a Group'
         }
       }
     }
     else if (paths[0] === 'studio') {
-      const activeStudioTab = getText('button[class*="bg-primary/10"][class*="text-foreground"]')
-      presenceData.state = activeStudioTab ? `Studio: ${activeStudioTab}` : 'Studio'
+      const activeStudioTab = getText('button[class*="bg-accent"][class*="text-accent-foreground"] span') || getText('p.min-w-0.truncate.text-2xl.font-semibold')
+      presenceData.state = activeStudioTab ? `Studio (${activeStudioTab})` : 'Studio'
     }
     else if (paths[0] === 'store') {
       presenceData.state = 'Store'
     }
     else if (paths[0] === 'trust-safety') {
-      presenceData.state = 'Support Tickets'
+      presenceData.state = 'Trust & Safety'
     }
     else if (paths[0] === 'redeem') {
       presenceData.state = 'Redeeming a Code'
@@ -219,21 +255,24 @@ presence.on('UpdateData', async () => {
       presenceData.state = 'Unread Topics'
     }
     else if (paths[0] === 't') {
-      // Tries fancy-title first, then topic-link if it reloaded into the longer format
       const topicName = getText('a.fancy-title') || getText('a.topic-link span')
       const topicCreator = getText('article#post_1 .first.full-name a')
       if (topicName) {
-        presenceData.state = `Topic: "${topicName}${topicCreator ? `" by ${topicCreator}` : ''}`
+        presenceData.state = `Topic: "${topicName}"${topicCreator ? ` by ${topicCreator}` : ''}`
       }
       else {
         presenceData.state = 'Viewing a Topic'
       }
     }
     else if (paths[0] === 'c') {
-      const categorySpan = document.querySelector('span.badge-category__name')
-      const categoryName = categorySpan?.textContent?.trim()
-      if (categoryName) {
-        presenceData.state = `Category: ${categoryName}`.trim()
+      const categoryName = document.querySelector('.category-breadcrumb__category-selector .badge-category__name')?.textContent?.trim()
+      const subcategoryName = document.querySelector('.category-breadcrumb__subcategory-selector .badge-category__name')?.textContent?.trim()
+
+      if (categoryName && subcategoryName) {
+        presenceData.state = `Category: ${categoryName} (${subcategoryName})`
+      }
+      else if (categoryName) {
+        presenceData.state = `Category: ${categoryName}`
       }
       else {
         presenceData.state = 'Viewing a Category'
@@ -338,19 +377,6 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.state = 'Exploring...'
     }
-  }
-
-  // Main Page (https://luduvo.com)
-  else {
-    presenceData.name = 'Luduvo (Main)'
-    if (!paths.length)
-      presenceData.state = 'Landing'
-    else if (paths[0] === 'tos')
-      presenceData.state = 'Terms of Service'
-    else if (paths[0] === 'privacy')
-      presenceData.state = 'Privacy Policy'
-    else if (paths[0] === 'verify-email')
-      presenceData.state = 'Verifying Email'
   }
 
   if (privacy) {
