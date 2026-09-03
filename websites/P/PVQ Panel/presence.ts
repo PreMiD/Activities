@@ -181,9 +181,11 @@ presence.on('UpdateData', async () => {
     buttons: [{ label: 'PVQ Panel öffnen', url: 'https://pv-q.de/auth/login' }],
   }
 
-  const showServerName = await presence.getSetting<boolean>('showServerName')
-  const showStatus = await presence.getSetting<boolean>('showStatus')
-  const showElapsedTime = await presence.getSetting<boolean>('showElapsedTime')
+  const [showServerName, showStatus, showElapsedTime] = await Promise.all([
+    presence.getSetting<boolean>('showServerName'),
+    presence.getSetting<boolean>('showStatus'),
+    presence.getSetting<boolean>('showElapsedTime'),
+  ])
 
   if (showElapsedTime) {
     presenceData.startTimestamp = startTimestamp
@@ -191,10 +193,10 @@ presence.on('UpdateData', async () => {
 
   const { pathname } = document.location
 
-  const serverMatch = pathname.match(/^\/server\/([a-f0-9-]+)(\/.*)?$/i)
+  const serverMatch = pathname.match(/^\/server\/(?:[a-f0-9-]+)(\/.*)?$/i)
 
   if (serverMatch) {
-    const subPath = serverMatch[2] || '/'
+    const subPath = serverMatch[1] || '/'
     const serverName = getServerName()
 
     if (isBotPath(subPath)) {
