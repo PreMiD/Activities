@@ -17,7 +17,7 @@
   "thumbnail": "https://pv-q.de/favicons/pvq-icon-maskable-512x512.png",
   "color": "#3b82f6",
   "category": "other",
-  "tags": ["gameserver", "pterodactyl"],
+  "tags": ["gameserver", "panel"],
   "settings": [
     {
       "id": "showServerName",
