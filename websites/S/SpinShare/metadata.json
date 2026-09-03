@@ -12,7 +12,7 @@
   },
   "url": "spinsha.re",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*spinsha[.]re[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SpinShare/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SpinShare/assets/thumbnail.png",
   "color": "#e22c78",

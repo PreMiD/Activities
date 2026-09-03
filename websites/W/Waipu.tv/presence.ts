@@ -174,7 +174,7 @@ presence.on('UpdateData', async () => {
 
   // Check if current URL is in the excluded channels list - if so, block immediately
   if (isChannelInList(document.location.href, excludedChannels)) {
-    presence.setActivity()
+    presence.clearActivity()
     return
   }
 

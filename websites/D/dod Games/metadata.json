@@ -12,7 +12,7 @@
   },
   "url": "www.dod.gr",
   "regExp": "^https?[:][/][/](www[.])?dod[.]gr[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/dod%20Games/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/dod%20Games/assets/thumbnail.png",
   "color": "#008fec",

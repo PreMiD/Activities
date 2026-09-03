@@ -66,6 +66,6 @@ presence.on('UpdateData', async () => {
 
     if (isPlaying)
       presence.setActivity(presenceData)
-    else presence.setActivity()
+    else presence.clearActivity()
   }
 })

@@ -13,7 +13,7 @@
   },
   "url": "serienstream.to",
   "regExp": "^https?[:][/][/]serienstream[.]to[/]",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/s.to/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/s.to/assets/thumbnail.png",
   "color": "#0000ff",

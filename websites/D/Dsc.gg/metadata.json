@@ -15,7 +15,7 @@
     "docs.dsc.gg"
   ],
   "regExp": "^https?[:][/][/](docs[.])?dsc[.]gg[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Dsc.gg/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Dsc.gg/assets/thumbnail.png",
   "color": "#738adb",
