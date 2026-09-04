@@ -6,7 +6,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1_000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/fpEpgJD.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/Y/Yoru/assets/logo.png',
 }
 
 // Yoru serves every episode as Hard Sub, Soft Sub or Dub. The chosen track is

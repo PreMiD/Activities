@@ -11,9 +11,9 @@
   },
   "url": "watchyoru.uk",
   "regExp": "^https?[:][/][/](www[.])?watchyoru[.]uk[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/fpEpgJD.png",
-  "thumbnail": "https://i.imgur.com/28ZLhZo.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Yoru/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Yoru/assets/thumbnail.png",
   "color": "#7C22FF",
   "category": "anime",
   "tags": [
