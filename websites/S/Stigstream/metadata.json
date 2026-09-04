@@ -9,9 +9,12 @@
   "description": {
     "en": "Stream thousands of movies and TV shows on Stigstream. Watch the latest releases, classic films, and binge-worthy series with our premium streaming platform."
   },
-  "url": "www.stigstream.com",
+  "url": [
+    "stigstream.com",
+    "www.stigstream.com"
+  ],
   "regExp": "^https?[:][/][/](www[.])?stigstream[.]com[/]",
-  "version": "1.1.2",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Stigstream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Stigstream/assets/thumbnail.png",
   "color": "#db0000",
