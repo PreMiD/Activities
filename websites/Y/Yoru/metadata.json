@@ -10,7 +10,7 @@
     "en": "Yoru is an ad-light anime streaming site. Show the anime and episode you are watching, the audio track you picked, and how far into the episode you are."
   },
   "url": "watchyoru.uk",
-  "regExp": "^https?[:][/][/](?:www[.])?watchyoru[.]uk(?:[/]|$)",
+  "regExp": "^https?[:][/][/](www[.])?watchyoru[.]uk[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/fpEpgJD.png",
   "thumbnail": "https://i.imgur.com/28ZLhZo.png",
