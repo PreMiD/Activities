@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1227759305852190801",
+    "name": "lovelyauth"
+  },
+  "service": "auth's RNG",
+  "description": {
+    "en": "the greatest RNG webgame of all time. roll, sell, buy, repeat, and customize."
+  },
+  "url": "authsrng.xyz",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*authsrng[.]xyz[/]",
+  "version": "1.0.0",
+  "logo": "https://authsrng.xyz/assets/favicons/android-chrome-512x512.png",
+  "thumbnail": "https://authsrng.xyz/assets/favicons/android-chrome-512x512.png",
+  "color": "#000000",
+  "category": "games",
+  "tags": [
+    "games"
+  ]
+}
