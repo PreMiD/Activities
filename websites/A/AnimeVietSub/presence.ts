@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps } from 'premid'
+import { ActivityType, Assets, getTimestamps, StatusDisplayType } from 'premid'
 import {
   getEpisodeKey,
   getEpisodePrivacy,
@@ -273,8 +273,14 @@ presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
   const buttons = await presence.getSetting<boolean>('buttons')
   const privacyButtonShown = await presence.getSetting<boolean>('privacy-shown')
+  const displayType = await presence.getSetting<number>('displayType')
   const watchPage = isWatchPage()
   const detailPage = isDetailPage()
+
+  presenceData.name = 'AnimeVietSub'
+  presenceData.statusDisplayType = displayType === 0
+    ? StatusDisplayType.Name
+    : StatusDisplayType.Details
 
   currentPrivacyButtonShown = privacyButtonShown
   currentEpisodeKey = getEpisodeKey(pathname, document.location.search)
@@ -283,6 +289,8 @@ presence.on('UpdateData', async () => {
     : false
 
   if (watchPage) {
+    delete presenceData.startTimestamp
+
     if (privacyButtonShown)
       ensurePrivacyButton(document, currentEpisodePrivacy, toggleCurrentEpisodePrivacy)
     else
@@ -349,7 +357,7 @@ presence.on('UpdateData', async () => {
       else {
         presenceData.smallImageKey = Assets.Pause
         presenceData.smallImageText = 'Tạm dừng'
-        delete presenceData.startTimestamp
+        presenceData.startTimestamp = browsingTimestamp
         delete presenceData.endTimestamp
       }
     }
@@ -365,7 +373,7 @@ presence.on('UpdateData', async () => {
       else {
         presenceData.smallImageKey = Assets.Pause
         presenceData.smallImageText = 'Tạm dừng'
-        delete presenceData.startTimestamp
+        presenceData.startTimestamp = browsingTimestamp
         delete presenceData.endTimestamp
       }
     }
@@ -442,9 +450,10 @@ presence.on('UpdateData', async () => {
     delete presenceData.smallImageKey
     delete presenceData.smallImageText
 
-    // Override video timestamps with web browsing time to hide video length
-    presenceData.startTimestamp = browsingTimestamp
-    delete presenceData.endTimestamp
+    if (watchPage) {
+      delete presenceData.startTimestamp
+      delete presenceData.endTimestamp
+    }
 
     delete presenceData.buttons
   }
