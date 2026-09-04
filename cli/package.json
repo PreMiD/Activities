@@ -34,7 +34,7 @@
     "esbuild": "^0.28.2",
     "gitdiff-parser": "^0.3.1",
     "globby": "^16.2.4",
-    "got": "^15.1.0",
+    "got": "^16.0.0",
     "is-ci": "^4.1.0",
     "json-to-ast": "^2.1.0",
     "jsonschema": "^1.5.0",
