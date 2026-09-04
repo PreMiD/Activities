@@ -11,7 +11,7 @@
   },
   "url": "homestuck.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*homestuck[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Homestuck/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Homestuck/assets/thumbnail.png",
   "color": "#0fff00",

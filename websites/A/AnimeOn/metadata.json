@@ -1,0 +1,77 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "CleverWild",
+    "id": "576057606624247818"
+  },
+  "service": "AnimeOn",
+  "description": {
+    "en": "AnimeOn - watch anime online for free with Russian dubs, a large catalog, release schedule and watch parties.",
+    "ru": "AnimeOn - смотреть аниме онлайн бесплатно с русской озвучкой, большой каталог, расписание выхода серий и совместный просмотр."
+  },
+  "url": [
+    "animeon.cc",
+    "v1.animeon.co"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animeon[.](cc|co)[/]",
+  "version": "1.1.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeOn/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeOn/assets/thumbnail.png",
+  "color": "#8B5CF6",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "russian"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "timestamps",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Show Anime Cover",
+      "icon": "fas fa-image",
+      "value": true
+    },
+    {
+      "id": "showBrowsingStatus",
+      "title": "Show Browsing Status",
+      "icon": "fad fa-book-reader",
+      "value": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "joinButton",
+      "title": "Show \"Join\" Button",
+      "icon": "fas fa-right-to-bracket",
+      "value": true,
+      "if": {
+        "privacy": false,
+        "buttons": true
+      }
+    }
+  ]
+}

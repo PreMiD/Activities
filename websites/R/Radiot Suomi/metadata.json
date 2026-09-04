@@ -13,7 +13,7 @@
   },
   "url": "www.radio-suomi.com",
   "regExp": "^https?[:][/][/](www[.])?radio-suomi[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Radiot%20Suomi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Radiot%20Suomi/assets/thumbnail.png",
   "color": "#002F6C",

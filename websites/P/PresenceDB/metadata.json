@@ -15,7 +15,7 @@
     "preview.presencedb.com"
   ],
   "regExp": "^https?[:][/][/](www|preview)[.]presencedb[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PresenceDB/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PresenceDB/assets/thumbnail.png",
   "color": "#fff",

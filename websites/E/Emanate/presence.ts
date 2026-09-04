@@ -133,6 +133,6 @@ emanate.on('UpdateData', async () => {
     delete presenceData.buttons
 
   if (!presenceData.details)
-    emanate.setActivity()
+    emanate.clearActivity()
   else emanate.setActivity(presenceData)
 })

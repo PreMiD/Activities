@@ -17,7 +17,7 @@
     "mapgenie.io"
   ],
   "regExp": "^https?[:][/][/]((act|webstatic-sea)[.]hoyolab[.]com|(webstatic-sea)[.]mihoyo[.]com|(genshin-impact-map)[.]appsample[.]com|mapgenie[.]io)[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Genshin%20Impact%20Map/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Genshin%20Impact%20Map/assets/thumbnail.png",
   "color": "#b6c48c",

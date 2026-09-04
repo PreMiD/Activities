@@ -72,7 +72,7 @@ presence.on('UpdateData', async () => {
     return
   }
 
-  await presence.setActivity()
+  await presence.clearActivity()
 })
 
 function path(): string {

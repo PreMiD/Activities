@@ -14,6 +14,6 @@ presence.on('UpdateData', async () => {
       presenceData.startTimestamp = browsingTimestamp
   }
   if (!presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

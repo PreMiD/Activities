@@ -8,6 +8,6 @@ presence.on('UpdateData', async () => {
   )).PreMiD_PresenceData
 
   if (!presenceData)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData.data)
 })

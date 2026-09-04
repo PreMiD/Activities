@@ -11,7 +11,7 @@
   },
   "url": "discord.id",
   "regExp": "^https?[:][/][/]discord[.]id[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20ID/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Discord%20ID/assets/thumbnail.png",
   "color": "#7289da",

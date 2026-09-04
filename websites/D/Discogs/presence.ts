@@ -448,6 +448,6 @@ presence.on('UpdateData', async () => {
   }
   else {
     slideshow.deleteAllSlides()
-    presence.setActivity()
+    presence.clearActivity()
   }
 })

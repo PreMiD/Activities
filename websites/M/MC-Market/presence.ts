@@ -20,7 +20,7 @@ presence.on('UpdateData', async () => {
       presence.setActivity(presenceData)
     }
     else if (document.location.pathname.includes('/private-accounts/')) {
-      presence.setActivity()
+      presence.clearActivity()
     }
     else if (document.location.pathname.includes('/advertising/')) {
       presenceData.details = 'Viewing the'
@@ -192,7 +192,7 @@ presence.on('UpdateData', async () => {
         '#content > div > div > div.titleBar > h1',
       )
       if (title?.textContent?.includes('Private OG')) {
-        presence.setActivity()
+        presence.clearActivity()
       }
       else {
         presenceData.details = 'Reading thread:'
@@ -423,7 +423,7 @@ presence.on('UpdateData', async () => {
       }
     }
     else {
-      presence.setActivity()
+      presence.clearActivity()
     }
   }
   else if (document.location.hostname === 'status.mc-market.org') {
@@ -435,6 +435,6 @@ presence.on('UpdateData', async () => {
     presence.setActivity(presenceData)
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
   }
 })
