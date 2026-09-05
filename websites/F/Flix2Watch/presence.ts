@@ -48,10 +48,12 @@ function pageState(pathname: string): string {
 }
 
 presence.on('UpdateData', async () => {
-  const showBrowsing = await presence.getSetting<boolean>('showBrowsing')
-  const showTimestamp = await presence.getSetting<boolean>('showTimestamp')
-  const showButtons = await presence.getSetting<boolean>('showButtons')
-  const showPoster = await presence.getSetting<boolean>('showPoster')
+  const [showBrowsing, showTimestamp, showButtons, showPoster] = await Promise.all([
+    presence.getSetting<boolean>('showBrowsing'),
+    presence.getSetting<boolean>('showTimestamp'),
+    presence.getSetting<boolean>('showButtons'),
+    presence.getSetting<boolean>('showPoster'),
+  ])
 
   const { pathname, href } = document.location
   const bridge = document.querySelector<HTMLElement>('#f2w-premid-state')
