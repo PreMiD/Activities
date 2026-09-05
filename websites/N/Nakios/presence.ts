@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://nakios.cyou/premid/icon.png',
+  Logo = 'https://nakios.website/premid/icon.png',
 }
 
 /**
