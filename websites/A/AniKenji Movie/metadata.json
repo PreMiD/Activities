@@ -11,9 +11,12 @@
     "vi": "Xem phim miễn phí tốc độ cao không quảng cáo, anh em thích xem bộ nào tôi up bộ đấy",
     "zh": "高速观看免费电影，无广告，我会上传您喜欢的任何剧集。"
   },
-  "url": "anikenji.live",
-  "regExp": "^https?[:][/][/]anikenji[.]live[/]",
-  "version": "1.2.3",
+  "url": [
+    "anikenji.tech",
+    "anikenji.live"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anikenji[.](tech|live)[/]",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniKenji%20Movie/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniKenji%20Movie/assets/thumbnail.png",
   "color": "#ff71b3",
@@ -22,7 +25,7 @@
     "anime"
   ],
   "iframe": true,
-  "iFrameRegExp": "(?:streamc[.]xyz|service[.]anikenji[.]live|([a-z0-9-]+[.])*youtube[.]com|([a-z0-9-]+[.])*vimeo[.]com)",
+  "iFrameRegExp": "(?:streamc[.]xyz|phim1280[.]tv|([a-z0-9-]+[.])*(anikenji[.](tech|live)|youtube[.]com|vimeo[.]com))",
   "settings": [
     {
       "id": "showButtons",
