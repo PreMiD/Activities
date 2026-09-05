@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Josh",
+    "id": "1515168963691151573"
+  },
+  "service": "Flix2Watch",
+  "description": {
+    "en": "Flix2Watch makes it easy to discover movies and TV shows, save favorites, build a profile, and see what the community is watching."
+  },
+  "url": [
+    "flix2watch.com",
+    "www.flix2watch.com"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?flix2watch[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://flix2watch.com/flix2watch-premid-logo-512-v231.png",
+  "thumbnail": "https://flix2watch.com/flix2watch-share-v214.png",
+  "color": "#ef172c",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "tv",
+    "streaming",
+    "watching"
+  ],
+  "settings": [
+    {
+      "id": "showBrowsing",
+      "title": "Show browsing status",
+      "icon": "fas fa-compass",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show playback progress",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show watch button",
+      "icon": "fas fa-external-link-alt",
+      "value": true
+    },
+    {
+      "id": "showPoster",
+      "title": "Show title poster",
+      "icon": "fas fa-image",
+      "value": true
+    }
+  ]
+}
