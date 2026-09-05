@@ -1,0 +1,78 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "0immagic0",
+    "id": "1545854937341239306"
+  },
+  "contributors": [],
+  "service": "SoloLatino",
+  "description": {
+    "en": "SoloLatino.Net is a free streaming website where you can watch movies, series, animes and doramas dubbed in Latin Spanish.",
+    "es": "SoloLatino.Net es un sitio de streaming gratuito donde puedes ver películas, series, animes y doramas doblados al español latino."
+  },
+  "url": "sololatino.net",
+  "regExp": "^https?[:][/][/]sololatino[.]net[/]",
+  "version": "1.1.0",
+  "logo": "https://i.imgur.com/Rwq5vaF.png",
+  "thumbnail": "https://i.imgur.com/Rwq5vaF.png",
+  "color": "#e50914",
+  "category": "videos",
+  "tags": [
+    "streaming",
+    "peliculas",
+    "series",
+    "anime",
+    "doramas",
+    "latino",
+    "espanol",
+    "movies",
+    "tv"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "player[.]pelisserieshoy[.]com|embed69[.]org|xupalace[.]org|drive[.]google[.]com|.*vidhide.*|.*streamhide.*",
+  "settings": [
+    {
+      "id": "brand",
+      "title": "Mostrar SoloLatino en el estado",
+      "icon": "fas fa-signature",
+      "value": true,
+      "description": "Muestra \"Viendo SoloLatino\" como título de la actividad. Si lo desactivas, se muestra \"Viendo\" seguido únicamente del nombre de la serie o película."
+    },
+    {
+      "id": "showTempEp",
+      "title": "Mostrar temporada y episodio",
+      "icon": "fas fa-list-ol",
+      "value": true,
+      "description": "Muestra la temporada y el episodio actual mientras ves una serie."
+    },
+    {
+      "id": "showTime",
+      "title": "Mostrar tiempo restante",
+      "icon": "fas fa-stopwatch",
+      "value": true,
+      "description": "Muestra el minuto en el que vas, con un contador sincronizado al reproductor."
+    },
+    {
+      "id": "showCover",
+      "title": "Mostrar portada",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Usa la portada de la serie o película como imagen grande en lugar del logo."
+    },
+    {
+      "id": "showPlayState",
+      "title": "Mostrar estado de reproducción",
+      "icon": "fas fa-play-circle",
+      "value": true,
+      "description": "Muestra un pequeño icono que indica si el video está en reproducción o en pausa."
+    },
+    {
+      "id": "showButton",
+      "title": "Mostrar botón Ver ahora",
+      "icon": "fas fa-external-link-alt",
+      "value": true,
+      "description": "Añade un botón que abre directamente la página de la serie, episodio o película que estás viendo."
+    }
+  ]
+}
