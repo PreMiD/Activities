@@ -17,10 +17,10 @@ interface VideoData {
 
 interface SchemaNode {
   '@type'?: string | string[]
-  name?: string
-  image?: string
-  partOfSeason?: { seasonNumber?: number }
-  partOfSeries?: { name?: string }
+  'name'?: string
+  'image'?: string
+  'partOfSeason'?: { seasonNumber?: number }
+  'partOfSeries'?: { name?: string }
 }
 
 let video: VideoData = { duration: 0, currentTime: 0, paused: true }
@@ -153,13 +153,13 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
   }
 
-  const episodeMatch = pathname.match(/^\/serie\/([^/]+)\/temporada-(\d+)\/episodio-(\d+)/)
-  const seriesMatch = pathname.match(/^\/serie\/([^/]+)\/?$/)
-  const movieMatch = pathname.match(/^\/pelicula\/([^/]+)\/?$/)
+  const episodeMatch = pathname.match(/^\/serie\/(?:[^/]+)\/temporada-(\d+)\/episodio-(\d+)/)
+  const seriesMatch = pathname.match(/^\/serie\/(?:[^/]+)\/?$/)
+  const movieMatch = pathname.match(/^\/pelicula\/(?:[^/]+)\/?$/)
 
   if (episodeMatch) {
-    const seasonNumber = episodeMatch[2]
-    const episodeNumber = episodeMatch[3]
+    const seasonNumber = episodeMatch[1]
+    const episodeNumber = episodeMatch[2]
     const seriesName = schema?.partOfSeries?.name || cleanTitle(getOgTitle()) || 'Serie'
     const episodeTitle = schema?.name || document.querySelector('h1')?.textContent?.trim() || ''
     const cover = getOgImage()
@@ -240,7 +240,7 @@ presence.on('UpdateData', async () => {
   if (pathname === '/' || pathname === '') {
     presenceData.state = 'Página principal'
   }
-  else if (/^\/(series|peliculas|animes|doramas)\/?$/.test(pathname)) {
+  else if (/^\/(?:series|peliculas|animes|doramas)\/?$/.test(pathname)) {
     presenceData.state = prettify(pathname.replace(/\//g, ''))
   }
   else if (/^\/genero\/[^/]+/.test(pathname)) {
