@@ -6,7 +6,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/Rwq5vaF.png',
+  Logo = 'https://i.imgur.com/WTlbzGb.png',
 }
 
 interface VideoData {

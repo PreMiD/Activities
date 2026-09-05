@@ -13,9 +13,9 @@
   },
   "url": "sololatino.net",
   "regExp": "^https?[:][/][/]sololatino[.]net[/]",
-  "version": "1.1.0",
-  "logo": "https://i.imgur.com/Rwq5vaF.png",
-  "thumbnail": "https://i.imgur.com/Rwq5vaF.png",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/WTlbzGb.png",
+  "thumbnail": "https://i.imgur.com/WTlbzGb.png",
   "color": "#e50914",
   "category": "videos",
   "tags": [
