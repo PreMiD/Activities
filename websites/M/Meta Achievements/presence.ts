@@ -143,6 +143,10 @@ presence.on('UpdateData', async () => {
     details = 'IOS Web App Guide'
     smallImageKey = getEmojiUrl('🍏')
   }
+  else if (pathname.endsWith('qs-redirect.html') || pathname.endsWith('/qs-redirect')) {
+    details = 'Chosing their fate'
+    smallImageKey = getEmojiUrl('🎲')
+  }
   else if (
     pathname.endsWith('settings.html')
     || pathname.endsWith('/settings')
