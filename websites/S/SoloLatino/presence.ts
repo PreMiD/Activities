@@ -153,9 +153,9 @@ presence.on('UpdateData', async () => {
     largeImageKey: ActivityAssets.Logo,
   }
 
-  const episodeMatch = pathname.match(/^\/serie\/(?:[^/]+)\/temporada-(\d+)\/episodio-(\d+)/)
-  const seriesMatch = pathname.match(/^\/serie\/(?:[^/]+)\/?$/)
-  const movieMatch = pathname.match(/^\/pelicula\/(?:[^/]+)\/?$/)
+  const episodeMatch = pathname.match(/^\/serie\/[^/]+\/temporada-(\d+)\/episodio-(\d+)/)
+  const seriesMatch = pathname.match(/^\/serie\/[^/]+\/?$/)
+  const movieMatch = pathname.match(/^\/pelicula\/[^/]+\/?$/)
 
   if (episodeMatch) {
     const seasonNumber = episodeMatch[1]
