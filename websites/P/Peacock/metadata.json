@@ -13,6 +13,10 @@
     {
       "name": "not__bob",
       "id": "1446263635268735151"
+    },
+    {
+      "name": "oncefeltloved",
+      "id": "1454675198598058101"
     }
   ],
   "service": "Peacock",
@@ -25,7 +29,7 @@
     "peacocktv.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?peacocktv[.]com[/]",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Peacock/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Peacock/assets/thumbnail.png",
   "color": "#FCCC12",

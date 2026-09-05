@@ -20,15 +20,10 @@ function getCoverKey(): string | undefined {
 }
 
 function findWatchingVideo(): HTMLVideoElement | null {
-  const video = document.querySelector<HTMLVideoElement>('#core-video-shaka')
-    || document.querySelector<HTMLVideoElement>('.video-player-component video')
-
   // The detail page autoplays a muted preview clip in the background; that
   // isn't the user deliberately watching something, so it doesn't count.
-  if (video?.closest('[data-gsp-shortform-player]'))
-    return null
-
-  return video
+  const videos = document.querySelectorAll<HTMLVideoElement>('video')
+  return [...videos].find(video => !video.closest('[data-gsp-shortform-player]')) ?? null
 }
 
 presence.on('UpdateData', async () => {
@@ -80,6 +75,7 @@ presence.on('UpdateData', async () => {
       const title = document.querySelector('[data-testid="metadata-title"]')
         || document.querySelector('.playback-header__title')
         || document.querySelector('.playback-metadata__container-title')
+        || document.querySelector('h1')
       const timestamps = getTimestamps(
         Math.floor(video.currentTime),
         Math.floor(video.duration),
@@ -99,7 +95,8 @@ presence.on('UpdateData', async () => {
         delete presenceData.state
       }
       else {
-        let titleText = title?.textContent ?? undefined
+        let titleText = title?.textContent?.trim()
+          || document.title.replace(/\s*[-|]\s*Peacock.*$/i, '').trim()
         if (titleText && path.includes('/watch/playback/playlist'))
           titleText += ' Playlist'
 
@@ -107,6 +104,8 @@ presence.on('UpdateData', async () => {
           presenceData.name = titleText
           if (desc)
             presenceData.details = desc.textContent
+          else
+            presenceData.details = strings.watchingVid
         }
         else {
           if (titleText)
@@ -158,6 +157,24 @@ presence.on('UpdateData', async () => {
         const cover = getCoverKey()
         if (cover)
           presenceData.largeImageKey = cover
+      }
+    }
+    else if (path.includes('/watch/playback')) {
+      isWatching = true
+      ;(presenceData as PresenceData).type = ActivityType.Watching
+
+      const titleText = document.querySelector('h1')?.textContent?.trim()
+        || document.title.replace(/\s*[-|]\s*Peacock.*$/i, '').trim()
+
+      if (privacy) {
+        presenceData.details = strings.watchingVid
+      }
+      else if (usePresenceName && titleText) {
+        presenceData.name = titleText
+        presenceData.details = strings.watchingVid
+      }
+      else if (titleText) {
+        presenceData.details = titleText
       }
     }
   }
