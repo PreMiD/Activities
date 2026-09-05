@@ -1,94 +1,142 @@
-import { franc } from 'franc-min'
+import { ActivityType } from 'premid'
+import { ActivityAssets } from './assets.js'
 import {
-  clearResponsesMetadata,
-  fetchResponsesMetadata,
-  responsesMetadata,
-} from './functions/fetchResponsesMetadata.js'
+  formatPrompt,
+  formatTitle,
+  getConversationInfo,
+} from './conversation.js'
+import { getGrokMode, MODE_ASSETS } from './modes.js'
 
 const presence = new Presence({
   clientId: '1350152994993209536',
 })
+
+const sessionTimestamp = Math.floor(Date.now() / 1000)
+const chatTimestamps = new Map<string, number>()
+let previousChatId: string | null = null
+
 async function getStrings() {
   return presence.getStrings({
     talkingWithAI: 'grok.talkingWithAI',
-    aiResponding: 'grok.aiResponding',
-    conversationStats: 'grok.conversationStats',
     startNewConversation: 'grok.startNewConversation',
     thinkingOfPrompt: 'grok.thinkingOfPrompt',
+    replyingTo: 'grok.replyingTo',
+    creatingImages: 'grok.creatingImages',
+    viewingFiles: 'grok.viewingFiles',
+    browsingProjects: 'grok.browsingProjects',
+    readingSharedChat: 'grok.readingSharedChat',
+    browsing: 'general.browsing',
   })
 }
-const browsingTimestamp = Math.floor(Date.now() / 1000)
-let oldLang: string | null = null
-let strings: Awaited<ReturnType<typeof getStrings>>
 
-enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/G/Grok/assets/logo.png',
-  Talking = 'https://cdn.rcd.gg/PreMiD/websites/G/Grok/assets/0.png',
+function applyMode(presenceData: PresenceData, pathname: string): void {
+  const mode = getGrokMode(pathname)
+  if (!mode)
+    return
+  presenceData.smallImageKey = MODE_ASSETS[mode.id]
+  presenceData.smallImageText = mode.title
+}
+
+function timestampFor(chatId: string | null, useChatTimer: boolean): number {
+  if (!chatId || !useChatTimer)
+    return sessionTimestamp
+
+  let started = chatTimestamps.get(chatId)
+  if (!started) {
+    started = Math.floor(Date.now() / 1000)
+    chatTimestamps.set(chatId, started)
+  }
+  return started
 }
 
 presence.on('UpdateData', async () => {
-  const [lang, showTitle] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
-    presence.getSetting<boolean>('showTitle'),
+  const [showTitle, showLastPrompt] = await Promise.all([
+    presence.getSetting<boolean>('showTitle').catch(() => true),
+    presence.getSetting<boolean>('showLastPrompt').catch(() => true),
   ])
-
-  if (oldLang !== lang) {
-    oldLang = lang
-    strings = await getStrings()
-  }
-
+  const strings = await getStrings()
   const { pathname } = document.location
-  const presenceData: PresenceData = {
-    largeImageKey: ActivityAssets.Logo,
-    startTimestamp: browsingTimestamp,
+  const conversation = await getConversationInfo(pathname)
+  const useChatTimer = !!(conversation.id && (showTitle || showLastPrompt))
+
+  if (conversation.id !== previousChatId) {
+    previousChatId = conversation.id
+    if (conversation.id && !chatTimestamps.has(conversation.id))
+      chatTimestamps.set(conversation.id, Math.floor(Date.now() / 1000))
   }
 
-  const conversationId = pathname.match(
-    /\/chat\/([0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12})/,
-  )?.[1]
+  const presenceData: PresenceData = {
+    type: ActivityType.Playing,
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: timestampFor(conversation.id, useChatTimer),
+  }
 
-  if (conversationId) {
-    await fetchResponsesMetadata(conversationId)
+  applyMode(presenceData, pathname)
 
-    if (responsesMetadata.data.loadResponses) {
-      const isTalking
-        = document.getElementsByClassName('animate-gaussian').length > 0
+  const showDetails = showTitle || showLastPrompt
 
-      let wordCount = 0
-      for (const response of responsesMetadata.data.loadResponses.responses) {
-        wordCount += Array.from(
-          new Intl.Segmenter(franc(response.message), {
-            granularity: 'word',
-          }).segment(response.message),
-        ).length
+  if (!showDetails) {
+    presence.setActivity(presenceData)
+    return
+  }
+
+  switch (true) {
+    case pathname.startsWith('/imagine'):
+    case pathname.startsWith('/images'): {
+      presenceData.details = strings.creatingImages
+      break
+    }
+    case pathname.startsWith('/files'):
+    case pathname.startsWith('/library'): {
+      presenceData.details = strings.viewingFiles
+      break
+    }
+    case pathname.startsWith('/project'):
+    case pathname.startsWith('/workspace'): {
+      presenceData.details = strings.browsingProjects
+      break
+    }
+    case pathname.startsWith('/share'):
+    case pathname.startsWith('/s/'): {
+      presenceData.details = showTitle
+        ? (conversation.title ? formatTitle(conversation.title) : strings.readingSharedChat)
+        : strings.readingSharedChat
+      if (showLastPrompt && conversation.lastPrompt) {
+        presenceData.state = strings.replyingTo.replace(
+          '{0}',
+          formatPrompt(conversation.lastPrompt),
+        )
+      }
+      break
+    }
+    case !!conversation.id:
+    case pathname.startsWith('/voice'): {
+      if (showTitle) {
+        presenceData.details = conversation.title
+          ? formatTitle(conversation.title)
+          : strings.talkingWithAI
+      }
+      else if (showLastPrompt) {
+        presenceData.details = strings.talkingWithAI
       }
 
-      presenceData.details = showTitle
-        ? document.title.slice(0, -7)
-        : strings.talkingWithAI
-      presenceData.state = isTalking
-        ? strings.aiResponding
-        : strings.conversationStats
-            .replace(
-              '{0}',
-              `${
-                responsesMetadata.data.loadResponses.responses.filter(
-                  response => response.sender === 'human',
-                ).length
-              }`,
-            )
-            .replace('{1}', `${wordCount}`)
-      presenceData.smallImageKey = isTalking ? ActivityAssets.Talking : null
+      if (showLastPrompt && conversation.lastPrompt) {
+        presenceData.state = strings.replyingTo.replace(
+          '{0}',
+          formatPrompt(conversation.lastPrompt),
+        )
+      }
+      break
     }
-    else {
+    case pathname === '/' || pathname === '/chat' || pathname === '/c': {
       presenceData.details = strings.startNewConversation
       presenceData.state = strings.thinkingOfPrompt
+      break
     }
-  }
-  else {
-    clearResponsesMetadata()
-    presenceData.details = strings.startNewConversation
-    presenceData.state = strings.thinkingOfPrompt
+    default: {
+      presenceData.details = strings.browsing
+      break
+    }
   }
 
   presence.setActivity(presenceData)
