@@ -11,9 +11,9 @@
   },
   "url": "www.protondb.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*protondb[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/l4Z6mwH.png",
-  "thumbnail": "https://i.imgur.com/dI94BPN.jpeg",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/P/ProtonDB/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/ProtonDB/assets/thumbnail.jpeg",
   "color": "#cfb53b",
   "category": "other",
   "tags": [

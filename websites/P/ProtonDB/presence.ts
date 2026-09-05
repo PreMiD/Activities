@@ -15,7 +15,7 @@ let oldPath: string | undefined
 let cachedColorImage: string
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/l4Z6mwH.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/P/ProtonDB/assets/logo.png',
 }
 
 async function resizeImage(image: string): Promise<string> {

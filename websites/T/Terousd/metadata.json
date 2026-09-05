@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "1009426635780542475",
+    "name": "aethxrix"
+  },
+  "service": "Terousd",
+  "description": {
+    "en": "Terousd is a streaming site for movies and TV series."
+  },
+  "url": "stream.terousd.online",
+  "regExp": "^https?[:][/][/]stream[.]terousd[.]online[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Terousd/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Terousd/assets/thumbnail.jpg",
+  "color": "#E50914",
+  "category": "videos",
+  "tags": [
+    "video",
+    "media",
+    "movies",
+    "shows"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?[:][/][/]((stream[.]terousd[.]online[/]api[/]embed)|(([a-z0-9-]+[.])*(vsembed[.]su|vidking[.]net|vidnest[.]fun|vidlink[.]pro))[/])",
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "thumbnail",
+      "title": "Show Thumbnail",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "browsingStatus",
+      "title": "Show Browsing Status",
+      "icon": "fad fa-book-reader",
+      "value": true
+    },
+    {
+      "id": "hideWhenPaused",
+      "title": "Hide When Paused",
+      "icon": "fas fa-pause",
+      "value": false
+    }
+  ]
+}

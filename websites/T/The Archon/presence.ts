@@ -320,7 +320,7 @@ presence.on('UpdateData', async () => {
       presence.setActivity(presenceData)
     }
     else {
-      presence.setActivity()
+      presence.clearActivity()
     }
   }
   else if (document.location.hostname === 'shop.thearchon.net') {
@@ -333,6 +333,6 @@ presence.on('UpdateData', async () => {
     presence.setActivity(presenceData)
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
   }
 })

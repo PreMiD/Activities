@@ -15,7 +15,7 @@
     "lucidchart.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?lucidchart[.]com[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/LucidChart/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/LucidChart/assets/thumbnail.png",
   "color": "#F38D32",

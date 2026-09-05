@@ -12,7 +12,7 @@
   },
   "url": "www.monstercat.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*monstercat[.]com[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Monstercat/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Monstercat/assets/thumbnail.png",
   "color": "#000000",

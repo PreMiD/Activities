@@ -7,7 +7,7 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 let lastKnownTitle = ''
 
 enum ActivityAssets {
-  Logo = 'https://play-lh.googleusercontent.com/O35u7LcmgKHsRpEQvHmT9ACfvDvP5S6HRIVmz-x-spUhojXIcnk0wbMEqaBSWPUJYQ?.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/C/ChatLLM%20Teams/assets/logo.png',
 }
 
 presence.on('UpdateData', async () => {

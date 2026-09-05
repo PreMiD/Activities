@@ -230,7 +230,7 @@ presence.on('UpdateData', async () => {
     presence.setActivity(presenceData)
     return
   }
-  else if (pathname.includes('/') && !/\/\d+\/?$/.test(pathname) && !pathname.includes('/pelicula/')) {
+  else if (pathname.includes('/') && !/\/\d+\/?$/.test(pathname) && !pathname.includes('/pelicula/') && !pathname.includes('/especial/') && !pathname.includes('/ova/')) {
     const animeTitle = pathname.split('/')[1] || ''
 
     if (animeTitle) {
@@ -239,6 +239,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Viendo Descripción'
       presenceData.state = `Leyendo sobre: ${title}`
       presenceData.largeImageText = `Información de ${title}`
+      presenceData.largeImageKey = document.querySelector('.anime_pic')?.querySelector<HTMLImageElement>('img')?.getAttribute('src') || ActivityAssets.Logo
       presenceData.smallImageKey = Assets.Reading
 
       presence.setActivity(presenceData)

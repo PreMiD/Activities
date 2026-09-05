@@ -223,5 +223,5 @@ presence.on('UpdateData', async () => {
   // Used To Start The RPC
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

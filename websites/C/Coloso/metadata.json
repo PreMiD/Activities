@@ -1,0 +1,69 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "959609163367997510",
+    "name": "phacon2006"
+  },
+  "service": "Coloso",
+  "description": {
+    "en": "A platform for learning illustration or art related topics"
+  },
+  "url": "coloso.global",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*coloso[.]global[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Coloso/assets/logo.jpeg",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Coloso/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "videos",
+  "tags": [
+    "video",
+    "learning",
+    "illustration"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "v[.]kr[.]kollus[.]com",
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "showFavorite",
+      "title": "Show Favorite course",
+      "icon": "fas fa-heart",
+      "value": true,
+      "if": {
+        "showButtons": true
+      }
+    },
+    {
+      "id": "favoriteCourseURL",
+      "title": "Favorite Course URL",
+      "icon": "fas fa-paragraph",
+      "value": "https://coloso.global/en/products/illustrator-nekojira-us",
+      "placeholder": "https://coloso.global/<lang>/products/<slug>",
+      "if": {
+        "showFavorite": true,
+        "showButtons": true
+      }
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Video Timestamp",
+      "icon": "fas fa-clock",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      }
+    }
+  ]
+}

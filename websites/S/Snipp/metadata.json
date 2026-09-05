@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "407859300527243275",
+    "name": "igorwastaken"
+  },
+  "service": "Snipp",
+  "description": {
+    "en": "Explore trending screenshots, gaming clips, and uploads shared by the Snipp community."
+  },
+  "url": "snipp.gg",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*snipp[.]gg[/]",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Snipp/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Snipp/assets/thumbnail.png",
+  "color": "#f0b100",
+  "category": "socials",
+  "tags": [
+    "social",
+    "community",
+    "gaming"
+  ]
+}

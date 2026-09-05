@@ -69,6 +69,7 @@ The `PresenceData` object can have the following properties:
 | `smallImageUrl`    | `string`            | The URL the user will be redirected to when clicking the small image                                   |
 | `smallImageText`   | `string`            | The text that appears when hovering over the small image                                               |
 | `buttons`          | `ButtonData[]`      | An array of buttons (max 2)                                                                            |
+| `party`            | `PartyData`         | A party size shown on the activity, e.g. "2 of 5". Only honored on `ActivityType.Playing`              |
 
 ## Activity Types
 
@@ -147,6 +148,20 @@ const video = document.querySelector('video')
 [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
 ```
 
+## Party Size
+
+For activities with a "Playing" type, you can show a party size — rendered by Discord as e.g. "2 of 5":
+
+```typescript
+presenceData.type = ActivityType.Playing
+presenceData.party = {
+  partySize: 2,
+  maxPartySize: 5
+}
+```
+
+`partySize` and `maxPartySize` are required; `partyId` is optional and generated automatically when omitted. The party is only honored on `ActivityType.Playing` — it is ignored for other activity types.
+
 ## Clearing Activity
 
 If you want to clear the activity, you can use the `clearActivity` method:
@@ -163,6 +178,42 @@ If your activity has settings, you can get their values using the `getSetting` m
 const showButtons = await presence.getSetting<boolean>('showButtons')
 const displayFormat = await presence.getSetting<number>('displayFormat')
 ```
+
+## Reading Page Data and Requests
+
+Some sites don't expose everything you need in the DOM. Two methods let you reach into the page itself:
+
+- [`execInPage`](/v1/api/presence-class#execinpage) — run a function in the page's own realm and get its return value (call the site's own functions, read its globals).
+- [`onRequest`](/v1/api/presence-class#onrequest) — read the data the page fetches from its own API, instead of scraping the DOM.
+
+Both were added in extension **2.14**. Activities run on every installed version, so always guard them with the bundled [`supports`](/v1/api/utility-functions#supports) helper — on older extensions the method is missing, and feature-detecting lets your activity degrade gracefully instead of throwing.
+
+```typescript
+import { supports } from 'premid'
+
+// Run code inside the page and get a serializable result back
+if (supports(presence, 'execInPage')) {
+  const track = await presence.execInPage(() => {
+    const state = window.spotifyPlayer.getCurrentState()
+    return { title: state.track.name, paused: state.paused }
+  })
+}
+
+// Read data straight from the site's own API responses
+if (supports(presence, 'onRequest')) {
+  presence.onRequest({ url: '/api/now-playing', method: 'GET' }, (request) => {
+    if (!request.responseBody)
+      return
+
+    const data = JSON.parse(request.responseBody)
+    // use data...
+  })
+}
+```
+
+::: tip
+The eslint plugin will flag an unguarded `execInPage`/`onRequest` call and can autofix it by wrapping it in a `supports()` check. See the [API reference](/v1/api/presence-class#execinpage) for the full options (declarative `execInPage` specs, request filters, the `InterceptedRequest` shape, and unsubscribing).
+:::
 
 ## Complete Example
 

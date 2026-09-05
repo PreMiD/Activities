@@ -18,7 +18,7 @@
   },
   "url": "maps.google.com",
   "regExp": "^https?[:][/][/](www[.]google[.]com[/]maps|maps[.]google[.]com)[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Maps/assets/thumbnail.png",
   "color": "#4e85f2",
@@ -36,6 +36,15 @@
       "id": "privacy",
       "title": "Privacy Mode",
       "icon": "fad fa-user-secret",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
       "value": true
     }
   ]

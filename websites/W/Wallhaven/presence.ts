@@ -178,17 +178,17 @@ presence.on('UpdateData', async () => {
     if (result && !result?.details) {
       result.details = strings.browsing
 
-      presence.setActivity()
+      presence.clearActivity()
     }
     else if (result) {
       presence.setActivity(result)
     }
     else {
-      presence.setActivity()
+      presence.clearActivity()
     }
   }
 
   if (!presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

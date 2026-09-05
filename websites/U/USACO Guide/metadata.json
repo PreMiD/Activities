@@ -11,9 +11,9 @@
   },
   "url": "usaco.guide",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*usaco[.]guide[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/oRapkfu.png",
-  "thumbnail": "https://i.imgur.com/cxOe02L.jpeg",
+  "version": "1.0.3",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/U/USACO%20Guide/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/USACO%20Guide/assets/thumbnail.jpeg",
   "color": "#1e90ff",
   "category": "other",
   "tags": [

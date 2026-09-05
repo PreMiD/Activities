@@ -74,7 +74,7 @@ presence.on('UpdateData', async () => {
         break
         // Startpage, Unknown
       default:
-        return presence.setActivity()
+        return presence.clearActivity()
     }
   }
   else {
@@ -121,7 +121,7 @@ presence.on('UpdateData', async () => {
         break
         // Startpage, Unknown
       default:
-        return presence.setActivity()
+        return presence.clearActivity()
     }
   }
 

@@ -12,7 +12,7 @@
   },
   "url": "e926.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*e926[.]net[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/e926/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/e926/assets/thumbnail.jpg",
   "color": "#284A81",

@@ -1,5 +1,6 @@
 export * from './functions/getTimestamps.js'
 export * from './functions/getTimestampsFromMedia.js'
+export * from './functions/supports.js'
 export * from './functions/timestampFromFormat.js'
 
 /**

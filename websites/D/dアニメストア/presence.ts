@@ -53,7 +53,11 @@ presence.on('UpdateData', async () => {
       : (await strings).pause
 
     presenceData.type = ActivityType.Watching as any
-    presenceData.statusDisplayType = StatusDisplayType.Details
+
+    const isTitleEnabled = await presence.getSetting<boolean>('showTitle')
+    if (isTitleEnabled) {
+      presenceData.statusDisplayType = StatusDisplayType.Details
+    }
 
     if (isPlaying) {
       const [startTimestamp, endTimestamp] = getTimestampsFromMedia(video)

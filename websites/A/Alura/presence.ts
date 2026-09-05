@@ -236,5 +236,5 @@ presence.on('UpdateData', async () => {
     presenceData.type = ActivityType.Watching
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

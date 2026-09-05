@@ -4,7 +4,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000) // Show elapsed time
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/oRapkfu.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/U/USACO%20Guide/assets/logo.png',
 }
 
 presence.on('UpdateData', async () => {

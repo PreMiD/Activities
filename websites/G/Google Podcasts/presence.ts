@@ -62,7 +62,7 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })
 
 // Function that convert lengths like 01:13 to seconds like 73

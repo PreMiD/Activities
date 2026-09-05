@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 declare const Presence: any
 
@@ -12,7 +12,7 @@ function extractSeasonEpisode(text: string | null | undefined): string | null {
 }
 
 presence.on('UpdateData', async () => {
-  const video = document.querySelector('video')
+  const video = [...document.querySelectorAll('video')].find(v => v.src)
   const rawTitle = document.querySelector('.movie_title')?.textContent.trim() ?? null
 
   const presenceData: any = {
@@ -61,32 +61,8 @@ presence.on('UpdateData', async () => {
     }
     else {
       presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = 'Playing'
-
-      let rawCurrent = document.querySelector('.vjs-current-time-display')?.textContent ?? ''
-      let rawDuration = document.querySelector('.vjs-duration-display')?.textContent ?? ''
-      const rawRemaining = document.querySelector('.vjs-remaining-time-display')?.textContent ?? ''
-
-      if (!rawCurrent.trim()) {
-        rawCurrent = document.querySelector('.jw-text-elapsed')?.textContent ?? ''
-        rawDuration = document.querySelector('.jw-text-duration')?.textContent ?? ''
-      }
-
-      const currentSeconds = timestampFromFormat(rawCurrent.replace(/[^\d:]/g, ''))
-      const durationSeconds = timestampFromFormat(rawDuration.replace(/[^\d:]/g, ''))
-      const remainingSeconds = timestampFromFormat(rawRemaining.replace(/[^\d:]/g, ''))
-
-      if (durationSeconds > 0) {
-        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(currentSeconds, durationSeconds)
-      }
-      else if (remainingSeconds > 0) {
-        presenceData.startTimestamp = Date.now() - (currentSeconds * 1000)
-        presenceData.endTimestamp = Date.now() + (remainingSeconds * 1000)
-      }
-      else {
-        presenceData.startTimestamp = Date.now() - (currentSeconds * 1000)
-        delete presenceData.endTimestamp
-      }
+      presenceData.smallImageText = 'Playing';
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     }
   }
 

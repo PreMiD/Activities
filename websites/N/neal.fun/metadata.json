@@ -11,7 +11,7 @@
   },
   "url": "neal.fun",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*neal[.]fun[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/neal.fun/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/neal.fun/assets/thumbnail.png",
   "color": "#606060",
@@ -26,7 +26,7 @@
     {
       "id": "buttons",
       "title": "Show Buttons",
-      "icon": "fa-regular fa-rectangle-list",
+      "icon": "fa-solid fa-rectangle-list",
       "value": true
     },
     {

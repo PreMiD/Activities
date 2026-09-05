@@ -100,8 +100,8 @@ async function generatePresenceData() {
 
       if (showTypingState) {
         const playingNotifyText = document.querySelector('#playing_notify')?.textContent
-        const typeCount = document.querySelector('[label=\'type\']')?.textContent ?? 0
-        const kpm = document.querySelector('[label=\'kpm\']')?.textContent ?? 0
+        const typeCount = document.querySelector('#type .value span')?.textContent ?? 0
+        const kpm = document.querySelector('#kpm .value span')?.textContent ?? 0
 
         if (playingNotifyText?.includes('Replay')) {
           presenceData.state = 'リプレイ視聴中'

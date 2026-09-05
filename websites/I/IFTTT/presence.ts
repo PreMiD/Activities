@@ -22,7 +22,7 @@ presence.on('UpdateData', async () => {
   switch (window.location.hostname) {
     case 'ift.tt': {
       // IFTTT URL Shortener (for the Help Center)
-      return presence.setActivity()
+      return presence.clearActivity()
     }
     case 'help.ifttt.com': {
       // IFTTT Help Center
@@ -58,7 +58,7 @@ presence.on('UpdateData', async () => {
           break
           // Unknown
         default:
-          return presence.setActivity()
+          return presence.clearActivity()
       }
 
       break
@@ -111,7 +111,7 @@ presence.on('UpdateData', async () => {
           break
           // Startpage, Unknown
         default:
-          return presence.setActivity()
+          return presence.clearActivity()
       }
 
       break
@@ -259,7 +259,7 @@ presence.on('UpdateData', async () => {
           // Startpage, Services, Unknown
         default:
           if (!document.querySelector<HTMLDivElement>('.brand-section'))
-            return presence.setActivity()
+            return presence.clearActivity()
 
           presenceData.details = document.querySelector<HTMLHeadingElement>('h1')?.textContent
           presenceData.state = document.querySelector<HTMLImageElement>(

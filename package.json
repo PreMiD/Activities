@@ -13,17 +13,17 @@
     "dev": "pmd dev"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^8.2.0",
+    "@antfu/eslint-config": "^8.3.0",
     "@total-typescript/tsconfig": "^1.0.4",
-    "@types/node": "^25.6.0",
-    "@vitest/coverage-v8": "^4.1.5",
-    "@vitest/ui": "^4.1.5",
-    "eslint": "^10.2.1",
+    "@types/node": "^25.9.5",
+    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/ui": "^4.1.11",
+    "eslint": "^10.8.1",
     "eslint-plugin-format": "^2.0.1",
-    "eslint-plugin-json-schema-validator": "^6.2.0",
+    "eslint-plugin-json-schema-validator": "^6.3.1",
     "pmd": "file:cli",
     "premid": "file:premid",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.5"
+    "vitest": "^4.1.11"
   }
 }

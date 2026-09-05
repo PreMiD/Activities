@@ -16,7 +16,7 @@
     "kocowa.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?kocowa[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KOCOWA/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KOCOWA/assets/thumbnail.png",
   "color": "#6a287e",

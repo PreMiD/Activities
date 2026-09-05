@@ -13,7 +13,7 @@
   },
   "url": "www.vudu.com",
   "regExp": "^https?[:][/][/](www[.])?vudu[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VUDU/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VUDU/assets/thumbnail.png",
   "color": "#236cba",

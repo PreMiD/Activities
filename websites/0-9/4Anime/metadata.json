@@ -9,9 +9,9 @@
   "description": {
     "en": "4Anime is a free anime streaming website that offers a wide selection of anime series and movies in high quality."
   },
-  "url": "4anime.gg",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*4anime[.]gg[/]",
-  "version": "1.0.2",
+  "url": "4anime.com.ro",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*4anime[.]com[.]ro[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/0-9/4Anime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/0-9/4Anime/assets/thumbnail.png",
   "color": "#000000",
@@ -22,5 +22,5 @@
     "streaming"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https?[:][/][/]rapid-cloud[.]co[/]embed-2[/]v2[/]e-1[/][A-Za-z0-9]+"
+  "iFrameRegExp": "^(https?[:][/][/]rapid-cloud[.]co[/]embed-2[/]v2[/]e-1[/][A-Za-z0-9]+|https?[:][/][/]4anime[.]com[.]ro[/]wp-content[/]themes[/]animestream-child[/]player[/][?]source=blogger&url=[A-Za-z0-9%+=/]+)$"
 }

@@ -119,6 +119,6 @@ presence.on('UpdateData', async () => {
   }
 
   if (!presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

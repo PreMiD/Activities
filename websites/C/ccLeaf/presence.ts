@@ -35,6 +35,6 @@ presence.on('UpdateData', async () => {
     details,
     state,
     startTimestamp: browsingTimestamp,
-    largeImageKey: 'https://i.imgur.com/fv1VJQR.png',
+    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/C/ccLeaf/assets/logo.png',
   })
 })

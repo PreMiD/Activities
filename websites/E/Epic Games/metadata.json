@@ -15,7 +15,7 @@
     "www.epicgames.com"
   ],
   "regExp": "^https?[:][/][/](store|www)[.]epicgames[.]com[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/Epic%20Games/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/Epic%20Games/assets/thumbnail.png",
   "color": "#2A2A2A",

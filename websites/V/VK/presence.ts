@@ -75,7 +75,7 @@ presence.on('UpdateData', async () => {
   // Get cover image
   let coverUrl = ''
   if (showCover) {
-    const coverImg = document.querySelector('[data-testid="audio-player-block-audio-cover"] img')
+    const coverImg = document.querySelector('[data-testid="AudioPlayerBlock_AudioCover"] img')
     coverUrl = coverImg?.getAttribute('src') || ''
   }
 

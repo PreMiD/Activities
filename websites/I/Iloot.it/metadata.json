@@ -12,7 +12,7 @@
   },
   "url": "iloot.it",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*iloot[.]it[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Iloot.it/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Iloot.it/assets/thumbnail.png",
   "color": "#d4af37",

@@ -63,8 +63,16 @@
     "description": "Displayed when the user is thinking of a new prompt.",
     "message": "Thinking of a new prompt..."
   },
-  "gemini.viewTheirGeneratedStuff": {
-    "description": "Displayed when the user is viewing their generated content.",
-    "message": "Viewing their generated stuff"
+  "gemini.viewTheirLibrary": {
+    "description": "Displayed when the user is viewing their library.",
+    "message": "Viewing their library"
+  },
+  "gemini.importMemoryToGemini": {
+    "description": "Displayed when the user is importing memory to Gemini.",
+    "message": "Importing memory to Gemini"
+  },
+  "gemini.viewUsageLimits": {
+    "description": "Displayed when the user is viewing their usage limits.",
+    "message": "Viewing usage limits"
   }
 }
