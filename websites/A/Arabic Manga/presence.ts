@@ -192,7 +192,7 @@ function detectPageInfo(site: SiteConfig): PageInfo {
   if (site.name === 'Abmics') {
     const episodeIndex = lower.indexOf('episode')
     if (episodeIndex >= 0 && parts[episodeIndex + 1]) {
-      const episodeSlug = parts[episodeIndex + 1]
+      const episodeSlug = parts[episodeIndex + 1]!
       const match = episodeSlug.match(/^(.*?)-([0-9]+(?:\.[0-9]+)?)$/)
       chapter ??= match?.[2]
       const seriesSlug = match?.[1] ?? episodeSlug
@@ -217,14 +217,14 @@ function detectPageInfo(site: SiteConfig): PageInfo {
   const mangaIndex = lower.findIndex(part => ['manga', 'manhwa', 'manhua', 'webtoon', 'comic', 'series'].includes(part))
   const chapterIndex = lower.findIndex(part => /^(?:chapter|ch)(?:-|$)/i.test(part))
   if (chapterIndex >= 0) {
-    chapter ??= parts[chapterIndex].match(/(?:chapter|ch)-?([0-9]+(?:\.[0-9]+)?)/i)?.[1]
+    chapter ??= parts[chapterIndex]!.match(/(?:chapter|ch)-?([0-9]+(?:\.[0-9]+)?)/i)?.[1]
       ?? parts[chapterIndex + 1]?.match(/^([0-9]+(?:\.[0-9]+)?)$/)?.[1]
   }
 
   if (mangaIndex >= 0 && parts[mangaIndex + 1]) {
-    const seriesSlug = parts[mangaIndex + 1].replace(/\.html?$/i, '')
+    const seriesSlug = parts[mangaIndex + 1]!.replace(/\.html?$/i, '')
     let seriesUrl = `${origin}/${parts.slice(0, mangaIndex + 1).join('/')}/${seriesSlug}`
-    if (/\.html?$/i.test(parts[mangaIndex + 1]))
+    if (/\.html?$/i.test(parts[mangaIndex + 1]!))
       seriesUrl += '.html'
 
     return {
@@ -451,7 +451,6 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     largeImageKey: cover ?? siteIcon,
-    largeImageText: site.name,
   }
 
   if (showSiteIcon && cover) {
