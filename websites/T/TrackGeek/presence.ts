@@ -39,7 +39,7 @@ async function getStrings() {
     books: 'TrackGeek.books',
     games: 'TrackGeek.games',
     movies: 'TrackGeek.movies',
-    searchFor: 'general.searchFor'
+    searchFor: 'general.searchFor',
   })
 }
 
@@ -56,15 +56,15 @@ presence.on('UpdateData', async () => {
   const path = pathname.split('/')
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
-    startTimestamp: browsingTimestamp
+    startTimestamp: browsingTimestamp,
   }
- const strings = await getStrings()
+  const strings = await getStrings()
 
   switch (path[1]) {
-    case 'feed': 
+    case 'feed':
       presenceData.details = 'Browsing Feed'
       break
-    case 'donate': 
+    case 'donate':
       presenceData.details = strings.viewPage
       presenceData.state = textContent('h2') ?? undefined
       break
@@ -77,7 +77,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.viewPage
       presenceData.state = textContent('h1') ?? undefined
       break
-    case 'notifications': 
+    case 'notifications':
     case 'billing':
       presenceData.details = strings.viewPage
       presenceData.state = textContent('div.font-semibold') ?? undefined
@@ -88,51 +88,51 @@ presence.on('UpdateData', async () => {
       break
     case 'game':
       presenceData.details = strings.viewPage
-      presenceData.state = "Games"
-        if (path[2]) {
-          switch (path[2]) {
-            case 'recent':
-            case 'popular':
-            case 'upcoming':
-            case 'anticipated':
-              presenceData.details = strings.viewPage
-              presenceData.state = textContent('.text-2xl') ?? undefined
-              break
-            case 'franchises':
-              presenceData.details = strings.viewFranchise
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.largeImageKey = getImage('img.h-60')
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewFranchise,
-                  url: href,
-                },
-              ]
-              break
-            case 'company':
-              presenceData.details = strings.viewCompany
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.largeImageKey = getImage('img.object-contain')
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewCompany,
-                  url: href,
-                },
-              ]
-              break
-            default:
-              presenceData.details = strings.viewGame
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.largeImageKey = getImage('img.object-cover')
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewGame,
-                  url: href,
-                },
-              ]
-              break
-          }
+      presenceData.state = strings.games
+      if (path[2]) {
+        switch (path[2]) {
+          case 'recent':
+          case 'popular':
+          case 'upcoming':
+          case 'anticipated':
+            presenceData.details = strings.viewPage
+            presenceData.state = textContent('.text-2xl') ?? undefined
+            break
+          case 'franchises':
+            presenceData.details = strings.viewFranchise
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.largeImageKey = getImage('img.h-60')
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewFranchise,
+                url: href,
+              },
+            ]
+            break
+          case 'company':
+            presenceData.details = strings.viewCompany
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.largeImageKey = getImage('img.object-contain')
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewCompany,
+                url: href,
+              },
+            ]
+            break
+          default:
+            presenceData.details = strings.viewGame
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.largeImageKey = getImage('img.object-cover')
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewGame,
+                url: href,
+              },
+            ]
+            break
         }
+      }
       break
     case 'cast':
       presenceData.details = strings.viewCast
@@ -147,198 +147,198 @@ presence.on('UpdateData', async () => {
       break
     case 'anime':
       presenceData.details = strings.viewPage
-      presenceData.state = "Animes"
-        if (path[2]) {
-          switch (path[2]) {
-            case 'airing':
-            case 'recommendations':
-            case 'upcoming':
-            case 'top':
-              presenceData.details = strings.viewPage
-              presenceData.state = textContent('.text-2xl') ?? undefined
-              break
-            case 'company':
-              presenceData.details = strings.viewCompany
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.largeImageKey = getImage('img.object-contain')
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewCompany,
-                  url: href,
-                },
-              ]
-              break
-            default:
-              presenceData.details = strings.viewAnime
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.largeImageKey = getImage('img.object-cover')
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewAnime,
-                  url: href,
-                },
-              ]
-              break
-          }
+      presenceData.state = strings.animes
+      if (path[2]) {
+        switch (path[2]) {
+          case 'airing':
+          case 'recommendations':
+          case 'upcoming':
+          case 'top':
+            presenceData.details = strings.viewPage
+            presenceData.state = textContent('.text-2xl') ?? undefined
+            break
+          case 'company':
+            presenceData.details = strings.viewCompany
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.largeImageKey = getImage('img.object-contain')
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewCompany,
+                url: href,
+              },
+            ]
+            break
+          default:
+            presenceData.details = strings.viewAnime
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.largeImageKey = getImage('img.object-cover')
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewAnime,
+                url: href,
+              },
+            ]
+            break
         }
+      }
       break
     case 'book':
       presenceData.details = strings.viewPage
-      presenceData.state = "Books"
-        if (path[2]) {
-          switch (path[2]) {
-            case 'trending':
-            case 'upcoming':
-              presenceData.details = strings.viewPage
-              presenceData.state = textContent('.text-2xl') ?? undefined
-              break
-            case 'franchises':
-              presenceData.details = strings.viewFranchise
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewFranchise,
-                  url: href,
-                },
-              ]
-              break
-            default:
-              presenceData.details = strings.viewBook
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.largeImageKey = getImage('img.object-cover')
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewBook,
-                  url: href,
-                },
-              ]
-              break
-          }
+      presenceData.state = strings.books
+      if (path[2]) {
+        switch (path[2]) {
+          case 'trending':
+          case 'upcoming':
+            presenceData.details = strings.viewPage
+            presenceData.state = textContent('.text-2xl') ?? undefined
+            break
+          case 'franchises':
+            presenceData.details = strings.viewFranchise
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewFranchise,
+                url: href,
+              },
+            ]
+            break
+          default:
+            presenceData.details = strings.viewBook
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.largeImageKey = getImage('img.object-cover')
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewBook,
+                url: href,
+              },
+            ]
+            break
         }
+      }
       break
     case 'manga':
       presenceData.details = strings.viewPage
-      presenceData.state = "Mangas"
-        if (path[2]) {
-          switch (path[2]) {
-            case 'publishing':
-            case 'recommendations':
-            case 'upcoming':
-            case 'top':
-              presenceData.details = strings.viewPage
-              presenceData.state = textContent('.text-2xl') ?? undefined
-              break
-            case 'cast':
-              presenceData.details = strings.viewCast
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.largeImageKey = getImage('img.object-cover')
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewCast,
-                  url: href,
-                },
-              ]
-              break
-            default:
-              presenceData.details = strings.viewManga
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.largeImageKey = getImage('img.object-cover')
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewManga,
-                  url: href,
-                },
-              ]
-              break
-          }
+      presenceData.state = strings.mangas
+      if (path[2]) {
+        switch (path[2]) {
+          case 'publishing':
+          case 'recommendations':
+          case 'upcoming':
+          case 'top':
+            presenceData.details = strings.viewPage
+            presenceData.state = textContent('.text-2xl') ?? undefined
+            break
+          case 'cast':
+            presenceData.details = strings.viewCast
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.largeImageKey = getImage('img.object-cover')
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewCast,
+                url: href,
+              },
+            ]
+            break
+          default:
+            presenceData.details = strings.viewManga
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.largeImageKey = getImage('img.object-cover')
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewManga,
+                url: href,
+              },
+            ]
+            break
         }
+      }
       break
     case 'movie':
       presenceData.details = strings.viewPage
-      presenceData.state = "Movies"
-        if (path[2]) {
-          switch (path[2]) {
-            case 'airing':
-            case 'popular':
-            case 'trending':
-            case 'upcoming':
-              presenceData.details = strings.viewPage
-              presenceData.state = textContent('.text-2xl') ?? undefined
-              break
-            case 'franchises':
-              presenceData.details = strings.viewFranchise
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.largeImageKey = getImage('img.h-60')
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewFranchise,
-                  url: href,
-                },
-              ]
-              break
-            case 'company':
-              presenceData.details = strings.viewCompany
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.largeImageKey = getImage('img.object-contain')
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewCompany,
-                  url: href,
-                },
-              ]
-              break
-            default:
-              presenceData.details = strings.viewMovie
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.largeImageKey = getImage('img.object-cover')
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewMovie,
-                  url: href,
-                },
-              ]
-              break
-          }
+      presenceData.state = strings.movies
+      if (path[2]) {
+        switch (path[2]) {
+          case 'airing':
+          case 'popular':
+          case 'trending':
+          case 'upcoming':
+            presenceData.details = strings.viewPage
+            presenceData.state = textContent('.text-2xl') ?? undefined
+            break
+          case 'franchises':
+            presenceData.details = strings.viewFranchise
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.largeImageKey = getImage('img.h-60')
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewFranchise,
+                url: href,
+              },
+            ]
+            break
+          case 'company':
+            presenceData.details = strings.viewCompany
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.largeImageKey = getImage('img.object-contain')
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewCompany,
+                url: href,
+              },
+            ]
+            break
+          default:
+            presenceData.details = strings.viewMovie
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.largeImageKey = getImage('img.object-cover')
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewMovie,
+                url: href,
+              },
+            ]
+            break
         }
+      }
       break
     case 'tv':
       presenceData.details = strings.viewPage
-      presenceData.state = "TV Shows"
-        if (path[2]) {
-          switch (path[2]) {
-            case 'airing':
-            case 'popular':
-            case 'trending':
-            case 'upcoming':
-              presenceData.details = strings.viewPage
-              presenceData.state = textContent('.text-2xl') ?? undefined
-              break
-            case 'company':
-              presenceData.details = strings.viewCompany
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.largeImageKey = getImage('img.object-contain')
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewCompany,
-                  url: href,
-                },
-              ]
-              break
-            default:
-              presenceData.details = strings.viewTV
-              presenceData.state = textContent('h1') ?? undefined
-              presenceData.largeImageKey = getImage('img.object-cover')
-              presenceData.buttons = [
-                {
-                  label: strings.buttonViewTV,
-                  url: href,
-                },
-              ]
-              break
-          }
+      presenceData.state = strings.tvShows
+      if (path[2]) {
+        switch (path[2]) {
+          case 'airing':
+          case 'popular':
+          case 'trending':
+          case 'upcoming':
+            presenceData.details = strings.viewPage
+            presenceData.state = textContent('.text-2xl') ?? undefined
+            break
+          case 'company':
+            presenceData.details = strings.viewCompany
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.largeImageKey = getImage('img.object-contain')
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewCompany,
+                url: href,
+              },
+            ]
+            break
+          default:
+            presenceData.details = strings.viewTV
+            presenceData.state = textContent('h1') ?? undefined
+            presenceData.largeImageKey = getImage('img.object-cover')
+            presenceData.buttons = [
+              {
+                label: strings.buttonViewTV,
+                url: href,
+              },
+            ]
+            break
         }
+      }
       break
-    case 'search':
+    case 'search': {
       presenceData.details = strings.searchFor
       const query = new URLSearchParams(search).get('query')?.trim()
       const category = textContent('span[data-slot=select-value]')
@@ -348,8 +348,9 @@ presence.on('UpdateData', async () => {
           : query
         : undefined
       break
+    }
     case 'user':
-      presenceData.details = strings.viewMember + " " +  textContent('span.font-bold')
+      presenceData.details = `${strings.viewMember} ${textContent('span.font-bold')}`
       presenceData.state = textContent('div[role=tablist] > button[data-state=active]')?.replace(/\s*\([^)]*\)/g, '').trim() || undefined
       presenceData.largeImageKey = getImage('img.aspect-square')
       presenceData.buttons = [
@@ -359,9 +360,9 @@ presence.on('UpdateData', async () => {
         },
       ]
       break
-    default: 
-    presenceData.details = strings.browsing
-    break
+    default:
+      presenceData.details = strings.browsing
+      break
   }
 
   presence.setActivity(presenceData)
