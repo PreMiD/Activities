@@ -13,7 +13,7 @@
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*authsrng[.]xyz[/]",
   "version": "1.0.0",
   "logo": "https://authsrng.xyz/assets/favicons/android-chrome-512x512.png",
-  "thumbnail": "https://authsrng.xyz/assets/favicons/android-chrome-512x512.png",
+  "thumbnail": "https://nightly.authsrng.xyz/assets/promo.png",
   "color": "#000000",
   "category": "games",
   "tags": [

@@ -11,18 +11,26 @@ enum ActivityAssets {
 }
 
 presence.on('UpdateData', async () => {
+  const { pathname } = document.location
+
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     smallImageKey: Assets.Play,
     startTimestamp: browsingTimestamp,
     details: 'auth\'s RNG',
-    state: 'Playing',
-    buttons: [
-      {
-        label: 'play auth\'s RNG!',
-        url: 'https://authsrng.xyz',
-      },
-    ],
+  }
+
+  if (pathname.includes('leaderboard')) {
+    presenceData.state = 'viewing leaderboard'
+  }
+  else if (pathname.includes('profile')) {
+    presenceData.state = 'viewing profile'
+  }
+  else if (pathname.includes('credits')) {
+    presenceData.state = 'viewing credits'
+  }
+  else {
+    presenceData.state = 'playing'
   }
 
   presence.setActivity(presenceData)
