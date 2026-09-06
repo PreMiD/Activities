@@ -52,7 +52,7 @@ const sensitiveTerms = [
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 const classificationCache = new Map<string, boolean>()
-let lastPageKey = ''
+let lastTimerSession = ''
 let readingTimestamp = browsingTimestamp
 
 function currentSite(): SiteConfig | undefined {
@@ -443,9 +443,9 @@ presence.on('UpdateData', async () => {
   }
 
   const info = detectPageInfo(site)
-  const pageKey = `${location.hostname}${location.pathname}${location.search}`
-  if (pageKey !== lastPageKey) {
-    lastPageKey = pageKey
+  const timerSession = `${location.hostname}:${info.kind === 'chapter' ? 'reading' : 'browsing'}`
+  if (timerSession !== lastTimerSession) {
+    lastTimerSession = timerSession
     readingTimestamp = Math.floor(Date.now() / 1000)
   }
 
