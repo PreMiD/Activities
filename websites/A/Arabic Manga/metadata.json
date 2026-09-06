@@ -7,8 +7,8 @@
   },
   "service": "Arabic Manga",
   "description": {
-    "en": "A unified activity for supported Arabic manga and manhwa reading websites, with chapter details, covers, site branding, and sensitive-content filtering.",
-    "ar": "نشاط موحد لمواقع قراءة المانجا والمانهوا العربية المدعومة، يعرض العمل والفصل والغلاف وهوية الموقع مع فلترة المحتوى الحساس."
+    "en": "A unified activity for supported Arabic manga and manhwa reading websites, with chapter details, covers, site branding, reading-session timing, and sensitive-content filtering.",
+    "ar": "حضور موحد لمواقع قراءة المانجا والمانهوا العربية المدعومة، يعرض العمل والفصل والغلاف وشعار الموقع ومدة جلسة القراءة مع تصفية الاعمال ذات المحتوى الحساس."
   },
   "url": [
     "olympustaff.com",
@@ -21,9 +21,9 @@
     "toonarab.com"
   ],
   "version": "1.0.0",
-  "logo": "https://cdn.rcd.gg/PreMiD.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD.png",
-  "color": "#171717",
+  "logo": "https://i.imgur.com/nmHcsHc.png",
+  "thumbnail": "https://i.imgur.com/dNAQ7U9.png",
+  "color": "#8B5CF6",
   "category": "anime",
   "tags": [
     "arabic",
@@ -52,7 +52,7 @@
       "title": "Show reading time",
       "icon": "fas fa-stopwatch",
       "value": true,
-      "description": "Show how long the current chapter or title page has been open."
+      "description": "Show how long you have been reading the current title or browsing the site."
     },
     {
       "id": "buttons",
