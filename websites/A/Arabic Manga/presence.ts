@@ -248,6 +248,17 @@ function detectPageInfo(site: SiteConfig): PageInfo {
 }
 
 function getSiteIcon(): string {
+  const logoSelectors = [
+    'header img[alt*="logo" i]',
+    'img[alt*="logo" i]',
+  ]
+
+  for (const selector of logoSelectors) {
+    const logo = imageFromElement(document.querySelector<HTMLImageElement>(selector), location.href)
+    if (logo)
+      return logo
+  }
+
   const icon = document.querySelector<HTMLLinkElement>(
     'link[rel="apple-touch-icon"], link[rel="icon"], link[rel="shortcut icon"]',
   )
@@ -368,6 +379,17 @@ async function isSensitive(info: PageInfo, seriesDoc?: Document): Promise<boolea
 }
 
 function getSeriesTitle(site: SiteConfig, info: PageInfo, seriesDoc?: Document): string {
+  if (site.name === 'Azora Manga') {
+    const doc = seriesDoc ?? document
+    const azoraTitle = cleanSeriesTitle(
+      doc.querySelector('h1.break-words')?.textContent ?? '',
+      site,
+      info.chapter,
+    )
+    if (azoraTitle)
+      return azoraTitle
+  }
+
   if (site.name === 'OlympusStaff' && info.kind === 'chapter' && info.seriesSlug)
     return slugToTitle(info.seriesSlug)
 
