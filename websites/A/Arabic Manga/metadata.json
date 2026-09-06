@@ -1,0 +1,65 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "ShadowUR0",
+    "id": "843784503167680512"
+  },
+  "service": "Arabic Manga",
+  "description": {
+    "en": "A unified activity for supported Arabic manga and manhwa reading websites, with chapter details, covers, site branding, and sensitive-content filtering.",
+    "ar": "نشاط موحد لمواقع قراءة المانجا والمانهوا العربية المدعومة، يعرض العمل والفصل والغلاف وهوية الموقع مع فلترة المحتوى الحساس."
+  },
+  "url": [
+    "olympustaff.com",
+    "azorafly.com",
+    "mangalik.net",
+    "mangatime.org",
+    "mangaswan.com",
+    "mangaclub.net",
+    "abmics.com",
+    "toonarab.com"
+  ],
+  "version": "1.0.0",
+  "logo": "https://cdn.rcd.gg/PreMiD.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD.png",
+  "color": "#171717",
+  "category": "anime",
+  "tags": [
+    "arabic",
+    "manga",
+    "manhwa",
+    "manhua",
+    "webtoon"
+  ],
+  "settings": [
+    {
+      "id": "cover",
+      "title": "Show manga cover",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Use the current manga/manhwa cover as the large Discord image when available."
+    },
+    {
+      "id": "siteIcon",
+      "title": "Show site logo",
+      "icon": "fas fa-globe",
+      "value": true,
+      "description": "Show the current website icon next to the manga cover when available."
+    },
+    {
+      "id": "time",
+      "title": "Show reading time",
+      "icon": "fas fa-stopwatch",
+      "value": true,
+      "description": "Show how long the current chapter or title page has been open."
+    },
+    {
+      "id": "buttons",
+      "title": "Show open button",
+      "icon": "fas fa-external-link-alt",
+      "value": true,
+      "description": "Add a Discord button that opens the current chapter or title page."
+    }
+  ]
+}
