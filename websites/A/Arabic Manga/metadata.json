@@ -61,5 +61,6 @@
       "value": true,
       "description": "Add a Discord button that opens the current chapter or title page."
     }
-  ]
+  ],
+  "regExp": "^https?[:][/][/](?:www[.])?(?:olympustaff[.]com|azorafly[.]com|mangalik[.]net|mangatime[.]org|mangaswan[.]com|mangaclub[.]net|abmics[.]com|toonarab[.]com)(?:[/]|$)"
 }
