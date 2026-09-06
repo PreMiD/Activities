@@ -19,10 +19,12 @@ function formatAnimeSlug(slug: string | null): string | null {
     .join(' ')
 }
 function getAnimeTitleFromDOM(): string | null {
-  const titleSpan = document.querySelector<HTMLElement>('span[class*="truncate"][class*="text-snow"]')
+  const titleLink = document.querySelector<HTMLElement>('a[href*="/anime/"][class*="truncate"]')
+    || document.querySelector<HTMLElement>('a[href^="/anime/"]')
+    || document.querySelector<HTMLElement>('span[class*="truncate"][class*="text-snow"]')
     || document.querySelector<HTMLElement>('span[style*="view-transition-name: title-"]')
-  if (titleSpan && titleSpan.textContent?.trim()) {
-    return titleSpan.textContent.trim()
+  if (titleLink && titleLink.textContent?.trim()) {
+    return titleLink.textContent.trim()
   }
   const titleElem = document.querySelector('.anime-title, .show-title, h1[class*="text-snow"], h1')
   if (titleElem && titleElem.textContent?.trim()) {
@@ -136,10 +138,6 @@ const getStrings = presence.getStrings({
 })
 
 interface PageMetadata {
-  useMultiLanguage: string | boolean | undefined
-  showAnimeAsTitle: boolean | undefined
-  showButtons: boolean | undefined
-  showEpTitle: boolean | undefined
   animeTitle: string | null
   chapter: string | null
   subtitleLang: string | null
@@ -162,13 +160,6 @@ async function getPageData(urlStr: string): Promise<PageMetadata> {
   const { pathname, search } = url
   const searchParams = new URLSearchParams(search)
 
-  const [useMultiLanguage, showAnimeAsTitle, showButtons, showEpTitle] = await Promise.all([
-    presence.getSetting<string | boolean>('multiLanguage'),
-    presence.getSetting<boolean>('showAnimeAsTitle'),
-    presence.getSetting<boolean>('buttons'),
-    presence.getSetting<boolean>('showEpTitle'),
-  ])
-
   const animeTitle = getAnimeTitleFromDOM()
   const { chapter, subtitleLang } = getChapterOrSubtitleFromDOM()
   const epTitle = getEpisodeTitleFromDOM()
@@ -184,10 +175,6 @@ async function getPageData(urlStr: string): Promise<PageMetadata> {
   const coverUrlDefault = getCoverImageFromDOM()
 
   const data: PageMetadata = {
-    useMultiLanguage,
-    showAnimeAsTitle,
-    showButtons,
-    showEpTitle,
     animeTitle,
     chapter,
     subtitleLang,
@@ -206,6 +193,13 @@ async function getPageData(urlStr: string): Promise<PageMetadata> {
 presence.on('UpdateData', async () => {
   const { pathname, href, search } = document.location
   const searchParams = new URLSearchParams(search)
+
+  const [useMultiLanguage, showAnimeAsTitle, showButtons, showEpTitle] = await Promise.all([
+    presence.getSetting<string | boolean>('multiLanguage'),
+    presence.getSetting<boolean>('showAnimeAsTitle'),
+    presence.getSetting<boolean>('buttons'),
+    presence.getSetting<boolean>('showEpTitle'),
+  ])
 
   let cached = dataCache.get(href)
 
@@ -228,10 +222,6 @@ presence.on('UpdateData', async () => {
   }
 
   const {
-    useMultiLanguage,
-    showAnimeAsTitle,
-    showButtons,
-    showEpTitle,
     animeTitle,
     chapter,
     subtitleLang,

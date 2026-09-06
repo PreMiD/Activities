@@ -7,12 +7,12 @@
   },
   "service": "Anikura",
   "description": {
-    "en": "Watch anime free online — sub and dub, continue watching, and a growing catalog.",
-    "ja": "アニメ無料オンライン視聴 — 字幕付きと吹替付き、続きから視聴、拡大し続けるカタログ。"
+    "en": "Watch and discover anime on Anikura — seasonal picks, curated catalogs, genres, and Watch Together for fans.",
+    "ja": "Anikuraでアニメを観て、新しい作品を見つけよう。シーズンごとの特集や厳選されたラインナップ、ジャンル別検索、ファン同士で楽しめる「Watch Together」機能も。"
   },
   "url": "anikura.club",
   "regExp": "^https?[:][/][/](www[.])?anikura[.]club[/]",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://i.imgur.com/7J9jL7R.png",
   "thumbnail": "https://i.imgur.com/xK5jHDy.png",
   "color": "#6366f1",
