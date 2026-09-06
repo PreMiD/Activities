@@ -50,14 +50,102 @@ const sensitiveTerms = [
   'فان سيرفس',
 ]
 
-const browsingTimestamp = Math.floor(Date.now() / 1000)
+const timerStorageKey = 'premid:arabic-manga:timer:v1'
 const classificationCache = new Map<string, boolean>()
-let lastTimerSession = ''
-let readingTimestamp = browsingTimestamp
+let activeTimerSession = ''
+let activeTimerTimestamp = Math.floor(Date.now() / 1000)
+
+interface TimerState {
+  session: string
+  startedAt: number
+}
 
 function currentSite(): SiteConfig | undefined {
   const host = location.hostname.toLowerCase()
   return sites.find(site => site.hosts.includes(host))
+}
+
+function timerSeriesId(site: SiteConfig, info: PageInfo): string {
+  const parts = location.pathname.split('/').filter(Boolean)
+  const lower = parts.map(part => part.toLowerCase())
+
+  if ((site.name === 'MangaSwan' || site.name === 'MangaClub') && lower[0] === 'ar') {
+    if (lower[1] === 'manga' && parts[2])
+      return parts[2].replace(/\.html?$/i, '').toLowerCase()
+    if (parts[1])
+      return parts[1].toLowerCase()
+  }
+
+  if (info.seriesUrl) {
+    try {
+      const url = new URL(info.seriesUrl, location.href)
+      return `${url.hostname.toLowerCase()}${url.pathname.replace(/\/+$/, '').toLowerCase()}`
+    }
+    catch {}
+  }
+
+  if (info.seriesSlug)
+    return info.seriesSlug.toLowerCase()
+
+  return location.pathname.replace(/\/+$/, '').toLowerCase() || '/'
+}
+
+function timerSessionFor(site: SiteConfig, info: PageInfo): string {
+  if (info.kind === 'browse')
+    return `${location.hostname.toLowerCase()}:browse`
+
+  return `${location.hostname.toLowerCase()}:${info.kind}:${timerSeriesId(site, info)}`
+}
+
+function readStoredTimer(): TimerState | undefined {
+  try {
+    const raw = sessionStorage.getItem(timerStorageKey)
+    if (!raw)
+      return undefined
+
+    const parsed = JSON.parse(raw) as Partial<TimerState>
+    if (typeof parsed.session !== 'string' || typeof parsed.startedAt !== 'number')
+      return undefined
+    if (!Number.isFinite(parsed.startedAt) || parsed.startedAt <= 0)
+      return undefined
+
+    return { session: parsed.session, startedAt: parsed.startedAt }
+  }
+  catch {
+    return undefined
+  }
+}
+
+function storeTimer(state: TimerState): void {
+  try {
+    sessionStorage.setItem(timerStorageKey, JSON.stringify(state))
+  }
+  catch {}
+}
+
+function timerTimestampFor(site: SiteConfig, info: PageInfo): number {
+  const session = timerSessionFor(site, info)
+  if (session === activeTimerSession)
+    return activeTimerTimestamp
+
+  const now = Math.floor(Date.now() / 1000)
+  const stored = readStoredTimer()
+  let cameFromAnotherSite = false
+
+  if (document.referrer) {
+    try {
+      cameFromAnotherSite = new URL(document.referrer).origin !== location.origin
+    }
+    catch {}
+  }
+
+  activeTimerSession = session
+  activeTimerTimestamp = stored?.session === session && !cameFromAnotherSite
+    ? stored.startedAt
+    : now
+
+  storeTimer({ session, startedAt: activeTimerTimestamp })
+  return activeTimerTimestamp
 }
 
 function absoluteUrl(value: string | null | undefined, base = location.href): string | undefined {
@@ -443,11 +531,7 @@ presence.on('UpdateData', async () => {
   }
 
   const info = detectPageInfo(site)
-  const timerSession = `${location.hostname}:${info.kind === 'chapter' ? 'reading' : 'browsing'}`
-  if (timerSession !== lastTimerSession) {
-    lastTimerSession = timerSession
-    readingTimestamp = Math.floor(Date.now() / 1000)
-  }
+  const sessionTimestamp = timerTimestampFor(site, info)
 
   const [showCover, showTimestamp, showButtons, showSiteIcon] = await Promise.all([
     presence.getSetting<boolean>('cover').catch(() => true),
@@ -487,7 +571,7 @@ presence.on('UpdateData', async () => {
       : `يقرا فصلا • ${site.name}`
 
     if (showTimestamp)
-      presenceData.startTimestamp = readingTimestamp
+      presenceData.startTimestamp = sessionTimestamp
     if (showButtons)
       presenceData.buttons = [{ label: 'فتح الفصل', url: location.href }]
   }
@@ -496,7 +580,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = site.name
 
     if (showTimestamp)
-      presenceData.startTimestamp = readingTimestamp
+      presenceData.startTimestamp = sessionTimestamp
     if (showButtons)
       presenceData.buttons = [{ label: 'فتح العمل', url: location.href }]
   }
@@ -506,7 +590,7 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = siteIcon
 
     if (showTimestamp)
-      presenceData.startTimestamp = browsingTimestamp
+      presenceData.startTimestamp = sessionTimestamp
   }
 
   presence.setActivity(presenceData)
