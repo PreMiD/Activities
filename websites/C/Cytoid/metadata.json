@@ -11,7 +11,7 @@
   },
   "url": "cytoid.io",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*cytoid[.]io[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Cytoid/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Cytoid/assets/thumbnail.png",
   "color": "#476ADC",

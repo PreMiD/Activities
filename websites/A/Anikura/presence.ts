@@ -6,7 +6,7 @@ const presence = new Presence({
 
 const siteStartTimestamp = Math.floor(Date.now() / 1000)
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/7J9jL7R.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/Anikura/assets/logo.png',
 }
 
 function formatAnimeSlug(slug: string | null): string | null {

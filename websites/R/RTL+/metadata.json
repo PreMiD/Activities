@@ -22,7 +22,7 @@
     "beta.plus.rtl.de"
   ],
   "regExp": "^https?[:][/][/](beta[.])?plus[.]rtl[.]de[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RTL%2B/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RTL%2B/assets/thumbnail.jpg",
   "color": "#ffbc2d",

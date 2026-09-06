@@ -12,7 +12,7 @@
   },
   "url": "bourgestelevision.fr",
   "regExp": "^https?[:][/][/]bourgestelevision[.]fr[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Bourges%20T%C3%A9l%C3%A9vision/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Bourges%20T%C3%A9l%C3%A9vision/assets/thumbnail.jpg",
   "color": "#E63329",

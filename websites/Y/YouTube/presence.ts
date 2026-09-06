@@ -317,7 +317,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (!presenceData.details)
-      presence.setActivity()
+      presence.clearActivity()
     else presence.setActivity(presenceData)
   }
   else if (
@@ -587,7 +587,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (!presenceData.details)
-      presence.setActivity()
+      presence.clearActivity()
     else presence.setActivity(presenceData)
   }
   else if (hostname === 'studio.youtube.com') {
@@ -661,7 +661,7 @@ presence.on('UpdateData', async () => {
     }
 
     if (!presenceData.details)
-      presence.setActivity()
+      presence.clearActivity()
     else presence.setActivity(presenceData)
   }
 })

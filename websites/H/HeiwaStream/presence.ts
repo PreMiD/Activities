@@ -13,8 +13,6 @@ enum ActivityAssets {
 const supportedHosts = new Set([
   'heiwastream.fr',
   'www.heiwastream.fr',
-  'zelyon.xyz',
-  'www.zelyon.xyz',
 ])
 
 function lireNombre(value: string | undefined): number | null {
@@ -46,6 +44,7 @@ function mettreAJourActivite(): void {
   const title = data.premidWatching
 
   if (!title) {
+    const pageUrl = lireUrlHeiwa(data.premidPageUrl) ?? lireUrlHeiwa(document.location.href)
     const presenceData: PresenceData = {
       name: 'HeiwaStream',
       type: ActivityType.Playing,
@@ -56,6 +55,13 @@ function mettreAJourActivite(): void {
       smallImageText: 'Navigation',
       startTimestamp: lireNombre(data.premidSince) ?? browsingTimestamp,
     }
+
+    if (pageUrl) {
+      presenceData.detailsUrl = pageUrl
+      presenceData.stateUrl = pageUrl
+      presenceData.largeImageUrl = pageUrl
+    }
+
     presence.setActivity(presenceData)
     return
   }
@@ -63,7 +69,10 @@ function mettreAJourActivite(): void {
   const playbackState = data.premidState ?? 'playing'
   const position = lireNombre(data.premidPosition)
   const duration = lireNombre(data.premidDuration)
-  const metadata = [data.premidSeason, data.premidEpisode, data.premidLanguage]
+  const episode = [data.premidSeason, data.premidEpisode]
+    .filter(Boolean)
+    .join('')
+  const metadata = [episode || null, data.premidLanguage]
     .filter(Boolean)
     .join(' · ')
   const stateLabel = playbackState === 'paused'

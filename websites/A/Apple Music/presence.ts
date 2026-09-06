@@ -31,7 +31,7 @@ const strings = presence.getStrings({
 
 function clearActivity() {
   if (+presence.getExtensionVersion() < 224) {
-    presence.setActivity()
+    presence.clearActivity()
   }
   else {
     presence.clearActivity()

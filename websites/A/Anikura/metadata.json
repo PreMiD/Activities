@@ -13,8 +13,8 @@
   "url": "anikura.club",
   "regExp": "^https?[:][/][/](www[.])?anikura[.]club[/]",
   "version": "1.0.1",
-  "logo": "https://i.imgur.com/7J9jL7R.png",
-  "thumbnail": "https://i.imgur.com/xK5jHDy.png",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anikura/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anikura/assets/thumbnail.png",
   "color": "#6366f1",
   "category": "anime",
   "tags": [

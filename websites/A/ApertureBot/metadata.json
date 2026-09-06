@@ -24,7 +24,7 @@
     "dashboard.aperturebot.science"
   ],
   "regExp": "^https?[:][/][/](dashboard[.])?aperturebot[.]science[/]",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/ApertureBot/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/ApertureBot/assets/thumbnail.png",
   "color": "#2c2834",

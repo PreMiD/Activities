@@ -129,7 +129,7 @@ async function updateStrings() {
       details: strings.viewHelppage,
     },
     'activities': {
-      details: strings.viewActivity,
+      details: strings.viewActivities,
     },
     'community': {
       details: strings.viewCommunity,
@@ -206,9 +206,14 @@ let urlCache: any
 
 let soloDivision: any
 let soloRatingString: any
+let teamDivision: any
+let teamRatingString: any
 
 let isUnranked: boolean = false
 let currentGameMode: string = ''
+let currentDuelRound: any = null
+let duelGameActive = false
+let duelBaseDetails = ''
 
 presence.on('UpdateData', async () => {
   const currentRawURL = document.location.href
@@ -226,6 +231,12 @@ presence.on('UpdateData', async () => {
   const isNewURL = currentRawURL !== urlCache
   pathCache = currentPath
   urlCache = currentRawURL
+
+  if (isNewURL) {
+    currentDuelRound = null
+    if (currentPath[0] === 'multiplayer' && lastPath[0] !== 'multiplayer')
+      isUnranked = false
+  }
 
   if (!strings) {
     await updateStrings()
@@ -273,23 +284,60 @@ presence.on('UpdateData', async () => {
     setTimeout(() => {
       cooldowns.health = false
     }, 5000)
-    const healthUI = document.querySelectorAll('[class^="health-bar-2_barLabel__"]')
-    let scoreText: any
-    if (healthUI.length >= 2) {
+
+    const roundElement = document.querySelector('[class^="round-score_roundNumber__"]')
+    if (roundElement && roundElement.textContent) {
+      const roundNum = Number(roundElement.textContent.replace(/\D/g, ''))
+      // +1 because the post-round screen shows the round just completed
+      currentDuelRound = roundNum ? `Round ${roundNum + 1}` : null
+    }
+
+    const healthUI = document.querySelectorAll('[class^="health-bar-2_barLabel__"], [class^="health-bar_barLabel__"]')
+    let scoreText: string | undefined
+    const hasHealth = healthUI.length >= 2
+    if (hasHealth) {
       const firstLabel = healthUI[0] as HTMLElement
       const secondLabel = healthUI[1] as HTMLElement
       if (firstLabel && secondLabel && firstLabel.textContent && secondLabel.textContent) {
-        scoreText = ` | ${firstLabel.textContent} - ${secondLabel.textContent}`
+        scoreText = `${firstLabel.textContent} - ${secondLabel.textContent}`
       }
     }
-    if (autoSetGamemode && currentGameMode !== '') {
+    else {
+      if (!roundElement) {
+        currentDuelRound = null
+      }
+    }
+
+    // default to Round 1 before any round completes
+    if (hasHealth && !currentDuelRound) {
+      currentDuelRound = 'Round 1'
+    }
+
+    const hasGameState = !!(currentDuelRound || scoreText)
+
+    if (hasGameState && autoSetGamemode && currentGameMode !== '') {
       prefix = `${currentGameMode} ${prefix}`
     }
+
     if (!isConnected()) {
       return
     }
-    presenceData.details = `${prefix}${scoreText || ''}`
+    presenceData.details = prefix
+    duelBaseDetails = prefix
+    if (hasGameState) {
+      const stateParts: string[] = []
+      if (currentDuelRound)
+        stateParts.push(currentDuelRound)
+      if (scoreText)
+        stateParts.push(scoreText)
+      presenceData.state = stateParts.join(' | ')
+      duelGameActive = true
+    }
+    else {
+      duelGameActive = false
+    }
   }
+
   async function getMapIconFromInfo(mapInfo: any) {
     if (!isConnected() || !mapInfo) {
       return
@@ -330,9 +378,12 @@ presence.on('UpdateData', async () => {
     return await getMapIconFromInfo(mapInfo)
   }
 
-  async function setDivisionInfo(divisionName: any = null, rating: any = null) {
+  async function setDivisionInfo(divisionName: any = null, rating: any = null, appendToDetails: boolean = false) {
     if (isUnranked) {
-      presenceData.state = strings.inUnranked
+      if (appendToDetails)
+        presenceData.details = `${duelBaseDetails} | ${strings.unranked}`
+      else
+        presenceData.state = strings.inUnranked
       presenceData.smallImageKey = divisionIcons.Unranked
       presenceData.smallImageText = strings.unranked
       return
@@ -356,7 +407,10 @@ presence.on('UpdateData', async () => {
     if (!isConnected()) {
       return
     }
-    presenceData.state = strings.division.replace('{0}', divisionName)
+    if (appendToDetails)
+      presenceData.details = `${duelBaseDetails} | ${divisionName}`
+    else
+      presenceData.state = strings.division.replace('{0}', divisionName)
     const divisionIcon = divisionIcons[divisionName]
     if (divisionIcon) {
       presenceData.smallImageKey = divisionIcon
@@ -523,27 +577,30 @@ presence.on('UpdateData', async () => {
 
       if (isRanked) {
         presenceData.largeImageKey = (isTeams && gameModeIcons.team_duels) || gameModeIcons.solo_duels
-        presenceData.state = strings.inRanked
+        if (!duelGameActive)
+          presenceData.state = strings.inRanked
         delete presenceData.smallImageKey
         if (!isTeams) {
-          setDivisionInfo(soloDivision, soloRatingString)
+          setDivisionInfo(soloDivision, soloRatingString, duelGameActive)
         }
       }
       else if (gameInfo.options.gameContext.type === 'PartyV2') {
         presenceData.smallImageKey = gameModeIcons.party
         presenceData.smallImageText = strings.party
         presenceData.largeImageKey = (isTeams && gameModeIcons.team_duels) || gameModeIcons.solo_duels
-        presenceData.state = strings.inParty
+        if (!duelGameActive)
+          presenceData.state = strings.inParty
       }
       else {
         presenceData.largeImageKey = (isTeams && gameModeIcons.team_duels) || gameModeIcons.solo_duels
-        presenceData.state = strings.inUnranked
+        if (!duelGameActive)
+          presenceData.state = strings.inUnranked
         presenceData.smallImageKey = divisionIcons.Unranked
         presenceData.smallImageText = strings.unranked
       }
     }
   }
-  else if (currentPath[0] && currentPath[0] === 'matchmaking') {
+  else if (currentPath[0] === 'matchmaking') {
     const gameModeTextList = document.querySelectorAll('[class*="game-mode-brand_subTitle___"]')
     if (!alreadyFetchedList[currentPath[0]] && gameModeTextList[0]) {
       const isTeams = gameModeTextList[0] && gameModeTextList[0].textContent
@@ -627,16 +684,26 @@ presence.on('UpdateData', async () => {
     }
   }
   else if (currentPath[0] === 'multiplayer') {
-    if (!currentPath[1]) {
+    if (!currentPath[1] || currentPath[1] === 'duels') {
       // Duels (new HUD)
       setHealthUI(strings.duels, true)
       presenceData.largeImageKey = gameModeIcons.solo_duels
+
       const rankText = document.querySelectorAll('[class^="division-header_title__"]')
       const unrankedHeader = document.querySelectorAll('[class^="division-header_unrankedRoot__"]')
+      const unrankedMatchmaking = document.querySelectorAll('[class^="unranked-matchmaking-layout_"]')
+
       if (unrankedHeader[0]) {
         const unrankedHeaderShowing = document.querySelectorAll('[class*="division-header_reveal__"]')
         isUnranked = (unrankedHeaderShowing[0] && true) || false
       }
+      else if (unrankedMatchmaking[0]) {
+        isUnranked = true
+      }
+      else if (rankText[0]) {
+        isUnranked = false
+      }
+
       if (rankText[0]) {
         const divisionString = rankText[0].textContent
         const ratingText = document.querySelectorAll('[class^="division-header_rating__"]')
@@ -644,12 +711,13 @@ presence.on('UpdateData', async () => {
         if (ratingText[0]) {
           ratingString = ratingText[0].textContent
         }
-        setDivisionInfo(divisionString, ratingString)
+        setDivisionInfo(divisionString, ratingString, duelGameActive)
       }
       else if (lastPath[0] !== 'multiplayer' || lastPath[1]) {
         delete presenceData.smallImageKey
-        presenceData.state = strings.inRanked
-        setDivisionInfo(soloDivision, soloRatingString)
+        if (!duelGameActive)
+          presenceData.state = isUnranked ? strings.inUnranked : strings.inRanked
+        setDivisionInfo(soloDivision, soloRatingString, duelGameActive)
       }
     }
     else if (currentPath[1] === 'teams') {
@@ -657,7 +725,7 @@ presence.on('UpdateData', async () => {
       isUnranked = false
       setHealthUI(strings.teamDuels, true)
       presenceData.largeImageKey = gameModeIcons.team_duels
-      if (isNewURL) {
+      if (isNewURL && !duelGameActive) {
         delete presenceData.smallImageKey
         presenceData.state = strings.inRanked
       }
@@ -668,8 +736,18 @@ presence.on('UpdateData', async () => {
         let ratingString: any
         if (ratingText[0]) {
           ratingString = ratingText[0].textContent
+          teamRatingString = ratingString
         }
-        setDivisionInfo(divisionString, ratingString)
+        teamDivision = divisionString
+        setDivisionInfo(divisionString, ratingString, duelGameActive)
+      }
+      else if (lastPath[0] !== 'multiplayer' || lastPath[1]) {
+        delete presenceData.smallImageKey
+        if (!duelGameActive)
+          presenceData.state = strings.inRanked
+        if (teamDivision) {
+          setDivisionInfo(teamDivision, teamRatingString, duelGameActive)
+        }
       }
     }
     else if (currentPath[1] === 'battle-royale-countries') {
@@ -693,10 +771,12 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageText = strings.unranked
     }
     else {
-      presenceData.details = strings.multiplayer
+      presenceData.details = strings.inRanked
       presenceData.largeImageKey = logo
-      delete presenceData.state
-      delete presenceData.smallImageKey
+      if (!soloDivision)
+        await setDivisionInfo()
+      else
+        await setDivisionInfo(soloDivision, soloRatingString)
     }
   }
   else if (currentPath[0] === 'party') {
@@ -808,6 +888,14 @@ presence.on('UpdateData', async () => {
         presenceData.state = strings.brRemaining.replace('{0}', alivePlayers)
       }
     }
+  }
+  else if (currentPath[0] === 'world') {
+    delete presenceData.buttons
+    presenceData.state = 'World'
+    presenceData.largeImageKey = mapAvatarOfficial.world || logo
+    presenceData.details = strings.viewMap
+    presenceData.smallImageKey = movementIcons.moving
+    presenceData.smallImageText = strings.movementMoving
   }
   else {
     presenceData.largeImageKey = logo
