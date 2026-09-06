@@ -12,7 +12,7 @@
   },
   "url": "animevietsub.name",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animevietsub[s]?[.][a-z]+[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeVietSub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeVietSub/assets/thumbnail.png",
   "color": "#4A90D9",
@@ -36,6 +36,16 @@
       "title": "Privacy Overwrite Button",
       "icon": "fad fa-eye-low-vision",
       "value": true
+    },
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 1,
+      "values": [
+        "Activity Name",
+        "Anime Name"
+      ]
     }
   ]
 }
