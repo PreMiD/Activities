@@ -13,19 +13,31 @@ let lastCategory: 'browsing' | 'reading' | 'reciters' | 'search' | null = null
 
 async function getStrings() {
   return presence.getStrings({
+    aboutUs: 'quran.aboutUs',
+    apps: 'quran.apps',
+    ayah: 'quran.ayah',
     buttonViewPage: 'general.buttonViewPage',
+    dailyVerse: 'quran.dailyVerse',
+    developers: 'quran.developers',
+    duas: 'quran.duas',
+    learningPlans: 'quran.learningPlans',
     paused: 'general.paused',
     privacy: 'general.privacy',
+    radio: 'quran.radio',
     reading: 'general.reading',
+    readingFallback: 'quran.readingFallback',
+    readingTafsir: 'quran.readingTafsir',
+    reciters: 'quran.reciters',
     searchFor: 'general.searchFor',
     searchSomething: 'general.searchSomething',
+    support: 'quran.support',
+    viewingDua: 'quran.viewingDua',
+    viewingLearningPlan: 'quran.viewingLearningPlan',
+    viewingReciter: 'quran.viewingReciter',
     viewHome: 'general.viewHome',
     viewPage: 'general.viewPage',
   })
 }
-
-let strings: Awaited<ReturnType<typeof getStrings>>
-let oldLang: string | undefined
 
 function setCategory(category: typeof lastCategory) {
   if (lastCategory !== category) {
@@ -105,55 +117,9 @@ function getVerseKey(pathname: string, audio: HTMLAudioElement | null): string |
   return verseNumber && chapterNumber ? `${chapterNumber}:${verseNumber}` : undefined
 }
 
-const translations = {
-  en: {
-    radio: 'Looking through radio stations',
-    aboutUs: 'Viewing the about us page',
-    apps: 'Looking at Quran apps',
-    developers: 'Looking at the developers page',
-    support: 'Looking at the support page',
-    reciters: 'Browsing through reciters',
-    viewingReciter: 'Viewing a reciter',
-    dailyVerse: 'Viewing the Quran verse of the day',
-    duas: 'Browsing Quranic duas',
-    viewingDua: 'Viewing a Quranic dua',
-    readingTafsir: 'Reading a tafsir',
-    learningPlans: 'Browsing Quran learning plans',
-    viewingLearningPlan: 'Viewing a Quran learning plan',
-    readingFallback: 'Reading the Holy Quran',
-    ayah: 'Ayah',
-  },
-  ar: {
-    radio: 'تصفح محطات الراديو',
-    aboutUs: 'عرض صفحة من نحن',
-    apps: 'تصفح تطبيقات القرآن',
-    developers: 'عرض صفحة المطورين',
-    support: 'عرض صفحة الدعم',
-    reciters: 'تصفح القراء',
-    viewingReciter: 'عرض قارئ',
-    dailyVerse: 'عرض آية اليوم من القرآن',
-    duas: 'تصفح الأدعية القرآنية',
-    viewingDua: 'عرض دعاء قرآني',
-    readingTafsir: 'قراءة تفسير',
-    learningPlans: 'تصفح خطط تعلم القرآن',
-    viewingLearningPlan: 'عرض خطة لتعلم القرآن',
-    readingFallback: 'قراءة القرآن الكريم',
-    ayah: 'آية',
-  },
-} as const
-
-type LangCode = keyof typeof translations
-
 presence.on('UpdateData', async () => {
   try {
-    const newLang = await presence.getSetting<string>('lang').catch(() => 'en') || 'en'
-    if (oldLang !== newLang || !strings) {
-      oldLang = newLang
-      strings = await getStrings()
-    }
-
-    const lang: LangCode = newLang.toLowerCase().startsWith('ar') ? 'ar' : 'en'
-    const t = translations[lang]
+    const strings = await getStrings()
 
     let presenceData: PresenceData = {
       largeImageKey: ActivityAssets.Logo,
@@ -171,25 +137,25 @@ presence.on('UpdateData', async () => {
       }
       case '/radio': {
         setCategory('browsing')
-        presenceData.details = t.radio
+        presenceData.details = strings.radio
         presenceData.startTimestamp = browsingTimestamp
         break
       }
       case '/about-us': {
         setCategory('browsing')
-        presenceData.details = t.aboutUs
+        presenceData.details = strings.aboutUs
         presenceData.startTimestamp = browsingTimestamp
         break
       }
       case '/apps': {
         setCategory('browsing')
-        presenceData.details = t.apps
+        presenceData.details = strings.apps
         presenceData.startTimestamp = browsingTimestamp
         break
       }
       case '/developers': {
         setCategory('browsing')
-        presenceData.details = t.developers
+        presenceData.details = strings.developers
         presenceData.startTimestamp = browsingTimestamp
         break
       }
@@ -201,7 +167,7 @@ presence.on('UpdateData', async () => {
       }
       case '/support': {
         setCategory('browsing')
-        presenceData.details = t.support
+        presenceData.details = strings.support
         presenceData.startTimestamp = browsingTimestamp
         break
       }
@@ -220,7 +186,7 @@ presence.on('UpdateData', async () => {
         if (pathname.includes('/reciters')) {
           if (pathname.includes('/reciters/')) {
             setCategory('reciters')
-            presenceData.details = t.viewingReciter
+            presenceData.details = strings.viewingReciter
             const reciter = query(['[class*="ReciterInfo_reciterName"]', '[data-testid="reciter-name"]'])?.textContent
             if (reciter)
               presenceData.state = reciter
@@ -228,7 +194,7 @@ presence.on('UpdateData', async () => {
           }
           else {
             setCategory('browsing')
-            presenceData.details = t.reciters
+            presenceData.details = strings.reciters
             presenceData.startTimestamp = browsingTimestamp
           }
           break
@@ -236,17 +202,17 @@ presence.on('UpdateData', async () => {
 
         if (pathname === '/daily') {
           setCategory('reading')
-          presenceData.details = t.dailyVerse
+          presenceData.details = strings.dailyVerse
           const verseKey = query(['[data-verse-key]'])?.getAttribute('data-verse-key')
           if (verseKey)
-            presenceData.state = `${t.ayah} ${verseKey}`
+            presenceData.state = `${strings.ayah} ${verseKey}`
           presenceData.startTimestamp = browsingTimestamp
           break
         }
 
         if (pathname === '/duas' || pathname.startsWith('/duas/')) {
           setCategory('reading')
-          presenceData.details = pathname === '/duas' ? t.duas : t.viewingDua
+          presenceData.details = pathname === '/duas' ? strings.duas : strings.viewingDua
           if (pathname !== '/duas' && pageTitle)
             presenceData.state = pageTitle
           presenceData.startTimestamp = browsingTimestamp
@@ -255,13 +221,13 @@ presence.on('UpdateData', async () => {
 
         if (/^\/[^/]+\/\d+\/tafsirs(?:\/|$)/.test(pathname)) {
           setCategory('reading')
-          presenceData.details = t.readingTafsir
+          presenceData.details = strings.readingTafsir
           const tafsirSeparator = [' — Tafsir ', ' – Tafsir ', ' - Tafsir ']
             .find(separator => pageTitle.includes(separator))
           const tafsirTitle = tafsirSeparator ? pageTitle.split(tafsirSeparator)[0] : undefined
           const tafsirContext = pageTitle.split('Tafsir Surah ')[1]
           const verseKey = query(['[data-verse-key]'])?.getAttribute('data-verse-key')
-          const state = [verseKey ? `${t.ayah} ${verseKey}` : tafsirContext, tafsirTitle]
+          const state = [verseKey ? `${strings.ayah} ${verseKey}` : tafsirContext, tafsirTitle]
             .filter(Boolean)
             .join(' • ')
           if (state)
@@ -273,8 +239,8 @@ presence.on('UpdateData', async () => {
         if (pathname === '/learning-plans' || pathname.startsWith('/learning-plans/')) {
           setCategory('reading')
           presenceData.details = pathname === '/learning-plans'
-            ? t.learningPlans
-            : t.viewingLearningPlan
+            ? strings.learningPlans
+            : strings.viewingLearningPlan
           if (pathname !== '/learning-plans' && pageTitle)
             presenceData.state = pageTitle
           presenceData.startTimestamp = browsingTimestamp
@@ -307,9 +273,9 @@ presence.on('UpdateData', async () => {
 
         presenceData.details = surahName
           ? `${strings.reading} ${surahName}${englishName ? ` (${englishName})` : ''}`
-          : t.readingFallback
+          : strings.readingFallback
 
-        const ayahPart = verseKey ? `${t.ayah} ${verseKey}` : pageInfo
+        const ayahPart = verseKey ? `${strings.ayah} ${verseKey}` : pageInfo
         const state = [ayahPart, reciterName].filter(Boolean).join(' • ')
         if (state)
           presenceData.state = state
