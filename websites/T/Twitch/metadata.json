@@ -43,9 +43,6 @@
     "zh-tw": "Twitch是面向遊戲玩家和各種事物的全球領先的實時串流平台。快來與來自世界各地的數百萬粉絲一起觀看和聊天。"
   },
   "url": [
-    "www.twitch.tv",
-    "dashboard.twitch.tv",
-    "brand.twitch.tv",
     "blog.twitch.tv",
     "help.twitch.tv",
     "affiliate.twitch.tv",
@@ -55,7 +52,7 @@
     "status.twitch.tv"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*twitch[.]tv[/]",
-  "version": "3.5.3",
+  "version": "3.5.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Twitch/assets/thumbnail.png",
   "color": "#9146FF",
