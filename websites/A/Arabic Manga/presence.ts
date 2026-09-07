@@ -179,7 +179,7 @@ function chapterFromText(value: string | null | undefined): string | undefined {
     return undefined
 
   const normalized = normalizeSpaces(value)
-  const explicit = normalized.match(/(?:الفصل|فصل|chapter)\s*(?:رقم\s*)?#?\s*([0-9]+(?:\.[0-9]+)?)/i)
+  const explicit = normalized.match(/(?:الفصل|فصل|chapter)(?:\s+رقم)?[\s#]*(\d+(?:\.\d+)?)/i)
   return explicit?.[1]
 }
 
@@ -188,8 +188,8 @@ function cleanSeriesTitle(value: string, site: SiteConfig, chapter?: string): st
     .replace(/^Read\s+/i, '')
     .replace(/\s+(?:Manga|Manhwa)\s+Online.*$/i, '')
     .replace(/\s*\|\s*(?:Team-X|Azora.*|MangaLek.*|مانجا ليك.*|MangaTime.*|مانجا تايم.*|MangaSwan.*|MangaClub.*|Abmics.*|ToonArab.*)$/i, '')
-    .replace(/\s*[-–—|]\s*(?:مانجا|مانهوا)\s+مترجمة.*$/i, '')
-    .replace(/\s*[,،-]?\s*(?:الفصل|فصل|chapter)\s*(?:رقم\s*)?#?\s*[0-9]+(?:\.[0-9]+)?.*$/i, '')
+    .replace(/\s*[-–—|]\s*(?:مانجا|مانهوا)\s+مترجمة.*$/, '')
+    .replace(/[\s,،-]*(?:الفصل|فصل|chapter)(?:\s+رقم)?[\s#]*\d.*$/i, '')
     .trim()
 
   if (chapter) {
@@ -234,7 +234,7 @@ function detectPageInfo(site: SiteConfig): PageInfo {
     ?? chapterFromText(document.title)
 
   if (site.name === 'OlympusStaff' && lower[0] === 'series' && parts[1]) {
-    chapter ??= parts[2]?.match(/^([0-9]+(?:\.[0-9]+)?)$/)?.[1]
+    chapter ??= parts[2]?.match(/^(\d+(?:\.\d+)?)$/)?.[1]
     return {
       kind: chapter ? 'chapter' : 'series',
       chapter,
@@ -244,7 +244,7 @@ function detectPageInfo(site: SiteConfig): PageInfo {
   }
 
   if (site.name === 'Azora Manga' && lower[0] === 'series' && parts[1]) {
-    chapter ??= parts[2]?.match(/^chapter-([0-9]+(?:\.[0-9]+)?)$/i)?.[1]
+    chapter ??= parts[2]?.match(/^chapter-(\d+(?:\.\d+)?)$/i)?.[1]
     return {
       kind: chapter ? 'chapter' : 'series',
       chapter,
@@ -254,7 +254,7 @@ function detectPageInfo(site: SiteConfig): PageInfo {
   }
 
   if (site.name === 'MangaLek' && lower[0] === 'manga' && parts[1]) {
-    chapter ??= parts[2]?.match(/^([0-9]+(?:\.[0-9]+)?)$/)?.[1]
+    chapter ??= parts[2]?.match(/^(\d+(?:\.\d+)?)$/)?.[1]
     return {
       kind: chapter ? 'chapter' : 'series',
       chapter,
@@ -266,7 +266,7 @@ function detectPageInfo(site: SiteConfig): PageInfo {
   if (site.name === 'MangaTime' && ['manga', 'manhwa'].includes(lower[0] ?? '') && parts[1]) {
     const chapterIndex = lower.indexOf('chapter')
     chapter ??= chapterIndex >= 0
-      ? parts[chapterIndex + 1]?.match(/^([0-9]+(?:\.[0-9]+)?)$/)?.[1]
+      ? parts[chapterIndex + 1]?.match(/^(\d+(?:\.\d+)?)$/)?.[1]
       : undefined
 
     return {
@@ -281,7 +281,7 @@ function detectPageInfo(site: SiteConfig): PageInfo {
     const episodeIndex = lower.indexOf('episode')
     if (episodeIndex >= 0 && parts[episodeIndex + 1]) {
       const episodeSlug = parts[episodeIndex + 1]!
-      const match = episodeSlug.match(/^(.*?)-([0-9]+(?:\.[0-9]+)?)$/)
+      const match = episodeSlug.match(/^(.*?)-(\d+(?:\.\d+)?)$/)
       chapter ??= match?.[2]
       const seriesSlug = match?.[1] ?? episodeSlug
       return {
@@ -305,8 +305,8 @@ function detectPageInfo(site: SiteConfig): PageInfo {
   const mangaIndex = lower.findIndex(part => ['manga', 'manhwa', 'manhua', 'webtoon', 'comic', 'series'].includes(part))
   const chapterIndex = lower.findIndex(part => /^(?:chapter|ch)(?:-|$)/i.test(part))
   if (chapterIndex >= 0) {
-    chapter ??= parts[chapterIndex]!.match(/(?:chapter|ch)-?([0-9]+(?:\.[0-9]+)?)/i)?.[1]
-      ?? parts[chapterIndex + 1]?.match(/^([0-9]+(?:\.[0-9]+)?)$/)?.[1]
+    chapter ??= parts[chapterIndex]!.match(/(?:chapter|ch)-?(\d+(?:\.\d+)?)/i)?.[1]
+      ?? parts[chapterIndex + 1]?.match(/^(\d+(?:\.\d+)?)$/)?.[1]
   }
 
   if (mangaIndex >= 0 && parts[mangaIndex + 1]) {
