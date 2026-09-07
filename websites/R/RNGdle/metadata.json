@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "developedbyalex",
+    "id": "626130640768729088"
+  },
+  "service": "RNGdle",
+  "description": {
+    "en": "RNGdle is a daily number-rolling game. Earn badges and EP from the patterns in your roll and compete on the leaderboard."
+  },
+  "url": "www.rngdle.com",
+  "version": "1.0.0",
+  "logo": "https://www.rngdle.com/favicon/web-app-manifest-512x512.png",
+  "thumbnail": "https://www.rngdle.com/favicon/web-app-manifest-512x512.png",
+  "color": "#FFFFFF",
+  "category": "games",
+  "tags": [
+    "rng",
+    "daily",
+    "numbers",
+    "badges"
+  ],
+  "settings": [
+    {
+      "id": "showNames",
+      "title": "Show usernames",
+      "icon": "fas fa-user",
+      "value": true
+    }
+  ]
+}
