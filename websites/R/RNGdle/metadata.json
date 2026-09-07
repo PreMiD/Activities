@@ -10,9 +10,10 @@
     "en": "RNGdle is a daily number-rolling game. Earn badges and EP from the patterns in your roll and compete on the leaderboard."
   },
   "url": "www.rngdle.com",
+  "regExp": "^https?://(www\\.)?rngdle\\.com/",
   "version": "1.0.0",
-  "logo": "https://www.rngdle.com/favicon/web-app-manifest-512x512.png",
-  "thumbnail": "https://www.rngdle.com/favicon/web-app-manifest-512x512.png",
+  "logo": "https://github.com/user-attachments/assets/a456896f-d063-46ee-94e6-cad07feb0f12",
+  "thumbnail": "https://github.com/user-attachments/assets/b32d3b39-8959-49cd-97a1-e02b546fa0db",
   "color": "#FFFFFF",
   "category": "games",
   "tags": [

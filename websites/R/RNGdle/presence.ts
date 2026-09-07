@@ -7,7 +7,7 @@ presence.on('UpdateData', async () => {
   const showNames = await presence.getSetting<boolean>('showNames')
   const { pathname } = document.location
   const presenceData: PresenceData = {
-    largeImageKey: 'https://www.rngdle.com/favicon/web-app-manifest-512x512.png',
+    largeImageKey: 'https://github.com/user-attachments/assets/a456896f-d063-46ee-94e6-cad07feb0f12',
     startTimestamp: browsingTimestamp,
     details: 'Browsing RNGdle',
   }
