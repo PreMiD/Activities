@@ -7,8 +7,8 @@
   },
   "service": "Arabic Manga",
   "description": {
-    "en": "A unified activity for supported Arabic manga and manhwa reading websites, with chapter details, covers, site branding, reading-session timing, and sensitive-content filtering.",
-    "ar": "حضور موحد لمواقع قراءة المانجا والمانهوا العربية المدعومة، يعرض العمل والفصل والغلاف وشعار الموقع ومدة جلسة القراءة مع تصفية الاعمال ذات المحتوى الحساس."
+    "ar": "حضور موحد لمواقع قراءة المانجا والمانهوا العربية المدعومة، يعرض العمل والفصل والغلاف وشعار الموقع ومدة جلسة القراءة مع تصفية الاعمال ذات المحتوى الحساس.",
+    "en": "A unified activity for supported Arabic manga and manhwa reading websites, with chapter details, covers, site branding, reading-session timing, and sensitive-content filtering."
   },
   "url": [
     "olympustaff.com",
@@ -20,10 +20,11 @@
     "abmics.com",
     "toonarab.com"
   ],
+  "regExp": "^https?[:][/][/](?:www[.])?(?:olympustaff[.]com|azorafly[.]com|mangalik[.]net|mangatime[.]org|mangaswan[.]com|mangaclub[.]net|abmics[.]com|toonarab[.]com)(?:[/]|$)",
   "version": "1.0.0",
-  "logo": "https://i.imgur.com/nmHcsHc.png",
-  "thumbnail": "https://i.imgur.com/dNAQ7U9.png",
-  "color": "#8B5CF6",
+  "logo": "https://i.imgur.com/KhZr3rL.jpeg",
+  "thumbnail": "https://i.imgur.com/jFmlSjP.jpeg",
+  "color": "#F2C14E",
   "category": "anime",
   "tags": [
     "arabic",
@@ -61,6 +62,5 @@
       "value": true,
       "description": "Add a Discord button that opens the current chapter or title page."
     }
-  ],
-  "regExp": "^https?[:][/][/](?:www[.])?(?:olympustaff[.]com|azorafly[.]com|mangalik[.]net|mangatime[.]org|mangaswan[.]com|mangaclub[.]net|abmics[.]com|toonarab[.]com)(?:[/]|$)"
+  ]
 }
