@@ -1,0 +1,74 @@
+{
+  "tcgmini.homepage": {
+    "description": "Shown when browsing the TCGmini homepage.",
+    "message": "Browsing the homepage"
+  },
+  "tcgmini.simulator": {
+    "description": "Subtitle shown together with playingMatch, naming the app.",
+    "message": "Pokémon TCG Pocket simulator"
+  },
+  "tcgmini.inMatch": {
+    "description": "Tooltip for the small 'playing' icon while on the board.",
+    "message": "In a match"
+  },
+  "tcgmini.searchingCards": {
+    "description": "Shown when browsing/searching the card database.",
+    "message": "Searching for cards"
+  },
+  "tcgmini.buildingDeck": {
+    "description": "Shown when building a deck.",
+    "message": "Building a deck"
+  },
+  "tcgmini.checkingMeta": {
+    "description": "Shown when checking the best/meta decks.",
+    "message": "Checking the meta decks"
+  },
+  "tcgmini.draftingDeck": {
+    "description": "Shown when drafting a deck in Draft mode.",
+    "message": "Drafting a deck"
+  },
+  "tcgmini.makingTierlist": {
+    "description": "Shown when creating a tier list.",
+    "message": "Making a tier list"
+  },
+  "tcgmini.browsingSite": {
+    "description": "Fallback shown for any other page on the site.",
+    "message": "Browsing TCGmini"
+  },
+  "tcgmini.formatStandard": {
+    "description": "Shown as the match subtitle when playing in Standard format.",
+    "message": "Standard format"
+  },
+  "tcgmini.formatAdvanced": {
+    "description": "Shown as the match subtitle when playing in Advanced format.",
+    "message": "Advanced format"
+  },
+  "tcgmini.formatSandbox": {
+    "description": "Shown as the match subtitle when playing in Sandbox mode.",
+    "message": "Sandbox mode"
+  },
+  "tcgmini.winning": {
+    "description": "Shown in the match state when the local player has more points than their opponent.",
+    "message": "Winning"
+  },
+  "tcgmini.losing": {
+    "description": "Shown in the match state when the local player has fewer points than their opponent.",
+    "message": "Losing"
+  },
+  "tcgmini.tied": {
+    "description": "Shown in the match state when both players have the same number of points, and reused as the result headline for a drawn match.",
+    "message": "Tied"
+  },
+  "tcgmini.victory": {
+    "description": "Result headline shown on the post-match screen when the local player won.",
+    "message": "Victory!"
+  },
+  "tcgmini.defeat": {
+    "description": "Result headline shown on the post-match screen when the local player lost.",
+    "message": "Defeat"
+  },
+  "tcgmini.matchEnded": {
+    "description": "Tooltip for the small icon while the post-match result screen is showing.",
+    "message": "Match ended"
+  }
+}
