@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.11",
+  "author": {
+    "name": "nyannoying",
+    "id": "173796735699779585"
+  },
+  "service": "Gensokyo Radio",
+  "description": {
+    "en": "A 24/7 internet radio station playing fan-made Touhou Project music."
+  },
+  "url": ["gensokyoradio.net", "app.gensokyoradio.net", "forum.gensokyoradio.net", "gensokyo.store"],
+  "regExp": "^https?:\\/\\/(app\\.gensokyoradio\\.net|forum\\.gensokyoradio\\.net|(www\\.)?gensokyo\\.store|(www\\.)?gensokyoradio\\.net)\\/.*$",
+  "logo": "https://i.imgur.com/D3eyWs8.png",
+  "thumbnail": "https://i.imgur.com/ooORT0H.png",
+  "color": "#8a2f4a",
+  "tags": ["music", "radio", "touhou", "anime"],
+  "category": "music",
+  "version": "1.0.0"
+}
