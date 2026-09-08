@@ -110,16 +110,10 @@ function detectPaused(): boolean {
     return stateIcon.getAttribute("name") === "play";
   }
 
-  // Classic /playing page: #playStopBtn polygon morphs between a play triangle and stop square
-  const shape = document.querySelector<SVGPolygonElement>(
-    "#playStopBtn polygon#shape, #playStopBtn polygon"
-  );
-  if (shape) {
-    const points = shape.getAttribute("points") ?? "";
-    const looksLikeStopSquare = points.includes("45,45") && points.includes("95,95");
-    return !looksLikeStopSquare;
-  }
-
+  // Classic /playing page has no reliable play/pause signal in the DOM — no <audio>
+  // element, and the button's icon is animated via SMIL with no accessible state.
+  // Defaulting to "playing" is also just factually true most of the time: the
+  // station is always broadcasting regardless of whether you've muted locally.
   return false;
 }
 
