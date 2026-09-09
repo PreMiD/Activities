@@ -1,4 +1,3 @@
-export type VariantText = string | readonly string[]
 export type TmdbMediaType = 'movie' | 'tv'
 
 export interface TmdbMediaSummary {
@@ -14,4 +13,24 @@ export interface WatchContext {
   episodeTitle: string
   sourceLabel: string
   sourceDetail: string
+}
+
+export interface PartyContext {
+  title: string
+  mediaType: string
+  season: string
+  episode: string
+  poster: string
+  participants: number
+}
+
+export interface LiveTvContext {
+  channel: string
+  poster: string
+}
+
+export interface IframePlayback {
+  currentTime: number
+  duration: number
+  paused: boolean
 }
