@@ -21,6 +21,9 @@ function formatTime(seconds: number): string {
 }
 
 presence.on('UpdateData', async () => {
+  if (!document.location.pathname.startsWith('/studio/'))
+    return
+
   const language = await presence
     .getSetting<number>('language')
     .catch(() => 0)
