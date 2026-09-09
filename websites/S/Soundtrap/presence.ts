@@ -24,7 +24,7 @@ presence.on('UpdateData', async () => {
   const language = await presence
     .getSetting<number>('language')
     .catch(() => 0)
-  
+
   const isFrench = language === 1
 
   const strings = isFrench
@@ -55,21 +55,21 @@ presence.on('UpdateData', async () => {
     'button.rec.transport-controls__button',
   )
 
-  const isPlaying =
-    playButton?.classList.contains('selected') ?? false
+  const isPlaying
+    = playButton?.classList.contains('selected') ?? false
 
-  const isRecording =
-    recordButton?.classList.contains('selected') ?? false
+  const isRecording
+    = recordButton?.classList.contains('selected') ?? false
 
   const playhead = document.querySelector<HTMLElement>(
     '.timelabel',
   )
 
-  const currentTime =
-    playhead?.textContent?.trim() ?? '00:00.0'
+  const currentTime
+    = playhead?.textContent?.trim() ?? '00:00.0'
 
-  const currentSeconds =
-    timestampFromFormat(currentTime)
+  const currentSeconds
+    = timestampFromFormat(currentTime)
 
   const bpmText = document
     .querySelector('.tempocontrols__tempo-button')
@@ -105,56 +105,56 @@ presence.on('UpdateData', async () => {
     ? Math.max(...endBeats)
     : 0
 
-  const durationSeconds =
-    bpm > 0
+  const durationSeconds
+    = bpm > 0
       ? lastBeat * 60 / bpm
       : 0
 
-  const durationText =
-    formatTime(durationSeconds)
+  const durationText
+    = formatTime(durationSeconds)
 
-  presenceData.details =
-    `${projectName} • ${bpm} BPM • ${key} • ${timeSignature}`
+  presenceData.details
+    = `${projectName} • ${bpm} BPM • ${key} • ${timeSignature}`
 
   if (isRecording) {
-    presenceData.state =
-      `${strings.recording} • ${currentTime} / ${durationText}`
+    presenceData.state
+      = `${strings.recording} • ${currentTime} / ${durationText}`
 
     presenceData.smallImageKey = Assets.Live
-    presenceData.smallImageText =
-      strings.recording
+    presenceData.smallImageText
+      = strings.recording
 
     const [startTimestamp] = getTimestamps(
       currentSeconds,
       durationSeconds,
     )
 
-    presenceData.startTimestamp =
-      startTimestamp
+    presenceData.startTimestamp
+      = startTimestamp
   }
   else if (isPlaying) {
-    presenceData.state =
-      `${strings.playing} • ${currentTime} / ${durationText}`
+    presenceData.state
+      = `${strings.playing} • ${currentTime} / ${durationText}`
 
     presenceData.smallImageKey = Assets.Play
-    presenceData.smallImageText =
-      strings.playing
+    presenceData.smallImageText
+      = strings.playing
 
     const [startTimestamp] = getTimestamps(
       currentSeconds,
       durationSeconds,
     )
 
-    presenceData.startTimestamp =
-      startTimestamp
+    presenceData.startTimestamp
+      = startTimestamp
   }
   else {
-    presenceData.state =
-      `${strings.paused} • ${currentTime} / ${durationText}`
+    presenceData.state
+      = `${strings.paused} • ${currentTime} / ${durationText}`
 
     presenceData.smallImageKey = Assets.Pause
-    presenceData.smallImageText =
-      strings.paused
+    presenceData.smallImageText
+      = strings.paused
   }
 
   presence.setActivity(presenceData)
