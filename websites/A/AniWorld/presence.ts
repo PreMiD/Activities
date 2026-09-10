@@ -1,9 +1,31 @@
+import type { AnimeData } from './functions/animeData.js'
 import { ActivityType, Assets, getTimestamps } from 'premid'
-import { AnimeDataFetcher } from './functions/animeData.js'
+import { fetchCover, getAnimeData } from './functions/animeData.js'
 
 const presence = new Presence({
   clientId: '1387112561362604104',
 })
+
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png',
+}
+
+//* The hoster iframe stops sending as soon as it is unloaded (episode switch,
+//* hoster change, closed player), so data that is no longer being refreshed has
+//* to be dropped instead of freezing the presence on the last known position.
+const VIDEO_DATA_TTL = 10_000
+
+interface IFrameVideoData {
+  currentTime: number
+  duration: number
+  paused: boolean
+}
+
+interface PageInfo {
+  details: string
+  smallImageKey?: Assets
+  smallImageText?: string
+}
 
 async function getStrings() {
   return presence.getStrings({
@@ -12,15 +34,14 @@ async function getStrings() {
     buttonWatchAnime: 'general.buttonWatchAnime',
     buttonWatchEpisode: 'general.buttonViewEpisode',
     buttonWatchMovie: 'general.buttonWatchMovie',
-    buttonViewProfile: 'general.buttonViewProfile',
     account: 'general.viewAccount',
     animes: 'aniworld.animes',
+    browsing: 'general.browsing',
     calendar: 'aniworld.calendar',
-    catalogBrowsing: 'aniworld.catalog.browsing',
-    catalogBrowsingState: 'aniworld.catalog.state',
     dmca: 'aniworld.dmca',
     editinfo: 'aniworld.edit.info',
     episodeList: 'aniworld.episodeList',
+    faq: 'aniworld.support.faq',
     guide: 'aniworld.support.guide',
     home: 'general.viewHome',
     login: 'aniworld.login',
@@ -31,60 +52,24 @@ async function getStrings() {
     profile: 'general.viewProfile',
     random: 'aniworld.random',
     registration: 'aniworld.registration',
-    searchLoading: 'aniworld.search.loading',
-    searchQuery: 'aniworld.search.query',
     settings: 'aniworld.settings',
     subscribed: 'aniworld.subscribed',
+    support: 'aniworld.support.help',
     terms: 'general.terms',
     watchlist: 'aniworld.watchlist',
     wishes: 'aniworld.wishes',
-    faq: 'aniworld.support.faq',
-    support: 'aniworld.support.help',
-    supportQuestion: 'aniworld.support.question',
-    supportQuestionState: 'aniworld.support.questionState',
-    supportViewingQuestion: 'aniworld.support.viewingQuestion',
-    browsing: 'general.browsing',
   })
 }
 
-interface StaticPageInfo {
-  details: string
-  smallImageKey?: Assets
-  smallImageText?: string
-  largeImageKey?: string
-  largeImageText?: string
-  state?: string
-  buttons?: { label: string, url: string }[]
-  startTimestamp?: number
-  endTimestamp?: number
-}
+type Strings = Awaited<ReturnType<typeof getStrings>>
 
-let videoData: {
-  currTime?: number
-  duration?: number
-  paused?: boolean
-  title?: string | null
-} | null = null
-
-presence.on('iFrameData', (data: unknown) => {
-  const iframeData = (data as { iframe_video?: any })?.iframe_video
-  if (iframeData) {
-    videoData = {
-      currTime: iframeData.currTime,
-      duration: iframeData.duration,
-      paused: iframeData.paused,
-      title: iframeData.iFrameTitle || null,
-    }
-  }
-})
-
-let oldLang: string | null = null
-let strings: Awaited<ReturnType<typeof getStrings>>
-
-async function getStaticPages(): Promise<{ [key: string]: StaticPageInfo }> {
-  strings = await getStrings()
-
+function getStaticPages(strings: Strings): Record<string, PageInfo> {
   return {
+    '/': {
+      details: strings.home,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.home,
+    },
     '/animes': {
       details: strings.animes,
       smallImageKey: Assets.Reading,
@@ -200,60 +185,105 @@ async function getStaticPages(): Promise<{ [key: string]: StaticPageInfo }> {
     },
   }
 }
-let lastAnimeKey: string | null = null
-let cachedAnimeData: Awaited<ReturnType<AnimeDataFetcher['loadAnimeData']>> | null = null
-let isLoadingAnimeData = false
-let lastLoadPromise: Promise<Awaited<ReturnType<AnimeDataFetcher['loadAnimeData']>>> | null = null
 
-function getAnimeKeyFromUrl(url: string): string | null {
-  const match = url.match(/\/anime\/stream\/(.+?)\/?$/)
-  return match && typeof match[1] === 'string' ? match[1] : null
+/**
+ * Sub pages such as /user/profil/<name> or /account/support/new are only listed
+ * by their base path, so fall back to the longest matching prefix.
+ */
+function findStaticPage(pathname: string, pages: Record<string, PageInfo>): PageInfo | undefined {
+  let matched: [string, PageInfo] | undefined
+
+  for (const entry of Object.entries(pages)) {
+    if (pathname !== entry[0] && !pathname.startsWith(`${entry[0]}/`))
+      continue
+
+    if (!matched || entry[0].length > matched[0].length)
+      matched = entry
+  }
+
+  return matched?.[1]
 }
 
-async function getCachedAnimeData(): Promise<AnimeDataFetcher['animeData'] | null> {
-  const key = getAnimeKeyFromUrl(document.location.pathname)
-  if (!key) {
-    lastAnimeKey = null
-    cachedAnimeData = null
-    lastLoadPromise = null
-    return null
-  }
+let videoData: IFrameVideoData | null = null
+let videoDataUpdatedAt = 0
 
-  if (cachedAnimeData && lastAnimeKey === key) {
-    return cachedAnimeData
-  }
+presence.on('iFrameData', (data: IFrameVideoData) => {
+  videoData = data
+  videoDataUpdatedAt = Date.now()
+})
 
-  if (isLoadingAnimeData && lastLoadPromise) {
-    const data = await lastLoadPromise
-    if (getAnimeKeyFromUrl(document.location.pathname) === key) {
-      return data
-    }
-    return null
-  }
+function getVideoData(): IFrameVideoData | null {
+  if (videoData && Date.now() - videoDataUpdatedAt > VIDEO_DATA_TTL)
+    videoData = null
 
-  isLoadingAnimeData = true
-  const animeDataFetcher = new AnimeDataFetcher()
-  const loadPromise = animeDataFetcher.loadAnimeData()
-  lastLoadPromise = loadPromise
-
-  try {
-    const data = await loadPromise
-    if (getAnimeKeyFromUrl(document.location.pathname) === key) {
-      cachedAnimeData = data
-      lastAnimeKey = key
-      return data
-    }
-    return null
-  }
-  finally {
-    isLoadingAnimeData = false
-    lastLoadPromise = null
-  }
+  return videoData
 }
+
+let coverSlug: string | null = null
+let coverImg: string | undefined
+let pendingCover: Promise<string | undefined> | null = null
+
+/**
+ * Resolves the cover once per series - it does not change between episodes, so
+ * the Kitsu fallback must not be queried again on every episode switch.
+ */
+async function getCover(animeData: AnimeData): Promise<string | undefined> {
+  if (animeData.coverImg)
+    return animeData.coverImg
+
+  if (coverSlug === animeData.slug)
+    return coverImg
+
+  //* UpdateData keeps firing while the lookup is still open, so share it.
+  pendingCover ??= fetchCover(animeData.title).finally(() => {
+    pendingCover = null
+  })
+
+  const cover = await pendingCover
+
+  //* Discard a result that arrived after the user moved on to another series.
+  if (getAnimeData().slug !== animeData.slug)
+    return undefined
+
+  coverSlug = animeData.slug
+  coverImg = cover
+
+  return cover
+}
+
+function getEpisodeTitle(): string | undefined {
+  const heading = document.querySelector('h2')
+  if (!heading)
+    return undefined
+
+  //* The heading carries the localized title plus the English one in a sibling
+  //* <small>, which would otherwise be glued on without a separator.
+  const title = heading.querySelector('.episodeGermanTitle')?.textContent
+    ?? Array.from(heading.childNodes)
+      .filter(node => !(node instanceof Element && node.matches('small.episodeEnglishTitle')))
+      .map(node => node.textContent ?? '')
+      .join('')
+
+  return title.trim() || undefined
+}
+
+let browsingTimestamp = Math.floor(Date.now() / 1000)
+let wasWatching = false
+
+function getBrowsingTimestamp(): number {
+  if (wasWatching) {
+    browsingTimestamp = Math.floor(Date.now() / 1000)
+    wasWatching = false
+  }
+
+  return browsingTimestamp
+}
+
+let oldLang: string | null = null
+let strings: Strings
+let staticPages: Record<string, PageInfo>
 
 presence.on('UpdateData', async () => {
-  strings = await getStrings()
-
   const [lang, privacyMode, showTitleAsPresence, showCover, showTimestamp] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('privacy'),
@@ -262,138 +292,94 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('timestamp'),
   ])
 
-  if (oldLang !== lang) {
+  //* getStrings() is a round trip to the extension, so only refresh the strings
+  //* when the selected language actually changed.
+  if (!strings || oldLang !== lang) {
     oldLang = lang
     strings = await getStrings()
+    staticPages = getStaticPages(strings)
   }
 
   const page = document.location.pathname
-  const staticPages = await getStaticPages()
 
   if (privacyMode) {
     await presence.setActivity({
       details: strings.browsing,
       smallImageKey: Assets.Reading,
       smallImageText: strings.browsing,
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png',
+      largeImageKey: ActivityAssets.Logo,
+      startTimestamp: getBrowsingTimestamp(),
     })
     return
   }
 
   if (page.startsWith('/anime/')) {
-    const hasEpisode = page.includes('episode-')
+    const animeData = getAnimeData()
+    const isMovie = animeData.movie !== undefined
+    const isEpisode = animeData.episode !== undefined
+    const title = showTitleAsPresence ? animeData.title : 'AniWorld'
+    const largeImageKey = (showCover ? await getCover(animeData) : undefined) ?? ActivityAssets.Logo
 
-    const animeData = await getCachedAnimeData()
-    const detailsText = showTitleAsPresence ? animeData?.title ?? 'AniWorld' : 'AniWorld'
-    const largeImageKey = showCover
-      ? animeData?.coverImg || 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png'
-      : 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png'
-
-    if (!hasEpisode) {
+    if (!isEpisode && !isMovie) {
       await presence.setActivity({
         type: ActivityType.Watching,
-        name: detailsText,
-        details: detailsText,
+        name: title,
+        details: title,
         state: strings.episodeList,
         largeImageKey,
-        largeImageText: animeData?.title ?? 'AniWorld',
+        largeImageText: animeData.title,
         smallImageKey: Assets.Reading,
         smallImageText: strings.episodeList,
+        startTimestamp: getBrowsingTimestamp(),
         buttons: [{ label: strings.buttonWatchAnime, url: document.location.href }],
       })
       return
     }
 
-    const title = document.querySelector('title')?.textContent ?? ''
-    const heading = document.querySelector('h2')
-    const textWithoutSmall = heading
-      ? Array.from(heading.childNodes)
-          .filter(node => !(node.nodeType === Node.ELEMENT_NODE && (node as Element).matches('small.episodeEnglishTitle')))
-          .map(node => node.textContent ?? '')
-          .join('')
-          .trim()
-      : ''
-    const stateText = [title, textWithoutSmall]
-      .map((t) => {
-        const str = typeof t === 'string' ? t : (t && typeof (t as any).textContent === 'string' ? (t as any).textContent ?? '' : '')
-        return str.replace(/Staffel.*|Episode.*|Filme von| \| AniWorld\.to - Animes gratis online ansehen/g, '').trim()
-      })
-      .filter(Boolean)
-      .join(' - ')
-      .replace(/^-\s*/, '')
+    wasWatching = true
 
-    let timestamps: [number, number] = [Math.floor(Date.now() / 1000), Math.floor(Date.now() / 1000)]
-    if (videoData?.currTime != null && videoData?.duration != null) {
-      timestamps = getTimestamps(videoData.currTime, videoData.duration)
-    }
+    const video = getVideoData()
+    //* Without player data the safest assumption is that nothing is running,
+    //* e.g. while the hoster is still loading.
+    const paused = video?.paused ?? true
 
-    if (videoData?.paused || !videoData) {
-      await presence.setActivity({
-        type: ActivityType.Watching,
-        name: detailsText,
-        details: detailsText,
-        state: stateText,
-        largeImageKey,
-        largeImageText: `Season ${animeData?.season ?? 'N/A'}, Episode ${animeData?.episode ?? 'N/A'}`,
-        smallImageKey: Assets.Pause,
-        smallImageText: strings.videoPaused,
-        buttons: [{ label: strings.buttonWatchAnime, url: document.location.href }],
-      })
-      return
-    }
-
-    await presence.setActivity({
+    const presenceData: PresenceData = {
       type: ActivityType.Watching,
-      name: detailsText,
-      details: detailsText,
-      state: stateText,
+      name: title,
+      details: title,
       largeImageKey,
-      largeImageText: `Season ${animeData?.season ?? 'N/A'}, Episode ${animeData?.episode ?? 'N/A'}`,
-      smallImageKey: Assets.Play,
-      smallImageText: strings.videoPlaying,
-      startTimestamp: showTimestamp ? timestamps[0] : undefined,
-      endTimestamp: showTimestamp ? timestamps[1] : undefined,
-      buttons: [{ label: strings.buttonWatchAnime, url: document.location.href }],
-    })
-    return
-  }
-
-  if (page === '/') {
-    await presence.setActivity({
-      details: strings.home,
-      smallImageKey: Assets.Reading,
-      smallImageText: strings.home,
-      largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png',
-    })
-    return
-  }
-
-  if (page in staticPages) {
-    const info = staticPages[page]
-    if (info) {
-      const { largeImageText, buttons, ...restPageInfo } = info
-      const activityData: Record<string, unknown> = {
-        ...restPageInfo,
-        largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png',
-      }
-
-      if (buttons && buttons.length > 0) {
-        activityData.buttons = buttons.slice(0, 2) as [typeof buttons[0], typeof buttons[1]?]
-      }
-
-      if (largeImageText) {
-        activityData.largeImageText = largeImageText
-      }
-
-      await presence.setActivity(activityData)
-      return
+      largeImageText: isMovie
+        ? `Movie ${animeData.movie}`
+        : `Season ${animeData.season ?? 'N/A'}, Episode ${animeData.episode}`,
+      smallImageKey: paused ? Assets.Pause : Assets.Play,
+      smallImageText: paused ? strings.videoPaused : strings.videoPlaying,
+      buttons: [{
+        label: isMovie ? strings.buttonWatchMovie : strings.buttonWatchEpisode,
+        url: document.location.href,
+      }],
     }
+
+    const episodeTitle = getEpisodeTitle()
+    if (episodeTitle)
+      presenceData.state = episodeTitle
+
+    if (video && !paused && showTimestamp)
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
+
+    await presence.setActivity(presenceData)
+    return
   }
+
+  const pageInfo = findStaticPage(page, staticPages)
+    ?? {
+      details: strings.browsing,
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.browsing,
+    }
 
   await presence.setActivity({
-    details: strings.browsing,
-    smallImageKey: Assets.Reading,
-    smallImageText: strings.browsing,
-    largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png',
+    ...pageInfo,
+    largeImageKey: ActivityAssets.Logo,
+    startTimestamp: getBrowsingTimestamp(),
   })
 })
