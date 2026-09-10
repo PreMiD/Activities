@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "354233941550694400",
+    "name": "kuriel."
+  },
+  "service": "TrackGeek",
+  "description": {
+    "en": "Unified platform for tracking games, movies, series, anime, manga, and books — all in one place.",
+    "pt": "Plataforma unificada para rastrear jogos, filmes, séries, anime, mangás e livros — tudo em um só lugar.",
+    "pt-br": "Plataforma unificada para rastrear jogos, filmes, séries, anime, mangás e livros — tudo em um só lugar."
+  },
+  "url": "trackgeek.net",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*trackgeek[.]net[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/wrdklQH.png",
+  "thumbnail": "https://i.imgur.com/ttf7YuM.png",
+  "color": "#10b981",
+  "category": "socials",
+  "tags": [
+    "movie",
+    "anime",
+    "show",
+    "tv",
+    "tracking",
+    "tracker",
+    "games",
+    "books",
+    "mangas"
+  ]
+}
