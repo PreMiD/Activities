@@ -23,6 +23,7 @@ interface IFrameVideoData {
 
 interface PageInfo {
   details: string
+  state?: string
   smallImageKey?: Assets
   smallImageText?: string
 }
@@ -38,6 +39,7 @@ async function getStrings() {
     animes: 'aniworld.animes',
     browsing: 'general.browsing',
     calendar: 'aniworld.calendar',
+    catalog: 'aniworld.catalog.browsing',
     dmca: 'aniworld.dmca',
     editinfo: 'aniworld.edit.info',
     episodeList: 'aniworld.episodeList',
@@ -52,9 +54,13 @@ async function getStrings() {
     profile: 'general.viewProfile',
     random: 'aniworld.random',
     registration: 'aniworld.registration',
+    searchLoading: 'aniworld.search.loading',
+    searchQuery: 'aniworld.search.query',
     settings: 'aniworld.settings',
     subscribed: 'aniworld.subscribed',
     support: 'aniworld.support.help',
+    supportQuestion: 'aniworld.support.question',
+    supportQuestionState: 'aniworld.support.questionState',
     terms: 'general.terms',
     watchlist: 'aniworld.watchlist',
     wishes: 'aniworld.wishes',
@@ -99,6 +105,11 @@ function getStaticPages(strings: Strings): Record<string, PageInfo> {
       smallImageText: strings.random,
     },
     '/neu': {
+      details: strings.new,
+      smallImageKey: Assets.Search,
+      smallImageText: strings.new,
+    },
+    '/neue-episoden': {
       details: strings.new,
       smallImageKey: Assets.Search,
       smallImageText: strings.new,
@@ -187,8 +198,58 @@ function getStaticPages(strings: Strings): Record<string, PageInfo> {
 }
 
 /**
- * Sub pages such as /user/profil/<name> or /account/support/new are only listed
- * by their base path, so fall back to the longest matching prefix.
+ * Pages whose path carries the interesting part. Checked before the static list
+ * so that e.g. /support/frage/<slug> is not swallowed by /support.
+ */
+function getDynamicPage(pathname: string, strings: Strings): PageInfo | undefined {
+  const profile = pathname.match(/^\/user\/profil\/([^/]+)/)?.[1]
+  if (profile) {
+    return {
+      details: strings.profile,
+      //* "general.viewProfile" ends with a colon and expects the name next to it.
+      state: document.querySelector('h1')?.textContent?.trim() || decodeURIComponent(profile),
+      smallImageKey: Assets.Reading,
+      smallImageText: strings.profile,
+    }
+  }
+
+  const letter = pathname.match(/^\/katalog\/([^/]+)/)?.[1]
+  if (letter) {
+    return {
+      details: `${strings.catalog} ${decodeURIComponent(letter)}`,
+      smallImageKey: Assets.Search,
+      smallImageText: strings.animes,
+    }
+  }
+
+  if (/^\/support\/frage\//.test(pathname)) {
+    return {
+      details: strings.supportQuestion,
+      smallImageKey: Assets.Question,
+      smallImageText: strings.supportQuestionState,
+    }
+  }
+
+  if (pathname === '/search') {
+    const query = document.querySelector<HTMLInputElement>('#search')?.value.trim()
+    const info: PageInfo = {
+      details: query ? strings.searchQuery : strings.searchLoading,
+      smallImageKey: Assets.Search,
+      smallImageText: strings.searchLoading,
+    }
+
+    if (query)
+      info.state = query
+
+    return info
+  }
+
+  return undefined
+}
+
+/**
+ * Sub pages such as /account/support/new are only listed by their base path, so
+ * fall back to the longest matching prefix.
  */
 function findStaticPage(pathname: string, pages: Record<string, PageInfo>): PageInfo | undefined {
   let matched: [string, PageInfo] | undefined
@@ -370,7 +431,8 @@ presence.on('UpdateData', async () => {
     return
   }
 
-  const pageInfo = findStaticPage(page, staticPages)
+  const pageInfo = getDynamicPage(page, strings)
+    ?? findStaticPage(page, staticPages)
     ?? {
       details: strings.browsing,
       smallImageKey: Assets.Reading,
