@@ -216,7 +216,11 @@ function getDynamicPage(pathname: string, strings: Strings): PageInfo | undefine
   const letter = pathname.match(/^\/katalog\/([^/]+)/)?.[1]
   if (letter) {
     return {
-      details: `${strings.catalog} ${decodeURIComponent(letter)}`,
+      details: strings.catalog,
+      //* Keep the letter in its own field: the string reads as a prefix in
+      //* English ("Viewing animes with") but as a full sentence in other
+      //* locales, so appending to it would not translate.
+      state: decodeURIComponent(letter),
       smallImageKey: Assets.Search,
       smallImageText: strings.animes,
     }
