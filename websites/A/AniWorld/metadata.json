@@ -31,7 +31,7 @@
     "anicloud"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https?:\\/\\/[^\\/]+\\/(?:[ed]\\/[a-zA-Z0-9]{8,}|video\\/[a-zA-Z0-9]{8,}|embed-[a-zA-Z0-9]{8,}\\.html)",
+  "iFrameRegExp": "^https?:\\/\\/[^\\/]+\\/(?:[a-z]{1,6}\\d{0,4}\\/[a-z0-9]{8,16}|embed-[a-z0-9]{8,16}\\.html)",
   "settings": [
     {
       "id": "lang",
