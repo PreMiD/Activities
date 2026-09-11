@@ -36,10 +36,6 @@ function getCoverFromPage(): string | undefined {
   return new URL(source, document.location.origin).href
 }
 
-/**
- * Reads everything that is available from the page itself. Cheap enough to run
- * on every update, so season and episode never go stale.
- */
 export function getAnimeData(): AnimeData {
   const path = document.location.pathname.toLowerCase()
 
@@ -53,10 +49,6 @@ export function getAnimeData(): AnimeData {
   }
 }
 
-/**
- * Falls back to Kitsu when the page did not ship a cover, e.g. on pages that
- * omit the cover box entirely.
- */
 export async function fetchCover(title: string): Promise<string | undefined> {
   const url = new URL(KITSU_ANIME_API)
   url.searchParams.set('filter[text]', title)
@@ -73,8 +65,7 @@ export async function fetchCover(title: string): Promise<string | undefined> {
     const { data }: KitsuAnimeResponse = await response.json()
     const poster = data?.[0]?.attributes?.posterImage
 
-    //* Discord renders the large image at roughly 300px, so `small` (284x402)
-    //* is already sharp enough.
+    //* Discord renders the large image at roughly 300px, so `small` is enough.
     return poster?.small ?? poster?.medium ?? poster?.original ?? undefined
   }
   catch {
