@@ -53,19 +53,64 @@
       }
     },
     {
-      "id": "showCover",
-      "title": "Show Cover Image",
+      "id": "cover",
+      "title": "Cover Image",
       "icon": "fas fa-images",
-      "value": true,
+      "value": 1,
+      "values": [
+        "AniWorld Logo",
+        "AniWorld Cover",
+        "Kitsu Poster"
+      ],
       "if": {
         "privacy": false
       }
+    },
+    {
+      "id": "detailsFormat",
+      "title": "Details Row",
+      "icon": "fas fa-comment-alt-edit",
+      "value": "%anime%",
+      "placeholder": "Use %anime%, %episodeTitle%, %progress%, %season%, %episode%, %movie%",
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "stateFormat",
+      "title": "State Row",
+      "icon": "fas fa-comment-alt-edit",
+      "value": "%episodeTitle%",
+      "placeholder": "Same as the details row, or {0} to remove the row",
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 1,
+      "values": [
+        "Activity Name",
+        "Details",
+        "State"
+      ]
     },
     {
       "id": "timestamp",
       "title": "Show Timestamps",
       "icon": "fad fa-stopwatch",
       "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "hidePaused",
+      "title": "Hide When Paused",
+      "icon": "fad fa-pause-circle",
+      "value": false,
       "if": {
         "privacy": false
       }

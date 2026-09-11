@@ -1,5 +1,5 @@
 import type { AnimeData } from './functions/animeData.js'
-import { ActivityType, Assets, getTimestamps } from 'premid'
+import { ActivityType, Assets, getTimestamps, StatusDisplayType } from 'premid'
 import { fetchCover, getAnimeData } from './functions/animeData.js'
 
 const presence = new Presence({
@@ -8,6 +8,18 @@ const presence = new Presence({
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png',
+}
+
+enum CoverMode {
+  Logo = 0,
+  AniWorld = 1,
+  Kitsu = 2,
+}
+
+enum DisplayType {
+  Name = 0,
+  Details = 1,
+  State = 2,
 }
 
 //* The hoster iframe stops sending as soon as it is unloaded (episode switch,
@@ -197,10 +209,8 @@ function getStaticPages(strings: Strings): Record<string, PageInfo> {
   }
 }
 
-/**
- * Pages whose path carries the interesting part. Checked before the static list
- * so that e.g. /support/frage/<slug> is not swallowed by /support.
- */
+//* Checked before the static list so that /support/frage/<slug> is not
+//* swallowed by the /support entry.
 function getDynamicPage(pathname: string, strings: Strings): PageInfo | undefined {
   const profile = pathname.match(/^\/user\/profil\/([^/]+)/)?.[1]
   if (profile) {
@@ -217,9 +227,8 @@ function getDynamicPage(pathname: string, strings: Strings): PageInfo | undefine
   if (letter) {
     return {
       details: strings.catalog,
-      //* Keep the letter in its own field: the string reads as a prefix in
-      //* English ("Viewing animes with") but as a full sentence in other
-      //* locales, so appending to it would not translate.
+      //* Appending would not translate: the string is a prefix in English but a
+      //* full sentence in other locales.
       state: decodeURIComponent(letter),
       smallImageKey: Assets.Search,
       smallImageText: strings.animes,
@@ -251,10 +260,7 @@ function getDynamicPage(pathname: string, strings: Strings): PageInfo | undefine
   return undefined
 }
 
-/**
- * Sub pages such as /account/support/new are only listed by their base path, so
- * fall back to the longest matching prefix.
- */
+//* Sub pages such as /account/support/new are only listed by their base path.
 function findStaticPage(pathname: string, pages: Record<string, PageInfo>): PageInfo | undefined {
   let matched: [string, PageInfo] | undefined
 
@@ -284,20 +290,14 @@ function getVideoData(): IFrameVideoData | null {
   return videoData
 }
 
-let coverSlug: string | null = null
-let coverImg: string | undefined
+let kitsuSlug: string | null = null
+let kitsuCover: string | undefined
 let pendingCover: Promise<string | undefined> | null = null
 
-/**
- * Resolves the cover once per series - it does not change between episodes, so
- * the Kitsu fallback must not be queried again on every episode switch.
- */
-async function getCover(animeData: AnimeData): Promise<string | undefined> {
-  if (animeData.coverImg)
-    return animeData.coverImg
-
-  if (coverSlug === animeData.slug)
-    return coverImg
+//* Cached per series so an episode switch does not re-query Kitsu.
+async function getKitsuCover(animeData: AnimeData): Promise<string | undefined> {
+  if (kitsuSlug === animeData.slug)
+    return kitsuCover
 
   //* UpdateData keeps firing while the lookup is still open, so share it.
   pendingCover ??= fetchCover(animeData.title).finally(() => {
@@ -306,14 +306,26 @@ async function getCover(animeData: AnimeData): Promise<string | undefined> {
 
   const cover = await pendingCover
 
-  //* Discard a result that arrived after the user moved on to another series.
+  //* Discard a result that arrived after the user moved on.
   if (getAnimeData().slug !== animeData.slug)
     return undefined
 
-  coverSlug = animeData.slug
-  coverImg = cover
+  kitsuSlug = animeData.slug
+  kitsuCover = cover
 
   return cover
+}
+
+async function getCover(animeData: AnimeData, mode: CoverMode): Promise<string> {
+  if (mode === CoverMode.Logo)
+    return ActivityAssets.Logo
+
+  //* Either source may come up empty, so fall through to the other one.
+  const cover = mode === CoverMode.Kitsu
+    ? await getKitsuCover(animeData) ?? animeData.coverImg
+    : animeData.coverImg ?? await getKitsuCover(animeData)
+
+  return cover ?? ActivityAssets.Logo
 }
 
 function getEpisodeTitle(): string | undefined {
@@ -321,8 +333,8 @@ function getEpisodeTitle(): string | undefined {
   if (!heading)
     return undefined
 
-  //* The heading carries the localized title plus the English one in a sibling
-  //* <small>, which would otherwise be glued on without a separator.
+  //* The English title sits in a sibling <small> and would otherwise be glued
+  //* on without a separator.
   const title = heading.querySelector('.episodeGermanTitle')?.textContent
     ?? Array.from(heading.childNodes)
       .filter(node => !(node instanceof Element && node.matches('small.episodeEnglishTitle')))
@@ -330,6 +342,33 @@ function getEpisodeTitle(): string | undefined {
       .join('')
 
   return title.trim() || undefined
+}
+
+//* Unlike the raw %season%/%episode% placeholders this stays correct on movie
+//* pages, which have neither.
+function getProgress(animeData: AnimeData): string {
+  if (animeData.movie !== undefined)
+    return `Movie ${animeData.movie}`
+  if (animeData.episode === undefined)
+    return ''
+
+  return animeData.season === undefined
+    ? `E${animeData.episode}`
+    : `S${animeData.season}E${animeData.episode}`
+}
+
+//* Empty placeholders collapse together with their separator, so a missing
+//* episode title cannot leave a dangling dash behind.
+function formatRow(format: string, animeData: AnimeData, episodeTitle: string | undefined): string {
+  return format
+    .replace(/%anime%/g, animeData.title)
+    .replace(/%episodeTitle%/g, episodeTitle ?? '')
+    .replace(/%progress%/g, getProgress(animeData))
+    .replace(/%season%/g, animeData.season?.toString() ?? '')
+    .replace(/%episode%/g, animeData.episode?.toString() ?? '')
+    .replace(/%movie%/g, animeData.movie?.toString() ?? '')
+    .replace(/\s+/g, ' ')
+    .replace(/^[\s\-–·|]+|[\s\-–·|]+$/g, '')
 }
 
 let browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -349,12 +388,26 @@ let strings: Strings
 let staticPages: Record<string, PageInfo>
 
 presence.on('UpdateData', async () => {
-  const [lang, privacyMode, showTitleAsPresence, showCover, showTimestamp] = await Promise.all([
+  const [
+    lang,
+    privacyMode,
+    showTitleAsPresence,
+    coverMode,
+    detailsFormat,
+    stateFormat,
+    displayType,
+    showTimestamp,
+    hidePaused,
+  ] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('showTitleAsPresence'),
-    presence.getSetting<boolean>('showCover'),
+    presence.getSetting<number>('cover'),
+    presence.getSetting<string>('detailsFormat'),
+    presence.getSetting<string>('stateFormat'),
+    presence.getSetting<number>('displayType'),
     presence.getSetting<boolean>('timestamp'),
+    presence.getSetting<boolean>('hidePaused'),
   ])
 
   //* getStrings() is a round trip to the extension, so only refresh the strings
@@ -378,24 +431,31 @@ presence.on('UpdateData', async () => {
     return
   }
 
+  const statusDisplayType = displayType === DisplayType.Name
+    ? StatusDisplayType.Name
+    : displayType === DisplayType.State
+      ? StatusDisplayType.State
+      : StatusDisplayType.Details
+
   if (page.startsWith('/anime/')) {
     const animeData = getAnimeData()
     const isMovie = animeData.movie !== undefined
     const isEpisode = animeData.episode !== undefined
-    const title = showTitleAsPresence ? animeData.title : 'AniWorld'
-    const largeImageKey = (showCover ? await getCover(animeData) : undefined) ?? ActivityAssets.Logo
+    const name = showTitleAsPresence ? animeData.title : 'AniWorld'
+    const largeImageKey = await getCover(animeData, coverMode)
 
     if (!isEpisode && !isMovie) {
       await presence.setActivity({
         type: ActivityType.Watching,
-        name: title,
-        details: title,
+        name,
+        details: name,
         state: strings.episodeList,
         largeImageKey,
         largeImageText: animeData.title,
         smallImageKey: Assets.Reading,
         smallImageText: strings.episodeList,
         startTimestamp: getBrowsingTimestamp(),
+        statusDisplayType,
         buttons: [{ label: strings.buttonWatchAnime, url: document.location.href }],
       })
       return
@@ -404,29 +464,46 @@ presence.on('UpdateData', async () => {
     wasWatching = true
 
     const video = getVideoData()
-    //* Without player data the safest assumption is that nothing is running,
-    //* e.g. while the hoster is still loading.
+    //* No player data yet, e.g. while the hoster loads.
     const paused = video?.paused ?? true
+
+    if (paused && hidePaused) {
+      await presence.clearActivity()
+      return
+    }
+
+    const episodeTitle = getEpisodeTitle()
+    const details = formatRow(detailsFormat, animeData, episodeTitle)
+    const state = formatRow(stateFormat, animeData, episodeTitle)
+
+    const episodeButton = {
+      label: isMovie ? strings.buttonWatchMovie : strings.buttonWatchEpisode,
+      url: document.location.href,
+    }
+    const seriesButton = animeData.slug
+      ? {
+          label: strings.buttonWatchAnime,
+          url: `${document.location.origin}/anime/stream/${animeData.slug}`,
+        }
+      : undefined
 
     const presenceData: PresenceData = {
       type: ActivityType.Watching,
-      name: title,
-      details: title,
+      name,
+      details: details || animeData.title,
       largeImageKey,
       largeImageText: isMovie
         ? `Movie ${animeData.movie}`
         : `Season ${animeData.season ?? 'N/A'}, Episode ${animeData.episode}`,
       smallImageKey: paused ? Assets.Pause : Assets.Play,
       smallImageText: paused ? strings.videoPaused : strings.videoPlaying,
-      buttons: [{
-        label: isMovie ? strings.buttonWatchMovie : strings.buttonWatchEpisode,
-        url: document.location.href,
-      }],
+      statusDisplayType,
+      buttons: seriesButton ? [episodeButton, seriesButton] : [episodeButton],
     }
 
-    const episodeTitle = getEpisodeTitle()
-    if (episodeTitle)
-      presenceData.state = episodeTitle
+    //* "{0}" lets users drop the row entirely.
+    if (state && !stateFormat.includes('{0}'))
+      presenceData.state = state
 
     if (video && !paused && showTimestamp)
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
