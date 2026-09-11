@@ -4,7 +4,6 @@ export interface AnimeData {
   season?: number
   episode?: number
   movie?: number
-  coverImg?: string
 }
 
 interface KitsuAnimeResponse {
@@ -22,20 +21,6 @@ interface KitsuAnimeResponse {
 
 const KITSU_ANIME_API = 'https://kitsu.io/api/edge/anime'
 
-function getCoverFromPage(): string | undefined {
-  const cover = document.querySelector<HTMLImageElement>('.seriesCoverBox img')
-  if (!cover)
-    return undefined
-
-  //* The cover is lazy-loaded: until it enters the viewport `src` only holds a
-  //* 1x1 base64 placeholder and the real file is kept in `data-src`.
-  const source = cover.dataset.src ?? cover.getAttribute('src')
-  if (!source || source.startsWith('data:'))
-    return undefined
-
-  return new URL(source, document.location.origin).href
-}
-
 export function getAnimeData(): AnimeData {
   const path = document.location.pathname.toLowerCase()
 
@@ -45,7 +30,6 @@ export function getAnimeData(): AnimeData {
     season: Number(path.match(/\/staffel-(\d+)/)?.[1]) || undefined,
     episode: Number(path.match(/\/episode-(\d+)/)?.[1]) || undefined,
     movie: Number(path.match(/\/filme\/film-(\d+)/)?.[1]) || undefined,
-    coverImg: getCoverFromPage(),
   }
 }
 

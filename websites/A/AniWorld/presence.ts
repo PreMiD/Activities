@@ -12,8 +12,7 @@ enum ActivityAssets {
 
 enum CoverMode {
   Logo = 0,
-  AniWorld = 1,
-  Kitsu = 2,
+  Kitsu = 1,
 }
 
 enum DisplayType {
@@ -316,16 +315,13 @@ async function getKitsuCover(animeData: AnimeData): Promise<string | undefined> 
   return cover
 }
 
+//* Covers hosted on aniworld.to are not an option: Discord never resolves them
+//* into an external asset and falls back to a blank image.
 async function getCover(animeData: AnimeData, mode: CoverMode): Promise<string> {
   if (mode === CoverMode.Logo)
     return ActivityAssets.Logo
 
-  //* Either source may come up empty, so fall through to the other one.
-  const cover = mode === CoverMode.Kitsu
-    ? await getKitsuCover(animeData) ?? animeData.coverImg
-    : animeData.coverImg ?? await getKitsuCover(animeData)
-
-  return cover ?? ActivityAssets.Logo
+  return await getKitsuCover(animeData) ?? ActivityAssets.Logo
 }
 
 function getEpisodeTitle(): string | undefined {
