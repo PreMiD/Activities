@@ -169,13 +169,13 @@ async function obtainMediaInfo(itemId: string): Promise<MediaInfo | null> {
 }
 
 async function searchMedia(searchTerm: string): Promise<MediaInfo[]> {
-  if (searchMediaCache.has(searchTerm))
-    return searchMediaCache.get(searchTerm)!
-
   if (/- S\d+:E\d+ -/.test(searchTerm))
     searchTerm = searchTerm.split(' - ').pop() ?? ''
 
   searchTerm = searchTerm.replace(/\(\d{4}\)/, '').trim()
+
+  if (searchMediaCache.has(searchTerm))
+    return searchMediaCache.get(searchTerm)!
 
   try {
     const res = await fetch(
