@@ -1,0 +1,83 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "krexizm",
+    "id": "699386102066446346"
+  },
+  "service": "Anikage",
+  "description": {
+    "en": "Anikage is a free anime streaming website. Watch subbed and dubbed anime with multiple servers."
+  },
+  "url": "anikage.cc",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anikage[.]cc[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/8byHs8E.jpeg",
+  "thumbnail": "https://i.imgur.com/2c98voU.png",
+  "color": "#201224",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "video"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?[:][/][/]([^/]+[.])?(megaplay[.]buzz|bibiemb[.]xyz|flixcloud[.]cc)[/].*",
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover Image",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showAudioMode",
+      "title": "Show SUB/DUB in Status",
+      "icon": "fad fa-closed-captioning",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showSearchQuery",
+      "title": "Show Search Query",
+      "icon": "fad fa-search",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fad fa-link",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
