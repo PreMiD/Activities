@@ -13,8 +13,8 @@
   "url": "clubdodorama.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*clubdodorama[.]com[/]",
   "version": "1.0.0",
-  "logo": "https://clubdodorama.com/wp-content/uploads/2025/04/CLUBDODORAMA.png",
-  "thumbnail": "https://clubdodorama.com/wp-content/uploads/2025/04/CLUBDODORAMA.png",
+  "logo": "https://i.imgur.com/NG3A7fd.png",
+  "thumbnail": "https://i.imgur.com/NG3A7fd.png",
   "color": "#000000",
   "category": "videos",
   "tags": [
