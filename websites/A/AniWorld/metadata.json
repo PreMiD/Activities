@@ -20,7 +20,7 @@
   },
   "url": "aniworld.to",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*aniworld[.]to[/]",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniWorld/assets/thumbnail.png",
   "color": "#637cf9",
@@ -31,7 +31,7 @@
     "anicloud"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https?[:][/][/](jilliandescribecompany[.]com[/]e|loadx[.]ws[/]video)[/][a-zA-Z0-9]+",
+  "iFrameRegExp": "^https?:\\/\\/[^\\/]+\\/(?:[a-z]{1,6}\\d{0,4}\\/[a-z0-9]{8,16}|embed-[a-z0-9]{8,16}\\.html)",
   "settings": [
     {
       "id": "lang",
@@ -53,19 +53,63 @@
       }
     },
     {
-      "id": "showCover",
-      "title": "Show Cover Image",
+      "id": "cover",
+      "title": "Cover Image",
       "icon": "fas fa-images",
-      "value": true,
+      "value": 1,
+      "values": [
+        "AniWorld Logo",
+        "Kitsu Poster"
+      ],
       "if": {
         "privacy": false
       }
+    },
+    {
+      "id": "detailsFormat",
+      "title": "Details Row",
+      "icon": "fas fa-comment-alt-edit",
+      "value": "%anime%",
+      "placeholder": "Use %anime%, %episodeTitle%, %progress%, %season%, %episode%, %movie%",
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "stateFormat",
+      "title": "State Row",
+      "icon": "fas fa-comment-alt-edit",
+      "value": "%episodeTitle%",
+      "placeholder": "Same as the details row, or {0} to remove the row",
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 1,
+      "values": [
+        "Activity Name",
+        "Details",
+        "State"
+      ]
     },
     {
       "id": "timestamp",
       "title": "Show Timestamps",
       "icon": "fad fa-stopwatch",
       "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "hidePaused",
+      "title": "Hide When Paused",
+      "icon": "fad fa-pause-circle",
+      "value": false,
       "if": {
         "privacy": false
       }
