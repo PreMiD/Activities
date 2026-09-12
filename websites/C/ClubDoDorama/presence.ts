@@ -21,7 +21,7 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
-    largeImageKey: 'https://i.imgur.com/uItlPhx.jpeg',
+    largeImageKey: 'https://i.imgur.com/NG3A7fd.png',
     largeImageText: 'ClubDoDorama',
     startTimestamp: browsingTimestamp,
   }
@@ -90,14 +90,14 @@ presence.on('UpdateData', async () => {
     presenceData.details = rawTitle
     presenceData.state = 'Vendo detalhes do dorama'
     presenceData.smallImageKey
-      = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f50d.png'
+      = 'https://i.imgur.com/eeVRVDN.png'
     presenceData.smallImageText = 'Navegando'
   }
   else {
     presenceData.details = 'Navegando no site'
     presenceData.state = 'Procurando o que assistir'
     presenceData.smallImageKey
-      = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f50d.png'
+      = 'https://i.imgur.com/eeVRVDN.png'
     presenceData.smallImageText = 'Navegando'
   }
 
