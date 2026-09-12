@@ -31,10 +31,53 @@ function isVisible(element: Element | null): element is HTMLElement {
   )
 }
 
+function isTitlePage(): boolean {
+  const path = document.location.pathname.toLowerCase()
+
+  return /^\/(?:serie|serier|film|filmer)\/[^/]+\/?$/.test(path)
+}
+
+function isShortPreview(video: HTMLVideoElement): boolean {
+  return (
+    Number.isFinite(video.duration)
+    && video.duration > 0
+    && video.duration <= 15 * 60
+  )
+}
+
+function isMutedAutoplayPreview(video: HTMLVideoElement): boolean {
+  if (!isTitlePage())
+    return false
+
+  const muted
+    = video.muted
+      || video.defaultMuted
+      || video.volume === 0
+
+  const durationLooksLikePreview
+    = !Number.isFinite(video.duration)
+      || video.duration <= 15 * 60
+
+  return muted && durationLooksLikePreview
+}
+
+function isAudibleTrailer(video: HTMLVideoElement): boolean {
+  return (
+    isTitlePage()
+    && isShortPreview(video)
+    && !video.muted
+    && !video.defaultMuted
+    && video.volume > 0
+  )
+}
+
 function largestVideo(root: ParentNode = document): HTMLVideoElement | null {
   return [...root.querySelectorAll('video')]
     .filter(video =>
-      video.readyState > 0
+      video.isConnected
+      && isVisible(video)
+      && !isMutedAutoplayPreview(video)
+      && video.readyState > 0
       && Boolean(video.currentSrc || video.src || video.srcObject),
     )
     .map(video => ({
@@ -157,8 +200,15 @@ function readEpisodeTitle(
   if (!player || !season || !episode)
     return ''
 
-  const codeRegex
-    = new RegExp(`^S${season}E${episode}$`, 'i')
+  const codeRegex = new RegExp(
+    `^(?:S${season}\\s*E${episode}|(?:Sesong|Season)\\s*${season}\\s*(?:[•·|\\-–—]\\s*)?(?:Episode|Ep\\.?)\\s*${episode}|(?:Episode|Ep\\.?)\\s*${episode})$`,
+    'i',
+  )
+
+  const removeCodeRegex = new RegExp(
+    `\\bS${season}\\s*E${episode}\\b|\\b(?:Sesong|Season)\\s*${season}\\b|\\b(?:Episode|Ep\\.?)\\s*${episode}\\b`,
+    'gi',
+  )
 
   const candidates = [
     ...player.querySelectorAll<HTMLElement>(
@@ -179,10 +229,7 @@ function readEpisodeTitle(
 
   if (parentText) {
     const withoutCode = clean(
-      parentText.replace(
-        new RegExp(`\\bS${season}E${episode}\\b`, 'i'),
-        '',
-      ),
+      parentText.replace(removeCodeRegex, ''),
     )
 
     if (
@@ -247,6 +294,50 @@ function isLiveVideo(video: HTMLVideoElement): boolean {
 }
 
 presence.on('UpdateData', async () => {
+  const language
+    = await presence.getSetting<number>('language')
+
+  const privacyMode
+    = await presence.getSetting<boolean>('privacyMode')
+
+  const english = language === 1
+
+  const text = english
+    ? {
+        browsingDetails: 'Exploring TV 2 Play',
+        browsingState: 'Looking for something to watch',
+        live: 'Live',
+        watching: 'Watching',
+        paused: 'Paused',
+        playing: 'Playing',
+        pause: 'Paused',
+        button: 'Watch on TV 2 Play',
+        season: 'Season',
+        episode: 'Episode',
+        privacy: 'Privacy mode',
+        privateSeries: 'Watching a series',
+        privateMovie: 'Watching a movie',
+        privateLive: 'Watching live TV',
+        trailer: 'Watching a trailer',
+      }
+    : {
+        browsingDetails: 'Utforsker TV 2 Play',
+        browsingState: 'Leter etter noe å se på',
+        live: 'Direkte',
+        watching: 'Ser på',
+        paused: 'Satt på pause',
+        playing: 'Spiller av',
+        pause: 'Pause',
+        button: 'Se på TV 2 Play',
+        season: 'Sesong',
+        episode: 'Episode',
+        privacy: 'Privat modus',
+        privateSeries: 'Ser på en serie',
+        privateMovie: 'Ser på en film',
+        privateLive: 'Ser på direktesendt TV',
+        trailer: 'Ser på en trailer',
+      }
+
   const player
     = document.querySelector('[data-testid="player"]')
 
@@ -268,54 +359,87 @@ presence.on('UpdateData', async () => {
     } = getTitles(player)
 
     const live = isLiveVideo(video)
+    const trailer = isAudibleTrailer(video)
 
     presenceData.type = ActivityType.Watching
-    presenceData.details = showTitle
 
-    if (season && episode) {
-      presenceData.state = episodeTitle
-        ? `Sesong ${season} • Episode ${episode} • ${episodeTitle}`
-        : `Sesong ${season} • Episode ${episode}`
-    }
-    else if (live) {
-      presenceData.state = 'Direkte'
-    }
-    else {
-      presenceData.state
-        = video.paused ? 'Satt på pause' : 'Ser på'
-    }
+    if (privacyMode) {
+      presenceData.details = trailer
+        ? text.trailer
+        : live
+          ? text.privateLive
+          : season && episode
+            ? text.privateSeries
+            : text.privateMovie
 
-    if (live) {
-      presenceData.smallImageKey = Assets.Live
-      presenceData.smallImageText = 'Direkte'
-    }
-    else if (!video.paused) {
-      presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = 'Spiller av'
+      presenceData.state = text.privacy
 
-      if (
-        Number.isFinite(video.duration)
-        && video.duration > 0
-      ) {
-        ;[
-          presenceData.startTimestamp,
-          presenceData.endTimestamp,
-        ] = getTimestampsFromMedia(video)
+      if (live) {
+        presenceData.smallImageKey = Assets.Live
+        presenceData.smallImageText = text.live
       }
+      else if (!video.paused) {
+        presenceData.smallImageKey = Assets.Play
+        presenceData.smallImageText = text.playing
+      }
+      else {
+        presenceData.smallImageKey = Assets.Pause
+        presenceData.smallImageText = text.pause
+      }
+
+      wasWatching = true
     }
     else {
-      presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = 'Pause'
+      presenceData.details = showTitle
+
+      if (trailer) {
+        presenceData.state = text.trailer
+      }
+      else if (season && episode) {
+        presenceData.state = episodeTitle
+          ? `${text.season} ${season} • ${text.episode} ${episode} • ${episodeTitle}`
+          : `${text.season} ${season} • ${text.episode} ${episode}`
+      }
+      else if (live) {
+        presenceData.state = text.live
+      }
+      else {
+        presenceData.state
+          = video.paused ? text.paused : text.watching
+      }
+
+      if (live) {
+        presenceData.smallImageKey = Assets.Live
+        presenceData.smallImageText = text.live
+      }
+      else if (!video.paused) {
+        presenceData.smallImageKey = Assets.Play
+        presenceData.smallImageText = text.playing
+
+        if (
+          Number.isFinite(video.duration)
+          && video.duration > 0
+        ) {
+          ;[
+            presenceData.startTimestamp,
+            presenceData.endTimestamp,
+          ] = getTimestampsFromMedia(video)
+        }
+      }
+      else {
+        presenceData.smallImageKey = Assets.Pause
+        presenceData.smallImageText = text.pause
+      }
+
+      presenceData.buttons = [
+        {
+          label: text.button,
+          url: document.location.href,
+        },
+      ]
+
+      wasWatching = true
     }
-
-    presenceData.buttons = [
-      {
-        label: 'Se på TV 2 Play',
-        url: document.location.href,
-      },
-    ]
-
-    wasWatching = true
   }
   else {
     if (wasWatching) {
@@ -325,8 +449,9 @@ presence.on('UpdateData', async () => {
       wasWatching = false
     }
 
-    presenceData.details = 'Utforsker TV 2 Play'
-    presenceData.state = 'Leter etter noe å se på'
+    // Privacy mode must not override normal browsing status.
+    presenceData.details = text.browsingDetails
+    presenceData.state = text.browsingState
     presenceData.startTimestamp = browsingTimestamp
   }
 
