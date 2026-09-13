@@ -1,8 +1,4 @@
 {
-  "tcgmini.homepage": {
-    "description": "Shown when browsing the TCGmini homepage.",
-    "message": "Browsing the homepage"
-  },
   "tcgmini.simulator": {
     "description": "Subtitle shown together with playingMatch, naming the app.",
     "message": "Pokémon TCG Pocket simulator"

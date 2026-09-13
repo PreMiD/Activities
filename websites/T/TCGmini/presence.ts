@@ -26,7 +26,7 @@ let lastSection: string | null = null
 
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
-    homepage: 'tcgmini.homepage',
+    homepage: 'general.viewHome',
     simulator: 'tcgmini.simulator',
     inMatch: 'tcgmini.inMatch',
     searchingCards: 'tcgmini.searchingCards',
