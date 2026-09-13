@@ -28,9 +28,3 @@ export interface LiveTvContext {
   channel: string
   poster: string
 }
-
-export interface IframePlayback {
-  currentTime: number
-  duration: number
-  paused: boolean
-}

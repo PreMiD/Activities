@@ -1,5 +1,4 @@
 import type {
-  IframePlayback,
   LiveTvContext,
   PartyContext,
   WatchContext,
@@ -38,14 +37,10 @@ import {
 } from './constants.js'
 import { format, s } from './strings.js'
 
-const IFRAME_PLAYBACK_MAX_AGE_MS = 10_000
-
 let lastRouteKey = ''
 let lastRouteStartedAt = Date.now()
 let privacyModeEnabled = false
 let posterEnabled = true
-let iframePlayback: IframePlayback | null = null
-let iframePlaybackAt = 0
 
 export function setPrivacyMode(enabled: boolean): void {
   privacyModeEnabled = enabled
@@ -57,41 +52,6 @@ export function isPrivacyModeEnabled(): boolean {
 
 export function setPosterEnabled(enabled: boolean): void {
   posterEnabled = enabled
-}
-
-export function setIframePlayback(data: unknown): void {
-  if (!data || typeof data !== 'object') {
-    return
-  }
-
-  const candidate = data as Partial<IframePlayback>
-  if (
-    typeof candidate.currentTime !== 'number'
-    || typeof candidate.duration !== 'number'
-    || typeof candidate.paused !== 'boolean'
-    || !Number.isFinite(candidate.duration)
-    || candidate.duration <= 0
-  ) {
-    return
-  }
-
-  iframePlayback = {
-    currentTime: candidate.currentTime,
-    duration: candidate.duration,
-    paused: candidate.paused,
-  }
-  iframePlaybackAt = Date.now()
-}
-
-export function getIframePlayback(): IframePlayback | null {
-  if (
-    !iframePlayback
-    || Date.now() - iframePlaybackAt > IFRAME_PLAYBACK_MAX_AGE_MS
-  ) {
-    return null
-  }
-
-  return iframePlayback
 }
 
 export function normalizeText(value: unknown): string {
@@ -546,9 +506,6 @@ export function createWatchingPresence(options: {
   const selectedSourceDisplay = privacy
     ? ''
     : formatWatchSourceDisplay(watchContext.sourceLabel, watchContext.sourceDetail)
-  const embedSourceDisplay = privacy
-    ? ''
-    : formatWatchSourceDisplay(embedSourceLabel, watchContext.sourceDetail)
   const embedSourceState = privacy
     ? ''
     : formatWatchSourceState(embedSourceLabel, watchContext.sourceDetail)
@@ -591,35 +548,9 @@ export function createWatchingPresence(options: {
     }
   }
   else if (activeEmbedFrame || embedSourceLabel) {
-    const embedPlayback = getIframePlayback()
-
-    if (embedPlayback && embedPlayback.paused) {
-      presenceData.state = embedSourceDisplay
-        ? `${s().paused} - ${embedSourceDisplay}`
-        : `${prefix}${s().paused}`
-      presenceData.smallImageKey = PRESENCE_ICONS.pause
-      presenceData.smallImageText = s().paused
-    }
-    else if (embedPlayback) {
-      presenceData.state = embedSourceDisplay || `${prefix}${s().playing}`
-      presenceData.smallImageKey = PRESENCE_ICONS.play
-      presenceData.smallImageText = s().playing
-      presenceData.startTimestamp
-        = Date.now() - Math.floor(embedPlayback.currentTime * 1000)
-      presenceData.endTimestamp
-        = Date.now()
-          + Math.max(
-            0,
-            Math.floor(
-              (embedPlayback.duration - embedPlayback.currentTime) * 1000,
-            ),
-          )
-    }
-    else {
-      presenceData.state = embedSourceState || s().externalPlayer
-      presenceData.smallImageKey = PRESENCE_ICONS.play
-      presenceData.smallImageText = s().playing
-    }
+    presenceData.state = embedSourceState || s().externalPlayer
+    presenceData.smallImageKey = PRESENCE_ICONS.play
+    presenceData.smallImageText = s().playing
   }
   else if (selectedSourceLabel) {
     presenceData.state = selectedSourceState

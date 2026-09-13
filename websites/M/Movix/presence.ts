@@ -1,9 +1,5 @@
 import { setLanguage } from './core/strings.js'
-import {
-  setIframePlayback,
-  setPosterEnabled,
-  setPrivacyMode,
-} from './core/utils.js'
+import { setPosterEnabled, setPrivacyMode } from './core/utils.js'
 import { buildRoutePresence } from './routes/buildRoutePresence.js'
 
 const presence = new Presence({
@@ -37,10 +33,6 @@ async function getNumberSetting(
     return fallback
   }
 }
-
-presence.on('iFrameData', (data: unknown) => {
-  setIframePlayback(data)
-})
 
 presence.on('UpdateData', async () => {
   const [showTimestamp, showButtons, privacyMode, showPoster, langIndex]

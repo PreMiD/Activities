@@ -18,9 +18,10 @@
     "movix.golf",
     "movix.cloud",
     "movix.fun",
-    "movix.online"
+    "movix.online",
+    "movix.men"
   ],
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(movix[.]cash|movix[.]show|movix[.]date|movix[.]chat|movix[.]golf|movix[.]cloud|movix[.]online|movix[.]fun)[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(movix[.]cash|movix[.]show|movix[.]date|movix[.]chat|movix[.]golf|movix[.]cloud|movix[.]online|movix[.]fun|movix[.]men)[/]",
   "version": "2.0.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/thumbnail.png",
@@ -33,8 +34,6 @@
     "watchparty",
     "streaming"
   ],
-  "iframe": true,
-  "iFrameRegExp": ".*",
   "allowURLOverrides": true,
   "settings": [
     {
