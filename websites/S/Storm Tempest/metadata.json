@@ -1,22 +1,24 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.10",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
   "author": {
-    "name": "Storm Tempest",
+    "name": "Mitsuki9",
     "id": "422884226430402568"
   },
-  "service": "Storm Tempest",
-  "altnames": [],
+  "service": "StormD",
   "description": {
-    "en": "Watch anime online for free"
+    "en": "Watch anime on StormD."
   },
   "url": "stormd.site",
-  "logo": "https://raw.githubusercontent.com/akuyakii/Web/main/public/logo-512.png",
-  "thumbnail": "https://raw.githubusercontent.com/akuyakii/Web/main/public/logo-512.png",
-  "color": "#000000",
+  "regExp": "^https?[:][/][/](?:www[.])?stormd[.]site[/]",
+  "version": "1.0.0",
+  "logo": "https://stormd.site/favicon.ico",
+  "thumbnail": "https://stormd.site/favicon.ico",
+  "color": "#151515",
   "category": "anime",
   "tags": [
     "anime",
+    "arabic",
     "streaming"
-  ],
-  "iframe": false
+  ]
 }
