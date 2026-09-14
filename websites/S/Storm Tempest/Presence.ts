@@ -22,7 +22,7 @@ presence.on('UpdateData', () => {
       wasWatching = false
     }
 
-    presenceData.details = 'Browsing StormD'
+    presenceData.details = 'Browsing Storm Tempest'
     presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = 'Browsing'
     presenceData.startTimestamp = browsingTimestamp
@@ -46,7 +46,7 @@ presence.on('UpdateData', () => {
     slug
       ?.replaceAll('-', ' ')
       .replace(/\b\w/g, character => character.toUpperCase())
-    ?? pageTitle?.replace(/\s*[-|]\s*StormD.*$/i, '')
+    ?? pageTitle?.replace(/\s*[-|]\s*Storm Tempest.*$/i, '')
     ?? heading
     ?? 'Anime'
 
@@ -66,7 +66,7 @@ presence.on('UpdateData', () => {
       )[0]
     ?? videos[0]
 
-  presenceData.details = animeTitle
+  presenceData.details = `Watching ${animeTitle}`
   presenceData.state = episode
     ? `Episode ${episode}`
     : 'Watching an episode'
