@@ -25,7 +25,6 @@ async function getStrings() {
 }
 
 let strings: Awaited<ReturnType<typeof getStrings>>
-let oldLang: string | null = null
 
 interface EmbedVideoData {
   currTime?: number
@@ -118,8 +117,7 @@ function hookSearchInput(input: HTMLInputElement | null) {
 }
 
 async function updateActivity() {
-  const [newLang, privacy, showTimestamp, showCover, showAudioMode, showSearchQuery, showButtons] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
+  const [privacy, showTimestamp, showCover, showAudioMode, showSearchQuery, showButtons] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('timestamp'),
     presence.getSetting<boolean>('showCover'),
@@ -128,10 +126,7 @@ async function updateActivity() {
     presence.getSetting<boolean>('showButtons'),
   ])
 
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
+  strings = await getStrings()
 
   // Store art: metadata logo/thumbnail go live on the CDN at merge time.
   // Until then the activity's own imgur logo keeps art working everywhere.
