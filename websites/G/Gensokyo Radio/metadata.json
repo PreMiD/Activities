@@ -10,7 +10,7 @@
     "en": "A 24/7 internet radio station playing fan-made Touhou Project music."
   },
   "url": ["gensokyoradio.net", "app.gensokyoradio.net", "forum.gensokyoradio.net", "gensokyo.store"],
-  "regExp": "^https?:\\/\\/(app\\.gensokyoradio\\.net|forum\\.gensokyoradio\\.net|(www\\.)?gensokyo\\.store|(www\\.)?gensokyoradio\\.net)\\/.*$",
+  "regExp": "^https?[:][/][/](app[.]gensokyoradio[.]net|forum[.]gensokyoradio[.]net|(www[.])?gensokyo[.]store|(www[.])?gensokyoradio[.]net)[/].*$",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/D3eyWs8.png",
   "thumbnail": "https://i.imgur.com/ooORT0H.png",
