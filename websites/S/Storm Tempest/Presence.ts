@@ -4,8 +4,7 @@ const presence = new Presence({
   clientId: '1233213267053248633',
 })
 
-const STORM_TEMPEST_IMAGE
-  = 'https://raw.githubusercontent.com/akuyakii/Web/main/public/logo-512.png'
+const STORM_TEMPEST_IMAGE = 'https://raw.githubusercontent.com/akuyakii/Web/main/public/logo-512.png'
 
 interface WatchState {
   title: string
@@ -64,12 +63,10 @@ function isVisible(element: Element): boolean {
   const style = window.getComputedStyle(node)
   const rect = node.getBoundingClientRect()
 
-  return (
-    style.display !== 'none'
+  return style.display !== 'none'
     && style.visibility !== 'hidden'
     && rect.width > 0
     && rect.height > 0
-  )
 }
 
 function sourceFromSelectedControl(): string | undefined {
@@ -198,12 +195,10 @@ function getEpisode(): string | undefined {
 }
 
 function stripEpisode(value: string): string {
-  return value
-    .replace(
-      /\s*[-|•·]\s*(?:Episode|Ep\.?)\s*\d{1,4}\s*$/i,
-      '',
-    )
-    .trim()
+  return value.replace(
+    /\s*[-|•·]\s*(?:Episode|Ep\.?)\s*\d{1,4}\s*$/i,
+    '',
+  ).trim()
 }
 
 function getAnimeTitle(): string | undefined {
@@ -250,16 +245,16 @@ function getVideo(): HTMLVideoElement | undefined {
 }
 
 function isWatchPage(): boolean {
-  const url
-    = `${window.location.pathname}${window.location.search}`.toLowerCase()
+  const url = `${window.location.pathname}${window.location.search}`.toLowerCase()
 
-  return (
-    /\/watch\b/.test(url)
-    || /\/episode\b/.test(url)
-    || /\/play\b/.test(url)
-    || /[?&](?:episode|ep)=/i.test(url)
-    || Boolean(getVideo())
-  )
+  const watchRoutes = [
+    /\/watch\b/,
+    /\/episode\b/,
+    /\/play\b/,
+    /[?&](?:episode|ep)=/,
+  ]
+
+  return watchRoutes.some(pattern => pattern.test(url)) || Boolean(getVideo())
 }
 
 function getWatchState(): WatchState {
