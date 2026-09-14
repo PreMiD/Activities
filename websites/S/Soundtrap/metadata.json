@@ -12,7 +12,7 @@
   },
   "url": "soundtrap.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*soundtrap[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Soundtrap/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Soundtrap/assets/thumbnail.jpeg",
   "color": "#000000",
