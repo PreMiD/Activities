@@ -100,6 +100,7 @@ function largestVideo(root: ParentNode = document): HTMLVideoElement | null {
   return [...root.querySelectorAll('video')]
     .filter(video =>
       video.isConnected
+      && !video.ended
       && isVisible(video)
       && !isMutedAutoplayPreview(video)
       && video.readyState > 0
