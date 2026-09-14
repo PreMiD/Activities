@@ -9,7 +9,6 @@ const logoUrl = 'https://i.imgur.com/3dAnDrb.png'
 async function getStrings() {
   return presence.getStrings({
     browsing: 'general.browsing',
-    watching: 'general.watching',
     playing: 'general.playing',
     paused: 'general.paused',
     live: 'general.live',
@@ -50,7 +49,19 @@ function isVisible(element: Element | null): element is HTMLElement {
 function isTitlePage(): boolean {
   const path = document.location.pathname.toLowerCase()
 
-  return /^\/(?:serie|serier|film|filmer)\/[^/]+\/?$/.test(path)
+  return (
+    /^\/(?:serie|serier|film|filmer)\/[^/]+\/?$/.test(path)
+    || /^\/programmer\/[^/]+\/[^/]+\/?$/.test(path)
+  )
+}
+
+function isSeriesTitlePage(): boolean {
+  const path = document.location.pathname.toLowerCase()
+
+  return (
+    /^\/(?:serie|serier)\/[^/]+\/?$/.test(path)
+    || /^\/programmer\/[^/]+\/[^/]+\/?$/.test(path)
+  )
 }
 
 function isShortPreview(video: HTMLVideoElement): boolean {
@@ -343,9 +354,9 @@ presence.on('UpdateData', async () => {
     if (privacyMode) {
       presenceData.details = live
         ? strings.watchingLive
-        : season && episode
-          ? strings.watchingSeries
-          : strings.watchingMovie
+        : (season && episode) || isSeriesTitlePage()
+            ? strings.watchingSeries
+            : strings.watchingMovie
 
       if (live) {
         presenceData.smallImageKey = Assets.Live
@@ -378,7 +389,7 @@ presence.on('UpdateData', async () => {
       }
       else {
         presenceData.state
-          = video.paused ? strings.paused : strings.watching
+          = video.paused ? strings.paused : strings.playing
       }
 
       if (live) {
