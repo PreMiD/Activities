@@ -7,14 +7,14 @@
   },
   "service": "ClubDoDorama",
   "description": {
-    "en": "Show on Discord which drama you are watching on ClubDoDorama.",
-    "pt": "Mostre no Discord qual dorama você está assistindo no ClubDoDorama."
+    "en": "Your universe of online dramas!",
+    "pt": "Seu universo de doramas online!"
   },
   "url": "clubdodorama.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*clubdodorama[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/NG3A7fd.png",
-  "thumbnail": "https://i.imgur.com/NG3A7fd.png",
+  "thumbnail": "https://i.imgur.com/c2s1fU2.png",
   "color": "#000000",
   "category": "videos",
   "tags": [
