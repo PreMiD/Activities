@@ -28,22 +28,22 @@ presence.on('UpdateData', async () => {
   }
 
   else if (
-    pathname === '/products' ||
-    pathname === '/products/' ||
-    pathname.includes('/products/products.html')
+    pathname === '/products'
+    || pathname === '/products/'
+    || pathname.includes('/products/products.html')
   ) {
     presenceData.details = 'يتصفح المنتجات'
     presenceData.state = 'جميع المنتجات'
   }
 
   else if (
-    pathname.includes('/product/') ||
-    pathname.includes('/products/product')
+    pathname.includes('/product/')
+    || pathname.includes('/products/product')
   ) {
-    const productName =
-      document.querySelector('h1')?.textContent?.trim() ||
-      document.querySelector('.product-title')?.textContent?.trim() ||
-      document.querySelector('.product-name')?.textContent?.trim()
+    const productName
+      = document.querySelector('h1')?.textContent?.trim()
+        || document.querySelector('.product-title')?.textContent?.trim()
+        || document.querySelector('.product-name')?.textContent?.trim()
 
     presenceData.details = 'يشاهد منتج'
     presenceData.state = productName || 'منتج من Shark Jazz'
@@ -61,59 +61,59 @@ presence.on('UpdateData', async () => {
   }
 
   else if (
-    pathname === '/reviews' ||
-    pathname === '/reviews/' ||
-    pathname.includes('/review/reviews.html')
+    pathname === '/reviews'
+    || pathname === '/reviews/'
+    || pathname.includes('/review/reviews.html')
   ) {
     presenceData.details = 'يتصفح تقييمات العملاء'
     presenceData.state = 'التقييمات'
   }
 
   else if (
-    pathname === '/contact' ||
-    pathname === '/contact/' ||
-    pathname.includes('/contact/contact.html')
+    pathname === '/contact'
+    || pathname === '/contact/'
+    || pathname.includes('/contact/contact.html')
   ) {
     presenceData.details = 'يتصفح صفحة التواصل'
     presenceData.state = 'تواصل معنا'
   }
 
   else if (
-    pathname === '/about' ||
-    pathname === '/about/' ||
-    pathname.includes('/about/about.html')
+    pathname === '/about'
+    || pathname === '/about/'
+    || pathname.includes('/about/about.html')
   ) {
     presenceData.details = 'يتعرف على Shark Jazz'
     presenceData.state = 'من نحن'
   }
 
   else if (
-    pathname.includes('/cart') ||
-    pathname.includes('/shopping-cart')
+    pathname.includes('/cart')
+    || pathname.includes('/shopping-cart')
   ) {
     presenceData.details = 'يتفقد سلة التسوق'
     presenceData.state = 'السلة'
   }
 
   else if (
-    pathname === '/profile' ||
-    pathname.startsWith('/profile/')
+    pathname === '/profile'
+    || pathname.startsWith('/profile/')
   ) {
     presenceData.details = 'يتصفح حسابه'
     presenceData.state = 'الملف الشخصي'
   }
 
   else if (
-    pathname.includes('/my-orders') ||
-    pathname.includes('/my_orders/')
+    pathname.includes('/my-orders')
+    || pathname.includes('/my_orders/')
   ) {
     presenceData.details = 'يتابع طلباته'
     presenceData.state = 'طلباتي'
   }
 
   else if (
-    pathname === '/account' ||
-    pathname.startsWith('/account/')
+    pathname === '/account'
+    || pathname.startsWith('/account/')
   ) {
     presenceData.details = 'صفحة الحساب'
     presenceData.state = 'Shark Jazz'
