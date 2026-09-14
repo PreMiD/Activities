@@ -24,23 +24,11 @@ presence.on('UpdateData', async () => {
   if (!document.location.pathname.startsWith('/studio/'))
     return
 
-  const language = await presence
-    .getSetting<number>('language')
-    .catch(() => 0)
-
-  const isFrench = language === 1
-
-  const strings = isFrench
-    ? {
-        playing: 'Lecture',
-        paused: 'En pause',
-        recording: 'Enregistrement',
-      }
-    : {
-        playing: 'Playing',
-        paused: 'Paused',
-        recording: 'Recording',
-      }
+  const strings = await presence.getStrings({
+    playing: 'general.playing',
+    paused: 'general.paused',
+    recording: 'general.live',
+  })
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
