@@ -89,15 +89,13 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = rawTitle
     presenceData.state = 'Vendo detalhes do dorama'
-    presenceData.smallImageKey
-      = 'https://i.imgur.com/eeVRVDN.png'
+    presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = 'Navegando'
   }
   else {
     presenceData.details = 'Navegando no site'
     presenceData.state = 'Procurando o que assistir'
-    presenceData.smallImageKey
-      = 'https://i.imgur.com/eeVRVDN.png'
+    presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = 'Navegando'
   }
 
