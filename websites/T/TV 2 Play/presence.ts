@@ -78,7 +78,6 @@ function isMutedAutoplayPreview(video: HTMLVideoElement): boolean {
 
   const muted
     = video.muted
-      || video.defaultMuted
       || video.volume === 0
 
   const durationLooksLikePreview
@@ -93,7 +92,6 @@ function isAudibleTrailer(video: HTMLVideoElement): boolean {
     isTitlePage()
     && isShortPreview(video)
     && !video.muted
-    && !video.defaultMuted
     && video.volume > 0
   )
 }
