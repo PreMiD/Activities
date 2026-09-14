@@ -5,15 +5,15 @@
     "name": "Mitsuki9",
     "id": "422884226430402568"
   },
-  "service": "StormD",
+  "service": "Storm Tempest",
   "description": {
-    "en": "Watch anime on StormD."
+    "en": "Watch anime on Storm Tempest."
   },
   "url": "stormd.site",
   "regExp": "^https?[:][/][/](?:www[.])?stormd[.]site[/]",
   "version": "1.0.0",
-  "logo": "https://stormd.site/favicon.ico",
-  "thumbnail": "https://stormd.site/favicon.ico",
+  "logo": "https://stormd.site/favicon.png",
+  "thumbnail": "https://stormd.site/favicon.png",
   "color": "#151515",
   "category": "anime",
   "tags": [
