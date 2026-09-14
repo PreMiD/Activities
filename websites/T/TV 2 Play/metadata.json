@@ -7,11 +7,11 @@
   },
   "service": "TV 2 Play",
   "description": {
-    "en": "Shows what you are watching on TV 2 Play.",
-    "no": "Viser hva du ser på TV 2 Play."
+    "en": "Watch TV 2's channels, sports, movies and series whenever and wherever you want!",
+    "no": "Se TV 2s kanaler, sport, film og serier når og hvor du vil!"
   },
   "url": "play.tv2.no",
-  "regExp": "^https?://play[.]tv2[.]no(?:/|$)",
+  "regExp": "^https?[:][/][/]play[.]tv2[.]no[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/3dAnDrb.png",
   "thumbnail": "https://i.imgur.com/yX01NEg.png",
@@ -25,20 +25,11 @@
   ],
   "settings": [
     {
-      "id": "language",
-      "title": "Språk / Language",
-      "icon": "fas fa-language",
-      "value": 0,
-      "values": [
-        "Norsk",
-        "English"
-      ]
-    },
-    {
       "id": "privacyMode",
-      "title": "Privacy Mode / Privat modus",
+      "title": "Privacy Mode",
       "icon": "fas fa-user-secret",
-      "value": false
+      "value": false,
+      "description": "Hide the exact title and episode information while watching."
     }
   ]
 }

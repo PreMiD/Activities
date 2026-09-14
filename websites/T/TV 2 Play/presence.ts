@@ -6,6 +6,22 @@ const presence = new Presence({
 
 const logoUrl = 'https://i.imgur.com/3dAnDrb.png'
 
+async function getStrings() {
+  return presence.getStrings({
+    browsing: 'general.browsing',
+    watching: 'general.watching',
+    playing: 'general.playing',
+    paused: 'general.paused',
+    live: 'general.live',
+    season: 'general.season',
+    episode: 'general.episode',
+    watchingMovie: 'general.watchingMovie',
+    watchingSeries: 'general.watchingSeries',
+    watchingLive: 'general.watchingLive',
+    watchVideo: 'general.buttonWatchVideo',
+  })
+}
+
 let browsingTimestamp = Math.floor(Date.now() / 1000)
 let wasWatching = false
 
@@ -294,49 +310,10 @@ function isLiveVideo(video: HTMLVideoElement): boolean {
 }
 
 presence.on('UpdateData', async () => {
-  const language
-    = await presence.getSetting<number>('language')
-
-  const privacyMode
-    = await presence.getSetting<boolean>('privacyMode')
-
-  const english = language === 1
-
-  const text = english
-    ? {
-        browsingDetails: 'Exploring TV 2 Play',
-        browsingState: 'Looking for something to watch',
-        live: 'Live',
-        watching: 'Watching',
-        paused: 'Paused',
-        playing: 'Playing',
-        pause: 'Paused',
-        button: 'Watch on TV 2 Play',
-        season: 'Season',
-        episode: 'Episode',
-        privacy: 'Privacy mode',
-        privateSeries: 'Watching a series',
-        privateMovie: 'Watching a movie',
-        privateLive: 'Watching live TV',
-        trailer: 'Watching a trailer',
-      }
-    : {
-        browsingDetails: 'Utforsker TV 2 Play',
-        browsingState: 'Leter etter noe å se på',
-        live: 'Direkte',
-        watching: 'Ser på',
-        paused: 'Satt på pause',
-        playing: 'Spiller av',
-        pause: 'Pause',
-        button: 'Se på TV 2 Play',
-        season: 'Sesong',
-        episode: 'Episode',
-        privacy: 'Privat modus',
-        privateSeries: 'Ser på en serie',
-        privateMovie: 'Ser på en film',
-        privateLive: 'Ser på direktesendt TV',
-        trailer: 'Ser på en trailer',
-      }
+  const [privacyMode, strings] = await Promise.all([
+    presence.getSetting<boolean>('privacyMode'),
+    getStrings(),
+  ])
 
   const player
     = document.querySelector('[data-testid="player"]')
@@ -364,27 +341,23 @@ presence.on('UpdateData', async () => {
     presenceData.type = ActivityType.Watching
 
     if (privacyMode) {
-      presenceData.details = trailer
-        ? text.trailer
-        : live
-          ? text.privateLive
-          : season && episode
-            ? text.privateSeries
-            : text.privateMovie
-
-      presenceData.state = text.privacy
+      presenceData.details = live
+        ? strings.watchingLive
+        : season && episode
+          ? strings.watchingSeries
+          : strings.watchingMovie
 
       if (live) {
         presenceData.smallImageKey = Assets.Live
-        presenceData.smallImageText = text.live
+        presenceData.smallImageText = strings.live
       }
       else if (!video.paused) {
         presenceData.smallImageKey = Assets.Play
-        presenceData.smallImageText = text.playing
+        presenceData.smallImageText = strings.playing
       }
       else {
         presenceData.smallImageKey = Assets.Pause
-        presenceData.smallImageText = text.pause
+        presenceData.smallImageText = strings.paused
       }
 
       wasWatching = true
@@ -393,28 +366,28 @@ presence.on('UpdateData', async () => {
       presenceData.details = showTitle
 
       if (trailer) {
-        presenceData.state = text.trailer
+        presenceData.state = 'Trailer'
       }
       else if (season && episode) {
         presenceData.state = episodeTitle
-          ? `${text.season} ${season} • ${text.episode} ${episode} • ${episodeTitle}`
-          : `${text.season} ${season} • ${text.episode} ${episode}`
+          ? `${strings.season} ${season} • ${strings.episode} ${episode} • ${episodeTitle}`
+          : `${strings.season} ${season} • ${strings.episode} ${episode}`
       }
       else if (live) {
-        presenceData.state = text.live
+        presenceData.state = strings.live
       }
       else {
         presenceData.state
-          = video.paused ? text.paused : text.watching
+          = video.paused ? strings.paused : strings.watching
       }
 
       if (live) {
         presenceData.smallImageKey = Assets.Live
-        presenceData.smallImageText = text.live
+        presenceData.smallImageText = strings.live
       }
       else if (!video.paused) {
         presenceData.smallImageKey = Assets.Play
-        presenceData.smallImageText = text.playing
+        presenceData.smallImageText = strings.playing
 
         if (
           Number.isFinite(video.duration)
@@ -428,12 +401,12 @@ presence.on('UpdateData', async () => {
       }
       else {
         presenceData.smallImageKey = Assets.Pause
-        presenceData.smallImageText = text.pause
+        presenceData.smallImageText = strings.paused
       }
 
       presenceData.buttons = [
         {
-          label: text.button,
+          label: strings.watchVideo,
           url: document.location.href,
         },
       ]
@@ -449,9 +422,7 @@ presence.on('UpdateData', async () => {
       wasWatching = false
     }
 
-    // Privacy mode must not override normal browsing status.
-    presenceData.details = text.browsingDetails
-    presenceData.state = text.browsingState
+    presenceData.details = strings.browsing
     presenceData.startTimestamp = browsingTimestamp
   }
 
