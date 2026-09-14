@@ -4,8 +4,8 @@ const presence = new Presence({
   clientId: '1233213267053248633',
 })
 
-const STORM_TEMPEST_IMAGE =
-  'https://raw.githubusercontent.com/akuyakii/Web/main/public/logo-512.png'
+const STORM_TEMPEST_IMAGE
+  = 'https://raw.githubusercontent.com/akuyakii/Web/main/public/logo-512.png'
 
 interface WatchState {
   title: string
@@ -65,10 +65,10 @@ function isVisible(element: Element): boolean {
   const rect = node.getBoundingClientRect()
 
   return (
-    style.display !== 'none' &&
-    style.visibility !== 'hidden' &&
-    rect.width > 0 &&
-    rect.height > 0
+    style.display !== 'none'
+    && style.visibility !== 'hidden'
+    && rect.width > 0
+    && rect.height > 0
   )
 }
 
@@ -231,8 +231,8 @@ function getAnimeTitle(): string | undefined {
     const title = clean(stripEpisode(candidate))
 
     if (
-      title &&
-      !/^(?:storm|stormd|anisto|mangasto|movisto|anime|watch anime)$/i.test(
+      title
+      && !/^(?:storm|stormd|anisto|mangasto|movisto|anime|watch anime)$/i.test(
         title,
       )
     ) {
@@ -250,15 +250,15 @@ function getVideo(): HTMLVideoElement | undefined {
 }
 
 function isWatchPage(): boolean {
-  const url =
-    `${window.location.pathname}${window.location.search}`.toLowerCase()
+  const url
+    = `${window.location.pathname}${window.location.search}`.toLowerCase()
 
   return (
-    /\/watch\b/.test(url) ||
-    /\/episode\b/.test(url) ||
-    /\/play\b/.test(url) ||
-    /[?&](episode|ep)=/i.test(url) ||
-    Boolean(getVideo())
+    /\/watch\b/.test(url)
+    || /\/episode\b/.test(url)
+    || /\/play\b/.test(url)
+    || /[?&](?:episode|ep)=/i.test(url)
+    || Boolean(getVideo())
   )
 }
 
@@ -279,12 +279,12 @@ function getPlaybackTimestamps(
   endTimestamp?: number
 } {
   if (
-    !video ||
-    video.paused ||
-    video.ended ||
-    !Number.isFinite(video.duration) ||
-    video.duration <= 0 ||
-    !Number.isFinite(video.currentTime)
+    !video
+    || video.paused
+    || video.ended
+    || !Number.isFinite(video.duration)
+    || video.duration <= 0
+    || !Number.isFinite(video.currentTime)
   ) {
     return {}
   }
