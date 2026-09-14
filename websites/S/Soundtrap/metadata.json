@@ -24,14 +24,8 @@
   ],
   "settings": [
     {
-      "id": "language",
-      "title": "Language",
-      "icon": "fas fa-language",
-      "value": 0,
-      "values": [
-        "English",
-        "Français"
-      ]
+      "id": "lang",
+      "multiLanguage": true
     }
   ]
 }
