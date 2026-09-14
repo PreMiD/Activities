@@ -1,28 +1,22 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.17",
-  "apiVersion": 1,
+  "$schema": "https://schemas.premid.app/metadata/1.10",
   "author": {
-    "name": "Mitsuki9",
+    "name": "Storm Tempest",
     "id": "422884226430402568"
   },
   "service": "Storm Tempest",
-  "altnames": [
-    "Storm Tempest",
-    "StormD"
-  ],
+  "altnames": [],
   "description": {
-    "en": "Shows what is currently being watched on Storm Tempest."
+    "en": "Watch anime online for free"
   },
   "url": "stormd.site",
-  "regExp": "^https[:][/][/]stormd[.]site[/].*$",
-  "version": "1.0.0",
   "logo": "https://raw.githubusercontent.com/akuyakii/Web/main/public/logo-512.png",
   "thumbnail": "https://raw.githubusercontent.com/akuyakii/Web/main/public/logo-512.png",
-  "color": "#111111",
-  "category": "videos",
+  "color": "#000000",
+  "category": "anime",
   "tags": [
     "anime",
-    "streaming",
-    "watching"
-  ]
+    "streaming"
+  ],
+  "iframe": false
 }
