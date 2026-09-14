@@ -1,7 +1,7 @@
 const iframe = new iFrame()
 
 iframe.on('UpdateData', async () => {
-  const video = document.querySelector('video') as HTMLVideoElement | null
+  const video = document.querySelector<HTMLVideoElement>('video')
   if (video && !Number.isNaN(video.duration) && video.duration > 0) {
     iframe.send({
       iframe_video: {

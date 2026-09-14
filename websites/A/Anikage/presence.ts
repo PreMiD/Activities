@@ -24,9 +24,6 @@ async function getStrings() {
   })
 }
 
-const HOME_URL = 'https://anikage.cc/'
-const VISIT_ANIKAGE = 'Visit Anikage'
-
 let strings: Awaited<ReturnType<typeof getStrings>>
 let oldLang: string | null = null
 
@@ -139,10 +136,11 @@ async function updateActivity() {
   // Store art: metadata logo/thumbnail go live on the CDN at merge time.
   // Until then the activity's own imgur logo keeps art working everywhere.
   const logoUrl = 'https://i.imgur.com/8byHs8E.jpeg'
-  const presenceData = {
+  const presenceData: PresenceData = {
+    type: ActivityType.Watching,
     largeImageKey: logoUrl,
     startTimestamp: browsingTimestamp,
-  } as PresenceData
+  }
 
   if (privacy) {
     presenceData.details = strings.browsing
@@ -175,7 +173,6 @@ async function updateActivity() {
       ? video.paused
       : embedVideo?.paused ?? (playLabel ? !/^pause/i.test(playLabel) && /play/i.test(playLabel) : true)
 
-    presenceData.type = ActivityType.Watching
     presenceData.details = title ?? 'Anikage'
     presenceData.largeImageText = title ?? 'Anikage'
     presenceData.state = `Episode ${episode}${audioMode ? ` • ${audioMode}` : ''}`
@@ -198,10 +195,7 @@ async function updateActivity() {
     }
 
     const watchUrl = `https://anikage.cc/anime/watch/${id}?ep=${episode}`
-    presenceData.buttons = [
-      { label: strings.buttonWatchAnime, url: watchUrl },
-      { label: VISIT_ANIKAGE, url: HOME_URL },
-    ]
+    presenceData.buttons = [{ label: strings.buttonWatchAnime, url: watchUrl }]
   }
   // --- Info page ---
   else if (pathname.startsWith('/anime/info/')) {
@@ -215,12 +209,10 @@ async function updateActivity() {
     presenceData.smallImageKey = Assets.Reading
     if (showCover && cover) {
       presenceData.largeImageKey = cover
-      presenceData.largeImageText = title
+      if (title)
+        presenceData.largeImageText = title
     }
-    presenceData.buttons = [
-      { label: strings.buttonViewAnime, url: `https://anikage.cc/anime/info/${id}` },
-      { label: VISIT_ANIKAGE, url: HOME_URL },
-    ]
+    presenceData.buttons = [{ label: strings.buttonViewAnime, url: `https://anikage.cc/anime/info/${id}` }]
   }
   // --- Browse (+ search) ---
   else if (pathname.startsWith('/browse')) {
@@ -239,7 +231,6 @@ async function updateActivity() {
       presenceData.state = 'Browsing anime'
     }
     presenceData.smallImageKey = Assets.Search
-    presenceData.buttons = [{ label: VISIT_ANIKAGE, url: HOME_URL }]
     delete presenceData.startTimestamp
     presenceData.startTimestamp = browsingTimestamp
   }
@@ -247,31 +238,26 @@ async function updateActivity() {
   else if (pathname.startsWith('/schedule')) {
     presenceData.details = 'Viewing anime schedule'
     presenceData.smallImageKey = Assets.Reading
-    presenceData.buttons = [{ label: VISIT_ANIKAGE, url: HOME_URL }]
   }
   // --- Music ---
   else if (pathname.startsWith('/music')) {
     presenceData.details = 'Exploring anime music'
     presenceData.smallImageKey = Assets.Search
-    presenceData.buttons = [{ label: VISIT_ANIKAGE, url: HOME_URL }]
   }
   // --- Torrents / DMCA ---
   else if (pathname.startsWith('/torrents')) {
     presenceData.details = 'Browsing torrents'
     presenceData.smallImageKey = Assets.Reading
-    presenceData.buttons = [{ label: VISIT_ANIKAGE, url: HOME_URL }]
   }
   else if (pathname.startsWith('/dmca')) {
     presenceData.details = strings.browsing
     presenceData.state = 'Reading DMCA'
     presenceData.smallImageKey = Assets.Reading
-    presenceData.buttons = [{ label: VISIT_ANIKAGE, url: HOME_URL }]
   }
   // --- Account shells (login-walled SPA, no title) ---
   else if (['/profile', '/settings', '/notifications'].some(p => pathname.startsWith(p))) {
     presenceData.details = strings.viewAccount
     presenceData.smallImageKey = Assets.Reading
-    presenceData.buttons = [{ label: VISIT_ANIKAGE, url: HOME_URL }]
   }
   // --- Public user profiles (/u/:username, client-rendered) ---
   else if (pathname.startsWith('/u/')) {
@@ -279,29 +265,23 @@ async function updateActivity() {
     if (!username || !/^[\w.-]+$/.test(username)) {
       presenceData.details = strings.browsing
       presenceData.smallImageKey = Assets.Reading
-      presenceData.buttons = [{ label: VISIT_ANIKAGE, url: HOME_URL }]
     }
     else {
       presenceData.details = strings.viewProfile
       presenceData.state = username
       presenceData.smallImageKey = Assets.Reading
-      presenceData.buttons = [
-        { label: strings.buttonViewProfile, url: `https://anikage.cc/u/${username}` },
-        { label: VISIT_ANIKAGE, url: HOME_URL },
-      ]
+      presenceData.buttons = [{ label: strings.buttonViewProfile, url: `https://anikage.cc/u/${username}` }]
     }
   }
   // --- Home ---
   else if (pathname === '/') {
     presenceData.details = strings.viewHome
     presenceData.smallImageKey = Assets.Reading
-    presenceData.buttons = [{ label: VISIT_ANIKAGE, url: HOME_URL }]
   }
   // --- Fallback ---
   else {
     presenceData.details = strings.browsing
     presenceData.smallImageKey = Assets.Reading
-    presenceData.buttons = [{ label: VISIT_ANIKAGE, url: HOME_URL }]
   }
 
   if (!showCover)
