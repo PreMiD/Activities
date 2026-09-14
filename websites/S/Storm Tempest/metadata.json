@@ -12,8 +12,8 @@
   "url": "stormd.site",
   "regExp": "^https?[:][/][/](?:www[.])?stormd[.]site[/]",
   "version": "1.0.0",
-  "logo": "https://stormd.site/favicon.png",
-  "thumbnail": "https://stormd.site/favicon.png",
+  "logo": "https://raw.githubusercontent.com/akuyakii/Web/main/public/logo-512.png",
+  "thumbnail": "https://raw.githubusercontent.com/akuyakii/Web/main/public/logo-512.png",
   "color": "#151515",
   "category": "anime",
   "tags": [
