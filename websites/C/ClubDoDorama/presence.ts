@@ -1,12 +1,23 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1534760108268064938',
 })
 
-// Guarda o momento em que começamos a "assistir" essa página,
-// já que o player é um iframe de terceiros (fsst.online) e não
-// dá pra ler o tempo real do vídeo por causa de CORS.
+interface IframeVideoData {
+  currentTime: number
+  duration: number
+  paused: boolean
+}
+
+let iframeData: IframeVideoData | null = null
+
+presence.on('iFrameData', (data) => {
+  iframeData = data as IframeVideoData
+})
+
+// Guarda o momento em que a pessoa abriu a página, usado só como
+// fallback enquanto os dados reais do vídeo (via iframe) ainda não chegaram.
 let browsingTimestamp = Math.floor(Date.now() / 1000)
 let lastPath = ''
 
@@ -17,70 +28,74 @@ presence.on('UpdateData', async () => {
   if (pathname !== lastPath) {
     browsingTimestamp = Math.floor(Date.now() / 1000)
     lastPath = pathname
+    iframeData = null
   }
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     largeImageKey: 'https://i.imgur.com/NG3A7fd.png',
     largeImageText: 'ClubDoDorama',
-    startTimestamp: browsingTimestamp,
   }
 
   const isEpisodePage = pathname.startsWith('/episodios/')
   const isSeriesPage = pathname.startsWith('/series-de-tv/')
   const isMoviePage = pathname.startsWith('/filmes/')
 
-  if (isEpisodePage) {
-    // Ex: "The Shadow Sovereign: 1x16"
+  if (isEpisodePage || isMoviePage) {
     const titleEl = document.querySelector('h1')
-    const rawTitle = titleEl?.textContent?.trim() ?? 'Dorama desconhecido'
-
-    // Busca "NxN" no final do título, evitando regex com backtracking ambíguo
-    const episodeMatch = rawTitle.match(/(\d+)x(\d+)\s*$/)
+    const rawTitle = titleEl?.textContent?.trim()
+      ?? (isEpisodePage ? 'Dorama desconhecido' : 'Filme desconhecido')
 
     const poster = document.querySelector<HTMLImageElement>(
       'img[src*="image.tmdb.org"]',
     )?.src
 
-    if (episodeMatch) {
-      const season = episodeMatch[1]
-      const episode = episodeMatch[2]
-      const showName = rawTitle.slice(0, episodeMatch.index).replace(/:\s*$/, '').trim() || rawTitle
-      presenceData.name = showName
-      presenceData.details = `Assistindo: ${showName}`
-      presenceData.state = `Temporada ${season}, Episódio ${episode}`
+    if (isEpisodePage) {
+      // Busca "NxN" no final do título, evitando regex com backtracking ambíguo
+      const episodeMatch = rawTitle.match(/(\d+)x(\d+)\s*$/)
+
+      if (episodeMatch) {
+        const season = episodeMatch[1]
+        const episode = episodeMatch[2]
+        const showName = rawTitle.slice(0, episodeMatch.index).replace(/:\s*$/, '').trim() || rawTitle
+        presenceData.name = showName
+        presenceData.details = `Assistindo: ${showName}`
+        presenceData.state = `Temporada ${season}, Episódio ${episode}`
+      }
+      else {
+        presenceData.name = rawTitle
+        presenceData.details = `Assistindo: ${rawTitle}`
+        presenceData.state = 'Episódio'
+      }
     }
     else {
       presenceData.name = rawTitle
       presenceData.details = `Assistindo: ${rawTitle}`
-      presenceData.state = 'Episódio'
+      presenceData.state = 'Filme'
     }
-
-    presenceData.smallImageKey = Assets.Play
-    presenceData.smallImageText = 'Assistindo'
 
     if (poster) {
       presenceData.largeImageKey = poster
       presenceData.largeImageText = presenceData.details
     }
-  }
-  else if (isMoviePage) {
-    const titleEl = document.querySelector('h1')
-    const rawTitle = titleEl?.textContent?.trim() ?? 'Filme desconhecido'
 
-    const poster = document.querySelector<HTMLImageElement>(
-      'img[src*="image.tmdb.org"]',
-    )?.src
+    // Usa os dados reais do vídeo (mandados pelo iframe.ts) quando disponíveis
+    if (iframeData && !Number.isNaN(iframeData.duration) && iframeData.duration > 0) {
+      presenceData.smallImageKey = iframeData.paused ? Assets.Pause : Assets.Play
+      presenceData.smallImageText = iframeData.paused ? 'Pausado' : 'Assistindo'
 
-    presenceData.name = rawTitle
-    presenceData.details = `Assistindo: ${rawTitle}`
-    presenceData.state = 'Filme'
-    presenceData.smallImageKey = Assets.Play
-    presenceData.smallImageText = 'Assistindo'
-
-    if (poster) {
-      presenceData.largeImageKey = poster
-      presenceData.largeImageText = rawTitle
+      if (!iframeData.paused) {
+        [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+          Math.floor(iframeData.currentTime),
+          Math.floor(iframeData.duration),
+        )
+      }
+    }
+    else {
+      // Fallback: ainda não chegaram dados do iframe (ex: página acabou de abrir)
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = 'Assistindo'
+      presenceData.startTimestamp = browsingTimestamp
     }
   }
   else if (isSeriesPage) {
@@ -91,12 +106,14 @@ presence.on('UpdateData', async () => {
     presenceData.state = 'Vendo detalhes do dorama'
     presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = 'Navegando'
+    presenceData.startTimestamp = browsingTimestamp
   }
   else {
     presenceData.details = 'Navegando no site'
     presenceData.state = 'Procurando o que assistir'
     presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = 'Navegando'
+    presenceData.startTimestamp = browsingTimestamp
   }
 
   presence.setActivity(presenceData)
