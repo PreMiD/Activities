@@ -18,8 +18,8 @@
   "url": "stormd.site",
   "regExp": "^https?:\\/\\/(www\\.)?stormd\\.site\\/.*$",
   "version": "1.0.0",
-  "logo": "https://stormd.site/images/background.jpg",
-  "thumbnail": "https://stormd.site/images/background.jpg",
+  "logo": "https://akuyaki.rest/logo-512.png",
+  "thumbnail": "https://akuyaki.rest/logo-512.png",
   "color": "#0b0c10",
   "category": "anime",
   "tags": [
