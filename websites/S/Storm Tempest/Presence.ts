@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: "1233213267053248633", // TODO(verify): your registered PreMiD client ID
+  clientId: "1233213267053248633",
 });
 
 const startTimestamp = Math.floor(Date.now() / 1000);
