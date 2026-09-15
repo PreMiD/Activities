@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "noonenook",
+    "id": "437695615095275520"
+  },
+  "service": "TV 2 Play",
+  "description": {
+    "en": "Watch TV 2's channels, sports, movies and series whenever and wherever you want!",
+    "no": "Se TV 2s kanaler, sport, film og serier når og hvor du vil!"
+  },
+  "url": "play.tv2.no",
+  "regExp": "^https?[:][/][/]play[.]tv2[.]no[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/3dAnDrb.png",
+  "thumbnail": "https://i.imgur.com/yX01NEg.png",
+  "color": "#7000FF",
+  "category": "videos",
+  "tags": [
+    "tv2",
+    "streaming",
+    "norway",
+    "video"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false,
+      "description": "Hide the exact title and episode information while watching."
+    }
+  ]
+}
