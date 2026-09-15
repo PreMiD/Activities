@@ -1,7 +1,7 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  clientId: '1545636765875048538', // TODO: replace with your Discord application ID
+  clientId: '1545636765875048538',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
