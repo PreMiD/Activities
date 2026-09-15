@@ -170,7 +170,7 @@ async function updatePresence(): Promise<void> {
         parts.push(voiceChannel)
     }
 
-    data.state = parts.length ? parts.join(' • ') : playing ? 'Listening to Soya' : 'Paused'
+    data.state = (parts.length ? parts.join(' • ') : playing ? 'Listening to Soya' : 'Paused').slice(0, 128)
 
     if (lyricsOpen) {
       data.smallImageKey = DEFAULT_ASSETS.lyrics
