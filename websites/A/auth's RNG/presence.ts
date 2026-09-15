@@ -10,6 +10,15 @@ enum ActivityAssets {
   Logo = 'https://authsrng.xyz/assets/favicons/android-chrome-512x512.png',
 }
 
+function getStat(key: string): string | null {
+  try {
+    return localStorage.getItem(key)
+  }
+  catch {
+    return null
+  }
+}
+
 presence.on('UpdateData', async () => {
   const { pathname } = document.location
 
@@ -29,8 +38,31 @@ presence.on('UpdateData', async () => {
   else if (pathname.includes('credits')) {
     presenceData.state = 'viewing credits'
   }
+  else if (pathname.includes('FAQ')) {
+    presenceData.state = 'reading the FAQ'
+  }
+  else if (pathname.includes('licenseview')) {
+    presenceData.state = 'viewing license'
+  }
+  else if (pathname.includes('/blog/')) {
+    presenceData.state = 'reading the blog'
+  }
+  else if (pathname.includes('community')) {
+    presenceData.state = 'reading community CoC page'
+  }
+  else if (pathname.includes('legal')) {
+    presenceData.state = 'reading legal info'
+  }
   else {
-    presenceData.state = 'playing'
+    const rolls = getStat('totalRolls')
+    const points = getStat('shopPoints')
+
+    if (rolls && points) {
+      presenceData.state = `${points} pts · ${rolls} rolls`
+    }
+    else {
+      presenceData.state = 'Playing'
+    }
   }
 
   presence.setActivity(presenceData)
