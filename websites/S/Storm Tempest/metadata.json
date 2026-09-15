@@ -8,17 +8,16 @@
   "contributors": [],
   "service": "Storm Tempest",
   "altnames": [
-    "StormD",
     "Anisto",
     "Mangasto",
     "Movisto"
   ],
   "description": {
-    "en": "Shows what you're watching/reading on StormD (Anisto anime, Mangasto manga, Movisto movies) or which section you're browsing."
+    "en": "Shows what you're watching/reading on Storm Tempest (Anisto anime, Mangasto manga, Movisto movies) or which section you're browsing."
   },
   "url": "stormd.site",
   "regExp": "^https?:\\/\\/(www\\.)?stormd\\.site\\/.*$",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "logo": "https://stormd.site/images/background.jpg",
   "thumbnail": "https://stormd.site/images/background.jpg",
   "color": "#0b0c10",
