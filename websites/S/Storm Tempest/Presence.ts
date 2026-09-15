@@ -23,7 +23,7 @@ const startTimestamp = Math.floor(Date.now() / 1000)
 
 function safeText(value: string | null | undefined, fallback: string): string {
   const trimmed = value?.trim()
-  if (!trimmed || /^(?:undefined|null|nan)$/i.test(trimmed)) {
+  if (!trimmed || /^(?:undefined|null|nan)$/.test(trimmed.toLowerCase())) {
     return fallback
   }
   return trimmed
