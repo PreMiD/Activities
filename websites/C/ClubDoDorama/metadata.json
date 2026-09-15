@@ -17,12 +17,12 @@
   "thumbnail": "https://i.imgur.com/c2s1fU2.png",
   "color": "#000000",
   "category": "videos",
-  "iframe": true,
-  "iFrameRegExp": "^https?[:][/][/]([a-z0-9-]+[.])*(incvideo\\d*[.]online[/]embed[/]|dailymotion[.]com[/]player[/])",
   "tags": [
     "streaming",
     "doramas",
     "series",
     "tv"
-  ]
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?[:][/][/]([a-z0-9-]+[.])*(incvideo\\d*[.]online[/]embed[/]|dailymotion[.]com[/]player[/])"
 }
