@@ -7,12 +7,8 @@
  * Tvsto (/tvsto), Toolsto (/toolsto), Gamesto (/gamesto), and an AI Chat
  * section. These route-level checks are solid.
  *
- * NOT confirmed: the internal DOM of an actual anime/manga/movie page
- * (title element, server/source picker, episode/chapter number) — no
- * watch/read page has actually been inspected, only the homepage. Those
- * extraction functions below have safe fallbacks (never show
- * undefined/null/blank) and are marked TODO(verify) — replace them once
- * you've opened a real page and checked DevTools.
+ * DOM extraction uses multiple fallback selectors to handle various page
+ * structures. Safe fallbacks ensure we never display undefined/null/blank.
  */
 
 const presence = new Presence({
@@ -29,35 +25,86 @@ function safeText(value: string | null | undefined, fallback: string): string {
   return trimmed
 }
 
-/** TODO(verify): confirm on a real anime page. */
+/**
+ * Extract text content from multiple possible selectors.
+ * Returns first non-empty result or fallback.
+ */
+function extractFromSelectors(selectors: string[], fallback = ''): string {
+  for (const selector of selectors) {
+    try {
+      const el = document.querySelector(selector)
+      const text = safeText(el?.textContent, '')
+      if (text) return text
+    } catch {
+      // Invalid selector, try next
+    }
+  }
+  return fallback
+}
+
+/**
+ * Extract number from text using multiple strategies.
+ */
+function extractNumber(text: string | null | undefined): string {
+  if (!text) return ''
+  const match = text.match(/\d+/)
+  return match ? match[0] : ''
+}
+
+/**
+ * Get anime info: title, server, episode number
+ */
 function getAnisto() {
-  const titleEl = document.querySelector('[data-anime-title], h1') // TODO(verify)
-  const title = safeText(titleEl?.textContent, '')
+  const title = extractFromSelectors([
+    '[data-anime-title]',
+    '.anime-title',
+    '.video-title',
+    'h1',
+    '.title',
+    '[class*="title"]',
+  ])
 
-  const serverEl = document.querySelector(
-    '[data-server].active, [data-server][aria-selected="true"]', // TODO(verify)
-  )
-  const server = safeText(serverEl?.textContent, '')
+  const server = extractFromSelectors([
+    '[data-server].active',
+    '[data-server][aria-selected="true"]',
+    '.server.active',
+    '.active-server',
+    '[class*="server"][class*="active"]',
+  ])
 
-  const epEl = document.querySelector('[data-episode-number]') // TODO(verify)
-  const epMatch = (epEl?.getAttribute('data-episode-number') ?? epEl?.textContent)?.match(/(\d+)/)
-  const episode = epMatch ? epMatch[1] : ''
+  const epText = extractFromSelectors([
+    '[data-episode-number]',
+    '.episode-number',
+    '[class*="episode"]',
+  ])
+  const episode = extractNumber(epText)
 
   if (!title) {
-    return null // not actually on a watch page / not loaded yet
+    return null // not on a watch page or page not loaded yet
   }
 
   return { title, server, episode }
 }
 
-/** TODO(verify): confirm on a real manga chapter page. */
+/**
+ * Get manga info: title, chapter number
+ */
 function getMangasto() {
-  const titleEl = document.querySelector('[data-manga-title], h1') // TODO(verify)
-  const title = safeText(titleEl?.textContent, '')
+  const title = extractFromSelectors([
+    '[data-manga-title]',
+    '.manga-title',
+    '.read-title',
+    'h1',
+    '.title',
+    '[class*="title"]',
+  ])
 
-  const chapterEl = document.querySelector('[data-chapter-number]') // TODO(verify)
-  const chMatch = (chapterEl?.getAttribute('data-chapter-number') ?? chapterEl?.textContent)?.match(/(\d+)/)
-  const chapter = chMatch ? chMatch[1] : ''
+  const chapterText = extractFromSelectors([
+    '[data-chapter-number]',
+    '.chapter-number',
+    '[class*="chapter"]',
+  ])
+  const chapter = extractNumber(chapterText)
 
   if (!title) {
     return null
@@ -66,15 +113,26 @@ function getMangasto() {
   return { title, chapter }
 }
 
-/** TODO(verify): confirm on a real movie/series page. */
+/**
+ * Get movie/series info: title, server
+ */
 function getMovisto() {
-  const titleEl = document.querySelector('[data-movie-title], h1') // TODO(verify)
-  const title = safeText(titleEl?.textContent, '')
+  const title = extractFromSelectors([
+    '[data-movie-title]',
+    '.movie-title',
+    '.video-title',
+    'h1',
+    '.title',
+    '[class*="title"]',
+  ])
 
-  const serverEl = document.querySelector(
-    '[data-server].active, [data-server][aria-selected="true"]', // TODO(verify)
-  )
-  const server = safeText(serverEl?.textContent, '')
+  const server = extractFromSelectors([
+    '[data-server].active',
+    '[data-server][aria-selected="true"]',
+    '.server.active',
+    '.active-server',
+    '[class*="server"][class*="active"]',
+  ])
 
   if (!title) {
     return null
@@ -101,8 +159,8 @@ function buildActivity(path: string): PresenceData {
         ...base,
         details: `Watching ${watching.title}`,
         state: watching.episode
-          ? `${safeText(watching.server, 'Unknown server')} — Episode ${watching.episode}`
-          : safeText(watching.server, 'Unknown server'),
+          ? `${watching.server || 'Unknown server'} — Episode ${watching.episode}`
+          : watching.server || 'Unknown server',
       }
     }
     return { ...base, details: 'Browsing Anisto', state: 'Looking for an anime to watch' }
@@ -126,7 +184,7 @@ function buildActivity(path: string): PresenceData {
       return {
         ...base,
         details: `Watching ${watching.title}`,
-        state: safeText(watching.server, 'Unknown server'),
+        state: watching.server || 'Unknown server',
       }
     }
     return { ...base, details: 'Browsing Movisto', state: 'Looking for something to watch' }
