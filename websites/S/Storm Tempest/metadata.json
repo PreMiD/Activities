@@ -27,7 +27,6 @@
     "manga",
     "streaming"
   ],
-  "readLogs": true,
   "iframe": false,
-  "warning": true
+  "readLogs": true
 }
