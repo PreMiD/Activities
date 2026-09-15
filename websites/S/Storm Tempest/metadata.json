@@ -1,24 +1,34 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "$schema": "https://schemas.premid.app/metadata/1.13",
   "apiVersion": 1,
   "author": {
-    "name": "Mitsuki9",
-    "id": "422884226430402568"
+    "name": "REPLACE_ME",
+    "id": "000000000000000000"
   },
-  "service": "Storm Tempest",
+  "contributors": [],
+  "service": "StormD",
+  "altnames": [
+    "Storm Tempest",
+    "Anisto",
+    "Mangasto",
+    "Movisto"
+  ],
   "description": {
-    "en": "Watch anime on Storm Tempest."
+    "en": "Shows what you're watching/reading on StormD (Anisto anime, Mangasto manga, Movisto movies) or which section you're browsing."
   },
   "url": "stormd.site",
-  "regExp": "^https?[:][/][/](?:www[.])?stormd[.]site[/]",
-  "version": "1.0.0",
-  "logo": "https://raw.githubusercontent.com/akuyakii/Web/main/public/logo-512.png",
-  "thumbnail": "https://raw.githubusercontent.com/akuyakii/Web/main/public/logo-512.png",
-  "color": "#151515",
+  "regExp": "^https?:\\/\\/(www\\.)?stormd\\.site\\/.*$",
+  "version": "0.0.1",
+  "logo": "https://stormd.site/images/background.jpg",
+  "thumbnail": "https://stormd.site/images/background.jpg",
+  "color": "#0b0c10",
   "category": "anime",
   "tags": [
     "anime",
-    "arabic",
+    "manga",
     "streaming"
-  ]
+  ],
+  "readLogs": true,
+  "iframe": false,
+  "warning": true
 }
