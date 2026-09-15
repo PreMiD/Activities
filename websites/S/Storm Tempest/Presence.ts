@@ -1,5 +1,5 @@
 /**
- * StormD — PreMiD Presence
+ * Storm Tempest — PreMiD Presence
  *
  * Confirmed from the site's homepage: top-level sections are
  * Mangasto (/mangasto), Anisto (/anisto), Movisto (/movisto),
@@ -16,14 +16,16 @@
  */
 
 const presence = new Presence({
-  clientId: '1233213267053248633'
+  clientId: '1233213267053248633',
 })
 
 const startTimestamp = Math.floor(Date.now() / 1000)
 
 function safeText(value: string | null | undefined, fallback: string): string {
   const trimmed = value?.trim()
-  if (!trimmed || /^(undefined|null|nan)$/i.test(trimmed)) return fallback
+  if (!trimmed || /^(?:undefined|null|nan)$/i.test(trimmed)) {
+    return fallback
+  }
   return trimmed
 }
 
@@ -33,7 +35,7 @@ function getAnisto() {
   const title = safeText(titleEl?.textContent, '')
 
   const serverEl = document.querySelector(
-    '[data-server].active, [data-server][aria-selected="true"]' // TODO(verify)
+    '[data-server].active, [data-server][aria-selected="true"]', // TODO(verify)
   )
   const server = safeText(serverEl?.textContent, '')
 
@@ -41,7 +43,9 @@ function getAnisto() {
   const epMatch = (epEl?.getAttribute('data-episode-number') ?? epEl?.textContent)?.match(/(\d+)/)
   const episode = epMatch ? epMatch[1] : ''
 
-  if (!title) return null // not actually on a watch page / not loaded yet
+  if (!title) {
+    return null // not actually on a watch page / not loaded yet
+  }
 
   return { title, server, episode }
 }
@@ -55,7 +59,9 @@ function getMangasto() {
   const chMatch = (chapterEl?.getAttribute('data-chapter-number') ?? chapterEl?.textContent)?.match(/(\d+)/)
   const chapter = chMatch ? chMatch[1] : ''
 
-  if (!title) return null
+  if (!title) {
+    return null
+  }
 
   return { title, chapter }
 }
@@ -66,11 +72,13 @@ function getMovisto() {
   const title = safeText(titleEl?.textContent, '')
 
   const serverEl = document.querySelector(
-    '[data-server].active, [data-server][aria-selected="true"]' // TODO(verify)
+    '[data-server].active, [data-server][aria-selected="true"]', // TODO(verify)
   )
   const server = safeText(serverEl?.textContent, '')
 
-  if (!title) return null
+  if (!title) {
+    return null
+  }
 
   return { title, server }
 }
@@ -79,7 +87,7 @@ function buildActivity(path: string): PresenceData {
   const base: PresenceData = {
     largeImageKey: Assets.Logo,
     startTimestamp,
-    buttons: [{ label: 'Open StormD', url: window.location.href }]
+    buttons: [{ label: 'Open Storm Tempest', url: window.location.href }],
   }
 
   if (path === '/' || path === '') {
@@ -94,7 +102,7 @@ function buildActivity(path: string): PresenceData {
         details: `Watching ${watching.title}`,
         state: watching.episode
           ? `${safeText(watching.server, 'Unknown server')} — Episode ${watching.episode}`
-          : safeText(watching.server, 'Unknown server')
+          : safeText(watching.server, 'Unknown server'),
       }
     }
     return { ...base, details: 'Browsing Anisto', state: 'Looking for an anime to watch' }
@@ -106,7 +114,7 @@ function buildActivity(path: string): PresenceData {
       return {
         ...base,
         details: `Reading ${reading.title}`,
-        state: reading.chapter ? `Chapter ${reading.chapter}` : 'Reading'
+        state: reading.chapter ? `Chapter ${reading.chapter}` : 'Reading',
       }
     }
     return { ...base, details: 'Browsing Mangasto', state: 'Looking for a manga to read' }
@@ -118,7 +126,7 @@ function buildActivity(path: string): PresenceData {
       return {
         ...base,
         details: `Watching ${watching.title}`,
-        state: safeText(watching.server, 'Unknown server')
+        state: safeText(watching.server, 'Unknown server'),
       }
     }
     return { ...base, details: 'Browsing Movisto', state: 'Looking for something to watch' }
