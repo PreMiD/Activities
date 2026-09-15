@@ -1,0 +1,65 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "671037171611729920",
+    "name": "Skully"
+  },
+  "service": "CrazyGames",
+  "description": {
+    "en": "Play free online games at CrazyGames, the best place to play high-quality browser games. We add new games every day. Have fun!",
+    "fr": "Joue gratuitement en ligne sur CrazyGames, le meilleur endroit pour trouver des jeux sur navigateur de haute qualité. Nous ajoutons de nouveaux jeux tous les jours. Amuse-toi bien !"
+  },
+  "url": "crazygames.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*crazygames[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/ajxwR7R.png",
+  "thumbnail": "https://i.postimg.cc/zvVNzfkL/unnamed.webp",
+  "color": "#6842FF",
+  "category": "games",
+  "tags": [
+    "games",
+    "gaming",
+    "arcade"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "usePresenceName",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Game as Presence",
+      "icon": "fad fa-user-edit",
+      "value": true
+    },
+    {
+      "id": "showCover",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Cover",
+      "icon": "fas fa-images",
+      "value": true,
+      "description": "Display the game poster thumbnail."
+    },
+    {
+      "id": "buttons",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}
