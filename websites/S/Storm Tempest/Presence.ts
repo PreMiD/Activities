@@ -1,110 +1,139 @@
-import { Assets, getTimestampsFromMedia } from 'premid'
-
 const presence = new Presence({
-  clientId: '1233213267053248633',
-})
+  clientId: "1233213267053248633", // TODO(verify): your registered PreMiD client ID
+});
 
-let browsingTimestamp = Date.now()
-let wasWatching = false
+const startTimestamp = Math.floor(Date.now() / 1000);
 
-presence.on('UpdateData', () => {
-  const { pathname } = document.location
+function safeText(value: string | null | undefined, fallback: string): string {
+  const trimmed = value?.trim();
+  if (!trimmed || /^(undefined|null|nan)$/i.test(trimmed)) return fallback;
+  return trimmed;
+}
 
-  const presenceData: PresenceData = {
-    largeImageKey:
-      document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content
-      ?? Assets.Question,
+/** TODO(verify): confirm on a real anime page. */
+function getAnisto() {
+  const titleEl = document.querySelector("[data-anime-title], h1"); // TODO(verify)
+  const title = safeText(titleEl?.textContent, "");
+
+  const serverEl = document.querySelector(
+    '[data-server].active, [data-server][aria-selected="true"]', // TODO(verify)
+  );
+  const server = safeText(serverEl?.textContent, "");
+
+  const epEl = document.querySelector("[data-episode-number]"); // TODO(verify)
+  const epMatch = (epEl?.getAttribute("data-episode-number") ?? epEl?.textContent)?.match(/(\d+)/);
+  const episode = epMatch ? epMatch[1] : "";
+
+  if (!title) return null; // not actually on a watch page / not loaded yet
+
+  return { title, server, episode };
+}
+
+/** TODO(verify): confirm on a real manga chapter page. */
+function getMangasto() {
+  const titleEl = document.querySelector("[data-manga-title], h1"); // TODO(verify)
+  const title = safeText(titleEl?.textContent, "");
+
+  const chapterEl = document.querySelector("[data-chapter-number]"); // TODO(verify)
+  const chMatch = (chapterEl?.getAttribute("data-chapter-number") ?? chapterEl?.textContent)?.match(/(\d+)/);
+  const chapter = chMatch ? chMatch[1] : "";
+
+  if (!title) return null;
+
+  return { title, chapter };
+}
+
+/** TODO(verify): confirm on a real movie/series page. */
+function getMovisto() {
+  const titleEl = document.querySelector("[data-movie-title], h1"); // TODO(verify)
+  const title = safeText(titleEl?.textContent, "");
+
+  const serverEl = document.querySelector(
+    '[data-server].active, [data-server][aria-selected="true"]', // TODO(verify)
+  );
+  const server = safeText(serverEl?.textContent, "");
+
+  if (!title) return null;
+
+  return { title, server };
+}
+
+function buildActivity(path: string): PresenceData {
+  const base: PresenceData = {
+    largeImageKey: Assets.Logo,
+    startTimestamp,
+    buttons: [{ label: "Open StormD", url: window.location.href }],
+  };
+
+  if (path === "/" || path === "") {
+    return { ...base, details: "On the homepage", state: "Choosing what to do" };
   }
 
-  if (!pathname.startsWith('/episode/')) {
-    if (wasWatching) {
-      browsingTimestamp = Date.now()
-      wasWatching = false
+  if (path.startsWith("/anisto")) {
+    const watching = getAnisto();
+    if (watching) {
+      return {
+        ...base,
+        details: `Watching ${watching.title}`,
+        state: watching.episode
+          ? `${safeText(watching.server, "Unknown server")} — Episode ${watching.episode}`
+          : safeText(watching.server, "Unknown server"),
+      };
     }
-
-    presenceData.details = 'Browsing Storm Tempest'
-    presenceData.smallImageKey = Assets.Search
-    presenceData.smallImageText = 'Browsing'
-    presenceData.startTimestamp = browsingTimestamp
-
-    presence.setActivity(presenceData)
-    return
+    return { ...base, details: "Browsing Anisto", state: "Looking for an anime to watch" };
   }
 
-  const pathParts = pathname.split('/').filter(Boolean)
-  const episode = pathParts.at(-1)
-  const slug = pathParts.at(-2)
-
-  const heading = document.querySelector('h1')?.textContent?.trim()
-
-  const pageTitle =
-    document.querySelector<HTMLMetaElement>(
-      'meta[property="og:title"]',
-    )?.content
-
-  const animeTitle =
-    slug
-      ?.replaceAll('-', ' ')
-      .replace(/\b\w/g, character => character.toUpperCase())
-    ?? pageTitle?.replace(/\s*[-|]\s*Storm Tempest.*$/i, '')
-    ?? heading
-    ?? 'Anime'
-
-  const videos = [...document.querySelectorAll('video')]
-
-  const video =
-    videos
-      .filter(
-        video =>
-          !video.paused &&
-          Number.isFinite(video.duration) &&
-          video.duration > 0,
-      )
-      .sort(
-        (first, second) =>
-          second.currentTime - first.currentTime,
-      )[0]
-    ?? videos[0]
-
-  presenceData.details = `Watching ${animeTitle}`
-  presenceData.state = episode
-    ? `Episode ${episode}`
-    : 'Watching an episode'
-
-  presenceData.buttons = [
-    {
-      label: 'Watch Episode',
-      url: document.location.href,
-    },
-  ]
-
-  if (
-    video &&
-    Number.isFinite(video.duration) &&
-    video.duration > 0
-  ) {
-    wasWatching = true
-
-    presenceData.smallImageKey = video.paused
-      ? Assets.Pause
-      : Assets.Play
-
-    presenceData.smallImageText = video.paused
-      ? 'Paused'
-      : 'Watching'
-
-    if (!video.paused) {
-      ;[
-        presenceData.startTimestamp,
-        presenceData.endTimestamp,
-      ] = getTimestampsFromMedia(video)
+  if (path.startsWith("/mangasto")) {
+    const reading = getMangasto();
+    if (reading) {
+      return {
+        ...base,
+        details: `Reading ${reading.title}`,
+        state: reading.chapter ? `Chapter ${reading.chapter}` : "Reading",
+      };
     }
-  }
-  else {
-    wasWatching = true
-    presenceData.smallImageKey = Assets.Viewing
-    presenceData.smallImageText = 'Watching'
+    return { ...base, details: "Browsing Mangasto", state: "Looking for a manga to read" };
   }
 
-  presence.setActivity(presenceData)
-})
+  if (path.startsWith("/movisto")) {
+    const watching = getMovisto();
+    if (watching) {
+      return {
+        ...base,
+        details: `Watching ${watching.title}`,
+        state: safeText(watching.server, "Unknown server"),
+      };
+    }
+    return { ...base, details: "Browsing Movisto", state: "Looking for something to watch" };
+  }
+
+  if (path.startsWith("/booksto")) {
+    return { ...base, details: "Browsing Booksto", state: "Reading Arabic literature" };
+  }
+
+  if (path.startsWith("/novelsto")) {
+    return { ...base, details: "Browsing Novelsto", state: "Reading translated novels" };
+  }
+
+  if (path.startsWith("/codesto")) {
+    return { ...base, details: "Using Codesto", state: "Writing/running code" };
+  }
+
+  if (path.startsWith("/tvsto")) {
+    return { ...base, details: "Browsing Tvsto", state: "Watching live TV" };
+  }
+
+  if (path.startsWith("/toolsto")) {
+    return { ...base, details: "Using Toolsto", state: "Using a dev utility" };
+  }
+
+  if (path.startsWith("/gamesto")) {
+    return { ...base, details: "Browsing Gamesto", state: "Playing a game" };
+  }
+
+  return { ...base, details: "Browsing StormD", state: "" };
+}
+
+presence.on("UpdateData", async () => {
+  presence.setActivity(buildActivity(window.location.pathname));
+});
