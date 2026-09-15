@@ -148,7 +148,7 @@ function buildActivity(path: string): PresenceData {
     return { ...base, details: 'Browsing Gamesto', state: 'Playing a game' }
   }
 
-  return { ...base, details: 'Browsing StormD', state: '' }
+  return { ...base, details: 'Browsing Storm Tempest', state: '' }
 }
 
 presence.on('UpdateData', async () => {
