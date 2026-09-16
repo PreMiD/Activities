@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "richie",
+    "id": "990405387314425877"
+  },
+  "contributors": [
+    {
+      "name": "Joe",
+      "id": "301789889580498944"
+    }
+  ],
+  "service": "Mile Zero",
+  "description": {
+    "en": "Mile Zero | Your journey starts here"
+  },
+  "url": "milezero.live",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*milezero[.]live[/]",
+  "version": "1.0.0",
+  "logo": "https://i.richie.media/u/60bEtD.png",
+  "thumbnail": "https://i.richie.media/u/6emwPf.png",
+  "color": "#3424AD",
+  "category": "music",
+  "tags": [
+    "radio",
+    "simulation",
+    "gaming",
+    "ets2",
+    "ats",
+    "farmsim",
+    "farming",
+    "trucking",
+    "music"
+  ]
+}
