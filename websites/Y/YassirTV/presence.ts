@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, supports } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1549514873711501364',
@@ -64,14 +64,11 @@ function getMatchId(): string | null {
 // string library (maintained by their translation team), keyed to whatever
 // language the user picked in the "lang" setting. Falls back to English.
 async function getStrings() {
-  return presence.getStrings(
-    {
-      live: 'general.live',
-      paused: 'general.paused',
-      browsing: 'general.browsing',
-    },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
-  )
+  return presence.getStrings({
+    live: 'general.live',
+    paused: 'general.paused',
+    browsing: 'general.browsing',
+  })
 }
 
 // The page title carries the site's own branding alongside the match name,
