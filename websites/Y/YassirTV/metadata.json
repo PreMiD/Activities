@@ -11,12 +11,12 @@
   },
   "url": "yassirtv.com",
   "regExp": "([a-z0-9-]+[.])*yassirtv[.]com([/].*)?",
-  "iframe": true,
-  "iFrameRegExp": "[a-z0-9]+\\.yasirtv\\.com/playerv5\\.php.*",
   "version": "1.0.0",
   "logo": "https://sir-tv-apk.com/assets/store-icon-512.png",
   "thumbnail": "https://sir-tv-apk.com/assets/store-icon-512.png",
   "color": "#c0392b",
   "category": "videos",
-  "tags": ["football", "soccer", "live", "sports", "matches", "football", "UEFA Champions League", "La Liga"]
+  "tags": ["football", "soccer", "live", "sports", "matches", "football", "UEFA Champions League", "La Liga"],
+  "iframe": true,
+  "iFrameRegExp": "[a-z0-9]+\\.yasirtv\\.com/playerv5\\.php.*"
 }
