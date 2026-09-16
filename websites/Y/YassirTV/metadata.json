@@ -13,7 +13,7 @@
     "ar": "شاهد مباريات كرة القدم المباشرة على YassirTV.",
     "en": "Watch live football matches streamed on YassirTV."
   },
-  "url": ["fabor.tv", "yassirtv.com", "fabor-tv.to/"],
+  "url": ["fabor.tv", "yassirtv.com", "fabor-tv.to"],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(yassirtv[.]com|fabor[.]tv|fabor-tv[.]to)[/]",
   "version": "1.0.0",
   "logo": "https://i.ibb.co/cG1v62y/6aaaf2912fe1c2-59830015-Processed.png",
