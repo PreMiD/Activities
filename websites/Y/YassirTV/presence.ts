@@ -123,12 +123,6 @@ presence.on('UpdateData', async () => {
     }
     wasWatching = true
   }
-  else {
-    if (wasWatching) {
-      browsingTimestamp = Math.floor(Date.now() / 1000)
-      wasWatching = false
-    }
-  }
 
   presence.setActivity(presenceData)
 })
