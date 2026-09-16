@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Mitsuki9",
@@ -13,20 +13,18 @@
     "Movisto"
   ],
   "description": {
-    "en": "Shows what you're watching/reading on Storm Tempest (Anisto anime, Mangasto manga, Movisto movies) or which section you're browsing."
+    "en": "Manga, anime, movies, TV, books, novels, code tools and games, all in one place."
   },
   "url": "stormd.site",
-  "regExp": "^https?:\\/\\/(www\\.)?stormd\\.site\\/.*$",
+  "regExp": "^https?[:][/][/](www[.])?stormd[.]site[/]",
   "version": "1.0.0",
   "logo": "https://akuyaki.rest/logo-512.png",
-  "thumbnail": "https://akuyaki.rest/logo-512.png",
+  "thumbnail": "https://akuyaki.rest/storm.png",
   "color": "#0b0c10",
   "category": "anime",
   "tags": [
     "anime",
     "manga",
     "streaming"
-  ],
-  "iframe": false,
-  "readLogs": true
+  ]
 }
