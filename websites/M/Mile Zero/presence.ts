@@ -126,7 +126,7 @@ updateNowPlaying()
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    largeImageKey: 'https://i.richie.media/u/HzpecO.png',
+    largeImageKey: 'https://i.richie.media/u/6qR5hR.png',
   }
 
   const playButton = document.querySelector<HTMLButtonElement>('.hero-card__play')
