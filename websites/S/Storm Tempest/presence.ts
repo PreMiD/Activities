@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 const STORM_TEMPEST_IMAGE =
-  'https://raw.githubusercontent.com/akuyakii/Web/main/public/logo-512.png'
+  'https://raw.githubusercontent.com/akuyakii/assist-/main/logo-512.png'
 
 interface WatchState {
   title: string
