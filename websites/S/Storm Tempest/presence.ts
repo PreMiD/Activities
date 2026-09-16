@@ -247,7 +247,7 @@ function getVideo(): HTMLVideoElement | undefined {
 }
 
 function isWatchPage(): boolean {
-const url
+  const url
     = `${window.location.pathname}${window.location.search}`.toLowerCase()
 
   return (
