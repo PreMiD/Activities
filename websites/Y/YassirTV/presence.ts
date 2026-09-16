@@ -8,7 +8,6 @@ enum ActivityAssets {
   Logo = 'https://i.ibb.co/cG1v62y/6aaaf2912fe1c2-59830015-Processed.png',
 }
 
-let browsingTimestamp = Math.floor(Date.now() / 1000)
 let wasWatching = false
 
 interface IFrameData {
