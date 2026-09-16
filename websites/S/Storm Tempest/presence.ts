@@ -34,8 +34,9 @@ function attrOf(
 function queryText(selectors: string[]): string | undefined {
   for (const selector of selectors) {
     const value = textOf(document.querySelector(selector))
-    if (value)
+    if (value) {
       return value
+    }
   }
 
   return undefined
@@ -47,8 +48,9 @@ function queryAttr(
 ): string | undefined {
   for (const selector of selectors) {
     const value = attrOf(document.querySelector(selector), attribute)
-    if (value)
+    if (value) {
       return value
+    }
   }
 
   return undefined
@@ -60,10 +62,10 @@ function isVisible(element: Element): boolean {
   const rect = node.getBoundingClientRect()
 
   return (
-    style.display !== 'none' &&
-    style.visibility !== 'hidden' &&
-    rect.width > 0 &&
-    rect.height > 0
+    style.display !== 'none'
+    && style.visibility !== 'hidden'
+    && rect.width > 0
+    && rect.height > 0
   )
 }
 
@@ -88,20 +90,23 @@ function sourceFromSelectedControl(): string | undefined {
   for (const element of elements) {
     const value = textOf(element)
 
-    if (!value || value.length > 60)
+    if (!value || value.length > 60) {
       continue
+    }
 
     if (
       /^(watch|play|next|previous|episode|episodes|server|source|provider|stream|player|dub|sub|quality|auto|default)$/i.test(
         value,
       )
-    )
+    ) {
       continue
+    }
 
     const parentText = clean(element.parentElement?.textContent) ?? ''
 
-    if (/server|source|provider|stream|player/i.test(parentText))
+    if (/server|source|provider|stream|player/i.test(parentText)) {
       return value
+    }
   }
 
   return undefined
@@ -123,8 +128,9 @@ function sourceFromUrl(): string | undefined {
   for (const part of window.location.pathname.split('/').filter(Boolean)) {
     const source = sources[part.toLowerCase()]
 
-    if (source)
+    if (source) {
       return source
+    }
   }
 
   const params = new URLSearchParams(window.location.search)
@@ -132,16 +138,18 @@ function sourceFromUrl(): string | undefined {
   for (const key of ['source', 'server', 'provider']) {
     const value = clean(params.get(key))
 
-    if (value)
+    if (value) {
       return value
+    }
   }
 
   return undefined
 }
 
 function extractEpisode(value: string | undefined): string | undefined {
-  if (!value)
+  if (!value) {
     return undefined
+  }
 
   const patterns = [
     /\bS\d{1,2}\s*E(\d{1,4})\b/i,
@@ -153,8 +161,9 @@ function extractEpisode(value: string | undefined): string | undefined {
   for (const pattern of patterns) {
     const match = value.match(pattern)
 
-    if (match?.[1])
+    if (match?.[1]) {
       return match[1]
+    }
   }
 
   return undefined
@@ -177,8 +186,9 @@ function getEpisode(): string | undefined {
   for (const candidate of candidates) {
     const episode = extractEpisode(candidate)
 
-    if (episode)
+    if (episode) {
       return episode
+    }
   }
 
   return undefined
@@ -211,18 +221,20 @@ function getAnimeTitle(): string | undefined {
   ]
 
   for (const candidate of candidates) {
-    if (!candidate)
+    if (!candidate) {
       continue
+    }
 
     const title = clean(stripEpisode(candidate))
 
     if (
-      title &&
-      !/^(storm|stormd|anisto|mangasto|movisto|anime|watch anime)$/i.test(
+      title
+      && !/^(storm|stormd|anisto|mangasto|movisto|anime|watch anime)$/i.test(
         title,
       )
-    )
+    ) {
       return title
+    }
   }
 
   return undefined
@@ -239,11 +251,11 @@ function isWatchPage(): boolean {
     `${window.location.pathname}${window.location.search}`.toLowerCase()
 
   return (
-    /\/watch\b/.test(url) ||
-    /\/episode\b/.test(url) ||
-    /\/play\b/.test(url) ||
-    /[?&](episode|ep)=/i.test(url) ||
-    Boolean(getVideo())
+    /\/watch\b/.test(url)
+    || /\/episode\b/.test(url)
+    || /\/play\b/.test(url)
+    || /[?&](episode|ep)=/i.test(url)
+    || Boolean(getVideo())
   )
 }
 
@@ -262,14 +274,15 @@ function getPlaybackTimestamps(video: HTMLVideoElement | undefined): {
   endTimestamp?: number
 } {
   if (
-    !video ||
-    video.paused ||
-    video.ended ||
-    !Number.isFinite(video.duration) ||
-    video.duration <= 0 ||
-    !Number.isFinite(video.currentTime)
-  )
+    !video
+    || video.paused
+    || video.ended
+    || !Number.isFinite(video.duration)
+    || video.duration <= 0
+    || !Number.isFinite(video.currentTime)
+  ) {
     return {}
+  }
 
   const [startTimestamp, endTimestamp] = getTimestamps(
     Math.floor(video.currentTime),
@@ -313,8 +326,9 @@ presence.on('UpdateData', async () => {
   const activity = buildActivity(getWatchState())
   const snapshot = JSON.stringify(activity)
 
-  if (snapshot === lastSnapshot)
+  if (snapshot === lastSnapshot) {
     return
+  }
 
   lastSnapshot = snapshot
   presence.setActivity(activity)
