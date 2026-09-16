@@ -6,8 +6,8 @@
   "service": "YassirTV",
   "altnames": ["Siiir.tv", "Sir TV"],
   "description": {
-    "en": "Watch live football matches streamed on YassirTV.",
-    "ar": "شاهد مباريات كرة القدم المباشرة على YassirTV."
+    "ar": "شاهد مباريات كرة القدم المباشرة على YassirTV.",
+    "en": "Watch live football matches streamed on YassirTV."
   },
   "url": "yassirtv.com",
   "regExp": "([a-z0-9-]+[.])*yassirtv[.]com([/].*)?",
@@ -18,5 +18,5 @@
   "thumbnail": "https://sir-tv-apk.com/assets/store-icon-512.png",
   "color": "#c0392b",
   "category": "videos",
-  "tags": ["football", "soccer", "live", "sports", "matches", "football"]
+  "tags": ["football", "soccer", "live", "sports", "matches", "football", "UEFA Champions League", "La Liga"]
 }
