@@ -8,8 +8,6 @@ enum ActivityAssets {
   Logo = 'https://i.ibb.co/cG1v62y/6aaaf2912fe1c2-59830015-Processed.png',
 }
 
-let wasWatching = false
-
 interface IFrameData {
   video?: {
     paused: boolean
@@ -116,12 +114,11 @@ presence.on('UpdateData', async () => {
       else if (!isPlaying) {
         presenceData.smallImageKey = Assets.Pause
         presenceData.smallImageText = strings.paused
-      }
+      } 
       else {
         presenceData.state = 'Loading…'
       }
     }
-    wasWatching = true
   }
 
   presence.setActivity(presenceData)
