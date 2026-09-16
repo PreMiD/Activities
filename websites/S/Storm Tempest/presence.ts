@@ -4,8 +4,8 @@ const presence = new Presence({
   clientId: '1233213267053248633',
 })
 
-const STORM_TEMPEST_IMAGE =
-  'https://raw.githubusercontent.com/akuyakii/assist-/main/logo-512.png'
+const STORM_TEMPEST_IMAGE
+  = 'https://raw.githubusercontent.com/akuyakii/assist-/main/logo-512.png'
 
 interface WatchState {
   title: string
