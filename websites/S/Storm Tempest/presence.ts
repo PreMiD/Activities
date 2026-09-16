@@ -155,7 +155,7 @@ function extractEpisode(value: string | undefined): string | undefined {
     /\bS\d{1,2}\s*E(\d{1,4})\b/i,
     /\bEpisode\s*(\d{1,4})\b/i,
     /\bEp\.?\s*(\d{1,4})\b/i,
-    /(?:^|\s)#(\d{1,4})(?:\s|$)/i,
+    /(?:^|\s)#(\d{1,4})(?:\s|$)/,
   ]
 
   for (const pattern of patterns) {
@@ -311,25 +311,12 @@ function buildActivity(watch: WatchState): PresenceData {
   }
 }
 
-let lastSnapshot = ''
-
 presence.on('UpdateData', async () => {
   if (!isWatchPage()) {
-    if (lastSnapshot !== '') {
-      lastSnapshot = ''
-      presence.clearActivity()
-    }
-
+    presence.clearActivity()
     return
   }
 
   const activity = buildActivity(getWatchState())
-  const snapshot = JSON.stringify(activity)
-
-  if (snapshot === lastSnapshot) {
-    return
-  }
-
-  lastSnapshot = snapshot
   presence.setActivity(activity)
 })
