@@ -6,7 +6,6 @@ const presence = new Presence({
 
 enum ActivityAssets {
   Logo = 'https://i.ibb.co/cG1v62y/6aaaf2912fe1c2-59830015-Processed.png',
-  LiveDot = 'https://i.ibb.co/SDvNjsDY/6aaadb82e5ef86-05272767-Processed.png',
 }
 
 let browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -69,7 +68,6 @@ function parseMinuteFromTitle(title: string): string | null {
 }
 
 presence.on('UpdateData', async () => {
-  const showTimestamp = await presence.getSetting<boolean>('showTimestamp')
   const strings = await getStrings()
 
   const presenceData: PresenceData = {
@@ -113,7 +111,7 @@ presence.on('UpdateData', async () => {
       const isPlaying = !video.paused && !video.ended
 
       if (isPlaying && !isBuffering) {
-        presenceData.smallImageKey = ActivityAssets.LiveDot
+        presenceData.smallImageKey = Assets.Live
         presenceData.smallImageText = strings.live
       }
       else if (!isPlaying) {
@@ -124,19 +122,6 @@ presence.on('UpdateData', async () => {
         presenceData.state = 'Loading…'
       }
     }
-
-    if (video && Number.isFinite(video.duration) && showTimestamp) {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
-        video.currentTime,
-        video.duration,
-      )
-    }
-    else if (showTimestamp) {
-      if (!wasWatching)
-        browsingTimestamp = Math.floor(Date.now() / 1000)
-      presenceData.startTimestamp = browsingTimestamp
-    }
-
     wasWatching = true
   }
   else {
@@ -144,9 +129,6 @@ presence.on('UpdateData', async () => {
       browsingTimestamp = Math.floor(Date.now() / 1000)
       wasWatching = false
     }
-    presenceData.details = `Looking for a Match`
-    if (showTimestamp)
-      presenceData.startTimestamp = browsingTimestamp
   }
 
   presence.setActivity(presenceData)
