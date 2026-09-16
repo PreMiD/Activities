@@ -12,7 +12,7 @@
     "en": "Watch live football matches streamed on YassirTV."
   },
   "url": ["fabor.tv", "yassirtv.com", "fabor-tv.to/"],
-  "regExp": "(?:yassirtv\\.com|fabor\\.tv|fabor-tv\\.to)\\/.*",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(yassirtv[.]com|fabor[.]tv|fabor-tv[.]to)[/]",
   "version": "1.0.0",
   "logo": "https://i.ibb.co/cG1v62y/6aaaf2912fe1c2-59830015-Processed.png",
   "thumbnail": "https://i.ibb.co/k2JsKY9Y/Screenshot-2026-09-15-211137.png",
@@ -20,5 +20,5 @@
   "category": "videos",
   "tags": ["football", "soccer", "live", "sports", "matches", "uefa-champions-league", "la-liga"],
   "iframe": true,
-  "iFrameRegExp": "[a-z0-9]+\\.yasirtv\\.com/playerv5\\.php.*"
+  "iFrameRegExp": "[a-z0-9]+[.]yasirtv[.]com/playerv5[.]php.*"
 }
