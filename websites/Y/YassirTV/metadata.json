@@ -16,7 +16,7 @@
   "thumbnail": "https://sir-tv-apk.com/assets/store-icon-512.png",
   "color": "#c0392b",
   "category": "videos",
-  "tags": ["football", "soccer", "live", "sports", "matches", "football", "UEFA Champions League", "La Liga"],
+  "tags": ["football", "soccer", "live", "sports", "matches", "uefa-champions-league", "la-liga"],
   "iframe": true,
   "iFrameRegExp": "[a-z0-9]+\\.yasirtv\\.com/playerv5\\.php.*"
 }
