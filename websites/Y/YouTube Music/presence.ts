@@ -15,32 +15,66 @@ class PresenceState {
   mediaTimestamps: [number, number] = [0, 0]
   oldPath = ''
   startTimestamp = 0
-  videoListenerAttached = false
+  attachedVideoElement: HTMLMediaElement | null = null
+  updateTimestampsHandler: (() => void) | null = null
   dataGetter = new YouTubeMusicDataGetter()
 }
 
 const state = new PresenceState()
 
 function attachVideoListeners(videoElement: HTMLMediaElement) {
-  if (state.videoListenerAttached)
+  if (state.attachedVideoElement === videoElement)
     return
+
+  detachVideoListeners()
+
   const updateTimestamps = () => {
     state.mediaTimestamps = updateSongTimestamps(state.dataGetter)
   }
   videoElement.addEventListener('seeked', updateTimestamps)
   videoElement.addEventListener('play', updateTimestamps)
-  state.videoListenerAttached = true
+
+  state.attachedVideoElement = videoElement
+  state.updateTimestampsHandler = updateTimestamps
 }
 
 function detachVideoListeners() {
+  if (state.attachedVideoElement && state.updateTimestampsHandler) {
+    state.attachedVideoElement.removeEventListener('seeked', state.updateTimestampsHandler)
+    state.attachedVideoElement.removeEventListener('play', state.updateTimestampsHandler)
+  }
+  state.attachedVideoElement = null
+  state.updateTimestampsHandler = null
   state.prevTitleAuthor = ''
-  state.videoListenerAttached = false
+}
+
+function tryShowBrowsing(
+  settings: Awaited<ReturnType<typeof getSettings>>,
+  pathname: string,
+  search: string,
+  href: string,
+  strings: Awaited<ReturnType<typeof presence.getStrings>>,
+) {
+  if (!settings.showBrowsing)
+    return false
+
+  if (state.oldPath !== pathname) {
+    state.oldPath = pathname
+    state.startTimestamp = Math.floor(Date.now() / 1000)
+  }
+
+  presence.setActivity(
+    createBrowsingPresence(pathname, search, href, state.startTimestamp, strings, settings.privacyMode),
+  )
+  return true
 }
 
 presence.on('UpdateData', async () => {
   const { pathname, search, href } = document.location
-  const settings = await getSettings(presence)
-  const strings = await presence.getStrings(stringMap)
+  const [settings, strings] = await Promise.all([
+    getSettings(presence),
+    presence.getStrings(stringMap),
+  ])
   const mediaData = state.dataGetter.getMediaData()
   const watchID = state.dataGetter.getWatchId()
   const repeatMode = state.dataGetter.getRepeatMode()
@@ -53,21 +87,15 @@ presence.on('UpdateData', async () => {
     detachVideoListeners()
   }
 
-  if (settings.hidePaused && mediaData.playbackState !== 'playing') {
+  if (!videoElement) {
+    if (tryShowBrowsing(settings, pathname, search, href, strings))
+      return
+
+    state.prevTitleAuthor = ''
     return presence.clearActivity()
   }
 
-  if (!videoElement) {
-    if (settings.showBrowsing) {
-      if (state.oldPath !== pathname) {
-        state.oldPath = pathname
-        state.startTimestamp = Math.floor(Date.now() / 1000)
-      }
-      return presence.setActivity(
-        createBrowsingPresence(pathname, search, href, state.startTimestamp, strings, settings.privacyMode),
-      )
-    }
-    state.prevTitleAuthor = ''
+  if (settings.hidePaused && mediaData.playbackState !== 'playing') {
     return presence.clearActivity()
   }
 
@@ -121,15 +149,8 @@ presence.on('UpdateData', async () => {
 
   state.prevTitleAuthor = ''
 
-  if (settings.showBrowsing) {
-    if (state.oldPath !== pathname) {
-      state.oldPath = pathname
-      state.startTimestamp = Math.floor(Date.now() / 1000)
-    }
-    return presence.setActivity(
-      createBrowsingPresence(pathname, search, href, state.startTimestamp, strings, settings.privacyMode),
-    )
-  }
+  if (tryShowBrowsing(settings, pathname, search, href, strings))
+    return
 
   return presence.clearActivity()
 })
