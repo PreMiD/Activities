@@ -114,7 +114,7 @@ presence.on('UpdateData', async () => {
       else if (!isPlaying) {
         presenceData.smallImageKey = Assets.Pause
         presenceData.smallImageText = strings.paused
-      } 
+      }
       else {
         presenceData.state = 'Loading…'
       }
