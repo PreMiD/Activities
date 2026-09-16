@@ -95,7 +95,7 @@ function sourceFromSelectedControl(): string | undefined {
     }
 
     if (
-      /^(watch|play|next|previous|episode|episodes|server|source|provider|stream|player|dub|sub|quality|auto|default)$/i.test(
+      /^(?:watch|play|next|previous|episode|episodes|server|source|provider|stream|player|dub|sub|quality|auto|default)$/i.test(
         value,
       )
     ) {
@@ -229,7 +229,7 @@ function getAnimeTitle(): string | undefined {
 
     if (
       title
-      && !/^(storm|stormd|anisto|mangasto|movisto|anime|watch anime)$/i.test(
+      && !/^(?:storm|stormd|anisto|mangasto|movisto|anime|watch anime)$/i.test(
         title,
       )
     ) {
@@ -247,14 +247,14 @@ function getVideo(): HTMLVideoElement | undefined {
 }
 
 function isWatchPage(): boolean {
-  const url =
-    `${window.location.pathname}${window.location.search}`.toLowerCase()
+  const url
+  = `${window.location.pathname}${window.location.search}`.toLowerCase()
 
   return (
     /\/watch\b/.test(url)
     || /\/episode\b/.test(url)
     || /\/play\b/.test(url)
-    || /[?&](episode|ep)=/i.test(url)
+    || /[?&](?:episode|ep)=/i.test(url)
     || Boolean(getVideo())
   )
 }
