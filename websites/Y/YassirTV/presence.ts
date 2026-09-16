@@ -92,7 +92,8 @@ function cleanTitle(title: string): string {
 
 // Extracts the live match minute from the page title, e.g. "52'"
 function parseMinuteFromTitle(title: string): string | null {
-  const match = title.match(/(\d{1,3})['\u2019\u02BC]/)
+  // Matches "52'", "90+1'", "45+2'", etc.
+  const match = title.match(/(\d{1,3}(?:\+\d{1,2})?)['\u2019\u02BC]/)
   return match ? `${match[1]}'` : null
 }
 
