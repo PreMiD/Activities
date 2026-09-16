@@ -1,9 +1,6 @@
 import { Assets } from 'premid'
 
 const presence = new Presence({
-  // Get this from a Discord Application you create at
-  // https://discord.com/developers/applications (Rich Presence is enabled
-  // by default, you just need the Client ID from the General Information tab).
   clientId: '1519022518617374852',
 })
 
@@ -102,13 +99,18 @@ function getCurrentShow(): string {
 let lastTitle = ''
 let lastTrackStart = Math.floor(Date.now() / 1000)
 
-function pushMusicPresence(presenceData: PresenceData): void {
-  presenceData.details = currentTitle
-  presenceData.state = `${currentArtist} • ${currentDj}`
-  presenceData.smallImageKey = Assets.Play
-  presenceData.smallImageText = `Listening to ${currentDj}`
+interface PresenceSettings {
+  showDj: boolean
+  useCoverArt: boolean
+}
 
-  if (currentArt)
+function pushMusicPresence(presenceData: PresenceData, settings: PresenceSettings): void {
+  presenceData.details = currentTitle
+  presenceData.state = settings.showDj ? `${currentArtist} • ${currentDj}` : currentArtist
+  presenceData.smallImageKey = Assets.Play
+  presenceData.smallImageText = settings.showDj ? `Listening to ${currentDj}` : 'Listening live'
+
+  if (settings.useCoverArt && currentArt)
     presenceData.largeImageKey = currentArt
 
   if (lastTitle !== currentTitle) {
@@ -124,10 +126,7 @@ updateNowPlaying()
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
-    // This falls back to the site's own favicon so it works immediately in
-    // local testing. Once the activity is approved, PreMiD swap this for
-    // the logo you submit (see metadata.json) automatically.
-    largeImageKey: 'https://milezero.live/favicon.png',
+    largeImageKey: 'https://i.richie.media/u/HzpecO.png',
   }
 
   const playButton = document.querySelector<HTMLButtonElement>('.hero-card__play')
@@ -138,8 +137,12 @@ presence.on('UpdateData', async () => {
 
   const { pathname } = document.location
 
+  const showButtons = await presence.getSetting<boolean>('buttons')
+  const showDj = await presence.getSetting<boolean>('showDj')
+  const useCoverArt = await presence.getSetting<boolean>('useCoverArt')
+
   if (isPlaying && isOnline) {
-    pushMusicPresence(presenceData)
+    pushMusicPresence(presenceData, { showDj, useCoverArt })
   }
   else {
     presenceData.startTimestamp = browsingTimestamp
@@ -181,6 +184,13 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.details = 'Browsing Mile Zero'
     }
+  }
+
+  if (showButtons) {
+    presenceData.buttons = [
+      { label: 'Listen to MZ', url: 'https://milezero.live' },
+      { label: 'Join the Discord', url: 'https://discord.milezero.live' },
+    ]
   }
 
   if (presenceData.details)
