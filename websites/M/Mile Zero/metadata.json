@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "richie",
@@ -34,13 +34,6 @@
     "music"
   ],
   "settings": [
-    {
-      "id": "buttons",
-      "title": "Show Buttons",
-      "icon": "fas fa-link",
-      "value": true,
-      "description": "Show \"Listen Live\" and \"Join the Discord\" buttons"
-    },
     {
       "id": "showDj",
       "title": "Show DJ Name",

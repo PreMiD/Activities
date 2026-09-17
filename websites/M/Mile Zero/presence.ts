@@ -56,7 +56,6 @@ async function updateNowPlaying(): Promise<void> {
     currentArt = data.nowPlaying.art
   }
   catch {
-    // Keep the last known values if the API is briefly unreachable.
   }
 }
 
@@ -67,7 +66,6 @@ let timetable: TimetableSlot[] = []
 async function updateTimetable(): Promise<void> {
   const now = Math.floor(Date.now() / 1000)
 
-  // The schedule doesn't change often, so only refetch every 5 minutes.
   if (now - timetableFetchedAt < 300)
     return
 
@@ -81,7 +79,6 @@ async function updateTimetable(): Promise<void> {
     timetableFetchedAt = now
   }
   catch {
-    // Keep the last known timetable if the API is briefly unreachable.
   }
 }
 
@@ -137,9 +134,10 @@ presence.on('UpdateData', async () => {
 
   const { pathname } = document.location
 
-  const showButtons = await presence.getSetting<boolean>('buttons')
-  const showDj = await presence.getSetting<boolean>('showDj')
-  const useCoverArt = await presence.getSetting<boolean>('useCoverArt')
+  const [showDj, useCoverArt] = await Promise.all([
+    presence.getSetting<boolean>('showDj'),
+    presence.getSetting<boolean>('useCoverArt'),
+  ])
 
   if (isPlaying && isOnline) {
     pushMusicPresence(presenceData, { showDj, useCoverArt })
@@ -184,13 +182,6 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.details = 'Browsing Mile Zero'
     }
-  }
-
-  if (showButtons) {
-    presenceData.buttons = [
-      { label: 'Listen to MZ', url: 'https://milezero.live' },
-      { label: 'Join the Discord', url: 'https://discord.milezero.live' },
-    ]
   }
 
   if (presenceData.details)
