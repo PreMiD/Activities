@@ -319,4 +319,4 @@ presence.on('UpdateData', async () => {
 
   const activity = buildActivity(getWatchState())
   presence.setActivity(activity)
-})
+}) // by Mitsuki9 
