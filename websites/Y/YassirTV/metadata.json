@@ -20,5 +20,11 @@
   "category": "videos",
   "tags": ["football", "soccer", "live", "sports", "matches", "uefa-champions-league", "la-liga"],
   "iframe": true,
-  "iFrameRegExp": "[a-z0-9]+[.]yasirtv[.]com/playerv5[.]php.*"
+  "iFrameRegExp": "[a-z0-9]+[.]yasirtv[.]com/playerv5[.]php.*",
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
 }
