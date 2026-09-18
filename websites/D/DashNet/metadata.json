@@ -15,7 +15,7 @@
   },
   "url": "dashnet.org",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*dashnet[.]org[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DashNet/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DashNet/assets/thumbnail.png",
   "color": "#042B48",

@@ -17,7 +17,7 @@
     "privacy.patreon.com"
   ],
   "regExp": "^https?[:][/][/]((www|support|privacy)[.]patreon[.]com|patreon[.]com)[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Patreon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Patreon/assets/thumbnail.png",
   "color": "#F1465A",

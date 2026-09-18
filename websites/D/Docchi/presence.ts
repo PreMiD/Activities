@@ -234,6 +234,6 @@ presence.on('UpdateData', async () => {
     delete presenceData.state
   }
   if (!presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

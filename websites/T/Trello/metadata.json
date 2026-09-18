@@ -17,7 +17,7 @@
     "developers.trello.com"
   ],
   "regExp": "^https?[:][/][/]((help|blog|developers)[.])?trello[.]com[/]",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Trello/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Trello/assets/thumbnail.png",
   "color": "#0080cb",

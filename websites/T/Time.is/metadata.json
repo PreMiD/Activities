@@ -12,7 +12,7 @@
   },
   "url": "time.is",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*time[.]is[/]",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Time.is/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Time.is/assets/thumbnail.png",
   "color": "#cc3355",

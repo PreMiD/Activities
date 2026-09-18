@@ -162,6 +162,60 @@ describe('assetsManager', () => {
     })
   })
 
+  describe('getClientIds', () => {
+    it('should find literal clientIds in TypeScript files', async () => {
+      mocks.globby.mockResolvedValue(['/test/path/presence.ts'])
+      mocks.readFile.mockResolvedValue(
+        `const presence = new Presence({ clientId: '123456789012345678' })`,
+      )
+
+      const clientIds = await assetsManager.getClientIds()
+
+      expect(clientIds.map(id => id.clientId)).toEqual(['123456789012345678'])
+    })
+
+    it('should resolve clientIds referenced through enum members', async () => {
+      mocks.globby.mockResolvedValue(['/test/path/presence.ts'])
+      mocks.readFile.mockResolvedValue(`enum PresenceClients {
+  Reddit = '609183409440555018',
+  RedditNetflix = '869992823854870588',
+}
+let presence = new Presence({ clientId: PresenceClients.Reddit })`)
+
+      const clientIds = await assetsManager.getClientIds()
+
+      expect(clientIds.map(id => id.clientId)).toEqual([
+        '609183409440555018',
+        '869992823854870588',
+      ])
+    })
+
+    it('should not duplicate clientIds found both literally and via enums', async () => {
+      mocks.globby.mockResolvedValue(['/test/path/presence.ts'])
+      mocks.readFile.mockResolvedValue(`enum PresenceClients {
+  Main = '123456789012345678',
+}
+const presence = new Presence({ clientId: '123456789012345678' })
+const other = new Presence({ clientId: PresenceClients.Main })`)
+
+      const clientIds = await assetsManager.getClientIds()
+
+      expect(clientIds.map(id => id.clientId)).toEqual(['123456789012345678'])
+    })
+
+    it('should ignore enums that are never referenced by a clientId', async () => {
+      mocks.globby.mockResolvedValue(['/test/path/presence.ts'])
+      mocks.readFile.mockResolvedValue(`enum Unrelated {
+  Something = '999999999999999999',
+}
+const presence = new Presence({ clientId: '123456789012345678' })`)
+
+      const clientIds = await assetsManager.getClientIds()
+
+      expect(clientIds.map(id => id.clientId)).toEqual(['123456789012345678'])
+    })
+  })
+
   describe('getAssets', () => {
     beforeEach(() => {
       mocks.globby.mockReset()

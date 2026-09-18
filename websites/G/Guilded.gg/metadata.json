@@ -12,7 +12,7 @@
   },
   "url": "www.guilded.gg",
   "regExp": "^https?[:][/][/](www[.])?guilded[.]gg[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Guilded.gg/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Guilded.gg/assets/thumbnail.jpg",
   "color": "#ffff00",

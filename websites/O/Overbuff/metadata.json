@@ -12,7 +12,7 @@
   },
   "url": "www.overbuff.com",
   "regExp": "^https?[:][/][/](www[.])?overbuff[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Overbuff/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Overbuff/assets/thumbnail.png",
   "color": "#FF8D00",

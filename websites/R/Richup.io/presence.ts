@@ -94,7 +94,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = pages[pathname]
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
     return
   }
 

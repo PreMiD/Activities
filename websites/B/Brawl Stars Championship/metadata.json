@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "gamerjagdish",
+    "id": "525148562842189825"
+  },
+  "service": "Brawl Stars Championship",
+  "altnames": [
+    "BSC",
+    "Brawl Stars Esports",
+    "Brawl Stars Event",
+    "Brawl Stars Live"
+  ],
+  "description": {
+    "en": "Official platform for Brawl Stars Championship and esports events. Watch live streams, interact, and earn in-game rewards."
+  },
+  "url": "event.supercell.com",
+  "regExp": "^https?[:][/][/]event[.]supercell[.]com[/](brawlstars)?",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/Brawl%20Stars%20Championship/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/Brawl%20Stars%20Championship/assets/thumbnail.jpeg",
+  "color": "#FFC414",
+  "category": "games",
+  "tags": [
+    "brawl-stars",
+    "bsc",
+    "esports",
+    "livestream",
+    "supercell"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}

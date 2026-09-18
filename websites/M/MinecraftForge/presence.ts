@@ -86,7 +86,7 @@ presence.on('UpdateData', async () => {
         }
       }
       else {
-        presence.setActivity()
+        presence.clearActivity()
       }
 
       break
@@ -162,6 +162,6 @@ presence.on('UpdateData', async () => {
       break
     }
     default:
-      presence.setActivity()
+      presence.clearActivity()
   }
 })

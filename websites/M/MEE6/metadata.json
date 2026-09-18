@@ -15,7 +15,7 @@
     "help.mee6.xyz"
   ],
   "regExp": "^https?[:][/][/](help[.])?mee6[.]xyz[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MEE6/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MEE6/assets/thumbnail.png",
   "color": "#60d1f6",

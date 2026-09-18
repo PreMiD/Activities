@@ -13,7 +13,7 @@
   },
   "url": "glitch.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*glitch([.][a-z]+)+[/]",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Glitch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Glitch/assets/thumbnail.png",
   "color": "#f003fc",

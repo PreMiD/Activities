@@ -135,7 +135,7 @@ presence.on('UpdateData', async () => {
             presenceData.smallImageKey = Assets.Reading
         }
         else {
-          presence.setActivity()
+          presence.clearActivity()
         }
     }
   }

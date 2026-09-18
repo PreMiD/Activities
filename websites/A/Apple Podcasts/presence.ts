@@ -125,6 +125,6 @@ presence.on('UpdateData', async () => {
   }
   else {
     presenceData.type = ActivityType.Listening
-    presence.setActivity()
+    presence.clearActivity()
   }
 })

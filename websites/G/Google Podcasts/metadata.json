@@ -14,7 +14,7 @@
   },
   "url": "podcasts.google.com",
   "regExp": "^https?[:][/][/]podcasts[.]google[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Podcasts/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Podcasts/assets/thumbnail.jpg",
   "color": "#ffffff",

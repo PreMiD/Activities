@@ -45,7 +45,7 @@ function setClient(clientId: PresenceClients) {
   presence.clearActivity()
   if (presences[clientId]) {
     presence = presences[clientId]
-    presence.setActivity()
+    presence.clearActivity()
   }
   else {
     presence = new Presence({ clientId })

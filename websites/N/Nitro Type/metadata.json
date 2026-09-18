@@ -21,7 +21,7 @@
     "www.nitrotype.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?nitrotype[.]com[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nitro%20Type/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nitro%20Type/assets/thumbnail.png",
   "color": "#D62F3A",

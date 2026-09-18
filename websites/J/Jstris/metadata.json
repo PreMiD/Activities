@@ -12,7 +12,7 @@
   },
   "url": "jstris.jezevec10.com",
   "regExp": "^https?[:][/][/]jstris[.]jezevec10[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Jstris/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Jstris/assets/thumbnail.png",
   "color": "#375a7f",

@@ -55,7 +55,7 @@ presence.on('UpdateData', async () => {
   // If data doesn't exist clear else set activity to the presence data
   if (!presenceData.details) {
     // Clear tray
-    presence.setActivity() // Clear activity
+    presence.clearActivity() // Clear activity
   }
   else {
     presence.setActivity(presenceData)

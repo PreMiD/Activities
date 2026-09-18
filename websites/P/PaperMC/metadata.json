@@ -18,7 +18,7 @@
     "forums.papermc.io"
   ],
   "regExp": "^https?[:][/][/](((docs|jd|hangar|forums)[.])?papermc[.]io|(hangar)[.]papermc[.]dev)[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PaperMC/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PaperMC/assets/thumbnail.png",
   "color": "#FFC0CB",

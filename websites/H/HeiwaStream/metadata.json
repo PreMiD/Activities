@@ -10,9 +10,7 @@
     "en": "Browse movies, series and anime available on HeiwaStream.",
     "fr": "Parcourez les films, séries et animés disponibles sur HeiwaStream."
   },
-  "url": [
-    "heiwastream.fr"
-  ],
+  "url": "heiwastream.fr",
   "regExp": "^https?[:][/][/](?:www[.])?heiwastream[.]fr(?:[/]|$)",
   "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HeiwaStream/assets/logo.png",

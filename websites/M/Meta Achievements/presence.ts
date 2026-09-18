@@ -29,11 +29,11 @@ presence.on('UpdateData', async () => {
   const getEmojiUrl = (char: string) => `https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/72x72/${char.codePointAt(0)?.toString(16)}.png`
 
   let buttonLabel: string | undefined
-  if (pathname.endsWith('index.html') || pathname === '/') {
+  if (pathname.endsWith('index.html') || pathname.endsWith('/index') || pathname === '/') {
     details = 'Home'
     smallImageKey = getEmojiUrl('🏠')
   }
-  else if (pathname.endsWith('achievements.html')) {
+  else if (pathname.endsWith('achievements.html') || pathname.endsWith('/achievements')) {
     const username = document.querySelector('.summary-title')?.textContent?.trim()
     const games = getMetric('Games Tracked')
     const achievements = getMetric('Achievements Unlocked')
@@ -64,7 +64,7 @@ presence.on('UpdateData', async () => {
       smallImageKey = avatarImg.src
     }
   }
-  else if (pathname.endsWith('achievementsbeta.html')) {
+  else if (pathname.endsWith('achievementsbeta.html') || pathname.endsWith('/achievementsbeta')) {
     const username = document.querySelector('.summary-title')?.textContent?.trim()
     const games = getMetric('Games Tracked')
     const achievements = getMetric('Achievements Unlocked')
@@ -95,7 +95,7 @@ presence.on('UpdateData', async () => {
       smallImageKey = avatarImg.src
     }
   }
-  else if (pathname.endsWith('achievementdefinitions.html')) {
+  else if (pathname.endsWith('achievementdefinitions.html') || pathname.endsWith('/achievementdefinitions')) {
     details = 'All Achievements'
     smallImageKey = getEmojiUrl('📚')
 
@@ -113,7 +113,7 @@ presence.on('UpdateData', async () => {
       state = parts.join(' · ')
     }
   }
-  else if (pathname.endsWith('achievementdefinitionsbeta.html')) {
+  else if (pathname.endsWith('achievementdefinitionsbeta.html') || pathname.endsWith('/achievementdefinitionsbeta')) {
     details = 'All Achievements'
     smallImageKey = getEmojiUrl('📚')
 
@@ -131,20 +131,33 @@ presence.on('UpdateData', async () => {
       state = parts.join(' · ')
     }
   }
-  else if (pathname.endsWith('achievementdefinitionsapp.html')) {
+  else if (pathname.endsWith('achievementdefinitionsapp.html') || pathname.endsWith('/achievementdefinitionsapp')) {
     details = 'Definitions App'
     smallImageKey = getEmojiUrl('🛠️')
   }
-  else if (pathname.endsWith('gamercard.html')) {
+  else if (pathname.endsWith('gamercard.html') || pathname.endsWith('/gamercard')) {
     details = 'Gamercard'
     smallImageKey = getEmojiUrl('🪪')
   }
-  else if (pathname.endsWith('ios-webapp-guide.html')) {
+  else if (pathname.endsWith('ios-webapp-guide.html') || pathname.endsWith('/ios-webapp-guide')) {
     details = 'IOS Web App Guide'
     smallImageKey = getEmojiUrl('🍏')
   }
-  else if (pathname.endsWith('settings.html')) {
-    details = 'User Settings'
+  else if (pathname.endsWith('qs-redirect.html') || pathname.endsWith('/qs-redirect')) {
+    details = 'Chosing their fate'
+    smallImageKey = getEmojiUrl('🎲')
+  }
+  else if (
+    pathname.endsWith('settings.html')
+    || pathname.endsWith('/settings')
+    || pathname.endsWith('admin.html')
+    || pathname.endsWith('/admin')
+    || pathname.endsWith('link.html')
+    || pathname.endsWith('/link')
+    || pathname.endsWith('altstore.html')
+    || pathname.endsWith('/altstore')
+  ) {
+    details = 'Settings'
     smallImageKey = getEmojiUrl('⚙️')
   }
 

@@ -197,5 +197,5 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = ActivityAssets.Logo
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

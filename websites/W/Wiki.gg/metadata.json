@@ -12,7 +12,7 @@
   },
   "url": "wiki.gg",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wiki[.]gg[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wiki.gg/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wiki.gg/assets/thumbnail.jpg",
   "color": "#ff1980",

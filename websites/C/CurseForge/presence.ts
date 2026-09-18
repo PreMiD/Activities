@@ -361,6 +361,6 @@ presence.on('UpdateData', async () => {
     delete presenceData.smallImageKey
   }
   else {
-    presence.setActivity()
+    presence.clearActivity()
   }
 })

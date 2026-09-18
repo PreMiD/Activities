@@ -12,7 +12,7 @@
   },
   "url": "www.truetrophies.com",
   "regExp": "^https?[:][/][/](www[.])?truetrophies[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TrueTrophies/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TrueTrophies/assets/thumbnail.png",
   "color": "#2e94d8",

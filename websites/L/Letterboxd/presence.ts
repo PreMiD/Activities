@@ -45,9 +45,9 @@ function getImageURLByAlt(alt: string): string | undefined {
 
 function filterIterable<T extends Element>(
   itr: NodeListOf<T>,
-  fnc: (val: T, ind?: number) => boolean,
+  fn: (val: T, ind?: number) => boolean,
 ) {
-  return Array.from(itr).find((element, ind) => fnc(element, ind))
+  return Array.from(itr).find((element, ind) => fn(element, ind))
 }
 
 interface FilmSchema {
@@ -137,26 +137,57 @@ presence.on('UpdateData', async () => {
         break
 
       case 'actor':
-      case 'director': {
-        const name = document
-          .querySelectorAll('.title-1.prettify')[0]
-          ?.textContent
-          ?.replace(
-            path[0] === 'director' ? /Films directed by\n?/i : /Films starring\n?/i,
-            '',
-          )
-          ?.trim()
+      case 'director':
+      case 'producer':
+      case 'writer':
+      case 'editor':
+      case 'executive-producer':
+      case 'cinematography':
+      case 'story':
+      case 'camera-operator':
+      case 'composer':
+      case 'original-writer':
+      case 'set-decoration':
+      case 'songs':
+      case 'sound':
+      case 'casting':
+      case 'lighting':
+      case 'production-design':
+      case 'art-direction':
+      case 'special-effects':
+      case 'stunts':
+      case 'costume-design':
+      case 'makeup':
+      case 'hairstyling':
+      case 'additional-directing':
+      case 'additional-photopgraphy':
+      case 'visual-effects':
+      case 'title-design':
+      case 'assistant-director': {
+        const rawHeader = document.querySelectorAll('.title-1.prettify')[0]?.textContent ?? ''
+        const cleanHeader = rawHeader.replace(/\s+/g, ' ').trim()
+
         const pfp = (
           document.querySelectorAll('.avatar.person-image.image-loaded')[0]
             ?.firstElementChild as HTMLImageElement
         )?.src
 
-        presenceData.details = `Viewing ${path[0] === 'director' ? 'director' : 'actor'}: ${name}`
+        presenceData.details = cleanHeader ? `Viewing ${cleanHeader}` : 'Viewing person page'
         if (pfp)
           presenceData.largeImageKey = pfp
 
+        const roleName = path[0]
+          .split('-')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ')
+
         presenceData.smallImageKey = ActivityAssets.Logo
-        presenceData.buttons = generateButtonText(presenceData.details)
+        presenceData.buttons = [
+          {
+            label: `View ${roleName}`,
+            url: document.location.href,
+          },
+        ]
         break
       }
 
@@ -503,16 +534,21 @@ presence.on('UpdateData', async () => {
           }
         }
         else {
-          const name = (document.querySelectorAll('.title-1')[0] as HTMLHeadingElement)?.textContent
-          presenceData.details = `Viewing ${path[0] === user ? 'their own' : `${name ?? path[0]}'s`} profile`
-          presenceData.state = `(${path[0] === user ? `${name}/${path[0]}` : path[0]})`
+          const name = document.querySelectorAll('.title-1')[0]?.textContent?.trim()
+          const displayName = name || path[0]
+
+          presenceData.details = `Viewing ${path[0] === user ? 'their own' : `${displayName}'s`} profile`
+          presenceData.state = path[0] === user && name
+            ? `(${name}/${path[0]})`
+            : `(${path[0]})`
+
           presenceData.largeImageKey = (
             document.querySelector('#avatar-zoom')?.previousElementSibling as HTMLImageElement
           )?.src ?? ActivityAssets.Logo
           presenceData.smallImageKey = ActivityAssets.Logo
           presenceData.buttons = [
             {
-              label: `View ${name ?? path[0]}`,
+              label: `View ${displayName}`,
               url: document.location.href,
             },
           ]

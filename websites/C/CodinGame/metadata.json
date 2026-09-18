@@ -12,7 +12,7 @@
   },
   "url": "www.codingame.com",
   "regExp": "^https?[:][/][/](www[.])?codingame[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/CodinGame/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/CodinGame/assets/thumbnail.png",
   "color": "#c4bf1c",

@@ -42,6 +42,6 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'On waitlist'
 
   if (!presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

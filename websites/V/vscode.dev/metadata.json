@@ -18,7 +18,7 @@
   },
   "url": "vscode.dev",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*vscode[.]dev[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/vscode.dev/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/vscode.dev/assets/thumbnail.png",
   "color": "#3eaaf2",
