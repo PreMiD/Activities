@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "richie",
+    "id": "990405387314425877"
+  },
+  "contributors": [
+    {
+      "name": "Joe",
+      "id": "301789889580498944"
+    }
+  ],
+  "service": "Mile Zero",
+  "description": {
+    "en": "Mile Zero | Your journey starts here"
+  },
+  "url": "milezero.live",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*milezero[.]live[/]",
+  "version": "1.0.0",
+  "logo": "https://i.richie.media/u/Rl9BsF.png",
+  "thumbnail": "https://i.richie.media/u/6emwPf.png",
+  "color": "#3424AD",
+  "category": "music",
+  "tags": [
+    "radio",
+    "simulation",
+    "gaming",
+    "ets2",
+    "ats",
+    "farmsim",
+    "minecraft",
+    "trucking",
+    "music"
+  ],
+  "settings": [
+    {
+      "id": "showDj",
+      "title": "Show DJ Name",
+      "icon": "fas fa-microphone",
+      "value": true,
+      "description": "Show who's currently on air alongside the track"
+    },
+    {
+      "id": "useCoverArt",
+      "title": "Use Track Cover Art",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Use the track's cover art instead of the Mile Zero logo while playing"
+    }
+  ]
+}
