@@ -1,7 +1,6 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
-  // Crea tu aplicación en https://discord.com/developers/applications y pega aquí su Client ID
   clientId: '1545854937341239306',
 })
 
@@ -27,12 +26,6 @@ let video: VideoData = { duration: 0, currentTime: 0, paused: true }
 let lastIFrameUpdate = 0
 const iframeCacheDuration = 5000
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-
-const strings = presence.getStrings({
-  play: 'general.playing',
-  pause: 'general.paused',
-  browse: 'general.browsing',
-})
 
 presence.on('iFrameData', (data: unknown) => {
   video = data as VideoData
@@ -136,13 +129,26 @@ function applyButton(presenceData: PresenceData, showButton: boolean, url: strin
 }
 
 presence.on('UpdateData', async () => {
-  const s = await strings
-  const brand = await presence.getSetting<boolean>('brand')
-  const showTempEp = await presence.getSetting<boolean>('showTempEp')
-  const showTime = await presence.getSetting<boolean>('showTime')
-  const showCover = await presence.getSetting<boolean>('showCover')
-  const showPlayState = await presence.getSetting<boolean>('showPlayState')
-  const showButton = await presence.getSetting<boolean>('showButton')
+  const strings = await presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    browse: 'general.browsing',
+  })
+  const [
+    brand,
+    showTempEp,
+    showTime,
+    showCover,
+    showPlayState,
+    showButton,
+  ] = await Promise.all([
+    presence.getSetting<boolean>('brand'),
+    presence.getSetting<boolean>('showTempEp'),
+    presence.getSetting<boolean>('showTime'),
+    presence.getSetting<boolean>('showCover'),
+    presence.getSetting<boolean>('showPlayState'),
+    presence.getSetting<boolean>('showButton'),
+  ])
 
   const { pathname, href, search } = document.location
   const schema = getSchemaNode()
@@ -182,7 +188,7 @@ presence.on('UpdateData', async () => {
 
     presenceData.largeImageKey = showCover && cover ? cover : ActivityAssets.Logo
     presenceData.largeImageText = seriesName
-    applyVideoState(presenceData, showTime, showPlayState, s.play, s.pause)
+    applyVideoState(presenceData, showTime, showPlayState, strings.play, strings.pause)
     applyButton(presenceData, showButton, href)
     return presence.setActivity(presenceData)
   }
@@ -204,7 +210,7 @@ presence.on('UpdateData', async () => {
 
     presenceData.largeImageKey = showCover && cover ? cover : ActivityAssets.Logo
     presenceData.largeImageText = movieName
-    applyVideoState(presenceData, showTime, showPlayState, s.play, s.pause)
+    applyVideoState(presenceData, showTime, showPlayState, strings.play, strings.pause)
     applyButton(presenceData, showButton, href)
     return presence.setActivity(presenceData)
   }
@@ -226,7 +232,7 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageText = seriesName
     presenceData.startTimestamp = browsingTimestamp
     presenceData.smallImageKey = Assets.Search
-    presenceData.smallImageText = s.browse
+    presenceData.smallImageText = strings.browse
     applyButton(presenceData, showButton, href)
     return presence.setActivity(presenceData)
   }
@@ -235,7 +241,7 @@ presence.on('UpdateData', async () => {
   presenceData.state = 'Navegando'
   presenceData.startTimestamp = browsingTimestamp
   presenceData.smallImageKey = Assets.Search
-  presenceData.smallImageText = s.browse
+  presenceData.smallImageText = strings.browse
 
   if (pathname === '/' || pathname === '') {
     presenceData.state = 'Página principal'
