@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "infinit7even",
+    "id": "1550909471180726362"
+  },
+  "service": "Fumoshare",
+  "description": {
+    "en": "Fumoshare is a social network for FumoFumo plushie collectors to share photos, browse the FumoDex, track preorders, and map sightings.",
+    "it": "Fumoshare è una piattaforma social per collezionisti di peluche FumoFumo dove condividere foto, esplorare il FumoDex e monitorare i preordini."
+  },
+  "url": "fumoshare.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*fumoshare[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://fumoshare.com/logo.png",
+  "thumbnail": "https://fumoshare.com/favicon.png",
+  "color": "#E11D48",
+  "category": "socials",
+  "tags": [
+    "fumo",
+    "touhou",
+    "plushies",
+    "social",
+    "community"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "description": "Hide usernames, post captions, and search queries from your presence",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "elapsedTime",
+      "title": "Show Elapsed Time",
+      "icon": "fas fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-link",
+      "value": true
+    }
+  ]
+}
