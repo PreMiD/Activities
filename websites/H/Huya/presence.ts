@@ -1,4 +1,4 @@
-import { Assets, ActivityType } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1550648464084566136',
@@ -19,25 +19,21 @@ function formatTime(seconds: number): string {
 }
 
 async function getStrings() {
-  return presence.getStrings(
-    {
-      play: 'general.playing',
-      pause: 'general.paused',
-      live: 'general.live',
-      viewHome: 'general.viewHome',
-      browse: 'general.browsing',
-      watchingLive: 'general.watchingLive',
-      watchingVid: 'general.watchingVid',
-      searchingFor: 'general.searchFor',
-      searchingSomething: 'general.searchSomething',
-      watchStream: 'general.buttonWatchStream',
-      watchVideo: 'general.buttonWatchVideo',
-    },
-    await presence.getSetting<string>('lang').catch(() => 'en'),
-  )
+  return presence.getStrings({
+    play: 'general.playing',
+    pause: 'general.paused',
+    live: 'general.live',
+    viewHome: 'general.viewHome',
+    browse: 'general.browsing',
+    watchingLive: 'general.watchingLive',
+    watchingVid: 'general.watchingVid',
+    searchingFor: 'general.searchFor',
+    searchingSomething: 'general.searchSomething',
+    watchStream: 'general.buttonWatchStream',
+    watchVideo: 'general.buttonWatchVideo',
+  })
 }
 
-let oldLang = 'en'
 let strings: Awaited<ReturnType<typeof getStrings>>
 
 const openedTimestamp = Math.floor(Date.now() / 1000)
@@ -49,18 +45,14 @@ presence.on('UpdateData', async () => {
     privacy,
     streamState,
     vidState,
-    newLang,
   ] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<string>('streamState'),
     presence.getSetting<string>('vidState'),
-    presence.getSetting<string>('lang').catch(() => 'en'),
   ])
 
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
+  if (!strings)
     strings = await getStrings()
-  }
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -96,7 +88,7 @@ presence.on('UpdateData', async () => {
         if (video?.duration) {
           const timeText = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`
           presenceData.state = author
-            ? `${vidState.replace('%uploader%', author)}　${timeText}`
+            ? `${vidState.replace('%uploader%', author)} - ${timeText}`
             : timeText
         }
       }
