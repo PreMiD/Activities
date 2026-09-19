@@ -1,6 +1,6 @@
 import type { RoutePresenceContext } from '../types.js'
+import { Assets } from 'premid'
 import {
-  PRESENCE_ICONS,
   ROUTE_COLLECTION_PATTERN,
   ROUTE_DOWNLOAD_PATTERN,
   ROUTE_GENRE_PATTERN,
@@ -42,11 +42,11 @@ export async function handleCatalogRoutes(
     const query = getSearchParam('q')
     const presenceData = createPagePresence(
       s().searching,
-      query ? format(s().searchQuery, query) : s().searchGlobal,
+      query ? `${s().searchQuery} ${query}` : s().searchGlobal,
       pageImage,
     )
 
-    presenceData.smallImageKey = PRESENCE_ICONS.search
+    presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = s().searchLabel
 
     return finalizeRoutePresence(context, presenceData)
@@ -264,7 +264,7 @@ export async function handleCatalogRoutes(
       livePoster && isImageUrlAllowed(livePoster) ? livePoster : pageImage,
     )
 
-    presenceData.smallImageKey = PRESENCE_ICONS.live
+    presenceData.smallImageKey = Assets.Live
     presenceData.smallImageText = s().live
 
     return finalizeRoutePresence(context, presenceData)

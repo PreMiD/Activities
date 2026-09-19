@@ -1,0 +1,346 @@
+{
+  "movix.home": {
+    "description": "Movix activity text: home.",
+    "message": "Home"
+  },
+  "movix.browseMovies": {
+    "description": "Movix activity text: browse movies.",
+    "message": "Browsing the movie catalog"
+  },
+  "movix.movies": {
+    "description": "Movix activity text: movies.",
+    "message": "Movies"
+  },
+  "movix.browseSeries": {
+    "description": "Movix activity text: browse series.",
+    "message": "Browsing the TV show catalog"
+  },
+  "movix.series": {
+    "description": "Movix activity text: series.",
+    "message": "TV shows"
+  },
+  "movix.browseCollections": {
+    "description": "Movix activity text: browse collections.",
+    "message": "Browsing collections"
+  },
+  "movix.collections": {
+    "description": "Movix activity text: collections.",
+    "message": "Collections"
+  },
+  "movix.viewCollection": {
+    "description": "Movix activity text: view collection.",
+    "message": "Viewing the collection"
+  },
+  "movix.collectionId": {
+    "description": "Fallback collection title; {0} is the collection ID.",
+    "message": "Collection {0}"
+  },
+  "movix.movieId": {
+    "description": "Fallback movie title; {0} is the movie ID.",
+    "message": "Movie {0}"
+  },
+  "movix.seriesId": {
+    "description": "Fallback series title; {0} is the series ID.",
+    "message": "TV show {0}"
+  },
+  "movix.downloadMovie": {
+    "description": "Movix activity text: download movie.",
+    "message": "Preparing the movie download"
+  },
+  "movix.downloadSeries": {
+    "description": "Movix activity text: download series.",
+    "message": "Preparing the TV show download"
+  },
+  "movix.movieToDownload": {
+    "description": "Movix activity text: movie to download.",
+    "message": "Movie to download"
+  },
+  "movix.seriesToDownload": {
+    "description": "Movix activity text: series to download.",
+    "message": "TV show to download"
+  },
+  "movix.useDebrid": {
+    "description": "Movix activity text: use debrid.",
+    "message": "Using the link debrider"
+  },
+  "movix.debridService": {
+    "description": "Selected link debrid service; {0} is the service name.",
+    "message": "Service: {0}"
+  },
+  "movix.debrid": {
+    "description": "Movix activity text: debrid.",
+    "message": "Link debriding"
+  },
+  "movix.moviesByGenre": {
+    "description": "Movix activity text: movies by genre.",
+    "message": "Movies by genre"
+  },
+  "movix.seriesByGenre": {
+    "description": "Movix activity text: series by genre.",
+    "message": "TV shows by genre"
+  },
+  "movix.useRoulette": {
+    "description": "Movix activity text: use roulette.",
+    "message": "Using the suggestion roulette"
+  },
+  "movix.randomPick": {
+    "description": "Movix activity text: random pick.",
+    "message": "Random pick"
+  },
+  "movix.browsePlatformCatalog": {
+    "description": "Movix activity text: browse platform catalog.",
+    "message": "Browsing a platform's catalog"
+  },
+  "movix.viewPlatform": {
+    "description": "Movix activity text: view platform.",
+    "message": "Viewing a platform"
+  },
+  "movix.platformId": {
+    "description": "Fallback streaming platform name; {0} is the platform ID.",
+    "message": "Platform {0}"
+  },
+  "movix.signIn": {
+    "description": "Movix activity text: sign in.",
+    "message": "Signing in"
+  },
+  "movix.signInState": {
+    "description": "Movix activity text: sign in state.",
+    "message": "Sign-in"
+  },
+  "movix.createAccount": {
+    "description": "Movix activity text: create account.",
+    "message": "Creating an account"
+  },
+  "movix.accountCreation": {
+    "description": "Movix activity text: account creation.",
+    "message": "Account creation"
+  },
+  "movix.bip39": {
+    "description": "Movix activity text: bip39.",
+    "message": "BIP39 sign-in"
+  },
+  "movix.viewPerson": {
+    "description": "Movix activity text: view person.",
+    "message": "Viewing the person's page"
+  },
+  "movix.personId": {
+    "description": "Fallback person name; {0} is the person ID.",
+    "message": "Person {0}"
+  },
+  "movix.userProfile": {
+    "description": "Movix activity text: user profile.",
+    "message": "User profile"
+  },
+  "movix.viewAlerts": {
+    "description": "Movix activity text: view alerts.",
+    "message": "Checking their alerts"
+  },
+  "movix.alerts": {
+    "description": "Movix activity text: alerts.",
+    "message": "Alerts"
+  },
+  "movix.watchLiveTv": {
+    "description": "Movix activity text: watch live tv.",
+    "message": "Watching live TV"
+  },
+  "movix.viewSuggestions": {
+    "description": "Movix activity text: view suggestions.",
+    "message": "Viewing personalized suggestions"
+  },
+  "movix.suggestions": {
+    "description": "Movix activity text: suggestions.",
+    "message": "Suggestions"
+  },
+  "movix.viewExtension": {
+    "description": "Movix activity text: view extension.",
+    "message": "Viewing the extension page"
+  },
+  "movix.extension": {
+    "description": "Movix activity text: extension.",
+    "message": "Movix extension"
+  },
+  "movix.listId": {
+    "description": "Fallback public list title; {0} is the list ID.",
+    "message": "List {0}"
+  },
+  "movix.listCatalog": {
+    "description": "Movix activity text: list catalog.",
+    "message": "List catalog"
+  },
+  "movix.viewLegal": {
+    "description": "Movix activity text: view legal.",
+    "message": "Viewing legal information"
+  },
+  "movix.dmca": {
+    "description": "Movix activity text: dmca.",
+    "message": "DMCA"
+  },
+  "movix.useAdmin": {
+    "description": "Movix activity text: use admin.",
+    "message": "Using the admin console"
+  },
+  "movix.administration": {
+    "description": "Movix activity text: administration.",
+    "message": "Administration"
+  },
+  "movix.selectProfile": {
+    "description": "Movix activity text: select profile.",
+    "message": "Selecting a profile"
+  },
+  "movix.manageProfiles": {
+    "description": "Movix activity text: manage profiles.",
+    "message": "Managing profiles"
+  },
+  "movix.browseWishboard": {
+    "description": "Movix activity text: browse wishboard.",
+    "message": "Browsing the Wishboard"
+  },
+  "movix.communityRequests": {
+    "description": "Movix activity text: community requests.",
+    "message": "Community requests"
+  },
+  "movix.writeRequest": {
+    "description": "Movix activity text: write request.",
+    "message": "Writing a Wishboard request"
+  },
+  "movix.newRequest": {
+    "description": "Movix activity text: new request.",
+    "message": "New request"
+  },
+  "movix.viewRequests": {
+    "description": "Movix activity text: view requests.",
+    "message": "Viewing their Wishboard requests"
+  },
+  "movix.myRequests": {
+    "description": "Movix activity text: my requests.",
+    "message": "My requests"
+  },
+  "movix.submitLink": {
+    "description": "Movix activity text: submit link.",
+    "message": "Submitting a link to the Wishboard"
+  },
+  "movix.linkSubmission": {
+    "description": "Movix activity text: link submission.",
+    "message": "Link submission"
+  },
+  "movix.viewAbout": {
+    "description": "Movix activity text: view about.",
+    "message": "Viewing the About page"
+  },
+  "movix.cinegraphMovie": {
+    "description": "Movix activity text: cinegraph movie.",
+    "message": "Exploring a movie's connections in CinéGraph"
+  },
+  "movix.cinegraphSeries": {
+    "description": "Movix activity text: cinegraph series.",
+    "message": "Exploring a TV show's connections in CinéGraph"
+  },
+  "movix.cinegraphPerson": {
+    "description": "Movix activity text: cinegraph person.",
+    "message": "Exploring a person's connections in CinéGraph"
+  },
+  "movix.cinegraph": {
+    "description": "Movix activity text: cinegraph.",
+    "message": "Exploring CinéGraph"
+  },
+  "movix.configureSettings": {
+    "description": "Movix activity text: configure settings.",
+    "message": "Configuring preferences"
+  },
+  "movix.viewTop10": {
+    "description": "Movix activity text: view top10.",
+    "message": "Viewing the top 10"
+  },
+  "movix.top10": {
+    "description": "Movix activity text: top10.",
+    "message": "Top 10"
+  },
+  "movix.viewWrapped": {
+    "description": "Movix activity text: view wrapped.",
+    "message": "Viewing their yearly recap"
+  },
+  "movix.wrapped": {
+    "description": "Movix activity text: wrapped.",
+    "message": "Wrapped"
+  },
+  "movix.wrappedYear": {
+    "description": "Annual recap title; {0} is the year. Keep the product name Wrapped.",
+    "message": "Wrapped {0}"
+  },
+  "movix.notFound": {
+    "description": "Movix activity text: not found.",
+    "message": "Page not found"
+  },
+  "movix.error404": {
+    "description": "Movix activity text: error404.",
+    "message": "Error 404"
+  },
+  "movix.createParty": {
+    "description": "Movix activity text: create party.",
+    "message": "Creating a WatchParty"
+  },
+  "movix.newParty": {
+    "description": "Movix activity text: new party.",
+    "message": "New WatchParty"
+  },
+  "movix.inParty": {
+    "description": "Movix activity text: in party.",
+    "message": "In a WatchParty"
+  },
+  "movix.participantsOne": {
+    "description": "Number of participants in a WatchParty room when exactly one person is present.",
+    "message": "1 participant"
+  },
+  "movix.participantsMany": {
+    "description": "Number of participants in a WatchParty room; {0} is the participant count.",
+    "message": "{0} participants"
+  },
+  "movix.joinParty": {
+    "description": "Movix activity text: join party.",
+    "message": "Joining a WatchParty"
+  },
+  "movix.codeEntry": {
+    "description": "Movix activity text: code entry.",
+    "message": "Entering a code"
+  },
+  "movix.codeValue": {
+    "description": "WatchParty invitation code; {0} is the code.",
+    "message": "Code {0}"
+  },
+  "movix.browseRooms": {
+    "description": "Movix activity text: browse rooms.",
+    "message": "Browsing WatchParty rooms"
+  },
+  "movix.publicRooms": {
+    "description": "Movix activity text: public rooms.",
+    "message": "Public rooms"
+  },
+  "movix.roomId": {
+    "description": "Fallback WatchParty room title; {0} is the room ID.",
+    "message": "Room {0}"
+  },
+  "movix.sourceSelection": {
+    "description": "Movix activity text: source selection.",
+    "message": "Selecting a source"
+  },
+  "movix.ended": {
+    "description": "Movix activity text: ended.",
+    "message": "Playback finished"
+  },
+  "movix.externalPlayer": {
+    "description": "Movix activity text: external player.",
+    "message": "Playing via an external player"
+  },
+  "movix.fallbackMovie": {
+    "description": "Movix activity text: fallback movie.",
+    "message": "Movie"
+  },
+  "movix.fallbackSeries": {
+    "description": "Movix activity text: fallback series.",
+    "message": "TV show"
+  },
+  "movix.btnJoinRoom": {
+    "description": "Movix activity text: btn join room.",
+    "message": "Join the room"
+  }
+}

@@ -1,4 +1,4 @@
-import { setLanguage } from './core/strings.js'
+import { loadStrings } from './core/strings.js'
 import { setPosterEnabled, setPrivacyMode } from './core/utils.js'
 import { buildRoutePresence } from './routes/buildRoutePresence.js'
 
@@ -19,32 +19,27 @@ async function getBooleanSetting(
   }
 }
 
-async function getNumberSetting(
-  settingId: string,
-  fallback: number,
-): Promise<number> {
+async function getLanguageSetting(): Promise<string> {
   try {
-    const value = await presence.getSetting<number>(settingId)
-    return typeof value === 'number' && Number.isFinite(value)
-      ? value
-      : fallback
+    const value = await presence.getSetting<string>('lang')
+    return typeof value === 'string' && value ? value : 'en'
   }
   catch {
-    return fallback
+    return 'en'
   }
 }
 
 presence.on('UpdateData', async () => {
-  const [showTimestamp, showButtons, privacyMode, showPoster, langIndex]
+  const [showTimestamp, showButtons, privacyMode, showPoster, language]
     = await Promise.all([
       getBooleanSetting('showTimestamp', true),
       getBooleanSetting('showButtons', false),
       getBooleanSetting('privacyMode', false),
       getBooleanSetting('showPoster', true),
-      getNumberSetting('lang', 0),
+      getLanguageSetting(),
     ])
 
-  setLanguage(langIndex === 1 ? 'en' : 'fr')
+  await loadStrings(presence, language)
   setPrivacyMode(privacyMode)
   setPosterEnabled(showPoster)
 

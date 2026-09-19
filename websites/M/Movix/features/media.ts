@@ -24,7 +24,7 @@ async function fetchTmdbMediaSummary(
     return null
   }
 
-  const language = getLanguage() === 'en' ? 'en-US' : 'fr-FR'
+  const language = getLanguage()
   const cacheKey = `${type}:${mediaId}:${language}`
   const cachedPromise = tmdbMediaCache.get(cacheKey)
   if (cachedPromise) {

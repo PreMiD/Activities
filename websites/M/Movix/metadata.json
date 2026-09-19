@@ -38,10 +38,7 @@
   "settings": [
     {
       "id": "lang",
-      "title": "Display Language",
-      "icon": "fas fa-language",
-      "value": 0,
-      "values": ["Français", "English"]
+      "multiLanguage": true
     },
     {
       "id": "showPoster",
