@@ -326,7 +326,7 @@ presence.on('UpdateData', async () => {
       }
       else {
         let details = showServerName && serverName
-          ? `${usernamePrefix}${strings.server}: ${truncate(serverName, 40)}`
+          ? `${usernamePrefix}${truncate(serverName, 40)}`
           : `${usernamePrefix}${strings.server}`
 
         if (showStatus && showServerName) {
