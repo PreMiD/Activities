@@ -246,7 +246,7 @@ function getResources(): string | null {
       }
     }
   }
-  catch (e) {
+  catch {
     console.error(e)
   }
   return null
@@ -259,7 +259,7 @@ function getAccountName(): string | null {
       return w.PterodactylUser.username
     }
   }
-  catch (e) {}
+  catch {}
   return null
 }
 
@@ -284,15 +284,17 @@ presence.on('UpdateData', async () => {
       const uptimeDisplay = document.getElementById('server-uptime-display')
       let hasCustomUptime = false
       if (uptimeDisplay && uptimeDisplay.dataset.uptime) {
-        const uptimeMs = parseInt(uptimeDisplay.dataset.uptime, 10)
+        const uptimeMs = Number.parseInt(uptimeDisplay.dataset.uptime, 10)
         if (uptimeMs > 0) {
           const totalSeconds = Math.floor(uptimeMs / 1000)
           const days = Math.floor(totalSeconds / 86400)
           const hours = Math.floor(totalSeconds / 3600)
           const minutes = Math.floor(totalSeconds / 60)
-          
-          if (days > 0) uptimeString = ` ${strings.onlineForDays.replace('[TIME]', days.toString())}`
-          else if (hours > 0) uptimeString = ` ${strings.onlineForHours.replace('[TIME]', hours.toString())}`
+
+          if (days > 0)
+            uptimeString = ` ${strings.onlineForDays.replace('[TIME]', days.toString())}`
+          else if (hours > 0)
+            uptimeString = ` ${strings.onlineForHours.replace('[TIME]', hours.toString())}`
           else uptimeString = ` ${strings.onlineForMinutes.replace('[TIME]', Math.max(1, minutes).toString())}`
           hasCustomUptime = true
         }
@@ -301,8 +303,8 @@ presence.on('UpdateData', async () => {
         presenceData.startTimestamp = startTimestamp
       }
     }
-    const accountName = showAccountName ? getAccountName() : null;
-    const usernamePrefix = accountName ? `[${accountName}] ` : '';
+    const accountName = showAccountName ? getAccountName() : null
+    const usernamePrefix = accountName ? `[${accountName}] ` : ''
 
     const { pathname } = document.location
 
@@ -333,16 +335,18 @@ presence.on('UpdateData', async () => {
           const status = getServerStatus()
           if (status)
             details += ` · ${status}${uptimeString}`
-        } else if (uptimeString) {
+        }
+        else if (uptimeString) {
           details += uptimeString
         }
 
         presenceData.details = details
-        
-        const resources = showResources ? getResources() : null;
+
+        const resources = showResources ? getResources() : null
         if (resources) {
           presenceData.state = `${getServerAction(subPath, strings)} (${resources})`
-        } else {
+        }
+        else {
           presenceData.state = getServerAction(subPath, strings)
         }
       }
@@ -350,7 +354,8 @@ presence.on('UpdateData', async () => {
     else if (pathname.startsWith('/account')) {
       if (accountName) {
         presenceData.details = `Account: ${accountName}`
-      } else {
+      }
+      else {
         delete presenceData.details
       }
       presenceData.state = getAccountAction(pathname, strings)
@@ -358,14 +363,16 @@ presence.on('UpdateData', async () => {
     else {
       if (accountName) {
         presenceData.details = `Account: ${accountName}`
-      } else {
+      }
+      else {
         delete presenceData.details
       }
       presenceData.state = strings.dashboard
     }
 
     presence.setActivity(presenceData)
-  } catch (error) {
+  }
+  catch (error) {
     console.error('PreMiD PVQ Panel Error:', error)
   }
 })
