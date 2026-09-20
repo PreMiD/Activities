@@ -198,5 +198,17 @@
   "pvqpanel.managing_servers": {
     "message": "Managing servers",
     "description": "Managing servers"
+  },
+  "pvqpanel.online_for_days": {
+    "message": "(online for [TIME]d)",
+    "description": "Online for days"
+  },
+  "pvqpanel.online_for_hours": {
+    "message": "(online for [TIME]h)",
+    "description": "Online for hours"
+  },
+  "pvqpanel.online_for_minutes": {
+    "message": "(online for [TIME]m)",
+    "description": "Online for minutes"
   }
 }

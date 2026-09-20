@@ -60,6 +60,9 @@ async function getStrings() {
     server: 'pvqpanel.server',
     buttonOpenPanel: 'pvqpanel.button_open_panel',
     managingServers: 'pvqpanel.managing_servers',
+    onlineForDays: 'pvqpanel.online_for_days',
+    onlineForHours: 'pvqpanel.online_for_hours',
+    onlineForMinutes: 'pvqpanel.online_for_minutes',
   })
 }
 
@@ -276,16 +279,25 @@ presence.on('UpdateData', async () => {
       presence.getSetting<boolean>('showResources'),
     ])
 
+    let uptimeString = ''
     if (showElapsedTime) {
       const uptimeDisplay = document.getElementById('server-uptime-display')
+      let hasCustomUptime = false
       if (uptimeDisplay && uptimeDisplay.dataset.uptime) {
         const uptimeMs = parseInt(uptimeDisplay.dataset.uptime, 10)
         if (uptimeMs > 0) {
-          presenceData.startTimestamp = Math.floor((Date.now() - uptimeMs) / 1000)
-        } else {
-          presenceData.startTimestamp = startTimestamp
+          const totalSeconds = Math.floor(uptimeMs / 1000)
+          const days = Math.floor(totalSeconds / 86400)
+          const hours = Math.floor(totalSeconds / 3600)
+          const minutes = Math.floor(totalSeconds / 60)
+          
+          if (days > 0) uptimeString = ` ${strings.onlineForDays.replace('[TIME]', days.toString())}`
+          else if (hours > 0) uptimeString = ` ${strings.onlineForHours.replace('[TIME]', hours.toString())}`
+          else uptimeString = ` ${strings.onlineForMinutes.replace('[TIME]', Math.max(1, minutes).toString())}`
+          hasCustomUptime = true
         }
-      } else {
+      }
+      if (!hasCustomUptime) {
         presenceData.startTimestamp = startTimestamp
       }
     }
@@ -320,7 +332,9 @@ presence.on('UpdateData', async () => {
         if (showStatus && showServerName) {
           const status = getServerStatus()
           if (status)
-            details += ` · ${status}`
+            details += ` · ${status}${uptimeString}`
+        } else if (uptimeString) {
+          details += uptimeString
         }
 
         presenceData.details = details
