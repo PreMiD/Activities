@@ -1,0 +1,202 @@
+{
+  "pvqpanel.viewing_console": {
+    "message": "Viewing Console",
+    "description": "Viewing the server console"
+  },
+  "pvqpanel.editing_files": {
+    "message": "Editing Files",
+    "description": "Editing files"
+  },
+  "pvqpanel.managing_files": {
+    "message": "Managing Files",
+    "description": "Managing server files"
+  },
+  "pvqpanel.managing_databases": {
+    "message": "Managing Databases",
+    "description": "Managing server databases"
+  },
+  "pvqpanel.managing_backups": {
+    "message": "Managing Backups",
+    "description": "Managing server backups"
+  },
+  "pvqpanel.installing_plugins": {
+    "message": "Installing Plugins",
+    "description": "Installing Minecraft plugins"
+  },
+  "pvqpanel.browsing_modpacks": {
+    "message": "Browsing Modpacks",
+    "description": "Browsing Minecraft modpacks"
+  },
+  "pvqpanel.managing_players": {
+    "message": "Managing Players",
+    "description": "Managing server players"
+  },
+  "pvqpanel.managing_bedrock_addons": {
+    "message": "Managing Bedrock Addons",
+    "description": "Managing Bedrock addons"
+  },
+  "pvqpanel.configuring_server": {
+    "message": "Configuring Server",
+    "description": "Configuring the server"
+  },
+  "pvqpanel.changing_server_version": {
+    "message": "Changing Server Version",
+    "description": "Changing the server version"
+  },
+  "pvqpanel.configuring_bedrock": {
+    "message": "Configuring Bedrock",
+    "description": "Configuring Bedrock server"
+  },
+  "pvqpanel.managing_ports": {
+    "message": "Managing Ports",
+    "description": "Managing server network ports"
+  },
+  "pvqpanel.configuring_proxy": {
+    "message": "Configuring Proxy",
+    "description": "Configuring the proxy"
+  },
+  "pvqpanel.configuring_subdomains": {
+    "message": "Configuring Subdomains",
+    "description": "Configuring subdomains"
+  },
+  "pvqpanel.editing_schedules": {
+    "message": "Editing Schedules",
+    "description": "Editing server schedules"
+  },
+  "pvqpanel.managing_schedules": {
+    "message": "Managing Schedules",
+    "description": "Managing server schedules"
+  },
+  "pvqpanel.managing_users": {
+    "message": "Managing Users",
+    "description": "Managing server users"
+  },
+  "pvqpanel.configuring_startup": {
+    "message": "Configuring Startup",
+    "description": "Configuring server startup parameters"
+  },
+  "pvqpanel.managing_settings": {
+    "message": "Managing Settings",
+    "description": "Managing server settings"
+  },
+  "pvqpanel.viewing_statistics": {
+    "message": "Viewing Statistics",
+    "description": "Viewing server statistics"
+  },
+  "pvqpanel.viewing_activity_logs": {
+    "message": "Viewing Activity Logs",
+    "description": "Viewing server activity logs"
+  },
+  "pvqpanel.managing_picoclaw": {
+    "message": "Managing PicoClaw",
+    "description": "Managing PicoClaw"
+  },
+  "pvqpanel.in_panel": {
+    "message": "In Panel",
+    "description": "General panel state"
+  },
+  "pvqpanel.managing_node": {
+    "message": "Managing Node",
+    "description": "Managing the node"
+  },
+  "pvqpanel.configuring_firewall": {
+    "message": "Configuring Firewall",
+    "description": "Configuring node firewall"
+  },
+  "pvqpanel.viewing_system_logs": {
+    "message": "Viewing System Logs",
+    "description": "Viewing node system logs"
+  },
+  "pvqpanel.managing_node_users": {
+    "message": "Managing Node Users",
+    "description": "Managing node users"
+  },
+  "pvqpanel.managing_api_keys": {
+    "message": "Managing API Keys",
+    "description": "Managing API keys"
+  },
+  "pvqpanel.in_bot_overview": {
+    "message": "In Bot Overview",
+    "description": "Bot overview"
+  },
+  "pvqpanel.training_knowledgebase": {
+    "message": "Training Knowledgebase",
+    "description": "Training bot knowledgebase"
+  },
+  "pvqpanel.managing_blacklist": {
+    "message": "Managing Blacklist",
+    "description": "Managing bot blacklist"
+  },
+  "pvqpanel.configuring_channels": {
+    "message": "Configuring Channels",
+    "description": "Configuring bot channels"
+  },
+  "pvqpanel.editing_bot_profile": {
+    "message": "Editing Bot Profile",
+    "description": "Editing bot profile"
+  },
+  "pvqpanel.viewing_bot_logs": {
+    "message": "Viewing Bot Logs",
+    "description": "Viewing bot logs"
+  },
+  "pvqpanel.managing_bot_access": {
+    "message": "Managing Bot Access",
+    "description": "Managing bot access"
+  },
+  "pvqpanel.viewing_bot_activity": {
+    "message": "Viewing Bot Activity",
+    "description": "Viewing bot activity"
+  },
+  "pvqpanel.managing_bot_memory": {
+    "message": "Managing Bot Memory",
+    "description": "Managing bot memory"
+  },
+  "pvqpanel.configuring_bot": {
+    "message": "Configuring Bot",
+    "description": "Configuring bot"
+  },
+  "pvqpanel.managing_bot": {
+    "message": "Managing Bot",
+    "description": "Managing bot"
+  },
+  "pvqpanel.viewing_account_logs": {
+    "message": "Viewing Account Logs",
+    "description": "Viewing account logs"
+  },
+  "pvqpanel.managing_snippets": {
+    "message": "Managing Snippets",
+    "description": "Managing snippets"
+  },
+  "pvqpanel.in_gdpr_export": {
+    "message": "In GDPR Export",
+    "description": "GDPR export area"
+  },
+  "pvqpanel.managing_account": {
+    "message": "Managing Account",
+    "description": "Managing account"
+  },
+  "pvqpanel.dashboard": {
+    "message": "Dashboard",
+    "description": "Dashboard"
+  },
+  "pvqpanel.discord_bot": {
+    "message": "Discord Bot",
+    "description": "Discord Bot"
+  },
+  "pvqpanel.node_manager": {
+    "message": "Node Manager",
+    "description": "Node Manager"
+  },
+  "pvqpanel.server": {
+    "message": "Server",
+    "description": "Server"
+  },
+  "pvqpanel.button_open_panel": {
+    "message": "Open PVQ Panel",
+    "description": "Button to open the panel"
+  },
+  "pvqpanel.managing_servers": {
+    "message": "Managing servers",
+    "description": "Managing servers"
+  }
+}

@@ -7,8 +7,8 @@
   },
   "service": "PVQ Panel",
   "description": {
-    "de": "Game-Server-Management-Panel",
-    "en": "Game server management panel"
+    "de": "Game- und Software-Management Panel für die eigene KVM/Dedi",
+    "en": "Game and software management panel for your own KVM/Dedi"
   },
   "url": "pv-q.de",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pv-q[.]de[/]",
@@ -39,6 +39,24 @@
       "value": true,
       "title": "Show Elapsed Time",
       "description": "Show how long you've been on the page."
+    },
+    {
+      "id": "showAccountName",
+      "icon": "fas fa-user-secret",
+      "value": false,
+      "title": "Show Account Name",
+      "description": "Show your PVQ Panel account username."
+    },
+    {
+      "id": "showResources",
+      "icon": "fas fa-microchip",
+      "value": true,
+      "title": "Show CPU/RAM",
+      "description": "Show server resource usage (CPU & RAM)."
+    },
+    {
+      "id": "lang",
+      "multiLanguage": true
     }
   ]
 }
