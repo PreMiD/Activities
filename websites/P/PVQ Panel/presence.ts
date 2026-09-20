@@ -246,7 +246,7 @@ function getResources(): string | null {
       }
     }
   }
-  catch {
+  catch (e) {
     console.error(e)
   }
   return null
