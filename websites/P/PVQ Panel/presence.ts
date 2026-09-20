@@ -277,9 +277,18 @@ presence.on('UpdateData', async () => {
     ])
 
     if (showElapsedTime) {
-      presenceData.startTimestamp = startTimestamp
+      const uptimeDisplay = document.getElementById('server-uptime-display')
+      if (uptimeDisplay && uptimeDisplay.dataset.uptime) {
+        const uptimeMs = parseInt(uptimeDisplay.dataset.uptime, 10)
+        if (uptimeMs > 0) {
+          presenceData.startTimestamp = Math.floor((Date.now() - uptimeMs) / 1000)
+        } else {
+          presenceData.startTimestamp = startTimestamp
+        }
+      } else {
+        presenceData.startTimestamp = startTimestamp
+      }
     }
-
     const accountName = showAccountName ? getAccountName() : null;
     const usernamePrefix = accountName ? `[${accountName}] ` : '';
 
