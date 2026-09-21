@@ -14,7 +14,7 @@
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*fumoshare[.]com[/]",
   "version": "1.0.0",
   "logo": "https://fumoshare.com/logo.png",
-  "thumbnail": "https://fumoshare.com/favicon.png",
+  "thumbnail": "https://fumoshare.com/thumbnail.png",
   "color": "#E11D48",
   "category": "socials",
   "tags": [

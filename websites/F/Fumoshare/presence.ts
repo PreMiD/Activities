@@ -41,7 +41,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'Explore Feed', url: 'https://fumoshare.com/feed' },
-        { label: 'Visit Fumoshare', url: 'https://fumoshare.com' },
       ]
     }
   }
@@ -66,7 +65,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'Open Feed', url: href },
-        { label: 'Visit Fumoshare', url: 'https://fumoshare.com' },
       ]
     }
   }
@@ -88,7 +86,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'View Post', url: href },
-        { label: 'Explore Fumoshare', url: 'https://fumoshare.com' },
       ]
     }
   }
@@ -104,7 +101,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'Browse FumoDex', url: 'https://fumoshare.com/fumodex' },
-        { label: 'Visit Fumoshare', url: 'https://fumoshare.com' },
       ]
     }
   }
@@ -131,7 +127,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'Check Preorders', url: 'https://fumoshare.com/radar' },
-        { label: 'Visit Fumoshare', url: 'https://fumoshare.com' },
       ]
     }
   }
@@ -143,7 +138,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'Explore Map', url: 'https://fumoshare.com/map' },
-        { label: 'Visit Fumoshare', url: 'https://fumoshare.com' },
       ]
     }
   }
@@ -155,7 +149,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'Read Articles', url: 'https://fumoshare.com/articles' },
-        { label: 'Visit Fumoshare', url: 'https://fumoshare.com' },
       ]
     }
   }
@@ -183,7 +176,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'View Profile', url: href },
-        { label: 'Visit Fumoshare', url: 'https://fumoshare.com' },
       ]
     }
   }
@@ -195,7 +187,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'Try FumoMaker', url: 'https://fumoshare.com/fumomaker' },
-        { label: 'Visit Fumoshare', url: 'https://fumoshare.com' },
       ]
     }
   }
@@ -207,7 +198,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'Open FumoSnap', url: 'https://fumoshare.com/fumosnap' },
-        { label: 'Visit Fumoshare', url: 'https://fumoshare.com' },
       ]
     }
   }
@@ -219,7 +209,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'Watch Stories', url: 'https://fumoshare.com/feed' },
-        { label: 'Visit Fumoshare', url: 'https://fumoshare.com' },
       ]
     }
   }
@@ -231,7 +220,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'Read Rules', url: 'https://fumoshare.com/rules' },
-        { label: 'Visit Fumoshare', url: 'https://fumoshare.com' },
       ]
     }
   }
@@ -243,7 +231,6 @@ presence.on('UpdateData', async () => {
     if (showButtons) {
       presenceData.buttons = [
         { label: 'View Leaderboard', url: href },
-        { label: 'Visit Fumoshare', url: 'https://fumoshare.com' },
       ]
     }
   }
@@ -252,12 +239,6 @@ presence.on('UpdateData', async () => {
     const pageTitle = cleanTitle(document.title)
     presenceData.details = 'Browsing Fumoshare'
     presenceData.state = pageTitle && pageTitle !== 'Fumoshare' ? pageTitle.slice(0, 128) : 'Fumo Plushie Community'
-
-    if (showButtons) {
-      presenceData.buttons = [
-        { label: 'Visit Fumoshare', url: 'https://fumoshare.com' },
-      ]
-    }
   }
 
   presence.setActivity(presenceData)
