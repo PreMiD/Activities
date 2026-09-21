@@ -1,4 +1,4 @@
-import type { ApiClient, MediaInfo, Person, Server } from './types.js'
+import type { ApiClient, MediaInfo, Person, Server, Session } from './types.js'
 import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 enum ActivityAssets {
@@ -21,9 +21,12 @@ function cacheSet<K, V>(map: Map<K, V>, key: K, value: V): void {
   map.set(key, value)
 }
 
+const NOW_PLAYING_TTL = 5000
+
 const mediaInfoCache = new Map<string, MediaInfo>()
 const searchMediaCache = new Map<string, MediaInfo[]>()
 const uploadedMediaCache = new Map<string, string>()
+let nowPlayingCache: { itemId: string | null, fetchedAt: number } | null = null
 
 let apiClient: ApiClient
 let wasLogin = false
@@ -200,6 +203,29 @@ async function obtainMediaInfo(itemId: string): Promise<MediaInfo | null> {
   catch {
     return null
   }
+}
+
+async function obtainNowPlayingItemId(): Promise<string | null> {
+  if (nowPlayingCache && Date.now() - nowPlayingCache.fetchedAt < NOW_PLAYING_TTL)
+    return nowPlayingCache.itemId
+
+  let itemId: string | null = null
+  try {
+    const res = await fetchWithTimeout(
+      `${jellyfinBasenameUrl()}Sessions?deviceId=${encodeURIComponent(apiClient._deviceId)}`,
+      { credentials: 'include', headers: authHeaders() },
+    )
+    if (res.ok) {
+      const sessions: Session[] = await res.json()
+      itemId = sessions.find(s => s.NowPlayingItem)?.NowPlayingItem?.Id ?? null
+    }
+  }
+  catch {
+    itemId = null
+  }
+
+  nowPlayingCache = { itemId, fetchedAt: Date.now() }
+  return itemId
 }
 
 async function searchMedia(searchTerm: string): Promise<MediaInfo[]> {
@@ -814,9 +840,13 @@ async function handleAudioPlayback(settings: Settings): Promise<PresenceData | n
 }
 
 async function handleVideoPlayback(settings: Settings): Promise<PresenceData | null> {
-  // The video controller (legacy and modern layouts alike) sets document.title
-  // to the currently playing item's display name, so it's a far more stable
-  // signal than any OSD DOM element, whose classes/structure keep changing.
+  // The page title is only the series name for episodes on some versions, so
+  // ask the server what this device is playing and search by title as a fallback.
+  const nowPlayingId = await obtainNowPlayingItemId()
+  const nowPlayingInfo = nowPlayingId ? await obtainMediaInfo(nowPlayingId) : null
+  if (nowPlayingInfo)
+    return buildMediaPresence(nowPlayingInfo, settings)
+
   const pageTitle = document.title.trim()
   const [mediaInfo] = pageTitle ? await searchMedia(pageTitle) : []
 
