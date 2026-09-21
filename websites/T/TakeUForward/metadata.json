@@ -12,7 +12,7 @@
   "url": "takeuforward.org",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*takeuforward[.]org[/]",
   "version": "1.0.0",
-  "logo": "https://pbs.twimg.com/profile_images/2100916656579207168/KVz7IWL4_400x400.jpg",
+  "logo": "https://res.cloudinary.com/dg9yrubdu/image/upload/w_512,h_512,c_scale/v1790024531/6ab19affb3b543.98664790Processed_pyt5tt.jpg",
   "thumbnail": "https://static.takeuforward.org/content/1789314070_5PmnWO7-.webp",
   "color": "#307af3",
   "category": "other",

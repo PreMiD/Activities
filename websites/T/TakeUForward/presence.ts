@@ -4,7 +4,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets { // Other default assets can be found at index.d.ts
-  Logo = 'https://pbs.twimg.com/profile_images/2100916656579207168/KVz7IWL4_400x400.jpg',
+  Logo = 'https://res.cloudinary.com/dg9yrubdu/image/upload/w_512,h_512,c_scale/v1790024531/6ab19affb3b543.98664790Processed_pyt5tt.jpg',
 }
 
 const routes = [
