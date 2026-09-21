@@ -218,6 +218,8 @@ export interface MediaInfo {
     | 'Episode'
     | 'TvChannel'
     | 'Person'
+    | 'Book'
+    | 'AudioBook'
   People: Person[]
   ParentBackdropItemId: string
   ParentBackdropImageTags: string[]
