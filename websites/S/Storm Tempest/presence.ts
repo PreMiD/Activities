@@ -21,6 +21,7 @@ interface PageState {
 
 function clean(value: string | null | undefined): string | undefined {
   const normalized = value?.replace(/\s+/g, ' ').trim()
+
   return normalized || undefined
 }
 
@@ -212,7 +213,10 @@ function stripEpisode(value: string): string {
 function getAnimeTitle(): string | undefined {
   const candidates = [
     queryAttr(
-      ['meta[property="og:title"]', 'meta[name="twitter:title"]'],
+      [
+        'meta[property="og:title"]',
+        'meta[name="twitter:title"]',
+      ],
       'content',
     ),
     queryText([
@@ -235,7 +239,7 @@ function getAnimeTitle(): string | undefined {
 
     if (
       title
-      && !/^(?:storm|stormd|anisto|mangasto|movisto|anime|watch anime)$/i.test(
+      && !/^(?:storm|stormd|storm tempest|anisto|mangasto|movisto|anime|watch anime)$/i.test(
         title,
       )
     ) {
@@ -283,7 +287,11 @@ function getPageName(): string {
     return 'Home'
   }
 
-  const firstSegment = segments[0].toLowerCase()
+  const firstSegment = segments[0]
+
+  if (!firstSegment) {
+    return 'Home'
+  }
 
   const pageNames: Record<string, string> = {
     search: 'Search',
@@ -297,15 +305,16 @@ function getPageName(): string {
     series: 'Series',
     favorites: 'Favorites',
     favourite: 'Favorites',
-    favorites: 'Favorites',
     history: 'History',
     settings: 'Settings',
     profile: 'Profile',
     browse: 'Browse',
   }
 
-  if (pageNames[firstSegment]) {
-    return pageNames[firstSegment]
+  const pageName = pageNames[firstSegment.toLowerCase()]
+
+  if (pageName) {
+    return pageName
   }
 
   const title = clean(document.title)
@@ -327,7 +336,9 @@ function getPageState(): PageState {
   }
 }
 
-function getPlaybackTimestamps(video: HTMLVideoElement | undefined): {
+function getPlaybackTimestamps(
+  video: HTMLVideoElement | undefined,
+): {
   startTimestamp?: number
   endTimestamp?: number
 } {
