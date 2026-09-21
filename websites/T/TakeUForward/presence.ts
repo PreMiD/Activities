@@ -3,7 +3,7 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets { // Other default assets can be found at index.d.ts
+enum ActivityAssets {
   Logo = 'https://res.cloudinary.com/dg9yrubdu/image/upload/w_512,h_512,c_scale/v1790024531/6ab19affb3b543.98664790Processed_pyt5tt.jpg',
 }
 
@@ -39,55 +39,70 @@ presence.on('UpdateData', async () => {
 
     if (practiceRoute) {
       const h1 = document.querySelector('h1')?.textContent?.trim()
-      const questionMatch = h1?.match(/^\d+\.\s*(.+)$/)
+      const [questionNumber, ...questionTitleParts] = h1?.split('.') ?? []
+      const questionTitle = /^\d+$/.test(questionNumber ?? '')
+        ? questionTitleParts.join('.').trim()
+        : undefined
 
-      if (questionMatch) {
+      if (questionTitle) {
         presenceData.details = `Solving ${practiceRoute.label} Problem`
-        presenceData.state = questionMatch[1]
-      } else {
+        presenceData.state = questionTitle
+      }
+      else {
         presenceData.state = practiceRoute.state
       }
       presenceData.stateUrl = window.location.href
     }
-  } else if (pathname.startsWith('/blogs')) {
+  }
+  else if (pathname.startsWith('/blogs')) {
     const h1 = document.querySelector('h1')?.textContent?.trim()
     const isArticle = pathname.split('/').filter(Boolean).length > 1
 
     if (h1 && isArticle) {
       presenceData.details = 'Reading Blog'
       presenceData.state = h1
-    } else {
+    }
+    else {
       presenceData.state = 'Viewing Blogs'
     }
     presenceData.stateUrl = window.location.href
-  } else if (pathname.startsWith('/prep-hub')) {
+  }
+  else if (pathname.startsWith('/prep-hub')) {
     const h1 = document.querySelector('h1')?.textContent?.trim()
     const isSheet = pathname.split('/').filter(Boolean).length > 1
 
     if (h1 && isSheet) {
       presenceData.details = 'Viewing Prep Hub'
       presenceData.state = `Browsing ${h1}`
-    } else {
+    }
+    else {
       presenceData.state = 'Viewing Prephub'
     }
     presenceData.stateUrl = window.location.href
-  } else if (pathname.startsWith('/learning')) {
+  }
+  else if (pathname.startsWith('/learning')) {
     const subject = document.querySelector('[class*="subject_name"]')?.getAttribute('title')
     const lesson = document.querySelector('[aria-current="page"] [class*="problem_title"]')?.textContent?.trim()
 
-    if (subject) presenceData.details = `Learning ${subject}`
-    if (lesson) presenceData.state = lesson
+    if (subject)
+      presenceData.details = `Learning ${subject}`
+    if (lesson)
+      presenceData.state = lesson
     presenceData.stateUrl = window.location.href
-  } else if (pathname.startsWith('/community/interview-experiences')) {
+  }
+  else if (pathname.startsWith('/community/interview-experiences')) {
     const title = document.title.replace(/\s*\|\s*takeUforward$/i, '').trim()
 
     presenceData.details = 'Reading Interview Experience'
-    if (title) presenceData.state = title
+    if (title)
+      presenceData.state = title
     presenceData.stateUrl = window.location.href
-  } else if (pathname.startsWith('/community')) {
+  }
+  else if (pathname.startsWith('/community')) {
     presenceData.state = 'Viewing Community Posts'
     presenceData.stateUrl = 'https://takeuforward.org/community'
-  } else {
+  }
+  else {
     const route = routes.find(({ path }) => pathname.startsWith(path))
 
     if (route) {
