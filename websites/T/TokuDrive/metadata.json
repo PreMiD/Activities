@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "582396294715408436",
+    "name": "lucas.mro"
+  },
+  "service": "TokuDrive",
+  "description": {
+    "en": "Join the biggest platform in Latin America. An immersive, cinematic experience with no limits to watch your favorite heroes on any device.",
+    "pt": "Junte-se à maior plataforma da América Latina. Uma experiência cinematográfica, imersiva e sem limites para assistir seus heróis favoritos em qualquer dispositivo."
+  },
+  "url": "tokusatsus.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tokusatsus[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/4so3zr3.png",
+  "thumbnail": "https://i.imgur.com/P2xOgrk.png",
+  "color": "#e2231a",
+  "category": "videos",
+  "tags": [
+    "tokusatsu",
+    "kamenrider",
+    "supersentai",
+    "streaming"
+  ]
+}
