@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "1089505219244728432",
@@ -15,7 +15,7 @@
     "lotus-simulator.de",
     "lotus-simulator.dev"
   ],
-  "regExp": "^https?[:][/][/]((www|docs)[.])?lotus-simulator[.](de|dev)[/]",
+  "regExp": "^https?[:][/][/](www[.])?lotus-simulator[.](de|dev)[/]",
   "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/L/Lotus-Simulator/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/L/Lotus-Simulator/assets/thumbnail.png",

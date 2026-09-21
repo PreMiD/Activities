@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "852786062496759818",
@@ -12,7 +12,7 @@
     "zh": "高速观看免费电影，无广告，我会上传您喜欢的任何剧集。"
   },
   "url": "anikenji.tech",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anikenji[.](tech|live)[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anikenji[.]tech[/]",
   "version": "1.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AniKenji%20Movie/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AniKenji%20Movie/assets/thumbnail.png",
@@ -22,7 +22,7 @@
     "anime"
   ],
   "iframe": true,
-  "iFrameRegExp": "(?:streamc[.]xyz|phim1280[.]tv|([a-z0-9-]+[.])*(anikenji[.](tech|live)|youtube[.]com|vimeo[.]com))",
+  "iFrameRegExp": "(?:streamc[.]xyz|phim1280[.]tv|([a-z0-9-]+[.])*(anikenji[.]tech|youtube[.]com|vimeo[.]com))",
   "settings": [
     {
       "id": "showButtons",
