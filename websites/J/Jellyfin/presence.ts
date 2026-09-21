@@ -474,18 +474,14 @@ async function buildMediaPresence(
         parts.push(`${mediaInfo.ProductionYear}`)
       if (mediaInfo.Genres?.length)
         parts.push(mediaInfo.Genres.slice(0, 2).join(', '))
-      if (mediaInfo.CommunityRating)
-        parts.push(`★ ${mediaInfo.CommunityRating.toFixed(1)}`)
-      const stateText = parts.join(' • ') || (mediaInfo.Name ?? 'Movie')
-
-      const overview = mediaInfo.Overview
-        ? truncate(mediaInfo.Overview)
-        : null
+      const rating = mediaInfo.CommunityRating
+        ? `★ ${mediaInfo.CommunityRating.toFixed(1)}`
+        : undefined
 
       const presenceData: MediaPresenceData = {
         type: ActivityType.Watching,
-        details: stateText,
-        state: overview ?? stateText,
+        details: parts.join(' • ') || (mediaInfo.Name ?? 'Movie'),
+        state: rating,
         largeImageKey: await getCoverUrl(mediaInfo, settings),
         largeImageText: `${mediaInfo.Name} (${mediaInfo.ProductionYear})`,
       }
@@ -520,14 +516,14 @@ async function buildMediaPresence(
         ? (season && episode ? `Episode ${episode}` : 'Episode')
         : (mediaInfo.Name ?? 'Episode')
 
-      const overview = mediaInfo.Overview
-        ? truncate(mediaInfo.Overview)
+      const seasonEpisode = season && episode
+        ? `Season ${season} • Episode ${episode}`
         : null
 
       const presenceData: MediaPresenceData = {
         type: ActivityType.Watching,
         details: mediaInfo.SeriesName,
-        state: overview ?? epName,
+        state: seasonEpisode ? `${seasonEpisode} • ${epName}` : epName,
         largeImageKey: await getCoverUrl(mediaInfo, settings),
       }
 
@@ -537,7 +533,7 @@ async function buildMediaPresence(
       if (settings.usePresenceName) {
         presenceData.name = mediaInfo.SeriesName
         presenceData.details = epName
-        presenceData.state = overview ?? epName
+        presenceData.state = seasonEpisode ?? epName
       }
 
       const episodeImdb = getImdbButton(mediaInfo)
