@@ -4,8 +4,7 @@ const presence = new Presence({
   clientId: '1233213267053248633',
 })
 
-const STORM_TEMPEST_IMAGE
-  = 'https://akuyaki.rest/logo-512.png'
+const STORM_TEMPEST_IMAGE = 'https://akuyaki.rest/logo-512.png'
 
 interface WatchState {
   title: string
@@ -13,6 +12,11 @@ interface WatchState {
   episode?: string
   url: string
   video?: HTMLVideoElement
+}
+
+interface PageState {
+  name: string
+  url: string
 }
 
 function clean(value: string | null | undefined): string | undefined {
@@ -34,6 +38,7 @@ function attrOf(
 function queryText(selectors: string[]): string | undefined {
   for (const selector of selectors) {
     const value = textOf(document.querySelector(selector))
+
     if (value) {
       return value
     }
@@ -48,6 +53,7 @@ function queryAttr(
 ): string | undefined {
   for (const selector of selectors) {
     const value = attrOf(document.querySelector(selector), attribute)
+
     if (value) {
       return value
     }
@@ -125,7 +131,7 @@ function sourceFromUrl(): string | undefined {
     gamesto: 'Gamesto',
   }
 
-  for (const part of window.location.pathname.split('/').filter(Boolean)) {
+  for (const part of document.location.pathname.split('/').filter(Boolean)) {
     const source = sources[part.toLowerCase()]
 
     if (source) {
@@ -133,7 +139,7 @@ function sourceFromUrl(): string | undefined {
     }
   }
 
-  const params = new URLSearchParams(window.location.search)
+  const params = new URLSearchParams(document.location.search)
 
   for (const key of ['source', 'server', 'provider']) {
     const value = clean(params.get(key))
@@ -171,8 +177,8 @@ function extractEpisode(value: string | undefined): string | undefined {
 
 function getEpisode(): string | undefined {
   const candidates = [
-    window.location.pathname,
-    window.location.search,
+    document.location.pathname,
+    document.location.search,
     document.title,
     queryText([
       '[data-episode]',
@@ -248,7 +254,7 @@ function getVideo(): HTMLVideoElement | undefined {
 
 function isWatchPage(): boolean {
   const url
-    = `${window.location.pathname}${window.location.search}`.toLowerCase()
+    = `${document.location.pathname}${document.location.search}`.toLowerCase()
 
   return (
     /\/watch\b/.test(url)
@@ -264,8 +270,60 @@ function getWatchState(): WatchState {
     title: getAnimeTitle() ?? 'Unknown Anime',
     source: sourceFromSelectedControl() ?? sourceFromUrl(),
     episode: getEpisode(),
-    url: window.location.href,
+    url: document.location.href,
     video: getVideo(),
+  }
+}
+
+function getPageName(): string {
+  const pathname = document.location.pathname
+  const segments = pathname.split('/').filter(Boolean)
+
+  if (segments.length === 0) {
+    return 'Home'
+  }
+
+  const firstSegment = segments[0].toLowerCase()
+
+  const pageNames: Record<string, string> = {
+    search: 'Search',
+    anime: 'Anime',
+    genre: 'Genres',
+    genres: 'Genres',
+    category: 'Categories',
+    categories: 'Categories',
+    movies: 'Movies',
+    movie: 'Movie',
+    series: 'Series',
+    favorites: 'Favorites',
+    favourite: 'Favorites',
+    favorites: 'Favorites',
+    history: 'History',
+    settings: 'Settings',
+    profile: 'Profile',
+    browse: 'Browse',
+  }
+
+  if (pageNames[firstSegment]) {
+    return pageNames[firstSegment]
+  }
+
+  const title = clean(document.title)
+
+  if (
+    title
+    && !/^(?:storm|stormd|storm tempest)$/i.test(title)
+  ) {
+    return stripEpisode(title)
+  }
+
+  return 'Storm Tempest'
+}
+
+function getPageState(): PageState {
+  return {
+    name: getPageName(),
+    url: document.location.href,
   }
 }
 
@@ -289,12 +347,17 @@ function getPlaybackTimestamps(video: HTMLVideoElement | undefined): {
     Math.floor(video.duration),
   )
 
-  return { startTimestamp, endTimestamp }
+  return {
+    startTimestamp,
+    endTimestamp,
+  }
 }
 
-function buildActivity(watch: WatchState): PresenceData {
+function buildWatchActivity(watch: WatchState): PresenceData {
   const source = watch.source ?? 'Unknown Source'
-  const episode = watch.episode ? `Episode ${watch.episode}` : 'Episode ?'
+  const episode = watch.episode
+    ? `Episode ${watch.episode}`
+    : 'Episode ?'
 
   return {
     type: ActivityType.Watching,
@@ -311,12 +374,31 @@ function buildActivity(watch: WatchState): PresenceData {
   }
 }
 
+function buildPageActivity(page: PageState): PresenceData {
+  return {
+    type: ActivityType.Watching,
+    details: `Browsing ${page.name}`,
+    state: 'Storm Tempest',
+    largeImageKey: STORM_TEMPEST_IMAGE,
+    buttons: [
+      {
+        label: 'Open Storm Tempest',
+        url: page.url,
+      },
+    ],
+  }
+}
+
 presence.on('UpdateData', async () => {
-  if (!isWatchPage()) {
-    presence.clearActivity()
+  if (isWatchPage()) {
+    presence.setActivity(
+      buildWatchActivity(getWatchState()),
+    )
+
     return
   }
 
-  const activity = buildActivity(getWatchState())
-  presence.setActivity(activity)
+  presence.setActivity(
+    buildPageActivity(getPageState()),
+  )
 })
