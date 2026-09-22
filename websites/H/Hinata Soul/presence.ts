@@ -7,34 +7,12 @@ const presence = new Presence({
 const CATEGORY_LABELS: Record<string, string> = {
   'animes': 'Animes',
   'anime-dublado': 'Animes Dublados',
-  'tokusatsus': 'Tokusatsu',
+  'tokusatsus': 'Tokusatsus',
   'doramas': 'Doramas',
-  'donghua': 'Donghua',
+  'donghua': 'Donghuas',
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-
-function normalizeKey(name: string) {
-  return name.trim().toLowerCase()
-}
-
-function saveCover(showName: string, coverUrl: string) {
-  try {
-    localStorage.setItem(`hinatasoul-cover:${normalizeKey(showName)}`, coverUrl)
-  }
-  catch {
-    // localStorage pode falhar em algumas situações (ex: modo privado) — não é crítico
-  }
-}
-
-function getSavedCover(showName: string): string | null {
-  try {
-    return localStorage.getItem(`hinatasoul-cover:${normalizeKey(showName)}`)
-  }
-  catch {
-    return null
-  }
-}
 
 presence.on('UpdateData', async () => {
   const { pathname } = document.location
@@ -81,10 +59,6 @@ presence.on('UpdateData', async () => {
     presenceData.details = `Assistindo: ${showName}`
     presenceData.state = episodeNumber ? `Episódio ${episodeNumber}` : 'Episódio'
 
-    const savedCover = getSavedCover(showName)
-    if (savedCover)
-      presenceData.largeImageKey = savedCover
-
     const videoElement = document.querySelector<HTMLVideoElement>('video')
 
     if (videoElement && !videoElement.paused) {
@@ -94,17 +68,11 @@ presence.on('UpdateData', async () => {
   else if (infoMatch) {
     const titleEl = document.querySelector('h1')
     const showName = titleEl?.textContent?.trim() ?? 'Anime desconhecido'
-    const coverEl = document.querySelector<HTMLImageElement>('img[rel="preload"][as="image"]')
 
     presenceData.name = showName
     presenceData.details = showName
     presenceData.state = 'Vendo informações'
     presenceData.startTimestamp = browsingTimestamp
-
-    if (coverEl?.src) {
-      presenceData.largeImageKey = coverEl.src
-      saveCover(showName, coverEl.src)
-    }
   }
   else {
     presenceData.details = 'Navegando no site'
