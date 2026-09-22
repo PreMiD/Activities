@@ -50,7 +50,7 @@ presence.on('UpdateData', async () => {
   const catalogMatch = pathname.match(/^\/(animes|anime-dublado|tokusatsus|doramas|donghua)\/?$/)
 
   // Ex: "/animes/hack-sign", "/anime-dublado/hack-sign-dublado"
-  const infoMatch = pathname.match(/^\/(animes|anime-dublado|tokusatsus|doramas|donghua)\/([^/]+)\/?$/)
+  const infoMatch = pathname.match(/^\/(?:animes|anime-dublado|tokusatsus|doramas|donghua)\/[^/]+\/?$/)
 
   // Ex: "/videos/493948"
   const isEpisodePage = /^\/videos\/[^/]+\/?$/.test(pathname)
