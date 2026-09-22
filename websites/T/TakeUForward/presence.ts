@@ -9,7 +9,7 @@ enum ActivityAssets {
 
 const routes = [
   { path: '/dashboard', state: 'Viewing Dashboard' },
-  { path: '/planly', state: 'Viewing Plans' },
+  { path: '/planly', state: 'Viewing Planly' },
   { path: '/goodies', state: 'Viewing Goodies' },
   { path: '/leaderboard', state: 'Viewing Leaderboard' },
   { path: '/ide', state: 'Using IDE' },
