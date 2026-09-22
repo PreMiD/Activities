@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "582396294715408436",
+    "name": "lucas.mro"
+  },
+  "service": "Hinata Soul",
+  "description": {
+    "en": "Watch anime online for free in FullHD on your computer, tablet, smartphone or phone, like Dragon Ball, Naruto and One Piece, subbed and dubbed anime online.",
+    "pt": "Assista animes online de graça em FULLHD no seu computador, Tablet, Smartfone, Celular, como dragon ball, naruto e one piece, Animes legendados e dublados online."
+  },
+  "url": "hinatasoul.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*hinatasoul[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/BGYco3K.png",
+  "thumbnail": "https://i.imgur.com/xx2Xppy.png",
+  "color": "#000000",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "tokusatsu",
+    "dorama",
+    "donghua",
+    "streaming",
+    "portuguese"
+  ]
+}
