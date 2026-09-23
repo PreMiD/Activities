@@ -51,7 +51,7 @@ presence.on('UpdateData', async () => {
       else {
         presenceData.state = practiceRoute.state
       }
-      presenceData.stateUrl = window.location.href
+      presenceData.stateUrl = document.location.href
     }
   }
   else if (pathname.startsWith('/blogs')) {
@@ -65,7 +65,7 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.state = 'Viewing Blogs'
     }
-    presenceData.stateUrl = window.location.href
+    presenceData.stateUrl = document.location.href
   }
   else if (pathname.startsWith('/prep-hub')) {
     const h1 = document.querySelector('h1')?.textContent?.trim()
@@ -78,7 +78,7 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.state = 'Viewing Prephub'
     }
-    presenceData.stateUrl = window.location.href
+    presenceData.stateUrl = document.location.href
   }
   else if (pathname.startsWith('/learning')) {
     const subject = document.querySelector('[class*="subject_name"]')?.getAttribute('title')
@@ -88,7 +88,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = `Learning ${subject}`
     if (lesson)
       presenceData.state = lesson
-    presenceData.stateUrl = window.location.href
+    presenceData.stateUrl = document.location.href
   }
   else if (pathname.startsWith('/community/interview-experiences')) {
     const title = document.title.replace(/\s*\|\s*takeUforward$/i, '').trim()
@@ -96,7 +96,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Reading Interview Experience'
     if (title)
       presenceData.state = title
-    presenceData.stateUrl = window.location.href
+    presenceData.stateUrl = document.location.href
   }
   else if (pathname.startsWith('/community')) {
     presenceData.state = 'Viewing Community Posts'
