@@ -1,4 +1,4 @@
-import type { ApiClient, MediaInfo, Person, Server } from './types.js'
+import type { ApiClient, MediaInfo, Person, Server, Session } from './types.js'
 import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 enum ActivityAssets {
@@ -21,9 +21,12 @@ function cacheSet<K, V>(map: Map<K, V>, key: K, value: V): void {
   map.set(key, value)
 }
 
+const NOW_PLAYING_TTL = 5000
+
 const mediaInfoCache = new Map<string, MediaInfo>()
 const searchMediaCache = new Map<string, MediaInfo[]>()
 const uploadedMediaCache = new Map<string, string>()
+let nowPlayingCache: { itemId: string | null, fetchedAt: number } | null = null
 
 let apiClient: ApiClient
 let wasLogin = false
@@ -200,6 +203,29 @@ async function obtainMediaInfo(itemId: string): Promise<MediaInfo | null> {
   catch {
     return null
   }
+}
+
+async function obtainNowPlayingItemId(): Promise<string | null> {
+  if (nowPlayingCache && Date.now() - nowPlayingCache.fetchedAt < NOW_PLAYING_TTL)
+    return nowPlayingCache.itemId
+
+  let itemId: string | null = null
+  try {
+    const res = await fetchWithTimeout(
+      `${jellyfinBasenameUrl()}Sessions?deviceId=${encodeURIComponent(apiClient._deviceId)}`,
+      { credentials: 'include', headers: authHeaders() },
+    )
+    if (res.ok) {
+      const sessions: Session[] = await res.json()
+      itemId = sessions.find(s => s.NowPlayingItem)?.NowPlayingItem?.Id ?? null
+    }
+  }
+  catch {
+    itemId = null
+  }
+
+  nowPlayingCache = { itemId, fetchedAt: Date.now() }
+  return itemId
 }
 
 async function searchMedia(searchTerm: string): Promise<MediaInfo[]> {
@@ -448,18 +474,14 @@ async function buildMediaPresence(
         parts.push(`${mediaInfo.ProductionYear}`)
       if (mediaInfo.Genres?.length)
         parts.push(mediaInfo.Genres.slice(0, 2).join(', '))
-      if (mediaInfo.CommunityRating)
-        parts.push(`★ ${mediaInfo.CommunityRating.toFixed(1)}`)
-      const stateText = parts.join(' • ') || (mediaInfo.Name ?? 'Movie')
-
-      const overview = mediaInfo.Overview
-        ? truncate(mediaInfo.Overview)
-        : null
+      const rating = mediaInfo.CommunityRating
+        ? `★ ${mediaInfo.CommunityRating.toFixed(1)}`
+        : undefined
 
       const presenceData: MediaPresenceData = {
         type: ActivityType.Watching,
-        details: stateText,
-        state: overview ?? stateText,
+        details: parts.join(' • ') || (mediaInfo.Name ?? 'Movie'),
+        state: rating,
         largeImageKey: await getCoverUrl(mediaInfo, settings),
         largeImageText: `${mediaInfo.Name} (${mediaInfo.ProductionYear})`,
       }
@@ -494,14 +516,14 @@ async function buildMediaPresence(
         ? (season && episode ? `Episode ${episode}` : 'Episode')
         : (mediaInfo.Name ?? 'Episode')
 
-      const overview = mediaInfo.Overview
-        ? truncate(mediaInfo.Overview)
+      const seasonEpisode = season && episode
+        ? `Season ${season} • Episode ${episode}`
         : null
 
       const presenceData: MediaPresenceData = {
         type: ActivityType.Watching,
         details: mediaInfo.SeriesName,
-        state: overview ?? epName,
+        state: seasonEpisode ? `${seasonEpisode} • ${epName}` : epName,
         largeImageKey: await getCoverUrl(mediaInfo, settings),
       }
 
@@ -511,7 +533,7 @@ async function buildMediaPresence(
       if (settings.usePresenceName) {
         presenceData.name = mediaInfo.SeriesName
         presenceData.details = epName
-        presenceData.state = overview ?? epName
+        presenceData.state = seasonEpisode ?? epName
       }
 
       const episodeImdb = getImdbButton(mediaInfo)
@@ -814,9 +836,13 @@ async function handleAudioPlayback(settings: Settings): Promise<PresenceData | n
 }
 
 async function handleVideoPlayback(settings: Settings): Promise<PresenceData | null> {
-  // The video controller (legacy and modern layouts alike) sets document.title
-  // to the currently playing item's display name, so it's a far more stable
-  // signal than any OSD DOM element, whose classes/structure keep changing.
+  // The page title is only the series name for episodes on some versions, so
+  // ask the server what this device is playing and search by title as a fallback.
+  const nowPlayingId = await obtainNowPlayingItemId()
+  const nowPlayingInfo = nowPlayingId ? await obtainMediaInfo(nowPlayingId) : null
+  if (nowPlayingInfo)
+    return buildMediaPresence(nowPlayingInfo, settings)
+
   const pageTitle = document.title.trim()
   const [mediaInfo] = pageTitle ? await searchMedia(pageTitle) : []
 

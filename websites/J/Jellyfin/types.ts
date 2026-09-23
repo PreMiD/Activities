@@ -263,3 +263,7 @@ export interface Server {
   UserId: string
   manualAddressOnly: boolean
 }
+
+export interface Session {
+  NowPlayingItem?: { Id: string }
+}
