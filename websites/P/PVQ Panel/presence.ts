@@ -266,7 +266,7 @@ function getAccountName(): string | null {
 presence.on('UpdateData', async () => {
   try {
     const strings = await getStrings()
-    const presenceData: any = {
+    const presenceData: PresenceData = {
       largeImageKey: ActivityAssets.Logo,
       buttons: [{ label: strings.buttonOpenPanel, url: 'https://pv-q.de/auth/login' }],
     }
