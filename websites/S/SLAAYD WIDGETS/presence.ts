@@ -12,11 +12,11 @@ presence.on('UpdateData', async () => {
   }
 
   if (pathname === '/') {
-    data.details = 'Pe pagina principală'
+    data.details = 'Viewing the homepage'
     data.state = 'SLAAYD WIDGETS'
   }
   else {
-    data.details = 'Navighează pe SLAAYD WIDGETS'
+    data.details = 'Browsing SLAAYD WIDGETS'
     data.state = document.title
   }
 
