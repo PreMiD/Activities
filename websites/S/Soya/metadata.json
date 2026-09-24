@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "SoulDevs",
+    "id": "1261749481976889397"
+  },
+  "service": "Soya",
+  "description": {
+    "en": "Soya is a Discord music bot featuring a modern web dashboard and player with queue controls, low-latency playback, and high-quality audio with flawless performance."
+  },
+  "url": "soyamusic.in",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(soyamusic[.]in|soya[.]bot|localhost:3000)[/]",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/21RstdWc/Soya-1-1.png",
+  "thumbnail": "https://i.ibb.co/21RstdWc/Soya-1-1.png",
+  "color": "#10B981",
+  "category": "music",
+  "tags": [
+    "music",
+    "bot",
+    "player",
+    "dashboard"
+  ],
+  "settings": [
+    {
+      "id": "showServer",
+      "title": "Show Server Name",
+      "icon": "fa-solid fa-server",
+      "value": true
+    },
+    {
+      "id": "showVoiceChannel",
+      "title": "Show Voice Channel",
+      "icon": "fa-solid fa-microphone",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Web Player Buttons",
+      "icon": "fa-solid fa-link",
+      "value": true
+    },
+    {
+      "id": "showTimestamps",
+      "title": "Show Progress Timestamps",
+      "icon": "fa-solid fa-stopwatch",
+      "value": true
+    }
+  ]
+}
