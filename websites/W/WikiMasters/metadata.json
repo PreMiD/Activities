@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "476295168950009856",
+    "name": "staelh"
+  },
+  "service": "WikiMasters",
+  "description": {
+    "en": "Collect Wikipedia-based cards, trade with other players and battle in WikiMasters."
+  },
+  "url": "wiki-masters.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wiki-masters[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WikiMasters/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WikiMasters/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "games",
+  "tags": [
+    "wikipedia",
+    "cards",
+    "game"
+  ]
+}
