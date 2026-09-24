@@ -173,7 +173,7 @@ export interface MediaInfo {
   AlbumArtist: string
   AlbumArtists: { Name: string, Id: string }[]
   AlbumId: string
-  AlbumPrimaryImageTag: string
+  AlbumPrimaryImageTag?: string
   ArtistsItems: { Name: string, Id: string }[]
   Artists: string[]
   Name: string
@@ -233,12 +233,12 @@ export interface MediaInfo {
   SpecialFeatureCount: number
   DisplayPreferencesId: string
   PrimaryImageAspectRatio: number
-  SeriesPrimaryImageTag: string
+  SeriesPrimaryImageTag?: string
   SeasonName: string
   MediaStreams: MediaStream[]
   VideoType: string
-  ImageTags: {
-    Primary: string
+  ImageTags?: {
+    Primary?: string
   }
   SeriesStudio: string
   Chapters: Chapter[]

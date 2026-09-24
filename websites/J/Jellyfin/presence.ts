@@ -65,21 +65,24 @@ function jellyfinBasenameUrl(): string {
   )}`
 }
 
-function mediaPrimaryImage(mediaInfo: MediaInfo): string {
-  let mediaId: string
+// Prefers series/album art, falling back to the item's own art. Null when neither exists.
+function mediaPrimaryImage(mediaInfo: MediaInfo): string | null {
+  let mediaId = mediaInfo.Id
+  let tag = mediaInfo.ImageTags?.Primary
 
-  switch (mediaInfo.Type) {
-    case 'Episode':
-      mediaId = mediaInfo.SeriesId
-      break
-    case 'Audio':
-      mediaId = mediaInfo.AlbumId
-      break
-    default:
-      mediaId = mediaInfo.Id
+  if (mediaInfo.Type === 'Episode' && mediaInfo.SeriesPrimaryImageTag) {
+    mediaId = mediaInfo.SeriesId
+    tag = mediaInfo.SeriesPrimaryImageTag
+  }
+  else if (mediaInfo.Type === 'Audio' && mediaInfo.AlbumPrimaryImageTag) {
+    mediaId = mediaInfo.AlbumId
+    tag = mediaInfo.AlbumPrimaryImageTag
   }
 
-  return `${jellyfinBasenameUrl()}Items/${mediaId}/Images/Primary?fillHeight=256&fillWidth=256`
+  if (!tag)
+    return null
+
+  return `${jellyfinBasenameUrl()}Items/${mediaId}/Images/Primary?fillHeight=256&fillWidth=256&tag=${tag}`
 }
 
 function truncate(text: string, max = 128): string {
@@ -106,43 +109,34 @@ function bookCredits(people: Person[] | undefined): string | null {
   return parts.join(' • ') || null
 }
 
-function isNonPublicURL(url: string): boolean {
-  if (/^https?:\/\/(?:192\.168\.|10\.|172\.(?:1[6-9]|2\d|3[01])\.|100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.|127\.0\.0\.1|localhost)/.test(url))
-    return true
-
-  if (/^https?:\/\/[^/]+\.ts\.net(?:\/|:|$)/.test(url))
-    return true
-
-  return false
+function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result as string)
+    reader.onerror = () => reject(reader.error)
+    reader.readAsDataURL(blob)
+  })
 }
 
-async function resolveImageUrl(
-  url: string,
-  forceLocal: boolean,
-): Promise<string> {
-  if (!isNonPublicURL(url) && !forceLocal)
-    return url
+// Discord can't load images from many servers (LAN, VPN, auth proxies, or its own proxy
+// rejecting the response), so fetch the image here and hand PreMiD the data to upload.
+async function uploadImage(url: string | null): Promise<string> {
+  if (!url)
+    return ActivityAssets.Logo
 
-  if (uploadedMediaCache.has(url))
-    return uploadedMediaCache.get(url)!
+  const cached = uploadedMediaCache.get(url)
+  if (cached)
+    return cached
 
   try {
     const res = await fetchWithTimeout(url)
     const blob = await res.blob()
+    if (!res.ok || !blob.type.startsWith('image/'))
+      return ActivityAssets.Logo
 
-    return await new Promise<string>((resolve) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(blob)
-      reader.onloadend = () => {
-        const result = reader.result
-        if (typeof result !== 'string') {
-          resolve(ActivityAssets.Logo)
-          return
-        }
-        cacheSet(uploadedMediaCache, url, result)
-        resolve(result)
-      }
-    })
+    const dataUrl = await blobToDataUrl(blob)
+    cacheSet(uploadedMediaCache, url, dataUrl)
+    return dataUrl
   }
   catch {
     return ActivityAssets.Logo
@@ -312,7 +306,6 @@ interface Settings {
   showSmallImages: boolean
   showBrowsingStatus: boolean
   privacy: boolean
-  localImageExtraction: boolean
 }
 
 async function fetchSettings(): Promise<Settings> {
@@ -328,7 +321,6 @@ async function fetchSettings(): Promise<Settings> {
     showSmallImages,
     showBrowsingStatus,
     privacy,
-    localImageExtraction,
   ] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('usePresenceName'),
@@ -341,7 +333,6 @@ async function fetchSettings(): Promise<Settings> {
     presence.getSetting<boolean>('showSmallImages'),
     presence.getSetting<boolean>('showBrowsingStatus'),
     presence.getSetting<boolean>('privacy'),
-    presence.getSetting<boolean>('localImageExtraction'),
   ])
 
   return {
@@ -356,7 +347,6 @@ async function fetchSettings(): Promise<Settings> {
     showSmallImages,
     showBrowsingStatus,
     privacy,
-    localImageExtraction,
   }
 }
 
@@ -367,8 +357,7 @@ async function getCoverUrl(
   if (!settings.showCover || settings.privacy)
     return ActivityAssets.Logo
 
-  const imageUrl = mediaPrimaryImage(mediaInfo)
-  return resolveImageUrl(imageUrl, settings.localImageExtraction)
+  return uploadImage(mediaPrimaryImage(mediaInfo))
 }
 
 function getImdbButton(mediaInfo: MediaInfo): ButtonData | null {
@@ -806,10 +795,8 @@ async function handleItemDetails(settings: Settings): Promise<PresenceData | nul
       presenceData.state = data.Type
   }
 
-  if (settings.showCover) {
-    const imageUrl = mediaPrimaryImage(data)
-    presenceData.largeImageKey = await resolveImageUrl(imageUrl, settings.localImageExtraction)
-  }
+  if (settings.showCover)
+    presenceData.largeImageKey = await uploadImage(mediaPrimaryImage(data))
 
   const imdbButton = getImdbButton(data)
   if (imdbButton)
