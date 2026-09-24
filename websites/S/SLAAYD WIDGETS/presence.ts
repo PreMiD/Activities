@@ -4,11 +4,26 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+enum ActivityAssets {
+  Logo = 'https://i.imgur.com/rj0odvQ.png',
+}
+
+const siteUrl = 'https://slaayd.xyz/'
+
 presence.on('UpdateData', async () => {
   const { pathname } = document.location
 
   const data: PresenceData = {
+    largeImageKey: ActivityAssets.Logo,
+    largeImageUrl: siteUrl,
+    detailsUrl: siteUrl,
     startTimestamp: browsingTimestamp,
+    buttons: [
+      {
+        label: 'Visit SLAAYD WIDGETS',
+        url: siteUrl,
+      },
+    ],
   }
 
   if (pathname === '/') {
