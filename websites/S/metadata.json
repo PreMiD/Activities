@@ -1,0 +1,24 @@
+]{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1385401164509745217",
+    "name": "raionthego"
+  },
+  "service": "SLAAYD WIDGETS",
+  "description": {
+    "en": "The best streaming widgets for your stream."
+  },
+  "url": "slaayd.xyz",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*slaayd[.]xyz[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/WAHLmhD.png",
+  "thumbnail": "https://i.imgur.com/WAHLmhD.png",
+  "color": "#8A2BE2",
+  "category": "other",
+  "tags": [
+    "slaayd",
+    "widgets",
+    "streaming"
+  ]
+}
