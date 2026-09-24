@@ -1,35 +1,15 @@
 {
-  "movix.home": {
-    "description": "Movix activity text: home.",
-    "message": "Home"
-  },
-  "movix.browseMovies": {
-    "description": "Movix activity text: browse movies.",
-    "message": "Browsing the movie catalog"
-  },
   "movix.movies": {
     "description": "Movix activity text: movies.",
     "message": "Movies"
-  },
-  "movix.browseSeries": {
-    "description": "Movix activity text: browse series.",
-    "message": "Browsing the TV show catalog"
   },
   "movix.series": {
     "description": "Movix activity text: series.",
     "message": "TV shows"
   },
-  "movix.browseCollections": {
-    "description": "Movix activity text: browse collections.",
-    "message": "Browsing collections"
-  },
   "movix.collections": {
     "description": "Movix activity text: collections.",
     "message": "Collections"
-  },
-  "movix.viewCollection": {
-    "description": "Movix activity text: view collection.",
-    "message": "Viewing the collection"
   },
   "movix.collectionId": {
     "description": "Fallback collection title; {0} is the collection ID.",
@@ -87,14 +67,6 @@
     "description": "Movix activity text: random pick.",
     "message": "Random pick"
   },
-  "movix.browsePlatformCatalog": {
-    "description": "Movix activity text: browse platform catalog.",
-    "message": "Browsing a platform's catalog"
-  },
-  "movix.viewPlatform": {
-    "description": "Movix activity text: view platform.",
-    "message": "Viewing a platform"
-  },
   "movix.platformId": {
     "description": "Fallback streaming platform name; {0} is the platform ID.",
     "message": "Platform {0}"
@@ -119,17 +91,9 @@
     "description": "Movix activity text: bip39.",
     "message": "BIP39 sign-in"
   },
-  "movix.viewPerson": {
-    "description": "Movix activity text: view person.",
-    "message": "Viewing the person's page"
-  },
   "movix.personId": {
     "description": "Fallback person name; {0} is the person ID.",
     "message": "Person {0}"
-  },
-  "movix.userProfile": {
-    "description": "Movix activity text: user profile.",
-    "message": "User profile"
   },
   "movix.viewAlerts": {
     "description": "Movix activity text: view alerts.",
@@ -139,10 +103,6 @@
     "description": "Movix activity text: alerts.",
     "message": "Alerts"
   },
-  "movix.watchLiveTv": {
-    "description": "Movix activity text: watch live tv.",
-    "message": "Watching live TV"
-  },
   "movix.viewSuggestions": {
     "description": "Movix activity text: view suggestions.",
     "message": "Viewing personalized suggestions"
@@ -150,10 +110,6 @@
   "movix.suggestions": {
     "description": "Movix activity text: suggestions.",
     "message": "Suggestions"
-  },
-  "movix.viewExtension": {
-    "description": "Movix activity text: view extension.",
-    "message": "Viewing the extension page"
   },
   "movix.extension": {
     "description": "Movix activity text: extension.",
@@ -166,10 +122,6 @@
   "movix.listCatalog": {
     "description": "Movix activity text: list catalog.",
     "message": "List catalog"
-  },
-  "movix.viewLegal": {
-    "description": "Movix activity text: view legal.",
-    "message": "Viewing legal information"
   },
   "movix.dmca": {
     "description": "Movix activity text: dmca.",
@@ -246,10 +198,6 @@
   "movix.configureSettings": {
     "description": "Movix activity text: configure settings.",
     "message": "Configuring preferences"
-  },
-  "movix.viewTop10": {
-    "description": "Movix activity text: view top10.",
-    "message": "Viewing the top 10"
   },
   "movix.top10": {
     "description": "Movix activity text: top10.",

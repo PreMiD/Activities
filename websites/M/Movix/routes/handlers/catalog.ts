@@ -34,7 +34,7 @@ export async function handleCatalogRoutes(
   if (pathname === '/') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(s().browseHome, s().home, pageImage),
+      createPagePresence(s().browseHome, '', pageImage),
     )
   }
 
@@ -239,7 +239,7 @@ export async function handleCatalogRoutes(
   if (pathname === '/profile') {
     return finalizeRoutePresence(
       context,
-      createPagePresence(s().viewProfile, s().userProfile, pageImage),
+      createPagePresence(s().viewProfile, '', pageImage),
     )
   }
 
