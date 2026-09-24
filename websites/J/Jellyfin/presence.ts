@@ -1,4 +1,4 @@
-import type { ApiClient, MediaInfo, Server } from './types.js'
+import type { ApiClient, MediaInfo, Person, Server, Session } from './types.js'
 import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 enum ActivityAssets {
@@ -21,9 +21,12 @@ function cacheSet<K, V>(map: Map<K, V>, key: K, value: V): void {
   map.set(key, value)
 }
 
+const NOW_PLAYING_TTL = 5000
+
 const mediaInfoCache = new Map<string, MediaInfo>()
 const searchMediaCache = new Map<string, MediaInfo[]>()
 const uploadedMediaCache = new Map<string, string>()
+let nowPlayingCache: { itemId: string | null, fetchedAt: number } | null = null
 
 let apiClient: ApiClient
 let wasLogin = false
@@ -38,11 +41,20 @@ async function getStrings() {
     listeningMusic: 'general.listeningMusic',
     search: 'general.search',
     live: 'general.live',
+    reading: 'general.reading',
   })
 }
 
 let oldLang: string | null = null
 let strings: Awaited<ReturnType<typeof getStrings>>
+
+function currentHashPath(): string {
+  const rawPath = location.hash.split('?')[0] ?? ''
+
+  return rawPath
+    .replace(/^#!?\/?/, '')
+    .replace(/\.html$/, '')
+}
 
 function jellyfinBasenameUrl(): string {
   const { pathname } = location
@@ -76,6 +88,24 @@ function truncate(text: string, max = 128): string {
   return `${text.slice(0, max - 3)}...`
 }
 
+function peopleByType(people: Person[] | undefined, type: string): string[] {
+  return people?.filter(person => person.Type === type).map(person => person.Name) ?? []
+}
+
+function bookCredits(people: Person[] | undefined): string | null {
+  const authors = peopleByType(people, 'Author')
+  const authorSet = new Set(authors)
+  const narrators = peopleByType(people, 'Narrator').filter(name => !authorSet.has(name))
+
+  const parts: string[] = []
+  if (authors.length)
+    parts.push(`by ${authors.slice(0, 2).join(', ')}`)
+  if (narrators.length)
+    parts.push(`narrated by ${narrators.slice(0, 2).join(', ')}`)
+
+  return parts.join(' • ') || null
+}
+
 function isNonPublicURL(url: string): boolean {
   if (/^https?:\/\/(?:192\.168\.|10\.|172\.(?:1[6-9]|2\d|3[01])\.|100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.|127\.0\.0\.1|localhost)/.test(url))
     return true
@@ -97,14 +127,18 @@ async function resolveImageUrl(
     return uploadedMediaCache.get(url)!
 
   try {
-    const res = await fetch(url)
+    const res = await fetchWithTimeout(url)
     const blob = await res.blob()
 
     return await new Promise<string>((resolve) => {
       const reader = new FileReader()
       reader.readAsDataURL(blob)
       reader.onloadend = () => {
-        const result = reader.result as string
+        const result = reader.result
+        if (typeof result !== 'string') {
+          resolve(ActivityAssets.Logo)
+          return
+        }
         cacheSet(uploadedMediaCache, url, result)
         resolve(result)
       }
@@ -130,7 +164,7 @@ function getUserId(): string {
         : servers.find(
             (s: Server) =>
               s.Id
-              === new URLSearchParams(location.hash.split('?')[1]).get('serverId'),
+              === new URLSearchParams(location.hash.split('?')[1] ?? '').get('serverId'),
           )
     )?.UserId ?? ''
   }
@@ -138,10 +172,13 @@ function getUserId(): string {
 
 function authHeaders(): Record<string, string> {
   return {
-    'x-emby-authorization': `MediaBrowser Client="${apiClient._appName}",`
-      + `Device="${apiClient._deviceName}",`
-      + `DeviceId="${apiClient._deviceId}",`
-      + `Version="${apiClient._appVersion}",`
+    // Servers with legacy authorization disabled (the default since Jellyfin
+    // began deprecating it) ignore X-Emby-Authorization entirely, so use the
+    // standard Authorization header instead, which every version accepts.
+    Authorization: `MediaBrowser Client="${apiClient._appName}", `
+      + `Device="${apiClient._deviceName}", `
+      + `DeviceId="${apiClient._deviceId}", `
+      + `Version="${apiClient._appVersion}", `
       + `Token="${apiClient._serverInfo.AccessToken}"`,
   }
 }
@@ -151,7 +188,7 @@ async function obtainMediaInfo(itemId: string): Promise<MediaInfo | null> {
     return mediaInfoCache.get(itemId)!
 
   try {
-    const res = await fetch(
+    const res = await fetchWithTimeout(
       `${jellyfinBasenameUrl()}Users/${getUserId()}/Items/${itemId}`,
       { credentials: 'include', headers: authHeaders() },
     )
@@ -168,18 +205,44 @@ async function obtainMediaInfo(itemId: string): Promise<MediaInfo | null> {
   }
 }
 
-async function searchMedia(searchTerm: string): Promise<MediaInfo[]> {
-  if (searchMediaCache.has(searchTerm))
-    return searchMediaCache.get(searchTerm)!
+async function obtainNowPlayingItemId(): Promise<string | null> {
+  if (nowPlayingCache && Date.now() - nowPlayingCache.fetchedAt < NOW_PLAYING_TTL)
+    return nowPlayingCache.itemId
 
+  let itemId: string | null = null
+  try {
+    const res = await fetchWithTimeout(
+      `${jellyfinBasenameUrl()}Sessions?deviceId=${encodeURIComponent(apiClient._deviceId)}`,
+      { credentials: 'include', headers: authHeaders() },
+    )
+    if (res.ok) {
+      const sessions: Session[] = await res.json()
+      itemId = sessions.find(s => s.NowPlayingItem)?.NowPlayingItem?.Id ?? null
+    }
+  }
+  catch {
+    itemId = null
+  }
+
+  nowPlayingCache = { itemId, fetchedAt: Date.now() }
+  return itemId
+}
+
+async function searchMedia(searchTerm: string): Promise<MediaInfo[]> {
   if (/- S\d+:E\d+ -/.test(searchTerm))
     searchTerm = searchTerm.split(' - ').pop() ?? ''
 
   searchTerm = searchTerm.replace(/\(\d{4}\)/, '').trim()
 
+  if (!searchTerm)
+    return []
+
+  if (searchMediaCache.has(searchTerm))
+    return searchMediaCache.get(searchTerm)!
+
   try {
-    const res = await fetch(
-      `${jellyfinBasenameUrl()}Users/${getUserId()}/Items/?searchTerm=${searchTerm}`
+    const res = await fetchWithTimeout(
+      `${jellyfinBasenameUrl()}Users/${getUserId()}/Items/?searchTerm=${encodeURIComponent(searchTerm)}`
       + '&IncludePeople=false&IncludeMedia=true&IncludeGenres=false&IncludeStudios=false'
       + '&IncludeArtists=false&IncludeItemTypes=Movie,Episode&Limit=3'
       + '&Fields=PrimaryImageAspectRatio%2CCanDelete%2CBasicSyncInfo%2CMediaSourceCount'
@@ -212,12 +275,18 @@ async function isJellyfinWebClient(): Promise<boolean> {
   return !!(
     apiClient
     && typeof apiClient === 'object'
-    && apiClient._appName === 'Jellyfin Web'
+    && decodeURIComponent(apiClient._appName ?? '') === 'Jellyfin Web'
   )
 }
 
 function sleep(ms: number): Promise<void> {
   return new Promise(res => setTimeout(res, ms))
+}
+
+function fetchWithTimeout(url: string, options: RequestInit = {}, ms = 5000): Promise<Response> {
+  const controller = new AbortController()
+  const id = setTimeout(() => controller.abort(), ms)
+  return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(id))
 }
 
 async function loggedIn(): Promise<void> {
@@ -226,7 +295,7 @@ async function loggedIn(): Promise<void> {
   do {
     await sleep(125)
     newApiClient = (await presence.getPageVariable<{ ApiClient: ApiClient }>('ApiClient')).ApiClient
-  } while (!apiClient._serverInfo.AccessToken)
+  } while (!newApiClient?._serverInfo?.AccessToken)
 
   apiClient = newApiClient
 }
@@ -400,21 +469,19 @@ async function buildMediaPresence(
         }
       }
 
-      const parts: string[] = [`${mediaInfo.ProductionYear}`]
+      const parts: string[] = []
+      if (mediaInfo.ProductionYear)
+        parts.push(`${mediaInfo.ProductionYear}`)
       if (mediaInfo.Genres?.length)
         parts.push(mediaInfo.Genres.slice(0, 2).join(', '))
-      if (mediaInfo.CommunityRating)
-        parts.push(`★ ${mediaInfo.CommunityRating.toFixed(1)}`)
-      const stateText = parts.join(' • ')
-
-      const overview = mediaInfo.Overview
-        ? truncate(mediaInfo.Overview)
-        : null
+      const rating = mediaInfo.CommunityRating
+        ? `★ ${mediaInfo.CommunityRating.toFixed(1)}`
+        : undefined
 
       const presenceData: MediaPresenceData = {
         type: ActivityType.Watching,
-        details: stateText,
-        state: overview ?? stateText,
+        details: parts.join(' • ') || (mediaInfo.Name ?? 'Movie'),
+        state: rating,
         largeImageKey: await getCoverUrl(mediaInfo, settings),
         largeImageText: `${mediaInfo.Name} (${mediaInfo.ProductionYear})`,
       }
@@ -447,16 +514,16 @@ async function buildMediaPresence(
       const hasFilename = /[.\\/]/.test(mediaInfo.Name ?? '')
       const epName = hasFilename
         ? (season && episode ? `Episode ${episode}` : 'Episode')
-        : mediaInfo.Name
+        : (mediaInfo.Name ?? 'Episode')
 
-      const overview = mediaInfo.Overview
-        ? truncate(mediaInfo.Overview)
+      const seasonEpisode = season && episode
+        ? `Season ${season} • Episode ${episode}`
         : null
 
       const presenceData: MediaPresenceData = {
         type: ActivityType.Watching,
         details: mediaInfo.SeriesName,
-        state: overview ?? epName,
+        state: seasonEpisode ? `${seasonEpisode} • ${epName}` : epName,
         largeImageKey: await getCoverUrl(mediaInfo, settings),
       }
 
@@ -466,7 +533,7 @@ async function buildMediaPresence(
       if (settings.usePresenceName) {
         presenceData.name = mediaInfo.SeriesName
         presenceData.details = epName
-        presenceData.state = overview ?? epName
+        presenceData.state = seasonEpisode ?? epName
       }
 
       const episodeImdb = getImdbButton(mediaInfo)
@@ -493,6 +560,37 @@ async function buildMediaPresence(
         type: ActivityType.Watching,
         details: mediaInfo.Name,
         state: `Series • ${mediaInfo.Status}`,
+        largeImageKey: await getCoverUrl(mediaInfo, settings),
+      }
+
+      if (settings.usePresenceName)
+        presenceData.name = mediaInfo.Name
+
+      applyPlaybackInfo(presenceData, settings)
+      return presenceData
+    }
+
+    case 'Book':
+    case 'AudioBook': {
+      const isAudioBook = mediaInfo.Type === 'AudioBook'
+      const activityType = isAudioBook ? ActivityType.Listening : ActivityType.Watching
+
+      if (settings.privacy) {
+        return {
+          type: activityType,
+          details: isAudioBook ? strings.listeningMusic : strings.reading,
+          largeImageKey: ActivityAssets.Logo,
+        }
+      }
+
+      const credits = bookCredits(mediaInfo.People)
+      const overview = mediaInfo.Overview ? truncate(mediaInfo.Overview) : null
+      const genreText = mediaInfo.Genres?.length ? mediaInfo.Genres.slice(0, 2).join(', ') : null
+
+      const presenceData: MediaPresenceData = {
+        type: activityType,
+        details: credits ?? mediaInfo.Name ?? (isAudioBook ? 'Audiobook' : 'Book'),
+        state: overview ?? genreText ?? strings.reading,
         largeImageKey: await getCoverUrl(mediaInfo, settings),
       }
 
@@ -568,15 +666,18 @@ function handleOfficialWebsite(settings: Settings): PresenceData | null {
       break
     case '/posts/':
       presenceData.state = 'Reading the latest posts'
-      presenceData.smallImageKey = Assets.Reading
+      if (settings.showSmallImages)
+        presenceData.smallImageKey = Assets.Reading
       break
     case '/clients/':
       presenceData.state = 'Checking clients'
-      presenceData.smallImageKey = Assets.Search
+      if (settings.showSmallImages)
+        presenceData.smallImageKey = Assets.Search
       break
     case '/downloads/':
       presenceData.state = 'On downloads'
-      presenceData.smallImageKey = Assets.Downloading
+      if (settings.showSmallImages)
+        presenceData.smallImageKey = Assets.Downloading
       break
     case '/contribute/':
       presenceData.state = 'Learning how to contribute'
@@ -589,7 +690,8 @@ function handleOfficialWebsite(settings: Settings): PresenceData | null {
         presenceData.state = `Reading the docs: ${document.title
           .split('|')[0]
           ?.trim()}`
-        presenceData.smallImageKey = Assets.Reading
+        if (settings.showSmallImages)
+          presenceData.smallImageKey = Assets.Reading
       }
   }
 
@@ -607,9 +709,15 @@ async function handleItemDetails(settings: Settings): Promise<PresenceData | nul
     }
   }
 
-  const data = await obtainMediaInfo(
-    new URLSearchParams(location.hash.split('?')[1]).get('id')!,
-  )
+  const itemId = new URLSearchParams(location.hash.split('?')[1] ?? '').get('id')
+  if (!itemId) {
+    return {
+      largeImageKey: ActivityAssets.Logo,
+      details: strings.browse,
+    }
+  }
+
+  const data = await obtainMediaInfo(itemId)
 
   if (!data) {
     return {
@@ -630,12 +738,14 @@ async function handleItemDetails(settings: Settings): Promise<PresenceData | nul
 
   switch (data.Type) {
     case 'Movie': {
-      const movieParts: string[] = [`${data.ProductionYear}`]
+      const movieParts: string[] = []
+      if (data.ProductionYear)
+        movieParts.push(`${data.ProductionYear}`)
       if (data.Genres?.length)
         movieParts.push(data.Genres.slice(0, 2).join(', '))
       if (data.CommunityRating)
         movieParts.push(`★ ${data.CommunityRating.toFixed(1)}`)
-      presenceData.state = movieParts.join(' • ')
+      presenceData.state = movieParts.join(' • ') || 'Movie'
       break
     }
     case 'Series': {
@@ -684,6 +794,14 @@ async function handleItemDetails(settings: Settings): Promise<PresenceData | nul
     case 'TvChannel':
       presenceData.state = 'Live TV Channel'
       break
+    case 'Book':
+    case 'AudioBook': {
+      const credits = bookCredits(data.People)
+      const genreText = data.Genres?.length ? data.Genres.slice(0, 2).join(', ') : null
+      const fallback = data.Type === 'AudioBook' ? 'Audiobook' : 'Book'
+      presenceData.state = credits ?? genreText ?? fallback
+      break
+    }
     default:
       presenceData.state = data.Type
   }
@@ -718,12 +836,15 @@ async function handleAudioPlayback(settings: Settings): Promise<PresenceData | n
 }
 
 async function handleVideoPlayback(settings: Settings): Promise<PresenceData | null> {
-  if (!document.querySelector('#videoOsdPage'))
-    return null
+  // The page title is only the series name for episodes on some versions, so
+  // ask the server what this device is playing and search by title as a fallback.
+  const nowPlayingId = await obtainNowPlayingItemId()
+  const nowPlayingInfo = nowPlayingId ? await obtainMediaInfo(nowPlayingId) : null
+  if (nowPlayingInfo)
+    return buildMediaPresence(nowPlayingInfo, settings)
 
-  const [mediaInfo] = await searchMedia(
-    document.querySelector<HTMLHeadingElement>('h3.pageTitle')?.textContent ?? '',
-  )
+  const pageTitle = document.title.trim()
+  const [mediaInfo] = pageTitle ? await searchMedia(pageTitle) : []
 
   if (mediaInfo) {
     const info = await obtainMediaInfo(mediaInfo.Id)
@@ -749,8 +870,15 @@ async function handleRemotePlayback(settings: Settings): Promise<PresenceData | 
     document.querySelector<HTMLDivElement>('.nowPlayingImage')?.style.backgroundImage ?? '',
   ) ?? []
 
-  if (!mediaId)
-    return null
+  if (!mediaId) {
+    if (settings.privacy)
+      return null
+    return {
+      type: ActivityType.Watching,
+      largeImageKey: ActivityAssets.Logo,
+      details: 'Watching',
+    } as MediaPresenceData
+  }
 
   const mediaInfo = await obtainMediaInfo(mediaId)
   if (!mediaInfo)
@@ -778,9 +906,9 @@ async function handleWebClient(settings: Settings): Promise<PresenceData | null>
     return handleRemotePlayback(settings)
   }
 
-  const path = location.hash.split('?')[0]?.substring(2)
+  const path = currentHashPath()
 
-  if (path === 'login.html') {
+  if (path === 'login') {
     wasLogin = true
   }
   else if (wasLogin) {
@@ -808,32 +936,33 @@ async function handleWebClient(settings: Settings): Promise<PresenceData | null>
   }
 
   switch (path) {
-    case 'login.html':
+    case 'login':
       presenceData.state = 'Logging in'
       break
-    case 'home.html':
+    case 'home':
       presenceData.state = 'Home'
       break
-    case 'search.html':
+    case 'search':
       presenceData.state = 'Searching'
       if (settings.showSmallImages) {
         presenceData.smallImageKey = Assets.Search
         presenceData.smallImageText = strings.search
       }
       break
-    case 'movies.html':
+    case 'movies':
       presenceData.state = 'Movies'
       break
-    case 'tv.html':
+    case 'tv':
       presenceData.state = 'TV Series'
       break
-    case 'music.html':
+    case 'music':
       presenceData.state = 'Music'
       break
-    case 'livetv.html':
+    case 'livetv':
       presenceData.state = 'Live TV'
       break
-    case 'nowplaying.html':
+    case 'queue':
+    case 'nowplaying':
       presenceData.state = 'Audio Playlist'
       break
     default:

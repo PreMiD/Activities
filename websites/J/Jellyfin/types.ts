@@ -218,6 +218,8 @@ export interface MediaInfo {
     | 'Episode'
     | 'TvChannel'
     | 'Person'
+    | 'Book'
+    | 'AudioBook'
   People: Person[]
   ParentBackdropItemId: string
   ParentBackdropImageTags: string[]
@@ -260,4 +262,8 @@ export interface Server {
   Type: 'Server'
   UserId: string
   manualAddressOnly: boolean
+}
+
+export interface Session {
+  NowPlayingItem?: { Id: string }
 }
