@@ -32,7 +32,7 @@
   ],
   "regExp": "^https?[:][/][/](www[.])?bbc[.](com|co[.]uk)[/]",
   "version": "2.3.1",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BBC/assets/logo.png",
+  "logo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/BBC_Logo_2021.svg/1920px-BBC_Logo_2021.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BBC/assets/thumbnail.png",
   "color": "#000000",
   "category": "other",
