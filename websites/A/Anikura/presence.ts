@@ -19,10 +19,12 @@ function formatAnimeSlug(slug: string | null): string | null {
     .join(' ')
 }
 function getAnimeTitleFromDOM(): string | null {
-  const titleSpan = document.querySelector<HTMLElement>('span[class*="truncate"][class*="text-snow"]')
+  const titleLink = document.querySelector<HTMLElement>('a[href*="/anime/"][class*="truncate"]')
+    || document.querySelector<HTMLElement>('a[href^="/anime/"]')
+    || document.querySelector<HTMLElement>('span[class*="truncate"][class*="text-snow"]')
     || document.querySelector<HTMLElement>('span[style*="view-transition-name: title-"]')
-  if (titleSpan && titleSpan.textContent?.trim()) {
-    return titleSpan.textContent.trim()
+  if (titleLink && titleLink.textContent?.trim()) {
+    return titleLink.textContent.trim()
   }
   const titleElem = document.querySelector('.anime-title, .show-title, h1[class*="text-snow"], h1')
   if (titleElem && titleElem.textContent?.trim()) {
@@ -128,21 +130,20 @@ function getCoverImageFromDOM(epNum?: string, lang?: string, isProfile?: boolean
   return src && src.startsWith('http') && !src.includes('/avatars/') ? src : null
 }
 
-const getStrings = presence.getStrings({
-  browsing: 'general.browsing',
-  searching: 'general.searching',
-  viewHome: 'general.viewHome',
-  viewing: 'general.viewing',
-})
+let currentLanguage: string | boolean | undefined
+let stringsPromise: Promise<Record<string, string>> | null = null
+
+function fetchStrings() {
+  return presence.getStrings({
+    browsing: 'general.browsing',
+    searching: 'general.searching',
+    viewHome: 'general.viewHome',
+    viewing: 'general.viewing',
+  })
+}
 
 interface PageMetadata {
-  useMultiLanguage: string | boolean | undefined
-  showAnimeAsTitle: boolean | undefined
-  showButtons: boolean | undefined
-  showEpTitle: boolean | undefined
   animeTitle: string | null
-  chapter: string | null
-  subtitleLang: string | null
   epTitle: string | null
   followersCount: string | null
   followingCount: string | null
@@ -162,15 +163,7 @@ async function getPageData(urlStr: string): Promise<PageMetadata> {
   const { pathname, search } = url
   const searchParams = new URLSearchParams(search)
 
-  const [useMultiLanguage, showAnimeAsTitle, showButtons, showEpTitle] = await Promise.all([
-    presence.getSetting<string | boolean>('multiLanguage'),
-    presence.getSetting<boolean>('showAnimeAsTitle'),
-    presence.getSetting<boolean>('buttons'),
-    presence.getSetting<boolean>('showEpTitle'),
-  ])
-
   const animeTitle = getAnimeTitleFromDOM()
-  const { chapter, subtitleLang } = getChapterOrSubtitleFromDOM()
   const epTitle = getEpisodeTitleFromDOM()
   const followersCount = getFollowersCountFromDOM()
   const followingCount = getFollowingCountFromDOM()
@@ -184,13 +177,7 @@ async function getPageData(urlStr: string): Promise<PageMetadata> {
   const coverUrlDefault = getCoverImageFromDOM()
 
   const data: PageMetadata = {
-    useMultiLanguage,
-    showAnimeAsTitle,
-    showButtons,
-    showEpTitle,
     animeTitle,
-    chapter,
-    subtitleLang,
     epTitle,
     followersCount,
     followingCount,
@@ -206,6 +193,18 @@ async function getPageData(urlStr: string): Promise<PageMetadata> {
 presence.on('UpdateData', async () => {
   const { pathname, href, search } = document.location
   const searchParams = new URLSearchParams(search)
+
+  const [useMultiLanguage, showAnimeAsTitle, showButtons, showEpTitle] = await Promise.all([
+    presence.getSetting<string | boolean>('multiLanguage'),
+    presence.getSetting<boolean>('showAnimeAsTitle'),
+    presence.getSetting<boolean>('buttons'),
+    presence.getSetting<boolean>('showEpTitle'),
+  ])
+
+  if (useMultiLanguage !== currentLanguage || !stringsPromise) {
+    currentLanguage = useMultiLanguage
+    stringsPromise = fetchStrings()
+  }
 
   let cached = dataCache.get(href)
 
@@ -228,14 +227,6 @@ presence.on('UpdateData', async () => {
   }
 
   const {
-    useMultiLanguage,
-    showAnimeAsTitle,
-    showButtons,
-    showEpTitle,
-    animeTitle,
-    chapter,
-    subtitleLang,
-    epTitle,
     followersCount,
     followingCount,
     coverUrlProfile,
@@ -243,7 +234,11 @@ presence.on('UpdateData', async () => {
     coverUrlDefault,
   } = cached!
 
-  const rawStrings = await getStrings
+  const animeTitle = getAnimeTitleFromDOM() || cached?.animeTitle || null
+  const epTitle = getEpisodeTitleFromDOM() || cached?.epTitle || null
+  const { chapter, subtitleLang } = getChapterOrSubtitleFromDOM()
+
+  const rawStrings = await stringsPromise
   const getString = (key: keyof typeof rawStrings, fallback: string) => {
     if (!useMultiLanguage)
       return fallback
@@ -465,7 +460,7 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = Assets.Play
         presenceData.smallImageText = 'Paused'
 
-        presenceData.startTimestamp = siteStartTimestamp
+        delete presenceData.startTimestamp
         delete presenceData.endTimestamp
       }
 
