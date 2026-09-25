@@ -12,7 +12,7 @@
   },
   "url": "popcornmovies.ac",
   "regExp": "^https?[:][/][/]popcornmovies[.]ac[/]",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "logo": "https://i.imgur.com/MofAknO.png",
   "thumbnail": "https://i.imgur.com/aciw89B.png",
   "color": "#2aa9e0",
@@ -33,8 +33,15 @@
     {
       "id": "privacyMode",
       "title": "Hide what you're watching",
-      "description": "Show only a generic movie activity without the title, cover, metadata, or timestamps.",
+      "description": "Hides every detail about the movie or series you're watching",
       "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showJoinPartyButton",
+      "title": "Show Join Party button",
+      "description": "Share the watch party link in the presence",
+      "icon": "fas fa-users",
       "value": false
     }
   ]

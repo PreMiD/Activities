@@ -119,7 +119,6 @@ function getStructuredDataImage(): string | undefined {
 
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
-    anime: 'general.viewAnime',
     browse: 'general.browsing',
     home: 'general.viewHome',
     paused: 'general.paused',
@@ -131,6 +130,7 @@ presence.on('UpdateData', async () => {
     viewPage: 'general.viewPage',
   })
   const privacyMode = await presence.getSetting<boolean>('privacyMode')
+  const showJoinPartyButton = await presence.getSetting<boolean>('showJoinPartyButton')
 
   const { pathname } = document.location
   const presenceData = {
@@ -154,6 +154,14 @@ presence.on('UpdateData', async () => {
   if (pathname.startsWith('/watch/')) {
     const player = document.querySelector<HTMLElement>('[data-media-player]')
     const video = player?.querySelector<HTMLVideoElement>('video')
+    const partyId = new URLSearchParams(document.location.search).get('party')?.trim()
+    const partyHeader = Array.from(document.querySelectorAll<HTMLElement>('span'))
+      .find(element => element.textContent?.trim() === 'Watch Party' && element.querySelector('svg.lucide-users'))
+      ?.parentElement
+    const watchingText = partyHeader?.querySelector<HTMLElement>(':scope > span:last-child')?.textContent?.trim()
+    const partyStatus = partyId
+      ? `Watch Party${watchingText && /^\d+ watching$/.test(watchingText) ? ` • ${watchingText}` : ''}`
+      : undefined
     const title = player?.getAttribute('aria-label')?.replace(/^Video Player - /, '').trim()
       || player?.querySelector<HTMLElement>('h2')?.textContent?.trim()
       || player?.querySelector<HTMLImageElement>('img[alt]')?.alt
@@ -190,8 +198,8 @@ presence.on('UpdateData', async () => {
 
         presenceData.name = title
         presenceData.details = title
-        if (metadataText)
-          presenceData.state = metadataText
+        if (metadataText || partyStatus)
+          presenceData.state = [metadataText, partyStatus].filter(Boolean).join(' • ')
         else
           delete presenceData.state
         presenceData.smallImageKey = isPlaying ? IconAssets.Play : IconAssets.Pause
@@ -210,6 +218,12 @@ presence.on('UpdateData', async () => {
         else {
           delete presenceData.startTimestamp
           delete presenceData.endTimestamp
+        }
+
+        if (partyId && showJoinPartyButton) {
+          const partyUrl = new URL(pathname, document.location.origin)
+          partyUrl.searchParams.set('party', partyId)
+          presenceData.buttons = [{ label: 'Join Party', url: partyUrl.href }]
         }
       }
 
@@ -276,6 +290,11 @@ presence.on('UpdateData', async () => {
     state = 'Browse'
     presenceData.smallImageKey = IconAssets.Search
   }
+  else if (pathname === '/store') {
+    details = 'Viewing Store'
+    state = strings.browse
+    presenceData.smallImageKey = IconAssets.Cart
+  }
   else if (pathname === '/movies') {
     details = strings.viewPage
     state = 'Movies'
@@ -287,8 +306,8 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = IconAssets.Search
   }
   else if (pathname === '/anime') {
-    details = strings.anime
-    state = strings.browse
+    details = strings.viewPage
+    state = 'Anime'
     presenceData.smallImageKey = IconAssets.Sparkle
   }
   else if (pathname === '/trending') {
@@ -315,7 +334,8 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = IconAssets.Network
   }
   else if (pathname.startsWith('/network/')) {
-    details = strings.viewPage
+    details = 'Viewing Network'
+    state = getText('section .eyebrow + h1') || title || strings.browse
     presenceData.smallImageKey = IconAssets.Network
   }
   else if (pathname === '/people') {
