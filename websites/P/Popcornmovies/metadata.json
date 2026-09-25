@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "860122608682795028",
+    "name": "itsmarian.mc"
+  },
+  "service": "Popcornmovies",
+  "description": {
+    "de": "Popcornmovies ist ein Katalog für Filme und Serien mit On-Demand-Videowiedergabe.",
+    "en": "Popcornmovies is a catalogue for movies and series with on-demand video playback."
+  },
+  "url": "popcornmovies.ac",
+  "regExp": "^https?[:][/][/]popcornmovies[.]ac[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/MofAknO.png",
+  "thumbnail": "https://i.imgur.com/aciw89B.png",
+  "color": "#2aa9e0",
+  "category": "videos",
+  "tags": [
+    "video",
+    "media",
+    "streaming",
+    "entertainment",
+    "movies",
+    "series"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Hide what you're watching",
+      "description": "Show only a generic movie activity without the title, cover, metadata, or timestamps.",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
+}
