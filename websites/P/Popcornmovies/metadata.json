@@ -12,7 +12,7 @@
   },
   "url": "popcornmovies.ac",
   "regExp": "^https?[:][/][/]popcornmovies[.]ac[/]",
-  "version": "1.0.4",
+  "version": "1.0.0",
   "logo": "https://i.imgur.com/MofAknO.png",
   "thumbnail": "https://i.imgur.com/aciw89B.png",
   "color": "#2aa9e0",
