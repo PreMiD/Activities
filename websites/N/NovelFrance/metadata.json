@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1321159978240708699",
+    "name": "ashenvesper"
+  },
+  "service": "NovelFrance",
+  "description": {
+    "en": "Shows what is currently being viewed on NovelFrance."
+  },
+  "url": "novelfrance.fr",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*novelfrance[.]fr[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/ZndzvPu.png",
+  "thumbnail": "https://i.imgur.com/ZndzvPu.png",
+  "color": "#808080",
+  "category": "other",
+  "tags": [
+    "novel",
+    "reading"
+  ]
+}
