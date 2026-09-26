@@ -32,16 +32,20 @@
     "message": "Browsing TCGmini"
   },
   "tcgmini.formatStandard": {
-    "description": "Shown as the match subtitle when playing in Standard format.",
+    "description": "Shown as part of the match details when playing (or searching for a match) in Standard format.",
     "message": "Standard format"
   },
   "tcgmini.formatAdvanced": {
-    "description": "Shown as the match subtitle when playing in Advanced format.",
+    "description": "Shown as part of the match details when playing (or searching for a match) in Advanced format.",
     "message": "Advanced format"
   },
   "tcgmini.formatSandbox": {
     "description": "Shown as the match subtitle when playing in Sandbox mode.",
     "message": "Sandbox mode"
+  },
+  "tcgmini.formatDraft": {
+    "description": "Shown as part of the match details when playing (or searching for a match) in Draft format.",
+    "message": "Draft format"
   },
   "tcgmini.winning": {
     "description": "Shown in the match state when the local player has more points than their opponent.",
@@ -66,5 +70,9 @@
   "tcgmini.matchEnded": {
     "description": "Tooltip for the small icon while the post-match result screen is showing.",
     "message": "Match ended"
+  },
+  "tcgmini.searchingMatch": {
+    "description": "Shown as the match details, and as the tooltip for the small icon, while looking for an online opponent (before a match starts).",
+    "message": "Looking for a match"
   }
 }
