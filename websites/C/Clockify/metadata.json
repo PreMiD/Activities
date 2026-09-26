@@ -12,7 +12,7 @@
   },
   "url": "clockify.me",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*clockify[.]me[/]",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Clockify/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Clockify/assets/thumbnail.png",
   "color": "#03A9F4",
@@ -23,5 +23,31 @@
     "work",
     "projects",
     "tracker"
+  ],
+  "settings": [
+    {
+      "id": "showProject",
+      "title": "Show project name",
+      "icon": "fas fa-folder",
+      "value": true
+    },
+    {
+      "id": "showProjectTime",
+      "title": "Show project time today",
+      "icon": "fas fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "showDaily",
+      "title": "Show daily total",
+      "icon": "fas fa-calendar-day",
+      "value": true
+    },
+    {
+      "id": "showWeekly",
+      "title": "Show weekly total",
+      "icon": "fas fa-calendar-week",
+      "value": true
+    }
   ]
 }
