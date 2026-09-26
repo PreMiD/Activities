@@ -128,7 +128,7 @@ presence.on('UpdateData', async () => {
 
       const slideA: PresenceData = {
         ...sharedTracking,
-        details: `🔴 | ${taskDescription ?? 'Tracking time'}`,
+        details: `🔴 | ${taskDescription || 'Tracking time'}`,
         state: slideAState || undefined,
       }
       const summaryText = buildSummaryText(
