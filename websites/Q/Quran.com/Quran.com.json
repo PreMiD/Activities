@@ -1,0 +1,62 @@
+{
+  "quran.aboutUs": {
+    "description": "Shown when viewing Quran.com's about page.",
+    "message": "Viewing the about us page"
+  },
+  "quran.apps": {
+    "description": "Shown when viewing Quran.com's apps page.",
+    "message": "Looking at Quran apps"
+  },
+  "quran.ayah": {
+    "description": "The label for a Quran verse number.",
+    "message": "Ayah"
+  },
+  "quran.dailyVerse": {
+    "description": "Shown when viewing Quran.com's verse of the day.",
+    "message": "Viewing the Quran verse of the day"
+  },
+  "quran.developers": {
+    "description": "Shown when viewing Quran.com's developers page.",
+    "message": "Looking at the developers page"
+  },
+  "quran.duas": {
+    "description": "Shown when browsing Quranic duas.",
+    "message": "Browsing Quranic duas"
+  },
+  "quran.learningPlans": {
+    "description": "Shown when browsing Quran learning plans.",
+    "message": "Browsing Quran learning plans"
+  },
+  "quran.radio": {
+    "description": "Shown when browsing Quran radio stations.",
+    "message": "Looking through radio stations"
+  },
+  "quran.readingFallback": {
+    "description": "Shown when reading the Quran and no chapter name is available.",
+    "message": "Reading the Holy Quran"
+  },
+  "quran.readingTafsir": {
+    "description": "Shown when reading a Quran tafsir.",
+    "message": "Reading a tafsir"
+  },
+  "quran.reciters": {
+    "description": "Shown when browsing Quran reciters.",
+    "message": "Browsing through reciters"
+  },
+  "quran.support": {
+    "description": "Shown when viewing Quran.com's support page.",
+    "message": "Looking at the support page"
+  },
+  "quran.viewingDua": {
+    "description": "Shown when viewing a specific Quranic dua.",
+    "message": "Viewing a Quranic dua"
+  },
+  "quran.viewingLearningPlan": {
+    "description": "Shown when viewing a specific Quran learning plan.",
+    "message": "Viewing a Quran learning plan"
+  },
+  "quran.viewingReciter": {
+    "description": "Shown when viewing a specific Quran reciter.",
+    "message": "Viewing a reciter"
+  }
+}

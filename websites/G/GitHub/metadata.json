@@ -35,7 +35,7 @@
     "gist.github.com"
   ],
   "regExp": "^https?[:][/][/](gist[.])?github[.]com[/]",
-  "version": "2.12.1",
+  "version": "2.12.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GitHub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GitHub/assets/thumbnail.png",
   "color": "#171515",
@@ -46,6 +46,12 @@
     "coding"
   ],
   "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
     {
       "id": "cover",
       "title": "Show Cover",
@@ -59,10 +65,13 @@
       "value": true
     },
     {
-      "id": "privacy",
-      "title": "Privacy Mode",
-      "icon": "fad fa-user-secret",
-      "value": false
+      "id": "privategist",
+      "title": "Show Private Gists",
+      "icon": "fa-solid fa-lock",
+      "value": false,
+      "if": {
+        "privacy": false
+      }
     }
   ]
 }

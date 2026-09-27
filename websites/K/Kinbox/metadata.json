@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "italsouzaa",
+    "id": "914570418357166080"
+  },
+  "service": "Kinbox",
+  "description": {
+    "en": "Kinbox brings customer conversations, sales pipelines, campaigns and AI agents together in one workspace.",
+    "pt-br": "O Kinbox reúne conversas com clientes, funis de vendas, campanhas e agentes de IA em um só ambiente."
+  },
+  "url": [
+    "app.kinbox.com.br",
+    "insider.kinbox.com.br",
+    "staging.kinbox.com.br"
+  ],
+  "regExp": "^https[:][/][/](app|insider|staging)[.]kinbox[.]com[.]br[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kinbox/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kinbox/assets/thumbnail.png",
+  "color": "#316FEA",
+  "category": "other",
+  "tags": [
+    "crm",
+    "customer-service",
+    "whatsapp",
+    "productivity",
+    "ai"
+  ],
+  "settings": [
+    {
+      "id": "showSection",
+      "title": "Mostrar seção do painel",
+      "icon": "fas fa-list",
+      "value": true,
+      "description": "Exibe apenas o nome da seção, como Contatos ou Agentes de IA."
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Mostrar tempo de atividade",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Exibe o tempo desde a abertura desta aba do painel."
+    }
+  ]
+}

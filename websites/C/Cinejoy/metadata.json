@@ -9,9 +9,12 @@
   "description": {
     "en": "Watch free movies and TV shows on Cinejoy."
   },
-  "url": "cinejoy.to",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*cinejoy[.]to[/]",
-  "version": "1.0.1",
+  "url": [
+    "cinejoy.to",
+    "cinejoy.pk"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*cinejoy[.](to|pk)[/]",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Cinejoy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Cinejoy/assets/thumbnail.jpeg",
   "color": "#95FF50",
