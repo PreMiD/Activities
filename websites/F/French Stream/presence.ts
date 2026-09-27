@@ -59,7 +59,7 @@ presence.on('iFrameData', (data: unknown) => {
   }
 })
 
-async function getStrings() {
+async function getStrings(): Promise<Record<'playing' | 'paused' | 'browsing' | 'search' | 'viewMovie' | 'viewSeries', string>> {
   return presence.getStrings({
     playing: 'general.playing',
     paused: 'general.paused',
