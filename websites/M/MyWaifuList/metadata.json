@@ -14,7 +14,7 @@
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*mywaifulist[.]moe[/]",
   "version": "1.0.0",
   "logo": "https://mywaifulist.moe/android-chrome-512x512.png",
-"thumbnail": "https://mywaifulist.moe/android-chrome-512x512.png",
+  "thumbnail": "https://mywaifulist.moe/android-chrome-512x512.png",
   "color": "#3B82F6",
   "category": "anime",
   "tags": [
