@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "igatx",
+    "id": "199902444442877952"
+  },
+  "service": "CAF",
+  "altnames": [
+    "Caisse d'Allocations Familiales",
+    "caf.fr"
+  ],
+  "description": {
+    "en": "The French family allowance fund (Caisse d'Allocations Familiales): housing aid, family benefits, RSA, prime d'activité and online services for beneficiaries.",
+    "fr": "La Caisse d'Allocations Familiales : aides au logement, prestations familiales, RSA, prime d'activité et services en ligne pour les allocataires."
+  },
+  "url": [
+    "www.caf.fr",
+    "wwwd.caf.fr",
+    "connect.caf.fr",
+    "caf.fr"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*caf[.]fr[/]",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/wZ5Z2LzQ/logo.png",
+  "thumbnail": "https://i.ibb.co/dspq28GN/thumbnailcaf.png",
+  "color": "#0060AD",
+  "category": "other",
+  "tags": [
+    "allocations-familiales",
+    "france",
+    "government",
+    "administration"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy mode",
+      "icon": "fas fa-user-secret",
+      "value": false,
+      "description": "Hide page titles, searches and account sections"
+    },
+    {
+      "id": "buttons",
+      "title": "Show buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "description": "Show a button to the current public page"
+    }
+  ]
+}
