@@ -14,7 +14,7 @@
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*mywaifulist[.]moe[/]",
   "version": "1.0.0",
   "logo": "https://raw.githubusercontent.com/batistayoi/Activities/feat/mywaifulist/websites/M/MyWaifuList/assets/logo.png",
-  "thumbnail": "https://mywaifulist.moe/android-chrome-512x512.png",
+"thumbnail": "https://raw.githubusercontent.com/batistayoi/Activities/feat/mywaifulist/websites/M/MyWaifuList/assets/logo.png",
   "color": "#3B82F6",
   "category": "anime",
   "tags": [
