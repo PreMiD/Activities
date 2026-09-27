@@ -8,56 +8,79 @@ enum ActivityAssets {
   Logo = 'https://i.imgur.com/ZIxVopt.png',
 }
 
+function getCurrentProductName(): string | undefined {
+  try {
+    const openModal = document.querySelector<HTMLElement>(
+      '#productModal.active[aria-hidden="false"]',
+    )
+
+    if (!openModal || openModal.style.display === 'none')
+      return undefined
+
+    return openModal.querySelector<HTMLElement>('#modalName')?.textContent?.trim()
+      || undefined
+  }
+  catch {
+    return undefined
+  }
+}
+
 presence.on('UpdateData', async () => {
-  const { pathname, href } = document.location
+  const url = new URL(document.location.href)
+  const pathname = url.pathname.replace(/^\/shark(?=\/|$)/, '') || '/'
+
+  // Never broadcast administration or checkout activity to Discord.
+  if (
+    pathname === '/admin'
+    || pathname.startsWith('/admin/')
+    || document.querySelector('#checkoutModal.active[aria-hidden="false"]')
+  ) {
+    presence.clearActivity()
+    return
+  }
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    buttons: [
-      {
-        label: 'زيارة Shark Jazz',
-        url: 'https://sharkjazz.com',
-      },
-    ],
   }
 
-  if (pathname === '/' || pathname === '/index.html') {
-    presenceData.details = 'يتصفح Shark Jazz'
-    presenceData.state = 'الرئيسية'
+  const productName = getCurrentProductName()
+  const productId = url.searchParams.get('id')
+  const modalCode = document.querySelector<HTMLElement>(
+    '#productModal.active[aria-hidden="false"] #modalCode',
+  )?.textContent?.trim()
+
+  if (productName) {
+    presenceData.details = 'يشاهد منتج'
+    presenceData.state = productName
+
+    // The URL is shareable only when it identifies the product in this modal.
+    if (
+      productId
+      && /^[a-f\d]{24}$/i.test(productId)
+      && modalCode === `#${productId.slice(-6)}`
+      && (pathname === '/' || pathname === '/products' || pathname === '/products/')
+    ) {
+      presenceData.buttons = [{
+        label: 'عرض المنتج',
+        url: `https://sharkjazz.com/?id=${productId}`,
+      }]
+    }
   }
 
+  // بعد ذلك صفحة جميع المنتجات
   else if (
     pathname === '/products'
     || pathname === '/products/'
-    || pathname.includes('/products/products.html')
+    || pathname.endsWith('/products/products.html')
   ) {
     presenceData.details = 'يتصفح المنتجات'
     presenceData.state = 'جميع المنتجات'
   }
 
-  else if (
-    pathname.includes('/product/')
-    || pathname.includes('/products/product')
-  ) {
-    const productName
-      = document.querySelector('h1')?.textContent?.trim()
-        || document.querySelector('.product-title')?.textContent?.trim()
-        || document.querySelector('.product-name')?.textContent?.trim()
-
-    presenceData.details = 'يشاهد منتج'
-    presenceData.state = productName || 'منتج من Shark Jazz'
-
-    presenceData.buttons = [
-      {
-        label: 'عرض المنتج',
-        url: href,
-      },
-      {
-        label: 'زيارة المتجر',
-        url: 'https://sharkjazz.com',
-      },
-    ]
+  else if (pathname === '/' || pathname === '/index.html') {
+    presenceData.details = 'يتصفح Shark Jazz'
+    presenceData.state = 'الرئيسية'
   }
 
   else if (
