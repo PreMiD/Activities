@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "d2vw",
+    "id": "260153969957928960"
+  },
+  "service": "French Stream",
+  "description": {
+    "en": "French Stream is a French-language website for browsing and watching films and TV series in French or with subtitles.",
+    "fr": "French Stream permet de consulter et regarder des films et des séries en français ou en version originale sous-titrée."
+  },
+  "url": "fs01.lol",
+  "regExp": "^https?://(?:www\\.)?fs[0-9]+\\.lol(?:/|$)",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/7eKVAQo.png",
+  "thumbnail": "https://i.imgur.com/WgFcORr.png",
+  "color": "#F48625",
+  "category": "videos",
+  "tags": [
+    "french",
+    "films",
+    "series",
+    "streaming"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?://",
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "browsing",
+      "title": "Show browsing status",
+      "icon": "fas fa-book-reader",
+      "value": true
+    },
+    {
+      "id": "covers",
+      "title": "Show cover",
+      "icon": "fas fa-images",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show page button",
+      "icon": "fas fa-link",
+      "value": true
+    }
+  ],
+  "allowURLOverrides": true
+}
