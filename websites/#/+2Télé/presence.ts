@@ -24,6 +24,7 @@ const strings = presence.getStrings({
   buttonViewPage: 'general.buttonViewPage',
   buttonReadArticle: 'general.buttonReadArticle',
   buttonViewChangelog: 'general.buttonViewChangelog',
+  buttonBrowse: 'general.buttonBrowse',
 })
 
 type Strings = Awaited<typeof strings>
@@ -102,13 +103,13 @@ presence.on('UpdateData', async () => {
   const showButtons = await presence.getSetting<boolean>('buttons')
   const t = await strings
   const heading = getHeading()
-  let button: ButtonData | undefined
+  const buttons: ButtonData[] = []
 
   // Lecteur intégré  /embed/*  (sans préfixe de langue)
   if (pathname.startsWith('/embed/')) {
     presenceData.details = document.title.split(' | ')[0]?.trim() || t.watching
     setVideo(presenceData, t)
-    button = { label: t.buttonWatchVideo, url: href }
+    buttons.push({ label: t.buttonWatchVideo, url: href })
   }
   // Administration  /staff/*  (sans préfixe de langue)
   else if (pathname.startsWith('/staff')) {
@@ -124,6 +125,7 @@ presence.on('UpdateData', async () => {
     // Page : Accueil
     if (path === '/') {
       presenceData.details = t.viewHome
+      buttons.push({ label: t.buttonBrowse, url: href })
     }
     // Page : Lecteur  /player/*
     else if (root === 'player') {
@@ -135,23 +137,30 @@ presence.on('UpdateData', async () => {
         ?.trim()
 
       presenceData.details = heading ?? t.watching
+      const uploader = document
+        .querySelector('main h1')
+        ?.parentElement
+        ?.querySelector<HTMLAnchorElement>('a[href*="/profile/"]')
+
       presenceData.state = channel
       setVideo(presenceData, t)
-      button = { label: t.buttonWatchVideo, url: href }
+      buttons.push({ label: t.buttonWatchVideo, url: href })
+      if (uploader)
+        buttons.push({ label: t.buttonViewProfile, url: uploader.href })
     }
     // Page : Zapping aléatoire  /zapping
     else if (root === 'zapping') {
-      const channel = document
-        .querySelector('main a[href*="archives?channel="]')
-        ?.textContent
-        ?.trim()
+      const channelLink = document.querySelector<HTMLAnchorElement>('main a[href*="archives?channel="]')
       const playerLink = document.querySelector<HTMLAnchorElement>('main a[href*="/player/"]')
+      const channel = channelLink?.textContent?.trim()
 
       presenceData.details = heading ?? 'Zapping'
       presenceData.state = channel ? `Zapping • ${channel}` : 'Zapping'
       setVideo(presenceData, t)
       if (playerLink)
-        button = { label: t.buttonWatchVideo, url: playerLink.href }
+        buttons.push({ label: t.buttonWatchVideo, url: playerLink.href })
+      if (channelLink)
+        buttons.push({ label: t.buttonViewChannel, url: channelLink.href })
     }
     // Page : Archives  /archives  (recherche et filtres)
     else if (root === 'archives') {
@@ -171,43 +180,44 @@ presence.on('UpdateData', async () => {
         presenceData.details = t.browse
         presenceData.state = ['Archives', ...filters].join(' • ')
       }
+      buttons.push({ label: t.buttonBrowse, url: href })
     }
     // Page : Chaîne et ses sous-pages  /channel/:slug[/annee|type|habillage/*]
     else if (root === 'channel') {
       presenceData.details = subSub ? t.view : t.viewChannel
       presenceData.state = heading
-      button = { label: t.buttonViewChannel, url: href }
+      buttons.push({ label: t.buttonViewChannel, url: href })
     }
     // Page : Archives d'une année  /annee/:year
     else if (root === 'annee') {
       presenceData.details = t.view
       presenceData.state = heading ?? `La télévision en ${sub}`
-      button = { label: t.buttonViewPage, url: href }
+      buttons.push({ label: t.buttonViewPage, url: href })
     }
     // Page : Type d'archive  /type/:typeSlug
     else if (root === 'type') {
       presenceData.details = t.viewCategory
       presenceData.state = heading
-      button = { label: t.buttonViewPage, url: href }
+      buttons.push({ label: t.buttonViewPage, url: href })
     }
     // Page : Collection  /collection/:id
     else if (root === 'collection') {
       presenceData.details = `${t.view} Collection`
       presenceData.state = heading
-      button = { label: t.buttonViewPage, url: href }
+      buttons.push({ label: t.buttonViewPage, url: href })
     }
     // Page : Agence  /agence/:slug
     else if (root === 'agence') {
       presenceData.details = `${t.view} Agence`
       presenceData.state = heading
-      button = { label: t.buttonViewPage, url: href }
+      buttons.push({ label: t.buttonViewPage, url: href })
     }
     // Page : Profil  /profile/:id  ou son propre profil  /profile
     else if (root === 'profile') {
       if (sub) {
         presenceData.details = t.viewProfile
         presenceData.state = heading
-        button = { label: t.buttonViewProfile, url: href }
+        buttons.push({ label: t.buttonViewProfile, url: href })
       }
       else {
         presenceData.details = t.viewAccount
@@ -218,11 +228,12 @@ presence.on('UpdateData', async () => {
       if (sub) {
         presenceData.details = t.readingAnArticle
         presenceData.state = heading
-        button = { label: t.buttonReadArticle, url: href }
+        buttons.push({ label: t.buttonReadArticle, url: href })
       }
       else {
         presenceData.details = t.browse
         presenceData.state = 'Blog'
+        buttons.push({ label: t.buttonBrowse, url: href })
       }
     }
     // Espace archiviste  /archivist/*
@@ -234,15 +245,16 @@ presence.on('UpdateData', async () => {
     else if (['channels', 'collections', 'agences'].includes(root)) {
       presenceData.details = t.browse
       presenceData.state = heading
+      buttons.push({ label: t.buttonBrowse, url: href })
     }
     // Pages statiques : communauté, classement, +2Box, charte, changelog…
     else if (root in staticPages) {
       presenceData.details = t.viewPage
       presenceData.state = staticPages[root]
       if (root === 'changelog')
-        button = { label: t.buttonViewChangelog, url: href }
+        buttons.push({ label: t.buttonViewChangelog, url: href })
       else if (root !== 'settings')
-        button = { label: t.buttonViewPage, url: href }
+        buttons.push({ label: t.buttonViewPage, url: href })
     }
     // Toute autre page
     else {
@@ -251,8 +263,8 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  if (showButtons && button)
-    presenceData.buttons = [button]
+  if (showButtons && buttons[0])
+    presenceData.buttons = buttons[1] ? [buttons[0], buttons[1]] : [buttons[0]]
 
   presence.setActivity(presenceData)
 })
