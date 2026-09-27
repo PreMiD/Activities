@@ -3,6 +3,9 @@ const presence = new Presence({
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
+let observedProductModal: HTMLElement | null = null
+let productModalObserver: MutationObserver | undefined
+let refreshTimer: ReturnType<typeof setTimeout> | undefined
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/ZIxVopt.png',
@@ -25,7 +28,36 @@ function getCurrentProductName(): string | undefined {
   }
 }
 
-presence.on('UpdateData', async () => {
+function observeProductModal(): void {
+  const modal = document.querySelector<HTMLElement>('#productModal')
+  if (modal === observedProductModal)
+    return
+
+  productModalObserver?.disconnect()
+  observedProductModal = modal
+  if (!modal)
+    return
+
+  productModalObserver = new MutationObserver(() => {
+    if (refreshTimer)
+      clearTimeout(refreshTimer)
+
+    refreshTimer = setTimeout(() => {
+      refreshTimer = undefined
+      void updatePresence()
+    }, 50)
+  })
+  productModalObserver.observe(modal, {
+    attributes: true,
+    attributeFilter: ['aria-hidden', 'class', 'hidden', 'style'],
+    childList: true,
+    characterData: true,
+    subtree: true,
+  })
+}
+
+function updatePresence(): void {
+  observeProductModal()
   const url = new URL(document.location.href)
   const pathname = url.pathname.replace(/^\/shark(?=\/|$)/, '') || '/'
 
@@ -148,4 +180,8 @@ presence.on('UpdateData', async () => {
   }
 
   presence.setActivity(presenceData)
+}
+
+presence.on('UpdateData', () => {
+  updatePresence()
 })
