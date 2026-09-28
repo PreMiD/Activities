@@ -1,14 +1,33 @@
 {
   "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
-  "author": { "id": "920705896936513556", "name": "Coconut" },
+  "author": {
+    "name": "Coconut",
+    "id": "920705896936513556"
+  },
   "service": "Karta Club",
-  "description": { "en": "Shows Rami and Chkobba activity on Karta Club" },
+  "description": {
+    "en": "Tunisia's online home for Rami and Chkobba. Shows whether you are in the menu, searching for a match, or playing a ranked, casual or custom game."
+  },
   "url": "kartaclub.tn",
-  "version": "0.1.0",
-  "logo": "https://kartaclub.tn/favicon.ico",
-  "thumbnail": "https://kartaclub.tn/favicon.ico",
-  "color": "#071d19",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kartaclub[.]tn[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/GlUf3X8.png",
+  "thumbnail": "https://i.imgur.com/JIzpQZD.png",
+  "color": "#071D19",
   "category": "games",
-  "tags": ["karta", "rami", "chkobba"]
+  "tags": [
+    "game",
+    "cards",
+    "rami",
+    "chkobba"
+  ],
+  "settings": [
+    {
+      "id": "showName",
+      "title": "Show username",
+      "icon": "fas fa-user",
+      "value": true
+    }
+  ]
 }

@@ -1,19 +1,37 @@
 import { ActivityType } from 'premid'
 
-const presence = new Presence({ clientId: '1554253475809075341' })
-const DEBUG = true
-const has = (sel: string) => !!document.querySelector(sel)
-const nowSec = () => Math.floor(Date.now() / 1000)
+const presence = new Presence({
+  clientId: '1554253475809075341',
+})
 
-// Art asset uploaded in the Discord Developer Portal (Rich Presence > Art Assets).
-// It must be in the SAME application as clientId above.
-const LOGO = 'https://avatars.githubusercontent.com/u/9919?s=200'
+// Must be a square 512x512 PNG (same URL as "logo" in metadata.json)
+const LOGO = 'https://i.imgur.com/GlUf3X8.png'
+
+function has(selector: string): boolean {
+  return document.querySelector(selector) !== null
+}
+
+function nowSec(): number {
+  return Math.floor(Date.now() / 1000)
+}
+
+function textOf(el: Element): string {
+  return (el.textContent ?? '').trim()
+}
+
+function isVisible(el: Element): boolean {
+  return el.getClientRects().length > 0
+}
+
+function cap(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase()
+}
 
 // ---------- ACCOUNT NAME ----------
-// The menu header shows "ONLINE" with the account name under it (top right).
-// The name isn't visible during a match, so it's cached in localStorage.
-const USER_KEY = 'kartaPresenceUser'
-const STATUS_WORDS = /^(online|offline|away|idle|busy)$/i
+// The menu header shows "ONLINE" with the account name next to it. The name
+// isn't visible during a match, so it's cached for the rest of the session.
+const USER_KEY = 'PMD_kartaclub_user'
+const STATUS_WORDS = /^(?:online|offline|away|idle|busy)$/i
 let username: string | null = null
 let userCheckedAt = 0
 
@@ -21,21 +39,19 @@ function findUsername(): string | null {
   const labels = Array.from(
     document.querySelectorAll<HTMLElement>('span, div, small, p'),
   ).filter((el) => {
-    if ((el.innerText ?? '').trim().toLowerCase() !== 'online')
+    if (el.childElementCount > 2 || !STATUS_WORDS.test(textOf(el)))
       return false
     const top = el.getBoundingClientRect().top
-    return top > -5 && top < 150 // header area only, not the "539 online" cards
+    return isVisible(el) && top > -5 && top < 150 // header only, not "539 online"
   })
 
   for (const label of labels) {
+    const labelText = textOf(label)
     let box: HTMLElement | null = label.parentElement
     for (let i = 0; i < 3 && box; i++) {
-      const lines = (box.innerText ?? '')
-        .split('\n')
-        .map(s => s.trim())
-        .filter(s => s && !STATUS_WORDS.test(s))
-      if (lines.length > 0 && lines[0] && lines[0].length <= 32)
-        return lines[0]
+      const name = textOf(box).replace(labelText, '').trim()
+      if (name.length > 0 && name.length <= 32 && !STATUS_WORDS.test(name))
+        return name
       box = box.parentElement
     }
   }
@@ -65,28 +81,32 @@ function currentUser(): string | null {
 }
 
 // ---------- IN-GAME RULES ----------
-const inGame = () =>
-  has('.game-shell')
-  || has('.table-room')
-  || has('.cb-game')
-  || has('.leave-match-action')
+function inGame(): boolean {
+  return (
+    has('.game-shell')
+    || has('.table-room')
+    || has('.cb-game')
+    || has('.leave-match-action')
+  )
+}
 
-const gameName = () =>
-  has('.rami-table-shell')
-    ? 'Rami'
-    : has('.cb-game') || has('.cb-table-shell')
-      ? 'Chkobba'
-      : 'a card game'
+function gameName(): string {
+  if (has('.rami-table-shell'))
+    return 'Rami'
+  if (has('.cb-game') || has('.cb-table-shell'))
+    return 'Chkobba'
+  return 'a card game'
+}
 
 // ---------- MODE ----------
 // Remember which menu row was clicked. Order matters (2v2 before "friends").
 const CLICK_MODES: Array<[string, RegExp]> = [
   ['Custom 2v2', /2v2/i],
   ['Custom', /play with friends|private/i],
-  ['Casual', /single player|against (a )?bots?/i],
+  ['Casual', /single player|against (?:a )?bots?/i],
   ['Ranked', /ranked|classé/i],
 ]
-const MODE_KEY = 'kartaPresenceMode'
+const MODE_KEY = 'PMD_kartaclub_mode'
 
 document.addEventListener(
   'click',
@@ -95,7 +115,7 @@ document.addEventListener(
       return
     let el = e.target as HTMLElement | null
     for (let i = 0; i < 5 && el; i++) {
-      const t = el.innerText ?? ''
+      const t = textOf(el)
       if (t.length > 0 && t.length < 120) {
         const hit = CLICK_MODES.find(([, re]) => re.test(t))
         if (hit) {
@@ -112,7 +132,7 @@ document.addEventListener(
   true,
 )
 
-const mode = (): string => {
+function mode(): string {
   // Structural signals first (they can't go stale)
   if (has('.cb-side-player-zone'))
     return 'Custom 2v2' // 4-seat Chkobba table
@@ -129,7 +149,7 @@ const mode = (): string => {
 }
 
 // ---------- QUEUE ----------
-const QUEUE_KEY = 'kartaPresenceQueue'
+const QUEUE_KEY = 'PMD_kartaclub_queue'
 const QUEUE_STALE_MS = 8000
 
 interface Queue {
@@ -141,17 +161,26 @@ interface Queue {
   ts: number
 }
 
-type State =
-  | { view: 'menu' }
-  | {
-    view: 'queue'
-    mode: string
-    game: string
-    players?: number
-    max?: number
-    start: number
-  }
-  | { view: 'game', game: string, mode: string }
+interface MenuState {
+  view: 'menu'
+}
+
+interface QueueState {
+  view: 'queue'
+  mode: string
+  game: string
+  players?: number
+  max?: number
+  start: number
+}
+
+interface GameState {
+  view: 'game'
+  game: string
+  mode: string
+}
+
+type State = MenuState | QueueState | GameState
 
 function readSharedQueue(): Queue | null {
   try {
@@ -165,8 +194,6 @@ function readSharedQueue(): Queue | null {
   }
 }
 
-const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase()
-
 // A) Main tab: the menu shows an "IN QUEUE" badge on the mode row while searching
 let queueSince: number | null = null
 
@@ -174,8 +201,10 @@ function findQueueInMenu(): { mode: string, game: string } | null {
   const badge = Array.from(
     document.querySelectorAll<HTMLElement>('span, div, small, b, em, p'),
   ).find((el) => {
-    const t = (el.innerText ?? '').trim()
-    return t.length > 0 && t.length < 20 && /in queue/i.test(t)
+    if (el.childElementCount > 2)
+      return false
+    const t = textOf(el)
+    return t.length > 0 && t.length < 20 && /in queue/i.test(t) && isVisible(el)
   })
   if (!badge)
     return null
@@ -184,7 +213,7 @@ function findQueueInMenu(): { mode: string, game: string } | null {
   let modeWord = ''
   let row: HTMLElement | null = badge.parentElement
   for (let i = 0; i < 5 && row; i++) {
-    const t = row.innerText ?? ''
+    const t = textOf(row)
     if (t.length < 120) {
       const m = t.match(/ranked|casual|custom/i)
       if (m) {
@@ -199,10 +228,15 @@ function findQueueInMenu(): { mode: string, game: string } | null {
   let game = 'a card game'
   const selected = Array.from(
     document.querySelectorAll<HTMLElement>('button, span, div'),
-  ).find(el => (el.innerText ?? '').trim().toUpperCase() === 'SELECTED')
+  ).find(
+    el =>
+      el.childElementCount <= 2
+      && textOf(el).toUpperCase() === 'SELECTED'
+      && isVisible(el),
+  )
   let card: HTMLElement | null = selected?.parentElement ?? null
   for (let i = 0; i < 4 && card; i++) {
-    const m = (card.innerText ?? '').match(/rami|chkobba/i)
+    const m = textOf(card).match(/rami|chkobba/i)
     if (m) {
       game = cap(m[0])
       break
@@ -214,9 +248,21 @@ function findQueueInMenu(): { mode: string, game: string } | null {
 }
 
 // B) Popup window (if PreMiD runs there): reads the queue window's own page
+function pageText(): string {
+  // Visible text only (textContent would also include inline <script> data)
+  const parts: string[] = []
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    const tag = n.parentElement?.tagName
+    if (tag !== 'SCRIPT' && tag !== 'STYLE' && tag !== 'NOSCRIPT')
+      parts.push(n.textContent ?? '')
+  }
+  return parts.join(' ')
+}
+
 function detectQueueHere(): Queue | null {
   const title = document.title
-  const text = document.body?.innerText ?? ''
+  const text = document.body ? pageText() : ''
   if (!/finding a match/i.test(text) && !/queue/i.test(title))
     return null
 
@@ -242,10 +288,12 @@ let lastKey = ''
 let since = nowSec()
 
 presence.on('UpdateData', async () => {
+  const showName = await presence.getSetting<boolean>('showName')
+
   const playing = inGame()
   const here = playing ? null : detectQueueHere()
   const inMenuQueue = playing ? null : findQueueInMenu()
-  const user = currentUser()
+  const user = showName ? currentUser() : null
 
   if (here) {
     try {
@@ -287,29 +335,27 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  const state: State = playing
-    ? { view: 'game', game: gameName(), mode: mode() }
-    : queue
-      ? {
-          view: 'queue',
-          mode: queue.mode,
-          game: queue.game,
-          players: queue.players,
-          max: queue.max,
-          start: queue.start,
-        }
-      : { view: 'menu' }
-
-  if (DEBUG)
-    console.log('[KartaPresence]', state, 'user:', user)
+  let state: State = { view: 'menu' }
+  if (playing) {
+    state = { view: 'game', game: gameName(), mode: mode() }
+  }
+  else if (queue) {
+    state = {
+      view: 'queue',
+      mode: queue.mode,
+      game: queue.game,
+      players: queue.players,
+      max: queue.max,
+      start: queue.start,
+    }
+  }
 
   // Reset the timer on view/game/mode changes
-  const key
-    = state.view === 'game'
-      ? `game|${state.game}|${state.mode}`
-      : state.view === 'queue'
-        ? `queue|${state.game}|${state.mode}`
-        : 'menu'
+  let key = 'menu'
+  if (state.view === 'game')
+    key = `game|${state.game}|${state.mode}`
+  else if (state.view === 'queue')
+    key = `queue|${state.game}|${state.mode}`
   if (key !== lastKey) {
     lastKey = key
     since = nowSec()
@@ -317,28 +363,28 @@ presence.on('UpdateData', async () => {
 
   const withUser = (s: string) => (user ? `${s} · ${user}` : s)
 
-  const data: PresenceData = {
+  const presenceData: PresenceData = {
     type: ActivityType.Playing,
     largeImageKey: LOGO,
     startTimestamp: state.view === 'queue' ? state.start : since,
   }
 
   if (state.view === 'menu') {
-    data.details = 'In the main menu'
-    data.state = withUser('Choosing a game')
+    presenceData.details = 'In the main menu'
+    presenceData.state = withUser('Choosing a game')
   }
   else if (state.view === 'queue') {
-    data.details = `Searching for a ${state.mode} game`
-    data.state = withUser(
+    presenceData.details = `Searching for a ${state.mode} game`
+    presenceData.state = withUser(
       state.players && state.max
         ? `${state.game} · ${state.players}/${state.max} players`
         : state.game,
     )
   }
   else {
-    data.details = `Playing ${state.game}`
-    data.state = withUser(`${state.mode} game`)
+    presenceData.details = `Playing ${state.game}`
+    presenceData.state = withUser(`${state.mode} game`)
   }
 
-  presence.setActivity(data)
+  presence.setActivity(presenceData)
 })
