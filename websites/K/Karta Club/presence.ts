@@ -4,7 +4,6 @@ const presence = new Presence({
   clientId: '1554253475809075341',
 })
 
-// Must be a square 512x512 PNG (same URL as "logo" in metadata.json)
 const LOGO = 'https://i.imgur.com/GlUf3X8.png'
 
 function has(selector: string): boolean {
@@ -28,8 +27,6 @@ function cap(s: string): string {
 }
 
 // ---------- ACCOUNT NAME ----------
-// The menu header shows "ONLINE" with the account name next to it. The name
-// isn't visible during a match, so it's cached for the rest of the session.
 const USER_KEY = 'PMD_kartaclub_user'
 const STATUS_WORDS = /^(?:online|offline|away|idle|busy)$/i
 let username: string | null = null
@@ -99,7 +96,6 @@ function gameName(): string {
 }
 
 // ---------- MODE ----------
-// Remember which menu row was clicked. Order matters (2v2 before "friends").
 const CLICK_MODES: Array<[string, RegExp]> = [
   ['Custom 2v2', /2v2/i],
   ['Custom', /play with friends|private/i],
@@ -133,11 +129,10 @@ document.addEventListener(
 )
 
 function mode(): string {
-  // Structural signals first (they can't go stale)
   if (has('.cb-side-player-zone'))
-    return 'Custom 2v2' // 4-seat Chkobba table
+    return 'Custom 2v2' 
   if (has('.pause-match-action') && !has('.ingame-chat'))
-    return 'Casual' // single player: pausable, no chat
+    return 'Casual' 
 
   try {
     const m = sessionStorage.getItem(MODE_KEY)
@@ -194,7 +189,6 @@ function readSharedQueue(): Queue | null {
   }
 }
 
-// A) Main tab: the menu shows an "IN QUEUE" badge on the mode row while searching
 let queueSince: number | null = null
 
 function findQueueInMenu(): { mode: string, game: string } | null {
@@ -209,7 +203,6 @@ function findQueueInMenu(): { mode: string, game: string } | null {
   if (!badge)
     return null
 
-  // Walk up to the row that contains the mode name (e.g. "Ranked")
   let modeWord = ''
   let row: HTMLElement | null = badge.parentElement
   for (let i = 0; i < 5 && row; i++) {
@@ -224,7 +217,6 @@ function findQueueInMenu(): { mode: string, game: string } | null {
     row = row.parentElement
   }
 
-  // The selected game card ("SELECTED" button) tells us Rami vs Chkobba
   let game = 'a card game'
   const selected = Array.from(
     document.querySelectorAll<HTMLElement>('button, span, div'),
@@ -247,9 +239,7 @@ function findQueueInMenu(): { mode: string, game: string } | null {
   return { mode: modeWord ? cap(modeWord) : 'Ranked', game }
 }
 
-// B) Popup window (if PreMiD runs there): reads the queue window's own page
 function pageText(): string {
-  // Visible text only (textContent would also include inline <script> data)
   const parts: string[] = []
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
   for (let n = walker.nextNode(); n; n = walker.nextNode()) {
@@ -308,7 +298,6 @@ presence.on('UpdateData', async () => {
     catch {}
   }
 
-  // Own timer for the main-tab queue (queue time isn't shown there)
   if (inMenuQueue) {
     if (queueSince === null)
       queueSince = nowSec()
@@ -350,7 +339,6 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  // Reset the timer on view/game/mode changes
   let key = 'menu'
   if (state.view === 'game')
     key = `game|${state.game}|${state.mode}`
