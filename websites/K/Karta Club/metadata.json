@@ -1,0 +1,14 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": { "id": "920705896936513556", "name": "Coconut" },
+  "service": "Karta Club",
+  "description": { "en": "Shows Rami and Chkobba activity on Karta Club" },
+  "url": "kartaclub.tn",
+  "version": "0.1.0",
+  "logo": "https://kartaclub.tn/favicon.ico",
+  "thumbnail": "https://kartaclub.tn/favicon.ico",
+  "color": "#071d19",
+  "category": "games",
+  "tags": ["karta", "rami", "chkobba"]
+}
