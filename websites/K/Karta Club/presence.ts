@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1554253475809075341',
 })
 
-const LOGO = 'https://i.imgur.com/GlUf3X8.png'
+const LOGO = 'https://i.imgur.com/7JShl3X.png'
 
 function has(selector: string): boolean {
   return document.querySelector(selector) !== null
