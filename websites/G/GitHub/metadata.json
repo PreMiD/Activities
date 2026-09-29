@@ -13,6 +13,10 @@
     {
       "name": "veryCrunchy",
       "id": "576097150359044106"
+    },
+    {
+      "name": "JuJuplayz",
+      "id": "960971439996035083"
     }
   ],
   "service": "GitHub",
@@ -35,7 +39,7 @@
     "gist.github.com"
   ],
   "regExp": "^https?[:][/][/](gist[.])?github[.]com[/]",
-  "version": "2.12.2",
+  "version": "2.13.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GitHub/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GitHub/assets/thumbnail.png",
   "color": "#171515",
@@ -63,6 +67,15 @@
       "title": "Show timestamps",
       "icon": "fad fa-stopwatch",
       "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fad fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
     },
     {
       "id": "privategist",
