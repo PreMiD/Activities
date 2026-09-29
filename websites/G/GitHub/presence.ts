@@ -8,7 +8,7 @@ presence.on('UpdateData', async () => {
   let presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/G/GitHub/assets/logo.png',
   }
-  const pages: Record<string, PresenceData> = {
+  const pages: { [key: string]: PresenceData } = {
     'login': {
       details: 'Logging in',
     },
@@ -51,21 +51,22 @@ presence.on('UpdateData', async () => {
     },
   }
   const { pathname, search, href, hostname } = document.location
-  const [cover, timestamp, privacy, privategist] = await Promise.all([
-    presence.getSetting<boolean>('cover'),
-    presence.getSetting<boolean>('timestamp'),
-    presence.getSetting<boolean>('privacy'),
-    presence.getSetting<boolean>('privategist'),
+  const [cover, timestamp, privacy, privategist, buttons] = await Promise.all([
+    presence.getSetting('cover'),
+    presence.getSetting('timestamp'),
+    presence.getSetting('privacy'),
+    presence.getSetting('privategist'),
+    presence.getSetting('buttons'),
   ])
 
   for (const [path, data] of Object.entries(pages)) {
     if (pathname.includes(`/${path}`))
-      presenceData = { ...presenceData, ...data } as PresenceData
+      Object.assign(presenceData, data)
   }
   if (hostname === 'github.com') {
     switch (true) {
       // * For Profiles
-      case !!document.querySelector<HTMLBodyElement>('body.page-profile'):
+      case !!document.querySelector('body.page-profile'):
         if (privacy) {
           presenceData.details = 'Viewing a profile'
           break
@@ -76,31 +77,37 @@ presence.on('UpdateData', async () => {
           ?.textContent
           ?.split('·')[0]
           ?.trim()
-        presenceData.buttons = [{ label: 'View Profile', url: href }]
+
+        if (buttons)
+          presenceData.buttons = [{ label: 'View Profile', url: href }]
+
         if (cover) {
           presenceData.largeImageKey = `${
-            document.querySelector<HTMLImageElement>('img.avatar-user')?.src
+            (document.querySelector('img.avatar-user') as HTMLImageElement)?.src
           }.png`
         }
         if (searchParam)
-          presenceData.details = `Viewing ${profileName}'s ${searchParam}`
+          presenceData.details = `Viewing \({profileName}'s\){searchParam}`
         else presenceData.details = `Viewing ${profileName}'s profile`
         break
         // * For repositories
-      case !!document.querySelector<HTMLDivElement>(
-        'div#repository-container-header',
-      ):
+      case !!document.querySelector('div#repository-container-header'):
         const repository = {
           owner: pathname.split('/')[1],
           name: pathname.split('/')[2],
           target: pathname.split('/')[4],
           id: pathname.split('/')[4],
         }
-        presenceData.buttons = [{ label: 'View Repository', url: href }]
+
+        if (buttons && !privacy)
+          presenceData.buttons = [{ label: 'View Repository', url: href }]
+
         if (cover && !privacy) {
           presenceData.largeImageKey = `https://avatars.githubusercontent.com/u/${
-            document.querySelector<HTMLMetaElement>(
-              'meta[name~="octolytics-dimension-user_id"]',
+            (
+              document.querySelector(
+                'meta[name~="octolytics-dimension-user_id"]',
+              ) as HTMLMetaElement
             )?.content
           }`
         }
@@ -112,7 +119,7 @@ presence.on('UpdateData', async () => {
             delete presenceData.buttons
             break
           }
-          presenceData.details = `Browsing repository ${repository.owner}/${repository.name}`
+          presenceData.details = `Browsing repository \({repository.owner}/\){repository.name}`
 
           presenceData.state = `In folder ${pathname
             .split('/')
@@ -134,9 +141,9 @@ presence.on('UpdateData', async () => {
             .slice(1)
             .join('/')
           const fileName = document.querySelector('#file-name-id')?.textContent
-          presenceData.details = `Browsing repository ${repository.owner}/${repository.name}`
+          presenceData.details = `Browsing repository \({repository.owner}/\){repository.name}`
           presenceData.state = `Viewing file ${(pathFolder
-            ? `${pathFolder}/${fileName}`
+            ? `\({pathFolder}/\){fileName}`
             : fileName
           )?.trim()} at ${repository.target}`
         }
@@ -149,7 +156,7 @@ presence.on('UpdateData', async () => {
                 delete presenceData.buttons
                 break
               }
-              presenceData.details = `Creating an issue in ${repository.owner}/${repository.name}`
+              presenceData.details = `Creating an issue in \({repository.owner}/\){repository.name}`
             }
             else {
               if (privacy) {
@@ -160,16 +167,19 @@ presence.on('UpdateData', async () => {
               }
               presenceData.details = `Looking at issue #${repository.id}`
               presenceData.state = `${
-                document
-                  .querySelector<HTMLAnchorElement>('[data-testid="issue-body-header-author"]')
-                  ?.textContent
+                (
+                  document.querySelector(
+                    '[data-testid="issue-body-header-author"]',
+                  ) as HTMLAnchorElement
+                )?.textContent
                   ?.trim()
                   ?? document.querySelector('[href="#top"]')?.textContent?.trim()
               } - ${
                 document.querySelector('bdi[data-testid="issue-title"]')
                   ?.textContent
               }`
-              presenceData.buttons = [{ label: 'View Issue', url: href }]
+              if (buttons)
+                presenceData.buttons = [{ label: 'View Issue', url: href }]
             }
           }
           else {
@@ -180,7 +190,7 @@ presence.on('UpdateData', async () => {
               break
             }
             presenceData.details = 'Browsing issues'
-            presenceData.state = `${repository.owner}/${repository.name}`
+            presenceData.state = `\({repository.owner}/\){repository.name}`
           }
         }
         else if (pathname.includes('/pulls')) {
@@ -191,7 +201,7 @@ presence.on('UpdateData', async () => {
             break
           }
           presenceData.details = 'Browsing pull requests'
-          presenceData.state = `${repository.owner}/${repository.name}`
+          presenceData.state = `\({repository.owner}/\){repository.name}`
         }
         else if (pathname.includes('/pull')) {
           if (privacy) {
@@ -202,13 +212,17 @@ presence.on('UpdateData', async () => {
           }
           presenceData.details = `Looking at pull request #${repository.id}`
           presenceData.state = `${
-            document.querySelector<HTMLAnchorElement>('a.author.Link--primary')
-              ?.textContent
+            (
+              document.querySelector(
+                'a.author.Link--primary',
+              ) as HTMLAnchorElement
+            )?.textContent
               ?? document.querySelector('[class*="author Link"]')?.textContent
           } - ${
             document.querySelector('[href="#top"]')?.textContent?.trim()
           }`
-          presenceData.buttons = [{ label: 'View Pull Request', url: href }]
+          if (buttons)
+            presenceData.buttons = [{ label: 'View Pull Request', url: href }]
         }
         else if (pathname.endsWith('/discussions')) {
           if (privacy) {
@@ -218,7 +232,7 @@ presence.on('UpdateData', async () => {
             break
           }
           presenceData.details = 'Browsing discussions in'
-          presenceData.state = `${repository.owner}/${repository.name}`
+          presenceData.state = `\({repository.owner}/\){repository.name}`
         }
         else if (pathname.includes('/discussions/')) {
           if (privacy) {
@@ -229,13 +243,18 @@ presence.on('UpdateData', async () => {
           }
           presenceData.details = `Looking at discussion #${repository.id}`
           presenceData.state = `${
-            document.querySelectorAll<HTMLAnchorElement>('a.author')[0]
-              ?.textContent
+            (
+              document.querySelectorAll('a.author')[0] as HTMLAnchorElement
+            )?.textContent
           } - ${
-            document.querySelector<HTMLHeadingElement>('h1.gh-header-title')
-              ?.textContent
+            (
+              document.querySelector(
+                'h1.gh-header-title',
+              ) as HTMLHeadingElement
+            )?.textContent
           }`
-          presenceData.buttons = [{ label: 'View Discussion', url: href }]
+          if (buttons)
+            presenceData.buttons = [{ label: 'View Discussion', url: href }]
         }
         else if (
           pathname.includes('/pulse')
@@ -254,10 +273,12 @@ presence.on('UpdateData', async () => {
             delete presenceData.buttons
             break
           }
-          presenceData.details = `Browsing insights of ${repository.owner} / ${repository.name}`
+          presenceData.details = `Browsing insights of \({repository.owner} /\){repository.name}`
 
-          presenceData.state = document.querySelector<HTMLAnchorElement>(
-            'nav a.js-selected-navigation-item.selected.menu-item',
+          presenceData.state = (
+            document.querySelector(
+              'nav a.js-selected-navigation-item.selected.menu-item',
+            ) as HTMLAnchorElement
           )?.textContent
         }
         else {
@@ -268,7 +289,7 @@ presence.on('UpdateData', async () => {
             break
           }
           presenceData.details = 'Browsing repository'
-          presenceData.state = `${repository.owner}/${repository.name}`
+          presenceData.state = `\({repository.owner}/\){repository.name}`
         }
         break
       case pathname.includes('/orgs/'):
@@ -278,14 +299,12 @@ presence.on('UpdateData', async () => {
           delete presenceData.buttons
           break
         }
-        presenceData.details = `Viewing ${pathname.split('/')[2]}'s ${
+        presenceData.details = `Viewing \({pathname.split('/')[2]}'s\){
           pathname.split('/')[3]
         }`
 
         break
-      case !!document.querySelector<HTMLMetaElement>(
-        'meta[name="hovercard-subject-tag"]',
-      ):
+      case !!document.querySelector('meta[name="hovercard-subject-tag"]'):
         presenceData.details = 'Viewing an organization'
 
         if (privacy) {
@@ -297,11 +316,15 @@ presence.on('UpdateData', async () => {
         presenceData.state = document.title
         if (cover) {
           presenceData.largeImageKey = `${
-            document.querySelector<HTMLMetaElement>(
-              'meta[property~="og:image"]',
+            (
+              document.querySelector(
+                'meta[property~="og:image"]',
+              ) as HTMLMetaElement
             )?.content
-            ?? document.querySelector<HTMLImageElement>(
-              'img[itemprop=\'image\'].avatar',
+            ?? (
+              document.querySelector(
+                'img[itemprop=\'image\'].avatar',
+              ) as HTMLImageElement
             )?.src
             ?? presenceData.largeImageKey
           }`
@@ -344,16 +367,21 @@ presence.on('UpdateData', async () => {
           .querySelector('span.p-nickname')
           ?.textContent
           ?.trim()
-        presenceData.buttons = [{ label: 'View Profile', url: href }]
+
+        if (buttons)
+          presenceData.buttons = [{ label: 'View Profile', url: href }]
+
         if (cover) {
           presenceData.largeImageKey = `${
-            document.querySelector<HTMLImageElement>(
-              'img.avatar.avatar-user.width-full',
+            (
+              document.querySelector(
+                'img.avatar.avatar-user.width-full',
+              ) as HTMLImageElement
             )?.src
           }.png`
         }
         if (searchParam)
-          presenceData.details = `Viewing ${profileName}'s ${searchParam}`
+          presenceData.details = `Viewing \({profileName}'s\){searchParam}`
         else presenceData.details = `Viewing ${profileName}'s profile`
         break
         // * For gists
@@ -367,11 +395,19 @@ presence.on('UpdateData', async () => {
           name: document.querySelector('[itemprop = \'name\'] > a')?.innerHTML,
         }
         const isPrivateGist = !!document.querySelector('.Label')
-        presenceData.buttons = isPrivateGist && !privategist ? undefined : [{ label: 'View Gist', url: href }]
-        presenceData.details = isPrivateGist && !privategist ? 'Viewing a private gist' : `Browsing gist ${gist.name} by ${gist.owner}`
+
+        if (buttons && !(isPrivateGist && !privategist))
+          presenceData.buttons = [{ label: 'View Gist', url: href }]
+
+        presenceData.details = isPrivateGist && !privategist ? 'Viewing a private gist' : `Browsing gist \({gist.name} by\){gist.owner}`
     }
   }
+
+  if (!buttons || privacy)
+    delete presenceData.buttons
+
   if (timestamp)
     presenceData.startTimestamp = browsingTimestamp
+
   presence.setActivity(presenceData)
 })
