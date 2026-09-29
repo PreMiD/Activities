@@ -5,30 +5,6 @@ const presence = new Presence({
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-const strings = presence.getStrings({
-  browse: 'general.browsing',
-  viewHome: 'general.viewHome',
-  view: 'general.view',
-  viewPage: 'general.viewPage',
-  viewChannel: 'general.viewChannel',
-  viewCategory: 'general.viewCategory',
-  viewProfile: 'general.viewProfile',
-  viewAccount: 'general.viewAccount',
-  searchFor: 'general.searchFor',
-  readingAnArticle: 'general.readingAnArticle',
-  watching: 'general.watching',
-  paused: 'general.paused',
-  buttonWatchVideo: 'general.buttonWatchVideo',
-  buttonViewChannel: 'general.buttonViewChannel',
-  buttonViewProfile: 'general.buttonViewProfile',
-  buttonViewPage: 'general.buttonViewPage',
-  buttonReadArticle: 'general.buttonReadArticle',
-  buttonViewChangelog: 'general.buttonViewChangelog',
-  buttonBrowse: 'general.buttonBrowse',
-})
-
-type Strings = Awaited<typeof strings>
-
 // Pages statiques : libellé affiché (le h1 de certaines pages est générique)
 const staticPages: Record<string, string> = {
   community: 'La Communauté',
@@ -76,7 +52,7 @@ function getHeading(): string | undefined {
   return document.querySelector('main h1')?.textContent?.trim() || undefined
 }
 
-function setVideo(presenceData: PresenceData, t: Strings) {
+function setVideo(presenceData: PresenceData, t: { paused: string, watching: string }) {
   const video = document.querySelector('video')
   const isPaused = video?.paused ?? true
 
@@ -101,7 +77,27 @@ presence.on('UpdateData', async () => {
   const { href, pathname, search } = document.location
   const params = new URLSearchParams(search)
   const showButtons = await presence.getSetting<boolean>('buttons')
-  const t = await strings
+  const t = await presence.getStrings({
+    browse: 'general.browsing',
+    viewHome: 'general.viewHome',
+    view: 'general.view',
+    viewPage: 'general.viewPage',
+    viewChannel: 'general.viewChannel',
+    viewCategory: 'general.viewCategory',
+    viewProfile: 'general.viewProfile',
+    viewAccount: 'general.viewAccount',
+    searchFor: 'general.searchFor',
+    readingAnArticle: 'general.readingAnArticle',
+    watching: 'general.watching',
+    paused: 'general.paused',
+    buttonWatchVideo: 'general.buttonWatchVideo',
+    buttonViewChannel: 'general.buttonViewChannel',
+    buttonViewProfile: 'general.buttonViewProfile',
+    buttonViewPage: 'general.buttonViewPage',
+    buttonReadArticle: 'general.buttonReadArticle',
+    buttonViewChangelog: 'general.buttonViewChangelog',
+    buttonBrowse: 'general.buttonBrowse',
+  })
   const heading = getHeading()
   const buttons: ButtonData[] = []
 

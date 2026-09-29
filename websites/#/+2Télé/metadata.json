@@ -7,8 +7,8 @@
   },
   "service": "+2Télé",
   "description": {
-    "en": "+2Télé is a television archive featuring idents, channel branding, jingles and opening credits from TV channels around the world.",
-    "fr": "+2Télé est une archive de la télévision regroupant jingles, habillages et génériques des chaînes du monde entier."
+    "en": "+2Télé is a television archiving website featuring idents, channel branding, jingles and opening credits from TV channels around the world.",
+    "fr": "+2Télé est un site d'archivage télévisuel regroupant jingles, habillages et génériques des chaînes du monde entier."
   },
   "url": "plus2tele.com",
   "regExp": "^https?[:][/][/](www[.])?plus2tele[.]com[/]",
