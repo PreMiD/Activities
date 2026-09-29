@@ -130,9 +130,9 @@ document.addEventListener(
 
 function mode(): string {
   if (has('.cb-side-player-zone'))
-    return 'Custom 2v2' 
+    return 'Custom 2v2'
   if (has('.pause-match-action') && !has('.ingame-chat'))
-    return 'Casual' 
+    return 'Casual'
 
   try {
     const m = sessionStorage.getItem(MODE_KEY)
