@@ -125,7 +125,6 @@ presence.on('UpdateData', async () => {
     // Page : Accueil
     if (path === '/') {
       presenceData.details = t.viewHome
-      buttons.push({ label: t.buttonBrowse, url: href })
     }
     // Page : Lecteur  /player/*
     else if (root === 'player') {
