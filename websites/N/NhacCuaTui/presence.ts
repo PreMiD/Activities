@@ -231,7 +231,11 @@ async function fetchSongCoverFromApi(
       if (!res.ok)
         continue
       const data = await res.json()
-      const songs: any[] = data?.data?.songs || []
+      interface NctApiSong {
+        name?: string
+        image?: string
+      }
+      const songs: NctApiSong[] = data?.data?.songs || []
       if (songs.length === 0)
         continue
 
@@ -367,7 +371,9 @@ async function getSongImage(
   }
 
   // 6. Tìm kiếm trực tiếp qua API chính thức của NhacCuaTui (graph.nhaccuatui.com)
-  const currentKey = document.documentElement.getAttribute('data-nct-song-key') || getKeyFromUrl()
+  const currentKey = (typeof document !== 'undefined' && document.documentElement
+    ? document.documentElement.getAttribute('data-nct-song-key')
+    : null) || getKeyFromUrl()
   const apiCover = await fetchSongCoverFromApi(songName, artists, currentKey)
   if (apiCover) {
     if (songKey)
