@@ -67,17 +67,6 @@ function sumProjectTimeToday(projectName: string, elapsedSeconds: number): strin
   return totalSeconds > 0 ? secondsToHHMM(totalSeconds) : null
 }
 
-// Custom function needed: PreMiD does not provide a helper to combine multiple
-// optional metrics (daily + weekly totals) into a single label string. This
-// function handles the conditional concatenation for display in largeImageText.
-function buildSummaryText(daily: string | null, weekly: string | null): string | null {
-  const parts = [
-    daily ? `${daily} today` : null,
-    weekly ? `${weekly} this week` : null,
-  ].filter(Boolean)
-  return parts.length > 0 ? parts.join('  •  ') : null
-}
-
 presence.on('UpdateData', async () => {
   try {
     const path = document.location.pathname
@@ -131,11 +120,6 @@ presence.on('UpdateData', async () => {
         details: `🔴 | ${taskDescription || 'Tracking time'}`,
         state: slideAState || undefined,
       }
-      const summaryText = buildSummaryText(
-        showDaily ? dailyFormatted : null,
-        showWeekly ? weeklyFormatted : null,
-      )
-      ;(slideA as unknown as { largeImageText: string | undefined }).largeImageText = summaryText ?? undefined
 
       const hasTotals = (showDaily && dailyFormatted) || (showWeekly && weeklyFormatted)
       const contentKey = `tracking|${taskDescription}|${projectName}|${projectTimeToday}|${dailyFormatted}|${weeklyFormatted}|${showProject}|${showProjectTime}|${showDaily}|${showWeekly}`
@@ -153,7 +137,6 @@ presence.on('UpdateData', async () => {
           details: slideBDetails,
           state: slideBState,
         }
-        ;(slideB as unknown as { largeImageText: string | undefined }).largeImageText = taskDescription ?? ((showProject && projectName) ? projectName : 'Clockify')
 
         if (registerSlideshowKey(contentKey)) {
           slideshow.addSlide('task', slideA, 5000)
@@ -191,13 +174,6 @@ presence.on('UpdateData', async () => {
       presenceData.state = showDaily && dailyFormatted ? `⏱️ | ${dailyFormatted} tracked today` : '🔍 | Reviewing reports'
       presenceData.smallImageKey = Assets.Viewing
       presenceData.smallImageText = 'Reviewing reports'
-      const reportsSummary = buildSummaryText(
-        showDaily ? dailyFormatted : null,
-        showWeekly ? weeklyFormatted : null,
-      )
-      if (reportsSummary) {
-        ;(presenceData as unknown as { largeImageText: string | undefined }).largeImageText = reportsSummary
-      }
     }
     else if (path.startsWith('/projects')) {
       presenceData.details = showProject ? '📁 | Projects' : 'Clockify'
@@ -226,14 +202,6 @@ presence.on('UpdateData', async () => {
     else {
       presenceData.details = '🌐 | Workspace'
       presenceData.state = '🔍 | Browsing Clockify'
-    }
-
-    const idleSummary = buildSummaryText(
-      showDaily ? dailyFormatted : null,
-      showWeekly ? weeklyFormatted : null,
-    )
-    if (idleSummary) {
-      ;(presenceData as unknown as { largeImageText: string | undefined }).largeImageText = idleSummary
     }
 
     const contentKey = `idle|${path}|${dailyFormatted}|${weeklyFormatted}|${showProject}|${showProjectTime}|${showDaily}|${showWeekly}`
