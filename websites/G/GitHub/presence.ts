@@ -83,7 +83,7 @@ presence.on('UpdateData', async () => {
 
         if (cover) {
           presenceData.largeImageKey = `${
-            (document.querySelector('img.avatar-user') as HTMLImageElement)?.src
+            document.querySelector('img.avatar-user')?.src
           }.png`
         }
         if (searchParam)
@@ -104,10 +104,8 @@ presence.on('UpdateData', async () => {
 
         if (cover && !privacy) {
           presenceData.largeImageKey = `https://avatars.githubusercontent.com/u/${
-            (
-              document.querySelector(
-                'meta[name~="octolytics-dimension-user_id"]',
-              ) as HTMLMetaElement
+            document.querySelector(
+              'meta[name~="octolytics-dimension-user_id"]',
             )?.content
           }`
         }
@@ -167,10 +165,8 @@ presence.on('UpdateData', async () => {
               }
               presenceData.details = `Looking at issue #${repository.id}`
               presenceData.state = `${
-                (
-                  document.querySelector(
-                    '[data-testid="issue-body-header-author"]',
-                  ) as HTMLAnchorElement
+                document.querySelector(
+                  '[data-testid="issue-body-header-author"]',
                 )?.textContent
                   ?.trim()
                   ?? document.querySelector('[href="#top"]')?.textContent?.trim()
@@ -212,10 +208,8 @@ presence.on('UpdateData', async () => {
           }
           presenceData.details = `Looking at pull request #${repository.id}`
           presenceData.state = `${
-            (
-              document.querySelector(
-                'a.author.Link--primary',
-              ) as HTMLAnchorElement
+            document.querySelector(
+              'a.author.Link--primary',
             )?.textContent
               ?? document.querySelector('[class*="author Link"]')?.textContent
           } - ${
@@ -243,14 +237,11 @@ presence.on('UpdateData', async () => {
           }
           presenceData.details = `Looking at discussion #${repository.id}`
           presenceData.state = `${
-            (
-              document.querySelectorAll('a.author')[0] as HTMLAnchorElement
-            )?.textContent
+            document.querySelectorAll('a.author')[0]
+              ?.textContent
           } - ${
-            (
-              document.querySelector(
-                'h1.gh-header-title',
-              ) as HTMLHeadingElement
+            document.querySelector(
+              'h1.gh-header-title',
             )?.textContent
           }`
           if (buttons)
@@ -275,10 +266,8 @@ presence.on('UpdateData', async () => {
           }
           presenceData.details = `Browsing insights of \({repository.owner} /\){repository.name}`
 
-          presenceData.state = (
-            document.querySelector(
-              'nav a.js-selected-navigation-item.selected.menu-item',
-            ) as HTMLAnchorElement
+          presenceData.state = document.querySelector(
+            'nav a.js-selected-navigation-item.selected.menu-item',
           )?.textContent
         }
         else {
@@ -316,15 +305,11 @@ presence.on('UpdateData', async () => {
         presenceData.state = document.title
         if (cover) {
           presenceData.largeImageKey = `${
-            (
-              document.querySelector(
-                'meta[property~="og:image"]',
-              ) as HTMLMetaElement
+            document.querySelector(
+              'meta[property~="og:image"]',
             )?.content
-            ?? (
-              document.querySelector(
-                'img[itemprop=\'image\'].avatar',
-              ) as HTMLImageElement
+            ?? document.querySelector(
+              'img[itemprop=\'image\'].avatar',
             )?.src
             ?? presenceData.largeImageKey
           }`
@@ -373,10 +358,8 @@ presence.on('UpdateData', async () => {
 
         if (cover) {
           presenceData.largeImageKey = `${
-            (
-              document.querySelector(
-                'img.avatar.avatar-user.width-full',
-              ) as HTMLImageElement
+            document.querySelector(
+              'img.avatar.avatar-user.width-full',
             )?.src
           }.png`
         }
