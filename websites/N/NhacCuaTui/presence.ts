@@ -22,9 +22,11 @@ const songCoverCache = new Map<string, string>()
 function normalizeString(str: string): string {
   return str
     .toLowerCase()
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'd')
     .normalize('NFD')
     .replace(/[\u0300-\u036F]/g, '')
-    .replace(/[^a-z0-9]/g, '')
+    .replace(/[^\p{L}\p{N}]/gu, '')
 }
 
 function isSongNameMatch(nameA: string, nameB: string): boolean {
@@ -95,7 +97,10 @@ function injectPageHelper(): void {
             const cur = store && store.currentMusicInfo;
             if (cur && cur.name) {
               document.documentElement.setAttribute('data-nct-song-name', cur.name || '');
-              const cover = cur.image || cur.thumbnail || cur.cover || cur.avatar || '';
+              if (cur.key) {
+                document.documentElement.setAttribute('data-nct-song-key', cur.key);
+              }
+              const cover = cur.image || cur.thumbnail || cur.cover || cur.avatar || cur.bgImage || '';
               if (cover && typeof cover === 'string' && !cover.includes('default-song-img')) {
                 document.documentElement.setAttribute('data-nct-song-cover', cover);
               } else {
@@ -200,11 +205,13 @@ async function fetchSongCoverFromApi(
       const res = await fetch(`https://graph.nhaccuatui.com/api/v1/song/detail/${songKey}`)
       if (res.ok) {
         const data = await res.json()
-        const img = data?.data?.image || data?.data?.thumbnail || data?.data?.cover
-        if (img) {
-          const cleaned = cleanImageUrl(img)
-          if (cleaned)
-            return cleaned
+        if (data?.data?.name && isSongNameMatch(data.data.name, songName)) {
+          const img = data?.data?.image || data?.data?.thumbnail || data?.data?.cover || data?.data?.bgImage
+          if (img) {
+            const cleaned = cleanImageUrl(img)
+            if (cleaned)
+              return cleaned
+          }
         }
       }
     }
@@ -216,6 +223,16 @@ async function fetchSongCoverFromApi(
     `${songName} ${artists}`.trim(),
     songName.trim(),
   ]
+
+  if (songName.includes('/')) {
+    const parts = songName.split('/').map(p => p.trim()).filter(Boolean)
+    for (const part of parts) {
+      if (part && !queries.includes(part)) {
+        queries.push(`${part} ${artists}`.trim())
+        queries.push(part)
+      }
+    }
+  }
 
   for (const q of queries) {
     if (!q)
@@ -302,7 +319,42 @@ async function getSongImage(
     return piniaCover
   }
 
-  // 3. Lấy từ thẻ meta og:image trên trang nếu tên bài hát trên trang khớp
+  // 3. Trích xuất trực tiếp từ màn hình Lời bài hát toàn màn hình (.full-screen-wrap)
+  if (typeof document !== 'undefined') {
+    const fullScreenWrap = document.querySelector<HTMLElement>('.full-screen-wrap')
+    if (fullScreenWrap) {
+      // 3.1. Lấy từ CSS variable --bg-image được gán trực tiếp trên .full-screen-wrap
+      const rawStyle = fullScreenWrap.getAttribute('style') || ''
+      const bgMatch = rawStyle.match(/--bg-image\s*:\s*url\(['"]?(.*?)['"]?\)/)
+        || rawStyle.match(/url\(['"]?(.*?)['"]?\)/)
+      if (bgMatch?.[1]) {
+        const cleaned = cleanImageUrl(bgMatch[1])
+        if (cleaned) {
+          if (songKey)
+            songCoverCache.set(songKey, cleaned)
+          return cleaned
+        }
+      }
+
+      // 3.2. Lấy từ thẻ img bên trong khung toàn màn hình
+      const fsImgs = fullScreenWrap.querySelectorAll<HTMLImageElement>('img')
+      for (const img of Array.from(fsImgs)) {
+        const candidate = cleanImageUrl(
+          img.currentSrc
+          || img.src
+          || img.getAttribute('data-src')
+          || img.getAttribute('data-real-src'),
+        )
+        if (candidate) {
+          if (songKey)
+            songCoverCache.set(songKey, candidate)
+          return candidate
+        }
+      }
+    }
+  }
+
+  // 4. Lấy từ thẻ meta og:image trên trang nếu tên bài hát trên trang khớp
   if (typeof document !== 'undefined') {
     const ogImg = cleanImageUrl(
       document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content,
@@ -314,7 +366,7 @@ async function getSongImage(
     }
   }
 
-  // 4. Lấy từ MediaSession metadata (chỉ dùng nếu tiêu đề khớp)
+  // 5. Lấy từ MediaSession metadata (chỉ dùng nếu tiêu đề khớp)
   if ('mediaSession' in navigator && navigator.mediaSession?.metadata) {
     const meta = navigator.mediaSession.metadata
     if (meta.title && isSongNameMatch(meta.title, songName) && meta.artwork?.length) {
@@ -329,7 +381,7 @@ async function getSongImage(
     }
   }
 
-  // 5. Nếu tab đang mở trực tiếp (visible), lấy ảnh từ thẻ img trong Player hoặc trên trang
+  // 6. Nếu tab đang mở trực tiếp (visible), lấy ảnh từ thẻ img trong Player hoặc trên trang
   const isTabVisible = typeof document === 'undefined' || document.visibilityState === 'visible'
 
   if (isTabVisible && player) {
@@ -370,7 +422,7 @@ async function getSongImage(
     }
   }
 
-  // 6. Tìm kiếm trực tiếp qua API chính thức của NhacCuaTui (graph.nhaccuatui.com)
+  // 7. Tìm kiếm trực tiếp qua API chính thức của NhacCuaTui (graph.nhaccuatui.com)
   const currentKey = (typeof document !== 'undefined' && document.documentElement
     ? document.documentElement.getAttribute('data-nct-song-key')
     : null) || getKeyFromUrl()
@@ -397,9 +449,11 @@ function getSongInfo(player: Element | null): {
   let songName = ''
   let artists = ''
 
-  // 1. Đọc từ DOM thanh phát nhạc
-  if (player) {
-    const nameEl = player.querySelector('.music-info .name, .music-info .song-name')
+  // 1. Đọc từ DOM thanh phát nhạc hoặc màn hình toàn màn hình lời bài hát (.full-screen-wrap)
+  const activeContainer = (typeof document !== 'undefined' ? document.querySelector('.full-screen-wrap') : null) || player
+
+  if (activeContainer) {
+    const nameEl = activeContainer.querySelector('.song-title, .music-info .name, .music-info .song-name')
     if (nameEl) {
       const text = nameEl.textContent?.trim() || ''
       // Bỏ qua các text mặc định khi chưa phát bài nào
@@ -412,13 +466,13 @@ function getSongInfo(player: Element | null): {
       }
     }
 
-    // Chỉ lấy các thẻ lá chứa tên ca sĩ (.name-text) để không bị trùng với thẻ cha (.item-row)
-    let artistEls = player.querySelectorAll('.music-info .artist .name-text')
+    // Chỉ lấy các thẻ chứa tên ca sĩ
+    let artistEls = activeContainer.querySelectorAll('.music-info .artist .name-text, .full-screen-wrap .name-text')
     if (artistEls.length === 0) {
-      artistEls = player.querySelectorAll('.music-info .artist a')
+      artistEls = activeContainer.querySelectorAll('.music-info .artist a, .full-screen-wrap .artist a, [data-source] a')
     }
     if (artistEls.length === 0) {
-      artistEls = player.querySelectorAll('.music-info .artist .item-row')
+      artistEls = activeContainer.querySelectorAll('.music-info .artist .item-row')
     }
 
     if (artistEls.length > 0) {
@@ -432,7 +486,7 @@ function getSongInfo(player: Element | null): {
       artists = Array.from(uniqueArtists).join(', ')
     }
     else {
-      const artistContainer = player.querySelector('.music-info .artist')
+      const artistContainer = activeContainer.querySelector('.music-info .artist, .artist')
       if (artistContainer) {
         artists = artistContainer.textContent?.trim() || ''
       }
@@ -594,7 +648,7 @@ presence.on('UpdateData', async () => {
     ])
 
   // Player và Audio elements
-  const player = document.querySelector('.music-player-wrap')
+  const player = document.querySelector('.full-screen-wrap, .music-player-wrap')
   const audio
     = document.querySelector<HTMLAudioElement>('audio.audio')
       ?? document.querySelector<HTMLAudioElement>('audio')
