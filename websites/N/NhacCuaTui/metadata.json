@@ -13,7 +13,7 @@
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*nhaccuatui[.]com[/]",
   "version": "1.0.0",
   "logo": "https://files.catbox.moe/eha3a5.png",
-  "thumbnail": "https://files.catbox.moe/eha3a5.png",
+  "thumbnail": "https://files.catbox.moe/670z7p.png",
   "color": "#7B2CFB",
   "category": "music",
   "tags": ["nct", "music", "audio", "vietnam", "songs"],
@@ -48,9 +48,12 @@
     {
       "id": "showButtons",
       "title": "Show Button",
-      "description": "Show a button linking to NhacCuaTui.",
+      "description": "Show a button linking to the playing song on NhacCuaTui.",
       "icon": "fad fa-external-link-alt",
-      "value": true
+      "value": true,
+      "if": {
+        "privacy": false
+      }
     },
     {
       "id": "showBrowsing",

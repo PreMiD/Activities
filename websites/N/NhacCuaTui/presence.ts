@@ -11,7 +11,6 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 // ==========================================
 
 const NCT_LOGO = 'https://files.catbox.moe/eha3a5.png'
-const NCT_URL = 'https://www.nhaccuatui.com/'
 
 // Bộ nhớ đệm ảnh bìa bài hát theo khóa (Tên bài hát - Ca sĩ)
 const songCoverCache = new Map<string, string>()
@@ -460,30 +459,38 @@ function checkIsPlaying(
 }
 
 // ==========================================
+// LẤY LINK BÀI HÁT TRỰC TIẾP
+// ==========================================
+
+function getSongUrl(): string | null {
+  const key = document.documentElement.getAttribute('data-nct-song-key')
+  if (key) {
+    return `https://www.nhaccuatui.com/song/${key}`
+  }
+
+  if (typeof window !== 'undefined' && window.location) {
+    const path = window.location.pathname
+    if (path.includes('/bai-hat/') || path.includes('/song/')) {
+      return window.location.href
+    }
+  }
+
+  return null
+}
+
+// ==========================================
 // PRESENCE DUYỆT WEB
 // ==========================================
 
-function getBrowsingPresence(showButtons: boolean): PresenceData {
-  const data: PresenceData = {
+function getBrowsingPresence(): PresenceData {
+  return {
     type: ActivityType.Listening,
     name: 'NhacCuaTui',
     details: 'Browsing NhacCuaTui',
     largeImageKey: NCT_LOGO,
     largeImageText: 'NhacCuaTui',
-    largeImageUrl: NCT_URL,
     startTimestamp: browsingTimestamp,
   }
-
-  if (showButtons) {
-    data.buttons = [
-      {
-        label: 'Open NhacCuaTui',
-        url: NCT_URL,
-      },
-    ]
-  }
-
-  return data
 }
 
 // ==========================================
@@ -516,10 +523,10 @@ presence.on('UpdateData', async () => {
   // Nếu không có bài hát đang được chọn/phát
   if (!songName) {
     if (showBrowsing) {
-      await presence.setActivity(getBrowsingPresence(showButtons))
+      presence.setActivity(getBrowsingPresence())
     }
     else {
-      await presence.clearActivity()
+      presence.clearActivity()
     }
     return
   }
@@ -554,7 +561,6 @@ presence.on('UpdateData', async () => {
 
     // Ảnh lớn
     largeImageKey: songImage,
-    largeImageUrl: NCT_URL,
 
     smallImageKey: isPaused ? Assets.Pause : Assets.Play,
     smallImageText: isPaused ? `Paused at ${currentTime}` : 'Listening',
@@ -566,14 +572,18 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageText = album
   }
 
-  // Nút liên kết
-  if (showButtons) {
-    presenceData.buttons = [
-      {
-        label: 'Open NhacCuaTui',
-        url: NCT_URL,
-      },
-    ]
+  // Nút liên kết trực tiếp bài hát (chỉ hiện khi có link trực tiếp của bài hát, không link về trang chủ)
+  const songUrl = getSongUrl()
+  if (!privacy && songUrl) {
+    presenceData.largeImageUrl = songUrl
+    if (showButtons) {
+      presenceData.buttons = [
+        {
+          label: 'Listen on NhacCuaTui',
+          url: songUrl,
+        },
+      ]
+    }
   }
 
   // Thời gian (nếu đang phát và được bật)
@@ -582,5 +592,5 @@ presence.on('UpdateData', async () => {
       = getTimestampsFromMedia(audio!)
   }
 
-  await presence.setActivity(presenceData)
+  presence.setActivity(presenceData)
 })
