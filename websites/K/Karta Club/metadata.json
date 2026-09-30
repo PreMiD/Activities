@@ -7,7 +7,7 @@
   },
   "service": "Karta Club",
   "description": {
-    "en": "Tunisia's online home for Rami and Chkobba. Shows whether you are in the menu, searching for a match, or playing a ranked, casual or custom game."
+    "en": "Karta Club is Tunisia's online home for Rami, Chkobba, and more. Play online card games with the community, from ranked matches to private games with friends."
   },
   "url": "kartaclub.tn",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kartaclub[.]tn[/]",
