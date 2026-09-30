@@ -83,11 +83,11 @@ presence.on('UpdateData', async () => {
 
         if (cover) {
           presenceData.largeImageKey = `${
-            document.querySelector('img.avatar-user')?.src
+            (document.querySelector('img.avatar-user') as HTMLImageElement)?.src
           }.png`
         }
         if (searchParam)
-          presenceData.details = `Viewing \({profileName}'s\){searchParam}`
+          presenceData.details = `Viewing ${profileName}'s ${searchParam}`
         else presenceData.details = `Viewing ${profileName}'s profile`
         break
         // * For repositories
@@ -104,8 +104,10 @@ presence.on('UpdateData', async () => {
 
         if (cover && !privacy) {
           presenceData.largeImageKey = `https://avatars.githubusercontent.com/u/${
-            document.querySelector(
-              'meta[name~="octolytics-dimension-user_id"]',
+            (
+              document.querySelector(
+                'meta[name~="octolytics-dimension-user_id"]',
+              ) as HTMLMetaElement
             )?.content
           }`
         }
@@ -305,11 +307,15 @@ presence.on('UpdateData', async () => {
         presenceData.state = document.title
         if (cover) {
           presenceData.largeImageKey = `${
-            document.querySelector(
-              'meta[property~="og:image"]',
+            (
+              document.querySelector(
+                'meta[property~="og:image"]',
+              ) as HTMLMetaElement
             )?.content
-            ?? document.querySelector(
-              'img[itemprop=\'image\'].avatar',
+            ?? (
+              document.querySelector(
+                'img[itemprop=\'image\'].avatar',
+              ) as HTMLImageElement
             )?.src
             ?? presenceData.largeImageKey
           }`
@@ -358,13 +364,15 @@ presence.on('UpdateData', async () => {
 
         if (cover) {
           presenceData.largeImageKey = `${
-            document.querySelector(
-              'img.avatar.avatar-user.width-full',
+            (
+              document.querySelector(
+                'img.avatar.avatar-user.width-full',
+              ) as HTMLImageElement
             )?.src
           }.png`
         }
         if (searchParam)
-          presenceData.details = `Viewing \({profileName}'s\){searchParam}`
+          presenceData.details = `Viewing ${profileName}'s ${searchParam}`
         else presenceData.details = `Viewing ${profileName}'s profile`
         break
         // * For gists
