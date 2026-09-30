@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1261749481976889397',
@@ -13,20 +13,6 @@ const DEFAULT_ASSETS = {
 
 let pageStartTime = Math.floor(Date.now() / 1000)
 let lastPath = ''
-
-function parseDuration(val: string): number {
-  if (!val)
-    return 0
-  const parts = val.trim().split(':').map(Number)
-  const p0 = parts[0] ?? 0
-  const p1 = parts[1] ?? 0
-  const p2 = parts[2] ?? 0
-  if (parts.length === 2)
-    return p0 * 60 + p1
-  if (parts.length === 3)
-    return p0 * 3600 + p1 * 60 + p2
-  return 0
-}
 
 async function updatePresence(): Promise<void> {
   const { pathname, href } = document.location
@@ -51,13 +37,6 @@ async function updatePresence(): Promise<void> {
       details: 'Exploring Soya',
       state: 'High Fidelity Discord Music Bot',
       startTimestamp: pageStartTime,
-    }
-
-    if (showButtons) {
-      homeData.buttons = [
-        { label: 'Visit Website', url: 'https://soyamusic.in' },
-        { label: 'Invite Soya Bot', url: 'https://soyamusic.in/invite' },
-      ]
     }
 
     presence.setActivity(homeData)
@@ -131,8 +110,8 @@ async function updatePresence(): Promise<void> {
         const t0 = times[0]?.textContent
         const t1 = times[1]?.textContent
         if (t0 && t1) {
-          position = parseDuration(t0) * 1000
-          duration = parseDuration(t1) * 1000
+          position = timestampFromFormat(t0) * 1000
+          duration = timestampFromFormat(t1) * 1000
         }
       }
     }
@@ -208,7 +187,6 @@ async function updatePresence(): Promise<void> {
       const playerUrl = serverId ? `https://soyamusic.in/dashboard/${serverId}/webplayer` : href
       data.buttons = [
         { label: 'Listen on Web Player', url: playerUrl },
-        { label: 'Invite Soya Bot', url: 'https://soyamusic.in/invite' },
       ]
     }
 
@@ -220,13 +198,6 @@ async function updatePresence(): Promise<void> {
     data.details = 'Web Player'
     data.state = displayServer ? `Connected to ${displayServer}` : 'Idle'
     data.startTimestamp = pageStartTime
-
-    if (showButtons) {
-      data.buttons = [
-        { label: 'Open Web Player', url: href },
-        { label: 'Invite Soya Bot', url: 'https://soyamusic.in/invite' },
-      ]
-    }
 
     presence.setActivity(data)
     return
@@ -252,13 +223,6 @@ async function updatePresence(): Promise<void> {
     data.state = match[2]
     data.startTimestamp = pageStartTime
 
-    if (showButtons) {
-      data.buttons = [
-        { label: 'Open Dashboard', url: 'https://soyamusic.in/dashboard' },
-        { label: 'Invite Soya Bot', url: 'https://soyamusic.in/invite' },
-      ]
-    }
-
     presence.setActivity(data)
     return
   }
@@ -266,13 +230,6 @@ async function updatePresence(): Promise<void> {
   data.details = 'Exploring Soya'
   data.state = 'High Fidelity Discord Music Bot'
   data.startTimestamp = pageStartTime
-
-  if (showButtons) {
-    data.buttons = [
-      { label: 'Visit Website', url: 'https://soyamusic.in' },
-      { label: 'Invite Soya Bot', url: 'https://soyamusic.in/invite' },
-    ]
-  }
 
   presence.setActivity(data)
 }
