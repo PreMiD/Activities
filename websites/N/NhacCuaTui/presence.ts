@@ -91,6 +91,63 @@ function injectPageHelper(): void {
           return null;
         }
 
+        function isValidCover(url) {
+          if (!url || typeof url !== 'string') return false;
+          if (url.startsWith('data:') || url.startsWith('blob:')) return false;
+          if (
+            url.includes('default-song-img') ||
+            url.includes('default-topic-img') ||
+            url.includes('default-artist-img') ||
+            url.includes('1x1') ||
+            url.includes('nct-share.png')
+          ) return false;
+          return url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//');
+        }
+
+        // Fetch cover art from graph.nhaccuatui.com inside page context (avoids CORS from extension)
+        var fetchingKey = null;
+        function fetchCoverFromApi(songKey, songName, artistStr) {
+          if (!songKey || fetchingKey === songKey) return;
+          fetchingKey = songKey;
+          var targetKey = songKey;
+
+          fetch('https://graph.nhaccuatui.com/api/v1/song/detail/' + songKey)
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(data) {
+              var img = data && data.data && (data.data.image || data.data.bgImage || data.data.thumbnail || data.data.cover);
+              if (isValidCover(img)) {
+                if (document.documentElement.getAttribute('data-nct-song-key') === targetKey) {
+                  document.documentElement.setAttribute('data-nct-song-cover', img);
+                }
+                return;
+              }
+              // Fallback: search by name + artist
+              var q = (songName + ' ' + (artistStr || '')).trim();
+              return fetch(
+                'https://graph.nhaccuatui.com/api/v1/search/song?keyword=' + encodeURIComponent(q) + '&pageindex=1&pagesize=5&correct=false',
+                {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ keyword: q, pageindex: 1, pagesize: 5 })
+                }
+              ).then(function(r) { return r.ok ? r.json() : null; })
+               .then(function(data) {
+                 var songs = (data && data.data && data.data.songs) || [];
+                 for (var i = 0; i < songs.length; i++) {
+                   var s = songs[i];
+                   var sImg = s && (s.image || s.bgImage);
+                   if (isValidCover(sImg)) {
+                     if (document.documentElement.getAttribute('data-nct-song-key') === targetKey) {
+                       document.documentElement.setAttribute('data-nct-song-cover', sImg);
+                     }
+                     return;
+                   }
+                 }
+               });
+            })
+            .catch(function() { if (fetchingKey === songKey) fetchingKey = null; });
+        }
+
         var lastSyncedKey = null;
 
         function syncState() {
@@ -100,29 +157,16 @@ function injectPageHelper(): void {
             if (cur && cur.name) {
               const currentKey = cur.key || cur.id || cur.songId || null;
 
-              // Khi bài hát thay đổi, xóa ngay ảnh bìa cũ để tránh leak ảnh cũ sang bài mới
+              // When song changes, immediately clear old cover to prevent stale image
               if (currentKey && currentKey !== lastSyncedKey) {
                 document.documentElement.removeAttribute('data-nct-song-cover');
                 lastSyncedKey = currentKey;
+                fetchingKey = null;
               }
 
               document.documentElement.setAttribute('data-nct-song-name', cur.name || '');
               if (currentKey) {
                 document.documentElement.setAttribute('data-nct-song-key', currentKey);
-              }
-
-              const cover = cur.image || cur.thumbnail || cur.cover || cur.avatar || cur.bgImage || '';
-              if (
-                cover &&
-                typeof cover === 'string' &&
-                !cover.includes('default-song-img') &&
-                !cover.includes('default-topic-img') &&
-                !cover.includes('1x1')
-              ) {
-                document.documentElement.setAttribute('data-nct-song-cover', cover);
-              } else if (!currentKey || currentKey === lastSyncedKey) {
-                // Chỉ xóa nếu không vừa xóa ở trên
-                document.documentElement.removeAttribute('data-nct-song-cover');
               }
 
               let artistStr = '';
@@ -133,6 +177,14 @@ function injectPageHelper(): void {
               }
               if (artistStr) {
                 document.documentElement.setAttribute('data-nct-song-artist', artistStr);
+              }
+
+              const cover = cur.image || cur.thumbnail || cur.cover || cur.avatar || cur.bgImage || '';
+              if (isValidCover(cover)) {
+                document.documentElement.setAttribute('data-nct-song-cover', cover);
+              } else if (currentKey && !document.documentElement.getAttribute('data-nct-song-cover')) {
+                // Pinia has no valid cover => fetch from API (runs in page context to bypass CORS)
+                fetchCoverFromApi(currentKey, cur.name, artistStr);
               }
             }
           } catch {}
