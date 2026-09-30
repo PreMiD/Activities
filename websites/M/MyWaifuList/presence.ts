@@ -1,5 +1,5 @@
 const presence = new Presence({
-  clientId: '468420510632509473',
+  clientId: '1554833814566473841',
 })
 
 presence.on('UpdateData', async () => {
@@ -7,7 +7,7 @@ presence.on('UpdateData', async () => {
   const privacy = await presence.getSetting<boolean>('privacy')
 
   const presenceData: PresenceData = {
-    largeImageKey: 'https://mywaifulist.moe/images/thumb_waifus.png',
+    largeImageKey: 'https://i.imgur.com/dHRZK0D.png',
   }
 
   // =========================
@@ -16,8 +16,7 @@ presence.on('UpdateData', async () => {
   if (pathname === '/') {
     presenceData.details = 'Browsing MyWaifuList'
     presenceData.state = 'Anime Character Database'
-    presenceData.largeImageKey
-      = 'https://mywaifulist.moe/images/thumb_waifus.png'
+    presenceData.largeImageKey = 'https://i.imgur.com/dHRZK0D.png'
   }
 
   // =========================
@@ -51,8 +50,22 @@ presence.on('UpdateData', async () => {
 
         const seriesName = text[text.length - 1]
 
-        if (seriesName)
-          presenceData.state = `${name} • ${seriesName}`
+        if (seriesName) {
+          const seriesType = seriesName.match(
+            /^(TV|OVA|Movie|Special|ONA|Game|Hentai|Manga|Manhwa|Manhua|Webtoon|Novel)/i,
+          )?.[1]
+
+          const cleanSeriesName = seriesName
+            .replace(
+              /^(?:TV|OVA|Movie|Special|ONA|Game|Hentai|Manga|Manhwa|Manhua|Webtoon|Novel)\s*/i,
+              '',
+            )
+            .trim()
+
+          presenceData.state = [name, seriesType, cleanSeriesName]
+            .filter(Boolean)
+            .join(' • ')
+        }
       }
 
       presenceData.buttons = [
@@ -83,14 +96,12 @@ presence.on('UpdateData', async () => {
       if (seriesImage)
         presenceData.largeImageKey = seriesImage
 
-      // Type
       const pageText = document.body.textContent ?? ''
 
       const typeMatch = pageText.match(
         /Type\s*(TV|Movie|OVA|ONA|Special|Music)/i,
       )
 
-      // Studio
       const studioLink = document.querySelector<HTMLAnchorElement>(
         'a[href^="/studio/"]',
       )
@@ -161,7 +172,6 @@ presence.on('UpdateData', async () => {
       if (seiyuuImage)
         presenceData.largeImageKey = seiyuuImage
 
-      // Número de favoritos
       const favoriteText = [...document.querySelectorAll('*')]
         .map(element => element.textContent?.trim())
         .find(text => text && /^\d[\d,.]*\s+favorites$/i.test(text))
@@ -197,7 +207,6 @@ presence.on('UpdateData', async () => {
       if (studioImage)
         presenceData.largeImageKey = studioImage
 
-      // Número de obras
       const worksMatch = (document.body.textContent ?? '').match(
         /Studio Works \((\d+)\)/i,
       )
@@ -220,8 +229,7 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/popular') {
     presenceData.details = 'Browsing Popular Waifus'
     presenceData.state = 'Most voted characters of all time'
-    presenceData.largeImageKey
-      = 'https://mywaifulist.moe/images/thumb_waifus.png'
+    presenceData.largeImageKey = 'https://i.imgur.com/dHRZK0D.png'
   }
 
   // =========================
@@ -230,8 +238,7 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/best') {
     presenceData.details = 'Browsing Top Tier Waifus'
     presenceData.state = 'Best of the best by weighted votes'
-    presenceData.largeImageKey
-      = 'https://mywaifulist.moe/images/thumb_winner.png'
+    presenceData.largeImageKey = 'https://i.imgur.com/dHRZK0D.png'
   }
 
   // =========================
@@ -240,8 +247,7 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/trash') {
     presenceData.details = 'Browsing Top Trash'
     presenceData.state = 'Most disliked characters'
-    presenceData.largeImageKey
-      = 'https://mywaifulist.moe/images/thumb_trash.png'
+    presenceData.largeImageKey = 'https://i.imgur.com/dHRZK0D.png'
   }
 
   // =========================
@@ -250,8 +256,7 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/current/best') {
     presenceData.details = 'Browsing Seasonal Best Girls'
     presenceData.state = 'Top Waifus of the current season'
-    presenceData.largeImageKey
-      = 'https://mywaifulist.moe/images/thumb_winner.png'
+    presenceData.largeImageKey = 'https://i.imgur.com/dHRZK0D.png'
   }
 
   // =========================
@@ -260,8 +265,7 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/add/waifu') {
     presenceData.details = 'Adding a Waifu'
     presenceData.state = 'Creating a new character entry'
-    presenceData.largeImageKey
-      = 'https://mywaifulist.moe/images/thumb_waifus.png'
+    presenceData.largeImageKey = 'https://i.imgur.com/dHRZK0D.png'
   }
 
   // =========================
@@ -270,8 +274,7 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/add/seiyuu') {
     presenceData.details = 'Adding a Voice Actor'
     presenceData.state = 'Creating a new voice actor entry'
-    presenceData.largeImageKey
-      = 'https://mywaifulist.moe/images/thumb_history.png'
+    presenceData.largeImageKey = 'https://i.imgur.com/dHRZK0D.png'
   }
 
   // =========================
@@ -280,8 +283,7 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/browse/seiyuu') {
     presenceData.details = 'Browsing Voice Actors'
     presenceData.state = 'Japanese anime voice actors'
-    presenceData.largeImageKey
-      = 'https://mywaifulist.moe/images/thumb_history.png'
+    presenceData.largeImageKey = 'https://i.imgur.com/dHRZK0D.png'
   }
 
   // =========================
@@ -290,8 +292,7 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/studios') {
     presenceData.details = 'Browsing Anime Studios'
     presenceData.state = 'Discover animation studios'
-    presenceData.largeImageKey
-      = 'https://mywaifulist.moe/images/thumb_history.png'
+    presenceData.largeImageKey = 'https://i.imgur.com/dHRZK0D.png'
   }
 
   // =========================
@@ -300,8 +301,7 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/series') {
     presenceData.details = 'Browsing Anime Series'
     presenceData.state = 'Discover anime and manga series'
-    presenceData.largeImageKey
-      = 'https://mywaifulist.moe/images/thumb_series.png'
+    presenceData.largeImageKey = 'https://i.imgur.com/dHRZK0D.png'
   }
 
   // =========================
@@ -310,8 +310,7 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/husbandos') {
     presenceData.details = 'Browsing Husbandos'
     presenceData.state = 'Find the best anime husbandos'
-    presenceData.largeImageKey
-      = 'https://mywaifulist.moe/images/thumb_husbandos.png'
+    presenceData.largeImageKey = 'https://i.imgur.com/dHRZK0D.png'
   }
 
   // =========================
@@ -320,8 +319,7 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/browse') {
     presenceData.details = 'Browsing Waifus'
     presenceData.state = 'Discover anime characters'
-    presenceData.largeImageKey
-      = 'https://mywaifulist.moe/images/thumb_waifus.png'
+    presenceData.largeImageKey = 'https://i.imgur.com/dHRZK0D.png'
   }
 
   // =========================
