@@ -179,13 +179,39 @@ function cleanImageUrl(url: string | null | undefined): string | null {
 }
 
 // ==========================================
-// TẢI ẢNH BÌA TỪ API CHÍNH THỨC CỦA NHACCUATUI
+// TẢI ẢNH BÀI HÁT TỪ API CHÍNH THỨC CỦA NHACCUATUI
 // ==========================================
+
+function getKeyFromUrl(): string | null {
+  if (typeof window === 'undefined' || !window.location)
+    return null
+  const match = window.location.pathname.match(/(?:\/song\/|\/bai-hat\/[^.]*\.)([a-zA-Z0-9]+)/)
+  return match?.[1] ?? null
+}
 
 async function fetchSongCoverFromApi(
   songName: string,
   artists: string,
+  songKey?: string | null,
 ): Promise<string | null> {
+  // 1. Nếu có mã bài hát (key), tra cứu trực tiếp theo API chi tiết bài hát
+  if (songKey) {
+    try {
+      const res = await fetch(`https://graph.nhaccuatui.com/api/v1/song/detail/${songKey}`)
+      if (res.ok) {
+        const data = await res.json()
+        const img = data?.data?.image || data?.data?.thumbnail || data?.data?.cover
+        if (img) {
+          const cleaned = cleanImageUrl(img)
+          if (cleaned)
+            return cleaned
+        }
+      }
+    }
+    catch {}
+  }
+
+  // 2. Tìm kiếm theo từ khóa bài hát và ca sĩ (quét tối đa 5 kết quả)
   const queries = [
     `${songName} ${artists}`.trim(),
     songName.trim(),
@@ -195,19 +221,42 @@ async function fetchSongCoverFromApi(
     if (!q)
       continue
     try {
-      const url = `https://graph.nhaccuatui.com/api/v1/search/song?keyword=${encodeURIComponent(q)}&pageindex=1&pagesize=1&correct=false`
+      const url = `https://graph.nhaccuatui.com/api/v1/search/song?keyword=${encodeURIComponent(q)}&pageindex=1&pagesize=5&correct=false`
       const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ keyword: q, pageindex: 1, pagesize: 1 }),
+        body: JSON.stringify({ keyword: q, pageindex: 1, pagesize: 5 }),
       })
 
       if (!res.ok)
         continue
       const data = await res.json()
-      const song = data?.data?.songs?.[0]
-      if (song && song.image) {
-        const cleaned = cleanImageUrl(song.image)
+      const songs: any[] = data?.data?.songs || []
+      if (songs.length === 0)
+        continue
+
+      // Ưu tiên 1: Khớp CHÍNH XÁC 100% tên bài hát (tránh lấy nhầm bản khác năm/khác album)
+      const exactMatch = songs.find(
+        s => s?.name && s.name.trim().toLowerCase() === songName.trim().toLowerCase(),
+      )
+      if (exactMatch?.image) {
+        const cleaned = cleanImageUrl(exactMatch.image)
+        if (cleaned)
+          return cleaned
+      }
+
+      // Ưu tiên 2: Khớp tên bài hát tương đối
+      for (const s of songs) {
+        if (s?.name && isSongNameMatch(s.name, songName) && s.image) {
+          const cleaned = cleanImageUrl(s.image)
+          if (cleaned)
+            return cleaned
+        }
+      }
+
+      // Fallback kết quả đầu tiên
+      if (songs[0]?.image) {
+        const cleaned = cleanImageUrl(songs[0].image)
         if (cleaned)
           return cleaned
       }
@@ -249,7 +298,19 @@ async function getSongImage(
     return piniaCover
   }
 
-  // 3. Lấy từ MediaSession metadata (chỉ dùng nếu tiêu đề khớp)
+  // 3. Lấy từ thẻ meta og:image trên trang nếu tên bài hát trên trang khớp
+  if (typeof document !== 'undefined') {
+    const ogImg = cleanImageUrl(
+      document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content,
+    )
+    if (ogImg && document.title && isSongNameMatch(document.title, songName)) {
+      if (songKey)
+        songCoverCache.set(songKey, ogImg)
+      return ogImg
+    }
+  }
+
+  // 4. Lấy từ MediaSession metadata (chỉ dùng nếu tiêu đề khớp)
   if ('mediaSession' in navigator && navigator.mediaSession?.metadata) {
     const meta = navigator.mediaSession.metadata
     if (meta.title && isSongNameMatch(meta.title, songName) && meta.artwork?.length) {
@@ -264,9 +325,7 @@ async function getSongImage(
     }
   }
 
-  // 4. Nếu tab đang mở trực tiếp (visible), lấy ảnh từ thẻ img trong Player
-  // Khi tab chạy ngầm (hidden), Chromium không update lazy load nên img sẽ giữ ảnh bài trước,
-  // do đó KHÔNG được đọc DOM img khi tab đang hidden!
+  // 5. Nếu tab đang mở trực tiếp (visible), lấy ảnh từ thẻ img trong Player hoặc trên trang
   const isTabVisible = typeof document === 'undefined' || document.visibilityState === 'visible'
 
   if (isTabVisible && player) {
@@ -288,11 +347,28 @@ async function getSongImage(
         return candidate
       }
     }
+
+    const pageImgs = document.querySelectorAll<HTMLImageElement>(
+      '.cover-media, .song-info img, .album-cover img, .banner-img-wrap img',
+    )
+
+    for (const img of Array.from(pageImgs)) {
+      const candidate = cleanImageUrl(
+        img.currentSrc
+        || img.src
+        || img.getAttribute('data-src'),
+      )
+      if (candidate) {
+        if (songKey)
+          songCoverCache.set(songKey, candidate)
+        return candidate
+      }
+    }
   }
 
-  // 5. Tìm kiếm trực tiếp qua API chính thức của NhacCuaTui (graph.nhaccuatui.com)
-  // Hoạt động tuyệt đối chính xác ngay cả khi tab chạy ngầm nhiều giờ
-  const apiCover = await fetchSongCoverFromApi(songName, artists)
+  // 6. Tìm kiếm trực tiếp qua API chính thức của NhacCuaTui (graph.nhaccuatui.com)
+  const currentKey = document.documentElement.getAttribute('data-nct-song-key') || getKeyFromUrl()
+  const apiCover = await fetchSongCoverFromApi(songName, artists, currentKey)
   if (apiCover) {
     if (songKey)
       songCoverCache.set(songKey, apiCover)
