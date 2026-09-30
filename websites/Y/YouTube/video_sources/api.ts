@@ -34,27 +34,37 @@ async function fetchVideoData(id: string) {
     'yt.config_.INNERTUBE_CLIENT_NAME',
     'yt.config_.INNERTUBE_CLIENT_VERSION',
   )
-  const request = fetch(
-    `https://www.youtube.com/youtubei/v1/player?key=${data['yt.config_.INNERTUBE_API_KEY']}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        videoId: id,
-        context: {
-          client: {
-            clientName: data['yt.config_.INNERTUBE_CLIENT_NAME'],
-            clientVersion: data['yt.config_.INNERTUBE_CLIENT_VERSION'],
-          },
-        },
-      }),
-    },
-  ).then(res => res.json() as Promise<YouTubeAPIResponse>)
+  if (
+    !data['yt.config_.INNERTUBE_API_KEY']
+    || !data['yt.config_.INNERTUBE_CLIENT_NAME']
+    || !data['yt.config_.INNERTUBE_CLIENT_VERSION']
+  ) {
+    return
+  }
+
   videoCacheLoading.add(id)
-  videoCache.set(id, await request)
-  videoCacheLoading.delete(id)
+  try {
+    const res = await fetch(
+      `https://www.youtube.com/youtubei/v1/player?key=${data['yt.config_.INNERTUBE_API_KEY']}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          videoId: id,
+          context: {
+            client: {
+              clientName: data['yt.config_.INNERTUBE_CLIENT_NAME'],
+              clientVersion: data['yt.config_.INNERTUBE_CLIENT_VERSION'],
+            },
+          },
+        }),
+      },
+    )
+    videoCache.set(id, await res.json() as YouTubeAPIResponse)
+  }
+  finally {
+    videoCacheLoading.delete(id)
+  }
 }
 
 function isActive(): boolean {
