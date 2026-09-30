@@ -91,19 +91,37 @@ function injectPageHelper(): void {
           return null;
         }
 
+        var lastSyncedKey = null;
+
         function syncState() {
           try {
             const store = getPiniaStore();
             const cur = store && store.currentMusicInfo;
             if (cur && cur.name) {
-              document.documentElement.setAttribute('data-nct-song-name', cur.name || '');
-              if (cur.key) {
-                document.documentElement.setAttribute('data-nct-song-key', cur.key);
+              const currentKey = cur.key || cur.id || cur.songId || null;
+
+              // Khi bài hát thay đổi, xóa ngay ảnh bìa cũ để tránh leak ảnh cũ sang bài mới
+              if (currentKey && currentKey !== lastSyncedKey) {
+                document.documentElement.removeAttribute('data-nct-song-cover');
+                lastSyncedKey = currentKey;
               }
+
+              document.documentElement.setAttribute('data-nct-song-name', cur.name || '');
+              if (currentKey) {
+                document.documentElement.setAttribute('data-nct-song-key', currentKey);
+              }
+
               const cover = cur.image || cur.thumbnail || cur.cover || cur.avatar || cur.bgImage || '';
-              if (cover && typeof cover === 'string' && !cover.includes('default-song-img')) {
+              if (
+                cover &&
+                typeof cover === 'string' &&
+                !cover.includes('default-song-img') &&
+                !cover.includes('default-topic-img') &&
+                !cover.includes('1x1')
+              ) {
                 document.documentElement.setAttribute('data-nct-song-cover', cover);
-              } else {
+              } else if (!currentKey || currentKey === lastSyncedKey) {
+                // Chỉ xóa nếu không vừa xóa ở trên
                 document.documentElement.removeAttribute('data-nct-song-cover');
               }
 
@@ -120,7 +138,7 @@ function injectPageHelper(): void {
           } catch {}
         }
 
-        setInterval(syncState, 500);
+        setInterval(syncState, 300);
         syncState();
       })();
     `
@@ -323,32 +341,39 @@ async function getSongImage(
   if (typeof document !== 'undefined') {
     const fullScreenWrap = document.querySelector<HTMLElement>('.full-screen-wrap')
     if (fullScreenWrap) {
-      // 3.1. Lấy từ CSS variable --bg-image được gán trực tiếp trên .full-screen-wrap
-      const rawStyle = fullScreenWrap.getAttribute('style') || ''
-      const bgMatch = rawStyle.match(/--bg-image\s*:\s*url\(['"]?(.*?)['"]?\)/)
-        || rawStyle.match(/url\(['"]?(.*?)['"]?\)/)
-      if (bgMatch?.[1]) {
-        const cleaned = cleanImageUrl(bgMatch[1])
-        if (cleaned) {
-          if (songKey)
-            songCoverCache.set(songKey, cleaned)
-          return cleaned
-        }
-      }
+      // Xác nhận tên bài hát trên full-screen khớp với bài đang được truy vấn
+      // để tránh lấy ảnh bìa của bài cũ khi UI đang chuyển tiếp
+      const fsTitle = fullScreenWrap.querySelector('.song-title, .music-info .name')?.textContent?.trim() || ''
+      const fsTitleValid = !fsTitle || isSongNameMatch(fsTitle, songName)
 
-      // 3.2. Lấy từ thẻ img bên trong khung toàn màn hình
-      const fsImgs = fullScreenWrap.querySelectorAll<HTMLImageElement>('img')
-      for (const img of Array.from(fsImgs)) {
-        const candidate = cleanImageUrl(
-          img.currentSrc
-          || img.src
-          || img.getAttribute('data-src')
-          || img.getAttribute('data-real-src'),
-        )
-        if (candidate) {
-          if (songKey)
-            songCoverCache.set(songKey, candidate)
-          return candidate
+      if (fsTitleValid) {
+        // 3.1. Lấy từ CSS variable --bg-image được gán trực tiếp trên .full-screen-wrap
+        const rawStyle = fullScreenWrap.getAttribute('style') || ''
+        const bgMatch = rawStyle.match(/--bg-image\s*:\s*url\(['"]?(.*?)['"]?\)/)
+          || rawStyle.match(/background[^:]*:\s*url\(['"]?(.*?)['"]?\)/)
+        if (bgMatch?.[1]) {
+          const cleaned = cleanImageUrl(bgMatch[1])
+          if (cleaned) {
+            if (songKey)
+              songCoverCache.set(songKey, cleaned)
+            return cleaned
+          }
+        }
+
+        // 3.2. Lấy từ thẻ img bên trong khung toàn màn hình
+        const fsImgs = fullScreenWrap.querySelectorAll<HTMLImageElement>('img')
+        for (const img of Array.from(fsImgs)) {
+          const candidate = cleanImageUrl(
+            img.currentSrc
+            || img.src
+            || img.getAttribute('data-src')
+            || img.getAttribute('data-real-src'),
+          )
+          if (candidate) {
+            if (songKey)
+              songCoverCache.set(songKey, candidate)
+            return candidate
+          }
         }
       }
     }
@@ -426,11 +451,15 @@ async function getSongImage(
   const currentKey = (typeof document !== 'undefined' && document.documentElement
     ? document.documentElement.getAttribute('data-nct-song-key')
     : null) || getKeyFromUrl()
-  const apiCover = await fetchSongCoverFromApi(songName, artists, currentKey)
-  if (apiCover) {
-    if (songKey)
-      songCoverCache.set(songKey, apiCover)
-    return apiCover
+
+  // Tránh gọi API nếu đã có trong cache (do bài hát mới chưa cập nhật key)
+  if (!songCoverCache.has(songKey)) {
+    const apiCover = await fetchSongCoverFromApi(songName, artists, currentKey)
+    if (apiCover) {
+      if (songKey)
+        songCoverCache.set(songKey, apiCover)
+      return apiCover
+    }
   }
 
   // Fallback về Logo chính thức 512x512
