@@ -11,9 +11,9 @@
   },
   "url": "slaayd.xyz",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*slaayd[.]xyz[/]",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://i.imgur.com/rj0odvQ.png",
-  "thumbnail": "https://i.imgur.com/rj0odvQ.png",
+  "thumbnail": "https://i.imgur.com/fOM9rXg.png",
   "color": "#8A2BE2",
   "category": "other",
   "tags": [
