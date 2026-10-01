@@ -144,12 +144,15 @@ presence.on('UpdateData', async () => {
     const hardcorePointsRaw = hardcorePointsContainer?.querySelectorAll('span')[1]?.textContent ?? ''
     const hardcorePoints = hardcorePointsRaw.split('(')[0]?.replace(/\s+/g, ' ').trim()
 
-    // Quantidade de jogos platinados ("Game Awards")
-    const gameAwardsHeading = Array.from(document.querySelectorAll('*')).find(
-      el => el.children.length === 0 && el.textContent?.trim() === 'Game Awards',
+    // Quantidade de jogos "Game Awards": soma 👑 (Mastered, hardcore) e 🎖 (Completed, casual)
+    // ex: "Game Awards👑47🎖2" (hardcore) ou "Game Awards🎖17" (só casual)
+    const gameAwardsHeading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5')).find(
+      el => el.textContent?.includes('Game Awards'),
     )
-    const gameAwardsContainer = gameAwardsHeading?.closest('div')
-    const gameAwardsCount = gameAwardsContainer?.querySelector('.numitems')?.textContent?.trim()
+    const gameAwardsNumbers = [...gameAwardsHeading?.textContent?.matchAll(/(?:👑|🎖)\s*(\d+)/g) ?? []]
+    const gameAwardsCount = gameAwardsNumbers.length > 0
+      ? gameAwardsNumbers.reduce((total, match) => total + Number(match[1]), 0)
+      : undefined
 
     presenceData.details = `Viewing ${username}'s profile`
 
@@ -167,8 +170,8 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageKey = avatarEl.src
   }
   else if (gameMatch) {
-    // Título vem do document.title: "7th Dragon (Nintendo DS) · RetroAchievements"
-    // Remove o sufixo do site, mantendo só "7th Dragon (Nintendo DS)"
+    // Título vem do document.title: "Magic Knight Rayearth (Saturn) · RetroAchievements"
+    // Remove o sufixo do site, mantendo só "Magic Knight Rayearth (Saturn)"
     const gameTitle = document.title.replace(/\s*·\s*RetroAchievements\s*$/i, '').trim() || 'a game'
 
     const cover = document.querySelector<HTMLImageElement>('img[alt*="~"], img[width="96"][height="96"]')
@@ -190,12 +193,14 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Browsing the site'
   }
 
-  presenceData.buttons = [
-    {
-      label: 'View Page',
-      url: href,
-    },
-  ]
+  if (pathname !== '/') {
+    presenceData.buttons = [
+      {
+        label: 'View Page',
+        url: href,
+      },
+    ]
+  }
 
   presence.setActivity(presenceData)
 })
