@@ -1,0 +1,22 @@
+{
+  "heiwastream.loading": {
+    "description": "Shown while the player is still fetching the video, before the first frame.",
+    "message": "Loading"
+  },
+  "heiwastream.duration": {
+    "description": "Runtime of the episode or movie, in minutes. {0} is the number of minutes.",
+    "message": "{0} min"
+  },
+  "heiwastream.watchParty": {
+    "description": "Shown when watching together in a shared room. {0} is how many people are in the room, {1} how many seats it has.",
+    "message": "Watch party · {0}/{1}"
+  },
+  "heiwastream.joinWatchParty": {
+    "description": "Used as the title for the button in Discord. Opens the shared room so the viewer can watch along.",
+    "message": "Join Watch Party"
+  },
+  "heiwastream.choosing": {
+    "description": "Shown on the page of a movie or series, before playback starts: the viewer is deciding what to watch.",
+    "message": "Choosing what to watch"
+  }
+}
