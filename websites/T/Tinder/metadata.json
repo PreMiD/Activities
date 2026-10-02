@@ -14,7 +14,7 @@
     "www.tinder.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?tinder[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "logo": "https://i.imgur.com/OiNrW2k.png",
   "thumbnail": "https://i.imgur.com/OiNrW2k.png",
   "color": "#fd297b",
