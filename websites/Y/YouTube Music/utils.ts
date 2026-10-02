@@ -17,17 +17,17 @@ export function updateSongTimestamps(
 ): [number, number] {
   const times = dataGetter.getCurrentAndTotalTime()
 
-  if (!times) {
-    return [0, 0]
-  }
-
-  const [currTimes, totalTimes] = times
-
-  if (currTimes && totalTimes) {
+  if (times) {
+    const [currTimes, totalTimes] = times
     return getTimestamps(
       timestampFromFormat(currTimes),
       timestampFromFormat(totalTimes),
     )
+  }
+
+  const videoElement = dataGetter.getVideoElement()
+  if (videoElement && Number.isFinite(videoElement.currentTime) && Number.isFinite(videoElement.duration) && videoElement.duration > 0) {
+    return getTimestamps(videoElement.currentTime, videoElement.duration)
   }
 
   return [0, 0]
