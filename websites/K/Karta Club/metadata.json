@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Coconut",
+    "id": "920705896936513556"
+  },
+  "service": "Karta Club",
+  "description": {
+    "en": "Karta Club is Tunisia's online home for Rami, Chkobba, and more. Play online card games with the community, from ranked matches to private games with friends."
+  },
+  "url": "kartaclub.tn",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kartaclub[.]tn[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/7JShl3X.png",
+  "thumbnail": "https://i.imgur.com/JIzpQZD.png",
+  "color": "#071D19",
+  "category": "games",
+  "tags": [
+    "game",
+    "cards",
+    "rami",
+    "chkobba"
+  ],
+  "settings": [
+    {
+      "id": "showName",
+      "title": "Show username",
+      "icon": "fas fa-user",
+      "value": true
+    }
+  ]
+}
