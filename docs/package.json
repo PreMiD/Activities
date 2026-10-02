@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
-    "markdown-it": "^15.0.0",
+    "markdown-it": "^15.0.1",
     "typescript": "^6.0.3",
     "vitepress": "^2.0.0-alpha.19"
   }
