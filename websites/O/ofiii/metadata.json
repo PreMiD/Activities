@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.15",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "410036441129943050",
@@ -11,6 +11,7 @@
     "zh-tw": "ofiii 歐飛是 LiTV 推出的免費正版影音平台，提供戲劇、電影、動漫、綜藝、兒童節目及電視頻道直播。"
   },
   "url": "www.ofiii.com",
+  "regExp": "^https?[:][/][/](www[.])?ofiii[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/dKBCFwR.png",
   "thumbnail": "https://i.imgur.com/DJSnrYd.png",
