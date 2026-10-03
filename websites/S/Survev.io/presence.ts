@@ -3,7 +3,7 @@ import { Assets } from 'premid'
 const presence = new Presence({ clientId: '1555855996428099594' })
 
 enum ActivityAssets {
-  Logo = 'https://cdn.discordapp.com/app-assets/1555855996428099594/1555856356391657562.png?size=512',
+  Logo = 'https://i.imgur.com/V7TRADQ.png',
 }
 
 let matchStarted: number | null = null
