@@ -1,0 +1,118 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "Viridian",
+    "id": "744008931734716507"
+  },
+  "service": "PlayMogo",
+  "description": {
+    "en": "PlayMogo is a video hosting and streaming service."
+  },
+  "url": "playmogo.com",
+  "regExp": "^https?[:][/][/](?:www[.])?playmogo[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/5OqXGcI.png",
+  "thumbnail": "https://i.imgur.com/C84ompb.png",
+  "color": "#FF9800",
+  "category": "videos",
+  "tags": [
+    "video",
+    "streaming"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?[:][/][/](?:www[.])?playmogo[.]com[/]e[/][A-Za-z0-9]+(?:[/?#].*)?$",
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-shield",
+      "value": false,
+      "description": "Hide video titles, timestamps, and page links."
+    },
+    {
+      "id": "showBrowsing",
+      "title": "Show Browsing Status",
+      "icon": "fas fa-compass",
+      "value": true,
+      "description": "Show an activity when browsing without an active video."
+    },
+    {
+      "id": "titleFormat",
+      "title": "Video Title",
+      "icon": "fas fa-heading",
+      "value": 0,
+      "values": [
+        "Clean title",
+        "Original title"
+      ],
+      "if": {
+        "privacyMode": false
+      },
+      "description": "Choose whether common source-site suffixes are removed."
+    },
+    {
+      "id": "showPlaybackState",
+      "title": "Show Playback State",
+      "icon": "fas fa-play-circle",
+      "value": true,
+      "description": "Show Playing, Paused, or Video ended."
+    },
+    {
+      "id": "showPlaybackIcon",
+      "title": "Show Playback Icon",
+      "icon": "fas fa-icons",
+      "value": true,
+      "description": "Show a play or pause icon as the small activity image."
+    },
+    {
+      "id": "hidePaused",
+      "title": "Hide When Paused",
+      "icon": "fas fa-pause-circle",
+      "value": false,
+      "if": {
+        "privacyMode": false
+      },
+      "description": "Clear the activity while the video is paused."
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamps",
+      "icon": "fas fa-clock",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      },
+      "description": "Show media playback timing while the video is playing."
+    },
+    {
+      "id": "timestampMode",
+      "title": "Timestamp Mode",
+      "icon": "fas fa-stopwatch",
+      "value": 0,
+      "values": [
+        "Elapsed and remaining",
+        "Elapsed only",
+        "Remaining only"
+      ],
+      "if": {
+        "showTimestamp": true
+      },
+      "description": "Choose which playback timestamp Discord receives."
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Video Button",
+      "icon": "fas fa-external-link-alt",
+      "value": true,
+      "if": {
+        "privacyMode": false
+      },
+      "description": "Show a button to the video's normal PlayMogo page."
+    }
+  ]
+}
