@@ -1,9 +1,9 @@
 import { Assets } from 'premid'
 
-const presence = new Presence({ clientId: '' })
+const presence = new Presence({ clientId: '1555855996428099594' })
 
 enum ActivityAssets {
-  Logo = 'https://survev.io/img/icon_app.png',
+  Logo = 'https://cdn.discordapp.com/app-assets/1555855996428099594/1555856356391657562.png?size=512',
 }
 
 let matchStarted: number | null = null
