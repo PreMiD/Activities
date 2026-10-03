@@ -1,0 +1,41 @@
+{
+  "apiVersion": 1,
+  "author": {
+    "name": "kot16",
+    "id": "792829036761186305"
+  },
+  "service": "AniCat",
+  "description": {
+    "en": "AniCat is an anime streaming website with Shikimori list sync. Shows what you are browsing or which episode you are watching.",
+    "ru": "AniCat — онлайн-просмотр аниме с синхронизацией списков Шикимори. Показывает, что вы смотрите в Discord.",
+    "uk": "AniCat — онлайн-перегляд аніме із синхронізацією списків Шикіморі. Показує, що ви дивитесь у Discord."
+  },
+  "url": "anicat.cc",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])?anicat[.]cc[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/72dpXW6.png",
+  "thumbnail": "https://i.imgur.com/72dpXW6.png",
+  "color": "#A570FF",
+  "category": "anime",
+  "tags": ["anime", "shikimori", "kodik", "watch-online"],
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-external-link-alt",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamps",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showPoster",
+      "title": "Show Poster",
+      "icon": "fas fa-image",
+      "value": true
+    }
+  ]
+}
