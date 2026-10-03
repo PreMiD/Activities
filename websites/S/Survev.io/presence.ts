@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({ clientId: '1555855996428099594' })
 
@@ -50,12 +50,16 @@ presence.on('UpdateData', async () => {
     presence.clearActivity()
     return
   }
-  const [privacy, browsing, gameState, matchInformation, timestamp] = await Promise.all([
+  const [privacy, browsing, gameState, matchInformation, timestamp, partySize, statusIcon, hideSpectating, hideResults] = await Promise.all([
     presence.getSetting<boolean>('privacyMode'),
     presence.getSetting<boolean>('showBrowsing'),
     presence.getSetting<boolean>('showGameState'),
     presence.getSetting<boolean>('showMatchInformation'),
     presence.getSetting<boolean>('showTimestamp'),
+    presence.getSetting<boolean>('showPartySize'),
+    presence.getSetting<boolean>('showStatusIcon'),
+    presence.getSetting<boolean>('hideSpectating'),
+    presence.getSetting<boolean>('hideResults'),
   ])
 
   const menu = visible('#start-menu-wrapper')
@@ -75,12 +79,14 @@ presence.on('UpdateData', async () => {
   }
   previousState = state
 
-  if ((!inGame && !browsing) || (inGame && !gameState && !browsing)) {
+  if ((!inGame && !browsing) || (inGame && !gameState && !browsing)
+    || (state === 'spectating' && hideSpectating) || (state === 'results' && hideResults)) {
     presence.clearActivity()
     return
   }
 
   const data: PresenceData = {
+    type: ActivityType.Playing,
     largeImageKey: ActivityAssets.Logo,
     details: 'Playing Survev.io',
   }
@@ -101,7 +107,7 @@ presence.on('UpdateData', async () => {
     data.details = descriptions[state]!
   }
   else {
-    data.details = 'Browsing Survev.io'
+    data.details = inGame ? 'Playing Survev.io' : 'Browsing Survev.io'
   }
 
   if (gameState && matchInformation) {
@@ -109,7 +115,9 @@ presence.on('UpdateData', async () => {
     if (inGame && selectedMode)
       information.push(selectedMode)
     if (state === 'playing' || state === 'spectating') {
-      const alive = count('.ui-players-alive')
+      const red = count('.ui-players-alive-red')
+      const blue = count('.ui-players-alive-blue')
+      const alive = count('.ui-players-alive') ?? (red !== null && blue !== null ? red + blue : null)
       const kills = state === 'playing' ? count('.ui-player-kills') : null
       if (alive !== null)
         information.push(`${alive} alive`)
@@ -119,9 +127,20 @@ presence.on('UpdateData', async () => {
     if (information.length)
       data.state = information.join(' • ')
   }
-  if (gameState && state === 'spectating') {
+  if (gameState && partySize && state === 'lobby') {
+    // Count occupied slots without reading player names or room identifiers.
+    const maxPartySize = document.querySelectorAll('#team-menu-member-list .team-menu-member').length
+    const occupied = document.querySelectorAll('#team-menu-member-list .team-menu-member > .icon[data-playerid]:not([data-playerid="0"])').length
+    if (occupied > 0 && occupied <= maxPartySize && maxPartySize <= 4)
+      data.party = { partySize: occupied, maxPartySize }
+  }
+  if (gameState && statusIcon && state === 'spectating') {
     data.smallImageKey = Assets.Viewing
     data.smallImageText = 'Spectating'
+  }
+  else if (gameState && statusIcon && !inGame) {
+    data.smallImageKey = Assets.Search
+    data.smallImageText = state === 'matchmaking' ? 'Finding a match' : state === 'lobby' ? 'Team lobby' : 'Browsing'
   }
   if (timestamp && state !== 'results' && (!inGame || gameState))
     data.startTimestamp = matchStarted ?? browsingStarted

@@ -56,6 +56,34 @@
       "icon": "fas fa-clock",
       "value": true,
       "description": "Show elapsed time since the Activity detected the match or opened the site."
+    },
+    {
+      "id": "showPartySize",
+      "title": "Show Party Size",
+      "icon": "fas fa-users",
+      "value": true,
+      "description": "Show occupied slots and capacity in the team lobby without player names or invite codes."
+    },
+    {
+      "id": "showStatusIcon",
+      "title": "Show Status Icon",
+      "icon": "fas fa-icons",
+      "value": true,
+      "description": "Show a small icon while browsing, finding a match, or spectating."
+    },
+    {
+      "id": "hideSpectating",
+      "title": "Hide While Spectating",
+      "icon": "fas fa-eye-slash",
+      "value": false,
+      "description": "Clear the Activity while spectating a match."
+    },
+    {
+      "id": "hideResults",
+      "title": "Hide Match Results",
+      "icon": "fas fa-eye-slash",
+      "value": false,
+      "description": "Clear the Activity while viewing match results."
     }
   ]
 }
