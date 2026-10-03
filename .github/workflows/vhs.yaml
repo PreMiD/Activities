@@ -26,11 +26,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - uses: charmbracelet/vhs-action@v2.1.0
+      - uses: charmbracelet/vhs-action@v2.1.1
         with:
           path: docs/tapes/create-activity.tape
 
-      - uses: charmbracelet/vhs-action@v2.1.0
+      - uses: charmbracelet/vhs-action@v2.1.1
         with:
           path: docs/tapes/developing-activity.tape
 
