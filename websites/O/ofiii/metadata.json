@@ -53,6 +53,17 @@
       "title": "Show Browsing",
       "icon": "fad fa-compass",
       "value": true
+    },
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 1,
+      "values": [
+        "ofiii",
+        "Show/Channel Name",
+        "Episode/Program Name"
+      ]
     }
   ]
 }

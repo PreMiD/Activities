@@ -1,9 +1,11 @@
-import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia, StatusDisplayType } from 'premid'
 
 const presence = new Presence({
   clientId: '1555895308649500783',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
+// Indexed by the "displayType" setting value
+const statusDisplayTypes = [StatusDisplayType.Name, StatusDisplayType.Details, StatusDisplayType.State]
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/dKBCFwR.png',
@@ -39,12 +41,13 @@ let strings: Awaited<ReturnType<typeof getStrings>>
 
 presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
-  const [newLang, buttons, cover, hidePaused, browsing] = await Promise.all([
+  const [newLang, buttons, cover, hidePaused, browsing, displayType] = await Promise.all([
     presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('hidePaused'),
     presence.getSetting<boolean>('browsing'),
+    presence.getSetting<number>('displayType'),
   ])
 
   if (oldLang !== newLang || !strings) {
@@ -79,6 +82,7 @@ presence.on('UpdateData', async () => {
         return presence.clearActivity()
 
       presenceData.details = title
+      presenceData.statusDisplayType = statusDisplayTypes[displayType]
       presenceData.state = document.querySelector('h2.subtitle_section')?.textContent?.trim()
 
       if (cover)
@@ -108,6 +112,7 @@ presence.on('UpdateData', async () => {
         return presence.clearActivity()
 
       presenceData.details = channel
+      presenceData.statusDisplayType = statusDisplayTypes[displayType]
       presenceData.state = document.querySelector('h2.subtitle')?.textContent?.trim()
 
       if (cover)
