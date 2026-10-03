@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Viridian",
+    "id": "744008931734716507"
+  },
+  "service": "Survev.io",
+  "description": {
+    "en": "Survev.io is an open-source 2D battle royale game inspired by surviv.io."
+  },
+  "url": "survev.io",
+  "regExp": "^https?[:][/][/]survev[.]io[/]",
+  "version": "1.0.0",
+  "logo": "https://survev.io/img/icon_app.png",
+  "thumbnail": "https://survev.io/img/survev_title.png",
+  "color": "#7A9B43",
+  "category": "games",
+  "tags": [
+    "survev",
+    "battle-royale",
+    "surviv"
+  ],
+  "settings": [
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-shield",
+      "value": false,
+      "description": "Show only the game name; hide status, match information, and timestamps."
+    },
+    {
+      "id": "showBrowsing",
+      "title": "Show Browsing Status",
+      "icon": "fas fa-compass",
+      "value": true,
+      "description": "Show menus, team lobby, and matchmaking."
+    },
+    {
+      "id": "showGameState",
+      "title": "Show Game State",
+      "icon": "fas fa-gamepad",
+      "value": true,
+      "description": "Show gameplay, spectating, and match results."
+    },
+    {
+      "id": "showMatchInformation",
+      "title": "Show Match Information",
+      "icon": "fas fa-list",
+      "value": true,
+      "description": "Show detected mode, players alive, and your kills during gameplay."
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Show elapsed time since the Activity detected the match or opened the site."
+    }
+  ]
+}
