@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://raw.githubusercontent.com/viridianknight7/Activities/playmogo-artwork/PlayMogo-Logo.png',
+  Logo = 'https://i.imgur.com/5OqXGcI.png',
 }
 
 interface PlayerVideoData {

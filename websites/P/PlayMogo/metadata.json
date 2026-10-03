@@ -12,8 +12,8 @@
   "url": "playmogo.com",
   "regExp": "^https?[:][/][/](?:www[.])?playmogo[.]com[/]",
   "version": "1.0.0",
-  "logo": "https://raw.githubusercontent.com/viridianknight7/Activities/playmogo-artwork/PlayMogo-Logo.png",
-  "thumbnail": "https://raw.githubusercontent.com/viridianknight7/Activities/playmogo-artwork/PlayMogo-Thumbnail.png",
+  "logo": "https://i.imgur.com/5OqXGcI.png",
+  "thumbnail": "https://i.imgur.com/C84ompb.png",
   "color": "#FF9800",
   "category": "videos",
   "tags": [
