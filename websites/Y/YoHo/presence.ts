@@ -60,9 +60,9 @@ import { ActivityType, getTimestamps } from 'premid'
       return
     }
 
-    if (!/(?:^|\.)(?:nextembed\.ws|stravers\.live|kodikplayer\.com|obrut\.show)$/i.test(hostname))
-      return
-    }
+  if (!/(?:^|\.)(?:nextembed\.ws|stravers\.live|kodikplayer\.com|obrut\.show)$/i.test(hostname)) {
+    return
+  }
 
     let data: unknown = event.data
 
