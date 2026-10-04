@@ -1,12 +1,10 @@
-import { ActivityType } from 'premid';
+import { ActivityType, getTimestamps } from 'premid'
 
 (() => {
   'use strict'
 
-  // This is PreMiD's public Discord application. See README.txt to use a
-  // dedicated YoHo application name instead of "PreMiD" in Discord.
   const presence = new Presence({ clientId: '503557087041683458' })
-  const LOGO = 'https://reyoho.ru/icon?57a86ae42f7a6ded'
+  const LOGO = 'https://i.imgur.com/dyqDcS4.png'
   const PLAYER_DATA_TTL = 35000
 
   interface PlayerState {
@@ -48,7 +46,7 @@ import { ActivityType } from 'premid';
   }
 
   const playerStates = new Map<string, PlayerState>()
-  let lastPathname = location.pathname
+  let lastPathname = document.location.pathname
   let messagedEpisode: MessagedEpisode = { label: '', receivedAt: 0 }
   let updateTimer: ReturnType<typeof setTimeout> | undefined
 
@@ -62,7 +60,7 @@ import { ActivityType } from 'premid';
       return
     }
 
-    if (!/(?:nextembed\.ws|stravers\.live|kodikplayer\.com|obrut\.show)$/i.test(hostname)) {
+    if (!/(?:^|\.)(?:nextembed\.ws|stravers\.live|kodikplayer\.com|obrut\.show)$/i.test(hostname))
       return
     }
 
@@ -118,7 +116,7 @@ import { ActivityType } from 'premid';
       return ''
 
     try {
-      return new URL(value, location.origin).href
+      return new URL(value, document.location.origin).href
     }
     catch {
       return ''
@@ -126,7 +124,7 @@ import { ActivityType } from 'premid';
   }
 
   function findTitleData(): TitleData | null {
-    if (!/^\/(?:film|series)\/\d+\/?$/.test(location.pathname))
+    if (!/^\/(?:film|series)\/\d+\/?$/.test(document.location.pathname))
       return null
 
     const marker = document.querySelector<HTMLElement>('[data-yoho-film="true"]')
@@ -246,14 +244,6 @@ import { ActivityType } from 'premid';
       : `${minutes}:${String(secs).padStart(2, '0')}`
   }
 
-  function timestamps(currentTime: number, duration: number): [number, number] {
-    const now = Math.floor(Date.now() / 1000)
-    return [
-      now - Math.floor(currentTime),
-      now + Math.floor(duration - currentTime),
-    ]
-  }
-
   function episodeLabel(value: string): string {
     if (!value)
       return ''
@@ -271,10 +261,10 @@ import { ActivityType } from 'premid';
   }
 
   async function updateActivity(): Promise<void> {
-    if (lastPathname !== location.pathname) {
+    if (lastPathname !== document.location.pathname) {
       playerStates.clear()
       messagedEpisode = { label: '', receivedAt: 0 }
-      lastPathname = location.pathname
+      lastPathname = document.location.pathname
     }
 
     const [showButtonsSetting, showPosterSetting] = await Promise.all([
@@ -323,7 +313,7 @@ import { ActivityType } from 'premid';
     }
 
     if (showButtons) {
-      presenceData.buttons = [{ label: 'Смотреть на YoHo', url: location.href }]
+      presenceData.buttons = [{ label: 'Смотреть на YoHo', url: document.location.href }]
     }
 
     if (playback && (playback.duration > 0 || playback.currentTime > 0 || playback.episode)) {
@@ -344,7 +334,7 @@ import { ActivityType } from 'premid';
         presenceData.state = `${episode || `Смотрит ${kind}`}${duration ? ` • ${duration}` : ''}`
 
         if (playback.duration > playback.currentTime) {
-          [presenceData.startTimestamp, presenceData.endTimestamp] = timestamps(
+          [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
             playback.currentTime,
             playback.duration,
           )
@@ -371,11 +361,11 @@ import { ActivityType } from 'premid';
 
   presence.on('UpdateData', updateActivity)
 
-  let observedUrl = location.href
+  let observedUrl = document.location.href
 
   new MutationObserver(() => {
-    if (location.href !== observedUrl) {
-      observedUrl = location.href
+    if (document.location.href !== observedUrl) {
+      observedUrl = document.location.href
       scheduleUpdate(0)
     }
   }).observe(document.documentElement, { childList: true, subtree: true })
@@ -386,8 +376,8 @@ import { ActivityType } from 'premid';
     'click',
     () => {
       setTimeout(() => {
-        if (location.href !== observedUrl) {
-          observedUrl = location.href
+        if (document.location.href !== observedUrl) {
+          observedUrl = document.location.href
           scheduleUpdate(0)
         }
       }, 0)
