@@ -7,7 +7,7 @@
   },
   "service": "FlyStream",
   "description": {
-    "en": "FlyStream is a free streaming site for movies, TV shows and anime, with watch parties, no ads and no account needed."
+    "en": "Watch movies & TV free at Fly Stream - no ads, no login. Continue Watching resumes exactly where you left off, with subtitles, audio tracks & fast streaming."
   },
   "url": "flystream.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flystream[.]net[/]",
