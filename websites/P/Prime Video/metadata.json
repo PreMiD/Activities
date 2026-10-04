@@ -17,6 +17,10 @@
     {
       "name": "Skully",
       "id": "671037171611729920"
+    },
+    {
+      "name": "noonenook",
+      "id": "437695615095275520"
     }
   ],
   "service": "Prime Video",
@@ -25,11 +29,12 @@
     "en": "Enjoy exclusive Amazon Originals as well as popular movies and TV shows. Watch anytime, anywhere. Start your free trial.",
     "fr": "Découvrez les programmes Amazon Original exclusifs et de nombreux films et séries populaires. Regardez quand vous voulez, où vous voulez. Commencez votre essai gratuit.",
     "ja": "ここでしか見れない、先行や独占配信作品が続々追加！まずは30日間無料でお試し",
-    "nl": "Geniet van exclusieve Amazon Originals en populaire films en tv-programma's. Bekijk altijd en overal. Start uw gratis proefperiode."
+    "nl": "Geniet van exclusieve Amazon Originals en populaire films en tv-programma's. Bekijk altijd en overal. Start uw gratis proefperiode.",
+    "no": "Se eksklusive Amazon Originals samt populære filmer og serier. Se når og hvor du vil. Start en gratis prøveperiode."
   },
   "url": "primevideo.com",
   "regExp": "^https?[:][/][/]((([a-z0-9-]+[.])*amazon([.][a-z]+)+[/]((-[/])?(([a-z0-9]+)[/])?)?(Prime-Video|Prime-Instant-Video|Amazon-Video|gp[/]video))|([a-z0-9-]+[.])*primevideo([.][a-z]+)+)[/]",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/thumbnail.jpg",
   "color": "#FFFFFF",
