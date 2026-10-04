@@ -1,4 +1,4 @@
-﻿import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1548362846558228500',
@@ -172,8 +172,9 @@ function cleanImageUrl(url: string | null | undefined): string | null {
     || trimmed.includes('default-video-img')
     || trimmed.includes('nct-share.png')
     || trimmed.includes('1x1')
-  )
+  ) {
     return null
+  }
   if (trimmed.startsWith('//'))
     trimmed = `https:${trimmed}`
   else if (trimmed.startsWith('/'))
