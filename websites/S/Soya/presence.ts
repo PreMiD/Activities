@@ -132,7 +132,7 @@ async function updatePresence(): Promise<void> {
   }
 
   if (active && title) {
-    data.details = title
+    data.details = title.slice(0, 128)
 
     const parts: string[] = []
     if (!playing) {
@@ -204,17 +204,17 @@ async function updatePresence(): Promise<void> {
   }
 
   const routes: [RegExp, string, string][] = [
-    [/\/dashboard\/[^/]+\/audio/, 'Audio Settings', displayServer || 'Equalizer & Filters'],
-    [/\/dashboard\/[^/]+\/settings/, 'Server Settings', displayServer || 'Configuration'],
-    [/\/dashboard\/[^/]+\/commands/, 'Commands', displayServer || 'Management'],
-    [/\/dashboard\/profile\/playlists/, 'Playlists', 'Personal Library'],
-    [/\/dashboard\/profile\/history/, 'Listening History', 'Recent Tracks'],
-    [/\/dashboard\/profile/, 'User Profile', 'Dashboard'],
-    [/\/dashboard\/[^/]+$/, 'Server Dashboard', displayServer || 'Overview'],
-    [/\/dashboard/, 'Server Directory', 'Dashboard'],
-    [/\/status/, 'System Status', 'Cluster & Shards'],
-    [/\/commands/, 'Command Reference', 'Documentation'],
-    [/\/premium/, 'Premium Tiers', 'Perks & Features'],
+    [/\/dashboard\/[^/]+\/audio\/?/, 'Audio Settings', displayServer || 'Equalizer & Filters'],
+    [/\/dashboard\/[^/]+\/settings\/?/, 'Server Settings', displayServer || 'Configuration'],
+    [/\/dashboard\/[^/]+\/commands\/?/, 'Commands', displayServer || 'Management'],
+    [/\/dashboard\/profile\/playlists\/?/, 'Playlists', 'Personal Library'],
+    [/\/dashboard\/profile\/history\/?/, 'Listening History', 'Recent Tracks'],
+    [/\/dashboard\/profile\/?/, 'User Profile', 'Dashboard'],
+    [/\/dashboard\/[^/]+\/?$/, 'Server Dashboard', displayServer || 'Overview'],
+    [/\/dashboard\/?/, 'Server Directory', 'Dashboard'],
+    [/\/status\/?/, 'System Status', 'Cluster & Shards'],
+    [/\/commands\/?/, 'Command Reference', 'Documentation'],
+    [/\/premium\/?/, 'Premium Tiers', 'Perks & Features'],
   ]
 
   const match = routes.find(([regex]) => regex.test(pathname))
@@ -234,44 +234,6 @@ async function updatePresence(): Promise<void> {
   presence.setActivity(data)
 }
 
-let updateTimer: number | null = null
-function queueFastUpdate() {
-  if (updateTimer)
-    return
-  updateTimer = window.setTimeout(() => {
-    updateTimer = null
-    updatePresence()
-  }, 100)
-}
-
 presence.on('UpdateData', async () => {
   await updatePresence()
 })
-
-if (typeof window !== 'undefined') {
-  window.addEventListener('soya:presence-update', queueFastUpdate)
-  window.addEventListener('popstate', queueFastUpdate)
-
-  const originalPush = history.pushState
-  history.pushState = function (...args) {
-    originalPush.apply(this, args)
-    queueFastUpdate()
-  }
-
-  const originalReplace = history.replaceState
-  history.replaceState = function (...args) {
-    originalReplace.apply(this, args)
-    queueFastUpdate()
-  }
-
-  const observer = new MutationObserver(() => {
-    queueFastUpdate()
-  })
-
-  observer.observe(document.documentElement, {
-    childList: true,
-    subtree: true,
-    attributes: true,
-    attributeFilter: ['data-playing', 'data-title', 'data-position', 'data-lyrics-open'],
-  })
-}
