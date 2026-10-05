@@ -19,6 +19,60 @@ export interface MediaDataGetter {
   isPlaying: () => boolean
 }
 
+function getTextContent(selector: string): string | undefined {
+  const text = document.querySelector(selector)?.textContent?.trim()
+
+  return text && text.length > 0 ? text : undefined
+}
+
+function getValidImageSource(selector: string): string | undefined {
+  const src = document.querySelector<HTMLImageElement>(selector)?.src
+
+  return src && !src.startsWith('data:') ? src : undefined
+}
+
+function getPlayerLinks(): HTMLAnchorElement[] {
+  return [
+    ...document.querySelectorAll<HTMLAnchorElement>(
+      '.byline.ytmusic-player-bar a, ytmusic-player-bar .subtitle a',
+    ),
+  ]
+}
+
+function getPlaybackStateFromControls(): MediaData['playbackState'] {
+  const playPauseButton = document.querySelector<HTMLElement>('#play-pause-button')
+  const label = [
+    playPauseButton?.getAttribute('title'),
+    playPauseButton?.getAttribute('aria-label'),
+    playPauseButton?.querySelector('button')?.getAttribute('title'),
+    playPauseButton?.querySelector('button')?.getAttribute('aria-label'),
+  ].find(Boolean)?.toLowerCase()
+
+  if (label === 'pause')
+    return 'playing'
+
+  if (label === 'play')
+    return 'paused'
+
+  return 'none'
+}
+
+function getPlaybackStateFromVideo(
+  videoElement: HTMLMediaElement | null,
+  hasMediaDetails: boolean,
+): MediaData['playbackState'] {
+  if (!videoElement)
+    return 'none'
+
+  if (!videoElement.paused && !videoElement.ended)
+    return 'playing'
+
+  if (Number.isFinite(videoElement.duration) && videoElement.duration > 0 && hasMediaDetails)
+    return 'paused'
+
+  return 'none'
+}
+
 export class YouTubeMusicDataGetter implements MediaDataGetter {
   private mediaSession: MediaSession | undefined
 
@@ -27,29 +81,13 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
   }
 
   getMediaData(): MediaData {
-    if (this.mediaSession?.metadata && ['playing', 'paused'].includes(this.mediaSession.playbackState)) {
-      return {
-        playbackState: this.mediaSession.playbackState as 'playing' | 'paused',
-        title: this.mediaSession.metadata.title,
-        artist: this.mediaSession.metadata.artist,
-        album: this.mediaSession.metadata.album,
-        artwork: this.mediaSession.metadata.artwork?.at(-1)?.src,
-      }
-    }
-
+    const mediaSessionState = this.mediaSession?.playbackState
     const videoElement = this.getVideoElement()
-    const isPaused = videoElement?.paused ?? true
-    const isPlaying = !isPaused && videoElement && videoElement.currentTime > 0
-
-    if (!isPlaying && isPaused) {
-      return { playbackState: 'none' }
-    }
-
-    const titleElement = document.querySelector('.title.ytmusic-player-bar')
-    const artistElements = document.querySelectorAll('.byline.ytmusic-player-bar a')
+    const title = getTextContent('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title')
+    const artistElements = getPlayerLinks()
     const artistElement = artistElements[0]
     const albumElement = artistElements.length > 1 ? artistElements[1] : null
-    const thumbnailElement = document.querySelector<HTMLImageElement>('#song-image img, ytmusic-player-bar img#img')
+    const artwork = getValidImageSource('#song-image img, ytmusic-player-bar img#img')
 
     const complexInfo = document.querySelector('.complex-string.ytmusic-player-bar')
     const albumFromElement = albumElement?.textContent?.trim()
@@ -60,12 +98,38 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
           ? albumFromComplex
           : undefined
 
+    const controlPlaybackState = getPlaybackStateFromControls()
+    const playbackState = getPlaybackStateFromVideo(
+      videoElement,
+      Boolean(title || artistElement || this.mediaSession?.metadata),
+    )
+    const playerPlaybackState = controlPlaybackState === 'none'
+      ? playbackState
+      : controlPlaybackState
+
+    if (this.mediaSession?.metadata && ['playing', 'paused'].includes(mediaSessionState ?? '')) {
+      return {
+        playbackState: playerPlaybackState === 'none'
+          ? mediaSessionState as 'playing' | 'paused'
+          : playerPlaybackState,
+        title: this.mediaSession.metadata.title,
+        artist: this.mediaSession.metadata.artist,
+        album: this.mediaSession.metadata.album,
+        artwork: this.mediaSession.metadata.artwork?.at(-1)?.src,
+        duration: videoElement?.duration,
+      }
+    }
+
+    if (playerPlaybackState === 'none') {
+      return { playbackState: playerPlaybackState }
+    }
+
     return {
-      playbackState: isPaused ? 'paused' : 'playing',
-      title: titleElement?.textContent?.trim() || undefined,
+      playbackState: playerPlaybackState,
+      title,
       artist: artistElement?.textContent?.trim() || undefined,
       album,
-      artwork: thumbnailElement?.src || undefined,
+      artwork,
       duration: videoElement?.duration,
     }
   }
@@ -89,22 +153,22 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
   }
 
   getVideoElement(): HTMLMediaElement | null {
-    return document.querySelector<HTMLMediaElement>('.video-stream')
+    return document.querySelector<HTMLMediaElement>('.video-stream, video')
   }
 
   getAlbumArtistLink(): string | undefined {
     const mediaData = this.getMediaData()
-    const links = [...document.querySelectorAll<HTMLAnchorElement>('.byline a')]
+    const links = getPlayerLinks()
 
     if (mediaData.album && links.length > 0) {
       return links.at(-1)?.href
     }
 
-    return document.querySelector<HTMLAnchorElement>('.byline a')?.href
+    return links[0]?.href
   }
 
   getArtistLink(): string | undefined {
-    return document.querySelector<HTMLAnchorElement>('.byline a')?.href
+    return getPlayerLinks()[0]?.href
   }
 
   getCurrentAndTotalTime(): [string, string] | null {
@@ -134,20 +198,10 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
   }
 
   hasValidPlaybackState(): boolean {
-    if (this.mediaSession) {
-      return ['playing', 'paused'].includes(this.mediaSession.playbackState)
-    }
-
-    const videoElement = this.getVideoElement()
-    return videoElement !== null && !Number.isNaN(videoElement.duration)
+    return this.getMediaData().playbackState !== 'none'
   }
 
   isPlaying(): boolean {
-    if (this.mediaSession) {
-      return this.mediaSession.playbackState === 'playing'
-    }
-
-    const videoElement = this.getVideoElement()
-    return videoElement !== null && !videoElement.paused && videoElement.currentTime > 0
+    return this.getMediaData().playbackState === 'playing'
   }
 }
