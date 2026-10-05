@@ -10,13 +10,13 @@
     "en": "Play retro games in your browser, solo or with friends."
   },
   "url": "app.rebit.cc",
-  "regExp": "^https://app[.]rebit[.]cc/",
+  "regExp": "^https?[:][/][/]app[.]rebit[.]cc[/]",
   "version": "1.0.0",
   "logo": "https://app.rebit.cc/icons/icon-512x512.png",
   "thumbnail": "https://app.rebit.cc/screenshots/wide.png",
   "color": "#2DD4BF",
   "category": "games",
-  "tags": ["rebit", "retro", "games", "multiplayer"],
+  "tags": ["retro", "games", "multiplayer"],
   "settings": [
     {
       "id": "showGameDetails",

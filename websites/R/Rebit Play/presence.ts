@@ -1,3 +1,5 @@
+import { ActivityType } from 'premid'
+
 const presence = new Presence({ clientId: '1555682643553820783' })
 const logo = 'https://app.rebit.cc/icons/icon-512x512.png'
 
@@ -36,7 +38,7 @@ presence.on('UpdateData', async () => {
   }
 
   const data: PresenceData = {
-    type: 0,
+    type: ActivityType.Playing,
     details: showGameDetails ? game.title.slice(0, 128) : 'Playing a game',
     state: game.status === 'paused' ? 'Paused' : game.multiplayer ? 'Multiplayer' : 'Single player',
     largeImageKey: logo,
