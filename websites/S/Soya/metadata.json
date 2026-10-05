@@ -10,10 +10,10 @@
     "en": "Soya is a Discord music bot featuring a modern web dashboard and player with queue controls, low-latency playback, and high-quality audio with flawless performance."
   },
   "url": "soyamusic.in",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(soyamusic[.]in|soya[.]bot|localhost:3000)[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(soyamusic[.]in|soya[.]bot)[/]",
   "version": "1.0.0",
   "logo": "https://i.ibb.co/21RstdWc/Soya-1-1.png",
-  "thumbnail": "https://i.ibb.co/21RstdWc/Soya-1-1.png",
+  "thumbnail": "https://i.ibb.co/5WRCV9qv/banner.jpg",
   "color": "#10B981",
   "category": "music",
   "tags": [
