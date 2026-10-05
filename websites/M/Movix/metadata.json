@@ -8,7 +8,7 @@
   "service": "Movix",
   "description": {
     "en": "Movix is a streaming platform for movies, series, anime, and watch parties.",
-    "fr": "Movix est une plateforme de streaming pour films, series, anime et watch parties."
+    "fr": "Movix est une plateforme de streaming pour films, séries, animés et watch parties."
   },
   "url": [
     "movix.cash",
@@ -18,10 +18,11 @@
     "movix.golf",
     "movix.cloud",
     "movix.fun",
-    "movix.online"
+    "movix.online",
+    "movix.men"
   ],
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(movix[.]cash|movix[.]show|movix[.]date|movix[.]chat|movix[.]golf|movix[.]cloud|movix[.]online|movix[.]fun)[/]",
-  "version": "1.0.7",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(movix[.]cash|movix[.]show|movix[.]date|movix[.]chat|movix[.]golf|movix[.]cloud|movix[.]online|movix[.]fun|movix[.]men)[/]",
+  "version": "2.0.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Movix/assets/thumbnail.png",
   "color": "#dc2626",
@@ -36,6 +37,17 @@
   "allowURLOverrides": true,
   "settings": [
     {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "showPoster",
+      "title": "Show Poster",
+      "icon": "fas fa-image",
+      "value": true,
+      "description": "Show the media poster as the large image instead of the Movix logo."
+    },
+    {
       "id": "showTimestamp",
       "title": "Show Timestamp",
       "icon": "fas fa-clock",
@@ -46,8 +58,15 @@
       "id": "showButtons",
       "title": "Show Buttons",
       "icon": "fas fa-link",
-      "value": false,
+      "value": true,
       "description": "Add a button for supported deep pages when the URL uses HTTPS."
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false,
+      "description": "Hide titles, posters, sources and buttons; only show a generic activity."
     }
   ]
 }
