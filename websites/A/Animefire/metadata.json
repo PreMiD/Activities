@@ -8,7 +8,7 @@
   "service": "Animefire",
   "description": {
     "en": "Watch anime and movies online with Portuguese subtitles.",
-    "pt_BR": "Assista animes e filmes online com legendas em português."
+    "pt-br": "Assista animes e filmes online com legendas em português."
   },
   "url": "animefire.one",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animefire[.][a-z]+[/]",
