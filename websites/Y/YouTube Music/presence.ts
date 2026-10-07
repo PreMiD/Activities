@@ -97,6 +97,14 @@ presence.on('UpdateData', async () => {
       state.prevTitleAuthor = currentMediaIdentifier
     }
 
+    if (state.dataGetter.isAdPlaying()) {
+      return presence.setActivity({
+        type: ActivityType.Listening,
+        largeImageKey: ActivityAssets.Logo,
+        details: strings.listeningToSong,
+      })
+    }
+
     presenceData = createListeningPresence(
       mediaData,
       state.dataGetter,
