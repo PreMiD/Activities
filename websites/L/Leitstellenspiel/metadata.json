@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "poweroffapt",
+    "id": "150000744672657408"
+  },
+  "service": "Leitstellenspiel",
+  "description": {
+    "de": "Leitstellenspiel ist ein Browserspiel, in dem du deine eigene Leitstelle aufbaust und betreibst: Feuer-, Rettungs- und Polizeiwachen bauen, Fahrzeuge zu Einsätzen alarmieren und im Verband zusammen spielen.",
+    "en": "Leitstellenspiel is a German browser game where you build and run your own emergency dispatch center: build fire, rescue and police stations, dispatch vehicles to missions and play together in alliances."
+  },
+  "url": [
+    "www.leitstellenspiel.de",
+    "leitstellenspiel.de"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?leitstellenspiel[.]de[/]",
+  "version": "1.0.0",
+  "logo": "https://lss.trophynetwork.de/premid/leitstellenspiel-logo.png",
+  "thumbnail": "https://lss.trophynetwork.de/premid/leitstellenspiel-thumbnail.png",
+  "color": "#c62828",
+  "category": "games",
+  "tags": [
+    "lss",
+    "dispatch",
+    "feuerwehr",
+    "firefighter",
+    "simulation",
+    "browsergame"
+  ],
+  "settings": [
+    {
+      "id": "showMission",
+      "title": "Show mission names",
+      "icon": "fas fa-fire",
+      "value": true
+    },
+    {
+      "id": "showAddress",
+      "title": "Show mission address",
+      "icon": "fas fa-map-marker-alt",
+      "value": false,
+      "if": {
+        "showMission": true
+      }
+    },
+    {
+      "id": "showNames",
+      "title": "Show station and vehicle names",
+      "icon": "fas fa-building",
+      "value": true
+    },
+    {
+      "id": "showStats",
+      "title": "Show open missions and credits",
+      "icon": "fas fa-coins",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show elapsed time",
+      "icon": "fas fa-clock",
+      "value": true
+    }
+  ]
+}
