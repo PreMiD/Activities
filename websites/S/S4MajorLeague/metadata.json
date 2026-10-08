@@ -3,10 +3,10 @@
     "name": "S4 Major League",
     "id": "s4ml"
   },
-  "service": "S4 Major League",
+  "service": "S4 Master League",
   "description": {
-    "en": "Show your activity while playing and browsing S4 Major League on Xero.",
-    "pt": "Mostre sua atividade jogando e navegando no S4 Major League no Xero."
+    "en": "Show your activity while playing S4 Master League on Xero.",
+    "pt": "Mostre sua atividade no S4 Master League no Xero."
   },
   "url": "s4ml.club",
   "version": "1.0.0",
