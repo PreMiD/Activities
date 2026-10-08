@@ -1,18 +1,17 @@
 {
   "author": {
     "name": "S4 Major League",
-    "id": "123456789012345678"
+    "id": "s4ml"
   },
   "service": "S4 Major League",
   "description": {
-    "en": "Displays rich presence on Discord while browsing S4 Major League.",
-    "pt": "Exibe rich presence no Discord enquanto você navega no S4 Major League."
+    "en": "Show your activity while playing and browsing S4 Major League on Xero.",
+    "pt": "Mostre sua atividade jogando e navegando no S4 Major League no Xero."
   },
-  "url": ["s4ml.club", "www.s4ml.club"],
+  "url": "s4ml.club",
   "version": "1.0.0",
-  "logo": "https://www.s4ml.club/favicon.ico",
-  "thumbnail": "https://www.s4ml.club/favicon.ico",
-  "color": "#ef4444",
-  "category": "games",
-  "tags": ["s4league", "xero", "esports", "gaming"]
+  "logo": "https://www.s4ml.club/favicon.svg",
+  "thumbnail": "https://www.s4ml.club/favicon.svg",
+  "color": "#dc2626",
+  "category": "games"
 }
