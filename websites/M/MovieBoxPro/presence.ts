@@ -94,14 +94,25 @@ function getBrowsingStatus(): { details: string, state: string } {
 presence.on('UpdateData', async () => {
   const video = [...document.querySelectorAll('video')].find(v => v.src)
   const rawTitle = document.querySelector('.movie_title')?.textContent.trim() ?? null
-  const showBrowsingStatus = await presence.getSetting<boolean>('showBrowsingStatus')
-  const showLookingAtStatus = await presence.getSetting<boolean>('showLookingAtStatus')
-  const episodeFormat = await presence.getSetting<number>('episodeFormat')
-  const movieHeaderFormat = await presence.getSetting<number>('movieHeaderFormat')
-  const showHeaderFormat = await presence.getSetting<number>('showHeaderFormat')
-  const hideWhenPaused = await presence.getSetting<boolean>('hideWhenPaused')
-  const showImdbButton = await presence.getSetting<boolean>('showImdbButton')
-  const showEpisodeButton = await presence.getSetting<boolean>('showEpisodeButton')
+  const [
+    showBrowsingStatus,
+    showLookingAtStatus,
+    episodeFormat,
+    movieHeaderFormat,
+    showHeaderFormat,
+    hideWhenPaused,
+    showImdbButton,
+    showEpisodeButton,
+  ] = await Promise.all([
+    presence.getSetting<boolean>('showBrowsingStatus'),
+    presence.getSetting<boolean>('showLookingAtStatus'),
+    presence.getSetting<number>('episodeFormat'),
+    presence.getSetting<number>('movieHeaderFormat'),
+    presence.getSetting<number>('showHeaderFormat'),
+    presence.getSetting<boolean>('hideWhenPaused'),
+    presence.getSetting<boolean>('showImdbButton'),
+    presence.getSetting<boolean>('showEpisodeButton'),
+  ])
   const isWatching = Boolean(video && rawTitle)
   const isLookingAt = !isWatching && Boolean(rawTitle)
   const isGeneralBrowsing = !isWatching && !rawTitle
