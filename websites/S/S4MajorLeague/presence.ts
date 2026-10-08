@@ -1,7 +1,7 @@
 import { Presence } from "premid";
 
 const presence = new Presence({
-  clientId: "1293248356353245224"
+  clientId: "1557799759455191184"
 });
 
 const startTime = Math.floor(Date.now() / 1000);
