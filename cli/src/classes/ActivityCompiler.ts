@@ -303,6 +303,38 @@ export class ActivityCompiler {
       valid = false
     }
 
+    if (!metadata.iFrameRegExp && metadata.iframe) {
+      const message = `Expected iFrameRegExp to exist for activity ${metadata.service}, as metadata.iframe is true`
+      if (kill) {
+        exit(message)
+      }
+
+      error(message)
+      addSarifLog({
+        path: resolve(this.cwd, 'metadata.json'),
+        message,
+        ruleId: SarifRuleId.iframeRegexpCheck,
+        position: await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'iFrameRegExp'),
+      })
+      valid = false
+    }
+
+    if (metadata.iFrameRegExp && !metadata.iframe) {
+      const message = `Expected iFrameRegExp to not exist for activity ${metadata.service}, as metadata.iframe is false`
+      if (kill) {
+        exit(message)
+      }
+
+      error(message)
+      addSarifLog({
+        path: resolve(this.cwd, 'metadata.json'),
+        message,
+        ruleId: SarifRuleId.iframeRegexpCheck,
+        position: await getJsonPosition(resolve(this.cwd, 'metadata.json'), 'iFrameRegExp'),
+      })
+      valid = false
+    }
+
     if (metadata.iFrameRegExp === '.*') {
       const message = `iFrameRegExp is not allowed to be .*, as it is a wildcard`
       if (kill) {
