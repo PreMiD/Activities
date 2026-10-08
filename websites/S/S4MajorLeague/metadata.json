@@ -1,14 +1,18 @@
 {
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "author": {
     "name": "S4 Major League",
-    "id": "s4ml"
+    "id": "1288608162416558111"
   },
-  "service": "S4 Master League",
+  "service": "S4 Major League",
   "description": {
     "en": "Show your activity while playing S4 Master League on Xero.",
     "pt": "Mostre sua atividade no S4 Master League no Xero."
   },
-  "url": "s4ml.club",
+  "url": [
+    "s4ml.club",
+    "www.s4ml.club"
+  ],
   "version": "1.0.0",
   "logo": "https://www.s4ml.club/favicon.svg",
   "thumbnail": "https://www.s4ml.club/favicon.svg",
