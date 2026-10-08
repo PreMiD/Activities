@@ -9,9 +9,9 @@
   "description": {
     "en": "Monochrome is an open-source, privacy-respecting, ad-free TIDAL web UI, built on top of Hi-Fi."
   },
-  "url": "monochrome.tf",
-  "regExp": "^https?[:][/][/]monochrome[.](samidy[.]com|tf)[/]",
-  "version": "1.0.4",
+  "url": "monochrome.st",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*monochrome[.]st[/]",
+  "version": "1.0.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Monochrome/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Monochrome/assets/thumbnail.png",
   "color": "#000000",
