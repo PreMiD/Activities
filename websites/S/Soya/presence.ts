@@ -184,10 +184,17 @@ async function updatePresence(): Promise<void> {
     }
 
     if (showButtons) {
-      const playerUrl = serverId ? `https://soyamusic.in/dashboard/${serverId}/webplayer` : href
-      data.buttons = [
-        { label: 'Listen on Web Player', url: playerUrl },
-      ]
+      const pathServerId = pathname.match(/\/dashboard\/([^/]+)/)?.[1]
+      const resolvedServerId = serverId || (pathServerId && pathServerId !== 'profile' ? pathServerId : '')
+      const playerUrl = resolvedServerId
+        ? `https://soyamusic.in/dashboard/${resolvedServerId}/webplayer`
+        : (href.startsWith('https://') && pathname.includes('/webplayer') ? href : '')
+
+      if (playerUrl) {
+        data.buttons = [
+          { label: 'Listen on Web Player', url: playerUrl },
+        ]
+      }
     }
 
     presence.setActivity(data)
