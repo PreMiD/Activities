@@ -1,23 +1,27 @@
-import { Presence } from "premid";
-
-const presence = new Presence({
-  clientId: "1557799759455191184"
-});
-
-const startTime = Math.floor(Date.now() / 1000);
-
-presence.on("UpdateData", async () => {
-  presence.setActivity({
-    largeImageKey: "https://www.s4ml.club/favicon.svg",
-    largeImageText: "S4 Master League",
-    details: "on Xero",
-    state: "www.s4ml.club",
-    startTimestamp: startTime,
-    buttons: [
-      {
-        label: "Join S4ML",
-        url: "https://www.s4ml.club"
-      }
-    ]
-  });
-});
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "S4 Major League",
+    "id": "155779975455191184"
+  },
+  "service": "S4 Major League",
+  "description": {
+    "en": "Show your activity while playing S4 Major League on Xero.",
+    "pt": "Mostre sua atividade no S4 Major League no Xero."
+  },
+  "url": "s4ml.club",
+  "regExp": "https?://(www\\.)?s4ml\\.club",
+  "version": "1.0.0",
+  "logo": "https://s4ml.club/favicon.png",
+  "thumbnail": "https://s4ml.club/favicon.png",
+  "color": "#dc2626",
+  "category": "games",
+  "tags": [
+    "s4",
+    "s4 league",
+    "xero",
+    "ranking",
+    "tournament"
+  ]
+}
