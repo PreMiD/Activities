@@ -11,7 +11,7 @@
     "pt-br": "Assista animes e filmes online com legendas em português."
   },
   "url": "animefire.one",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animefire[.][a-z]+[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animefire([.][a-z]+)+[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/cihx7oo.png",
   "thumbnail": "https://i.imgur.com/5hdhZfn.png",
