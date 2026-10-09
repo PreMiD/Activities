@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "407859300527243275",
@@ -11,7 +11,7 @@
   },
   "url": "snipp.gg",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*snipp[.]gg[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Snipp/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Snipp/assets/thumbnail.png",
   "color": "#f0b100",

@@ -244,6 +244,7 @@ const savedSettings = {
   links: false,
   displayType: 1,
   lang: 'en',
+  titleParsing: false,
 }
 
 async function readSetting<K extends keyof typeof savedSettings>(id: K): Promise<typeof savedSettings[K]> {
@@ -295,6 +296,7 @@ async function updateActivity() {
     links,
     displayType,
     newLang,
+    titleParsing,
   ] = await Promise.all([
     readSetting('browse'),
     readSetting('song'),
@@ -304,6 +306,7 @@ async function updateActivity() {
     readSetting('links'),
     readSetting('displayType'),
     readSetting('lang'),
+    readSetting('titleParsing'),
   ])
   if (oldLang !== newLang || !strings) {
     try {
@@ -344,11 +347,18 @@ async function updateActivity() {
 
   const showingTrack = (playing || !showBrowsing) && showSong
   if (showingTrack) {
-    const track = parseTrackTitle(
-      document.querySelector('.playbackSoundBadge__titleLink > span:nth-child(2)')?.textContent?.trim()
-      ?? titleLink?.textContent?.trim(),
-      getElement('.playbackSoundBadge__lightLink'),
-    )
+    const track = titleParsing
+      ? parseTrackTitle(
+          document.querySelector('.playbackSoundBadge__titleLink > span:nth-child(2)')?.textContent?.trim()
+          ?? titleLink?.textContent?.trim(),
+          getElement('.playbackSoundBadge__lightLink'),
+        )
+      : {
+          title: document.querySelector('.playbackSoundBadge__titleLink > span:nth-child(2)')?.textContent?.trim()
+            ?? titleLink?.textContent?.trim(),
+          artist: getElement('.playbackSoundBadge__lightLink'),
+        }
+
     presenceData.details = track.title
     presenceData.state = track.artist
       ?? getElement('.playbackSoundBadge__lightLink')
@@ -486,7 +496,13 @@ async function updateActivity() {
       else presenceData.details = 'Browsing Playlist/Album...'
 
       const uploader = getElement('.soundTitle__username')
-      const track = parseTrackTitle(getElement('.soundTitle__title > span'), uploader)
+      const track = titleParsing
+        ? parseTrackTitle(getElement('.soundTitle__title > span'), uploader)
+        : {
+            title: getElement('.soundTitle__title > span'),
+            artist: uploader,
+          }
+      presenceData.details = 'Listening to...'
       presenceData.state = [track.title, track.artist || uploader].filter(Boolean).join(' by ')
     }
   }

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "John Smith",
@@ -21,7 +21,7 @@
     "myaccount.nytimes.com"
   ],
   "regExp": "^https?[:][/][/](www|myaccount)[.]nytimes[.]com[/]",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/The%20New%20York%20Times/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/The%20New%20York%20Times/assets/thumbnail.png",
   "color": "#ffffff",

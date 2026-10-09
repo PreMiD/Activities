@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "1045800378228281345",
@@ -26,7 +26,7 @@
     "new.yummy-ani.me"
   ],
   "regExp": "^https?[:][/][/](www[.])?(old[.])?(new[.])?(en[.])?(ru[.])?(uk[.])?yummy-?ani[.]me[/]",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YummyAnime/assets/thumbnail.png",
   "color": "#FF6666",

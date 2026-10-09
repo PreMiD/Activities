@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "PreMiD",
@@ -14,7 +14,7 @@
     "uktvplay.co.uk"
   ],
   "regExp": "^https?[:][/][/](uktvplay[.]uktv|uktvplay)[.]co[.]uk[/]",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/UKTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/UKTV/assets/thumbnail.png",
   "color": "#00BAC6",
