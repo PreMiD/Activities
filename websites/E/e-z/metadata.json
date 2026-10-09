@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "787787652644601857",
@@ -14,7 +14,7 @@
     "e-z.bio"
   ],
   "regExp": "^https?[:][/][/]e-z[.](host|bio)[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/E/e-z/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/E/e-z/assets/thumbnail.png",
   "color": "#558dd2",

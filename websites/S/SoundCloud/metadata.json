@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -28,7 +28,7 @@
   },
   "url": "soundcloud.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*soundcloud[.]com[/]",
-  "version": "2.8.0",
+  "version": "2.9.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SoundCloud/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SoundCloud/assets/thumbnail.jpg",
   "color": "#FF7E30",
@@ -88,6 +88,13 @@
         "Artist Name",
         "Song Title"
       ]
+    },
+    {
+      "id": "titleParsing",
+      "title": "Parse Song Title",
+      "description": "Parse the song title for a cleaner look and to try to separate the artist and song title.",
+      "icon": "fas fa-filter",
+      "value": false
     }
   ]
 }

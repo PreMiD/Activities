@@ -77,7 +77,7 @@ presence.on('UpdateData', async () => {
     }`
     const now = Math.floor(Date.now() / 1000)
     const startTimestamp = now - Math.floor(video.currentTime ?? 0)
-    const endTimestamp = startTimestamp + Math.floor((video.duration ?? 0) - (video.currentTime ?? 0))
+    const endTimestamp = startTimestamp + Math.floor(video.duration ?? 0)
     presenceData.largeImageText = `${season ? `${season}, ` : ''}${
       selectEps?.options[selectEps.selectedIndex]?.value ?? ''
     }`

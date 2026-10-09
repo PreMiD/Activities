@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "蒟蒻",
@@ -16,7 +16,7 @@
   },
   "url": "forum.gamer.com.tw",
   "regExp": "^https?[:][/][/]forum[.]gamer[.]com[.]tw[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%E5%B7%B4%E5%93%88%E5%A7%86%E7%89%B9/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%E5%B7%B4%E5%93%88%E5%A7%86%E7%89%B9/assets/thumbnail.png",
   "color": "#2E93A5",
