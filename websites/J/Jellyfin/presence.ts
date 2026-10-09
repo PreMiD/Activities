@@ -1,4 +1,4 @@
-import type { ApiClient, MediaInfo, Person, Server, Session } from './types.js'
+import type { MediaInfo, Person, Server, Session } from './types.js'
 import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 enum ActivityAssets {
@@ -28,8 +28,19 @@ const searchMediaCache = new Map<string, MediaInfo[]>()
 const uploadedMediaCache = new Map<string, string>()
 let nowPlayingCache: { itemId: string | null, fetchedAt: number } | null = null
 
-let apiClient: ApiClient
-let wasLogin = false
+// Failed lookups are remembered briefly so an unreachable or slow server
+// doesn't make every update wait on the same timed-out requests again.
+const FAILED_LOOKUP_TTL = 15000
+const failedLookups = new Map<string, number>()
+
+function recentlyFailed(key: string): boolean {
+  const failedAt = failedLookups.get(key)
+  return failedAt !== undefined && Date.now() - failedAt < FAILED_LOOKUP_TTL
+}
+
+function markFailed(key: string): void {
+  cacheSet(failedLookups, key, Date.now())
+}
 
 async function getStrings() {
   return presence.getStrings({
@@ -83,9 +94,21 @@ function mediaPrimaryImage(mediaInfo: MediaInfo): string {
 }
 
 function truncate(text: string, max = 128): string {
-  if (text.length <= max)
-    return text
-  return `${text.slice(0, max - 3)}...`
+  const normalizedText = text.replace(/\s+/g, ' ').trim()
+  if (normalizedText.length <= max)
+    return normalizedText
+
+  const suffix = '...'
+  let truncatedText = ''
+  let length = 0
+  for (const character of normalizedText) {
+    if (length + character.length > max - suffix.length)
+      break
+    truncatedText += character
+    length += character.length
+  }
+
+  return `${truncatedText.trimEnd()}${suffix}`
 }
 
 function peopleByType(people: Person[] | undefined, type: string): string[] {
@@ -149,37 +172,116 @@ async function resolveImageUrl(
   }
 }
 
-function getUserId(): string {
+interface ClientInfo {
+  appName: string
+  deviceId: string
+  accessToken: string
+  userId: string
+  // Only known when read from the page.
+  appVersion?: string
+  deviceName?: string
+}
+
+const CLIENT_INFO_TTL = 5000
+const PAGE_VARIABLES_RETRY = 30000
+const CLIENT_VARIABLES = [
+  'ApiClient._appName',
+  'ApiClient._appVersion',
+  'ApiClient._deviceName',
+  'ApiClient._deviceId',
+  'ApiClient._serverInfo.AccessToken',
+  'ApiClient._serverInfo.UserId',
+] as const
+
+let clientInfo: ClientInfo | null = null
+let clientInfoReadAt = 0
+let pageVariablesFailedAt = 0
+
+function storedClientInfo(): ClientInfo | null {
   try {
-    return apiClient._currentUser.Id
-  }
-  catch {
     const servers: Server[] = JSON.parse(
       localStorage.getItem('jellyfin_credentials') ?? '{}',
-    ).Servers
+    ).Servers ?? []
+    const serverId = new URLSearchParams(location.hash.split('?')[1] ?? '').get('serverId')
+    const signedIn = servers.filter(s => s.AccessToken && s.UserId)
+    const server = signedIn.find(s => s.Id === serverId)
+      ?? signedIn.sort((a, b) => b.DateLastAccessed - a.DateLastAccessed)[0]
 
-    return (
-      servers.length === 1
-        ? servers[0]
-        : servers.find(
-            (s: Server) =>
-              s.Id
-              === new URLSearchParams(location.hash.split('?')[1] ?? '').get('serverId'),
-          )
-    )?.UserId ?? ''
+    if (!server)
+      return null
+
+    return {
+      appName: 'Jellyfin Web',
+      deviceId: localStorage.getItem('_deviceId2') ?? '',
+      accessToken: server.AccessToken,
+      userId: server.UserId,
+    }
+  }
+  catch {
+    return null
   }
 }
 
+async function pageClientInfo(): Promise<ClientInfo | null> {
+  try {
+    const vars = await presence.getPageVariable<Record<typeof CLIENT_VARIABLES[number], string | undefined>>(...CLIENT_VARIABLES)
+    if (decodeURIComponent(vars['ApiClient._appName'] ?? '') !== 'Jellyfin Web')
+      return null
+
+    return {
+      appName: vars['ApiClient._appName']!,
+      appVersion: vars['ApiClient._appVersion'],
+      deviceName: vars['ApiClient._deviceName'],
+      deviceId: vars['ApiClient._deviceId'] ?? '',
+      accessToken: vars['ApiClient._serverInfo.AccessToken'] ?? '',
+      userId: vars['ApiClient._serverInfo.UserId'] ?? '',
+    }
+  }
+  catch {
+    return null
+  }
+}
+
+async function isJellyfinWebClient(): Promise<boolean> {
+  const now = Date.now()
+  if (now - clientInfoReadAt < CLIENT_INFO_TTL)
+    return !!clientInfo
+
+  clientInfoReadAt = now
+
+  // jellyfin-web keeps the login in localStorage, which the activity can read
+  // directly. Page variables are only a fallback (e.g. on the login page): on
+  // some setups the extension never gets an answer from the page and
+  // getPageVariable stalls until it times out, so failures back off.
+  clientInfo = storedClientInfo()
+  if (!clientInfo && now - pageVariablesFailedAt >= PAGE_VARIABLES_RETRY) {
+    clientInfo = await pageClientInfo()
+    if (!clientInfo)
+      pageVariablesFailedAt = Date.now()
+  }
+
+  return !!clientInfo
+}
+
 function authHeaders(): Record<string, string> {
+  // Fields we couldn't read are left out rather than sent empty, so the server
+  // falls back to what it has stored for the token instead of overwriting it.
+  const fields = {
+    Client: clientInfo?.appName,
+    Device: clientInfo?.deviceName,
+    DeviceId: clientInfo?.deviceId,
+    Version: clientInfo?.appVersion,
+    Token: clientInfo?.accessToken,
+  }
+
   return {
     // Servers with legacy authorization disabled (the default since Jellyfin
     // began deprecating it) ignore X-Emby-Authorization entirely, so use the
     // standard Authorization header instead, which every version accepts.
-    Authorization: `MediaBrowser Client="${apiClient._appName}", `
-      + `Device="${apiClient._deviceName}", `
-      + `DeviceId="${apiClient._deviceId}", `
-      + `Version="${apiClient._appVersion}", `
-      + `Token="${apiClient._serverInfo.AccessToken}"`,
+    Authorization: `MediaBrowser ${Object.entries(fields)
+      .filter(([, value]) => value)
+      .map(([key, value]) => `${key}="${value}"`)
+      .join(', ')}`,
   }
 }
 
@@ -187,13 +289,19 @@ async function obtainMediaInfo(itemId: string): Promise<MediaInfo | null> {
   if (mediaInfoCache.has(itemId))
     return mediaInfoCache.get(itemId)!
 
+  const failureKey = `item:${itemId}`
+  if (recentlyFailed(failureKey))
+    return null
+
   try {
     const res = await fetchWithTimeout(
-      `${jellyfinBasenameUrl()}Users/${getUserId()}/Items/${itemId}`,
+      `${jellyfinBasenameUrl()}Users/${clientInfo?.userId}/Items/${itemId}`,
       { credentials: 'include', headers: authHeaders() },
     )
-    if (!res.ok)
+    if (!res.ok) {
+      markFailed(failureKey)
       return null
+    }
 
     const mediaInfo: MediaInfo = await res.json()
     cacheSet(mediaInfoCache, itemId, mediaInfo)
@@ -201,6 +309,7 @@ async function obtainMediaInfo(itemId: string): Promise<MediaInfo | null> {
     return mediaInfoCache.get(itemId)!
   }
   catch {
+    markFailed(failureKey)
     return null
   }
 }
@@ -212,7 +321,7 @@ async function obtainNowPlayingItemId(): Promise<string | null> {
   let itemId: string | null = null
   try {
     const res = await fetchWithTimeout(
-      `${jellyfinBasenameUrl()}Sessions?deviceId=${encodeURIComponent(apiClient._deviceId)}`,
+      `${jellyfinBasenameUrl()}Sessions?deviceId=${encodeURIComponent(clientInfo?.deviceId ?? '')}`,
       { credentials: 'include', headers: authHeaders() },
     )
     if (res.ok) {
@@ -240,17 +349,23 @@ async function searchMedia(searchTerm: string): Promise<MediaInfo[]> {
   if (searchMediaCache.has(searchTerm))
     return searchMediaCache.get(searchTerm)!
 
+  const failureKey = `search:${searchTerm}`
+  if (recentlyFailed(failureKey))
+    return []
+
   try {
     const res = await fetchWithTimeout(
-      `${jellyfinBasenameUrl()}Users/${getUserId()}/Items/?searchTerm=${encodeURIComponent(searchTerm)}`
+      `${jellyfinBasenameUrl()}Users/${clientInfo?.userId}/Items/?searchTerm=${encodeURIComponent(searchTerm)}`
       + '&IncludePeople=false&IncludeMedia=true&IncludeGenres=false&IncludeStudios=false'
       + '&IncludeArtists=false&IncludeItemTypes=Movie,Episode&Limit=3'
       + '&Fields=PrimaryImageAspectRatio%2CCanDelete%2CBasicSyncInfo%2CMediaSourceCount'
       + '&Recursive=true&EnableTotalRecordCount=false&ImageTypeLimit=1',
       { credentials: 'include', headers: authHeaders() },
     )
-    if (!res.ok)
+    if (!res.ok) {
+      markFailed(failureKey)
       return []
+    }
 
     const resJson = await res.json()
     cacheSet(searchMediaCache, searchTerm, resJson.Items)
@@ -258,46 +373,15 @@ async function searchMedia(searchTerm: string): Promise<MediaInfo[]> {
     return searchMediaCache.get(searchTerm)!
   }
   catch {
+    markFailed(failureKey)
     return []
   }
-}
-
-async function refreshApiClient(): Promise<void> {
-  apiClient ??= (
-    await presence.getPageVariable<Record<'ApiClient', ApiClient>>('ApiClient')
-  ).ApiClient
-}
-
-async function isJellyfinWebClient(): Promise<boolean> {
-  if (!apiClient)
-    await refreshApiClient()
-
-  return !!(
-    apiClient
-    && typeof apiClient === 'object'
-    && decodeURIComponent(apiClient._appName ?? '') === 'Jellyfin Web'
-  )
-}
-
-function sleep(ms: number): Promise<void> {
-  return new Promise(res => setTimeout(res, ms))
 }
 
 function fetchWithTimeout(url: string, options: RequestInit = {}, ms = 5000): Promise<Response> {
   const controller = new AbortController()
   const id = setTimeout(() => controller.abort(), ms)
   return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(id))
-}
-
-async function loggedIn(): Promise<void> {
-  let newApiClient: ApiClient
-
-  do {
-    await sleep(125)
-    newApiClient = (await presence.getPageVariable<{ ApiClient: ApiClient }>('ApiClient')).ApiClient
-  } while (!newApiClient?._serverInfo?.AccessToken)
-
-  apiClient = newApiClient
 }
 
 interface Settings {
@@ -316,7 +400,15 @@ interface Settings {
   localImageExtraction: boolean
 }
 
+const SETTINGS_CACHE_TTL = 5000
+let settingsCache: Settings | null = null
+let settingsFetchedAt = 0
+
 async function fetchSettings(): Promise<Settings> {
+  const now = Date.now()
+  if (settingsCache && now - settingsFetchedAt < SETTINGS_CACHE_TTL)
+    return settingsCache
+
   const [
     lang,
     usePresenceName,
@@ -347,7 +439,7 @@ async function fetchSettings(): Promise<Settings> {
     presence.getSetting<boolean>('localImageExtraction'),
   ])
 
-  return {
+  settingsCache = {
     lang,
     usePresenceName,
     showMediaTimestamps,
@@ -362,6 +454,9 @@ async function fetchSettings(): Promise<Settings> {
     privacy,
     localImageExtraction,
   }
+  settingsFetchedAt = Date.now()
+
+  return settingsCache
 }
 
 async function getCoverUrl(
@@ -495,7 +590,11 @@ async function buildMediaPresence(
         details: parts.join(' • ') || (mediaInfo.Name ?? 'Movie'),
         state: overview ?? rating,
         largeImageKey: await getCoverUrl(mediaInfo, settings),
-        largeImageText: `${mediaInfo.Name} (${mediaInfo.ProductionYear})`,
+        largeImageText: truncate(
+          mediaInfo.ProductionYear
+            ? `${mediaInfo.Name ?? 'Movie'} (${mediaInfo.ProductionYear})`
+            : mediaInfo.Name ?? 'Movie',
+        ),
       }
 
       if (settings.usePresenceName)
@@ -922,14 +1021,6 @@ async function handleWebClient(settings: Settings): Promise<PresenceData | null>
   }
 
   const path = currentHashPath()
-
-  if (path === 'login') {
-    wasLogin = true
-  }
-  else if (wasLogin) {
-    loggedIn().catch(() => {})
-    wasLogin = false
-  }
 
   if (path === 'video')
     return handleVideoPlayback(settings)
