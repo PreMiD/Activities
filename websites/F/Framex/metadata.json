@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "Framex",
+    "id": "1524897264055746560"
+  },
+  "service": "Framex",
+  "description": {
+    "en": "Free movies, TV shows, and anime. Shows what you're watching, the episode, and how long you've been watching."
+  },
+  "url": [
+    "framextv.lol",
+    "framexx.netlify.app",
+    "pulse-stream-vibes.lovable.app"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?(framextv[.]lol|framexx[.]netlify[.]app|pulse-stream-vibes[.]lovable[.]app)[/]?",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/WEFa57f.png",
+  "thumbnail": "https://i.imgur.com/WEFa57f.png",
+  "color": "#242424",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "tv",
+    "anime",
+    "streaming"
+  ],
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}
