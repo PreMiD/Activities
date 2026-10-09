@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "503557087041683458",
@@ -11,7 +11,7 @@
   },
   "url": "pokerogue.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pokerogue[.]net[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PokeRogue/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PokeRogue/assets/thumbnail.png",
   "color": "#6b5a73",

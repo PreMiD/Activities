@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "503557087041683458",
@@ -19,7 +19,7 @@
     "hub.nexonairlines.com"
   ],
   "regExp": "^https?[:][/][/](((map|shop|hub)[.])?nexonlogistics[.]com|((map|hub)[.])?nexonairlines[.]com)[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nexon/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nexon/assets/thumbnail.png",
   "color": "#84C444",

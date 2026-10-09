@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "fror",
@@ -15,7 +15,7 @@
     "www.okanime.tv"
   ],
   "regExp": "^https?[:][/][/](www[.])?okanime[.]tv[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/OKanime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/OKanime/assets/thumbnail.png",
   "color": "#a5173b",

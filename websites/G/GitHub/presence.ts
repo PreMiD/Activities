@@ -51,11 +51,12 @@ presence.on('UpdateData', async () => {
     },
   }
   const { pathname, search, href, hostname } = document.location
-  const [cover, timestamp, privacy, privategist] = await Promise.all([
+  const [cover, timestamp, privacy, privategist, buttons] = await Promise.all([
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('timestamp'),
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('privategist'),
+    presence.getSetting<boolean>('buttons'),
   ])
 
   for (const [path, data] of Object.entries(pages)) {
@@ -371,6 +372,8 @@ presence.on('UpdateData', async () => {
         presenceData.details = isPrivateGist && !privategist ? 'Viewing a private gist' : `Browsing gist ${gist.name} by ${gist.owner}`
     }
   }
+  if (!buttons)
+    delete presenceData.buttons
   if (timestamp)
     presenceData.startTimestamp = browsingTimestamp
   presence.setActivity(presenceData)

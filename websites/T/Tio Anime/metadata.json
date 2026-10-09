@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Yelo",
@@ -12,7 +12,7 @@
   },
   "url": "tioanime.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tioanime[.]com[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Tio%20Anime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Tio%20Anime/assets/thumbnail.png",
   "color": "#18142f",

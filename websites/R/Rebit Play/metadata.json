@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Rebit Play",
+    "id": "408106032515252226"
+  },
+  "service": "Rebit Play",
+  "description": {
+    "en": "Play retro games in your browser, solo or with friends."
+  },
+  "url": "app.rebit.cc",
+  "regExp": "^https?[:][/][/]app[.]rebit[.]cc[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rebit%20Play/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rebit%20Play/assets/thumbnail.png",
+  "color": "#2DD4BF",
+  "category": "games",
+  "tags": [
+    "retro",
+    "games",
+    "multiplayer"
+  ],
+  "settings": [
+    {
+      "id": "showGameDetails",
+      "title": "Show game details",
+      "icon": "fas fa-gamepad",
+      "value": true,
+      "description": "Show the game title, console, artwork, and game link."
+    },
+    {
+      "id": "showButtons",
+      "title": "Show game button",
+      "icon": "fas fa-link",
+      "value": true,
+      "description": "Link to the current game's page when game details are visible."
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "432215088686956565",
@@ -11,7 +11,7 @@
   },
   "url": "witanime.life",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*witanime[.]life[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WitAnime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WitAnime/assets/thumbnail.png",
   "color": "#000000",

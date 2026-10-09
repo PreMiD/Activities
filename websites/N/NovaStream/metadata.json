@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "390265556357611521",
@@ -17,7 +17,7 @@
     "nova-2bn.pages.dev"
   ],
   "regExp": "^https?[:][/][/]((novastream)[.]vercel[.]app|(novastream-alt)[.]netlify[.]app|(novastream)[.]onrender[.]com|(nova-2bn)[.]pages[.]dev)[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NovaStream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NovaStream/assets/thumbnail.png",
   "color": "#5e24b8",
