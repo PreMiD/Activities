@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "1009426635780542475",
@@ -11,7 +11,7 @@
   },
   "url": "stream.terousd.online",
   "regExp": "^https?[:][/][/]stream[.]terousd[.]online[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Terousd/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Terousd/assets/thumbnail.jpg",
   "color": "#E50914",

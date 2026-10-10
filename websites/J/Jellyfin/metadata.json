@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "hashking710",
@@ -22,7 +22,7 @@
   },
   "url": "jellyfin.org",
   "regExp": "^https?[:][/][/](jellyfin[.]org|.*[/]web[/](index[.]html)?#)[/]",
-  "version": "1.12.1",
+  "version": "1.12.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Jellyfin/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Jellyfin/assets/thumbnail.png",
   "color": "#00698c",
@@ -107,6 +107,15 @@
       "title": "Show Elapsed Time",
       "icon": "fad fa-stopwatch",
       "value": true
+    },
+    {
+      "id": "showOverview",
+      "title": "Show Plot Summary",
+      "icon": "fad fa-align-left",
+      "value": false,
+      "if": {
+        "privacy": false
+      }
     },
     {
       "id": "localImageExtraction",

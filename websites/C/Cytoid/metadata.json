@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "joerkig",
@@ -11,7 +11,7 @@
   },
   "url": "cytoid.io",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*cytoid[.]io[/]",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/Cytoid/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/Cytoid/assets/thumbnail.png",
   "color": "#476ADC",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Bünyamin Öztürk",
@@ -24,7 +24,7 @@
     "askubuntu.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?askubuntu[.]com[/]",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AskUbuntu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AskUbuntu/assets/thumbnail.png",
   "color": "#dc461d",

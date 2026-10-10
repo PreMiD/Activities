@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Gurrman375D",
@@ -12,7 +12,7 @@
   },
   "url": "www.sparknotes.com",
   "regExp": "^https?[:][/][/](www[.])?sparknotes[.]com[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sparknotes/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sparknotes/assets/thumbnail.png",
   "color": "#363EE6",
