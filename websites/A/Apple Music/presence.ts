@@ -114,7 +114,7 @@ presence.on('UpdateData', async () => {
 
   if (data) {
     presenceData.details = data.name
-    presenceData.state = data.artist
+    presenceData.state = displayType === 3 && data.album ? data.album : data.artist
 
     if (data.paused && hidePaused) {
       clearActivity()
@@ -161,6 +161,9 @@ presence.on('UpdateData', async () => {
         break
       case 2:
         presenceData.statusDisplayType = StatusDisplayType.Details
+        break
+      case 3:
+        presenceData.statusDisplayType = StatusDisplayType.State
         break
     }
 
