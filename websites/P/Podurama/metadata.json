@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "358402930191106049",
@@ -11,7 +11,7 @@
   },
   "url": "podurama.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*podurama[.]com[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Podurama/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Podurama/assets/thumbnail.png",
   "color": "#4B5458",

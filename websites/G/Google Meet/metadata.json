@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Drull",
@@ -14,7 +14,7 @@
   },
   "url": "meet.google.com",
   "regExp": "^https?[:][/][/]meet[.]google([.][a-z]+)+[/]",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Meet/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Meet/assets/thumbnail.png",
   "color": "#308574",

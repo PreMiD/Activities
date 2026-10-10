@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Hans5958",
@@ -19,7 +19,7 @@
   },
   "url": "fandom.com",
   "regExp": "^https?[:][/][/][a-z0-9-]+[.]fandom[.]com[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Fandom/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Fandom/assets/thumbnail.png",
   "color": "#002A32",

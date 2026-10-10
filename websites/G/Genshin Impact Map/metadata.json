@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Faelayis",
@@ -17,7 +17,7 @@
     "mapgenie.io"
   ],
   "regExp": "^https?[:][/][/]((act|webstatic-sea)[.]hoyolab[.]com|(webstatic-sea)[.]mihoyo[.]com|(genshin-impact-map)[.]appsample[.]com|mapgenie[.]io)[/]",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Genshin%20Impact%20Map/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Genshin%20Impact%20Map/assets/thumbnail.png",
   "color": "#b6c48c",

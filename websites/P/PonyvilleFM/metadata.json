@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "sks316",
@@ -12,7 +12,7 @@
   },
   "url": "ponyvillefm.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*ponyvillefm[.]com[/]",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PonyvilleFM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PonyvilleFM/assets/thumbnail.png",
   "color": "#4D0F80",

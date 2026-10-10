@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Eai",
@@ -21,7 +21,7 @@
     "seiga.nicovideo.jp"
   ],
   "regExp": "^https?[:][/][/](www|live|seiga)[.]nicovideo[.]jp[/]",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/niconico/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/niconico/assets/thumbnail.jpg",
   "color": "#272727",

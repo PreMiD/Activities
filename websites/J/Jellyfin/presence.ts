@@ -311,6 +311,7 @@ interface Settings {
   showMusic: boolean
   showSmallImages: boolean
   showBrowsingStatus: boolean
+  showOverview: boolean
   privacy: boolean
   localImageExtraction: boolean
 }
@@ -327,6 +328,7 @@ async function fetchSettings(): Promise<Settings> {
     showMusic,
     showSmallImages,
     showBrowsingStatus,
+    showOverview,
     privacy,
     localImageExtraction,
   ] = await Promise.all([
@@ -340,6 +342,7 @@ async function fetchSettings(): Promise<Settings> {
     presence.getSetting<boolean>('showMusic'),
     presence.getSetting<boolean>('showSmallImages'),
     presence.getSetting<boolean>('showBrowsingStatus'),
+    presence.getSetting<boolean>('showOverview'),
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('localImageExtraction'),
   ])
@@ -355,6 +358,7 @@ async function fetchSettings(): Promise<Settings> {
     showMusic,
     showSmallImages,
     showBrowsingStatus,
+    showOverview,
     privacy,
     localImageExtraction,
   }
@@ -477,11 +481,19 @@ async function buildMediaPresence(
       const rating = mediaInfo.CommunityRating
         ? `★ ${mediaInfo.CommunityRating.toFixed(1)}`
         : undefined
+      const overview = settings.showOverview && mediaInfo.Overview
+        ? truncate(mediaInfo.Overview)
+        : undefined
+
+      // The overview takes the state line, so fold the rating into details
+      // instead of losing it entirely.
+      if (overview && rating)
+        parts.push(rating)
 
       const presenceData: MediaPresenceData = {
         type: ActivityType.Watching,
         details: parts.join(' • ') || (mediaInfo.Name ?? 'Movie'),
-        state: rating,
+        state: overview ?? rating,
         largeImageKey: await getCoverUrl(mediaInfo, settings),
         largeImageText: `${mediaInfo.Name} (${mediaInfo.ProductionYear})`,
       }
@@ -519,11 +531,14 @@ async function buildMediaPresence(
       const seasonEpisode = season && episode
         ? `Season ${season} • Episode ${episode}`
         : null
+      const overview = settings.showOverview && mediaInfo.Overview
+        ? truncate(mediaInfo.Overview)
+        : undefined
 
       const presenceData: MediaPresenceData = {
         type: ActivityType.Watching,
         details: mediaInfo.SeriesName,
-        state: seasonEpisode ? `${seasonEpisode} • ${epName}` : epName,
+        state: overview ?? (seasonEpisode ? `${seasonEpisode} • ${epName}` : epName),
         largeImageKey: await getCoverUrl(mediaInfo, settings),
       }
 
@@ -533,7 +548,7 @@ async function buildMediaPresence(
       if (settings.usePresenceName) {
         presenceData.name = mediaInfo.SeriesName
         presenceData.details = epName
-        presenceData.state = seasonEpisode ?? epName
+        presenceData.state = overview ?? (seasonEpisode ?? epName)
       }
 
       const episodeImdb = getImdbButton(mediaInfo)
