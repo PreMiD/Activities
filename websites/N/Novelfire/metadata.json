@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "757946349642711080",
@@ -15,7 +15,7 @@
     "www.novelfire.net"
   ],
   "regExp": "^https?[:][/][/](www[.])?novelfire[.]net[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Novelfire/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Novelfire/assets/thumbnail.jpg",
   "color": "#000000",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "MoeKotoki",
@@ -13,7 +13,7 @@
   },
   "url": "kawata.pw",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kawata[.]pw[/]",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20kawata/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/osu%20kawata/assets/thumbnail.png",
   "color": "#6EFBFE",

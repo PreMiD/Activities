@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Striker",
@@ -35,7 +35,7 @@
     "www.hulu.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?hulu[.]com[/]",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Hulu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Hulu/assets/thumbnail.jpg",
   "color": "#66AA33",

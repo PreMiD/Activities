@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "656514596303142934",
@@ -11,7 +11,7 @@
   },
   "url": "gg.deals",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gg[.]deals[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/gg.deals/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/gg.deals/assets/thumbnail.png",
   "color": "#000000",

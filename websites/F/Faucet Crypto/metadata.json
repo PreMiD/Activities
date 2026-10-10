@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "134710228242530305",
@@ -15,7 +15,7 @@
     "knowledge-base.faucetcrypto.com"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*faucetcrypto[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Faucet%20Crypto/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Faucet%20Crypto/assets/thumbnail.jpg",
   "color": "#50a2ff",
