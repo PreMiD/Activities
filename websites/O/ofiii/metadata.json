@@ -1,0 +1,69 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "410036441129943050",
+    "name": "seria_ati"
+  },
+  "service": "ofiii",
+  "description": {
+    "en": "ofiii is a free Taiwanese streaming service by LiTV, offering licensed dramas, movies, anime, variety shows, kids content and live TV channels.",
+    "zh-tw": "ofiii 歐飛是 LiTV 推出的免費正版影音平台，提供戲劇、電影、動漫、綜藝、兒童節目及電視頻道直播。"
+  },
+  "url": "www.ofiii.com",
+  "regExp": "^https?[:][/][/](www[.])?ofiii[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/dKBCFwR.png",
+  "thumbnail": "https://i.imgur.com/DJSnrYd.png",
+  "color": "#FF066B",
+  "category": "videos",
+  "tags": [
+    "video",
+    "anime",
+    "drama",
+    "movie",
+    "litv",
+    "taiwan"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true
+    },
+    {
+      "id": "hidePaused",
+      "title": "Hide Paused",
+      "icon": "fad fa-pause-circle",
+      "value": false
+    },
+    {
+      "id": "browsing",
+      "title": "Show Browsing",
+      "icon": "fad fa-compass",
+      "value": true
+    },
+    {
+      "id": "displayType",
+      "title": "Pick Status Display",
+      "icon": "fad fa-user-edit",
+      "value": 1,
+      "values": [
+        "ofiii",
+        "Show/Channel Name",
+        "Episode/Program Name"
+      ]
+    }
+  ]
+}
