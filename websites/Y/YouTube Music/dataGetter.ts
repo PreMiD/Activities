@@ -17,6 +17,7 @@ export interface MediaDataGetter {
   getCurrentAndTotalTime: () => [string, string] | null
   hasValidPlaybackState: () => boolean
   isPlaying: () => boolean
+  isAdPlaying: () => boolean
 }
 
 export class YouTubeMusicDataGetter implements MediaDataGetter {
