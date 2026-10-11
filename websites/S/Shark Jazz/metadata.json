@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1115382284426686517",
+    "name": "wdd3"
+  },
+  "service": "Shark Jazz",
+  "description": {
+    "ar": "شارك جاز متجر إلكتروني للألعاب والإلكترونيات والإكسسوارات ومستلزمات الكمبيوتر.",
+    "en": "Shark Jazz is an online store for gaming gear, electronics, accessories, and PC products."
+  },
+  "url": "sharkjazz.com",
+  "regExp": "^https?://([a-z0-9-]+\\.)*sharkjazz\\.com/",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/ZIxVopt.png",
+  "thumbnail": "https://i.imgur.com/ZIxVopt.png",
+  "color": "#000000",
+  "category": "other",
+  "tags": [
+    "shopping",
+    "ecommerce",
+    "electronics",
+    "gaming",
+    "store"
+  ]
+}
