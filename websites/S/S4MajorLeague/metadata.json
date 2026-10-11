@@ -11,7 +11,7 @@
     "pt": "Mostre sua atividade no S4 Major League no Xero."
   },
   "url": "s4ml.club",
-  "regExp": "https?://(www\\.)?s4ml\\.club",
+  "regExp": "https?[:][/][/](www[.])?s4ml[.]club[/]",
   "version": "1.0.0",
   "logo": "https://s4ml.club/favicon.png",
   "thumbnail": "https://s4ml.club/favicon.png",
