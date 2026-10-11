@@ -1,10 +1,10 @@
 import {
   ActivityType,
   getTimestampsFromMedia,
-} from "premid"
+} from 'premid'
 
 const presence = new Presence({
-  clientId: "503557087041683458",
+  clientId: '503557087041683458',
 })
 
 // --------------------------------------------------
@@ -33,8 +33,8 @@ function getContentKey() {
     return `tv:${tvMatch[1]}`
   }
 
-  if (location.pathname === "/") {
-    return "home"
+  if (location.pathname === '/') {
+    return 'home'
   }
 
   return location.pathname
@@ -46,7 +46,7 @@ function cleanTitle(title?: string | null) {
   }
 
   const cleaned = title
-    .replace(/\s*\|\s*Movy\s*$/i, "")
+    .replace(/\s*\|\s*Movy\s*$/i, '')
     .trim()
 
   if (isGenericMovyTitle(cleaned)) {
@@ -62,12 +62,12 @@ function isGenericMovyTitle(title?: string | null) {
   }
 
   const cleaned = title
-    .replace(/\s*\|\s*Movy\s*$/i, "")
+    .replace(/\s*\|\s*Movy\s*$/i, '')
     .trim()
 
   return (
-    cleaned.toLowerCase() === "movy" ||
-    /^Movy\s*-\s*Watch Free Movies\s*&\s*TV Shows Online$/i
+    cleaned.toLowerCase() === 'movy'
+    || /^Movy\s*-\s*Watch Free Movies\s*&\s*TV Shows Online$/i
       .test(cleaned)
   )
 }
@@ -84,12 +84,12 @@ function truncate(text: string, maxLength = 120) {
 // Presence update
 // --------------------------------------------------
 
-presence.on("UpdateData", async () => {
+presence.on('UpdateData', async () => {
   const currentPath = location.pathname
 
-  const isHome = currentPath === "/"
-  const isMovie = currentPath.startsWith("/movie/")
-  const isTV = currentPath.startsWith("/tv/")
+  const isHome = currentPath === '/'
+  const isMovie = currentPath.startsWith('/movie/')
+  const isTV = currentPath.startsWith('/tv/')
 
   // --------------------------------------------------
   // Detect actual content changes
@@ -120,14 +120,14 @@ presence.on("UpdateData", async () => {
   const ogTitle = cleanTitle(
     document
       .querySelector('meta[property="og:title"]')
-      ?.getAttribute("content")
+      ?.getAttribute('content'),
   )
 
   if (!isHome) {
-    if (ogTitle && documentTitle && ogTitle === documentTitle) {
+    if (ogTitle) {
       cachedTitle = ogTitle
     }
-    else if (documentTitle && !ogTitle) {
+    else if (documentTitle) {
       cachedTitle = documentTitle
     }
   }
@@ -138,13 +138,12 @@ presence.on("UpdateData", async () => {
 
   const currentPoster = document
     .querySelector('meta[property="og:image"]')
-    ?.getAttribute("content")
+    ?.getAttribute('content')
     ?.trim()
 
   if (
-    !isHome &&
-    currentPoster &&
-    /^https?:\/\//i.test(currentPoster)
+    currentPoster
+    && /^https?:\/\//i.test(currentPoster)
   ) {
     cachedPoster = currentPoster
   }
@@ -153,8 +152,8 @@ presence.on("UpdateData", async () => {
   // Visible page text
   // --------------------------------------------------
 
-  const lines = document.body.innerText
-    .split("\n")
+  const lines = (document.body.textContent ?? '')
+    .split('\n')
     .map(line => line.trim())
     .filter(Boolean)
 
@@ -168,11 +167,11 @@ presence.on("UpdateData", async () => {
   if (isMovie) {
     const year = lines
       .flatMap(line =>
-        line.split(/\s*[·•]\s*/)
+        line.split(/\s*[·•]\s*/),
       )
       .map(part => part.trim())
       .find(part =>
-        /^(19|20)\d{2}$/.test(part)
+        /^(?:19|20)\d{2}$/.test(part),
       )
 
     if (year) {
@@ -188,40 +187,40 @@ presence.on("UpdateData", async () => {
   // because Movy also has trailer/background videos.
   // --------------------------------------------------
 
-  const video =
-    document.querySelector<HTMLVideoElement>(
-      "#vp-shell video"
+  const video
+    = document.querySelector<HTMLVideoElement>(
+      '#vp-shell video',
     )
 
   // Player states
 
-  const videoReady =
-    !!video &&
-    video.readyState >= HTMLMediaElement.HAVE_METADATA &&
-    Number.isFinite(video.duration) &&
-    video.duration > 0
+  const videoReady
+    = !!video
+      && video.readyState >= HTMLMediaElement.HAVE_METADATA
+      && Number.isFinite(video.duration)
+      && video.duration > 0
 
-  const hasStarted =
-    !!video &&
-    video.currentTime > 0
+  const hasStarted
+    = !!video
+      && video.currentTime > 0
 
-  const isPlaying =
-    !!video &&
-    videoReady &&
-    !video.paused &&
-    !video.ended
+  const isPlaying
+    = !!video
+      && videoReady
+      && !video.paused
+      && !video.ended
 
-  const isPaused =
-    !!video &&
-    videoReady &&
-    video.paused &&
-    !video.ended &&
-    hasStarted
+  const isPaused
+    = !!video
+      && videoReady
+      && video.paused
+      && !video.ended
+      && hasStarted
 
-  const isEnded =
-    !!video &&
-    videoReady &&
-    video.ended
+  const isEnded
+    = !!video
+      && videoReady
+      && video.ended
 
   // --------------------------------------------------
   // TV episode
@@ -236,23 +235,21 @@ presence.on("UpdateData", async () => {
 
   if (isTV) {
     const episodeLine = lines.find(line =>
-      /^S\d+\s+E\d+\s+/i.test(line)
+      /^S\d+\s+E\d+\s+/i.test(line),
     )
 
     if (episodeLine) {
-      const match = episodeLine.match(
-        /^S(\d+)\s+E(\d+)\s+(.+?)(?:\s*·\s*.+)?$/i
-      )
+      const match = episodeLine.match(/^S(\d+)\s+E(\d+)\s+/i)
+      const rawEpisodeTitle = match
+        ? episodeLine.slice(match[0].length).split('·')[0]?.trim()
+        : undefined
 
       if (match) {
         season = Number(match[1])
         episode = Number(match[2])
 
-        if (match[3]) {
-          episodeTitle = truncate(
-            match[3].trim(),
-            90
-          )
+        if (rawEpisodeTitle) {
+          episodeTitle = truncate(rawEpisodeTitle, 90)
         }
       }
     }
@@ -262,25 +259,25 @@ presence.on("UpdateData", async () => {
   // Display title
   // --------------------------------------------------
 
-  let displayTitle = "Movy"
+  let displayTitle = 'Movy'
 
   if (
-    isMovie &&
-    cachedTitle
+    isMovie
+    && cachedTitle
   ) {
     displayTitle = cachedMovieYear
       ? `${cachedTitle} (${cachedMovieYear})`
       : cachedTitle
   }
   else if (
-    isTV &&
-    cachedTitle
+    isTV
+    && cachedTitle
   ) {
     displayTitle = cachedTitle
   }
   else if (
-    !isHome &&
-    cachedTitle
+    !isHome
+    && cachedTitle
   ) {
     displayTitle = cachedTitle
   }
@@ -292,7 +289,7 @@ presence.on("UpdateData", async () => {
   // ever reaching Discord.
 
   if (isGenericMovyTitle(displayTitle)) {
-    displayTitle = "Movy"
+    displayTitle = 'Movy'
   }
 
   displayTitle = truncate(displayTitle)
@@ -310,26 +307,26 @@ presence.on("UpdateData", async () => {
   // Poster
   // --------------------------------------------------
 
-  presenceData.largeImageKey =
-    !isHome && cachedPoster
-      ? cachedPoster
-      : "https://i.imgur.com/JTtBezM.png"
+  if (cachedPoster) {
+    presenceData.largeImageKey
+      = cachedPoster
+  }
 
   // --------------------------------------------------
   // Large image hover text
   // --------------------------------------------------
 
   if (
-    isTV &&
-    season !== undefined &&
-    episode !== undefined
+    isTV
+    && season !== undefined
+    && episode !== undefined
   ) {
-    presenceData.largeImageText =
-      `Season ${season}, Episode ${episode}`
+    presenceData.largeImageText
+      = `Season ${season}, Episode ${episode}`
   }
   else {
-    presenceData.largeImageText =
-      displayTitle
+    presenceData.largeImageText
+      = displayTitle
   }
 
   // --------------------------------------------------
@@ -340,7 +337,7 @@ presence.on("UpdateData", async () => {
   // --------------------------------------------------
 
   if (isHome) {
-    presenceData.state = "Browsing"
+    presenceData.state = 'Browsing'
   }
 
   // --------------------------------------------------
@@ -352,16 +349,16 @@ presence.on("UpdateData", async () => {
 
   else if (isMovie) {
     if (isEnded) {
-      presenceData.state = "Finished watching"
+      presenceData.state = 'Finished watching'
     }
     else if (isPaused) {
-      presenceData.state = "Paused"
+      presenceData.state = 'Paused'
     }
     else if (isPlaying) {
-      presenceData.state = "Watching"
+      presenceData.state = 'Watching'
     }
     else {
-      presenceData.state = "Browsing"
+      presenceData.state = 'Browsing'
     }
   }
 
@@ -373,39 +370,39 @@ presence.on("UpdateData", async () => {
   // --------------------------------------------------
 
   else if (
-    isTV &&
-    season !== undefined &&
-    episode !== undefined
+    isTV
+    && season !== undefined
+    && episode !== undefined
   ) {
-    const episodePrefix =
-      `S${season} E${episode}`
+    const episodePrefix
+      = `S${season} E${episode}`
 
     if (isEnded) {
-      presenceData.state =
-        `${episodePrefix} • Finished`
+      presenceData.state
+        = `${episodePrefix} • Finished`
     }
     else if (isPaused) {
       presenceData.state = episodeTitle
         ? truncate(
-            `${episodePrefix} • ${episodeTitle} • Paused`
+            `${episodePrefix} • ${episodeTitle} • Paused`,
           )
         : `${episodePrefix} • Paused`
     }
     else if (episodeTitle) {
-      presenceData.state =
-        truncate(
-          `${episodePrefix} • ${episodeTitle}`
+      presenceData.state
+        = truncate(
+          `${episodePrefix} • ${episodeTitle}`,
         )
     }
     else {
-      presenceData.state =
-        episodePrefix
+      presenceData.state
+        = episodePrefix
     }
   }
 
   // TV page before an episode is playing
   else if (isTV) {
-    presenceData.state = "Browsing"
+    presenceData.state = 'Browsing'
   }
 
   // --------------------------------------------------
@@ -413,7 +410,7 @@ presence.on("UpdateData", async () => {
   // --------------------------------------------------
 
   else {
-    presenceData.state = "Browsing"
+    presenceData.state = 'Browsing'
   }
 
   // --------------------------------------------------
@@ -423,22 +420,22 @@ presence.on("UpdateData", async () => {
   // --------------------------------------------------
 
   if (
-    video &&
-    isPlaying &&
-    Number.isFinite(video.currentTime) &&
-    Number.isFinite(video.duration) &&
-    video.duration > 0
+    video
+    && isPlaying
+    && Number.isFinite(video.currentTime)
+    && Number.isFinite(video.duration)
+    && video.duration > 0
   ) {
     const [
       startTimestamp,
       endTimestamp,
     ] = getTimestampsFromMedia(video)
 
-    presenceData.startTimestamp =
-      startTimestamp
+    presenceData.startTimestamp
+      = startTimestamp
 
-    presenceData.endTimestamp =
-      endTimestamp
+    presenceData.endTimestamp
+      = endTimestamp
   }
 
   // --------------------------------------------------
