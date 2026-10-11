@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.0",
+  "author": {
+    "name": "S4 Major League",
+    "id": "155779975455191184"
+  },
+  "service": "S4 Master League",
+  "description": {
+    "en": "Displays your competitive presence on S4 Master League on Xero.",
+    "es": "Muestra tu presencia competitiva en S4 Master League en Xero.",
+    "pt_BR": "Exibe sua presença competitiva no S4 Master League no Xero."
+  },
+  "url": "s4ml.club",
+  "regExp": "https?[:][/][/](www[.])?s4ml[.]club[/]",
+  "version": "1.0.0",
+  "logo": "https://www.s4ml.club/favicon.png",
+  "thumbnail": "https://www.s4ml.club/banner.webp",
+  "color": "#F71B38",
+  "category": "games",
+  "tags": [
+    "esports",
+    "s4league",
+    "gaming",
+    "xero"
+  ]
+}
