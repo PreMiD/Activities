@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "name": "V1kmanch1k",
+    "id": "481498655023693841"
+  },
+  "service": "YoHo",
+  "description": {
+    "en": "Shows the movie or series currently being watched on YoHo.",
+    "ru": "Показывает фильм или сериал, который сейчас смотрят на YoHo."
+  },
+  "url": "reyoho.ru",
+  "regExp": "^https?[:][/][/](www[.])?reyoho[.]ru[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/dyqDcS4.png",
+  "thumbnail": "https://i.imgur.com/uQniuyI.png",
+  "color": "#26333E",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "series",
+    "streaming",
+    "russian"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?[:][/][/](?:api[.]nextembed[.]ws|kodik[.](?:info|cc|biz|online)|kodikplayer[.]com|[a-z0-9-]+[.]stravers[.]live|[a-z0-9-]+[.]obrut[.]show|(?:[a-z0-9-]+[.])?cdnvideohub[.]com|vkuker[.]net|player[.]aksor[.]tv|(?:[a-z0-9-]+[.])?alloha[^/]*|(?:[a-z0-9-]+[.])?vibix[^/]*)[/]",
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Показывать кнопку просмотра",
+      "icon": "fas fa-mouse-pointer",
+      "value": true
+    },
+    {
+      "id": "showPoster",
+      "title": "Показывать постер",
+      "icon": "fas fa-image",
+      "value": true
+    }
+  ]
+}
