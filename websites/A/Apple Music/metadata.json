@@ -60,7 +60,8 @@
       "values": [
         "Activity Name",
         "Artist Name",
-        "Song Title"
+        "Song Title",
+        "Album Name"
       ]
     },
     {
