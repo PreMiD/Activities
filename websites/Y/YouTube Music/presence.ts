@@ -4,41 +4,20 @@ import { ActivityAssets } from './constants.js'
 import { YouTubeMusicDataGetter } from './dataGetter.js'
 import { stringMap } from './i18n.js'
 import { createListeningPresence } from './listeningPresence.js'
-import { createMediaIdentifier, getSettings, updateSongTimestamps } from './utils.js'
+import { getSettings } from './utils.js'
 
 const presence = new Presence({
   clientId: '463151177836658699',
 })
 
 class PresenceState {
-  prevTitleAuthor = ''
-  mediaTimestamps: [number, number] = [0, 0]
   oldPath = ''
   startTimestamp = 0
-  videoListenerAttached = false
+  listeningStartTimestamp = 0
   dataGetter = new YouTubeMusicDataGetter()
 }
 
 const state = new PresenceState()
-
-function attachVideoListeners(videoElement: HTMLMediaElement) {
-  if (state.videoListenerAttached)
-    return
-
-  const updateTimestamps = () => {
-    state.mediaTimestamps = updateSongTimestamps(state.dataGetter)
-  }
-
-  videoElement.addEventListener('seeked', updateTimestamps)
-  videoElement.addEventListener('play', updateTimestamps)
-
-  state.videoListenerAttached = true
-}
-
-function detachVideoListeners() {
-  state.prevTitleAuthor = ''
-  state.videoListenerAttached = false
-}
 
 presence.on('UpdateData', async () => {
   const { pathname, search, href } = document.location
@@ -48,14 +27,6 @@ presence.on('UpdateData', async () => {
   const mediaData = state.dataGetter.getMediaData()
   const watchID = state.dataGetter.getWatchId()
   const repeatMode = state.dataGetter.getRepeatMode()
-  const videoElement = state.dataGetter.getVideoElement()
-
-  if (videoElement && !settings.privacyMode) {
-    attachVideoListeners(videoElement)
-  }
-  else {
-    detachVideoListeners()
-  }
 
   if (settings.hidePaused && mediaData.playbackState !== 'playing') {
     return presence.clearActivity()
@@ -72,29 +43,12 @@ presence.on('UpdateData', async () => {
       })
     }
 
-    if (!mediaData.title || Number.isNaN(videoElement?.duration ?? Number.NaN)) {
+    if (!mediaData.title) {
       return
     }
 
-    const currentTimeText = document
-      .querySelector<HTMLSpanElement>('#left-controls > span')
-      ?.textContent
-      ?.trim()
-
-    const currentMediaIdentifier = createMediaIdentifier(
-      mediaData.title,
-      mediaData.artist,
-      currentTimeText,
-    )
-
-    if (state.prevTitleAuthor !== currentMediaIdentifier) {
-      state.mediaTimestamps = updateSongTimestamps(state.dataGetter)
-
-      if (state.mediaTimestamps[0] === state.mediaTimestamps[1]) {
-        return
-      }
-
-      state.prevTitleAuthor = currentMediaIdentifier
+    if (!state.listeningStartTimestamp) {
+      state.listeningStartTimestamp = Math.floor(Date.now() / 1000)
     }
 
     presenceData = createListeningPresence(
@@ -103,17 +57,22 @@ presence.on('UpdateData', async () => {
       settings,
       watchID,
       repeatMode,
-      state.mediaTimestamps,
+      state.listeningStartTimestamp,
       strings,
     )
   }
   else if (settings.showBrowsing) {
+    state.listeningStartTimestamp = 0
+
     if (state.oldPath !== pathname) {
       state.oldPath = pathname
       state.startTimestamp = Math.floor(Date.now() / 1000)
     }
 
     presenceData = createBrowsingPresence(pathname, search, href, state.startTimestamp, strings, settings.privacyMode)
+  }
+  else {
+    state.listeningStartTimestamp = 0
   }
 
   presence.setActivity(presenceData)
