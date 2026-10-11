@@ -1,26 +1,22 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "$schema": "https://schemas.premid.app/metadata/1.0",
   "apiVersion": 1,
   "author": {
     "name": "S4 Major League",
     "id": "155779975455191184"
   },
-  "service": "S4 Major League",
+  "service": "S4 Master League",
   "description": {
-    "en": "Show your activity while playing S4 Major League on Xero.",
-    "pt": "Mostre sua atividade no S4 Major League no Xero."
+    "en": "Competitive master league for S4 Xero: territory domination, live rankings and tournaments.",
+    "es": "Liga master competitiva de S4 Xero: dominación territorial, ranking en vivo y torneos.",
+    "pt-br": "Liga master competitiva do S4 Xero: guerra de territórios, ranking ao vivo e torneios."
   },
   "url": "s4ml.club",
   "regExp": "https?[:][/][/](www[.])?s4ml[.]club[/]",
   "version": "1.0.0",
-  "logo": "https://s4ml.club/favicon.png",
-  "thumbnail": "https://s4ml.club/favicon.png",
-  "color": "#dc2626",
-  "category": "games",
-  "tags": [
-    "esports",
-    "s4league",
-    "gaming",
-    "xero"
-  ]
+  "logo": "https://www.s4ml.club/favicon.png",
+  "thumbnail": "https://www.s4ml.club/banner.webp",
+  "color": "#F71B38",
+  "tags": ["games", "esports", "competitive", "shooter", "master-league"],
+  "category": "games"
 }
