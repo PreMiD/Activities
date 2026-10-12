@@ -5,13 +5,19 @@
     "id": "1385401164509745217",
     "name": "raionthego"
   },
+  "contributors": [
+    {
+      "id": "1326604090855264309",
+      "name": "slaayd"
+    }
+  ],
   "service": "SLAAYD WIDGETS",
   "description": {
     "en": "The best streaming widgets for your stream."
   },
   "url": "slaayd.xyz",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*slaayd[.]xyz[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SLAAYD%20WIDGETS/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SLAAYD%20WIDGETS/assets/thumbnail.png",
   "color": "#8A2BE2",
