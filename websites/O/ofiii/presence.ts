@@ -50,10 +50,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<number>('displayType'),
   ])
 
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
+  strings = await getStrings()
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
