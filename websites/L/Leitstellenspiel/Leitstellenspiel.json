@@ -1,0 +1,90 @@
+{
+  "leitstellenspiel.dispatch": {
+    "description": "Shown on the main page (dispatch center)",
+    "message": "At the dispatch center"
+  },
+  "leitstellenspiel.mission": {
+    "description": "Shown while a mission window is open",
+    "message": "Handling a mission"
+  },
+  "leitstellenspiel.building": {
+    "description": "Shown while a station page is open",
+    "message": "Managing a station"
+  },
+  "leitstellenspiel.vehicle": {
+    "description": "Shown while a vehicle page is open",
+    "message": "Viewing a vehicle"
+  },
+  "leitstellenspiel.build": {
+    "description": "Shown while building a new station",
+    "message": "Building a new station"
+  },
+  "leitstellenspiel.alliance": {
+    "description": "Shown on alliance pages",
+    "message": "In the alliance"
+  },
+  "leitstellenspiel.allianceForum": {
+    "description": "Shown in the alliance forum",
+    "message": "Reading the alliance forum"
+  },
+  "leitstellenspiel.allianceChat": {
+    "description": "Shown in alliance messages",
+    "message": "Reading alliance messages"
+  },
+  "leitstellenspiel.schooling": {
+    "description": "Shown on the training (schooling) pages",
+    "message": "Training personnel"
+  },
+  "leitstellenspiel.missions": {
+    "description": "Shown on the list of possible missions",
+    "message": "Browsing possible missions"
+  },
+  "leitstellenspiel.toplist": {
+    "description": "Shown on the leaderboard",
+    "message": "Viewing the leaderboard"
+  },
+  "leitstellenspiel.overview": {
+    "description": "Shown in the dispatch center overview",
+    "message": "Dispatch center overview"
+  },
+  "leitstellenspiel.profile": {
+    "description": "Shown on a player profile",
+    "message": "Viewing a profile"
+  },
+  "leitstellenspiel.credits": {
+    "description": "Shown on the credits/finance pages",
+    "message": "Checking finances"
+  },
+  "leitstellenspiel.coins": {
+    "description": "Shown in the coins shop",
+    "message": "In the coins shop"
+  },
+  "leitstellenspiel.messages": {
+    "description": "Shown in private messages",
+    "message": "Reading messages"
+  },
+  "leitstellenspiel.tasks": {
+    "description": "Shown on the tasks page",
+    "message": "Doing tasks"
+  },
+  "leitstellenspiel.aao": {
+    "description": "Shown while editing the dispatch rules (AAO)",
+    "message": "Editing dispatch rules"
+  },
+  "leitstellenspiel.settings": {
+    "description": "Shown in the game settings",
+    "message": "In the settings"
+  },
+  "leitstellenspiel.openMissions": {
+    "description": "Number of open missions, e.g. '30 open missions'",
+    "message": "{0} open missions"
+  },
+  "leitstellenspiel.credit": {
+    "description": "Amount of credits, e.g. '3,608,721 credits'",
+    "message": "{0} credits"
+  },
+  "leitstellenspiel.browsing": {
+    "description": "Fallback when no specific page is detected",
+    "message": "Playing Leitstellenspiel"
+  }
+}

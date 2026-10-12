@@ -7,30 +7,41 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 const LOGO = 'https://lss.trophynetwork.de/premid/leitstellenspiel-logo.png'
 
-const de = !navigator.language.toLowerCase().startsWith('en')
-const t = {
-  dispatch: de ? 'In der Leitstelle' : 'At the dispatch center',
-  mission: de ? 'Bearbeitet einen Einsatz' : 'Handling a mission',
-  building: de ? 'Verwaltet eine Wache' : 'Managing a station',
-  vehicle: de ? 'Schaut sich ein Fahrzeug an' : 'Viewing a vehicle',
-  build: de ? 'Baut eine neue Wache' : 'Building a new station',
-  alliance: de ? 'Im Verband' : 'In the alliance',
-  allianceForum: de ? 'Liest im Verbandsforum' : 'Reading the alliance forum',
-  allianceChat: de ? 'Verbands-Nachrichten' : 'Alliance messages',
-  schooling: de ? 'Bildet Personal aus' : 'Training personnel',
-  missions: de ? 'Stöbert in möglichen Einsätzen' : 'Browsing possible missions',
-  toplist: de ? 'Schaut in die Rangliste' : 'Viewing the leaderboard',
-  overview: de ? 'Leitstellenansicht' : 'Dispatch center overview',
-  profile: de ? 'Schaut sich ein Profil an' : 'Viewing a profile',
-  credits: de ? 'Prüft die Finanzen' : 'Checking finances',
-  coins: de ? 'Im Coins-Shop' : 'In the coins shop',
-  messages: de ? 'Liest Nachrichten' : 'Reading messages',
-  tasks: de ? 'Erledigt Aufgaben' : 'Doing tasks',
-  aao: de ? 'Bearbeitet die Alarm- und Ausrückeordnung' : 'Editing dispatch rules',
-  settings: de ? 'In den Einstellungen' : 'In the settings',
-  browsing: de ? 'Spielt Leitstellenspiel' : 'Playing Leitstellenspiel',
-  openMissions: de ? 'Einsätze offen' : 'open missions',
-  credit: 'Credits',
+type Strings = Record<
+  | 'dispatch' | 'mission' | 'building' | 'vehicle' | 'build' | 'alliance' | 'allianceForum' | 'allianceChat'
+  | 'schooling' | 'missions' | 'toplist' | 'overview' | 'profile' | 'credits' | 'coins' | 'messages' | 'tasks'
+  | 'aao' | 'settings' | 'browsing' | 'openMissions' | 'credit',
+  string
+>
+
+let strings: Strings | null = null
+let oldLang: string | null = null
+
+async function getStrings(): Promise<Strings> {
+  return presence.getStrings({
+    dispatch: 'leitstellenspiel.dispatch',
+    mission: 'leitstellenspiel.mission',
+    building: 'leitstellenspiel.building',
+    vehicle: 'leitstellenspiel.vehicle',
+    build: 'leitstellenspiel.build',
+    alliance: 'leitstellenspiel.alliance',
+    allianceForum: 'leitstellenspiel.allianceForum',
+    allianceChat: 'leitstellenspiel.allianceChat',
+    schooling: 'leitstellenspiel.schooling',
+    missions: 'leitstellenspiel.missions',
+    toplist: 'leitstellenspiel.toplist',
+    overview: 'leitstellenspiel.overview',
+    profile: 'leitstellenspiel.profile',
+    credits: 'leitstellenspiel.credits',
+    coins: 'leitstellenspiel.coins',
+    messages: 'leitstellenspiel.messages',
+    tasks: 'leitstellenspiel.tasks',
+    aao: 'leitstellenspiel.aao',
+    settings: 'leitstellenspiel.settings',
+    browsing: 'leitstellenspiel.browsing',
+    openMissions: 'leitstellenspiel.openMissions',
+    credit: 'leitstellenspiel.credit',
+  }) as Promise<Strings>
 }
 
 function text(sel: string, root: Document = document): string {
@@ -53,13 +64,20 @@ function activeDocument(): { doc: Document, path: string } {
 }
 
 presence.on('UpdateData', async () => {
-  const [showMission, showAddress, showNames, showStats, showTimestamp] = await Promise.all([
+  const [lang, showMission, showAddress, showNames, showStats, showTimestamp] = await Promise.all([
+    presence.getSetting<string>('lang').catch(() => 'en'),
     presence.getSetting<boolean>('showMission'),
     presence.getSetting<boolean>('showAddress'),
     presence.getSetting<boolean>('showNames'),
     presence.getSetting<boolean>('showStats'),
     presence.getSetting<boolean>('showTimestamp'),
   ])
+
+  if (!strings || oldLang !== lang) {
+    oldLang = lang
+    strings = await getStrings()
+  }
+  const t = strings
 
   const presenceData: PresenceData = {
     name: 'Leitstellenspiel',
@@ -76,9 +94,9 @@ presence.on('UpdateData', async () => {
     const credits = text('.credits-value')
     const parts: string[] = []
     if (document.querySelector('#mission_list'))
-      parts.push(`${open} ${t.openMissions}`)
+      parts.push(t.openMissions.replace('{0}', `${open}`))
     if (credits)
-      parts.push(`${credits} ${t.credit}`)
+      parts.push(t.credit.replace('{0}', credits))
     return parts.join(' · ') || undefined
   }
 
