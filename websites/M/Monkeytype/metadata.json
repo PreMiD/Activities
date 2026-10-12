@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Miodec",
@@ -21,7 +21,7 @@
     "monkeytype.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?monkeytype[.]com[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Monkeytype/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Monkeytype/assets/thumbnail.png",
   "color": "#383200",

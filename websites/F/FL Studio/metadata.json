@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Inkflow",
@@ -37,7 +37,7 @@
     "image-line.com"
   ],
   "regExp": "^https?[:][/][/](www[.])?image-line[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FL%20Studio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FL%20Studio/assets/thumbnail.png",
   "color": "#FF8C00",

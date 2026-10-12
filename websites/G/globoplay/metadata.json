@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "fror",
@@ -23,7 +23,7 @@
   },
   "url": "globoplay.globo.com",
   "regExp": "^https?[:][/][/]globoplay[.]globo[.]com[/]",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/globoplay/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/globoplay/assets/thumbnail.png",
   "color": "#ED1A37",

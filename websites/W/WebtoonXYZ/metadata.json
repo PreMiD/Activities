@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Harold",
@@ -12,7 +12,7 @@
   },
   "url": "www.webtoon.xyz",
   "regExp": "^https?[:][/][/](www[.])?webtoon[.]xyz[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WebtoonXYZ/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WebtoonXYZ/assets/thumbnail.png",
   "color": "#eb2e73",

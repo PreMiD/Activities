@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Flashlight",
@@ -12,7 +12,7 @@
   },
   "url": "japari-library.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*japari-library[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Japari%20Library/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Japari%20Library/assets/thumbnail.png",
   "color": "#4CC5FF",

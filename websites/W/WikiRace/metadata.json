@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "671037171611729920",
@@ -12,7 +12,7 @@
   },
   "url": "wiki-race.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wiki-race[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/WikiRace/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/WikiRace/assets/thumbnail.png",
   "color": "#3732AB",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "GURRMAN375D",
@@ -13,7 +13,7 @@
   },
   "url": "gitlab.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gitlab[.]com[/]",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/GitLab/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/GitLab/assets/thumbnail.png",
   "color": "#ff4400",

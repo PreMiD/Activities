@@ -9,12 +9,9 @@
   "description": {
     "en": "fridge.dev is a personal hobby website that hosts a blog, feed, personal projects, tools, and more."
   },
-  "url": [
-    "fridge.dev",
-    "m.fridge.dev"
-  ],
+  "url": "fridge.dev",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*fridge[.]dev[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/fridge.dev/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/fridge.dev/assets/thumbnail.jpg",
   "color": "#6caaa7",

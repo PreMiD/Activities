@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -14,7 +14,7 @@
   },
   "url": "burningseries.ac",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*burningseries([.][a-z]+)+[/]",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/B/bs.to/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/bs.to/assets/thumbnail.jpg",
   "color": "#ffffff",

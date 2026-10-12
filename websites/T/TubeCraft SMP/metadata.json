@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "1407468650499145782",
@@ -11,7 +11,7 @@
   },
   "url": "tubecraftsmp.com",
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*tubecraftsmp[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TubeCraft%20SMP/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TubeCraft%20SMP/assets/thumbnail.png",
   "color": "#5BC66B",

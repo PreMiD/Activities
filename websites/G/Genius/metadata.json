@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -13,7 +13,7 @@
   },
   "url": "genius.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*genius[.]com[/]",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Genius/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Genius/assets/thumbnail.png",
   "color": "#FFFF64",

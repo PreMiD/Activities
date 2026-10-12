@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "MauriceX",
@@ -14,7 +14,7 @@
   },
   "url": "www.wish.com",
   "regExp": "^https?[:][/][/](www[.])?wish[.]com[/]",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Wish/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Wish/assets/thumbnail.png",
   "color": "#48c0eb",

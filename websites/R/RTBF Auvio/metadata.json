@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "87107972676751360",
@@ -18,7 +18,7 @@
   },
   "url": "auvio.rtbf.be",
   "regExp": "^https?[:][/][/]auvio[.]rtbf[.]be[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/RTBF%20Auvio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/RTBF%20Auvio/assets/thumbnail.png",
   "color": "#cba10a",

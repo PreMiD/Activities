@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "543323460194271262",
@@ -15,7 +15,7 @@
     "play.waipu.tv"
   ],
   "regExp": "^https?[:][/][/](play[.])?waipu[.]tv[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/W/Waipu.tv/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/W/Waipu.tv/assets/thumbnail.png",
   "color": "#009652",

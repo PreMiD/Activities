@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Jake.",
@@ -12,7 +12,7 @@
   },
   "url": "www.dafont.com",
   "regExp": "^https?[:][/][/](www[.])?dafont[.]com[/]",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DaFont/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DaFont/assets/thumbnail.jpg",
   "color": "#eb4034",

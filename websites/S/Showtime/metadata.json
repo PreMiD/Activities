@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "PreMiD",
@@ -22,7 +22,7 @@
     "www.showtime.com"
   ],
   "regExp": "^https?[:][/][/]((www)[.]skyshowtime[.]com|(www)[.]sho[.]com|(www)[.]showtime[.]com)[/]",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Showtime/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Showtime/assets/thumbnail.png",
   "color": "#B20000",
