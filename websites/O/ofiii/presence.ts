@@ -36,13 +36,9 @@ function getThumbnailImage() {
   return poster ? new URL(poster).searchParams.get('src') : null
 }
 
-let oldLang: string | null = null
-let strings: Awaited<ReturnType<typeof getStrings>>
-
 presence.on('UpdateData', async () => {
   const { pathname, href } = document.location
-  const [newLang, buttons, cover, hidePaused, browsing, displayType] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
+  const [buttons, cover, hidePaused, browsing, displayType] = await Promise.all([
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<boolean>('hidePaused'),
@@ -50,7 +46,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<number>('displayType'),
   ])
 
-  strings = await getStrings()
+  const strings = await getStrings()
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
