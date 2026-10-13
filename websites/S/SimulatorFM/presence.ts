@@ -17,8 +17,8 @@ presence.on('UpdateData', async () => {
     const songArtist = songInfo?.[1]?.textContent?.trim()
     const djName = player?.querySelector<HTMLElement>('.player-avatar')?.getAttribute('alt')?.trim()
     presenceData.startTimestamp = browsingTimestamp
-    presenceData.details = `Listening to ${songName || 'Unknown Song'} by ${songArtist || 'Unknown Artist'}`
-    presenceData.state = `Presented by ${djName || 'SimulatorFM'}`
+    presenceData.details = `Listening to ${songName} by ${songArtist}`
+    presenceData.state = `Presented by ${djName}`
     presence.setActivity(presenceData)
   }
   else {
