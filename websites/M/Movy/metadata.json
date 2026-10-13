@@ -10,7 +10,7 @@
     "en": "Watch movies and TV shows on Movy."
   },
   "url": "movy.sx",
-  "regExp": "^https?://(www\\.)?movy\\.sx/",
+  "regExp": "^https?:[/][/](www[.])?movy[.]sx[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/JTtBezM.png",
   "thumbnail": "https://i.imgur.com/tyabHzo.png",
