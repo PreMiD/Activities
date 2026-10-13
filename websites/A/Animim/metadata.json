@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "516981681039605780",
+    "name": "semihnoir"
+  },
+  "service": "Animim",
+  "description": {
+    "en": "An ad-free anime-watching website with a user-friendly interface, Turkish subtitles, detailed anime information, and the latest episodes.",
+    "tr": "Kullanıcı dostu arayüzü, Türkçe altyazıları, detaylı anime bilgileri ve en yeni bölümleriyle reklamsız anime izleme sitesi."
+  },
+  "url": "animim.app",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(animim[.]app)[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/ACYIVVs.png",
+  "thumbnail": "https://i.imgur.com/U98Bn49.png",
+  "color": "#e53935",
+  "category": "anime",
+  "tags": ["anime", "movie", "series"]
+}
