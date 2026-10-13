@@ -7,8 +7,8 @@
   },
   "service": "YoHo",
   "description": {
-    "en": "Shows the movie or series currently being watched on YoHo.",
-    "ru": "Показывает фильм или сериал, который сейчас смотрят на YoHo."
+    "en": "YoHo is a free online cinema for watching movies, TV series, cartoons, anime, and doramas in HD 1080 quality without registration.",
+    "ru": "YoHo — бесплатный онлайн-кинотеатр: фильмы, сериалы, мультфильмы, аниме и дорамы онлайн в хорошем качестве HD 1080, без регистрации."
   },
   "url": "reyoho.ru",
   "regExp": "^https?[:][/][/](www[.])?reyoho[.]ru[/]",
