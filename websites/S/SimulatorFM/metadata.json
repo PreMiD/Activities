@@ -5,10 +5,17 @@
     "name": "DubStepMad",
     "id": "118810952530395136"
   },
+  "contributors": [
+    {
+      "name": "InfoBlock",
+      "id": "124220790001500161"
+    }
+  ],
   "service": "SimulatorFM",
   "description": {
     "en": "Simulator FM, a new but popular radio station for Euro Truck Simulator and American Truck Simulator.",
-    "nl": "Simulator FM, een nieuw maar populair radiostation voor Euro Truck Simulator en American Truck Simulator."
+    "nl": "Simulator FM, een nieuw maar populair radiostation voor Euro Truck Simulator en American Truck Simulator.",
+    "de": "Simulator FM, ein neuer, aber beliebter Radiosender für Euro Truck Simulator und American Truck Simulator."
   },
   "url": [
     "simulator.fm",
