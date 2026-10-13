@@ -75,10 +75,34 @@ async function getChannel(username: string): Promise<VeloraUser | null> {
   return data
 }
 
-// WebRTC playback uses a MediaStream via srcObject; LL-HLS uses a regular
-// src/currentSrc URL. Reading the existing player's element on the tick
-// PreMiD already runs is enough - no need to patch fetch/RTCPeerConnection.
-function detectStreamFormat(): 'webrtc' | 'll-hls' | undefined {
+const STREAM_FORMAT_LABELS = {
+  'veloq-adaptive': 'VELoQ Adaptive',
+  'veloq-native': 'VELoQ Native',
+  'webrtc': 'Ultra Low Latency (WebRTC)',
+  'll-hls': 'Low Latency (LL-HLS)',
+} as const
+
+type StreamFormat = keyof typeof STREAM_FORMAT_LABELS
+
+// The player's "Playback stats" panel names the protocol in use. Without it,
+// fall back to the video element: WebRTC playback uses a MediaStream via
+// srcObject, LL-HLS a regular src/currentSrc URL.
+function detectStreamFormat(): StreamFormat | undefined {
+  const playbackStats = document.querySelector('[aria-label="Playback stats"]')
+  const playbackLabel = [
+    playbackStats?.textContent,
+    playbackStats?.querySelector('[title]')?.getAttribute('title'),
+  ].filter(Boolean).join(' ').toLowerCase()
+
+  if (playbackLabel.includes('webrtc'))
+    return 'webrtc'
+  if (playbackLabel.includes('ll-hls') || playbackLabel.includes('low latency hls'))
+    return 'll-hls'
+  if (playbackLabel.includes('veloq adaptive') && !playbackLabel.includes('available'))
+    return 'veloq-adaptive'
+  if (playbackLabel.includes('veloq native') && !playbackLabel.includes('available'))
+    return 'veloq-native'
+
   const video = document.querySelector('video')
   if (!video)
     return undefined
@@ -196,11 +220,7 @@ async function updateActivity(): Promise<void> {
     if (showSmallImage) {
       const format = detectStreamFormat()
       presenceData.smallImageKey = Assets.Live
-      presenceData.smallImageText = format === 'webrtc'
-        ? 'Ultra Low Latency (WebRTC)'
-        : format === 'll-hls'
-          ? 'Low Latency (LL-HLS)'
-          : 'Live'
+      presenceData.smallImageText = format ? STREAM_FORMAT_LABELS[format] : 'Live'
     }
 
     if (showTimestamps && !hide)
