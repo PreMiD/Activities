@@ -17,6 +17,7 @@ export interface MediaDataGetter {
   getCurrentAndTotalTime: () => [string, string] | null
   hasValidPlaybackState: () => boolean
   isPlaying: () => boolean
+  isAdPlaying: () => boolean
 }
 
 function getTextContent(selector: string): string | undefined {
@@ -203,5 +204,13 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
 
   isPlaying(): boolean {
     return this.getMediaData().playbackState === 'playing'
+  }
+
+  isAdPlaying(): boolean {
+    return Boolean(
+      document.querySelector(
+        '.html5-video-player.ad-showing, .html5-video-player.ad-interrupting, .ytp-ad-player-overlay, .ytp-ad-text',
+      ),
+    )
   }
 }

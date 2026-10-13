@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "723471302123323434",
@@ -12,7 +12,7 @@
   },
   "url": "sushiscan.net",
   "regExp": "^https?[:][/][/]sushiscan[.]net[/]",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sushi%20Scan/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sushi%20Scan/assets/thumbnail.png",
   "color": "#f27b6e",

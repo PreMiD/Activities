@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "RisingSunLight",
@@ -20,7 +20,7 @@
   },
   "url": "vrv.co",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*vrv[.]co[/]",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VRV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VRV/assets/thumbnail.png",
   "color": "#fdde0a",

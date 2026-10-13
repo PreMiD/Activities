@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Connor!",
@@ -13,7 +13,7 @@
   },
   "url": "zerotwo.bot",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*zerotwo[.]bot[/]",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZeroTwo/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZeroTwo/assets/thumbnail.png",
   "color": "#ff40ff",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "212701689579438080",
@@ -16,7 +16,7 @@
     "www.odeoncinemas.ie"
   ],
   "regExp": "^https?[:][/][/]((www[.]odeon|odeon)[.]co[.]uk|(www[.])?odeoncinemas[.]ie)[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/ODEON/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/ODEON/assets/thumbnail.jpeg",
   "color": "#123263",

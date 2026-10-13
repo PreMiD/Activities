@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Callum",
@@ -13,7 +13,7 @@
   },
   "url": "glitch.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*glitch([.][a-z]+)+[/]",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Glitch/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Glitch/assets/thumbnail.png",
   "color": "#f003fc",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -19,7 +19,7 @@
   },
   "url": "www.pinterest.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*pinterest([.][a-z]+)+[/]",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pinterest/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pinterest/assets/thumbnail.jpg",
   "color": "#cc2127",

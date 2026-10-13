@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Striker",
@@ -19,7 +19,7 @@
   },
   "url": "www.pandora.com",
   "regExp": "^https?[:][/][/](www[.])?pandora[.]com[/]",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Pandora/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Pandora/assets/thumbnail.png",
   "color": "#224099",

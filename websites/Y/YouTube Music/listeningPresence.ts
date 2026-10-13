@@ -10,6 +10,7 @@ export function createListeningPresence(
   settings: Settings,
   watchID: string | undefined,
   repeatMode: string | null,
+  mediaTimestamps: [number, number],
   listeningStartTimestamp: number,
   strings: Strings,
 ): PresenceData {
@@ -18,6 +19,7 @@ export function createListeningPresence(
     showTimestamps,
     showCover,
     displayType,
+    timestampType,
   } = settings
 
   const albumArtistBtnLink = dataGetter.getAlbumArtistLink()
@@ -90,8 +92,12 @@ export function createListeningPresence(
     presenceData.smallImageText = strings.playing
   }
 
-  if (showTimestamps) {
+  if (showTimestamps && timestampType === 1) {
     presenceData.startTimestamp = listeningStartTimestamp
+  }
+  else if (showTimestamps && mediaData.playbackState === 'playing') {
+    presenceData.startTimestamp = mediaTimestamps[0]
+    presenceData.endTimestamp = mediaTimestamps[1]
   }
 
   return presenceData

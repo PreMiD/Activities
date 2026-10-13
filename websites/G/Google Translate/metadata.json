@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -28,7 +28,7 @@
   },
   "url": "translate.google.com",
   "regExp": "^https?[:][/][/]translate[.]google([.][a-z]+)+[/]",
-  "version": "3.1.2",
+  "version": "3.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Translate/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Google%20Translate/assets/thumbnail.png",
   "color": "#4c8bf5",

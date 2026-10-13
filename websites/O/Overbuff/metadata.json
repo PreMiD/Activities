@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Dekirai",
@@ -12,7 +12,7 @@
   },
   "url": "www.overbuff.com",
   "regExp": "^https?[:][/][/](www[.])?overbuff[.]com[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Overbuff/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Overbuff/assets/thumbnail.png",
   "color": "#FF8D00",
