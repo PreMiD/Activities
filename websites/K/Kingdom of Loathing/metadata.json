@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "gausie",
@@ -16,7 +16,7 @@
   },
   "url": "kingdomofloathing.com",
   "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*kingdomofloathing[.]com|(127[.]0[.]0[.]1|localhost)[:]6008[0-9])[/]",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kingdom%20of%20Loathing/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kingdom%20of%20Loathing/assets/thumbnail.png",
   "color": "#0000ff",

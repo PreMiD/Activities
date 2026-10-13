@@ -8,11 +8,8 @@ enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/T/TCGmini/assets/logo.png',
 }
 
-// TCGmini is a single-page app: the router changes `document.location.pathname`
-// without a full page reload. Only Spanish (/es/...) uses its own, translated
-// slugs (tablero/cartas/mazos/perfil); every other locale — English (unprefixed)
-// and the ja/it/fr/pt/ko translations — reuses the English slugs (board/cards/
-// decks/profile). "jp" and "kr" are not real locale prefixes on this site.
+// Only Spanish (/es/) uses its own translated slugs (tablero/cartas/mazos/perfil);
+// other locales reuse the English ones.
 const LOCALE_PREFIX = /^\/(?:es|ja|it|fr|pt|ko)(?=\/|$)/
 const SECTION_ALIASES: Record<string, string> = {
   tablero: 'board',
@@ -20,9 +17,29 @@ const SECTION_ALIASES: Record<string, string> = {
   mazos: 'decks',
 }
 
-// Reset the "elapsed time" counter whenever the visitor moves to a different section.
+interface FormatStrings {
+  formatStandard: string
+  formatAdvanced: string
+  formatSandbox: string
+  formatDraft: string
+  simulator: string
+}
+
+function getFormatLabel(strings: FormatStrings, rawFormat: string | null): string {
+  const FORMAT_LABELS: Record<string, string> = {
+    estandar: strings.formatStandard,
+    advanced: strings.formatAdvanced,
+    libre: strings.formatSandbox,
+    draft: strings.formatDraft,
+  }
+  return (rawFormat && FORMAT_LABELS[rawFormat]) || strings.simulator
+}
+
 let sectionTimestamp = Math.floor(Date.now() / 1000)
 let lastSection: string | null = null
+
+let searchTimestamp = Math.floor(Date.now() / 1000)
+let isSearching = false
 
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
@@ -38,6 +55,8 @@ presence.on('UpdateData', async () => {
     formatStandard: 'tcgmini.formatStandard',
     formatAdvanced: 'tcgmini.formatAdvanced',
     formatSandbox: 'tcgmini.formatSandbox',
+    formatDraft: 'tcgmini.formatDraft',
+    searchingMatch: 'tcgmini.searchingMatch',
     winning: 'tcgmini.winning',
     losing: 'tcgmini.losing',
     tied: 'tcgmini.tied',
@@ -49,6 +68,26 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
   }
+
+  const searchingEl = document.querySelector<HTMLElement>('.pvp-searching-wrap, #dr-online-search')
+  if (searchingEl?.offsetParent) {
+    if (!isSearching) {
+      searchTimestamp = Math.floor(Date.now() / 1000)
+      isSearching = true
+    }
+
+    const rawFormat = localStorage.getItem('pocketboard_play_mode_v1')
+
+    presenceData.details = strings.searchingMatch
+    presenceData.state = getFormatLabel(strings, rawFormat)
+    presenceData.smallImageKey = Assets.Search
+    presenceData.smallImageText = strings.searchingMatch
+    presenceData.startTimestamp = searchTimestamp
+
+    presence.setActivity(presenceData)
+    return
+  }
+  isSearching = false
 
   const path = document.location.pathname.replace(LOCALE_PREFIX, '') || '/'
   const rawSection = path.split('/')[1] || 'home'
@@ -65,24 +104,11 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'board': {
-      // Playing/simulating a match on the board.
-      // Format: stored in localStorage, confirmed by testing all 3 reachable
-      // modes live. "draft" is intentionally left unmapped — its real value
-      // couldn't be confirmed (Draft needs 2 real players to test).
-      const FORMAT_LABELS: Record<string, string> = {
-        estandar: strings.formatStandard,
-        advanced: strings.formatAdvanced,
-        libre: strings.formatSandbox,
-      }
       const rawFormat = localStorage.getItem('pocketboard_play_mode_v1')
-      const formatLabel = (rawFormat && FORMAT_LABELS[rawFormat]) || strings.simulator
+      const formatLabel = getFormatLabel(strings, rawFormat)
 
-      // End-of-match result screen. `.pvp-fin` is only present in the DOM
-      // while that overlay is showing (it's removed on "Play again"/"Leave"),
-      // so this naturally reverts to the live in-match state below once it's
-      // gone. Read directly from the DOM (shared with the page, unlike
-      // `window` globals) — `.pvp-fin-score` always lists the local player's
-      // score first, same "me first" convention confirmed elsewhere.
+      // `.pvp-fin` is only in the DOM while the end-of-match overlay shows;
+      // `.pvp-fin-score` lists the local player's score first.
       const finEl = document.querySelector('.pvp-fin')
       if (finEl) {
         const [finMine = 0, finTheirs = 0] = (finEl.querySelector('.pvp-fin-score')?.textContent ?? '')
@@ -98,12 +124,8 @@ presence.on('UpdateData', async () => {
         break
       }
 
-      // Score: `_pbScores` is TCGmini's own live score object, read from the
-      // page's realm via getPageVariable (presence.ts runs in an isolated JS
-      // context, so `window._pbScores` here would always be undefined).
-      // Confirmed directly in the site's source (see `_pvpZoneSync` /
-      // `_pvpStartMatch` comments): in a match the local player is ALWAYS p1,
-      // the opponent is ALWAYS p2, regardless of host/guest role.
+      // presence.ts runs in an isolated JS context, so `_pbScores` must be
+      // read via getPageVariable; the local player is always p1.
       const { _pbScores } = await presence.getPageVariable<{ _pbScores?: { p1: number, p2: number } }>('_pbScores')
       const mine = _pbScores?.p1 ?? 0
       const theirs = _pbScores?.p2 ?? 0
@@ -117,8 +139,6 @@ presence.on('UpdateData', async () => {
       break
     }
     case 'cards': {
-      // Card search/database. `#search-input` is a stable id, unlike the
-      // placeholder text which is translated per locale.
       const query = document.querySelector<HTMLInputElement>('#search-input')?.value
 
       presenceData.details = strings.searchingCards

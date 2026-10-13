@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "1495950265998905409",
@@ -19,7 +19,7 @@
     "it.findagrave.com"
   ],
   "regExp": "^https?:[/][/]([a-z0-9-]+[.])*findagrave[.]com[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/Find%20A%20Grave/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/Find%20A%20Grave/assets/thumbnail.png",
   "color": "#4a7c59",

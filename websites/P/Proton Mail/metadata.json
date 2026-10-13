@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "ShadowIsHere",
@@ -11,7 +11,7 @@
   },
   "url": "mail.proton.me",
   "regExp": "^https?[:][/][/]mail[.]proton[.]me[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/Proton%20Mail/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/Proton%20Mail/assets/thumbnail.png",
   "color": "#42B883",

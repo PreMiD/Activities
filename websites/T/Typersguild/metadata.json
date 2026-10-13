@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "620949166604156955",
@@ -11,7 +11,7 @@
   },
   "url": "typersguild.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*typersguild[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Typersguild/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Typersguild/assets/thumbnail.webp",
   "color": "#6366f1",

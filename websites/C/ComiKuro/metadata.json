@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "ceco",
@@ -11,7 +11,7 @@
   },
   "url": "comikuro.to",
   "regExp": "^https?[:][/][/]comikuro[.]to[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/C/ComiKuro/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/ComiKuro/assets/thumbnail.png",
   "color": "#0b0b0f",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "503557087041683458",
@@ -12,7 +12,7 @@
   },
   "url": "anime-odcinki.pl",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*anime-odcinki[.]pl[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anime-Odcinki/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anime-Odcinki/assets/thumbnail.png",
   "color": "#9b51e0",

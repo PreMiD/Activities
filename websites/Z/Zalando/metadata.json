@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -14,7 +14,7 @@
   },
   "url": "www.zalando.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*zalando([.][a-z]+)+[/]",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/Zalando/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/Zalando/assets/thumbnail.png",
   "color": "#f47127",

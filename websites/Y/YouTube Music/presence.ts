@@ -76,6 +76,14 @@ presence.on('UpdateData', async () => {
       return
     }
 
+    if (state.dataGetter.isAdPlaying()) {
+      return presence.setActivity({
+        type: ActivityType.Listening,
+        largeImageKey: ActivityAssets.Logo,
+        details: strings.listeningToSong,
+      })
+    }
+
     const currentTimeText = document
       .querySelector<HTMLSpanElement>('#left-controls > span')
       ?.textContent

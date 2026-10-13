@@ -2,7 +2,7 @@ const iframe = new iFrame()
 
 iframe.on('UpdateData', async () => {
   const video = document.querySelector<HTMLVideoElement>('#p_v_player_0')
-  const audio = document.querySelector<HTMLAudioElement>('#p_a_player_0')
+  const audio = document.querySelector<HTMLAudioElement>('#p_a_player_0, audio')
 
   if (video && !Number.isNaN(video.duration)) {
     iframe.send({

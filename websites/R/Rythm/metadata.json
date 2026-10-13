@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "407882734837563392",
@@ -21,12 +21,15 @@
   },
   "url": "rythm.fm",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*rythm[.]fm[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/logo.gif",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Rythm/assets/thumbnail.png",
   "color": "#147AFE",
   "category": "music",
-  "tags": ["music", "media"],
+  "tags": [
+    "music",
+    "media"
+  ],
   "settings": [
     {
       "id": "lang",
@@ -73,7 +76,11 @@
       "if": {
         "privacy": false
       },
-      "values": ["Song Title", "Artist Name", "Activity Name"]
+      "values": [
+        "Song Title",
+        "Artist Name",
+        "Activity Name"
+      ]
     },
     {
       "id": "largeImage",

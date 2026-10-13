@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "496673945211240462",
@@ -16,7 +16,7 @@
     "ptero.heo-systems.net"
   ],
   "regExp": "^https?[:][/][/](www|clients|ptero)[.]heo-systems[.]net[/]",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HEO%20Systems/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HEO%20Systems/assets/thumbnail.png",
   "color": "#1F51FF",

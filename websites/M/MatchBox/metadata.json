@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "596877893137596416",
@@ -15,7 +15,7 @@
     "www.smashpros.gg"
   ],
   "regExp": "^https?[:][/][/](thematchbox[.]gg|(www[.])?smashpros[.]gg)[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MatchBox/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MatchBox/assets/thumbnail.png",
   "color": "#52ff87",
