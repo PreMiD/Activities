@@ -75,7 +75,7 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageText = jsonData.smallImageText
 
       // Suppress buttons on the main homepage
-      if (jsonData.buttons && currentPage !== 'https://animim.app/' && currentPage !== 'https://animim.app') {
+      if (jsonData.buttons && new URL(currentPage).pathname !== '/') {
         presenceData.buttons = jsonData.buttons
       }
     }
