@@ -113,7 +113,7 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
     if (/^https?:\/\/[^/]*ytimg\.com\//.test(cleaned))
       cleaned = cleaned.split('?')[0] ?? cleaned
     else if (/googleusercontent\.com|ggpht\.com/.test(cleaned))
-      cleaned = cleaned.replace(/=w\d+-h\d+[^/?]*$/, '=w544-h544-l90-rj')
+      cleaned = cleaned.replace(/=w\d+-h\d[^/?]*$/, '=w544-h544-l90-rj')
 
     return cleaned.length > 250 ? undefined : cleaned
   }
