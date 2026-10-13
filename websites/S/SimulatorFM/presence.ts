@@ -12,17 +12,13 @@ presence.on('UpdateData', async () => {
 
   if (document.querySelector<HTMLElement>('.fa-pause')) {
     const player = document.querySelector<HTMLAudioElement>('.player-contain')
-    
     const songInfo = player?.querySelectorAll<HTMLElement>('.song-info h2')
     const songName = songInfo?.[0]?.textContent?.trim()
     const songArtist = songInfo?.[1]?.textContent?.trim()
-
     const djName = player?.querySelector<HTMLElement>('.player-avatar')?.getAttribute('alt')?.trim()
-
     presenceData.startTimestamp = browsingTimestamp
     presenceData.details = `Listening to ${songName || 'Unknown Song'} by ${songArtist || 'Unknown Artist'}`
     presenceData.state = `Presented by ${djName || 'SimulatorFM'}`
-
     presence.setActivity(presenceData)
   }
   else {
