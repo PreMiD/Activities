@@ -47,10 +47,6 @@
     "description": "Shown in the dispatch center overview",
     "message": "Dispatch center overview"
   },
-  "leitstellenspiel.profile": {
-    "description": "Shown on a player profile",
-    "message": "Viewing a profile"
-  },
   "leitstellenspiel.credits": {
     "description": "Shown on the credits/finance pages",
     "message": "Checking finances"
@@ -79,12 +75,12 @@
     "description": "Number of open missions, e.g. '30 open missions'",
     "message": "{0} open missions"
   },
+  "leitstellenspiel.allianceMissions": {
+    "description": "Number of open alliance missions, e.g. '12 alliance missions'",
+    "message": "{0} alliance missions"
+  },
   "leitstellenspiel.credit": {
     "description": "Amount of credits, e.g. '3,608,721 credits'",
     "message": "{0} credits"
-  },
-  "leitstellenspiel.browsing": {
-    "description": "Fallback when no specific page is detected",
-    "message": "Playing Leitstellenspiel"
   }
 }

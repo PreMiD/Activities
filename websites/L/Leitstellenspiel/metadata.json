@@ -34,10 +34,19 @@
       "multiLanguage": true
     },
     {
+      "id": "privacy",
+      "title": "Privacy mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
       "id": "showMission",
       "title": "Show mission names",
       "icon": "fas fa-fire",
-      "value": true
+      "value": true,
+      "if": {
+        "privacy": false
+      }
     },
     {
       "id": "showAddress",
@@ -52,19 +61,54 @@
       "id": "showNames",
       "title": "Show station and vehicle names",
       "icon": "fas fa-building",
-      "value": true
+      "value": true,
+      "if": {
+        "privacy": false
+      }
     },
     {
       "id": "showStats",
       "title": "Show open missions and credits",
       "icon": "fas fa-coins",
-      "value": true
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showButtons",
+      "title": "Show buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
     },
     {
       "id": "showTimestamp",
       "title": "Show elapsed time",
       "icon": "fas fa-clock",
       "value": true
+    },
+    {
+      "id": "showSlideshow",
+      "title": "Rotate stats on the dispatch center",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": {
+        "showStats": true
+      }
+    },
+    {
+      "id": "statusDisplay",
+      "title": "Member list shows",
+      "icon": "fas fa-user-tag",
+      "value": 0,
+      "values": [
+        "Game name",
+        "Activity (first line)",
+        "Info (second line)"
+      ]
     }
   ]
 }
