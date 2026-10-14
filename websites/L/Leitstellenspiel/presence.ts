@@ -1,4 +1,5 @@
 import { ActivityType, Assets, StatusDisplayType } from 'premid'
+import source from './Leitstellenspiel.json' with { type: 'json' }
 
 const presence = new Presence({
   clientId: '1524027844320301286',
@@ -20,36 +21,55 @@ type Strings = Record<
 let strings: Strings | null = null
 let oldLang: string | null = null
 
+const STRING_KEYS = {
+  dispatch: 'leitstellenspiel.dispatch',
+  mission: 'leitstellenspiel.mission',
+  building: 'leitstellenspiel.building',
+  vehicle: 'leitstellenspiel.vehicle',
+  build: 'leitstellenspiel.build',
+  alliance: 'leitstellenspiel.alliance',
+  allianceForum: 'leitstellenspiel.allianceForum',
+  allianceChat: 'leitstellenspiel.allianceChat',
+  schooling: 'leitstellenspiel.schooling',
+  missions: 'leitstellenspiel.missions',
+  toplist: 'leitstellenspiel.toplist',
+  overview: 'leitstellenspiel.overview',
+  credits: 'leitstellenspiel.credits',
+  coins: 'leitstellenspiel.coins',
+  messages: 'leitstellenspiel.messages',
+  tasks: 'leitstellenspiel.tasks',
+  aao: 'leitstellenspiel.aao',
+  settings: 'leitstellenspiel.settings',
+  openMissions: 'leitstellenspiel.openMissions',
+  allianceMissions: 'leitstellenspiel.allianceMissions',
+  credit: 'leitstellenspiel.credit',
+  browsing: 'general.browsing',
+  viewProfile: 'general.viewAProfile',
+  buttonViewGame: 'general.buttonViewGame',
+  buttonViewProfile: 'general.buttonViewProfile',
+  readingThread: 'general.readingAThread',
+  readingDm: 'general.readingADM',
+} as const
+
+const FALLBACK: Record<string, string> = {
+  'general.browsing': 'Browsing...',
+  'general.viewAProfile': 'Viewing a profile',
+  'general.buttonViewGame': 'View Game',
+  'general.buttonViewProfile': 'View Profile',
+  'general.readingAThread': 'Reading a thread',
+  'general.readingADM': 'Reading a DM',
+}
+for (const [key, value] of Object.entries(source as Record<string, { message: string }>))
+  FALLBACK[key] = value.message
+
+/** Translations that are not available yet in the selected language fall back to the English source. */
 async function getStrings(): Promise<Strings> {
-  return presence.getStrings({
-    dispatch: 'leitstellenspiel.dispatch',
-    mission: 'leitstellenspiel.mission',
-    building: 'leitstellenspiel.building',
-    vehicle: 'leitstellenspiel.vehicle',
-    build: 'leitstellenspiel.build',
-    alliance: 'leitstellenspiel.alliance',
-    allianceForum: 'leitstellenspiel.allianceForum',
-    allianceChat: 'leitstellenspiel.allianceChat',
-    schooling: 'leitstellenspiel.schooling',
-    missions: 'leitstellenspiel.missions',
-    toplist: 'leitstellenspiel.toplist',
-    overview: 'leitstellenspiel.overview',
-    credits: 'leitstellenspiel.credits',
-    coins: 'leitstellenspiel.coins',
-    messages: 'leitstellenspiel.messages',
-    tasks: 'leitstellenspiel.tasks',
-    aao: 'leitstellenspiel.aao',
-    settings: 'leitstellenspiel.settings',
-    openMissions: 'leitstellenspiel.openMissions',
-    allianceMissions: 'leitstellenspiel.allianceMissions',
-    credit: 'leitstellenspiel.credit',
-    browsing: 'general.browsing',
-    viewProfile: 'general.viewAProfile',
-    buttonViewGame: 'general.buttonViewGame',
-    buttonViewProfile: 'general.buttonViewProfile',
-    readingThread: 'general.readingAThread',
-    readingDm: 'general.readingADM',
-  }) as Promise<Strings>
+  const keys = STRING_KEYS
+  const translated = await presence.getStrings(keys).catch(() => ({} as Record<string, string | undefined>)) as Record<string, string | undefined>
+  const out = {} as Strings
+  for (const [name, key] of Object.entries(keys) as [keyof Strings, string][])
+    out[name] = translated[name] || FALLBACK[key] || key
+  return out
 }
 
 function text(sel: string, root: Document = document): string {
