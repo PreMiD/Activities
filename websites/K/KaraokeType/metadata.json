@@ -8,17 +8,17 @@
   "service": "KaraokeType",
   "altnames": ["Karaoke Type", "KaraokeType"],
   "description": {
-    "en": "Type along to song lyrics. Show your current song, accuracy and online room on Discord.",
-    "th": "เกมพิมพ์ตามเนื้อเพลง แสดงเพลงที่กำลังเล่น ความแม่นยำ และห้องออนไลน์บน Discord"
+    "en": "Type along to song lyrics. Show your current song, accuracy, 60s Speed Test, global rankings and online room on Discord.",
+    "th": "เกมพิมพ์ตามเนื้อเพลง แสดงเพลงที่กำลังเล่น ความแม่นยำ โหมด Speed Test 60 วินาที อันดับโลก และห้องออนไลน์บน Discord"
   },
   "url": "karaoketype.com",
   "regExp": "^https?[:][/][/](www[.])?karaoketype[.]com[/]",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "logo": "https://i.postimg.cc/3JGYtxg1/karaoketype.jpg",
   "thumbnail": "https://i.postimg.cc/3JGYtxg1/karaoketype.jpg",
   "color": "#1DB954",
   "category": "games",
-  "tags": ["karaoke", "typing", "game", "music", "multiplayer"],
+  "tags": ["karaoke", "typing", "game", "music", "multiplayer", "speedtest", "rankings"],
   "settings": [
     {
       "id": "privacy",
