@@ -41,7 +41,7 @@ function readBridge(): Bridge {
 /** Strip emoji (design rule: no emoji anywhere) and clamp to Discord limits. */
 function clean(text: string | undefined, fallback = ''): string {
   const out = (text ?? '')
-    .replace(/[\p{Extended_Pictographic}️‍]/gu, '')
+    .replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu, '')
     .replace(/\s+/g, ' ')
     .trim()
     .slice(0, 100)
@@ -77,6 +77,20 @@ function profileViewModalName(): string | null {
     return null
   const name = modal.querySelector('#pv-body .pv-name-row span')?.textContent
   return clean(name) || null
+}
+
+/** Username from /u/{username}, or null when the path is not a profile page. */
+function profileNameFromPath(): string | null {
+  const parts = location.pathname.split('/').filter(Boolean)
+  if (parts.length !== 2 || parts[0] !== 'u')
+    return null
+  const raw = parts[1] ?? ''
+  try {
+    return clean(decodeURIComponent(raw)) || null
+  }
+  catch {
+    return clean(raw) || null
+  }
 }
 
 function isOwn(name: string, me?: string): boolean {
@@ -154,8 +168,7 @@ function buildSolo(b: Bridge): PresenceData {
   }
 
   // 3) Profiles
-  const pm = location.pathname.match(/^\/u\/([^/]+)\/?$/)
-  const viewed = pm ? clean(decodeURIComponent(pm[1])) : profileViewModalName()
+  const viewed = profileNameFromPath() ?? profileViewModalName()
   if (viewed) {
     return isOwn(viewed, b.me)
       ? { details: 'Checking Profile & Badges', state: 'Main Menu', startTimestamp: pageLoadedAt }
