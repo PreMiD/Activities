@@ -52,7 +52,10 @@ function readBridge(): Bridge {
 /** Strip emoji (design rule: no emoji anywhere) and clamp to Discord limits. */
 function clean(text: string | undefined, fallback = ''): string {
   const out = (text ?? '')
-    .replace(/[\p{Extended_Pictographic}️‍]/gu, '')
+    // Emoji / pictographic symbols
+    .replace(/\p{Extended_Pictographic}/gu, '')
+    // Invisible joiners: variation selector-16 and zero-width joiner (escaped, not raw)
+    .replace(/\uFE0F|\u200D/g, '')
     .replace(/\s+/g, ' ')
     .trim()
     .slice(0, 100)
