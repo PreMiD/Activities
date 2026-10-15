@@ -278,7 +278,6 @@ export async function getWikiData(privacy: boolean, showButtons: boolean, logo: 
   else if (isHome) {
     data.details = 'Exploring'
     data.state = 'MCC Island Wiki'
-    publicPage = true
   }
   else {
     const namespace = title.includes(':') ? title.split(':')[0]!.toLowerCase() : ''
@@ -309,14 +308,14 @@ export async function getWikiData(privacy: boolean, showButtons: boolean, logo: 
       data.smallImageText = data.state ?? 'MCC Island Wiki'
     }
   }
-  if (showButtons && !privacy && publicPage) {
-    const target = new URL(isHome ? '/' : url.href, url.href)
+  if (showButtons && !privacy && publicPage && !isHome) {
+    const target = new URL(url.href)
     // No editing parameters, user inputs, revision tokens, or personal fragments are shared.
     target.search = ''
     target.hash = ''
-    if (!isHome && url.pathname === '/index.php')
+    if (url.pathname === '/index.php')
       target.searchParams.set('title', title)
-    data.buttons = [{ label: isHome ? 'Open MCCI Wiki' : 'Open Wiki Page', url: target.href }]
+    data.buttons = [{ label: 'Open Wiki Page', url: target.href }]
   }
   return data
 }

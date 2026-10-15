@@ -1,6 +1,6 @@
 import { ActivityType } from 'premid'
 import { AccountIcons } from './account-icons.js'
-import { ActivityAssets } from './image-assets.js'
+import { ActivityAssets, StaticImageUrls } from './image-assets.js'
 import { getMccLiveData, mccLiveSelection } from './mcc-live.js'
 import { applyWikiImageFallback, getWikiData, wikiCanPublish, wikiSelection } from './mcc-wiki.js'
 
@@ -72,7 +72,9 @@ async function getForumInfo(path: string): Promise<{ icon?: string, name?: strin
   return source ? findForumInfo(source, node, category) : undefined
 }
 
-function resolveImage(image: string | Blob): Promise<Blob | undefined> {
+function resolveImage(image: string | Blob): Promise<string | Blob | undefined> {
+  if (typeof image === 'string' && StaticImageUrls.has(image))
+    return Promise.resolve(image)
   if (image instanceof Blob)
     return Promise.resolve(image)
   if (!image)
@@ -100,7 +102,7 @@ function resolveImage(image: string | Blob): Promise<Blob | undefined> {
 
 const islandNodes = new Set([65, 73, 76, 77, 78, 79, 80, 81, 82, 94, 99, 128, 133, 137, 141])
 const eventNodes = new Set([72, 83, 84, 85, 86])
-const accountPages: Record<string, { details: string, changing?: boolean, icon?: Blob, tooltip?: string }> = {
+const accountPages: Record<string, { details: string, changing?: boolean, icon?: string | Blob, tooltip?: string }> = {
   '/account': { details: 'Changing account settings', changing: true, icon: AccountIcons.Account, tooltip: 'Account settings' },
   '/account/account-details': { details: 'Changing account settings', changing: true, icon: AccountIcons.Account, tooltip: 'Account settings' },
   '/account/reactions': { details: 'Looking at reactions', icon: AccountIcons.Reactions, tooltip: 'Reactions' },
@@ -356,8 +358,6 @@ presence.on('UpdateData', async () => {
     return
 
   const sequence = ++updateSequence
-  if (document.readyState === 'loading')
-    return
 
   const pageUrl = document.location.href
   const [
@@ -407,9 +407,6 @@ presence.on('UpdateData', async () => {
       Object.assign(presenceData, getMccLiveData(privacy))
       presenceData.largeImageKey = ActivityAssets.MccRed
       presenceData.largeImageText = 'Minecraft Championship'
-      if (showButtons && !privacy) {
-        presenceData.buttons = [{ label: 'Open MCC Live', url: 'https://mcc.live/' }]
-      }
       break
     }
     case isBugReportPage(path): {
