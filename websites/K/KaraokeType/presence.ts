@@ -2,7 +2,7 @@ const presence = new Presence({
   clientId: '1560173357952012288',
 })
 
-const LOGO = 'https://i.postimg.cc/X7sp0JZ3/karaoketype.jpg'
+const LOGO = 'https://i.postimg.cc/3JGYtxg1/karaoketype.jpg'
 const pageLoadedAt = Math.floor(Date.now() / 1000)
 
 /**
