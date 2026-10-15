@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "name": "JaeSwift",
+    "id": "1373707963759464458"
+  },
+  "service": "Venice AI",
+  "altnames": [
+    "Venice",
+    "venice.ai"
+  ],
+  "description": {
+    "en": "Venice.ai is a private, uncensored AI platform for chat, image, video and code generation. Show what you're doing on Venice in your Discord status."
+  },
+  "url": "venice.ai",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/yQDd2VZ.png",
+  "thumbnail": "https://i.imgur.com/PAixsDl.png",
+  "color": "#0a121a",
+  "category": "other",
+  "tags": [
+    "ai",
+    "chat",
+    "image-generation",
+    "llm",
+    "private"
+  ],
+  "regExp": "venice\\.ai"
+}
