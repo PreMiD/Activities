@@ -11,11 +11,11 @@
     "Dropsiders Radio"
   ],
   "description": {
-    "en": "Displays what music, radio shows, and festival news you are listening to and reading on Dropsiders.",
-    "fr": "Affiche les musiques, émissions radio et actus festivals que vous écoutez et lisez sur Dropsiders."
+    "en": "Displays what music, Dropsiders TV livesets, radio shows, and festival news you are enjoying on Dropsiders.",
+    "fr": "Affiche les musiques, les livesets Dropsiders TV, la radio et les actus festivals que vous suivez sur Dropsiders."
   },
   "url": "dropsiders.fr",
-  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*(dropsiders[.]fr)|localhost(:[0-9]+)?)[/]",
+  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*(dropsiders[.]fr)|localhost(:[0-9]+)?|127[.]0[.]0[.]1(:[0-9]+)?)([/]|$)",
   "version": "1.0.0",
   "logo": "https://raw.githubusercontent.com/Itsalexfr1/sitedropsiders/main/public/premid_logo.png",
   "thumbnail": "https://raw.githubusercontent.com/Itsalexfr1/sitedropsiders/main/public/premid_logo.png",
@@ -30,6 +30,12 @@
     "news"
   ],
   "settings": [
+    {
+      "id": "showTV",
+      "title": "Afficher Dropsiders TV (Direct & Livesets)",
+      "icon": "fas fa-tv",
+      "value": true
+    },
     {
       "id": "showRadio",
       "title": "Afficher la Radio / Morceau en cours",
