@@ -75,19 +75,19 @@ presence.on('UpdateData', async () => {
       details: 'Browsing channels',
     },
     loved: {
-      details: 'Browsing user\'sloved',
+      details: 'Browsing user\'s loved',
     },
     playlists: {
-      details: 'Browsing user\'splaylists',
+      details: 'Browsing user\'s playlists',
     },
     albums: {
-      details: 'Browsing user\'salbums',
+      details: 'Browsing user\'s albums',
     },
     artists: {
-      details: 'Browsing user\'sartists',
+      details: 'Browsing user\'s artists',
     },
     podcasts: {
-      details: 'Browsing user\'spodcasts',
+      details: 'Browsing user\'s podcasts',
     },
     show: {
       details: 'Viewing a podcast',
