@@ -1,0 +1,26 @@
+{
+  "playmogo.homepage": {
+    "description": "Shown when the user is on the PlayMogo homepage",
+    "message": "Homepage"
+  },
+  "playmogo.videoPage": {
+    "description": "Shown while a PlayMogo video page is open before playback data is available",
+    "message": "Viewing a video"
+  },
+  "playmogo.loadingVideo": {
+    "description": "Shown while waiting for the embedded video player to become ready",
+    "message": "Loading video"
+  },
+  "playmogo.watchingVideo": {
+    "description": "Privacy-safe replacement for a video title",
+    "message": "Watching a video"
+  },
+  "playmogo.videoEnded": {
+    "description": "Shown when video playback has reached the end",
+    "message": "Video ended"
+  },
+  "playmogo.viewVideo": {
+    "description": "Label for the button that opens the video's normal PlayMogo page",
+    "message": "View Video"
+  }
+}
