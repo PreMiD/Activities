@@ -22,8 +22,8 @@ let cachedMovieYear: string | undefined
 // --------------------------------------------------
 
 function getContentKey() {
-  const movieMatch = location.pathname.match(/^\/movie\/([^/]+)/)
-  const tvMatch = location.pathname.match(/^\/tv\/([^/]+)/)
+  const movieMatch = document.location.pathname.match(/^\/movie\/([^/]+)/)
+  const tvMatch = document.location.pathname.match(/^\/tv\/([^/]+)/)
 
   if (movieMatch) {
     return `movie:${movieMatch[1]}`
@@ -33,11 +33,11 @@ function getContentKey() {
     return `tv:${tvMatch[1]}`
   }
 
-  if (location.pathname === '/') {
+  if (document.location.pathname === '/') {
     return 'home'
   }
 
-  return location.pathname
+  return document.location.pathname
 }
 
 function cleanTitle(title?: string | null) {
@@ -85,7 +85,7 @@ function truncate(text: string, maxLength = 120) {
 // --------------------------------------------------
 
 presence.on('UpdateData', async () => {
-  const currentPath = location.pathname
+  const currentPath = document.location.pathname
 
   const isHome = currentPath === '/'
   const isMovie = currentPath.startsWith('/movie/')
