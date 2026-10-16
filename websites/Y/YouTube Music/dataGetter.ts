@@ -26,10 +26,13 @@ function getTextContent(selector: string): string | undefined {
   return text && text.length > 0 ? text : undefined
 }
 
-function getValidImageSource(selector: string): string | undefined {
-  const src = document.querySelector<HTMLImageElement>(selector)?.src
-
-  return src && !src.startsWith('data:') ? src : undefined
+function getValidImageSource(...selectors: string[]): string | undefined {
+  for (const selector of selectors) {
+    for (const image of document.querySelectorAll<HTMLImageElement>(selector)) {
+      if (image.src && /^https?:/.test(image.src))
+        return image.src
+    }
+  }
 }
 
 function getPlayerLinks(): HTMLAnchorElement[] {
@@ -88,7 +91,7 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
     const artistElements = getPlayerLinks()
     const artistElement = artistElements[0]
     const albumElement = artistElements.length > 1 ? artistElements[1] : null
-    const artwork = getValidImageSource('#song-image img, ytmusic-player-bar img#img')
+    const artwork = getValidImageSource('ytmusic-player-bar img.image', '#song-image img', 'ytmusic-player-bar img#img')
 
     const complexInfo = document.querySelector('.complex-string.ytmusic-player-bar')
     const albumFromElement = albumElement?.textContent?.trim()
@@ -116,7 +119,7 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
         title: this.mediaSession.metadata.title,
         artist: this.mediaSession.metadata.artist,
         album: this.mediaSession.metadata.album,
-        artwork: this.mediaSession.metadata.artwork?.at(-1)?.src,
+        artwork: this.mediaSession.metadata.artwork?.at(-1)?.src || artwork,
         duration: videoElement?.duration,
       }
     }
