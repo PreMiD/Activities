@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Dropsiders",
+    "id": "503557087041683458"
+  },
+  "service": "Dropsiders",
+  "altnames": [
+    "dropsiders.fr",
+    "Dropsiders Radio"
+  ],
+  "description": {
+    "en": "Displays what music, radio shows, and festival news you are listening to and reading on Dropsiders.",
+    "fr": "Affiche les musiques, émissions radio et actus festivals que vous écoutez et lisez sur Dropsiders."
+  },
+  "url": "dropsiders.fr",
+  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*(dropsiders[.]fr)|localhost(:[0-9]+)?)[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/Itsalexfr1/sitedropsiders/main/public/premid_logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/Itsalexfr1/sitedropsiders/main/public/premid_logo.png",
+  "color": "#ff1241",
+  "category": "music",
+  "tags": [
+    "music",
+    "radio",
+    "festivals",
+    "electronic",
+    "edm",
+    "news"
+  ],
+  "settings": [
+    {
+      "id": "showRadio",
+      "title": "Afficher la Radio / Morceau en cours",
+      "icon": "fas fa-radio",
+      "value": true
+    },
+    {
+      "id": "showArticle",
+      "title": "Afficher les articles lus",
+      "icon": "fas fa-newspaper",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Afficher les boutons (Écouter / Lire)",
+      "icon": "fas fa-link",
+      "value": true
+    }
+  ]
+}
