@@ -71,6 +71,20 @@
       }
     },
     {
+      "id": "timestampType",
+      "title": "Timestamp Type",
+      "icon": "fad fa-clock",
+      "value": 0,
+      "values": [
+        "Playback Progress",
+        "Elapsed Listening Time"
+      ],
+      "if": {
+        "timestamps": true,
+        "privacy": false
+      }
+    },
+    {
       "id": "buttons",
       "title": "Show Buttons",
       "icon": "fad fa-compress-arrows-alt",

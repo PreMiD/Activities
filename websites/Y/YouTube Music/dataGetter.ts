@@ -20,6 +20,98 @@ export interface MediaDataGetter {
   isAdPlaying: () => boolean
 }
 
+function getTextContent(selector: string): string | undefined {
+  const text = document.querySelector(selector)?.textContent?.trim()
+
+  return text && text.length > 0 ? text : undefined
+}
+
+/**
+ * Discord only accepts public http(s) images with a short URL, so
+ * placeholders (data:/blob:) and very long URLs are discarded.
+ */
+function cleanArtwork(url: string | undefined): string | undefined {
+  if (!url || !/^https?:\/\//.test(url))
+    return undefined
+
+  let cleaned = url
+  if (/^https?:\/\/[^/]*ytimg\.com\//.test(cleaned))
+    cleaned = cleaned.split('?')[0] ?? cleaned
+  else if (/googleusercontent\.com|ggpht\.com/.test(cleaned))
+    cleaned = cleaned.replace(/=w\d+-h\d[^/?]*$/, '=w544-h544-l90-rj')
+
+  return cleaned.length > 250 ? undefined : cleaned
+}
+
+function getValidImageSource(selector: string): string | undefined {
+  for (const image of document.querySelectorAll<HTMLImageElement>(selector)) {
+    const src = cleanArtwork(image.currentSrc || image.src)
+    if (src)
+      return src
+  }
+
+  return undefined
+}
+
+function getPlayerLinks(): HTMLAnchorElement[] {
+  return [
+    ...document.querySelectorAll<HTMLAnchorElement>(
+      '.byline.ytmusic-player-bar a, ytmusic-player-bar .subtitle a',
+    ),
+  ]
+}
+
+/**
+ * Returns every credited artist (e.g. "Artist A, Artist B y Artist C").
+ * The first segment of the player bar byline holds all of them, while the
+ * links only give access to the first one reliably.
+ */
+function getArtistsText(): string | undefined {
+  const text = document
+    .querySelector('.byline.ytmusic-player-bar, ytmusic-player-bar .subtitle')
+    ?.textContent
+    ?.replace(/\s+/g, ' ')
+    .trim()
+    .split('•')[0]
+    ?.trim()
+
+  return text && text.length > 0 ? text : undefined
+}
+
+function getPlaybackStateFromControls(): MediaData['playbackState'] {
+  const playPauseButton = document.querySelector<HTMLElement>('#play-pause-button')
+  const label = [
+    playPauseButton?.getAttribute('title'),
+    playPauseButton?.getAttribute('aria-label'),
+    playPauseButton?.querySelector('button')?.getAttribute('title'),
+    playPauseButton?.querySelector('button')?.getAttribute('aria-label'),
+  ].find(Boolean)?.toLowerCase()
+
+  if (label === 'pause')
+    return 'playing'
+
+  if (label === 'play')
+    return 'paused'
+
+  return 'none'
+}
+
+function getPlaybackStateFromVideo(
+  videoElement: HTMLMediaElement | null,
+  hasMediaDetails: boolean,
+): MediaData['playbackState'] {
+  if (!videoElement)
+    return 'none'
+
+  if (!videoElement.paused && !videoElement.ended)
+    return 'playing'
+
+  if (Number.isFinite(videoElement.duration) && videoElement.duration > 0 && hasMediaDetails)
+    return 'paused'
+
+  return 'none'
+}
+
 export class YouTubeMusicDataGetter implements MediaDataGetter {
   private mediaSession: MediaSession | undefined
 
@@ -28,42 +120,13 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
   }
 
   getMediaData(): MediaData {
+    const mediaSessionState = this.mediaSession?.playbackState
     const videoElement = this.getVideoElement()
-    const playbackState = videoElement && Number.isFinite(videoElement.duration)
-      ? videoElement.paused ? 'paused' : 'playing'
-      : this.mediaSession?.playbackState
-
-    const titleElement = document.querySelector('.ytmusicTrackInfoTitle, .title.ytmusic-player-bar')
-    const artist = this.getArtistText()
-    const artwork = this.getArtwork()
-
-    if (videoElement && Number.isFinite(videoElement.duration) && titleElement?.textContent?.trim()) {
-      return {
-        playbackState: videoElement.paused ? 'paused' : 'playing',
-        title: titleElement.textContent.trim(),
-        artist,
-        album: this.mediaSession?.metadata?.album,
-        artwork,
-        duration: videoElement.duration,
-      }
-    }
-
-    if (this.mediaSession?.metadata && ['playing', 'paused'].includes(playbackState ?? '')) {
-      return {
-        playbackState: playbackState as 'playing' | 'paused',
-        title: this.mediaSession.metadata.title,
-        artist,
-        album: this.mediaSession.metadata.album,
-        artwork,
-      }
-    }
-
-    if (!videoElement || !Number.isFinite(videoElement.duration)) {
-      return { playbackState: 'none' }
-    }
-
-    const artistElements = document.querySelectorAll('.byline.ytmusic-player-bar a')
+    const title = getTextContent('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title')
+    const artistElements = getPlayerLinks()
+    const artistElement = artistElements[0]
     const albumElement = artistElements.length > 1 ? artistElements[1] : null
+    const artwork = getValidImageSource('#song-image img, ytmusic-player-bar img#img')
 
     const complexInfo = document.querySelector('.complex-string.ytmusic-player-bar')
     const albumFromElement = albumElement?.textContent?.trim()
@@ -74,70 +137,59 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
           ? albumFromComplex
           : undefined
 
+    const controlPlaybackState = getPlaybackStateFromControls()
+    const playbackState = getPlaybackStateFromVideo(
+      videoElement,
+      Boolean(title || artistElement || this.mediaSession?.metadata),
+    )
+    const playerPlaybackState = controlPlaybackState === 'none'
+      ? playbackState
+      : controlPlaybackState
+
+    if (this.mediaSession?.metadata && ['playing', 'paused'].includes(mediaSessionState ?? '')) {
+      return {
+        playbackState: playerPlaybackState === 'none'
+          ? mediaSessionState as 'playing' | 'paused'
+          : playerPlaybackState,
+        title: this.mediaSession.metadata.title,
+        artist: this.mediaSession.metadata.artist,
+        album: this.mediaSession.metadata.album,
+        artwork: this.getMediaSessionArtwork() ?? artwork ?? this.getArtworkFallback(),
+        duration: videoElement?.duration,
+      }
+    }
+
+    if (playerPlaybackState === 'none') {
+      return { playbackState: playerPlaybackState }
+    }
+
     return {
-      playbackState: videoElement.paused ? 'paused' : 'playing',
-      title: titleElement?.textContent?.trim() || undefined,
-      artist,
+      playbackState: playerPlaybackState,
+      title,
+      artist: getArtistsText() ?? (artistElement?.textContent?.trim() || undefined),
       album,
-      artwork,
+      artwork: artwork ?? this.getArtworkFallback(),
       duration: videoElement?.duration,
     }
   }
 
-  /**
-   * Returns every credited artist (e.g. "Artist A, Artist B y Artist C").
-   * The first segment of the player bar byline holds all of them, while a
-   * plain `a` selector only matches the first linked artist.
-   */
-  private getArtistText(): string | undefined {
-    const bylineElement = document.querySelector('ytmusic-player-bar .byline, .byline.ytmusic-player-bar, .ytmusicTrackInfoByline')
-    const fromByline = bylineElement?.textContent?.replace(/\s+/g, ' ').trim().split('•')[0]?.trim()
-    if (fromByline)
-      return fromByline
-
-    const fromMediaSession = this.mediaSession?.metadata?.artist?.trim()
-    if (fromMediaSession)
-      return fromMediaSession
-
-    return document.querySelector('.ytmusicTrackInfoByline a, .byline.ytmusic-player-bar a')?.textContent?.trim() || undefined
-  }
-
-  /**
-   * Discord only accepts public http(s) images with a short URL, so
-   * placeholders (data:/blob:) and very long URLs are discarded.
-   */
-  private cleanArtwork(url: string | undefined): string | undefined {
-    if (!url || !/^https?:\/\//.test(url))
+  private getMediaSessionArtwork(): string | undefined {
+    const images = this.mediaSession?.metadata?.artwork
+    if (!images)
       return undefined
 
-    let cleaned = url
-    if (/^https?:\/\/[^/]*ytimg\.com\//.test(cleaned))
-      cleaned = cleaned.split('?')[0] ?? cleaned
-    else if (/googleusercontent\.com|ggpht\.com/.test(cleaned))
-      cleaned = cleaned.replace(/=w\d+-h\d[^/?]*$/, '=w544-h544-l90-rj')
+    for (const image of [...images].reverse()) {
+      const src = cleanArtwork(image.src)
+      if (src)
+        return src
+    }
 
-    return cleaned.length > 250 ? undefined : cleaned
+    return undefined
   }
 
-  private getArtwork(): string | undefined {
-    const candidates: (string | undefined)[] = []
-
-    const mediaSessionArtwork = this.mediaSession?.metadata?.artwork
-    if (mediaSessionArtwork?.length)
-      candidates.push(...[...mediaSessionArtwork].reverse().map(image => image.src))
-
-    for (const selector of ['.ytmusicTrackInfoThumbnail', 'ytmusic-player-bar img#img', '#song-image img']) {
-      for (const image of document.querySelectorAll<HTMLImageElement>(selector))
-        candidates.push(image.currentSrc || image.src)
-    }
-
-    for (const candidate of candidates) {
-      const cleaned = this.cleanArtwork(candidate)
-      if (cleaned)
-        return cleaned
-    }
-
+  private getArtworkFallback(): string | undefined {
     const watchId = this.getWatchId()
+
     return watchId ? `https://i.ytimg.com/vi/${watchId}/hqdefault.jpg` : undefined
   }
 
@@ -160,12 +212,12 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
   }
 
   getVideoElement(): HTMLMediaElement | null {
-    return document.querySelector<HTMLMediaElement>('.video-stream')
+    return document.querySelector<HTMLMediaElement>('.video-stream, video')
   }
 
   getAlbumArtistLink(): string | undefined {
     const mediaData = this.getMediaData()
-    const links = [...document.querySelectorAll<HTMLAnchorElement>('.ytmusicTrackInfoByline a[href], .byline a[href]')]
+    const links = getPlayerLinks()
 
     if (mediaData.album && links.length > 0) {
       return links.at(-1)?.href
@@ -175,7 +227,7 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
   }
 
   getArtistLink(): string | undefined {
-    return document.querySelector<HTMLAnchorElement>('.ytmusicTrackInfoByline a[href], .byline a[href]')?.href
+    return getPlayerLinks()[0]?.href
   }
 
   getCurrentAndTotalTime(): [string, string] | null {
@@ -185,7 +237,7 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
       ?.trim()
 
     if (!timeText)
-      return this.getMiniPlayerTime()
+      return null
 
     const times = timeText.split(' / ')
     if (times.length === 2 && times[0] && times[1]) {
@@ -204,27 +256,12 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
     return null
   }
 
-  private getMiniPlayerTime(): [string, string] | null {
-    const times = document.querySelector('.ytMusicMiniPlayerTimeInfo')?.textContent?.trim().split(' / ')
-    return times?.length === 2 && times[0] && times[1] ? [times[0], times[1]] : null
-  }
-
   hasValidPlaybackState(): boolean {
-    if (this.mediaSession) {
-      return ['playing', 'paused'].includes(this.mediaSession.playbackState)
-    }
-
-    const videoElement = this.getVideoElement()
-    return videoElement !== null && !Number.isNaN(videoElement.duration)
+    return this.getMediaData().playbackState !== 'none'
   }
 
   isPlaying(): boolean {
-    if (this.mediaSession) {
-      return this.mediaSession.playbackState === 'playing'
-    }
-
-    const videoElement = this.getVideoElement()
-    return videoElement !== null && !videoElement.paused && videoElement.currentTime > 0
+    return this.getMediaData().playbackState === 'playing'
   }
 
   isAdPlaying(): boolean {
