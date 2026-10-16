@@ -17,6 +17,10 @@ let cachedTitle: string | undefined
 let cachedPoster: string | undefined
 let cachedMovieYear: string | undefined
 
+let cachedSeason: number | undefined
+let cachedEpisode: number | undefined
+let cachedEpisodeTitle: string | undefined
+
 // --------------------------------------------------
 // Helpers
 // --------------------------------------------------
@@ -92,13 +96,7 @@ presence.on('UpdateData', async () => {
   const isTV = currentPath.startsWith('/tv/')
 
   // --------------------------------------------------
-  // Detect actual content changes
-  //
-  // movie/10363 -> movie/10363?play=true
-  // keeps the cache.
-  //
-  // movie/10363 -> movie/12345
-  // clears the cache.
+  // Detect content changes
   // --------------------------------------------------
 
   const currentContentKey = getContentKey()
@@ -109,6 +107,10 @@ presence.on('UpdateData', async () => {
     cachedTitle = undefined
     cachedPoster = undefined
     cachedMovieYear = undefined
+
+    cachedSeason = undefined
+    cachedEpisode = undefined
+    cachedEpisodeTitle = undefined
   }
 
   // --------------------------------------------------
@@ -142,7 +144,8 @@ presence.on('UpdateData', async () => {
     ?.trim()
 
   if (
-    currentPoster
+    !isHome
+    && currentPoster
     && /^https?:\/\//i.test(currentPoster)
   ) {
     cachedPoster = currentPoster
@@ -150,18 +153,19 @@ presence.on('UpdateData', async () => {
 
   // --------------------------------------------------
   // Visible page text
+  //
+  // innerText preserves rendered line breaks.
+  // This is important for episode detection.
   // --------------------------------------------------
 
-  const lines = (document.body.textContent ?? '')
+  // eslint-disable-next-line unicorn/prefer-dom-node-text-content
+  const lines = document.body.innerText
     .split('\n')
     .map(line => line.trim())
     .filter(Boolean)
 
   // --------------------------------------------------
   // Movie year
-  //
-  // Example:
-  // 7.6 · 0 · 0 · 1960 · 1h 58m · PG-13
   // --------------------------------------------------
 
   if (isMovie) {
@@ -180,19 +184,13 @@ presence.on('UpdateData', async () => {
   }
 
   // --------------------------------------------------
-  // Actual Movy player
-  //
-  // Important:
-  // Do NOT use document.querySelector("video")
-  // because Movy also has trailer/background videos.
+  // Actual Movy video player
   // --------------------------------------------------
 
   const video
     = document.querySelector<HTMLVideoElement>(
       '#vp-shell video',
     )
-
-  // Player states
 
   const videoReady
     = !!video
@@ -223,15 +221,11 @@ presence.on('UpdateData', async () => {
       && video.ended
 
   // --------------------------------------------------
-  // TV episode
+  // TV episode detection
   //
   // Example:
   // S1 E1 Red Light, Green Light · 1h 1m
   // --------------------------------------------------
-
-  let season: number | undefined
-  let episode: number | undefined
-  let episodeTitle: string | undefined
 
   if (isTV) {
     const episodeLine = lines.find(line =>
@@ -239,17 +233,24 @@ presence.on('UpdateData', async () => {
     )
 
     if (episodeLine) {
-      const match = episodeLine.match(/^S(\d+)\s+E(\d+)\s+/i)
-      const rawEpisodeTitle = match
-        ? episodeLine.slice(match[0].length).split('·')[0]?.trim()
-        : undefined
+      const match = episodeLine.match(
+        /^S(\d+)\s+E(\d+)\s+/i,
+      )
 
       if (match) {
-        season = Number(match[1])
-        episode = Number(match[2])
+        cachedSeason = Number(match[1])
+        cachedEpisode = Number(match[2])
+
+        const rawEpisodeTitle = episodeLine
+          .slice(match[0].length)
+          .split('·')[0]
+          ?.trim()
 
         if (rawEpisodeTitle) {
-          episodeTitle = truncate(rawEpisodeTitle, 90)
+          cachedEpisodeTitle = truncate(
+            rawEpisodeTitle,
+            90,
+          )
         }
       }
     }
@@ -282,12 +283,6 @@ presence.on('UpdateData', async () => {
     displayTitle = cachedTitle
   }
 
-  // Final protection against:
-  //
-  // Movy - Watch Free Movies & TV Shows Online
-  //
-  // ever reaching Discord.
-
   if (isGenericMovyTitle(displayTitle)) {
     displayTitle = 'Movy'
   }
@@ -295,21 +290,14 @@ presence.on('UpdateData', async () => {
   displayTitle = truncate(displayTitle)
 
   // --------------------------------------------------
-  // Presence
+  // Presence data
   // --------------------------------------------------
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
     details: displayTitle,
-  }
-
-  // --------------------------------------------------
-  // Poster
-  // --------------------------------------------------
-
-  if (cachedPoster) {
-    presenceData.largeImageKey
-      = cachedPoster
+    largeImageKey: cachedPoster
+      ?? 'https://i.imgur.com/JTtBezM.png',
   }
 
   // --------------------------------------------------
@@ -318,22 +306,18 @@ presence.on('UpdateData', async () => {
 
   if (
     isTV
-    && season !== undefined
-    && episode !== undefined
+    && cachedSeason !== undefined
+    && cachedEpisode !== undefined
   ) {
     presenceData.largeImageText
-      = `Season ${season}, Episode ${episode}`
+      = `Season ${cachedSeason}, Episode ${cachedEpisode}`
   }
   else {
-    presenceData.largeImageText
-      = displayTitle
+    presenceData.largeImageText = displayTitle
   }
 
   // --------------------------------------------------
   // HOME
-  //
-  // Movy
-  // Browsing
   // --------------------------------------------------
 
   if (isHome) {
@@ -342,9 +326,6 @@ presence.on('UpdateData', async () => {
 
   // --------------------------------------------------
   // MOVIE
-  //
-  // Purple Noon (1960)
-  // Watching
   // --------------------------------------------------
 
   else if (isMovie) {
@@ -364,45 +345,48 @@ presence.on('UpdateData', async () => {
 
   // --------------------------------------------------
   // TV
-  //
-  // Squid Game
-  // S1 E1 • Red Light, Green Light
   // --------------------------------------------------
 
-  else if (
-    isTV
-    && season !== undefined
-    && episode !== undefined
-  ) {
-    const episodePrefix
-      = `S${season} E${episode}`
+  else if (isTV) {
+    if (
+      cachedSeason !== undefined
+      && cachedEpisode !== undefined
+    ) {
+      const episodePrefix
+        = `S${cachedSeason} E${cachedEpisode}`
 
-    if (isEnded) {
-      presenceData.state
-        = `${episodePrefix} • Finished`
+      if (isEnded) {
+        presenceData.state
+          = `${episodePrefix} • Finished`
+      }
+      else if (isPaused) {
+        presenceData.state = cachedEpisodeTitle
+          ? truncate(
+              `${episodePrefix} • ${cachedEpisodeTitle} • Paused`,
+            )
+          : `${episodePrefix} • Paused`
+      }
+      else if (cachedEpisodeTitle) {
+        presenceData.state = truncate(
+          `${episodePrefix} • ${cachedEpisodeTitle}`,
+        )
+      }
+      else {
+        presenceData.state = episodePrefix
+      }
+    }
+    else if (isEnded) {
+      presenceData.state = 'Finished watching'
     }
     else if (isPaused) {
-      presenceData.state = episodeTitle
-        ? truncate(
-            `${episodePrefix} • ${episodeTitle} • Paused`,
-          )
-        : `${episodePrefix} • Paused`
+      presenceData.state = 'Paused'
     }
-    else if (episodeTitle) {
-      presenceData.state
-        = truncate(
-          `${episodePrefix} • ${episodeTitle}`,
-        )
+    else if (isPlaying) {
+      presenceData.state = 'Watching'
     }
     else {
-      presenceData.state
-        = episodePrefix
+      presenceData.state = 'Browsing'
     }
-  }
-
-  // TV page before an episode is playing
-  else if (isTV) {
-    presenceData.state = 'Browsing'
   }
 
   // --------------------------------------------------
@@ -415,8 +399,6 @@ presence.on('UpdateData', async () => {
 
   // --------------------------------------------------
   // Playback timestamps
-  //
-  // Only show countdown while actually playing.
   // --------------------------------------------------
 
   if (
@@ -431,11 +413,8 @@ presence.on('UpdateData', async () => {
       endTimestamp,
     ] = getTimestampsFromMedia(video)
 
-    presenceData.startTimestamp
-      = startTimestamp
-
-    presenceData.endTimestamp
-      = endTimestamp
+    presenceData.startTimestamp = startTimestamp
+    presenceData.endTimestamp = endTimestamp
   }
 
   // --------------------------------------------------
