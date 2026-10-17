@@ -1,0 +1,30 @@
+{
+  "anicat.catalog": {
+    "description": "Shown when the user is browsing the anime catalog.",
+    "message": "Browsing the catalog"
+  },
+  "anicat.schedule": {
+    "description": "Shown when the user is viewing the release schedule.",
+    "message": "Viewing the release schedule"
+  },
+  "anicat.myList": {
+    "description": "Shown when the user is viewing their anime list.",
+    "message": "Viewing their anime list"
+  },
+  "anicat.feed": {
+    "description": "Shown when the user is viewing the activity feed.",
+    "message": "Viewing the feed"
+  },
+  "anicat.changelog": {
+    "description": "Shown when the user is reading the site changelog.",
+    "message": "Reading the changelog"
+  },
+  "anicat.notifications": {
+    "description": "Shown when the user is viewing their notifications.",
+    "message": "Viewing notifications"
+  },
+  "anicat.watchTogether": {
+    "description": "Appended to the status when the user is in a watch-together room.",
+    "message": "Watching together"
+  }
+}
