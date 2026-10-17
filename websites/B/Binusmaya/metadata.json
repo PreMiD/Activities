@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1560317220737777775",
+    "name": "bachiang"
+  },
+  "service": "Binusmaya",
+  "description": {
+    "en": "Binus LMS (Binusmaya Learning Management System) is the online learning platform of Binus University, where students access courses, forums, assessments, grades, announcements, attendance and class schedules."
+  },
+  "url": "lms.binus.ac.id",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*lms[.]binus[.]ac[.]id[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/94izqgl.png",
+  "thumbnail": "https://i.imgur.com/eRte6N4.png",
+  "color": "#0067B1",
+  "category": "other",
+  "tags": [
+    "binus",
+    "lms",
+    "education",
+    "indonesia"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": true,
+      "description": "Hide course names, forum thread titles and assignment titles"
+    },
+    {
+      "id": "timestamp",
+      "title": "Show Timestamp",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "description": "Show time spent in the current section (forum, course, etc.)"
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fad fa-compress-arrows-alt",
+      "value": false,
+      "description": "Show a button linking to the current course, thread or assignment",
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
