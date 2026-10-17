@@ -1,102 +1,32 @@
-import { ActivityType, Assets, getTimestamps } from 'premid'
+import { ActivityType } from 'premid'
+import { getPlaybackMetadata, isMetadataLoading } from './api/metadata.js'
+import { ActivityAssets, CLIENT_ID, DETAIL_PATH } from './config/constants.js'
+import { applyBrowsingPresence } from './page/browsing.js'
+import { findBannerImage, findPageTitle, findPlayerVideo } from './page/dom.js'
+import { getPlaybackDisplay } from './player/display.js'
+import { applyPlayerPresence, resetElapsedTime } from './player/player.js'
+import { getLiveViewerTime } from './player/timeline.js'
+import { startTimelineTracking } from './player/timelineTracker.js'
 
 const presence = new Presence({
-  clientId: '705139844883677224',
-})
-
-const strings = presence.getStrings({
-  paused: 'general.paused',
-  playing: 'general.playing',
+  clientId: CLIENT_ID,
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/P/Prime%20Video/assets/logo.png',
-}
-
-let cacheUrl: { thumbnailUrl: string, type: number } | null = null
-let generatedImage: string
-export async function getThumbnail(thumbnailUrl: string, type: number): Promise<string> {
-  if (cacheUrl?.thumbnailUrl === thumbnailUrl && cacheUrl.type === type)
-    return generatedImage
-
-  if (type !== 0 && type !== 1) {
-    return new Promise((resolve) => {
-      const img = new Image()
-      img.crossOrigin = 'anonymous'
-      img.src = thumbnailUrl
-      img.onload = () => resolve(thumbnailUrl)
-      img.onerror = () => resolve(thumbnailUrl)
-    })
-  }
-
-  return new Promise((resolve) => {
-    const img = new Image()
-    const wh = 320
-    img.crossOrigin = 'anonymous'
-    img.src = thumbnailUrl
-
-    img.onload = () => {
-      const tempCanvas = document.createElement('canvas')
-      tempCanvas.width = wh
-      tempCanvas.height = wh
-      const ctx = tempCanvas.getContext('2d')
-
-      if (ctx) {
-        let sx = 0
-        let sy = 0
-        let sw = img.width
-        let sh = img.height
-
-        if (type === 0) {
-          const cropSize = 600
-          sw = Math.min(cropSize, img.width)
-          sh = Math.min(cropSize, img.height)
-
-          sx = Math.max(0, img.width - sw)
-          sy = Math.max(0, (img.height - sh) / 2)
-        }
-
-        let newWidth: number
-        let newHeight: number
-        let offsetX: number
-        let offsetY: number
-
-        if (sw > sh) {
-          newWidth = wh
-          newHeight = (wh / sw) * sh
-          offsetX = 0
-          offsetY = (wh - newHeight) / 2
-        }
-        else {
-          newHeight = wh
-          newWidth = (wh / sh) * sw
-          offsetX = (wh - newWidth) / 2
-          offsetY = 0
-        }
-
-        ctx.drawImage(img, sx, sy, sw, sh, offsetX, offsetY, newWidth, newHeight)
-      }
-
-      cacheUrl = { thumbnailUrl, type }
-      generatedImage = tempCanvas.toDataURL('image/png')
-      resolve(generatedImage)
-    }
-
-    img.onerror = () => {
-      resolve(thumbnailUrl)
-    }
-  })
-}
+startTimelineTracking(presence)
 
 presence.on('UpdateData', async () => {
-  const { pathname } = document.location
-
-  const [usePresenceName, showCover, imageType] = await Promise.all([
+  const [usePresenceName, showCover, imageType, useMediaImage, time, strings] = await Promise.all([
     presence.getSetting<boolean>('usePresenceName'),
     presence.getSetting<boolean>('cover'),
     presence.getSetting<number>('imageType'),
+    presence.getSetting<boolean>('useMediaImage'),
+    presence.getSetting<boolean>('time'),
+    presence.getStrings({
+      paused: 'general.paused',
+      playing: 'general.playing',
+    }),
   ])
 
   const presenceData: PresenceData = {
@@ -105,126 +35,48 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
   }
 
-  const body = document.querySelector('body')
-  const bodyStyle = window.getComputedStyle(body!)
+  const video = findPlayerVideo()
+  const playerActive = !!video && !video.className.includes('tst') && window.getComputedStyle(document.body).overflow === 'hidden'
 
-  const video = document.querySelector<HTMLVideoElement>('div[id^=dv-web-player] video[src]')
-    || document.querySelector<HTMLVideoElement>('#dv-web-player video')
-    || document.querySelector<HTMLVideoElement>('#dv-web-player .atvwebplayersdk-video-surface video')
-    || document.querySelector<HTMLVideoElement>('video')
+  // Page title and banner are only used by the player and the detail pages
+  const needsPageInfo = playerActive || document.location.pathname.includes(DETAIL_PATH)
+  const pageTitle = needsPageInfo ? findPageTitle() : undefined
+  const bannerImg = needsPageInfo && showCover ? findBannerImage() : undefined
 
-  const title = document.querySelector('.atvwebplayersdk-player-container .fpqiyer .ffszj3z .f124tp54 h1')?.textContent || document.querySelector<HTMLImageElement>('.DVWebNode-detail-atf-wrapper picture img')?.alt || document.querySelector('.atvwebplayersdk-title-text')?.textContent || document.querySelector('h1[data-automation-id="title"]')?.textContent
+  // Title and episode come from the playback API, even when the player overlay is hidden.
+  // While a new media is loading, the previous activity is kept.
+  const metadata = playerActive ? getPlaybackMetadata() : null
+  if (playerActive && !metadata && isMetadataLoading())
+    return
+  const viewerTime = video && !Number.isFinite(video.duration)
+    ? getLiveViewerTime(video, metadata?.schedule?.clockOffset ?? 0)
+    : undefined
+  const display = getPlaybackDisplay(metadata, viewerTime)
+  const contentTitle = display.title || pageTitle
 
-  const title2 = document.querySelector('.DVWebNode-detail-atf-wrapper .BaLbyy h1')?.textContent || document.querySelector<HTMLImageElement>('.DVWebNode-detail-atf-wrapper picture img')?.alt || document.querySelector('.atvwebplayersdk-title-text')?.textContent || document.querySelector('h1[data-automation-id="title"]')?.textContent
-
-  const bannerImg = document.querySelector<HTMLImageElement>('main div[data-automation-id="hero-background"] img')?.src
-
-  const subtitle = document.querySelector<HTMLElement>('.atvwebplayersdk-episode-info') || document.querySelector<HTMLElement>('.atvwebplayersdk-subtitle-text')
-
-  if (video && !video.className.includes('tst') && title && bodyStyle.overflow === 'hidden') {
-    const contentTitle = title
-    if (usePresenceName) {
-      presenceData.name = contentTitle
-    }
-    presenceData.details = contentTitle
-
-    if (subtitle && subtitle.textContent && subtitle.textContent.trim() !== contentTitle?.trim()) {
-      presenceData.state = subtitle.textContent
-    }
-
-    if (bannerImg && showCover) {
-      presenceData.largeImageKey = await getThumbnail(bannerImg, imageType)
-    }
-
-    if (video.paused) {
-      presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = (await strings).paused
-      delete presenceData.startTimestamp
-    }
-    else {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
-      presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = (await strings).playing
-    }
+  if (video && playerActive && contentTitle) {
+    applyPlayerPresence(presenceData, {
+      video,
+      display,
+      contentTitle,
+      viewerTime,
+      bannerImg,
+      usePresenceName,
+      showCover,
+      imageType,
+      useMediaImage,
+      strings,
+    })
   }
-  else if (video && !video.className.includes('tst') && title2 && bodyStyle.overflow === 'hidden') {
-    const contentTitle = title2
+  else {
+    resetElapsedTime()
+    applyBrowsingPresence(presenceData, { pathname: document.location.pathname, pageTitle, bannerImg, showCover, imageType })
+  }
 
-    if (usePresenceName) {
-      presenceData.name = contentTitle
-    }
-    presenceData.details = contentTitle
-
-    if (subtitle && subtitle.textContent && subtitle.textContent.trim() !== contentTitle?.trim()) {
-      presenceData.state = subtitle.textContent
-    }
-
-    if (bannerImg && showCover) {
-      presenceData.largeImageKey = await getThumbnail(bannerImg, imageType)
-    }
-
-    if (video.paused) {
-      presenceData.smallImageKey = Assets.Pause
-      presenceData.smallImageText = (await strings).paused
-      delete presenceData.startTimestamp
-    }
-    else {
-      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(video.currentTime, video.duration)
-      presenceData.smallImageKey = Assets.Play
-      presenceData.smallImageText = (await strings).playing
-    }
-  }
-  else if (pathname.includes('/storefront') || pathname === '/') {
-    presenceData.details = 'Viewing Home'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('/detail')) {
-    presenceData.details = 'Viewing page for:'
-    presenceData.state = title || title2 || 'Prime Video'
-
-    if (bannerImg && showCover) {
-      presenceData.largeImageKey = await getThumbnail(bannerImg, imageType)
-    }
-  }
-  else if (pathname.includes('/movie')) {
-    presenceData.details = 'Viewing Movies'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('/tv')) {
-    presenceData.details = 'Viewing TV-Series'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('/sports')) {
-    presenceData.details = 'Viewing Sports'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('/categories')) {
-    presenceData.details = 'Viewing Categories'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('/kids/')) {
-    presenceData.details = 'Viewing Movies for kids'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('/livetv')) {
-    presenceData.details = 'Viewing Live TV'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('/search/') && document.querySelector('.av-refine-bar-summaries')) {
-    presenceData.details = 'Searching for:';
-    [presenceData.state] = document
-      .querySelector('.av-refine-bar-summaries')
-      ?.textContent
-      ?.split(/["„]/)[1]
-      ?.split(/[”"]/) ?? []
-    presenceData.smallImageKey = Assets.Search
-  }
-  else if (pathname.includes('/genre/')) {
-    presenceData.details = 'Viewing Genres'
-    presenceData.state = 'Browsing...'
-  }
-  else if (pathname.includes('shop')) {
-    presenceData.details = 'Browsing the store...'
+  // Without any timestamp, Discord shows a timer that resets after ~1h10: the fixed start is kept
+  if (!time) {
+    presenceData.startTimestamp = browsingTimestamp
+    delete presenceData.endTimestamp
   }
 
   presence.setActivity(presenceData)
