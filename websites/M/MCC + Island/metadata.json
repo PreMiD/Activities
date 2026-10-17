@@ -1,0 +1,97 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "kispintyi",
+    "id": "506801862738182172"
+  },
+  "service": "MCC + Island",
+  "altnames": [
+    "MC Championship",
+    "MCC Island",
+    "Minecraft Championship"
+  ],
+  "description": {
+    "en": "Share what you are exploring on Minecraft Championship and MCC Island, including forum posts, profiles, event browsing on MCC Live, and browsing or editing pages on the MCC Island Wiki."
+  },
+  "url": [
+    "mcchampionship.com",
+    "mccisland.net",
+    "mcc.live",
+    "mccisland.wiki"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(mcchampionship[.]com|mccisland[.]net|mcc[.]live|mccisland[.]wiki)[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/duHdSPA.png",
+  "thumbnail": "https://i.imgur.com/qQzrXJD.png",
+  "color": "#F0443E",
+  "category": "games",
+  "tags": [
+    "minecraft",
+    "mcc",
+    "mcc-island",
+    "minecraft-championship",
+    "forums",
+    "wiki",
+    "mcci-wiki",
+    "mcc-island-wiki"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Show how long the page has been open"
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-mouse-pointer",
+      "value": true,
+      "description": "Let others open the forum post or page you are viewing. Buttons are disabled in Privacy Mode and on bug reports.",
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "mccLogo",
+      "title": "Minecraft Championship Logo",
+      "icon": "fad fa-icons",
+      "value": 0,
+      "values": [
+        "MCC Red",
+        "MCC(I) Transparent Icon",
+        "MCC Initials + Icon",
+        "MCC Initials"
+      ]
+    },
+    {
+      "id": "mcciLogo",
+      "title": "MCC Island Logo",
+      "icon": "fad fa-icons",
+      "value": 1,
+      "values": [
+        "MCCI Blue",
+        "MCC Island",
+        "MCC(I) Transparent Icon"
+      ]
+    },
+    {
+      "id": "wikiLogo",
+      "title": "MCCI Wiki Logo",
+      "icon": "fad fa-icons",
+      "value": 0,
+      "values": [
+        "MCCI Wiki Logo",
+        "MCCI Wiki Logo (Transparent)"
+      ]
+    }
+  ]
+}
