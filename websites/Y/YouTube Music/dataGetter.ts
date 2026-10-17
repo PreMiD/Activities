@@ -1,3 +1,5 @@
+import { timestampFromFormat } from 'premid'
+
 export interface MediaData {
   playbackState: 'playing' | 'paused' | 'none'
   title?: string
@@ -15,6 +17,7 @@ export interface MediaDataGetter {
   getAlbumArtistLink: () => string | undefined
   getArtistLink: () => string | undefined
   getCurrentAndTotalTime: () => [string, string] | null
+  getPlaybackTimes: () => [number, number] | null
   hasValidPlaybackState: () => boolean
   isPlaying: () => boolean
   isAdPlaying: () => boolean
@@ -41,6 +44,15 @@ function getPlayerLinks(): HTMLAnchorElement[] {
       '.byline.ytmusic-player-bar a, ytmusic-player-bar .subtitle a',
     ),
   ]
+}
+
+function firstNonEmpty(...values: (string | null | undefined)[]): string | undefined {
+  for (const value of values) {
+    const trimmed = value?.trim()
+    if (trimmed)
+      return trimmed
+  }
+  return undefined
 }
 
 function getPlaybackStateFromControls(): MediaData['playbackState'] {
@@ -102,38 +114,27 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
           ? albumFromComplex
           : undefined
 
-    const controlPlaybackState = getPlaybackStateFromControls()
-    const playbackState = getPlaybackStateFromVideo(
-      videoElement,
-      Boolean(title || artistElement || this.mediaSession?.metadata),
-    )
-    const playerPlaybackState = controlPlaybackState === 'none'
-      ? playbackState
-      : controlPlaybackState
+    const metadata = this.mediaSession?.metadata
+    const mergedTitle = firstNonEmpty(metadata?.title, title)
+    const mergedArtist = firstNonEmpty(metadata?.artist, artistElement?.textContent)
+    const hasMediaDetails = Boolean(mergedTitle || mergedArtist)
 
-    if (this.mediaSession?.metadata && ['playing', 'paused'].includes(mediaSessionState ?? '')) {
-      return {
-        playbackState: playerPlaybackState === 'none'
-          ? mediaSessionState as 'playing' | 'paused'
-          : playerPlaybackState,
-        title: this.mediaSession.metadata.title,
-        artist: this.mediaSession.metadata.artist,
-        album: this.mediaSession.metadata.album,
-        artwork: this.mediaSession.metadata.artwork?.at(-1)?.src || artwork,
-        duration: videoElement?.duration,
-      }
-    }
+    let playbackState = getPlaybackStateFromVideo(videoElement, hasMediaDetails)
+    if (playbackState === 'none' && metadata && (mediaSessionState === 'playing' || mediaSessionState === 'paused'))
+      playbackState = mediaSessionState
+    if (playbackState === 'none' && hasMediaDetails)
+      playbackState = getPlaybackStateFromControls()
 
-    if (playerPlaybackState === 'none') {
-      return { playbackState: playerPlaybackState }
+    if (playbackState === 'none') {
+      return { playbackState }
     }
 
     return {
-      playbackState: playerPlaybackState,
-      title,
-      artist: artistElement?.textContent?.trim() || undefined,
-      album,
-      artwork,
+      playbackState,
+      title: mergedTitle,
+      artist: mergedArtist,
+      album: firstNonEmpty(metadata?.album, album),
+      artwork: firstNonEmpty(metadata?.artwork?.at(-1)?.src, artwork),
       duration: videoElement?.duration,
     }
   }
@@ -157,7 +158,11 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
   }
 
   getVideoElement(): HTMLMediaElement | null {
-    return document.querySelector<HTMLMediaElement>('.video-stream, video')
+    return document.querySelector<HTMLMediaElement>('.html5-main-video')
+      ?? document.querySelector<HTMLMediaElement>('.video-stream')
+      ?? [...document.querySelectorAll<HTMLMediaElement>('video, audio')]
+        .find(media => media.currentSrc && Number.isFinite(media.duration) && media.duration > 0)
+        ?? null
   }
 
   getAlbumArtistLink(): string | undefined {
@@ -181,10 +186,7 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
       ?.textContent
       ?.trim()
 
-    if (!timeText)
-      return null
-
-    const times = timeText.split(' / ')
+    const times = timeText?.split(' / ') ?? []
     if (times.length === 2 && times[0] && times[1]) {
       return [times[0].trim(), times[1].trim()]
     }
@@ -199,6 +201,20 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
     }
 
     return null
+  }
+
+  getPlaybackTimes(): [number, number] | null {
+    const media = this.getVideoElement()
+    if (media && Number.isFinite(media.duration) && media.duration > 0)
+      return [media.currentTime, media.duration]
+
+    const times = this.getCurrentAndTotalTime()
+    if (!times)
+      return null
+
+    const current = timestampFromFormat(times[0])
+    const total = timestampFromFormat(times[1])
+    return total > 0 ? [current, total] : null
   }
 
   hasValidPlaybackState(): boolean {
