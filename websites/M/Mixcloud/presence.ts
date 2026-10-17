@@ -13,7 +13,7 @@ const strings = presence.getStrings({
 const MIXCLOUD_LOGO = 'https://cdn.rcd.gg/PreMiD/websites/M/Mixcloud/assets/logo.png'
 
 function absoluteUrl(value: string | null | undefined): string | undefined {
-  if (!value) 
+  if (!value)
     return undefined
   try {
     const url = new URL(value, window.location.origin)
