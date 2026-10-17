@@ -11,6 +11,7 @@ export function createListeningPresence(
   watchID: string | undefined,
   repeatMode: string | null,
   mediaTimestamps: [number, number],
+  listeningStartTimestamp: number,
   strings: Strings,
 ): PresenceData {
   const {
@@ -18,6 +19,7 @@ export function createListeningPresence(
     showTimestamps,
     showCover,
     displayType,
+    timestampType,
   } = settings
 
   const albumArtistBtnLink = dataGetter.getAlbumArtistLink()
@@ -72,21 +74,28 @@ export function createListeningPresence(
     presenceData.buttons = buttons
   }
 
-  if (mediaData.playbackState === 'paused' || (repeatMode && repeatMode !== 'NONE')) {
-    presenceData.smallImageKey = mediaData.playbackState === 'paused'
-      ? Assets.Pause
-      : repeatMode === 'ONE'
-        ? Assets.RepeatOne
-        : Assets.Repeat
+  if (mediaData.playbackState === 'paused') {
+    presenceData.smallImageKey = Assets.Pause
+    presenceData.smallImageText = strings.paused
+  }
+  else if (repeatMode && repeatMode !== 'NONE') {
+    presenceData.smallImageKey = repeatMode === 'ONE'
+      ? Assets.RepeatOne
+      : Assets.Repeat
 
-    presenceData.smallImageText = mediaData.playbackState === 'paused'
-      ? strings.paused
-      : repeatMode === 'ONE'
-        ? strings.onLoop
-        : strings.playlistOnLoop
+    presenceData.smallImageText = repeatMode === 'ONE'
+      ? strings.onLoop
+      : strings.playlistOnLoop
+  }
+  else {
+    presenceData.smallImageKey = Assets.Play
+    presenceData.smallImageText = strings.playing
   }
 
-  if (showTimestamps && mediaData.playbackState === 'playing') {
+  if (showTimestamps && timestampType === 1) {
+    presenceData.startTimestamp = listeningStartTimestamp
+  }
+  else if (showTimestamps && mediaData.playbackState === 'playing') {
     presenceData.startTimestamp = mediaTimestamps[0]
     presenceData.endTimestamp = mediaTimestamps[1]
   }

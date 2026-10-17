@@ -15,6 +15,7 @@ class PresenceState {
   mediaTimestamps: [number, number] = [0, 0]
   oldPath = ''
   startTimestamp = 0
+  listeningStartTimestamp = 0
   videoListenerAttached = false
   dataGetter = new YouTubeMusicDataGetter()
 }
@@ -72,8 +73,20 @@ presence.on('UpdateData', async () => {
       })
     }
 
-    if (!mediaData.title || Number.isNaN(videoElement?.duration ?? Number.NaN)) {
+    if (!mediaData.title) {
       return
+    }
+
+    if (state.dataGetter.isAdPlaying()) {
+      return presence.setActivity({
+        type: ActivityType.Listening,
+        largeImageKey: ActivityAssets.Logo,
+        details: strings.listeningToSong,
+      })
+    }
+
+    if (!state.listeningStartTimestamp) {
+      state.listeningStartTimestamp = Math.floor(Date.now() / 1000)
     }
 
     const currentTimeText = document
@@ -90,7 +103,11 @@ presence.on('UpdateData', async () => {
     if (state.prevTitleAuthor !== currentMediaIdentifier) {
       state.mediaTimestamps = updateSongTimestamps(state.dataGetter)
 
-      if (state.mediaTimestamps[0] === state.mediaTimestamps[1]) {
+      if (
+        settings.showTimestamps
+        && settings.timestampType === 0
+        && state.mediaTimestamps[0] === state.mediaTimestamps[1]
+      ) {
         return
       }
 
@@ -104,16 +121,22 @@ presence.on('UpdateData', async () => {
       watchID,
       repeatMode,
       state.mediaTimestamps,
+      state.listeningStartTimestamp,
       strings,
     )
   }
   else if (settings.showBrowsing) {
+    state.listeningStartTimestamp = 0
+
     if (state.oldPath !== pathname) {
       state.oldPath = pathname
       state.startTimestamp = Math.floor(Date.now() / 1000)
     }
 
     presenceData = createBrowsingPresence(pathname, search, href, state.startTimestamp, strings, settings.privacyMode)
+  }
+  else {
+    state.listeningStartTimestamp = 0
   }
 
   presence.setActivity(presenceData)
