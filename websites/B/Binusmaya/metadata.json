@@ -7,7 +7,7 @@
   },
   "service": "Binusmaya",
   "description": {
-    "en": "Para Mahasiswa Universitas Bina Nusantara, Para Binusian yang sangat saya banggakan, saya Haryanto Prabowo, Rektor Binus University, Rektor Anda semua, saya ingin mengucapkan terima kasih dan selamat kepada anda yang segera akan mengikuti ujian pada periode ini."
+    "en": "Binus LMS (Binusmaya Learning Management System) is the online learning platform of Binus University, where students access courses, forums, assessments, grades, announcements, attendance and class schedules."
   },
   "url": "lms.binus.ac.id",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*lms[.]binus[.]ac[.]id[/]",
