@@ -26,10 +26,31 @@ function getTextContent(selector: string): string | undefined {
   return text && text.length > 0 ? text : undefined
 }
 
-function getValidImageSource(selector: string): string | undefined {
-  const src = document.querySelector<HTMLImageElement>(selector)?.src
+/**
+ * Discord only accepts public http(s) images with a short URL, so
+ * placeholders (data:/blob:) and very long URLs are discarded.
+ */
+function cleanArtwork(url: string | undefined): string | undefined {
+  if (!url || !/^https?:\/\//.test(url))
+    return undefined
 
-  return src && !src.startsWith('data:') ? src : undefined
+  let cleaned = url
+  if (/^https?:\/\/[^/]*ytimg\.com\//.test(cleaned))
+    cleaned = cleaned.split('?')[0] ?? cleaned
+  else if (/googleusercontent\.com|ggpht\.com/.test(cleaned))
+    cleaned = cleaned.replace(/=w\d+-h\d[^/?]*$/, '=w544-h544-l90-rj')
+
+  return cleaned.length > 250 ? undefined : cleaned
+}
+
+function getValidImageSource(selector: string): string | undefined {
+  for (const image of document.querySelectorAll<HTMLImageElement>(selector)) {
+    const src = cleanArtwork(image.currentSrc || image.src)
+    if (src)
+      return src
+  }
+
+  return undefined
 }
 
 function getPlayerLinks(): HTMLAnchorElement[] {
@@ -38,6 +59,23 @@ function getPlayerLinks(): HTMLAnchorElement[] {
       '.byline.ytmusic-player-bar a, ytmusic-player-bar .subtitle a',
     ),
   ]
+}
+
+/**
+ * Returns every credited artist (e.g. "Artist A, Artist B y Artist C").
+ * The first segment of the player bar byline holds all of them, while the
+ * links only give access to the first one reliably.
+ */
+function getArtistsText(): string | undefined {
+  const text = document
+    .querySelector('.byline.ytmusic-player-bar, ytmusic-player-bar .subtitle')
+    ?.textContent
+    ?.replace(/\s+/g, ' ')
+    .trim()
+    .split('•')[0]
+    ?.trim()
+
+  return text && text.length > 0 ? text : undefined
 }
 
 function getPlaybackStateFromControls(): MediaData['playbackState'] {
@@ -116,7 +154,7 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
         title: this.mediaSession.metadata.title,
         artist: this.mediaSession.metadata.artist,
         album: this.mediaSession.metadata.album,
-        artwork: this.mediaSession.metadata.artwork?.at(-1)?.src,
+        artwork: this.getMediaSessionArtwork() ?? artwork ?? this.getArtworkFallback(),
         duration: videoElement?.duration,
       }
     }
@@ -128,11 +166,31 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
     return {
       playbackState: playerPlaybackState,
       title,
-      artist: artistElement?.textContent?.trim() || undefined,
+      artist: getArtistsText() ?? (artistElement?.textContent?.trim() || undefined),
       album,
-      artwork,
+      artwork: artwork ?? this.getArtworkFallback(),
       duration: videoElement?.duration,
     }
+  }
+
+  private getMediaSessionArtwork(): string | undefined {
+    const images = this.mediaSession?.metadata?.artwork
+    if (!images)
+      return undefined
+
+    for (const image of [...images].reverse()) {
+      const src = cleanArtwork(image.src)
+      if (src)
+        return src
+    }
+
+    return undefined
+  }
+
+  private getArtworkFallback(): string | undefined {
+    const watchId = this.getWatchId()
+
+    return watchId ? `https://i.ytimg.com/vi/${watchId}/hqdefault.jpg` : undefined
   }
 
   getWatchId(): string | undefined {
