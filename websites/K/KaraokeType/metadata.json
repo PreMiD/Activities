@@ -15,7 +15,7 @@
   "regExp": "^https?[:][/][/](www[.])?karaoketype[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.postimg.cc/3JGYtxg1/karaoketype.jpg",
-  "thumbnail": "https://i.postimg.cc/3JGYtxg1/karaoketype.jpg",
+  "thumbnail": "https://i.postimg.cc/HnCBzh36/karaoketype.png",
   "color": "#1DB954",
   "category": "games",
   "tags": ["karaoke", "typing", "game", "music", "multiplayer", "speedtest", "rankings"],
