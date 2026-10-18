@@ -5,18 +5,32 @@
     "name": "Kubuś!",
     "id": "404217213873029120"
   },
+  "contributors": [
+    {
+      "name": "MORQS",
+      "id": "308930846298210304"
+    }
+  ],
   "service": "Trakt",
   "description": {
     "en": "Track what you watch and when. Discover what's hot and where you can watch it. Share comments, ratings and recommendations."
   },
   "url": "trakt.tv",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*trakt[.]tv[/]",
-  "version": "1.1.2",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Trakt/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Trakt/assets/thumbnail.png",
+  "version": "2.0.0",
+  "logo": "https://i.postimg.cc/Cxwsz86J/trakt-logomark.png",
+  "thumbnail": "https://i.postimg.cc/8zTmjvnb/traktbg.png",
   "color": "#ff0000",
   "category": "videos",
   "tags": [
     "videos"
+  ],
+  "settings": [
+    {
+      "id": "showNowPlaying",
+      "title": "Show Now Playing Status",
+      "icon": "fas fa-play-circle",
+      "value": true
+    }
   ]
 }
