@@ -3,8 +3,6 @@ const presence = new Presence({
 })
 
 const LOGO = 'https://i.postimg.cc/3JGYtxg1/karaoketype.jpg'
-const SITE_URL = 'https://karaoketype.com/'
-const BUTTONS: [ButtonData] = [{ label: 'Play KaraokeType', url: SITE_URL }]
 const pageLoadedAt = Math.floor(Date.now() / 1000)
 
 /** Live snapshot of the 60s Speed Test (published by SpeedTest.snapshot() in index.html). */
@@ -245,7 +243,6 @@ presence.on('UpdateData', async () => {
       details: profile ? 'Browsing Profiles' : 'Playing KaraokeType',
       state: profile ? 'Main Menu' : 'In Game',
       startTimestamp: pageLoadedAt,
-      buttons: BUTTONS,
     })
     return
   }
@@ -254,5 +251,5 @@ presence.on('UpdateData', async () => {
   const isOnlinePage = !!document.getElementById('room-grid')
   const data = isOnlinePage ? buildOnline(bridge) : buildSolo(bridge)
 
-  presence.setActivity({ largeImageKey: LOGO, ...data, buttons: BUTTONS })
+  presence.setActivity({ largeImageKey: LOGO, ...data })
 })
