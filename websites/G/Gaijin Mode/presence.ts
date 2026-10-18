@@ -1,11 +1,11 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1561263394626076772', // Discord Developer Portal > New Application named "Gaijin Mode"
 })
 
 enum ActivityAssets {
-  Logo = 'https://www.gaijinmode.com/assets/logos/logo.png',
+  Logo = 'https://i.imgur.com/qeBB1Jd.png',
 }
 
 type Section
@@ -177,6 +177,7 @@ presence.on('UpdateData', async () => {
   }
 
   const presenceData: PresenceData = {
+    type: ActivityType.Playing,
     largeImageKey: ActivityAssets.Logo,
     largeImageText: 'Gaijin Mode',
     smallImageKey: view.icon,
