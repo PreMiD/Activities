@@ -1,3 +1,5 @@
+import { ActivityType } from "premid"
+
 const presence = new Presence({
   clientId: '968880591003082783',
 })
@@ -168,10 +170,10 @@ try {
       const presenceData: PresenceData = {
         largeImageKey: ActivityAssets.traktLogomark,
         startTimestamp: browsingTimestamp,
-        type: 3,
+        type: ActivityType.Watching,
       }
 
-      const showNowPlaying = await presence.getSetting('showNowPlaying')
+      const showNowPlaying = await presence.getSetting<boolean>('showNowPlaying')
       const nowPlayingToast = document.querySelector('.trakt-now-playing-container')
 
       if (nowPlayingToast && showNowPlaying) {
