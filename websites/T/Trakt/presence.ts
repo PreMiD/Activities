@@ -34,6 +34,16 @@ function getMeta(property: string): string | null {
   return document.querySelector(`meta[property="${property}"]`)?.getAttribute('content') || null
 }
 
+function cleanTitle(rawTitle: string | null): string {
+  if (!rawTitle)
+    return ''
+
+  return rawTitle
+    .replace(/^Trakt Web\s*:\s*/i, '')
+    .replace(/\s*[-–—]\s*Trakt$/i, '')
+    .trim()
+}
+
 function setSmallIcon(data: PresenceData, key: string, text: string) {
   data.smallImageKey = key
   data.smallImageText = text
@@ -151,6 +161,7 @@ try {
       const isPopular = pathname === '/discover/popular'
       const isTrending = pathname === '/discover' || pathname === '/discover/trending'
       const isProfile = pathname.startsWith('/users/') || pathname.startsWith('/profile/')
+      const isPeople = pathname.startsWith('/people')
       const isSearch = pathname.startsWith('/search')
       const isMedia = pathname.startsWith('/shows') || pathname.startsWith('/movies')
 
@@ -468,6 +479,32 @@ try {
           })
         }
       }
+      else if (isPeople) {
+        const personTitle = cleanTitle(getMeta('og:title')) || document.querySelector('.trakt-person-title h1')?.textContent?.trim() || 'Person'
+        const personDetail = document.querySelector('.trakt-person-title p')?.textContent?.trim() || 'Profile'
+        const personImage = document.querySelector('.trakt-summary-poster img, .trakt-person-image img') as HTMLImageElement | null
+        const personRole = personDetail.toLowerCase()
+        const personRoleMap: Record<string, string> = {
+          acting: 'Actor',
+          directing: 'Director',
+          writing: 'Writer',
+          producing: 'Producer',
+          casting: 'Casting',
+          music: 'Musician',
+        }
+        const personRoleLabel = personRoleMap[personRole] ?? 'Person'
+
+        presenceData.details = `Viewing ${personRoleLabel}`
+        presenceData.state = truncate(personTitle)
+        setSmallIcon(presenceData, ActivityAssets.users, personRoleLabel)
+
+        if (personImage?.src) {
+          presenceData.largeImageKey = personImage.src
+          presenceData.largeImageText = truncate(personTitle)
+        }
+
+        presenceData.buttons = [{ label: 'View on Trakt', url: href }]
+      }
       else if (isSearch) {
         const queryParams = new URLSearchParams(search)
         const searchInput = document.querySelector('.trakt-search-input') as HTMLInputElement
@@ -486,7 +523,7 @@ try {
       }
       else if (isMedia) {
         const isShow = pathname.startsWith('/shows')
-        const ogTitle = getMeta('og:title') || document.title.replace(' - Trakt', '').trim()
+        const ogTitle = cleanTitle(getMeta('og:title')) || document.title.replace(' - Trakt', '').trim()
         const primaryImage = getPrimaryMediaImage()
 
         presenceData.details = isShow ? 'Viewing TV Show' : 'Viewing Movie'
