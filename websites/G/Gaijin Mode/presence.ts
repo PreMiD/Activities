@@ -179,7 +179,6 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     type: ActivityType.Playing,
     largeImageKey: ActivityAssets.Logo,
-    largeImageText: 'Gaijin Mode',
     smallImageKey: view.icon,
     details: clamp(fancy ? `✦ ${view.jp} ✦` : view.plainDetails),
   }
