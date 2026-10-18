@@ -48,6 +48,18 @@ function getProfileAvatar(): string | null {
   return avatarImg?.src || null
 }
 
+function getPrimaryMediaImage(): string | null {
+  const posterImg = document.querySelector('.trakt-summary-poster img') as HTMLImageElement | null
+  if (posterImg?.src)
+    return posterImg.src
+
+  const heroImg = document.querySelector('.trakt-summary-content img') as HTMLImageElement | null
+  if (heroImg?.src && /images\//.test(heroImg.src))
+    return heroImg.src
+
+  return getMeta('og:image')
+}
+
 function getDisplayUsername(pathname: string): string {
   const rawUsername = pathname.split('/')[2] || 'a user'
   const loggedInUser = document.querySelector('.trakt-profile-link-username')?.textContent?.trim()?.toLowerCase()
@@ -475,13 +487,13 @@ try {
       else if (isMedia) {
         const isShow = pathname.startsWith('/shows')
         const ogTitle = getMeta('og:title') || document.title.replace(' - Trakt', '').trim()
-        const ogImage = getMeta('og:image')
+        const primaryImage = getPrimaryMediaImage()
 
         presenceData.details = isShow ? 'Viewing TV Show' : 'Viewing Movie'
         presenceData.state = truncate(ogTitle)
 
-        if (ogImage) {
-          presenceData.largeImageKey = ogImage
+        if (primaryImage) {
+          presenceData.largeImageKey = primaryImage
           presenceData.largeImageText = truncate(ogTitle)
           setSmallIcon(
             presenceData,
