@@ -11,31 +11,14 @@ enum ActivityAssets {
 }
 
 enum IconAssets {
-  MagicPen = 'https://i.imgur.com/u91zmaE.png',
-  Login = 'https://i.imgur.com/FsZPn7h.png',
   House = 'https://i.imgur.com/d0u9KBC.png',
-  Book = 'https://i.imgur.com/S0yvaDs.png',
   UpDown = 'https://i.imgur.com/JAbwLgh.png',
   Search = 'https://i.imgur.com/XBf1cGW.png',
   Crown = 'https://i.imgur.com/46F79PQ.png',
   Person = 'https://i.imgur.com/ZSiPGqT.png',
-  Plus = 'https://i.imgur.com/F1W4m5F.png',
-  PersonCheck = 'https://i.imgur.com/Q2gWRtY.png',
-  Bookmark = 'https://i.imgur.com/DzXeiWS.png',
-  Settings = 'https://i.imgur.com/GASIlZP.png',
-  Notification = 'https://i.imgur.com/PVJdOfm.png',
-  Chat = 'https://i.imgur.com/GmdAyQk.png',
   Network = 'https://i.imgur.com/he4qHAL.png',
-  Cloud = 'https://i.imgur.com/T99PYwE.png',
-  CommandLine = 'https://i.imgur.com/EfA6nXg.png',
-  Pencil = 'https://i.imgur.com/WCNCAfF.png',
-  SettingsAlt = 'https://i.imgur.com/JKIwVXB.png',
-  Group = 'https://i.imgur.com/5yGqlXI.png',
-  Clock = 'https://i.imgur.com/5PiTO2N.png',
   Sparkle = 'https://i.imgur.com/DBNSiFh.png',
-  Parcel = 'https://i.imgur.com/QcQ4uDk.png',
   Cart = 'https://i.imgur.com/Pdhm2Ja.png',
-  Dumbell = 'https://i.imgur.com/Enn4T70.png',
 }
 
 function getText(selector: string): string | undefined {
