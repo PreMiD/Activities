@@ -50,7 +50,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = Assets.Writing
     }
     presenceData.state = messageRecipient
-      ? document.querySelector('div.t6p9ggj4.tkr6xdv7 span > span')
+      ? document.querySelector('div.xdj266r.x14z9mp span > span')
         ?.textContent ?? 'Unknown'
       : '(Hidden)'
   }
