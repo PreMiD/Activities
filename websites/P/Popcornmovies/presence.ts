@@ -1,4 +1,4 @@
-import { ActivityType, getTimestamps } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1465383098437992448',
@@ -11,8 +11,6 @@ enum ActivityAssets {
 }
 
 enum IconAssets {
-  Pause = 'https://i.imgur.com/CI5FfJQ.png',
-  Play = 'https://i.imgur.com/qDcQfEh.png',
   MagicPen = 'https://i.imgur.com/u91zmaE.png',
   Login = 'https://i.imgur.com/FsZPn7h.png',
   House = 'https://i.imgur.com/d0u9KBC.png',
@@ -27,7 +25,6 @@ enum IconAssets {
   Settings = 'https://i.imgur.com/GASIlZP.png',
   Notification = 'https://i.imgur.com/PVJdOfm.png',
   Chat = 'https://i.imgur.com/GmdAyQk.png',
-  Eye = 'https://i.imgur.com/YgvuHjf.png',
   Network = 'https://i.imgur.com/he4qHAL.png',
   Cloud = 'https://i.imgur.com/T99PYwE.png',
   CommandLine = 'https://i.imgur.com/EfA6nXg.png',
@@ -118,26 +115,28 @@ function getStructuredDataImage(): string | undefined {
 }
 
 presence.on('UpdateData', async () => {
-  const strings = await presence.getStrings({
-    browse: 'general.browsing',
-    home: 'general.viewHome',
-    paused: 'general.paused',
-    playing: 'general.playing',
-    profile: 'general.viewProfile',
-    search: 'general.search',
-    searchFor: 'general.searchFor',
-    viewGenre: 'general.viewGenre',
-    viewPage: 'general.viewPage',
-  })
-  const privacyMode = await presence.getSetting<boolean>('privacyMode')
-  const showJoinPartyButton = await presence.getSetting<boolean>('showJoinPartyButton')
+  const [strings, privacyMode, showJoinPartyButton] = await Promise.all([
+    presence.getStrings({
+      browse: 'general.browsing',
+      home: 'general.viewHome',
+      paused: 'general.paused',
+      playing: 'general.playing',
+      profile: 'general.viewProfile',
+      search: 'general.search',
+      searchFor: 'general.searchFor',
+      viewGenre: 'general.viewGenre',
+      viewPage: 'general.viewPage',
+    }),
+    presence.getSetting<boolean>('privacyMode'),
+    presence.getSetting<boolean>('showJoinPartyButton'),
+  ])
 
   const { pathname } = document.location
-  const presenceData = {
+  let presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
     type: ActivityType.Playing,
-  } as PresenceData & { type: ActivityType }
+  }
 
   const globalSearch = document.querySelector<HTMLInputElement>(
     'input[aria-label="Search the catalog"]',
@@ -147,7 +146,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = globalSearch.value.trim()
     presenceData.smallImageKey = IconAssets.Search
     presenceData.smallImageText = strings.search
-    presence.setActivity(presenceData as PresenceData)
+    presence.setActivity(presenceData)
     return
   }
 
@@ -169,7 +168,10 @@ presence.on('UpdateData', async () => {
     if (video) {
       const isPlaying = !video.paused && !video.ended && video.readyState > 2
 
-      presenceData.type = ActivityType.Watching
+      presenceData = {
+        ...presenceData,
+        type: ActivityType.Watching,
+      }
       if (privacyMode) {
         presenceData.name = 'a movie'
         delete presenceData.details
@@ -202,7 +204,7 @@ presence.on('UpdateData', async () => {
           presenceData.state = [metadataText, partyStatus].filter(Boolean).join(' • ')
         else
           delete presenceData.state
-        presenceData.smallImageKey = isPlaying ? IconAssets.Play : IconAssets.Pause
+        presenceData.smallImageKey = isPlaying ? Assets.Play : Assets.Pause
         presenceData.smallImageText = isPlaying ? strings.playing : strings.paused
 
         const poster = player?.querySelector<HTMLImageElement>('img[alt]')
@@ -227,7 +229,7 @@ presence.on('UpdateData', async () => {
         }
       }
 
-      presence.setActivity(presenceData as PresenceData)
+      presence.setActivity(presenceData)
       return
     }
   }
@@ -240,7 +242,7 @@ presence.on('UpdateData', async () => {
     presenceData.state = query || strings.search
     presenceData.smallImageKey = IconAssets.Search
     presenceData.smallImageText = strings.search
-    presence.setActivity(presenceData as PresenceData)
+    presence.setActivity(presenceData)
     return
   }
 
@@ -264,7 +266,7 @@ presence.on('UpdateData', async () => {
       presenceData.state = metadataText
     else
       delete presenceData.state
-    presenceData.smallImageKey = IconAssets.Eye
+    presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = strings.browse
 
     const image = getStructuredDataImage() || getPageImage()
@@ -272,7 +274,7 @@ presence.on('UpdateData', async () => {
       presenceData.smallImageKey = image
     }
 
-    presence.setActivity(presenceData as PresenceData)
+    presence.setActivity(presenceData)
     return
   }
 
@@ -357,5 +359,5 @@ presence.on('UpdateData', async () => {
   presenceData.state = state
   if (presenceData.smallImageKey)
     presenceData.smallImageText = strings.browse
-  presence.setActivity(presenceData as PresenceData)
+  presence.setActivity(presenceData)
 })
