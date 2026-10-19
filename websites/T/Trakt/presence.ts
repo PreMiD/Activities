@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '968880591003082783',
@@ -18,14 +18,11 @@ const ActivityAssets = {
   calendarDays: 'https://i.postimg.cc/JzR5GXd0/calendar-days-solid.png',
   faceGrinHearts: 'https://i.postimg.cc/dVJjLCSL/face-grin-hearts-solid.png',
   users: 'https://i.postimg.cc/vZGtcnS2/users-solid.png',
-  magnifyingGlass: 'https://i.postimg.cc/VkzWdtHn/magnifying-glass-solid.png',
   userGear: 'https://i.postimg.cc/3x3FdGbS/user-gear-solid.png',
   userClock: 'https://i.postimg.cc/MpzmvBrs/user-clock-solid.png',
   userSecret: 'https://i.postimg.cc/HkT9VMP6/user-secret-solid.png',
   tv: 'https://i.postimg.cc/7ZqnfzQm/tv-solid.png',
   film: 'https://i.postimg.cc/GmbxHDSy/film-solid.png',
-  play: 'https://i.postimg.cc/8zTmjvnm/play-solid.png',
-  pause: 'https://i.postimg.cc/RZvLNtb1/pause-solid.png',
 }
 
 //* HELPERS
@@ -56,16 +53,16 @@ function pluralize(count: number, singular: string) {
 }
 
 function getProfileAvatar(): string | null {
-  const avatarImg = document.querySelector('.trakt-profile-image img, .trakt-profile-button img') as HTMLImageElement
+  const avatarImg = document.querySelector<HTMLImageElement>('.trakt-profile-image img, .trakt-profile-button img')
   return avatarImg?.src || null
 }
 
 function getPrimaryMediaImage(): string | null {
-  const posterImg = document.querySelector('.trakt-summary-poster img') as HTMLImageElement | null
+  const posterImg = document.querySelector<HTMLImageElement>('.trakt-summary-poster img')
   if (posterImg?.src)
     return posterImg.src
 
-  const heroImg = document.querySelector('.trakt-summary-content img') as HTMLImageElement | null
+  const heroImg = document.querySelector<HTMLImageElement>('.trakt-summary-content img')
   if (heroImg?.src && /images\//.test(heroImg.src))
     return heroImg.src
 
@@ -179,7 +176,7 @@ try {
       if (nowPlayingToast && showNowPlaying) {
         const titleEl = nowPlayingToast.querySelector('.bold.ellipsis')
         const imgEl = nowPlayingToast.querySelector('img')
-        const linkEl = nowPlayingToast.querySelector('a.trakt-link') as HTMLAnchorElement
+        const linkEl = nowPlayingToast.querySelector<HTMLAnchorElement>('a.trakt-link')
         const timeRemainingEl = nowPlayingToast.querySelector('.trakt-now-playing-remaining')
 
         let stateText = titleEl?.textContent?.trim() || 'Media'
@@ -205,7 +202,7 @@ try {
           presenceData.buttons = [{ label: 'View on Trakt', url: linkEl.href }]
         }
 
-        setSmallIcon(presenceData, ActivityAssets.play, 'Now Playing')
+        setSmallIcon(presenceData, ActivityAssets.traktCirclemark, 'Now Playing')
 
         if (timeRemainingEl?.textContent) {
           let minutesLeft = 0
@@ -484,7 +481,7 @@ try {
       else if (isPeople) {
         const personTitle = cleanTitle(getMeta('og:title')) || document.querySelector('.trakt-person-title h1')?.textContent?.trim() || 'Person'
         const personDetail = document.querySelector('.trakt-person-title p')?.textContent?.trim() || 'Profile'
-        const personImage = document.querySelector('.trakt-summary-poster img, .trakt-person-image img') as HTMLImageElement | null
+        const personImage = document.querySelector<HTMLImageElement>('.trakt-summary-poster img, .trakt-person-image img')
         const personRole = personDetail.toLowerCase()
         const personRoleMap: Record<string, string> = {
           acting: 'Actor',
@@ -509,11 +506,11 @@ try {
       }
       else if (isSearch) {
         const queryParams = new URLSearchParams(search)
-        const searchInput = document.querySelector('.trakt-search-input') as HTMLInputElement
+        const searchInput = document.querySelector<HTMLInputElement>('.trakt-search-input')
         const query = queryParams.get('q') || queryParams.get('query') || searchInput?.value?.trim() || ''
 
         presenceData.details = 'Searching'
-        setSmallIcon(presenceData, ActivityAssets.magnifyingGlass, 'Search')
+        setSmallIcon(presenceData, Assets.Search, 'Search')
 
         if (query) {
           presenceData.state = truncate(`Looking for "${query}"`)
