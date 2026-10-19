@@ -10,6 +10,7 @@ export interface Settings {
   privacyMode: boolean
   displayType: number
   links: boolean
+  timestampType: number
 }
 
 export function updateSongTimestamps(
@@ -51,6 +52,7 @@ export async function getSettings(presence: Presence): Promise<Settings> {
     privacyMode,
     displayType,
     links,
+    timestampType,
   ] = await Promise.all([
     presence.getSetting<boolean>('buttons'),
     presence.getSetting<boolean>('timestamps'),
@@ -60,6 +62,7 @@ export async function getSettings(presence: Presence): Promise<Settings> {
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<number>('displayType'),
     presence.getSetting<boolean>('links'),
+    presence.getSetting<number>('timestampType'),
   ])
 
   return {
@@ -71,5 +74,6 @@ export async function getSettings(presence: Presence): Promise<Settings> {
     privacyMode,
     displayType,
     links,
+    timestampType,
   }
 }

@@ -21,7 +21,7 @@
   },
   "url": "music.youtube.com",
   "regExp": "^https?[:][/][/]music[.]youtube[.]com[/]",
-  "version": "3.4.3",
+  "version": "3.4.5",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/thumbnail.png",
   "color": "#E40813",
@@ -67,6 +67,20 @@
       "icon": "fad fa-stopwatch",
       "value": true,
       "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "timestampType",
+      "title": "Timestamp Type",
+      "icon": "fad fa-clock",
+      "value": 0,
+      "values": [
+        "Playback Progress",
+        "Elapsed Listening Time"
+      ],
+      "if": {
+        "timestamps": true,
         "privacy": false
       }
     },

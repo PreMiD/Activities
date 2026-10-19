@@ -29,6 +29,7 @@ const browsePages: Record<string, string> = {
   wrapped: 'Wrapped',
   apps: 'Apps',
   faq: 'FAQ',
+  providers: 'Providers',
 }
 
 const namedPages: Record<string, string> = {
@@ -45,6 +46,9 @@ function text(selector: string) {
 }
 
 function squarePoster(source: string | null | undefined) {
+  const cover = source?.match(/(?:\/api\/anime-image\/s4\/|s4\.anilist\.co\/file\/anilistcdn\/)(media\/anime\/cover\/(?:large|medium)\/[\w.-]+\.(?:png|jpe?g))/i)?.[1]
+  if (cover)
+    return `${site}/api/poster-square/512/anime/${cover}`
   const file = source?.match(/\/(?:api\/tmdb-image|t\/p)\/\w+\/([\w.-]+)/)?.[1]
   if (!file)
     return
@@ -53,7 +57,8 @@ function squarePoster(source: string | null | undefined) {
 
 function pagePoster() {
   const detail = document.querySelector<HTMLElement>('.detail')
-  return squarePoster(detail?.style.getPropertyValue('--mobile-poster').match(/url\(['"]?([^'")]+)/)?.[1])
+  return squarePoster(detail?.style.getPropertyValue('--mobile-poster').match(/url\(['"]?([^'")]+)/)?.[1]
+    ?? document.querySelector<HTMLElement>('[data-poster]')?.dataset.poster)
 }
 
 function pageYear() {
