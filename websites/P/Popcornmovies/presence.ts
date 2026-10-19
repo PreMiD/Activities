@@ -13,7 +13,6 @@ enum ActivityAssets {
 enum IconAssets {
   House = 'https://i.imgur.com/d0u9KBC.png',
   UpDown = 'https://i.imgur.com/JAbwLgh.png',
-  Search = 'https://i.imgur.com/XBf1cGW.png',
   Crown = 'https://i.imgur.com/46F79PQ.png',
   Person = 'https://i.imgur.com/ZSiPGqT.png',
   Network = 'https://i.imgur.com/he4qHAL.png',
@@ -127,7 +126,7 @@ presence.on('UpdateData', async () => {
   if (globalSearch && isVisible(globalSearch) && globalSearch.value.trim()) {
     presenceData.details = strings.searchFor
     presenceData.state = globalSearch.value.trim()
-    presenceData.smallImageKey = IconAssets.Search
+    presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = strings.search
     presence.setActivity(presenceData)
     return
@@ -223,7 +222,7 @@ presence.on('UpdateData', async () => {
 
     presenceData.details = strings.searchFor
     presenceData.state = query || strings.search
-    presenceData.smallImageKey = IconAssets.Search
+    presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = strings.search
     presence.setActivity(presenceData)
     return
@@ -273,7 +272,7 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/browse') {
     details = strings.viewPage
     state = 'Browse'
-    presenceData.smallImageKey = IconAssets.Search
+    presenceData.smallImageKey = Assets.Search
   }
   else if (pathname === '/store') {
     details = 'Viewing Store'
@@ -283,12 +282,12 @@ presence.on('UpdateData', async () => {
   else if (pathname === '/movies') {
     details = strings.viewPage
     state = 'Movies'
-    presenceData.smallImageKey = IconAssets.Search
+    presenceData.smallImageKey = Assets.Search
   }
   else if (pathname === '/tv') {
     details = strings.viewPage
     state = 'TV Shows'
-    presenceData.smallImageKey = IconAssets.Search
+    presenceData.smallImageKey = Assets.Search
   }
   else if (pathname === '/anime') {
     details = strings.viewPage
@@ -311,7 +310,7 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.startsWith('/genre/')) {
     details = strings.viewGenre
-    presenceData.smallImageKey = IconAssets.Search
+    presenceData.smallImageKey = Assets.Search
   }
   else if (pathname === '/networks') {
     details = strings.viewPage
