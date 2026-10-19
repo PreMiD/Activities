@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "$schema": "https://schemas.premid.app/metadata/1.16",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -9,6 +9,10 @@
     {
       "name": "Kyrie",
       "id": "368399721494216706"
+    },
+    {
+      "name": "itsmateo20",
+      "id": "630812692659044352"
     }
   ],
   "service": "Messenger",
@@ -19,7 +23,7 @@
   },
   "url": "www.messenger.com",
   "regExp": "^https?[:][/][/](www[.])?messenger[.]com[/]",
-  "version": "1.3.1",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Messenger/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Messenger/assets/thumbnail.jpg",
   "color": "#00a3ff",
