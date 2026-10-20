@@ -285,7 +285,7 @@ presence.on('UpdateData', async () => {
           url: href,
         },
         {
-          label: 'Community',
+          label: 'View Community',
           url: 'https://yumezone.live/community',
         },
       ]
