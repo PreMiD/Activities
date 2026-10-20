@@ -145,11 +145,14 @@ presence.on('UpdateData', async () => {
           label: strings.buttonViewEpisode || 'Watch Episode',
           url: href,
         },
-        {
-          label: strings.buttonViewSeries || 'Anime Details',
-          url: animeId ? `https://yumezone.live/anime/${animeId}` : 'https://yumezone.live/home',
-        },
       ]
+
+      if (animeId) {
+        presenceData.buttons.push({
+          label: strings.buttonViewSeries || 'Anime Details',
+          url: `https://yumezone.live/anime/${animeId}`,
+        })
+      }
     }
 
     if (privacyMode) {
@@ -204,10 +207,6 @@ presence.on('UpdateData', async () => {
               {
                 label: 'View Manga',
                 url: href,
-              },
-              {
-                label: 'Browse Manga',
-                url: 'https://yumezone.live/manga',
               },
             ]
       }
@@ -320,10 +319,6 @@ presence.on('UpdateData', async () => {
           label: isPost ? 'View Discussion' : 'Join Community',
           url: href,
         },
-        {
-          label: 'Explore Catalog',
-          url: 'https://yumezone.live/home',
-        },
       ]
     }
 
@@ -347,10 +342,6 @@ presence.on('UpdateData', async () => {
           label: 'Search Results',
           url: href,
         },
-        {
-          label: 'Browse Catalog',
-          url: 'https://yumezone.live/home',
-        },
       ]
     }
 
@@ -366,19 +357,6 @@ presence.on('UpdateData', async () => {
   presenceData.type = ActivityType.Watching
   presenceData.details = strings.viewHome || 'Home'
   presenceData.state = 'Browsing Catalog'
-
-  if (buttons) {
-    presenceData.buttons = [
-      {
-        label: 'Explore Anime',
-        url: 'https://yumezone.live/home',
-      },
-      {
-        label: 'Browse Manga',
-        url: 'https://yumezone.live/manga',
-      },
-    ]
-  }
 
   presence.setActivity(presenceData)
 })
