@@ -26,7 +26,8 @@ presence.on('UpdateData', async () => {
   if (scriptEl && scriptEl.textContent) {
     try {
       metaData = JSON.parse(scriptEl.textContent)
-    } catch {}
+    }
+    catch {}
   }
 
   const path = document.location.pathname
@@ -36,41 +37,53 @@ presence.on('UpdateData', async () => {
     const mediaState = document.getElementById('anivesta-media-state')
     const playbackEl = document.getElementById('wpPlaybackProgress')
 
-    const animeTitle =
-      metaData?.anime ||
-      playbackEl?.dataset?.animeTitle ||
-      document.querySelector('.wp-anime-title')?.textContent?.trim() ||
-      'Anime'
+    const animeTitle
+      = metaData?.anime
+      || playbackEl?.dataset?.animeTitle
+      || document.querySelector('.wp-anime-title')?.textContent?.trim()
+      || 'Anime'
 
-    const seasonNum = parseInt(metaData?.season || playbackEl?.dataset?.season || '1', 10)
-    const episodeNum = parseInt(metaData?.episode || playbackEl?.dataset?.episodeNumber || '1', 10)
-    const posterUrl = metaData?.poster || playbackEl?.dataset?.animeImage || ActivityAssets.Logo
+    const seasonNum = Number.parseInt(
+      metaData?.season || playbackEl?.dataset?.season || '1',
+      10,
+    )
+    const episodeNum = Number.parseInt(
+      metaData?.episode || playbackEl?.dataset?.episodeNumber || '1',
+      10,
+    )
+    const posterUrl
+      = metaData?.poster
+      || playbackEl?.dataset?.animeImage
+      || ActivityAssets.Logo
     const currentUrl = metaData?.url || document.location.href
-    const animeUrl =
-      metaData?.animeUrl ||
-      (playbackEl?.dataset?.animeSlug
+    const animeUrl
+      = metaData?.animeUrl
+      || (playbackEl?.dataset?.animeSlug
         ? `https://anivesta.com/anime/${playbackEl.dataset.animeSlug}`
         : null)
 
     const isPaused = mediaState?.dataset?.status === 'paused'
-    const currentTime = parseFloat(
-      mediaState?.dataset?.currentTime || playbackEl?.dataset?.currentTime || '0'
+    const currentTime = Number.parseFloat(
+      mediaState?.dataset?.currentTime || playbackEl?.dataset?.currentTime || '0',
     )
-    const duration = parseFloat(
-      mediaState?.dataset?.duration || playbackEl?.dataset?.duration || '1440'
+    const duration = Number.parseFloat(
+      mediaState?.dataset?.duration || playbackEl?.dataset?.duration || '1440',
     )
 
     presenceData.type = ActivityType.Watching
     presenceData.details = animeTitle
-    presenceData.state =
-      seasonNum > 1 ? `${seasonNum}. Sezon ${episodeNum}. Bölüm` : `${episodeNum}. Bölüm`
+    presenceData.state
+      = seasonNum > 1
+        ? `${seasonNum}. Sezon ${episodeNum}. Bölüm`
+        : `${episodeNum}. Bölüm`
 
     if (showCover && posterUrl) {
       presenceData.largeImageKey = posterUrl
       presenceData.largeImageText = animeTitle
       presenceData.smallImageKey = ActivityAssets.Logo
       presenceData.smallImageText = isPaused ? 'Duraklatıldı' : 'Anivesta'
-    } else {
+    }
+    else {
       presenceData.largeImageKey = ActivityAssets.Logo
       presenceData.largeImageText = animeTitle
     }
@@ -79,14 +92,15 @@ presence.on('UpdateData', async () => {
       const timestamps = getTimestamps(currentTime, duration)
       presenceData.startTimestamp = timestamps[0]
       presenceData.endTimestamp = timestamps[1]
-    } else if (isPaused) {
+    }
+    else if (isPaused) {
       presenceData.smallImageText = 'Duraklatıldı'
     }
 
     if (showButtons) {
       presenceData.buttons = [
         {
-          label: "Anivesta'da İzle",
+          label: 'Anivesta\'da İzle',
           url: currentUrl,
         },
       ]
@@ -101,14 +115,14 @@ presence.on('UpdateData', async () => {
   }
   // 3. ANİME DETAY SAYFASI (/anime/...)
   else if (path.startsWith('/anime') && !path.includes('/bolumler')) {
-    const animeTitle =
-      metaData?.anime ||
-      document.querySelector('.ad-title')?.textContent?.trim() ||
-      'Anime Detayı'
-    const posterUrl =
-      metaData?.poster ||
-      document.querySelector('.ad-poster-img')?.getAttribute('src') ||
-      ActivityAssets.Logo
+    const animeTitle
+      = metaData?.anime
+      || document.querySelector('.ad-title')?.textContent?.trim()
+      || 'Anime Detayı'
+    const posterUrl
+      = metaData?.poster
+      || document.querySelector('.ad-poster-img')?.getAttribute('src')
+      || ActivityAssets.Logo
 
     presenceData.type = ActivityType.Watching
     presenceData.details = animeTitle
@@ -119,7 +133,8 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageText = animeTitle
       presenceData.smallImageKey = ActivityAssets.Logo
       presenceData.smallImageText = 'Anivesta'
-    } else {
+    }
+    else {
       presenceData.largeImageKey = ActivityAssets.Logo
       presenceData.largeImageText = animeTitle
     }
@@ -138,18 +153,22 @@ presence.on('UpdateData', async () => {
   // 4. TOPLULUK & FORUM SAYFALARI (/social)
   else if (path.startsWith('/social')) {
     if (metaData?.type === 'community_topic' || path.includes('/topic/')) {
-      const topicTitle =
-        metaData?.title ||
-        document.querySelector('.thread-header-card h1')?.textContent?.trim() ||
-        'Forum Tartışması'
+      const topicTitle
+        = metaData?.title
+        || document.querySelector('.thread-header-card h1')?.textContent?.trim()
+        || 'Forum Tartışması'
       presenceData.details = 'Toplulukta Tartışıyor'
-      presenceData.state =
-        topicTitle.length > 30 ? topicTitle.slice(0, 27) + '...' : topicTitle
-    } else {
+      presenceData.state
+        = topicTitle.length > 30
+          ? `${topicTitle.slice(0, 27)}...`
+          : topicTitle
+    }
+    else {
       presenceData.details = 'Topluluk & Forum'
-      presenceData.state = metaData?.category
-        ? `${metaData.category} Kategorisinde`
-        : 'Konuları Keşfediyor'
+      presenceData.state
+        = metaData?.category
+          ? `${metaData.category} Kategorisinde`
+          : 'Konuları Keşfediyor'
     }
 
     presenceData.largeImageKey = ActivityAssets.Logo
