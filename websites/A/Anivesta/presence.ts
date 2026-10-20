@@ -1,4 +1,4 @@
-import { ActivityType, Presence, getTimestamps } from 'premid'
+import { ActivityType, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1323996217675616321',
@@ -15,6 +15,7 @@ presence.on('UpdateData', async () => {
   const showCover = (await presence.getSetting<boolean>('showCover')) ?? true
 
   const presenceData: PresenceData = {
+    type: ActivityType.Watching,
     largeImageKey: ActivityAssets.Logo,
     largeImageText: 'Anivesta - Anime İzle & Topluluk',
   }
@@ -78,12 +79,8 @@ presence.on('UpdateData', async () => {
       const timestamps = getTimestamps(currentTime, duration)
       presenceData.startTimestamp = timestamps[0]
       presenceData.endTimestamp = timestamps[1]
-    } else {
-      delete presenceData.startTimestamp
-      delete presenceData.endTimestamp
-      if (isPaused) {
-        presenceData.smallImageText = 'Duraklatıldı'
-      }
+    } else if (isPaused) {
+      presenceData.smallImageText = 'Duraklatıldı'
     }
 
     if (showButtons) {
