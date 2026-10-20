@@ -39,9 +39,9 @@ presence.on('UpdateData', async () => {
 
     const animeTitle
       = metaData?.anime
-      || playbackEl?.dataset?.animeTitle
-      || document.querySelector('.wp-anime-title')?.textContent?.trim()
-      || 'Anime'
+        || playbackEl?.dataset?.animeTitle
+        || document.querySelector('.wp-anime-title')?.textContent?.trim()
+        || 'Anime'
 
     const seasonNum = Number.parseInt(
       metaData?.season || playbackEl?.dataset?.season || '1',
@@ -53,14 +53,11 @@ presence.on('UpdateData', async () => {
     )
     const posterUrl
       = metaData?.poster
-      || playbackEl?.dataset?.animeImage
-      || ActivityAssets.Logo
+        || playbackEl?.dataset?.animeImage
+        || ActivityAssets.Logo
     const currentUrl = metaData?.url || document.location.href
-    const animeUrl
-      = metaData?.animeUrl
-      || (playbackEl?.dataset?.animeSlug
-        ? `https://anivesta.com/anime/${playbackEl.dataset.animeSlug}`
-        : null)
+    const animeSlug = playbackEl?.dataset?.animeSlug
+    const animeUrl = metaData?.animeUrl || (animeSlug ? `https://anivesta.com/anime/${animeSlug}` : null)
 
     const isPaused = mediaState?.dataset?.status === 'paused'
     const currentTime = Number.parseFloat(
@@ -117,12 +114,12 @@ presence.on('UpdateData', async () => {
   else if (path.startsWith('/anime') && !path.includes('/bolumler')) {
     const animeTitle
       = metaData?.anime
-      || document.querySelector('.ad-title')?.textContent?.trim()
-      || 'Anime Detayı'
+        || document.querySelector('.ad-title')?.textContent?.trim()
+        || 'Anime Detayı'
     const posterUrl
       = metaData?.poster
-      || document.querySelector('.ad-poster-img')?.getAttribute('src')
-      || ActivityAssets.Logo
+        || document.querySelector('.ad-poster-img')?.getAttribute('src')
+        || ActivityAssets.Logo
 
     presenceData.type = ActivityType.Watching
     presenceData.details = animeTitle
@@ -155,8 +152,8 @@ presence.on('UpdateData', async () => {
     if (metaData?.type === 'community_topic' || path.includes('/topic/')) {
       const topicTitle
         = metaData?.title
-        || document.querySelector('.thread-header-card h1')?.textContent?.trim()
-        || 'Forum Tartışması'
+          || document.querySelector('.thread-header-card h1')?.textContent?.trim()
+          || 'Forum Tartışması'
       presenceData.details = 'Toplulukta Tartışıyor'
       presenceData.state
         = topicTitle.length > 30
