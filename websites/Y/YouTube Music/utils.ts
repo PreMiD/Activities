@@ -1,5 +1,5 @@
 import type { MediaDataGetter } from './dataGetter.js'
-import { getTimestamps, timestampFromFormat } from 'premid'
+import { getTimestamps } from 'premid'
 
 export interface Settings {
   showButtons: boolean
@@ -16,30 +16,21 @@ export interface Settings {
 export function updateSongTimestamps(
   dataGetter: MediaDataGetter,
 ): [number, number] {
-  const times = dataGetter.getCurrentAndTotalTime()
+  const times = dataGetter.getPlaybackTimes()
 
   if (!times) {
     return [0, 0]
   }
 
-  const [currTimes, totalTimes] = times
-
-  if (currTimes && totalTimes) {
-    return getTimestamps(
-      timestampFromFormat(currTimes),
-      timestampFromFormat(totalTimes),
-    )
-  }
-
-  return [0, 0]
+  return getTimestamps(Math.floor(times[0]), Math.floor(times[1]))
 }
 
 export function createMediaIdentifier(
   title?: string,
   artist?: string,
-  timeText?: string,
+  watchId?: string,
 ): string {
-  return `${title || ''}${artist || ''}${timeText || ''}`
+  return `${title || ''}${artist || ''}${watchId || ''}`
 }
 
 export async function getSettings(presence: Presence): Promise<Settings> {

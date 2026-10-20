@@ -95,7 +95,7 @@ export function createListeningPresence(
   if (showTimestamps && timestampType === 1) {
     presenceData.startTimestamp = listeningStartTimestamp
   }
-  else if (showTimestamps && mediaData.playbackState === 'playing') {
+  else if (showTimestamps && mediaData.playbackState === 'playing' && mediaTimestamps[0] !== mediaTimestamps[1]) {
     presenceData.startTimestamp = mediaTimestamps[0]
     presenceData.endTimestamp = mediaTimestamps[1]
   }
