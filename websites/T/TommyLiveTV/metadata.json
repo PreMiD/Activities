@@ -12,7 +12,7 @@
   "url": "watch.tommytrace.com",
   "regExp": "^https://watch[.]tommytrace[.]com/",
   "version": "1.0.0",
-  "logo": "https://raw.githubusercontent.com/jackreacherdota/Activities/feat/tommytrace-tommylivetv-activity/websites/T/TommyLiveTV/assets/logo.png",
+  "logo": "https://raw.githubusercontent.com/jackreacherdota/Activities/9132e5093f99ecb397ec5fd05dcfd24f81979a65/websites/T/TommyLiveTV/assets/logo.png",
   "thumbnail": "https://tommylive.pages.dev/tommylivetv-logo-splash.png",
   "color": "#6D3BFF",
   "category": "videos",
