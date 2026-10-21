@@ -11,8 +11,10 @@ enum ActivityAssets {
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
-  const showButtons = (await presence.getSetting<boolean>('showButtons')) ?? true
-  const showCover = (await presence.getSetting<boolean>('showCover')) ?? true
+  const [showButtons, showCover] = await Promise.all([
+  presence.getSetting<boolean>('showButtons'),
+  presence.getSetting<boolean>('showCover'),
+  ])
 
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
@@ -196,15 +198,7 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = ActivityAssets.Logo
     presenceData.largeImageText = 'Anivesta'
     presenceData.startTimestamp = browsingTimestamp
-
-    if (showButtons) {
-      presenceData.buttons = [
-        {
-          label: 'Siteyi Ziyaret Et',
-          url: 'https://anivesta.com',
-        },
-      ]
-    }
+    
   }
 
   presence.setActivity(presenceData)
