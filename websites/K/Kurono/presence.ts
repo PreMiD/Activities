@@ -22,7 +22,8 @@ presence.on('UpdateData', async () => {
       const [season, episode] = info.label.match(/^S(\d+) · EP (\d+)/)!.slice(1).map(Number)
       data.details = info.series
       data.state = `Season ${season} · Episode ${episode}`
-      if (video?.poster) data.largeImageKey = new URL(video.poster, document.location.href).href
+      if (video?.poster)
+        data.largeImageKey = new URL(video.poster, document.location.href).href
     }
     else {
       data.details = 'Watching an anime'
