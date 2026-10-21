@@ -1,1 +1,15 @@
-{"$schema":"https://schemas.premid.app/metadata/1.17","apiVersion":1,"author":{"name":"saffier2","id":"936351514035900457"},"service":"Kurono","description":{"en":"Kurono is a free anime streaming site with SUB and DUB, manga and light novels."},"url":"kurono.nl","regExp":"^https?[:][/][/](www[.])?kurono[.]nl[/]","version":"1.0.0","logo":"https://kurono.nl/anime-icon-512.png","thumbnail":"https://kurono.nl/anime-icon-512.png","color":"#ff640a","category":"anime","tags":["anime","streaming","manga","sub","dub"]}
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": { "name": "saffier2", "id": "936351514035900457" },
+  "service": "Kurono",
+  "description": { "en": "Kurono is a free anime streaming site with SUB and DUB, manga and light novels." },
+  "url": "kurono.nl",
+  "regExp": "^https?[:][/][/](www[.])?kurono[.]nl[/]",
+  "version": "1.0.0",
+  "logo": "https://kurono.nl/anime-icon-512.png",
+  "thumbnail": "https://kurono.nl/anime-icon-512.png",
+  "color": "#ff640a",
+  "category": "anime",
+  "tags": ["anime", "streaming", "manga", "sub", "dub"]
+}
