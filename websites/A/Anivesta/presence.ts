@@ -198,7 +198,6 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = ActivityAssets.Logo
     presenceData.largeImageText = 'Anivesta'
     presenceData.startTimestamp = browsingTimestamp
-    
   }
 
   presence.setActivity(presenceData)
