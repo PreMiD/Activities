@@ -3,7 +3,10 @@ import { ActivityType, getTimestamps, timestampFromFormat } from 'premid'
 // Actividad de PreMiD para ACI-MAPA (https://aci.nous.es).
 // Privacidad: nunca se leen búsquedas, valores de parámetros, anclas, datos de
 // cuenta ni rutas privadas. Solo la sección visible y, si el ajuste lo permite,
-// el título público de lo que se ve (territorio, pieza audiovisual, obra, teoría).
+// el título público de lo que se ve. La web publica ese ítem (guía, norma,
+// evento, noticia, asociación, programa, formación, pieza, obra, territorio…)
+// en <html data-presencia> ya saneado: solo datos públicos y un enlace a su
+// ficha en aci.nous.es sin parámetros de búsqueda.
 
 const presence = new Presence({
   clientId: '1562392315773976707',
@@ -116,6 +119,39 @@ function territorioMapa(): string | undefined {
     return undefined
   const ultimo = texto(tag)?.split('·').pop()?.trim()
   return ultimo && ultimo !== 'Estado español' ? ultimo : undefined
+}
+
+interface Item {
+  seccion: string
+  titulo: string
+  detalle?: string
+  url?: string
+}
+
+/** Ítem activo que publica la propia web (html[data-presencia]); se vuelve a validar aquí. */
+function itemActivo(): Item | undefined {
+  const crudo = document.documentElement.dataset.presencia
+  if (!crudo)
+    return undefined
+  try {
+    const v = JSON.parse(crudo) as Partial<Item>
+    const limpio = (x: unknown) => typeof x === 'string' ? x.replace(/\s+/g, ' ').trim() || undefined : undefined
+    const seccion = limpio(v.seccion)
+    const titulo = limpio(v.titulo)
+    if (!seccion || !titulo)
+      return undefined
+    let url: string | undefined
+    if (typeof v.url === 'string') {
+      const u = new URL(v.url, SITIO)
+      const primero = u.pathname.split('/').filter(Boolean)[0] ?? ''
+      if (u.origin === SITIO && !PRIVADAS.has(primero))
+        url = u.href
+    }
+    return { seccion: recorta(seccion, 60), titulo, detalle: limpio(v.detalle), url }
+  }
+  catch {
+    return undefined
+  }
 }
 
 interface Pieza {
@@ -248,6 +284,22 @@ presence.on('UpdateData', async () => {
       }
     }
     datos.largeImageText = `${nombre} · ${PIE}`
+
+    // Ítem concreto que publica la web: línea 1 la sección, línea 2 su título
+    if (conDetalle) {
+      const item = itemActivo()
+      if (item) {
+        const ic = Object.values(SECCIONES).find(([n]) => n === item.seccion)?.[1]
+        nombre = item.seccion
+        if (ic)
+          icono = ic
+        datos.details = item.seccion
+        datos.state = recorta(item.titulo)
+        datos.largeImageText = recorta(item.detalle ? `${item.detalle} · ${PIE}` : `${nombre} · ${PIE}`, 128)
+        if (item.url)
+          enlace = item.url
+      }
+    }
 
     // Reproducción audiovisual (solo con detalle completo)
     if (conDetalle) {

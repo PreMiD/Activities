@@ -30,7 +30,7 @@
       "icon": "fad fa-user-secret",
       "value": 0,
       "values": [
-        "Sección y detalle (territorio, pieza, obra)",
+        "Sección y el ítem que se ve (guía, norma, evento, noticia…)",
         "Solo la sección",
         "Solo «En ACI-MAPA»"
       ]
