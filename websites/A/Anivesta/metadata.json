@@ -1,5 +1,6 @@
 {
   "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
   "author": {
     "name": "Anivesta",
     "id": "1295071083661361253"
@@ -12,7 +13,6 @@
   "url": "anivesta.com",
   "regExp": "^https?://(www\\.)?anivesta\\.com/",
   "version": "1.0.0",
-  "apiVersion": 1,
   "logo": "https://anivesta.com/assets/logo-bg.png",
   "thumbnail": "https://anivesta.com/og-banner.png",
   "color": "#bce594",
