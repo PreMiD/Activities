@@ -2,7 +2,7 @@ import { ActivityType } from 'premid'
 
 const HOME = 'https://watch.tommytrace.com/'
 const HOST = 'watch.tommytrace.com'
-const LOGO = 'https://raw.githubusercontent.com/jackreacherdota/Activities/feat/tommytrace-tommylivetv-activity/websites/T/TommyLiveTV/assets/logo.png'
+const LOGO = 'https://raw.githubusercontent.com/jackreacherdota/Activities/9132e5093f99ecb397ec5fd05dcfd24f81979a65/websites/T/TommyLiveTV/assets/logo.png'
 
 interface PlaybackTimes {
   startTimestamp: number
