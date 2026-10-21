@@ -12,8 +12,8 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('UpdateData', async () => {
   const [showButtons, showCover] = await Promise.all([
-  presence.getSetting<boolean>('showButtons'),
-  presence.getSetting<boolean>('showCover'),
+    presence.getSetting<boolean>('showButtons'),
+    presence.getSetting<boolean>('showCover'),
   ])
 
   const presenceData: PresenceData = {
