@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "btfcookies",
+    "id": "1283880493288263752"
+  },
+  "service": "QBReader",
+  "description": {
+    "en": "QBReader is a free quizbowl question reader for practicing tossups and bonuses alone or in multiplayer rooms."
+  },
+  "url": "qbreader.org",
+  "regExp": "^https?[:][/][/](www[.])?qbreader[.]org[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/Q/QBReader/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Q/QBReader/assets/thumbnail.png",
+  "color": "#0a84ff",
+  "category": "other",
+  "tags": [
+    "quizbowl",
+    "trivia",
+    "education"
+  ],
+  "settings": [
+    {
+      "id": "showRoom",
+      "title": "Show public multiplayer room name",
+      "icon": "fa-solid fa-door-open",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "if": {
+        "showRoom": true
+      },
+      "title": "Show join room button",
+      "icon": "fa-solid fa-user-plus",
+      "value": true
+    },
+    {
+      "id": "showProgress",
+      "title": "Show set, packet and question number",
+      "icon": "fa-solid fa-list-ol",
+      "value": true
+    }
+  ]
+}
