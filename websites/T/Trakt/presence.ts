@@ -69,12 +69,31 @@ function getProfileAvatar(): string | null {
   return avatarImg?.src || null
 }
 
+function getSummaryPosterImage(root: Document | Element = document): HTMLImageElement | null {
+  const selectors = [
+    '.episode-info-poster-ratings .trakt-summary-poster-container .trakt-summary-poster a img',
+    '.episode-info-poster-ratings .trakt-summary-poster-container .trakt-summary-poster img',
+    '.trakt-summary-poster-container .trakt-summary-poster a img',
+    '.trakt-summary-poster-container .trakt-summary-poster img',
+    '.trakt-summary-poster a img',
+    '.trakt-summary-poster img',
+  ]
+
+  for (const selector of selectors) {
+    const img = root.querySelector<HTMLImageElement>(selector)
+    if (img?.src)
+      return img
+  }
+
+  return null
+}
+
 function getPrimaryMediaImage(): string | null {
-  const posterImg = document.querySelector<HTMLImageElement>('.trakt-summary-poster img')
+  const posterImg = document.querySelector<HTMLImageElement>('.trakt-summary-poster a img.image-loaded, .trakt-summary-poster a img, .trakt-summary-poster img.image-loaded, .trakt-summary-poster img')
   if (posterImg?.src)
     return posterImg.src
 
-  const heroImg = document.querySelector<HTMLImageElement>('.trakt-summary-content img')
+  const heroImg = document.querySelector<HTMLImageElement>('.trakt-summary-content a img.image-loaded, .trakt-summary-content a img, .trakt-summary-content img.image-loaded, .trakt-summary-content img')
   if (heroImg?.src && /images\//.test(heroImg.src))
     return heroImg.src
 
@@ -158,7 +177,7 @@ function countIndicators(root: Document | Element = document): number {
 }
 
 function applyHistoryState(data: PresenceData, displayUsername = 'their') {
-  data.details = `Viewing ${displayUsername} history`
+  data.details = `Checking ${displayUsername} history`
   setSmallIcon(data, ActivityAssets.userClock, 'History')
 
   const lastPlayed = getCardTitle(document.querySelector('.trakt-card'), true)
@@ -307,7 +326,7 @@ try {
         }
       }
       else if (isHome) {
-        presenceData.details = 'Viewing dashboard'
+        presenceData.details = 'Checking dashboard'
         presenceData.state = 'Checking their feed'
         setSmallIcon(presenceData, ActivityAssets.house, 'Dashboard')
 
@@ -321,7 +340,7 @@ try {
         applyHistoryState(presenceData, 'their')
       }
       else if (isCalendar) { //* Users Personal Upcoming Release Calendar (Shows with at least 1 episode watched or on the watchlist)
-        presenceData.details = 'Viewing personal calendar'
+        presenceData.details = 'Checking personal calendar'
         setSmallIcon(presenceData, ActivityAssets.calendarWeek, 'Calendar')
 
         const totalReleases = getCalendarDisplayWeekCount(document)
@@ -449,16 +468,16 @@ try {
           applyHistoryState(presenceData, displayUsername)
         }
         else if (pathname.includes('/collection')) {
-          presenceData.details = `Viewing ${displayUsername} collection`
+          presenceData.details = `Checking ${displayUsername} collection`
           setSmallIcon(presenceData, profileAvatar || ActivityAssets.users, 'Collection')
         }
         else if (pathname.includes('/ratings')) {
-          presenceData.details = `Viewing ${displayUsername} ratings`
+          presenceData.details = `Checking ${displayUsername} ratings`
           if (profileAvatar)
             setSmallIcon(presenceData, profileAvatar, 'Ratings')
         }
         else if (pathname.includes('/watchlist')) {
-          presenceData.details = `Viewing ${displayUsername} watchlist`
+          presenceData.details = `Checking ${displayUsername} watchlist`
           setSmallIcon(presenceData, profileAvatar || ActivityAssets.listCheck, 'Watchlist')
 
           const count = parseItemCount(document.querySelector('.trakt-navbar-header .count-item'))
@@ -467,7 +486,7 @@ try {
             : 'Organizing their watchlist'
         }
         else if (pathname.includes('/start-watching')) {
-          presenceData.details = `Viewing ${displayUsername} start-watching list`
+          presenceData.details = `Checking ${displayUsername} start-watching list`
           setSmallIcon(presenceData, profileAvatar || ActivityAssets.listCheck, 'Start Watching')
 
           const startTitle = getCardTitle(document.querySelector('.trakt-card'))
@@ -475,7 +494,7 @@ try {
         }
         else if (pathname.includes('/lists')) {
           const isLiked = pathname.includes('/liked')
-          presenceData.details = isLiked ? `Viewing ${displayUsername} liked lists` : `Viewing ${displayUsername} lists`
+          presenceData.details = isLiked ? `Checking ${displayUsername} liked lists` : `Checking ${displayUsername} lists`
           if (profileAvatar)
             setSmallIcon(presenceData, profileAvatar, 'Lists')
 
@@ -508,7 +527,7 @@ try {
           }
         }
         else if (pathname.includes('/progress')) {
-          presenceData.details = `Viewing ${displayUsername} progress`
+          presenceData.details = `Checking ${displayUsername} progress`
           setSmallIcon(presenceData, profileAvatar || ActivityAssets.listCheck, 'Up Next')
 
           const progressCount = document.querySelectorAll('.trakt-up-next-episode').length
@@ -517,7 +536,7 @@ try {
             : 'Checking their backlog'
         }
         else {
-          presenceData.details = `Viewing ${displayUsername} profile`
+          presenceData.details = `Checking ${displayUsername} profile`
           setSmallIcon(presenceData, profileAvatar || ActivityAssets.users, 'Profile')
 
           document.querySelectorAll('.trakt-stats-card').forEach((card) => {
@@ -556,7 +575,7 @@ try {
         }
         const personRoleLabel = personRoleMap[personRole] ?? 'Person'
 
-        presenceData.details = `Viewing ${personRoleLabel}`
+        presenceData.details = `Checking ${personRoleLabel}`
         presenceData.state = truncate(personTitle)
         setSmallIcon(presenceData, ActivityAssets.users, personRoleLabel)
 
@@ -587,18 +606,43 @@ try {
         const isShow = pathname.startsWith('/shows')
         const ogTitle = cleanTitle(getMeta('og:title')) || document.title.replace(' - Trakt', '').trim()
         const primaryImage = getPrimaryMediaImage()
+        const queryParams = new URLSearchParams(search)
+        const isEpisodeView = queryParams.get('view') === 'episode' || !!document.querySelector('.trakt-episode-drawer')
+        const episodeMeta = document.querySelector('.episode-title-meta-info')?.textContent?.trim() || null
+        const showTitle = document.querySelector('.trakt-drawer-title h1')?.textContent?.trim() || ogTitle
 
-        presenceData.details = isShow ? 'Viewing TV Show' : 'Viewing Movie'
-        presenceData.state = truncate(ogTitle)
+        if (isEpisodeView && episodeMeta) {
+          const episodeLabel = episodeMeta.replace(/\s+/g, ' ').trim()
+          const episodeName = episodeLabel.split(/-\s*/).slice(1).join(' - ').trim() || episodeLabel
 
-        if (primaryImage) {
-          presenceData.largeImageKey = primaryImage
-          presenceData.largeImageText = truncate(ogTitle)
-          setSmallIcon(
-            presenceData,
-            isShow ? ActivityAssets.tv : ActivityAssets.film,
-            isShow ? 'TV Show' : 'Movie',
-          )
+          const episodeDisplayText = `${showTitle} • ${episodeName}`
+
+          presenceData.details = 'Checking episode details'
+          presenceData.state = truncate(episodeDisplayText)
+
+          const episodeImage = getSummaryPosterImage()
+            || document.querySelector<HTMLImageElement>('.trakt-episode-drawer img, .episode-drawer-content img')
+
+          if (episodeImage?.src) {
+            presenceData.largeImageKey = episodeImage.src || primaryImage || ActivityAssets.traktLogomark
+            presenceData.largeImageText = `Season ${episodeLabel.match(/S(\d+)/i)?.[1] || '?'}, Episode ${episodeLabel.match(/E(\d+)/i)?.[1] || '?'}`
+          }
+
+          setSmallIcon(presenceData, primaryImage != ActivityAssets.traktLogomark ? ActivityAssets.traktCirclemark : ActivityAssets.tv, 'Episode')
+        }
+        else {
+          presenceData.details = isShow ? 'Checking TV show details' : 'Checking movie details'
+          presenceData.state = truncate(ogTitle)
+
+          if (primaryImage) {
+            presenceData.largeImageKey = primaryImage
+            presenceData.largeImageText = truncate(ogTitle)
+            setSmallIcon(
+              presenceData,
+              isShow ? ActivityAssets.tv : ActivityAssets.film,
+              isShow ? 'TV Show' : 'Movie',
+            )
+          }
         }
 
         presenceData.buttons = [{ label: 'View on Trakt', url: href }]
