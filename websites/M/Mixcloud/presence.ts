@@ -16,7 +16,7 @@ function absoluteUrl(value: string | null | undefined): string | undefined {
   if (!value)
     return undefined
   try {
-    const url = new URL(value, window.location.origin)
+    const url = new URL(value, document.location.origin)
     return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : undefined
   }
   catch {
@@ -81,7 +81,7 @@ presence.on('UpdateData', async () => {
       largeImageKey: MIXCLOUD_LOGO,
       smallImageKey: Assets.Live,
       smallImageText: (await strings).live,
-      buttons: [{ label: 'View Livestream', url: window.location.href }],
+      buttons: [{ label: 'View Livestream', url: document.location.href }],
     }
     presence.setActivity(presenceData)
     return
