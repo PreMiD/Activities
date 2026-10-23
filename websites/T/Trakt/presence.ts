@@ -123,6 +123,15 @@ function getCardTitle(card: Element | null, preferUrl = false): string {
   return !preferUrl ? extractTitleFromUrl(linkHref) : ''
 }
 
+function getCalendarDisplayWeekCount(root: Document | Element = document): number {
+  //* <span class="week-count secondary svelte-1pl2gmz">10 Items</span>
+
+  const text = root.querySelector('.week-count.secondary')?.textContent?.trim() ?? ''
+  const match = text.match(/(\d+)/)
+  const value = match?.[1]
+  return value ? Number.parseInt(value, 10) : 0
+}
+
 function countIndicators(root: Document | Element = document): number {
   let total = root.querySelectorAll('.trakt-content-indicator .circle').length
   root.querySelectorAll('.trakt-content-indicator .secondary').forEach((el) => {
@@ -246,14 +255,14 @@ try {
       else if (isHistory) {
         applyHistoryState(presenceData, 'their')
       }
-      else if (isCalendar) {
-        presenceData.details = 'Checking the calendar'
+      else if (isCalendar) { //* Users Personal Upcoming Release Calendar (Shows with at least 1 episode watched or on the watchlist)
+        presenceData.details = 'Viewing personal calendar'
         setSmallIcon(presenceData, ActivityAssets.calendarWeek, 'Calendar')
 
-        const totalReleases = countIndicators(document)
+        const totalReleases = getCalendarDisplayWeekCount(document)
         presenceData.state = totalReleases > 0
-          ? `${totalReleases} releases coming this week`
-          : 'Looking at upcoming releases'
+          ? `Tracking ${totalReleases} releases this week`
+          : 'Looking for upcoming releases'
       }
       else if (isRecommended) {
         presenceData.details = 'Browsing recommendations'
@@ -273,24 +282,13 @@ try {
           presenceData.state = 'Finding something to watch'
         }
       }
-      else if (isReleases) {
+      else if (isReleases) { //* Global Upcoming Release Calendar (All episodes and movies)
         presenceData.details = 'Checking the release calendar'
         setSmallIcon(presenceData, ActivityAssets.calendarDays, 'Releases')
 
-        const activeDayBtn = document.querySelector('.trakt-calendar-day-button.is-active')
-        let activeDayTotal = 0
-
-        if (activeDayBtn) {
-          const ariaLabel = activeDayBtn.getAttribute('aria-label') || ''
-          const dateMatch = ariaLabel.match(/Go to (.+?), \d{4}/)
-          if (dateMatch && dateMatch[1]) {
-            presenceData.details = `Releases for ${dateMatch[1]}`
-          }
-          activeDayTotal = countIndicators(activeDayBtn)
-        }
-
-        presenceData.state = activeDayTotal > 0
-          ? `Tracking ${activeDayTotal} releases today`
+        const weekCount = getCalendarDisplayWeekCount(document)
+        presenceData.state = weekCount > 0
+          ? `${weekCount} releases this week`
           : 'Looking for upcoming releases'
       }
       else if (isAnticipated) {
