@@ -163,19 +163,6 @@ function getCalendarDisplayWeekCount(root: Document | Element = document): numbe
   return value ? Number.parseInt(value, 10) : 0
 }
 
-function countIndicators(root: Document | Element = document): number {
-  let total = root.querySelectorAll('.trakt-content-indicator .circle').length
-  root.querySelectorAll('.trakt-content-indicator .secondary').forEach((el) => {
-    const text = el.textContent?.trim() || ''
-    if (text.startsWith('+')) {
-      const num = Number.parseInt(text.replace('+', ''), 10)
-      if (!Number.isNaN(num))
-        total += num
-    }
-  })
-  return total
-}
-
 function applyHistoryState(data: PresenceData, displayUsername = 'their') {
   data.details = `Checking ${displayUsername} history`
   setSmallIcon(data, ActivityAssets.userClock, 'History')
