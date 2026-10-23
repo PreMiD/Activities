@@ -551,7 +551,7 @@ try {
         }
       }
       else if (isPeople) {
-        const personTitle = cleanTitle(getMeta('og:title')) || document.querySelector('.trakt-person-title h1')?.textContent?.trim() || 'Person'
+        const personTitle = document.querySelector('.trakt-person-title h1')?.textContent?.trim() || cleanTitle(getMeta('og:title')) || 'Person'
         const personDetail = document.querySelector('.trakt-person-title p')?.textContent?.trim() || 'Profile'
         const personImage = document.querySelector<HTMLImageElement>('.trakt-summary-poster img, .trakt-person-image img')
         const personRole = personDetail.toLowerCase()
@@ -594,18 +594,19 @@ try {
       }
       else if (isMedia) {
         const isShow = pathname.startsWith('/shows')
-        const ogTitle = cleanTitle(getMeta('og:title')) || document.title.replace(' - Trakt', '').trim()
+        const mediaTitle = document.querySelector('.trakt-drawer-title h1, .trakt-summary-content h1')?.textContent?.trim()
+          || cleanTitle(getMeta('og:title'))
+          || document.title.replace(' - Trakt', '').trim()
         const primaryImage = getPrimaryMediaImage()
         const queryParams = new URLSearchParams(search)
         const isEpisodeView = queryParams.get('view') === 'episode' || !!document.querySelector('.trakt-episode-drawer')
         const episodeMeta = document.querySelector('.episode-title-meta-info')?.textContent?.trim() || null
-        const showTitle = document.querySelector('.trakt-drawer-title h1')?.textContent?.trim() || ogTitle
 
         if (isEpisodeView && episodeMeta) {
           const episodeLabel = episodeMeta.replace(/\s+/g, ' ').trim()
           const episodeName = episodeLabel.split(/-\s*/).slice(1).join(' - ').trim() || episodeLabel
 
-          const episodeDisplayText = `${showTitle} • ${episodeName}`
+          const episodeDisplayText = `${mediaTitle} • ${episodeName}`
 
           presenceData.details = 'Checking episode details'
           presenceData.state = truncate(episodeDisplayText)
@@ -622,11 +623,11 @@ try {
         }
         else {
           presenceData.details = isShow ? 'Checking TV show details' : 'Checking movie details'
-          presenceData.state = truncate(ogTitle)
+          presenceData.state = truncate(mediaTitle)
 
           if (primaryImage) {
             presenceData.largeImageKey = primaryImage
-            presenceData.largeImageText = truncate(ogTitle)
+            presenceData.largeImageText = truncate(mediaTitle)
             setSmallIcon(
               presenceData,
               isShow ? ActivityAssets.tv : ActivityAssets.film,
