@@ -8,6 +8,8 @@ enum ActivityAssets {
   Logo = 'https://i.ibb.co/rYjNWTr/rsz-1gamerlog-logo-dcstibz3.png',
 }
 
+const TRAILING_SLASH_REGEX = /\/+$/
+
 const libraryTabs: Record<string, string> = {
   played: 'Already Played Games',
   playing: 'Currently Playing',
@@ -54,7 +56,7 @@ function getGameInfo() {
 
 presence.on('UpdateData', async () => {
   const hideOwnName = await presence.getSetting<boolean>('hideOwnName')
-  const path = document.location.pathname.replace(/\/+$/, '') || '/'
+  const path = document.location.pathname.replace(TRAILING_SLASH_REGEX, '') || '/'
   const segments = path.split('/').filter(Boolean)
 
   const presenceData: PresenceData = {
