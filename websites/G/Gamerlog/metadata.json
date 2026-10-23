@@ -17,14 +17,18 @@
   "color": "#0a0a0b",
   "category": "games",
   "tags": [
-    "games"
+    "games",
+    "gaming",
+    "tracker",
+    "reviews",
+    "backlog"
   ],
   "settings": [
-  {
-    "id": "hideOwnName",
-    "title": "Hide My Username",
-    "icon": "fas fa-user-secret",
-    "value": false
-  }
-]
+    {
+      "id": "hideOwnName",
+      "title": "Hide my username",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
 }
