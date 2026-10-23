@@ -78,7 +78,7 @@ function getPrimaryMediaImage(): string | null {
   if (heroImg?.src && /images\//.test(heroImg.src))
     return heroImg.src
 
-  return getMeta('og:image')
+  return getMeta('og:image')?.replace('open-graph', 'story') || getMeta('og:image') || null
 }
 
 function getDisplayUsername(pathname: string): string {
