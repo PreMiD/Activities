@@ -201,7 +201,6 @@ try {
       const nowPlayingToast = document.querySelector('.trakt-now-playing-container')
 
       if (nowPlayingToast && showNowPlaying) {
-
         presenceData.statusDisplayType = StatusDisplayType.Details //* Show the media name instead of "Trakt" as the primary detail text
 
         const titleEl = nowPlayingToast.querySelector('.bold.ellipsis')
@@ -210,17 +209,19 @@ try {
         const timeRemainingEl = nowPlayingToast.querySelector('.trakt-now-playing-remaining')
         const endsAtEl = nowPlayingToast.querySelector('.trakt-now-playing-ends-at')
         const progressBarEl = nowPlayingToast.querySelector('.trakt-distribution-bar')
-        let imageUrl = imgEl?.src || (getMeta('og:image')?.replace('open-graph', 'story') ?? null) || ActivityAssets.traktLogomark
+        const imageUrl = imgEl?.src || (getMeta('og:image')?.replace('open-graph', 'story') ?? null) || ActivityAssets.traktLogomark
 
         //* Match TV toast titles like "S1 • E4 - Episode Title" or "S1E4 - Episode Title"
-        const seasonEpisodePattern = /S(?<season>\d+)\s*(?:[•·]|(?:\s*E\s*))?\s*E(?<episode>\d+)\s*(?:-|–|—|:)?\s*(?<title>.+)/i
+        const seasonEpisodePattern = /S(?<season>\d+)[\s•·-]*E(?<episode>\d+)/i
 
         let detailsText = titleEl?.textContent?.trim() || 'Media'
 
         const seMatch = detailsText.match(seasonEpisodePattern)
         const season = seMatch?.groups?.season
         const episode = seMatch?.groups?.episode
-        const title = seMatch?.groups?.title
+        const title = seMatch
+          ? detailsText.slice(seMatch[0].length).replace(/^[\s:–—-]+/, '').trim()
+          : detailsText
 
         if (season && episode && title) {
           detailsText = title
@@ -239,7 +240,7 @@ try {
           presenceData.buttons = [{ label: 'View on Trakt', url: linkEl.href }]
         }
 
-        setSmallIcon(presenceData, (imageUrl != ActivityAssets.traktLogomark) ? ActivityAssets.traktCirclemark : (season && episode ? ActivityAssets.tv : ActivityAssets.film), 'Now Playing')
+        setSmallIcon(presenceData, (imageUrl !== ActivityAssets.traktLogomark) ? ActivityAssets.traktCirclemark : (season && episode ? ActivityAssets.tv : ActivityAssets.film), 'Now Playing')
 
         if (timeRemainingEl?.textContent) {
           let remainingSeconds = 0
@@ -259,7 +260,7 @@ try {
             ? Number.parseFloat(progressStyleValue.replace('%', ''))
             : Number.parseFloat(progressBarEl?.getAttribute('aria-valuenow') ?? '0')
 
-          let elapsedSeconds = remainingSeconds / (100 - currentProgress) * currentProgress
+          const elapsedSeconds = remainingSeconds / (100 - currentProgress) * currentProgress
 
           let endsAtTimestamp: number | null = null
 
@@ -283,12 +284,14 @@ try {
                 const now = new Date()
                 const endsAtDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0)
 
-                if (endsAtDate.getTime() <= now.getTime())
+                if (endsAtDate.getTime() <= now.getTime()) {
                   endsAtDate.setDate(endsAtDate.getDate() + 1)
+                }
 
                 endsAtTimestamp = Math.floor(endsAtDate.getTime() / 1000)
               }
-            } else {
+            }
+            else {
               endsAtTimestamp = Math.floor(Date.now() / 1000) + remainingSeconds
             }
 
@@ -300,7 +303,7 @@ try {
                 nowPlayingCache = {
                   key: currentNowPlayingKey,
                   startedAt: nowSeconds - elapsedSeconds,
-                  endedAt: endsAtTimestamp
+                  endedAt: endsAtTimestamp,
                 }
               }
 
@@ -615,7 +618,7 @@ try {
             presenceData.largeImageText = `Season ${episodeLabel.match(/S(\d+)/i)?.[1] || '?'}, Episode ${episodeLabel.match(/E(\d+)/i)?.[1] || '?'}`
           }
 
-          setSmallIcon(presenceData, primaryImage != ActivityAssets.traktLogomark ? ActivityAssets.traktCirclemark : ActivityAssets.tv, 'Episode')
+          setSmallIcon(presenceData, primaryImage !== ActivityAssets.traktLogomark ? ActivityAssets.traktCirclemark : ActivityAssets.tv, 'Episode')
         }
         else {
           presenceData.details = isShow ? 'Checking TV show details' : 'Checking movie details'
