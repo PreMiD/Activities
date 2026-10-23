@@ -1,10 +1,22 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, StatusDisplayType } from 'premid'
 
 const presence = new Presence({
   clientId: '968880591003082783',
 })
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+interface NowPlayingCache {
+  key: string | null
+  startedAt: number | null
+  endedAt: number | null
+}
+
+let nowPlayingCache: NowPlayingCache = {
+  key: null,
+  startedAt: null,
+  endedAt: null,
+}
 
 const ActivityAssets = {
   traktLogomark: 'https://cdn.rcd.gg/PreMiD/websites/T/Trakt/assets/logo.png',
@@ -183,60 +195,113 @@ try {
       const nowPlayingToast = document.querySelector('.trakt-now-playing-container')
 
       if (nowPlayingToast && showNowPlaying) {
+
+        presenceData.statusDisplayType = StatusDisplayType.Details //* Show the media name instead of "Trakt" as the primary detail text
+
         const titleEl = nowPlayingToast.querySelector('.bold.ellipsis')
         const imgEl = nowPlayingToast.querySelector('img')
         const linkEl = nowPlayingToast.querySelector<HTMLAnchorElement>('a.trakt-link')
         const timeRemainingEl = nowPlayingToast.querySelector('.trakt-now-playing-remaining')
+        const endsAtEl = nowPlayingToast.querySelector('.trakt-now-playing-ends-at')
+        const progressBarEl = nowPlayingToast.querySelector('.trakt-distribution-bar')
+        let imageUrl = imgEl?.src || (getMeta('og:image')?.replace('open-graph', 'story') ?? null) || ActivityAssets.traktLogomark
 
-        let stateText = titleEl?.textContent?.trim() || 'Media'
-        let detailsText = 'Watching'
+        //* Match TV toast titles like "S1 • E4 - Episode Title" or "S1E4 - Episode Title"
+        const seasonEpisodePattern = /S(?<season>\d+)\s*(?:[•·]|(?:\s*E\s*))?\s*E(?<episode>\d+)\s*(?:-|–|—|:)?\s*(?<title>.+)/i
 
-        const seMatch = stateText.match(/S(\d+)\s*•\s*E(\d+)\s*-\s*(.+)/i)
-        if (seMatch && seMatch[1] && seMatch[2] && seMatch[3]) {
-          detailsText = (linkEl?.href && extractTitleFromUrl(linkEl.href)) || 'TV Show'
-          stateText = seMatch[3]
+        let detailsText = titleEl?.textContent?.trim() || 'Media'
+
+        const seMatch = detailsText.match(seasonEpisodePattern)
+        const season = seMatch?.groups?.season
+        const episode = seMatch?.groups?.episode
+        const title = seMatch?.groups?.title
+
+        if (season && episode && title) {
+          detailsText = title
         }
 
         presenceData.details = truncate(detailsText)
-        presenceData.state = truncate(stateText)
 
-        if (imgEl?.src) {
-          presenceData.largeImageKey = imgEl.src
-          presenceData.largeImageText = seMatch && seMatch[1] && seMatch[2]
-            ? `Season ${seMatch[1]}, Episode ${seMatch[2]}`
-            : truncate(stateText)
+        if (imageUrl) {
+          presenceData.largeImageKey = imageUrl
+          presenceData.largeImageText = season && episode
+            ? `Season ${season}, Episode ${episode}`
+            : truncate(detailsText)
         }
 
         if (linkEl?.href) {
           presenceData.buttons = [{ label: 'View on Trakt', url: linkEl.href }]
         }
 
-        setSmallIcon(presenceData, ActivityAssets.traktCirclemark, 'Now Playing')
+        setSmallIcon(presenceData, (imageUrl != ActivityAssets.traktLogomark) ? ActivityAssets.traktCirclemark : (season && episode ? ActivityAssets.tv : ActivityAssets.film), 'Now Playing')
 
         if (timeRemainingEl?.textContent) {
-          let minutesLeft = 0
+          let remainingSeconds = 0
           const hMatch = timeRemainingEl.textContent.match(/(\d+)h/i)
           const mMatch = timeRemainingEl.textContent.match(/(\d+)m/i)
+          const sMatch = timeRemainingEl.textContent.match(/(\d+)s/i)
 
           if (hMatch && hMatch[1])
-            minutesLeft += Number.parseInt(hMatch[1], 10) * 60
+            remainingSeconds += Number.parseInt(hMatch[1], 10) * 60 * 60
           if (mMatch && mMatch[1])
-            minutesLeft += Number.parseInt(mMatch[1], 10)
+            remainingSeconds += Number.parseInt(mMatch[1], 10) * 60
+          if (sMatch && sMatch[1])
+            remainingSeconds += Number.parseInt(sMatch[1], 10)
 
-          if (minutesLeft > 0) {
-            const endTs = Math.floor(Date.now() / 1000) + (minutesLeft * 60)
-            presenceData.endTimestamp = endTs
-            delete presenceData.startTimestamp
+          const progressStyleValue = progressBarEl?.getAttribute('style')?.match(/--viz-fill:\s*([^;]+)/)?.[1]?.trim() ?? null
+          const currentProgress = progressStyleValue
+            ? Number.parseFloat(progressStyleValue.replace('%', ''))
+            : Number.parseFloat(progressBarEl?.getAttribute('aria-valuenow') ?? '0')
 
-            const percentStr = nowPlayingToast
-              .querySelector('.trakt-distribution-bar[role="progressbar"]')
-              ?.getAttribute('aria-valuenow')
-            const percentVal = percentStr ? Number.parseFloat(percentStr) : Number.NaN
+          let elapsedSeconds = remainingSeconds / (100 - currentProgress) * currentProgress
 
-            if (!Number.isNaN(percentVal) && percentVal >= 0 && percentVal < 100) {
-              const fractionLeft = (100 - percentVal) / 100
-              const totalSeconds = (minutesLeft * 60) / fractionLeft
-              presenceData.startTimestamp = endTs - Math.floor(totalSeconds)
+          let endsAtTimestamp: number | null = null
+
+          if (endsAtEl?.textContent) {
+            const endsAtMatch = endsAtEl.textContent.match(/Ends at\s+(\d{1,2}):(\d{2})\s*(AM|PM)/i)
+            if (endsAtMatch) {
+              const rawHours = endsAtMatch[1]
+              const rawMinutes = endsAtMatch[2]
+              const rawAmpm = endsAtMatch[3]
+
+              if (rawHours && rawMinutes && rawAmpm) {
+                let hours = Number.parseInt(rawHours, 10)
+                const minutes = Number.parseInt(rawMinutes, 10)
+                const ampm = rawAmpm.toUpperCase()
+
+                if (ampm === 'PM' && hours < 12)
+                  hours += 12
+                if (ampm === 'AM' && hours === 12)
+                  hours = 0
+
+                const now = new Date()
+                const endsAtDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0)
+
+                if (endsAtDate.getTime() <= now.getTime())
+                  endsAtDate.setDate(endsAtDate.getDate() + 1)
+
+                endsAtTimestamp = Math.floor(endsAtDate.getTime() / 1000)
+              }
+            } else {
+              endsAtTimestamp = Math.floor(Date.now() / 1000) + remainingSeconds
+            }
+
+            if (remainingSeconds > 0) {
+              const currentNowPlayingKey = linkEl?.href || titleEl?.textContent?.trim() || null
+              const nowSeconds = Math.floor(Date.now() / 1000)
+
+              if (!currentNowPlayingKey || currentNowPlayingKey !== nowPlayingCache.key || nowPlayingCache.endedAt === null || nowPlayingCache.startedAt === null) {
+                nowPlayingCache = {
+                  key: currentNowPlayingKey,
+                  startedAt: nowSeconds - elapsedSeconds,
+                  endedAt: endsAtTimestamp
+                }
+              }
+
+              if (nowPlayingCache.startedAt !== null && nowPlayingCache.endedAt !== null) {
+                presenceData.startTimestamp = nowPlayingCache.startedAt
+                presenceData.endTimestamp = nowPlayingCache.endedAt
+              }
             }
           }
         }
