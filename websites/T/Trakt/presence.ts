@@ -606,7 +606,7 @@ try {
 
         if (isEpisodeView && episodeMeta) {
           const episodeLabel = episodeMeta.replace(/\s+/g, ' ').trim()
-          const episodeName = episodeLabel.split(/-\s*/).slice(1).join(' - ').trim() || episodeLabel
+          const episodeName = episodeLabel.split(/\s[-–—]\s/).slice(1).join(' - ').trim() || episodeLabel
 
           const episodeDisplayText = `${mediaTitle} • ${episodeName}`
 
