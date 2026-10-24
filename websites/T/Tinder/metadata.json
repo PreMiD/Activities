@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "natebuster85",
+    "id": "1056635268783943700"
+  },
+  "service": "Tinder",
+  "description": {
+    "en": "Tinder is a dating app for meeting new people. Shows whether you are swiping, viewing matches or chatting, without ever showing names or profiles."
+  },
+  "url": [
+    "tinder.com",
+    "www.tinder.com"
+  ],
+  "regExp": "^https?[:][/][/](www[.])?tinder[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/OiNrW2k.png",
+  "thumbnail": "https://i.imgur.com/OiNrW2k.png",
+  "color": "#fd297b",
+  "category": "socials",
+  "tags": [
+    "dating",
+    "social"
+  ],
+  "settings": [
+    {
+      "id": "privacyMode",
+      "title": "Privacy mode (only show \"Using Tinder\")",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show elapsed time",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    }
+  ]
+}
