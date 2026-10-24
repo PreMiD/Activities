@@ -7,7 +7,7 @@
   },
   "contributors": [
     {
-      "name": "MORQS",
+      "name": "MORGS",
       "id": "308930846298210304"
     }
   ],
@@ -17,7 +17,7 @@
   },
   "url": "trakt.tv",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*trakt[.]tv[/]",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Trakt/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Trakt/assets/thumbnail.png",
   "color": "#9F42C6",
