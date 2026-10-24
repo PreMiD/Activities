@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "neco222",
+    "id": "642335102055088128"
+  },
+  "service": "LRCHub",
+  "description": {
+    "en": "Displays LRCHub playback and lyrics pages, plus YouTube Music playback with current lyrics supplied by the YTM-Immersion extension. Supports custom text and album artwork.",
+    "ja": "LRCHub の再生・歌詞ページと、YouTube Music の再生情報を表示します。YouTube Music の現在歌詞は YTM-Immersion 拡張から読み取り、表示文とジャケットをカスタマイズできます。"
+  },
+  "url": [
+    "lrchub.coreone.work",
+    "music.youtube.com"
+  ],
+  "regExp": "^https://(?:music\\.youtube\\.com(?:[/?#]|$)|lrchub\\.coreone\\.work(?:[/?#]|$))",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/PreMiD/Activities/main/.resources/play.png",
+  "thumbnail": "https://raw.githubusercontent.com/PreMiD/Activities/main/.resources/play.png",
+  "color": "#6366F1",
+  "category": "music",
+  "tags": [
+    "music",
+    "lyrics"
+  ],
+  "settings": [
+    {
+      "id": "enabled",
+      "title": "Enable Discord integration",
+      "icon": "fas fa-toggle-on",
+      "value": true
+    },
+    {
+      "placeholder": "%song% / %artist% / %lyric%",
+      "id": "line1",
+      "title": "Activity name and account status",
+      "icon": "fas fa-font",
+      "value": "%lyric%"
+    },
+    {
+      "placeholder": "%song% / %artist%",
+      "id": "line2",
+      "title": "First body row",
+      "icon": "fas fa-font",
+      "value": "%song%"
+    },
+    {
+      "placeholder": "%lyric% / %artist%",
+      "id": "line3",
+      "title": "Second body row",
+      "icon": "fas fa-font",
+      "value": "%artist%"
+    },
+    {
+      "placeholder": "%album%",
+      "id": "line4",
+      "title": "Album text",
+      "icon": "fas fa-font",
+      "value": "%album%"
+    }
+  ]
+}
