@@ -260,7 +260,9 @@ try {
             ? Number.parseFloat(progressStyleValue.replace('%', ''))
             : Number.parseFloat(progressBarEl?.getAttribute('aria-valuenow') ?? '0')
 
-          const elapsedSeconds = remainingSeconds / (100 - currentProgress) * currentProgress
+          const elapsedSeconds = currentProgress > 0 && currentProgress < 100
+            ? remainingSeconds / (100 - currentProgress) * currentProgress
+            : 0
 
           let endsAtTimestamp: number | null = null
 
