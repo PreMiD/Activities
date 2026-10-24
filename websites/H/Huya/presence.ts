@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/Y9mrSga.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/H/Huya/assets/logo.png',
 }
 
 function getElement(query: string): string | undefined {
