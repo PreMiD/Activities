@@ -11,7 +11,7 @@
     "tr": "En sevdiğiniz anime dizi ve filmlerini Full HD Türkçe altyazılı izleyin."
   },
   "url": "anivesta.com",
-  "regExp": "^https?://(www\\.)?anivesta\\.com/",
+  "regExp": "^https?[:][/][/](www[.])?anivesta[.]com[/]",
   "version": "1.0.0",
   "logo": "https://anivesta.com/assets/logo-bg.png",
   "thumbnail": "https://anivesta.com/og-banner.png",
