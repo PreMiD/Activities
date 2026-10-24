@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "944919875674071060",
+    "name": "itsme.hamza"
+  },
+  "service": "Gamerlog",
+  "description": {
+    "en": "Track games, rate and review them, and see your gaming stats."
+  },
+  "url": "gamerlog.app",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*gamerlog[.]app[/]",
+  "version": "1.0.0",
+  "logo": "https://i.ibb.co/rYjNWTr/rsz-1gamerlog-logo-dcstibz3.png",
+  "thumbnail": "https://i.ibb.co/nsPN2vg7/Screenshot-2026-10-22-224255.png",
+  "color": "#0a0a0b",
+  "category": "games",
+  "tags": [
+    "games",
+    "gaming",
+    "tracker",
+    "reviews",
+    "backlog"
+  ],
+  "settings": [
+    {
+      "id": "hideOwnName",
+      "title": "Hide my username",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
+}
