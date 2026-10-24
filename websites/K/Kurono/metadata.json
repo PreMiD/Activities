@@ -7,8 +7,8 @@
   "url": "kurono.nl",
   "regExp": "^https?[:][/][/](www[.])?kurono[.]nl[/]",
   "version": "1.0.0",
-  "logo": "https://kurono.nl/anime-icon-512.png",
-  "thumbnail": "https://kurono.nl/brand/premid-thumbnail.png",
+  "logo": "https://i.imgur.com/y4migxJ.png",
+  "thumbnail": "https://i.imgur.com/o4DDsCQ.png",
   "color": "#ff640a",
   "category": "anime",
   "tags": ["anime", "streaming", "manga", "sub", "dub"]
