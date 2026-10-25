@@ -13,8 +13,8 @@
   "url": "vrchat.dance",
   "regExp": "^https?[:][/][/](www[.])?vrchat[.]dance[/]",
   "version": "1.0.0",
-  "logo": "https://vrchat.dance/logo-512.png",
-  "thumbnail": "https://vrchat.dance/og/site/home.png",
+  "logo": "https://i.imgur.com/mQiTGMd.png",
+  "thumbnail": "https://i.imgur.com/odloI3Y.png",
   "color": "#ff3d9a",
   "category": "socials",
   "tags": [
