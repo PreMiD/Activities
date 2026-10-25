@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "ebuword",
+    "id": "1524803642383663114"
+  },
+  "service": "Wiwizi",
+  "description": {
+    "en": "Watch movies, series and anime on Wiwizi with rich Discord activity status.",
+    "tr": "Wiwizi üzerinde film, dizi ve anime izlerken Discord zengin durumunuzu gösterin."
+  },
+  "url": "wiwizi.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wiwizi[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://wiwizi.com/assets/logo.png",
+  "thumbnail": "https://wiwizi.com/assets/logo.png",
+  "color": "#E50914",
+  "category": "videos",
+  "tags": [
+    "wiwizi",
+    "movies",
+    "series",
+    "anime",
+    "streaming"
+  ],
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Wiwizi Butonu Göster",
+      "icon": "fas fa-external-link-alt",
+      "value": true
+    },
+    {
+      "id": "showTimestamps",
+      "title": "Oynatma Çubuğu Göster",
+      "icon": "fas fa-clock",
+      "value": true
+    }
+  ]
+}
