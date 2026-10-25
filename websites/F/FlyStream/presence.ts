@@ -7,7 +7,7 @@ const openedAt = Math.floor(Date.now() / 1000)
 const site = 'https://flystream.net'
 
 enum ActivityAssets {
-  Logo = 'https://cdn.rcd.gg/PreMiD/websites/F/FlyStream/assets/logo.png',
+  Logo = 'https://flystream.net/icon-512.png?v=20261011-halloween',
 }
 
 async function getStrings() {
