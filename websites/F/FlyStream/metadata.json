@@ -12,7 +12,7 @@
   "url": "flystream.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flystream[.]net[/]",
   "version": "1.0.3",
-  "logo": "https://flystream.net/icon-512.png?v=20261011-halloween",
+  "logo": "https://flystream.net/icon-512.png",
   "thumbnail": "https://raw.githubusercontent.com/ggychzmc8p-cmyk/Activities/flystream-halloween-branding/websites/F/FlyStream/assets/thumbnail.jpg",
   "color": "#e5372a",
   "category": "videos",
