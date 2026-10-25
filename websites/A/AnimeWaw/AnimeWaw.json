@@ -1,0 +1,14 @@
+{
+  "animewaw.together": {
+    "description": "Shown in a watch-together room next to the number of people watching, e.g. \"Watching together · 3\".",
+    "message": "Watching together"
+  },
+  "animewaw.buttonWatchTogether": {
+    "description": "Button that opens the watch-together room the user is in. Must be 32 characters or less.",
+    "message": "Watch Together"
+  },
+  "animewaw.top100": {
+    "description": "Shown when the user is viewing the list of the 100 best rated anime.",
+    "message": "Viewing the top 100"
+  }
+}
