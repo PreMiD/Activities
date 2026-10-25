@@ -149,7 +149,40 @@ presence.on('UpdateData', async () => {
   }
 
   // ==========================================
-  // 2. KATALOG, LİSTE VE GEZİNME SAYFALARI
+  // 2. KULLANICI PROFİL SAYFASI (/u/:username)
+  // ==========================================
+  const isProfile = Boolean(pathname.match(/\/(?:u|profile|kullanici)\/[^/]+/))
+  if (isProfile) {
+    const username = pathname.split('/').filter(Boolean).pop() || 'kullanıcı'
+    const userAvatar = document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content
+      || document.querySelector<HTMLImageElement>('img[src*="avatar"]')?.src
+      || ActivityAssets.Logo
+
+    const cleanName = cleanTitle(document.title).replace(/\s*Profili.*$/i, '').trim()
+
+    const presenceData: PresenceData = {
+      type: ActivityType.Watching,
+      details: cleanName ? `${cleanName} (@${username})` : `@${username}`,
+      state: 'Kullanıcı profilinde',
+      largeImageKey: userAvatar,
+      largeImageText: `@${username}`,
+      smallImageKey: ActivityAssets.Logo,
+      smallImageText: 'wiwizi.com',
+      startTimestamp: browsingTimestamp,
+    }
+
+    if (showButtons) {
+      presenceData.buttons = [
+        { label: 'Profili Gör', url: href },
+      ]
+    }
+
+    presence.setActivity(presenceData)
+    return
+  }
+
+  // ==========================================
+  // 3. KATALOG, LİSTE VE GEZİNME SAYFALARI
   // ==========================================
   const pathLower = pathname.toLowerCase()
 
@@ -168,10 +201,6 @@ presence.on('UpdateData', async () => {
   }
   else if (pathLower.includes('listem') || pathLower.includes('watchlist')) {
     pageTitle = 'İzleme listesinde'
-  }
-  else if (pathLower.includes('/u/') || pathLower.includes('/profile') || pathLower.includes('/kullanici/')) {
-    const username = pathname.split('/').filter(Boolean).pop() || 'kullanıcı'
-    pageTitle = `@${username} profilinde`
   }
 
   const presenceData: PresenceData = {
