@@ -1,4 +1,6 @@
 import type { TestEvent } from './WebSocketServer.js'
+import { Buffer } from 'node:buffer'
+import net from 'node:net'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import WebSocket from 'ws'
 import { WebSocketServer } from './WebSocketServer.js'
@@ -111,6 +113,26 @@ describe('webSocketServer test RPC', () => {
 
     expect(first).toHaveBeenCalledTimes(1)
     expect(second).toHaveBeenLastCalledWith({ tabId: 2, kind: 'error', error: 'bad url' })
+  })
+
+  it('a malformed frame from a local client does not crash the server', async () => {
+    await new Promise<void>((resolve, reject) => {
+      const raw = net.connect(3021, 'localhost', () => {
+        raw.write('GET / HTTP/1.1\r\nHost: localhost:3021\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\nSec-WebSocket-Version: 13\r\n\r\n')
+      })
+      raw.once('data', () => {
+        // Masked text frame with RSV2 set, which ws rejects. Without a socket error listener this crashes the process.
+        raw.write(Buffer.from([0xA1, 0x81, 0, 0, 0, 0, 0x78]))
+        setTimeout(() => {
+          raw.destroy()
+          resolve()
+        }, 50)
+      })
+      raw.on('error', reject)
+    })
+
+    const client = await connectClient()
+    expect(client.readyState).toBe(WebSocket.OPEN)
   })
 
   it('ignores non-JSON messages', async () => {

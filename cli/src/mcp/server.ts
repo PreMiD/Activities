@@ -7,8 +7,12 @@ import { buildActivity, createActivity, listActivities } from './projectTools.js
 
 const cliPackageJson = JSON.parse(readFileSync(new URL('../../package.json', import.meta.url), 'utf-8'))
 
-function toToolResult(result: unknown) {
-  if (typeof result === 'object' && result !== null && 'error' in result && typeof result.error === 'string') {
+// Only the handler-error shape, { error } alone, is a tool failure. Results that carry an error field
+// as data, like get_activity's { kind, activity, error }, are normal results.
+export function toToolResult(result: unknown) {
+  const isHandlerError = typeof result === 'object' && result !== null
+    && Object.keys(result).length === 1 && 'error' in result && typeof result.error === 'string'
+  if (isHandlerError) {
     return { isError: true, content: [{ type: 'text' as const, text: (result as ToolError).error }] }
   }
 

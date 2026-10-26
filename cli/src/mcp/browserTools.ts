@@ -62,6 +62,19 @@ export function getConnection(): Promise<WebSocketServer> {
   return connection
 }
 
+// Closes the WebSocket server, so port 3021 is free once the MCP process exits.
+export async function closeConnection(): Promise<void> {
+  const pending = connection
+  connection = undefined
+  try {
+    const ws = await pending
+    await ws?.close()
+  }
+  catch {
+    // Never created, or it failed to bind. Nothing to close.
+  }
+}
+
 export async function extensionStatus(): Promise<{ connected: boolean, supportsTests: boolean } | ToolError> {
   try {
     const ws = await getConnection()

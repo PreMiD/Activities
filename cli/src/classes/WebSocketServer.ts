@@ -57,6 +57,9 @@ export class WebSocketServer implements TestRpc {
         }
       })
 
+      // A malformed frame or a reset socket emits 'error'. Without a listener that crashes a long-lived pmd process.
+      socket.on('error', () => {})
+
       socket.on('close', () => {
         info('Disconnected from the extension!')
       })

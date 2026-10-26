@@ -11,6 +11,7 @@ const mocks = vi.hoisted(() => ({
   runCli: vi.fn(),
   findActivity: vi.fn(),
   findTestFiles: vi.fn(),
+  close: vi.fn(),
 }))
 
 vi.mock('../classes/WebSocketServer.js', async () => {
@@ -45,6 +46,10 @@ vi.mock('../classes/WebSocketServer.js', async () => {
 
     send() {
       return mocks.send()
+    }
+
+    close() {
+      return mocks.close()
     }
   }
 
@@ -172,6 +177,29 @@ describe('browserTools', () => {
     expect(mocks.instances).toHaveLength(2)
     // Only the successful server subscribes to test events.
     expect(mocks.onTestEvent).toHaveBeenCalledTimes(1)
+  })
+
+  it('get_activity returns an invalid event as a normal result with its error', async () => {
+    await browserTools.getConnection()
+    testEventListener()({ tabId: 4, kind: 'invalid', error: 'Missing details' })
+
+    expect(await browserTools.getActivity({ tabId: 4, timeoutMs: 10 })).toEqual({ kind: 'invalid', activity: null, error: 'Missing details' })
+  })
+
+  it('closeConnection closes the server and the next call creates a new one', async () => {
+    await browserTools.getConnection()
+    await browserTools.closeConnection()
+
+    expect(mocks.close).toHaveBeenCalledTimes(1)
+
+    await browserTools.getConnection()
+    expect(mocks.instances).toHaveLength(2)
+  })
+
+  it('closeConnection does nothing when no server was created', async () => {
+    await browserTools.closeConnection()
+
+    expect(mocks.close).not.toHaveBeenCalled()
   })
 
   it('run_tests reports a service without test files', async () => {
