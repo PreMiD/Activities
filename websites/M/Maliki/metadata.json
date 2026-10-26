@@ -11,12 +11,9 @@
     "es": "Odio hablar de mi... Aparte de mis cómics, mis novelas y en mi blog!",
     "fr": "J'ai horreur de parler de moi... Ailleurs que dans mes BD, mes romans et sur mon blog !"
   },
-  "url": [
-    "maliki.com",
-    "malimode.maliki.com"
-  ],
+  "url": "maliki.com",
   "regExp": "^https?[:][/][/](malimode[.])?maliki[.]com[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Maliki/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Maliki/assets/thumbnail.jpg",
   "color": "#f576ab",

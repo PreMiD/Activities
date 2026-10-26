@@ -18,12 +18,9 @@
     "nl": "Uw Nummer 1 Hit Simulatie Radio",
     "sv": "Din nummer 1 träffsimuleringsradio"
   },
-  "url": [
-    "simulatorhits.com",
-    "panel.simulatorhits.com"
-  ],
+  "url": "simulatorhits.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*simulatorhits[.]com[/]",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SimulatorHits/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SimulatorHits/assets/thumbnail.png",
   "color": "#DC2424",
