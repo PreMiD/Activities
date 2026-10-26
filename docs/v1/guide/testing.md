@@ -83,6 +83,14 @@ await page.waitForUser('Log in to your account', {
 
 A bar also appears at the top of the test tab with **Continue** and **Skip test** buttons. The wait ends when `until` returns a truthy value, when you click **Continue**, or when the timeout runs out. **Skip test** marks the test as skipped.
 
+Sometimes `page.goto` itself ends up on a page the activity doesn't match, like a cookie consent screen or a login page on another domain. `pmd` waits up to 5 minutes for you to finish there and prints:
+
+```
+⏸ YouTube Music › browsing the home page: waiting for you: Finish on consent.youtube.com (sign in or accept), the test continues on its own
+```
+
+Once the tab is back on a page the activity matches, the test continues.
+
 ## Running Tests
 
 Tests run in your own browser through the PreMiD extension. You need:

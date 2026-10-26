@@ -11,6 +11,8 @@ export type TestEvent
   = | { tabId: number, kind: 'setActivity', data: unknown }
     | { tabId: number, kind: 'clearActivity' }
     | { tabId: number, kind: 'invalid' | 'error', error: string }
+    // The tab loaded a page the activity doesn't match, like a consent or login redirect
+    | { tabId: number, kind: 'waitingForUser', url: string }
 
 export interface TestRpc {
   request: <T = unknown>(method: string, params?: object, timeoutMs?: number) => Promise<T>

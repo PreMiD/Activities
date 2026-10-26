@@ -11,6 +11,8 @@ const USER_POLL_INTERVAL_MS = 500
 const DEFAULT_WAIT_TIMEOUT_MS = 30_000
 const DEFAULT_USER_TIMEOUT_MS = 300_000
 const LOAD_TIMEOUT_MS = 30_000
+// The extension waits up to 300s itself when the tab needs the user, so its error arrives before ours.
+const OPEN_TIMEOUT_MS = DEFAULT_USER_TIMEOUT_MS + 30_000
 
 interface UserBarState {
   choice: 'continue' | 'skip' | null
@@ -75,7 +77,18 @@ export function createPage(rpc: TestRpc, opts: {
   // Nothing awaits tabFailure until a wait races it, so keep it from being reported as unhandled.
   tabFailure.catch(() => {})
 
+  // Set while goto waits, so a page that needs the user can be reported before openTab returns the tab id.
+  let opening = false
+
   const unsubscribe = rpc.onTestEvent((event) => {
+    if (event.kind === 'waitingForUser') {
+      if (opening && (session.tabId === undefined || event.tabId === session.tabId)) {
+        opts.onWaiting(`Finish on ${new URL(event.url).host} (sign in or accept), the test continues on its own`)
+        if (opts.interactive)
+          rpc.request('focus', { tabId: event.tabId }).catch(() => {})
+      }
+      return
+    }
     if (event.kind !== 'error' || event.tabId !== session.tabId || tabError)
       return
     tabError = new Error(event.error)
@@ -140,12 +153,18 @@ export function createPage(rpc: TestRpc, opts: {
 
   async function goto(url: string) {
     throwIfAborted()
-    if (session.tabId === undefined) {
-      const result = await rpc.request<{ tabId: number }>('openTab', { url, service: opts.service, settings: opts.settings })
-      session.tabId = result.tabId
+    opening = true
+    try {
+      if (session.tabId === undefined) {
+        const result = await rpc.request<{ tabId: number }>('openTab', { url, service: opts.service, settings: opts.settings }, OPEN_TIMEOUT_MS)
+        session.tabId = result.tabId
+      }
+      else {
+        await rpc.request('navigate', { tabId: session.tabId, url }, OPEN_TIMEOUT_MS)
+      }
     }
-    else {
-      await rpc.request('navigate', { tabId: session.tabId, url })
+    finally {
+      opening = false
     }
     await waitForLoad()
   }

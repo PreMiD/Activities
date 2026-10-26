@@ -7,6 +7,7 @@ type Handler = (method: string, params: any) => unknown
 
 function createFakeRpc(handler: Handler) {
   const calls: { method: string, params: any }[] = []
+  const timeouts = new Map<string, number | undefined>()
   const listeners = new Set<(event: TestEvent) => void>()
   // goto waits for the page to load. The fake page is complete unless a test sets this to 'loading'.
   const ready = { state: 'complete' }
@@ -15,8 +16,9 @@ function createFakeRpc(handler: Handler) {
       listener(event)
   }
   const rpc: TestRpc = {
-    request: (async (method: string, params?: object) => {
+    request: (async (method: string, params?: object, timeoutMs?: number) => {
       calls.push({ method, params })
+      timeouts.set(method, timeoutMs)
       if (method === 'evaluate' && (params as { code: string }).code.includes('readyState'))
         return { value: ready.state }
       return handler(method, params)
@@ -26,7 +28,7 @@ function createFakeRpc(handler: Handler) {
       return () => listeners.delete(listener)
     },
   }
-  return { rpc, calls, emit, listeners, ready }
+  return { rpc, calls, emit, listeners, ready, timeouts }
 }
 
 function evaluateCalls(calls: { method: string, params: any }[]) {
@@ -82,6 +84,38 @@ describe('createPage', () => {
       method: 'navigate',
       params: { tabId: 7, url: 'https://example.com/b' },
     })
+  })
+
+  it('goto outwaits the extension, which allows 300s for a page that needs the user', async () => {
+    const { rpc, timeouts } = createFakeRpc(method => method === 'openTab' ? { tabId: 7 } : {})
+    const { page } = makePage(rpc)
+
+    await page.goto('https://example.com/a')
+    await page.goto('https://example.com/b')
+
+    expect(timeouts.get('openTab')).toBeGreaterThan(300_000)
+    expect(timeouts.get('navigate')).toBeGreaterThan(300_000)
+  })
+
+  it('goto asks the user when the tab is held on a page the activity does not match', async () => {
+    let finishOpen: () => void = () => {}
+    const { rpc, calls, emit } = createFakeRpc((method) => {
+      if (method === 'openTab')
+        return new Promise(resolve => finishOpen = () => resolve({ tabId: 7 }))
+      return {}
+    })
+    const { page, onWaiting } = makePage(rpc, { interactive: true })
+
+    const going = page.goto('https://example.com/a')
+    await vi.advanceTimersByTimeAsync(0)
+    emit({ tabId: 7, kind: 'waitingForUser', url: 'https://consent.example.com/?continue=x' })
+    await vi.advanceTimersByTimeAsync(0)
+
+    expect(onWaiting).toHaveBeenCalledWith('Finish on consent.example.com (sign in or accept), the test continues on its own')
+    expect(calls).toContainEqual({ method: 'focus', params: { tabId: 7 } })
+
+    finishOpen()
+    await going
   })
 
   it('evaluate sends the function source', async () => {

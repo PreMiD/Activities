@@ -13,7 +13,7 @@ export function createActivity(rpc: TestRpc, opts: { session: PageSession, signa
   let lastData: unknown
 
   const unsubscribe = rpc.onTestEvent((event) => {
-    if (session.tabId === undefined || event.tabId !== session.tabId)
+    if (session.tabId === undefined || event.tabId !== session.tabId || event.kind === 'waitingForUser')
       return
 
     if (event.kind === 'setActivity')

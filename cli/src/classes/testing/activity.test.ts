@@ -43,6 +43,18 @@ describe('createActivity', () => {
     activity.dispose()
   })
 
+  it('next() skips waitingForUser events, which are not activity updates', async () => {
+    const { rpc, emit } = createFakeRpc()
+    const session = { tabId: 4 as number | undefined }
+    const activity = createActivity(rpc, { session, signal: controller.signal })
+
+    emit({ tabId: 4, kind: 'waitingForUser', url: 'https://consent.example.com/' })
+    emit({ tabId: 4, kind: 'setActivity', data: { details: 'Watching' } })
+
+    await expect(activity.next()).resolves.toEqual({ details: 'Watching' })
+    activity.dispose()
+  })
+
   it('next() resolves undefined on clearActivity', async () => {
     const { rpc, emit } = createFakeRpc()
     const session = { tabId: 4 as number | undefined }

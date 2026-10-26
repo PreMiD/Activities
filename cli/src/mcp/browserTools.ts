@@ -181,7 +181,7 @@ function nextTabEvent(tabId: number, timeoutMs: number): Promise<TestEvent | und
   })
 }
 
-export async function getActivity({ tabId, timeoutMs = DEFAULT_EVENT_TIMEOUT_MS }: { tabId: number, timeoutMs?: number }): Promise<{ kind: string, activity: unknown, error?: string } | ToolError> {
+export async function getActivity({ tabId, timeoutMs = DEFAULT_EVENT_TIMEOUT_MS }: { tabId: number, timeoutMs?: number }): Promise<{ kind: string, activity: unknown, error?: string, url?: string } | ToolError> {
   try {
     const event = latestEvents.get(tabId) ?? await nextTabEvent(tabId, timeoutMs)
     latestEvents.delete(tabId)
@@ -193,6 +193,8 @@ export async function getActivity({ tabId, timeoutMs = DEFAULT_EVENT_TIMEOUT_MS 
       return { kind: event.kind, activity: event.data }
     if (event.kind === 'clearActivity')
       return { kind: event.kind, activity: null }
+    if (event.kind === 'waitingForUser')
+      return { kind: event.kind, activity: null, url: event.url }
     return { kind: event.kind, activity: null, error: event.error }
   }
   catch (error) {
