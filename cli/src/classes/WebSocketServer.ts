@@ -7,7 +7,21 @@ import ora from 'ora'
 import WebSocket, { WebSocketServer as WSServer } from 'ws'
 import { info, prefix } from '../util/log.js'
 
-export class WebSocketServer {
+export type TestEvent =
+  | { tabId: number, kind: 'setActivity', data: unknown }
+  | { tabId: number, kind: 'clearActivity' }
+  | { tabId: number, kind: 'invalid' | 'error', error: string }
+
+export interface TestRpc {
+  request: <T = unknown>(method: string, params?: object, timeoutMs?: number) => Promise<T>
+  onTestEvent: (listener: (event: TestEvent) => void) => () => void
+}
+
+type TestMessage =
+  | { type: 'testResponse', id: number, result?: unknown, error?: string }
+  | ({ type: 'testEvent' } & TestEvent)
+
+export class WebSocketServer implements TestRpc {
   private server: WSServer
 
   constructor(public readonly cwd: string) {
@@ -18,6 +32,25 @@ export class WebSocketServer {
         info('Connected to the extension!')
         this.send()
       }
+
+      socket.on('message', (raw) => {
+        let message: TestMessage
+        try {
+          message = JSON.parse(raw.toString()) as TestMessage
+        }
+        catch {
+          return
+        }
+
+        if (message?.type === 'testResponse') {
+          this.handleTestResponse(message)
+        }
+        else if (message?.type === 'testEvent') {
+          const { type: _type, ...event } = message
+          for (const listener of this.testListeners)
+            listener(event)
+        }
+      })
 
       socket.on('close', () => {
         info('Disconnected from the extension!')
@@ -111,5 +144,70 @@ export class WebSocketServer {
     spinner.succeed(prefix + chalk.greenBright(' Activity sent to the extension!'))
 
     this.isSending = false
+  }
+
+  private nextTestId = 0
+  private pendingTests = new Map<number, { resolve: (value: unknown) => void, reject: (error: Error) => void, timeout: NodeJS.Timeout }>()
+  private testListeners = new Set<(event: TestEvent) => void>()
+
+  get isConnected(): boolean {
+    return this.getOpenClient() !== undefined
+  }
+
+  private getOpenClient() {
+    return [...this.server.clients].find(client => client.readyState === WebSocket.OPEN)
+  }
+
+  request<T = unknown>(method: string, params: object = {}, timeoutMs = 30_000): Promise<T> {
+    const client = this.getOpenClient()
+    if (!client)
+      return Promise.reject(new Error('Extension not connected'))
+
+    const id = ++this.nextTestId
+    return new Promise<T>((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        this.pendingTests.delete(id)
+        reject(new Error(`Timed out waiting for the extension (${method})`))
+      }, timeoutMs)
+
+      this.pendingTests.set(id, { resolve: resolve as (value: unknown) => void, reject, timeout })
+      client.send(JSON.stringify({ type: 'test', id, method, params }))
+    })
+  }
+
+  onTestEvent(listener: (event: TestEvent) => void) {
+    this.testListeners.add(listener)
+    return () => {
+      this.testListeners.delete(listener)
+    }
+  }
+
+  private handleTestResponse(message: Extract<TestMessage, { type: 'testResponse' }>) {
+    const pending = this.pendingTests.get(message.id)
+    if (!pending)
+      return
+
+    clearTimeout(pending.timeout)
+    this.pendingTests.delete(message.id)
+
+    if (message.error !== undefined)
+      pending.reject(new Error(message.error))
+    else
+      pending.resolve(message.result)
+  }
+
+  async close(): Promise<void> {
+    for (const [id, pending] of this.pendingTests) {
+      clearTimeout(pending.timeout)
+      this.pendingTests.delete(id)
+      pending.reject(new Error('WebSocket server closed'))
+    }
+
+    for (const client of this.server.clients)
+      client.terminate()
+
+    await new Promise<void>((resolve, reject) => {
+      this.server.close(err => err ? reject(err) : resolve())
+    })
   }
 }
