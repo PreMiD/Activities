@@ -48,12 +48,15 @@ export class DevTestLoop {
   }
 
   runNow(): void {
+    clearTimeout(this.timer)
+    this.timer = undefined
     this.execute(true)
   }
 
   togglePause(): void {
     this.isPaused = !this.isPaused
     if (this.isPaused) {
+      this.controller?.abort()
       this.deps.log('PAUSED, press p to resume')
       return
     }
@@ -69,17 +72,21 @@ export class DevTestLoop {
   }
 
   private async cycle(generation: number, interactive: boolean): Promise<void> {
-    if (generation !== this.generation)
+    // Debounced builds stay silent while paused. A manual run (`t`) still goes ahead.
+    const skip = () => generation !== this.generation || (!interactive && this.isPaused)
+    if (skip())
       return
 
     let controller: AbortController | undefined
     try {
       await this.deps.send()
-      if (generation !== this.generation)
+      if (skip())
         return
       if (!(await this.checkSupported()))
         return
       if (!(await this.deps.hasTests()))
+        return
+      if (skip())
         return
 
       controller = new AbortController()
@@ -124,6 +131,8 @@ export function listenForKeys(loop: Pick<DevTestLoop, 'togglePause' | 'runNow'>)
   process.stdin.on('keypress', (_input, key) => {
     if (key?.ctrl && key.name === 'c')
       process.exit(0)
+    if (key?.ctrl)
+      return
     if (key?.name === 'p')
       loop.togglePause()
     if (key?.name === 't')

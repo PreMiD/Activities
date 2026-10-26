@@ -6,7 +6,10 @@ const PASSED: TestResult = { file: 'a.test.ts', name: 'works', status: 'passed',
 
 interface RunOptions { signal: AbortSignal, interactive: boolean }
 
-function setup(run: (opts: RunOptions) => Promise<TestResult[]> = async () => [PASSED]) {
+function setup(
+  run: (opts: RunOptions) => Promise<TestResult[]> = async () => [PASSED],
+  hasTests: () => Promise<boolean> = async () => true,
+) {
   const send = vi.fn(async () => {})
   const log = vi.fn((_line: string) => {})
   const runSpy = vi.fn(run)
@@ -14,7 +17,7 @@ function setup(run: (opts: RunOptions) => Promise<TestResult[]> = async () => [P
     service: 'Svc',
     send,
     tester: { run: runSpy, isSupported: async () => true },
-    hasTests: async () => true,
+    hasTests,
     log,
   })
   return { loop, send, run: runSpy, log }
@@ -84,6 +87,59 @@ describe('devTestLoop', () => {
     expect(run).toHaveBeenCalledTimes(1)
     expect(log).toHaveBeenCalledWith('PAUSED, press p to resume')
     expect(log).toHaveBeenCalledWith('Resumed')
+  })
+
+  it('pausing aborts the running test run and queued builds do nothing', async () => {
+    const { loop, send, run } = setup(({ signal }) => new Promise(resolve =>
+      signal.addEventListener('abort', () => resolve([{ ...PASSED, status: 'cancelled' }]), { once: true }),
+    ))
+
+    loop.onBuild()
+    await vi.advanceTimersByTimeAsync(300)
+    expect(run).toHaveBeenCalledTimes(1)
+
+    loop.togglePause()
+    expect(run.mock.calls[0][0].signal.aborted).toBe(true)
+
+    loop.onBuild()
+    await vi.advanceTimersByTimeAsync(300)
+
+    expect(send).toHaveBeenCalledTimes(1)
+    expect(run).toHaveBeenCalledTimes(1)
+  })
+
+  it('a build arriving during hasTests prevents the stale run', async () => {
+    let release!: () => void
+    const gate = new Promise<boolean>((resolve) => {
+      release = () => resolve(true)
+    })
+    let hasTestsCalls = 0
+    const { loop, run } = setup(undefined, async () => {
+      hasTestsCalls++
+      return hasTestsCalls === 1 ? gate : true
+    })
+
+    loop.onBuild()
+    await vi.advanceTimersByTimeAsync(300)
+    loop.runNow()
+    release()
+    await vi.advanceTimersByTimeAsync(1)
+
+    expect(run).toHaveBeenCalledTimes(1)
+    expect(run).toHaveBeenCalledWith(expect.objectContaining({ interactive: true }))
+  })
+
+  it('runNow cancels a pending debounced build', async () => {
+    const { loop, send, run } = setup()
+
+    loop.onBuild()
+    await vi.advanceTimersByTimeAsync(100)
+    loop.runNow()
+    await vi.advanceTimersByTimeAsync(300)
+
+    expect(send).toHaveBeenCalledTimes(1)
+    expect(run).toHaveBeenCalledTimes(1)
+    expect(run).toHaveBeenCalledWith(expect.objectContaining({ interactive: true }))
   })
 
   it('runNow runs while paused with interactive true', async () => {
