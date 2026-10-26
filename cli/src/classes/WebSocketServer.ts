@@ -14,6 +14,9 @@ export type TestEvent
     // The tab loaded a page the activity doesn't match, like a consent or login redirect
     | { tabId: number, kind: 'waitingForUser', url: string }
 
+// Tests drive one browser. With several connected there is no way to tell which one the developer means.
+export const MULTIPLE_BROWSERS = 'More than one browser is connected to pmd. Turn off developer mode in the others so tests run in one browser.'
+
 export interface TestRpc {
   request: <T = unknown>(method: string, params?: object, timeoutMs?: number) => Promise<T>
   onTestEvent: (listener: (event: TestEvent) => void) => () => void
@@ -169,7 +172,10 @@ export class WebSocketServer implements TestRpc {
   }
 
   request<T = unknown>(method: string, params: object = {}, timeoutMs = 30_000): Promise<T> {
-    const client = this.getOpenClient()
+    const open = [...this.server.clients].filter(client => client.readyState === WebSocket.OPEN)
+    if (open.length > 1)
+      return Promise.reject(new Error(MULTIPLE_BROWSERS))
+    const client = open[0]
     if (!client)
       return Promise.reject(new Error('Extension not connected'))
 

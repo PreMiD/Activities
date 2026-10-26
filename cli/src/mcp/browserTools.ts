@@ -4,7 +4,7 @@ import { once } from 'node:events'
 import process from 'node:process'
 import { ActivityTester, findTestFiles } from '../classes/ActivityTester.js'
 import { createReporter } from '../classes/testing/reporter.js'
-import { WebSocketServer } from '../classes/WebSocketServer.js'
+import { MULTIPLE_BROWSERS, WebSocketServer } from '../classes/WebSocketServer.js'
 import { waitForExtension } from '../commands/test.js'
 import { findActivity, runCli } from './projectTools.js'
 
@@ -81,7 +81,11 @@ export async function extensionStatus(): Promise<{ connected: boolean, supportsT
     if (!ws.isConnected)
       return { connected: false, supportsTests: false }
 
-    const supportsTests = await ws.request('hello', {}, HELLO_TIMEOUT_MS).then(() => true, () => false)
+    const supportsTests = await ws.request('hello', {}, HELLO_TIMEOUT_MS).then(() => true, (error: Error) => {
+      if (error.message === MULTIPLE_BROWSERS)
+        throw error
+      return false
+    })
     return { connected: true, supportsTests }
   }
   catch (error) {

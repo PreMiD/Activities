@@ -10,6 +10,7 @@ import { globby } from 'globby'
 import { createActivity } from './testing/activity.js'
 import { CancelledError, SkipError } from './testing/errors.js'
 import { createPage } from './testing/page.js'
+import { MULTIPLE_BROWSERS } from './WebSocketServer.js'
 
 export type TestStatus = 'passed' | 'failed' | 'skipped' | 'cancelled'
 
@@ -72,7 +73,9 @@ export class ActivityTester {
       await this.rpc.request('hello', {}, HELLO_TIMEOUT_MS)
       return true
     }
-    catch {
+    catch (error) {
+      if (error instanceof Error && error.message === MULTIPLE_BROWSERS)
+        throw error
       return false
     }
   }

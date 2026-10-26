@@ -46,7 +46,11 @@ export async function test(service?: string) {
   await ws.send()
 
   const tester = new ActivityTester(folder, metadata.service, ws, createReporter(metadata.service))
-  if (!(await tester.isSupported())) {
+  const supported = await tester.isSupported().catch(async (error: Error) => {
+    await ws.close()
+    exit(error.message)
+  })
+  if (!supported) {
     await ws.close()
     exit(`Your extension doesn't support tests yet, or developer mode is off`)
   }

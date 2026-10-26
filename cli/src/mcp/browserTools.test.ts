@@ -53,7 +53,7 @@ vi.mock('../classes/WebSocketServer.js', async () => {
     }
   }
 
-  return { WebSocketServer }
+  return { WebSocketServer, MULTIPLE_BROWSERS: 'several browsers' }
 })
 vi.mock('../commands/test.js', () => ({ waitForExtension: mocks.waitForExtension }))
 vi.mock('./projectTools.js', () => ({ runCli: mocks.runCli, findActivity: mocks.findActivity }))
@@ -177,6 +177,12 @@ describe('browserTools', () => {
     expect(mocks.instances).toHaveLength(2)
     // Only the successful server subscribes to test events.
     expect(mocks.onTestEvent).toHaveBeenCalledTimes(1)
+  })
+
+  it('extension_status reports several connected browsers as an error', async () => {
+    mocks.request.mockRejectedValue(new Error('several browsers'))
+
+    expect(await browserTools.extensionStatus()).toEqual({ error: 'several browsers' })
   })
 
   it('get_activity returns an invalid event as a normal result with its error', async () => {

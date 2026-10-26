@@ -5,6 +5,7 @@ import chalk from 'chalk'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ActivityTester, findTestFiles } from './ActivityTester.js'
 import { createReporter, printSummary } from './testing/reporter.js'
+import { MULTIPLE_BROWSERS } from './WebSocketServer.js'
 
 const FIXTURES = resolve(import.meta.dirname, '__fixtures__/tester')
 
@@ -14,7 +15,7 @@ interface Call {
 }
 
 // Answers the test RPC like a page that loads at once and sets presence on openTab.
-function createFakeRpc(options: { onOpenTab?: () => void, helloFails?: boolean } = {}) {
+function createFakeRpc(options: { onOpenTab?: () => void, helloFails?: boolean, helloError?: string } = {}) {
   const calls: Call[] = []
   const listeners = new Set<(event: TestEvent) => void>()
   let nextTabId = 1
@@ -29,6 +30,8 @@ function createFakeRpc(options: { onOpenTab?: () => void, helloFails?: boolean }
       calls.push({ method, params })
       switch (method) {
         case 'hello':
+          if (options.helloError)
+            throw new Error(options.helloError)
           if (options.helloFails)
             throw new Error('Timed out')
           return { version: 1 }
@@ -173,6 +176,13 @@ describe('activityTester', () => {
 
     expect(await tester.isSupported()).toBe(false)
     expect(calls).toEqual([{ method: 'hello', params: {} }])
+  })
+
+  it('isSupported passes the several-browsers error through instead of reporting no support', async () => {
+    const { rpc } = createFakeRpc({ helloError: MULTIPLE_BROWSERS })
+    const tester = new ActivityTester(FIXTURES, 'Example', rpc, vi.fn(), { outDir })
+
+    await expect(tester.isSupported()).rejects.toThrow(MULTIPLE_BROWSERS)
   })
 
   it('isSupported is true when hello answers', async () => {

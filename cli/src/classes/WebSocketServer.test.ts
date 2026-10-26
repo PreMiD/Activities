@@ -3,7 +3,7 @@ import { Buffer } from 'node:buffer'
 import net from 'node:net'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import WebSocket from 'ws'
-import { WebSocketServer } from './WebSocketServer.js'
+import { MULTIPLE_BROWSERS, WebSocketServer } from './WebSocketServer.js'
 
 vi.mock('../util/log.js', () => ({
   info: vi.fn(),
@@ -83,6 +83,19 @@ describe('webSocketServer test RPC', () => {
   it('request rejects when no extension is connected', async () => {
     expect(server.isConnected).toBe(false)
     await expect(server.request('hello')).rejects.toThrow('Extension not connected')
+  })
+
+  it('request refuses to pick a browser when more than one is connected', async () => {
+    const first = await connectClient()
+    const second = await connectClient()
+    const received: unknown[] = []
+    first.on('message', raw => received.push(parse(raw)))
+    second.on('message', raw => received.push(parse(raw)))
+    await vi.waitFor(() => expect(server.isConnected).toBe(true))
+    await vi.waitFor(() => expect([...server.server.clients].length).toBe(2))
+
+    await expect(server.request('hello', {}, 20)).rejects.toThrow(MULTIPLE_BROWSERS)
+    expect(received).toEqual([])
   })
 
   it('request times out', async () => {
