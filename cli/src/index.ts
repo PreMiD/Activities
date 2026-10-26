@@ -5,6 +5,7 @@ import { cac } from 'cac'
 import { build } from './commands/build.js'
 import { bump } from './commands/bump.js'
 import { checkDns } from './commands/checkDns.js'
+import { mcp } from './commands/mcp.js'
 import { newActivity } from './commands/new.js'
 import { release } from './commands/release.js'
 import { test } from './commands/test.js'
@@ -67,6 +68,10 @@ cli
 cli
   .command('release', 'Release all activities in CI')
   .action(release)
+
+cli
+  .command('mcp', 'Run the MCP server for AI agents')
+  .action(mcp)
 
 cli.help()
 cli.version(cliPackageJson.version)
