@@ -12,7 +12,7 @@
     "fr": "J'ai horreur de parler de moi... Ailleurs que dans mes BD, mes romans et sur mon blog !"
   },
   "url": "maliki.com",
-  "regExp": "^https?[:][/][/](malimode[.])?maliki[.]com[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*maliki[.]com[/]",
   "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Maliki/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Maliki/assets/thumbnail.jpg",
