@@ -23,7 +23,7 @@ function parse(raw: WebSocket.RawData): any {
   return JSON.parse(raw.toString())
 }
 
-describe('WebSocketServer test RPC', () => {
+describe('webSocketServer test RPC', () => {
   let server: WebSocketServer
 
   beforeEach(() => {

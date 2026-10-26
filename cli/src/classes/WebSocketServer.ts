@@ -7,19 +7,19 @@ import ora from 'ora'
 import WebSocket, { WebSocketServer as WSServer } from 'ws'
 import { info, prefix } from '../util/log.js'
 
-export type TestEvent =
-  | { tabId: number, kind: 'setActivity', data: unknown }
-  | { tabId: number, kind: 'clearActivity' }
-  | { tabId: number, kind: 'invalid' | 'error', error: string }
+export type TestEvent
+  = | { tabId: number, kind: 'setActivity', data: unknown }
+    | { tabId: number, kind: 'clearActivity' }
+    | { tabId: number, kind: 'invalid' | 'error', error: string }
 
 export interface TestRpc {
   request: <T = unknown>(method: string, params?: object, timeoutMs?: number) => Promise<T>
   onTestEvent: (listener: (event: TestEvent) => void) => () => void
 }
 
-type TestMessage =
-  | { type: 'testResponse', id: number, result?: unknown, error?: string }
-  | ({ type: 'testEvent' } & TestEvent)
+type TestMessage
+  = | { type: 'testResponse', id: number, result?: unknown, error?: string }
+    | ({ type: 'testEvent' } & TestEvent)
 
 export class WebSocketServer implements TestRpc {
   private server: WSServer
