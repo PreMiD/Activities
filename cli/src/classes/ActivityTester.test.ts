@@ -194,7 +194,14 @@ describe('reporter', () => {
 
     report({ type: 'waiting', name: 'logs in', message: 'Log in to continue' })
 
-    expect(log).toHaveBeenCalledWith('⏸ Example › logs in: waiting for you: Log in to continue')
+    expect(log).toHaveBeenCalledWith('   ⏸ logs in waiting for you: Log in to continue')
+  })
+
+  it('prints a header with the test count', () => {
+    const log = vi.fn()
+    createReporter('Example', log)({ type: 'run', count: 2 })
+
+    expect(log.mock.calls.map(([line]) => line)).toEqual(['', 'Example 2 tests'])
   })
 
   it('prints pass, fail, skip and summary lines', () => {
@@ -213,12 +220,14 @@ describe('reporter', () => {
     ], log)
 
     expect(log.mock.calls.map(([line]) => line)).toEqual([
-      '✓ Example › ok (1.5s)',
-      '✗ Example › bad',
-      '  nope',
-      '  Last activity: {"details":"x"}',
-      '↷ Example › later (skipped)',
-      'Tests: 1 passed, 1 failed, 1 skipped',
+      '   ✓ ok 1.5s',
+      '   ✗ bad 1.5s',
+      '     nope',
+      '     Last activity: {"details":"x"}',
+      '   ↷ later (skipped)',
+      '',
+      ' Tests  1 failed · 1 passed · 1 skipped (3)',
+      '  Time  4.5s',
     ])
   })
 })

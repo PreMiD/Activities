@@ -1,3 +1,4 @@
+import type { Page } from 'premid/test'
 import { ActivityType, Assets } from 'premid'
 import { expect, test } from 'premid/test'
 
@@ -6,7 +7,7 @@ const consentOrLogin = {
 }
 
 // A pre-roll ad also plays in the video element, and the song can come up paused after it.
-// Polled by `until`, so it retries playback until the song itself is playing with its title shown.
+// Called repeatedly, so it retries playback until the song itself is playing with its title shown.
 function playSong() {
   const video = document.querySelector('video')
   const adShowing = !!document.querySelector('.html5-video-player.ad-showing, .html5-video-player.ad-interrupting')
@@ -16,6 +17,16 @@ function playSong() {
   }
   const title = document.querySelector('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title')?.textContent?.trim()
   return !!video && !video.paused && !adShowing && !!title
+}
+
+// Starts the song muted, riding out a pre-roll ad. Only asks for a click if the browser blocks autoplay.
+async function startPlayback(page: Page) {
+  for (let attempt = 0; attempt < 40; attempt++) {
+    if (await page.evaluate(playSong).catch(() => false))
+      return
+    await new Promise(resolve => setTimeout(resolve, 500))
+  }
+  await page.waitForUser('Press play on the song', { until: playSong })
 }
 
 // Skips presences that arrived before the song loaded or during an ad, which the activity sets without a state.
@@ -46,7 +57,7 @@ test('listening to a song', async ({ page, activity }) => {
   await page.goto('https://music.youtube.com/watch?v=dQw4w9WgXcQ')
   await page.waitForUser('Accept the consent screen or sign in', consentOrLogin)
 
-  await page.waitForUser('Press play', { until: playSong })
+  await startPlayback(page)
 
   const presence = await nextListening(() => activity.next(), p => p.smallImageKey === Assets.Play && typeof p.state === 'string')
 
@@ -66,7 +77,7 @@ test('privacy mode hides the song title', { settings: { privacy: true } }, async
   await page.goto('https://music.youtube.com/watch?v=dQw4w9WgXcQ')
   await page.waitForUser('Accept the consent screen or sign in', consentOrLogin)
 
-  await page.waitForUser('Press play', { until: playSong })
+  await startPlayback(page)
 
   const title = await page.evaluate(() => {
     return document.querySelector('.title.ytmusic-player-bar, ytmusic-player-bar .middle-controls .title')

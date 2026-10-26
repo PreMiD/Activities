@@ -23,7 +23,8 @@ export interface TestResult {
 }
 
 export type TesterEvent
-  = | { type: 'start', file: string, name: string }
+  = | { type: 'run', count: number }
+    | { type: 'start', file: string, name: string }
     | { type: 'waiting', name: string, message: string }
     | { type: 'result', result: TestResult }
 
@@ -79,6 +80,7 @@ export class ActivityTester {
   async run(opts: { signal: AbortSignal, interactive: boolean }): Promise<TestResult[]> {
     const tests = await this.load()
     const results: TestResult[] = []
+    this.onEvent({ type: 'run', count: tests.length })
 
     for (const { file, test } of tests) {
       if (opts.signal.aborted)

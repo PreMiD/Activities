@@ -69,7 +69,7 @@ describe('devTestLoop', () => {
     expect(run).toHaveBeenCalledTimes(2)
     expect(send).toHaveBeenCalledTimes(2)
     // Only the newest run prints a summary.
-    expect(log.mock.calls.filter(([line]) => line.startsWith('Tests:'))).toHaveLength(1)
+    expect(log.mock.calls.filter(([line]) => line.startsWith(' Tests'))).toHaveLength(1)
   })
 
   it('paused builds send nothing until resume', async () => {
@@ -183,6 +183,6 @@ describe('devTestLoop', () => {
     await vi.advanceTimersByTimeAsync(300)
 
     expect(run).toHaveBeenCalledTimes(2)
-    expect(log).toHaveBeenCalledWith(expect.stringContaining('Tests: 1 passed'))
+    expect(log).toHaveBeenCalledWith(expect.stringContaining('1 passed'))
   })
 })
