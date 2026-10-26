@@ -7,6 +7,7 @@ import { bump } from './commands/bump.js'
 import { checkDns } from './commands/checkDns.js'
 import { newActivity } from './commands/new.js'
 import { release } from './commands/release.js'
+import { test } from './commands/test.js'
 import { updateAssets } from './commands/updateAssets.js'
 import { getCliPackageJson, getPackageJson } from './util/getPackageJson.js'
 import { exit } from './util/log.js'
@@ -41,6 +42,10 @@ cli
   .option('--sarif', 'Output the result in SARIF format (Doesn\'t work with --kill)')
   .option('--zip', 'Zip the activity')
   .action(build)
+
+cli
+  .command('test [activity]', 'Run the e2e tests of an activity')
+  .action(test)
 
 cli
   .command('bump [activity] [version]', 'Bump an activity')
