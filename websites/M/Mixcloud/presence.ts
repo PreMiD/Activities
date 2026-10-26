@@ -36,10 +36,10 @@ presence.on('UpdateData', async () => {
   const liveIsPlaying = livePlayButton?.getAttribute('icon') === 'pause'
 
   if (player && audio && !audio.paused && !audio.ended) {
-    const titleLink = player.querySelector<HTMLAnchorElement>('[data-testid="player-short-title"]')
+    const titleLink = player.querySelector<HTMLAnchorElement>('[data-testid="player-show-title"]')
     const details = player.querySelector<HTMLElement>('[data-sentry-component="PlayerControlsDetails"]')
     const artistLink = details?.querySelector<HTMLAnchorElement>(
-      'a:not([data-testid="player-short-title"])',
+      'a:not([data-testid="player-show-title"])',
     )
     const artwork = player.querySelector<HTMLImageElement>('img')
 
