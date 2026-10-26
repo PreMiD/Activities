@@ -22,9 +22,9 @@ type TestMessage
     | ({ type: 'testEvent' } & TestEvent)
 
 export class WebSocketServer implements TestRpc {
-  private server: WSServer
+  readonly server: WSServer
 
-  constructor(public readonly cwd: string) {
+  constructor(public cwd: string) {
     this.server = new WSServer({ port: 3021 })
 
     this.server.on('connection', (socket) => {

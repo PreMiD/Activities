@@ -11,7 +11,7 @@ import { exit, info } from '../util/log.js'
 
 const EXTENSION_WAIT_MS = 15_000
 
-async function waitForExtension(ws: WebSocketServer): Promise<boolean> {
+export async function waitForExtension(ws: WebSocketServer): Promise<boolean> {
   const deadline = Date.now() + EXTENSION_WAIT_MS
   while (!ws.isConnected) {
     if (Date.now() >= deadline)

@@ -2,6 +2,7 @@ import type { ToolError } from './projectTools.js'
 import { readFileSync } from 'node:fs'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
+import { closePage, evaluate, extensionStatus, getActivity, loadActivity, navigate, openPage, runTests } from './browserTools.js'
 import { buildActivity, createActivity, listActivities } from './projectTools.js'
 
 const cliPackageJson = JSON.parse(readFileSync(new URL('../../package.json', import.meta.url), 'utf-8'))
@@ -56,6 +57,97 @@ export function createServer(): McpServer {
       },
     },
     async args => toToolResult(await buildActivity(args)),
+  )
+
+  server.registerTool(
+    'extension_status',
+    {
+      description: 'Check whether the PreMiD dev extension is connected to pmd on port 3021, and whether it supports activity tests. Call it before the browser tools. If pmd dev or pmd test is already running, it returns the port 3021 error.',
+      inputSchema: {},
+    },
+    async () => toToolResult(await extensionStatus()),
+  )
+
+  server.registerTool(
+    'load_activity',
+    {
+      description: 'Build an activity and send it to the connected extension. Call it before open_page or run_tests. Only one activity is loaded at a time; loading another replaces it.',
+      inputSchema: {
+        service: z.string().describe('Name of the service, e.g. "YouTube"'),
+      },
+    },
+    async args => toToolResult(await loadActivity(args)),
+  )
+
+  server.registerTool(
+    'open_page',
+    {
+      description: 'Open a browser tab at url with the loaded activity running. Returns the tabId for navigate, evaluate, get_activity and close_page. The service must be the one loaded with load_activity.',
+      inputSchema: {
+        service: z.string().describe('Name of the loaded service'),
+        url: z.string().describe('URL to open, e.g. "https://www.youtube.com/watch?v=abc"'),
+        settings: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional().describe('Activity settings to apply for this tab'),
+      },
+    },
+    async args => toToolResult(await openPage(args)),
+  )
+
+  server.registerTool(
+    'navigate',
+    {
+      description: 'Navigate an open tab to another URL.',
+      inputSchema: {
+        tabId: z.number().describe('Tab id returned by open_page'),
+        url: z.string().describe('URL to navigate to'),
+      },
+    },
+    async args => toToolResult(await navigate(args)),
+  )
+
+  server.registerTool(
+    'evaluate',
+    {
+      description: 'Run a function in the page of an open tab and return its result. code is the function source, e.g. "() => document.title". It runs with no arguments.',
+      inputSchema: {
+        tabId: z.number().describe('Tab id returned by open_page'),
+        code: z.string().describe('Function source, e.g. "() => document.title"'),
+      },
+    },
+    async args => toToolResult(await evaluate(args)),
+  )
+
+  server.registerTool(
+    'get_activity',
+    {
+      description: 'Read the presence the activity set in an open tab. Returns the latest buffered update and clears it, or waits up to timeoutMs for the next one. kind is setActivity, clearActivity, invalid, error or none (timed out). Call it after an action, such as navigate or a page change, to see what the activity shows.',
+      inputSchema: {
+        tabId: z.number().describe('Tab id returned by open_page'),
+        timeoutMs: z.number().optional().default(5000).describe('How long to wait for an update when none is buffered (default 5000)'),
+      },
+    },
+    async args => toToolResult(await getActivity(args)),
+  )
+
+  server.registerTool(
+    'close_page',
+    {
+      description: 'Close an open tab.',
+      inputSchema: {
+        tabId: z.number().describe('Tab id returned by open_page'),
+      },
+    },
+    async args => toToolResult(await closePage(args)),
+  )
+
+  server.registerTool(
+    'run_tests',
+    {
+      description: 'Build an activity and run its *.test.ts files in the connected extension. Returns the TestResult list (file, name, status, durationMs, error, lastActivity). Fails with "No tests found" when the activity has no tests. Tests can pause to ask the user, so they may take a while.',
+      inputSchema: {
+        service: z.string().describe('Name of the service, e.g. "YouTube"'),
+      },
+    },
+    async args => toToolResult(await runTests(args)),
   )
 
   return server
