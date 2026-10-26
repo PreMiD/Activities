@@ -18,7 +18,7 @@ interface UserBarState {
 }
 
 // Runs inside the test tab. It must not use anything outside its own parameters.
-function pollUserBar(message: string, untilCode: string | null): UserBarState {
+async function pollUserBar(message: string, untilCode: string | null): Promise<UserBarState> {
   const barId = '__pmd_wait_for_user'
   const state = window as unknown as { __pmdUserChoice?: 'continue' | 'skip' }
 
@@ -49,9 +49,10 @@ function pollUserBar(message: string, untilCode: string | null): UserBarState {
     document.documentElement.append(host)
   }
 
-  // Indirect eval runs the until condition in the page's global scope.
+  // Indirect eval runs the until condition in the extension's isolated user-script world.
+  // The DOM is shared with the page, but page JavaScript globals are not.
   // eslint-disable-next-line no-eval
-  const done = untilCode ? !!(0, eval)(`(${untilCode})`)() : false
+  const done = untilCode ? !!(await (0, eval)(`(${untilCode})`)()) : false
   return { choice: state.__pmdUserChoice ?? null, done }
 }
 
@@ -120,18 +121,34 @@ export function createPage(rpc: TestRpc, opts: {
     await waitForLoad()
   }
 
-  async function waitFor(selector: string, waitOptions: WaitForOptions = {}) {
-    requireTab()
+  // Runs a wait that rejects as soon as the test tab reports an error, such as being closed.
+  function withTabErrors<T>(task: (wait: (ms: number) => Promise<void>) => Promise<T>): Promise<T> {
+    let fail: (error: Error) => void = () => {}
+    const tabError = new Promise<never>((_, reject) => {
+      fail = reject
+    })
+    const unsubscribe = rpc.onTestEvent((event) => {
+      if (event.kind === 'error' && event.tabId === session.tabId)
+        fail(new Error(event.error))
+    })
+    const wait = (ms: number) => Promise.race([sleep(ms), tabError])
+    return Promise.race([task(wait), tabError]).finally(unsubscribe)
+  }
+
+  function waitFor(selector: string, waitOptions: WaitForOptions = {}): Promise<void> {
     const timeout = waitOptions.timeout ?? DEFAULT_WAIT_TIMEOUT_MS
-    const deadline = Date.now() + timeout
-    while (true) {
-      throwIfAborted()
-      if (await tryEvaluate((s: string) => !!document.querySelector(s), selector))
-        return
-      if (Date.now() >= deadline)
-        throw new Error(`Timed out after ${timeout}ms waiting for ${selector}`)
-      await sleep(POLL_INTERVAL_MS)
-    }
+    return withTabErrors(async (wait) => {
+      requireTab()
+      const deadline = Date.now() + timeout
+      while (true) {
+        throwIfAborted()
+        if (await tryEvaluate((s: string) => !!document.querySelector(s), selector))
+          return
+        if (Date.now() >= deadline)
+          throw new Error(`Timed out after ${timeout}ms waiting for ${selector}`)
+        await wait(POLL_INTERVAL_MS)
+      }
+    })
   }
 
   async function click(selector: string) {
@@ -162,35 +179,37 @@ export function createPage(rpc: TestRpc, opts: {
     })
   }
 
-  async function waitForUser(message: string, userOptions: WaitForUserOptions = {}) {
-    throwIfAborted()
-    const tabId = requireTab()
-    const timeout = userOptions.timeout ?? DEFAULT_USER_TIMEOUT_MS
-
-    if (userOptions.until && await tryEvaluate(userOptions.until))
-      return
-
-    opts.onWaiting(message)
-    if (opts.interactive)
-      await rpc.request('focus', { tabId })
-
-    const untilCode = userOptions.until?.toString() ?? null
-    const deadline = Date.now() + timeout
-    while (true) {
+  function waitForUser(message: string, userOptions: WaitForUserOptions = {}): Promise<void> {
+    return withTabErrors(async (wait) => {
       throwIfAborted()
-      const state = await tryEvaluate(pollUserBar, message, untilCode)
-      if (state?.choice === 'skip') {
-        await removeUserBar()
-        throw new SkipError(`Skipped by user: ${message}`)
-      }
-      if (state?.done || state?.choice === 'continue') {
-        await removeUserBar()
+      const tabId = requireTab()
+      const timeout = userOptions.timeout ?? DEFAULT_USER_TIMEOUT_MS
+
+      if (userOptions.until && await tryEvaluate(userOptions.until))
         return
+
+      opts.onWaiting(message)
+      if (opts.interactive)
+        await rpc.request('focus', { tabId })
+
+      const untilCode = userOptions.until?.toString() ?? null
+      const deadline = Date.now() + timeout
+      while (true) {
+        throwIfAborted()
+        const state = await tryEvaluate(pollUserBar, message, untilCode)
+        if (state?.choice === 'skip') {
+          await removeUserBar()
+          throw new SkipError(`Skipped by user: ${message}`)
+        }
+        if (state?.done || state?.choice === 'continue') {
+          await removeUserBar()
+          return
+        }
+        if (Date.now() >= deadline)
+          throw new Error(`Timed out waiting for user: ${message}`)
+        await wait(USER_POLL_INTERVAL_MS)
       }
-      if (Date.now() >= deadline)
-        throw new Error(`Timed out waiting for user: ${message}`)
-      await sleep(USER_POLL_INTERVAL_MS)
-    }
+    })
   }
 
   return { goto, click, fill, waitFor, evaluate, waitForUser }

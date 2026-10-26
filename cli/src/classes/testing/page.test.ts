@@ -8,6 +8,10 @@ type Handler = (method: string, params: any) => unknown
 function createFakeRpc(handler: Handler) {
   const calls: { method: string, params: any }[] = []
   const listeners = new Set<(event: TestEvent) => void>()
+  const emit = (event: TestEvent) => {
+    for (const listener of [...listeners])
+      listener(event)
+  }
   const rpc: TestRpc = {
     request: (async (method: string, params?: object) => {
       calls.push({ method, params })
@@ -21,7 +25,7 @@ function createFakeRpc(handler: Handler) {
       return () => listeners.delete(listener)
     },
   }
-  return { rpc, calls }
+  return { rpc, calls, emit }
 }
 
 function evaluateCalls(calls: { method: string, params: any }[]) {
@@ -111,6 +115,38 @@ describe('createPage', () => {
     await expect(page.waitFor('#x')).rejects.toThrow('No page open, call page.goto first')
   })
 
+  it('waitFor rejects when the tab reports an error', async () => {
+    const { rpc, emit } = createFakeRpc((method) => {
+      if (method === 'openTab')
+        return { tabId: 1 }
+      return { value: false }
+    })
+    const { page } = makePage(rpc)
+    await page.goto('https://example.com')
+
+    const waiting = page.waitFor('#x')
+    emit({ tabId: 1, kind: 'error', error: 'Test tab was closed' })
+
+    await expect(waiting).rejects.toThrow('Test tab was closed')
+  })
+
+  it('waitForUser rejects when the tab reports an error', async () => {
+    const { rpc, emit } = createFakeRpc((method, params) => {
+      if (method === 'openTab')
+        return { tabId: 1 }
+      if (method === 'evaluate' && params.code.startsWith('async function pollUserBar'))
+        return { value: { choice: null, done: false } }
+      return { value: undefined }
+    })
+    const { page } = makePage(rpc)
+    await page.goto('https://example.com')
+
+    const waiting = page.waitForUser('Log in')
+    emit({ tabId: 1, kind: 'error', error: 'Test tab was closed' })
+
+    await expect(waiting).rejects.toThrow('Test tab was closed')
+  })
+
   it('waitFor times out with the selector in the message', async () => {
     const { rpc } = createFakeRpc((method) => {
       if (method === 'openTab')
@@ -175,7 +211,7 @@ describe('createPage', () => {
     const { rpc } = createFakeRpc((method, params) => {
       if (method === 'openTab')
         return { tabId: 2 }
-      if (method === 'evaluate' && params.code.startsWith('function pollUserBar')) {
+      if (method === 'evaluate' && params.code.startsWith('async function pollUserBar')) {
         barPolls++
         if (barPolls === 1)
           throw new Error('Page navigated during evaluate')
@@ -218,5 +254,62 @@ describe('createPage', () => {
     controller.abort()
 
     await expect(page.waitFor('#x')).rejects.toBeInstanceOf(CancelledError)
+  })
+})
+
+describe('waitForUser with an async until', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+    vi.unstubAllGlobals()
+  })
+
+  it('keeps waiting when an async until resolves false', async () => {
+    // Stub the page so the real serialized poll runs in Node.
+    const win: { __pmdUserChoice?: string } = {}
+    vi.stubGlobal('window', win)
+    vi.stubGlobal('document', {
+      getElementById: () => ({ remove() {} }),
+      createElement: () => ({}),
+      documentElement: { append() {} },
+    })
+
+    let barPolls = 0
+    const runInPage = (code: string, args: unknown[]) => {
+      // eslint-disable-next-line no-eval
+      return (0, eval)(`(${code})`)(...args)
+    }
+    const { rpc } = createFakeRpc(async (method, params) => {
+      if (method === 'openTab')
+        return { tabId: 2 }
+      if (method === 'evaluate' && params.code.startsWith('async function pollUserBar')) {
+        barPolls++
+        const value = await runInPage(params.code, params.args)
+        if (barPolls === 3)
+          win.__pmdUserChoice = 'continue'
+        return { value }
+      }
+      if (method === 'evaluate')
+        return { value: await runInPage(params.code, params.args) }
+      return {}
+    })
+    const session = { tabId: undefined as number | undefined }
+    const page = createPage(rpc, {
+      service: 'Example',
+      signal: new AbortController().signal,
+      interactive: false,
+      session,
+      onWaiting: vi.fn(),
+    })
+    await page.goto('https://example.com')
+
+    const waiting = page.waitForUser('Log in', { until: async () => false })
+    await vi.advanceTimersByTimeAsync(2000)
+
+    await expect(waiting).resolves.toBeUndefined()
+    expect(barPolls).toBe(4)
   })
 })
