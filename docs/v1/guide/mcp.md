@@ -95,3 +95,4 @@ For an existing activity, skip step 1 and start from `load_activity`.
 | `Port 3021 is in use. Stop pmd dev or pmd test first.` | Another `pmd dev` or `pmd test` process is running.                                                           |
 | `Activity <service> not found`                         | No activity matches the service name. Use `list_activities` to find the exact name.                           |
 | `No tests found for <service>`                         | The activity has no `*.test.ts` file.                                                                         |
+| `Load the activity with load_activity first`           | `open_page` was called before `load_activity` loaded that service.                                            |
