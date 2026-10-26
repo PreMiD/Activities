@@ -82,9 +82,12 @@ export class DevTestLoop {
       await this.deps.send()
       if (skip())
         return
-      if (!(await this.checkSupported()))
-        return
+      // Check for tests before probing the extension, so a tests-less activity never sends `hello`.
       if (!(await this.deps.hasTests()))
+        return
+      if (skip())
+        return
+      if (!(await this.checkSupported()))
         return
       if (skip())
         return

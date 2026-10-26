@@ -47,8 +47,13 @@ export class WebSocketServer implements TestRpc {
         }
         else if (message?.type === 'testEvent') {
           const { type: _type, ...event } = message
-          for (const listener of this.testListeners)
-            listener(event)
+          for (const listener of this.testListeners) {
+            // A throwing listener must not stop the others or the message handler.
+            try {
+              listener(event)
+            }
+            catch {}
+          }
         }
       })
 
@@ -190,7 +195,7 @@ export class WebSocketServer implements TestRpc {
     clearTimeout(pending.timeout)
     this.pendingTests.delete(message.id)
 
-    if (message.error !== undefined)
+    if (typeof message.error === 'string')
       pending.reject(new Error(message.error))
     else
       pending.resolve(message.result)

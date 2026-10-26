@@ -175,6 +175,7 @@ export class ActivityTester {
     finally {
       lastActivity = activity.last()
       activity.dispose()
+      page.dispose()
       signal.removeEventListener('abort', abortTest)
       if (session.tabId !== undefined) {
         try {

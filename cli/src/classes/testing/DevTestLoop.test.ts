@@ -13,14 +13,15 @@ function setup(
   const send = vi.fn(async () => {})
   const log = vi.fn((_line: string) => {})
   const runSpy = vi.fn(run)
+  const isSupported = vi.fn(async () => true)
   const loop = new DevTestLoop({
     service: 'Svc',
     send,
-    tester: { run: runSpy, isSupported: async () => true },
+    tester: { run: runSpy, isSupported },
     hasTests,
     log,
   })
-  return { loop, send, run: runSpy, log }
+  return { loop, send, run: runSpy, log, isSupported }
 }
 
 describe('devTestLoop', () => {
@@ -127,6 +128,17 @@ describe('devTestLoop', () => {
 
     expect(run).toHaveBeenCalledTimes(1)
     expect(run).toHaveBeenCalledWith(expect.objectContaining({ interactive: true }))
+  })
+
+  it('activities without tests never probe the extension', async () => {
+    const { loop, isSupported, run, log } = setup(undefined, async () => false)
+
+    loop.onBuild()
+    await vi.advanceTimersByTimeAsync(300)
+
+    expect(isSupported).not.toHaveBeenCalled()
+    expect(run).not.toHaveBeenCalled()
+    expect(log).not.toHaveBeenCalled()
   })
 
   it('runNow cancels a pending debounced build', async () => {

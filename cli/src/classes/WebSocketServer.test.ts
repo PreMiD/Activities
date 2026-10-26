@@ -127,4 +127,38 @@ describe('webSocketServer test RPC', () => {
 
     await expect(server.request('hello')).resolves.toBe('ok')
   })
+
+  it('request resolves when the response error is not a string', async () => {
+    const client = await connectClient()
+    client.on('message', (raw) => {
+      const message = parse(raw)
+      if (message.type === 'test')
+        client.send(JSON.stringify({ type: 'testResponse', id: message.id, error: null, result: 'ok' }))
+    })
+    await vi.waitFor(() => expect(server.isConnected).toBe(true))
+
+    await expect(server.request('hello')).resolves.toBe('ok')
+  })
+
+  it('a throwing test event listener does not stop the others or later messages', async () => {
+    const client = await connectClient()
+    client.on('message', (raw) => {
+      const message = parse(raw)
+      if (message.type === 'test')
+        client.send(JSON.stringify({ type: 'testResponse', id: message.id, result: 'ok' }))
+    })
+    await vi.waitFor(() => expect(server.isConnected).toBe(true))
+
+    const second = vi.fn()
+    server.onTestEvent(() => {
+      throw new Error('listener failed')
+    })
+    server.onTestEvent(second)
+
+    const event: TestEvent = { tabId: 1, kind: 'clearActivity' }
+    client.send(JSON.stringify({ type: 'testEvent', ...event }))
+    await vi.waitFor(() => expect(second).toHaveBeenCalledWith(event))
+
+    await expect(server.request('hello')).resolves.toBe('ok')
+  })
 })

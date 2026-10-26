@@ -63,10 +63,36 @@ export function createPage(rpc: TestRpc, opts: {
   interactive: boolean
   session: PageSession
   onWaiting: (message: string) => void
-}): Page {
+}): Page & { dispose: () => void } {
   const { session, signal } = opts
 
-  const sleep = (ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms))
+  // The first error the test tab reports. It stays set for the rest of the test.
+  let tabError: Error | undefined
+  let rejectOnTabError: (error: Error) => void = () => {}
+  const tabFailure = new Promise<never>((_, reject) => {
+    rejectOnTabError = reject
+  })
+  // Nothing awaits tabFailure until a wait races it, so keep it from being reported as unhandled.
+  tabFailure.catch(() => {})
+
+  const unsubscribe = rpc.onTestEvent((event) => {
+    if (event.kind !== 'error' || event.tabId !== session.tabId || tabError)
+      return
+    tabError = new Error(event.error)
+    rejectOnTabError(tabError)
+  })
+
+  function throwIfTabFailed() {
+    if (tabError)
+      throw tabError
+  }
+
+  // Rejects as soon as the test tab reports an error, or at once if it already has.
+  function untilTabFails<T>(task: Promise<T>): Promise<T> {
+    return Promise.race([task, tabFailure])
+  }
+
+  const sleep = (ms: number) => untilTabFails(new Promise<void>(resolve => setTimeout(resolve, ms)))
 
   function throwIfAborted() {
     if (signal.aborted)
@@ -82,7 +108,8 @@ export function createPage(rpc: TestRpc, opts: {
   async function evaluate<A extends unknown[], R>(fn: (...args: A) => R | Promise<R>, ...args: A): Promise<Awaited<R>> {
     throwIfAborted()
     const tabId = requireTab()
-    const result = await rpc.request<{ value: Awaited<R> }>('evaluate', { tabId, code: fn.toString(), args })
+    throwIfTabFailed()
+    const result = await untilTabFails(rpc.request<{ value: Awaited<R> }>('evaluate', { tabId, code: fn.toString(), args }))
     return result.value
   }
 
@@ -93,12 +120,14 @@ export function createPage(rpc: TestRpc, opts: {
     }
     catch {
       throwIfAborted()
+      throwIfTabFailed()
       return undefined
     }
   }
 
   async function waitForLoad() {
     const deadline = Date.now() + LOAD_TIMEOUT_MS
+    throwIfTabFailed()
     while (true) {
       throwIfAborted()
       if (await tryEvaluate(() => document.readyState) === 'complete')
@@ -121,34 +150,19 @@ export function createPage(rpc: TestRpc, opts: {
     await waitForLoad()
   }
 
-  // Runs a wait that rejects as soon as the test tab reports an error, such as being closed.
-  function withTabErrors<T>(task: (wait: (ms: number) => Promise<void>) => Promise<T>): Promise<T> {
-    let fail: (error: Error) => void = () => {}
-    const tabError = new Promise<never>((_, reject) => {
-      fail = reject
-    })
-    const unsubscribe = rpc.onTestEvent((event) => {
-      if (event.kind === 'error' && event.tabId === session.tabId)
-        fail(new Error(event.error))
-    })
-    const wait = (ms: number) => Promise.race([sleep(ms), tabError])
-    return Promise.race([task(wait), tabError]).finally(unsubscribe)
-  }
-
-  function waitFor(selector: string, waitOptions: WaitForOptions = {}): Promise<void> {
+  async function waitFor(selector: string, waitOptions: WaitForOptions = {}): Promise<void> {
     const timeout = waitOptions.timeout ?? DEFAULT_WAIT_TIMEOUT_MS
-    return withTabErrors(async (wait) => {
-      requireTab()
-      const deadline = Date.now() + timeout
-      while (true) {
-        throwIfAborted()
-        if (await tryEvaluate((s: string) => !!document.querySelector(s), selector))
-          return
-        if (Date.now() >= deadline)
-          throw new Error(`Timed out after ${timeout}ms waiting for ${selector}`)
-        await wait(POLL_INTERVAL_MS)
-      }
-    })
+    requireTab()
+    throwIfTabFailed()
+    const deadline = Date.now() + timeout
+    while (true) {
+      throwIfAborted()
+      if (await tryEvaluate((s: string) => !!document.querySelector(s), selector))
+        return
+      if (Date.now() >= deadline)
+        throw new Error(`Timed out after ${timeout}ms waiting for ${selector}`)
+      await sleep(POLL_INTERVAL_MS)
+    }
   }
 
   async function click(selector: string) {
@@ -179,38 +193,37 @@ export function createPage(rpc: TestRpc, opts: {
     })
   }
 
-  function waitForUser(message: string, userOptions: WaitForUserOptions = {}): Promise<void> {
-    return withTabErrors(async (wait) => {
+  async function waitForUser(message: string, userOptions: WaitForUserOptions = {}): Promise<void> {
+    throwIfAborted()
+    throwIfTabFailed()
+    const tabId = requireTab()
+    const timeout = userOptions.timeout ?? DEFAULT_USER_TIMEOUT_MS
+
+    if (userOptions.until && await tryEvaluate(userOptions.until))
+      return
+
+    opts.onWaiting(message)
+    if (opts.interactive)
+      await rpc.request('focus', { tabId })
+
+    const untilCode = userOptions.until?.toString() ?? null
+    const deadline = Date.now() + timeout
+    while (true) {
       throwIfAborted()
-      const tabId = requireTab()
-      const timeout = userOptions.timeout ?? DEFAULT_USER_TIMEOUT_MS
-
-      if (userOptions.until && await tryEvaluate(userOptions.until))
-        return
-
-      opts.onWaiting(message)
-      if (opts.interactive)
-        await rpc.request('focus', { tabId })
-
-      const untilCode = userOptions.until?.toString() ?? null
-      const deadline = Date.now() + timeout
-      while (true) {
-        throwIfAborted()
-        const state = await tryEvaluate(pollUserBar, message, untilCode)
-        if (state?.choice === 'skip') {
-          await removeUserBar()
-          throw new SkipError(`Skipped by user: ${message}`)
-        }
-        if (state?.done || state?.choice === 'continue') {
-          await removeUserBar()
-          return
-        }
-        if (Date.now() >= deadline)
-          throw new Error(`Timed out waiting for user: ${message}`)
-        await wait(USER_POLL_INTERVAL_MS)
+      const state = await tryEvaluate(pollUserBar, message, untilCode)
+      if (state?.choice === 'skip') {
+        await removeUserBar()
+        throw new SkipError(`Skipped by user: ${message}`)
       }
-    })
+      if (state?.done || state?.choice === 'continue') {
+        await removeUserBar()
+        return
+      }
+      if (Date.now() >= deadline)
+        throw new Error(`Timed out waiting for user: ${message}`)
+      await sleep(USER_POLL_INTERVAL_MS)
+    }
   }
 
-  return { goto, click, fill, waitFor, evaluate, waitForUser }
+  return { goto, click, fill, waitFor, evaluate, waitForUser, dispose: unsubscribe }
 }

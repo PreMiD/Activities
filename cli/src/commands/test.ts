@@ -24,6 +24,12 @@ async function waitForExtension(ws: WebSocketServer): Promise<boolean> {
 export async function test(service?: string) {
   const { metadata, folder, versionized } = await getSingleActivity('Select or search for an activity to test', service)
 
+  // Checked before compiling or probing the extension, so a tests-less activity exits at once.
+  if ((await findTestFiles(folder)).length === 0) {
+    info(`No tests found for ${metadata.service}`)
+    process.exit(0)
+  }
+
   await cp(
     resolve(process.cwd(), `cli/templates/tsconfig${versionized ? '.versionized' : ''}.json`),
     resolve(folder, 'tsconfig.json'),
@@ -43,12 +49,6 @@ export async function test(service?: string) {
   if (!(await tester.isSupported())) {
     await ws.close()
     exit(`Your extension doesn't support tests yet, or developer mode is off`)
-  }
-
-  if ((await findTestFiles(folder)).length === 0) {
-    info(`No tests found for ${metadata.service}`)
-    await ws.close()
-    process.exit(0)
   }
 
   let results

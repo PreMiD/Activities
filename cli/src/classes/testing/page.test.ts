@@ -8,6 +8,8 @@ type Handler = (method: string, params: any) => unknown
 function createFakeRpc(handler: Handler) {
   const calls: { method: string, params: any }[] = []
   const listeners = new Set<(event: TestEvent) => void>()
+  // goto waits for the page to load. The fake page is complete unless a test sets this to 'loading'.
+  const ready = { state: 'complete' }
   const emit = (event: TestEvent) => {
     for (const listener of [...listeners])
       listener(event)
@@ -15,9 +17,8 @@ function createFakeRpc(handler: Handler) {
   const rpc: TestRpc = {
     request: (async (method: string, params?: object) => {
       calls.push({ method, params })
-      // goto waits for the page to load, so the fake page is always complete.
       if (method === 'evaluate' && (params as { code: string }).code.includes('readyState'))
-        return { value: 'complete' }
+        return { value: ready.state }
       return handler(method, params)
     }) as TestRpc['request'],
     onTestEvent: (listener) => {
@@ -25,7 +26,7 @@ function createFakeRpc(handler: Handler) {
       return () => listeners.delete(listener)
     },
   }
-  return { rpc, calls, emit }
+  return { rpc, calls, emit, listeners, ready }
 }
 
 function evaluateCalls(calls: { method: string, params: any }[]) {
@@ -128,6 +129,54 @@ describe('createPage', () => {
     emit({ tabId: 1, kind: 'error', error: 'Test tab was closed' })
 
     await expect(waiting).rejects.toThrow('Test tab was closed')
+  })
+
+  it('waitFor rejects immediately when the tab already reported an error', async () => {
+    const { rpc, calls, emit } = createFakeRpc((method) => {
+      if (method === 'openTab')
+        return { tabId: 1 }
+      return { value: false }
+    })
+    const { page } = makePage(rpc)
+    await page.goto('https://example.com')
+
+    emit({ tabId: 1, kind: 'error', error: 'Test tab was closed' })
+
+    await expect(page.waitFor('#x')).rejects.toThrow('Test tab was closed')
+    expect(evaluateCalls(calls).some(call => call.params.code.includes('querySelector'))).toBe(false)
+  })
+
+  it('goto rejects when the tab reports an error while loading', async () => {
+    const { rpc, emit, ready } = createFakeRpc((method) => {
+      if (method === 'openTab')
+        return { tabId: 1 }
+      return {}
+    })
+    const { page } = makePage(rpc)
+    await page.goto('https://example.com/a')
+
+    ready.state = 'loading'
+    const navigating = page.goto('https://example.com/b')
+    // Let goto reach its load wait before the tab fails.
+    await vi.advanceTimersByTimeAsync(100)
+    emit({ tabId: 1, kind: 'error', error: 'Test tab was closed' })
+
+    await expect(navigating).rejects.toThrow('Test tab was closed')
+  })
+
+  it('dispose removes the tab error listener', async () => {
+    const { rpc, listeners } = createFakeRpc((method) => {
+      if (method === 'openTab')
+        return { tabId: 1 }
+      return {}
+    })
+    const { page } = makePage(rpc)
+    await page.goto('https://example.com')
+    expect(listeners.size).toBe(1)
+
+    page.dispose()
+
+    expect(listeners.size).toBe(0)
   })
 
   it('waitForUser rejects when the tab reports an error', async () => {

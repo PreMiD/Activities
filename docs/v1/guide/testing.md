@@ -99,11 +99,11 @@ Then use one of these commands from the root of the activities repository:
 
 While `pmd dev` runs, these keys work in the terminal:
 
-| Key      | Action                                                                                                                                                                     |
-| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `p`      | Pause or resume. While paused, rebuilds are not sent to the extension and tests don't run automatically. Resuming with `p` sends the latest build and runs the tests once. |
-| `t`      | Run the tests now. This sends the latest build and runs the tests, even while paused.                                                                                      |
-| `Ctrl+C` | Exit.                                                                                                                                                                      |
+| Key      | Action                                                                                                                                                                                                                         |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `p`      | Pause or resume. While paused, rebuilds are not sent to the extension and tests don't run automatically. Pausing also cancels a test run that's in progress. Resuming with `p` sends the latest build and runs the tests once. |
+| `t`      | Run the tests now. This sends the latest build and runs the tests, even while paused.                                                                                                                                          |
+| `Ctrl+C` | Exit.                                                                                                                                                                                                                          |
 
 Results print one line per test, followed by a summary:
 
