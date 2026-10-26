@@ -1,14 +1,17 @@
 import { mkdtemp, readFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mocks = vi.hoisted(() => ({
   getSchema: vi.fn(),
   getDmcaServices: vi.fn(),
+  isFirstTimeAuthor: vi.fn(),
 }))
 
 vi.mock('./getSchema.js', () => ({ getSchema: mocks.getSchema }))
+vi.mock('./isFirstTimeAuthor.js', () => ({ isFirstTimeAuthor: mocks.isFirstTimeAuthor }))
 vi.mock('./dmca.js', async (importOriginal) => {
   const actual = await importOriginal<typeof import('./dmca.js')>()
   return { ...actual, getDmcaServices: mocks.getDmcaServices }
@@ -32,6 +35,7 @@ describe('scaffoldActivity', () => {
     cwd = await mkdtemp(join(tmpdir(), 'pmd-scaffold-'))
     mocks.getSchema.mockResolvedValue({ definitions: {}, properties: {} })
     mocks.getDmcaServices.mockResolvedValue(new Set())
+    mocks.isFirstTimeAuthor.mockResolvedValue(true)
   })
 
   afterEach(async () => {
@@ -57,6 +61,21 @@ describe('scaffoldActivity', () => {
 
     expect(await readFile(join(folder, 'tsconfig.json'), 'utf-8')).not.toBe('')
     expect(await readFile(join(folder, 'presence.ts'), 'utf-8')).not.toBe('')
+  })
+
+  it('scaffoldActivity picks the presence template by author status', async () => {
+    const templates = fileURLToPath(new URL('../../templates', import.meta.url))
+    const full = await readFile(join(templates, 'presence.ts'), 'utf-8')
+    const min = await readFile(join(templates, 'presence.min.ts'), 'utf-8')
+
+    mocks.isFirstTimeAuthor.mockResolvedValue(true)
+    const first = await scaffoldActivity(input, cwd)
+    expect(mocks.isFirstTimeAuthor).toHaveBeenLastCalledWith('123', cwd)
+    expect(await readFile(join(first.folder, 'presence.ts'), 'utf-8')).toBe(full)
+
+    mocks.isFirstTimeAuthor.mockResolvedValue(false)
+    const known = await scaffoldActivity({ ...input, service: 'Other Service' }, cwd)
+    expect(await readFile(join(known.folder, 'presence.ts'), 'utf-8')).toBe(min)
   })
 
   it('scaffoldActivity rejects an existing activity', async () => {
