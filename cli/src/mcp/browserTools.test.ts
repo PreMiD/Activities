@@ -1,4 +1,3 @@
-import net from 'node:net'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mocks = vi.hoisted(() => ({
@@ -159,29 +158,20 @@ describe('browserTools', () => {
     expect(mocks.send).not.toHaveBeenCalled()
   })
 
-  it('browser tools report the port error when 3021 is taken', async (context) => {
-    // The real WebSocketServer is needed here, so the file-level mock is removed for this module instance.
-    // The import happens before the port is bound, so 3021 is held only for the connection attempt.
-    vi.resetModules()
-    vi.doUnmock('../classes/WebSocketServer.js')
-    const real = await import('./browserTools.js')
+  it('reports the port error on EADDRINUSE, then retries and connects', async () => {
+    mocks.listenError = Object.assign(new Error('listen EADDRINUSE: address already in use :::3021'), { code: 'EADDRINUSE' })
+    mocks.request.mockResolvedValue({})
 
-    const blocker = net.createServer()
-    const bound = await new Promise<boolean>((resolve) => {
-      blocker.once('error', () => resolve(false))
-      blocker.listen(3021, () => resolve(true))
-    })
-    if (!bound)
-      return context.skip()
+    const first = await browserTools.extensionStatus()
+    expect(first).toEqual({ error: 'Port 3021 is in use. Stop pmd dev or pmd test first.' })
 
-    try {
-      const result = await real.extensionStatus()
+    mocks.listenError = undefined
+    const second = await browserTools.extensionStatus()
 
-      expect(result).toEqual({ error: 'Port 3021 is in use. Stop pmd dev or pmd test first.' })
-    }
-    finally {
-      await new Promise<void>(resolve => blocker.close(() => resolve()))
-    }
+    expect(second).toEqual({ connected: true, supportsTests: true })
+    expect(mocks.instances).toHaveLength(2)
+    // Only the successful server subscribes to test events.
+    expect(mocks.onTestEvent).toHaveBeenCalledTimes(1)
   })
 
   it('run_tests reports a service without test files', async () => {

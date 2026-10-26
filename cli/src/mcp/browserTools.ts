@@ -87,13 +87,13 @@ async function loadFolder(service: string): Promise<{ folder: string, canonical:
       return { error: build.output || `Build failed for ${canonical}` }
 
     const ws = await getConnection()
-    ws.cwd = activity.folder
-
     if (!(await waitForExtension(ws)))
       return { error: NOT_CONNECTED }
 
-    await ws.send()
+    // Set together, right before send, so a failed load leaves neither one changed.
+    ws.cwd = activity.folder
     loadedService = canonical
+    await ws.send()
     return { folder: activity.folder, canonical }
   }
   catch (error) {
