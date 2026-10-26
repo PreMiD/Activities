@@ -78,7 +78,7 @@ await page.waitForUser('Log in to your account', {
 `pmd` prints the message in your terminal, for example:
 
 ```
-⏸ Mixcloud › shows the playing mix: waiting for you: Start playing any mix
+⠋ shows the playing mix ⏸ waiting for you: Start playing any mix
 ```
 
 A bar also appears at the top of the test tab with **Continue** and **Skip test** buttons. The wait ends when `until` returns a truthy value, when you click **Continue**, or when the timeout runs out. **Skip test** marks the test as skipped.
@@ -86,7 +86,7 @@ A bar also appears at the top of the test tab with **Continue** and **Skip test*
 Sometimes `page.goto` itself ends up on a page the activity doesn't match, like a cookie consent screen or a login page on another domain. `pmd` waits up to 5 minutes for you to finish there and prints:
 
 ```
-⏸ YouTube Music › browsing the home page: waiting for you: Finish on consent.youtube.com (sign in or accept), the test continues on its own
+⠋ browsing the home page ⏸ waiting for you: Finish on consent.youtube.com (sign in or accept), the test continues on its own
 ```
 
 Once the tab is back on a page the activity matches, the test continues.
@@ -113,14 +113,17 @@ While `pmd dev` runs, these keys work in the terminal:
 | `t`      | Run the tests now. This sends the latest build and runs the tests, even while paused.                                                                                                                                          |
 | `Ctrl+C` | Exit.                                                                                                                                                                                                                          |
 
-Results print one line per test, followed by a summary:
+Results are grouped under the activity. In a terminal, the running test shows as a live line that turns into its result. Each test gets one line, and a summary follows:
 
 ```
-✓ Mixcloud › shows the playing mix (4.2s)
-↷ Mixcloud › shows the live stream (skipped)
-✗ Mixcloud › shows the artist name
-  Expected ...
-Tests: 1 passed, 1 failed, 1 skipped
+Mixcloud 3 tests
+   ✓ shows the playing mix 4.2s
+   ↷ shows the live stream (skipped)
+   ✗ shows the artist name 1.1s
+     Expected ...
+
+ Tests  1 failed · 1 passed · 1 skipped (3)
+  Time  5.3s
 ```
 
 If you change the code while a test run is in progress, the run is cancelled and only the newest run reports.
@@ -142,6 +145,16 @@ Your extension doesn't support tests yet, or developer mode is off
 ```
 
 Update the PreMiD extension, and make sure Activity Developer Mode is on.
+
+### Several Browsers Connected
+
+Tests run in one browser. If more than one browser has Activity Developer Mode on, `pmd` refuses to pick one and prints:
+
+```
+More than one browser is connected to pmd. Turn off developer mode in the others so tests run in one browser.
+```
+
+Turn off Activity Developer Mode in every browser except the one you want to test in.
 
 ## Next Steps
 

@@ -58,13 +58,14 @@ These tools use the PreMiD extension in your browser. Call `extension_status` be
 
 `get_activity` returns one of these `kind` values:
 
-| `kind`          | `activity`                         | Meaning                                            |
-| --------------- | ---------------------------------- | -------------------------------------------------- |
-| `setActivity`   | The presence data the activity set | The activity updated its presence                  |
-| `clearActivity` | `null`                             | The activity cleared its presence                  |
-| `invalid`       | `null`                             | An error event. The `error` field has the message. |
-| `error`         | `null`                             | An error event. The `error` field has the message. |
-| `none`          | `null`                             | No update arrived before `timeoutMs` ran out       |
+| `kind`           | `activity`                         | Meaning                                                                                                                                                                      |
+| ---------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `setActivity`    | The presence data the activity set | The activity updated its presence                                                                                                                                            |
+| `clearActivity`  | `null`                             | The activity cleared its presence                                                                                                                                            |
+| `invalid`        | `null`                             | An error event. The `error` field has the message.                                                                                                                           |
+| `error`          | `null`                             | An error event. The `error` field has the message.                                                                                                                           |
+| `waitingForUser` | `null`                             | The tab is on a page the activity doesn't match, such as a consent or login page. The `url` field has the page. Finish there in the browser, then call `get_activity` again. |
+| `none`           | `null`                             | No update arrived before `timeoutMs` ran out                                                                                                                                 |
 
 ## Typical Workflow
 
@@ -89,10 +90,11 @@ For an existing activity, skip step 1 and start from `load_activity`.
 
 ## Errors
 
-| Message                                                | Cause                                                                                                         |
-| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
-| `Extension not connected. Is developer mode on?`       | The extension isn't connected to pmd. Make sure the extension is installed and Activity Developer Mode is on. |
-| `Port 3021 is in use. Stop pmd dev or pmd test first.` | Another `pmd dev` or `pmd test` process is running.                                                           |
-| `Activity <service> not found`                         | No activity matches the service name. Use `list_activities` to find the exact name.                           |
-| `No tests found for <service>`                         | The activity has no `*.test.ts` file.                                                                         |
-| `Load the activity with load_activity first`           | `open_page` was called before `load_activity` loaded that service.                                            |
+| Message                                                                                                         | Cause                                                                                                                                     |
+| --------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `Extension not connected. Is developer mode on?`                                                                | The extension isn't connected to pmd. Make sure the extension is installed and Activity Developer Mode is on.                             |
+| `Port 3021 is in use. Stop pmd dev or pmd test first.`                                                          | Another `pmd dev` or `pmd test` process is running.                                                                                       |
+| `Activity <service> not found`                                                                                  | No activity matches the service name. Use `list_activities` to find the exact name.                                                       |
+| `No tests found for <service>`                                                                                  | The activity has no `*.test.ts` file.                                                                                                     |
+| `Load the activity with load_activity first`                                                                    | `open_page` was called before `load_activity` loaded that service.                                                                        |
+| `More than one browser is connected to pmd. Turn off developer mode in the others so tests run in one browser.` | Several browsers have Activity Developer Mode on. `extension_status` and the other browser tools return this until only one is connected. |
