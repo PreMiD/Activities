@@ -42,19 +42,19 @@ test('shows the video title', { settings: { showTitle: true }, timeout: 60_000 }
 })
 ```
 
-| Option                                  | Default           | Applies to                              |
-| --------------------------------------- | ----------------- | --------------------------------------- |
-| `settings`                              | Activity defaults | Activity settings applied for this test |
-| `timeout`                               | 120s              | The whole test                          |
-| `waitFor` and `activity.next()` timeout | 30s               | Each `waitFor` or `next()` call         |
-| `waitForUser` timeout                   | 300s              | Each `waitForUser` call                 |
+| Option     | Default           | Applies to                              |
+| ---------- | ----------------- | --------------------------------------- |
+| `settings` | Activity defaults | Activity settings applied for this test |
+| `timeout`  | 120s              | The whole test                          |
+
+Each `page.waitFor` and `activity.next()` call times out after 30s, and each `page.waitForUser` call after 300s. Pass a `timeout` to the call itself, for example `page.waitFor(selector, { timeout: 10_000 })`.
 
 ### Running Code in the Page
 
 `until` and `page.evaluate` run inside the test tab, not in the test file. The function is serialized, so:
 
 - Write it as an arrow function or a `function` expression. Method shorthand (`until() { ... }`) doesn't work.
-- It can't use variables from the test file. Pass them through the extra arguments of `evaluate` instead.
+- `until` takes no arguments, so it can't receive values from the test file. Only `page.evaluate` takes extra arguments, so pass any values it needs through those.
 - It runs in the extension's isolated script world. Globals the website defines aren't visible, but the DOM is.
 
 ```typescript
@@ -99,11 +99,11 @@ Then use one of these commands from the root of the activities repository:
 
 While `pmd dev` runs, these keys work in the terminal:
 
-| Key      | Action                                                                               |
-| -------- | ------------------------------------------------------------------------------------ |
-| `p`      | Pause or resume. While paused, builds and test runs stop. Press `p` again to resume. |
-| `t`      | Run the tests now.                                                                   |
-| `Ctrl+C` | Exit.                                                                                |
+| Key      | Action                                                                                                                                                                     |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `p`      | Pause or resume. While paused, rebuilds are not sent to the extension and tests don't run automatically. Resuming with `p` sends the latest build and runs the tests once. |
+| `t`      | Run the tests now. This sends the latest build and runs the tests, even while paused.                                                                                      |
+| `Ctrl+C` | Exit.                                                                                                                                                                      |
 
 Results print one line per test, followed by a summary:
 
