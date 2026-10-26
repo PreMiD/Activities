@@ -7,14 +7,14 @@
   },
   "service": "Wiwizi",
   "description": {
-    "en": "Watch movies, series and anime on Wiwizi with rich Discord activity status.",
-    "tr": "Wiwizi üzerinde film, dizi ve anime izlerken Discord zengin durumunuzu gösterin."
+    "en": "A social discovery and tracking platform for movies, TV series, and anime.",
+    "tr": "Film, dizi ve anime takibi yapabileceğiniz sosyal keşif ve izleme platformu."
   },
   "url": "wiwizi.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*wiwizi[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/pJggfex.png",
-  "thumbnail": "https://i.imgur.com/pJggfex.png",
+  "thumbnail": "https://i.imgur.com/7HOw5PW.png",
   "color": "#E50914",
   "category": "videos",
   "tags": [
@@ -26,13 +26,13 @@
   "settings": [
     {
       "id": "showButtons",
-      "title": "Wiwizi Butonu Göster",
+      "title": "Show Buttons",
       "icon": "fas fa-external-link-alt",
       "value": true
     },
     {
       "id": "showTimestamps",
-      "title": "Oynatma Çubuğu Göster",
+      "title": "Show Timestamps",
       "icon": "fas fa-clock",
       "value": true
     }

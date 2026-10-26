@@ -56,8 +56,10 @@ presence.on('UpdateData', async () => {
     lastPath = pathname
   }
 
-  const showButtons = await presence.getSetting<boolean>('showButtons')
-  const showTimestamps = await presence.getSetting<boolean>('showTimestamps')
+  const [showButtons, showTimestamps] = await Promise.all([
+    presence.getSetting<boolean>('showButtons'),
+    presence.getSetting<boolean>('showTimestamps'),
+  ])
 
   const video = document.querySelector<HTMLVideoElement>('video')
   const schema = getSchemaData()
