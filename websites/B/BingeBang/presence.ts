@@ -110,18 +110,10 @@ presence.on('UpdateData', async () => {
     if (showButtons)
       presenceData.buttons = [{ label: 'Watch Series', url: href }]
   }
-  // Any other page (e.g. movie / series detail pages)
+  // Any other page (calendar, explore, my-space, etc.): show nothing
   else {
-    const isSeries = path[0] === 'tv'
-    presenceData.details = isSeries ? 'Viewing series' : 'Viewing movie'
-    presenceData.state = rawTitle.replace(/\s*\(\d{4}\)\s*$/, '').replace(/\s+S\d+E\d+\s*$/i, '').trim()
-    if (cover)
-      presenceData.largeImageKey = cover
-    if (showButtons) {
-      presenceData.buttons = [
-        { label: isSeries ? 'Watch Series' : 'Watch Movie', url: href },
-      ]
-    }
+    presence.clearActivity()
+    return
   }
 
   presence.setActivity(presenceData)
