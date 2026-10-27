@@ -57,11 +57,11 @@ function roundFrom(value: string): string {
  */
 export function createPresenceData(
   document: Document,
-  url: Pick<Location, 'protocol' | 'hostname' | 'pathname'>,
+  url: Pick<Location, 'protocol' | 'pathname'>,
   startedAt: number,
   options: PresenceOptions = {},
 ): PresenceData | null {
-  if (url.protocol !== 'https:' || !['tommytrace.com', 'www.tommytrace.com'].includes(url.hostname))
+  if (url.protocol !== 'https:')
     return null
   if (!['/', '/index.html'].includes(url.pathname))
     return null

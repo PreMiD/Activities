@@ -13,7 +13,7 @@
     "tommytrace.com",
     "www.tommytrace.com"
   ],
-  "regExp": "^https://(www[.])?tommytrace[.]com/",
+  "regExp": "^https[:][/][/](www[.])?tommytrace[.]com[/]",
   "version": "1.0.0",
   "logo": "https://tommytrace.com/assets/tommytrace-logo.webp",
   "thumbnail": "https://tommytrace.com/assets/backgrounds/home-hero-borneo.webp",

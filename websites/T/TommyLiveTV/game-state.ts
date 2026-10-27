@@ -1,7 +1,6 @@
 import { ActivityType } from 'premid'
 
 const HOME = 'https://watch.tommytrace.com/'
-const HOST = 'watch.tommytrace.com'
 const LOGO = 'https://raw.githubusercontent.com/jackreacherdota/Activities/9132e5093f99ecb397ec5fd05dcfd24f81979a65/websites/T/TommyLiveTV/assets/logo.png'
 
 interface PlaybackTimes {
@@ -111,10 +110,10 @@ function activity(details: string, state = '', options: ActivityOptions = {}): P
 /** Reads only the current visible TommyLiveTV page; it never reads account or history data. */
 export function createPresenceData(
   document: Document,
-  location: Pick<Location, 'protocol' | 'hostname' | 'pathname'>,
+  location: Pick<Location, 'protocol' | 'pathname'>,
   playback: PlaybackTimes | null = null,
 ): PresenceData | null {
-  if (location.protocol !== 'https:' || location.hostname !== HOST)
+  if (location.protocol !== 'https:')
     return null
 
   const pathname = location.pathname || '/'
