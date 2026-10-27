@@ -1,4 +1,4 @@
-import { ActivityType, getTimestamps } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '1564637288045088949',
@@ -7,8 +7,6 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/4jb06Gm.png',
-  Play = 'https://cdn.rcd.gg/PreMiD/resources/play.png',
-  Pause = 'https://cdn.rcd.gg/PreMiD/resources/pause.png',
 }
 
 interface VideoData {
@@ -128,7 +126,7 @@ function applyVideoState(
     return
 
   if (video.paused) {
-    presenceData.smallImageKey = ActivityAssets.Pause
+    presenceData.smallImageKey = Assets.Pause
     presenceData.smallImageText = strings.pause
     delete presenceData.startTimestamp
   }
@@ -137,7 +135,7 @@ function applyVideoState(
       Math.floor(video.currentTime),
       Math.floor(video.duration),
     )
-    presenceData.smallImageKey = ActivityAssets.Play
+    presenceData.smallImageKey = Assets.Play
     presenceData.smallImageText = strings.play
     presenceData.startTimestamp = startTimestamp
     presenceData.endTimestamp = endTimestamp
