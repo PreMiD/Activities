@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "apiVersion": 1,
+  "author": {
+    "id": "582396294715408436",
+    "name": "lucas.mro"
+  },
+  "service": "BingeBang",
+  "description": {
+    "en": "BingeBang is a free site to watch movies and TV shows online in HD and 4K, with no ads and no sign-up needed. Stream trending titles and new episodes."
+  },
+  "url": "bingebang.st",
+  "regExp": "^https?[:][/][/](www[.])?bingebang[.][a-z]+[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/4jb06Gm.png",
+  "thumbnail": "https://i.imgur.com/vWIMYfv.png",
+  "color": "#E50914",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "series",
+    "streaming"
+  ],
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fad fa-mouse-pointer",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover Image",
+      "icon": "fad fa-images",
+      "value": true
+    }
+  ]
+}
