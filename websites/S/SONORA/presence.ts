@@ -32,7 +32,7 @@ interface DataJembatanSonora {
 
 function logoPublikAktif(): string {
   const { origin, hostname } = document.location
-  if (/([a-z0-9-]+\.)*(sonora\.web\.id|muhammadzakizn\.com)$/i.test(hostname)) {
+  if (hostname.endsWith('sonora.web.id') || hostname.endsWith('muhammadzakizn.com')) {
     return `${origin}/ikon/ikon-512.png`
   }
   return ActivityAssets.Logo
@@ -40,7 +40,9 @@ function logoPublikAktif(): string {
 
 function bacaJembatanDom(): DataJembatanSonora | null {
   const el = document.querySelector<HTMLElement>('#sonora-premid-bridge')
-  if (!el) return null
+  if (!el) {
+    return null
+  }
   const d = el.dataset
   const logoDefault = logoPublikAktif()
   return {
@@ -110,20 +112,22 @@ presence.on('UpdateData', async () => {
       2: StatusDisplayType.Details,
     }
 
-    const labelPerangkat =
-      jembatan.perangkat === 'discord'
-        ? 'Voice Discord'
-        : jembatan.perangkat === 'connect'
-          ? 'SONORA Connect'
-          : jembatan.perangkat === 'lan'
-            ? 'Smart TV / Cast'
-            : 'Pemutar Web'
+    const petaPerangkat: Record<string, string> = {
+      discord: 'Voice Discord',
+      connect: 'SONORA Connect',
+      lan: 'Smart TV / Cast',
+    }
+    const labelPerangkat = petaPerangkat[jembatan.perangkat] || 'Pemutar Web'
 
-    const sampulTerpilih = !showCover
-      ? logoDefault
-      : showAnimatedCover && jembatan.sampulGif
-        ? jembatan.sampulGif
-        : jembatan.sampulStatis || logoDefault
+    let sampulTerpilih = logoDefault
+    if (showCover) {
+      if (showAnimatedCover && jembatan.sampulGif) {
+        sampulTerpilih = jembatan.sampulGif
+      }
+      else if (jembatan.sampulStatis) {
+        sampulTerpilih = jembatan.sampulStatis
+      }
+    }
 
     const teksAlbumBersih = jembatan.album.trim()
 
@@ -141,9 +145,11 @@ presence.on('UpdateData', async () => {
 
     if (teksAlbumBersih) {
       presenceData.largeImageText = teksAlbumBersih
-    } else if (adalahVideo) {
+    }
+    else if (adalahVideo) {
       presenceData.largeImageText = 'Video Musik Resmi'
-    } else if (!jembatan.sedangPutar) {
+    }
+    else if (!jembatan.sedangPutar) {
       presenceData.largeImageText = 'Dijeda'
     }
 
@@ -198,10 +204,10 @@ presence.on('UpdateData', async () => {
     }
 
     if (
-      showButtons &&
-      pathname.startsWith('/player/') &&
-      pathname !== '/player/' &&
-      !pathname.startsWith('/player/pengaturan')
+      showButtons
+      && pathname.startsWith('/player/')
+      && pathname !== '/player/'
+      && !pathname.startsWith('/player/pengaturan')
     ) {
       presenceData.buttons = [
         {
