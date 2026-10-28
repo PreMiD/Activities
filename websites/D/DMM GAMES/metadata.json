@@ -16,7 +16,7 @@
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*games[.]dmm[.]com[/]",
   "version": "1.0.0",
-  "logo": "https://cdn.discordapp.com/app-icons/1565002054227726456/35e0778b7cba4d71fbcb58e9f6ccdcbe.png",
+  "logo": "https://raw.githubusercontent.com/pachiris/Activities/premid-assets/dmm-games-512.png",
   "thumbnail": "https://media.games.dmm.com/p/netgame/sns/share/logo.png",
   "color": "#FF6B00",
   "category": "games",

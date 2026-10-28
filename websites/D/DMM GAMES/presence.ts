@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1565002054227726456',
 })
 
-const LOGO = 'https://cdn.discordapp.com/app-icons/1565002054227726456/35e0778b7cba4d71fbcb58e9f6ccdcbe.png'
+const LOGO = 'https://raw.githubusercontent.com/pachiris/Activities/premid-assets/dmm-games-512.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let playingSlug = ''
