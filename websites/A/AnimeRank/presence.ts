@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1519847995862945813',
 })
 const browsingTimestamp = Math.floor(Date.now() / 1000)
-const LOGO = 'https://animerank.tv/icons/icon-512.png'
+const LOGO = 'https://raw.githubusercontent.com/Xaena53/Activities/animerank-assets/AnimeRank/logo.png'
 
 interface AnimeInfo {
   title: string
