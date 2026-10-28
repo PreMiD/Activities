@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "754572586914021468",
+    "name": "0120r"
+  },
+  "service": "DMM GAMES",
+  "description": {
+    "en": "DMM GAMES is a Japanese game platform offering browser games such as KanColle and Touken Ranbu, as well as PC games.",
+    "ja": "DMM GAMES は、艦これや刀剣乱舞などのブラウザゲームやPCゲームを遊べる国内のゲームプラットフォームです。"
+  },
+  "url": [
+    "play.games.dmm.com",
+    "games.dmm.com"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*games[.]dmm[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://cdn.discordapp.com/app-icons/1565002054227726456/35e0778b7cba4d71fbcb58e9f6ccdcbe.png",
+  "thumbnail": "https://media.games.dmm.com/p/netgame/sns/share/logo.png",
+  "color": "#FF6B00",
+  "category": "games",
+  "tags": [
+    "browser-game",
+    "japan",
+    "dmm",
+    "kancolle",
+    "touken-ranbu"
+  ],
+  "settings": [
+    {
+      "id": "showGame",
+      "title": "ゲーム名を表示",
+      "icon": "fad fa-gamepad",
+      "value": true
+    },
+    {
+      "id": "showImage",
+      "title": "ゲームのアイコンを表示",
+      "icon": "fad fa-image",
+      "value": true
+    }
+  ]
+}
