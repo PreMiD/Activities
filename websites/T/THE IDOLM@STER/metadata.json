@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "754572586914021468",
+    "name": "0120r"
+  },
+  "service": "THE IDOLM@STER",
+  "altnames": [
+    "アイドルマスター",
+    "アイマス"
+  ],
+  "description": {
+    "en": "The official portal of THE IDOLM@STER series by Bandai Namco, with news, schedules and the idol directory for every brand.",
+    "ja": "「アイドルマスター」シリーズの公式ポータル。全ブランドのニュースやスケジュール、アイドル名鑑を見られます。"
+  },
+  "url": [
+    "idolmaster-official.jp",
+    "idollist.idolmaster-official.jp"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*idolmaster-official[.]jp[/]",
+  "version": "1.0.0",
+  "logo": "https://idolmaster-official.jp/icon-512x512.png",
+  "thumbnail": "https://idolmaster-official.jp/ogp.jpg",
+  "color": "#F34F6D",
+  "category": "other",
+  "tags": [
+    "idolmaster",
+    "imas",
+    "anime",
+    "idol",
+    "japan"
+  ],
+  "settings": [
+    {
+      "id": "showTitle",
+      "title": "記事タイトル・アイドル名を表示",
+      "icon": "fad fa-heading",
+      "value": true
+    },
+    {
+      "id": "showIdolImage",
+      "title": "アイドルの画像を表示",
+      "icon": "fad fa-image",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "ボタンを表示",
+      "icon": "fad fa-link",
+      "value": true
+    }
+  ]
+}
