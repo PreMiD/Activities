@@ -54,8 +54,7 @@ presence.on('UpdateData', async () => {
     const name = showGame ? gameName() : null
     if (name) {
       presenceData.name = name
-      presenceData.details = name
-      presenceData.state = 'DMM GAMES でプレイ中'
+      presenceData.details = 'DMM GAMES でプレイ中'
       const icon = showImage ? gameIcon(slug) : null
       if (icon) {
         presenceData.largeImageKey = icon
