@@ -129,7 +129,7 @@ presence.on('UpdateData', async () => {
 
     const presenceData: PresenceData = {
       type: adalahVideo ? ActivityType.Watching : ActivityType.Listening,
-      stateDisplayType: petaStatusDisplay[statusDisplayType] ?? StatusDisplayType.Name,
+      statusDisplayType: petaStatusDisplay[statusDisplayType] ?? StatusDisplayType.Name,
       details: jembatan.judul,
       state: jembatan.artis || 'Artis',
       largeImageKey: sampulTerpilih,
