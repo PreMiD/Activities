@@ -17,8 +17,7 @@
   "url": [
     "idolmaster-official.jp",
     "idollist.idolmaster-official.jp",
-    "www.idolmaster.jp",
-    "bandainamco-am.co.jp"
+    "www.idolmaster.jp"
   ],
   "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*(idolmaster-official|idolmaster)[.]jp[/]|(www[.])?bandainamco(-am[.]co)?[.]jp[/]am[/]vg[/]idolmaster-tours[/])",
   "version": "1.0.0",
