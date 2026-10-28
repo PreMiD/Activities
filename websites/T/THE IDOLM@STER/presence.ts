@@ -44,6 +44,28 @@ const SECTIONS: Record<string, string> = {
   'mydesk': 'マイデスク',
 }
 
+// 旧公式サイト「THE IDOLM@STER WEB」(www.idolmaster.jp/imas/archive/) のコーナー
+const ARCHIVE_SECTIONS: Record<string, string> = {
+  'body.htm': 'トップページ',
+  'intro': '作品紹介',
+  'idol': 'アイドル紹介',
+  'qa': 'Q&A',
+  'notice': '重要なお知らせ',
+  'mobile': 'モバイルサイト',
+  'staff': 'スタッフ',
+  'more': 'コンテンツ案内',
+  'begin': 'はじめての方へ',
+  'times': 'コラム',
+  'beyond': 'BEYOND THE IDOL',
+  'soundlog': 'サウンドログ',
+  'kanji': '使用できる文字',
+  'callnames': '呼び方一覧',
+  'history': 'サイトの歩み',
+  'recruit': '採用情報',
+  'info': 'サイト案内',
+  '765shop': '765ショップ',
+}
+
 // 「記事タイトル | 【公式】アイドルマスター ポータル（アイマス）」→「記事タイトル」
 function pageTitle(): string {
   return document.title.split(/\s*\|\s*【公式】/)[0]?.trim() ?? ''
@@ -100,6 +122,26 @@ presence.on('UpdateData', async () => {
     }
     else {
       presenceData.details = 'アイドル名鑑を閲覧中'
+    }
+    presence.setActivity(presenceData)
+    return
+  }
+
+  // ***** 旧公式サイト (www.idolmaster.jp) *****
+  if (hostname.endsWith('idolmaster.jp') && !hostname.endsWith('idolmaster-official.jp')) {
+    const archive = pathname.match(/^\/imas\/archive\/(.*)$/)?.[1]
+    if (archive !== undefined) {
+      const key = archive.split('/')[0] ?? ''
+      presenceData.details = 'THE IDOLM@STER WEB（旧公式サイト）'
+      const title = document.title.replace(/^THE IDOLM@STER WEB\s*/, '').trim()
+      presenceData.state = ARCHIVE_SECTIONS[key] ?? (title || (key === '' || key === 'index.htm' ? 'トップページ' : '閲覧中'))
+    }
+    else {
+      // 「THE IDOLM@STER [トップページ]」→「トップページ」
+      const title = document.title.match(/\[(.+)\]/)?.[1] ?? document.title.replace(/^THE IDOLM@STER\s*/, '').trim()
+      presenceData.details = 'THE IDOLM@STER 公式サイト（旧）'
+      if (title)
+        presenceData.state = title
     }
     presence.setActivity(presenceData)
     return

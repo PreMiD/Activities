@@ -11,14 +11,15 @@
     "アイマス"
   ],
   "description": {
-    "en": "The official portal of THE IDOLM@STER series by Bandai Namco, with news, schedules and the idol directory for every brand.",
-    "ja": "「アイドルマスター」シリーズの公式ポータル。全ブランドのニュースやスケジュール、アイドル名鑑を見られます。"
+    "en": "The official portal of THE IDOLM@STER series by Bandai Namco, with news, schedules and the idol directory for every brand, plus the classic THE IDOLM@STER WEB archive.",
+    "ja": "「アイドルマスター」シリーズの公式ポータル。全ブランドのニュースやスケジュール、アイドル名鑑のほか、旧公式サイト「THE IDOLM@STER WEB」にも対応しています。"
   },
   "url": [
     "idolmaster-official.jp",
-    "idollist.idolmaster-official.jp"
+    "idollist.idolmaster-official.jp",
+    "www.idolmaster.jp"
   ],
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*idolmaster-official[.]jp[/]",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(idolmaster-official|idolmaster)[.]jp[/]",
   "version": "1.0.0",
   "logo": "https://idolmaster-official.jp/icon-512x512.png",
   "thumbnail": "https://idolmaster-official.jp/ogp.jpg",
