@@ -56,8 +56,7 @@ presence.on('UpdateData', async () => {
     const game = getGameName()
     if (showGame && game) {
       presenceData.name = game
-      presenceData.details = game
-      presenceData.state = 'G123 でプレイ中'
+      presenceData.details = 'G123 でプレイ中'
       const image = showImage ? getOgImage() : null
       if (image) {
         presenceData.largeImageKey = image
