@@ -1,0 +1,105 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "680684439701553200",
+    "name": "muhammadzakizn"
+  },
+  "service": "SONORA",
+  "description": {
+    "en": "SONORA is a web music player and Discord audio streaming platform with synchronized lyrics, animated album covers, seamless automix, and official music videos.",
+    "id": "SONORA adalah pemutar musik web dan platform audio Discord dengan lirik tersinkronisasi, sampul album beranimasi, mixing antarlagu mulus, dan video musik resmi."
+  },
+  "url": "sonora.muhammadzakizn.com",
+  "regExp": "^https?:\\/\\/([a-z0-9-]+\\.)?(sonora\\.web\\.id|sonora\\.muhammadzakizn\\.com)(\\/|$)",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/Lph77V5.png",
+  "thumbnail": "https://i.imgur.com/9aZB62v.png",
+  "color": "#711C29",
+  "category": "music",
+  "tags": [
+    "sonora",
+    "music",
+    "audio",
+    "streaming",
+    "lyrics",
+    "video",
+    "indonesia"
+  ],
+  "allowURLOverrides": true,
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false,
+      "description": "Hide song details and browsing activity from your Discord status"
+    },
+    {
+      "id": "showBrowsing",
+      "title": "Show Browsing Activity",
+      "icon": "fad fa-compass",
+      "value": true,
+      "description": "Display the current page when no track is loaded in the player",
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showCover",
+      "title": "Show Album Cover",
+      "icon": "fad fa-album-collection",
+      "value": true,
+      "description": "Display the song or album artwork instead of the default SONORA logo",
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showAnimatedCover",
+      "title": "Animated Album Covers",
+      "icon": "fad fa-film",
+      "value": true,
+      "description": "Automatically upgrade static artwork to animated GIF covers when available",
+      "if": {
+        "privacy": false,
+        "showCover": true
+      }
+    },
+    {
+      "id": "showTimestamps",
+      "title": "Show Timestamps",
+      "icon": "fad fa-stopwatch",
+      "value": true,
+      "description": "Display the elapsed and remaining song progress bar in Discord",
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "description": "Display interactive buttons to open the album or artist page",
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "statusDisplayType",
+      "title": "Status Text Display",
+      "icon": "fad fa-id-card",
+      "value": 0,
+      "values": [
+        "Service Name (Listening to SONORA)",
+        "Artist Name (Listening to Artist)",
+        "Song Title (Listening to Song)"
+      ],
+      "description": "Choose which text appears in the compact member list status",
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
