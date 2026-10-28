@@ -25,7 +25,9 @@ function gameIcon(slug: string): string | null {
   const appId = html.match(/\/setting\/game\/detail\/(\d+)/)?.[1]
     ?? html.match(/app_id=(\d+)/)?.[1]
   const url = appId ? `https://media.games.dmm.com/freegame/app/${appId}/200.gif` : null
-  cachedIcon = { slug, url }
+  // ページの読み込み途中でまだ見つからないときは覚えずに、次の更新でもう一度探す
+  if (url)
+    cachedIcon = { slug, url }
   return url
 }
 
