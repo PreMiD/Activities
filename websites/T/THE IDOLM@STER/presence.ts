@@ -127,6 +127,14 @@ presence.on('UpdateData', async () => {
     return
   }
 
+  // ***** アイドルマスター ツアーズ (アーケード) 公式サイト *****
+  if (hostname.includes('bandainamco')) {
+    presenceData.details = 'アイドルマスター ツアーズ 公式サイト'
+    presenceData.state = 'アーケードゲーム（ツアマス）'
+    presence.setActivity(presenceData)
+    return
+  }
+
   // ***** 旧公式サイト (www.idolmaster.jp) *****
   if (hostname.endsWith('idolmaster.jp') && !hostname.endsWith('idolmaster-official.jp')) {
     const archive = pathname.match(/^\/imas\/archive\/(.*)$/)?.[1]
