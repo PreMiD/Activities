@@ -60,7 +60,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('time'),
     presence.getSetting<number>('buttons'),
   ])
-  const { hostname, href, pathname } = document.location
+  const { hostname, href, pathname, search } = document.location
   const presenceData: PresenceData & {
     partySize?: number
     partyMax?: number
@@ -114,7 +114,7 @@ presence.on('UpdateData', async () => {
             presenceData.buttons = [
               {
                 label: parts && parts.length > 2 ? 'Watch Episode' : 'Watch Movie',
-                url: href,
+                url: href.replace(search, ''),
               },
             ]
           }
