@@ -70,6 +70,8 @@ presence.on('UpdateData', async () => {
     largeImageKey: LOGO,
     startTimestamp: browsingTimestamp,
   }
+  // 画面に表示されている文字だけを見たい (隠れている要素の文字は含めたくない) ので innerText を使う
+  // eslint-disable-next-line unicorn/prefer-dom-node-text-content
   const body = document.body.innerText
   const modeName = (t: Texts | undefined) => (lastMode && t ? t.modeNames[lastMode] : null)
 
