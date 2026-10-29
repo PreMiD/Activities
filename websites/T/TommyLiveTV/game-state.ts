@@ -127,8 +127,20 @@ export function createPresenceData(
     return activity('Browsing TommyLiveTV', 'Movies & TV')
   }
 
-  if (pathname === '/live/sports' || pathname === '/live/sports/')
+  if (pathname === '/live/sports' || pathname === '/live/sports/') {
+    // Channel pages use cross-origin players; report the selected visible channel from the parent page.
+    const playerCard = Array.from(document.querySelectorAll('.sports-cooking-player-card'))
+      .find(card => isVisible(card) && isVisible(card.querySelector('iframe, video')))
+    const channelHeading = playerCard?.querySelector('.sports-cooking-player-heading strong')
+    const channelTitle = channelHeading && isVisible(channelHeading)
+      ? cleanText(channelHeading.textContent, 96)
+      : ''
+    if (channelTitle) {
+      const pageUrl = new URL(pathname, HOME).href
+      return activity(channelTitle, 'Live TV', { type: ActivityType.Watching, pageUrl })
+    }
     return activity('Browsing TommyLiveTV', 'SportsLive')
+  }
 
   if (pathname.startsWith('/live/sports/') && pathname !== '/live/sports/teams') {
     const eventTitle = readVisibleText(document, '.sports-player-header h1', 96)
