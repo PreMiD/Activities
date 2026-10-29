@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1564987621883510934',
 })
 
-const LOGO = 'https://idolmaster-official.jp/icon-512x512.png'
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/T/THE%20IDOLM%40STER/assets/logo.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 // URL (ブランドページ) とアイドル名鑑の ID の先頭の数字から、ブランド名を決める
