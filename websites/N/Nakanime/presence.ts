@@ -4,6 +4,9 @@ const presence = new Presence({
   clientId: '1565331266465697802',
 })
 
+const nakanimeLogo = 'https://i.imgur.com/6Sgsj9h.png'
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
 interface IFrameData {
   video?: {
     paused?: boolean
@@ -13,18 +16,73 @@ interface IFrameData {
 }
 
 let iframeData: IFrameData = {}
-const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 presence.on('iFrameData', (data: IFrameData) => {
   iframeData = data
 })
 
+function getBrowsingState(pathname: string, hash: string): string {
+  if (pathname === '/')
+    return 'Sur la page d’accueil'
+
+  if (pathname.startsWith('/saison/'))
+    return 'Regarde les saisons'
+
+  if (pathname.startsWith('/profile/'))
+    return 'Consulte un profil'
+
+  switch (pathname) {
+    case '/catalog':
+      return 'Explore le catalogue'
+
+    case '/schedule':
+      return 'Consulte le calendrier des sorties'
+
+    case '/feed':
+      return 'Consulte le fil d’actualité'
+
+    case '/saisons':
+      return 'Consulte toutes les saisons'
+
+    case '/quests':
+      return 'Consulte ses quêtes'
+
+    case '/leaderboard':
+      return 'Consulte le classement'
+
+    case '/settings':
+      if (hash === '#playlists')
+        return 'Gère ses playlists'
+
+      return 'Consulte ses paramètres'
+
+    case '/personnages':
+      return 'Explore les personnages'
+
+    case '/changelog':
+      return 'Consulte les nouveautés'
+
+    case '/about':
+      return 'Découvre Nakanime'
+
+    case '/latest':
+      return 'Consulte les dernières sorties'
+
+    default:
+      return 'Explore Nakanime'
+  }
+}
+
 presence.on('UpdateData', async () => {
-  const episodeMatch = window.location.pathname.match(
+  const pathname = window.location.pathname
+  const hash = window.location.hash
+
+  const episodeMatch = pathname.match(
     /\/anime\/(\d+)\/season\/(\d+)\/episode\/(\d+)/,
   )
 
   const isEpisodePage = Boolean(episodeMatch)
+  const episodeNumber = episodeMatch?.[3]
 
   const heading = document.querySelector('h1')?.textContent?.trim()
 
@@ -39,21 +97,18 @@ presence.on('UpdateData', async () => {
     || 'Nakanime'
     : 'Nakanime'
 
-  const episodeNumber = episodeMatch?.[3]
-
   const poster = document.querySelector<HTMLMetaElement>(
     'meta[property="og:image"]',
   )?.content
 
   const video = iframeData.video
 
-  const validVideo
-    = video !== undefined
-      && video !== null
-      && typeof video.paused === 'boolean'
-      && typeof video.currentTime === 'number'
-      && typeof video.duration === 'number'
-      && video.duration > 0
+  const validVideo = video !== undefined
+    && video !== null
+    && typeof video.paused === 'boolean'
+    && typeof video.currentTime === 'number'
+    && typeof video.duration === 'number'
+    && video.duration > 0
 
   const presenceData: PresenceData = {
     name: 'Nakanime',
@@ -61,40 +116,10 @@ presence.on('UpdateData', async () => {
     details: animeTitle,
     state: episodeNumber
       ? `Épisode ${episodeNumber}`
-      : window.location.pathname === '/'
-        ? 'Sur la page d\'accueil'
-        : window.location.pathname.startsWith('/catalog')
-          ? 'Explore le catalogue'
-          : window.location.pathname.startsWith('/schedule')
-            ? 'Consulte le calendrier des sorties'
-            : window.location.pathname.startsWith('/feed')
-              ? 'Consulte le fil d\'actualité'
-              : window.location.pathname === '/saisons'
-                ? 'Consulte toutes les saisons'
-                : window.location.pathname.startsWith('/saison/')
-                  ? 'Regarde les saisons'
-                  : window.location.pathname.startsWith('/profile/')
-                    ? 'Consulte un profil'
-                    : window.location.pathname === '/quests'
-                      ? 'Consulte ses quêtes'
-                      : window.location.pathname === '/leaderboard'
-                        ? 'Consulte le classement'
-                        : window.location.pathname === '/settings'
-                          ? window.location.hash === '#playlists'
-                            ? 'Gère ses playlists'
-                            : 'Consulte ses paramètres'
-                          : window.location.pathname === '/personnages'
-                            ? 'Explore les personnages'
-                            : window.location.pathname === '/changelog'
-                              ? 'Consulte les nouveautés'
-                              : window.location.pathname === '/about'
-                                ? 'Découvre Nakanime'
-                                : window.location.pathname === '/latest'
-                                  ? 'Consulte les dernières sorties'
-                                  : 'Explore Nakanime',
+      : getBrowsingState(pathname, hash),
     largeImageKey: isEpisodePage && poster
       ? poster
-      : 'https://i.imgur.com/hPsVwo8.png',
+      : nakanimeLogo,
     largeImageText: animeTitle,
   }
 
@@ -107,14 +132,10 @@ presence.on('UpdateData', async () => {
     ]
   }
 
-  if (validVideo && video) {
+  if (isEpisodePage && validVideo && video) {
     presenceData.state = video.paused
-      ? 'En pause'
-      : 'En lecture'
-
-    if (episodeNumber) {
-      presenceData.state += ` • Épisode ${episodeNumber}`
-    }
+      ? `En pause • Épisode ${episodeNumber}`
+      : `En lecture • Épisode ${episodeNumber}`
 
     presenceData.smallImageKey = video.paused
       ? Assets.Pause
@@ -124,29 +145,21 @@ presence.on('UpdateData', async () => {
       ? 'En pause'
       : 'En lecture'
 
-    const currentTime = video.currentTime
-    const duration = video.duration
-
-    if (
-      typeof currentTime === 'number'
-      && typeof duration === 'number'
-      && !video.paused
-    ) {
+    if (!video.paused) {
       const [startTimestamp, endTimestamp] = getTimestamps(
-        currentTime,
-        duration,
+        video.currentTime!,
+        video.duration!,
       )
 
       presenceData.startTimestamp = startTimestamp
       presenceData.endTimestamp = endTimestamp
     }
   }
+  else if (isEpisodePage) {
+    presenceData.startTimestamp = browsingTimestamp
+  }
   else {
     presenceData.startTimestamp = browsingTimestamp
-
-    if (episodeNumber) {
-      presenceData.state = `Épisode ${episodeNumber}`
-    }
   }
 
   presence.setActivity(presenceData)
