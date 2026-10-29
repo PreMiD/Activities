@@ -11,7 +11,7 @@
     "fr": "Nakanime est une plateforme de streaming anime entièrement gratuite."
   },
   "url": "nakanime.tv",
-  "regExp": "^https?://([a-z0-9-]+\\.)*nakanime\\.tv/",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*nakanime[.]tv[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/hPsVwo8.png",
   "thumbnail": "https://i.imgur.com/EXIpga2.png",
