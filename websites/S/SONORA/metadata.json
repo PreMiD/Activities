@@ -11,7 +11,7 @@
     "id": "SONORA adalah pemutar musik web dan platform audio Discord dengan lirik tersinkronisasi, sampul album beranimasi, mixing antarlagu mulus, dan video musik resmi."
   },
   "url": "sonora.muhammadzakizn.com",
-  "regExp": "^https?:\\/\\/([a-z0-9-]+\\.)?(sonora\\.web\\.id|sonora\\.muhammadzakizn\\.com)(\\/|$)",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])?(sonora[.]web[.]id|sonora[.]muhammadzakizn[.]com)[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/Lph77V5.png",
   "thumbnail": "https://i.imgur.com/9aZB62v.png",
