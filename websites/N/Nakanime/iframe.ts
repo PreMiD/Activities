@@ -1,7 +1,5 @@
 const iframe = new iFrame()
 
-let lastVideo: HTMLVideoElement | null = null
-
 iframe.on('UpdateData', () => {
   const video = document.querySelector('video')
 
