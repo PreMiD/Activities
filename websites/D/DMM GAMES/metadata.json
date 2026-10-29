@@ -15,9 +15,9 @@
     "games.dmm.com"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*games[.]dmm[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://raw.githubusercontent.com/pachiris/Activities/premid-assets/dmm-games-512.png",
-  "thumbnail": "https://media.games.dmm.com/p/netgame/sns/share/logo.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DMM%20GAMES/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DMM%20GAMES/assets/thumbnail.png",
   "color": "#FF6B00",
   "category": "games",
   "tags": [

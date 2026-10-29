@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1565002054227726456',
 })
 
-const LOGO = 'https://raw.githubusercontent.com/pachiris/Activities/premid-assets/dmm-games-512.png'
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/D/DMM%20GAMES/assets/logo.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let playingSlug = ''
