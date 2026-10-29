@@ -46,7 +46,7 @@ async function getStrings() {
 }
 
 function cleanTitle(title: string): string {
-  const BRANDING = /si+r\s*tv|sirftv|sirtv|yas+ir\s*tv|سير|ياسر/i
+  const BRANDING = /si+r\s*tv|sirftv|yas+ir\s*tv|سير|ياسر/i
 
   const parts = title
     .split(/\s*[|\u2013\u2014\u00BB\u00AB]\s*/)
