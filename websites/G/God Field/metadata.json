@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "754572586914021468",
+    "name": "0120r"
+  },
+  "service": "God Field",
+  "altnames": [
+    "ゴッドフィールド"
+  ],
+  "description": {
+    "en": "God Field is a free online card battle game where prophets fight each other with miracles, weapons and guardians.",
+    "ja": "ゴッドフィールドは、預言者どうしが奇跡や武器、守護神を使って戦う無料のオンライン対戦カードゲームです。"
+  },
+  "url": "godfield.net",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*godfield[.]net[/]",
+  "version": "1.0.0",
+  "logo": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/9d/d4/8a/9dd48a1d-0ff3-123f-7b8f-de54f35da71c/Placeholder.mill/512x512bb.png",
+  "thumbnail": "https://godfield.net/images/screens/home.webp",
+  "color": "#008F6F",
+  "category": "games",
+  "tags": [
+    "card-game",
+    "online",
+    "japan",
+    "multiplayer"
+  ],
+  "settings": [
+    {
+      "id": "showMode",
+      "title": "モード名を表示",
+      "icon": "fad fa-gamepad",
+      "value": true
+    },
+    {
+      "id": "showCount",
+      "title": "人数を表示",
+      "icon": "fad fa-users",
+      "value": true
+    }
+  ]
+}
