@@ -7,13 +7,13 @@
   },
   "service": "FlyStream",
   "description": {
-    "en": "Watch movies & TV free at Fly Stream - no ads, no login. Continue Watching resumes exactly where you left off, with subtitles, audio tracks & fast streaming."
+    "en": "Stream movies & TV free at FlyStream. Continue Watching resumes exactly where you left off, with subtitles, audio tracks & fast streaming."
   },
   "url": "flystream.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*flystream[.]net[/]",
-  "version": "1.0.2",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FlyStream/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FlyStream/assets/thumbnail.png",
+  "version": "1.0.3",
+  "logo": "https://flystream.net/icon-512.png",
+  "thumbnail": "https://raw.githubusercontent.com/ggychzmc8p-cmyk/Activities/flystream-halloween-branding/websites/F/FlyStream/assets/thumbnail.jpg",
   "color": "#e5372a",
   "category": "videos",
   "tags": [
