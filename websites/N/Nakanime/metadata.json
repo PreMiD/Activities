@@ -7,9 +7,9 @@
   },
   "service": "Nakanime",
   "description": {
-  "en": "Free anime streaming platform offering thousands of titles in French and with French subtitles.",
-  "fr": "Nakanime est une plateforme de streaming anime entièrement gratuite."
-},
+    "en": "Free anime streaming platform offering thousands of titles in French and with French subtitles.",
+    "fr": "Nakanime est une plateforme de streaming anime entièrement gratuite."
+  },
   "url": "nakanime.tv",
   "regExp": "^https?://([a-z0-9-]+\\.)*nakanime\\.tv/",
   "version": "1.0.0",
