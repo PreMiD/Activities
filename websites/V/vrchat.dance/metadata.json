@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Nicrolix",
+    "id": "161218923663065088"
+  },
+  "service": "vrchat.dance",
+  "description": {
+    "en": "The guide to VRChat dance clubs: tonight's schedule, clubs, dancers, DJs and their pages. Shows your vrchat.dance profile and what you are looking at.",
+    "fr": "Le guide des clubs de danse VRChat : le programme du soir, les clubs, les danseurs, les DJ et leurs pages. Affiche votre profil vrchat.dance et ce que vous regardez."
+  },
+  "url": "vrchat.dance",
+  "regExp": "^https?[:][/][/](www[.])?vrchat[.]dance[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/mQiTGMd.png",
+  "thumbnail": "https://i.imgur.com/odloI3Y.png",
+  "color": "#ff3d9a",
+  "category": "socials",
+  "tags": [
+    "vrchat",
+    "dance",
+    "club",
+    "vr",
+    "dancers",
+    "djs"
+  ],
+  "settings": [
+    {
+      "id": "showProfile",
+      "title": "Show my vrchat.dance profile",
+      "icon": "fas fa-user",
+      "value": true
+    },
+    {
+      "id": "showPage",
+      "title": "Show the page I am looking at",
+      "icon": "fas fa-eye",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show buttons",
+      "icon": "fas fa-link",
+      "value": true
+    }
+  ]
+}
