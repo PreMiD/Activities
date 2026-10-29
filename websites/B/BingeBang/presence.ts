@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1564637288045088949',
@@ -7,12 +7,6 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/4jb06Gm.png',
-}
-
-interface VideoData {
-  currentTime: number
-  duration: number
-  paused: boolean
 }
 
 /** "Cyberpunk: Edgerunners S01E01 · Player · BingeBang" -> "Cyberpunk: Edgerunners S01E01" */
@@ -24,16 +18,9 @@ function getCover(): string | undefined {
   return document.querySelector<HTMLMetaElement>('meta[property="og:image"]')?.content || undefined
 }
 
-function getVideo(): VideoData | null {
+function getVideo(): HTMLVideoElement | null {
   const video = document.querySelector<HTMLVideoElement>('video')
-  if (video && !Number.isNaN(video.duration)) {
-    return {
-      currentTime: video.currentTime,
-      duration: video.duration,
-      paused: video.paused,
-    }
-  }
-  return null
+  return video && !Number.isNaN(video.duration) ? video : null
 }
 
 presence.on('UpdateData', async () => {
@@ -131,10 +118,7 @@ function applyVideoState(
     delete presenceData.startTimestamp
   }
   else {
-    const [startTimestamp, endTimestamp] = getTimestamps(
-      Math.floor(video.currentTime),
-      Math.floor(video.duration),
-    )
+    const [startTimestamp, endTimestamp] = getTimestampsFromMedia(video)
     presenceData.smallImageKey = Assets.Play
     presenceData.smallImageText = strings.play
     presenceData.startTimestamp = startTimestamp
