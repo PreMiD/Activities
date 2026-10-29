@@ -1,0 +1,69 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "739942220160827433",
+    "name": "Xaena"
+  },
+  "service": "AnimeRank",
+  "description": {
+    "en": "AnimeRank is a Turkish anime streaming platform with Turkish subtitles and dubs, ad-free, up to 4K quality.",
+    "tr": "AnimeRank; Türkçe altyazılı ve dublajlı, reklamsız, 4K'ya kadar kalitede anime izleme platformu."
+  },
+  "url": [
+    "animerank.tv",
+    "www.animerank.tv"
+  ],
+  "regExp": "^https?[:][/][/]((www[.])?animerank[.]tv)[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/Xaena53/Activities/animerank-assets/AnimeRank/logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/Xaena53/Activities/animerank-assets/AnimeRank/thumbnail.png",
+  "color": "#e11d48",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "turkish",
+    "video",
+    "4k"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "description": "Hides anime and episode information from your presence.",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover",
+      "description": "Shows the anime cover instead of the AnimeRank logo.",
+      "icon": "fad fa-image",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "description": "Shows elapsed and remaining time of the episode.",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "description": "Shows the 'Watch Episode' and 'View Anime' buttons.",
+      "icon": "fad fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}
