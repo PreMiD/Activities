@@ -19,11 +19,26 @@ interface Texts {
   game: { abandon: string, resetGame: string, opening: string, endingWin: string, endingDraw: string, usedMiracles: string }
 }
 
-// ゲームの言語ファイル (/i18n/*.json) から、画面ごとの目印になる文言を集める
-let texts: Texts[] | null = null
+// ゲームの言語ファイル (/i18n/*.json) から、画面ごとの目印になる文言を集める。
+// UpdateData は1秒に何度も呼ばれるので、読み込んだ結果はキャッシュして使い回す。
+// 読み込みに失敗したときは、毎回 fetch しないように一定時間あけてから再試行する。
+const CACHE_TTL = 6 * 60 * 60 * 1000
+const RETRY_INTERVAL = 60 * 1000
+let texts: Texts[] = []
+let loadedAt = 0
+let lastAttempt = 0
 let loading: Promise<void> | null = null
+
 function loadTexts(): Promise<void> {
-  loading ??= Promise.all(LANGS.map(async (lang) => {
+  const now = Date.now()
+  if (texts.length && now - loadedAt < CACHE_TTL)
+    return Promise.resolve()
+  if (loading)
+    return loading
+  if (now - lastAttempt < RETRY_INTERVAL)
+    return Promise.resolve()
+  lastAttempt = now
+  loading = Promise.all(LANGS.map(async (lang) => {
     try {
       const res = await fetch(`${location.origin}/i18n/${lang}.json`)
       return res.ok ? ((await res.json()) as { texts: Texts }).texts : null
@@ -32,17 +47,23 @@ function loadTexts(): Promise<void> {
       return null
     }
   })).then((list) => {
-    texts = list.filter((t): t is Texts => !!t)
+    const loaded = list.filter((t): t is Texts => !!t)
+    if (loaded.length) {
+      texts = loaded
+      loadedAt = Date.now()
+    }
+  }).finally(() => {
+    loading = null
   })
   return loading
 }
 
 const strip = (s: string) => s.replace(/<br>/g, '\n').trim()
-const has = (body: string, pick: (t: Texts) => string) => texts!.find(t => body.includes(strip(pick(t))))
+const has = (body: string, pick: (t: Texts) => string) => texts.find(t => body.includes(strip(pick(t))))
 
 // 「預言者 {{count}} 人」のような文言から人数を読み取る
 function readCount(body: string, pick: (t: Texts) => string): number | null {
-  for (const t of texts!) {
+  for (const t of texts) {
     const [before, after] = pick(t).split('{{count}}')
     if (before === undefined || after === undefined)
       continue
@@ -84,7 +105,7 @@ presence.on('UpdateData', async () => {
     ?? has(body, t => t.game.endingWin)
     ?? has(body, t => t.game.endingDraw)
     ?? has(body, t => t.game.usedMiracles)
-    ?? (/HP\s*\d+/.test(body) && /MP\s*\d+/.test(body) ? texts![0] : undefined)
+    ?? (/HP\s*\d+/.test(body) && /MP\s*\d+/.test(body) ? texts[0] : undefined)
   if (inGame) {
     battleSince ||= Math.floor(Date.now() / 1000)
     const ended = has(body, t => t.game.endingWin) ?? has(body, t => t.game.endingDraw)
@@ -102,7 +123,7 @@ presence.on('UpdateData', async () => {
   battleSince = 0
 
   // ***** メニュー (3つのモードのカードが並ぶ画面) *****
-  const menu = texts!.find(t => (['training', 'private', 'duel'] as const).every(m => body.includes(t.modeNames[m])))
+  const menu = texts.find(t => (['training', 'private', 'duel'] as const).every(m => body.includes(t.modeNames[m])))
   if (menu) {
     if (has(body, t => t.menu.roomPassword)) {
       // 隠れ乱闘を押したときに出る「部屋の合言葉」の入力
