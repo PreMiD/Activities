@@ -52,21 +52,14 @@ async function getStrings() {
   })
 }
 
-let strings: Awaited<ReturnType<typeof getStrings>>
-let oldLang: string | null = null
-
 presence.on('UpdateData', async () => {
-  const [newLang, privacy, showCover, showTimestamp, showButtons] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
+  const [privacy, showCover, showTimestamp, showButtons] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('showCover'),
     presence.getSetting<boolean>('showTimestamp'),
     presence.getSetting<boolean>('showButtons'),
   ])
-  if (oldLang !== newLang || !strings) {
-    oldLang = newLang
-    strings = await getStrings()
-  }
+  const strings = await getStrings()
 
   const { pathname, href, origin } = document.location
   const presenceData: PresenceData = {
