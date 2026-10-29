@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1564985155863580781',
 })
 
-const LOGO = 'https://g123.jp/icons/G123_512.png'
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/G/G123/assets/logo.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let playingSlug = ''
