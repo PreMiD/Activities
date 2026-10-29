@@ -22,7 +22,7 @@
     "sirtv.top"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(yassirtv[.]com|fabor[.]tv|fabor-tv[.]to|fabor-tv[.]vip|sirftv[.]com|sirtv[.]top)[/]",
-  "version": "1.3.0",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YassirTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YassirTV/assets/thumbnail.png",
   "color": "#c0392b",
