@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1564620013367730256',
 })
 
-const LOGO = 'https://raw.githubusercontent.com/tsukumijima/KonomiTV/master/client/public/assets/images/icons/icon-512px.png'
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/K/KonomiTV/assets/logo.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 interface ProgramInfo {

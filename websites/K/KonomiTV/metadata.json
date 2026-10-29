@@ -12,9 +12,9 @@
   },
   "url": "my.local.konomi.tv",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*local[.]konomi[.]tv([:][0-9]+)?[/]",
-  "version": "1.0.0",
-  "logo": "https://raw.githubusercontent.com/tsukumijima/KonomiTV/master/client/public/assets/images/icons/icon-512px.png",
-  "thumbnail": "https://user-images.githubusercontent.com/39271166/134050201-8110f076-a939-4b62-8c86-7beaa3d4728c.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KonomiTV/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KonomiTV/assets/thumbnail.png",
   "color": "#E64F97",
   "category": "videos",
   "tags": [
