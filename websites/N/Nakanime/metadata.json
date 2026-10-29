@@ -7,9 +7,9 @@
   },
   "service": "Nakanime",
   "description": {
-    "en": "Displays the anime and episode you are watching on Nakanime.",
-    "fr": "Affiche l'anime et l'épisode que vous regardez sur Nakanime."
-  },
+  "en": "Free anime streaming platform offering thousands of titles in French and with French subtitles.",
+  "fr": "Nakanime est une plateforme de streaming anime entièrement gratuite."
+},
   "url": "nakanime.tv",
   "regExp": "^https?://([a-z0-9-]+\\.)*nakanime\\.tv/",
   "version": "1.0.0",
