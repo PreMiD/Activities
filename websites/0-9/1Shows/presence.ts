@@ -213,19 +213,19 @@ function getTvInfo() {
 
 const ActivityAssets = {
   Logo: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/logo.png',
-  house: 'https://i.postimg.cc/0y90bSHM/house-solid.png',
-  compass: 'https://i.postimg.cc/W1swhZfd/compass-solid.png',
-  calendarDays: 'https://i.postimg.cc/JzR5GXd0/calendar-days-solid.png',
-  userSecret: 'https://i.postimg.cc/HkT9VMP6/user-secret-solid.png',
-  tv: 'https://i.postimg.cc/7ZqnfzQm/tv-solid.png',
-  towerBroadcast: 'https://i.postimg.cc/Mpw2LvcZ/tower-broadcast-solid.png',
-  football: 'https://i.postimg.cc/Hs4PV3xT/football-solid.png',
-  gamepad: 'https://i.postimg.cc/7Zj7DrkM/gamepad-solid.png',
-  addressCard: 'https://i.postimg.cc/QNPjf8kk/address-card-solid.png',
-  arrowRightToBracket: 'https://i.postimg.cc/KcVm0Gr7/arrow-right-to-bracket-solid.png',
-  fileContract: 'https://i.postimg.cc/wxP9wqcL/file-contract-solid.png',
-  magnet: 'https://i.postimg.cc/Yq9bC7JW/magnet-solid.png',
-  moviesAndTv: 'https://i.postimg.cc/HnfgQGgm/movies-And-Tv.png',
+  house: 'https://i.postimg.cc/d1JjfN3Y/house-solid.png',
+  compass: 'https://i.postimg.cc/85TmYXcj/compass-solid.png',
+  calendarDays: 'https://i.postimg.cc/C1ws2r5d/calendar-days-solid.png',
+  userSecret: 'https://i.postimg.cc/63BfPbqp/user-secret-solid.png',
+  tv: 'https://i.postimg.cc/nznGWSrF/tv-solid.png',
+  towerBroadcast: 'https://i.postimg.cc/rmqNHZsM/tower-broadcast-solid.png',
+  football: 'https://i.postimg.cc/HxT9Nvn8/football-solid.png',
+  gamepad: 'https://i.postimg.cc/rmqNHZsd/gamepad-solid.png',
+  addressCard: 'https://i.postimg.cc/NMQknCFf/address-card-solid.png',
+  arrowRightToBracket: 'https://i.postimg.cc/63BfPbqQ/arrow-right-to-bracket-solid.png',
+  fileContract: 'https://i.postimg.cc/XJnkP1qr/file-contract-solid.png',
+  magnet: 'https://i.postimg.cc/sX34LHxV/magnet-solid.png',
+  moviesAndTv: 'https://i.postimg.cc/SsmfP1RQ/movies-And-Tv.png',
 }
 
 presence.on('UpdateData', async () => {
