@@ -63,6 +63,8 @@ export interface GameVideo {
 }
 
 export interface GameLayer {
+  _content1?: GameLayer
+  _content2?: GameLayer
   _bgmPath?: unknown
   texture?: {
     baseTexture?: {
@@ -76,6 +78,7 @@ export interface GameLayer {
     characterAlbum?: CharacterAlbum
     gameEvent?: GameEvent
     releasedCommunications?: EventCommunication[]
+    daifugoCourses?: { id?: unknown, name?: unknown }[]
     id?: unknown
     category?: unknown
     userMypageCommunication?: { mypageCommunication?: AlbumCommunication }
@@ -99,6 +102,8 @@ export interface GameLayer {
 }
 
 interface GameScene extends GameLayer {
+  _gameService?: { daifugoCourse?: { name?: unknown } }
+  _menuPopup?: GameLayer | null
   _fesDeckLayer?: GameLayer
   _idolDetail?: unknown
   _userIdol?: AlbumCard
@@ -135,6 +140,7 @@ interface GameScene extends GameLayer {
   _gameEventId?: unknown
   _store?: ProduceStore & IdolPageStore
   _mainLayer?: {
+    _selectedCharacter?: { name?: unknown }
     _areaSelectLayer?: GameLayer
     _store?: { _gameEvent?: GameEvent }
     _deckEditLayer?: {
@@ -193,6 +199,8 @@ export interface EventContext {
 }
 
 export type GameStatus = ProduceStatus | { home: true } | { album: string } | {
+  miniGame: { route: '/daifugo' | '/characterProfile', section?: string }
+} | {
   page: string
   state?: string
   playback?: { type: 'audio' | 'video', position: number, duration: number, paused: boolean }

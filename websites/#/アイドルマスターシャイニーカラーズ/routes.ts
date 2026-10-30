@@ -49,7 +49,7 @@ const pageGroups: { details: string, sections: Record<string, string> }[] = [
     },
   },
   { details: pageLabels.producerDesk, sections: { '/producerDeskShop': 'Pレベルショップ' } },
-  { details: pageLabels.miniGame, sections: { '/daifugo': '大富豪' } },
+  { details: pageLabels.miniGame, sections: { '/daifugo': '大富豪', '/characterProfile': 'プロフィール' } },
 ]
 
 const pageNames: Record<string, string> = {
@@ -80,7 +80,6 @@ const pageNames: Record<string, string> = {
   '/fesToursConcert': 'フェスツアーズ',
   '/mastersFes': 'マスターズフェス',
   '/miniGamePortal': pageLabels.miniGame,
-  '/characterProfile': 'アイドルプロフィール',
   '/photo': 'フォトモード',
 }
 

@@ -74,6 +74,11 @@ presence.on('UpdateData', async () => {
       state = isRoutePage ? routeDisplay.state : status.state
     }
   }
+  else if (status && 'miniGame' in status) {
+    const miniGame = getRouteDisplay(status.miniGame.route)
+    details = miniGame.details
+    state = [miniGame.state, status.miniGame.section].filter(Boolean).join(' ／ ')
+  }
   else if (status && 'fesUnit' in status) {
     details = pageLabels.fes
     state = pageLabels.fesUnit

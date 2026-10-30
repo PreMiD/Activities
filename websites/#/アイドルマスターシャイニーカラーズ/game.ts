@@ -271,6 +271,40 @@ export function readGameStatus(route: string, isIdolPage = false): GameStatus | 
     }
   }
 
+  if (route === '/characterProfile') {
+    const character = scenes.find(scene => scene?._mainLayer?._selectedCharacter)?._mainLayer?._selectedCharacter?.name
+    if (typeof character === 'string' && character.trim())
+      return { miniGame: { route, section: character.trim() } }
+  }
+
+  if (route === '/miniGamePortal') {
+    const ready = scenes.find(scene => Array.isArray(scene?._params?.daifugoCourses)
+      && scene.visible !== false && scene.renderable !== false)
+    if (ready)
+      return { miniGame: { route: '/daifugo', section: readHeader(scenes[0] ?? ready, true) ?? 'コース選択' } }
+  }
+
+  if (route === '/daifugo') {
+    const game = scenes.find(scene => scene?._gameService?.daifugoCourse)
+    if (game) {
+      const course = game._gameService?.daifugoCourse?.name
+      const result = game.children?.some(child => child.visible !== false && child.renderable !== false
+        && child._content1 && child._content2)
+      const menu = game._menuPopup
+      let phase = readHeader(scenes[0] ?? game, true) ?? '対戦'
+      if (result)
+        phase = 'リザルト'
+      else if (menu && menu.visible !== false && menu.renderable !== false)
+        phase = '一時停止'
+      return {
+        miniGame: {
+          route,
+          section: [typeof course === 'string' ? course.trim() : '', phase].filter(Boolean).join(' ／ '),
+        },
+      }
+    }
+  }
+
   if ((route === '/fesTop' || route === '/fesReady') && scenes.some(scene => scene?._fesDeckLayer))
     return { fesUnit: true }
 
