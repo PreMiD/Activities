@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "754572586914021468",
+    "name": "0120r"
+  },
+  "service": "THE IDOLM@STER",
+  "altnames": [
+    "アイドルマスター",
+    "アイマス"
+  ],
+  "description": {
+    "en": "The official portal of THE IDOLM@STER series by Bandai Namco, with news, schedules and the idol directory for every brand, plus the classic THE IDOLM@STER WEB archive and the arcade THE IDOLM@STER TOURS site.",
+    "ja": "「アイドルマスター」シリーズの公式ポータル。全ブランドのニュースやスケジュール、アイドル名鑑のほか、旧公式サイト「THE IDOLM@STER WEB」やアーケード版「アイドルマスター ツアーズ」の公式サイトにも対応しています。"
+  },
+  "url": [
+    "idolmaster-official.jp",
+    "idollist.idolmaster-official.jp",
+    "www.idolmaster.jp"
+  ],
+  "regExp": "^https?[:][/][/](([a-z0-9-]+[.])*(idolmaster-official|idolmaster)[.]jp[/]|(www[.])?bandainamco(-am[.]co)?[.]jp[/]am[/]vg[/]idolmaster-tours[/])",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/THE%20IDOLM%40STER/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/THE%20IDOLM%40STER/assets/thumbnail.jpg",
+  "color": "#F34F6D",
+  "category": "other",
+  "tags": [
+    "idolmaster",
+    "imas",
+    "anime",
+    "idol",
+    "japan"
+  ],
+  "settings": [
+    {
+      "id": "showTitle",
+      "title": "記事タイトル・アイドル名を表示",
+      "icon": "fad fa-heading",
+      "value": true
+    },
+    {
+      "id": "showIdolImage",
+      "title": "アイドルの画像を表示",
+      "icon": "fad fa-image",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "ボタンを表示",
+      "icon": "fad fa-link",
+      "value": true
+    }
+  ]
+}
