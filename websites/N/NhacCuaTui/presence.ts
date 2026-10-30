@@ -10,6 +10,48 @@ const NCT_LOGO = 'https://files.catbox.moe/eha3a5.png'
 
 const songCoverCache = new Map<string, string>()
 
+interface NctStorageMusic {
+  name?: string
+  title?: string
+  key?: string
+  id?: string | number
+  songId?: string | number
+  artist?: string | Array<{ name?: string }>
+  artists?: string | Array<{ name?: string }>
+  image?: string
+  thumbnail?: string
+  cover?: string
+  avatar?: string
+  bgImage?: string
+  album?: string
+  songUrl?: string
+  url?: string
+}
+
+function getCurrentMusicFromStorage(): NctStorageMusic | null {
+  try {
+    const raw = localStorage.getItem('currentMusic')
+    if (!raw)
+      return null
+    return JSON.parse(raw) as NctStorageMusic
+  }
+  catch {
+    return null
+  }
+}
+
+function parseArtist(artistField: unknown): string {
+  if (typeof artistField === 'string')
+    return artistField
+  if (Array.isArray(artistField)) {
+    return artistField
+      .map(a => (typeof a === 'string' ? a : a?.name || ''))
+      .filter(Boolean)
+      .join(', ')
+  }
+  return ''
+}
+
 function normalizeString(str: string): string {
   return str
     .toLowerCase()
@@ -26,129 +68,6 @@ function isSongNameMatch(nameA: string, nameB: string): boolean {
   if (!a || !b)
     return false
   return a === b || a.includes(b) || b.includes(a)
-}
-
-// Inject script vao page (main world) de doc Pinia va goi API khong bi CORS
-// fetch tu content script bi block vi origin la chrome-extension://
-// fetch tu injected script chay voi origin nhaccuatui.com => khong bi block
-function injectPageHelper(): void {
-  if (typeof document === 'undefined')
-    return
-  if (document.getElementById('premid-nct-helper'))
-    return
-
-  try {
-    const script = document.createElement('script')
-    script.id = 'premid-nct-helper'
-    script.textContent = `
-      (function() {
-        function getPiniaStore() {
-          try {
-            const nuxtEl = document.querySelector('#__nuxt');
-            const app = nuxtEl && nuxtEl.__vue_app__;
-            if (app) {
-              const pinia = (app.config && app.config.globalProperties && app.config.globalProperties.$pinia) ||
-                (app.$nuxt && app.$nuxt.$pinia);
-              if (pinia && pinia._s) {
-                const store = pinia._s.get('musicPlayer');
-                if (store && store.currentMusicInfo && store.currentMusicInfo.name) return store;
-                for (const s of pinia._s.values()) {
-                  if (s && s.currentMusicInfo && s.currentMusicInfo.name) return s;
-                }
-              }
-            }
-          } catch {}
-          try {
-            if (typeof window.useNuxtApp === 'function') {
-              const nuxt = window.useNuxtApp();
-              const pinia = nuxt && nuxt.$pinia;
-              if (pinia && pinia._s) {
-                const store = pinia._s.get('musicPlayer');
-                if (store && store.currentMusicInfo && store.currentMusicInfo.name) return store;
-              }
-            }
-          } catch {}
-          return null;
-        }
-
-        function isValidCover(url) {
-          if (!url || typeof url !== 'string') return false;
-          if (url.startsWith('data:') || url.startsWith('blob:')) return false;
-          if (url.includes('default-song-img') || url.includes('default-topic-img') ||
-              url.includes('default-artist-img') || url.includes('1x1') ||
-              url.includes('nct-share.png')) return false;
-          return url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//');
-        }
-
-        var fetchingKey = null;
-        function fetchCoverFromApi(songKey, songName, artistStr) {
-          if (!songKey || fetchingKey === songKey) return;
-          fetchingKey = songKey;
-          var targetKey = songKey;
-          fetch('https://graph.nhaccuatui.com/api/v1/song/detail/' + songKey)
-            .then(function(r) { return r.ok ? r.json() : null; })
-            .then(function(data) {
-              var img = data && data.data && (data.data.image || data.data.bgImage || data.data.thumbnail);
-              if (isValidCover(img)) {
-                if (document.documentElement.getAttribute('data-nct-song-key') === targetKey)
-                  document.documentElement.setAttribute('data-nct-song-cover', img);
-                return;
-              }
-              var q = (songName + ' ' + (artistStr || '')).trim();
-              return fetch(
-                'https://graph.nhaccuatui.com/api/v1/search/song?keyword=' + encodeURIComponent(q) + '&pageindex=1&pagesize=5&correct=false',
-                { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ keyword: q, pageindex: 1, pagesize: 5 }) }
-              ).then(function(r) { return r.ok ? r.json() : null; })
-               .then(function(data) {
-                 var songs = (data && data.data && data.data.songs) || [];
-                 for (var i = 0; i < songs.length; i++) {
-                   var sImg = songs[i] && (songs[i].image || songs[i].bgImage);
-                   if (isValidCover(sImg)) {
-                     if (document.documentElement.getAttribute('data-nct-song-key') === targetKey)
-                       document.documentElement.setAttribute('data-nct-song-cover', sImg);
-                     return;
-                   }
-                 }
-               });
-            })
-            .catch(function() { if (fetchingKey === songKey) fetchingKey = null; });
-        }
-
-        var lastSyncedKey = null;
-        function syncState() {
-          try {
-            const store = getPiniaStore();
-            const cur = store && store.currentMusicInfo;
-            if (cur && cur.name) {
-              const currentKey = cur.key || cur.id || cur.songId || null;
-              if (currentKey && currentKey !== lastSyncedKey) {
-                document.documentElement.removeAttribute('data-nct-song-cover');
-                lastSyncedKey = currentKey;
-                fetchingKey = null;
-              }
-              document.documentElement.setAttribute('data-nct-song-name', cur.name || '');
-              if (currentKey) document.documentElement.setAttribute('data-nct-song-key', currentKey);
-              let artistStr = '';
-              if (typeof cur.artist === 'string') artistStr = cur.artist;
-              else if (Array.isArray(cur.artist))
-                artistStr = cur.artist.map(function(a) { return (a && a.name) || ''; }).filter(Boolean).join(', ');
-              if (artistStr) document.documentElement.setAttribute('data-nct-song-artist', artistStr);
-              const cover = cur.image || cur.thumbnail || cur.cover || cur.avatar || cur.bgImage || '';
-              if (isValidCover(cover)) {
-                document.documentElement.setAttribute('data-nct-song-cover', cover);
-              } else if (currentKey && !document.documentElement.getAttribute('data-nct-song-cover')) {
-                fetchCoverFromApi(currentKey, cur.name, artistStr);
-              }
-            }
-          } catch {}
-        }
-        setInterval(syncState, 300);
-        syncState();
-      })();
-    `
-    ;(document.head || document.documentElement).appendChild(script)
-  }
-  catch {}
 }
 
 function formatTime(seconds: number): string {
@@ -197,15 +116,22 @@ async function getSongImage(
       return cached
   }
 
-  // Pinia cover (set boi injected script, bao gom ca ket qua tu API)
-  const piniaSongName = document.documentElement.getAttribute('data-nct-song-name')
-  const piniaCover = cleanImageUrl(
-    document.documentElement.getAttribute('data-nct-song-cover'),
-  )
-  if (piniaCover && piniaSongName && isSongNameMatch(piniaSongName, songName)) {
-    if (cacheKey)
-      songCoverCache.set(cacheKey, piniaCover)
-    return piniaCover
+  // LocalStorage currentMusic
+  const storageMusic = getCurrentMusicFromStorage()
+  if (storageMusic) {
+    const rawCover
+      = storageMusic.image
+        || storageMusic.thumbnail
+        || storageMusic.cover
+        || storageMusic.avatar
+        || storageMusic.bgImage
+    const candidate = cleanImageUrl(rawCover)
+    const storageName = storageMusic.name || storageMusic.title
+    if (candidate && (!storageName || isSongNameMatch(storageName, songName))) {
+      if (cacheKey)
+        songCoverCache.set(cacheKey, candidate)
+      return candidate
+    }
   }
 
   // MediaSession
@@ -254,6 +180,7 @@ function getSongInfo(player: Element | null): {
 } {
   let songName = ''
   let artists = ''
+  let album = ''
 
   if (player) {
     const nameEl = player.querySelector('.music-info .name, .music-info .song-name')
@@ -285,17 +212,17 @@ function getSongInfo(player: Element | null): {
     }
   }
 
-  let album = ''
-
-  if (!songName) {
-    const piniaName = document.documentElement.getAttribute('data-nct-song-name')
-    if (piniaName)
-      songName = piniaName.trim()
-  }
-  if (!artists) {
-    const piniaArtist = document.documentElement.getAttribute('data-nct-song-artist')
-    if (piniaArtist)
-      artists = piniaArtist.trim()
+  const storageMusic = getCurrentMusicFromStorage()
+  if (storageMusic) {
+    if (!songName)
+      songName = (storageMusic.name || storageMusic.title || '').trim()
+    if (!artists) {
+      const parsed = parseArtist(storageMusic.artists || storageMusic.artist)
+      if (parsed)
+        artists = parsed.trim()
+    }
+    if (!album && storageMusic.album)
+      album = storageMusic.album.trim()
   }
 
   if ('mediaSession' in navigator && navigator.mediaSession?.metadata) {
@@ -304,7 +231,7 @@ function getSongInfo(player: Element | null): {
       songName = meta.title.trim()
     if (!artists && meta.artist)
       artists = meta.artist.trim()
-    if (meta.album)
+    if (!album && meta.album)
       album = meta.album.trim()
   }
 
@@ -360,14 +287,20 @@ function checkIsPlaying(
 }
 
 function getSongUrl(): string | null {
-  const key = document.documentElement.getAttribute('data-nct-song-key')
+  const music = getCurrentMusicFromStorage()
+  const key = music?.key || music?.songId || music?.id
   if (key)
     return `https://www.nhaccuatui.com/song/${key}`
-  if (typeof window !== 'undefined' && window.location) {
-    const path = window.location.pathname
+
+  if (music?.songUrl && music.songUrl.startsWith('http'))
+    return music.songUrl
+
+  if (typeof document !== 'undefined' && document.location) {
+    const path = document.location.pathname
     if (path.includes('/bai-hat/') || path.includes('/song/'))
-      return window.location.href
+      return document.location.href
   }
+
   return null
 }
 
@@ -383,8 +316,6 @@ function getBrowsingPresence(): PresenceData {
 }
 
 presence.on('UpdateData', async () => {
-  injectPageHelper()
-
   const [privacy, showCover, showTimestamps, showButtons, showBrowsing]
     = await Promise.all([
       presence.getSetting<boolean>('privacy').catch(() => false),
