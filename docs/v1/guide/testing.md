@@ -9,22 +9,22 @@ Tests are optional. You don't need to add them to a pull request, but they help 
 Put a `*.test.ts` file next to your `presence.ts`. Import `test` and `expect` from `premid/test`:
 
 ```typescript
-import { Assets } from "premid";
-import { expect, test } from "premid/test";
+import { Assets } from 'premid'
+import { expect, test } from 'premid/test'
 
-test("shows the playing mix", async ({ page, activity }) => {
-  await page.goto("https://www.mixcloud.com/");
-  await page.waitForUser("Start playing any mix", {
+test('shows the playing mix', async ({ page, activity }) => {
+  await page.goto('https://www.mixcloud.com/')
+  await page.waitForUser('Start playing any mix', {
     until: () => {
-      const audio = document.querySelector("audio");
-      return !!audio && !audio.paused;
+      const audio = document.querySelector('audio')
+      return !!audio && !audio.paused
     },
-  });
+  })
   expect(await activity.next()).toMatchObject({
     details: expect.any(String),
     smallImageKey: Assets.Play,
-  });
-});
+  })
+})
 ```
 
 Each test receives two handles:
@@ -38,12 +38,12 @@ Pass an options object as the second argument to change the defaults:
 
 ```typescript
 test(
-  "shows the video title",
+  'shows the video title',
   { settings: { showTitle: true }, timeout: 60_000 },
   async ({ page, activity }) => {
     // ...
   },
-);
+)
 ```
 
 | Option     | Default           | Applies to                              |
@@ -67,9 +67,9 @@ Each `page.waitFor` and `activity.next()` call times out after 30s, and each `pa
 `activity.next()` returns updates in the order they arrived, so an update from an earlier step can still be waiting. Call `activity.clear()` before the step you want to check to drop them. To check that the activity stays quiet, for example while a video is paused, use `activity.expectNone()`:
 
 ```typescript
-activity.clear();
-await page.click(".pause");
-await activity.expectNone({ timeout: 3000 });
+activity.clear()
+await page.click('.pause')
+await activity.expectNone({ timeout: 3000 })
 ```
 
 `expectNone` fails if the activity sets or clears its presence during the wait, or if an update is already waiting. `clear()` only drops updates that have arrived, so an update still on its way can show up afterwards.
@@ -84,8 +84,8 @@ await activity.expectNone({ timeout: 3000 });
 
 ```typescript
 const title = await page.evaluate((selector: string) => {
-  return document.querySelector(selector)?.textContent?.trim();
-}, ".video-title");
+  return document.querySelector(selector)?.textContent?.trim()
+}, '.video-title')
 ```
 
 If the page navigates while `evaluate` is pending, for example after a login redirect or a link click, the call rejects with `Page navigated during evaluate`. `waitForUser` and `waitFor` keep polling across reloads. If your own code throws inside the page, for example in an `until` function, the call fails with that error instead of waiting for the timeout.
@@ -95,9 +95,9 @@ If the page navigates while `evaluate` is pending, for example after a login red
 Some steps need a person, such as logging in, accepting a cookie banner, or pressing play. Use `waitForUser` for these:
 
 ```typescript
-await page.waitForUser("Log in to your account", {
-  until: () => !document.querySelector(".login-form"),
-});
+await page.waitForUser('Log in to your account', {
+  until: () => !document.querySelector('.login-form'),
+})
 ```
 
 `pmd` prints the message in your terminal, for example:
