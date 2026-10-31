@@ -9,22 +9,22 @@ Tests are optional. You don't need to add them to a pull request, but they help 
 Put a `*.test.ts` file next to your `presence.ts`. Import `test` and `expect` from `premid/test`:
 
 ```typescript
-import { Assets } from 'premid'
-import { expect, test } from 'premid/test'
+import { Assets } from "premid";
+import { expect, test } from "premid/test";
 
-test('shows the playing mix', async ({ page, activity }) => {
-  await page.goto('https://www.mixcloud.com/')
-  await page.waitForUser('Start playing any mix', {
+test("shows the playing mix", async ({ page, activity }) => {
+  await page.goto("https://www.mixcloud.com/");
+  await page.waitForUser("Start playing any mix", {
     until: () => {
-      const audio = document.querySelector('audio')
-      return !!audio && !audio.paused
+      const audio = document.querySelector("audio");
+      return !!audio && !audio.paused;
     },
-  })
+  });
   expect(await activity.next()).toMatchObject({
     details: expect.any(String),
     smallImageKey: Assets.Play,
-  })
-})
+  });
+});
 ```
 
 Each test receives two handles:
@@ -37,9 +37,13 @@ Each test receives two handles:
 Pass an options object as the second argument to change the defaults:
 
 ```typescript
-test('shows the video title', { settings: { showTitle: true }, timeout: 60_000 }, async ({ page, activity }) => {
-  // ...
-})
+test(
+  "shows the video title",
+  { settings: { showTitle: true }, timeout: 60_000 },
+  async ({ page, activity }) => {
+    // ...
+  },
+);
 ```
 
 | Option     | Default           | Applies to                              |
@@ -48,6 +52,27 @@ test('shows the video title', { settings: { showTitle: true }, timeout: 60_000 }
 | `timeout`  | 120s              | The whole test                          |
 
 Each `page.waitFor` and `activity.next()` call times out after 30s, and each `page.waitForUser` call after 300s. Pass a `timeout` to the call itself, for example `page.waitFor(selector, { timeout: 10_000 })`.
+
+### Moving Around the Page
+
+| Call                  | What it does                                                                                               |
+| --------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `page.url()`          | Returns the test tab's current URL.                                                                        |
+| `page.reload()`       | Opens the current URL again and waits for the page to load. The URL must still match the activity.         |
+| `page.back()`         | Goes back one step in the tab's history and waits for the page to load. Times out after 30s by default.    |
+| `page.press('Enter')` | Presses a key (any `KeyboardEvent.key` value) on the focused element, or on the page if nothing has focus. |
+
+### Checking Presence Over Time
+
+`activity.next()` returns updates in the order they arrived, so an update from an earlier step can still be waiting. Call `activity.clear()` before the step you want to check to drop them. To check that the activity stays quiet, for example while a video is paused, use `activity.expectNone()`:
+
+```typescript
+activity.clear();
+await page.click(".pause");
+await activity.expectNone({ timeout: 3000 });
+```
+
+`expectNone` fails if the activity sets or clears its presence during the wait, or if an update is already waiting. `clear()` only drops updates that have arrived, so an update still on its way can show up afterwards.
 
 ### Running Code in the Page
 
@@ -59,20 +84,20 @@ Each `page.waitFor` and `activity.next()` call times out after 30s, and each `pa
 
 ```typescript
 const title = await page.evaluate((selector: string) => {
-  return document.querySelector(selector)?.textContent?.trim()
-}, '.video-title')
+  return document.querySelector(selector)?.textContent?.trim();
+}, ".video-title");
 ```
 
-If the page navigates while `evaluate` is pending, for example after a login redirect or a link click, the call rejects with `Page navigated during evaluate`. `waitForUser` and `waitFor` keep polling across reloads.
+If the page navigates while `evaluate` is pending, for example after a login redirect or a link click, the call rejects with `Page navigated during evaluate`. `waitForUser` and `waitFor` keep polling across reloads. If your own code throws inside the page, for example in an `until` function, the call fails with that error instead of waiting for the timeout.
 
 ### Waiting for the User
 
 Some steps need a person, such as logging in, accepting a cookie banner, or pressing play. Use `waitForUser` for these:
 
 ```typescript
-await page.waitForUser('Log in to your account', {
-  until: () => !document.querySelector('.login-form'),
-})
+await page.waitForUser("Log in to your account", {
+  until: () => !document.querySelector(".login-form"),
+});
 ```
 
 `pmd` prints the message in your terminal, for example:
@@ -145,6 +170,18 @@ Your extension doesn't support tests yet, or developer mode is off
 ```
 
 Update the PreMiD extension, and make sure Activity Developer Mode is on.
+
+### Protocol Mismatch
+
+If the extension and `pmd` don't speak the same test protocol, `pmd` stops and prints:
+
+```
+The extension speaks test protocol 2, pmd expects 1. Update the older one of the two.
+```
+
+Update the PreMiD extension or `pmd`, whichever is older.
+
+If the extension disconnects while a test is running, for example because the browser closed, the pending step fails right away with `Extension disconnected`.
 
 ### Several Browsers Connected
 
