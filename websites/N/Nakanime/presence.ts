@@ -123,24 +123,22 @@ presence.on('UpdateData', async () => {
     largeImageText: animeTitle,
   }
 
-  
-if (isEpisodePage) {
-  presenceData.buttons = [
-    {
-      label: 'Regarder l’épisode',
-      url: window.location.href,
-    },
-  ]
-}
-else if (pathname === '/') {
-  presenceData.buttons = [
-    {
-      label: 'Visiter Nakanime',
-      url: 'https://nakanime.tv/',
-    },
-  ]
-}
-
+  if (isEpisodePage) {
+    presenceData.buttons = [
+      {
+        label: 'Regarder l’épisode',
+        url: window.location.href,
+      },
+    ]
+  }
+  else if (pathname === '/') {
+    presenceData.buttons = [
+      {
+        label: 'Visiter Nakanime',
+        url: 'https://nakanime.tv/',
+      },
+    ]
+  }
 
   if (isEpisodePage && validVideo && video) {
     presenceData.state = video.paused
