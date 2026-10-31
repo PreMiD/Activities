@@ -5,6 +5,12 @@
     "id": "223277933521928203",
     "name": "ryunt"
   },
+  "contributors": [
+    {
+      "name": "sino",
+      "id": "258380809172418570"
+    }
+  ],
   "service": "TVer",
   "description": {
     "en": "TVer is a Japanese ad-supported video on demand (AVOD) service. It allows viewers to watch TV programs they missed during their initial broadcast for free for one week.",
@@ -12,8 +18,8 @@
   },
   "url": "tver.jp",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tver[.]jp[/]",
-  "version": "1.1.2",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TVer/assets/logo.png",
+  "version": "1.2.0",
+  "logo": "https://i.imgur.com/ERIpjV7.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TVer/assets/thumbnail.png",
   "color": "#21ABE6",
   "category": "videos",
@@ -36,44 +42,43 @@
       "value": false
     },
     {
-      "id": "liveDetail",
+      "id": "displayType",
+      "title": "Member List Display",
+      "icon": "fad fa-user-edit",
+      "value": 0,
+      "values": [
+        "Activity Name",
+        "Program Title"
+      ],
       "if": {
         "privacy": false
-      },
-      "title": "Stream Details row1",
-      "icon": "fas fa-comment-alt-edit",
-      "value": "%tvStation%",
-      "placeholder": "Use %tvStation% or %seriesTitle% or %title%"
+      }
     },
     {
-      "id": "liveState",
+      "id": "liveDetails",
+      "title": "Stream Details",
+      "icon": "fas fa-align-left",
+      "value": 0,
+      "values": [
+        "TV Station",
+        "Program Title"
+      ],
       "if": {
         "privacy": false
-      },
-      "title": "Stream Details row2",
-      "icon": "fas fa-comment-alt-edit",
-      "value": "%seriesTitle%",
-      "placeholder": "Use %tvStation% or %seriesTitle% or %title%"
+      }
     },
     {
-      "id": "vidDetail",
+      "id": "videoDetails",
+      "title": "Video Details",
+      "icon": "fas fa-align-left",
+      "value": 0,
+      "values": [
+        "Series Title",
+        "Episode Title"
+      ],
       "if": {
         "privacy": false
-      },
-      "title": "Video Details row1",
-      "icon": "fas fa-comment-alt-edit",
-      "value": "%seriesTitle%",
-      "placeholder": "Use %tvStation% or %seriesTitle% or %title%"
-    },
-    {
-      "id": "vidState",
-      "if": {
-        "privacy": false
-      },
-      "title": "Video Details row2",
-      "icon": "fas fa-comment-alt-edit",
-      "value": "%title%",
-      "placeholder": "Use %tvStation% or %seriesTitle% or %title%"
+      }
     },
     {
       "id": "timestamp",
