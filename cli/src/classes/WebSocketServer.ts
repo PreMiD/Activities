@@ -67,6 +67,8 @@ export class WebSocketServer implements TestRpc {
 
       socket.on('close', () => {
         info('Disconnected from the extension!')
+        if (!this.getOpenClient())
+          this.rejectPendingTests('Extension disconnected')
       })
     })
   }
@@ -83,12 +85,20 @@ export class WebSocketServer implements TestRpc {
       return
     }
 
-    this.isSending = true
-
     const distPath = resolve(this.cwd, 'dist')
     if (!existsSync(distPath))
       return
 
+    this.isSending = true
+    try {
+      await this.sendFiles(distPath)
+    }
+    finally {
+      this.isSending = false
+    }
+  }
+
+  private async sendFiles(distPath: string) {
     const files = await readdir(distPath)
 
     const spinner = ora(
@@ -155,8 +165,6 @@ export class WebSocketServer implements TestRpc {
     }
 
     spinner.succeed(prefix + chalk.greenBright(' Activity sent to the extension!'))
-
-    this.isSending = false
   }
 
   private nextTestId = 0
@@ -212,12 +220,16 @@ export class WebSocketServer implements TestRpc {
       pending.resolve(message.result)
   }
 
-  async close(): Promise<void> {
+  private rejectPendingTests(message: string) {
     for (const [id, pending] of this.pendingTests) {
       clearTimeout(pending.timeout)
       this.pendingTests.delete(id)
-      pending.reject(new Error('WebSocket server closed'))
+      pending.reject(new Error(message))
     }
+  }
+
+  async close(): Promise<void> {
+    this.rejectPendingTests('WebSocket server closed')
 
     for (const client of this.server.clients)
       client.terminate()

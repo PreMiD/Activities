@@ -64,6 +64,25 @@ export interface Page {
    * @param options Optional `until` condition and timeout.
    */
   waitForUser: (message: string, options?: WaitForUserOptions) => Promise<void>
+  /**
+   * Returns the test tab's current URL.
+   */
+  url: () => Promise<string>
+  /**
+   * Reloads the test tab's current URL and waits for the page to load.
+   */
+  reload: () => Promise<void>
+  /**
+   * Goes back one step in the test tab's history and waits for the page to load.
+   * Defaults to a 30s timeout.
+   * @param options Timeout settings.
+   */
+  back: (options?: WaitForOptions) => Promise<void>
+  /**
+   * Presses `key` (a `KeyboardEvent.key` value such as `Enter` or `ArrowRight`) on the focused element.
+   * @param key The key to press.
+   */
+  press: (key: string) => Promise<void>
 }
 
 export interface ActivityHandle {
@@ -74,6 +93,16 @@ export interface ActivityHandle {
    * @param options Timeout settings.
    */
   next: (options?: WaitForOptions) => Promise<PresenceData | undefined>
+  /**
+   * Drops every activity update received so far, so the next `next()` only sees newer ones.
+   */
+  clear: () => void
+  /**
+   * Fails if the activity updates within the timeout, or already has an update waiting.
+   * Defaults to a 2s timeout.
+   * @param options Timeout settings.
+   */
+  expectNone: (options?: WaitForOptions) => Promise<void>
 }
 
 export interface TestContext {

@@ -311,6 +311,105 @@ describe('createPage', () => {
     expect(barPolls).toBe(2)
   })
 
+  it('waitFor surfaces an exception thrown by the page instead of timing out', async () => {
+    const { rpc } = createFakeRpc((method) => {
+      if (method === 'openTab')
+        return { tabId: 2 }
+      if (method === 'evaluate')
+        throw new Error('document.querySelector is not a function')
+      return {}
+    })
+    const { page } = makePage(rpc)
+    await page.goto('https://example.com')
+
+    await expect(page.waitFor('#x')).rejects.toThrow('document.querySelector is not a function')
+  })
+
+  it('url returns the tab location', async () => {
+    const { rpc } = createFakeRpc((method, params) => {
+      if (method === 'openTab')
+        return { tabId: 2 }
+      if (method === 'evaluate' && params.code.includes('location.href'))
+        return { value: 'https://example.com/now' }
+      return {}
+    })
+    const { page } = makePage(rpc)
+    await page.goto('https://example.com')
+
+    await expect(page.url()).resolves.toBe('https://example.com/now')
+  })
+
+  it('reload navigates to the current url', async () => {
+    const { rpc, calls } = createFakeRpc((method, params) => {
+      if (method === 'openTab')
+        return { tabId: 2 }
+      if (method === 'evaluate' && params.code.includes('location.href'))
+        return { value: 'https://example.com/redirected' }
+      return {}
+    })
+    const { page } = makePage(rpc)
+    await page.goto('https://example.com')
+
+    await page.reload()
+
+    expect(calls.find(call => call.method === 'navigate')?.params).toEqual({ tabId: 2, url: 'https://example.com/redirected' })
+  })
+
+  it('back waits until the url changes, ignoring mid-navigation errors', async () => {
+    const hrefs = ['https://example.com/b', undefined, 'https://example.com/b', 'https://example.com/a']
+    const { rpc, calls } = createFakeRpc((method, params) => {
+      if (method === 'openTab')
+        return { tabId: 2 }
+      if (method === 'evaluate' && params.code.includes('location.href')) {
+        const href = hrefs.shift()
+        if (href === undefined)
+          throw new Error('Page navigated during evaluate')
+        return { value: href }
+      }
+      return { value: undefined }
+    })
+    const { page } = makePage(rpc)
+    await page.goto('https://example.com/b')
+
+    const going = page.back()
+    await vi.advanceTimersByTimeAsync(2000)
+    await expect(going).resolves.toBeUndefined()
+    expect(calls.some(call => call.method === 'evaluate' && call.params.code.includes('history.back'))).toBe(true)
+    expect(hrefs).toEqual([])
+  })
+
+  it('back times out when the url never changes', async () => {
+    const { rpc } = createFakeRpc((method, params) => {
+      if (method === 'openTab')
+        return { tabId: 2 }
+      if (method === 'evaluate' && params.code.includes('location.href'))
+        return { value: 'https://example.com/b' }
+      return { value: undefined }
+    })
+    const { page } = makePage(rpc)
+    await page.goto('https://example.com/b')
+
+    const going = expect(page.back({ timeout: 1000 })).rejects.toThrow('Timed out after 1000ms waiting to go back')
+    await vi.advanceTimersByTimeAsync(1500)
+    await going
+  })
+
+  it('press dispatches the key through evaluate', async () => {
+    const { rpc, calls } = createFakeRpc((method) => {
+      if (method === 'openTab')
+        return { tabId: 2 }
+      return { value: undefined }
+    })
+    const { page } = makePage(rpc)
+    await page.goto('https://example.com')
+
+    await page.press('Enter')
+
+    const call = calls.filter(c => c.method === 'evaluate').at(-1)!
+    expect(call.params.args).toEqual(['Enter'])
+    expect(call.params.code).toContain('KeyboardEvent')
+  })
+
   it('waitForUser throws SkipError on skip', async () => {
     const { rpc } = createFakeRpc((method, params) => {
       if (method === 'openTab')

@@ -103,6 +103,65 @@ describe('createActivity', () => {
     activity.dispose()
   })
 
+  it('clear() drops updates received so far', async () => {
+    const { rpc, emit } = createFakeRpc()
+    const session = { tabId: 4 as number | undefined }
+    const activity = createActivity(rpc, { session, signal: controller.signal })
+
+    emit({ tabId: 4, kind: 'setActivity', data: { details: 'Old' } })
+    activity.clear()
+    emit({ tabId: 4, kind: 'setActivity', data: { details: 'New' } })
+
+    await expect(activity.next()).resolves.toEqual({ details: 'New' })
+    activity.dispose()
+  })
+
+  it('expectNone() passes when nothing arrives in the window', async () => {
+    const { rpc } = createFakeRpc()
+    const session = { tabId: 4 as number | undefined }
+    const activity = createActivity(rpc, { session, signal: controller.signal })
+
+    const quiet = expect(activity.expectNone({ timeout: 500 })).resolves.toBeUndefined()
+    await vi.advanceTimersByTimeAsync(500)
+    await quiet
+    activity.dispose()
+  })
+
+  it('expectNone() fails on an update already waiting', async () => {
+    const { rpc, emit } = createFakeRpc()
+    const session = { tabId: 4 as number | undefined }
+    const activity = createActivity(rpc, { session, signal: controller.signal })
+
+    emit({ tabId: 4, kind: 'setActivity', data: { details: 'Stale' } })
+
+    await expect(activity.expectNone()).rejects.toThrow('Expected no activity update, but got setActivity')
+    activity.dispose()
+  })
+
+  it('expectNone() fails on an update inside the window', async () => {
+    const { rpc, emit } = createFakeRpc()
+    const session = { tabId: 4 as number | undefined }
+    const activity = createActivity(rpc, { session, signal: controller.signal })
+
+    const quiet = expect(activity.expectNone({ timeout: 500 })).rejects.toThrow('got clearActivity')
+    emit({ tabId: 4, kind: 'clearActivity' })
+
+    await quiet
+    activity.dispose()
+  })
+
+  it('expectNone() is cancelled with the run', async () => {
+    const { rpc } = createFakeRpc()
+    const session = { tabId: 4 as number | undefined }
+    const activity = createActivity(rpc, { session, signal: controller.signal })
+
+    const quiet = expect(activity.expectNone({ timeout: 500 })).rejects.toBeInstanceOf(CancelledError)
+    controller.abort()
+
+    await quiet
+    activity.dispose()
+  })
+
   it('ignores events while no tab is open', async () => {
     const { rpc, emit } = createFakeRpc()
     const session = { tabId: undefined as number | undefined }

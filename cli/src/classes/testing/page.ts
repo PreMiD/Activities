@@ -58,6 +58,8 @@ async function pollUserBar(message: string, untilCode: string | null): Promise<U
   return { choice: state.__pmdUserChoice ?? null, done }
 }
 
+const TRANSIENT_EVALUATE_ERROR = /^(?:Page navigated during evaluate|Test tab is not ready|Test tab did not load|Test evaluate timed out)$/
+
 export function createPage(rpc: TestRpc, opts: {
   service: string
   settings?: Record<string, string | number | boolean>
@@ -126,15 +128,17 @@ export function createPage(rpc: TestRpc, opts: {
     return result.value
   }
 
-  // Used while polling. The page may be navigating, so errors are ignored.
+  // Used while polling. Errors from a page that is loading or navigating are ignored, anything else is a real failure.
   async function tryEvaluate<A extends unknown[], R>(fn: (...args: A) => R | Promise<R>, ...args: A): Promise<Awaited<R> | undefined> {
     try {
       return await evaluate(fn, ...args)
     }
-    catch {
+    catch (error) {
       throwIfAborted()
       throwIfTabFailed()
-      return undefined
+      if (error instanceof Error && TRANSIENT_EVALUATE_ERROR.test(error.message))
+        return undefined
+      throw error
     }
   }
 
@@ -244,5 +248,39 @@ export function createPage(rpc: TestRpc, opts: {
     }
   }
 
-  return { goto, click, fill, waitFor, evaluate, waitForUser, dispose: unsubscribe }
+  const currentUrl = () => evaluate(() => location.href)
+
+  async function reload() {
+    await goto(await currentUrl())
+  }
+
+  async function back(options: WaitForOptions = {}) {
+    const timeout = options.timeout ?? DEFAULT_WAIT_TIMEOUT_MS
+    const before = await currentUrl()
+    await evaluate(() => {
+      history.back()
+    })
+    const deadline = Date.now() + timeout
+    while (true) {
+      throwIfAborted()
+      // undefined means the page is mid-navigation, which is not arrival yet
+      const now = await tryEvaluate(() => location.href)
+      if (now !== undefined && now !== before)
+        break
+      if (Date.now() >= deadline)
+        throw new Error(`Timed out after ${timeout}ms waiting to go back from ${before}`)
+      await sleep(POLL_INTERVAL_MS)
+    }
+    await waitForLoad()
+  }
+
+  async function press(key: string) {
+    await evaluate((k: string) => {
+      const target = document.activeElement ?? document.body
+      for (const type of ['keydown', 'keypress', 'keyup'])
+        target.dispatchEvent(new KeyboardEvent(type, { key: k, bubbles: true, cancelable: true }))
+    }, key)
+  }
+
+  return { goto, click, fill, waitFor, evaluate, waitForUser, url: currentUrl, reload, back, press, dispose: unsubscribe }
 }

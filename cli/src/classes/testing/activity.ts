@@ -4,6 +4,7 @@ import type { ActivityHandle, PresenceData, WaitForOptions } from './types.js'
 import { CancelledError } from './errors.js'
 
 const DEFAULT_NEXT_TIMEOUT_MS = 30_000
+const DEFAULT_QUIET_MS = 2000
 
 export function createActivity(rpc: TestRpc, opts: { session: PageSession, signal: AbortSignal }): ActivityHandle & { dispose: () => void, last: () => unknown } {
   const { session, signal } = opts
@@ -80,8 +81,31 @@ export function createActivity(rpc: TestRpc, opts: { session: PageSession, signa
     }
   }
 
+  function clear() {
+    buffer.length = 0
+  }
+
+  async function expectNone(options: WaitForOptions = {}): Promise<void> {
+    if (signal.aborted)
+      throw new CancelledError('Test run was cancelled')
+
+    if (!buffer.length) {
+      try {
+        await waitForEvent(options.timeout ?? DEFAULT_QUIET_MS)
+      }
+      catch (error) {
+        if (error instanceof CancelledError)
+          throw error
+        return
+      }
+    }
+    throw new Error(`Expected no activity update, but got ${buffer[0]!.kind}`)
+  }
+
   return {
     next,
+    clear,
+    expectNone,
     dispose: unsubscribe,
     last: () => lastData,
   }

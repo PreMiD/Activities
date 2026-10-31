@@ -1,6 +1,9 @@
 import type { TestEvent } from './WebSocketServer.js'
 import { Buffer } from 'node:buffer'
+import { mkdir, mkdtemp, writeFile } from 'node:fs/promises'
 import net from 'node:net'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import WebSocket from 'ws'
 import { MULTIPLE_BROWSERS, WebSocketServer } from './WebSocketServer.js'
@@ -96,6 +99,35 @@ describe('webSocketServer test RPC', () => {
 
     await expect(server.request('hello', {}, 20)).rejects.toThrow(MULTIPLE_BROWSERS)
     expect(received).toEqual([])
+  })
+
+  it('pending requests reject as soon as the extension disconnects', async () => {
+    const client = await connectClient()
+    await vi.waitFor(() => expect(server.isConnected).toBe(true))
+
+    const pending = server.request('evaluate', {}, 30_000)
+    const rejection = expect(pending).rejects.toThrow('Extension disconnected')
+    client.terminate()
+
+    await rejection
+  })
+
+  it('send recovers after a run without a dist folder', async () => {
+    const cwd = await mkdtemp(join(tmpdir(), 'pmd-ws-'))
+    await server.close()
+    server = new WebSocketServer(cwd)
+    const client = await connectClient()
+    await vi.waitFor(() => expect(server.isConnected).toBe(true))
+
+    await server.send()
+
+    await mkdir(join(cwd, 'dist'))
+    await writeFile(join(cwd, 'dist', 'metadata.json'), '{}')
+    const received = new Promise<any>(resolve => client.once('message', raw => resolve(parse(raw))))
+    client.on('message', () => client.send('received'))
+    await server.send()
+
+    expect((await received).type).toBe('localPresence')
   })
 
   it('request times out', async () => {

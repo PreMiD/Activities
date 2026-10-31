@@ -15,7 +15,7 @@ interface Call {
 }
 
 // Answers the test RPC like a page that loads at once and sets presence on openTab.
-function createFakeRpc(options: { onOpenTab?: () => void, helloFails?: boolean, helloError?: string } = {}) {
+function createFakeRpc(options: { onOpenTab?: () => void, helloFails?: boolean, helloError?: string, helloVersion?: number } = {}) {
   const calls: Call[] = []
   const listeners = new Set<(event: TestEvent) => void>()
   let nextTabId = 1
@@ -34,7 +34,7 @@ function createFakeRpc(options: { onOpenTab?: () => void, helloFails?: boolean, 
             throw new Error(options.helloError)
           if (options.helloFails)
             throw new Error('Timed out')
-          return { version: 1 }
+          return { version: options.helloVersion ?? 1 }
         case 'openTab': {
           const tabId = nextTabId++
           options.onOpenTab?.()
@@ -183,6 +183,13 @@ describe('activityTester', () => {
     const tester = new ActivityTester(FIXTURES, 'Example', rpc, vi.fn(), { outDir })
 
     await expect(tester.isSupported()).rejects.toThrow(MULTIPLE_BROWSERS)
+  })
+
+  it('isSupported rejects when the extension speaks another protocol version', async () => {
+    const { rpc } = createFakeRpc({ helloVersion: 2 })
+    const tester = new ActivityTester(FIXTURES, 'Example', rpc, vi.fn(), { outDir })
+
+    await expect(tester.isSupported()).rejects.toThrow('test protocol 2')
   })
 
   it('isSupported is true when hello answers', async () => {

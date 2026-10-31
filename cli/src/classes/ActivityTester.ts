@@ -31,6 +31,8 @@ export type TesterEvent
 
 const DEFAULT_TEST_TIMEOUT_MS = 120_000
 const HELLO_TIMEOUT_MS = 3000
+// Bump together with the extension's hello reply when the test messages change incompatibly.
+const PROTOCOL_VERSION = 1
 
 type TestGlobal = typeof globalThis & { __PMD_TESTS__?: RegisteredTest[] }
 
@@ -69,15 +71,18 @@ export class ActivityTester {
   }
 
   async isSupported(): Promise<boolean> {
+    let hello: { version?: number } | undefined
     try {
-      await this.rpc.request('hello', {}, HELLO_TIMEOUT_MS)
-      return true
+      hello = await this.rpc.request<{ version?: number }>('hello', {}, HELLO_TIMEOUT_MS)
     }
     catch (error) {
       if (error instanceof Error && error.message === MULTIPLE_BROWSERS)
         throw error
       return false
     }
+    if (hello?.version !== PROTOCOL_VERSION)
+      throw new Error(`The extension speaks test protocol ${hello?.version ?? 'unknown'}, pmd expects ${PROTOCOL_VERSION}. Update the older one of the two.`)
+    return true
   }
 
   async run(opts: { signal: AbortSignal, interactive: boolean }): Promise<TestResult[]> {

@@ -29,8 +29,8 @@ test('shows the playing mix', async ({ page, activity }) => {
 
 Each test receives two handles:
 
-- `page` controls the test tab: `goto`, `click`, `fill`, `waitFor`, `evaluate`, and `waitForUser`.
-- `activity` gives you the presence your activity sets: `activity.next()` waits for the next `setActivity` call and returns its data. It resolves to `undefined` if the activity clears its presence.
+- `page` controls the test tab: `goto`, `click`, `fill`, `waitFor`, `evaluate`, `waitForUser`, `url`, `reload`, `back`, and `press`.
+- `activity` gives you the presence your activity sets: `activity.next()` waits for the next `setActivity` call and returns its data. It resolves to `undefined` if the activity clears its presence. `activity.clear()` drops the updates received so far, and `activity.expectNone()` fails if an update arrives within 2s (or the `timeout` you pass) or one is already waiting.
 
 ### Options
 
