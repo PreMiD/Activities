@@ -10,5 +10,5 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "exclude": ["templates", "**/*.test.ts", "vitest.config.ts"]
+  "exclude": ["templates", "**/*.test.ts", "**/__fixtures__/**", "vitest.config.ts"]
 }

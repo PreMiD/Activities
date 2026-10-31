@@ -1,8 +1,6 @@
 import { existsSync } from 'node:fs'
-import { cp, mkdir, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import process from 'node:process'
-import { fileURLToPath } from 'node:url'
 import { confirm, input, search } from '@inquirer/prompts'
 import chalk from 'chalk'
 import { Validator } from 'jsonschema'
@@ -10,9 +8,9 @@ import { getDmcaServices, isDmcaBlocked } from '../util/dmca.js'
 import { getDiscordUser, getDiscordUserById } from '../util/getDiscordUser.js'
 import { getFolderLetter } from '../util/getFolderLetter.js'
 import { getSchema } from '../util/getSchema.js'
-import { isFirstTimeAuthor } from '../util/isFirstTimeAuthor.js'
 import { exit, prefix, success } from '../util/log.js'
 import { sanitazeFolderName } from '../util/sanitazeFolderName.js'
+import { scaffoldActivity } from '../util/scaffoldActivity.js'
 import { searchChoices } from '../util/searchChoices.js'
 import { build } from './build.js'
 import { versionizeActivity } from './versionize.js'
@@ -26,8 +24,7 @@ export async function newActivity(activity?: string) {
     exit('Activity name is required')
   }
 
-  const dmcaServices = await getDmcaServices()
-  if (isDmcaBlocked(activity, dmcaServices)) {
+  if (isDmcaBlocked(activity, await getDmcaServices())) {
     exit(`Activity "${activity}" is on the DMCA blocklist and cannot be created`)
   }
 
@@ -100,33 +97,19 @@ export async function newActivity(activity?: string) {
     source: input => searchChoices(schema.properties.category.enum, input),
   }).catch(() => exit('Something went wrong.'))
 
-  const metadata = {
-    $schema: 'https://schemas.premid.app/metadata/1.17',
-    apiVersion: 1,
-    author,
-    service: activity,
-    description: {
-      en: 'TODO',
-    },
-    url: 'google.com',
-    regExp: '^https?[:][/][/]([a-z0-9-]+[.])*google[.]com[/]',
-    version: '1.0.0',
-    logo: 'https://i.imgur.com/000000.png',
-    thumbnail: 'https://i.imgur.com/000000.png',
-    color: '#000000',
-    category,
-    tags: tags.split(','),
+  try {
+    await scaffoldActivity({
+      service: activity,
+      url: 'google.com',
+      regExp: '^https?[:][/][/]([a-z0-9-]+[.])*google[.]com[/]',
+      category,
+      tags: tags.split(','),
+      author: author!,
+    })
   }
-
-  const result = v.validate(metadata, schema)
-  if (!result.valid) {
-    exit(result.toString())
+  catch (error) {
+    exit((error as Error).message)
   }
-
-  await mkdir(path, { recursive: true })
-  await writeFile(resolve(path, 'metadata.json'), `${JSON.stringify(metadata, null, 2)}\n`)
-  await cp(resolve(fileURLToPath(import.meta.url), '../../../templates/tsconfig.json'), resolve(path, 'tsconfig.json'))
-  await cp(resolve(fileURLToPath(import.meta.url), `../../../templates/presence${await isFirstTimeAuthor(author!.id) ? '' : '.min'}.ts`), resolve(path, 'presence.ts'))
 
   success(
     `Activity created successfully! ${chalk.grey(chalk.underline(resolve(path, 'metadata.json')))}\n${prefix} ${chalk.white('Please edit the metadata.json file and add the correct information.')}\n${prefix} ${chalk.white(`After that, run ${chalk.cyan(`${prefix} dev "${activity}"`)} to start developing the activity.`)}`,

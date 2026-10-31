@@ -18,8 +18,11 @@ import { getJsonPosition } from '../util/getJsonPosition.js'
 import { error, exit, prefix } from '../util/log.js'
 import { sanitazeFolderName } from '../util/sanitazeFolderName.js'
 import { addSarifLog, SarifRuleId, writeSarifLog } from '../util/sarif.js'
+import { ActivityTester, findTestFiles } from './ActivityTester.js'
 import { AssetsManager } from './AssetsManager.js'
 import { DependenciesManager } from './DependenciesManager.js'
+import { DevTestLoop, listenForKeys } from './testing/DevTestLoop.js'
+import { createReporter } from './testing/reporter.js'
 import { TypescriptCompiler } from './TypescriptCompiler.js'
 import { WebSocketServer } from './WebSocketServer.js'
 
@@ -41,6 +44,7 @@ export class ActivityCompiler {
   dependencies: DependenciesManager
   ts: TypescriptCompiler
   ws: WebSocketServer | undefined
+  tests: DevTestLoop | undefined
   assetsManager: AssetsManager
 
   constructor(
@@ -123,7 +127,19 @@ export class ActivityCompiler {
   async watch({ validate, zip, sarif }: { validate: boolean, zip: boolean, sarif: boolean }) {
     await this.dependencies.installDependencies()
 
-    this.ws = new WebSocketServer(this.cwd)
+    const ws = new WebSocketServer(this.cwd)
+    this.ws = ws
+
+    this.tests = new DevTestLoop({
+      service: this.activity.service,
+      send: async () => {
+        await ws.send()
+      },
+      tester: new ActivityTester(this.cwd, this.activity.service, ws, createReporter(this.activity.service)),
+      hasTests: async () => (await findTestFiles(this.cwd)).length > 0,
+      log: line => console.log(line),
+    })
+    listenForKeys(this.tests)
 
     watch(this.cwd, {
       depth: 0,
@@ -176,7 +192,7 @@ export class ActivityCompiler {
     if (sarif) {
       await writeSarifLog()
     }
-    await this.ws?.send()
+    this.tests?.onBuild()
   }
 
   private async validate({ kill }: { kill: boolean }): Promise<boolean> {
