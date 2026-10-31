@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, Assets, getTimestamps, StatusDisplayType, timestampFromFormat } from 'premid'
 
 const presence = new Presence({
   clientId: '1478440957774008471',
@@ -6,6 +6,18 @@ const presence = new Presence({
 
 const browsingTimestamp: number = Math.floor(Date.now() / 1000)
 const DEFAULT_LOGO = 'https://cdn.rcd.gg/PreMiD/websites/T/TropiStream/assets/logo.png'
+const TROPI_MUSIC_HOSTNAME = 'tropimusic.tropistream.fr'
+const TROPI_MUSIC_LOGO = 'https://tropimusic.tropistream.fr/images/premid.png'
+
+const TROPI_MUSIC_SECTIONS: Record<string, string> = {
+  fonctionnalites: 'Découvre les fonctionnalités',
+  visite: 'Fait la visite du bot',
+  installation: 'Lit le guide d\'installation',
+  commandes: 'Consulte les commandes',
+  filtres: 'Découvre les filtres audio',
+  faq: 'Lit la FAQ',
+  developpeur: 'Découvre le développeur',
+}
 
 let lastValidTitle: string = ''
 let lastValidPoster: string = ''
@@ -77,7 +89,112 @@ function setNavigationActivity(pathname: string): void {
   })
 }
 
+function getText(selector: string): string {
+  return document.querySelector(selector)?.textContent?.trim() ?? ''
+}
+
+function isDisplayed(id: string): boolean {
+  const element = document.getElementById(id)
+  return !!element && !element.hidden
+}
+
+function getVisibleSectionId(): string {
+  const middle = window.innerHeight / 2
+  const section = Array.from(document.querySelectorAll<HTMLElement>('section[id]'))
+    .find((s) => {
+      const { top, bottom } = s.getBoundingClientRect()
+      return top <= middle && bottom >= middle
+    })
+  return section?.id ?? ''
+}
+
+function setTropiMusicActivity(): void {
+  const presenceData: PresenceData = {
+    name: 'Tropi Music',
+    type: ActivityType.Listening,
+    largeImageKey: TROPI_MUSIC_LOGO,
+    largeImageText: 'Tropi Music',
+    startTimestamp: browsingTimestamp,
+  }
+
+  if (!document.location.pathname.startsWith('/lecture')) {
+    presenceData.details = '🏠 Accueil'
+    presenceData.state = TROPI_MUSIC_SECTIONS[getVisibleSectionId()] ?? 'Découvre le bot musique'
+    presence.setActivity(presenceData)
+    return
+  }
+
+  presenceData.details = '🔴 En direct'
+
+  if (isDisplayed('accueil')) {
+    presenceData.state = 'Choisit un serveur à écouter'
+    presence.setActivity(presenceData)
+    return
+  }
+
+  if (!isDisplayed('vue')) {
+    presenceData.state = (isDisplayed('info') && getText('#info-titre')) || 'Chargement...'
+    presence.setActivity(presenceData)
+    return
+  }
+
+  const serverName = getText('#serveur-nom')
+
+  if (!document.querySelector('#scene')?.classList.contains('active')) {
+    presenceData.details = `🔴 ${serverName}`
+    presenceData.state = 'Rien ne joue pour le moment'
+    presence.setActivity(presenceData)
+    return
+  }
+
+  const cover = document.querySelector<HTMLImageElement>('#pochette')
+  const source = document.querySelector<HTMLAnchorElement>('#ouvrir-source')
+  const status = document.querySelector('#etat')?.classList
+
+  presenceData.details = getText('#titre')
+  presenceData.state = getText('#auteur')
+  presenceData.statusDisplayType = StatusDisplayType.Details
+  presenceData.largeImageText = `En direct sur ${serverName}`
+  presenceData.buttons = [
+    { label: 'Écouter en direct', url: document.location.href },
+  ]
+
+  if (cover && !cover.hidden && cover.src.startsWith('https://')) {
+    presenceData.largeImageKey = cover.src
+  }
+
+  // Only link YouTube, Spotify, SoundCloud… pages, never a direct audio file
+  if (source && !source.hidden && source.firstElementChild?.classList.contains('fa-brands')) {
+    presenceData.detailsUrl = source.href
+  }
+
+  if (status?.contains('live')) {
+    presenceData.smallImageKey = Assets.Live
+    presenceData.smallImageText = 'En direct'
+  }
+  else if (status?.contains('pause')) {
+    presenceData.smallImageKey = Assets.Pause
+    presenceData.smallImageText = 'En pause'
+    delete presenceData.startTimestamp
+  }
+  else {
+    presenceData.smallImageKey = Assets.Play
+    presenceData.smallImageText = 'En lecture'
+    ;[presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(
+      timestampFromFormat(getText('#pos')),
+      timestampFromFormat(getText('#duree')),
+    )
+  }
+
+  presence.setActivity(presenceData)
+}
+
 function updateActivity(): void {
+  if (document.location.hostname === TROPI_MUSIC_HOSTNAME) {
+    setTropiMusicActivity()
+    return
+  }
+
   const pathname = getPathname()
 
   if (!pathname.includes('/watch/')) {

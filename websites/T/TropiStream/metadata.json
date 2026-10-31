@@ -5,14 +5,23 @@
     "id": "505270457109315585",
     "name": "ext4zy_omega"
   },
+  "contributors": [
+    {
+      "id": "789858600985427978",
+      "name": "yohan81_"
+    }
+  ],
   "service": "TropiStream",
   "description": {
-    "en": "Streaming platform to watch movies and TV series on TropiStream.",
-    "fr": "Plateforme de streaming pour regarder des films et séries sur TropiStream."
+    "en": "Streaming platform to watch movies and TV series on TropiStream, and listen live to Tropi Music, its Discord music bot.",
+    "fr": "Plateforme de streaming pour regarder des films et séries sur TropiStream, et écouter en direct Tropi Music, son bot musique Discord."
   },
-  "url": "tropistream.fr",
+  "url": [
+    "tropistream.fr",
+    "tropimusic.tropistream.fr"
+  ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*tropistream[.]fr[/]",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TropiStream/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TropiStream/assets/thumbnail.png",
   "color": "#000000",
@@ -20,6 +29,8 @@
   "tags": [
     "streaming",
     "movies",
-    "series"
+    "series",
+    "music",
+    "tropimusic"
   ]
 }
