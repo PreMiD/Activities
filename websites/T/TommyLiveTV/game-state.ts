@@ -126,9 +126,9 @@ function compactPlaybackState(playback: PlaybackTimes, now = Date.now()): string
     return ''
 
   const elapsed = Math.min(duration, Math.max(0, now - playback.startTimestamp))
-  const barLength = 8
+  const barLength = 18
   const filled = Math.round((elapsed / duration) * barLength)
-  const bar = `${'█'.repeat(filled)}${'░'.repeat(barLength - filled)}`
+  const bar = `${'━'.repeat(filled)}${'─'.repeat(barLength - filled)}`
   return `${formatPlaybackTime(elapsed / 1000)} ${bar} ${formatPlaybackTime(duration / 1000)}`
 }
 
