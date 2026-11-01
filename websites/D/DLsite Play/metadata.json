@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "815861193242968084",
+    "name": "wea017net"
+  },
+  "service": "DLsite Play",
+  "description": {
+    "de": "Genieße deine Manga, CG, Audio- und Videowerke von DLsite direkt im Browser!",
+    "en": "Enjoy your DLsite manga, CG, audio and video library straight from your browser!",
+    "es": "¡Disfruta de tus mangas, CG, audios y vídeos de DLsite directamente en tu navegador!",
+    "fr": "Profitez de vos mangas, CG, œuvres audio et vidéos DLsite directement dans votre navigateur !",
+    "id": "Nikmati koleksi manga, CG, audio, dan video DLsite Anda langsung di browser!",
+    "it": "Goditi manga, CG, audio e video della tua libreria DLsite direttamente nel browser!",
+    "ja": "DLsiteで購入したマンガ・CG、音声、動画がブラウザですぐに楽しめるビューワーアプリ",
+    "ko": "DLsite에서 구매한 만화, CG, 음성, 동영상을 브라우저에서 바로 즐기세요!",
+    "pt": "Desfrute dos mangás, CG, áudios e vídeos da sua biblioteca DLsite diretamente no navegador!",
+    "sv": "Njut av manga, CG, ljud och video från ditt DLsite-bibliotek direkt i webbläsaren!",
+    "th": "เพลิดเพลินกับมังงะ CG เสียง และวิดีโอที่ซื้อจาก DLsite ได้โดยตรงในเบราว์เซอร์!",
+    "vi": "Thưởng thức manga, CG, âm thanh và video đã mua trên DLsite ngay trong trình duyệt!",
+    "zh": "直接在浏览器中欣赏您在DLsite购买的漫画、CG、音频和视频！",
+    "zh-tw": "直接在瀏覽器中欣賞您在DLsite購買的漫畫、CG、音訊和影片！"
+  },
+  "url": "play.dlsite.com",
+  "regExp": "^https://play\\.dlsite\\.com/",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/82UeEJt.png",
+  "thumbnail": "https://i.imgur.com/89yS5PO.png",
+  "color": "#188AEA",
+  "category": "other",
+  "tags": [
+    "manga",
+    "comics",
+    "illustrations",
+    "audio",
+    "music",
+    "video",
+    "ebooks"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacyMode",
+      "title": "Privacy Mode",
+      "description": "作品情報を表示しない / Hide content details",
+      "icon": "fa-solid fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "displayType",
+      "title": "Display",
+      "description": "名前の下に表示される内容 / Content shown below your name",
+      "icon": "fa-solid fa-eye",
+      "value": 2,
+      "values": ["\"DLsite Play\"", "Track Title", "Content Title"]
+    }
+  ]
+}
