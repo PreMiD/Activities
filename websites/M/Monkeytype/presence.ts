@@ -3,6 +3,58 @@ const presence = new Presence({
 })
 const time = Math.floor(Date.now() / 1000)
 
+function getResultStat(label: string): HTMLElement | undefined {
+  return Array.from(
+    document.querySelectorAll<HTMLElement>(
+      '#result [data-ui-element="resultStat"]',
+    ),
+  ).find(
+    stat =>
+      stat.firstElementChild?.textContent?.trim().toLowerCase() === label,
+  )
+}
+
+function getResultStatValue(label: string): string | undefined {
+  const valueElement = getResultStat(label)?.querySelector<HTMLElement>(
+    '[data-ui-element="resultStatValue"]',
+  )
+  if (!valueElement)
+    return
+
+  return (
+    Array.from(valueElement.childNodes)
+      .map(node => (node.nodeName === 'BR' ? ' ' : node.textContent ?? ''))
+      .join('')
+      .replace(/\s+/g, ' ')
+      .trim() || undefined
+  )
+}
+
+function getResultStatFirstLine(label: string): string | undefined {
+  return getResultStat(label)
+    ?.querySelector<HTMLElement>('[data-ui-element="resultStatValue"]')
+    ?.firstElementChild
+    ?.textContent
+    ?.trim()
+}
+
+function getLiveStats(): { speed?: string, acc?: string } {
+  const accElement = Array.from(
+    document.querySelectorAll<HTMLElement>('#typingTest div'),
+  ).find(
+    element =>
+      element.children.length === 0
+      && /^\d+%$/.test(element.textContent?.trim() ?? ''),
+  )
+  const speedElement = accElement?.previousElementSibling
+  const speed = speedElement?.textContent?.trim()
+
+  return {
+    speed: speed && /^\d+$/.test(speed) ? speed : undefined,
+    acc: accElement?.textContent?.trim(),
+  }
+}
+
 presence.on('UpdateData', () => {
   const presenceData: PresenceData = {
     largeImageKey: 'https://cdn.rcd.gg/PreMiD/websites/M/Monkeytype/assets/logo.png',
@@ -12,32 +64,24 @@ presence.on('UpdateData', () => {
   switch (document.location.pathname.toLowerCase()) {
     case '/': {
       presenceData.details = 'Idling'
-      if (
-        !document
-          .querySelector('.pageTest #result')
-          ?.classList
-          .contains('hidden')
-      ) {
-        const statsElem = document.querySelector('.pageTest #result .stats')
-        const moreStatsElem = document.querySelector(
-          '.pageTest #result .morestats',
-        )
+      const resultElement = document.querySelector('#result')
+      if (resultElement) {
         const stats = {
-          wpm: statsElem?.querySelector('.wpm .bottom')?.textContent,
-          acc: statsElem?.querySelector('.acc .bottom')?.textContent,
-          raw: moreStatsElem?.querySelector('.raw .bottom')?.textContent,
-          char: moreStatsElem?.querySelector('.key .bottom')?.textContent,
-          con: moreStatsElem?.querySelector('.consistency .bottom')?.textContent,
-          time: moreStatsElem?.querySelector('.time .bottom .text')?.textContent,
+          wpm: resultElement.querySelector<HTMLElement>(
+            '[data-ui-element="resultStat"] [data-ui-element="resultStatValue"]',
+          )?.textContent,
+          acc: getResultStatValue('acc'),
+          raw: getResultStatValue('raw'),
+          char: getResultStatValue('characters'),
+          con: getResultStatValue('consistency'),
+          time: getResultStatFirstLine('time'),
+          testType: getResultStatValue('test type'),
         }
         if (Object.values(stats).some(v => !v)) {
           isLoading = true
         }
         else {
-          presenceData.details = `Finished ${document
-            .querySelector('.testType .bottom')
-            ?.textContent
-            ?.replaceAll('<br>', ' ')}`
+          presenceData.details = `Finished ${stats.testType}`
           presenceData.state = `${stats.wpm} wpm ${stats.acc} acc ${stats.raw} raw ${stats.char} ${stats.con} consistency ${stats.time}`
         }
       }
@@ -45,39 +89,29 @@ presence.on('UpdateData', () => {
         document.querySelector('#words letter.correct')
         || document.querySelector('#words letter.incorrect')
       ) {
-        presenceData.details = `Typing ${
-          document.querySelector('.pageTest #premidTestMode')?.textContent
-        }`
-        presenceData.state = `${
-          document.querySelector('.pageTest .speed')
-            ?.textContent
-        } wpm ${
-          document.querySelector('.pageTest .acc')
-            ?.textContent
-        } acc`
+        const testMode = document
+          .querySelector('#premidTestMode')
+          ?.textContent
+          ?.trim()
+        presenceData.details = `Typing ${testMode}`
 
-        if (
-          document
-            .querySelector('#top .config .mode .text-button.active')
-            ?.textContent
-            ?.replace(/[\t\r\n]/g, '') === 'time'
-        ) {
+        const liveStats = getLiveStats()
+        if (liveStats.speed && liveStats.acc)
+          presenceData.state = `${liveStats.speed} wpm ${liveStats.acc} acc`
+
+        if (testMode?.split(' ')[0] === 'time') {
           presenceData.endTimestamp = Math.floor(Date.now() / 1000)
             + (Number.parseInt(
-              document.querySelector('.pageTest #premidSecondsLeft')?.textContent ?? '0',
+              document.querySelector('#premidSecondsLeft')?.textContent ?? '0',
             )
             + 1)
         }
       }
-      else if (
-        !document
-          .querySelector('#leaderboardsWrapper')
-          ?.classList
-          .contains('hidden')
-      ) {
-        presenceData.details = 'Checking leaderboards'
-      }
 
+      break
+    }
+    case '/leaderboards': {
+      presenceData.details = 'Checking leaderboards'
       break
     }
     case '/about': {
