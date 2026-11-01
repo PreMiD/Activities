@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "608743140400300044",
+    "name": "mrlinxed"
+  },
+  "service": "Old Light",
+  "description": {
+    "en": "Old Light is a slow strategy game in a shared galaxy. Build a system, scout neighbours, send fleets, and return to see what changed while you were away."
+  },
+  "url": "oldlight.io",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*oldlight[.]io[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/XxEisPT.png",
+  "thumbnail": "https://i.imgur.com/VEmHgDf.png",
+  "color": "#05070d",
+  "category": "games",
+  "tags": [
+    "strategy",
+    "multiplayer",
+    "space",
+    "browser-game",
+    "4x"
+  ]
+}
