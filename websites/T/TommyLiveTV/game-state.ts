@@ -123,7 +123,7 @@ function formatPlaybackTime(totalSeconds: number): string {
 function compactPlaybackState(playback: PlaybackTimes, now = Date.now()): string {
   const duration = playback.endTimestamp - playback.startTimestamp
   if (!Number.isFinite(duration) || duration <= 0)
-    return 'TommyLiveTV'
+    return ''
 
   const elapsed = Math.min(duration, Math.max(0, now - playback.startTimestamp))
   const barLength = 8
@@ -168,7 +168,7 @@ function activity(details: string, state = '', options: ActivityOptions = {}): P
     if (pageUrl) {
       data.detailsUrl = pageUrl
       data.buttons = [{
-        label: name === 'SportsLive' ? 'Watch this event' : 'Watch this title',
+        label: 'Watch on TommyLiveTV',
         url: pageUrl,
       }]
     }
