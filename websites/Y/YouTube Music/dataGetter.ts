@@ -204,17 +204,16 @@ export class YouTubeMusicDataGetter implements MediaDataGetter {
   }
 
   getPlaybackTimes(): [number, number] | null {
-    const media = this.getVideoElement()
-    if (media && Number.isFinite(media.duration) && media.duration > 0)
-      return [media.currentTime, media.duration]
+    const progressBar = document.querySelector<HTMLElement>(
+      '#progress-bar',
+    )
+    const current = Number(progressBar?.getAttribute('aria-valuenow'))
+    const total = Number(progressBar?.getAttribute('aria-valuemax'))
 
-    const times = this.getCurrentAndTotalTime()
-    if (!times)
-      return null
+    if (Number.isFinite(current) && Number.isFinite(total) && total > 0 && current >= 0 && current <= total)
+      return [current, total]
 
-    const current = timestampFromFormat(times[0])
-    const total = timestampFromFormat(times[1])
-    return total > 0 ? [current, total] : null
+    return null
   }
 
   hasValidPlaybackState(): boolean {
