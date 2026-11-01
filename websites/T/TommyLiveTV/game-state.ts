@@ -13,6 +13,9 @@ interface ActivityOptions {
   name?: string
   pageUrl?: string
   playback?: PlaybackTimes | null
+  imageUrl?: string
+  smallImageKey?: string
+  smallImageText?: string
 }
 
 function isVisible(element: Element | null | undefined): boolean {
@@ -49,6 +52,46 @@ function readVisibleText(document: Document, selector: string, maxLength?: numbe
   if (!element || !isVisible(element))
     return ''
   return cleanText(element.textContent, maxLength)
+}
+
+function safeArtworkUrl(value: string | null | undefined): string | null {
+  if (!value)
+    return null
+
+  try {
+    const url = new URL(value, HOME)
+    return url.protocol === 'https:' && url.origin === 'https://image.tmdb.org'
+      ? url.href
+      : null
+  }
+  catch {
+    return null
+  }
+}
+
+function readTitleArtwork(document: Document): string | null {
+  const backdrop = document.querySelector<HTMLElement>('.media-detail-backdrop')
+  if (backdrop && isVisible(backdrop)) {
+    const backgroundImage = backdrop.style.backgroundImage
+      || backdrop.ownerDocument.defaultView?.getComputedStyle(backdrop).backgroundImage
+      || ''
+    const backgroundUrl = /url\((?:"|')?([^"')]+)(?:"|')?\)/i.exec(backgroundImage)?.[1]
+    const safeBackgroundUrl = safeArtworkUrl(backgroundUrl)
+    if (safeBackgroundUrl)
+      return safeBackgroundUrl
+  }
+
+  const poster = document.querySelector<HTMLImageElement>('.media-detail-poster')
+  return poster && isVisible(poster)
+    ? safeArtworkUrl(poster.currentSrc || poster.src || poster.getAttribute('src'))
+    : null
+}
+
+function titleArtworkOptions(document: Document): Pick<ActivityOptions, 'imageUrl' | 'smallImageKey' | 'smallImageText'> {
+  const imageUrl = readTitleArtwork(document)
+  return imageUrl
+    ? { imageUrl, smallImageKey: LOGO, smallImageText: 'TommyLiveTV' }
+    : {}
 }
 
 function browsingState(pathname: string): string {
@@ -95,6 +138,9 @@ function activity(details: string, state = '', options: ActivityOptions = {}): P
     name = 'TommyLiveTV',
     pageUrl = '',
     playback = null,
+    imageUrl = LOGO,
+    smallImageKey,
+    smallImageText,
   } = options
   // Discord's compact member popout omits timestamps, so mirror playback progress in its visible state line.
   const visibleState = type === ActivityType.Watching && playback
@@ -104,7 +150,9 @@ function activity(details: string, state = '', options: ActivityOptions = {}): P
     name,
     details,
     ...(visibleState ? { state: visibleState } : {}),
-    largeImageKey: LOGO,
+    largeImageKey: imageUrl,
+    ...(smallImageKey ? { smallImageKey } : {}),
+    ...(smallImageText ? { smallImageText } : {}),
   }
 
   if (type === ActivityType.Watching) {
@@ -148,7 +196,12 @@ export function createPresenceData(
     const title = readVisibleText(document, '.media-now-playing .media-now-playing-title')
     if (title && !/^loading\b/i.test(title)) {
       const pageUrl = new URL(pathname, HOME).href
-      return activity(title, 'TommyLiveTV', { type: ActivityType.Watching, pageUrl, playback })
+      return activity(title, 'TommyLiveTV', {
+        type: ActivityType.Watching,
+        pageUrl,
+        playback,
+        ...titleArtworkOptions(document),
+      })
     }
     return activity('Browsing TommyLiveTV', 'Movies & TV')
   }
