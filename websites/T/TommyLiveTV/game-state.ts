@@ -196,7 +196,7 @@ export function createPresenceData(
     const title = readVisibleText(document, '.media-now-playing .media-now-playing-title')
     if (title && !/^loading\b/i.test(title)) {
       const pageUrl = new URL(pathname, HOME).href
-      return activity(title, 'TommyLiveTV', {
+      return activity(title, '', {
         type: ActivityType.Watching,
         pageUrl,
         playback,
@@ -226,7 +226,7 @@ export function createPresenceData(
     const playerFrame = document.querySelector('.sports-player-frame iframe')
     if (eventTitle && !/^loading\b/i.test(eventTitle) && isVisible(playerFrame)) {
       const pageUrl = new URL(pathname, HOME).href
-      return activity(eventTitle, 'TommyLiveTV', { type: ActivityType.Watching, name: 'SportsLive', pageUrl })
+      return activity(eventTitle, '', { type: ActivityType.Watching, name: 'SportsLive', pageUrl })
     }
     return activity('Browsing TommyLiveTV', 'SportsLive')
   }
