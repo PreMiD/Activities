@@ -110,6 +110,28 @@ function browsingState(pathname: string): string {
   return 'Browsing'
 }
 
+function formatPlaybackTime(totalSeconds: number): string {
+  const seconds = Math.floor(Math.max(0, totalSeconds))
+  const hours = Math.floor(seconds / 3600)
+  const minutes = Math.floor((seconds % 3600) / 60)
+  const remainder = seconds % 60
+  return hours > 0
+    ? `${hours}:${String(minutes).padStart(2, '0')}:${String(remainder).padStart(2, '0')}`
+    : `${minutes}:${String(remainder).padStart(2, '0')}`
+}
+
+function compactPlaybackState(playback: PlaybackTimes, now = Date.now()): string {
+  const duration = playback.endTimestamp - playback.startTimestamp
+  if (!Number.isFinite(duration) || duration <= 0)
+    return ''
+
+  const elapsed = Math.min(duration, Math.max(0, now - playback.startTimestamp))
+  const barLength = 18
+  const filled = Math.round((elapsed / duration) * barLength)
+  const bar = `${'━'.repeat(filled)}${'─'.repeat(barLength - filled)}`
+  return `${formatPlaybackTime(elapsed / 1000)} ${bar} ${formatPlaybackTime(duration / 1000)}`
+}
+
 function activity(details: string, state = '', options: ActivityOptions = {}): PresenceData {
   const {
     type = ActivityType.Playing,
@@ -120,10 +142,13 @@ function activity(details: string, state = '', options: ActivityOptions = {}): P
     smallImageKey,
     smallImageText,
   } = options
+  const visibleState = type === ActivityType.Watching && playback
+    ? compactPlaybackState(playback)
+    : state
   const common = {
     name,
     details,
-    ...(state ? { state } : {}),
+    ...(visibleState ? { state: visibleState } : {}),
     largeImageKey: imageUrl,
     ...(smallImageKey ? { smallImageKey } : {}),
     ...(smallImageText ? { smallImageText } : {}),
@@ -134,10 +159,6 @@ function activity(details: string, state = '', options: ActivityOptions = {}): P
       ...common,
       type: ActivityType.Watching,
       largeImageText: 'TommyLiveTV',
-    }
-    if (playback && Number.isFinite(playback.startTimestamp) && Number.isFinite(playback.endTimestamp)) {
-      data.startTimestamp = playback.startTimestamp
-      data.endTimestamp = playback.endTimestamp
     }
     if (pageUrl) {
       data.detailsUrl = pageUrl
