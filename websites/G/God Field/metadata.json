@@ -15,9 +15,9 @@
   },
   "url": "godfield.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*godfield[.]net[/]",
-  "version": "1.0.0",
-  "logo": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/9d/d4/8a/9dd48a1d-0ff3-123f-7b8f-de54f35da71c/Placeholder.mill/512x512bb.png",
-  "thumbnail": "https://godfield.net/images/screens/home.webp",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/G/God%20Field/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/God%20Field/assets/thumbnail.webp",
   "color": "#008F6F",
   "category": "games",
   "tags": [

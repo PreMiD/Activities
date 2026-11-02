@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1564987185709588580',
 })
 
-const LOGO = 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/9d/d4/8a/9dd48a1d-0ff3-123f-7b8f-de54f35da71c/Placeholder.mill/512x512bb.png'
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/G/God%20Field/assets/logo.png'
 const LANGS = ['ja', 'en', 'fr', 'ko', 'pt', 'ru', 'zh-hans', 'zh-hant']
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
