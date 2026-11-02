@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "tommy811",
+    "id": "211976335663300608"
+  },
+  "service": "TommyLiveTV",
+  "description": {
+    "en": "TommyLiveTV is a movie, series and live sports website. Show what you are watching on Discord."
+  },
+  "url": "watch.tommytrace.com",
+  "regExp": "^https[:][/][/]watch[.]tommytrace[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/jackreacherdota/Activities/9132e5093f99ecb397ec5fd05dcfd24f81979a65/websites/T/TommyLiveTV/assets/logo.png",
+  "thumbnail": "https://tommylive.pages.dev/tommylivetv-logo-splash.png",
+  "color": "#6D3BFF",
+  "category": "videos",
+  "tags": [
+    "streaming",
+    "movies",
+    "series",
+    "sports",
+    "live-tv"
+  ]
+}
