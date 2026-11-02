@@ -5,8 +5,10 @@ import { cac } from 'cac'
 import { build } from './commands/build.js'
 import { bump } from './commands/bump.js'
 import { checkDns } from './commands/checkDns.js'
+import { mcp } from './commands/mcp.js'
 import { newActivity } from './commands/new.js'
 import { release } from './commands/release.js'
+import { test } from './commands/test.js'
 import { updateAssets } from './commands/updateAssets.js'
 import { getCliPackageJson, getPackageJson } from './util/getPackageJson.js'
 import { exit } from './util/log.js'
@@ -43,6 +45,10 @@ cli
   .action(build)
 
 cli
+  .command('test [activity]', 'Run the e2e tests of an activity')
+  .action(test)
+
+cli
   .command('bump [activity] [version]', 'Bump an activity')
   .option('--all', 'Bump all activities (Usage: bump "" [version] --all)')
   .option('--changed', 'Bump only changed activities (Usage: bump "" [version] --changed)')
@@ -62,6 +68,10 @@ cli
 cli
   .command('release', 'Release all activities in CI')
   .action(release)
+
+cli
+  .command('mcp', 'Run the MCP server for AI agents')
+  .action(mcp)
 
 cli.help()
 cli.version(cliPackageJson.version)
