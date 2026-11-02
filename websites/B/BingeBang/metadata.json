@@ -11,9 +11,9 @@
   },
   "url": "bingebang.st",
   "regExp": "^https?[:][/][/](www[.])?bingebang[.][a-z]+[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/4jb06Gm.png",
-  "thumbnail": "https://i.imgur.com/vWIMYfv.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/B/BingeBang/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/B/BingeBang/assets/thumbnail.png",
   "color": "#E50914",
   "category": "videos",
   "tags": [

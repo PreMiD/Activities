@@ -6,7 +6,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/4jb06Gm.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/B/BingeBang/assets/logo.png',
 }
 
 /** "Cyberpunk: Edgerunners S01E01 · Player · BingeBang" -> "Cyberpunk: Edgerunners S01E01" */
