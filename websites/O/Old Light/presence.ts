@@ -29,7 +29,7 @@ function titleCase(slug: string): string {
 // Survives reloads and in-game navigation within the tab; a different
 // galaxy (or a new tab) starts a fresh timer.
 function galaxySessionStart(galaxy: string): number {
-  const key = 'premid-oldlight-session'
+  const key = 'PMD_oldlight_session'
   try {
     const saved = JSON.parse(sessionStorage.getItem(key) ?? 'null')
     if (saved?.galaxy === galaxy && typeof saved.start === 'number')
@@ -55,12 +55,6 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    buttons: [
-      {
-        label: 'Play Old Light',
-        url: 'https://oldlight.io/play?utm_source=discord-presence&utm_medium=premid',
-      },
-    ],
   }
 
   const heading = text('h1')
@@ -76,10 +70,12 @@ presence.on('UpdateData', async () => {
     // Set by the game only while the player's public profile page exists.
     const profileSlug = document.querySelector<HTMLElement>('[data-field="player-name"]')?.dataset.profileSlug
     if (showProfile && profileSlug) {
-      presenceData.buttons?.push({
-        label: 'View empire',
-        url: `https://oldlight.io/galaxy/${game}/player/${encodeURIComponent(profileSlug)}?utm_source=discord-presence&utm_medium=premid`,
-      })
+      presenceData.buttons = [
+        {
+          label: 'View empire',
+          url: `https://oldlight.io/galaxy/${game}/player/${encodeURIComponent(profileSlug)}?utm_source=discord-presence&utm_medium=premid`,
+        },
+      ]
     }
 
     const openDialog = document.querySelector('dialog[open]')?.id
@@ -91,11 +87,13 @@ presence.on('UpdateData', async () => {
   }
   else if (pathname.startsWith('/guide')) {
     presenceData.details = 'Reading the guide'
-    presenceData.state = heading
+    if (heading)
+      presenceData.state = heading
   }
   else if (pathname.startsWith('/blog')) {
     presenceData.details = 'Reading the blog'
-    presenceData.state = heading
+    if (heading)
+      presenceData.state = heading
   }
   else if (page) {
     const galaxy = `Galaxy ${titleCase(page[1] ?? '')}`
@@ -109,9 +107,11 @@ presence.on('UpdateData', async () => {
       region: 'Viewing a region',
     }
     presenceData.details = (page[2] && pageDetails[page[2]]) ?? `Viewing ${galaxy}`
-    presenceData.state = page[2] === 'player' || page[2] === 'sector' || page[2] === 'region'
+    const state = page[2] === 'player' || page[2] === 'sector' || page[2] === 'region'
       ? heading
       : page[2] ? galaxy : undefined
+    if (state)
+      presenceData.state = state
   }
   else if (pathname.startsWith('/premium')) {
     presenceData.details = 'Viewing Premium'
