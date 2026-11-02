@@ -6,7 +6,7 @@ const presence = new Presence({
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
-const NCT_LOGO = 'https://files.catbox.moe/eha3a5.png'
+const NCT_LOGO = 'https://cdn.rcd.gg/PreMiD/websites/N/NhacCuaTui/assets/logo.png'
 
 const songCoverCache = new Map<string, string>()
 

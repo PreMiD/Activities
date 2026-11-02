@@ -11,12 +11,18 @@
   },
   "url": "www.nhaccuatui.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*nhaccuatui[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://files.catbox.moe/eha3a5.png",
-  "thumbnail": "https://files.catbox.moe/670z7p.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/N/NhacCuaTui/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/NhacCuaTui/assets/thumbnail.png",
   "color": "#7B2CFB",
   "category": "music",
-  "tags": ["nct", "music", "audio", "vietnam", "songs"],
+  "tags": [
+    "nct",
+    "music",
+    "audio",
+    "vietnam",
+    "songs"
+  ],
   "settings": [
     {
       "id": "privacy",
