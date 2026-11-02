@@ -22,5 +22,25 @@
     "space",
     "browser-game",
     "4x"
+  ],
+  "settings": [
+    {
+      "id": "showEmpire",
+      "title": "Show Empire Name",
+      "icon": "fas fa-user",
+      "value": true
+    },
+    {
+      "id": "showSector",
+      "title": "Show Active Sector",
+      "icon": "fas fa-location-dot",
+      "value": true
+    },
+    {
+      "id": "showProfile",
+      "title": "Show Empire Profile Button",
+      "icon": "fas fa-id-card",
+      "value": true
+    }
   ]
 }
