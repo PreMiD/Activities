@@ -13,15 +13,15 @@
   ],
   "service": "dアニメストア",
   "description": {
-    "de": "No.1 anime streaming website in Japan! Free for the first month! Unlimited viewing of over 2,900 anime works for 400 yen per month (excluding taxes)! You can use other than DoCoMo mobile devices. Even better quality on tablets, PCs, Chromecasts, and Fire TV!",
-    "en": "No.1 anime streaming website in Japan! Free for the first month! Unlimited viewing of over 2,900 anime works for 400 yen per month (excluding taxes)! You can use other than DoCoMo mobile devices. Even better quality on tablets, PCs, Chromecasts, and Fire TV!",
-    "ja": "アニメ作品数No.1見放題サイトdアニメストア！初回31日間無料！月額400円(税抜)で2,900作品以上のアニメが見放題！ドコモのケータイ以外も利用可能。タブレットやPC,Chromecast,Fire TVではさらに高画質！",
-    "nl": "De beste anime streaming website in Japan! Eerste maand gratis! Onbeperkt bekijken van meer dan 2900 animes voor 400 yen per maand (exclusief belasting)! U kunt andere dan DoCoMo mobiele apparaten ook gebruiken. Nog betere kwaliteit op tablets, pc's, Chromecasts en Fire TV!",
-    "pt-br": "Site número 1 em streaming de animes no Japão! Grátis no primeiro mês! Assista mais de 2,900 animes por 400 ienes por mês (excluindo taxas)! Você pode usar outros dispositivos móveis além de DoCoMo. Melhor qualidade em tablets, PCs, Chromecasts, e Fire TV!"
+    "de": "dアニメストア ist ein japanischer Streamingdienst für Anime, der auf Smartphones, Tablets und PCs verfügbar ist.",
+    "en": "dアニメストア is a Japanese anime streaming service for smartphones, tablets, and computers.",
+    "ja": "dアニメストアは、スマートフォンやタブレット、パソコンでアニメを楽しめる動画配信サービスです。",
+    "nl": "dアニメストア is een Japanse streamingdienst voor anime, beschikbaar op smartphones, tablets en computers.",
+    "pt-br": "dアニメストア é um serviço japonês de streaming de animes para smartphones, tablets e computadores."
   },
   "url": "animestore.docomo.ne.jp",
   "regExp": "^https?[:][/][/]animestore[.]docomo[.]ne[.]jp[/]",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/d%E3%82%A2%E3%83%8B%E3%83%A1%E3%82%B9%E3%83%88%E3%82%A2/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/d%E3%82%A2%E3%83%8B%E3%83%A1%E3%82%B9%E3%83%88%E3%82%A2/assets/thumbnail.jpg",
   "color": "#ea552a",
