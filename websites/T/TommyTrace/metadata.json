@@ -14,9 +14,9 @@
     "www.tommytrace.com"
   ],
   "regExp": "^https[:][/][/](www[.])?tommytrace[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://tommytrace.com/assets/tommytrace-logo.webp",
-  "thumbnail": "https://tommytrace.com/assets/backgrounds/home-hero-borneo.webp",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TommyTrace/assets/logo.webp",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TommyTrace/assets/thumbnail.webp",
   "color": "#72DDEB",
   "category": "games",
   "tags": [

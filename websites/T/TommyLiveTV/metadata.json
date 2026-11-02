@@ -11,9 +11,9 @@
   },
   "url": "watch.tommytrace.com",
   "regExp": "^https[:][/][/]watch[.]tommytrace[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://raw.githubusercontent.com/jackreacherdota/Activities/9132e5093f99ecb397ec5fd05dcfd24f81979a65/websites/T/TommyLiveTV/assets/logo.png",
-  "thumbnail": "https://tommylive.pages.dev/tommylivetv-logo-splash.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/T/TommyLiveTV/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/TommyLiveTV/assets/thumbnail.png",
   "color": "#6D3BFF",
   "category": "videos",
   "tags": [
