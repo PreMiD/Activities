@@ -1,4 +1,4 @@
-import { Assets, getTimestamps } from 'premid'
+import { Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1565331266465697802',
@@ -9,9 +9,9 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 interface IFrameData {
   video?: {
-    paused?: boolean
-    currentTime?: number
-    duration?: number
+    paused: boolean
+    startTimestamp: number
+    endTimestamp: number
   } | null
 }
 
@@ -51,10 +51,9 @@ function getBrowsingState(pathname: string, hash: string): string {
       return 'Consulte le classement'
 
     case '/settings':
-      if (hash === '#playlists')
-        return 'Gère ses playlists'
-
-      return 'Consulte ses paramètres'
+      return hash === '#playlists'
+        ? 'Gère ses playlists'
+        : 'Consulte ses paramètres'
 
     case '/personnages':
       return 'Explore les personnages'
@@ -103,13 +102,6 @@ presence.on('UpdateData', async () => {
 
   const video = iframeData.video
 
-  const validVideo = video !== undefined
-    && video !== null
-    && typeof video.paused === 'boolean'
-    && typeof video.currentTime === 'number'
-    && typeof video.duration === 'number'
-    && video.duration > 0
-
   const presenceData: PresenceData = {
     name: 'Nakanime',
     type: 3,
@@ -131,16 +123,8 @@ presence.on('UpdateData', async () => {
       },
     ]
   }
-  else if (pathname === '/') {
-    presenceData.buttons = [
-      {
-        label: 'Visiter Nakanime',
-        url: 'https://nakanime.tv/',
-      },
-    ]
-  }
 
-  if (isEpisodePage && validVideo && video) {
+  if (isEpisodePage && video) {
     presenceData.state = video.paused
       ? `En pause • Épisode ${episodeNumber}`
       : `En lecture • Épisode ${episodeNumber}`
@@ -154,17 +138,9 @@ presence.on('UpdateData', async () => {
       : 'En lecture'
 
     if (!video.paused) {
-      const [startTimestamp, endTimestamp] = getTimestamps(
-        video.currentTime!,
-        video.duration!,
-      )
-
-      presenceData.startTimestamp = startTimestamp
-      presenceData.endTimestamp = endTimestamp
+      presenceData.startTimestamp = video.startTimestamp
+      presenceData.endTimestamp = video.endTimestamp
     }
-  }
-  else if (isEpisodePage) {
-    presenceData.startTimestamp = browsingTimestamp
   }
   else {
     presenceData.startTimestamp = browsingTimestamp

@@ -1,3 +1,5 @@
+import { getTimestampsFromMedia } from 'premid'
+
 const iframe = new iFrame()
 
 iframe.on('UpdateData', () => {
@@ -7,15 +9,16 @@ iframe.on('UpdateData', () => {
     iframe.send({
       video: null,
     })
-
     return
   }
+
+  const [startTimestamp, endTimestamp] = getTimestampsFromMedia(video)
 
   iframe.send({
     video: {
       paused: video.paused,
-      currentTime: video.currentTime,
-      duration: video.duration,
+      startTimestamp,
+      endTimestamp,
     },
   })
 })
