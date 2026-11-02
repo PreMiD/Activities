@@ -213,19 +213,19 @@ function getTvInfo() {
 
 const ActivityAssets = {
   Logo: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/logo.png',
-  house: 'https://i.postimg.cc/d1JjfN3Y/house-solid.png',
-  compass: 'https://i.postimg.cc/85TmYXcj/compass-solid.png',
-  calendarDays: 'https://i.postimg.cc/C1ws2r5d/calendar-days-solid.png',
-  userSecret: 'https://i.postimg.cc/63BfPbqp/user-secret-solid.png',
-  tv: 'https://i.postimg.cc/nznGWSrF/tv-solid.png',
-  towerBroadcast: 'https://i.postimg.cc/rmqNHZsM/tower-broadcast-solid.png',
-  football: 'https://i.postimg.cc/HxT9Nvn8/football-solid.png',
-  gamepad: 'https://i.postimg.cc/rmqNHZsd/gamepad-solid.png',
-  addressCard: 'https://i.postimg.cc/NMQknCFf/address-card-solid.png',
-  arrowRightToBracket: 'https://i.postimg.cc/63BfPbqQ/arrow-right-to-bracket-solid.png',
-  fileContract: 'https://i.postimg.cc/XJnkP1qr/file-contract-solid.png',
-  magnet: 'https://i.postimg.cc/sX34LHxV/magnet-solid.png',
-  moviesAndTv: 'https://i.postimg.cc/SsmfP1RQ/movies-And-Tv.png',
+  house: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/0.png',
+  compass: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/1.png',
+  calendarDays: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/2.png',
+  userSecret: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/3.png',
+  tv: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/4.png',
+  towerBroadcast: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/5.png',
+  football: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/6.png',
+  gamepad: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/7.png',
+  addressCard: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/8.png',
+  arrowRightToBracket: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/9.png',
+  fileContract: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/10.png',
+  magnet: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/11.png',
+  moviesAndTv: 'https://cdn.rcd.gg/PreMiD/websites/0-9/1Shows/assets/12.png',
 }
 
 presence.on('UpdateData', async () => {
