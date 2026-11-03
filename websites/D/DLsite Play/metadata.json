@@ -23,7 +23,7 @@
     "zh-tw": "直接在瀏覽器中欣賞您在DLsite購買的漫畫、CG、音訊和影片！"
   },
   "url": "play.dlsite.com",
-  "regExp": "^https://play\\.dlsite\\.com/",
+  "regExp": "^https[:][/][/]play[.]dlsite[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/82UeEJt.png",
   "thumbnail": "https://i.imgur.com/89yS5PO.png",
