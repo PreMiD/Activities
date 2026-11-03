@@ -1,4 +1,4 @@
-import { Assets } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1565331266465697802',
@@ -198,7 +198,7 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     name: 'Nakanime',
-    type: 3,
+    type: ActivityType.Watching,
     details: animeTitle,
     state: isEpisodePage
       ? `Épisode ${episodeNumber || '?'}`
