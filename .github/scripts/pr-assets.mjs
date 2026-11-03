@@ -119,8 +119,15 @@ export function buildCommentBody(activities, pullNumber = 0) {
     }
 
     lines.push('| Preview | Source | URL |', '| --- | --- | --- |')
-    for (const asset of activity.assets)
-      lines.push(`| <img src="${asset.url}" width="${asset.width}"> | ${asset.source} | ${asset.url} |`)
+    for (const asset of activity.assets) {
+      // Dynamic (template/concatenated) URLs can't be resolved from the diff.
+      const preview = asset.dynamic
+        ? '_dynamic URL — can\'t preview_'
+        : asset.broken
+          ? '⚠️ _not a valid image_'
+          : `<img src="${asset.url}" width="${asset.width}">`
+      lines.push(`| ${preview} | ${asset.source} | ${asset.url.replaceAll('${', '\\${')} |`)
+    }
     return lines.join('\n')
   })
 
@@ -146,6 +153,21 @@ export function desiredLabels(activities) {
   if (activities.length > 1)
     desired.add('multiple activities')
   return desired
+}
+
+export const isDynamic = url => /\$\{|\{\{/.test(url)
+
+/**
+ * True when the URL responds with an image content-type.
+ */
+async function isImage(url) {
+  try {
+    const response = await fetch(url, { method: 'HEAD', redirect: 'follow', signal: AbortSignal.timeout(10000) })
+    return response.ok && (response.headers.get('content-type') ?? '').startsWith('image/')
+  }
+  catch {
+    return false
+  }
 }
 
 /**
@@ -316,6 +338,13 @@ export default async function run({ github, context, core }) {
           })
         }
       }
+    }
+
+    for (const asset of activity.assets) {
+      asset.dynamic = isDynamic(asset.url)
+      asset.broken = !asset.dynamic && !(await isImage(asset.url))
+      if (asset.broken)
+        core.warning(`${activity.folder}: ${asset.url} is not a valid image`)
     }
 
     activities.push(activity)
