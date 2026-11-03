@@ -55,9 +55,6 @@ function getBrowsingState(pathname: string, hash: string): string {
         ? 'Gère ses playlists'
         : 'Consulte ses paramètres'
 
-    case '/personnages':
-      return 'Explore les personnages'
-
     case '/changelog':
       return 'Consulte les nouveautés'
 
