@@ -210,10 +210,13 @@ presence.on('UpdateData', async () => {
   }
 
   if (isEpisodePage) {
+    const episodeUrl = new URL(window.location.href)
+    episodeUrl.searchParams.set('ref', 'premid')
+
     presenceData.buttons = [
       {
         label: 'Regarder l’épisode',
-        url: window.location.href,
+        url: episodeUrl.toString(),
       },
     ]
   }
