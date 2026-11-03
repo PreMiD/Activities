@@ -21,17 +21,6 @@ const keys = {
 
 export type Strings = Record<keyof typeof keys, string>
 
-let cached: { language: string | undefined, strings: Promise<Strings> } | undefined
-
-export async function getStrings(presence: Presence): Promise<Strings> {
-  const language = await presence.getSetting<string>('lang')
-  if (!cached || cached.language !== language) {
-    const request = { language, strings: presence.getStrings(keys) }
-    cached = request
-    request.strings.catch(() => {
-      if (cached === request)
-        cached = undefined
-    })
-  }
-  return cached.strings
+export function getStrings(presence: Presence): Promise<Strings> {
+  return presence.getStrings(keys)
 }
