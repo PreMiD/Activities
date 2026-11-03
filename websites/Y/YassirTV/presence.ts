@@ -46,7 +46,7 @@ async function getStrings() {
 }
 
 function cleanTitle(title: string): string {
-  const BRANDING = /si+r\s*tv|yas+ir\s*tv|سير|ياسر/i
+  const BRANDING = /si+r\s*tv|sirftv|yas+ir\s*tv|سير|ياسر/i
 
   const parts = title
     .split(/\s*[|\u2013\u2014\u00BB\u00AB]\s*/)
@@ -74,8 +74,11 @@ presence.on('UpdateData', async () => {
 
   const matchId = getMatchId()
   const host = document.location.hostname
-  const onFaborList = host === 'fabor.tv' || host === 'fabor-tv.to'
-  const onMatchPage = (document.location.pathname.includes('/hard/') && matchId) || onFaborList
+
+  const isListPage = host === 'fabor.tv' || host === 'fabor-tv.to' || host === 'fabor-tv.vip' || (host.includes('sirftv.com') && !document.location.pathname.includes('/hard/'))
+
+  const onMatchPage = (document.location.pathname.includes('/hard/') && matchId) || isListPage
+
   if (onMatchPage) {
     const home = text(SELECTORS.homeTeam)
     const away = text(SELECTORS.awayTeam)
@@ -83,7 +86,7 @@ presence.on('UpdateData', async () => {
     const status = text(SELECTORS.matchStatus)
     const video = iFrameData.video
 
-    if (onFaborList) {
+    if (isListPage) {
       presenceData.details = 'Browsing...'
       presenceData.state = 'Looking for a Match'
       presenceData.largeImageKey = ActivityAssets.Logo

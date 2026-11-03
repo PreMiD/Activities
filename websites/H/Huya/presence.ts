@@ -12,6 +12,10 @@ function getElement(query: string): string | undefined {
   return document.querySelector(query)?.textContent?.trim() ?? undefined
 }
 
+function getTitleAttribute(query: string): string | undefined {
+  return document.querySelector(query)?.getAttribute('title')?.trim() || undefined
+}
+
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60)
   const s = Math.floor(seconds % 60)
@@ -35,6 +39,7 @@ async function getStrings() {
 }
 
 let strings: Awaited<ReturnType<typeof getStrings>>
+let lastStream: { path: string, title: string, streamer: string } | undefined
 
 const openedTimestamp = Math.floor(Date.now() / 1000)
 
@@ -55,6 +60,7 @@ presence.on('UpdateData', async () => {
     strings = await getStrings()
 
   const presenceData: PresenceData = {
+    name: '虎牙直播',
     largeImageKey: ActivityAssets.Logo,
     details: strings.browse,
     type: ActivityType.Watching,
@@ -103,16 +109,21 @@ presence.on('UpdateData', async () => {
     }
   }
   else {
-    const title = getElement('#J_roomTitle p')
-    const streamer = getElement('.host-name')
+    const title = getTitleAttribute('#J_roomTitle') ?? getElement('#J_roomTitle p')
+    const streamer = getTitleAttribute('.host-name') ?? getElement('.host-name')
 
-    if (title && streamer) {
+    if (title && streamer)
+      lastStream = { path: pathname, title, streamer }
+
+    const stream = lastStream?.path === pathname ? lastStream : undefined
+
+    if (stream) {
       if (privacy) {
         presenceData.details = strings.watchingLive
       }
       else {
-        presenceData.details = title
-        presenceData.state = streamState.replace('%streamer%', streamer)
+        presenceData.details = stream.title
+        presenceData.state = streamState.replace('%streamer%', stream.streamer)
         presenceData.buttons = [
           { label: strings.watchStream, url: document.URL },
         ]

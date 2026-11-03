@@ -15,29 +15,36 @@ class PresenceState {
   mediaTimestamps: [number, number] = [0, 0]
   oldPath = ''
   startTimestamp = 0
-  videoListenerAttached = false
+  listeningStartTimestamp = 0
+  videoListenerTarget: HTMLMediaElement | null = null
   dataGetter = new YouTubeMusicDataGetter()
 }
 
 const state = new PresenceState()
 
+const timestampEvents = ['seeked', 'play', 'loadedmetadata', 'durationchange', 'ratechange'] as const
+
+function updateTimestamps() {
+  state.mediaTimestamps = updateSongTimestamps(state.dataGetter)
+}
+
+// Re-attaches if the player swaps its media element.
 function attachVideoListeners(videoElement: HTMLMediaElement) {
-  if (state.videoListenerAttached)
+  if (state.videoListenerTarget === videoElement)
     return
 
-  const updateTimestamps = () => {
-    state.mediaTimestamps = updateSongTimestamps(state.dataGetter)
-  }
+  detachVideoListeners()
+  for (const event of timestampEvents)
+    videoElement.addEventListener(event, updateTimestamps)
 
-  videoElement.addEventListener('seeked', updateTimestamps)
-  videoElement.addEventListener('play', updateTimestamps)
-
-  state.videoListenerAttached = true
+  state.videoListenerTarget = videoElement
 }
 
 function detachVideoListeners() {
   state.prevTitleAuthor = ''
-  state.videoListenerAttached = false
+  for (const event of timestampEvents)
+    state.videoListenerTarget?.removeEventListener(event, updateTimestamps)
+  state.videoListenerTarget = null
 }
 
 presence.on('UpdateData', async () => {
@@ -72,7 +79,7 @@ presence.on('UpdateData', async () => {
       })
     }
 
-    if (!mediaData.title || Number.isNaN(videoElement?.duration ?? Number.NaN)) {
+    if (!mediaData.title) {
       return
     }
 
@@ -84,25 +91,22 @@ presence.on('UpdateData', async () => {
       })
     }
 
-    const currentTimeText = document
-      .querySelector<HTMLSpanElement>('#left-controls > span')
-      ?.textContent
-      ?.trim()
+    if (!state.listeningStartTimestamp) {
+      state.listeningStartTimestamp = Math.floor(Date.now() / 1000)
+    }
 
     const currentMediaIdentifier = createMediaIdentifier(
       mediaData.title,
       mediaData.artist,
-      currentTimeText,
+      watchID,
     )
 
+    // If timestamps aren't readable yet, still show the song and retry them next update.
     if (state.prevTitleAuthor !== currentMediaIdentifier) {
       state.mediaTimestamps = updateSongTimestamps(state.dataGetter)
 
-      if (state.mediaTimestamps[0] === state.mediaTimestamps[1]) {
-        return
-      }
-
-      state.prevTitleAuthor = currentMediaIdentifier
+      if (state.mediaTimestamps[0] !== state.mediaTimestamps[1])
+        state.prevTitleAuthor = currentMediaIdentifier
     }
 
     presenceData = createListeningPresence(
@@ -112,16 +116,22 @@ presence.on('UpdateData', async () => {
       watchID,
       repeatMode,
       state.mediaTimestamps,
+      state.listeningStartTimestamp,
       strings,
     )
   }
   else if (settings.showBrowsing) {
+    state.listeningStartTimestamp = 0
+
     if (state.oldPath !== pathname) {
       state.oldPath = pathname
       state.startTimestamp = Math.floor(Date.now() / 1000)
     }
 
     presenceData = createBrowsingPresence(pathname, search, href, state.startTimestamp, strings, settings.privacyMode)
+  }
+  else {
+    state.listeningStartTimestamp = 0
   }
 
   presence.setActivity(presenceData)

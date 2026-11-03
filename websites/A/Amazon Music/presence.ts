@@ -1,4 +1,4 @@
-import { ActivityType, Assets, timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '808756700022702120',
@@ -36,7 +36,9 @@ presence.on('UpdateData', async () => {
   }
 
   if (navigator.mediaSession.metadata) {
-    const paused = navigator.mediaSession.playbackState === 'paused'
+    const videos = [...document.querySelectorAll('video')].filter(v => v.duration > 0)
+    const video = videos.find(v => !v.paused) ?? videos[0]
+    const paused = !video || video.paused
 
     if (
       !document.querySelector(
@@ -85,12 +87,8 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = paused ? strings.pause : strings.play
 
-    const currentTime = document.querySelector('div.sXaGQzYs9WqImj2uxDCBs > span:nth-child(1)')?.textContent?.match(/[0-9:]+/)?.[0]
-    const duration = document.querySelector('div.sXaGQzYs9WqImj2uxDCBs > span:nth-child(2)')?.textContent?.match(/[0-9:]+/)?.[0]
-
-    if (currentTime && duration && !paused) {
-      presenceData.startTimestamp = Math.floor(Date.now() / 1000) - timestampFromFormat(currentTime)
-      presenceData.endTimestamp = Math.floor(Date.now() / 1000) + timestampFromFormat(duration)
+    if (video && !paused) {
+      [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     }
 
     if (cover) {
