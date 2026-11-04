@@ -56,7 +56,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = data.channel
       ? data.title
       : data.episodeName
-        ?? data.title
+        || data.title
     presenceData.state = data.season
       ? strings.showsMetadata
           .replace('{0}', data.season)

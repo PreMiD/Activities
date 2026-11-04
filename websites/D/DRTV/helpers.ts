@@ -5,39 +5,34 @@ export function getVideoDetails() {
   const episodeMetadata = get('.player-metadata__metadata')
   const channelData = (get('.ch1-details__schedule-time') || get('.ch1-details__description'))
 
-  let title = titleData
+  const title = titleData.split(':')[0]!.split('(')[0]!
 
   let season: string | null = null
   let episode: string | null = null
-  let episodeName: string | null = null
+  const episodeName = titleData.split(':').slice(1).join(':')
 
   let channel: string | null = null
 
   if (episodeMetadata) {
     const metadata = episodeMetadata.textContent
 
-    title = title.split(':')[0]!
-
     if (!metadata.includes('Film')) {
       const match = metadata.match(/(\d+)/g)!
       season = match[0]
       episode = match[1]!
-      episodeName = titleData.split(':')[1]!
     }
   }
 
   if (channelData) {
     const data = channelData.textContent.split(' | ')[0]!
-    const match = title.match(/\((\d+):(\d+)\)/)!
+    const match = titleData.match(/\((\d+):(\d+)\)/)
 
     if (match) {
       season = match[1]!
       episode = match[2]!
     }
 
-    episodeName = title.split(':')[1]!
     channel = data
-    title = title.split(':')[0]!
   }
 
   return {
