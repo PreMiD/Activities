@@ -1,0 +1,42 @@
+{
+  "drtv.browsing.categories": {
+    "description": "",
+    "message": "Browsing categories"
+  },
+  "drtv.browsing.category": {
+    "description": "",
+    "message": "Browsing {0}"
+  },
+  "drtv.browsing.general": {
+    "description": "",
+    "message": "Idly browsing"
+  },
+  "drtv.discord.watch": {
+    "description": "",
+    "message": "Watch"
+  },
+  "drtv.myList": {
+    "description": "",
+    "message": "Viewing their list"
+  },
+  "drtv.profile": {
+    "description": "",
+    "message": "Managing their profiles"
+  },
+  "drtv.searching": {
+    "description": "",
+    "message": "Searching for programmes"
+  },
+  "drtv.show.metadata": {
+    "description": "",
+    "message": "Season {0}, Episode {1}"
+  },
+  "drtv.show.viewDetails": {
+    "description": "",
+    "message": "Viewing the details of"
+  },
+  "drtv.tvGuide": {
+    "description": "",
+    "message": "Viewing the TV guide"
+  }
+}
