@@ -11,7 +11,7 @@
     "en": "Watch or rewatch DR's catalogue of programmes on DRTV. You can watch programmes from DR1, DR2, and DR Ramasjang. Watch live tv or on demand"
   },
   "url": "dr.dk",
-  "regExp": "^https://www.dr.dk/drtv[/]",
+  "regExp": "^https[:][/][/]www[.]dr[.]dk[/]drtv[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/N8wZtKx.png",
   "thumbnail": "https://i.imgur.com/Xe3zY4M.png",
