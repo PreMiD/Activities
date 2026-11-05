@@ -12,6 +12,7 @@ async function getStrings() {
     browsingCategories: 'drtv.browsing.categories',
     browsingCategory: 'drtv.browsing.category',
     browsingGenerally: 'drtv.browsing.general',
+    browsingList: 'drtv.browsing.list',
     discordWatch: 'drtv.discord.watch',
     myList: 'drtv.myList',
     profile: 'drtv.profile',
@@ -97,6 +98,11 @@ presence.on('UpdateData', async () => {
 
   if (get('.list-pg')) {
     presenceData.details = strings.browsingCategories
+    const title = get('.page h1')
+    if (title) {
+      presenceData.details = strings.browsingList
+      presenceData.state = title.textContent
+    }
   }
 
   if (get('.pg-category')) {

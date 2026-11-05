@@ -10,7 +10,7 @@
     "da": "Se eller gense DR's TV-programmer her på DRTV. Du kan se programmer fra både DR1, DR2 og DR Ramasjang. Se live-tv eller on-demand",
     "en": "Watch or rewatch DR's catalogue of programmes on DRTV. You can watch programmes from DR1, DR2, and DR Ramasjang. Watch live tv or on demand"
   },
-  "url": "dr.dk",
+  "url": "www.dr.dk",
   "regExp": "^https[:][/][/]www[.]dr[.]dk[/]drtv[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/N8wZtKx.png",

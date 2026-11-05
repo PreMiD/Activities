@@ -17,7 +17,7 @@ export function getVideoDetails() {
     const metadata = episodeMetadata.textContent
 
     if (!metadata.includes('Film')) {
-      const match = metadata.match(/(\d+)/g)!
+      const match = metadata.match(/\d+/g)!
       season = match[0]
       episode = match[1]!
     }
