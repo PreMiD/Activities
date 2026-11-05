@@ -14,7 +14,7 @@
   "regExp": "^https?[:][/][/]playjelly[.]fr[/]",
   "version": "1.0.0",
   "logo": "https://playjelly.fr/logo.png",
-  "thumbnail": "https://playjelly.fr/banner.png?v=2",
+  "thumbnail": "https://playjelly.fr/banner.png",
   "color": "#00716D",
   "category": "videos",
   "tags": [
