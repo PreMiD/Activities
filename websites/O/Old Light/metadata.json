@@ -11,9 +11,9 @@
   },
   "url": "oldlight.io",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*oldlight[.]io[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/XxEisPT.png",
-  "thumbnail": "https://i.imgur.com/VEmHgDf.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Old%20Light/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Old%20Light/assets/thumbnail.png",
   "color": "#05070d",
   "category": "games",
   "tags": [
