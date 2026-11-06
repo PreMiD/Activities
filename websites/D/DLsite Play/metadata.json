@@ -24,9 +24,9 @@
   },
   "url": "play.dlsite.com",
   "regExp": "^https[:][/][/]play[.]dlsite[.]com[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/82UeEJt.png",
-  "thumbnail": "https://i.imgur.com/89yS5PO.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DLsite%20Play/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DLsite%20Play/assets/thumbnail.png",
   "color": "#188AEA",
   "category": "other",
   "tags": [
@@ -56,7 +56,11 @@
       "description": "名前の下に表示される内容 / Content shown below your name",
       "icon": "fa-solid fa-eye",
       "value": 2,
-      "values": ["\"DLsite Play\"", "Track Title", "Content Title"]
+      "values": [
+        "\"DLsite Play\"",
+        "Track Title",
+        "Content Title"
+      ]
     }
   ]
 }
