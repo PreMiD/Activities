@@ -87,7 +87,8 @@ presence.on('UpdateData', async () => {
   }
 
   const video = getVideo()
-  const inPlayer = path.startsWith('/player') || path.startsWith('/play') || !!video
+  // only the real player counts — the homepage/series pages autoplay trailers
+  const inPlayer = path.startsWith('/player') || path.startsWith('/livestream/')
 
   // ───────────── WATCHING ─────────────
   if (inPlayer && video) {
