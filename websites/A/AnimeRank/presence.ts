@@ -40,18 +40,6 @@ function titleFromDocument(): string {
   return document.title.split(' · ')[0]?.replace(/\s*[—-]\s*AnimeRank.*$/, '').trim() || ''
 }
 
-async function getStrings() {
-  return presence.getStrings({
-    browsing: 'general.browsing',
-    paused: 'general.paused',
-    playing: 'general.playing',
-    episode: 'general.episode',
-    buttonViewEpisode: 'general.buttonViewEpisode',
-    buttonViewSeries: 'general.buttonViewSeries',
-    viewHome: 'general.viewHome',
-  })
-}
-
 presence.on('UpdateData', async () => {
   const [privacy, showCover, showTimestamp, showButtons] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
@@ -59,7 +47,6 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('showTimestamp'),
     presence.getSetting<boolean>('showButtons'),
   ])
-  const strings = await getStrings()
 
   const { pathname, href, origin } = document.location
   const presenceData: PresenceData = {
@@ -78,14 +65,14 @@ presence.on('UpdateData', async () => {
     const video = document.querySelector<HTMLVideoElement>('video')
 
     presenceData.details = privacy ? 'Anime izliyor' : title
-    presenceData.state = `${strings.episode ?? 'Bölüm'} ${ep}`
+    presenceData.state = `${ep}. Bölüm`
     if (!privacy && showCover && anime?.cover)
       presenceData.largeImageKey = anime.cover
     presenceData.largeImageText = privacy ? 'AnimeRank' : title
 
     if (video && Number.isFinite(video.duration) && video.duration > 0) {
       presenceData.smallImageKey = video.paused ? Assets.Pause : Assets.Play
-      presenceData.smallImageText = video.paused ? (strings.paused ?? 'Duraklatıldı') : (strings.playing ?? 'Oynatılıyor')
+      presenceData.smallImageText = video.paused ? 'Duraklatıldı' : 'Oynatılıyor'
       if (showTimestamp && !video.paused)
         [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
       else if (video.paused)
@@ -93,8 +80,8 @@ presence.on('UpdateData', async () => {
     }
     if (!privacy && showButtons) {
       presenceData.buttons = [
-        { label: strings.buttonViewEpisode ?? 'Bölümü İzle', url: href },
-        { label: strings.buttonViewSeries ?? 'Animeye Göz At', url: `${origin}/anime/${id}` },
+        { label: 'Bölümü İzle', url: href },
+        { label: 'Animeye Göz At', url: `${origin}/anime/${id}` },
       ]
     }
   }
@@ -102,37 +89,39 @@ presence.on('UpdateData', async () => {
     const [, id] = detail
     const anime = getAnime(id!)
     const title = anime?.title || titleFromDocument()
-    presenceData.details = privacy ? (strings.browsing ?? 'Bakınıyor') : 'Animeye göz atıyor'
+    presenceData.details = privacy ? 'Sitede geziniyor' : 'Animeye göz atıyor'
     if (!privacy) {
       presenceData.state = title
       if (showCover && anime?.cover)
         presenceData.largeImageKey = anime.cover
       if (showButtons)
-        presenceData.buttons = [{ label: strings.buttonViewSeries ?? 'Animeye Göz At', url: href }]
+        presenceData.buttons = [{ label: 'Animeye Göz At', url: href }]
     }
     presenceData.smallImageKey = Assets.Viewing
   }
   else {
-    presenceData.details = strings.browsing ?? 'Bakınıyor'
+    presenceData.details = 'Sitede geziniyor'
     if (!privacy) {
       const pages: Record<string, string> = {
-        '/': strings.viewHome ?? 'Ana sayfa',
-        '/kesfet': 'Keşfet',
-        '/animeler': 'Keşfet',
-        '/takvim': 'Yayın takvimi',
-        '/koleksiyonlar': 'Koleksiyonlar',
-        '/arkadaslar': 'Arkadaşlar',
-        '/premium': 'Premium',
-        '/ayarlar': 'Ayarlar',
+        '/': 'Ana sayfada',
+        '/kesfet': 'Keşfet sayfasında',
+        '/animeler': 'Anime listesinde',
+        '/takvim': 'Yayın takvimine bakıyor',
+        '/koleksiyonlar': 'Koleksiyonlara bakıyor',
+        '/arkadaslar': 'Arkadaşlarına bakıyor',
+        '/premium': 'Premium paketlere bakıyor',
+        '/ayarlar': 'Ayarlarda',
         '/kim-izliyor': 'Profil seçiyor',
+        '/topluluk': 'Toplulukta',
+        '/birlikte': 'Birlikte İzle odasında',
       }
       const key = Object.keys(pages).find(p => pathname === p || (p !== '/' && pathname.startsWith(`${p}/`)))
       if (key)
         presenceData.state = pages[key]
       else if (pathname.startsWith('/profil'))
-        presenceData.state = 'Profil'
+        presenceData.state = 'Profile bakıyor'
       else if (pathname.startsWith('/koleksiyon/'))
-        presenceData.state = 'Koleksiyon'
+        presenceData.state = 'Koleksiyona bakıyor'
     }
     presenceData.smallImageKey = Assets.Search
   }
