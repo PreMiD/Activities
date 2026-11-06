@@ -45,7 +45,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.watchingLive
 
       if (privacy === false) {
-        const title = document.querySelector<HTMLParagraphElement>('#Streaming > div:nth-of-type(3) > p')?.textContent
+        const title = document.querySelector<HTMLHeadingElement>('#Streaming h1')?.textContent
         if (title) {
           presenceData.state = title
           presenceData.largeImageText = title
