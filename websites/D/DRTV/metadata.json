@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1159413794913656843",
+    "name": "libramion"
+  },
+  "service": "DRTV",
+  "description": {
+    "da": "Se eller gense DR's TV-programmer her på DRTV. Du kan se programmer fra både DR1, DR2 og DR Ramasjang. Se live-tv eller on-demand",
+    "en": "Watch or rewatch DR's catalogue of programmes on DRTV. You can watch programmes from DR1, DR2, and DR Ramasjang. Watch live tv or on demand"
+  },
+  "url": "www.dr.dk",
+  "regExp": "^https[:][/][/]www[.]dr[.]dk[/]drtv[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/N8wZtKx.png",
+  "thumbnail": "https://i.imgur.com/Xe3zY4M.png",
+  "color": "#ffc800",
+  "category": "videos",
+  "tags": [
+    "video",
+    "media",
+    "streaming",
+    "tv"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    }
+  ]
+}
