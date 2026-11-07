@@ -45,8 +45,13 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.watchingLive
 
       if (privacy === false) {
-        const title = document.querySelector<HTMLHeadingElement>('#Streaming h1')?.textContent
-        if (title) {
+        const title = document.title.split(" | SPWN")[0]?.trim()
+        const videoTitle = document.querySelector<HTMLHeadingElement>('#Streaming h1')?.textContent?.trim()
+
+        // Multi-camera streams may append labels such as 【本編】 or 【全景固定】 to the h1 title.
+        // Use the document title to omit these labels, but only if the h1 title contains it.
+        // This avoids showing an unrelated document title if the page encounters an error.
+        if (title && videoTitle?.includes(title)) {
           presenceData.state = title
           presenceData.largeImageText = title
         }
@@ -59,7 +64,7 @@ presence.on('UpdateData', async () => {
     }
     else {
       if (privacy === false) {
-        const title = document.querySelector<HTMLHeadingElement>('h2')?.textContent
+        const title = document.querySelector<HTMLHeadingElement>('h2.no-translate')?.textContent?.trim()
         if (title) {
           presenceData.state = title
           presenceData.largeImageText = title
