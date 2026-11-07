@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1318857340136718346",
+    "name": "4mrxe"
+  },
+  "service": "Nakanime",
+  "description": {
+    "en": "Free Anime Streaming with French Dubs & Subtitles",
+    "fr": "Streaming Anime Gratuit VF & VOSTFR."
+  },
+  "url": "nakanime.tv",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*nakanime[.]tv[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/6Sgsj9h.png",
+  "thumbnail": "https://i.imgur.com/EXIpga2.png",
+  "color": "#E84393",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?://.*"
+}
