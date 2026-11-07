@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1233213267053248633',
 })
 
-const STORM_TEMPEST_IMAGE = 'https://akuyaki.rest/logo-512.png'
+const STORM_TEMPEST_IMAGE = 'https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/logo.png'
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -132,6 +132,7 @@ function sourceFromUrl(): string | undefined {
     tvsto: 'Tvsto',
     toolsto: 'Toolsto',
     gamesto: 'Gamesto',
+    studysto: 'Studysto',
   }
 
   for (const part of document.location.pathname.split('/').filter(Boolean)) {
@@ -296,21 +297,16 @@ function getPageName(): string {
   }
 
   const pageNames: Record<string, string> = {
-    search: 'Search',
-    anime: 'Anime',
-    genre: 'Genres',
-    genres: 'Genres',
-    category: 'Categories',
-    categories: 'Categories',
-    movies: 'Movies',
-    movie: 'Movie',
-    series: 'Series',
-    favorites: 'Favorites',
-    favourite: 'Favorites',
-    history: 'History',
-    settings: 'Settings',
-    profile: 'Profile',
-    browse: 'Browse',
+    anisto: 'Anime',
+    mangasto: 'Manga',
+    movisto: 'Movies',
+    novelsto: 'Novels',
+    booksto: 'Books',
+    tvsto: 'Live TV',
+    gamesto: 'Games',
+    codesto: 'Code Tools',
+    toolsto: 'Tools',
+    studysto: 'Study',
   }
 
   const pageName = pageNames[firstSegment.toLowerCase()]

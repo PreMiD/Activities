@@ -20,8 +20,8 @@
   ],
   "regExp": "^https?[:][/][/](www[.])?(stormy[.]rest|beta[.]stormy[.]rest)[/]",
   "version": "1.1.0",
-  "logo": "https://akuyaki.rest/logo-512.png",
-  "thumbnail": "https://akuyaki.rest/storm.png",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/thumbnail.png",
   "color": "#0b0c10",
   "category": "anime",
   "tags": [
