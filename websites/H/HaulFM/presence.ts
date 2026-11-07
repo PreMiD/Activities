@@ -3,9 +3,9 @@ const presence = new Presence({
 })
 
 enum ActivityAssets {
-  Logo = '1567275092084265022', // logo
-  Play = '1567267051909685328', // play
-  Pause = '1567267077671362710', // pause
+  Logo = 'https://i.imgur.com/vqklmUN.png', // logo
+  Play = 'https://i.imgur.com/oyR1Bi1.png', // play
+  Pause = 'https://i.imgur.com/pZEOjC7.png', // pause
 }
 
 const PAUSE_GRACE_MS = 3000
@@ -19,13 +19,12 @@ function getText(id: string): string | undefined {
 }
 
 function detectPlaying(): boolean {
-  const audio = document.querySelector('audio') as HTMLAudioElement | null
+  const audio = document.querySelector<HTMLAudioElement>('audio')
   if (audio)
     return !audio.paused && !audio.ended
 
-  // Fallback if there is no <audio> element on the page
   const state = document
-    .querySelector('[data-state="playing"], [data-state="idle"]')
+    .querySelector<HTMLElement>('[data-state="playing"], [data-state="idle"]')
     ?.getAttribute('data-state')
     ?.toLowerCase()
   return state === 'playing'
@@ -46,7 +45,7 @@ presence.on('UpdateData', async () => {
     const artistName = getText('artist')
     const djName = getText('onair-name')
 
-    presenceData.details = trackName && artistName
+    presenceData.details = `${artistName} - ${trackName}`
       ? `${artistName} - ${trackName}`
       : trackName ?? 'Listening to haul.fm'
     presenceData.state = djName ? `Presented by ${djName}` : undefined
