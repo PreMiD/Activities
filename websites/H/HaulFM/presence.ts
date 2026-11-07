@@ -4,8 +4,8 @@ const presence = new Presence({
 
 enum ActivityAssets {
   Logo = 'https://i.imgur.com/vqklmUN.png', // logo
-  Play = 'https://i.imgur.com/oyR1Bi1.png', // play
-  Pause = 'https://i.imgur.com/pZEOjC7.png', // pause
+  Play = 'https://i.imgur.com/3WimqKn.png', // play
+  Pause = 'https://i.imgur.com/TQL74Ev.png', // pause
 }
 
 const PAUSE_GRACE_MS = 3000
