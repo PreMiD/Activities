@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "960971439996035083",
+    "name": "JuJuplayz"
+  },
+  "service": "HollyMovieHD",
+  "description": {
+    "en": "Watch movies online for free"
+  },
+  "url": ["hollymoviehd.cc"],
+  "regExp": "^https?://(www\\.)?hollymoviehd\\.cc/",
+  "iFrameRegExp": "^https?://(www\\.)?goodstream\\.cc/",
+  "iframe": true,
+  "version": "1.3.0",
+  "logo": "https://i.imgur.com/eNrh6LG.png",
+  "thumbnail": "https://i.imgur.com/5q0Ta7P.png",
+  "color": "#000000",
+  "category": "videos",
+  "tags": [
+    "movies",
+    "shows",
+    "series",
+    "entertainment"
+  ],
+  "settings": [
+    {
+      "id": "hideWebsite",
+      "title": "Hide website name",
+      "icon": "fad fa-eye-slash",
+      "value": false
+    },
+    {
+      "id": "timestamps",
+      "title": "Show progress bar",
+      "icon": "fad fa-clock",
+      "value": true
+    },
+    {
+      "id": "largeImage",
+      "title": "Large image",
+      "icon": "fad fa-image",
+      "value": 0,
+      "values": ["Movie poster", "Movie backdrop", "Website logo"]
+    }
+  ]
+}
