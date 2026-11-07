@@ -1,0 +1,75 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "roicaluste",
+    "id": "934386454455549983"
+  },
+  "service": "AnimeWaw",
+  "description": {
+    "en": "AnimeWaw is a free anime streaming site from Uzbekistan with Russian voice-overs, its own player and watch-together rooms.",
+    "ru": "AnimeWaw — бесплатный сайт для просмотра аниме из Узбекистана: русская озвучка, собственный плеер и комнаты для совместного просмотра."
+  },
+  "url": ["animewaw.uz", "www.animewaw.uz"],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*animewaw[.]uz[/]",
+  "version": "1.0.0",
+  "logo": "https://www.animewaw.uz/icon.png",
+  "thumbnail": "https://www.animewaw.uz/icon.png",
+  "color": "#00e5cc",
+  "category": "anime",
+  "tags": ["anime", "video", "russian", "watch-together"],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "browsingActivity",
+      "title": "Show Browsing Activity",
+      "icon": "fad fa-book-reader",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "cover",
+      "title": "Show Cover",
+      "icon": "fad fa-images",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "titleAsPresence",
+      "title": "Show Title as Presence",
+      "icon": "fad fa-user-edit",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fad fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "hideWhenPaused",
+      "title": "Hide When Paused",
+      "icon": "fad fa-pause",
+      "value": false
+    }
+  ]
+}
