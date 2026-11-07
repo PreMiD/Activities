@@ -100,8 +100,8 @@ presence.on('UpdateData', async () => {
   else if (/^\/assistir-junto\/[a-f0-9]{32}$/.test(pathname) && activity.page === 'watch-room') {
     const people = Number(activity.roomPeople || 0)
     presenceData.details = privacy || !activity.title ? 'Assistindo junto' : `Assistindo junto: ${activity.title}`
-    presenceData.state = [privacy ? '' : episodeLine(activity), people ? `${people} ${people === 1 ? 'pessoa' : 'pessoas'} na sala` : '']
-      .filter(Boolean).join(' • ') || 'Sala do AnimesFHD'
+    const roomParts = [privacy ? '' : episodeLine(activity), people ? `${people} ${people === 1 ? 'pessoa' : 'pessoas'} na sala` : '']
+    presenceData.state = roomParts.filter(Boolean).join(' • ') || 'Sala do AnimesFHD'
     presenceData.largeImageKey = cover
     presenceData.smallImageKey = Assets.Live
     presenceData.smallImageText = 'Sala ao vivo'
