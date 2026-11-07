@@ -1,10 +1,10 @@
-import { ActivityType, Assets, StatusDisplayType } from 'premid'
+import { ActivityType, Assets, getTimestamps, StatusDisplayType } from 'premid'
 
 const presence = new Presence({
   clientId: '1527392816966402270',
 })
 
-const LOGO = 'https://i.imgur.com/eNrh6LG.png'
+const LOGO = 'https://i.imgur.com/LDonhZk.png'
 
 interface VideoData {
   currentTime: number
@@ -92,7 +92,7 @@ presence.on('UpdateData', async () => {
         const elapsed = (Date.now() - videoDataReceivedAt) / 1000
         const currentTime = Math.min(videoData.currentTime + elapsed, videoData.duration)
 
-        ;[data.startTimestamp, data.endTimestamp] = presence.getTimestamps(
+        ;[data.startTimestamp, data.endTimestamp] = getTimestamps(
           currentTime,
           videoData.duration,
         )
