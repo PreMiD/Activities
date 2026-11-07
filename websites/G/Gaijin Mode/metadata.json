@@ -1,0 +1,52 @@
+{
+  "apiVersion": 1,
+  "author": {
+    "id": "856933488011903077",
+    "name": "thanony_"
+  },
+  "service": "Gaijin Mode",
+  "description": {
+    "en": "Gaijin Mode is a voice-first Japanese learning game where you practice real conversations with AI characters, scenarios and learners from around the world."
+  },
+  "url": [
+    "www.gaijinmode.com",
+    "gaijinmode.com"
+  ],
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/qeBB1Jd.png",
+  "thumbnail": "https://www.gaijinmode.com/assets/images/landing-page/hero_character.png",
+  "color": "#5B6CFF",
+  "category": "other",
+  "tags": [
+    "japanese",
+    "language-learning",
+    "education",
+    "ai"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "fancy",
+      "title": "Aesthetic Style (Japanese + symbols)",
+      "icon": "fas fa-star",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fas fa-clock",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}
