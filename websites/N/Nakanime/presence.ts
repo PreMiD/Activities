@@ -101,7 +101,6 @@ function getStructuredEntries(): StructuredData[] {
       return
 
     const entry = value as StructuredData
-
     entries.push(entry)
 
     if (entry['@graph'])
@@ -179,8 +178,7 @@ function getDirectVideoData(): VideoData | null {
 }
 
 presence.on('UpdateData', async () => {
-  const pathname = document.location.pathname
-  const hash = document.location.hash
+  const { hash, pathname } = document.location
 
   const episodeMatch = pathname.match(
     /\/anime\/(\d+)\/season\/(\d+)\/episode\/(\d+)/,
@@ -217,7 +215,6 @@ presence.on('UpdateData', async () => {
       'meta[property="og:image"]',
     )?.content
 
-  // Priorité à la vidéo intégrée, puis au lecteur iframe.
   const video = isEpisodePage
     ? getDirectVideoData() || iframeData.video
     : null

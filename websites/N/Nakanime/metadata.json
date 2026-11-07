@@ -11,7 +11,7 @@
     "fr": "Streaming Anime Gratuit VF & VOSTFR."
   },
   "url": "nakanime.tv",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*nakanime[.]tv[/]",
+  "regExp": "^https?[:][/][/](?:[a-z0-9-]+[.])*nakanime[.]tv[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/6Sgsj9h.png",
   "thumbnail": "https://i.imgur.com/EXIpga2.png",
@@ -22,5 +22,5 @@
     "streaming"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https?://.*"
+  "iFrameRegExp": "^https?://(vidmoly\\.org|voe\\.sx|vidzy\\.org|smoothpre\\.com|uqload\\.vc)/"
 }
