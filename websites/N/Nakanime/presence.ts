@@ -1,4 +1,4 @@
-import { ActivityType, Assets } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1565331266465697802',
@@ -7,12 +7,14 @@ const presence = new Presence({
 const nakanimeLogo = 'https://i.imgur.com/6Sgsj9h.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+interface VideoData {
+  paused: boolean
+  startTimestamp: number
+  endTimestamp: number
+}
+
 interface IFrameData {
-  video?: {
-    paused: boolean
-    startTimestamp: number
-    endTimestamp: number
-  } | null
+  video?: VideoData | null
 }
 
 interface StructuredData {
@@ -155,6 +157,27 @@ function getStructuredImage(
     : image.url
 }
 
+function getDirectVideoData(): VideoData | null {
+  const video = document.querySelector('video')
+
+  if (
+    !video
+    || !Number.isFinite(video.duration)
+    || video.duration <= 0
+  ) {
+    return null
+  }
+
+  const [startTimestamp, endTimestamp]
+    = getTimestampsFromMedia(video)
+
+  return {
+    paused: video.paused,
+    startTimestamp,
+    endTimestamp,
+  }
+}
+
 presence.on('UpdateData', async () => {
   const pathname = document.location.pathname
   const hash = document.location.hash
@@ -194,7 +217,10 @@ presence.on('UpdateData', async () => {
       'meta[property="og:image"]',
     )?.content
 
-  const video = iframeData.video
+  // Priorité à la vidéo intégrée, puis au lecteur iframe.
+  const video = isEpisodePage
+    ? getDirectVideoData() || iframeData.video
+    : null
 
   const presenceData: PresenceData = {
     name: 'Nakanime',
