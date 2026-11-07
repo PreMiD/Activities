@@ -45,7 +45,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.watchingLive
 
       if (privacy === false) {
-        const title = document.title.split(" | SPWN")[0]?.trim()
+        const title = document.title.split(' | SPWN')[0]?.trim()
         const videoTitle = document.querySelector<HTMLHeadingElement>('#Streaming h1')?.textContent?.trim()
 
         // Multi-camera streams may append labels such as 【本編】 or 【全景固定】 to the h1 title.

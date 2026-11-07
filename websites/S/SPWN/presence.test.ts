@@ -17,16 +17,16 @@ test('browsing the home page', async ({ page, activity }) => {
   await page.goto('https://spwn.jp/')
   expect(await activity.next()).toMatchObject({
     type: ActivityType.Watching,
-    details: "Browsing home page"
+    details: 'Browsing home page',
   })
 })
 
 test('browsing an event page', async ({ page, activity }) => {
   await page.goto('https://spwn.jp/events/evt_26102901-jpmiko2ndlive')
-  await page.waitFor("h2.no-translate")
+  await page.waitFor('h2.no-translate')
 
-  const title = await page.evaluate(() => document.querySelector("h2.no-translate")?.textContent.trim() ?? "")
-  expect(title).not.toBe("")
+  const title = await page.evaluate(() => document.querySelector('h2.no-translate')?.textContent.trim() ?? '')
+  expect(title).not.toBe('')
 
   const presence = await nextPresence(
     () => activity.next(),
@@ -40,31 +40,30 @@ test('browsing an event page', async ({ page, activity }) => {
     buttons: [
       {
         label: expect.any(String),
-        url: 'https://spwn.jp/events/evt_26102901-jpmiko2ndlive'
-      }
-    ]
+        url: 'https://spwn.jp/events/evt_26102901-jpmiko2ndlive',
+      },
+    ],
   })
 })
 
 test('privacy mode hides the event title', { settings: { privacy: true } }, async ({ page, activity }) => {
   await page.goto('https://spwn.jp/events/evt_26102901-jpmiko2ndlive')
-  await page.waitFor("h2.no-translate")
+  await page.waitFor('h2.no-translate')
 
-  const title = await page.evaluate(() => document.querySelector("h2.no-translate")?.textContent.trim() ?? "")
-  expect(title).not.toBe("")
+  const title = await page.evaluate(() => document.querySelector('h2.no-translate')?.textContent.trim() ?? '')
+  expect(title).not.toBe('')
 
   const presence = await activity.next()
   expect(presence).toBeDefined()
   expect(presence?.state ?? '').not.toContain(title)
   expect(presence?.buttons).toBeUndefined()
-
 })
 
 test('watching a stream', {
   timeout: 360_000,
 }, async ({ page, activity }) => {
-  await page.goto("https://spwn.jp/")
-  await page.waitForUser("Sign in and watch the stream", {
+  await page.goto('https://spwn.jp/')
+  await page.waitForUser('Sign in and watch the stream', {
     until: () => {
       const video = document.querySelector<HTMLVideoElement>('#Streaming video')
       const title = document.querySelector('#Streaming h1')?.textContent?.trim()
@@ -74,7 +73,9 @@ test('watching a stream', {
   activity.clear()
 
   const presence = await nextPresence(() => activity.next(), p => p.smallImageKey === Assets.Play && typeof p.state === 'string')
-  const title = await page.evaluate(() => { return document.querySelector("#Streaming h1")?.textContent.trim() ?? "" })
+  const title = await page.evaluate(() => {
+    return document.querySelector('#Streaming h1')?.textContent.trim() ?? ''
+  })
   expect(title).not.toBe('')
 
   // The h1 may append labels such as 【本編】 or 【全景固定】 that the activity omits.
