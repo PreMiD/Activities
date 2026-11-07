@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "lolilover",
@@ -14,7 +14,7 @@
     "www.mangareader.to"
   ],
   "regExp": "^https?[:][/][/](www[.])?mangareader[.]to[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MangaReader/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MangaReader/assets/thumbnail.png",
   "color": "#6241B0",

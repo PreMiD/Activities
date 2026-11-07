@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "567885938160697377",
@@ -11,7 +11,7 @@
   },
   "url": "www.royalroad.com",
   "regExp": "^https?[:][/][/](www[.])?royalroad[.]com[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Royal%20Road/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Royal%20Road/assets/thumbnail.jpeg",
   "color": "#ffffff",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "496673945211240462",
@@ -10,14 +10,9 @@
     "en": "HEO Systems is a hosting company, mainly focused on hosting game servers.",
     "nl": "HEO Systems is een hostingbedrijf, voornamelijk gericht op het hosten van game servers."
   },
-  "url": [
-    "www.heo-systems.net",
-    "clients.heo-systems.net",
-    "ptero.heo-systems.net",
-    "heos-hosting.site"
-  ],
-  "regExp": "^https?[:][/][/]((www|clients|ptero)[.]heo-systems[.]net|heos-hosting[.]site)[/]",
-  "version": "1.1.1",
+  "url": "www.heo-systems.net",
+  "regExp": "^https?[:][/][/](www[.])?heo-systems[.]net[/]",
+  "version": "1.1.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HEO%20Systems/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HEO%20Systems/assets/thumbnail.png",
   "color": "#1F51FF",

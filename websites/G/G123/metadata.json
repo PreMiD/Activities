@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "754572586914021468",
+    "name": "0120r"
+  },
+  "service": "G123",
+  "description": {
+    "en": "G123 is a Japanese browser game platform where you can play anime-licensed games instantly without downloading.",
+    "ja": "G123 は、アニメ・漫画原作などのゲームをダウンロードなしでブラウザから今すぐ遊べるゲームプラットフォームです。"
+  },
+  "url": [
+    "g123.jp",
+    "h5.g123.jp"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*g123[.]jp[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/G/G123/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/G123/assets/thumbnail.png",
+  "color": "#FF3B30",
+  "category": "games",
+  "tags": [
+    "browser-game",
+    "japan",
+    "anime",
+    "html5"
+  ],
+  "settings": [
+    {
+      "id": "showGame",
+      "title": "ゲーム名を表示",
+      "icon": "fad fa-gamepad",
+      "value": true
+    },
+    {
+      "id": "showImage",
+      "title": "ゲームの画像を表示",
+      "icon": "fad fa-image",
+      "value": true
+    }
+  ]
+}

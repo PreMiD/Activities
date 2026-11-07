@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "193714715631812608",
@@ -17,7 +17,7 @@
     "developer.vroid.com"
   ],
   "regExp": "^https?[:][/][/]((www|hub|developer)[.])?vroid[.]com[/]",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/VRoid/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/VRoid/assets/thumbnail.png",
   "color": "#ffec00",

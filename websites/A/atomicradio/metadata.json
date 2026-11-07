@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "VocalZero",
@@ -17,7 +17,7 @@
   },
   "url": "atomic.radio",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*atomic[.]radio[/]",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/atomicradio/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/atomicradio/assets/thumbnail.jpg",
   "color": "#a9f923",

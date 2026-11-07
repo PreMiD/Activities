@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "751341509068193840",
@@ -19,7 +19,7 @@
     "mobile.kiite.jp"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*kiite[.]jp[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Kiite/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Kiite/assets/thumbnail.png",
   "color": "#FF33AA",

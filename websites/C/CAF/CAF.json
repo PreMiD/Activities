@@ -1,0 +1,46 @@
+{
+  "caf.loggingIn": {
+    "message": "Logging in",
+    "description": "Displayed when the user is on the CAF login page"
+  },
+  "caf.dashboard": {
+    "message": "Dashboard",
+    "description": "Section of the user's CAF account: dashboard/home"
+  },
+  "caf.payments": {
+    "message": "Payments and entitlements",
+    "description": "Section of the user's CAF account: payments and entitlements"
+  },
+  "caf.certificates": {
+    "message": "Certificates",
+    "description": "Section of the user's CAF account: downloadable certificates"
+  },
+  "caf.procedures": {
+    "message": "Procedures",
+    "description": "Section of the user's CAF account: tracking of ongoing procedures"
+  },
+  "caf.mail": {
+    "message": "Mail",
+    "description": "Section of the user's CAF account: letters and emails"
+  },
+  "caf.resources": {
+    "message": "Income declaration",
+    "description": "Section of the user's CAF account: declaring income/resources"
+  },
+  "caf.profile": {
+    "message": "Profile",
+    "description": "Section of the user's CAF account: personal profile"
+  },
+  "caf.benefitRequest": {
+    "message": "Applying for a benefit",
+    "description": "Section of the user's CAF account: applying for a new benefit"
+  },
+  "caf.appointments": {
+    "message": "Appointments",
+    "description": "Section of the user's CAF account: appointments calendar"
+  },
+  "caf.contact": {
+    "message": "Contacting their CAF",
+    "description": "Section of the user's CAF account: contacting their local CAF"
+  }
+}

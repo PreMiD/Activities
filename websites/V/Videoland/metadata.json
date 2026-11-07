@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "PreMiD",
@@ -16,7 +16,7 @@
     "www.videoland.com"
   ],
   "regExp": "^https?[:][/][/]((v2|www)[.])?videoland[.]com[/]",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/V/Videoland/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/V/Videoland/assets/thumbnail.png",
   "color": "#FF3746",

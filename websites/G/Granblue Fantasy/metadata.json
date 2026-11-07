@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Morrays",
@@ -23,7 +23,7 @@
   },
   "url": "game.granbluefantasy.jp",
   "regExp": "^https?[:][/][/]game[.]granbluefantasy[.]jp[/]",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Granblue%20Fantasy/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Granblue%20Fantasy/assets/thumbnail.jpg",
   "color": "#2F4F7A",

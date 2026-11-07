@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "CRUGG",
@@ -26,7 +26,7 @@
   },
   "url": "www.instagram.com",
   "regExp": "^https?[:][/][/](www[.])?instagram[.]com[/]",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Instagram/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Instagram/assets/thumbnail.png",
   "color": "#E1306C",

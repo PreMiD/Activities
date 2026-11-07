@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "241929388403195914",
@@ -18,7 +18,7 @@
   },
   "url": "www.threads.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*threads[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Threads/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Threads/assets/thumbnail.jpeg",
   "color": "#000",

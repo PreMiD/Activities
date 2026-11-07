@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "371311292985901057",
@@ -14,7 +14,7 @@
   },
   "url": "itaku.ee",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*itaku[.]ee[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/I/Itaku/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/I/Itaku/assets/thumbnail.png",
   "color": "#FF6B6B",

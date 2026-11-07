@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "1009426635780542475",
@@ -9,9 +9,9 @@
   "description": {
     "en": "Terousd is a streaming site for movies and TV series."
   },
-  "url": "stream.terousd.online",
-  "regExp": "^https?[:][/][/]stream[.]terousd[.]online[/]",
-  "version": "1.0.1",
+  "url": "stream.terousd.site",
+  "regExp": "^https?[:][/][/]stream[.]terousd[.]site[/]",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Terousd/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Terousd/assets/thumbnail.jpg",
   "color": "#E50914",
@@ -23,7 +23,7 @@
     "shows"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https?[:][/][/]((stream[.]terousd[.]online[/]api[/]embed)|(([a-z0-9-]+[.])*(vsembed[.]su|vidking[.]net|vidnest[.]fun|vidlink[.]pro))[/])",
+  "iFrameRegExp": "^https?[:][/][/]((stream[.]terousd[.]site[/]api[/]embed)|(([a-z0-9-]+[.])*(vsembed[.]su|vidking[.]net|vidnest[.]fun|vidlink[.]pro))[/])",
   "settings": [
     {
       "id": "privacy",

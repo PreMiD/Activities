@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Vaz",
@@ -11,7 +11,7 @@
   },
   "url": "www.goodreads.com",
   "regExp": "^https?[:][/][/](www[.])?goodreads[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Goodreads/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Goodreads/assets/thumbnail.png",
   "color": "#b5ae84",

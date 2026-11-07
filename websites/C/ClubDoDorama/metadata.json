@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "582396294715408436",
+    "name": "lucas.mro"
+  },
+  "service": "ClubDoDorama",
+  "description": {
+    "en": "Your universe of online dramas!",
+    "pt": "Seu universo de doramas online!"
+  },
+  "url": "clubdodorama.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*clubdodorama[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/C/ClubDoDorama/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/C/ClubDoDorama/assets/thumbnail.png",
+  "color": "#000000",
+  "category": "videos",
+  "tags": [
+    "streaming",
+    "doramas",
+    "series",
+    "tv"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?[:][/][/]([a-z0-9-]+[.])*(incvideo\\d*[.]online[/]embed[/]|dailymotion[.]com[/]player[/])"
+}
