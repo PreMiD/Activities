@@ -507,9 +507,10 @@ function getPlaybackState(href: string): {
 }
 
 presence.on('UpdateData', async () => {
-  const [privacy, showButtons] = await Promise.all([
+  const [privacy, showButtons, displayType] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('buttons'),
+    presence.getSetting<number>('displayType'),
   ])
   const resolvedUrl = getResolvedPageUrl()
   const href = resolvedUrl.href
@@ -597,6 +598,7 @@ presence.on('UpdateData', async () => {
     const { currentTime, duration, paused } = getPlaybackState(href)
 
     const presenceData: PresenceData = {
+      name: displayType === 1 ? animeTitle : undefined,
       type: ActivityType.Watching,
       largeImageKey: privacy ? ActivityAssets.Logo : poster || ActivityAssets.Logo,
       largeImageText: privacy ? 'Re:Anime' : seasonEpisodeText || 'Re:Anime',
