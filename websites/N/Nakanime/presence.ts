@@ -156,8 +156,8 @@ function getStructuredImage(
 }
 
 presence.on('UpdateData', async () => {
-  const pathname = window.location.pathname
-  const hash = window.location.hash
+  const pathname = document.location.pathname
+  const hash = document.location.hash
 
   const episodeMatch = pathname.match(
     /\/anime\/(\d+)\/season\/(\d+)\/episode\/(\d+)/,
@@ -210,7 +210,7 @@ presence.on('UpdateData', async () => {
   }
 
   if (isEpisodePage) {
-    const episodeUrl = new URL(window.location.href)
+    const episodeUrl = new URL(document.location.href)
     episodeUrl.searchParams.set('ref', 'premid')
 
     presenceData.buttons = [
