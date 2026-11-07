@@ -15,7 +15,7 @@ const coverCache = new Map<string, string>()
 
 // O site usa rotas por hash: #/, #/cat/<tag>, #/drama/<slug>, #/drama/<slug>/<episódio>
 function getRoute(): string[] {
-  return location.hash
+  return document.location.hash
     .replace(/^#\/?/, '')
     .split('?')[0]!
     .split('/')
