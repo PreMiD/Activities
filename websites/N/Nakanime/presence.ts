@@ -232,17 +232,15 @@ presence.on('UpdateData', async () => {
     largeImageText: animeTitle,
   }
 
-  if (isEpisodePage) {
-    const episodeUrl = new URL(document.location.href)
-    episodeUrl.searchParams.set('ref', 'premid')
-
-    presenceData.buttons = [
-      {
-        label: 'Regarder l’épisode',
-        url: episodeUrl.toString(),
-      },
-    ]
-  }
+  
+if (isEpisodePage) {
+  presenceData.buttons = [
+    {
+      label: 'Regarder l’épisode',
+      url: document.location.href,
+    },
+  ]
+}
 
   if (isEpisodePage && video) {
     presenceData.state = video.paused
