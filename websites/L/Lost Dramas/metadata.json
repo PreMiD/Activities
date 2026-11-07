@@ -11,7 +11,7 @@
     "pt": "Assista doramas no Lost Dramas, um site de doramas em português."
   },
   "url": "lostdramas.blogspot.com",
-  "regExp": "^https?://lostdramas\\.blogspot\\.com/",
+  "regExp": "^https?[:][/][/]lostdramas[.]blogspot[.]com[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/GMhgPg7.png",
   "thumbnail": "https://i.imgur.com/rVEZVzQ.png",
