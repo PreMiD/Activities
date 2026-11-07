@@ -32,7 +32,7 @@ presence.on('UpdateData', async () => {
     presence.getSetting<number>('largeImage'),
   ])
 
-  // Clear activity and set again without progress bar
+  // Clears activity and sets again without progress bar
   if (lastShowTimestamps === true && !showTimestamps) {
     lastShowTimestamps = showTimestamps
     presence.clearActivity()
@@ -44,7 +44,7 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Watching,
     name: hideWebsite ? 'a movie' : 'HollyMovieHD',
     statusDisplayType: StatusDisplayType.Details,
-    largeImageKey: LOGO, // default: the activity logo
+    largeImageKey: LOGO,
   }
 
   if (!hideWebsite)
@@ -89,7 +89,6 @@ presence.on('UpdateData', async () => {
     }
     else {
       if (showTimestamps) {
-        // The iframe data can be a moment old, so add the time since it arrived
         const elapsed = (Date.now() - videoDataReceivedAt) / 1000
         const currentTime = Math.min(videoData.currentTime + elapsed, videoData.duration)
 
