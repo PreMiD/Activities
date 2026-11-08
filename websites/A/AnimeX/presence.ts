@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps } from 'premid'
+import { ActivityType, Assets, getTimestamps, StatusDisplayType } from 'premid'
 
 const presence = new Presence({ clientId: '1508462512339943425' })
 
@@ -61,10 +61,12 @@ function getGenres(): string {
 presence.on(
   'UpdateData',
   async () => {
-    const [showButtons, showTimestamp] = await Promise.all(
+    const [showButtons, showTimestamp, displayType, hideSubType] = await Promise.all(
       [
         presence.getSetting<boolean>('showButtons').catch(() => true),
         presence.getSetting<boolean>('showTimestamp').catch(() => true),
+        presence.getSetting<number>('displayType'),
+        presence.getSetting<boolean>('hideSubType'),
       ],
     )
 
@@ -104,8 +106,7 @@ presence.on(
           : animeTitle
 
       presenceData.details = animeTitle
-      presenceData.state = `${episodeNum !== null ? `Episode ${episodeNum}` : 'Unknown Episode'}${subDub ? ` \u00B7 ${subDub}` : ''}`
-
+      presenceData.state = `${episodeNum !== null ? `Episode ${episodeNum}` : 'Unknown Episode'}${!hideSubType && subDub ? ` \u00B7 ${subDub}` : ''}`
       if (video) {
         const paused = video.paused
         presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
@@ -247,6 +248,17 @@ presence.on(
       }
       delete presenceData.endTimestamp
       delete presenceData.buttons
+    }
+
+    switch (displayType) {
+      case 0:
+        presenceData.statusDisplayType = StatusDisplayType.Name
+        break
+      case 1:
+        presenceData.statusDisplayType = pathname.startsWith('/watch')
+          ? StatusDisplayType.Details
+          : StatusDisplayType.Name
+        break
     }
 
     presence.setActivity(presenceData)

@@ -1,4 +1,5 @@
 import type { AnimeData } from './models/anime.js'
+import type { CardData } from './models/card.js'
 import type { CharacterData } from './models/character.js'
 import type { CollectionData } from './models/collections.js'
 import type { MangaData } from './models/manga.js'
@@ -8,24 +9,18 @@ import type { RanobeData } from './models/ranobe.js'
 import type { ReviewData } from './models/reviews.js'
 import type { TeamData } from './models/teams.js'
 import type { UserData } from './models/user.js'
-import { AnimeCdn, CharacterCdn, CollectionsCdn, MangaCdn, PeopleCdn, PublisherCdn, ReviewsCdn, TeamsCdn, UserCdn } from './cdnlibs.js'
+import { AnimeCdn, CardCdn, CharacterCdn, CollectionsCdn, MangaCdn, PeopleCdn, PublisherCdn, ReviewsCdn, TeamsCdn, UserCdn } from './cdnlibs.js'
 import { assurePd, SiteId } from './utils.js'
 
-type DataType = AnimeData | UserData | CharacterData | PersonData | PublisherData | TeamData | CollectionData | ReviewData
+type DataType = AnimeData | UserData | CharacterData | PersonData | PublisherData | TeamData | CollectionData | ReviewData | CardData
 
 interface CachedResponse<T extends DataType = DataType> {
   id: string
   data: T
 }
 
-interface CachedCover {
-  url: string
-  blob: Blob
-}
-
 export class Lib {
   private cache?: CachedResponse
-  private cachedCover?: CachedCover
 
   private extractId(string: string) {
     return string.split('/').pop()!.split('-')[0]!
@@ -41,6 +36,8 @@ export class Lib {
       data.cover.adjusted = assurePd(data.cover.default, siteId)
     if (data.related)
       data.related.cover.adjusted = assurePd(data.related.cover.default, siteId)
+    if (data.media)
+      data.media[0].cover.adjusted = assurePd(data.media[0].cover.default, siteId)
     if (data.avatar)
       data.avatar.adjusted = assurePd(data.avatar.url, siteId)
     if (data.user)
@@ -71,6 +68,15 @@ export class Lib {
     }
 
     return this.cache as CachedResponse<T>
+  }
+
+  public async getCard(slug: string, siteId: SiteId): Promise<CachedResponse<CardData>> {
+    const id = this.extractId(slug)
+
+    if (!this.cache || this.cache.id !== id)
+      this.cache = await this.fetch<CardData>(CardCdn(slug), siteId)
+
+    return this.cache as CachedResponse<CardData>
   }
 
   public async getCollection(id: string, siteId: SiteId): Promise<CachedResponse<CollectionData>> {
@@ -114,7 +120,7 @@ export class Lib {
 
   /**
    *
-   * Can't be currencly used due to API changes
+   * Can't be currently used due to API changes
    */
   public async getTeam(slug: string, siteId: SiteId): Promise<CachedResponse<TeamData>> {
     const id = this.extractId(slug)

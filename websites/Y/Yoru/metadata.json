@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "trionic2",
+    "id": "1064357832742416494"
+  },
+  "service": "Yoru",
+  "description": {
+    "en": "Yoru is an ad-light anime streaming site. Show the anime and episode you are watching, the audio track you picked, and how far into the episode you are."
+  },
+  "url": "watchyoru.uk",
+  "regExp": "^https?[:][/][/](www[.])?watchyoru[.]uk[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/Yoru/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/Yoru/assets/thumbnail.png",
+  "color": "#7C22FF",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "watchyoru",
+    "streaming",
+    "episodes"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "description": "Hide anime titles, episodes and search terms, and show only that you are on Yoru.",
+      "icon": "fa-solid fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover Art",
+      "description": "Use the cover of the anime you are watching as the large image instead of the Yoru logo.",
+      "icon": "fa-solid fa-image",
+      "value": true
+    },
+    {
+      "id": "showTimestamps",
+      "title": "Show Timestamps",
+      "description": "Show how much time is left in the episode you are watching.",
+      "icon": "fa-solid fa-clock",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "description": "Show buttons linking to the episode and the anime you are watching.",
+      "icon": "fa-solid fa-link",
+      "value": true
+    }
+  ]
+}

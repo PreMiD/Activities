@@ -185,10 +185,9 @@ function getPageData(
               ]
             }
             return {
-              details: JSON.parse(
-                document.querySelectorAll('[type="application/ld+json"]')?.[1]
-                  ?.textContent ?? '',
-              )?.broadcastOfEvent?.name ?? 'Unknown title',
+              details: document.querySelector<HTMLElement>('[data-testId="livestream-title"]')
+                ?.title
+                ?.trim() || 'Unknown title',
               state,
               largeImageKey: document.querySelector<HTMLImageElement>('.owner-avatar img')
                 ?.src,

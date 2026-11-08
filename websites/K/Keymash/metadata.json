@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "GNiK",
@@ -18,7 +18,7 @@
   },
   "url": "keymash.io",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*keymash[.]io[/]",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Keymash/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Keymash/assets/thumbnail.png",
   "color": "#FB923C",

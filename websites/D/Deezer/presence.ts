@@ -1,4 +1,4 @@
-import { ActivityType, Assets, getTimestamps, timestampFromFormat } from 'premid'
+import { ActivityType, Assets, getTimestamps } from 'premid'
 
 const presence = new Presence({
   clientId: '607651992567021580',
@@ -34,12 +34,11 @@ async function getStrings() {
 }
 
 presence.on('UpdateData', async () => {
-  let presenceData: PresenceData = {
+  const presenceData: PresenceData = {
     type: ActivityType.Listening,
     largeImageKey: ActivityAssets.Logo,
   }
   let strings = await getStrings()
-  let paused = false
 
   const [buttons, newLang, cover, browseInfo, artistAsTitle, showBrowsing, hidePaused] = await Promise.all([
     presence.getSetting<boolean>('buttons'),
@@ -51,14 +50,22 @@ presence.on('UpdateData', async () => {
     presence.getSetting<boolean>('hidePaused'),
   ])
   const { pathname, hostname } = document.location
-  const remainingTest = document.querySelector(
-    '[data-testid="remaining_time"]',
-  )?.textContent
 
   if (oldLang !== newLang || !oldLang) {
     oldLang = newLang
     strings = await getStrings()
   }
+
+  // Only look inside the player bar so page content can never be mistaken for the current track
+  const player = document.querySelector('[data-testid="miniplayer_container"]') ?? document
+  const getPlayerElement = <T extends Element = Element>(testId: string) =>
+    player.querySelector<T>(`[data-testid="${testId}"]`)
+
+  const progressBar = getPlayerElement<HTMLInputElement>('progress_bar')
+  const duration = Number(progressBar?.getAttribute('aria-valuemax') ?? 0)
+  const elapsed = Number(progressBar?.getAttribute('aria-valuenow') ?? 0)
+  const hasTrack = !!getPlayerElement('item_title')?.textContent?.trim() && duration > 0
+  const paused = !getPlayerElement('play_button_pause')
 
   const pages: Record<string, PresenceData> = {
     shows: {
@@ -95,43 +102,30 @@ presence.on('UpdateData', async () => {
       details: 'Looking at an artist',
     },
   }
-  if (showBrowsing) {
-    for (const [path, data] of Object.entries(pages)) {
-      if (pathname.includes(path)) {
-        presenceData = { ...presenceData, ...data } as PresenceData
-        if (browseInfo || !remainingTest || remainingTest === '00:00')
-          return presence.setActivity(presenceData)
-      }
-    }
-  }
+  const page = pathname
+    .split('/')
+    .reverse()
+    .map(segment => pages[segment])
+    .find(Boolean)
 
-  const albumLink = document
-    .querySelector('[data-testid="item_title"] > a')
-    ?.getAttribute('href')
-  const artistLink = document
-    .querySelector('[data-testid="item_subtitle"] > a')
-    ?.getAttribute('href')
-  const timestamps = getTimestamps(
-    timestampFromFormat(
-      document.querySelector('[data-testid="elapsed_time"]')?.textContent ?? '',
-    ),
-    timestampFromFormat(
-      document.querySelector('[data-testid="remaining_time"]')?.textContent ?? '',
-    ),
-  )
+  // Browsing info is only shown when nothing is actively playing, unless the user asked for browsing info only
+  if (showBrowsing && page && (browseInfo || !hasTrack || paused))
+    return presence.setActivity({ ...presenceData, ...page } as PresenceData)
 
-  if (document.querySelector('[data-testid="play_button_play"]'))
-    paused = true
-
-  if (hidePaused && paused)
+  if (!hasTrack || (hidePaused && paused))
     return presence.clearActivity()
 
-  presenceData.details = document.querySelector(
-    '[data-testid="item_title"]',
-  )?.textContent
+  const albumLink = getPlayerElement('item_title')
+    ?.querySelector('a')
+    ?.getAttribute('href')
+  const artistLink = getPlayerElement('item_subtitle')
+    ?.querySelector('a')
+    ?.getAttribute('href')
+
+  presenceData.details = getPlayerElement('item_title')?.textContent
 
   const artistElements = [
-    ...document.querySelectorAll<HTMLAnchorElement>(
+    ...player.querySelectorAll<HTMLAnchorElement>(
       '[data-testid="item_subtitle"] a',
     ),
   ]
@@ -142,22 +136,21 @@ presence.on('UpdateData', async () => {
 
   if (!artistAsTitle) {
     presenceData.state = joinedArtists
-      || document.querySelector('[data-testid="item_subtitle"]')?.textContent
+      || getPlayerElement('item_subtitle')?.textContent
   }
 
   if (artistAsTitle && joinedArtists)
     presenceData.name = joinedArtists
 
   presenceData.largeImageKey = cover
-    ? document
-      .querySelector('[data-testid="item_cover"]')
+    ? getPlayerElement('item_cover')
       ?.querySelector('img')
       ?.getAttribute('src')
       ?.replace(/264x264|48x48/g, '512x512') ?? ActivityAssets.Logo
     : ActivityAssets.Logo
   presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play
   presenceData.smallImageText = paused ? strings.pause : strings.play;
-  [presenceData.startTimestamp, presenceData.endTimestamp] = timestamps
+  [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(elapsed, duration)
 
   if (paused) {
     delete presenceData.startTimestamp

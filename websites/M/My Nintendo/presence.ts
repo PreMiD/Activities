@@ -65,7 +65,7 @@ presence.on('UpdateData', async () => {
       // Points
     case 'point':
       if (path.length < 2)
-        return presence.setActivity()
+        return presence.clearActivity()
 
       presenceData.details = document.querySelector<HTMLHeadingElement>('h1')?.textContent
       presenceData.state = document.querySelector<HTMLHeadingElement>('h2')?.textContent
@@ -105,6 +105,6 @@ presence.on('UpdateData', async () => {
       break
       // Startpage, Unknown
     default:
-      return presence.setActivity()
+      return presence.clearActivity()
   }
 })

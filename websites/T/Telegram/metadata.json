@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Kabal",
@@ -26,7 +26,7 @@
   },
   "url": "web.telegram.org",
   "regExp": "^https?[:][/][/]web[.]telegram[.]org[/]",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Telegram/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Telegram/assets/thumbnail.png",
   "color": "#33abe0",

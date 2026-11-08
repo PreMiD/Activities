@@ -18,7 +18,10 @@ presence.on('UpdateData', async () => {
   }
   const { pathname, hostname, href } = document.location
   const pathList = pathname.split('/').filter(Boolean)
-  const buttons = await presence.getSetting<boolean>('buttons')
+  const [privacy, buttons] = await Promise.all([
+    presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('buttons'),
+  ])
   const ideasHubPage = document.querySelector('[data-test-id="ideas-hub-page-header"]')
     || document.querySelector('[data-test-id="control-ideas-redesign-header"]')
   const search = document.querySelector<HTMLInputElement>(
@@ -151,8 +154,32 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  if (!buttons && presenceData.buttons)
+  if (privacy) {
+    switch (true) {
+      case !!search?.value:
+        presenceData.details = 'Searching Pinterest'
+        break
+      case !!document.querySelector('[data-test-id="profile-name"]'):
+        presenceData.details = 'Viewing a profile'
+        break
+      case pathname.includes('/pin/'):
+        presenceData.details = video ? 'Viewing a video pin' : 'Viewing a pin'
+        break
+      case pathname.includes('/ideas/'):
+        presenceData.details = 'Browsing through ideas'
+        break
+    }
+
+    presenceData.startTimestamp = browsingTimestamp
+    delete presenceData.state
     delete presenceData.buttons
+    delete presenceData.endTimestamp
+    delete presenceData.smallImageKey
+    delete presenceData.smallImageText
+  }
+  else if (!buttons && presenceData.buttons) {
+    delete presenceData.buttons
+  }
   if (presenceData.details)
     presence.setActivity(presenceData)
 })

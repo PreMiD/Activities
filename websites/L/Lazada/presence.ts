@@ -84,6 +84,6 @@ presence.on('UpdateData', async () => {
     delete presenceData.startTimestamp
   }
   if (!presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

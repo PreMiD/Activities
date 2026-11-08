@@ -20,7 +20,7 @@ function getStrings() {
     {
       play: 'general.playing',
       pause: 'general.paused',
-      Live: 'general.Live',
+      Live: 'general.live',
       browse: 'general.browsing',
       searchSomething: 'general.searchSomething',
       viewTeam: 'twitch.viewTeam',
@@ -57,6 +57,17 @@ function formatChannelName(channelId?: string): string {
   return channelMap[channelId.toLowerCase()] || channelId.toUpperCase()
 }
 
+const LIVE_DURATION_THRESHOLD = 86400 * 30 // nothing on iPlayer is 30 days long
+function isEpochAnchored(value: number): boolean {
+  return Number.isFinite(value) && value > LIVE_DURATION_THRESHOLD
+}
+function isLiveTimeline(media: { duration: number, currentTime: number }): boolean {
+  // `duration` alone is ambiguous: MSE streams (live or VOD) can report
+  // Infinity while the seekable range is still unresolved. `currentTime`
+  // anchored to wall-clock epoch seconds is the reliable live signature.
+  return isEpochAnchored(media.currentTime) || isEpochAnchored(media.duration)
+}
+
 const serviceName = (() => {
   switch (location.pathname.split('/')[1]) {
     case 'iplayer':
@@ -90,6 +101,29 @@ let SoundMedia: MediaData = {
 }
 let iPlayer: IPlayerData
 let soundData: SoundData
+let lastPath: string | undefined
+let liveBroadcast: { serviceId: string, data?: LiveBroadcast, fetchedAt: number } | undefined
+
+async function getLiveBroadcast(serviceId: string): Promise<LiveBroadcast | undefined> {
+  const now = Date.now()
+  if (liveBroadcast?.serviceId === serviceId) {
+    const end = liveBroadcast.data ? Date.parse(liveBroadcast.data.end) : 0
+    if (now < end || now - liveBroadcast.fetchedAt < 30_000)
+      return liveBroadcast.data
+  }
+
+  const previous = liveBroadcast?.serviceId === serviceId ? liveBroadcast.data : undefined
+  liveBroadcast = { serviceId, data: previous, fetchedAt: now }
+  try {
+    const response = await fetch(
+      `https://rms.api.bbc.co.uk/v2/broadcasts/sub-services/poll/${serviceId}?experience=domestic&offset=0&limit=3`,
+    )
+    const { data } = await response.json() as { data: LiveBroadcast[] }
+    liveBroadcast.data = data.find(b => Date.parse(b.start) <= now && now < Date.parse(b.end)) ?? data[0]
+  }
+  catch {}
+  return liveBroadcast.data
+}
 
 presence.on('iFrameData', (data: IFrameData) => {
   if (data.audio)
@@ -126,7 +160,16 @@ presence.on('UpdateData', async () => {
     }
   }
   const handleVideo = () => {
-    presenceData.type = ActivityType.Watching;
+    presenceData.type = ActivityType.Watching
+
+    if (isLiveTimeline(VideoMedia)) {
+      presenceData.smallImageKey = Assets.Live
+      presenceData.smallImageText = strings.Live
+      delete presenceData.startTimestamp
+      delete presenceData.endTimestamp
+      return
+    }
+
     [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(VideoMedia.currentTime, VideoMedia.duration)
 
     presenceData.smallImageKey = VideoMedia.paused
@@ -144,9 +187,23 @@ presence.on('UpdateData', async () => {
 
   if (path.includes('/iplayer')) {
     presenceData.type = ActivityType.Watching
-    iPlayer ??= await presence
-      .getPageVariable('__IPLAYER_REDUX_STATE__')
-      .then(data => data.__IPLAYER_REDUX_STATE__) as IPlayerData
+    if (lastPath !== path) {
+      lastPath = path
+      const data = await presence.getPageVariable<Record<string, any>>(
+        '__IPLAYER_REDUX_STATE__.episode',
+        '__IPLAYER_REDUX_STATE__.versions',
+        '__IPLAYER_REDUX_STATE__.channel',
+        '__IPLAYER_REDUX_STATE__.header',
+        '__IPLAYER_REDUX_STATE__.relatedEpisodes',
+      )
+      iPlayer = {
+        episode: data['__IPLAYER_REDUX_STATE__.episode'],
+        versions: data['__IPLAYER_REDUX_STATE__.versions'],
+        channel: data['__IPLAYER_REDUX_STATE__.channel'],
+        header: data['__IPLAYER_REDUX_STATE__.header'],
+        relatedEpisodes: data['__IPLAYER_REDUX_STATE__.relatedEpisodes'],
+      } as IPlayerData
+    }
 
     let iPlayerVideo: HTMLVideoElement | MediaData | undefined = document
       .querySelector('smp-toucan-player')
@@ -159,14 +216,38 @@ presence.on('UpdateData', async () => {
       iPlayerVideo = VideoMedia
     // OD Programming:
     if (iPlayerVideo && path.includes('/iplayer/episode')) {
-      if (!iPlayerVideo.duration || iPlayer.episode?.Live) {
-        if (iPlayer.channel?.onAir || iPlayer.episode?.Live) {
-          presenceData.details = (iPlayer.channel ?? iPlayer.episode)?.title
-          presenceData.state = strings.Live
+      const simulcast = iPlayer.versions?.find(version => version.kind === 'simulcast')
+      const isSimulcast = Boolean(simulcast) || iPlayer.episode?.live
+      if (!iPlayerVideo.duration || isSimulcast || isLiveTimeline(iPlayerVideo)) {
+        if (iPlayer.channel?.onAir || isSimulcast || isLiveTimeline(iPlayerVideo)) {
+          if (usePresenceName) {
+            presenceData.name = iPlayer.episode?.title ?? presenceData.name
+            presenceData.details = iPlayer.episode?.subtitle?.match(/: (.*)/)?.[1]
+              ?? iPlayer.episode?.subtitle
+              ?? strings.Live
+            presenceData.state = iPlayer.episode?.subtitle ?? strings.Live
+          }
+          else {
+            presenceData.details = (iPlayer.channel ?? iPlayer.episode)?.title
+            presenceData.state = iPlayer.episode?.subtitle || strings.Live
+          }
 
           setCover(iPlayer.episode?.images?.standard)
 
           presenceData.smallImageKey = Assets.Live
+          presenceData.smallImageText = strings.Live
+
+          if (simulcast?.startTime) {
+            presenceData.startTimestamp = simulcast.startTime
+            if (simulcast.endTime && simulcast.endTime > Math.floor(Date.now() / 1000))
+              presenceData.endTimestamp = simulcast.endTime
+            else
+              delete presenceData.endTimestamp
+          }
+          else {
+            delete presenceData.startTimestamp
+            delete presenceData.endTimestamp
+          }
         }
         else if (!iPlayer.channel) {
           setCover(
@@ -270,7 +351,6 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageText = strings.Live
 
         delete presenceData.startTimestamp
-        presenceData.startTimestamp = Date.now() // milliseconds
         delete presenceData.endTimestamp
       }
       else {
@@ -282,31 +362,61 @@ presence.on('UpdateData', async () => {
   }
   else if (path.includes('/sounds')) {
     presenceData.type = ActivityType.Listening
-    soundData ??= await presence
-      .getPageVariable('__PRELOADED_STATE__')
-      .then(data => data.__PRELOADED_STATE__) as SoundData
+    const liveServiceId = path.match(/\/sounds\/play\/live[/:]([^/?#]+)/)?.[1]
 
-    if (path.includes('/play/')) {
-      const isLive = path.includes('Live:')
-      setCover(soundData.programmes?.current.image_url)
+    if (liveServiceId) {
+      const broadcast = await getLiveBroadcast(liveServiceId)
+      const station = broadcast?.network.short_title
+      const audio = document.querySelector<HTMLAudioElement>('audio')
+      // No player found means we can't tell, and a live page is most likely playing
+      const paused = audio?.paused ?? (SoundMedia.duration ? SoundMedia.paused : false)
 
-      if (isLive) {
-        presenceData.details = SoundMedia.title ?? soundData.programmes?.current.titles.primary
-        presenceData.state = soundData.programmes?.current.titles.secondary
-        presenceData.smallImageKey = Assets.Live
+      if (usePresenceName && station)
+        presenceData.name = `BBC ${station}`
+
+      presenceData.details = broadcast?.titles.primary || station
+      presenceData.state = broadcast?.titles.secondary || (station ? `${strings.Live}: ${station}` : strings.Live)
+      setCover(broadcast?.image_url)
+
+      presenceData.smallImageKey = paused ? Assets.Pause : Assets.Live
+      presenceData.smallImageText = paused ? strings.pause : strings.Live
+
+      if (broadcast && !paused) {
+        presenceData.startTimestamp = Math.floor(Date.parse(broadcast.start) / 1000)
+        presenceData.endTimestamp = Math.floor(Date.parse(broadcast.end) / 1000)
       }
       else {
-        presenceData.details = SoundMedia.title ?? soundData.programmes?.current.titles.primary
-        presenceData.state = soundData.programmes?.current.titles.secondary
-        presenceData.smallImageKey = SoundMedia.paused || !SoundMedia.duration
-          ? Assets.Pause
-          : Assets.Play
+        delete presenceData.startTimestamp
+        delete presenceData.endTimestamp
       }
 
+      presenceData.buttons = [
+        {
+          label: strings.buttonListenAlong,
+          url: href,
+        },
+      ]
+    }
+    else if (path.includes('/play/')) {
+      if (lastPath !== path) {
+        lastPath = path
+        const data = await presence.getPageVariable<Record<string, any>>(
+          '__PRELOADED_STATE__.programmes',
+        )
+        soundData = {
+          programmes: data['__PRELOADED_STATE__.programmes'],
+        } as SoundData
+      }
+
+      setCover(soundData.programmes?.current.image_url)
+
+      presenceData.details = SoundMedia.title ?? soundData.programmes?.current.titles.primary
+      presenceData.state = soundData.programmes?.current.titles.secondary
+      presenceData.smallImageKey = SoundMedia.paused || !SoundMedia.duration
+        ? Assets.Pause
+        : Assets.Play
       presenceData.smallImageText = SoundMedia.paused || !SoundMedia.duration
-        ? isLive
-          ? strings.Live
-          : strings.pause
+        ? strings.pause
         : strings.play;
 
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestamps(SoundMedia.currentTime, SoundMedia.duration)
@@ -318,7 +428,7 @@ presence.on('UpdateData', async () => {
         },
       ]
 
-      if (SoundMedia.paused || isLive) {
+      if (SoundMedia.paused) {
         delete presenceData.startTimestamp
         delete presenceData.endTimestamp
       }
@@ -815,7 +925,7 @@ interface IPlayerData {
   episode?: {
     title: string
     subtitle: string
-    Live: boolean
+    live: boolean
     images: {
       portrait?: string
       standard: string
@@ -826,6 +936,11 @@ interface IPlayerData {
       category: string
     }
   }
+  versions?: {
+    kind: string
+    startTime: number
+    endTime: number
+  }[]
   relatedEpisodes?: {
     count: number
     episodes: {
@@ -870,6 +985,19 @@ interface MediaData {
   paused: boolean
   cover?: string
   title?: string
+}
+
+interface LiveBroadcast {
+  start: string
+  end: string
+  image_url?: string
+  network: {
+    short_title: string
+  }
+  titles: {
+    primary?: string
+    secondary?: string
+  }
 }
 
 interface SoundData {

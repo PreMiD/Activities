@@ -1,0 +1,98 @@
+{
+  "hamivideo.watchingDocumentary": {
+    "description": "Shown as the details line while watching a documentary",
+    "message": "Watching Documentary"
+  },
+  "hamivideo.watchingKids": {
+    "description": "Shown as the details line while watching kids' content",
+    "message": "Watching Kids Content"
+  },
+  "hamivideo.watchingVariety": {
+    "description": "Shown as the details line while watching a variety show",
+    "message": "Watching Variety Show"
+  },
+  "hamivideo.watchingSportsLive": {
+    "description": "Shown as the details line while watching a live sports broadcast whose sport could not be identified",
+    "message": "Watching Live Sports"
+  },
+  "hamivideo.watchingSportsReplay": {
+    "description": "Shown as the details line while watching a sports replay",
+    "message": "Watching Sports Replay"
+  },
+  "hamivideo.watchingTV": {
+    "description": "Shown as the details line while watching a live TV channel that isn't a sports broadcast (e.g. cartoons, news, movies, variety, kids channels)",
+    "message": "Watching TV"
+  },
+  "hamivideo.watchingBaseball": {
+    "description": "Shown as the details line while watching a live baseball broadcast (MLB, CPBL, etc.)",
+    "message": "Watching Baseball"
+  },
+  "hamivideo.watchingBasketball": {
+    "description": "Shown as the details line while watching a live basketball broadcast (NBA, WNBA, etc.)",
+    "message": "Watching Basketball"
+  },
+  "hamivideo.watchingFormula1": {
+    "description": "Shown as the details line while watching a live Formula 1 broadcast",
+    "message": "Watching Formula 1"
+  },
+  "hamivideo.watchingMotorcycleRacing": {
+    "description": "Shown as the details line while watching a live MotoGP broadcast",
+    "message": "Watching Motorcycle Racing"
+  },
+  "hamivideo.watchingMMA": {
+    "description": "Shown as the details line while watching a live UFC/MMA broadcast",
+    "message": "Watching MMA"
+  },
+  "hamivideo.watchingBadminton": {
+    "description": "Shown as the details line while watching a live badminton broadcast (BWF, etc.)",
+    "message": "Watching Badminton"
+  },
+  "hamivideo.watchingGolf": {
+    "description": "Shown as the details line while watching a live golf broadcast (PGA, LPGA, etc.)",
+    "message": "Watching Golf"
+  },
+  "hamivideo.watchingFootball": {
+    "description": "Shown as the details line while watching a live football/soccer broadcast",
+    "message": "Watching Football"
+  },
+  "hamivideo.watchingAmericanFootball": {
+    "description": "Shown as the details line while watching a live NFL broadcast",
+    "message": "Watching American Football"
+  },
+  "hamivideo.watchingIceHockey": {
+    "description": "Shown as the details line while watching a live NHL broadcast",
+    "message": "Watching Ice Hockey"
+  },
+  "hamivideo.watchingTennis": {
+    "description": "Shown as the details line while watching a live tennis broadcast (ATP, WTA, etc.)",
+    "message": "Watching Tennis"
+  },
+  "hamivideo.watchingVolleyball": {
+    "description": "Shown as the details line while watching a live volleyball broadcast",
+    "message": "Watching Volleyball"
+  },
+  "hamivideo.watchingEsports": {
+    "description": "Shown as the details line while watching a live esports broadcast",
+    "message": "Watching Esports"
+  },
+  "hamivideo.liveEventFallback": {
+    "description": "Shown as the state line for a live sports broadcast when no event name could be parsed",
+    "message": "LIVE Event"
+  },
+  "hamivideo.browsingAnime": {
+    "description": "Shown while browsing the anime section",
+    "message": "Browsing Anime"
+  },
+  "hamivideo.watchButton": {
+    "description": "Button label linking to the movie/show on Hami Video",
+    "message": "Watch on Hami Video"
+  },
+  "hamivideo.watchLiveButton": {
+    "description": "Button label linking to the current live sports broadcast",
+    "message": "Watch Live"
+  },
+  "hamivideo.watchReplayButton": {
+    "description": "Button label linking to the current sports replay",
+    "message": "Watch Replay"
+  }
+}

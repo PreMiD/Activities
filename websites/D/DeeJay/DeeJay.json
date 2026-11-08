@@ -31,6 +31,18 @@
     "description": "Shown when viewing episodes",
     "message": "Viewing Episodes"
   },
+  "deejay.listeningToEpisode": {
+    "description": "Shown when listening to a specific episode",
+    "message": "Listening to episode"
+  },
+  "deejay.viewingArticles": {
+    "description": "Shown when browsing articles",
+    "message": "Viewing articles"
+  },
+  "deejay.listeningToPodcast": {
+    "description": "Shown when listening to a specific podcast episode",
+    "message": "Listening to podcast"
+  },
   "deejay.viewingHosts": {
     "description": "Shown when viewing the hosts page",
     "message": "Viewing Hosts in DeeJay Team"

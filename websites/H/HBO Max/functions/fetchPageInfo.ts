@@ -21,8 +21,13 @@ export async function fetchPageInfo(pathname: string): Promise<void> {
 
     try {
       pageInfo.data = await fetch(
-        `https://default.any-amer.prd.api.hbomax.com/cms/routes${pathname}?include=default&page[items.size]=10`,
+        `https://default.any-amer.prd.api.hbomax.com/cms/routes${pathname}?include=default&decorators=viewingHistory,isFavorite,contentAction,badges&page[items.size]=10`,
         {
+          headers: {
+            'x-device-info': 'hbomax/7.6.0 (desktop/desktop; Windows/NT 10.0; 177ff0d8-8ac4-4ab9-a39e-c14f2e98bb34/da0cdd94-5a39-42ef-aa68-54cbc1b852c3)',
+            'x-disco-client': 'WEB:NT 10.0:hbomax:7.6.0',
+            'x-disco-params': 'realm=bolt,bid=beam,features=ar',
+          },
           method: 'GET',
           credentials: 'include',
         },

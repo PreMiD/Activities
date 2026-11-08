@@ -1,0 +1,64 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "1088052955896356925",
+    "name": "ShqipCinema"
+  },
+  "service": "ShqipCinema",
+  "description": {
+    "en": "Watch anime and movies with Albanian subtitles and dubbing on ShqipCinema."
+  },
+  "url": "shqipcinema.org",
+  "regExp": "^https?[:][/][/](?:www[.])?shqipcinema[.]org[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/ShqipCinema/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/ShqipCinema/assets/thumbnail.png",
+  "color": "#e50914",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "movies",
+    "albanian",
+    "shqip"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?[:][/][/](?:(?:www[.])?bysedikamoum[.]com[/].*|player[.]abyssplayer[.]com[/].*|(?:www[.])?shqipcinema[.]upn[.]one(?:[/].*)?|(?:www[.])?shqipcinema[.]org[/](?:server1|server2)_shqipcinema[.]php.*)$",
+  "settings": [
+    {
+      "id": "showBrowsing",
+      "title": "Show Browsing",
+      "icon": "fad fa-search",
+      "value": false,
+      "description": "Show a Rich Presence while browsing regular ShqipCinema pages."
+    },
+    {
+      "id": "showCover",
+      "title": "Show Cover",
+      "icon": "fas fa-images",
+      "value": true,
+      "description": "Display the current anime or movie poster as the large image."
+    },
+    {
+      "id": "showPlaybackTimer",
+      "title": "Show Playback Timer",
+      "icon": "fas fa-clock",
+      "value": true,
+      "description": "Display playback progress when the active video iframe exposes its video state."
+    },
+    {
+      "id": "showEpisodeTitle",
+      "title": "Show Episode Title",
+      "icon": "fas fa-tv",
+      "value": true,
+      "description": "Show the episode title when it is available in the episode list."
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Content Buttons",
+      "icon": "fas fa-external-link-alt",
+      "value": true,
+      "description": "Add buttons for the current episode/movie and its anime details page."
+    }
+  ]
+}

@@ -313,7 +313,7 @@ presence.on('UpdateData', async () => {
                 }
               }
               else {
-                presence.setActivity()
+                presence.clearActivity()
               }
           }
         }

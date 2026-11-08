@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "premid-activities": {
+      "command": "node",
+      "args": ["cli/dist/index.js", "mcp"]
+    }
+  }
+}

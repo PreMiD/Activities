@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Deleted 7.12i",
@@ -18,7 +18,7 @@
   },
   "url": "nuxtjs.org",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*nuxtjs[.]org[/]",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/Nuxt.js/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/Nuxt.js/assets/thumbnail.png",
   "color": "#00c58e",

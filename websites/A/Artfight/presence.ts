@@ -219,5 +219,5 @@ presence.on('UpdateData', async () => {
     presence.setActivity(slideshow)
   else if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })

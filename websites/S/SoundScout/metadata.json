@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "239809113125552129",
+    "name": "Snupai"
+  },
+  "service": "SoundScout",
+  "description": {
+    "en": "SoundScout provides claim-free music licensing for creators, streamers, and brands."
+  },
+  "url": "soundscout.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*soundscout[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SoundScout/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SoundScout/assets/thumbnail.jpeg",
+  "color": "#F1D383",
+  "category": "music",
+  "tags": [
+    "streaming",
+    "royalty-free",
+    "creator"
+  ]
+}

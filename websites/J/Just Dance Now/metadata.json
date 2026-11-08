@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "joerkig",
@@ -11,7 +11,7 @@
   },
   "url": "justdancenow.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*justdancenow[.]com[/]",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Just%20Dance%20Now/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Just%20Dance%20Now/assets/thumbnail.png",
   "color": "#558e9c",

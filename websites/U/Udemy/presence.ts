@@ -15,6 +15,7 @@ presence.on('UpdateData', async () => {
     pause: 'general.paused',
     browse: 'general.browsing',
   })
+  const privacy = await presence.getSetting<boolean>('privacy')
 
   const presenceData: PresenceData = {
     largeImageKey: ActivityAssets.Logo,
@@ -71,6 +72,23 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = BROWSING_TIMESTAMP
     presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = (await strings).browse
+  }
+
+  if (privacy) {
+    if (videoInfo)
+      presenceData.details = 'Watching a course'
+    else if (pathname.includes('/course/'))
+      presenceData.details = 'Viewing a course'
+    else if (pathname.includes('/courses/search/'))
+      presenceData.details = 'Searching Udemy'
+    else
+      presenceData.details = (await strings).browse
+
+    presenceData.startTimestamp = BROWSING_TIMESTAMP
+    delete presenceData.state
+    delete presenceData.endTimestamp
+    delete presenceData.smallImageKey
+    delete presenceData.smallImageText
   }
 
   if (presenceData.details) {

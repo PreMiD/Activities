@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Bas950",
@@ -50,7 +50,7 @@
     "feedback.premid.app"
   ],
   "regExp": "^https?[:][/][/]((docs|beta|status|feedback)[.])?premid[.]app[/]",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/P/PreMiD/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/P/PreMiD/assets/thumbnail.png",
   "color": "#7289DA",

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "462965713162731520",
+    "name": "n4iff"
+  },
+  "service": "3asq",
+  "description": {
+    "en": "3asq (مانجا العاشق) is an Arabic manga reader offering fan translations of popular manga such as One Piece, Hunter x Hunter, Berserk and more."
+  },
+  "url": "3asq.online",
+  "regExp": "^https?[:][/][/](www[.])?3asq[.]online[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/lrQuCiY.png",
+  "thumbnail": "https://i.imgur.com/IJEzc87.png",
+  "color": "#e67e22",
+  "category": "anime",
+  "tags": [
+    "manga",
+    "reading",
+    "arabic",
+    "translation",
+    "comics"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy",
+      "icon": "fa-solid fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "cover",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show manga cover",
+      "icon": "fa-solid fa-images",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "if": {
+        "privacy": false
+      },
+      "title": "Show buttons",
+      "icon": "fa-solid fa-compress-arrows-alt",
+      "value": true
+    },
+    {
+      "id": "time",
+      "title": "Show timestamps",
+      "icon": "fa-solid fa-stopwatch",
+      "value": true
+    }
+  ]
+}

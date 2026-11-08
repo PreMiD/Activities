@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Dzlandis",
@@ -17,7 +17,7 @@
   },
   "url": "ko-fi.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*ko-fi[.]com[/]",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/Ko-Fi/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/Ko-Fi/assets/thumbnail.png",
   "color": "#28AAE0",

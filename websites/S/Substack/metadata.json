@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "671037171611729920",
+    "name": "atom_skully"
+  },
+  "service": "Substack",
+  "description": {
+    "en": "Substack is a platform that allows independent writers, journalists, and creators to publish newsletters, articles, and podcasts directly to their audience, while building a community with their readers.",
+    "fr": "Substack est une plateforme qui permet aux écrivains, journalistes et créateurs indépendants de publier directement leurs newsletters, articles et podcasts, tout en créant une communauté avec leurs lecteurs."
+  },
+  "url": "substack.com",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*substack[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Substack/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Substack/assets/thumbnail.jpeg",
+  "color": "#FE8247",
+  "category": "socials",
+  "tags": [
+    "newsletter",
+    "blog",
+    "reading",
+    "articles",
+    "writing",
+    "authors"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "userPic",
+      "title": "Show User's Picture",
+      "icon": "fas fa-user",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    },
+    {
+      "id": "buttons",
+      "title": "Show Buttons",
+      "icon": "fas fa-compress-arrows-alt",
+      "value": true,
+      "if": {
+        "privacy": false
+      }
+    }
+  ]
+}

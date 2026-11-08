@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "Luscarvalho",
@@ -10,12 +10,9 @@
     "en": "Discover and enjoy a vast collection of literary works, including manga, manhwa, manhua, novels, and much more.",
     "pt-br": "Descubra e desfrute de uma vasta coleção de obras literárias, incluindo mangás, manwhas, manhuas, novels e muito mais."
   },
-  "url": [
-    "slimeread.com",
-    "www.slimeread.com"
-  ],
+  "url": "www.slimeread.com",
   "regExp": "^https?[:][/][/](www[.])?slimeread[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/SlimeRead/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/SlimeRead/assets/thumbnail.png",
   "color": "#5794CE",

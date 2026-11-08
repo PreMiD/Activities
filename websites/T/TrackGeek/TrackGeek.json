@@ -1,0 +1,70 @@
+{
+  "TrackGeek.buttonViewCast": {
+    "description": "Used as the title for the button in Discord.",
+    "message": "View Cast"
+  },
+  "TrackGeek.buttonViewCompany": {
+    "description": "Used as the title for the button in Discord.",
+    "message": "View Company"
+  },
+  "TrackGeek.buttonViewFranchise": {
+    "description": "Used as the title for the button in Discord.",
+    "message": "View Franchise"
+  },
+  "TrackGeek.buttonViewManga": {
+    "description": "Used as the title for the button in Discord.",
+    "message": "View Manga"
+  },
+  "TrackGeek.buttonViewAnime": {
+    "description": "Used as the title for the button in Discord.",
+    "message": "View Anime"
+  },
+  "TrackGeek.buttonViewBook": {
+    "description": "Used as the title for the button in Discord.",
+    "message": "View Book"
+  },
+  "TrackGeek.viewBook": {
+    "description": "Displayed when viewing a specific book.",
+    "message": "Viewing book:"
+  },
+  "TrackGeek.settings": {
+    "description": "View the settings page.",
+    "message": "Settings"
+  },
+  "TrackGeek.viewCast": {
+    "description": "Displayed when viewing a specific cast member.",
+    "message": "Viewing cast member:"
+  },
+  "TrackGeek.viewCompany": {
+    "description": "Displayed when viewing a specific company.",
+    "message": "Viewing company:"
+  },
+  "TrackGeek.viewFranchise": {
+    "description": "Displayed when viewing a specific franchise.",
+    "message": "Viewing franchise:"
+  },
+  "TrackGeek.mangas": {
+    "description": "Displayed when viewing the mangas home.",
+    "message": "Mangas"
+  },
+  "TrackGeek.animes": {
+    "description": "Displayed when viewing the animes home.",
+    "message": "Animes"
+  },
+  "TrackGeek.books": {
+    "description": "Displayed when viewing the books home.",
+    "message": "Books"
+  },
+  "TrackGeek.games": {
+    "description": "Displayed when viewing the games home.",
+    "message": "Games"
+  },
+  "TrackGeek.movies": {
+    "description": "Displayed when viewing the movies home.",
+    "message": "Movies"
+  },
+  "TrackGeek.tvShows": {
+    "description": "Displayed when viewing the tv shows home.",
+    "message": "TV Shows"
+  }
+}

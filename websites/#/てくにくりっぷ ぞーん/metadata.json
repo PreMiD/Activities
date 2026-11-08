@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Buachi",
+    "id": "594865372608462866"
+  },
+  "service": "てくにくりっぷ ぞーん",
+  "description": {
+    "en": "Share what OtoMADs you're watching on Techniclip Zone!",
+    "ja": "てくにくりっぷ ぞーんでどんな音MADを見ているかシェアしよう！"
+  },
+  "url": "zone.techniclip.com",
+  "regExp": "^https?[:][/][/](zone[.])?techniclip[.]com[/]",
+  "version": "1.0.2",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%E3%81%A6%E3%81%8F%E3%81%AB%E3%81%8F%E3%82%8A%E3%81%A3%E3%81%B7%20%E3%81%9E%E3%83%BC%E3%82%93/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%E3%81%A6%E3%81%8F%E3%81%AB%E3%81%8F%E3%82%8A%E3%81%A3%E3%81%B7%20%E3%81%9E%E3%83%BC%E3%82%93/assets/thumbnail.jpeg",
+  "color": "#ffffff",
+  "category": "videos",
+  "tags": [
+    "video",
+    "techniclip",
+    "anime"
+  ]
+}

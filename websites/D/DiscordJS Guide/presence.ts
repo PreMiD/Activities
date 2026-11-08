@@ -16,6 +16,6 @@ presence.on('UpdateData', async () => {
     ?.replace('#', '')}`
 
   if (!presenceData.details)
-    presence.setActivity()
+    presence.clearActivity()
   else presence.setActivity(presenceData)
 })

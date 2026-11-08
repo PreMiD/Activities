@@ -12,3 +12,4 @@ export const PeopleCdn = (slug: string) => `https://${Host}/api/people/${slug}`
 export const ReviewsCdn = (id: string) => `https://${Host}/api/reviews/${id}`
 export const TeamsCdn = (slug: string) => `https://${Host}/api/teams/${slug}`
 export const PublisherCdn = (slug: string) => `https://${Host}/api/publisher/${slug}`
+export const CardCdn = (slug: string) => `https://${Host}/api/cards/${slug}`

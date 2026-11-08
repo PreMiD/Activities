@@ -10,34 +10,44 @@ enum ActivityAssets {
 
 presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
+    name: 'Homestuck: Beyond Canon',
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
   }
   const { pathname } = document.location
   const pathArr = pathname.split('/')
 
-  switch (pathArr[1]) {
+  switch (pathArr[0]) {
     case '':
       presenceData.details = 'Viewing the home page'
       break
+  }
 
+  switch (pathArr[1]) {
     case 'story':
-      presenceData.details = 'Reading Homestuck^2'
+      presenceData.details = 'Reading Homestuck: Beyond Canon'
       presenceData.smallImageKey = ActivityAssets.Heart
+
       if (!pathArr[2])
         presenceData.state = `Page 1 of ${await getPages()}`
-      else presenceData.state = `Page ${pathArr[2]} of ${await getPages()}`
+      else if (!(pathArr[2] === 'log'))
+        presenceData.state = `Page ${pathArr[2]} of ${await getPages()}`
 
-      if (document.querySelector('h2')) {
-        presenceData.smallImageText = document.querySelector('h2')?.textContent
+      if (pathArr[2] === 'log') {
+        presenceData.details = 'Viewing the adventure log'
+      }
+
+      if (document.querySelector('h1')) {
+        presenceData.smallImageText = document.querySelector('h1')?.textContent
       }
       else {
-        presenceData.smallImageText = document.querySelector('title')?.textContent
+        presenceData.smallImageText = document.querySelector('.title__content')?.textContent
       }
+
       presenceData.buttons = [
         {
           label: 'Read Along',
-          url: `https://www.homestuck2.com${pathname}`,
+          url: `https://www.beyondcanon.com${pathname}`,
         },
       ]
       break
@@ -53,7 +63,7 @@ presence.on('UpdateData', async () => {
           presenceData.buttons = [
             {
               label: 'Read Along',
-              url: `https://www.homestuck2.com${pathname}`,
+              url: `https://www.beyondcanon.com${pathname}`,
             },
           ]
           break
@@ -66,7 +76,7 @@ presence.on('UpdateData', async () => {
           presenceData.buttons = [
             {
               label: 'Read Along',
-              url: `https://www.homestuck2.com${pathname}`,
+              url: `https://www.beyondcanon.com${pathname}`,
             },
           ]
           break
@@ -79,7 +89,7 @@ presence.on('UpdateData', async () => {
           presenceData.buttons = [
             {
               label: 'Read Along',
-              url: `https://www.homestuck2.com${pathname}`,
+              url: `https://www.beyondcanon.com${pathname}`,
             },
           ]
           break
@@ -92,7 +102,7 @@ presence.on('UpdateData', async () => {
           presenceData.buttons = [
             {
               label: 'Read Along',
-              url: `https://www.homestuck2.com${pathname}`,
+              url: `https://www.beyondcanon.com${pathname}`,
             },
           ]
           break
@@ -105,7 +115,7 @@ presence.on('UpdateData', async () => {
           presenceData.buttons = [
             {
               label: 'Read Along',
-              url: `https://www.homestuck2.com${pathname}`,
+              url: `https://www.beyondcanon.com${pathname}`,
             },
           ]
           break
@@ -127,16 +137,20 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Viewing the credits'
       break
 
-    case 'log':
-      presenceData.details = 'Viewing the adventure log'
-      break
-
     case 'privacy-policy':
       presenceData.details = 'Viewing the privacy policy'
       break
 
+    case 'cookie-policy':
+      presenceData.details = 'Viewing the cookie policy'
+      break
+
     case 'recap':
       presenceData.details = 'Viewing recap'
+      break
+
+    case 'news':
+      presenceData.details = 'Viewing the news page'
       break
 
     default:
@@ -146,12 +160,12 @@ presence.on('UpdateData', async () => {
 
   if (presenceData.details)
     presence.setActivity(presenceData)
-  else presence.setActivity()
+  else presence.clearActivity()
 })
 
 async function getPages() {
   const response = await fetch(
-    `https://api.rss2json.com/v1/api.json?rss_url=${'https://homestuck2.com/story/rss'}`,
+    `https://api.rss2json.com/v1/api.json?rss_url=${'https://beyondcanon.com/story/feed'}`,
   )
   const data = await response.json()
   return data.items[0].title

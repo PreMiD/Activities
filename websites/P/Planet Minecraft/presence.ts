@@ -324,11 +324,13 @@ function memberActivity(
       else {
         presenceData.details = strings.viewMember
         presenceData.state = document
-          .querySelector('meta[name="og:profile:username"]')
+          .querySelector('meta[property="profile:username"]')
           ?.getAttribute('content')
-        presenceData.largeImageKey = document
-          .querySelector('meta[name="og:image:secure_url"]')
+        const avatarFilename = document
+          .querySelector('meta[property="og:image:secure_url"]')
           ?.getAttribute('content')
+        if (avatarFilename)
+          presenceData.largeImageKey = `https://static.planetminecraft.com/files/avatar/${avatarFilename}`
       }
     }
   }

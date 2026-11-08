@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "건유1019",
@@ -15,7 +15,7 @@
   },
   "url": "www.music-flo.com",
   "regExp": "^https?[:][/][/](www[.])?music-flo[.]com[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/F/FLO/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/F/FLO/assets/thumbnail.png",
   "color": "#3f3fff",
