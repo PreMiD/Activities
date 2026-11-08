@@ -24,6 +24,12 @@ function gameIcon(slug: string): string | null {
   const html = document.body.innerHTML
   const appId = html.match(/\/setting\/game\/detail\/(\d+)/)?.[1]
     ?? html.match(/app_id=(\d+)/)?.[1]
+    // プレイ画面のゲーム本体 iframe (osapi ガジェット) の aid パラメータ
+    ?? document
+      .querySelector<HTMLIFrameElement>(
+        'iframe[src*="osapi.dmm.com/gadgets/ifr"]',
+      )
+      ?.src.match(/[?&]aid=(\d+)/)?.[1]
   const url = appId ? `https://media.games.dmm.com/freegame/app/${appId}/200.gif` : null
   // ページの読み込み途中でまだ見つからないときは覚えずに、次の更新でもう一度探す
   if (url)

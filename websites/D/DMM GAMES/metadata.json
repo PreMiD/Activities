@@ -15,7 +15,7 @@
     "games.dmm.com"
   ],
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*games[.]dmm[.]com[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/DMM%20GAMES/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/DMM%20GAMES/assets/thumbnail.png",
   "color": "#FF6B00",
