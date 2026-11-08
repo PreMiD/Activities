@@ -16,7 +16,7 @@
     "en": "Syosetu is one of Japan's largest web novel platforms, where anyone can publish and read novels for free.",
     "ja": "小説家になろうは、誰でも小説を投稿・無料で読むことができる日本最大級の小説投稿サイトです。"
   },
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/%23/%E5%B0%8F%E8%AA%AC%E5%AE%B6%E3%81%AB%E3%81%AA%E3%82%8D%E3%81%86/assets/logo.png",
+  "logo": "https://github.com/user-attachments/assets/086574d3-067b-49c5-b689-75ab336bb11f",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*syosetu[.]com[/]",
   "service": "小説家になろう",
   "settings": [
@@ -45,7 +45,7 @@
     "japan",
     "web-novel"
   ],
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/%23/%E5%B0%8F%E8%AA%AC%E5%AE%B6%E3%81%AB%E3%81%AA%E3%82%8D%E3%81%86/assets/thumbnail.png",
+  "thumbnail": "https://github.com/user-attachments/assets/b43ccd65-66b8-4cbc-86cf-bb9b240e253a",
   "url": [
     "syosetu.com",
     "ncode.syosetu.com",
