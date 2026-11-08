@@ -23,18 +23,23 @@ interface Station {
 
 const stations = new Map<string, Station>()
 const pending = new Map<string, Promise<void>>()
+// 取得に失敗した局は 5 分間再試行しない（UpdateData のたびに fetch が走るのを防ぐ）
+const failedAt = new Map<string, number>()
 // 再生中に別のページへ移動しても、最後に聴いていた局を覚えておく
 let lastLive: { station: string, timefree: string | null } | null = null
 
 function loadStation(id: string): void {
   const cached = stations.get(id)
-  if ((cached && Date.now() - cached.fetchedAt < 60 * 60 * 1000) || pending.has(id))
+  const lastFailed = failedAt.get(id)
+  if ((cached && Date.now() - cached.fetchedAt < 60 * 60 * 1000) || pending.has(id) || (lastFailed && Date.now() - lastFailed < 5 * 60 * 1000))
     return
   pending.set(id, (async () => {
     try {
       const res = await fetch(`https://radiko.jp/v3/program/station/weekly/${id}.xml`)
-      if (!res.ok)
+      if (!res.ok) {
+        failedAt.set(id, Date.now())
         return
+      }
       const xml = new DOMParser().parseFromString(await res.text(), 'text/xml')
       const programs: Program[] = [...xml.querySelectorAll('prog')].map(prog => ({
         ft: prog.getAttribute('ft') ?? '',
@@ -48,8 +53,11 @@ function loadStation(id: string): void {
         programs,
         fetchedAt: Date.now(),
       })
+      failedAt.delete(id)
     }
-    catch {}
+    catch {
+      failedAt.set(id, Date.now())
+    }
     finally {
       pending.delete(id)
     }
@@ -138,13 +146,9 @@ presence.on('UpdateData', async () => {
     }
     if (timefreeTime && program)
       presenceData.largeImageText = `タイムフリー：${formatDate(program.ft)} 放送`
-    if (showImage && program?.img) {
+    if (showImage && program?.img)
       presenceData.largeImageKey = program.img
-      presenceData.smallImageKey = playing ? Assets.Play : Assets.Pause
-    }
-    else {
-      presenceData.smallImageKey = playing ? Assets.Play : Assets.Pause
-    }
+    presenceData.smallImageKey = playing ? Assets.Play : Assets.Pause
     presenceData.smallImageText = playing ? '再生中' : '一時停止中'
 
     if (playing && isTimeVisible) {
