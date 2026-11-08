@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1568835180276219986',
 })
 
-const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/%23/%E5%AF%BF%E5%8F%B8%E6%89%93/assets/logo.png'
+const LOGO = 'https://github.com/user-attachments/assets/39ae8731-765e-491e-94cf-c2f0e0e9ebe0'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let playingSince = 0
