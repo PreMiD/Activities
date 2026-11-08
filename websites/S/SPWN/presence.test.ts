@@ -1,6 +1,14 @@
 import { ActivityType, Assets } from 'premid'
 import { expect, test } from 'premid/test'
 
+/**
+ * Waits for a presence update that satisfies the supplied condition.
+ *
+ * @param next - Reads the next activity update.
+ * @param isReady - Checks whether an update is ready for assertions.
+ * @returns The first matching presence within 20 updates.
+ * @throws If none of the 20 updates satisfies the condition.
+ */
 async function nextPresence(
   next: () => Promise<PresenceData | undefined>,
   isReady: (presence: PresenceData) => boolean,
