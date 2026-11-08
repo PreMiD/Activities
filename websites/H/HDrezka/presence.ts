@@ -26,8 +26,8 @@ presence.on('UpdateData', async () => {
   }
 
   const urlPath = document.location.pathname
-  const contentType = document.querySelector('meta[property=\'og:url\']')?.getAttribute('content')?.split('/')[3]
-  const isMediaPage = urlPath.match(/\/(films|series|cartoons|animation)\/.+/)
+  const contentType = document.querySelector('meta[property=\'og:url\']')?.getAttribute('content')?.split('/')[3] || urlPath.split('/')[1]
+  const isMediaPage = urlPath.match(/\/(?:films|series|cartoons|animation)\/.+/)
 
   if (privacyMode && isMediaPage) {
     return presence.setActivity({
@@ -42,8 +42,16 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Browsing the Home Page'
   }
   else if (isMediaPage) {
-    const title = document.querySelector('.b-post__title h1')?.textContent?.trim()
+    let title = document.querySelector('.b-post__title h1')?.textContent?.trim()
+
+    if (title)
+      title = title.replace(/\s*[-–—]\s*(?:все серии|серии|смотреть|в озвучке|дублированный|онлайн).*$/i, '').trim()
+    else
+      title = document.querySelector('meta[property=\'og:title\']')?.getAttribute('content')?.replace(/\s*\(\d{4}\)$/, '').trim()
+
     const coverImage = document.querySelector<HTMLImageElement>('.b-sidecover a img')?.src
+      || document.querySelector('meta[property=\'og:image\']')?.getAttribute('content')
+      || document.querySelector<HTMLLinkElement>('link[rel=\'image_src\']')?.href
 
     if (showTitleAsPresence && !privacyMode) {
       presenceData.name = title
