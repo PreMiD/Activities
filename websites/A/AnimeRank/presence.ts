@@ -65,7 +65,8 @@ presence.on('UpdateData', async () => {
     const video = document.querySelector<HTMLVideoElement>('video')
 
     presenceData.details = privacy ? 'Anime izliyor' : title
-    presenceData.state = `${ep}. Bölüm`
+    if (!privacy)
+      presenceData.state = `${ep}. Bölüm`
     if (!privacy && showCover && anime?.cover)
       presenceData.largeImageKey = anime.cover
     presenceData.largeImageText = privacy ? 'AnimeRank' : title
