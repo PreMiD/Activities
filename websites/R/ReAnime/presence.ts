@@ -102,7 +102,7 @@ function detectPageRoute(): 'home' | 'search' | 'schedule' | 'anime' | 'watch' |
 }
 
 function getAnimeTitle(): string {
-  const headingTitle = cleanText(document.querySelector('h2[title]')?.textContent)
+  const headingTitle = cleanText(document.querySelector('h1[data-anime-title]')?.textContent)
   const ogTitle = getMetaContent('meta[property="og:title"]')
     .replace(/^Watch\s+/i, '')
     .replace(/\s+Episode\s+\d+\s+Online Free\s+\|\s+Re:ANIME$/i, '')
@@ -506,7 +506,9 @@ presence.on('UpdateData', async () => {
     resolvedUrl,
     animeTitle,
     poster,
-    browsingTimestamp: getState().browsingTimestamp,
+    get browsingTimestamp() {
+      return getState().browsingTimestamp
+    },
   }
 
   // Add route-specific data
