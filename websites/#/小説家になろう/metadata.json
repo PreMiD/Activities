@@ -1,56 +1,56 @@
 {
   "$schema": "https://schemas.premid.app/metadata/1.17",
-  "altnames": [
-    "小説家になろう",
-    "なろう",
-    "Shosetsuka ni Naro"
-  ],
   "apiVersion": 1,
   "author": {
     "id": "754572586914021468",
     "name": "0120r"
   },
-  "category": "other",
-  "color": "#18B7CD",
+  "service": "小説家になろう",
+  "altnames": [
+    "小説家になろう",
+    "なろう",
+    "Shosetsuka ni Naro"
+  ],
   "description": {
     "en": "Syosetu is one of Japan's largest web novel platforms, where anyone can publish and read novels for free.",
     "ja": "小説家になろうは、誰でも小説を投稿・無料で読むことができる日本最大級の小説投稿サイトです。"
   },
-  "logo": "https://github.com/user-attachments/assets/086574d3-067b-49c5-b689-75ab336bb11f",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*syosetu[.]com[/]",
-  "service": "小説家になろう",
-  "settings": [
-    {
-      "icon": "fad fa-book-open",
-      "id": "showNovel",
-      "title": "作品名を表示",
-      "value": true
-    },
-    {
-      "icon": "fad fa-bookmark",
-      "id": "showEpisode",
-      "title": "話題を表示",
-      "value": true
-    },
-    {
-      "icon": "fad fa-eye",
-      "id": "showR18",
-      "title": "novel18（R18）を表示",
-      "value": false
-    }
-  ],
-  "tags": [
-    "novel",
-    "reading",
-    "japan",
-    "web-novel"
-  ],
-  "thumbnail": "https://github.com/user-attachments/assets/b43ccd65-66b8-4cbc-86cf-bb9b240e253a",
   "url": [
     "syosetu.com",
     "ncode.syosetu.com",
     "yomou.syosetu.com",
     "novel18.syosetu.com"
   ],
-  "version": "1.0.0"
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*syosetu[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/pachiris/Activities/premid-assets/syosetu/logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/pachiris/Activities/premid-assets/syosetu/thumbnail.png",
+  "color": "#18B7CD",
+  "category": "other",
+  "tags": [
+    "novel",
+    "reading",
+    "japan",
+    "web-novel"
+  ],
+  "settings": [
+    {
+      "id": "showNovel",
+      "title": "作品名を表示",
+      "icon": "fad fa-book-open",
+      "value": true
+    },
+    {
+      "id": "showEpisode",
+      "title": "話題を表示",
+      "icon": "fad fa-bookmark",
+      "value": true
+    },
+    {
+      "id": "showR18",
+      "title": "novel18（R18）を表示",
+      "icon": "fad fa-eye",
+      "value": false
+    }
+  ]
 }

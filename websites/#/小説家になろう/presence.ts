@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1568839930954916004',
 })
 
-const LOGO = 'https://github.com/user-attachments/assets/086574d3-067b-49c5-b689-75ab336bb11f'
+const LOGO = 'https://raw.githubusercontent.com/pachiris/Activities/premid-assets/syosetu/logo.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let readingKey = ''
@@ -54,9 +54,10 @@ presence.on('UpdateData', async () => {
   // ***** 作品の本文・目次 (ncode.syosetu.com) *****
   // /n1234ab/ が目次、/n1234ab/5/ のように末尾が数字だと各話。
   // 短編は話番号なしのURLのまま本文が表示されるため、本文要素の有無でも判定する
-  const novel = pathname.match(/^\/(n[a-z0-9]+)(?:\/(\d+)\/?.*)?$/)
-  if (hostname === 'ncode.syosetu.com' && novel) {
-    const [, ncode = '', episodeNum] = novel
+  const segments = pathname.split('/').filter(s => s !== '')
+  const ncode = segments[0] && /^n[a-z0-9]+$/.test(segments[0]) ? segments[0] : null
+  const episodeNum = segments[1] && /^\d+$/.test(segments[1]) ? segments[1] : undefined
+  if (hostname === 'ncode.syosetu.com' && ncode) {
     const isEpisode = !!episodeNum
     const isReading = isEpisode || !!document.querySelector('.p-novel__text')
     const key = `${ncode}/${episodeNum ?? ''}`
