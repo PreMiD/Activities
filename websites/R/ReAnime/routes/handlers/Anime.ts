@@ -5,7 +5,9 @@ import { setMode } from '../../state/presence-state.js'
 
 export default function anime(context: RouteContext) {
   setMode('detail')
+  const name = !context.privacy && context.displayType === 1 ? context.animeTitle : undefined
   const presenceData: PresenceData = {
+    name,
     largeImageKey: context.privacy
       ? ActivityAssets.Logo
       : context.poster || ActivityAssets.Logo,
