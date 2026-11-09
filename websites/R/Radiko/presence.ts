@@ -5,6 +5,8 @@ const presence = new Presence({
 })
 
 const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/logo.png'
+// 旧版からある Radiko 固有のブラウジング用アイコン (水色の丸)
+const BROWSING_ICON = 'https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/0.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 interface Program {
@@ -188,10 +190,13 @@ presence.on('UpdateData', async () => {
   const presenceData: PresenceData = {
     largeImageKey: LOGO,
     startTimestamp: browsingTimestamp,
+    smallImageKey: BROWSING_ICON,
+    smallImageText: 'ブラウジング中',
   }
   if (hash.startsWith('#!/search')) {
     presenceData.details = '番組を検索しています'
     presenceData.smallImageKey = Assets.Search
+    presenceData.smallImageText = '検索中'
   }
   else if (hash.startsWith('#!/timeshift') || hash.startsWith('#!/ts')) {
     presenceData.details = 'タイムフリーの番組を探しています'
