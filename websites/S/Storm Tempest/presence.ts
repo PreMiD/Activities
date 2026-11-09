@@ -21,16 +21,19 @@ interface PageState {
   url: string
 }
 
+/** Collapses whitespace and trims `value`, returning `undefined` for an empty result. */
 function clean(value: string | null | undefined): string | undefined {
   const normalized = value?.replace(/\s+/g, ' ').trim()
 
   return normalized || undefined
 }
 
+/** Returns the cleaned text content of `element`, if any. */
 function textOf(element: Element | null): string | undefined {
   return clean(element?.textContent)
 }
 
+/** Returns the cleaned value of `attribute` on `element`, if any. */
 function attrOf(
   element: Element | null,
   attribute: string,
@@ -38,6 +41,7 @@ function attrOf(
   return clean(element?.getAttribute(attribute))
 }
 
+/** Returns the text of the first element matching any of `selectors`. */
 function queryText(selectors: string[]): string | undefined {
   for (const selector of selectors) {
     const value = textOf(document.querySelector(selector))
@@ -50,6 +54,7 @@ function queryText(selectors: string[]): string | undefined {
   return undefined
 }
 
+/** Returns `attribute` from the first element matching any of `selectors`. */
 function queryAttr(
   selectors: string[],
   attribute: string,
@@ -65,6 +70,7 @@ function queryAttr(
   return undefined
 }
 
+/** Whether `element` is rendered with a non-empty box. */
 function isVisible(element: Element): boolean {
   const node = element as HTMLElement
   const style = window.getComputedStyle(node)
@@ -78,6 +84,7 @@ function isVisible(element: Element): boolean {
   )
 }
 
+/** Reads the label of the active server/source control in the player. */
 function sourceFromSelectedControl(): string | undefined {
   const selectors = [
     '[aria-pressed="true"]',
@@ -121,6 +128,7 @@ function sourceFromSelectedControl(): string | undefined {
   return undefined
 }
 
+/** Resolves the current app section (or a `source`/`server`/`provider` param) from the URL. */
 function sourceFromUrl(): string | undefined {
   const sources: Record<string, string> = {
     anisto: 'Anisto',
@@ -156,6 +164,7 @@ function sourceFromUrl(): string | undefined {
   return undefined
 }
 
+/** Extracts an episode number from text such as "S1E5", "Episode 5", "Ep 5" or "#5". */
 function extractEpisode(value: string | undefined): string | undefined {
   if (!value) {
     return undefined
@@ -179,6 +188,7 @@ function extractEpisode(value: string | undefined): string | undefined {
   return undefined
 }
 
+/** Finds the current episode number from the URL, title, or page elements. */
 function getEpisode(): string | undefined {
   const candidates = [
     document.location.pathname,
@@ -204,6 +214,7 @@ function getEpisode(): string | undefined {
   return undefined
 }
 
+/** Removes a trailing "- Episode N" suffix from a title. */
 function stripEpisode(value: string): string {
   return value
     .replace(
@@ -213,6 +224,7 @@ function stripEpisode(value: string): string {
     .trim()
 }
 
+/** Finds the title of the show being watched, ignoring generic site titles. */
 function getAnimeTitle(): string | undefined {
   const candidates = [
     queryAttr(
@@ -253,12 +265,14 @@ function getAnimeTitle(): string | undefined {
   return undefined
 }
 
+/** Returns the first loaded, unfinished `<video>` element on the page. */
 function getVideo(): HTMLVideoElement | undefined {
   return Array.from(
     document.querySelectorAll<HTMLVideoElement>('video'),
   ).find(video => !video.ended && video.readyState > 0)
 }
 
+/** Whether the current page is a watch/episode page or has an active video. */
 function isWatchPage(): boolean {
   const url
     = `${document.location.pathname}${document.location.search}`.toLowerCase()
@@ -272,6 +286,7 @@ function isWatchPage(): boolean {
   )
 }
 
+/** Collects the title, source, episode and video of the current watch page. */
 function getWatchState(): WatchState {
   return {
     title: getAnimeTitle() ?? 'Unknown Anime',
@@ -282,6 +297,7 @@ function getWatchState(): WatchState {
   }
 }
 
+/** Returns a display name for the current browsing page. */
 function getPageName(): string {
   const pathname = document.location.pathname
   const segments = pathname.split('/').filter(Boolean)
@@ -327,6 +343,7 @@ function getPageName(): string {
   return 'Storm Tempest'
 }
 
+/** Collects the name and URL of the current browsing page. */
 function getPageState(): PageState {
   return {
     name: getPageName(),
@@ -334,6 +351,7 @@ function getPageState(): PageState {
   }
 }
 
+/** Builds start/end timestamps from `video`, or none while it is paused or unknown. */
 function getPlaybackTimestamps(
   video: HTMLVideoElement | undefined,
 ): {
@@ -362,6 +380,7 @@ function getPlaybackTimestamps(
   }
 }
 
+/** Builds the presence shown while watching an episode. */
 function buildWatchActivity(watch: WatchState): PresenceData {
   const source = watch.source ?? 'Unknown Source'
   const episode = watch.episode
@@ -383,6 +402,7 @@ function buildWatchActivity(watch: WatchState): PresenceData {
   }
 }
 
+/** Builds the presence shown while browsing, keeping the elapsed time fixed. */
 function buildPageActivity(page: PageState): PresenceData {
   return {
     type: ActivityType.Watching,
@@ -399,6 +419,7 @@ function buildPageActivity(page: PageState): PresenceData {
   }
 }
 
+/** Updates the presence with watch or browsing activity on every refresh. */
 presence.on('UpdateData', async () => {
   if (isWatchPage()) {
     presence.setActivity(
