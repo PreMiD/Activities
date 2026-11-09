@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1568839930954916004',
@@ -65,6 +65,10 @@ presence.on('UpdateData', async () => {
       readingSince = Math.floor(Date.now() / 1000)
     }
     presenceData.details = isReading ? '小説を読んでいます' : '作品ページを見ています'
+    if (isReading) {
+      presenceData.smallImageKey = Assets.Reading
+      presenceData.smallImageText = '読書中'
+    }
     if (showNovel) {
       const title = getNovelTitle(ncode, isEpisode)
       const episode = showEpisode ? getEpisodeTitle(isEpisode) : null
