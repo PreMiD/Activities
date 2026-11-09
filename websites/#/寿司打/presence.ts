@@ -59,6 +59,10 @@ presence.on('UpdateData', async () => {
       : pathname.startsWith('/icon.html')
         ? '寿司アイコンの素材を見ています'
         : 'サイトを見ています'
+  if (pathname.startsWith('/qa.html')) {
+    presenceData.smallImageKey = Assets.Question
+    presenceData.smallImageText = 'Q&A'
+  }
   if (showButtons) {
     presenceData.buttons = [
       {
