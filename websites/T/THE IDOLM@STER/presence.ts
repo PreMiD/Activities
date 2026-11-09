@@ -87,7 +87,6 @@ presence.on('UpdateData', async () => {
     type: ActivityType.Playing,
     largeImageKey: LOGO,
     startTimestamp: browsingTimestamp,
-    smallImageKey: Assets.Reading,
   }
   const { hostname, pathname, href } = document.location
   const parts = pathname.split('/').filter(Boolean)
