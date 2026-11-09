@@ -10,24 +10,45 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 let playingSince = 0
 
 presence.on('UpdateData', async () => {
+  const [showButtons, showTimestamp] = await Promise.all([
+    presence.getSetting<boolean>('showButtons'),
+    presence.getSetting<boolean>('showTimestamp'),
+  ])
+
   const presenceData: PresenceData = {
     name: '寿司打',
     type: ActivityType.Playing,
     largeImageKey: LOGO,
-    startTimestamp: browsingTimestamp,
   }
 
-  const { pathname } = document.location
+  if (showTimestamp)
+    presenceData.startTimestamp = browsingTimestamp
+
+  const { pathname, search } = document.location
 
   // ***** プレイ画面 *****
-  // ゲーム本体は Unity WebGL (canvas) のため、コース名や結果はDOMに現れない
-  // （2026-11-04 に play.html 本体と共通JS (parts.js) を確認し、コース名を含む
-  // テキストがDOM側に存在しないことを検証済み）。表示は「プレイ中」のみになる
+  // ゲーム本体は Unity WebGL (canvas) のため、コース名やスコアはDOMに現れない
+  // （2026-11-04 に play.html 本体と共通JS (parts.js) を確認済み）。代わりに、
+  // トップページの3つの入口ごとに異なるクエリ文字列からプレイ方式を判別する
   if (pathname.startsWith('/play.html')) {
     playingSince ||= Math.floor(Date.now() / 1000)
     presenceData.details = 'プレイ中'
+    presenceData.state = search.includes('soundless')
+      ? '静かモード（サウンドなし）'
+      : search.includes('kana')
+        ? 'ふりがなつきモード'
+        : '通常モード'
     presenceData.smallImageKey = Assets.Play
-    presenceData.startTimestamp = playingSince
+    if (showTimestamp)
+      presenceData.startTimestamp = playingSince
+    if (showButtons) {
+      presenceData.buttons = [
+        {
+          label: '寿司打で遊ぶ',
+          url: document.location.href,
+        },
+      ]
+    }
     presence.setActivity(presenceData)
     return
   }
@@ -35,7 +56,19 @@ presence.on('UpdateData', async () => {
 
   // ***** その他のページ *****
   presenceData.details = pathname === '/' || pathname === '/index.html'
-    ? 'タイトル画面'
-    : 'サイトを見ています'
+    ? 'トップページを見ています'
+    : pathname.startsWith('/qa.html')
+      ? 'Q&Aを見ています'
+      : pathname.startsWith('/icon.html')
+        ? '寿司アイコンの素材を見ています'
+        : 'サイトを見ています'
+  if (showButtons) {
+    presenceData.buttons = [
+      {
+        label: '寿司打で遊ぶ',
+        url: 'https://sushida.net/play.html',
+      },
+    ]
+  }
   presence.setActivity(presenceData)
 })

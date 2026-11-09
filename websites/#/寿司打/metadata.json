@@ -25,5 +25,19 @@
     "game",
     "japan",
     "practice"
+  ],
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "ボタンを表示",
+      "icon": "fad fa-link",
+      "value": true
+    },
+    {
+      "id": "showTimestamp",
+      "title": "経過時間を表示",
+      "icon": "fad fa-clock",
+      "value": true
+    }
   ]
 }
