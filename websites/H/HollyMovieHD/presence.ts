@@ -4,7 +4,8 @@ const presence = new Presence({
   clientId: '1527392816966402270',
 })
 
-const LOGO = 'https://i.imgur.com/LDonhZk.png'
+const LOGO = 'https://i.imgur.com/eNrh6LG.png'
+const STALE_MS = 5000
 
 interface VideoData {
   currentTime: number
@@ -12,12 +13,17 @@ interface VideoData {
   paused: boolean
 }
 
+interface IframePayload extends VideoData {
+  active: boolean
+}
+
 let videoData: VideoData | null = null
 let videoDataReceivedAt = 0
 let lastShowTimestamps: boolean | null = null
 
 presence.on('iFrameData', (data) => {
-  videoData = data as VideoData
+  const payload = data as IframePayload
+  videoData = payload.active ? payload : null
   videoDataReceivedAt = Date.now()
 })
 
@@ -32,13 +38,16 @@ presence.on('UpdateData', async () => {
     presence.getSetting<number>('largeImage'),
   ])
 
-  // Clears activity and sets again without progress bar
+  // Clear activity and set again without progress bar
   if (lastShowTimestamps === true && !showTimestamps) {
     lastShowTimestamps = showTimestamps
     presence.clearActivity()
     return
   }
   lastShowTimestamps = showTimestamps
+
+  if (videoData && Date.now() - videoDataReceivedAt > STALE_MS)
+    videoData = null
 
   const data: PresenceData = {
     type: ActivityType.Watching,
