@@ -24,20 +24,17 @@ presence.on('UpdateData', async () => {
   if (showTimestamp)
     presenceData.startTimestamp = browsingTimestamp
 
-  const { pathname, search } = document.location
+  const { pathname } = document.location
 
   // ***** プレイ画面 *****
   // ゲーム本体は Unity WebGL (canvas) のため、コース名やスコアはDOMに現れない
-  // （2026-11-04 に play.html 本体と共通JS (parts.js) を確認済み）。代わりに、
-  // トップページの3つの入口ごとに異なるクエリ文字列からプレイ方式を判別する
+  // （2026-11-04 に play.html 本体と共通JS (parts.js) を確認済み）。
+  // 入口のクエリ (?soundless / ?kana) は初期プリセットにすぎず、タイトル画面の
+  // 「設定」でサウンド／ふりがなをどのモードからでも変更できる（トップページ
+  // 本人の注意書き）ため、現在の設定とは限らず state には使わない
   if (pathname.startsWith('/play.html')) {
     playingSince ||= Math.floor(Date.now() / 1000)
     presenceData.details = 'プレイ中'
-    presenceData.state = search.includes('soundless')
-      ? '静かモード（サウンドなし）'
-      : search.includes('kana')
-        ? 'ふりがなつきモード'
-        : '通常モード'
     presenceData.smallImageKey = Assets.Play
     if (showTimestamp)
       presenceData.startTimestamp = playingSince
