@@ -84,6 +84,32 @@ function isVisible(element: Element): boolean {
   )
 }
 
+/** Whether `element` sits inside a group labelled as the player's server/source/provider switcher. */
+function isInServerControl(element: Element): boolean {
+  const group = element.closest(
+    '[role="group"], [role="radiogroup"], [role="tablist"], [role="listbox"], [role="menu"], [id*="server" i], [class*="server" i], [data-server]',
+  )
+
+  if (!group) {
+    return false
+  }
+
+  const labelledBy = (group.getAttribute('aria-labelledby') ?? '')
+    .split(/\s+/)
+    .map(id => textOf(document.getElementById(id)) ?? '')
+    .join(' ')
+
+  const label = [
+    group.getAttribute('aria-label'),
+    labelledBy,
+    group.id,
+    group.getAttribute('class'),
+    group.hasAttribute('data-server') ? 'server' : '',
+  ].join(' ')
+
+  return /server|source|provider/i.test(label)
+}
+
 /** Reads the label of the active server/source control in the player. */
 function sourceFromSelectedControl(): string | undefined {
   const selectors = [
@@ -120,7 +146,10 @@ function sourceFromSelectedControl(): string | undefined {
 
     const parentText = clean(element.parentElement?.textContent) ?? ''
 
-    if (/server|source|provider|stream|player/i.test(parentText)) {
+    if (
+      isInServerControl(element)
+      || /server|source|provider|stream|player/i.test(parentText)
+    ) {
       return value
     }
   }
