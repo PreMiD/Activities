@@ -148,8 +148,18 @@ presence.on('UpdateData', async () => {
       presenceData.largeImageText = `タイムフリー：${formatDate(program.ft)} 放送`
     if (showImage && program?.img)
       presenceData.largeImageKey = program.img
-    presenceData.smallImageKey = playing ? Assets.Play : Assets.Pause
-    presenceData.smallImageText = playing ? '再生中' : '一時停止中'
+    if (!playing) {
+      presenceData.smallImageKey = Assets.Pause
+      presenceData.smallImageText = '一時停止中'
+    }
+    else if (timefreeTime) {
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = '再生中'
+    }
+    else {
+      presenceData.smallImageKey = Assets.Live
+      presenceData.smallImageText = 'ライブ'
+    }
 
     if (playing && isTimeVisible) {
       if (!timefreeTime && program) {
@@ -185,9 +195,13 @@ presence.on('UpdateData', async () => {
   }
   else if (hash.startsWith('#!/timeshift') || hash.startsWith('#!/ts')) {
     presenceData.details = 'タイムフリーの番組を探しています'
+    presenceData.smallImageKey = Assets.Viewing
+    presenceData.smallImageText = 'タイムフリー'
   }
   else if (hash.startsWith('#!/timetable') || hash.startsWith('#!/live')) {
     presenceData.details = '番組表を見ています'
+    presenceData.smallImageKey = Assets.Viewing
+    presenceData.smallImageText = '番組表'
   }
   else if (hash.startsWith('#!/mypage')) {
     presenceData.details = 'マイページを見ています'
