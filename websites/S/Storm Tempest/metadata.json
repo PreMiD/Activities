@@ -18,7 +18,7 @@
     "stormy.rest",
     "beta.stormy.rest"
   ],
-  "regExp": "^https?[:][/][/](www[.])?(stormy[.]rest|beta[.]stormy[.]rest)([/]|$)",
+  "regExp": "^https?[:][/][/]((www|beta)[.])?stormy[.]rest[/]",
   "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/thumbnail.png",
