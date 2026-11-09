@@ -301,18 +301,34 @@ function getVideo(): HTMLVideoElement | undefined {
   ).find(video => !video.ended && video.readyState > 0)
 }
 
-/** Whether the current page is a watch/episode page or has an active video. */
+/** Whether `video` is visible and big enough to be the main player rather than a preview. */
+function isMainPlayer(video: HTMLVideoElement): boolean {
+  const rect = video.getBoundingClientRect()
+
+  return (
+    isVisible(video)
+    && rect.width >= 200
+    && rect.width >= window.innerWidth * 0.5
+  )
+}
+
+/** Whether the current page is a watch/episode page or shows a main player. */
 function isWatchPage(): boolean {
   const url
     = `${document.location.pathname}${document.location.search}`.toLowerCase()
 
-  return (
+  if (
     /\/watch\b/.test(url)
     || /\/episode\b/.test(url)
     || /\/play\b/.test(url)
     || /[?&](?:episode|ep)=/i.test(url)
-    || Boolean(getVideo())
-  )
+  ) {
+    return true
+  }
+
+  const video = getVideo()
+
+  return Boolean(video && isMainPlayer(video))
 }
 
 /** Collects the title, source, episode and video of the current watch page. */
