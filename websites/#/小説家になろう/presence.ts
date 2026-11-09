@@ -29,17 +29,16 @@ function getEpisodeTitle(isEpisode: boolean): string | null {
 }
 
 presence.on('UpdateData', async () => {
-  const [showNovel, showEpisode, showR18] = await Promise.all([
+  const [showNovel, showEpisode] = await Promise.all([
     presence.getSetting<boolean>('showNovel'),
     presence.getSetting<boolean>('showEpisode'),
-    presence.getSetting<boolean>('showR18'),
   ])
 
   const { hostname, pathname } = document.location
 
-  // novel18（R18側）は設定 showR18 が ON のときだけ表示する（既定 OFF）。
-  // OFF のときは Activity 自体を消す
-  if (hostname === 'novel18.syosetu.com' && !showR18) {
+  // novel18（R18側）は NSFW のため常時表示しない（設定で有効化もしない）。
+  // Activity 自体を消して終了する
+  if (hostname === 'novel18.syosetu.com') {
     presence.clearActivity()
     return
   }

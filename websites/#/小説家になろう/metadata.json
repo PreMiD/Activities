@@ -45,12 +45,6 @@
       "title": "話題を表示",
       "icon": "fad fa-bookmark",
       "value": true
-    },
-    {
-      "id": "showR18",
-      "title": "novel18（R18）を表示",
-      "icon": "fad fa-eye",
-      "value": false
     }
   ]
 }
