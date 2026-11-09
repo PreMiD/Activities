@@ -10,7 +10,7 @@
     "en": "Watch movies online for free"
   },
   "url": ["hollymoviehd.cc", "goodstream.cc"],
-  "regExp": "^https?://(www\\.)?(hollymoviehd|goodstream)\\.cc/",
+  "regExp": "^https?[:][/][/](www[.])?(hollymoviehd|goodstream)[.]cc[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/LDonhZk.png",
   "thumbnail": "https://i.imgur.com/5q0Ta7P.png",
