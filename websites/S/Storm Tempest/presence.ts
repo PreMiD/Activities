@@ -301,12 +301,16 @@ function getVideo(): HTMLVideoElement | undefined {
   ).find(video => !video.ended && video.readyState > 0)
 }
 
-/** Whether `video` is visible and big enough to be the main player rather than a preview. */
+/** Whether `video` is in the viewport and big enough to be the main player rather than a preview. */
 function isMainPlayer(video: HTMLVideoElement): boolean {
   const rect = video.getBoundingClientRect()
 
   return (
     isVisible(video)
+    && rect.bottom > 0
+    && rect.top < window.innerHeight
+    && rect.right > 0
+    && rect.left < window.innerWidth
     && rect.width >= 200
     && rect.width >= window.innerWidth * 0.5
   )
