@@ -23,7 +23,7 @@
     "entertainment"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https?://(www\\.)?goodstream\\.cc/",
+  "iFrameRegExp": "^https?[:][/][/](www[.])?goodstream[.]cc[/]",
   "settings": [
     {
       "id": "hideWebsite",
