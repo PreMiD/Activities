@@ -50,7 +50,7 @@ presence.on('UpdateData', async () => {
   if (!hideWebsite)
     data.largeImageText = 'HollyMovieHD'
 
-  const slug = decodeURIComponent(window.location.pathname.replace(/^\/|\/$/g, ''))
+  const slug = decodeURIComponent(document.location.pathname.replace(/^\/|\/$/g, ''))
   const match = slug.match(/^(.+)[-_]((?:19|20)\d{2})$/)
 
   if (!match) {
