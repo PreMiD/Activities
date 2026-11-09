@@ -576,6 +576,14 @@ presence.on('UpdateData', async () => {
     return
   }
   presenceData.details = pathname.startsWith('/settings') ? '設定' : (pageNames[pathname] ?? 'ブラウジング中')
+  if (pathname === '/tv/search' || pathname === '/videos/search') {
+    presenceData.smallImageKey = Assets.Search
+    presenceData.smallImageText = '検索中'
+  }
+  else {
+    presenceData.smallImageKey = Assets.Viewing
+    presenceData.smallImageText = '閲覧中'
+  }
   presenceData.startTimestamp = browsingTimestamp
   presence.setActivity(presenceData)
 })
