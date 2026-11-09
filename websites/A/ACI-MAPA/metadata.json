@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "polimathia",
+    "id": "150258777243910147"
+  },
+  "service": "ACI-MAPA",
+  "description": {
+    "en": "ACI-MAPA: an open map of gifted education resources in Spain (identification data, legislation, associations, training, research, press and audiovisual).",
+    "es": "ACI-MAPA: mapa abierto de recursos sobre altas capacidades en España (identificación, legislación, asociaciones, formación, investigación, prensa y audiovisual)."
+  },
+  "url": "aci.nous.es",
+  "regExp": "^https?[:][/][/]aci[.]nous[.]es[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/ACI-MAPA/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/ACI-MAPA/assets/thumbnail.png",
+  "color": "#a3d2ce",
+  "category": "other",
+  "tags": [
+    "altas-capacidades",
+    "educacion",
+    "mapa",
+    "nous"
+  ],
+  "settings": [
+    {
+      "id": "privacidad",
+      "title": "Privacidad",
+      "icon": "fad fa-user-secret",
+      "value": 0,
+      "values": [
+        "Sección y el ítem que se ve (guía, norma, evento, noticia…)",
+        "Solo la sección",
+        "Solo «En ACI-MAPA»"
+      ]
+    },
+    {
+      "id": "boton",
+      "title": "Botón «Abrir esta sección»",
+      "icon": "fad fa-link",
+      "value": true
+    },
+    {
+      "id": "tiempo",
+      "title": "Mostrar tiempo transcurrido",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "iconos",
+      "title": "Icono pequeño por sección",
+      "icon": "fad fa-icons",
+      "value": true
+    }
+  ]
+}

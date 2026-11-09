@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "narpi",
@@ -12,7 +12,7 @@
   },
   "url": "www.horizon.tv",
   "regExp": "^https?[:][/][/](www[.])?horizon[.]tv[/]",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/Horizon%20GO/assets/logo.jpg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/Horizon%20GO/assets/thumbnail.png",
   "color": "#12121E",

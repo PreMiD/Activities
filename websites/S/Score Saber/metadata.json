@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": "joerkig",
@@ -11,7 +11,7 @@
   },
   "url": "scoresaber.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*scoresaber[.]com[/]",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Score%20Saber/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Score%20Saber/assets/thumbnail.png",
   "color": "#ffde1a",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "193714715631812608",
@@ -24,7 +24,7 @@
   },
   "url": "www.deckshop.pro",
   "regExp": "^https?[:][/][/](www[.])?deckshop[.]pro[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Deck%20Shop/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Deck%20Shop/assets/thumbnail.jpg",
   "color": "#222222",

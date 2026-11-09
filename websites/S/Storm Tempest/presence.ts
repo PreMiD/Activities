@@ -461,7 +461,7 @@ function buildPageActivity(page: PageState): PresenceData {
     startTimestamp: browsingTimestamp,
     buttons: [
       {
-        label: 'Storm Tempest',
+        label: 'Open Storm Tempest',
         url: page.url,
       },
     ],

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "193714715631812608",
@@ -11,7 +11,7 @@
   },
   "url": "game8.co",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*game8[.]co[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/G/Game8/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/G/Game8/assets/thumbnail.webp",
   "color": "#ffffff",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "441580459663818752",
@@ -11,7 +11,7 @@
   },
   "url": "usaco.guide",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*usaco[.]guide[/]",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/U/USACO%20Guide/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/U/USACO%20Guide/assets/thumbnail.jpeg",
   "color": "#1e90ff",

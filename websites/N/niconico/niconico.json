@@ -1,0 +1,10 @@
+{
+  "niconico.deletedUser": {
+    "description": "Shown instead of the uploader name when the video has no uploader information.",
+    "message": "Deleted User"
+  },
+  "niconico.watchingAd": {
+    "description": "Shown while a video advertisement is playing when ad status is enabled.",
+    "message": "Watching an ad"
+  }
+}

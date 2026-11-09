@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "993170607841746974",
@@ -11,7 +11,7 @@
   },
   "url": "www.zee5.com",
   "regExp": "^https?[:][/][/](www[.])?zee5[.]com[/]",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Z/ZEE5/assets/logo.jpeg",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Z/ZEE5/assets/thumbnail.png",
   "color": "#8230c6",

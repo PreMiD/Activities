@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "357461892526243840",
@@ -14,7 +14,7 @@
     "developers.raycast.com"
   ],
   "regExp": "^https?[:][/][/](www|developers)[.]raycast[.]com[/]",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Raycast/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Raycast/assets/thumbnail.png",
   "color": "#FF6363",

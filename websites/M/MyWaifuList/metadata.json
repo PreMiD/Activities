@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "batista_yoi",
+    "id": "1186359907197386854"
+  },
+  "service": "MyWaifuList",
+  "description": {
+    "en": "The ultimate anime character database. Discover, rate, and track your favorite waifus and husbandos.",
+    "pt-br": "O banco de dados definitivo de personagens de anime. Descubra, avalie e acompanhe suas waifus e husbandos favoritos."
+  },
+  "url": "mywaifulist.moe",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*mywaifulist[.]moe[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MyWaifuList/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MyWaifuList/assets/thumbnail.png",
+  "color": "#3B82F6",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "manga",
+    "waifu",
+    "husbando",
+    "characters"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fas fa-user-secret",
+      "value": false
+    }
+  ]
+}

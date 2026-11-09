@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "name": ".toop",
@@ -11,7 +11,7 @@
   },
   "url": "www.temu.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*temu[.]com[/]",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/T/Temu/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/T/Temu/assets/thumbnail.png",
   "color": "#FB6D13",

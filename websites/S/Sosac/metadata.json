@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "310360857366233099",
@@ -25,7 +25,7 @@
     "sosac.tv"
   ],
   "regExp": "^https?[:][/][/]((tv|movies)[.])?sosac[.]tv[/]",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Sosac/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Sosac/assets/thumbnail.png",
   "color": "#ff5600",

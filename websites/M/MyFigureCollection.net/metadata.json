@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.premid.app/metadata/1.16",
+  "$schema": "https://schemas.premid.app/metadata/1.17",
   "apiVersion": 1,
   "author": {
     "id": "193714715631812608",
@@ -15,7 +15,7 @@
   },
   "url": "myfigurecollection.net",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*myfigurecollection[.]net[/]",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MyFigureCollection.net/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MyFigureCollection.net/assets/thumbnail.jpeg",
   "color": "#57A052",
