@@ -46,6 +46,8 @@ interface SectionState {
   details: string
   state: string
   url: string
+  image?: string
+  video?: HTMLVideoElement
 }
 
 interface Playback {
@@ -588,16 +590,53 @@ function isCodestoWorkspace(): boolean {
   )
 }
 
+/** Removes a language badge such as "TS" or "JS" glued to the front of a file name. */
+function stripBadge(name: string): string {
+  const extension = name.split('.').pop()?.toUpperCase() ?? ''
+  const aliases: Record<string, string[]> = {
+    MJS: ['JS'],
+    CJS: ['JS'],
+    JSX: ['JS'],
+    TSX: ['TS'],
+    YML: ['YAML'],
+    YAML: ['YML'],
+  }
+
+  for (const badge of [extension, ...(aliases[extension] ?? [])]) {
+    const rest = name.slice(badge.length)
+
+    if (name.startsWith(badge) && /^[a-z_@-]/.test(rest)) {
+      return rest
+    }
+  }
+
+  return name
+}
+
+/** Finds a file name inside `element`, preferring a child that holds only the name. */
+function fileNameIn(element: Element): string | undefined {
+  const pattern = /[\w@+.-]+\.[a-z][a-z0-9]{0,7}/i
+
+  for (const child of Array.from(element.querySelectorAll('*'))) {
+    const text = textOf(child)
+
+    if (text && child.children.length === 0 && text.match(pattern)?.[0] === text) {
+      return text
+    }
+  }
+
+  const match = textOf(element)?.match(pattern)?.[0]
+
+  return match ? stripBadge(match) : undefined
+}
+
 /** Finds the file name of the active editor tab. */
 function getCodestoFile(): string | undefined {
   const fileName = /[\w@+.-]+\.[a-z][a-z0-9]{0,7}/i
-  const tab = queryText([
-    '#wsTabs [aria-selected="true"]',
-    '#wsTabs .active',
-    '#wsTabs [class*="active"]',
-    '[role="tab"][aria-selected="true"]',
-  ])
-  const fromTab = tab?.match(fileName)?.[0]
+  const tabElement = document.querySelector(
+    '#wsTabs [aria-selected="true"], #wsTabs .active, #wsTabs [class*="active"], [role="tab"][aria-selected="true"]',
+  )
+  const fromTab = tabElement ? fileNameIn(tabElement) : undefined
 
   if (fromTab) {
     return fromTab
@@ -614,7 +653,7 @@ function getCodestoFile(): string | undefined {
       continue
     }
 
-    const match = text.match(fileName)?.[0]
+    const match = fileName.test(text) ? fileNameIn(element) : undefined
 
     if (match) {
       return match
@@ -655,6 +694,60 @@ function headingOr(fallback: string): string {
   const heading = textOf(document.querySelector('main h1'))
 
   return heading && heading.length <= 60 ? heading : fallback
+}
+
+const studySubjects = [
+  'Math',
+  'Physics',
+  'Chemistry',
+  'Biology',
+  'Arabic',
+  'English',
+  'Islamic studies',
+]
+
+/** Finds the subject name shown on a Studysto teacher or lecture page. */
+function findSubject(): string | undefined {
+  const nodes = Array.from(
+    document.querySelectorAll('main span, main a, main p, main h2, main li'),
+  ).slice(0, 400)
+
+  for (const node of nodes) {
+    const text = textOf(node)?.toLowerCase()
+    const subject = studySubjects.find(name => name.toLowerCase() === text)
+
+    if (subject) {
+      return subject
+    }
+  }
+
+  return undefined
+}
+
+/** Finds the teacher's display name from a link to their page, falling back to the URL slug. */
+function findTeacher(slug: string): string {
+  const link = Array.from(document.querySelectorAll('a[href]')).find((anchor) => {
+    const href = safeDecode(anchor.getAttribute('href') ?? '')
+    const text = textOf(anchor)
+
+    return (
+      href.startsWith(`/studysto/t/${slug}`)
+      && Boolean(text)
+      && (text?.length ?? 0) <= 40
+      && !/back|رجوع|عودة/i.test(text ?? '')
+    )
+  })
+
+  return textOf(link ?? null) ?? slug
+}
+
+/** Finds the first large https image in the main content, such as a teacher photo. */
+function findMainImage(): string | undefined {
+  return Array.from(document.querySelectorAll<HTMLImageElement>('main img')).find(
+    image =>
+      image.src.startsWith('https:')
+      && image.getBoundingClientRect().width >= 40,
+  )?.src
 }
 
 const toolNames: Record<string, string> = {
@@ -719,19 +812,32 @@ function getSectionState(): SectionState | undefined {
     }
   }
 
-  if (app === 'studysto' && second === 't' && third && fourth) {
-    return {
-      details: `Watching ${headingOr('a lecture')}`,
-      state: `${third} • Studysto`,
-      url,
-    }
-  }
-
   if (app === 'studysto' && second === 't' && third) {
+    const video = getVideo()
+    const image = getArtwork(video) ?? findMainImage()
+    const subject = findSubject()
+
+    if (fourth || video) {
+      const chapter = extractChapter(document.title) ?? extractChapter(headingOr(''))
+
+      return {
+        details: `Watching ${headingOr('a lecture')}`,
+        state: [
+          chapter ? `Chapter ${chapter}` : undefined,
+          findTeacher(third),
+          subject,
+        ].filter(Boolean).join(' • '),
+        url,
+        image,
+        video,
+      }
+    }
+
     return {
-      details: `Studying with ${headingOr(third)}`,
-      state: 'Studysto',
+      details: `Studying with ${headingOr(findTeacher(third))}`,
+      state: subject ? `${subject} • Studysto` : 'Studysto',
       url,
+      image,
     }
   }
 
@@ -945,7 +1051,11 @@ function buildSectionActivity(section: SectionState): PresenceData {
     type: ActivityType.Playing,
     details: section.details,
     state: section.state,
-    largeImageKey: STORM_TEMPEST_IMAGE,
+    largeImageKey: section.image ?? STORM_TEMPEST_IMAGE,
+    ...(section.image && {
+      smallImageKey: STORM_TEMPEST_IMAGE,
+      smallImageText: 'Storm Tempest',
+    }),
     startTimestamp: browsingTimestamp,
     buttons: [
       {
@@ -953,6 +1063,7 @@ function buildSectionActivity(section: SectionState): PresenceData {
         url: section.url,
       },
     ],
+    ...getPlaybackTimestamps(getPlayback(section.video)),
   }
 }
 
