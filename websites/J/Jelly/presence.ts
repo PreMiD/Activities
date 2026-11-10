@@ -1,9 +1,10 @@
 import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
-import { ANIMATED_LOGO, STILL_LOGO } from './icons.js'
 
 // Littéral obligatoire : la CI PreMiD cherche `clientId: '…'` dans le code.
 const presence = new Presence({ clientId: '1234273608835272898' })
 const JELLY_LOGO = 'https://playjelly.fr/logo.png'
+const ANIMATED_LOGO = 'https://raw.githubusercontent.com/Kaysuto/Activities/pr-assets/jelly-11412/logo-animated.gif'
+const STILL_LOGO = 'https://raw.githubusercontent.com/Kaysuto/Activities/pr-assets/jelly-11412/logo-still.png'
 
 function truncate(value: string, maxLength = 128): string {
   return value.length <= maxLength ? value : `${value.slice(0, maxLength - 1)}…`
