@@ -6,6 +6,8 @@ const presence = new Presence({
 
 const STORM_TEMPEST_IMAGE = 'https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/logo.png'
 
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
 interface WatchState {
   title: string
   source?: string
@@ -19,16 +21,19 @@ interface PageState {
   url: string
 }
 
+/** Collapses whitespace and trims `value`, returning `undefined` for an empty result. */
 function clean(value: string | null | undefined): string | undefined {
   const normalized = value?.replace(/\s+/g, ' ').trim()
 
   return normalized || undefined
 }
 
+/** Returns the cleaned text content of `element`, if any. */
 function textOf(element: Element | null): string | undefined {
   return clean(element?.textContent)
 }
 
+/** Returns the cleaned value of `attribute` on `element`, if any. */
 function attrOf(
   element: Element | null,
   attribute: string,
@@ -36,6 +41,7 @@ function attrOf(
   return clean(element?.getAttribute(attribute))
 }
 
+/** Returns the text of the first element matching any of `selectors`. */
 function queryText(selectors: string[]): string | undefined {
   for (const selector of selectors) {
     const value = textOf(document.querySelector(selector))
@@ -48,6 +54,7 @@ function queryText(selectors: string[]): string | undefined {
   return undefined
 }
 
+/** Returns `attribute` from the first element matching any of `selectors`. */
 function queryAttr(
   selectors: string[],
   attribute: string,
@@ -63,6 +70,7 @@ function queryAttr(
   return undefined
 }
 
+/** Whether `element` is rendered with a non-empty box. */
 function isVisible(element: Element): boolean {
   const node = element as HTMLElement
   const style = window.getComputedStyle(node)
@@ -76,6 +84,33 @@ function isVisible(element: Element): boolean {
   )
 }
 
+/** Whether `element` sits inside a group labelled as the player's server/source/provider switcher. */
+function isInServerControl(element: Element): boolean {
+  const group = element.closest(
+    '[role="group"], [role="radiogroup"], [role="tablist"], [role="listbox"], [role="menu"], [id*="server" i], [class*="server" i], [data-server]',
+  )
+
+  if (!group) {
+    return false
+  }
+
+  const labelledBy = (group.getAttribute('aria-labelledby') ?? '')
+    .split(/\s+/)
+    .map(id => textOf(document.getElementById(id)) ?? '')
+    .join(' ')
+
+  const label = [
+    group.getAttribute('aria-label'),
+    labelledBy,
+    group.id,
+    group.getAttribute('class'),
+    group.hasAttribute('data-server') ? 'server' : '',
+  ].join(' ')
+
+  return /server|source|provider/i.test(label)
+}
+
+/** Reads the label of the active server/source control in the player. */
 function sourceFromSelectedControl(): string | undefined {
   const selectors = [
     '[aria-pressed="true"]',
@@ -111,7 +146,10 @@ function sourceFromSelectedControl(): string | undefined {
 
     const parentText = clean(element.parentElement?.textContent) ?? ''
 
-    if (/server|source|provider|stream|player/i.test(parentText)) {
+    if (
+      isInServerControl(element)
+      || /server|source|provider|stream|player/i.test(parentText)
+    ) {
       return value
     }
   }
@@ -119,6 +157,7 @@ function sourceFromSelectedControl(): string | undefined {
   return undefined
 }
 
+/** Resolves the current app section (or a `source`/`server`/`provider` param) from the URL. */
 function sourceFromUrl(): string | undefined {
   const sources: Record<string, string> = {
     anisto: 'Anisto',
@@ -130,6 +169,7 @@ function sourceFromUrl(): string | undefined {
     tvsto: 'Tvsto',
     toolsto: 'Toolsto',
     gamesto: 'Gamesto',
+    studysto: 'Studysto',
   }
 
   for (const part of document.location.pathname.split('/').filter(Boolean)) {
@@ -153,6 +193,7 @@ function sourceFromUrl(): string | undefined {
   return undefined
 }
 
+/** Extracts an episode number from text such as "S1E5", "Episode 5", "Ep 5" or "#5". */
 function extractEpisode(value: string | undefined): string | undefined {
   if (!value) {
     return undefined
@@ -176,6 +217,7 @@ function extractEpisode(value: string | undefined): string | undefined {
   return undefined
 }
 
+/** Finds the current episode number from the URL, title, or page elements. */
 function getEpisode(): string | undefined {
   const candidates = [
     document.location.pathname,
@@ -201,6 +243,7 @@ function getEpisode(): string | undefined {
   return undefined
 }
 
+/** Removes a trailing "- Episode N" suffix from a title. */
 function stripEpisode(value: string): string {
   return value
     .replace(
@@ -210,6 +253,7 @@ function stripEpisode(value: string): string {
     .trim()
 }
 
+/** Finds the title of the show being watched, ignoring generic site titles. */
 function getAnimeTitle(): string | undefined {
   const candidates = [
     queryAttr(
@@ -250,25 +294,48 @@ function getAnimeTitle(): string | undefined {
   return undefined
 }
 
+/** Returns the first loaded, unfinished `<video>` element on the page. */
 function getVideo(): HTMLVideoElement | undefined {
   return Array.from(
     document.querySelectorAll<HTMLVideoElement>('video'),
   ).find(video => !video.ended && video.readyState > 0)
 }
 
+/** Whether `video` is in the viewport and big enough to be the main player rather than a preview. */
+function isMainPlayer(video: HTMLVideoElement): boolean {
+  const rect = video.getBoundingClientRect()
+
+  return (
+    isVisible(video)
+    && rect.bottom > 0
+    && rect.top < window.innerHeight
+    && rect.right > 0
+    && rect.left < window.innerWidth
+    && rect.width >= 200
+    && rect.width >= window.innerWidth * 0.5
+  )
+}
+
+/** Whether the current page is a watch/episode page or shows a main player. */
 function isWatchPage(): boolean {
   const url
     = `${document.location.pathname}${document.location.search}`.toLowerCase()
 
-  return (
+  if (
     /\/watch\b/.test(url)
     || /\/episode\b/.test(url)
     || /\/play\b/.test(url)
     || /[?&](?:episode|ep)=/i.test(url)
-    || Boolean(getVideo())
-  )
+  ) {
+    return true
+  }
+
+  const video = getVideo()
+
+  return Boolean(video && isMainPlayer(video))
 }
 
+/** Collects the title, source, episode and video of the current watch page. */
 function getWatchState(): WatchState {
   return {
     title: getAnimeTitle() ?? 'Unknown Anime',
@@ -279,6 +346,7 @@ function getWatchState(): WatchState {
   }
 }
 
+/** Returns a display name for the current browsing page. */
 function getPageName(): string {
   const pathname = document.location.pathname
   const segments = pathname.split('/').filter(Boolean)
@@ -294,21 +362,16 @@ function getPageName(): string {
   }
 
   const pageNames: Record<string, string> = {
-    search: 'Search',
-    anime: 'Anime',
-    genre: 'Genres',
-    genres: 'Genres',
-    category: 'Categories',
-    categories: 'Categories',
-    movies: 'Movies',
-    movie: 'Movie',
-    series: 'Series',
-    favorites: 'Favorites',
-    favourite: 'Favorites',
-    history: 'History',
-    settings: 'Settings',
-    profile: 'Profile',
-    browse: 'Browse',
+    anisto: 'Anime',
+    mangasto: 'Manga',
+    movisto: 'Movies',
+    novelsto: 'Novels',
+    booksto: 'Books',
+    tvsto: 'Live TV',
+    gamesto: 'Games',
+    codesto: 'Code Tools',
+    toolsto: 'Tools',
+    studysto: 'Study',
   }
 
   const pageName = pageNames[firstSegment.toLowerCase()]
@@ -329,6 +392,7 @@ function getPageName(): string {
   return 'Storm Tempest'
 }
 
+/** Collects the name and URL of the current browsing page. */
 function getPageState(): PageState {
   return {
     name: getPageName(),
@@ -336,6 +400,7 @@ function getPageState(): PageState {
   }
 }
 
+/** Builds start/end timestamps from `video`, or none while it is paused or unknown. */
 function getPlaybackTimestamps(
   video: HTMLVideoElement | undefined,
 ): {
@@ -364,6 +429,7 @@ function getPlaybackTimestamps(
   }
 }
 
+/** Builds the presence shown while watching an episode. */
 function buildWatchActivity(watch: WatchState): PresenceData {
   const source = watch.source ?? 'Unknown Source'
   const episode = watch.episode
@@ -385,12 +451,14 @@ function buildWatchActivity(watch: WatchState): PresenceData {
   }
 }
 
+/** Builds the presence shown while browsing, keeping the elapsed time fixed. */
 function buildPageActivity(page: PageState): PresenceData {
   return {
     type: ActivityType.Watching,
     details: `Browsing ${page.name}`,
     state: 'Storm Tempest',
     largeImageKey: STORM_TEMPEST_IMAGE,
+    startTimestamp: browsingTimestamp,
     buttons: [
       {
         label: 'Open Storm Tempest',
@@ -400,6 +468,7 @@ function buildPageActivity(page: PageState): PresenceData {
   }
 }
 
+/** Updates the presence with watch or browsing activity on every refresh. */
 presence.on('UpdateData', async () => {
   if (isWatchPage()) {
     presence.setActivity(

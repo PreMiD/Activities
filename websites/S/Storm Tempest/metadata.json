@@ -14,9 +14,12 @@
   "description": {
     "en": "Manga, anime, movies, TV, books, novels, code tools and games, all in one place."
   },
-  "url": "stormd.site",
-  "regExp": "^https?[:][/][/](www[.])?stormd[.]site[/]",
-  "version": "1.0.1",
+  "url": [
+    "stormy.rest",
+    "beta.stormy.rest"
+  ],
+  "regExp": "^https?[:][/][/]((www|beta)[.])?stormy[.]rest[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/thumbnail.png",
   "color": "#0b0c10",
