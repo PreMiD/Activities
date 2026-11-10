@@ -657,10 +657,39 @@ function headingOr(fallback: string): string {
   return heading && heading.length <= 60 ? heading : fallback
 }
 
-/** Describes what the user is doing in a Toolsto tool, a Gamesto game or on a Studysto teacher page. */
+const toolNames: Record<string, string> = {
+  'compress-image': 'Compress image',
+  'resize-image': 'Resize image',
+  'convert-image': 'Convert image',
+  'merge-pdf': 'Merge PDFs',
+  'split-pdf': 'Split PDF',
+  'images-to-pdf': 'Images to PDF',
+  'word-counter': 'Word counter',
+  'case-converter': 'Case converter',
+  'compare-text': 'Compare text',
+  'arabic-keyboard': 'Arabic keyboard',
+  'json': 'JSON formatter',
+  'base64': 'Base64',
+  'jwt': 'JWT decoder',
+  'regex': 'Regex tester',
+  'uuid': 'UUID generator',
+  'color': 'Color picker',
+  'canvas': 'Canvas editor',
+}
+
+const gameNames: Record<string, string> = {
+  'snake': 'Snake',
+  '2048': '2048',
+  'memory': 'Memory',
+  'tic-tac-toe': 'Tic-Tac-Toe',
+}
+
+/** Describes what the user is doing in a Toolsto tool, a Gamesto game or on a Studysto teacher or lecture page. */
 function getSectionState(): SectionState | undefined {
   const segments = document.location.pathname.split('/').filter(Boolean)
-  const [app, second, third] = segments.map(segment => safeDecode(segment))
+  const [app, second, third, fourth] = segments.map(segment =>
+    safeDecode(segment),
+  )
   const url = document.location.href
 
   if (app === 'toolsto' && second && third) {
@@ -672,7 +701,7 @@ function getSectionState(): SectionState | undefined {
     }
 
     return {
-      details: `Using ${headingOr(prettify(third))}`,
+      details: `Using ${toolNames[third.toLowerCase()] ?? headingOr(prettify(third))}`,
       state: `Toolsto • ${categories[second] ?? prettify(second)}`,
       url,
     }
@@ -684,8 +713,16 @@ function getSectionState(): SectionState | undefined {
     && !/^(?:browse|library|leaderboard|scores|settings)$/i.test(second)
   ) {
     return {
-      details: `Playing ${headingOr(prettify(second))}`,
+      details: `Playing ${gameNames[second.toLowerCase()] ?? headingOr(prettify(second))}`,
       state: 'Gamesto',
+      url,
+    }
+  }
+
+  if (app === 'studysto' && second === 't' && third && fourth) {
+    return {
+      details: `Watching ${headingOr('a lecture')}`,
+      state: `${third} • Studysto`,
       url,
     }
   }
