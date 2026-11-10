@@ -7,7 +7,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/sXfV5v7.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/Shahid/assets/logo.png',
 }
 
 /** Page title without the "MBC Shahid |" part */
