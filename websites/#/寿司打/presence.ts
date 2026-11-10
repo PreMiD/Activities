@@ -63,13 +63,5 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Question
     presenceData.smallImageText = 'Q&A'
   }
-  if (showButtons) {
-    presenceData.buttons = [
-      {
-        label: '寿司打で遊ぶ',
-        url: 'https://sushida.net/play.html',
-      },
-    ]
-  }
   presence.setActivity(presenceData)
 })
