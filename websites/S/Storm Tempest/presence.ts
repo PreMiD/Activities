@@ -33,6 +33,7 @@ interface ReadState {
   title: string
   source: string
   chapter?: string
+  chapterLabel?: string
   page?: number
   pages?: number
   url: string
@@ -56,6 +57,7 @@ interface SectionState {
   image?: string
   video?: HTMLVideoElement
   media?: boolean
+  teacher?: { source: string, id: string }
 }
 
 interface Playback {
@@ -491,6 +493,13 @@ function extractChapter(value: string | undefined): string | undefined {
   return match?.[1]
 }
 
+/** Returns a short chapter title from the reader heading, used when it has no number. */
+function getChapterLabel(): string | undefined {
+  const { title, label } = readerHeading()
+
+  return label && label.length <= 40 && label !== title ? label : undefined
+}
+
 /** Finds the current chapter number from the reader heading, the page title or elements. */
 function getChapter(): string | undefined {
   const candidates = [
@@ -556,7 +565,28 @@ function isWatchPage(): boolean {
   return Boolean(video && isMainPlayer(video))
 }
 
-/** Finds the episode or show artwork as an absolute https URL. */
+/** Returns `value` as an absolute https URL, or undefined when missing, invalid or the site's generic share card at `/og/`. */
+function usableImage(
+  value: string | null | undefined,
+  base: string,
+): string | undefined {
+  if (!value) {
+    return undefined
+  }
+
+  try {
+    const url = new URL(value, base)
+
+    return url.protocol === 'https:' && !/^\/og(?:\/|$)/.test(url.pathname)
+      ? url.href
+      : undefined
+  }
+  catch {
+    return undefined
+  }
+}
+
+/** Finds the episode or show artwork as an absolute https URL, ignoring the generic share card. */
 function getArtwork(video: HTMLVideoElement | undefined): string | undefined {
   const candidates = [
     video?.poster,
@@ -571,23 +601,90 @@ function getArtwork(video: HTMLVideoElement | undefined): string | undefined {
   ]
 
   for (const candidate of candidates) {
-    if (!candidate) {
-      continue
-    }
+    const image = usableImage(candidate, document.location.href)
 
-    try {
-      const url = new URL(candidate, document.location.href)
-
-      if (url.protocol === 'https:') {
-        return url.href
-      }
-    }
-    catch {
-      continue
+    if (image) {
+      return image
     }
   }
 
   return undefined
+}
+
+/** Finds the series cover shown in the manga reader's top bar. */
+function getReaderCover(): string | undefined {
+  return usableImage(
+    document
+      .querySelector('[class*="aspect-[5/7]"] img, [class*="aspect-[2/3]"] img')
+      ?.getAttribute('src'),
+    document.location.href,
+  )
+}
+
+const coverCache = new Map<string, Promise<string | undefined>>()
+
+/** Picks the share image from a fetched page. */
+function shareImageOf(doc: Document, href: string): string | undefined {
+  return usableImage(
+    doc.querySelector('meta[property="og:image"]')?.getAttribute('content'),
+    href,
+  )
+}
+
+/** Picks the first photo in a fetched teacher page, such as the teacher's avatar. */
+function teacherPhotoOf(doc: Document, href: string): string | undefined {
+  return usableImage(
+    (
+      doc.querySelector('main img[src^="https"]')
+      ?? doc.querySelector('img[src^="https"]')
+    )?.getAttribute('src'),
+    href,
+  )
+}
+
+/** Fetches `href` once, picks an image from it with `pick`, and remembers the result. */
+function fetchCover(
+  href: string,
+  pick: (doc: Document, href: string) => string | undefined = shareImageOf,
+): Promise<string | undefined> {
+  const cached = coverCache.get(href)
+
+  if (cached) {
+    return cached
+  }
+
+  const request = fetch(href, { credentials: 'same-origin' })
+    .then(response => (response.ok ? response.text() : ''))
+    .then(html =>
+      pick(new DOMParser().parseFromString(html, 'text/html'), href),
+    )
+    .catch(() => undefined)
+
+  coverCache.set(href, request)
+
+  return request
+}
+
+/** Fetches the teacher's photo from their page, given the lecture's source and teacher path segments. */
+function fetchTeacherPhoto(teacher: { source: string, id: string }): Promise<string | undefined> {
+  return fetchCover(
+    `/studysto/t/${teacher.id}?source=${teacher.source}`,
+    teacherPhotoOf,
+  )
+}
+
+/** Finds the cover of the title behind the current watch or reader page from its title page. */
+function fetchTitleCover(): Promise<string | undefined> {
+  const path = document.location.pathname
+  const content = path.match(
+    /^\/(anisto|movisto|novelsto|booksto)\/(?:watch|read)\/([^/]+)\/([^/]+)/i,
+  )
+  const manga = path.match(/^\/mangasto\/series\/([^/]+)\/([^/]+)\/[^/]+/i)
+  const href = content
+    ? `/${content[1]}/title/${content[2]}/${content[3]}`
+    : manga ? `/mangasto/series/${manga[1]}/${manga[2]}` : undefined
+
+  return href ? fetchCover(href) : Promise.resolve(undefined)
 }
 
 /** Finds the total number of episodes from the page description or text, such as "13 episodes". */
@@ -938,6 +1035,9 @@ function getSectionState(): SectionState | undefined {
   }
 
   if (app === 'studysto' && second === 'watch' && fifth) {
+    const [, , rawSource = '', rawTeacher = ''] = document.location.pathname
+      .split('/')
+      .filter(Boolean)
     const video = getVideo()
     const [teacher, subject] = (
       textOf(document.querySelector('main a[href*="/studysto/t/"]')) ?? ''
@@ -951,9 +1051,9 @@ function getSectionState(): SectionState | undefined {
       privateState: 'Studysto',
       buttonLabel: 'Open Lecture',
       url,
-      image: getArtwork(video) ?? findMainImage(),
       video,
       media: true,
+      teacher: { source: rawSource, id: rawTeacher },
     }
   }
 
@@ -1083,12 +1183,11 @@ function getReadState(path: { app: string, source: string, slug: string }): Read
     title: readerHeading().title ?? getAnimeTitle() ?? prettify(path.slug),
     source: prettify(path.source),
     chapter: getChapter(),
+    chapterLabel: getChapterLabel(),
     page: reader?.page,
     pages: reader?.pages,
     url: document.location.href,
-    image:
-      getArtwork(undefined)
-      ?? (kind === 'Manga' ? undefined : findMainImage()),
+    image: getReaderCover() ?? getArtwork(undefined),
   }
 }
 
@@ -1216,7 +1315,7 @@ function buildReadActivity(read: ReadState, privacy: boolean): PresenceData {
       ? read.kind
       : [
           read.kind,
-          read.chapter ? `Chapter ${read.chapter}` : undefined,
+          read.chapter ? `Chapter ${read.chapter}` : read.chapterLabel,
           read.source,
         ].filter(Boolean).join(' • '),
     largeImageKey: privacy
@@ -1304,9 +1403,11 @@ presence.on('UpdateData', async () => {
   const readPath = parseReadPath()
 
   if (readPath) {
-    presence.setActivity(
-      buildReadActivity(getReadState(readPath), privacy),
-    )
+    const read = getReadState(readPath)
+
+    read.image ??= await fetchTitleCover()
+
+    presence.setActivity(buildReadActivity(read, privacy))
 
     return
   }
@@ -1314,6 +1415,10 @@ presence.on('UpdateData', async () => {
   const section = getSectionState()
 
   if (section) {
+    if (section.teacher) {
+      section.image = await fetchTeacherPhoto(section.teacher)
+    }
+
     presence.setActivity(
       buildSectionActivity(section, privacy),
     )
@@ -1322,9 +1427,11 @@ presence.on('UpdateData', async () => {
   }
 
   if (isWatchPage()) {
-    presence.setActivity(
-      buildWatchActivity(getWatchState(), privacy),
-    )
+    const watch = getWatchState()
+
+    watch.image ??= await fetchTitleCover()
+
+    presence.setActivity(buildWatchActivity(watch, privacy))
 
     return
   }
