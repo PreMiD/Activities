@@ -25,6 +25,15 @@ enum ActivityAssets {
   Env = 'https://i.imgur.com/fuYGTtN.png',
   Xml = 'https://i.imgur.com/XtPCwcn.png',
   Txt = 'https://i.imgur.com/3zDU6R2.png',
+  Php = 'https://i.imgur.com/TYpgRem.png',
+  C = 'https://i.imgur.com/CGuoF46.png',
+  Cpp = 'https://i.imgur.com/CgmfJYa.png',
+  Java = 'https://i.imgur.com/s0oaDfH.png',
+  Rust = 'https://i.imgur.com/7imwzug.png',
+  Vue = 'https://i.imgur.com/MgXTLIT.png',
+  Svg = 'https://i.imgur.com/Fu9ofFI.png',
+  Toml = 'https://i.imgur.com/cDzp54I.png',
+  Docker = 'https://i.imgur.com/prrk2om.png',
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -835,6 +844,19 @@ const codestoIcons: Record<string, ActivityAssets> = {
   env: ActivityAssets.Env,
   xml: ActivityAssets.Xml,
   txt: ActivityAssets.Txt,
+  php: ActivityAssets.Php,
+  c: ActivityAssets.C,
+  h: ActivityAssets.C,
+  cpp: ActivityAssets.Cpp,
+  cc: ActivityAssets.Cpp,
+  cxx: ActivityAssets.Cpp,
+  hpp: ActivityAssets.Cpp,
+  java: ActivityAssets.Java,
+  rs: ActivityAssets.Rust,
+  vue: ActivityAssets.Vue,
+  svg: ActivityAssets.Svg,
+  toml: ActivityAssets.Toml,
+  dockerfile: ActivityAssets.Docker,
 }
 
 /** Returns the language icon for a file name, if it has one. */
