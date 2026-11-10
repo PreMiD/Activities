@@ -6,6 +6,7 @@ const presence = new Presence({
 
 enum ActivityAssets {
   Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/logo.png',
+  Keyboard = 'https://i.imgur.com/HuS6SkP.jpeg',
   Moon = 'https://i.imgur.com/PqT7xJ4.png',
   Js = 'https://i.imgur.com/FH6KGTc.png',
   Jsx = 'https://i.imgur.com/C340rKu.png',
@@ -16,6 +17,14 @@ enum ActivityAssets {
   Html = 'https://i.imgur.com/cvOy8al.png',
   Css = 'https://i.imgur.com/H08IIi3.png',
   Json = 'https://i.imgur.com/KhT2obK.png',
+  Md = 'https://i.imgur.com/K99vbls.png',
+  Yml = 'https://i.imgur.com/Py3YttK.png',
+  Sh = 'https://i.imgur.com/MtwpqvA.png',
+  Sql = 'https://i.imgur.com/JRYM1wW.png',
+  Bat = 'https://i.imgur.com/mZEjROI.png',
+  Env = 'https://i.imgur.com/fuYGTtN.png',
+  Xml = 'https://i.imgur.com/XtPCwcn.png',
+  Txt = 'https://i.imgur.com/3zDU6R2.png',
 }
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
@@ -811,6 +820,21 @@ const codestoIcons: Record<string, ActivityAssets> = {
   htm: ActivityAssets.Html,
   css: ActivityAssets.Css,
   json: ActivityAssets.Json,
+  md: ActivityAssets.Md,
+  mdx: ActivityAssets.Md,
+  yml: ActivityAssets.Yml,
+  yaml: ActivityAssets.Yml,
+  sh: ActivityAssets.Sh,
+  bash: ActivityAssets.Sh,
+  zsh: ActivityAssets.Sh,
+  sql: ActivityAssets.Sql,
+  db: ActivityAssets.Sql,
+  sqlite: ActivityAssets.Sql,
+  bat: ActivityAssets.Bat,
+  cmd: ActivityAssets.Bat,
+  env: ActivityAssets.Env,
+  xml: ActivityAssets.Xml,
+  txt: ActivityAssets.Txt,
 }
 
 /** Returns the language icon for a file name, if it has one. */
@@ -1377,7 +1401,7 @@ function buildCodestoActivity(code: CodestoState, privacy: boolean): PresenceDat
         ? 'Idling'
         : `Editing ${privacy ? 'a file' : code.file ?? 'a file'}`,
     state: privacy || !code.project ? 'Codesto' : `Workspace: ${code.project}`,
-    largeImageKey: icon ?? ActivityAssets.Logo,
+    largeImageKey: idle ? ActivityAssets.Keyboard : icon ?? ActivityAssets.Logo,
     ...(idle
       ? { smallImageKey: ActivityAssets.Moon, smallImageText: 'Idling' }
       : smallImageFor(undefined, Boolean(icon))),
