@@ -63,6 +63,7 @@ interface ReadState {
   chapterLabel?: string
   page?: number
   pages?: number
+  progress?: number
   url: string
   image?: string
 }
@@ -97,6 +98,26 @@ interface Playback {
 interface PageState {
   name: string
   url: string
+  kind?: 'search' | 'profile'
+  subject?: string
+}
+
+interface RoomState {
+  joined: boolean
+  name?: string
+  title?: string
+  episode?: string
+  members?: number
+  titleHref?: string
+  url: string
+  image?: string
+  video?: HTMLVideoElement
+}
+
+interface Options {
+  buttons: boolean
+  cover: boolean
+  time: boolean
 }
 
 /** Collapses whitespace and trims `value`, returning `undefined` for an empty result. */
@@ -1204,6 +1225,7 @@ function getPageName(): string {
     studysto: 'Study',
     plansto: 'Plans',
     roomsto: 'Rooms',
+    r: 'Rooms',
   }
 
   const subPages: Record<string, Record<string, string>> = {
@@ -1264,16 +1286,144 @@ function getReadState(path: { app: string, source: string, slug: string }): Read
     chapterLabel: getChapterLabel(),
     page: reader?.page,
     pages: reader?.pages,
+    progress: reader ? undefined : readingProgress(),
     url: document.location.href,
     image: getReaderCover() ?? getArtwork(undefined),
   }
 }
 
-/** Collects the name and URL of the current browsing page. */
+/** Returns how far down the page the reader has scrolled as a percentage, or undefined for short pages. */
+function readingProgress(): number | undefined {
+  const root = document.scrollingElement ?? document.documentElement
+  const total = root.scrollHeight - window.innerHeight
+
+  if (total < window.innerHeight * 0.5) {
+    return undefined
+  }
+
+  return Math.min(100, Math.max(0, Math.round((root.scrollTop / total) * 100)))
+}
+
+/** Collects the name and URL of the current browsing page, noting a search query or a profile. */
 function getPageState(): PageState {
+  const url = document.location.href
+  const [first, second] = document.location.pathname.split('/').filter(Boolean)
+
+  if (first?.toLowerCase() === 'u' && second) {
+    return {
+      name: 'Profile',
+      url,
+      kind: 'profile',
+      subject: safeDecode(second),
+    }
+  }
+
+  const params = new URLSearchParams(document.location.search)
+  const query = clean(
+    ['q', 'query', 'search'].map(key => params.get(key)).find(Boolean),
+  )
+
+  return query
+    ? { name: getPageName(), url, kind: 'search', subject: query }
+    : { name: getPageName(), url }
+}
+
+/** Whether the current page is a watch-together room at `/r/<code>`. */
+function isRoomPage(): boolean {
+  return /^\/r\/[a-z0-9]{8}\/?$/i.test(document.location.pathname)
+}
+
+/** Reads the room name, show, episode, member count and player from the join card or the live room. */
+function getRoomState(): RoomState | undefined {
+  const url = document.location.href
+  const card = document.querySelector('section[aria-labelledby="join-title"]')
+
+  if (card) {
+    const parts = (
+      textOf(card.querySelector('#join-title')?.nextElementSibling ?? null) ?? ''
+    ).split(' · ')
+    const count = Array.from(card.querySelectorAll('span'))
+      .map(span => span.textContent?.trim().match(/^(\d+)\D+\d+(?::\d{2}){1,2}$/))
+      .find(Boolean)
+
+    return {
+      joined: false,
+      name: textOf(card.querySelector('#join-title')),
+      title: clean(parts[0]),
+      episode: parts.length > 2 ? clean(parts[1]) : undefined,
+      members: count?.[1] ? Number(count[1]) : undefined,
+      url,
+      image: usableImage(
+        card.querySelector('img')?.getAttribute('src'),
+        url,
+      ),
+    }
+  }
+
+  const heading = document.querySelector('main h1')
+
+  if (!heading) {
+    return undefined
+  }
+
+  const segments = (textOf(heading.nextElementSibling) ?? '').split(' · ')
+  const crowd = segments[segments.length - 2]?.match(/\d+/)
+  const link = document.querySelector<HTMLAnchorElement>('a[href*="/title/"]')
+  const video = getVideo()
+
   return {
-    name: getPageName(),
-    url: document.location.href,
+    joined: true,
+    name: textOf(heading),
+    title: clean(link?.firstChild?.textContent),
+    episode: clean(
+      textOf(document.querySelector('h2[dir="auto"]'))?.split(' · ')[0],
+    ),
+    members: crowd ? Number(crowd[0]) : undefined,
+    titleHref: link?.getAttribute('href') ?? undefined,
+    url,
+    image: getArtwork(video),
+    video,
+  }
+}
+
+/** Builds the presence shown on a watch-together room, with the member count and the room's playback. */
+function buildRoomActivity(room: RoomState, privacy: boolean): PresenceData {
+  const playback = room.joined ? getPlayback(room.video) : undefined
+  const crowd = room.members ? `${room.members} watching` : undefined
+
+  if (!room.joined) {
+    return {
+      type: ActivityType.Playing,
+      details: privacy ? 'Joining a watch party' : `Joining ${room.name ?? 'a watch party'}`,
+      state: privacy
+        ? 'Roomsto'
+        : [room.title, room.episode, crowd].filter(Boolean).join(' • ') || 'Roomsto',
+      largeImageKey: privacy
+        ? ActivityAssets.Logo
+        : room.image ?? ActivityAssets.Logo,
+      ...smallImageFor(undefined, !privacy && Boolean(room.image)),
+      startTimestamp: browsingTimestamp,
+      buttons: privacy
+        ? buildButtons()
+        : buildButtons({ label: 'Join Room', url: room.url }),
+    }
+  }
+
+  return {
+    type: ActivityType.Watching,
+    details: privacy ? 'In a watch party' : room.title ?? room.name ?? 'Watch party',
+    state: privacy
+      ? ['Roomsto', crowd].filter(Boolean).join(' • ')
+      : [room.episode, room.name, crowd].filter(Boolean).join(' • '),
+    largeImageKey: privacy
+      ? ActivityAssets.Logo
+      : room.image ?? ActivityAssets.Logo,
+    ...smallImageFor(playback, !privacy && Boolean(room.image)),
+    startTimestamp: browsingTimestamp,
+    buttons: privacy
+      ? buildButtons()
+      : buildButtons({ label: 'Join Room', url: room.url }),
+    ...getPlaybackTimestamps(playback),
   }
 }
 
@@ -1394,6 +1544,7 @@ function buildReadActivity(read: ReadState, privacy: boolean): PresenceData {
       : [
           read.kind,
           read.chapter ? `Chapter ${read.chapter}` : read.chapterLabel,
+          read.progress === undefined ? undefined : `${read.progress}%`,
           read.source,
         ].filter(Boolean).join(' • '),
     largeImageKey: privacy
@@ -1454,28 +1605,84 @@ function buildSectionActivity(section: SectionState, privacy: boolean): Presence
 
 /** Builds the presence shown while browsing, keeping the elapsed time fixed. */
 function buildPageActivity(page: PageState, privacy: boolean): PresenceData {
+  const details = page.kind === 'profile'
+    ? 'Viewing a profile'
+    : page.kind === 'search'
+      ? privacy ? 'Searching Storm Tempest' : `Searching ${page.name}`
+      : privacy ? 'Browsing Storm Tempest' : `Browsing ${page.name}`
+  const state = privacy || !page.subject
+    ? 'Storm Tempest'
+    : page.kind === 'profile' ? `@${page.subject}` : `"${page.subject}"`
+
   return {
     type: ActivityType.Watching,
-    details: privacy ? 'Browsing Storm Tempest' : `Browsing ${page.name}`,
-    state: 'Storm Tempest',
+    details,
+    state,
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
     buttons: buildButtons(),
   }
 }
 
+/** Whether `key` is one of this presence's own icons rather than a title cover or teacher photo. */
+function isOwnAsset(key: unknown): boolean {
+  return Object.values(ActivityAssets).includes(key as ActivityAssets)
+}
+
+/** Reads a boolean setting, using `fallback` when it is missing. */
+async function readSetting(id: string, fallback: boolean): Promise<boolean> {
+  return presence.getSetting<boolean>(id).catch(() => fallback)
+}
+
+/** Drops the buttons, cover or timestamps from `data` according to the user's settings. */
+function applyOptions(data: PresenceData, options: Options): PresenceData {
+  const result = { ...data }
+
+  if (!options.buttons) {
+    delete result.buttons
+  }
+
+  if (!options.cover && result.largeImageKey && !isOwnAsset(result.largeImageKey)) {
+    result.largeImageKey = ActivityAssets.Logo
+  }
+
+  if (!options.time) {
+    delete result.startTimestamp
+    delete result.endTimestamp
+  }
+
+  return result
+}
+
 /** Updates the presence with coding, reading, watching, tool, game or browsing activity on every refresh. */
 presence.on('UpdateData', async () => {
-  const privacy = await presence
-    .getSetting<boolean>('privacy')
-    .catch(() => false)
+  const privacy = await readSetting('privacy', false)
+  const options: Options = {
+    buttons: await readSetting('showButtons', true),
+    cover: await readSetting('showCover', true),
+    time: await readSetting('showTime', true),
+  }
+  const show = (data: PresenceData): void =>
+    presence.setActivity(applyOptions(data, options))
 
   if (isCodestoWorkspace()) {
-    presence.setActivity(
-      buildCodestoActivity(getCodestoState(), privacy),
-    )
+    show(buildCodestoActivity(getCodestoState(), privacy))
 
     return
+  }
+
+  if (isRoomPage()) {
+    const room = getRoomState()
+
+    if (room) {
+      if (!room.image && room.titleHref) {
+        room.image = await fetchCover(room.titleHref)
+      }
+
+      show(buildRoomActivity(room, privacy))
+
+      return
+    }
   }
 
   const readPath = parseReadPath()
@@ -1485,7 +1692,7 @@ presence.on('UpdateData', async () => {
 
     read.image ??= await fetchTitleCover()
 
-    presence.setActivity(buildReadActivity(read, privacy))
+    show(buildReadActivity(read, privacy))
 
     return
   }
@@ -1497,9 +1704,7 @@ presence.on('UpdateData', async () => {
       section.image = await fetchTeacherPhoto(section.teacher)
     }
 
-    presence.setActivity(
-      buildSectionActivity(section, privacy),
-    )
+    show(buildSectionActivity(section, privacy))
 
     return
   }
@@ -1509,12 +1714,10 @@ presence.on('UpdateData', async () => {
 
     watch.image ??= await fetchTitleCover()
 
-    presence.setActivity(buildWatchActivity(watch, privacy))
+    show(buildWatchActivity(watch, privacy))
 
     return
   }
 
-  presence.setActivity(
-    buildPageActivity(getPageState(), privacy),
-  )
+  show(buildPageActivity(getPageState(), privacy))
 })

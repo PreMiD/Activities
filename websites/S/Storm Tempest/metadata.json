@@ -19,7 +19,7 @@
     "beta.stormy.rest"
   ],
   "regExp": "^https?[:][/][/]((www|beta)[.])?stormy[.]rest[/]",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/thumbnail.png",
   "color": "#0b0c10",
@@ -38,6 +38,27 @@
       "description": "Hides titles, chapters, files, projects and teachers, and the button to what you are viewing.",
       "icon": "fad fa-user-secret",
       "value": false
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "description": "Shows the Storm Tempest button and the button to what you are viewing.",
+      "icon": "fad fa-link",
+      "value": true
+    },
+    {
+      "id": "showCover",
+      "title": "Show Covers",
+      "description": "Shows covers and teacher photos instead of the site logo.",
+      "icon": "fad fa-image",
+      "value": true
+    },
+    {
+      "id": "showTime",
+      "title": "Show Time",
+      "description": "Shows the elapsed time or the playback progress.",
+      "icon": "fad fa-clock",
+      "value": true
     }
   ]
 }
