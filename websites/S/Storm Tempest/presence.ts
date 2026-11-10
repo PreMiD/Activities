@@ -8,6 +8,13 @@ const STORM_TEMPEST_IMAGE = 'https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempes
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+let iframePlayback: (Playback & { at: number }) | undefined
+
+/** Stores the playback state sent by the embedded player. */
+presence.on('iFrameData', (data: Playback) => {
+  iframePlayback = { ...data, at: Date.now() }
+})
+
 let codestoProject: string | undefined
 let codestoStart = browsingTimestamp
 
@@ -31,7 +38,6 @@ interface ReadState {
 interface CodestoState {
   project: string
   file?: string
-  language?: string
   running: boolean
   url: string
 }
@@ -40,6 +46,13 @@ interface SectionState {
   details: string
   state: string
   url: string
+}
+
+interface Playback {
+  paused: boolean
+  ended?: boolean
+  currentTime: number
+  duration: number
 }
 
 interface PageState {
@@ -568,42 +581,70 @@ function codestoIcon(file: string | undefined): string | undefined {
     : undefined
 }
 
-/** Whether the current page is a Codesto project workspace. */
+/** Whether the current page is a Codesto project workspace rather than a list, templates, plans or usage page. */
 function isCodestoWorkspace(): boolean {
-  return (
-    /^\/codesto(?:\/|$)/i.test(document.location.pathname)
-    && Boolean(document.querySelector('#wsName, #wsTabs'))
+  return /^\/codesto\/(?!(?:new|plans|usage|admin|nodes)(?:\/|$))[^/]+/i.test(
+    document.location.pathname,
   )
 }
 
 /** Finds the file name of the active editor tab. */
 function getCodestoFile(): string | undefined {
+  const fileName = /[\w@+.-]+\.[a-z][a-z0-9]{0,7}/i
   const tab = queryText([
     '#wsTabs [aria-selected="true"]',
     '#wsTabs .active',
     '#wsTabs [class*="active"]',
     '[role="tab"][aria-selected="true"]',
   ])
+  const fromTab = tab?.match(fileName)?.[0]
 
-  return tab?.match(/[\w@+.-]+\.[a-z0-9]{1,8}/i)?.[0]
+  if (fromTab) {
+    return fromTab
+  }
+
+  const active = document.querySelectorAll(
+    '[aria-selected="true"], [data-active="true"], [data-state="active"], [class*="active" i], [class*="selected" i], [class*="current" i]',
+  )
+
+  for (const element of Array.from(active)) {
+    const text = textOf(element)
+
+    if (!text || text.length > 60 || !isVisible(element)) {
+      continue
+    }
+
+    const match = text.match(fileName)?.[0]
+
+    if (match) {
+      return match
+    }
+  }
+
+  return undefined
 }
 
-/** Collects the project, active file, language and run state of the workspace. */
+/** Collects the project, active file and run state of the workspace. */
 function getCodestoState(): CodestoState {
   const title = clean(document.title)
     ?.replace(/\s*[—·-]\s*storm\s*$/i, '')
     .replace(/\s*[—·-]\s*codesto\s*$/i, '')
-  const language = textOf(document.querySelector('#wsStLang'))
 
   return {
     project:
       textOf(document.querySelector('#wsName'))
+      ?? queryText([
+        '[data-project-name]',
+        '[class*="project-name" i]',
+        '[class*="projectName" i]',
+      ])
       ?? (title && !/^codesto$/i.test(title) ? title : undefined)
       ?? 'Untitled project',
     file: getCodestoFile(),
-    language: language && language !== '—' ? language : undefined,
-    running: /stop|running/i.test(
-      textOf(document.querySelector('#wsRunLabel')) ?? '',
+    running: Array.from(document.querySelectorAll('button')).some(
+      button =>
+        /^(?:stop|running)\b/i.test(textOf(button) ?? '')
+        && isVisible(button),
     ),
     url: document.location.href,
   }
@@ -740,27 +781,40 @@ function getPageState(): PageState {
   }
 }
 
-/** Builds start/end timestamps from `video`, or none while it is paused or unknown. */
+/** Returns the page video's playback, or the embedded player's if it reported in the last 5 seconds. */
+function getPlayback(video: HTMLVideoElement | undefined): Playback | undefined {
+  if (video) {
+    return video
+  }
+
+  if (iframePlayback && Date.now() - iframePlayback.at < 5000) {
+    return iframePlayback
+  }
+
+  return undefined
+}
+
+/** Builds start/end timestamps from `playback`, or none while it is paused or unknown. */
 function getPlaybackTimestamps(
-  video: HTMLVideoElement | undefined,
+  playback: Playback | undefined,
 ): {
   startTimestamp?: number
   endTimestamp?: number
 } {
   if (
-    !video
-    || video.paused
-    || video.ended
-    || !Number.isFinite(video.duration)
-    || video.duration <= 0
-    || !Number.isFinite(video.currentTime)
+    !playback
+    || playback.paused
+    || playback.ended
+    || !Number.isFinite(playback.duration)
+    || playback.duration <= 0
+    || !Number.isFinite(playback.currentTime)
   ) {
     return {}
   }
 
   const [startTimestamp, endTimestamp] = getTimestamps(
-    Math.floor(video.currentTime),
-    Math.floor(video.duration),
+    Math.floor(playback.currentTime),
+    Math.floor(playback.duration),
   )
 
   return {
@@ -793,7 +847,7 @@ function buildWatchActivity(watch: WatchState): PresenceData {
       },
     ],
     ...(live && { startTimestamp: browsingTimestamp }),
-    ...getPlaybackTimestamps(watch.video),
+    ...getPlaybackTimestamps(getPlayback(watch.video)),
   }
 }
 

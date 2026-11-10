@@ -28,5 +28,7 @@
     "anime",
     "manga",
     "streaming"
-  ]
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?[:][/][/]"
 }
