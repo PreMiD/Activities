@@ -13,6 +13,7 @@ interface WatchState {
   source?: string
   episode?: string
   url: string
+  image?: string
   video?: HTMLVideoElement
 }
 
@@ -157,8 +158,51 @@ function sourceFromSelectedControl(): string | undefined {
   return undefined
 }
 
-/** Resolves the current app section (or a `source`/`server`/`provider` param) from the URL. */
+/** Decodes a URL path segment, returning it unchanged when it is malformed. */
+function safeDecode(value: string): string {
+  try {
+    return decodeURIComponent(value)
+  }
+  catch {
+    return value
+  }
+}
+
+/** Turns a slug such as "kaoru-hana-wa-rin-to-saku" into "Kaoru Hana Wa Rin To Saku". */
+function prettify(slug: string): string {
+  return slug
+    .replace(/[-_]+/g, ' ')
+    .replace(/\b\p{L}/gu, letter => letter.toUpperCase())
+    .trim()
+}
+
+/** Parses `/watch/<source>/<slug>/<episode>` from the URL path. */
+function parseWatchPath():
+  | { source: string, slug: string, episode?: string }
+  | undefined {
+  const match = document.location.pathname.match(
+    /\/watch\/([^/]+)\/([^/]+)(?:\/(\d{1,4}))?\/?$/,
+  )
+
+  if (!match?.[1] || !match[2]) {
+    return undefined
+  }
+
+  return {
+    source: safeDecode(match[1]),
+    slug: safeDecode(match[2]),
+    episode: match[3],
+  }
+}
+
+/** Resolves the provider from a watch URL, else the app section or a `source`/`server`/`provider` param. */
 function sourceFromUrl(): string | undefined {
+  const watchPath = parseWatchPath()
+
+  if (watchPath) {
+    return prettify(watchPath.source)
+  }
+
   const sources: Record<string, string> = {
     anisto: 'Anisto',
     mangasto: 'Mangasto',
@@ -219,6 +263,12 @@ function extractEpisode(value: string | undefined): string | undefined {
 
 /** Finds the current episode number from the URL, title, or page elements. */
 function getEpisode(): string | undefined {
+  const fromPath = parseWatchPath()?.episode
+
+  if (fromPath) {
+    return fromPath
+  }
+
   const candidates = [
     document.location.pathname,
     document.location.search,
@@ -335,14 +385,52 @@ function isWatchPage(): boolean {
   return Boolean(video && isMainPlayer(video))
 }
 
-/** Collects the title, source, episode and video of the current watch page. */
+/** Finds the episode or show artwork as an absolute https URL. */
+function getArtwork(video: HTMLVideoElement | undefined): string | undefined {
+  const candidates = [
+    video?.poster,
+    queryAttr(
+      [
+        'meta[property="og:image"]',
+        'meta[name="twitter:image"]',
+      ],
+      'content',
+    ),
+    queryAttr(['link[rel="image_src"]'], 'href'),
+  ]
+
+  for (const candidate of candidates) {
+    if (!candidate) {
+      continue
+    }
+
+    try {
+      const url = new URL(candidate, document.location.href)
+
+      if (url.protocol === 'https:') {
+        return url.href
+      }
+    }
+    catch {
+      continue
+    }
+  }
+
+  return undefined
+}
+
+/** Collects the title, source, episode, artwork and video of the current watch page. */
 function getWatchState(): WatchState {
+  const video = getVideo()
+  const slug = parseWatchPath()?.slug
+
   return {
-    title: getAnimeTitle() ?? 'Unknown Anime',
+    title: getAnimeTitle() ?? (slug ? prettify(slug) : 'Unknown Anime'),
     source: sourceFromSelectedControl() ?? sourceFromUrl(),
     episode: getEpisode(),
     url: document.location.href,
-    video: getVideo(),
+    image: getArtwork(video),
+    video,
   }
 }
 
@@ -440,7 +528,11 @@ function buildWatchActivity(watch: WatchState): PresenceData {
     type: ActivityType.Watching,
     details: 'Watching Storm Tempest',
     state: `${source}\n${watch.title} - ${episode}`,
-    largeImageKey: STORM_TEMPEST_IMAGE,
+    largeImageKey: watch.image ?? STORM_TEMPEST_IMAGE,
+    ...(watch.image && {
+      smallImageKey: STORM_TEMPEST_IMAGE,
+      smallImageText: 'Storm Tempest',
+    }),
     buttons: [
       {
         label: 'Open Storm Tempest',
