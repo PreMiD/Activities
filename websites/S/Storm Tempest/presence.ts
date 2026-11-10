@@ -17,6 +17,14 @@ interface WatchState {
   video?: HTMLVideoElement
 }
 
+interface ReadState {
+  title: string
+  source: string
+  chapter?: string
+  url: string
+  image?: string
+}
+
 interface PageState {
   name: string
   url: string
@@ -293,11 +301,12 @@ function getEpisode(): string | undefined {
   return undefined
 }
 
-/** Removes a trailing "- Episode N" suffix from a title. */
+/** Removes a trailing "· storm" site suffix and "- Episode N" or "- Chapter N" from a title. */
 function stripEpisode(value: string): string {
   return value
+    .replace(/\s*[-|•·]\s*storm\s*$/i, '')
     .replace(
-      /\s*[-|•·]\s*(?:Episode|Ep\.?)\s*\d{1,4}\s*$/i,
+      /\s*[-|•·]\s*(?:Episode|Ep\.?|Chapter|Ch\.?)\s*\d{1,5}\s*$/i,
       '',
     )
     .trim()
@@ -333,11 +342,63 @@ function getAnimeTitle(): string | undefined {
 
     if (
       title
-      && !/^(?:storm|stormd|storm tempest|anisto|mangasto|movisto|anime|watch anime)$/i.test(
+      && !/^(?:storm|stormd|storm tempest|anisto|mangasto|movisto|novelsto|booksto|tvsto|anime|watch anime)$/i.test(
         title,
       )
     ) {
       return title
+    }
+  }
+
+  return undefined
+}
+
+/** Parses `/<app>/series/<source>/<slug>/<chapter>` for the manga, novel and book readers. */
+function parseReadPath(): { source: string, slug: string } | undefined {
+  const match = document.location.pathname.match(
+    /^\/(?:mangasto|novelsto|booksto)\/series\/([^/]+)\/([^/]+)\/[^/]+\/?$/i,
+  )
+
+  if (!match?.[1] || !match[2]) {
+    return undefined
+  }
+
+  return {
+    source: safeDecode(match[1]),
+    slug: safeDecode(match[2]),
+  }
+}
+
+/** Extracts a chapter number from text such as "Chapter 20", "Ch. 20" or "الفصل 20". */
+function extractChapter(value: string | undefined): string | undefined {
+  if (!value) {
+    return undefined
+  }
+
+  const match
+    = value.match(/\b(?:Chapter|Ch\.?)\s*(\d{1,5}(?:\.\d+)?)\b/i)
+      ?? value.match(/(?:الفصل|فصل)\s*(\d{1,5}(?:\.\d+)?)/)
+
+  return match?.[1]
+}
+
+/** Finds the current chapter number from the page title or elements. */
+function getChapter(): string | undefined {
+  const candidates = [
+    document.title,
+    queryText([
+      '[data-chapter]',
+      '[class*="chapter"]',
+      '[id*="chapter"]',
+      '[aria-label*="Chapter" i]',
+    ]),
+  ]
+
+  for (const candidate of candidates) {
+    const chapter = extractChapter(candidate)
+
+    if (chapter) {
+      return chapter
     }
   }
 
@@ -480,6 +541,17 @@ function getPageName(): string {
   return 'Storm Tempest'
 }
 
+/** Collects the title, provider, chapter and artwork of the current reader page. */
+function getReadState(path: { source: string, slug: string }): ReadState {
+  return {
+    title: getAnimeTitle() ?? prettify(path.slug),
+    source: prettify(path.source),
+    chapter: getChapter(),
+    url: document.location.href,
+    image: getArtwork(undefined),
+  }
+}
+
 /** Collects the name and URL of the current browsing page. */
 function getPageState(): PageState {
   return {
@@ -520,14 +592,12 @@ function getPlaybackTimestamps(
 /** Builds the presence shown while watching an episode. */
 function buildWatchActivity(watch: WatchState): PresenceData {
   const source = watch.source ?? 'Unknown Source'
-  const episode = watch.episode
-    ? `Episode ${watch.episode}`
-    : 'Episode ?'
+  const episode = watch.episode ? `Episode ${watch.episode}` : undefined
 
   return {
     type: ActivityType.Watching,
-    details: 'Watching Storm Tempest',
-    state: `${source}\n${watch.title} - ${episode}`,
+    details: watch.title,
+    state: episode ? `${episode} • ${source}` : source,
     largeImageKey: watch.image ?? STORM_TEMPEST_IMAGE,
     ...(watch.image && {
       smallImageKey: STORM_TEMPEST_IMAGE,
@@ -540,6 +610,27 @@ function buildWatchActivity(watch: WatchState): PresenceData {
       },
     ],
     ...getPlaybackTimestamps(watch.video),
+  }
+}
+
+/** Builds the presence shown while reading a manga, novel or book chapter. */
+function buildReadActivity(read: ReadState): PresenceData {
+  return {
+    type: ActivityType.Playing,
+    details: `Reading ${read.title}`,
+    state: read.chapter ? `Chapter ${read.chapter} • ${read.source}` : read.source,
+    largeImageKey: read.image ?? STORM_TEMPEST_IMAGE,
+    ...(read.image && {
+      smallImageKey: STORM_TEMPEST_IMAGE,
+      smallImageText: 'Storm Tempest',
+    }),
+    startTimestamp: browsingTimestamp,
+    buttons: [
+      {
+        label: 'Open Storm Tempest',
+        url: read.url,
+      },
+    ],
   }
 }
 
@@ -560,8 +651,18 @@ function buildPageActivity(page: PageState): PresenceData {
   }
 }
 
-/** Updates the presence with watch or browsing activity on every refresh. */
+/** Updates the presence with reading, watching or browsing activity on every refresh. */
 presence.on('UpdateData', async () => {
+  const readPath = parseReadPath()
+
+  if (readPath) {
+    presence.setActivity(
+      buildReadActivity(getReadState(readPath)),
+    )
+
+    return
+  }
+
   if (isWatchPage()) {
     presence.setActivity(
       buildWatchActivity(getWatchState()),
