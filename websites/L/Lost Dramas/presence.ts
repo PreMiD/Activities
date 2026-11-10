@@ -7,7 +7,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://i.imgur.com/GMhgPg7.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/L/Lost%20Dramas/assets/logo.png',
 }
 
 // Guarda o poster de cada drama (a página do episódio pode não ter o .poster)
