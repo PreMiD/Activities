@@ -15,9 +15,6 @@ presence.on('iFrameData', (data: Playback) => {
   iframePlayback = { ...data, at: Date.now() }
 })
 
-let codestoProject: string | undefined
-let codestoStart = browsingTimestamp
-
 interface WatchState {
   title: string
   source?: string
@@ -41,7 +38,7 @@ interface ReadState {
 }
 
 interface CodestoState {
-  project: string
+  project?: string
   file?: string
   running: boolean
   url: string
@@ -565,7 +562,7 @@ function isWatchPage(): boolean {
   return Boolean(video && isMainPlayer(video))
 }
 
-/** Returns `value` as an absolute https URL, or undefined when missing, invalid or the site's generic share card at `/og/`. */
+/** Returns `value` as an absolute https URL (upgrading http), or undefined when missing, invalid or the site's generic share card at `/og/`. */
 function usableImage(
   value: string | null | undefined,
   base: string,
@@ -576,6 +573,10 @@ function usableImage(
 
   try {
     const url = new URL(value, base)
+
+    if (url.protocol === 'http:') {
+      url.protocol = 'https:'
+    }
 
     return url.protocol === 'https:' && !/^\/og(?:\/|$)/.test(url.pathname)
       ? url.href
@@ -659,18 +660,62 @@ function fetchCover(
       pick(new DOMParser().parseFromString(html, 'text/html'), href),
     )
     .catch(() => undefined)
+    .then((image) => {
+      if (!image) {
+        setTimeout(() => coverCache.delete(href), 30_000)
+      }
+
+      return image
+    })
 
   coverCache.set(href, request)
 
   return request
 }
 
-/** Fetches the teacher's photo from their page, given the lecture's source and teacher path segments. */
-function fetchTeacherPhoto(teacher: { source: string, id: string }): Promise<string | undefined> {
-  return fetchCover(
-    `/studysto/t/${teacher.id}?source=${teacher.source}`,
-    teacherPhotoOf,
-  )
+const teacherPhotos = new Map<string, string>()
+const teacherRequests = new Map<string, Promise<string | undefined>>()
+
+/** Finds the teacher's photo from one seen earlier, the site's API, or the teacher's page. */
+async function fetchTeacherPhoto(teacher: { source: string, id: string }): Promise<string | undefined> {
+  const known = teacherPhotos.get(teacher.id)
+
+  if (known) {
+    return known
+  }
+
+  let request = teacherRequests.get(teacher.id)
+
+  if (!request) {
+    request = fetch(`/v1/studysto/sources/${teacher.source}/titles/${teacher.id}`)
+      .then(response => (response.ok ? response.json() : undefined))
+      .then(data =>
+        usableImage((data as { cover?: string } | undefined)?.cover, document.location.href),
+      )
+      .catch(() => undefined)
+      .then(
+        photo =>
+          photo
+          ?? fetchCover(
+            `/studysto/t/${teacher.id}?source=${teacher.source}`,
+            teacherPhotoOf,
+          ),
+      )
+      .then((photo) => {
+        if (photo) {
+          teacherPhotos.set(teacher.id, photo)
+        }
+        else {
+          setTimeout(() => teacherRequests.delete(teacher.id), 30_000)
+        }
+
+        return photo
+      })
+
+    teacherRequests.set(teacher.id, request)
+  }
+
+  return request
 }
 
 /** Finds the cover of the title behind the current watch or reader page from its title page. */
@@ -891,8 +936,7 @@ function getCodestoState(): CodestoState {
         '[class*="project-name" i]',
         '[class*="projectName" i]',
       ])
-      ?? (title && !/^codesto$/i.test(title) ? title : undefined)
-      ?? 'Untitled project',
+      ?? (title && !/^(?:codesto|editor)$/i.test(title) ? title : undefined),
     file: getCodestoFile(),
     running:
       Boolean(document.querySelector('.cs-run-btn[aria-label="Stop"]'))
@@ -1059,6 +1103,11 @@ function getSectionState(): SectionState | undefined {
 
   if (app === 'studysto' && second === 't' && third) {
     const subject = findSubject()
+    const image = getArtwork(undefined) ?? findMainImage()
+
+    if (image && segments[2]) {
+      teacherPhotos.set(segments[2], image)
+    }
 
     return {
       details: `Studying with ${headingOr(findTeacher(third))}`,
@@ -1067,7 +1116,7 @@ function getSectionState(): SectionState | undefined {
       privateState: 'Studysto',
       buttonLabel: 'Open Teacher',
       url,
-      image: getArtwork(undefined) ?? findMainImage(),
+      image,
     }
   }
 
@@ -1336,20 +1385,15 @@ function buildReadActivity(read: ReadState, privacy: boolean): PresenceData {
 function buildCodestoActivity(code: CodestoState, privacy: boolean): PresenceData {
   const icon = codestoIcon(code.file)
 
-  if (codestoProject !== code.project) {
-    codestoProject = code.project
-    codestoStart = Math.floor(Date.now() / 1000)
-  }
-
   return {
     type: ActivityType.Playing,
     details: code.running
-      ? privacy ? 'Running a project' : `Running ${code.project}`
+      ? privacy || !code.project ? 'Running a project' : `Running ${code.project}`
       : `Editing ${privacy ? 'a file' : code.file ?? 'a file'}`,
-    state: privacy ? 'Codesto' : `Workspace: ${code.project}`,
+    state: privacy || !code.project ? 'Codesto' : `Workspace: ${code.project}`,
     largeImageKey: icon ?? STORM_TEMPEST_IMAGE,
     ...smallImageFor(undefined, Boolean(icon)),
-    startTimestamp: codestoStart,
+    startTimestamp: browsingTimestamp,
     buttons: buildButtons(),
   }
 }
