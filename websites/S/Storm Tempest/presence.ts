@@ -8,6 +8,9 @@ const STORM_TEMPEST_IMAGE = 'https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempes
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+let codestoProject: string | undefined
+let codestoStart = browsingTimestamp
+
 interface WatchState {
   title: string
   source?: string
@@ -23,6 +26,20 @@ interface ReadState {
   chapter?: string
   url: string
   image?: string
+}
+
+interface CodestoState {
+  project: string
+  file?: string
+  language?: string
+  running: boolean
+  url: string
+}
+
+interface SectionState {
+  details: string
+  state: string
+  url: string
 }
 
 interface PageState {
@@ -502,6 +519,147 @@ function getWatchState(): WatchState {
   }
 }
 
+const codestoIconIds: Record<string, number> = {
+  js: 65,
+  mjs: 65,
+  cjs: 65,
+  jsx: 67,
+  ts: 124,
+  tsx: 132,
+  py: 94,
+  go: 53,
+  html: 54,
+  htm: 54,
+  css: 18,
+  scss: 110,
+  json: 62,
+  md: 88,
+  rs: 118,
+  java: 69,
+  php: 97,
+  c: 27,
+  cpp: 17,
+  cs: 23,
+  rb: 105,
+  sh: 115,
+  sql: 106,
+  yml: 136,
+  yaml: 136,
+  xml: 137,
+  svg: 119,
+  vue: 140,
+  svelte: 109,
+  lua: 78,
+  dart: 26,
+  kt: 72,
+  swift: 117,
+  toml: 125,
+  txt: 126,
+  log: 75,
+  env: 41,
+}
+
+/** Returns the language icon for a file name, taken from the vscode.dev assets. */
+function codestoIcon(file: string | undefined): string | undefined {
+  const id = codestoIconIds[file?.split('.').pop()?.toLowerCase() ?? '']
+
+  return id
+    ? `https://cdn.rcd.gg/PreMiD/websites/V/vscode.dev/assets/${id}.png`
+    : undefined
+}
+
+/** Whether the current page is a Codesto project workspace. */
+function isCodestoWorkspace(): boolean {
+  return (
+    /^\/codesto(?:\/|$)/i.test(document.location.pathname)
+    && Boolean(document.querySelector('#wsName, #wsTabs'))
+  )
+}
+
+/** Finds the file name of the active editor tab. */
+function getCodestoFile(): string | undefined {
+  const tab = queryText([
+    '#wsTabs [aria-selected="true"]',
+    '#wsTabs .active',
+    '#wsTabs [class*="active"]',
+    '[role="tab"][aria-selected="true"]',
+  ])
+
+  return tab?.match(/[\w@+.-]+\.[a-z0-9]{1,8}/i)?.[0]
+}
+
+/** Collects the project, active file, language and run state of the workspace. */
+function getCodestoState(): CodestoState {
+  const title = clean(document.title)
+    ?.replace(/\s*[—·-]\s*storm\s*$/i, '')
+    .replace(/\s*[—·-]\s*codesto\s*$/i, '')
+  const language = textOf(document.querySelector('#wsStLang'))
+
+  return {
+    project:
+      textOf(document.querySelector('#wsName'))
+      ?? (title && !/^codesto$/i.test(title) ? title : undefined)
+      ?? 'Untitled project',
+    file: getCodestoFile(),
+    language: language && language !== '—' ? language : undefined,
+    running: /stop|running/i.test(
+      textOf(document.querySelector('#wsRunLabel')) ?? '',
+    ),
+    url: document.location.href,
+  }
+}
+
+/** Returns the page heading when it is short enough to be a name, else `fallback`. */
+function headingOr(fallback: string): string {
+  const heading = textOf(document.querySelector('main h1'))
+
+  return heading && heading.length <= 60 ? heading : fallback
+}
+
+/** Describes what the user is doing in a Toolsto tool, a Gamesto game or on a Studysto teacher page. */
+function getSectionState(): SectionState | undefined {
+  const segments = document.location.pathname.split('/').filter(Boolean)
+  const [app, second, third] = segments.map(segment => safeDecode(segment))
+  const url = document.location.href
+
+  if (app === 'toolsto' && second && third) {
+    const categories: Record<string, string> = {
+      images: 'Images',
+      pdf: 'PDF',
+      text: 'Text',
+      developer: 'Developer',
+    }
+
+    return {
+      details: `Using ${headingOr(prettify(third))}`,
+      state: `Toolsto • ${categories[second] ?? prettify(second)}`,
+      url,
+    }
+  }
+
+  if (
+    app === 'gamesto'
+    && second
+    && !/^(?:browse|library|leaderboard|scores|settings)$/i.test(second)
+  ) {
+    return {
+      details: `Playing ${headingOr(prettify(second))}`,
+      state: 'Gamesto',
+      url,
+    }
+  }
+
+  if (app === 'studysto' && second === 't' && third) {
+    return {
+      details: `Studying with ${headingOr(third)}`,
+      state: 'Studysto',
+      url,
+    }
+  }
+
+  return undefined
+}
+
 /** Returns a display name for the current browsing page. */
 function getPageName(): string {
   const pathname = document.location.pathname
@@ -530,10 +688,25 @@ function getPageName(): string {
     studysto: 'Study',
   }
 
+  const subPages: Record<string, Record<string, string>> = {
+    studysto: { library: 'My teachers', desk: 'My study' },
+    tvsto: { favorites: 'Favorites' },
+    codesto: { new: 'Templates', plans: 'Plans', usage: 'Usage' },
+    toolsto: {
+      images: 'Images',
+      pdf: 'PDF',
+      text: 'Text',
+      developer: 'Developer',
+    },
+  }
+
   const pageName = pageNames[firstSegment.toLowerCase()]
+  const subPage = segments[1]
+    ? subPages[firstSegment.toLowerCase()]?.[segments[1].toLowerCase()]
+    : undefined
 
   if (pageName) {
-    return pageName
+    return subPage ? `${pageName} • ${subPage}` : pageName
   }
 
   const title = clean(document.title)
@@ -600,11 +773,14 @@ function getPlaybackTimestamps(
 function buildWatchActivity(watch: WatchState): PresenceData {
   const source = watch.source ?? 'Unknown Source'
   const episode = watch.episode ? `Episode ${watch.episode}` : undefined
+  const live = document.location.pathname.startsWith('/tvsto/')
 
   return {
     type: ActivityType.Watching,
     details: watch.title,
-    state: episode ? `${episode} • ${source}` : source,
+    state: live
+      ? `Live TV • ${source}`
+      : episode ? `${episode} • ${source}` : source,
     largeImageKey: watch.image ?? STORM_TEMPEST_IMAGE,
     ...(watch.image && {
       smallImageKey: STORM_TEMPEST_IMAGE,
@@ -616,6 +792,7 @@ function buildWatchActivity(watch: WatchState): PresenceData {
         url: watch.url,
       },
     ],
+    ...(live && { startTimestamp: browsingTimestamp }),
     ...getPlaybackTimestamps(watch.video),
   }
 }
@@ -641,6 +818,53 @@ function buildReadActivity(read: ReadState): PresenceData {
   }
 }
 
+/** Builds the presence shown while working in a Codesto project, like an editor. */
+function buildCodestoActivity(code: CodestoState): PresenceData {
+  const icon = codestoIcon(code.file)
+
+  if (codestoProject !== code.project) {
+    codestoProject = code.project
+    codestoStart = Math.floor(Date.now() / 1000)
+  }
+
+  return {
+    type: ActivityType.Playing,
+    details: code.running
+      ? `Running ${code.project}`
+      : `Editing ${code.file ?? 'a file'}`,
+    state: `Workspace: ${code.project}`,
+    largeImageKey: icon ?? STORM_TEMPEST_IMAGE,
+    ...(icon && {
+      smallImageKey: STORM_TEMPEST_IMAGE,
+      smallImageText: 'Codesto',
+    }),
+    startTimestamp: codestoStart,
+    buttons: [
+      {
+        label: 'Open Storm Tempest',
+        url: code.url,
+      },
+    ],
+  }
+}
+
+/** Builds the presence shown while using a tool or game, or viewing a teacher. */
+function buildSectionActivity(section: SectionState): PresenceData {
+  return {
+    type: ActivityType.Playing,
+    details: section.details,
+    state: section.state,
+    largeImageKey: STORM_TEMPEST_IMAGE,
+    startTimestamp: browsingTimestamp,
+    buttons: [
+      {
+        label: 'Open Storm Tempest',
+        url: section.url,
+      },
+    ],
+  }
+}
+
 /** Builds the presence shown while browsing, keeping the elapsed time fixed. */
 function buildPageActivity(page: PageState): PresenceData {
   return {
@@ -658,13 +882,31 @@ function buildPageActivity(page: PageState): PresenceData {
   }
 }
 
-/** Updates the presence with reading, watching or browsing activity on every refresh. */
+/** Updates the presence with coding, reading, watching, tool, game or browsing activity on every refresh. */
 presence.on('UpdateData', async () => {
+  if (isCodestoWorkspace()) {
+    presence.setActivity(
+      buildCodestoActivity(getCodestoState()),
+    )
+
+    return
+  }
+
   const readPath = parseReadPath()
 
   if (readPath) {
     presence.setActivity(
       buildReadActivity(getReadState(readPath)),
+    )
+
+    return
+  }
+
+  const section = getSectionState()
+
+  if (section) {
+    presence.setActivity(
+      buildSectionActivity(section),
     )
 
     return
