@@ -30,5 +30,14 @@
     "streaming"
   ],
   "iframe": true,
-  "iFrameRegExp": "^https?[:][/][/]"
+  "iFrameRegExp": "^https?[:][/][/]",
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "description": "Hides titles, chapters, files, projects and teachers, and the button to what you are viewing.",
+      "icon": "fad fa-user-secret",
+      "value": false
+    }
+  ]
 }
