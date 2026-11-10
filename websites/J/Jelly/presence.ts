@@ -177,6 +177,7 @@ function getBrowsingState(): string {
 }
 
 let updateVersion = 0
+let wasPrivate = false
 
 presence.on('UpdateData', async () => {
   const version = ++updateVersion
@@ -205,6 +206,10 @@ presence.on('UpdateData', async () => {
     return
 
   const [privacy, usePresenceName, showBrowsingStatus, showCover, showMovies, showSeries, showSmallImages, timestamp, logoType] = settings
+  // Le logo peut mettre jusqu'à 10 s à charger : retirer tout de suite l'activité identifiante.
+  if (privacy && !wasPrivate)
+    presence.clearActivity()
+  wasPrivate = privacy
   const logo = [ANIMATED_LOGO, STILL_LOGO, JELLY_LOGO][logoType] ?? JELLY_LOGO
   const playback = getActivePlayback()
 
