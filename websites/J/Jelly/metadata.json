@@ -7,8 +7,8 @@
   },
   "service": "Jelly",
   "description": {
-    "en": "Browse Jelly and watch movies and series.",
-    "fr": "Parcours Jelly et regarde des films et des séries."
+    "en": "Jelly is a French streaming platform for movies, series and anime. Browse the catalog, watch in the built-in player and request missing titles: Jelly notifies you as soon as they arrive.",
+    "fr": "Jelly est une plateforme française de streaming de films, séries et animés. Parcours le catalogue, regarde dans le lecteur intégré et demande les titres manquants : Jelly te prévient dès qu'ils arrivent."
   },
   "url": "playjelly.fr",
   "regExp": "^https?[:][/][/]playjelly[.]fr[/]",
