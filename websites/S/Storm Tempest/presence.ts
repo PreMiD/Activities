@@ -277,6 +277,13 @@ function getEpisode(): string | undefined {
     return fromPath
   }
 
+  const params = new URLSearchParams(document.location.search)
+  const fromQuery = params.get('ep') ?? params.get('episode')
+
+  if (fromQuery && /^\d{1,4}$/.test(fromQuery)) {
+    return fromQuery
+  }
+
   const candidates = [
     document.location.pathname,
     document.location.search,
@@ -353,10 +360,10 @@ function getAnimeTitle(): string | undefined {
   return undefined
 }
 
-/** Parses `/<app>/series/<source>/<slug>/<chapter>` for the manga, novel and book readers. */
+/** Parses `/<app>/<kind>/<source>/<slug>/<chapter>` for the manga, novel and book readers. */
 function parseReadPath(): { source: string, slug: string } | undefined {
   const match = document.location.pathname.match(
-    /^\/(?:mangasto|novelsto|booksto)\/series\/([^/]+)\/([^/]+)\/[^/]+\/?$/i,
+    /^\/(?:mangasto|novelsto|booksto)\/(?!browse|library|source|classic|search)[^/]+\/([^/]+)\/([^/]+)\/[^/]+\/?$/i,
   )
 
   if (!match?.[1] || !match[2]) {
