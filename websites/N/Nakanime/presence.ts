@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1565331266465697802',
 })
 
-const nakanimeLogo = 'https://i.imgur.com/6Sgsj9h.png'
+const nakanimeLogo = 'https://cdn.rcd.gg/PreMiD/websites/N/Nakanime/assets/logo.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 interface VideoData {
