@@ -4,7 +4,19 @@ const presence = new Presence({
   clientId: '1233213267053248633',
 })
 
-const STORM_TEMPEST_IMAGE = 'https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/logo.png'
+enum ActivityAssets {
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/S/Storm%20Tempest/assets/logo.png',
+  Moon = 'https://i.imgur.com/PqT7xJ4.png',
+  Js = 'https://i.imgur.com/FH6KGTc.png',
+  Jsx = 'https://i.imgur.com/C340rKu.png',
+  Ts = 'https://i.imgur.com/5nXesVp.png',
+  Tsx = 'https://i.imgur.com/U4bfs4Y.png',
+  Py = 'https://i.imgur.com/sjZjxC1.png',
+  Go = 'https://i.imgur.com/zUJmvxp.png',
+  Html = 'https://i.imgur.com/cvOy8al.png',
+  Css = 'https://i.imgur.com/H08IIi3.png',
+  Json = 'https://i.imgur.com/KhT2obK.png',
+}
 
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
@@ -786,53 +798,24 @@ function getWatchState(): WatchState {
   }
 }
 
-const codestoIconIds: Record<string, number> = {
-  js: 65,
-  mjs: 65,
-  cjs: 65,
-  jsx: 67,
-  ts: 124,
-  tsx: 132,
-  py: 94,
-  go: 53,
-  html: 54,
-  htm: 54,
-  css: 18,
-  scss: 110,
-  json: 62,
-  md: 88,
-  rs: 118,
-  java: 69,
-  php: 97,
-  c: 27,
-  cpp: 17,
-  cs: 23,
-  rb: 105,
-  sh: 115,
-  sql: 106,
-  yml: 136,
-  yaml: 136,
-  xml: 137,
-  svg: 119,
-  vue: 140,
-  svelte: 109,
-  lua: 78,
-  dart: 26,
-  kt: 72,
-  swift: 117,
-  toml: 125,
-  txt: 126,
-  log: 75,
-  env: 41,
+const codestoIcons: Record<string, ActivityAssets> = {
+  js: ActivityAssets.Js,
+  mjs: ActivityAssets.Js,
+  cjs: ActivityAssets.Js,
+  jsx: ActivityAssets.Jsx,
+  ts: ActivityAssets.Ts,
+  tsx: ActivityAssets.Tsx,
+  py: ActivityAssets.Py,
+  go: ActivityAssets.Go,
+  html: ActivityAssets.Html,
+  htm: ActivityAssets.Html,
+  css: ActivityAssets.Css,
+  json: ActivityAssets.Json,
 }
 
-/** Returns the language icon for a file name, taken from the vscode.dev assets. */
-function codestoIcon(file: string | undefined): string | undefined {
-  const id = codestoIconIds[file?.split('.').pop()?.toLowerCase() ?? '']
-
-  return id
-    ? `https://cdn.rcd.gg/PreMiD/websites/V/vscode.dev/assets/${id}.png`
-    : undefined
+/** Returns the language icon for a file name, if it has one. */
+function codestoIcon(file: string | undefined): ActivityAssets | undefined {
+  return codestoIcons[file?.split('.').pop()?.toLowerCase() ?? '']
 }
 
 /** Whether the current page is a Codesto project editor at `/codesto/p/<id>`. */
@@ -1312,7 +1295,7 @@ function smallImageFor(
   }
 
   return hasArtwork
-    ? { smallImageKey: STORM_TEMPEST_IMAGE, smallImageText: 'Storm Tempest' }
+    ? { smallImageKey: ActivityAssets.Logo, smallImageText: 'Storm Tempest' }
     : {}
 }
 
@@ -1339,8 +1322,8 @@ function buildWatchActivity(watch: WatchState, privacy: boolean): PresenceData {
     details: privacy ? `Watching ${kind}` : watch.title,
     state: privacy ? undefined : info,
     largeImageKey: privacy
-      ? STORM_TEMPEST_IMAGE
-      : watch.image ?? STORM_TEMPEST_IMAGE,
+      ? ActivityAssets.Logo
+      : watch.image ?? ActivityAssets.Logo,
     ...smallImageFor(playback, !privacy && Boolean(watch.image)),
     buttons: privacy
       ? buildButtons()
@@ -1368,8 +1351,8 @@ function buildReadActivity(read: ReadState, privacy: boolean): PresenceData {
           read.source,
         ].filter(Boolean).join(' • '),
     largeImageKey: privacy
-      ? STORM_TEMPEST_IMAGE
-      : read.image ?? STORM_TEMPEST_IMAGE,
+      ? ActivityAssets.Logo
+      : read.image ?? ActivityAssets.Logo,
     ...smallImageFor(undefined, !privacy && Boolean(read.image)),
     ...(read.page && read.pages && {
       party: { partySize: read.page, maxPartySize: read.pages },
@@ -1384,15 +1367,20 @@ function buildReadActivity(read: ReadState, privacy: boolean): PresenceData {
 /** Builds the presence shown while working in a Codesto project, like an editor. */
 function buildCodestoActivity(code: CodestoState, privacy: boolean): PresenceData {
   const icon = codestoIcon(code.file)
+  const idle = !code.file && !code.running
 
   return {
     type: ActivityType.Playing,
     details: code.running
       ? privacy || !code.project ? 'Running a project' : `Running ${code.project}`
-      : `Editing ${privacy ? 'a file' : code.file ?? 'a file'}`,
+      : idle
+        ? 'Idling'
+        : `Editing ${privacy ? 'a file' : code.file ?? 'a file'}`,
     state: privacy || !code.project ? 'Codesto' : `Workspace: ${code.project}`,
-    largeImageKey: icon ?? STORM_TEMPEST_IMAGE,
-    ...smallImageFor(undefined, Boolean(icon)),
+    largeImageKey: icon ?? ActivityAssets.Logo,
+    ...(idle
+      ? { smallImageKey: ActivityAssets.Moon, smallImageText: 'Idling' }
+      : smallImageFor(undefined, Boolean(icon))),
     startTimestamp: browsingTimestamp,
     buttons: buildButtons(),
   }
@@ -1407,8 +1395,8 @@ function buildSectionActivity(section: SectionState, privacy: boolean): Presence
     details: privacy ? section.privateDetails : section.details,
     state: privacy ? section.privateState : section.state,
     largeImageKey: privacy
-      ? STORM_TEMPEST_IMAGE
-      : section.image ?? STORM_TEMPEST_IMAGE,
+      ? ActivityAssets.Logo
+      : section.image ?? ActivityAssets.Logo,
     ...smallImageFor(playback, !privacy && Boolean(section.image)),
     startTimestamp: browsingTimestamp,
     buttons: privacy
@@ -1424,7 +1412,7 @@ function buildPageActivity(page: PageState, privacy: boolean): PresenceData {
     type: ActivityType.Watching,
     details: privacy ? 'Browsing Storm Tempest' : `Browsing ${page.name}`,
     state: 'Storm Tempest',
-    largeImageKey: STORM_TEMPEST_IMAGE,
+    largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
     buttons: buildButtons(),
   }
