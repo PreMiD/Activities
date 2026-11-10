@@ -9,7 +9,7 @@ const presence = new Presence({
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 enum ActivityAssets {
-  Logo = 'https://animesfhd.net/assets/img/pwa/icon-512.png',
+  Logo = 'https://cdn.rcd.gg/PreMiD/websites/A/AnimesFHD/assets/logo.png',
 }
 
 interface Activity {

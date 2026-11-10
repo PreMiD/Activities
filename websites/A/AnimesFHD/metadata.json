@@ -12,9 +12,9 @@
   },
   "url": "animesfhd.net",
   "regExp": "^https?[:][/][/](www[.])?animesfhd[.]net[/]",
-  "version": "1.0.0",
-  "logo": "https://animesfhd.net/assets/img/pwa/icon-512.png",
-  "thumbnail": "https://animesfhd.net/assets/img/logo.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimesFHD/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimesFHD/assets/thumbnail.png",
   "color": "#a855f7",
   "category": "anime",
   "tags": [
