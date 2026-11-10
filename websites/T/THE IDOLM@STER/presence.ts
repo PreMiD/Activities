@@ -84,11 +84,9 @@ presence.on('UpdateData', async () => {
 
   const presenceData: PresenceData = {
     name: 'THE IDOLM@STER',
-    type: ActivityType.Watching,
+    type: ActivityType.Playing,
     largeImageKey: LOGO,
-    largeImageText: 'THE IDOLM@STER',
     startTimestamp: browsingTimestamp,
-    smallImageKey: Assets.Reading,
   }
   const { hostname, pathname, href } = document.location
   const parts = pathname.split('/').filter(Boolean)
@@ -106,7 +104,6 @@ presence.on('UpdateData', async () => {
       const image = showIdolImage ? ogImage() : null
       if (image && image.includes('/character_main/')) {
         presenceData.largeImageKey = image
-        presenceData.largeImageText = name || 'アイドル名鑑'
         presenceData.smallImageKey = LOGO
         presenceData.smallImageText = 'アイドル名鑑'
       }
