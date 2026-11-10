@@ -15,7 +15,7 @@
     "www.animerank.tv"
   ],
   "regExp": "^https?[:][/][/]((www[.])?animerank[.]tv)[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeRank/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/AnimeRank/assets/thumbnail.png",
   "color": "#e11d48",
@@ -28,20 +28,16 @@
   ],
   "settings": [
     {
-      "id": "lang",
-      "multiLanguage": true
-    },
-    {
       "id": "privacy",
-      "title": "Privacy Mode",
-      "description": "Hides anime and episode information from your presence.",
+      "title": "Gizlilik Modu",
+      "description": "Anime ve bölüm bilgisini Discord kartında gizler.",
       "icon": "fad fa-user-secret",
       "value": false
     },
     {
       "id": "showCover",
-      "title": "Show Cover",
-      "description": "Shows the anime cover instead of the AnimeRank logo.",
+      "title": "Kapağı Göster",
+      "description": "AnimeRank logosu yerine anime kapağını gösterir.",
       "icon": "fad fa-image",
       "value": true,
       "if": {
@@ -50,15 +46,15 @@
     },
     {
       "id": "showTimestamp",
-      "title": "Show Timestamp",
-      "description": "Shows elapsed and remaining time of the episode.",
+      "title": "Süreyi Göster",
+      "description": "Bölümün geçen ve kalan süresini gösterir.",
       "icon": "fad fa-stopwatch",
       "value": true
     },
     {
       "id": "showButtons",
-      "title": "Show Buttons",
-      "description": "Shows the 'Watch Episode' and 'View Anime' buttons.",
+      "title": "Düğmeleri Göster",
+      "description": "'Bölümü İzle' ve 'Animeye Göz At' düğmelerini gösterir.",
       "icon": "fad fa-compress-arrows-alt",
       "value": true,
       "if": {
