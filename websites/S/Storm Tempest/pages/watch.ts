@@ -94,7 +94,7 @@ export function parseWatchPath():
   return {
     source: safeDecode(match[1]),
     slug: safeDecode(match[2]),
-    episode: match[3] && /^\d{1,4}$/.test(match[3]) ? match[3] : undefined,
+    episode: match[3] && /^\d{1,4}(?:\.\d+)?$/.test(match[3]) ? match[3] : undefined,
   }
 }
 
@@ -190,7 +190,7 @@ export function getEpisode(): string | undefined {
   const params = new URLSearchParams(document.location.search)
   const fromQuery = params.get('ep') ?? params.get('episode')
 
-  if (fromQuery && /^\d{1,4}$/.test(fromQuery)) {
+  if (fromQuery && /^\d{1,4}(?:\.\d+)?$/.test(fromQuery)) {
     return fromQuery
   }
 

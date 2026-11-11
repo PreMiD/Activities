@@ -29,13 +29,8 @@ export function usableImage(
 export function getArtwork(video: HTMLVideoElement | undefined): string | undefined {
   const candidates = [
     video?.poster,
-    queryAttr(
-      [
-        'meta[property="og:image"]',
-        'meta[name="twitter:image"]',
-      ],
-      'content',
-    ),
+    queryAttr(['meta[property="og:image"]'], 'content'),
+    queryAttr(['meta[name="twitter:image"]'], 'content'),
     queryAttr(['link[rel="image_src"]'], 'href'),
   ]
 
@@ -92,10 +87,11 @@ export function fetchCover(
     return cached
   }
 
+  const base = new URL(href, document.location.href).href
   const request = fetch(href, { credentials: 'same-origin' })
     .then(response => (response.ok ? response.text() : ''))
     .then(html =>
-      pick(new DOMParser().parseFromString(html, 'text/html'), href),
+      pick(new DOMParser().parseFromString(html, 'text/html'), base),
     )
     .catch(() => undefined)
     .then((image) => {

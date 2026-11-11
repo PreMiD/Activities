@@ -16,14 +16,9 @@ export function distinctParts(title: string | undefined, parts: (string | undefi
     .join(' • ')
 }
 
-/** Builds the home-page button and, when given, a second button to the current item. */
-export function buildButtons(item?: ButtonData): [ButtonData, ButtonData?] {
-  const home = {
-    label: 'Storm Tempest',
-    url: `${document.location.origin}/`,
-  }
-
-  return item ? [home, item] : [home]
+/** Builds the single button to the current item, or none when there is nothing specific to open. */
+export function buildButtons(item?: ButtonData): [ButtonData] | undefined {
+  return item ? [item] : undefined
 }
 
 /** Picks a play or pause icon while playback is known, else the site logo when artwork fills the large image. */
