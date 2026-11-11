@@ -5,6 +5,7 @@ const presence: Presence = new Presence({
 })
 const startTimestamp: number = Math.floor(Date.now() / 1000)
 
+/** Loads the localized strings used by the activity. */
 async function getStrings() {
   return presence.getStrings({
     browsing: 'general.browsing',
@@ -19,6 +20,7 @@ enum ActivityAssets {
 
 let strings: Awaited<ReturnType<typeof getStrings>>
 
+/** Returns the current page title without the ZEN Study suffix. */
 function getPageTitle() {
   const rawTitle = document.title?.trim()
   if (rawTitle) {
@@ -32,6 +34,7 @@ function getPageTitle() {
     ?.trim()
 }
 
+/** Returns the most relevant visible course progress as localized text. */
 function getProgressText() {
   const progressBars = [
     ...document.querySelectorAll<HTMLElement>('[role="progressbar"]'),
