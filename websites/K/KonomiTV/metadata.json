@@ -12,7 +12,7 @@
   },
   "url": "my.local.konomi.tv",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*local[.]konomi[.]tv([:][0-9]+)?[/]",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/K/KonomiTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/K/KonomiTV/assets/thumbnail.png",
   "color": "#E64F97",
