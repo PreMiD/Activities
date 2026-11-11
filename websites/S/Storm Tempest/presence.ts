@@ -1386,39 +1386,45 @@ function getRoomState(): RoomState | undefined {
   }
 }
 
-/** Builds the presence shown on a watch-together room, with the member count and the room's playback. */
+/** Joins the distinct, non-empty parts of a status line, skipping names that repeat the show's title. */
+function distinctParts(title: string | undefined, parts: (string | undefined)[]): string {
+  const seen = new Set<string>(title ? [title.toLowerCase()] : [])
+
+  return parts
+    .filter((part): part is string => Boolean(part))
+    .filter((part) => {
+      const key = part.toLowerCase()
+
+      return seen.has(key) ? false : Boolean(seen.add(key))
+    })
+    .join(' • ')
+}
+
+/** Builds the presence shown on a watch-together room, with the member count as the party and the room's playback. */
 function buildRoomActivity(room: RoomState, privacy: boolean): PresenceData {
   const playback = room.joined ? getPlayback(room.video) : undefined
-  const crowd = room.members ? `${room.members} watching` : undefined
-
-  if (!room.joined) {
-    return {
-      type: ActivityType.Playing,
-      details: privacy ? 'Joining a watch party' : `Joining ${room.name ?? 'a watch party'}`,
-      state: privacy
-        ? 'Roomsto'
-        : [room.title, room.episode, crowd].filter(Boolean).join(' • ') || 'Roomsto',
-      largeImageKey: privacy
-        ? ActivityAssets.Logo
-        : room.image ?? ActivityAssets.Logo,
-      ...smallImageFor(undefined, !privacy && Boolean(room.image)),
-      startTimestamp: browsingTimestamp,
-      buttons: privacy
-        ? buildButtons()
-        : buildButtons({ label: 'Join Room', url: room.url }),
-    }
-  }
+  const party = room.members
+    ? { partySize: room.members, maxPartySize: 50 }
+    : undefined
+  const state = privacy
+    ? 'Roomsto'
+    : [distinctParts(room.title, [room.episode, room.name]), 'Roomsto']
+        .filter(Boolean)
+        .join(' • ')
 
   return {
-    type: ActivityType.Watching,
-    details: privacy ? 'In a watch party' : room.title ?? room.name ?? 'Watch party',
-    state: privacy
-      ? ['Roomsto', crowd].filter(Boolean).join(' • ')
-      : [room.episode, room.name, crowd].filter(Boolean).join(' • '),
+    type: room.joined ? ActivityType.Watching : ActivityType.Playing,
+    details: privacy
+      ? room.joined ? 'In a watch party' : 'Joining a watch party'
+      : room.joined
+        ? room.title ?? room.name ?? 'Watch party'
+        : `Joining ${room.title ?? room.name ?? 'a watch party'}`,
+    state,
     largeImageKey: privacy
       ? ActivityAssets.Logo
       : room.image ?? ActivityAssets.Logo,
     ...smallImageFor(playback, !privacy && Boolean(room.image)),
+    ...(party && { party }),
     startTimestamp: browsingTimestamp,
     buttons: privacy
       ? buildButtons()
