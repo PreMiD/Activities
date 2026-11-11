@@ -14,6 +14,22 @@ function isGenerating(): boolean {
     ),
   )
 }
+
+function isTyping(): boolean {
+  // チャットの入力欄 (textarea / contenteditable) に未送信の文字がある間だけ true。
+  // 判定に使うのは「文字があるかどうか」だけで、入力内容そのものは表示に使わない
+  const editors = document.querySelectorAll<HTMLElement>(
+    'textarea, [contenteditable="true"]',
+  )
+  for (const el of editors) {
+    const text = el instanceof HTMLTextAreaElement
+      ? el.value
+      : (el.textContent ?? '')
+    if (text.replace(/\u200B/g, '').trim().length > 0)
+      return true
+  }
+  return false
+}
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let chatKey = ''
@@ -125,9 +141,17 @@ presence.on('UpdateData', async () => {
     }
     if (showTimestamp)
       presenceData.startTimestamp = chatSince
+    // 状態は 生成中 → 入力中 → 通常 の優先順で切り替える
+    let chatState = 'チャット'
     if (isGenerating()) {
       presenceData.smallImageKey = TALKING_ICON
-      presenceData.smallImageText = '応答中'
+      presenceData.smallImageText = '応答を生成中…'
+      chatState = '応答を生成中…'
+    }
+    else if (isTyping()) {
+      presenceData.smallImageKey = Assets.Writing
+      presenceData.smallImageText = '入力中…'
+      chatState = '入力中…'
     }
     else {
       presenceData.smallImageKey = Assets.Writing
@@ -138,7 +162,7 @@ presence.on('UpdateData', async () => {
     presenceData.details = showTitle && title && title !== 'Muse'
       ? title
       : 'Muse と会話中'
-    presenceData.state = 'チャット'
+    presenceData.state = chatState
   }
   else {
     presenceData.details = first === 'library'

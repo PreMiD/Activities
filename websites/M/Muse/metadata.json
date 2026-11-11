@@ -12,7 +12,7 @@
   },
   "url": "muse.ai",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*muse[.]ai[/]",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "logo": "https://i.imgur.com/ZOkEmUL.png",
   "thumbnail": "https://i.imgur.com/TGZgLl0.png",
   "color": "#0081FB",
