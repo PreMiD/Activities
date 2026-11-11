@@ -121,14 +121,6 @@ export function sourceFromUrl(): string | undefined {
     roomsto: 'Roomsto',
   }
 
-  for (const part of document.location.pathname.split('/').filter(Boolean)) {
-    const source = sources[part.toLowerCase()]
-
-    if (source) {
-      return source
-    }
-  }
-
   const params = new URLSearchParams(document.location.search)
 
   for (const key of ['source', 'server', 'provider']) {
@@ -136,6 +128,14 @@ export function sourceFromUrl(): string | undefined {
 
     if (value) {
       return value
+    }
+  }
+
+  for (const part of document.location.pathname.split('/').filter(Boolean)) {
+    const source = sources[part.toLowerCase()]
+
+    if (source) {
+      return source
     }
   }
 
