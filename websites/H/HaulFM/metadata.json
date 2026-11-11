@@ -13,9 +13,9 @@
   },
   "url": "haul.fm",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*haul[.]fm[/]",
-  "version": "1.0.0",
-  "logo": "https://i.imgur.com/vqklmUN.png",
-  "thumbnail": "https://i.imgur.com/WTstwt8.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HaulFM/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HaulFM/assets/thumbnail.png",
   "color": "#070127",
   "category": "music",
   "tags": [
