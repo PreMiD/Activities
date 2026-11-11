@@ -580,6 +580,10 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Search
     presenceData.smallImageText = '検索中'
   }
+  else {
+    presenceData.smallImageKey = Assets.Viewing
+    presenceData.smallImageText = 'ブラウジング中'
+  }
   presenceData.startTimestamp = browsingTimestamp
   presence.setActivity(presenceData)
 })
