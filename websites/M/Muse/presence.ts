@@ -1,0 +1,144 @@
+import { Assets, getTimestampsFromMedia } from 'premid'
+
+const presence = new Presence({
+  clientId: '1570043946585817139',
+})
+
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/M/Muse/assets/logo.png'
+const TALKING_ICON = 'https://cdn.rcd.gg/PreMiD/websites/M/Muse/assets/0.png'
+
+function isGenerating(): boolean {
+  return Boolean(
+    document.querySelector(
+      '[data-is-streaming="true"], [data-streaming="true"], button[aria-label*="Stop"], button[aria-label*="停止"]',
+    ),
+  )
+}
+const browsingTimestamp = Math.floor(Date.now() / 1000)
+
+let chatKey = ''
+let chatSince = browsingTimestamp
+
+// ページごとの表示名。URL は 2026-11-11 にユーザーの実環境で確認したもの:
+// メインチャット=/、サイドチャット=/thread/:id、/goals、/ideas、/feed、
+// /library/artifacts?view=web|documents、/library/podcasts、/library/media?view=video|images
+const simplePages: Record<string, string> = {
+  feed: 'フィードを見ています',
+  ideas: 'アイデアを見ています',
+  goals: 'ゴールを見ています',
+}
+
+function libraryPage(segments: string[], search: string): string {
+  const view = new URLSearchParams(search).get('view')
+  switch (segments[1]) {
+    case 'artifacts':
+      if (view === 'web')
+        return 'Web の成果物を見ています'
+      if (view === 'documents')
+        return 'ドキュメントを見ています'
+      return '成果物を見ています'
+    case 'podcasts':
+      return 'ポッドキャストを見ています'
+    case 'media':
+      if (view === 'video')
+        return '動画を見ています'
+      if (view === 'images')
+        return '画像を見ています'
+      return 'メディアを見ています'
+    default:
+      return 'ライブラリを見ています'
+  }
+}
+
+presence.on('UpdateData', async () => {
+  const [showTitle, showTimestamp, showBrowsing] = await Promise.all([
+    presence.getSetting<boolean>('showTitle'),
+    presence.getSetting<boolean>('timestamp'),
+    presence.getSetting<boolean>('browsing'),
+  ])
+
+  const { pathname, search } = document.location
+  const segments = pathname.split('/').filter(Boolean)
+  const first = segments[0] ?? ''
+  // ルート (メインチャット) と /thread/:id (サイドチャット) をチャット画面として扱う
+  const isChat = first === '' || first === 'thread'
+
+  if (!isChat && !showBrowsing) {
+    presence.clearActivity()
+    return
+  }
+
+  const presenceData: PresenceData = {
+    name: 'Muse',
+    largeImageKey: LOGO,
+    largeImageText: 'Muse',
+    startTimestamp: showTimestamp ? browsingTimestamp : null,
+  }
+
+  // クイック検索 (コマンドパレット) が開いている間は検索中表示にする。
+  // URL は変わらないため、スクリム要素の data-state で判定する (2026-11-11 実機確認)
+  if (document.querySelector('[data-slot="quick-search-scrim"][data-state="open"]')) {
+    presenceData.details = '検索中'
+    presenceData.smallImageKey = Assets.Search
+    presenceData.smallImageText = '検索中'
+    presence.setActivity(presenceData)
+    return
+  }
+
+  // ポッドキャスト再生中はメディア要素からそのまま取る (標準パターン)。
+  // アプリが <audio> を使っていない場合は media が null で通常表示に落ちる
+  const media = document.querySelector<HTMLMediaElement>('audio, video')
+  if (media && (first === 'library' && segments[1] === 'podcasts' || !media.paused)) {
+    const mediaTitle = document.title.replace(/\s*[-|]\s*Muse\s*$/, '').trim()
+    presenceData.details = showTitle && mediaTitle && mediaTitle !== 'Muse'
+      ? mediaTitle
+      : 'ポッドキャスト'
+    presenceData.state = media.paused ? '一時停止中' : '再生中'
+    presenceData.smallImageKey = media.paused ? Assets.Pause : Assets.Play
+    presenceData.smallImageText = media.paused ? '一時停止中' : '再生中'
+    if (!media.paused) {
+      const { startTimestamp, endTimestamp } = getTimestampsFromMedia(media)
+      presenceData.startTimestamp = startTimestamp
+      presenceData.endTimestamp = endTimestamp
+    }
+    else if (!showTimestamp) {
+      presenceData.startTimestamp = null
+    }
+    presence.setActivity(presenceData)
+    return
+  }
+
+  if (isChat) {
+    // チャットが切り替わったら経過時間を数え直す
+    if (pathname !== chatKey) {
+      chatKey = pathname
+      chatSince = Math.floor(Date.now() / 1000)
+    }
+    if (showTimestamp)
+      presenceData.startTimestamp = chatSince
+    if (isGenerating()) {
+      presenceData.smallImageKey = TALKING_ICON
+      presenceData.smallImageText = '応答中'
+    }
+    else {
+      presenceData.smallImageKey = Assets.Writing
+      presenceData.smallImageText = 'チャット中'
+    }
+    // タイトルが「Muse」単体でないときはチャットタイトルとして使う
+    const title = document.title.replace(/\s*[-|]\s*Muse\s*$/, '').trim()
+    presenceData.details = showTitle && title && title !== 'Muse'
+      ? title
+      : 'Muse と会話中'
+    presenceData.state = 'チャット'
+  }
+  else {
+    presenceData.details = first === 'library'
+      ? libraryPage(segments, search)
+      : (simplePages[first] ?? 'Muse を見ています')
+    presenceData.state = 'ブラウジング'
+    presenceData.smallImageKey = Assets.Viewing
+    presenceData.smallImageText = 'ブラウジング中'
+  }
+
+  presence.setActivity(presenceData)
+})
