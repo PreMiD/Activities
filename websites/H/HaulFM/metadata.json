@@ -5,6 +5,12 @@
     "id": "124220790001500161",
     "name": "infoblock"
   },
+  "contributors": [
+    {
+      "id": "962402530401345596",
+      "name": "Momorissa"
+    }
+  ],
   "service": "HaulFM",
   "description": {
     "de": "Streaming des ultimativen Soundtracks für virtuelle Trucker und Open-Road-Enthusiasten auf haul.fm.",
@@ -13,7 +19,7 @@
   },
   "url": "haul.fm",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*haul[.]fm[/]",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/H/HaulFM/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/H/HaulFM/assets/thumbnail.png",
   "color": "#070127",
