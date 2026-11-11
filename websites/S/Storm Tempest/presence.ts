@@ -64,6 +64,7 @@ interface ReadState {
   page?: number
   pages?: number
   progress?: number
+  position?: { partySize: number, maxPartySize: number }
   url: string
   image?: string
 }
@@ -85,6 +86,7 @@ interface SectionState {
   image?: string
   video?: HTMLVideoElement
   media?: boolean
+  party?: { partySize: number, maxPartySize: number }
   teacher?: { source: string, id: string }
 }
 
@@ -1150,6 +1152,7 @@ function getSectionState(): SectionState | undefined {
       textOf(document.querySelector('main a[href*="/studysto/t/"]')) ?? ''
     ).split(' · ')
     const detail = textOf(document.querySelector('main h1 ~ p'))
+    const party = parseCount(textOf(document.querySelector('main aside h2 + span')))
 
     return {
       details: `Watching ${headingOr('a lecture')}`,
@@ -1160,6 +1163,7 @@ function getSectionState(): SectionState | undefined {
       url,
       video,
       media: true,
+      party,
       teacher: { source: rawSource, id: rawTeacher },
     }
   }
@@ -1281,6 +1285,24 @@ function getPageName(): string {
   return 'Storm Tempest'
 }
 
+/** Reads a "3 of 10" style count from `text` as a party size, or undefined when it is empty or inconsistent. */
+function parseCount(
+  text: string | undefined,
+): { partySize: number, maxPartySize: number } | undefined {
+  const match = latinDigits(text ?? '').match(/^(\d+)\D+(\d+)$/)
+  const partySize = Number(match?.[1])
+  const maxPartySize = Number(match?.[2])
+
+  return partySize >= 1 && partySize <= maxPartySize
+    ? { partySize, maxPartySize }
+    : undefined
+}
+
+/** Reads the chapter's position among all chapters from the novel and book reader's top bar. */
+function getChapterPosition(): { partySize: number, maxPartySize: number } | undefined {
+  return parseCount(textOf(document.querySelector('header span.truncate + span')))
+}
+
 /** Collects the kind, title, provider, chapter, page and cover of the current reader page. */
 function getReadState(path: { app: string, source: string, slug: string }): ReadState {
   const kinds: Record<string, string> = {
@@ -1300,6 +1322,7 @@ function getReadState(path: { app: string, source: string, slug: string }): Read
     page: reader?.page,
     pages: reader?.pages,
     progress: reader ? undefined : readingProgress(),
+    position: kind === 'Manga' ? undefined : getChapterPosition(),
     url: document.location.href,
     image: getReaderCover() ?? getArtwork(undefined),
   }
@@ -1574,9 +1597,9 @@ function buildReadActivity(read: ReadState, privacy: boolean): PresenceData {
       ? ActivityAssets.Logo
       : read.image ?? ActivityAssets.Logo,
     ...smallImageFor(undefined, !privacy && Boolean(read.image)),
-    ...(read.page && read.pages && {
-      party: { partySize: read.page, maxPartySize: read.pages },
-    }),
+    ...(read.page && read.pages
+      ? { party: { partySize: read.page, maxPartySize: read.pages } }
+      : read.position && { party: read.position }),
     startTimestamp: browsingTimestamp,
     buttons: privacy
       ? buildButtons()
@@ -1618,6 +1641,7 @@ function buildSectionActivity(section: SectionState, privacy: boolean): Presence
       ? ActivityAssets.Logo
       : section.image ?? ActivityAssets.Logo,
     ...smallImageFor(playback, !privacy && Boolean(section.image)),
+    ...(!privacy && section.party && { party: section.party }),
     startTimestamp: browsingTimestamp,
     buttons: privacy
       ? buildButtons()
