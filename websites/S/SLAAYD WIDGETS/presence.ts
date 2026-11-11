@@ -15,7 +15,7 @@ function getPageName(): string {
   if (heading)
     return heading
 
-  const title = document.title.split(/[|\-–—]/)[0]?.trim()
+  const title = document.title.split(/[|\-—]/)[0]?.trim()
   return title || 'SLAAYD WIDGETS'
 }
 
