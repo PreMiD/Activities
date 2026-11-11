@@ -1413,7 +1413,7 @@ function buildRoomActivity(room: RoomState, privacy: boolean): PresenceData {
         .join(' • ')
 
   return {
-    type: room.joined ? ActivityType.Watching : ActivityType.Playing,
+    type: ActivityType.Playing,
     details: privacy
       ? room.joined ? 'In a watch party' : 'Joining a watch party'
       : room.joined
