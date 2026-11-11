@@ -1626,7 +1626,9 @@ function buildPageActivity(page: PageState, privacy: boolean): PresenceData {
     state,
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    buttons: buildButtons(),
+    buttons: page.kind === 'profile' && !privacy
+      ? buildButtons({ label: 'View Profile', url: page.url })
+      : buildButtons(),
   }
 }
 
