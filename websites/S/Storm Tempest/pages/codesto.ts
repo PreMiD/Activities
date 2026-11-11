@@ -141,6 +141,8 @@ export function buildCodestoActivity(code: CodestoState, privacy: boolean): Pres
       ? { smallImageKey: ActivityAssets.Moon, smallImageText: 'Idling' }
       : smallImageFor(undefined, Boolean(icon))),
     startTimestamp: browsingTimestamp,
-    buttons: buildButtons(),
+    buttons: privacy
+      ? buildButtons()
+      : buildButtons({ label: 'Open Project', url: code.url }),
   }
 }

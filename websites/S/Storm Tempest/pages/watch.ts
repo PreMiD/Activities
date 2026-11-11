@@ -374,7 +374,9 @@ export function buildWatchActivity(watch: WatchState, privacy: boolean): Presenc
     buttons: privacy
       ? buildButtons()
       : buildButtons({
-          label: live ? 'Open Channel' : 'Open Series',
+          label: live
+            ? 'Open Channel'
+            : path.startsWith('/movisto/') ? 'Open Movie' : 'Open Anime',
           url: watch.url,
         }),
     ...(live && !playback?.paused && { startTimestamp: browsingTimestamp }),

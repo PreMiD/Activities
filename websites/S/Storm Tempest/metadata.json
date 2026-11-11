@@ -42,7 +42,7 @@
     {
       "id": "showButtons",
       "title": "Show Buttons",
-      "description": "Shows the button to what you are viewing.",
+      "description": "Shows the button that opens what you are viewing.",
       "icon": "fad fa-link",
       "value": true
     },

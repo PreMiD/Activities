@@ -195,6 +195,6 @@ export function buildReadActivity(read: ReadState, privacy: boolean): PresenceDa
     startTimestamp: browsingTimestamp,
     buttons: privacy
       ? buildButtons()
-      : buildButtons({ label: 'Open Series', url: read.url }),
+      : buildButtons({ label: `Open ${read.kind}`, url: read.url }),
   }
 }

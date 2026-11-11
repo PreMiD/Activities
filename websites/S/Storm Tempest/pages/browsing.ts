@@ -100,6 +100,25 @@ export function getPageState(): PageState {
     : { name: getPageName(), url }
 }
 
+/** Picks the button for a browsing page: the profile, the search results, or the page itself, but never the home page. */
+export function pageButton(page: PageState): ButtonData | undefined {
+  if (new URL(page.url).pathname === '/') {
+    return undefined
+  }
+
+  if (page.kind === 'profile') {
+    return { label: 'View Profile', url: page.url }
+  }
+
+  if (page.kind === 'search') {
+    return { label: 'View Results', url: page.url }
+  }
+
+  const name = page.name.split(' • ').pop() ?? page.name
+
+  return { label: `Open ${name}`.slice(0, 32), url: page.url }
+}
+
 /** Builds the presence shown while browsing, keeping the elapsed time fixed. */
 export function buildPageActivity(page: PageState, privacy: boolean): PresenceData {
   const details = page.kind === 'profile'
@@ -117,8 +136,6 @@ export function buildPageActivity(page: PageState, privacy: boolean): PresenceDa
     state,
     largeImageKey: ActivityAssets.Logo,
     startTimestamp: browsingTimestamp,
-    buttons: page.kind === 'profile' && !privacy
-      ? buildButtons({ label: 'View Profile', url: page.url })
-      : buildButtons(),
+    buttons: privacy ? buildButtons() : buildButtons(pageButton(page)),
   }
 }
