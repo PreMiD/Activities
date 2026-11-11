@@ -132,6 +132,14 @@ function textOf(element: Element | null): string | undefined {
   return clean(element?.textContent)
 }
 
+/** Converts Arabic-Indic and Persian digits in `value` to Latin digits so numbers can be parsed in any site language. */
+function latinDigits(value: string): string {
+  return value
+    .replace(/[\u0660-\u0669]/g, digit => String(digit.charCodeAt(0) - 0x660))
+    .replace(/[\u06F0-\u06F9]/g, digit => String(digit.charCodeAt(0) - 0x6F0))
+    .replace(/\u066B/g, '.')
+}
+
 /** Returns the cleaned value of `attribute` on `element`, if any. */
 function attrOf(
   element: Element | null,
@@ -343,6 +351,7 @@ function extractEpisode(value: string | undefined): string | undefined {
     return undefined
   }
 
+  const text = latinDigits(value)
   const patterns = [
     /\bS\d{1,2}\s*E(\d{1,4})\b/i,
     /\bEpisode\s*(\d{1,4})\b/i,
@@ -352,7 +361,7 @@ function extractEpisode(value: string | undefined): string | undefined {
   ]
 
   for (const pattern of patterns) {
-    const match = value.match(pattern)
+    const match = text.match(pattern)
 
     if (match?.[1]) {
       return match[1]
@@ -364,11 +373,12 @@ function extractEpisode(value: string | undefined): string | undefined {
 
 /** Finds the current episode number from the URL, title, or page elements. */
 function getEpisode(): string | undefined {
-  const fromList = textOf(
+  const listed = textOf(
     document.querySelector(
       'aside[aria-labelledby="episodes-title"] [aria-current="true"] span',
     ),
   )
+  const fromList = listed && latinDigits(listed)
 
   if (fromList && /^\d{1,4}(?:\.\d+)?$/.test(fromList)) {
     return fromList
@@ -396,6 +406,7 @@ function getEpisode(): string | undefined {
       '[class*="episode"]',
       '[id*="episode"]',
       '[aria-label*="Episode" i]',
+      '[aria-label*="الحلقة"]',
     ]),
     queryAttr(['[data-episode]'], 'data-episode'),
   ]
@@ -416,7 +427,7 @@ function stripEpisode(value: string): string {
   return value
     .replace(/\s*[-|•·]\s*storm\s*$/i, '')
     .replace(
-      /\s*[-|•·]\s*(?:Episode|Ep\.?|Chapter|Ch\.?)\s*\d{1,5}\s*$/i,
+      /\s*[-|•·]\s*(?:Episode|Ep\.?|Chapter|Ch\.?|الحلقة|حلقة|الفصل|فصل)\s*[\d\u0660-\u0669]{1,5}\s*$/i,
       '',
     )
     .trim()
@@ -486,7 +497,7 @@ function parseReadPath():
 /** Reads the current and total page from the manga reader's counter, or from its page elements. */
 function getReaderPage(): { page: number, pages: number } | undefined {
   for (const counter of Array.from(document.querySelectorAll('span[class*="fixed"]'))) {
-    const match = textOf(counter)?.match(/^(\d{1,4})\s*\/\s*(\d{1,4})$/)
+    const match = latinDigits(textOf(counter) ?? '').match(/^(\d{1,4})\s*\/\s*(\d{1,4})$/)
     const page = Number(match?.[1])
     const pages = Number(match?.[2])
 
@@ -534,9 +545,10 @@ function extractChapter(value: string | undefined): string | undefined {
     return undefined
   }
 
+  const text = latinDigits(value)
   const match
-    = value.match(/\b(?:Chapter|Ch\.?)\s*(\d{1,5}(?:\.\d+)?)\b/i)
-      ?? value.match(/(?:الفصل|فصل)\s*(\d{1,5}(?:\.\d+)?)/)
+    = text.match(/\b(?:Chapter|Ch\.?)\s*(\d{1,5}(?:\.\d+)?)\b/i)
+      ?? text.match(/(?:الفصل|فصل)\s*(\d{1,5}(?:\.\d+)?)/)
 
   return match?.[1]
 }
@@ -806,7 +818,7 @@ function getTotalEpisodes(): string | undefined {
   ]
 
   for (const candidate of candidates) {
-    const match = candidate?.match(/(\d{1,4})\s*(?:episodes|eps\b|حلقات|حلقة)/i)
+    const match = candidate && latinDigits(candidate).match(/(\d{1,4})\s*(?:episodes|eps\b|حلقات|حلقة)/i)
 
     if (match?.[1]) {
       return match[1]
@@ -1343,7 +1355,7 @@ function getRoomState(): RoomState | undefined {
       textOf(card.querySelector('#join-title')?.nextElementSibling ?? null) ?? ''
     ).split(' · ')
     const count = Array.from(card.querySelectorAll('span'))
-      .map(span => span.textContent?.trim().match(/^(\d+)\D+\d+(?::\d{2}){1,2}$/))
+      .map(span => latinDigits(span.textContent?.trim() ?? '').match(/^(\d+)\D+\d+(?::\d{2}){1,2}$/))
       .find(Boolean)
 
     return {
@@ -1367,7 +1379,7 @@ function getRoomState(): RoomState | undefined {
   }
 
   const segments = (textOf(heading.nextElementSibling) ?? '').split(' · ')
-  const crowd = segments[segments.length - 2]?.match(/\d+/)
+  const crowd = latinDigits(segments[segments.length - 2] ?? '').match(/\d+/)
   const link = document.querySelector<HTMLAnchorElement>('a[href*="/title/"]')
   const video = getVideo()
 
