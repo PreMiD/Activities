@@ -1662,8 +1662,9 @@ presence.on('UpdateData', async () => {
     cover: await readSetting('showCover', true),
     time: await readSetting('showTime', true),
   }
-  const show = (data: PresenceData): void =>
+  const show = (data: PresenceData): void => {
     presence.setActivity(applyOptions(data, options))
+  }
 
   if (isCodestoWorkspace()) {
     show(buildCodestoActivity(getCodestoState(), privacy))
