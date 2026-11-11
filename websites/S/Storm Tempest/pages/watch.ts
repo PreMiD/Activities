@@ -150,11 +150,11 @@ export function extractEpisode(value: string | undefined): string | undefined {
 
   const text = latinDigits(value)
   const patterns = [
-    /\bS\d{1,2}\s*E(\d{1,4})\b/i,
-    /\bEpisode\s*(\d{1,4})\b/i,
-    /\bEp\.?\s*(\d{1,4})\b/i,
-    /(?:الحلقة|حلقة)\s*(\d{1,4})/,
-    /(?:^|\s)#(\d{1,4})(?:\s|$)/,
+    /\bS\d{1,2}\s*E(\d{1,4}(?:\.\d+)?)\b/i,
+    /\bEpisode\s*(\d{1,4}(?:\.\d+)?)\b/i,
+    /\bEp\.?\s*(\d{1,4}(?:\.\d+)?)\b/i,
+    /(?:الحلقة|حلقة)\s*(\d{1,4}(?:\.\d+)?)/,
+    /(?:^|\s)#(\d{1,4}(?:\.\d+)?)(?:\s|$)/,
   ]
 
   for (const pattern of patterns) {

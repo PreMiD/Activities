@@ -23,35 +23,35 @@ async function readSetting(id: string, fallback: boolean): Promise<boolean> {
   return presence.getSetting<boolean>(id).catch(() => fallback)
 }
 
-/** Updates the presence with coding, reading, watching, tool, game or browsing activity on every refresh. */
-presence.on('UpdateData', async () => {
-  const privacy = await readSetting('privacy', false)
-  const options: Options = {
-    buttons: await readSetting('showButtons', true),
-    cover: await readSetting('showCover', true),
-    time: await readSetting('showTime', true),
+/** Reads the privacy and display settings. */
+async function readSettings(): Promise<{ privacy: boolean, options: Options }> {
+  return {
+    privacy: await readSetting('privacy', false),
+    options: {
+      buttons: await readSetting('showButtons', true),
+      cover: await readSetting('showCover', true),
+      time: await readSetting('showTime', true),
+    },
   }
-  const show = (data: PresenceData): void => {
-    presence.setActivity(applyOptions(data, options))
-  }
+}
 
+/** Picks the page's activity, fetching a missing cover only when `covers` is true, and returns how to build it for a privacy setting. */
+async function pickActivity(covers: boolean): Promise<(privacy: boolean) => PresenceData> {
   if (isCodestoWorkspace()) {
-    show(buildCodestoActivity(getCodestoState(), privacy))
+    const code = getCodestoState()
 
-    return
+    return privacy => buildCodestoActivity(code, privacy)
   }
 
   if (isRoomPage()) {
     const room = getRoomState()
 
     if (room) {
-      if (!room.image && room.titleHref) {
+      if (covers && !room.image && room.titleHref) {
         room.image = await fetchCover(room.titleHref)
       }
 
-      show(buildRoomActivity(room, privacy))
-
-      return
+      return privacy => buildRoomActivity(room, privacy)
     }
   }
 
@@ -60,34 +60,43 @@ presence.on('UpdateData', async () => {
   if (readPath) {
     const read = getReadState(readPath)
 
-    read.image ??= await fetchTitleCover()
+    if (covers) {
+      read.image ??= await fetchTitleCover()
+    }
 
-    show(buildReadActivity(read, privacy))
-
-    return
+    return privacy => buildReadActivity(read, privacy)
   }
 
   const section = getSectionState()
 
   if (section) {
-    if (section.teacher) {
+    if (covers && section.teacher) {
       section.image = await fetchTeacherPhoto(section.teacher)
     }
 
-    show(buildSectionActivity(section, privacy))
-
-    return
+    return privacy => buildSectionActivity(section, privacy)
   }
 
   if (isWatchPage()) {
     const watch = getWatchState()
 
-    watch.image ??= await fetchTitleCover()
+    if (covers) {
+      watch.image ??= await fetchTitleCover()
+    }
 
-    show(buildWatchActivity(watch, privacy))
-
-    return
+    return privacy => buildWatchActivity(watch, privacy)
   }
 
-  show(buildPageActivity(getPageState(), privacy))
+  const page = getPageState()
+
+  return privacy => buildPageActivity(page, privacy)
+}
+
+/** Updates the presence with coding, reading, watching, tool, game or browsing activity on every refresh. */
+presence.on('UpdateData', async () => {
+  const before = await readSettings()
+  const build = await pickActivity(!before.privacy && before.options.cover)
+  const { privacy, options } = await readSettings()
+
+  presence.setActivity(applyOptions(build(privacy), options))
 })

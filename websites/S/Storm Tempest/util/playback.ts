@@ -11,9 +11,17 @@ export function setIframePlayback(data: Playback): void {
 
 /** Returns the first loaded, unfinished `<video>` element on the page. */
 export function getVideo(): HTMLVideoElement | undefined {
-  return Array.from(
+  const loaded = Array.from(
     document.querySelectorAll<HTMLVideoElement>('video'),
-  ).find(video => !video.ended && video.readyState > 0)
+  ).filter(video => !video.ended && video.readyState > 0)
+  const area = (video: HTMLVideoElement): number => {
+    const rect = video.getBoundingClientRect()
+
+    return rect.width * rect.height
+  }
+
+  return loaded.find(isMainPlayer)
+    ?? loaded.sort((a, b) => area(b) - area(a))[0]
 }
 
 /** Whether `video` is in the viewport and big enough to be the main player rather than a preview. */

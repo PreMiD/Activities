@@ -189,9 +189,9 @@ export function buildReadActivity(read: ReadState, privacy: boolean): PresenceDa
       ? ActivityAssets.Logo
       : read.image ?? ActivityAssets.Logo,
     ...smallImageFor(undefined, !privacy && Boolean(read.image)),
-    ...(read.page && read.pages
+    ...(!privacy && (read.page && read.pages
       ? { party: { partySize: read.page, maxPartySize: read.pages } }
-      : read.position && { party: read.position }),
+      : read.position && { party: read.position })),
     startTimestamp: browsingTimestamp,
     buttons: privacy
       ? buildButtons()

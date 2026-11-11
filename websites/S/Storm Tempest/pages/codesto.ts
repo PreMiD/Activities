@@ -39,7 +39,7 @@ export function stripBadge(name: string): string {
 
 /** Finds a file name inside `element`, preferring a child that holds only the name. */
 export function fileNameIn(element: Element): string | undefined {
-  const pattern = /[\w@+.-]+\.[a-z][a-z0-9]{0,7}/i
+  const pattern = /[\w@+.-]+\.[a-z][a-z0-9]{0,7}|Dockerfile/i
 
   for (const child of Array.from(element.querySelectorAll('*'))) {
     const text = textOf(child)
@@ -56,13 +56,13 @@ export function fileNameIn(element: Element): string | undefined {
 
 /** Finds the file name of the active editor tab. */
 export function getCodestoFile(): string | undefined {
-  const fileName = /[\w@+.-]+\.[a-z][a-z0-9]{0,7}/i
+  const fileName = /[\w@+.-]+\.[a-z][a-z0-9]{0,7}|Dockerfile/i
   const tabPath = document
     .querySelector('[role="tab"][aria-selected="true"]')
     ?.getAttribute('title')
   const tabName = tabPath?.split('/').pop()
 
-  if (tabName && /\.[a-z][a-z0-9]{0,7}$/i.test(tabName)) {
+  if (tabName && /\.[a-z][a-z0-9]{0,7}$|^Dockerfile$/i.test(tabName)) {
     return tabName
   }
 

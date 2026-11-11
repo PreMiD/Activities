@@ -88,7 +88,7 @@ export function fetchCover(
   }
 
   const base = new URL(href, document.location.href).href
-  const request = fetch(href, { credentials: 'same-origin' })
+  const request = fetch(href, { credentials: 'same-origin', signal: AbortSignal.timeout(8000) })
     .then(response => (response.ok ? response.text() : ''))
     .then(html =>
       pick(new DOMParser().parseFromString(html, 'text/html'), base),
