@@ -86,7 +86,6 @@ interface SectionState {
   image?: string
   video?: HTMLVideoElement
   media?: boolean
-  party?: { partySize: number, maxPartySize: number }
   teacher?: { source: string, id: string }
 }
 
@@ -1152,7 +1151,6 @@ function getSectionState(): SectionState | undefined {
       textOf(document.querySelector('main a[href*="/studysto/t/"]')) ?? ''
     ).split(' · ')
     const detail = textOf(document.querySelector('main h1 ~ p'))
-    const party = parseCount(textOf(document.querySelector('main aside h2 + span')))
 
     return {
       details: `Watching ${headingOr('a lecture')}`,
@@ -1163,7 +1161,6 @@ function getSectionState(): SectionState | undefined {
       url,
       video,
       media: true,
-      party,
       teacher: { source: rawSource, id: rawTeacher },
     }
   }
@@ -1641,7 +1638,6 @@ function buildSectionActivity(section: SectionState, privacy: boolean): Presence
       ? ActivityAssets.Logo
       : section.image ?? ActivityAssets.Logo,
     ...smallImageFor(playback, !privacy && Boolean(section.image)),
-    ...(!privacy && section.party && { party: section.party }),
     startTimestamp: browsingTimestamp,
     buttons: privacy
       ? buildButtons()
