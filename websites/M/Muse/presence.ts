@@ -4,8 +4,8 @@ const presence = new Presence({
   clientId: '1570043946585817139',
 })
 
-const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/M/Muse/assets/logo.png'
-const TALKING_ICON = 'https://cdn.rcd.gg/PreMiD/websites/M/Muse/assets/0.png'
+const LOGO = 'https://i.imgur.com/ZOkEmUL.png'
+const TALKING_ICON = 'https://i.imgur.com/l5SUX1w.png'
 
 function isGenerating(): boolean {
   return Boolean(

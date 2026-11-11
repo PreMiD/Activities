@@ -13,8 +13,8 @@
   "url": "muse.ai",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*muse[.]ai[/]",
   "version": "1.0.0",
-  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Muse/assets/logo.png",
-  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Muse/assets/thumbnail.png",
+  "logo": "https://i.imgur.com/ZOkEmUL.png",
+  "thumbnail": "https://i.imgur.com/TGZgLl0.png",
   "color": "#0081FB",
   "category": "other",
   "tags": [
