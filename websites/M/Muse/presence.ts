@@ -1,4 +1,4 @@
-import { Assets, getTimestampsFromMedia } from 'premid'
+import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 
 const presence = new Presence({
   clientId: '1570043946585817139',
@@ -68,9 +68,10 @@ presence.on('UpdateData', async () => {
     return
   }
 
+  // largeImageText を付けると型が MediaPresenceData 扱いになり type が必須になるため、
+  // 通常表示では付けない (メディア再生時は専用オブジェクト側で付ける)
   const presenceData: PresenceData = {
     largeImageKey: LOGO,
-    largeImageText: 'Muse',
   }
   if (showTimestamp)
     presenceData.startTimestamp = browsingTimestamp
@@ -92,24 +93,27 @@ presence.on('UpdateData', async () => {
     const isVideo = media instanceof HTMLVideoElement
       || (first === 'library' && segments[1] === 'media')
     const mediaTitle = document.title.replace(/\s*[-|]\s*Muse\s*$/, '').trim()
-    presenceData.details = showTitle && mediaTitle && mediaTitle !== 'Muse'
-      ? mediaTitle
-      : (isVideo ? '動画' : 'ポッドキャスト')
-    presenceData.state = media.paused ? '一時停止中' : '再生中'
-    presenceData.smallImageKey = media.paused ? Assets.Pause : Assets.Play
-    presenceData.smallImageText = media.paused ? '一時停止中' : '再生中'
+    // メディア再生は MediaPresenceData として組み立てる (type が必須)
+    const mediaData: PresenceData = {
+      type: isVideo ? ActivityType.Watching : ActivityType.Listening,
+      largeImageKey: LOGO,
+      largeImageText: 'Muse',
+      details: showTitle && mediaTitle && mediaTitle !== 'Muse'
+        ? mediaTitle
+        : (isVideo ? '動画' : 'ポッドキャスト'),
+      state: media.paused ? '一時停止中' : '再生中',
+      smallImageKey: media.paused ? Assets.Pause : Assets.Play,
+      smallImageText: media.paused ? '一時停止中' : '再生中',
+    }
     if (!media.paused && showTimestamp) {
       const [startTimestamp, endTimestamp] = getTimestampsFromMedia(media)
       if (endTimestamp > 0) {
-        presenceData.startTimestamp = startTimestamp
-        presenceData.endTimestamp = endTimestamp
+        mediaData.startTimestamp = startTimestamp
+        mediaData.endTimestamp = endTimestamp
       }
     }
-    else {
-      // 一時停止中は経過タイマーを残さない (進捗表示と矛盾するため)
-      delete presenceData.startTimestamp
-    }
-    presence.setActivity(presenceData)
+    // 一時停止中はタイマーを付けない (進捗表示と矛盾するため)
+    presence.setActivity(mediaData)
     return
   }
 
