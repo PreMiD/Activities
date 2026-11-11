@@ -1,0 +1,107 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "connor.h",
+    "id": "853334868372750386"
+  },
+  "service": "Battlefield Heroes",
+  "altnames": ["bf2.us"],
+  "description": {
+    "en": "Shows your Battlefield Heroes game status on bf2.us: the main menu, joining a battle, and the map, mode, team and class during a match."
+  },
+  "url": "bf2.us",
+  "regExp": "^https?[:][/][/]bf2[.]us[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/rHlya0J.png",
+  "thumbnail": "https://i.imgur.com/Cv5cJWU.png",
+  "color": "#903631",
+  "category": "games",
+  "tags": ["battlefield-heroes", "bf2", "game", "shooter"],
+  "settings": [
+    {
+      "id": "showmenu",
+      "title": "Show the main menu",
+      "icon": "fad fa-bars",
+      "value": true
+    },
+    {
+      "id": "menuDetails",
+      "title": "Main menu: first line",
+      "icon": "fad fa-font",
+      "if": { "showmenu": true },
+      "value": "In the Main Menu",
+      "placeholder": "In the Main Menu"
+    },
+    {
+      "id": "menuState",
+      "title": "Main menu: second line",
+      "icon": "fad fa-font",
+      "if": { "showmenu": true },
+      "value": "%team% %class% · Level %level%",
+      "placeholder": "%team% %class% · Level %level%"
+    },
+    {
+      "id": "showjoining",
+      "title": "Show joining a battle",
+      "icon": "fad fa-door-open",
+      "value": true
+    },
+    {
+      "id": "joiningDetails",
+      "title": "Joining a battle: first line",
+      "icon": "fad fa-font",
+      "if": { "showjoining": true },
+      "value": "Joining a Battle",
+      "placeholder": "Joining a Battle"
+    },
+    {
+      "id": "joiningState",
+      "title": "Joining a battle: second line",
+      "icon": "fad fa-font",
+      "if": { "showjoining": true },
+      "value": "%team% %class% · Level %level%",
+      "placeholder": "%team% %class% · Level %level%"
+    },
+    {
+      "id": "showplaying",
+      "title": "Show playing a match",
+      "icon": "fad fa-crosshairs",
+      "value": true
+    },
+    {
+      "id": "playingDetails",
+      "title": "Playing: first line",
+      "icon": "fad fa-font",
+      "if": { "showplaying": true },
+      "value": "%map%",
+      "placeholder": "%map%"
+    },
+    {
+      "id": "playingState",
+      "title": "Playing: second line",
+      "icon": "fad fa-font",
+      "if": { "showplaying": true },
+      "value": "%mode% · %team% %class%",
+      "placeholder": "%mode% · %team% %class%"
+    },
+    {
+      "id": "mapImage",
+      "title": "Show the map as the big picture",
+      "icon": "fad fa-map",
+      "value": true
+    },
+    {
+      "id": "timestamp",
+      "title": "Show elapsed time",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "matchTimer",
+      "title": "Restart the timer when a match starts",
+      "icon": "fad fa-redo",
+      "value": true
+    }
+  ]
+}
