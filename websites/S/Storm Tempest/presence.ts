@@ -108,6 +108,7 @@ interface RoomState {
   title?: string
   episode?: string
   members?: number
+  hosting?: boolean
   titleHref?: string
   url: string
   image?: string
@@ -1382,9 +1383,11 @@ function getRoomState(): RoomState | undefined {
   const crowd = latinDigits(segments[segments.length - 2] ?? '').match(/\d+/)
   const link = document.querySelector<HTMLAnchorElement>('a[href*="/title/"]')
   const video = getVideo()
+  const buttons = heading.parentElement?.parentElement?.querySelectorAll('button')
 
   return {
     joined: true,
+    hosting: (buttons?.length ?? 0) >= 3,
     name: textOf(heading),
     title: clean(link?.firstChild?.textContent),
     episode: clean(
@@ -1419,10 +1422,12 @@ function buildRoomActivity(room: RoomState, privacy: boolean): PresenceData {
     ? { partySize: room.members, maxPartySize: 50 }
     : undefined
   const state = privacy
-    ? 'Roomsto'
-    : [distinctParts(room.title, [room.episode, room.name]), 'Roomsto']
-        .filter(Boolean)
-        .join(' • ')
+    ? room.hosting ? 'Hosting • Roomsto' : 'Roomsto'
+    : [
+        distinctParts(room.title, [room.episode, room.name]),
+        room.hosting ? 'Hosting' : undefined,
+        'Roomsto',
+      ].filter(Boolean).join(' • ')
 
   return {
     type: ActivityType.Playing,
