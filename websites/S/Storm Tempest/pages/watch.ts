@@ -224,7 +224,7 @@ export function stripEpisode(value: string): string {
   return value
     .replace(/\s*[-|•·]\s*storm\s*$/i, '')
     .replace(
-      /\s*[-|•·]\s*(?:Episode|Ep\.?|Chapter|Ch\.?|الحلقة|حلقة|الفصل|فصل)\s*[\d\u0660-\u0669]{1,5}\s*$/i,
+      /\s*[-|•·]\s*(?:Episode|Ep\.?|Chapter|Ch\.?|الحلقة|حلقة|الفصل|فصل)\s*[\d\u0660-\u0669]{1,5}(?:[.\u066B][\d\u0660-\u0669]+)?\s*$/i,
       '',
     )
     .trim()
