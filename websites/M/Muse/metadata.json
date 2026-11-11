@@ -1,1 +1,47 @@
-{"$schema":"https://schemas.premid.app/metadata/1.17","author":{"id":"754572586914021468","name":"0120r"},"category":"other","color":"#0081FB","description":{"en":"Muse is Meta's personal AI agent. Chat with your own agent, build documents and apps together, and keep up with your feed, ideas and goals on the web, mobile and desktop.","ja_JP":"MuseはMetaのパーソナルAIエージェント。専用のエージェントとチャットしたり、ドキュメントやアプリを一緒に作ったり、フィードやアイデア、ゴールをWeb・モバイル・デスクトップで確認できます。"},"logo":"https://cdn.rcd.gg/PreMiD/websites/M/Muse/assets/logo.png","regExp":"^https?[:][/][/]([a-z0-9-]+[.])*muse[.]ai[/]","service":"Muse","settings":[{"icon":"fa-solid fa-message","id":"showTitle","title":"チャットタイトルを表示","value":true},{"icon":"fad fa-stopwatch","id":"timestamp","title":"経過時間を表示","value":true},{"icon":"fad fa-compass","id":"browsing","title":"チャット以外のタブも表示","value":true}],"tags":["ai","assistant","chat","meta","agent"],"thumbnail":"https://cdn.rcd.gg/PreMiD/websites/M/Muse/assets/thumbnail.png","url":"muse.ai","version":"1.0.0"}
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "754572586914021468",
+    "name": "0120r"
+  },
+  "service": "Muse",
+  "description": {
+    "en": "Muse is Meta's personal AI agent. Chat with your own agent, build documents and apps together, and keep up with your feed, ideas and goals on the web, mobile and desktop.",
+    "ja": "Muse\u306fMeta\u306e\u30d1\u30fc\u30bd\u30ca\u30ebAI\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u3002\u5c02\u7528\u306e\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u3068\u30c1\u30e3\u30c3\u30c8\u3057\u305f\u308a\u3001\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u3084\u30a2\u30d7\u30ea\u3092\u4e00\u7dd2\u306b\u4f5c\u3063\u305f\u308a\u3001\u30d5\u30a3\u30fc\u30c9\u3084\u30a2\u30a4\u30c7\u30a2\u3001\u30b4\u30fc\u30eb\u3092Web\u30fb\u30e2\u30d0\u30a4\u30eb\u30fb\u30c7\u30b9\u30af\u30c8\u30c3\u30d7\u3067\u78ba\u8a8d\u3067\u304d\u307e\u3059\u3002"
+  },
+  "url": "muse.ai",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*muse[.]ai[/]",
+  "version": "1.0.0",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/M/Muse/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/Muse/assets/thumbnail.png",
+  "color": "#0081FB",
+  "category": "other",
+  "tags": [
+    "ai",
+    "assistant",
+    "chat",
+    "meta",
+    "agent"
+  ],
+  "settings": [
+    {
+      "id": "showTitle",
+      "title": "\u30c1\u30e3\u30c3\u30c8\u30bf\u30a4\u30c8\u30eb\u3092\u8868\u793a",
+      "icon": "fa-solid fa-message",
+      "value": true
+    },
+    {
+      "id": "timestamp",
+      "title": "\u7d4c\u904e\u6642\u9593\u3092\u8868\u793a",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "browsing",
+      "title": "\u30c1\u30e3\u30c3\u30c8\u4ee5\u5916\u306e\u30bf\u30d6\u3082\u8868\u793a",
+      "icon": "fad fa-compass",
+      "value": true
+    }
+  ]
+}

@@ -69,11 +69,11 @@ presence.on('UpdateData', async () => {
   }
 
   const presenceData: PresenceData = {
-    name: 'Muse',
     largeImageKey: LOGO,
     largeImageText: 'Muse',
-    startTimestamp: showTimestamp ? browsingTimestamp : null,
   }
+  if (showTimestamp)
+    presenceData.startTimestamp = browsingTimestamp
 
   // クイック検索 (コマンドパレット) が開いている間は検索中表示にする。
   // URL は変わらないため、スクリム要素の data-state で判定する (2026-11-11 実機確認)
@@ -88,21 +88,26 @@ presence.on('UpdateData', async () => {
   // ポッドキャスト再生中はメディア要素からそのまま取る (標準パターン)。
   // アプリが <audio> を使っていない場合は media が null で通常表示に落ちる
   const media = document.querySelector<HTMLMediaElement>('audio, video')
-  if (media && (first === 'library' && segments[1] === 'podcasts' || !media.paused)) {
+  if (media && ((first === 'library' && segments[1] === 'podcasts') || !media.paused)) {
+    const isVideo = media instanceof HTMLVideoElement
+      || (first === 'library' && segments[1] === 'media')
     const mediaTitle = document.title.replace(/\s*[-|]\s*Muse\s*$/, '').trim()
     presenceData.details = showTitle && mediaTitle && mediaTitle !== 'Muse'
       ? mediaTitle
-      : 'ポッドキャスト'
+      : (isVideo ? '動画' : 'ポッドキャスト')
     presenceData.state = media.paused ? '一時停止中' : '再生中'
     presenceData.smallImageKey = media.paused ? Assets.Pause : Assets.Play
     presenceData.smallImageText = media.paused ? '一時停止中' : '再生中'
-    if (!media.paused) {
-      const { startTimestamp, endTimestamp } = getTimestampsFromMedia(media)
-      presenceData.startTimestamp = startTimestamp
-      presenceData.endTimestamp = endTimestamp
+    if (!media.paused && showTimestamp) {
+      const [startTimestamp, endTimestamp] = getTimestampsFromMedia(media)
+      if (endTimestamp > 0) {
+        presenceData.startTimestamp = startTimestamp
+        presenceData.endTimestamp = endTimestamp
+      }
     }
-    else if (!showTimestamp) {
-      presenceData.startTimestamp = null
+    else {
+      // 一時停止中は経過タイマーを残さない (進捗表示と矛盾するため)
+      delete presenceData.startTimestamp
     }
     presence.setActivity(presenceData)
     return
