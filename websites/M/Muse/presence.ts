@@ -172,7 +172,7 @@ presence.on('UpdateData', async () => {
     if (showTimestamp)
       presenceData.startTimestamp = chatSince
     // 状態は 生成中 → 入力中 → 通常 の優先順で切り替える
-    let chatState = strings.chatting
+    let chatState: string = strings.chatting
     if (isGenerating()) {
       presenceData.smallImageKey = TALKING_ICON
       presenceData.smallImageText = strings.generatingResponse
