@@ -153,13 +153,21 @@ presence.on('UpdateData', async () => {
   if (duel && body.includes(duel.modeNames.duel)) {
     lastMode = 'duel'
     const name = showMode ? duel.modeNames.duel : null
-    if (has(body, t => t.duel.rating)) {
-      presenceData.details = '対戦相手を待っています'
+    // ランキング一覧はロビーの上に重なって開くため、ロビーの「レーティング」が
+    // 残り続けて文言では待機中と区別できない。一覧を開くと行ごとのレーティング
+    // 数値 (1000以上の数だけの行) が大量に増えるので、その数で判定する
+    // (2026-11-12 実機の innerText で検証: ロビー=1件、一覧表示中=61件)
+    const ratingRows = body.split('\n').filter((line) => {
+      const text = line.trim()
+      return /^\d+$/.test(text) && Number(text) >= 1000
+    }).length
+    if (ratingRows >= 5 || !has(body, t => t.duel.rating)) {
+      presenceData.details = 'ランキングを見ています'
       if (name)
         presenceData.state = name
     }
     else {
-      presenceData.details = 'ランキングを見ています'
+      presenceData.details = '対戦相手を待っています'
       if (name)
         presenceData.state = name
     }
