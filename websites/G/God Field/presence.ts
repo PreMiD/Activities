@@ -5,7 +5,7 @@ const presence = new Presence({
 })
 
 const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/G/God%20Field/assets/logo.png'
-const LANGS = ['ja', 'en', 'fr', 'ko', 'pt', 'ru', 'zh-hans', 'zh-hant']
+const LANGS = ['ja', 'en', 'es', 'fr', 'ko', 'pt', 'ru', 'zh-hans', 'zh-hant']
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 type Mode = 'training' | 'private' | 'duel'
