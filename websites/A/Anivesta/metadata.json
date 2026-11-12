@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Anivesta",
+    "id": "1295071083661361253"
+  },
+  "service": "Anivesta",
+  "description": {
+    "en": "Watch your favorite anime series and movies with Turkish subtitles in Full HD.",
+    "tr": "En sevdiğiniz anime dizi ve filmlerini Full HD Türkçe altyazılı izleyin."
+  },
+  "url": "anivesta.com",
+  "regExp": "^https?[:][/][/](www[.])?anivesta[.]com[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/A/Anivesta/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/A/Anivesta/assets/thumbnail.png",
+  "color": "#bce594",
+  "category": "anime",
+  "tags": [
+    "anime",
+    "streaming",
+    "turkey",
+    "turkish",
+    "watch",
+    "dizi",
+    "film"
+  ],
+  "settings": [
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fas fa-link",
+      "value": true
+    },
+    {
+      "id": "showCover",
+      "title": "Show Anime Cover as Large Image",
+      "icon": "fas fa-image",
+      "value": true
+    }
+  ]
+}

@@ -12,16 +12,22 @@
     "Minecraft Championship"
   ],
   "description": {
-    "en": "MC Championship is a Minecraft mini-game tournament, and MCC Island is a free-to-play multiplayer server for Minecraft: Java Edition. The associated websites feature event news, community forums, and event leaderboards. The unofficial, community-run MCC Island Wiki provides information about MCC Island."
+    "en": "MC Championship is a Minecraft mini-game tournament, and MCC Island is a free-to-play multiplayer server for Minecraft: Java Edition. The associated websites feature event news, community forums, and event leaderboards. The unofficial, community-run MCC Island Wiki provides information about MCC Island. Lighthouse, MCCI Hub, and MCC Island Stats provide MCC Island player statistics. ReafyStats provides MC Championship player and event statistics, while Radar maps fishing spots on MCC Island."
   },
   "url": [
     "mcchampionship.com",
     "mccisland.net",
     "mcc.live",
-    "mccisland.wiki"
+    "mccisland.wiki",
+    "stats.sirarchibald.dev",
+    "lighthouse.gay",
+    "mccihub.net",
+    "stats.derniklaas.de",
+    "radar.themysterys.com",
+    "reafystats.com"
   ],
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(mcchampionship[.]com|mccisland[.]net|mcc[.]live|mccisland[.]wiki)[/]",
-  "version": "1.0.1",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(mcchampionship[.]com|mccisland[.]net|mcc[.]live|mccisland[.]wiki|stats[.]sirarchibald[.]dev|lighthouse[.]gay|mccihub[.]net|stats[.]derniklaas[.]de|radar[.]themysterys[.]com|reafystats[.]com)[/]",
+  "version": "1.0.3",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/M/MCC%20%2B%20Island/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/M/MCC%20%2B%20Island/assets/thumbnail.png",
   "color": "#F0443E",
@@ -34,7 +40,13 @@
     "forums",
     "wiki",
     "mcci-wiki",
-    "mcc-island-wiki"
+    "mcc-island-wiki",
+    "lighthouse",
+    "mcci-stats",
+    "mccihub",
+    "radar",
+    "reafystats",
+    "mcc-stats"
   ],
   "settings": [
     {
@@ -55,7 +67,7 @@
       "title": "Show Buttons",
       "icon": "fas fa-mouse-pointer",
       "value": true,
-      "description": "Let others open the forum post or page you are viewing. Buttons are disabled in Privacy Mode and on bug reports.",
+      "description": "Show buttons and clickable images for public pages and forum authors. Links are disabled in Privacy Mode and on private bug reports.",
       "if": {
         "privacy": false
       }

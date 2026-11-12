@@ -17,10 +17,12 @@
   "url": [
     "fabor.tv",
     "yassirtv.com",
-    "fabor-tv.to"
+    "fabor-tv.to",
+    "fabor-tv.vip",
+    "sirtv.top"
   ],
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(yassirtv[.]com|fabor[.]tv|fabor-tv[.]to)[/]",
-  "version": "1.0.2",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(yassirtv[.]com|fabor[.]tv|fabor-tv[.]to|fabor-tv[.]vip|sirftv[.]com|sirtv[.]top)[/]",
+  "version": "1.1.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/Y/YassirTV/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/Y/YassirTV/assets/thumbnail.png",
   "color": "#c0392b",
@@ -35,7 +37,7 @@
     "la-liga"
   ],
   "iframe": true,
-  "iFrameRegExp": "[a-z0-9]+[.]yasirtv[.]com/playerv5[.]php.*",
+  "iFrameRegExp": "[a-z0-9]+[.](yasirtv[.]com|sirtv[.]top)/playerv5[.]php.*",
   "settings": [
     {
       "id": "lang",

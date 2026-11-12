@@ -1,8 +1,10 @@
 import { ActivityType } from 'premid'
 import { AccountIcons } from './account-icons.js'
+import { communityAvatarFallback, communityHost, communitySelection, fitCommunityImage, getCommunityData, waitForCommunityProfile } from './community-sites.js'
 import { ActivityAssets, StaticImageUrls } from './image-assets.js'
 import { getMccLiveData, mccLiveSelection } from './mcc-live.js'
 import { applyWikiImageFallback, getWikiData, wikiCanPublish, wikiSelection } from './mcc-wiki.js'
+import { getReafyData, reafySelection } from './reafy-stats.js'
 
 const presence = new Presence({
   clientId: '1515363968359731331',
@@ -72,14 +74,15 @@ async function getForumInfo(path: string): Promise<{ icon?: string, name?: strin
   return source ? findForumInfo(source, node, category) : undefined
 }
 
-function resolveImage(image: string | Blob): Promise<string | Blob | undefined> {
+function resolveImage(image: string | Blob, fit = false): Promise<string | Blob | undefined> {
   if (typeof image === 'string' && StaticImageUrls.has(image))
     return Promise.resolve(image)
   if (image instanceof Blob)
     return Promise.resolve(image)
   if (!image)
     return Promise.resolve(undefined)
-  const cached = imageCache.get(image)
+  const cacheKey = fit ? `512:${image}` : image
+  const cached = imageCache.get(cacheKey)
   if (cached)
     return cached
   // Let PreMiD handle image bytes instead of sending the image-host URL to Discord.
@@ -90,13 +93,13 @@ function resolveImage(image: string | Blob): Promise<string | Blob | undefined> 
       const blob = await response.blob()
       if (!blob.type.startsWith('image/') || !blob.size)
         throw new Error('Invalid image response')
-      return blob
+      return fit ? await fitCommunityImage(blob) : blob
     })
     .catch(() => {
-      imageCache.delete(image)
+      imageCache.delete(cacheKey)
       return undefined
     })
-  imageCache.set(image, pending)
+  imageCache.set(cacheKey, pending)
   return pending
 }
 
@@ -158,6 +161,8 @@ function normalizedPath(): string {
 }
 
 function isBugReportPage(path: string): boolean {
+  if (/^\/threads\/(?:[^/]+\.)?1150(?:\/|$)/.test(path))
+    return false
   return /^\/forums\/(?:bug-report\.99|99)(?:\/|$)/.test(path)
     || /^\/form\/4(?:\/|$)/.test(path)
     || document.documentElement.getAttribute('data-container-key') === 'node-99'
@@ -201,13 +206,24 @@ function getProfile(): { name?: string, avatar?: string } {
   return { name, avatar: url.protocol === 'https:' ? url.href : undefined }
 }
 
-async function getThreadAuthor(): Promise<{ name?: string, avatar?: HTMLImageElement | Blob }> {
+async function getThreadAuthor(): Promise<{ name?: string, avatar?: HTMLImageElement | Blob, profileUrl?: string }> {
   // Never substitute a reply author when the original post is not on this page.
   const post = document.querySelector<HTMLElement>('.message-threadStarterPost, article.message--article')
   if (!post)
     return {}
   const name = cleanText(post.getAttribute('data-author'))
     ?? cleanText(post.querySelector('.message-userDetails .username, .message-attribution-user .username, .message-articleUserName .username')?.textContent)
+  const profileLink = post.querySelector<HTMLAnchorElement>('.message-avatar a.avatar[href], .message-attribution-user a.username[href], .message-articleUserName a.username[href], .message-userDetails a.username[href], .message-articleUserInfo a.avatar[href]')
+  const profileHref = profileLink?.getAttribute('href')
+  const profileUrl = profileHref && URL.canParse(profileHref, document.location.href) ? new URL(profileHref, document.location.href) : undefined
+  if (profileUrl) {
+    profileUrl.search = ''
+    profileUrl.hash = ''
+  }
+  const identity = {
+    name,
+    profileUrl: profileUrl?.protocol === 'https:' && profileUrl.origin === document.location.origin && /^\/members\/(?:[^/]+\.)?\d+\/?$/.test(profileUrl.pathname) ? profileUrl.href : undefined,
+  }
   const image = post.querySelector<HTMLImageElement>('.message-avatar img, .message-attribution-user .avatar img, .message-articleUserInfo .avatar img')
   const source = image?.currentSrc
     || image?.getAttribute('srcset')?.trim().split(/\s+/)[0]
@@ -216,18 +232,18 @@ async function getThreadAuthor(): Promise<{ name?: string, avatar?: HTMLImageEle
     const placeholder = post.querySelector<HTMLElement>('.message-avatar .avatar--default, .message-attribution-user .avatar--default, .message-articleUserInfo .avatar--default')
     const letter = cleanText(placeholder?.querySelector('[role=\'img\']')?.textContent)?.slice(0, 4)
     if (!placeholder || !letter)
-      return { name }
+      return identity
     const background = placeholder.style.backgroundColor || '#666666'
     const foreground = placeholder.style.color || '#ffffff'
     const key = JSON.stringify([letter, background, foreground])
     const cached = letterAvatars.get(key)
     if (cached)
-      return { name, avatar: cached }
+      return { ...identity, avatar: cached }
     const canvas = document.createElement('canvas')
     canvas.width = canvas.height = 512
     const context = canvas.getContext('2d')
     if (!context)
-      return { name }
+      return identity
     context.fillStyle = background
     context.fillRect(0, 0, 512, 512)
     context.fillStyle = foreground
@@ -238,11 +254,11 @@ async function getThreadAuthor(): Promise<{ name?: string, avatar?: HTMLImageEle
     const avatar = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'))
     if (avatar)
       letterAvatars.set(key, avatar)
-    return { name, avatar: avatar ?? undefined }
+    return { ...identity, avatar: avatar ?? undefined }
   }
   const url = new URL(source, document.location.href)
   // Pass the original page image through PreMiD's native image handling.
-  return { name, avatar: url.protocol === 'https:' ? image ?? undefined : undefined }
+  return { ...identity, avatar: url.protocol === 'https:' ? image ?? undefined : undefined }
 }
 
 function nodeBrand(node: number): 'island' | 'event' | undefined {
@@ -306,12 +322,7 @@ function getThreadContainer(): string | undefined {
 }
 
 function isCreatingThread(path: string): boolean {
-  return path.includes('/post-thread')
-    || path.includes('/create-thread')
-    || path.includes('/threads/add')
-    || !!document.querySelector(
-      'form[action*=\'post-thread\'], form[action*=\'create-thread\'], input[name=\'title\']',
-    )
+  return /^\/forums\/[^/]+\/post-thread$/.test(path)
 }
 
 function getMccLogo(setting: number): string | Blob {
@@ -331,16 +342,18 @@ function getMcciLogo(setting: number): string | Blob {
   ][setting] ?? ActivityAssets.McciIsland
 }
 
-function setButton(presenceData: PresenceData, label: string): void {
+function setButton(presenceData: PresenceData, label: string, categoryAnchor = false): string {
   const url = new URL(document.location.href)
   url.search = ''
-  url.hash = ''
+  if (!categoryAnchor || !/^#[\w-]+\.\d+$/.test(url.hash))
+    url.hash = ''
   presenceData.buttons = [
     {
       label,
       url: url.href,
     },
   ]
+  return url.href
 }
 
 presence.on('UpdateData', async () => {
@@ -383,6 +396,16 @@ presence.on('UpdateData', async () => {
   const mccLive = /^(?:www\.)?mcc\.live$/i.test(document.location.hostname)
   const selectedWikiPage = wiki ? wikiSelection() : undefined
   const liveSelection = mccLive ? mccLiveSelection() : undefined
+  const community = communityHost(document.location.hostname)
+  const reafy = /^(?:www\.)?reafystats\.com$/i.test(document.location.hostname)
+  if ((community || reafy) && document.visibilityState === 'hidden')
+    return
+  if (community)
+    await waitForCommunityProfile(community, privacy)
+  if (sequence !== updateSequence || document.location.href !== pageUrl)
+    return
+  const selectedCommunityPage = community ? communitySelection(community, privacy) : undefined
+  const selectedReafyPage = reafy ? reafySelection(privacy) : undefined
   const path = normalizedPath()
   const island = getBrand() === 'island'
   const forum = isForumPage(path) || isThreadPage(path)
@@ -399,6 +422,14 @@ presence.on('UpdateData', async () => {
     presenceData.startTimestamp = browsingTimestamp
 
   switch (true) {
+    case reafy: {
+      Object.assign(presenceData, getReafyData(privacy, showButtons))
+      break
+    }
+    case Boolean(community): {
+      Object.assign(presenceData, getCommunityData(community!, privacy, showButtons))
+      break
+    }
     case wiki: {
       Object.assign(presenceData, await getWikiData(privacy, showButtons, wikiLogo))
       break
@@ -407,6 +438,15 @@ presence.on('UpdateData', async () => {
       Object.assign(presenceData, getMccLiveData(privacy))
       presenceData.largeImageKey = ActivityAssets.MccRed
       presenceData.largeImageText = 'Minecraft Championship'
+      break
+    }
+    case document.documentElement.getAttribute('data-template') === 'error': {
+      presenceData.name = 'Minecraft Championship'
+      presenceData.details = 'Browsing the website'
+      presenceData.largeImageKey = ActivityAssets.MccRed
+      presenceData.largeImageText = 'Minecraft Championship'
+      presenceData.smallImageKey = ActivityAssets.MccInitialsColor
+      presenceData.smallImageText = 'MCC + Island'
       break
     }
     case isBugReportPage(path): {
@@ -530,9 +570,11 @@ presence.on('UpdateData', async () => {
         if (author.avatar && author.name) {
           presenceData.smallImageKey = author.avatar
           presenceData.smallImageText = author.name.slice(0, 128)
+          if (showButtons && author.profileUrl)
+            presenceData.smallImageUrl = author.profileUrl
         }
       }
-      if (showButtons && !privacy)
+      if (showButtons && !privacy && title)
         setButton(presenceData, 'View Forum Post')
       break
     }
@@ -543,8 +585,11 @@ presence.on('UpdateData', async () => {
         presenceData.state = (info?.name ?? strings.feedback).slice(0, 128)
       presenceData.smallImageKey = info?.icon ?? ActivityAssets.MccInitialsColor
       presenceData.smallImageText = typeof presenceData.state === 'string' ? presenceData.state : `${brandName} Forum`
-      if (showButtons && !privacy)
-        setButton(presenceData, 'View Feedback')
+      if (showButtons && !privacy) {
+        const target = setButton(presenceData, 'View Feedback')
+        if (info?.icon)
+          presenceData.smallImageUrl = target
+      }
       break
     }
     case isForumLanding(path):
@@ -563,8 +608,11 @@ presence.on('UpdateData', async () => {
       }
       presenceData.smallImageKey = info?.icon ?? ActivityAssets.MccInitialsColor
       presenceData.smallImageText = typeof presenceData.state === 'string' ? presenceData.state : `${brandName} Forum`
-      if (showButtons && !privacy)
-        setButton(presenceData, 'View Forums')
+      if (showButtons && !privacy) {
+        const target = setButton(presenceData, 'View Forums', Boolean(info?.icon && (isForumLanding(path) || path === '/forums/-/list')))
+        if (info?.icon)
+          presenceData.smallImageUrl = target
+      }
       break
     }
     default: {
@@ -578,7 +626,12 @@ presence.on('UpdateData', async () => {
     }
   }
 
-  if (!presenceData.smallImageKey && (privacy || !isBugReportPage(path))) {
+  // Reuse only existing public button targets; never invent homepage or private-page links.
+  const publicTarget = presenceData.buttons?.[0]?.url
+  if (!community && showButtons && !privacy && typeof publicTarget === 'string')
+    presenceData.largeImageUrl = publicTarget
+
+  if (!community && !reafy && !presenceData.smallImageKey && (privacy || !isBugReportPage(path))) {
     presenceData.smallImageKey = ActivityAssets.MccInitialsColor
     presenceData.smallImageText = 'MCC + Island'
   }
@@ -588,7 +641,7 @@ presence.on('UpdateData', async () => {
 
   const image = presenceData.largeImageKey
   const resolvedImage = image instanceof Blob || typeof image === 'string'
-    ? await resolveImage(image)
+    ? reafy ? image : await resolveImage(image, Boolean(community))
     : undefined
 
   if (document.location.href !== pageUrl)
@@ -598,13 +651,26 @@ presence.on('UpdateData', async () => {
     presenceData.largeImageKey = resolvedImage
   }
   else {
-    delete presenceData.largeImageKey
-    delete presenceData.largeImageText
+    if (community === 'lighthouse' && !privacy && typeof image === 'string' && presenceData.largeImageText !== 'Lighthouse') {
+      // The page's public avatar URL is still usable by Discord when browser CORS blocks fetching it.
+      presenceData.largeImageKey = communityAvatarFallback(image)
+    }
+    else if (community) {
+      const fallback = getCommunityData(community, true, false)
+      presenceData.largeImageKey = fallback.largeImageKey ?? ActivityAssets.MccRed
+      presenceData.largeImageText = fallback.largeImageText ?? 'MCC Island'
+      delete presenceData.largeImageUrl
+    }
+    else {
+      delete presenceData.largeImageKey
+      delete presenceData.largeImageText
+      delete presenceData.largeImageUrl
+    }
   }
 
   const smallImage = presenceData.smallImageKey
   if (smallImage instanceof Blob || typeof smallImage === 'string') {
-    const resolvedSmallImage = await resolveImage(smallImage)
+    const resolvedSmallImage = await resolveImage(smallImage, Boolean(community))
     if (resolvedSmallImage) {
       presenceData.smallImageKey = resolvedSmallImage
     }
@@ -615,6 +681,7 @@ presence.on('UpdateData', async () => {
       else if (!isForumOverview(path) && smallImage !== ActivityAssets.MccInitialsColor) {
         delete presenceData.smallImageKey
         delete presenceData.smallImageText
+        delete presenceData.smallImageUrl
       }
     }
   }
@@ -623,6 +690,11 @@ presence.on('UpdateData', async () => {
     return
 
   if (mccLive && mccLiveSelection() !== liveSelection)
+    return
+
+  if (community && (document.visibilityState === 'hidden' || communitySelection(community, privacy) !== selectedCommunityPage))
+    return
+  if (reafy && (document.visibilityState === 'hidden' || reafySelection(privacy) !== selectedReafyPage))
     return
 
   if (wiki && (!wikiCanPublish() || wikiSelection() !== selectedWikiPage))

@@ -9,6 +9,10 @@
     {
       "name": "Krauchelli",
       "id": "229334514084741120"
+    },
+    {
+      "name": "0120r",
+      "id": "754572586914021468"
     }
   ],
   "service": "Radiko",
@@ -19,7 +23,7 @@
   },
   "url": "radiko.jp",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*radiko[.]jp[/]",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/R/Radiko/assets/thumbnail.png",
   "color": "#0064FF",
@@ -32,8 +36,27 @@
   ],
   "settings": [
     {
+      "id": "showProgram",
+      "title": "番組名・出演者を表示",
+      "icon": "fad fa-radio",
+      "value": true
+    },
+    {
+      "id": "showImage",
+      "title": "番組の画像を表示",
+      "icon": "fad fa-image",
+      "value": true
+    },
+    {
       "id": "isTimeVisible",
-      "title": "Time visible",
+      "title": "放送時間を表示",
+      "icon": "fad fa-clock",
+      "value": true
+    },
+    {
+      "id": "buttons",
+      "title": "ボタンを表示",
+      "icon": "fad fa-link",
       "value": true
     }
   ]

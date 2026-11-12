@@ -53,6 +53,16 @@ const nullResolver: Resolver = {
   isMusic: () => false,
 }
 
+// Start of the current pause, and of the live being watched
+let pausedSince: number | null = null
+let liveSince: { videoId: string, start: number } | null = null
+
+// Without any timestamp, Discord shows a timer that resets after ~1h10: a fixed start, with no end, is kept
+function setFixedStart(presenceData: PresenceData, start?: number | null): void {
+  presenceData.startTimestamp = start ?? browsingTimestamp
+  delete presenceData.endTimestamp
+}
+
 presence.on('UpdateData', async () => {
   const [
     newLang,
@@ -112,6 +122,11 @@ presence.on('UpdateData', async () => {
   const video = Array.from(
     document.querySelectorAll<HTMLVideoElement>('.video-stream'),
   ).find(video => video.duration)
+
+  if (!video?.paused)
+    pausedSince = null
+  if (!video)
+    liveSince = null
 
   if (video) {
     const { mediaSession } = navigator
@@ -232,10 +247,16 @@ presence.on('UpdateData', async () => {
     if (vidState.includes('{0}'))
       delete presenceData.state
 
-    // Remove timestamps if paused or live
+    if (!live)
+      liveSince = null
+    else if (liveSince?.videoId !== videoId)
+      liveSince = { videoId, start: Math.floor(Date.now() / 1000) }
+
+    // No position to show if paused or live
     if (video.paused || live) {
-      delete presenceData.startTimestamp
-      delete presenceData.endTimestamp
+      if (video.paused)
+        pausedSince ??= Math.floor(Date.now() / 1000)
+      setFixedStart(presenceData, video.paused ? pausedSince : liveSince?.start)
 
       if (live) {
         presenceData.smallImageKey = Assets.Live
@@ -292,10 +313,8 @@ presence.on('UpdateData', async () => {
         },
       ]
     }
-    if (!time) {
-      delete presenceData.startTimestamp
-      delete presenceData.endTimestamp
-    }
+    if (!time)
+      setFixedStart(presenceData)
 
     if (resolver === youtubeShortsResolver) {
       presenceData.largeImageKey = YouTubeAssets.Shorts
@@ -583,10 +602,8 @@ presence.on('UpdateData', async () => {
       }
     }
 
-    if (!time) {
-      delete presenceData.startTimestamp
-      delete presenceData.endTimestamp
-    }
+    if (!time)
+      setFixedStart(presenceData)
 
     if (!presenceData.details)
       presence.clearActivity()
@@ -657,10 +674,8 @@ presence.on('UpdateData', async () => {
       delete presenceData.smallImageKey
     }
 
-    if (!time) {
-      delete presenceData.startTimestamp
-      delete presenceData.endTimestamp
-    }
+    if (!time)
+      setFixedStart(presenceData)
 
     if (!presenceData.details)
       presence.clearActivity()

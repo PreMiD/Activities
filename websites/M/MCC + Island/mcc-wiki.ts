@@ -207,6 +207,7 @@ async function pageIcon(title: string): Promise<string | undefined> {
 export function applyWikiImageFallback(data: PresenceData): void {
   data.smallImageKey = Eyes
   data.smallImageText = 'Watching the MCCI Wiki'
+  delete data.smallImageUrl
 }
 
 export async function getWikiData(privacy: boolean, showButtons: boolean, logo: number): Promise<Partial<PresenceData>> {
@@ -316,6 +317,8 @@ export async function getWikiData(privacy: boolean, showButtons: boolean, logo: 
     if (url.pathname === '/index.php')
       target.searchParams.set('title', title)
     data.buttons = [{ label: 'Open Wiki Page', url: target.href }]
+    if (showIcon && data.smallImageKey !== Eyes)
+      data.smallImageUrl = target.href
   }
   return data
 }

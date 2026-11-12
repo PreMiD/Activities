@@ -7,6 +7,7 @@ import ora from 'ora'
 import ts from 'typescript'
 import { error, exit, info, prefix } from '../util/log.js'
 import { addSarifLog, SarifRuleId } from '../util/sarif.js'
+import { findTestFiles } from './ActivityTester.js'
 
 export class TypescriptCompiler {
   constructor(
@@ -42,8 +43,9 @@ export class TypescriptCompiler {
       return false
     }
 
+    const testFiles = await findTestFiles(this.cwd)
     const program = ts.createProgram({
-      rootNames: [resolve(this.cwd, 'presence.ts'), ...(hasIframe ? [resolve(this.cwd, 'iframe.ts')] : [])],
+      rootNames: [resolve(this.cwd, 'presence.ts'), ...(hasIframe ? [resolve(this.cwd, 'iframe.ts')] : []), ...testFiles],
       options: { ...parsedConfig.options, noEmit: true },
     })
 
