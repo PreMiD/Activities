@@ -49,11 +49,12 @@ function playerVideo(): HTMLVideoElement | null {
 }
 
 presence.on('UpdateData', async () => {
-  const [showCover, showButtons, showSearch, privacy] = await Promise.all([
+  const [showCover, showButtons, showSearch, privacy, showAnimeName] = await Promise.all([
     presence.getSetting<boolean>('showCover'),
     presence.getSetting<boolean>('showButtons'),
     presence.getSetting<boolean>('showSearch'),
     presence.getSetting<boolean>('privacy'),
+    presence.getSetting<boolean>('showAnimeName'),
   ])
   const { pathname, search, href } = document.location
   const activity = readActivity()
@@ -68,11 +69,14 @@ presence.on('UpdateData', async () => {
     smallImageText: 'Navegando',
   }
   const cover = showCover && !privacy && activity.cover ? activity.cover : ActivityAssets.Logo
+  const animeName = showAnimeName && !privacy && activity.title ? activity.title.slice(0, 128) : ''
 
   if (/^\/(?:episod|episode)\//.test(pathname) && activity.page === 'episode' && activity.title) {
     presenceData.details = privacy ? 'Assistindo um anime' : activity.title
     presenceData.state = privacy ? 'No AnimesFHD' : (episodeLine(activity) || 'Assistindo')
     presenceData.largeImageKey = cover
+    if (animeName)
+      presenceData.name = animeName
     presenceData.largeImageText = !privacy && activity.episodeTitle ? activity.episodeTitle : 'AnimesFHD'
     const video = playerVideo()
     if (video && !Number.isNaN(video.duration) && video.duration > 0) {
@@ -103,6 +107,8 @@ presence.on('UpdateData', async () => {
     const roomParts = [privacy ? '' : episodeLine(activity), people ? `${people} ${people === 1 ? 'pessoa' : 'pessoas'} na sala` : '']
     presenceData.state = roomParts.filter(Boolean).join(' • ') || 'Sala do AnimesFHD'
     presenceData.largeImageKey = cover
+    if (animeName)
+      presenceData.name = animeName
     presenceData.smallImageKey = Assets.Live
     presenceData.smallImageText = 'Sala ao vivo'
     if (showButtons && !privacy && activity.roomPublic === '1')
@@ -117,6 +123,8 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Vendo um anime'
     presenceData.state = privacy ? 'No AnimesFHD' : [activity.title, activity.season && activity.season !== '1' ? `T${activity.season}` : '', activity.audio || ''].filter(Boolean).join(' • ')
     presenceData.largeImageKey = cover
+    if (animeName)
+      presenceData.name = animeName
     presenceData.smallImageKey = Assets.Reading
     presenceData.smallImageText = 'Lendo os detalhes'
     if (showButtons && !privacy)
