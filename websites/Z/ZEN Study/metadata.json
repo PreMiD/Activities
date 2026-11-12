@@ -23,7 +23,7 @@
   "regExp": "^https?[:][/][/](www[.])?(zen-study[.]jp|nnn[.]ed[.]nico)[/]",
   "version": "1.0.0",
   "logo": "https://i.imgur.com/8g7M0MY.png",
-  "thumbnail": "https://i.imgur.com/8g7M0MY.png",
+  "thumbnail": "https://raw.githubusercontent.com/YurKLYK/ZENStudy/pr-assets/zen-study-2026/.github/pr-assets/zen-study-2026/store-thumbnail.png",
   "color": "#5E49E0",
   "category": "other",
   "tags": [

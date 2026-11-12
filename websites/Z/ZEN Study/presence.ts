@@ -1,5 +1,3 @@
-/// <reference path="../../../@types/premid/index.d.ts" />
-
 const presence: Presence = new Presence({
   clientId: '1434188318760767568',
 })
