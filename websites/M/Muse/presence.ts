@@ -4,6 +4,35 @@ const presence = new Presence({
   clientId: '1570043946585817139',
 })
 
+async function getStrings() {
+  return presence.getStrings({
+    browsing: 'muse.browsing',
+    browsingMuse: 'muse.browsingMuse',
+    chatting: 'muse.chatting',
+    chattingWithMuse: 'muse.chattingWithMuse',
+    generatingResponse: 'muse.generatingResponse',
+    paused: 'muse.paused',
+    playing: 'muse.playing',
+    podcast: 'muse.podcast',
+    searching: 'muse.searching',
+    typing: 'muse.typing',
+    video: 'muse.video',
+    viewingArtifacts: 'muse.viewingArtifacts',
+    viewingDocuments: 'muse.viewingDocuments',
+    viewingFeed: 'muse.viewingFeed',
+    viewingGoals: 'muse.viewingGoals',
+    viewingIdeas: 'muse.viewingIdeas',
+    viewingImages: 'muse.viewingImages',
+    viewingLibrary: 'muse.viewingLibrary',
+    viewingMedia: 'muse.viewingMedia',
+    viewingPodcasts: 'muse.viewingPodcasts',
+    viewingVideo: 'muse.viewingVideo',
+    viewingWebArtifacts: 'muse.viewingWebArtifacts',
+  })
+}
+
+type Strings = Awaited<ReturnType<typeof getStrings>>
+
 const LOGO = 'https://i.imgur.com/ZOkEmUL.png'
 const TALKING_ICON = 'https://i.imgur.com/l5SUX1w.png'
 
@@ -35,42 +64,34 @@ const browsingTimestamp = Math.floor(Date.now() / 1000)
 let chatKey = ''
 let chatSince = browsingTimestamp
 
-// ページごとの表示名。URL は 2026-11-11 にユーザーの実環境で確認したもの:
-// メインチャット=/、サイドチャット=/thread/:id、/goals、/ideas、/feed、
-// /library/artifacts?view=web|documents、/library/podcasts、/library/media?view=video|images
-const simplePages: Record<string, string> = {
-  feed: 'フィードを見ています',
-  ideas: 'アイデアを見ています',
-  goals: 'ゴールを見ています',
-}
-
-function libraryPage(segments: string[], search: string): string {
+function libraryPage(segments: string[], search: string, strings: Strings): string {
   const view = new URLSearchParams(search).get('view')
   switch (segments[1]) {
     case 'artifacts':
       if (view === 'web')
-        return 'Web の成果物を見ています'
+        return strings.viewingWebArtifacts
       if (view === 'documents')
-        return 'ドキュメントを見ています'
-      return '成果物を見ています'
+        return strings.viewingDocuments
+      return strings.viewingArtifacts
     case 'podcasts':
-      return 'ポッドキャストを見ています'
+      return strings.viewingPodcasts
     case 'media':
       if (view === 'video')
-        return '動画を見ています'
+        return strings.viewingVideo
       if (view === 'images')
-        return '画像を見ています'
-      return 'メディアを見ています'
+        return strings.viewingImages
+      return strings.viewingMedia
     default:
-      return 'ライブラリを見ています'
+      return strings.viewingLibrary
   }
 }
 
 presence.on('UpdateData', async () => {
-  const [showTitle, showTimestamp, showBrowsing] = await Promise.all([
+  const [showTitle, showTimestamp, showBrowsing, strings] = await Promise.all([
     presence.getSetting<boolean>('showTitle'),
     presence.getSetting<boolean>('timestamp'),
     presence.getSetting<boolean>('browsing'),
+    getStrings(),
   ])
 
   const { pathname, search } = document.location
@@ -84,6 +105,15 @@ presence.on('UpdateData', async () => {
     return
   }
 
+  // ページごとの表示名。URL は 2026-11-11 にユーザーの実環境で確認したもの:
+  // メインチャット=/、サイドチャット=/thread/:id、/goals、/ideas、/feed、
+  // /library/artifacts?view=web|documents、/library/podcasts、/library/media?view=video|images
+  const simplePages: Record<string, string> = {
+    feed: strings.viewingFeed,
+    ideas: strings.viewingIdeas,
+    goals: strings.viewingGoals,
+  }
+
   // largeImageText を付けると型が MediaPresenceData 扱いになり type が必須になるため、
   // 通常表示では付けない (メディア再生時は専用オブジェクト側で付ける)
   const presenceData: PresenceData = {
@@ -95,9 +125,9 @@ presence.on('UpdateData', async () => {
   // クイック検索 (コマンドパレット) が開いている間は検索中表示にする。
   // URL は変わらないため、スクリム要素の data-state で判定する (2026-11-11 実機確認)
   if (document.querySelector('[data-slot="quick-search-scrim"][data-state="open"]')) {
-    presenceData.details = '検索中'
+    presenceData.details = strings.searching
     presenceData.smallImageKey = Assets.Search
-    presenceData.smallImageText = '検索中'
+    presenceData.smallImageText = strings.searching
     presence.setActivity(presenceData)
     return
   }
@@ -116,10 +146,10 @@ presence.on('UpdateData', async () => {
       largeImageText: 'Muse',
       details: showTitle && mediaTitle && mediaTitle !== 'Muse'
         ? mediaTitle
-        : (isVideo ? '動画' : 'ポッドキャスト'),
-      state: media.paused ? '一時停止中' : '再生中',
+        : (isVideo ? strings.video : strings.podcast),
+      state: media.paused ? strings.paused : strings.playing,
       smallImageKey: media.paused ? Assets.Pause : Assets.Play,
-      smallImageText: media.paused ? '一時停止中' : '再生中',
+      smallImageText: media.paused ? strings.paused : strings.playing,
     }
     if (!media.paused && showTimestamp) {
       const [startTimestamp, endTimestamp] = getTimestampsFromMedia(media)
@@ -142,35 +172,35 @@ presence.on('UpdateData', async () => {
     if (showTimestamp)
       presenceData.startTimestamp = chatSince
     // 状態は 生成中 → 入力中 → 通常 の優先順で切り替える
-    let chatState = 'チャット'
+    let chatState = strings.chatting
     if (isGenerating()) {
       presenceData.smallImageKey = TALKING_ICON
-      presenceData.smallImageText = '応答を生成中…'
-      chatState = '応答を生成中…'
+      presenceData.smallImageText = strings.generatingResponse
+      chatState = strings.generatingResponse
     }
     else if (isTyping()) {
       presenceData.smallImageKey = Assets.Writing
-      presenceData.smallImageText = '入力中…'
-      chatState = '入力中…'
+      presenceData.smallImageText = strings.typing
+      chatState = strings.typing
     }
     else {
       presenceData.smallImageKey = Assets.Writing
-      presenceData.smallImageText = 'チャット中'
+      presenceData.smallImageText = strings.chatting
     }
     // タイトルが「Muse」単体でないときはチャットタイトルとして使う
     const title = document.title.replace(/\s*[-|]\s*Muse\s*$/, '').trim()
     presenceData.details = showTitle && title && title !== 'Muse'
       ? title
-      : 'Muse と会話中'
+      : strings.chattingWithMuse
     presenceData.state = chatState
   }
   else {
     presenceData.details = first === 'library'
-      ? libraryPage(segments, search)
-      : (simplePages[first] ?? 'Muse を見ています')
-    presenceData.state = 'ブラウジング'
+      ? libraryPage(segments, search, strings)
+      : (simplePages[first] ?? strings.browsingMuse)
+    presenceData.state = strings.browsing
     presenceData.smallImageKey = Assets.Viewing
-    presenceData.smallImageText = 'ブラウジング中'
+    presenceData.smallImageText = strings.browsing
   }
 
   presence.setActivity(presenceData)

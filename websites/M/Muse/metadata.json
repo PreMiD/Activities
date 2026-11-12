@@ -27,19 +27,19 @@
   "settings": [
     {
       "id": "showTitle",
-      "title": "チャットタイトルを表示",
+      "title": "Show chat title",
       "icon": "fa-solid fa-message",
       "value": true
     },
     {
       "id": "timestamp",
-      "title": "経過時間を表示",
+      "title": "Show elapsed time",
       "icon": "fad fa-stopwatch",
       "value": true
     },
     {
       "id": "browsing",
-      "title": "チャット以外のタブも表示",
+      "title": "Show non-chat tabs",
       "icon": "fad fa-compass",
       "value": true
     }
