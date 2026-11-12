@@ -44,6 +44,7 @@ presence.on('UpdateData', async () => {
   ])
   const path = document.location.pathname.replace(/^\/(?:es|pt|tr|de|ru)(?=\/)/, '')
   const presenceData: PresenceData = {
+    name: 'xperify.in',
     largeImageKey: LOGO,
     startTimestamp: browsingTimestamp,
   }
