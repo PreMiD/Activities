@@ -27,7 +27,12 @@ function getAnime(id: string): AnimeInfo | null {
         const a = d?.anime ?? d?.data ?? d
         const t = a?.title ?? {}
         const title = t.turkish || t.english || t.romaji || ''
-        animeCache.set(id, title ? { title, cover: a?.images?.coverLarge || a?.images?.coverSmall } : null)
+        const raw: string | undefined = a?.images?.coverLarge || a?.images?.coverSmall
+        // The API returns site-relative paths and very large originals; Discord needs an absolute, small image.
+        const cover = raw
+          ? `${document.location.origin}/api/proxy/img?url=${encodeURIComponent(raw)}&w=512&format=jpeg`
+          : undefined
+        animeCache.set(id, title ? { title, cover } : null)
       })
       .catch(() => animeCache.set(id, null))
       .finally(() => pending.delete(id))
@@ -62,7 +67,12 @@ presence.on('UpdateData', async () => {
     const [, id, ep] = watch
     const anime = getAnime(id!)
     const title = anime?.title || titleFromDocument()
-    const video = document.querySelector<HTMLVideoElement>('video')
+    // The watch page also has preview/background <video> elements; read the main player only.
+    const video = document.querySelector<HTMLVideoElement>('#ar-main-video')
+      ?? [...document.querySelectorAll<HTMLVideoElement>('video')]
+        .filter(v => Number.isFinite(v.duration))
+        .sort((a, b) => b.duration - a.duration)[0]
+        ?? null
 
     presenceData.details = privacy ? 'Anime izliyor' : title
     if (!privacy)
