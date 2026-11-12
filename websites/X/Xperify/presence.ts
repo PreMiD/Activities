@@ -52,7 +52,9 @@ presence.on('UpdateData', async () => {
 
   let s: XpState = {}
   try {
-    s = JSON.parse(document.documentElement.dataset.xpPresence || '{}')
+    const parsed: unknown = JSON.parse(document.documentElement.dataset.xpPresence || '{}')
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed))
+      s = parsed as XpState
   }
   catch {}
 
