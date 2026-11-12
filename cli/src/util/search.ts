@@ -5,6 +5,7 @@ function resumeStdin() {
   if (process.stdin.isTTY) {
     process.stdin.setRawMode(false)
     process.stdin.resume()
+    process.stdin.unref()
   }
 }
 
