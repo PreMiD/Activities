@@ -26,6 +26,10 @@
   ],
   "settings": [
     {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
       "id": "showTitle",
       "title": "Show chat title",
       "icon": "fa-solid fa-message",
