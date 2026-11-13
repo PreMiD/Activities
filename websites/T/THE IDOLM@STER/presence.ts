@@ -157,8 +157,13 @@ presence.on('UpdateData', async () => {
   const brand = BRANDS[first]
   const section = SECTIONS[first] ?? (parts[1] ? SECTIONS[parts[1]] : undefined)
 
+  // サイト内検索 (/search?q=...)
+  if (first === 'search') {
+    presenceData.details = 'ポータルで検索中'
+    presenceData.smallImageKey = Assets.Search
+  }
   // 記事ページ (/news/01_20212 など)
-  if ((first === 'news' || first === 'information') && parts[1]) {
+  else if ((first === 'news' || first === 'information') && parts[1]) {
     presenceData.details = section ?? 'ニュース'
     const title = pageTitle()
     if (showTitle && title)
