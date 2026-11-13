@@ -124,6 +124,10 @@ presence.on('UpdateData', async () => {
     presenceData.details = 'Просматривает PREMIER'
     presenceData.startTimestamp = browsingTimestamp
   }
+  if (!showTimestamp) {
+    delete presenceData.startTimestamp
+    delete presenceData.endTimestamp
+  }
 
   presence.setActivity(presenceData)
 })
