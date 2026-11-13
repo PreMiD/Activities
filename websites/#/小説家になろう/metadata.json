@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "754572586914021468",
+    "name": "0120r"
+  },
+  "service": "小説家になろう",
+  "altnames": [
+    "小説家になろう",
+    "なろう",
+    "Shosetsuka ni Naro"
+  ],
+  "description": {
+    "en": "Syosetu is one of Japan's largest web novel platforms, where anyone can publish and read novels for free.",
+    "ja": "小説家になろうは、誰でも小説を投稿・無料で読むことができる日本最大級の小説投稿サイトです。"
+  },
+  "url": [
+    "syosetu.com",
+    "ncode.syosetu.com",
+    "yomou.syosetu.com",
+    "novel18.syosetu.com"
+  ],
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*syosetu[.]com[/]",
+  "version": "1.0.0",
+  "logo": "https://raw.githubusercontent.com/pachiris/Activities/premid-assets/syosetu/logo.png",
+  "thumbnail": "https://raw.githubusercontent.com/pachiris/Activities/premid-assets/syosetu/thumbnail.png",
+  "color": "#18B7CD",
+  "category": "other",
+  "tags": [
+    "novel",
+    "reading",
+    "japan",
+    "web-novel"
+  ],
+  "settings": [
+    {
+      "id": "showNovel",
+      "title": "作品名を表示",
+      "icon": "fad fa-book-open",
+      "value": true
+    },
+    {
+      "id": "showEpisode",
+      "title": "話題を表示",
+      "icon": "fad fa-bookmark",
+      "value": true
+    }
+  ]
+}
