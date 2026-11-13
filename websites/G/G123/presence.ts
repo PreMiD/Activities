@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1564985155863580781',
@@ -63,9 +63,15 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = LOGO
         presenceData.smallImageText = 'G123'
       }
+      else {
+        presenceData.smallImageKey = Assets.Play
+        presenceData.smallImageText = 'プレイ中'
+      }
     }
     else {
       presenceData.details = 'ゲームをプレイ中'
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = 'プレイ中'
     }
     presenceData.startTimestamp = playingSince
     presence.setActivity(presenceData)
@@ -83,7 +89,14 @@ presence.on('UpdateData', async () => {
   }
   // ***** 一覧・ランキング *****
   else if (pathname.startsWith('/games')) {
-    presenceData.details = pathname.includes('ranking') ? 'ランキングを閲覧中' : 'ゲームを探しています'
+    if (pathname.includes('ranking')) {
+      presenceData.details = 'ランキングを閲覧中'
+      presenceData.smallImageKey = Assets.Viewing
+      presenceData.smallImageText = 'ランキングを閲覧中'
+    }
+    else {
+      presenceData.details = 'ゲームを探しています'
+    }
   }
   else {
     presenceData.details = 'トップページを閲覧中'
