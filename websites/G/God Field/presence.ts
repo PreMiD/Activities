@@ -137,7 +137,7 @@ const REF_NOTES: ((t: Texts) => string)[] = [
   t => t.reference.guardianAttackNote,
   t => t.reference.guardiansNote,
 ]
-const isReferenceOpen = (body: string) => {
+function isReferenceOpen(body: string) {
   if (!has(body, t => t.reference.reference))
     return false
   if (REF_NOTES.some(pick => has(body, pick)))
