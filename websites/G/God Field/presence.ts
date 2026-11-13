@@ -163,6 +163,7 @@ presence.on('UpdateData', async () => {
     }).length
     if (ratingRows >= 5 || !has(body, t => t.duel.rating)) {
       presenceData.details = 'ランキングを見ています'
+      presenceData.smallImageKey = Assets.Viewing
       if (name)
         presenceData.state = name
     }
