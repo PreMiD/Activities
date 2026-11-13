@@ -63,5 +63,8 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Question
     presenceData.smallImageText = 'Q&A'
   }
+  else {
+    presenceData.smallImageKey = Assets.Viewing
+  }
   presence.setActivity(presenceData)
 })
