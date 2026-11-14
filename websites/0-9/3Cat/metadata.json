@@ -1,0 +1,58 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.11",
+  "apiVersion": 1,
+  "author": {
+    "id": "876847664275263499",
+    "name": "CARNICRU"
+  },
+  "service": "3Cat",
+  "description": {
+    "en": "3Cat, the digital platform of quality content in Catalan.",
+    "ca": "3Cat, la plataforma digital de continguts en català i de qualitat."
+  },
+  "url": [
+    "www.3cat.cat",
+    "3cat.cat"
+  ],
+  "regExp": "^https?://(www[.])?3cat[.]cat/",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/Imn9pvj.png",
+  "thumbnail": "https://i.imgur.com/QhlwcWi.png",
+  "color": "#E2001A",
+  "category": "videos",
+  "tags": [
+    "3cat",
+    "tv3",
+    "catalan",
+    "television",
+    "streaming"
+  ],
+  "iframe": true,
+  "iFrameRegExp": "^https?://([a-z0-9-]+[.])*(3cat|ccma)[.]cat/",
+  "settings": [
+    {
+      "id": "buttons",
+      "title": "Show buttons",
+      "icon": "fad fa-external-link-square",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Show episode and series cover",
+      "icon": "fad fa-image",
+      "value": true
+    },
+    {
+      "id": "browsing",
+      "title": "Show browsing status",
+      "icon": "fad fa-compass",
+      "value": true
+    },
+    {
+      "id": "privacy",
+      "title": "Hide search term",
+      "icon": "fad fa-user-secret",
+      "value": true
+    }
+  ]
+}
