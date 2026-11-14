@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.13",
+  "apiVersion": 1,
+  "author": {
+    "id": "189717259726356481",
+    "name": "sechs-vier"
+  },
+  "service": "sechs vier",
+  "description": {
+    "de": "sechs vier von hier – Das Campusradio des AStA der Hochschule Darmstadt.",
+    "en": "sechs vier von hier – Campus radio by AStA of Darmstadt University of Applied Sciences."
+  },
+  "url": "sechs-vier.de",
+  "version": "1.0.0",
+  "logo": "https://sechs-vier.de/img/og-default.png",
+  "thumbnail": "https://sechs-vier.de/img/og-default.png",
+  "color": "#E53935",
+  "category": "music",
+  "tags": ["radio", "music", "campusradio", "darmstadt"],
+  "settings": [
+    {
+      "id": "timestamps",
+      "title": "Zeitstempel / Fortschritt anzeigen",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "cover",
+      "title": "Song-Cover anzeigen",
+      "icon": "fad fa-images",
+      "value": true
+    }
+  ]
+}
