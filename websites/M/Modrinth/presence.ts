@@ -180,18 +180,26 @@ presence.on('UpdateData', async () => {
     if (!privacy && state)
       presenceData.state = state
   }
-  const setImage = (...images: (string | undefined)[]) => {
+  // Images are lazy getters so that no DOM lookup happens when covers are disabled
+  const setImage = (...images: (() => string | undefined)[]) => {
     if (!showCover)
       return
-    const image = images.find(Boolean)
-    if (image)
-      presenceData.largeImageKey = image
+    for (const getImage of images) {
+      const image = getImage()
+      if (image) {
+        presenceData.largeImageKey = image
+        return
+      }
+    }
   }
   const setButton = (label: string) => {
     if (showButtons)
       presenceData.buttons = [{ label, url: href }]
   }
-  const avatar = (alt?: string) => alt ? document.querySelector<HTMLImageElement>(`img.avatar[alt="${alt}"]`)?.src : undefined
+  // Compare the alt property instead of building a selector, titles can contain quotes
+  const avatar = (alt?: string) => () => alt
+    ? Array.from(document.querySelectorAll<HTMLImageElement>('img.avatar')).find(img => img.alt === alt)?.src
+    : undefined
   const firstAvatar = () => document.querySelector<HTMLImageElement>('img.avatar')?.src
   const fromMap = (map: Map<string, StringKey>, key: string | undefined, fallback: StringKey) =>
     strings[map.get(key ?? '') ?? fallback]
@@ -208,9 +216,9 @@ presence.on('UpdateData', async () => {
         const versionName = pathSplit[2] === 'version' ? document.querySelector('[class*="page"] > [class*="content"] h2')?.textContent?.trim() : undefined
         setState([mainTitle, versionName && `(${versionName})`].filter(Boolean).join(' '))
         if (pathSplit[0] === 'collection')
-          setImage(firstAvatar())
+          setImage(firstAvatar)
         else
-          setImage(avatar(mainTitle), firstAvatar())
+          setImage(avatar(mainTitle), firstAvatar)
         setButton(strings.buttonViewProject.replace('{0}', typeName))
 
         // Current tab of the project
