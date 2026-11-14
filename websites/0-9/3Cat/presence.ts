@@ -1,8 +1,6 @@
 import { ActivityType, Assets, getTimestamps } from 'premid'
 
-const CLIENT_ID = '1549793977589309622'
-
-const presence = new Presence({ clientId: CLIENT_ID })
+const presence = new Presence({ clientId: '1549793977589309622' })
 
 async function setting(id: string): Promise<boolean> {
   try {
