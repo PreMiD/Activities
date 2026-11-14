@@ -7,8 +7,7 @@
   },
   "service": "3Cat",
   "description": {
-    "en": "3Cat, the digital platform of quality content in Catalan.",
-    "ca": "3Cat, la plataforma digital de continguts en català i de qualitat."
+    "en": "3Cat, the digital platform of quality content in Catalan."
   },
   "url": [
     "www.3cat.cat",
@@ -21,7 +20,6 @@
   "color": "#E2001A",
   "category": "videos",
   "tags": [
-    "3cat",
     "tv3",
     "catalan",
     "television",

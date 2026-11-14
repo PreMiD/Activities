@@ -196,7 +196,7 @@ async function update() {
   const subName = SITES[segs[0] ?? ''] ? SITE_SUB[segs[1] ?? ''] : undefined
   const isSite = !!SITES[segs[0] ?? ''] && !isRadio && !isVideo
     && (segs.length === 1 || (!!subName && segs.length === 2) || segs[0] === '3catinfo')
-  const isProgram = !isVideo && ((segs[0] === '3cat' && segs.length >= 2 && !SECTIONS[segs[1]]) || (segs[0] === 'tv3' && segs.length >= 2))
+  const isProgram = !isVideo && ((segs[0] === '3cat' && segs.length >= 2 && !SECTIONS[segs[1] ?? '']) || (segs[0] === 'tv3' && segs.length >= 2))
 
   let isMediaPage = false
   let isProgramPage = false
@@ -206,7 +206,7 @@ async function update() {
     if (isAudio)
       presenceData.type = ActivityType.Listening
     const prefix = (h1 && ogTitle.endsWith(h1)) ? ogTitle.slice(0, ogTitle.length - h1.length).replace(/\s*[-–]\s*$/, '').trim() : ''
-    const series = /^(Pel·lícula|Documental|Reportatge|Curtmetratge|Telefilm|Programa|Sèrie|Vídeo|Àudio|Podcast|Pòdcast)$/i.test(prefix) ? '' : prefix
+    const series = /^(?:Pel·lícula|Documental|Reportatge|Curtmetratge|Telefilm|Programa|Sèrie|Vídeo|Àudio|Podcast|Pòdcast)$/i.test(prefix) ? '' : prefix
     const videoTitle = h1 || ogTitle || 'Contingut de 3Cat'
     presenceData.details = clean(series ? `${series} - ${videoTitle}` : videoTitle)
     presenceData.detailsUrl = shareUrl
@@ -215,9 +215,9 @@ async function update() {
     applyMedia(presenceData, getMedia())
   }
   else if (isLive) {
-    isMediaPage = true
     const slug = segs[2] ?? ''
     const channel = slug ? (CHANNELS[slug] ?? pretty(slug)) : ''
+    isMediaPage = !!channel
     const isAudio = RADIO_CHANNELS.includes(slug)
     if (isAudio)
       presenceData.type = ActivityType.Listening
