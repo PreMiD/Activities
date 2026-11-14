@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "802125827713925120",
+    "name": "jstsky"
+  },
+  "service": "PREMIER",
+  "description": {
+    "en": "Online cinema with Russian movies, series and TV shows.",
+    "ru": "Онлайн-кинотеатр с фильмами, сериалами и шоу."
+  },
+  "url": "premier.one",
+  "regExp": "^https?[:][/][/](www[.])?premier[.]one[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/T4V0Y5Z.png",
+  "thumbnail": "https://i.imgur.com/6dOZ6uw.jpeg",
+  "color": "#7b2ff7",
+  "category": "videos",
+  "tags": ["video", "movies", "series"],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Privacy Mode",
+      "icon": "fad fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "showTimestamp",
+      "title": "Show Timestamp",
+      "icon": "fad fa-clock",
+      "value": true
+    },
+    {
+      "id": "showButtons",
+      "title": "Show Buttons",
+      "icon": "fad fa-compress-arrows-alt",
+      "value": true
+    }
+  ]
+}
