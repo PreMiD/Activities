@@ -222,8 +222,8 @@ presence.on('UpdateData', async () => {
   }
 
   // ***** 真剣タイマン (待機画面・ランキング) *****
-  const duel = has(body, t => t.duel.ranking)
-  if (duel && body.includes(duel.modeNames.duel)) {
+  const duel = texts.find(t => body.includes(strip(t.duel.ranking)) && body.includes(t.modeNames.duel))
+  if (duel) {
     lastMode = 'duel'
     const name = showMode ? duel.modeNames.duel : null
     // ランキング一覧はロビーの上に重なって開くため、ロビーの「レーティング」が
