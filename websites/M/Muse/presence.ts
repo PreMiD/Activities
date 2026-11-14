@@ -13,8 +13,8 @@ async function getStrings() {
   })
 }
 
-const LOGO = 'https://i.imgur.com/ZOkEmUL.png'
-const TALKING_ICON = 'https://i.imgur.com/l5SUX1w.png'
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/M/Muse/assets/logo.png'
+const TALKING_ICON = 'https://cdn.rcd.gg/PreMiD/websites/M/Muse/assets/0.png'
 
 function isGenerating(): boolean {
   return Boolean(
