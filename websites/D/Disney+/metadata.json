@@ -32,9 +32,9 @@
   },
   "url": "www.disneyplus.com",
   "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*(disneyplus|hotstar)[.]com[/]",
-  "version": "1.11.3",
-  "logo": "https://i.imgur.com/9Ak5WOD.png",
-  "thumbnail": "https://i.imgur.com/IDdXjDB.png",
+  "version": "1.11.4",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/D/Disney%2B/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/D/Disney%2B/assets/thumbnail.png",
   "color": "#233778",
   "category": "videos",
   "tags": [
