@@ -18,8 +18,8 @@
   ],
   "regExp": "^https?[:][/][/](www[.])?zig-zag[.]fm[/]",
   "version": "1.0.0",
-  "logo": "https://imgur.com/RVoWxox",
-  "thumbnail": "https://imgur.com/S6HLoYe",
+  "logo": "https://i.imgur.com/RVoWxox.png",
+  "thumbnail": "https://i.imgur.com/S6HLoYe.png",
   "color": "#FFFFFF",
   "category": "music",
   "tags": [
