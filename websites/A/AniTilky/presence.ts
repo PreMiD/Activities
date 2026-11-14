@@ -38,7 +38,7 @@ async function getSettings(): Promise<PluginSettings> {
     showProfiles,
     showSmallImages,
   ] = await Promise.all([
-    presence.getSetting<string>('lang').catch(() => 'en'),
+    presence.getSetting<string>('lang').then(lang => lang || 'en').catch(() => 'en'),
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('showCover'),
     presence.getSetting<boolean>('showTimestamp'),
