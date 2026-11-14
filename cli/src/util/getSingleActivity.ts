@@ -1,9 +1,9 @@
 import type { ActivityMetadata } from '../classes/ActivityCompiler.js'
 import type { ActivityMetadataAndFolder } from './getActivities.js'
-import { search } from '@inquirer/prompts'
 import { getActivities } from './getActivities.js'
 import { exit } from './log.js'
 import { mapActivityToChoice } from './mapActivityToChoice.js'
+import { search } from './search.js'
 import { searchChoices } from './searchChoices.js'
 
 export async function getSingleActivity(searchMessage: string, service?: string): Promise<ActivityMetadataAndFolder> {

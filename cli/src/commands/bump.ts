@@ -1,12 +1,12 @@
 import type { ActivityMetadataAndFolder } from '../util/getActivities.js'
 import { writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
-import { search } from '@inquirer/prompts'
 import chalk from 'chalk'
 import { compare, inc, valid } from 'semver'
 import { getActivities, getChangedActivities } from '../util/getActivities.js'
 import { getSingleActivity } from '../util/getSingleActivity.js'
 import { exit, info, prefix } from '../util/log.js'
+import { search } from '../util/search.js'
 import { searchChoices } from '../util/searchChoices.js'
 
 export async function bump(service?: string, version?: string, {
