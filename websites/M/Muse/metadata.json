@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "754572586914021468",
+    "name": "0120r"
+  },
+  "service": "Muse",
+  "description": {
+    "en": "Muse is Meta's personal AI agent. Chat with your own agent, build documents and apps together, and keep up with your feed, ideas and goals on the web, mobile and desktop.",
+    "ja": "MuseはMetaのパーソナルAIエージェント。専用のエージェントとチャットしたり、ドキュメントやアプリを一緒に作ったり、フィードやアイデア、ゴールをWeb・モバイル・デスクトップで確認できます。"
+  },
+  "url": "muse.ai",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*muse[.]ai[/]",
+  "version": "1.0.0",
+  "logo": "https://i.imgur.com/ZOkEmUL.png",
+  "thumbnail": "https://i.imgur.com/TGZgLl0.png",
+  "color": "#0081FB",
+  "category": "other",
+  "tags": [
+    "ai",
+    "assistant",
+    "chat",
+    "meta",
+    "agent"
+  ],
+  "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
+    {
+      "id": "showTitle",
+      "title": "Show chat title",
+      "icon": "fa-solid fa-message",
+      "value": true
+    },
+    {
+      "id": "timestamp",
+      "title": "Show elapsed time",
+      "icon": "fad fa-stopwatch",
+      "value": true
+    },
+    {
+      "id": "browsing",
+      "title": "Show non-chat tabs",
+      "icon": "fad fa-compass",
+      "value": true
+    }
+  ]
+}
