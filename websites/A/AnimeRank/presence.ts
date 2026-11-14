@@ -80,28 +80,36 @@ async function loadAnime(id: string): Promise<AnimeInfo> {
   return { title, cover: await pickCover(anime?.images) }
 }
 
+// A title without a usable cover is looked up again a few times, in case the image service was
+// briefly down; an anime that really has no image stops after that.
+const MAX_COVER_RETRIES = 3
+
+function scheduleRetry(id: string, failed?: { count: number }): void {
+  const count = (failed?.count ?? 0) + 1
+  retry.set(id, { count, at: Date.now() + Math.min(60, 5 * 2 ** (count - 1)) * 1000 })
+}
+
 // Detail and watch pages carry the MAL id in the path: /anime/<id>[-slug], /watch/<id>[-slug]/<episode>.
 // Title and cover come from the site's public API once per anime and are cached.
 function getAnime(id: string): AnimeInfo | null {
-  const cached = animeCache.get(id)
-  if (cached)
-    return cached
+  const cached = animeCache.get(id) ?? null
   const failed = retry.get(id)
-  if (pending.has(id) || (failed && Date.now() < failed.at))
-    return null
+  const complete = cached && (cached.cover || (failed?.count ?? 0) >= MAX_COVER_RETRIES)
+  if (complete || pending.has(id) || (failed && Date.now() < failed.at))
+    return cached
 
   pending.set(id, Date.now())
   loadAnime(id)
     .then((info) => {
       animeCache.set(id, info)
-      retry.delete(id)
+      if (info.cover)
+        retry.delete(id)
+      else
+        scheduleRetry(id, failed)
     })
-    .catch(() => {
-      const count = (failed?.count ?? 0) + 1
-      retry.set(id, { count, at: Date.now() + Math.min(60, 5 * 2 ** (count - 1)) * 1000 })
-    })
+    .catch(() => scheduleRetry(id, failed))
     .finally(() => pending.delete(id))
-  return null
+  return cached
 }
 
 // The first answer normally arrives well within this window. Waiting for it avoids publishing a
