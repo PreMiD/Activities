@@ -4,7 +4,7 @@ const presence = new Presence({
   clientId: '1527392816966402270',
 })
 
-const LOGO = 'https://i.imgur.com/LDonhZk.png'
+const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/H/HollyMovieHD/assets/logo.png'
 const STALE_MS = 5000
 
 interface VideoData {
