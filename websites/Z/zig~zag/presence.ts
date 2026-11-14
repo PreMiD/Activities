@@ -149,7 +149,7 @@ presence.on('UpdateData', async () => {
 
   // nothing heard from the player for a while: no song (or the player frame isn't being read): show browsing
   if (!player || !player.title || Date.now() - playerSeen > 10000) {
-      presence.setActivity({
+    presence.setActivity({
       details: 'Exploring the map',
       state: 'on zig~zag',
       largeImageKey: ActivityAssets.Logo,
@@ -161,10 +161,10 @@ presence.on('UpdateData', async () => {
   // YouTube titles are usually "Artist - Song"
   let artist = ''
   let song = player.title
-  const split = player.title.match(/^(.+?)\s+[-–—]\s+(.+)$/)
-  if (split) {
-    artist = split[1]!
-    song = split[2]!
+  const sep = player.title.search(/ [-–—] /)
+  if (sep > 0) {
+    artist = player.title.slice(0, sep).trim()
+    song = player.title.slice(sep + 3).trim()
   }
 
   const presenceData: PresenceData = {

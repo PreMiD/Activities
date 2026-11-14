@@ -17,7 +17,6 @@
     "zig-zag.fm"
   ],
   "regExp": "^https?[:][/][/](www[.])?zig-zag[.]fm[/]",
-  "iFrameRegExp": "^https?[:][/][/](www[.])?youtube(-nocookie)?[.]com[/]embed[/]",
   "version": "1.0.0",
   "logo": "https://imgur.com/RVoWxox",
   "thumbnail": "https://imgur.com/5qlIG8r",
@@ -31,6 +30,7 @@
     "boat-party"
   ],
   "iframe": true,
+  "iFrameRegExp": "^https?[:][/][/](www[.])?youtube(-nocookie)?[.]com[/]embed[/]",
   "settings": [
     {
       "id": "showParty",
