@@ -77,11 +77,9 @@ const unsub = ctx.onCustomData('subtitle-lang', (data) => {
 return () => unsub()
 ```
 
-::: warning
-Custom data keys must be 1-32 characters, using only letters, numbers, hyphens, and underscores (matching the pattern `[\w-]{1,32}`).
-:::
-
 Only the controller can send custom data, and only followers receive it. It is not sent while the controller is alone in the party, and a message larger than 1 KB once serialized is dropped. Custom data sent from a follower is ignored.
+
+Custom data is delivered once and not stored: followers who join later, and every follower while the party is paused, miss it. Send state that followers need again when it changes and every few seconds, see [Custom Data Between Participants](/v1/examples/watch-party#custom-data-between-participants). It shares the party server's limit of 40 sync messages per second with playback and the other sync messages, and messages over the limit are dropped.
 
 ## Party State
 
