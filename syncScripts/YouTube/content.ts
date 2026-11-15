@@ -4,7 +4,26 @@ SyncScript.register({
 
     let lastPageInfoKey: string | null = null
 
+    function musicPageInfo() {
+      const metadata = navigator.mediaSession?.metadata
+      return {
+        title: metadata?.title || document.querySelector<HTMLElement>('ytmusic-player-bar .title')?.textContent?.trim(),
+        uploader: metadata?.artist || document.querySelector<HTMLElement>('ytmusic-player-bar .byline a')?.textContent?.trim(),
+        thumbnail: metadata?.artwork?.at(-1)?.src || document.querySelector<HTMLImageElement>('ytmusic-player-bar img.image')?.src,
+      }
+    }
+
     function updatePageInfo() {
+      if (location.hostname === 'music.youtube.com') {
+        const { title, uploader, thumbnail } = musicPageInfo()
+        const key = `${title}|${uploader}|${thumbnail}`
+        if (key === lastPageInfoKey)
+          return
+        lastPageInfoKey = key
+        ctx.setPageInfo({ title: title || undefined, subtitle: uploader || undefined, thumbnail: thumbnail || undefined })
+        return
+      }
+
       const title
         = document.querySelector<HTMLElement>('#title h1 yt-formatted-string')?.textContent
           ?? document.querySelector<HTMLElement>('ytm-slim-video-metadata-section-renderer h2 span')?.textContent
