@@ -39,17 +39,19 @@ The sync script's `metadata.json` defines which URLs the script should run on:
 }
 ```
 
-| Property              | Type     | Required | Description                                                                                                                                          |
-| --------------------- | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `service`             | `string` | Yes      | A unique identifier for the service, equal to the folder name. Used for [regional domain matching](/v1/guide/watch-party-behavior#desync-detection). |
-| `regExp`              | `string` | Yes      | A regular expression pattern that matches the URLs where the content script should activate.                                                         |
-| `version`             | `string` | Yes      | The script's semver version. Raise it with every change, see [Versioning](/v1/guide/watch-party-workflow#versioning).                                |
-| `minExtensionVersion` | `string` | No       | The oldest extension version the script works on. Older extensions skip it.                                                                          |
+| Property              | Type     | Required | Description                                                                                                           |
+| --------------------- | -------- | -------- | --------------------------------------------------------------------------------------------------------------------- |
+| `service`             | `string` | Yes      | The service name: 1-64 letters, digits, spaces or `+ . _ -`. The folder is named after it.                            |
+| `regExp`              | `string` | Yes      | A regular expression pattern that matches the URLs where the content script should activate.                          |
+| `version`             | `string` | Yes      | The script's semver version. Raise it with every change, see [Versioning](/v1/guide/watch-party-workflow#versioning). |
+| `minExtensionVersion` | `string` | No       | The oldest extension version the script works on. Older extensions skip it.                                           |
 
-The `regExp` must pass the extension's checks, which `pmd sync-build` runs too: at most 1000 characters, compiles in JavaScript, no line breaks, and no group with `+` or `*` inside that is itself repeated with `+` or `*`. Extensions before 2.15 are stricter than newer ones and reject even the common subdomain pattern `([a-z0-9-]+[.])*`; since they validate the whole list at once, one such script would turn off every sync script for them. Write `([a-z0-9-]{1,63}[.])?` instead.
+The `regExp` must pass the checks that `pmd sync-build` runs: at most 1000 characters, compiles in JavaScript, a single line, and no group with `+` or `*` inside that is itself repeated with `+` or `*`. Extensions before 2.15 are stricter than newer ones and reject even the common subdomain pattern `([a-z0-9-]+[.])*`; since they validate the whole list at once, one such script would turn off every sync script for them. Write `([a-z0-9-]{1,63}[.])?` instead.
+
+Each built `content.js` and `mainworld.js` may be at most 512 KB.
 
 ::: tip
-The `service` field is important for regional domain matching during desync detection. If a site has multiple regional domains (e.g., `anime-site.jp` and `anime-site.com`), use the same `service` value for both so the extension knows they're the same site.
+If a site has several regional domains (e.g. `anime-site.jp` and `anime-site.com`), cover them all with the `regExp` of one script, e.g. `^https?[:][/][/](www[.])?anime-site[.](jp|com)[/]`. Both domains then count as the same site during [desync detection](/v1/guide/watch-party-behavior#desync-detection). Two scripts can't share a `service`; `pmd sync-build` rejects that.
 :::
 
 ### Script Files

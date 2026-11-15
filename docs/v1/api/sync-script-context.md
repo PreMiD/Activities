@@ -71,12 +71,12 @@ Tells PreMiD that the sync script handles this page, and which sync features it 
 
 #### Parameters
 
-| Parameter           | Type      | Description                                                                                                                             |
-| ------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `features.video`    | `boolean` | Set to `false` to turn off video synchronization, including PreMiD's own video detection for this page.                                 |
-| `features.cursor`   | `boolean` | Set to `false` to stop sharing the controller's cursor.                                                                                 |
-| `features.scroll`   | `boolean` | Set to `false` to stop sharing the controller's scroll position.                                                                        |
-| `features.fallback` | `boolean` | Set to `false` to keep PreMiD's own video detection off this page while the script has no player yet. Extensions before 2.15 ignore it. |
+| Parameter           | Type      | Description                                                                                                                                                                                                                                                      |
+| ------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `features.video`    | `boolean` | Set to `false` to turn off video synchronization, including PreMiD's own video detection for this page.                                                                                                                                                          |
+| `features.cursor`   | `boolean` | Set to `false` to stop sharing the controller's cursor.                                                                                                                                                                                                          |
+| `features.scroll`   | `boolean` | Set to `false` to stop sharing the controller's scroll position.                                                                                                                                                                                                 |
+| `features.fallback` | `boolean` | Set to `false` to keep PreMiD's own video detection off this site while the party tab stays on it, even before the script has a player and after it releases or stops. If the script stops, followers show as blocked instead. Extensions before 2.15 ignore it. |
 
 #### Example
 
@@ -291,13 +291,13 @@ ctx.setPageInfo({
 reportBlocked(reason: string): void
 ```
 
-Reports that the user is blocked from viewing the content. Use this for login walls, geo-restrictions, or paywalls so other party members understand why synchronization has stopped. Reports from the controller are ignored.
+Reports that the user is blocked from viewing the content. Use this for login walls, geo-restrictions, or paywalls. Other party members see that this follower is blocked; the reason is only for debugging. Reports from the controller are ignored.
 
 #### Parameters
 
-| Parameter | Type     | Description                                            |
-| --------- | -------- | ------------------------------------------------------ |
-| `reason`  | `string` | A human-readable description of why access is blocked. |
+| Parameter | Type     | Description                                                                                  |
+| --------- | -------- | -------------------------------------------------------------------------------------------- |
+| `reason`  | `string` | A short description for debugging. Other participants only see that the follower is blocked. |
 
 #### Example
 
@@ -404,24 +404,24 @@ The `mainworld` namespace provides methods for communicating with scripts runnin
 <!-- eslint-skip -->
 
 ```typescript
-mainworld.send(key: string, data?: unknown): void
+mainworld.send(key: string, data: unknown): void
 ```
 
 Sends a one-way message to the main world.
 
 #### Parameters
 
-| Parameter | Type      | Description            |
-| --------- | --------- | ---------------------- |
-| `key`     | `string`  | The message key.       |
-| `data`    | `unknown` | Optional data payload. |
+| Parameter | Type      | Description                        |
+| --------- | --------- | ---------------------------------- |
+| `key`     | `string`  | The message key.                   |
+| `data`    | `unknown` | The data payload, `null` for none. |
 
 #### Example
 
 <!-- eslint-skip -->
 
 ```typescript
-ctx.mainworld.send('request-player-state')
+ctx.mainworld.send('request-player-state', null)
 ```
 
 ### mainworld.request
@@ -429,17 +429,17 @@ ctx.mainworld.send('request-player-state')
 <!-- eslint-skip -->
 
 ```typescript
-mainworld.request<T>(key: string, data?: unknown): Promise<T>
+mainworld.request(key: string, data: unknown): Promise<unknown>
 ```
 
 Sends a request to the main world and waits for a response.
 
 #### Parameters
 
-| Parameter | Type      | Description               |
-| --------- | --------- | ------------------------- |
-| `key`     | `string`  | The request key.          |
-| `data`    | `unknown` | Optional request payload. |
+| Parameter | Type      | Description                           |
+| --------- | --------- | ------------------------------------- |
+| `key`     | `string`  | The request key.                      |
+| `data`    | `unknown` | The request payload, `null` for none. |
 
 #### Returns
 
@@ -454,7 +454,7 @@ Requests have a 10-second timeout. If the main world does not respond within tha
 <!-- eslint-skip -->
 
 ```typescript
-const playerData = await ctx.mainworld.request<PlayerData>('get-player-data')
+const playerData = await ctx.mainworld.request('get-player-data', null) as PlayerData
 ```
 
 ### mainworld.onMessage
@@ -667,15 +667,15 @@ readonly runtime?: { version: string, capabilities: string[] }
 
 The version of the sync script runtime and the capabilities it has. `undefined` on older extensions, and also available as `SyncScript.runtime` before registering. Check a capability instead of comparing versions:
 
-| Capability         | Meaning                                                                                        |
-| ------------------ | ---------------------------------------------------------------------------------------------- |
-| `fallbackOptOut`   | `features({ fallback: false })` is honored.                                                    |
-| `derivedEvents`    | Ad and buffering reports are deduplicated and debounced by the runtime.                        |
-| `log`              | `ctx.log` exists.                                                                              |
-| `hostChange`       | `party.onHostChange` exists.                                                                   |
-| `localNavigate`    | `onNavigate` also fires on the controller and on a follower's own in-page navigation.          |
-| `pageInfoType`     | `setPageInfo` accepts `type` and `duration`.                                                   |
-| `errorContainment` | A throwing handler no longer stops the others, and a throwing `onRequest` rejects `request()`. |
+| Capability         | Meaning                                                                                                                    |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| `fallbackOptOut`   | `features({ fallback: false })` is honored.                                                                                |
+| `derivedEvents`    | `reportPlayback()` reports are throttled, and the controller's play, pause, seek and rate events are worked out from them. |
+| `log`              | `ctx.log` exists.                                                                                                          |
+| `hostChange`       | `party.onHostChange` exists.                                                                                               |
+| `localNavigate`    | `onNavigate` also fires on the controller and on a follower's own in-page navigation.                                      |
+| `pageInfoType`     | `setPageInfo` accepts `type` and `duration`.                                                                               |
+| `errorContainment` | A throwing handler no longer stops the others, and a throwing `onRequest` rejects `request()`.                             |
 
 <!-- eslint-skip -->
 

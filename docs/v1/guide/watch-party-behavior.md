@@ -16,7 +16,7 @@ The **host** (party creator) starts as the controller but can transfer control t
 The sync script receives role information via `ctx.party.role` and can listen for changes with `ctx.party.onRoleChange()`.
 
 ::: tip
-If the sync script needs to behave differently based on role (e.g., only the controller should report playback), check `ctx.party.role` before sending data.
+If the sync script needs to behave differently by role (for example, only the controller should send custom data), check `ctx.party.role`. Keep calling `reportPlayback()` in both roles: a follower ignores sync commands until its first report.
 :::
 
 ## Drift Correction
@@ -153,7 +153,7 @@ If a follower's page never finishes loading (no `status: 'complete'` event), a 1
 
 ### Desync Status
 
-When desync is detected, the follower sends a `desynced` status with the current URL. The Watch Party overlay shows this to other participants, and the follower can click to re-sync.
+When desync is detected, the follower sends a `desynced` status. The Watch Party overlay shows this to other participants, and the follower can click to re-sync.
 
 ## Status States
 

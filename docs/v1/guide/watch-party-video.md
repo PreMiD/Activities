@@ -106,25 +106,31 @@ setup(ctx) {
 
   const options: SyncScriptTakeControlOptions = {
     onPlay(timeSeconds) {
+      const player = getPlayer()
+      if (!player)
+        return
       // A follower that is more than a second off has to be at the party's position first.
       if (Math.abs(player.getCurrentTime() - timeSeconds) > 1)
         player.seekTo(timeSeconds)
       player.play()
     },
     onPause(timeSeconds) {
+      const player = getPlayer()
+      if (!player)
+        return
       if (Math.abs(player.getCurrentTime() - timeSeconds) > 1)
         player.seekTo(timeSeconds)
       player.pause()
     },
     onSeek(timeSeconds) {
-      player.seekTo(timeSeconds)
+      getPlayer()?.seekTo(timeSeconds)
     },
     pauseAfterSeek: true,
   }
   // onRate also makes the runtime correct small drift with rate nudges such as 1.02.
   // Only pass it when the player accepts any rate.
   if (ctx.runtime)
-    options.onRate = rate => player.setPlaybackRate(rate)
+    options.onRate = rate => getPlayer()?.setPlaybackRate(rate)
 
   const interval = setInterval(() => {
     const player = getPlayer()
@@ -189,7 +195,7 @@ These callbacks fire for **followers only**. The controller doesn't receive its 
 
 Report whenever the state changes, every 250ms while playing, and at least once a second while paused. Newer extensions throttle the reports and work out play, pause and seek events from them, so reporting at the player's natural rate is fine. Extensions before 2.15 send every report as is and compare against the last reported position, so a report that is a second old reads as a second of drift.
 
-If PreMiD hears nothing from the script for 10 seconds, it stops treating the page as handled by the script and falls back to its own video detection.
+Extensions before 2.15 stop treating the page as handled by the script when it reports nothing for 10 seconds, and fall back to their own video detection. Newer extensions keep the page with the script for as long as it is active, however quiet the player is. If the script stops responding on a page that set `fallback: false`, the follower shows as blocked instead of falling back.
 
 ### pauseAfterSeek
 
@@ -276,4 +282,4 @@ if (loginWall) {
 }
 ```
 
-The blocked reason is shown to other participants so they understand why someone isn't syncing. Only followers can be blocked; a report from the controller is ignored.
+Other participants see that this follower is blocked. The reason is not sent to them; it is for debugging and shows in the `pmd sync-dev` terminal. Only followers can be blocked; a report from the controller is ignored.

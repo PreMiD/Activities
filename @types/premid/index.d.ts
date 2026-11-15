@@ -984,7 +984,7 @@ declare global {
     cursor?: boolean
     scroll?: boolean
     /**
-     * `false` keeps PreMiD's generic video detection off this page while the script has no player yet.
+     * `false` keeps PreMiD's generic video detection off this site while the party tab stays on it, even after the script releases or stops.
      * Ignored by extensions that predate it.
      */
     fallback?: boolean
