@@ -137,6 +137,26 @@ describe('webSocketServer test RPC', () => {
     await expect(server.request('hello', {}, 20)).rejects.toThrow('Timed out waiting for the extension (hello)')
   })
 
+  it('onMessage hears every other message, and a throwing listener changes nothing', async () => {
+    const client = await connectClient()
+    await vi.waitFor(() => expect(server.isConnected).toBe(true))
+    const heard: unknown[] = []
+    server.onMessage(() => {
+      throw new Error('listener')
+    })
+    const unsubscribe = server.onMessage(message => heard.push(message))
+
+    client.send('received')
+    client.send(JSON.stringify({ type: 'syncScriptLog', service: 'YouTube', tabId: 1, level: 'log', args: ['hi'] }))
+    await vi.waitFor(() => expect(heard).toHaveLength(1))
+    unsubscribe()
+    client.send(JSON.stringify({ type: 'syncScriptReport', kind: 'status' }))
+    await new Promise(resolve => setTimeout(resolve, 20))
+
+    expect(heard).toEqual([{ type: 'syncScriptLog', service: 'YouTube', tabId: 1, level: 'log', args: ['hi'] }])
+    expect(server.isConnected).toBe(true)
+  })
+
   it('onTestEvent receives events and can unsubscribe', async () => {
     const client = await connectClient()
     await vi.waitFor(() => expect(server.isConnected).toBe(true))

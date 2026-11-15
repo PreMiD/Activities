@@ -9,6 +9,7 @@ import ora from 'ora'
 import ts from 'typescript'
 import { error, exit, info, prefix } from '../util/log.js'
 import { zipDir } from '../util/zipDir.js'
+import { SyncScriptDevConsole } from './SyncScriptDevConsole.js'
 import { WebSocketServer } from './WebSocketServer.js'
 
 export interface SyncScriptMetadata {
@@ -90,6 +91,17 @@ export class SyncScriptCompiler {
     })
 
     this.startTsWatch()
+    this.startDevConsole(this.ws)
+  }
+
+  // Prints what the extension reports about the script under development.
+  private startDevConsole(ws: WebSocketServer) {
+    const devConsole = new SyncScriptDevConsole()
+    ws.onMessage((message) => {
+      const line = devConsole.format(message)
+      if (line)
+        (line.level === 'error' ? error : info)(line.text)
+    })
   }
 
   private program: ts.WatchOfFilesAndCompilerOptions<ts.SemanticDiagnosticsBuilderProgram> | undefined

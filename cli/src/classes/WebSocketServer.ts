@@ -65,6 +65,14 @@ export class WebSocketServer implements TestRpc {
             catch {}
           }
         }
+        else {
+          for (const listener of this.messageListeners) {
+            try {
+              listener(message)
+            }
+            catch {}
+          }
+        }
       })
 
       // A malformed frame or a reset socket emits 'error'. Without a listener that crashes a long-lived pmd process.
@@ -175,6 +183,15 @@ export class WebSocketServer implements TestRpc {
   private nextTestId = 0
   private pendingTests = new Map<number, { resolve: (value: unknown) => void, reject: (error: Error) => void, timeout: NodeJS.Timeout }>()
   private testListeners = new Set<(event: TestEvent) => void>()
+  private messageListeners = new Set<(message: unknown) => void>()
+
+  /** Every other message the extension sends, such as a dev sync script's logs and reports. */
+  onMessage(listener: (message: unknown) => void) {
+    this.messageListeners.add(listener)
+    return () => {
+      this.messageListeners.delete(listener)
+    }
+  }
 
   get isConnected(): boolean {
     return this.getOpenClient() !== undefined
