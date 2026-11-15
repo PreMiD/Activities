@@ -1,7 +1,5 @@
 SyncScript.register({
   setup(ctx) {
-    ctx.features({ cursor: false, scroll: false, video: true })
-
     let handle: ManualVideoHandle | null = null
     let missed = 0
     let lastBuffering = false
@@ -19,13 +17,16 @@ SyncScript.register({
       }
       missed = 0
 
-      // Taking control before the player exists would leave a silent script that the party gives up on.
-      handle ??= ctx.video.takeControl({
-        onPlay: () => ctx.mainworld.send('command', { action: 'play' }),
-        onPause: () => ctx.mainworld.send('command', { action: 'pause' }),
-        onSeek: t => ctx.mainworld.send('command', { action: 'seek', timeMs: t * 1000 }),
-        pauseAfterSeek: true,
-      })
+      if (!handle) {
+        // A managed page that reports nothing is given up on, so it only becomes one once there is a player.
+        ctx.features({ cursor: false, scroll: false, video: true })
+        handle = ctx.video.takeControl({
+          onPlay: () => ctx.mainworld.send('command', { action: 'play' }),
+          onPause: () => ctx.mainworld.send('command', { action: 'pause' }),
+          onSeek: t => ctx.mainworld.send('command', { action: 'seek', timeMs: t * 1000 }),
+          pauseAfterSeek: true,
+        })
+      }
 
       handle.reportPlayback({
         playing: data.playing,
