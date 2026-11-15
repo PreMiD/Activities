@@ -963,12 +963,35 @@ declare global {
     currentTime?: number
     playbackRate?: number
     capturedAt?: number
+    serverTs?: number
+    clockOffset?: number
+    isHeartbeat?: boolean
   }
 
   interface SyncScriptPageInfo {
     title?: string
     subtitle?: string
     thumbnail?: string
+    /** Ignored by extensions that predate it. */
+    type?: string
+    /** Length in seconds. Ignored by extensions that predate it. */
+    duration?: number
+  }
+
+  interface SyncScriptFeatures {
+    video?: boolean
+    cursor?: boolean
+    scroll?: boolean
+    /**
+     * `false` keeps PreMiD's generic video detection off this page while the script has no player yet.
+     * Ignored by extensions that predate it.
+     */
+    fallback?: boolean
+  }
+
+  interface SyncScriptRuntime {
+    version: string
+    capabilities: string[]
   }
 
   interface SyncScriptTakeControlOptions {
@@ -976,7 +999,6 @@ declare global {
     onPause: (timeSeconds: number) => void
     onSeek: (timeSeconds: number) => void
     onRate?: (playbackRate: number) => void
-    driftThreshold?: number
     pauseAfterSeek?: boolean | number
   }
 
@@ -1020,7 +1042,10 @@ declare global {
   }
 
   interface SyncScriptContext {
-    features: (features: { video?: boolean, cursor?: boolean, scroll?: boolean }) => void
+    /** Missing on extensions that predate it, so check it before use. */
+    readonly runtime?: SyncScriptRuntime
+
+    features: (features: SyncScriptFeatures) => void
 
     video: SyncScriptVideoAPI
 
@@ -1035,6 +1060,9 @@ declare global {
     mainworld: MessagingNamespace
 
     party: PartyState
+
+    /** Writes to the extension's debug log. Missing on extensions that predate it, so check it before use. */
+    log?: (...args: unknown[]) => void
   }
 
   interface SyncScriptDefinition {
