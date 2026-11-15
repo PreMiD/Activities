@@ -33,6 +33,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Type check and build sync scripts
+        run: npx pmd sync-build --all
+
       - name: Upload analysis results to GitHub
         if: always()
         uses: github/codeql-action/upload-sarif@v3
