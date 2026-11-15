@@ -119,6 +119,9 @@ export async function syncRelease(service?: string, { changed = false, all = fal
 
   const apiUrl = process.env.API_URL || 'https://api.premid.app/v6'
 
+  if (!process.env.SYNC_SCRIPT_SIGNING_KEY)
+    info('SYNC_SCRIPT_SIGNING_KEY is not set, the sync scripts are released unsigned and extensions that check signatures will ignore them')
+
   const allScripts = await getSyncScripts()
   const failures: string[] = []
   let scripts: SyncScriptMetadataAndFolder[]
