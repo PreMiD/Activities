@@ -8,6 +8,9 @@ const presence = new Presence({
 const LOGO = 'https://i.imgur.com/ldFA4Ah.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
+// UpdateData の世代。非同期処理中に新しい呼び出しが来たら、古い側は公開しない
+let updateSeq = 0
+
 interface ProgramInfo {
   id: number
   title: string
@@ -451,12 +454,19 @@ function resolveLogo(target: LogoTarget, all: ServiceInfo[]): string | null {
   if (target.type === 'SKY' && sid >= 400 && sid <= 499)
     candidates.push('NID1-SID400')
   // サブチャンネルは本チャンネル (同じネットワークで一番若いサービス ID) のロゴを使う
+  // ただし BS / CS / スカパー! は 1 つのネットワーク ID に無関係な放送局が同居するため、
+  // 同じネットワーク ID というだけで他局のロゴは流用しない (地上波はネットワーク ID が放送局ごとに割り当てられる)
+  const selfType = target.type ?? all.find(s => s.id === target.id)?.type
   const nid = Math.floor(target.id / 100000)
-  const siblings = all
-    .filter(s => Math.floor(s.id / 100000) === nid)
-    .sort((a, b) => a.id - b.id)
-  for (const s of siblings)
-    candidates.push(logoKey(s.id))
+  const isSatelliteNetwork = selfType === 'BS' || selfType === 'CS' || selfType === 'SKY'
+    || (selfType === undefined && nid < 1000)
+  if (!isSatelliteNetwork) {
+    const siblings = all
+      .filter(s => Math.floor(s.id / 100000) === nid)
+      .sort((a, b) => a.id - b.id)
+    for (const s of siblings)
+      candidates.push(logoKey(s.id))
+  }
   const hit = candidates.find(key => BUNDLED.has(key))
   return hit ? `${LOGO_BASE}${hit}.png` : null
 }
@@ -506,8 +516,8 @@ async function getRecording(id: number): Promise<RecordingInfo | null> {
   const cached = recordingCache.get(id)
   if (cached)
     return cached
-  // 録画の一覧は新しい順。観ている録画が見つかるまでページをたどる
-  for (let offset = 0; offset < 500; offset += 100) {
+  // 録画の一覧は新しい順。観ている録画が見つかるまでページをたどる (上限 2000 件)
+  for (let offset = 0; offset < 2000; offset += 100) {
     const page = await fetchJson<RecordingInfo[]>(`/api/recordings?limit=100&offset=${offset}`)
     if (!page)
       return null
@@ -531,17 +541,23 @@ const pageNames: Record<string, string> = {
 }
 
 presence.on('UpdateData', async () => {
+  const seq = ++updateSeq
   const [showTimestamp, showProgram, browsing] = await Promise.all([
     presence.getSetting<boolean>('timestamp'),
     presence.getSetting<boolean>('showProgram'),
     presence.getSetting<boolean>('browsing'),
   ])
-
   const presenceData: PresenceData = {
     name: 'denpa',
     type: ActivityType.Watching,
     largeImageKey: LOGO,
     largeImageText: 'denpa',
+  }
+
+  // この呼び出しの結果を公開してよいのは、まだ最新の世代のときだけ
+  const publish = () => {
+    if (seq === updateSeq)
+      presence.setActivity(presenceData)
   }
 
   const { pathname, search } = document.location
@@ -569,7 +585,7 @@ presence.on('UpdateData', async () => {
       presenceData.startTimestamp = Math.floor(prog.startAt / 1000)
       presenceData.endTimestamp = Math.floor(prog.endAt / 1000)
     }
-    presence.setActivity(presenceData)
+    publish()
     return
   }
 
@@ -597,7 +613,7 @@ presence.on('UpdateData', async () => {
     }
     if (showTimestamp && video && !video.paused && Number.isFinite(video.duration))
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
-    presence.setActivity(presenceData)
+    publish()
     return
   }
 
@@ -626,13 +642,14 @@ presence.on('UpdateData', async () => {
     // 追っかけは尺が伸び続けるので、放送開始からの経過だけを出す
     if (showTimestamp && recording && !video?.paused)
       presenceData.startTimestamp = Math.floor(recording.startAt / 1000)
-    presence.setActivity(presenceData)
+    publish()
     return
   }
 
   // ***** その他のページ *****
   if (!browsing) {
-    presence.clearActivity()
+    if (seq === updateSeq)
+      presence.clearActivity()
     return
   }
 
@@ -645,6 +662,7 @@ presence.on('UpdateData', async () => {
     presenceData.smallImageKey = Assets.Viewing
     presenceData.smallImageText = 'ブラウジング中'
   }
-  presenceData.startTimestamp = browsingTimestamp
-  presence.setActivity(presenceData)
+  if (showTimestamp)
+    presenceData.startTimestamp = browsingTimestamp
+  publish()
 })
