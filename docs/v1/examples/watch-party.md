@@ -32,7 +32,7 @@ SyncScript.register({
 
 ## Custom Player Sync (Manual Mode)
 
-For sites with a proprietary JavaScript player API (e.g., the player isn't a standard `<video>` element):
+For sites with a proprietary JavaScript player API (e.g., the player isn't a standard `<video>` element). This is the short version; a real script should follow [the take-control pattern](/v1/guide/watch-party-video#the-take-control-pattern):
 
 <!-- eslint-skip -->
 
@@ -45,7 +45,7 @@ SyncScript.register({
     const player = (window as any).sitePlayer
     if (!player) return
 
-    const handle = ctx.video.takeControl({
+    const options: SyncScriptTakeControlOptions = {
       onPlay(timeSeconds) {
         player.seekTo(timeSeconds)
         player.play()
@@ -57,10 +57,13 @@ SyncScript.register({
       onSeek(timeSeconds) {
         player.seekTo(timeSeconds)
       },
-      onRate(rate) {
-        player.setPlaybackRate(rate)
-      },
-    })
+    }
+    // onRate also makes the runtime nudge the rate (such as 1.02) to correct drift.
+    // Only pass it when the player accepts any rate.
+    if (ctx.runtime)
+      options.onRate = rate => player.setPlaybackRate(rate)
+
+    const handle = ctx.video.takeControl(options)
 
     // Report every 250ms: while playing the position changes on every report
     const interval = setInterval(() => {
@@ -222,7 +225,7 @@ SyncScript.register({
 
 ## Custom Data Between Participants
 
-Send the controller's settings to the followers:
+Send the controller's settings to the followers. Custom data is not stored, so a follower who joins later never gets a message sent before it joined. The controller sends again whenever the setting changes and every few seconds:
 
 <!-- eslint-skip -->
 
@@ -237,15 +240,19 @@ SyncScript.register({
     const handle = ctx.video.attach(video)
 
     // Controller sends subtitle preference to all followers
-    if (ctx.party.role === 'controller') {
-      const subtitleTrack = video.textTracks[0]
-      if (subtitleTrack) {
-        ctx.sendCustomData('subtitles', {
-          lang: subtitleTrack.language,
-          enabled: subtitleTrack.mode === 'showing',
-        })
-      }
+    function sendSubtitles() {
+      const subtitleTrack = video!.textTracks[0]
+      if (ctx.party.role !== 'controller' || !subtitleTrack)
+        return
+      ctx.sendCustomData('subtitles', {
+        lang: subtitleTrack.language,
+        enabled: subtitleTrack.mode === 'showing',
+      })
     }
+    sendSubtitles()
+    video.textTracks.addEventListener('change', sendSubtitles)
+    // Late joiners get it within 5 seconds
+    const resend = setInterval(sendSubtitles, 5000)
 
     // Followers receive the controller's subtitle preference
     const unsub = ctx.onCustomData('subtitles', (data) => {
@@ -259,6 +266,8 @@ SyncScript.register({
 
     return () => {
       unsub()
+      clearInterval(resend)
+      video.textTracks.removeEventListener('change', sendSubtitles)
       handle.detach()
     }
   },
