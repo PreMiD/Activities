@@ -23,7 +23,11 @@ const animeCache = new Map<string, AnimeInfo>()
 // id -> time the lookup started
 const pending = new Map<string, number>()
 // Failed lookups are retried with a growing delay instead of being cached as "unknown" forever.
-const retry = new Map<string, { count: number, at: number }>()
+// API failures and missing covers are counted separately, so earlier API errors do not use up
+// the cover attempts.
+interface RetryState { count: number, at: number }
+const apiRetry = new Map<string, RetryState>()
+const coverRetry = new Map<string, RetryState>()
 
 // Discord downloads the image itself, so it needs an absolute, small, raster URL.
 // The API returns site-relative paths (some already proxied) and very large originals.
@@ -84,30 +88,35 @@ async function loadAnime(id: string): Promise<AnimeInfo> {
 // briefly down; an anime that really has no image stops after that.
 const MAX_COVER_RETRIES = 3
 
-function scheduleRetry(id: string, failed?: { count: number }): void {
-  const count = (failed?.count ?? 0) + 1
-  retry.set(id, { count, at: Date.now() + Math.min(60, 5 * 2 ** (count - 1)) * 1000 })
+function scheduleRetry(map: Map<string, RetryState>, id: string): void {
+  const count = (map.get(id)?.count ?? 0) + 1
+  map.set(id, { count, at: Date.now() + Math.min(60, 5 * 2 ** (count - 1)) * 1000 })
+}
+
+function waiting(state?: RetryState): boolean {
+  return state !== undefined && Date.now() < state.at
 }
 
 // Detail and watch pages carry the MAL id in the path: /anime/<id>[-slug], /watch/<id>[-slug]/<episode>.
 // Title and cover come from the site's public API once per anime and are cached.
 function getAnime(id: string): AnimeInfo | null {
   const cached = animeCache.get(id) ?? null
-  const failed = retry.get(id)
-  const complete = cached && (cached.cover || (failed?.count ?? 0) >= MAX_COVER_RETRIES)
-  if (complete || pending.has(id) || (failed && Date.now() < failed.at))
+  const coverFailed = coverRetry.get(id)
+  const complete = cached && (cached.cover || (coverFailed?.count ?? 0) >= MAX_COVER_RETRIES)
+  if (complete || pending.has(id) || waiting(apiRetry.get(id)) || (cached && waiting(coverFailed)))
     return cached
 
   pending.set(id, Date.now())
   loadAnime(id)
     .then((info) => {
+      apiRetry.delete(id)
       animeCache.set(id, info)
       if (info.cover)
-        retry.delete(id)
+        coverRetry.delete(id)
       else
-        scheduleRetry(id, failed)
+        scheduleRetry(coverRetry, id)
     })
-    .catch(() => scheduleRetry(id, failed))
+    .catch(() => scheduleRetry(apiRetry, id))
     .finally(() => pending.delete(id))
   return cached
 }
