@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs'
 import { cp, rm } from 'node:fs/promises'
 import { basename, dirname, resolve } from 'node:path'
 import process from 'node:process'
+import { createInterface } from 'node:readline'
 import chalk from 'chalk'
 import { watch } from 'chokidar'
 import { build } from 'esbuild'
@@ -9,7 +10,7 @@ import ora from 'ora'
 import ts from 'typescript'
 import { error, exit, info, prefix } from '../util/log.js'
 import { zipDir } from '../util/zipDir.js'
-import { SyncScriptDevConsole } from './SyncScriptDevConsole.js'
+import { parseSoloCommand, SOLO_HELP, SyncScriptDevConsole } from './SyncScriptDevConsole.js'
 import { WebSocketServer } from './WebSocketServer.js'
 
 export interface SyncScriptMetadata {
@@ -94,13 +95,26 @@ export class SyncScriptCompiler {
     this.startDevConsole(this.ws)
   }
 
-  // Prints what the extension reports about the script under development.
+  // Prints what the extension reports about the script, and turns typed lines into solo mode commands.
   private startDevConsole(ws: WebSocketServer) {
     const devConsole = new SyncScriptDevConsole()
     ws.onMessage((message) => {
       const line = devConsole.format(message)
       if (line)
         (line.level === 'error' ? error : info)(line.text)
+    })
+
+    info('Type help for the solo mode commands.')
+    createInterface({ input: process.stdin }).on('line', (line) => {
+      const command = parseSoloCommand(line)
+      if (!command)
+        return
+      if ('help' in command)
+        return console.log(SOLO_HELP)
+      const problem = 'error' in command ? command.error : devConsole.problemWith(command)
+      if (problem)
+        return error(problem)
+      ws.broadcast(command)
     })
   }
 

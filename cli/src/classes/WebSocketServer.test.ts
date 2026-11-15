@@ -157,6 +157,20 @@ describe('webSocketServer test RPC', () => {
     expect(server.isConnected).toBe(true)
   })
 
+  it('broadcast sends a message to every connected browser', async () => {
+    const first = await connectClient()
+    const second = await connectClient()
+    await vi.waitFor(() => expect([...server.server.clients].length).toBe(2))
+    const received = [first, second].map(client => new Promise(resolve => client.once('message', raw => resolve(parse(raw)))))
+
+    server.broadcast({ type: 'syncScriptSolo', command: 'follower' })
+
+    expect(await Promise.all(received)).toEqual([
+      { type: 'syncScriptSolo', command: 'follower' },
+      { type: 'syncScriptSolo', command: 'follower' },
+    ])
+  })
+
   it('onTestEvent receives events and can unsubscribe', async () => {
     const client = await connectClient()
     await vi.waitFor(() => expect(server.isConnected).toBe(true))

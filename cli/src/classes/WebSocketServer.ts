@@ -193,6 +193,14 @@ export class WebSocketServer implements TestRpc {
     }
   }
 
+  broadcast(message: object) {
+    const data = JSON.stringify(message)
+    for (const client of this.server.clients) {
+      if (client.readyState === WebSocket.OPEN)
+        client.send(data)
+    }
+  }
+
   get isConnected(): boolean {
     return this.getOpenClient() !== undefined
   }
