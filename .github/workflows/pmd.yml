@@ -30,6 +30,10 @@ jobs:
       - name: Install pmd
         run: npm ci
 
+      - name: Test pmd and sync scripts
+        run: npm test
+        working-directory: cli
+
       - name: Validate metadata and build (changed files)
         run: npx pmd build --changed --no-kill --validate --sarif
         env:
