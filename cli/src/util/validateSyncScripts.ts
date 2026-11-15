@@ -14,6 +14,9 @@ const NESTED_QUANTIFIER_RULES = [
   /\([^)]*[+*](?:[^)]*[+*?|][^)]*)?\)[+*]/,
 ]
 
+// The service names the API accepts.
+const SERVICE_PATTERN = /^[\w+. -]{1,64}$/
+
 export function validateRegExp(regExp: unknown): string | undefined {
   if (typeof regExp !== 'string' || regExp.length === 0)
     return 'regExp must be a non-empty string'
@@ -40,8 +43,8 @@ export function validateSyncScriptMetadata(metadata: Partial<SyncScriptMetadata>
       errors.push(`${field} must not contain a line break`)
   }
 
-  if (typeof metadata.service !== 'string' || metadata.service.length === 0 || metadata.service.length > 256)
-    errors.push('service must be a string of 1 to 256 characters')
+  if (typeof metadata.service !== 'string' || !SERVICE_PATTERN.test(metadata.service))
+    errors.push('service must be 1 to 64 letters, digits, spaces or + . _ -')
   else if (basename(folder) !== sanitazeFolderName(metadata.service))
     errors.push(`folder name "${basename(folder)}" does not match service "${metadata.service}" (expected "${sanitazeFolderName(metadata.service)}")`)
 
@@ -52,7 +55,7 @@ export function validateSyncScriptMetadata(metadata: Partial<SyncScriptMetadata>
   if (typeof metadata.version !== 'string' || semver.valid(metadata.version) !== metadata.version)
     errors.push('version must be a semver version such as "1.0.0"')
 
-  if (metadata.minExtensionVersion !== undefined && (typeof metadata.minExtensionVersion !== 'string' || !semver.valid(metadata.minExtensionVersion)))
+  if (metadata.minExtensionVersion !== undefined && (typeof metadata.minExtensionVersion !== 'string' || semver.valid(metadata.minExtensionVersion) !== metadata.minExtensionVersion))
     errors.push('minExtensionVersion must be a semver version such as "2.15.0" when set')
 
   return errors

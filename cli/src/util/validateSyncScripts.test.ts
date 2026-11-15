@@ -51,6 +51,13 @@ describe('validateSyncScripts', () => {
     expect(validateSyncScripts([script('Netflix', { ...valid, version: undefined })])[0]).toMatch(/version must be a semver/)
     expect(validateSyncScripts([script('Netflix', { ...valid, version: '1.0' })])[0]).toMatch(/version must be a semver/)
     expect(validateSyncScripts([script('Netflix', { ...valid, minExtensionVersion: 'soon' })])[0]).toMatch(/minExtensionVersion/)
+    expect(validateSyncScripts([script('Netflix', { ...valid, minExtensionVersion: 'v2.15.0' })])[0]).toMatch(/minExtensionVersion/)
+  })
+
+  it('only accepts service names the API accepts', () => {
+    expect(validateSyncScripts([script('Disney+', { ...valid, service: 'Disney+' })])).toEqual([])
+    expect(validateSyncScripts([script('Netflix', { ...valid, service: 'Netflix!' })])[0]).toMatch(/service must be 1 to 64 letters/)
+    expect(validateSyncScripts([script('Netflix', { ...valid, service: 'N'.repeat(65) })])[0]).toMatch(/service must be 1 to 64 letters/)
   })
 
   it('rejects line breaks in signed fields', () => {
