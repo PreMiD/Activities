@@ -5,7 +5,7 @@ const presence = new Presence({
   clientId: '1571280418056183980',
 })
 
-const LOGO = 'https://cdn.rcd.gg/PreMiD/websites/D/denpa/assets/logo.png'
+const LOGO = 'https://i.imgur.com/ldFA4Ah.png'
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 interface ProgramInfo {
