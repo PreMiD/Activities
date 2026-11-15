@@ -1,4 +1,4 @@
-import { ActivityType } from 'premid'
+import { ActivityType, Assets } from 'premid'
 
 const presence = new Presence({
   clientId: '1565002054227726456',
@@ -69,9 +69,15 @@ presence.on('UpdateData', async () => {
         presenceData.smallImageKey = LOGO
         presenceData.smallImageText = 'DMM GAMES'
       }
+      else {
+        presenceData.smallImageKey = Assets.Play
+        presenceData.smallImageText = 'プレイ中'
+      }
     }
     else {
       presenceData.details = 'ゲームをプレイ中'
+      presenceData.smallImageKey = Assets.Play
+      presenceData.smallImageText = 'プレイ中'
     }
     presenceData.startTimestamp = playingSince
     presence.setActivity(presenceData)
