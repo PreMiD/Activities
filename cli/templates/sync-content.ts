@@ -3,9 +3,10 @@ SyncScript.register({
     ctx.features({ video: true })
 
     const video = document.querySelector('video')
-    if (video)
-      ctx.video.attach(video)
+    const handle = video ? ctx.video.attach(video) : undefined
 
     ctx.setPageInfo({ title: document.title })
+
+    return () => handle?.detach()
   },
 })

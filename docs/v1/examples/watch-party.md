@@ -138,18 +138,27 @@ SyncScript.register({
   setup(ctx) {
     ctx.features({ video: true })
 
+    let blocked: boolean | undefined
+    let current: HTMLVideoElement | null = null
+    let handle: AutoVideoHandle | undefined
+
     function checkAccess() {
       const loginWall = document.querySelector('.login-gate, .paywall, .geo-block')
       if (loginWall) {
-        const reason = loginWall.querySelector('.message')?.textContent || 'Content unavailable'
-        ctx.reportBlocked(reason)
-      } else {
-        ctx.reportUnblocked()
+        if (blocked !== true)
+          ctx.reportBlocked(loginWall.querySelector('.message')?.textContent || 'Content unavailable')
+        blocked = true
+        return
+      }
 
-        const video = document.querySelector('video')
-        if (video) {
-          ctx.video.attach(video)
-        }
+      if (blocked !== false)
+        ctx.reportUnblocked()
+      blocked = false
+
+      const video = document.querySelector('video')
+      if (video && video !== current) {
+        current = video
+        handle = ctx.video.attach(video)
       }
     }
 
@@ -161,6 +170,7 @@ SyncScript.register({
 
     return () => {
       observer.disconnect()
+      handle?.detach()
     }
   },
 })
