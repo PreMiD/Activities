@@ -12,27 +12,27 @@ presence.on('UpdateData', async () => {
 
   // Rilevamento popup profilo
   const profilePopup = document.querySelector(
-    '.profile-user-info'
+    '.profile-user-info',
   )
 
   // Rilevamento titolo anime
   const animeTitle = document.querySelector(
-    '.anime-modal-details h2'
+    '.anime-modal-details h2',
   )?.textContent?.trim()
 
   // Copertina anime
   const animeCover = document.querySelector<HTMLImageElement>(
-    '.anime-modal-cover'
+    '.anime-modal-cover',
   )?.src
 
   // Rilevamento titolo manga
   const mangaTitle = document.querySelector(
-    '.ua-mcat-modal h2'
+    '.ua-mcat-modal h2',
   )?.textContent?.trim()
 
   // Copertina manga
   const mangaCover = document.querySelector<HTMLImageElement>(
-    '.ua-mcat-modal img'
+    '.ua-mcat-modal img',
   )?.src
 
   // Attività predefinita con pulsante Discord
@@ -82,8 +82,8 @@ presence.on('UpdateData', async () => {
 
   // 5. Catalogo anime
   else if (
-    path.includes('#catalogo') &&
-    !path.includes('#catalogo-manga')
+    path.includes('#catalogo')
+    && !path.includes('#catalogo-manga')
   ) {
     presenceData.details = 'Catalogo Anime'
     presenceData.state = 'Cercando nuovi anime'
@@ -91,8 +91,8 @@ presence.on('UpdateData', async () => {
 
   // 6. Catalogo manga
   else if (
-    path.includes('#manga') ||
-    path.includes('#catalogo-manga')
+    path.includes('#manga')
+    || path.includes('#catalogo-manga')
   ) {
     presenceData.details = 'Catalogo Manga'
     presenceData.state = 'Esplorando nuovi manga'
@@ -106,8 +106,8 @@ presence.on('UpdateData', async () => {
 
   // 8. Profilo tramite URL
   else if (
-    path.includes('#profilo') ||
-    path.includes('/profilo')
+    path.includes('#profilo')
+    || path.includes('/profilo')
   ) {
     presenceData.details = 'Visualizzando un profilo'
     presenceData.state = 'Su Universal Anime'
@@ -115,8 +115,8 @@ presence.on('UpdateData', async () => {
 
   // 9. Lista personale
   else if (
-    path.includes('#lista') ||
-    path.includes('/lista')
+    path.includes('#lista')
+    || path.includes('/lista')
   ) {
     presenceData.details = 'Lista Anime'
     presenceData.state = 'Gestendo la propria lista'
@@ -124,8 +124,8 @@ presence.on('UpdateData', async () => {
 
   // 10. Ricerca
   else if (
-    path.includes('#ricerca') ||
-    path.includes('/ricerca')
+    path.includes('#ricerca')
+    || path.includes('/ricerca')
   ) {
     presenceData.details = 'Ricerca'
     presenceData.state = 'Cercando anime e manga'
