@@ -39,17 +39,26 @@ export class SyncScriptCompiler {
     if (existsSync(resolve(this.cwd, 'dist')))
       await rm(resolve(this.cwd, 'dist'), { recursive: true })
 
-    await build({
-      entryPoints: [
-        resolve(this.cwd, 'content.ts'),
-        ...(hasMainworld ? [resolve(this.cwd, 'mainworld.ts')] : []),
-      ],
-      outdir: resolve(this.cwd, 'dist'),
-      bundle: true,
-      minify: true,
-      sourcemap: 'inline',
-      tsconfig: resolve(this.cwd, 'tsconfig.json'),
-    })
+    try {
+      await build({
+        entryPoints: [
+          resolve(this.cwd, 'content.ts'),
+          ...(hasMainworld ? [resolve(this.cwd, 'mainworld.ts')] : []),
+        ],
+        outdir: resolve(this.cwd, 'dist'),
+        bundle: true,
+        minify: true,
+        sourcemap: 'inline',
+        tsconfig: resolve(this.cwd, 'tsconfig.json'),
+        logLevel: 'silent',
+      })
+    }
+    catch (buildError) {
+      spinner.fail(prefix + chalk.red(` Failed to compile ${this.metadata.service}: ${buildError instanceof Error ? buildError.message : buildError}`))
+      if (kill)
+        process.exit(1)
+      return false
+    }
 
     await cp(resolve(this.cwd, 'metadata.json'), resolve(this.cwd, 'dist', 'metadata.json'))
 
@@ -172,7 +181,10 @@ export class SyncScriptCompiler {
     const configFile = ts.readConfigFile(tsconfigPath, ts.sys.readFile)
     if (configFile.error) {
       spinner.fail(prefix + chalk.red(' Failed to read tsconfig.json:'))
-      exit(ts.flattenDiagnosticMessageText(configFile.error.messageText, '\n'))
+      if (killOnError)
+        exit(ts.flattenDiagnosticMessageText(configFile.error.messageText, '\n'))
+      error(ts.flattenDiagnosticMessageText(configFile.error.messageText, '\n'))
+      return false
     }
 
     const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, this.cwd)

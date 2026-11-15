@@ -80,6 +80,8 @@ cli
 
 cli
   .command('sync-release [script]', 'Build and release a sync script to the API')
+  .option('--changed', 'Release the sync scripts changed since the base commit and delete removed ones')
+  .option('--all', 'Release every sync script')
   .action(syncRelease)
 
 cli

@@ -6,6 +6,10 @@ on:
     paths:
       - '**.ts'
       - '**.json'
+  workflow_dispatch:
+
+concurrency: release
+
 jobs:
   update:
     if: github.repository_owner == 'PreMiD'
@@ -29,8 +33,23 @@ jobs:
         run: npm ci
 
       - name: Update activities
+        if: github.event_name == 'push'
         run: npx pmd release
         env:
           CONNECT_TO_DEV: ${{ vars.CONNECT_TO_DEV}}
+          ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release changed sync scripts
+        if: ${{ !cancelled() && github.event_name == 'push' }}
+        run: npx pmd sync-release --changed
+        env:
+          ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release all sync scripts
+        if: github.event_name == 'workflow_dispatch'
+        run: npx pmd sync-release --all
+        env:
           ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

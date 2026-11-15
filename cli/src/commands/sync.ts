@@ -1,7 +1,7 @@
 import type { SyncScriptMetadataAndFolder } from '../util/getSyncScripts.js'
 import { existsSync } from 'node:fs'
-import { cp, mkdir, readFile, writeFile } from 'node:fs/promises'
-import { resolve } from 'node:path'
+import { cp, mkdir, writeFile } from 'node:fs/promises'
+import { basename, resolve } from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import { confirm, input } from '@inquirer/prompts'
@@ -9,9 +9,10 @@ import chalk from 'chalk'
 import isCI from 'is-ci'
 import { SyncScriptCompiler } from '../classes/SyncScriptCompiler.js'
 import { getBaseSha, getChangedPathsSince, readFileAtRef } from '../util/getChangedFiles.js'
-import { getSingleSyncScript, getSyncScripts } from '../util/getSyncScripts.js'
+import { getChangedSyncScripts, getSingleSyncScript, getSyncScripts } from '../util/getSyncScripts.js'
 import { error, exit, info, prefix, success } from '../util/log.js'
 import { sanitazeFolderName } from '../util/sanitazeFolderName.js'
+import { deleteSyncScript, releaseSyncScript } from '../util/syncScriptRelease.js'
 import { checkVersionBumps, validateSyncScripts } from '../util/validateSyncScripts.js'
 
 function getVersionBumpErrors(scripts: SyncScriptMetadataAndFolder[]): string[] {
@@ -110,50 +111,58 @@ export async function syncBuild(service?: string, { all = false, kill = true, zi
   process.exit(isSuccess && valid ? 0 : 1)
 }
 
-export async function syncRelease(service?: string) {
+export async function syncRelease(service?: string, { changed = false, all = false }: { changed?: boolean, all?: boolean } = {}) {
   const apiKey = process.env.ADMIN_API_KEY
   if (!apiKey)
     exit('ADMIN_API_KEY environment variable is required')
 
   const apiUrl = process.env.API_URL || 'https://api.premid.app/v6'
 
-  const { metadata, folder } = await getSingleSyncScript('Select a sync script to release', service)
+  const allScripts = await getSyncScripts()
+  const failures: string[] = []
+  let scripts: SyncScriptMetadataAndFolder[]
+  if (all) {
+    scripts = allScripts
+  }
+  else if (changed) {
+    const { changed: changedScripts, deleted } = await getChangedSyncScripts()
+    scripts = changedScripts
+    for (const { metadata } of deleted) {
+      const result = await deleteSyncScript(metadata.service, { apiUrl, apiKey })
+      if (result !== true)
+        failures.push(`${metadata.service}: ${result}`)
+    }
+  }
+  else {
+    scripts = [await getSingleSyncScript('Select a sync script to release', service)]
+  }
 
-  await cp(
-    resolve(process.cwd(), 'cli/templates/sync-tsconfig.json'),
-    resolve(folder, 'tsconfig.json'),
-  )
+  info(`Releasing ${scripts.length} sync scripts...`)
 
-  const compiler = new SyncScriptCompiler(folder, metadata)
-  const built = await compiler.compile({ kill: false, zip: false })
-  if (!built)
-    exit(`Failed to build ${metadata.service}`)
+  const metadataErrors = validateSyncScripts(allScripts)
+  let released = 0
 
-  const contentJs = await readFile(resolve(folder, 'dist', 'content.js'), 'utf8')
-  const mainworldJs = existsSync(resolve(folder, 'dist', 'mainworld.js'))
-    ? await readFile(resolve(folder, 'dist', 'mainworld.js'), 'utf8')
-    : undefined
+  for (const script of scripts) {
+    const errors = metadataErrors.filter(message => message.split(': ')[0]!.split(', ').includes(basename(script.folder)))
+    if (errors.length) {
+      errors.forEach(message => error(message))
+      failures.push(`${script.metadata.service}: invalid metadata`)
+      continue
+    }
 
-  info(`Releasing ${metadata.service}...`)
+    const result = await releaseSyncScript(script, { apiUrl, apiKey })
+    if (result === true)
+      released++
+    else
+      failures.push(`${script.metadata.service}: ${result}`)
+  }
 
-  const response = await fetch(`${apiUrl}/sync-scripts/v1`, {
-    method: 'POST',
-    headers: {
-      'Authorization': apiKey,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      service: metadata.service,
-      contentJs,
-      mainworldJs,
-      regExp: metadata.regExp,
-    }),
-  })
+  info(`Released ${released} of ${scripts.length} sync scripts`)
 
-  if (response.ok)
-    success(`Released sync script: ${metadata.service}`)
-  else
-    exit(`Failed to release ${metadata.service}: ${response.statusText} — ${await response.text()}`)
+  if (failures.length) {
+    failures.forEach(message => error(message))
+    exit(`${failures.length} sync scripts failed to release`)
+  }
 }
 
 export async function syncNew(service?: string) {
