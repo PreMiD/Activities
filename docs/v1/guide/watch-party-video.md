@@ -13,7 +13,7 @@ setup(ctx) {
   ctx.features({ video: true })
 
   // Pass an element or CSS selector
-  const handle = ctx.video.attach(document.querySelector('.player video')!)
+  const handle = ctx.video.attach(document.querySelector<HTMLVideoElement>('.player video')!)
   // or: ctx.video.attach('.player video')
 
   return () => handle.detach()
@@ -175,7 +175,7 @@ When the player lives in the page's JavaScript, read it from a [mainworld script
 | `reportBuffering(isBuffering)` | Report buffering state                            |
 | `release()`                    | Stop manual control                               |
 
-In manual mode, the `TakeControlOptions` callbacks fire **instead of** automatic element control:
+In manual mode, the `SyncScriptTakeControlOptions` callbacks fire **instead of** automatic element control:
 
 | Callback               | When it fires                                                                          |
 | ---------------------- | -------------------------------------------------------------------------------------- |

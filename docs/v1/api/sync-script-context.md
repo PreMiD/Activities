@@ -133,7 +133,7 @@ handle.detach()
 <!-- eslint-skip -->
 
 ```typescript
-video.takeControl(options: TakeControlOptions): ManualVideoHandle
+video.takeControl(options: SyncScriptTakeControlOptions): ManualVideoHandle
 ```
 
 Takes manual control of video synchronization for custom players that do not use a standard `HTMLMediaElement`. You provide callbacks that are invoked when the party sends sync commands.
@@ -254,7 +254,7 @@ video.addEventListener('playing', () => ctx.video.reportBuffering(false))
 <!-- eslint-skip -->
 
 ```typescript
-setPageInfo(info: PageInfo): void
+setPageInfo(info: SyncScriptPageInfo): void
 ```
 
 Sets metadata about the current page. The title and subtitle are shown at the top of the Watch Party overlay on this tab.

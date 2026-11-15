@@ -32,10 +32,10 @@ The main context object passed to sync script lifecycle hooks. See the [Sync Scr
 | `features`              | `(features: { video?: boolean, cursor?: boolean, scroll?: boolean, fallback?: boolean }) => void` | Declares which sync features this script supports.                                                                |
 | `video`                 | `object`                                                                                          | Namespace for video synchronization methods; see below.                                                           |
 | `video.attach`          | `(element: HTMLMediaElement \| string) => AutoVideoHandle`                                        | Attaches to a media element for automatic playback tracking. Returns an [AutoVideoHandle](#autovideohandle).      |
-| `video.takeControl`     | `(options: TakeControlOptions) => ManualVideoHandle`                                              | Takes manual control of playback synchronization. Returns a [ManualVideoHandle](#manualvideohandle).              |
+| `video.takeControl`     | `(options: SyncScriptTakeControlOptions) => ManualVideoHandle`                                    | Takes manual control of playback synchronization. Returns a [ManualVideoHandle](#manualvideohandle).              |
 | `video.reportAd`        | `(isInAd: boolean) => void`                                                                       | Reports whether an ad is currently playing.                                                                       |
 | `video.reportBuffering` | `(isBuffering: boolean) => void`                                                                  | Reports whether the video is currently buffering.                                                                 |
-| `setPageInfo`           | `(info: PageInfo) => void`                                                                        | Sets the current page metadata shown to party members.                                                            |
+| `setPageInfo`           | `(info: SyncScriptPageInfo) => void`                                                              | Sets the current page metadata shown to party members.                                                            |
 | `reportBlocked`         | `(reason: string) => void`                                                                        | Reports that synchronization is blocked, with a human-readable reason.                                            |
 | `reportUnblocked`       | `() => void`                                                                                      | Clears a previously reported blocked state.                                                                       |
 | `sendCustomData`        | `(key: string, data: unknown) => void`                                                            | Sends custom data from the controller to the followers.                                                           |
@@ -54,7 +54,7 @@ Also available as `SyncScript.runtime` before a script registers.
 | `version`      | `string`   | The extension version.                                                                                                                                                                   |
 | `capabilities` | `string[]` | Any of `fallbackOptOut`, `derivedEvents`, `log`, `hostChange`, `localNavigate`, `pageInfoType` and `errorContainment`. See the [runtime reference](/v1/api/sync-script-context#runtime). |
 
-## TakeControlOptions
+## SyncScriptTakeControlOptions
 
 Options passed to `video.takeControl()` for manual playback synchronization.
 
@@ -70,61 +70,62 @@ Options passed to `video.takeControl()` for manual playback synchronization.
 
 Returned by `video.attach()`. Manages automatic video tracking for a media element.
 
-| Property          | Type                                                  | Description                                                                      |
-| ----------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `detach`          | `() => void`                                          | Detaches from the media element and stops tracking.                              |
-| `onSyncCommand`   | `(handler: (cmd: SyncCommand) => void) => () => void` | Registers a handler for incoming sync commands; returns an unsubscribe function. |
-| `reportAd`        | `(isInAd: boolean) => void`                           | Reports whether an ad is currently playing on this video.                        |
-| `reportBuffering` | `(isBuffering: boolean) => void`                      | Reports whether this video is currently buffering.                               |
+| Property          | Type                                                            | Description                                                                      |
+| ----------------- | --------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `detach`          | `() => void`                                                    | Detaches from the media element and stops tracking.                              |
+| `onSyncCommand`   | `(handler: (cmd: SyncScriptSyncCommand) => void) => () => void` | Registers a handler for incoming sync commands; returns an unsubscribe function. |
+| `reportAd`        | `(isInAd: boolean) => void`                                     | Reports whether an ad is currently playing on this video.                        |
+| `reportBuffering` | `(isBuffering: boolean) => void`                                | Reports whether this video is currently buffering.                               |
 
 ## ManualVideoHandle
 
 Returned by `video.takeControl()`. Provides manual control over playback reporting.
 
-| Property          | Type                                                  | Description                                                                             |
-| ----------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `reportPlayback`  | `(status: PlaybackReport) => void`                    | Reports the current playback state to the party. See [PlaybackReport](#playbackreport). |
-| `onSyncCommand`   | `(handler: (cmd: SyncCommand) => void) => () => void` | Registers a handler for incoming sync commands; returns an unsubscribe function.        |
-| `reportAd`        | `(isInAd: boolean) => void`                           | Reports whether an ad is currently playing.                                             |
-| `reportBuffering` | `(isBuffering: boolean) => void`                      | Reports whether the video is currently buffering.                                       |
-| `release`         | `() => void`                                          | Releases manual control and stops reporting playback.                                   |
+| Property          | Type                                                            | Description                                                                                                 |
+| ----------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `reportPlayback`  | `(status: SyncScriptPlaybackReport) => void`                    | Reports the current playback state to the party. See [SyncScriptPlaybackReport](#syncscriptplaybackreport). |
+| `onSyncCommand`   | `(handler: (cmd: SyncScriptSyncCommand) => void) => () => void` | Registers a handler for incoming sync commands; returns an unsubscribe function.                            |
+| `reportAd`        | `(isInAd: boolean) => void`                                     | Reports whether an ad is currently playing.                                                                 |
+| `reportBuffering` | `(isBuffering: boolean) => void`                                | Reports whether the video is currently buffering.                                                           |
+| `release`         | `() => void`                                                    | Releases manual control and stops reporting playback.                                                       |
 
-## PlaybackReport
+## SyncScriptPlaybackReport
 
 Describes the current playback state, sent via `ManualVideoHandle.reportPlayback()`.
 
-| Property       | Type      | Description                                           |
-| -------------- | --------- | ----------------------------------------------------- |
-| `playing`      | `boolean` | Whether the video is currently playing.               |
-| `currentTime`  | `number`  | Current playback position in seconds.                 |
-| `duration`     | `number`  | Total duration of the video in seconds.               |
-| `playbackRate` | `number`  | Current playback rate (e.g., `1.0` for normal speed). |
+| Property       | Type      | Description                                         |
+| -------------- | --------- | --------------------------------------------------- |
+| `playing`      | `boolean` | Whether the video is currently playing.             |
+| `currentTime`  | `number`  | Current playback position in seconds.               |
+| `duration`     | `number`  | Total duration of the video in seconds.             |
+| `playbackRate` | `number`  | Optional. Current playback rate, `1` when left out. |
 
-## SyncCommand
+## SyncScriptSyncCommand
 
-A synchronization command received from the Watch Party server.
+A synchronization command received from the Watch Party server. Every property except `action` is optional.
 
-| Property       | Type                                    | Description                                                             |
-| -------------- | --------------------------------------- | ----------------------------------------------------------------------- |
-| `action`       | `'play' \| 'pause' \| 'seek' \| 'rate'` | The type of synchronization action to perform.                          |
-| `currentTime`  | `number`                                | The target playback time in seconds.                                    |
-| `playbackRate` | `number`                                | The target playback rate.                                               |
-| `capturedAt`   | `number`                                | Timestamp when the command was captured by the sender.                  |
-| `serverTs`     | `number`                                | Server timestamp when the command was processed.                        |
-| `clockOffset`  | `number`                                | Estimated clock offset between client and server in milliseconds.       |
-| `isHeartbeat`  | `boolean`                               | Whether this command is a periodic heartbeat rather than a user action. |
+| Property           | Type                                    | Description                                                             |
+| ------------------ | --------------------------------------- | ----------------------------------------------------------------------- |
+| `action`           | `'play' \| 'pause' \| 'seek' \| 'rate'` | The type of synchronization action to perform.                          |
+| `currentTime`      | `number`                                | The target playback time in seconds.                                    |
+| `playbackRate`     | `number`                                | The target playback rate.                                               |
+| `capturedAt`       | `number`                                | Timestamp when the command was captured by the sender.                  |
+| `capturedAtServer` | `number`                                | The controller's capture time in server time.                           |
+| `serverTs`         | `number`                                | Server timestamp when the command was processed.                        |
+| `clockOffset`      | `number`                                | Estimated clock offset between client and server in milliseconds.       |
+| `isHeartbeat`      | `boolean`                               | Whether this command is a periodic heartbeat rather than a user action. |
 
-## PageInfo
+## SyncScriptPageInfo
 
 Metadata about the current page, displayed to party members.
 
-| Property    | Type                                        | Description                                                          |
-| ----------- | ------------------------------------------- | -------------------------------------------------------------------- |
-| `title`     | `string`                                    | The title of the current content (e.g., video title).                |
-| `subtitle`  | `string`                                    | A subtitle or secondary label (e.g., channel name).                  |
-| `thumbnail` | `string`                                    | URL of a thumbnail image for the current content. Not displayed yet. |
-| `type`      | `'video' \| 'music' \| 'live' \| 'podcast'` | The kind of content. Ignored before extension 2.15.                  |
-| `duration`  | `number`                                    | The length in seconds. Ignored before extension 2.15.                |
+| Property    | Type                                        | Description                                                                 |
+| ----------- | ------------------------------------------- | --------------------------------------------------------------------------- |
+| `title`     | `string`                                    | The title of the current content (e.g., video title), up to 200 characters. |
+| `subtitle`  | `string`                                    | A subtitle or secondary label (e.g., channel name), up to 200 characters.   |
+| `thumbnail` | `string`                                    | URL of a thumbnail image for the current content. Not displayed yet.        |
+| `type`      | `'video' \| 'music' \| 'live' \| 'podcast'` | The kind of content. Ignored before extension 2.15.                         |
+| `duration`  | `number`                                    | The length in seconds. Ignored before extension 2.15.                       |
 
 ## PartyState
 
