@@ -64,18 +64,19 @@ SyncScript.register({
 <!-- eslint-skip -->
 
 ```typescript
-features(features: { video?: boolean, cursor?: boolean, scroll?: boolean }): void
+features(features: { video?: boolean, cursor?: boolean, scroll?: boolean, fallback?: boolean }): void
 ```
 
 Tells PreMiD that the sync script handles this page, and which sync features it supports. Every feature is on by default, so pass `false` to turn one off. Call it at the start of `setup`.
 
 #### Parameters
 
-| Parameter         | Type      | Description                                                                                             |
-| ----------------- | --------- | ------------------------------------------------------------------------------------------------------- |
-| `features.video`  | `boolean` | Set to `false` to turn off video synchronization, including PreMiD's own video detection for this page. |
-| `features.cursor` | `boolean` | Set to `false` to stop sharing the controller's cursor.                                                 |
-| `features.scroll` | `boolean` | Set to `false` to stop sharing the controller's scroll position.                                        |
+| Parameter           | Type      | Description                                                                                                                             |
+| ------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `features.video`    | `boolean` | Set to `false` to turn off video synchronization, including PreMiD's own video detection for this page.                                 |
+| `features.cursor`   | `boolean` | Set to `false` to stop sharing the controller's cursor.                                                                                 |
+| `features.scroll`   | `boolean` | Set to `false` to stop sharing the controller's scroll position.                                                                        |
+| `features.fallback` | `boolean` | Set to `false` to keep PreMiD's own video detection off this page while the script has no player yet. Extensions before 2.15 ignore it. |
 
 #### Example
 
@@ -151,7 +152,7 @@ Takes manual control of video synchronization for custom players that do not use
 
 A `ManualVideoHandle` with the following methods:
 
-- `reportPlayback(status)` -- Reports current playback state (`playing`, `currentTime`, `duration`, `playbackRate`). Call it about once a second, on the controller and on followers.
+- `reportPlayback(status)` -- Reports current playback state (`playing`, `currentTime`, `duration`, `playbackRate`). Call it on the controller and on followers whenever the state changes, every 250ms while playing, and at least once a second otherwise. See [reporting playback](/v1/guide/watch-party-video#reporting-playback).
 - `onSyncCommand(handler)` -- Registers a handler called on sync commands. Returns an unsubscribe function.
 - `reportAd(isInAd)` -- Reports whether an ad is currently playing.
 - `reportBuffering(isBuffering)` -- Reports whether the video is buffering.
@@ -178,7 +179,7 @@ const handle = ctx.video.takeControl({
   pauseAfterSeek: 200,
 })
 
-// Report playback state periodically
+// Report playback state at the player's own rate
 setInterval(() => {
   handle.reportPlayback({
     playing: player.isPlaying(),
@@ -186,7 +187,7 @@ setInterval(() => {
     duration: player.getDuration(),
     playbackRate: player.getPlaybackRate(),
   })
-}, 1000)
+}, 250)
 
 // Later, when cleaning up
 handle.release()
@@ -260,11 +261,13 @@ Sets metadata about the current page. The title and subtitle are shown at the to
 
 #### Parameters
 
-| Parameter        | Type     | Description                                    |
-| ---------------- | -------- | ---------------------------------------------- |
-| `info.title`     | `string` | The title of the content being viewed.         |
-| `info.subtitle`  | `string` | A subtitle or secondary description.           |
-| `info.thumbnail` | `string` | A URL to a thumbnail image. Not displayed yet. |
+| Parameter        | Type     | Description                                              |
+| ---------------- | -------- | -------------------------------------------------------- |
+| `info.title`     | `string` | The title of the content being viewed.                   |
+| `info.subtitle`  | `string` | A subtitle or secondary description.                     |
+| `info.thumbnail` | `string` | A URL to a thumbnail image. Not displayed yet.           |
+| `info.type`      | `string` | The kind of content. Extensions before 2.15 ignore it.   |
+| `info.duration`  | `number` | The length in seconds. Extensions before 2.15 ignore it. |
 
 #### Example
 
@@ -628,4 +631,41 @@ const unsubActive = ctx.party.onActiveChange((active) => {
 unsubRole()
 unsubPause()
 unsubActive()
+```
+
+## Runtime
+
+Extensions before 2.15 don't have these members, so check for them before use and keep the script working without them.
+
+### runtime
+
+<!-- eslint-skip -->
+
+```typescript
+readonly runtime?: { version: string, capabilities: string[] }
+```
+
+The version of the sync script runtime and the optional capabilities it has. `undefined` on older extensions.
+
+### log
+
+<!-- eslint-skip -->
+
+```typescript
+log?: (...args: unknown[]) => void
+```
+
+Writes to the extension's debug log, so a script can explain what went wrong without logging to the page's console.
+
+#### Example
+
+<!-- eslint-skip -->
+
+```typescript
+if (typeof ctx.log === 'function')
+  ctx.log('Player API changed', reason)
+
+// Only hand the runtime a rate setter where small drift corrections are known to work
+if (ctx.runtime)
+  options.onRate = rate => player.setPlaybackRate(rate)
 ```

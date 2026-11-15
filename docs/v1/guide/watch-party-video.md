@@ -84,48 +84,80 @@ SyncScript.register({
 
 ## Manual Video Mode
 
-For custom players that don't use standard `<video>` elements (canvas-based players, Flash wrappers, or sites with proprietary player APIs), use manual mode:
+For custom players that don't use standard `<video>` elements (canvas-based players, Flash wrappers, or sites with proprietary player APIs), use manual mode.
+
+### The Take-Control Pattern
+
+Claim the page early, but take control only once the player exists:
+
+1. **Claim the page with `fallback: false`** as soon as the URL is a watch page, before the player loads. Without it, PreMiD's own video detection may find the raw `<video>` first and drive it directly, which on players such as Netflix's stops playback with an error. Extensions before 2.15 ignore `fallback`.
+2. **Call `takeControl()` only when the player reports a position.** A follower ignores sync commands until its first report, and extensions before 2.15 give up on a managed page that has reported nothing for 10 seconds. Call `features()` again when you take control, so a page an older extension gave up on is claimed again.
+3. **Release the handle** when the player has been gone for a second or two (an episode change, or leaving the watch page). Measure it in time, not in missed messages, since reports are not sent at a fixed rate.
 
 <!-- eslint-skip -->
 
 ```typescript
 setup(ctx) {
-  ctx.features({ video: true })
+  let handle: ManualVideoHandle | null = null
+  let lastSeenAt = 0
 
-  const handle = ctx.video.takeControl({
+  if (location.pathname.startsWith('/watch/'))
+    ctx.features({ cursor: false, scroll: false, video: true, fallback: false })
+
+  const options: SyncScriptTakeControlOptions = {
     onPlay(timeSeconds) {
-      player.seekTo(timeSeconds)
+      // A follower that is more than a second off has to be at the party's position first.
+      if (Math.abs(player.getCurrentTime() - timeSeconds) > 1)
+        player.seekTo(timeSeconds)
       player.play()
     },
     onPause(timeSeconds) {
+      if (Math.abs(player.getCurrentTime() - timeSeconds) > 1)
+        player.seekTo(timeSeconds)
       player.pause()
-      player.seekTo(timeSeconds)
     },
     onSeek(timeSeconds) {
       player.seekTo(timeSeconds)
     },
-    onRate(playbackRate) {
-      player.setPlaybackRate(playbackRate)
-    },
     pauseAfterSeek: true,
-  })
+  }
+  // onRate also makes the runtime correct small drift with rate nudges such as 1.02.
+  // Only pass it when the player accepts any rate.
+  if (ctx.runtime)
+    options.onRate = rate => player.setPlaybackRate(rate)
 
-  // Report current playback state periodically
   const interval = setInterval(() => {
+    const player = getPlayer()
+    if (!player) {
+      if (handle && Date.now() - lastSeenAt > 2000) {
+        handle.release()
+        handle = null
+      }
+      return
+    }
+    lastSeenAt = Date.now()
+
+    if (!handle) {
+      ctx.features({ cursor: false, scroll: false, video: true, fallback: false })
+      handle = ctx.video.takeControl(options)
+    }
+
     handle.reportPlayback({
       playing: player.isPlaying(),
       currentTime: player.getCurrentTime(),
       duration: player.getDuration(),
       playbackRate: player.getPlaybackRate(),
     })
-  }, 1000)
+  }, 250)
 
   return () => {
     clearInterval(interval)
-    handle.release()
+    handle?.release()
   }
 }
 ```
+
+When the player lives in the page's JavaScript, read it from a [mainworld script](/v1/guide/watch-party-advanced#mainworld-communication) and post its state to the content script. The bundled Netflix and Disney+ scripts poll every 250ms and post only when something changed or a second has passed. While playing the position changes on every poll, so a playing player is still posted every 250ms.
 
 ### ManualVideoHandle
 
@@ -148,10 +180,14 @@ In manual mode, the `TakeControlOptions` callbacks fire **instead of** automatic
 
 These callbacks fire for **followers only**. The controller doesn't receive its own commands back.
 
-`reportPlayback()` should be called periodically (every ~1s) by **everyone**, controller and followers alike:
+### Reporting Playback
+
+`reportPlayback()` is called by **everyone**, controller and followers alike:
 
 - The controller's reports are sent to the party as heartbeats, so followers can run drift correction
 - On a follower, sync commands are ignored until the first report arrives, and the reported position is what drift correction compares against
+
+Report whenever the state changes, every 250ms while playing, and at least once a second while paused. Newer extensions throttle the reports and work out play, pause and seek events from them, so reporting at the player's natural rate is fine. Extensions before 2.15 send every report as is and compare against the last reported position, so a report that is a second old reads as a second of drift.
 
 If PreMiD hears nothing from the script for 10 seconds, it stops treating the page as handled by the script and falls back to its own video detection.
 

@@ -27,21 +27,23 @@ A handle returned when a sync script is loaded, used to tear it down.
 
 The main context object passed to sync script lifecycle hooks. See the [Sync Script Context API reference](/v1/api/sync-script-context) for full usage details.
 
-| Property                | Type                                                                          | Description                                                                                                       |
-| ----------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `features`              | `(features: { video?: boolean, cursor?: boolean, scroll?: boolean }) => void` | Declares which sync features this script supports.                                                                |
-| `video`                 | `object`                                                                      | Namespace for video synchronization methods; see below.                                                           |
-| `video.attach`          | `(element: HTMLMediaElement \| string) => AutoVideoHandle`                    | Attaches to a media element for automatic playback tracking. Returns an [AutoVideoHandle](#autovideohandle).      |
-| `video.takeControl`     | `(options: TakeControlOptions) => ManualVideoHandle`                          | Takes manual control of playback synchronization. Returns a [ManualVideoHandle](#manualvideohandle).              |
-| `video.reportAd`        | `(isInAd: boolean) => void`                                                   | Reports whether an ad is currently playing.                                                                       |
-| `video.reportBuffering` | `(isBuffering: boolean) => void`                                              | Reports whether the video is currently buffering.                                                                 |
-| `setPageInfo`           | `(info: PageInfo) => void`                                                    | Sets the current page metadata shown to party members.                                                            |
-| `reportBlocked`         | `(reason: string) => void`                                                    | Reports that synchronization is blocked, with a human-readable reason.                                            |
-| `reportUnblocked`       | `() => void`                                                                  | Clears a previously reported blocked state.                                                                       |
-| `sendCustomData`        | `(key: string, data: unknown) => void`                                        | Sends custom data from the controller to the followers.                                                           |
-| `onCustomData`          | `(key: string, handler: (data: unknown) => void) => () => void`               | Listens, on followers, for custom data from the controller; returns an unsubscribe function.                      |
-| `mainworld`             | `MessagingNamespace`                                                          | Messaging namespace for communicating with the main world context. See [MessagingNamespace](#messagingnamespace). |
-| `party`                 | `PartyState`                                                                  | Reactive state of the current Watch Party session. See [PartyState](#partystate).                                 |
+| Property                | Type                                                                                              | Description                                                                                                       |
+| ----------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `features`              | `(features: { video?: boolean, cursor?: boolean, scroll?: boolean, fallback?: boolean }) => void` | Declares which sync features this script supports.                                                                |
+| `video`                 | `object`                                                                                          | Namespace for video synchronization methods; see below.                                                           |
+| `video.attach`          | `(element: HTMLMediaElement \| string) => AutoVideoHandle`                                        | Attaches to a media element for automatic playback tracking. Returns an [AutoVideoHandle](#autovideohandle).      |
+| `video.takeControl`     | `(options: TakeControlOptions) => ManualVideoHandle`                                              | Takes manual control of playback synchronization. Returns a [ManualVideoHandle](#manualvideohandle).              |
+| `video.reportAd`        | `(isInAd: boolean) => void`                                                                       | Reports whether an ad is currently playing.                                                                       |
+| `video.reportBuffering` | `(isBuffering: boolean) => void`                                                                  | Reports whether the video is currently buffering.                                                                 |
+| `setPageInfo`           | `(info: PageInfo) => void`                                                                        | Sets the current page metadata shown to party members.                                                            |
+| `reportBlocked`         | `(reason: string) => void`                                                                        | Reports that synchronization is blocked, with a human-readable reason.                                            |
+| `reportUnblocked`       | `() => void`                                                                                      | Clears a previously reported blocked state.                                                                       |
+| `sendCustomData`        | `(key: string, data: unknown) => void`                                                            | Sends custom data from the controller to the followers.                                                           |
+| `onCustomData`          | `(key: string, handler: (data: unknown) => void) => () => void`                                   | Listens, on followers, for custom data from the controller; returns an unsubscribe function.                      |
+| `mainworld`             | `MessagingNamespace`                                                                              | Messaging namespace for communicating with the main world context. See [MessagingNamespace](#messagingnamespace). |
+| `party`                 | `PartyState`                                                                                      | Reactive state of the current Watch Party session. See [PartyState](#partystate).                                 |
+| `runtime`               | `{ version: string, capabilities: string[] } \| undefined`                                        | The runtime version and capabilities. Missing before extension 2.15.                                              |
+| `log`                   | `((...args: unknown[]) => void) \| undefined`                                                     | Writes to the extension's debug log. Missing before extension 2.15.                                               |
 
 ## TakeControlOptions
 
@@ -112,6 +114,8 @@ Metadata about the current page, displayed to party members.
 | `title`     | `string` | The title of the current content (e.g., video title).                |
 | `subtitle`  | `string` | A subtitle or secondary label (e.g., channel name).                  |
 | `thumbnail` | `string` | URL of a thumbnail image for the current content. Not displayed yet. |
+| `type`      | `string` | The kind of content. Ignored before extension 2.15.                  |
+| `duration`  | `number` | The length in seconds. Ignored before extension 2.15.                |
 
 ## PartyState
 

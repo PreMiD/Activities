@@ -44,7 +44,9 @@ SyncMainworldScript.register({
 ```
 
 ::: warning
-Mainworld scripts run in the page's JavaScript context, not the extension's. They cannot access extension APIs or the DOM utilities available to content scripts. Communication with the content script happens exclusively via `ctx.content`.
+Mainworld scripts run in the page's JavaScript context, not the extension's. They can read the DOM and the page's own globals (such as `window.netflix`), but have no extension APIs and no `SyncScriptContext`: reporting playback, page info and blocking all go through the content script. Communication with the content script happens exclusively via `ctx.content`.
+
+Because the page's own code runs alongside it, wrap every tick and every command in `try`/`catch`. The bundled Netflix and Disney+ scripts count failures and, after three in a row, send the content script a `broken` message once, which calls `ctx.reportBlocked` so the party sees why sync stopped.
 :::
 
 ### When to Use Mainworld Scripts

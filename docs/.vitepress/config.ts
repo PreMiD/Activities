@@ -85,6 +85,7 @@ export default defineConfig({
             { text: 'Video Sync', link: '/v1/guide/watch-party-video' },
             { text: 'Advanced Features', link: '/v1/guide/watch-party-advanced' },
             { text: 'Sync Behavior', link: '/v1/guide/watch-party-behavior' },
+            { text: 'Developing and Releasing', link: '/v1/guide/watch-party-workflow' },
           ],
         },
       ],

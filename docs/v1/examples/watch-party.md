@@ -62,7 +62,7 @@ SyncScript.register({
       },
     })
 
-    // Report playback state every second
+    // Report every 250ms: while playing the position changes on every report
     const interval = setInterval(() => {
       handle.reportPlayback({
         playing: player.isPlaying(),
@@ -70,7 +70,7 @@ SyncScript.register({
         duration: player.getDuration(),
         playbackRate: player.getPlaybackRate(),
       })
-    }, 1000)
+    }, 250)
 
     ctx.setPageInfo({
       title: player.getTitle(),

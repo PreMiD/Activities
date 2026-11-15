@@ -34,14 +34,19 @@ The sync script's `metadata.json` defines which URLs the script should run on:
 ```json
 {
   "service": "YouTube",
-  "regExp": "^https?://([a-z0-9-]+\\.)*youtube\\.com/"
+  "regExp": "^https?[:][/][/](www|m|music)[.]youtube[.]com[/](?!shorts[/])",
+  "version": "1.0.0"
 }
 ```
 
-| Property  | Type     | Required | Description                                                                                                                |
-| --------- | -------- | -------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `service` | `string` | Yes      | A unique identifier for the service. Used for [regional domain matching](/v1/guide/watch-party-behavior#desync-detection). |
-| `regExp`  | `string` | Yes      | A regular expression pattern that matches the URLs where the content script should activate.                               |
+| Property              | Type     | Required | Description                                                                                                                                          |
+| --------------------- | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `service`             | `string` | Yes      | A unique identifier for the service, equal to the folder name. Used for [regional domain matching](/v1/guide/watch-party-behavior#desync-detection). |
+| `regExp`              | `string` | Yes      | A regular expression pattern that matches the URLs where the content script should activate.                                                         |
+| `version`             | `string` | Yes      | The script's semver version. Raise it with every change, see [Versioning](/v1/guide/watch-party-workflow#versioning).                                |
+| `minExtensionVersion` | `string` | No       | The oldest extension version the script works on. Older extensions skip it.                                                                          |
+
+The `regExp` must pass the extension's checks, which `pmd sync-build` runs too: at most 1000 characters, compiles in JavaScript, no line breaks, and no group with `+` or `*` inside that is itself repeated with `+` or `*`. Extensions before 2.15 are stricter than newer ones and reject even the common subdomain pattern `([a-z0-9-]+[.])*`; since they validate the whole list at once, one such script would turn off every sync script for them. Write `([a-z0-9-]{1,63}[.])?` instead.
 
 ::: tip
 The `service` field is important for regional domain matching during desync detection. If a site has multiple regional domains (e.g., `anime-site.jp` and `anime-site.com`), use the same `service` value for both so the extension knows they're the same site.
@@ -49,10 +54,10 @@ The `service` field is important for regional domain matching during desync dete
 
 ### Script Files
 
-| File           | Context                          | Purpose                                                                                      |
-| -------------- | -------------------------------- | -------------------------------------------------------------------------------------------- |
-| `content.ts`   | Content script (page DOM access) | Main sync script — registers via `SyncScript.register()`                                     |
-| `mainworld.ts` | Page's JavaScript context        | Access page globals (e.g., `window.player`) — registers via `SyncMainworldScript.register()` |
+| File           | Context                          | Purpose                                                                                                  |
+| -------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `content.ts`   | Content script (page DOM access) | Main sync script — registers via `SyncScript.register()`                                                 |
+| `mainworld.ts` | Page's JavaScript context        | Access page globals (e.g., `window.player`) and the DOM — registers via `SyncMainworldScript.register()` |
 
 Sync scripts run in the top frame of the page only. A video that lives in an iframe is not reachable from a sync script, and while a sync script manages the page PreMiD's own iframe video detection is switched off.
 
@@ -152,3 +157,4 @@ The cleanup function (returned from `setup`) runs when:
 - [Advanced Features](/v1/guide/watch-party-advanced) — Mainworld communication, custom data, party state
 - [Sync Behavior](/v1/guide/watch-party-behavior) — How drift correction, desync detection, and ad coordination work
 - [Watch Party Example](/v1/examples/watch-party) — Complete working examples
+- [Developing and Releasing](/v1/guide/watch-party-workflow) — The CLI commands, testing with two browsers, versioning and the release runbook
