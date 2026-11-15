@@ -86,6 +86,8 @@ Merging to `main` releases the changed sync scripts. The Release workflow runs `
 
 To upload every script again, run the Release workflow by hand (workflow dispatch), which runs `pmd sync-release --all`.
 
+The API refuses an upload whose version is not higher than the released one, and the release fails asking to raise `version`. Uploading the same scripts and metadata again changes nothing, so re-running a release is safe.
+
 A release deletes the services the base commit had and the current commit doesn't, so renaming a folder or a service removes the old entry. A service that is already gone counts as deleted.
 
 ### Signing
@@ -96,9 +98,11 @@ When the `SYNC_SCRIPT_SIGNING_KEY` repository secret is set, every upload is sig
 2. Store `SYNC_SCRIPT_SIGNING_KEY` as an Activities repository secret, `SYNC_SCRIPT_SIGNING_PUBLIC_KEY` in the API environment and `VITE_SYNC_SCRIPT_PUBLIC_KEY` in the extension build.
 3. Never commit the private key or paste it anywhere else.
 
+A new key changes every signature, so each script needs a raised version before it can be released with it.
+
 ## Rollback
 
 When a released script breaks parties:
 
 1. **Roll back on the API.** An admin calls `POST /v6/sync-scripts/v1/{service}/rollback` with the admin API key. Without a body it restores the previous version; with `{"sha256": "..."}` it restores that one. `GET /v6/sync-scripts/v1/{service}/versions` lists the stored versions. Extensions pick the restored script up on their next discovery refresh.
-2. **Fix forward in the repository.** Revert or fix the change in a pull request with a version higher than the broken one, and merge it. Releasing the old code again from a tag only works if its version is raised too, since the API refuses lower versions; use the rollback endpoint for that instead.
+2. **Fix forward in the repository.** Revert or fix the change in a pull request with a version higher than the broken one, and merge it. Releasing the old code again from a tag only works if its version is raised too, since the API refuses lower versions; use the rollback endpoint for that instead. Until the fix is merged, don't run the Release workflow by hand: `--all` would upload the broken version again, since it is higher than the restored one.
