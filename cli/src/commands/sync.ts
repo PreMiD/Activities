@@ -79,9 +79,6 @@ export async function syncRelease(service?: string) {
     exit(`Failed to build ${metadata.service}`)
 
   const contentJs = await readFile(resolve(folder, 'dist', 'content.js'), 'utf8')
-  const iframeJs = existsSync(resolve(folder, 'dist', 'iframe.js'))
-    ? await readFile(resolve(folder, 'dist', 'iframe.js'), 'utf8')
-    : undefined
   const mainworldJs = existsSync(resolve(folder, 'dist', 'mainworld.js'))
     ? await readFile(resolve(folder, 'dist', 'mainworld.js'), 'utf8')
     : undefined
@@ -97,10 +94,8 @@ export async function syncRelease(service?: string) {
     body: JSON.stringify({
       service: metadata.service,
       contentJs,
-      iframeJs,
       mainworldJs,
       regExp: metadata.regExp,
-      iframeRegExp: metadata.iframeRegExp,
     }),
   })
 
@@ -136,30 +131,13 @@ export async function syncNew(service?: string) {
     default: `^https?[:][/][/]([a-z0-9-]+[.])*${service!.toLowerCase().replaceAll(/\W/g, '')}[.]com[/]`,
   }).catch(() => exit('Something went wrong.'))
 
-  const useIframe = await confirm({
-    message: 'Does this sync script need iframe support?',
-    default: false,
-  }).catch(() => exit('Something went wrong.'))
-
-  const metadata: Record<string, string> = {
-    service,
-    regExp,
-  }
-
-  if (useIframe) {
-    metadata.iframeRegExp = await input({
-      message: 'RegExp pattern for iframe URL matching',
-    }).catch(() => exit('Something went wrong.'))
-  }
+  const metadata = { service, regExp }
 
   const templatesDir = resolve(fileURLToPath(import.meta.url), '../../../templates')
 
   await mkdir(path, { recursive: true })
   await writeFile(resolve(path, 'metadata.json'), `${JSON.stringify(metadata, null, 2)}\n`)
   await cp(resolve(templatesDir, 'sync-content.ts'), resolve(path, 'content.ts'))
-
-  if (useIframe)
-    await cp(resolve(templatesDir, 'sync-iframe.ts'), resolve(path, 'iframe.ts'))
 
   success(
     `Sync script created successfully! ${chalk.grey(chalk.underline(resolve(path, 'metadata.json')))}\n${prefix} ${chalk.white('Please edit the metadata.json file and add the correct information.')}\n${prefix} ${chalk.white(`After that, run ${chalk.cyan(`pmd sync-dev "${service}"`)} to start developing.`)}`,

@@ -13,7 +13,7 @@ Defines the entry point for a sync script. The `setup` function receives a [Sync
 | Property     | Type                                               | Description                                                                 |
 | ------------ | -------------------------------------------------- | --------------------------------------------------------------------------- |
 | `setup`      | `(ctx: SyncScriptContext) => (() => void) \| void` | Called when the sync script is initialized; may return a teardown function. |
-| `onNavigate` | `(ctx: SyncScriptContext, url: string) => void`    | Called when the user navigates to a new URL within the same activity.       |
+| `onNavigate` | `(ctx: SyncScriptContext, url: string) => void`    | Called on a follower when the controller's navigation arrives.              |
 
 ## SyncScriptHandle
 
@@ -38,9 +38,8 @@ The main context object passed to sync script lifecycle hooks. See the [Sync Scr
 | `setPageInfo`           | `(info: PageInfo) => void`                                                    | Sets the current page metadata shown to party members.                                                            |
 | `reportBlocked`         | `(reason: string) => void`                                                    | Reports that synchronization is blocked, with a human-readable reason.                                            |
 | `reportUnblocked`       | `() => void`                                                                  | Clears a previously reported blocked state.                                                                       |
-| `sendCustomData`        | `(key: string, data: unknown) => void`                                        | Sends custom data to other party members.                                                                         |
-| `onCustomData`          | `(key: string, handler: (data: unknown) => void) => () => void`               | Listens for custom data from other party members; returns an unsubscribe function.                                |
-| `iframe`                | `IframeMessaging`                                                             | Messaging namespace for communicating with iframes. See [IframeMessaging](#iframemessaging).                      |
+| `sendCustomData`        | `(key: string, data: unknown) => void`                                        | Sends custom data from the controller to the followers.                                                           |
+| `onCustomData`          | `(key: string, handler: (data: unknown) => void) => () => void`               | Listens, on followers, for custom data from the controller; returns an unsubscribe function.                      |
 | `mainworld`             | `MessagingNamespace`                                                          | Messaging namespace for communicating with the main world context. See [MessagingNamespace](#messagingnamespace). |
 | `party`                 | `PartyState`                                                                  | Reactive state of the current Watch Party session. See [PartyState](#partystate).                                 |
 
@@ -48,13 +47,13 @@ The main context object passed to sync script lifecycle hooks. See the [Sync Scr
 
 Options passed to `video.takeControl()` for manual playback synchronization.
 
-| Property         | Type                             | Description                                                                 |
-| ---------------- | -------------------------------- | --------------------------------------------------------------------------- |
-| `onPlay`         | `(timeSeconds: number) => void`  | Called when the party requests playback to start at the given time.         |
-| `onPause`        | `(timeSeconds: number) => void`  | Called when the party requests playback to pause at the given time.         |
-| `onSeek`         | `(timeSeconds: number) => void`  | Called when the party requests a seek to the given time.                    |
-| `onRate`         | `(playbackRate: number) => void` | Called when the party requests a playback rate change.                      |
-| `pauseAfterSeek` | `boolean \| number`              | Whether to pause after seeking, or a delay in milliseconds before resuming. |
+| Property         | Type                             | Description                                                                                   |
+| ---------------- | -------------------------------- | --------------------------------------------------------------------------------------------- |
+| `onPlay`         | `(timeSeconds: number) => void`  | Called when the party requests playback to start at the given time.                           |
+| `onPause`        | `(timeSeconds: number) => void`  | Called when the party requests playback to pause at the given time.                           |
+| `onSeek`         | `(timeSeconds: number) => void`  | Called when the party requests a seek to the given time.                                      |
+| `onRate`         | `(playbackRate: number) => void` | Optional. Called when the party requests a playback rate change, and used to nudge drift.     |
+| `pauseAfterSeek` | `boolean \| number`              | After a paused follower is moved, pause again after 200ms (`true`) or the given milliseconds. |
 
 ## AutoVideoHandle
 
@@ -108,11 +107,11 @@ A synchronization command received from the Watch Party server.
 
 Metadata about the current page, displayed to party members.
 
-| Property    | Type     | Description                                           |
-| ----------- | -------- | ----------------------------------------------------- |
-| `title`     | `string` | The title of the current content (e.g., video title). |
-| `subtitle`  | `string` | A subtitle or secondary label (e.g., channel name).   |
-| `thumbnail` | `string` | URL of a thumbnail image for the current content.     |
+| Property    | Type     | Description                                                          |
+| ----------- | -------- | -------------------------------------------------------------------- |
+| `title`     | `string` | The title of the current content (e.g., video title).                |
+| `subtitle`  | `string` | A subtitle or secondary label (e.g., channel name).                  |
+| `thumbnail` | `string` | URL of a thumbnail image for the current content. Not displayed yet. |
 
 ## PartyState
 
@@ -138,30 +137,6 @@ A messaging namespace for sending and receiving messages between contexts (e.g.,
 | `request`   | `(key: string, data: unknown) => Promise<unknown>`                                     | Sends a message and waits for a response.                                                        |
 | `onMessage` | `(key: string, handler: (data: unknown) => void) => () => void`                        | Listens for messages with the given key; returns an unsubscribe function.                        |
 | `onRequest` | `(key: string, handler: (data: unknown) => unknown \| Promise<unknown>) => () => void` | Listens for requests with the given key and returns a response; returns an unsubscribe function. |
-
-## IframeMessaging
-
-A messaging namespace for communicating between content scripts and iframes, with frame identification.
-
-| Property    | Type                                                                                                    | Description                                                                                                    |
-| ----------- | ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `send`      | `(frameId: number, key: string, data: unknown) => void`                                                 | Sends a fire-and-forget message to a specific iframe by frame ID.                                              |
-| `request`   | `(frameId: number, key: string, data: unknown) => Promise<unknown>`                                     | Sends a message to a specific iframe and waits for a response.                                                 |
-| `onMessage` | `(key: string, handler: (data: unknown, frameId: number) => void) => () => void`                        | Listens for messages from any iframe; handler receives the sender's frame ID. Returns an unsubscribe function. |
-| `onRequest` | `(key: string, handler: (data: unknown, frameId: number) => unknown \| Promise<unknown>) => () => void` | Listens for requests from any iframe; handler receives the sender's frame ID. Returns an unsubscribe function. |
-
-## SyncIframeContext
-
-Context object available inside an iframe sync script.
-
-| Property              | Type                                                            | Description                                                                                                          |
-| --------------------- | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `video`               | `object`                                                        | Namespace for video synchronization within the iframe.                                                               |
-| `video.attach`        | `(element: HTMLMediaElement \| string) => AutoVideoHandle`      | Attaches to a media element for automatic playback tracking. Returns an [AutoVideoHandle](#autovideohandle).         |
-| `video.onSyncCommand` | `(handler: (cmd: SyncCommand) => void) => () => void`           | Registers a handler for incoming sync commands; returns an unsubscribe function.                                     |
-| `sendCustomData`      | `(key: string, data: unknown) => void`                          | Sends custom data to the parent content script.                                                                      |
-| `onCustomData`        | `(key: string, handler: (data: unknown) => void) => () => void` | Listens for custom data from the parent content script; returns an unsubscribe function.                             |
-| `content`             | `MessagingNamespace`                                            | Messaging namespace for communicating with the parent content script. See [MessagingNamespace](#messagingnamespace). |
 
 ## SyncMainworldContext
 

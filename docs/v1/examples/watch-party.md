@@ -9,7 +9,7 @@ The simplest sync script — for sites with a standard `<video>` element:
 <!-- eslint-skip -->
 
 ```typescript
-SyncScriptV1.register({
+SyncScript.register({
   setup(ctx) {
     ctx.features({ video: true })
 
@@ -27,19 +27,6 @@ SyncScriptV1.register({
       handle.detach()
     }
   },
-
-  onNavigate(ctx, url) {
-    // SPA navigation — re-attach to the new video element
-    const video = document.querySelector('video')
-    if (video) {
-      ctx.video.attach(video)
-
-      const title = document.querySelector('h1')?.textContent
-      if (title) {
-        ctx.setPageInfo({ title })
-      }
-    }
-  },
 })
 ```
 
@@ -50,7 +37,7 @@ For sites with a proprietary JavaScript player API (e.g., the player isn't a sta
 <!-- eslint-skip -->
 
 ```typescript
-SyncScriptV1.register({
+SyncScript.register({
   setup(ctx) {
     ctx.features({ video: true })
 
@@ -106,7 +93,7 @@ Detect and report advertisements using a MutationObserver:
 <!-- eslint-skip -->
 
 ```typescript
-SyncScriptV1.register({
+SyncScript.register({
   setup(ctx) {
     ctx.features({ video: true })
 
@@ -140,55 +127,6 @@ SyncScriptV1.register({
 Ad exit has a 500ms debounce built in, so rapid transitions between ad segments won't cause the party to constantly pause and resume.
 :::
 
-## iFrame Video Player
-
-When the video is embedded in an iframe (common for sites using third-party players):
-
-### Content Script (`content.ts`)
-
-<!-- eslint-skip -->
-
-```typescript
-SyncScriptV1.register({
-  setup(ctx) {
-    ctx.features({ video: true })
-
-    // Request current state from the iframe
-    ctx.iframe.onMessage('playback-update', (data, frameId) => {
-      const { title, episode } = data as { title: string, episode: string }
-      ctx.setPageInfo({ title, subtitle: episode })
-    })
-
-    return () => {}
-  },
-})
-```
-
-### iFrame Script (`iframe.ts`)
-
-<!-- eslint-skip -->
-
-```typescript
-SyncIframeScriptV1.register({
-  setup(ctx) {
-    const video = document.querySelector('video')
-    if (!video) return
-
-    // Attach to the iframe's video element
-    const handle = ctx.video.attach(video)
-
-    // Send metadata to the content script
-    const title = document.querySelector('.player-title')?.textContent ?? ''
-    const episode = document.querySelector('.episode-info')?.textContent ?? ''
-    ctx.content.send('playback-update', { title, episode })
-
-    return () => {
-      handle.detach()
-    }
-  },
-})
-```
-
 ## Blocked State Reporting
 
 Detect login walls or geo-restrictions and report them:
@@ -196,7 +134,7 @@ Detect login walls or geo-restrictions and report them:
 <!-- eslint-skip -->
 
 ```typescript
-SyncScriptV1.register({
+SyncScript.register({
   setup(ctx) {
     ctx.features({ video: true })
 
@@ -235,7 +173,7 @@ Adapt sync script behavior based on role and party state:
 <!-- eslint-skip -->
 
 ```typescript
-SyncScriptV1.register({
+SyncScript.register({
   setup(ctx) {
     ctx.features({ video: true, cursor: true })
 
@@ -274,12 +212,12 @@ SyncScriptV1.register({
 
 ## Custom Data Between Participants
 
-Synchronize custom settings across party members:
+Send the controller's settings to the followers:
 
 <!-- eslint-skip -->
 
 ```typescript
-SyncScriptV1.register({
+SyncScript.register({
   setup(ctx) {
     ctx.features({ video: true })
 
@@ -299,7 +237,7 @@ SyncScriptV1.register({
       }
     }
 
-    // All participants receive subtitle commands
+    // Followers receive the controller's subtitle preference
     const unsub = ctx.onCustomData('subtitles', (data) => {
       const { lang, enabled } = data as { lang: string, enabled: boolean }
       for (const track of video.textTracks) {

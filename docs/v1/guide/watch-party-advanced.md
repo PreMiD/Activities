@@ -1,59 +1,6 @@
 # Advanced Sync Script Features
 
-This page covers iFrame and mainworld communication, custom data exchange between participants, and reading party state.
-
-## iFrame Communication
-
-When the video player lives inside an iframe, you need a separate sync script for the iframe. See the [iFrames guide](/v1/guide/iframes) for background on iframe communication in PreMiD.
-
-### Content Script Side
-
-<!-- eslint-skip -->
-
-```typescript
-// Send a message to iframe
-ctx.iframe.send(frameId, 'set-quality', { quality: '1080p' })
-
-// Request data from iframe (10s timeout)
-const state = await ctx.iframe.request(frameId, 'get-state', {})
-
-// Listen for messages from iframe
-const unsub = ctx.iframe.onMessage('player-event', (data, frameId) => {
-  console.log('Event from frame', frameId, data)
-})
-```
-
-### iFrame Script Side
-
-The iframe script registers separately and receives a [`SyncIframeContext`](/v1/api/sync-script-types#synciframecontext):
-
-<!-- eslint-skip -->
-
-```typescript
-SyncIframeScriptV1.register({
-  setup(ctx) {
-    const handle = ctx.video.attach('video')
-
-    ctx.content.onMessage('set-quality', (data) => {
-      // Handle quality change
-    })
-
-    return () => handle.detach()
-  },
-})
-```
-
-The iframe script has access to `ctx.video.attach()` for managing video elements inside the iframe, and `ctx.content` for communicating with the content script.
-
-### When to Use iFrame Scripts
-
-Use an iframe script when:
-
-- The site embeds its video player in an iframe (common for third-party players)
-- You need to access DOM elements inside the iframe
-- The iframe has a different origin than the main page
-
-Don't forget to set `iframeRegExp` in the sync script's `metadata.json` to specify which iframes the script should be injected into.
+This page covers mainworld communication, custom data exchange between participants, and reading party state.
 
 ## Mainworld Communication
 
@@ -80,7 +27,7 @@ The mainworld script registers separately and receives a [`SyncMainworldContext`
 <!-- eslint-skip -->
 
 ```typescript
-SyncMainworldScriptV1.register({
+SyncMainworldScript.register({
   setup(ctx) {
     ctx.content.onRequest('get-player-state', () => {
       return {
@@ -110,7 +57,7 @@ Use a mainworld script when:
 
 ## Custom Data
 
-Send arbitrary data between party participants:
+Send arbitrary data from the controller to the followers:
 
 <!-- eslint-skip -->
 
@@ -118,7 +65,7 @@ Send arbitrary data between party participants:
 // Controller sends subtitle selection
 ctx.sendCustomData('subtitle-lang', { lang: 'en', enabled: true })
 
-// All participants receive it
+// Followers receive it
 const unsub = ctx.onCustomData('subtitle-lang', (data) => {
   const { lang, enabled } = data as { lang: string, enabled: boolean }
   player.setSubtitles(lang, enabled)
@@ -132,7 +79,7 @@ return () => unsub()
 Custom data keys must be 1-32 characters, using only letters, numbers, hyphens, and underscores (matching the pattern `[\w-]{1,32}`).
 :::
 
-Custom data is sent to all participants in the party. There's no built-in filtering — the receiving side should check `ctx.party.role` if it only wants to process data from the controller.
+Only the controller can send custom data, and only followers receive it. It is not sent while the controller is alone in the party, and a message larger than 1 KB once serialized is dropped. Custom data sent from a follower is ignored.
 
 ## Party State
 
@@ -172,7 +119,7 @@ All subscription methods return an unsubscribe function. Always call these in yo
 
 | Event            | Fires when                                                                                                                      |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `onRoleChange`   | The host transfers control to this user, or reclaims it. Also fires if the current controller leaves and control is reassigned. |
+| `onRoleChange`   | The host transfers control to this user, or reclaims it. Also fires when the controller leaves and control returns to the host. |
 | `onPauseChange`  | The host pauses or resumes the party (party-wide pause, not individual video pause).                                            |
 | `onActiveChange` | The Watch Party starts or ends. Note: when the party ends, the cleanup function also runs, so this is rarely needed.            |
 
@@ -182,4 +129,4 @@ All subscription methods return an unsubscribe function. Always call these in yo
 
 ### Messaging Timeout
 
-Both `ctx.iframe.request()` and `ctx.mainworld.request()` have a 10-second timeout. If the target doesn't respond within that time, the promise rejects. Make sure the target script is loaded and has a matching `onRequest` handler registered before making requests.
+`ctx.mainworld.request()` has a 10-second timeout. If the mainworld script doesn't respond within that time, the promise rejects. Make sure the mainworld script is loaded and has a matching `onRequest` handler registered before making requests.

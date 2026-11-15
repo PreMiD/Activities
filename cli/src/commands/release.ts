@@ -181,9 +181,6 @@ export async function release() {
     }
 
     const contentJs = await readFile(resolve(script.folder, 'dist', 'content.js'), 'utf8')
-    const iframeJs = existsSync(resolve(script.folder, 'dist', 'iframe.js'))
-      ? await readFile(resolve(script.folder, 'dist', 'iframe.js'), 'utf8')
-      : undefined
     const mainworldJs = existsSync(resolve(script.folder, 'dist', 'mainworld.js'))
       ? await readFile(resolve(script.folder, 'dist', 'mainworld.js'), 'utf8')
       : undefined
@@ -198,10 +195,8 @@ export async function release() {
         body: JSON.stringify({
           service: script.metadata.service,
           contentJs,
-          iframeJs,
           mainworldJs,
           regExp: script.metadata.regExp,
-          iframeRegExp: script.metadata.iframeRegExp,
         }),
       })
 

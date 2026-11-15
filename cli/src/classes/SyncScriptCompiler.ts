@@ -14,7 +14,6 @@ import { WebSocketServer } from './WebSocketServer.js'
 export interface SyncScriptMetadata {
   service: string
   regExp: string
-  iframeRegExp?: string
 }
 
 export class SyncScriptCompiler {
@@ -33,7 +32,6 @@ export class SyncScriptCompiler {
     const spinner = ora(prefix + chalk.greenBright(` Compiling ${this.metadata.service}...`))
     spinner.start()
 
-    const hasIframe = existsSync(resolve(this.cwd, 'iframe.ts'))
     const hasMainworld = existsSync(resolve(this.cwd, 'mainworld.ts'))
 
     if (existsSync(resolve(this.cwd, 'dist')))
@@ -42,7 +40,6 @@ export class SyncScriptCompiler {
     await build({
       entryPoints: [
         resolve(this.cwd, 'content.ts'),
-        ...(hasIframe ? [resolve(this.cwd, 'iframe.ts')] : []),
         ...(hasMainworld ? [resolve(this.cwd, 'mainworld.ts')] : []),
       ],
       outdir: resolve(this.cwd, 'dist'),
@@ -72,7 +69,7 @@ export class SyncScriptCompiler {
       ignored: ['**/dist/**'],
       persistent: true,
     }).on('all', async (event, path) => {
-      if (['add', 'unlink'].includes(event) && (basename(path) === 'iframe.ts' || basename(path) === 'mainworld.ts')) {
+      if (['add', 'unlink'].includes(event) && basename(path) === 'mainworld.ts') {
         return this.restartTsWatch()
       }
 
@@ -87,7 +84,6 @@ export class SyncScriptCompiler {
   private program: ts.WatchOfFilesAndCompilerOptions<ts.SemanticDiagnosticsBuilderProgram> | undefined
 
   private startTsWatch() {
-    const hasIframe = existsSync(resolve(this.cwd, 'iframe.ts'))
     const hasMainworld = existsSync(resolve(this.cwd, 'mainworld.ts'))
     const tsconfigPath = resolve(this.cwd, 'tsconfig.json')
 
@@ -107,7 +103,7 @@ export class SyncScriptCompiler {
     }
 
     const host = ts.createWatchCompilerHost(
-      [resolve(this.cwd, 'content.ts'), ...(hasIframe ? [resolve(this.cwd, 'iframe.ts')] : []), ...(hasMainworld ? [resolve(this.cwd, 'mainworld.ts')] : [])],
+      [resolve(this.cwd, 'content.ts'), ...(hasMainworld ? [resolve(this.cwd, 'mainworld.ts')] : [])],
       {
         ...parsedConfig.options,
         noEmit: true,
@@ -168,7 +164,6 @@ export class SyncScriptCompiler {
       prefix + chalk.yellow(` Type checking ${this.metadata.service}...`),
     ).start()
 
-    const hasIframe = existsSync(resolve(this.cwd, 'iframe.ts'))
     const hasMainworld = existsSync(resolve(this.cwd, 'mainworld.ts'))
     const tsconfigPath = resolve(this.cwd, 'tsconfig.json')
 
@@ -190,7 +185,7 @@ export class SyncScriptCompiler {
     }
 
     const program = ts.createProgram({
-      rootNames: [resolve(this.cwd, 'content.ts'), ...(hasIframe ? [resolve(this.cwd, 'iframe.ts')] : []), ...(hasMainworld ? [resolve(this.cwd, 'mainworld.ts')] : [])],
+      rootNames: [resolve(this.cwd, 'content.ts'), ...(hasMainworld ? [resolve(this.cwd, 'mainworld.ts')] : [])],
       options: { ...parsedConfig.options, noEmit: true },
     })
 

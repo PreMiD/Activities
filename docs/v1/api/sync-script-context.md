@@ -1,30 +1,30 @@
 # SyncScriptContext
 
-The `SyncScriptContext` is the main object sync script developers interact with when building Watch Party sync scripts. It provides methods for video synchronization, page metadata, cross-frame messaging, and party state observation.
+The `SyncScriptContext` is the main object sync script developers interact with when building Watch Party sync scripts. It provides methods for video synchronization, page metadata, main world messaging, and party state observation.
 
 See the [Sync Script Types](/v1/api/sync-script-types) reference for full interface definitions, and the [Watch Party Sync Scripts](/v1/guide/watch-party-sync-scripts) guide for usage patterns.
 
 ## Registration
 
-### SyncScriptV1.register
+### SyncScript.register
 
 <!-- eslint-skip -->
 
 ```typescript
-SyncScriptV1.register(options: {
+SyncScript.register(options: {
   setup: (ctx: SyncScriptContext) => (() => void) | void
   onNavigate?: (ctx: SyncScriptContext, url: string) => void
 }): SyncScriptHandle
 ```
 
-Registers a sync script with the PreMiD extension. The `setup` function is called once when the sync script is initialized. Return a cleanup function from `setup` to dispose of resources when the script is torn down.
+Registers a sync script with the PreMiD extension. The `setup` function is called each time the sync script is activated, for example when a party starts on the page or the controller navigates. Return a cleanup function from `setup` to dispose of resources when the script is deactivated.
 
 #### Parameters
 
-| Parameter            | Type                                               | Description                                                                                |
-| -------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `options.setup`      | `(ctx: SyncScriptContext) => (() => void) \| void` | Called once on initialization. Receives the context object. May return a cleanup function. |
-| `options.onNavigate` | `(ctx: SyncScriptContext, url: string) => void`    | Called when the user navigates to a new page within the same site.                         |
+| Parameter            | Type                                               | Description                                                                                            |
+| -------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `options.setup`      | `(ctx: SyncScriptContext) => (() => void) \| void` | Called on activation. Receives the context object. May return a cleanup function.                      |
+| `options.onNavigate` | `(ctx: SyncScriptContext, url: string) => void`    | Called on a follower when the controller's navigation arrives, before the tab has loaded the new page. |
 
 #### Returns
 
@@ -35,7 +35,7 @@ A `SyncScriptHandle` for managing the registered script.
 <!-- eslint-skip -->
 
 ```typescript
-SyncScriptV1.register({
+SyncScript.register({
   setup(ctx) {
     ctx.features({ video: true })
 
@@ -67,26 +67,22 @@ SyncScriptV1.register({
 features(features: { video?: boolean, cursor?: boolean, scroll?: boolean }): void
 ```
 
-Declares which sync features this script supports. Must be called before using any feature-specific APIs such as `video`.
+Tells PreMiD that the sync script handles this page, and which sync features it supports. Every feature is on by default, so pass `false` to turn one off. Call it at the start of `setup`.
 
 #### Parameters
 
-| Parameter         | Type      | Description                    |
-| ----------------- | --------- | ------------------------------ |
-| `features.video`  | `boolean` | Enable video synchronization.  |
-| `features.cursor` | `boolean` | Enable cursor synchronization. |
-| `features.scroll` | `boolean` | Enable scroll synchronization. |
-
-::: warning
-You must call `features()` before accessing `video.attach()` or `video.takeControl()`. Calling video methods without declaring video support will throw an error.
-:::
+| Parameter         | Type      | Description                                                                                             |
+| ----------------- | --------- | ------------------------------------------------------------------------------------------------------- |
+| `features.video`  | `boolean` | Set to `false` to turn off video synchronization, including PreMiD's own video detection for this page. |
+| `features.cursor` | `boolean` | Set to `false` to stop sharing the controller's cursor.                                                 |
+| `features.scroll` | `boolean` | Set to `false` to stop sharing the controller's scroll position.                                        |
 
 #### Example
 
 <!-- eslint-skip -->
 
 ```typescript
-ctx.features({ video: true, cursor: true })
+ctx.features({ cursor: false, scroll: false })
 ```
 
 ## Video
@@ -99,7 +95,7 @@ ctx.features({ video: true, cursor: true })
 video.attach(element: HTMLMediaElement | string): AutoVideoHandle
 ```
 
-Attaches to a standard HTML media element for automatic video synchronization. PreMiD will automatically manage play, pause, seek, and playback rate events on the element.
+Attaches to a standard HTML media element for automatic video synchronization. PreMiD will automatically manage play, pause, seek, and playback rate events on the element, and reports its position periodically while the controller is playing.
 
 #### Parameters
 
@@ -145,17 +141,17 @@ Takes manual control of video synchronization for custom players that do not use
 
 | Parameter                | Type                     | Description                                                                                   |
 | ------------------------ | ------------------------ | --------------------------------------------------------------------------------------------- |
-| `options.onPlay`         | `() => void`             | Called when the party requests playback to start.                                             |
-| `options.onPause`        | `() => void`             | Called when the party requests playback to pause.                                             |
+| `options.onPlay`         | `(time: number) => void` | Called when the party requests playback to start at `time` seconds.                           |
+| `options.onPause`        | `(time: number) => void` | Called when the party requests playback to pause at `time` seconds.                           |
 | `options.onSeek`         | `(time: number) => void` | Called when the party requests a seek to a specific time in seconds.                          |
-| `options.onRate`         | `(rate: number) => void` | Called when the party requests a playback rate change.                                        |
-| `options.pauseAfterSeek` | `boolean \| number`      | If `true`, pauses after seeking. If a number, pauses after a delay of that many milliseconds. |
+| `options.onRate`         | `(rate: number) => void` | Optional. Called when the party requests a playback rate change, and used to nudge drift.     |
+| `options.pauseAfterSeek` | `boolean \| number`      | After a paused follower is moved, pause again after 200ms (`true`) or the given milliseconds. |
 
 #### Returns
 
 A `ManualVideoHandle` with the following methods:
 
-- `reportPlayback(state)` -- Reports current playback state (time, duration, paused, rate) to the party.
+- `reportPlayback(status)` -- Reports current playback state (`playing`, `currentTime`, `duration`, `playbackRate`). Call it about once a second, on the controller and on followers.
 - `onSyncCommand(handler)` -- Registers a handler called on sync commands. Returns an unsubscribe function.
 - `reportAd(isInAd)` -- Reports whether an ad is currently playing.
 - `reportBuffering(isBuffering)` -- Reports whether the video is buffering.
@@ -169,20 +165,26 @@ A `ManualVideoHandle` with the following methods:
 const player = getCustomPlayer()
 
 const handle = ctx.video.takeControl({
-  onPlay: () => player.play(),
-  onPause: () => player.pause(),
-  onSeek: (time) => player.seekTo(time),
-  onRate: (rate) => player.setPlaybackRate(rate),
+  onPlay: (time) => {
+    player.seekTo(time)
+    player.play()
+  },
+  onPause: (time) => {
+    player.pause()
+    player.seekTo(time)
+  },
+  onSeek: time => player.seekTo(time),
+  onRate: rate => player.setPlaybackRate(rate),
   pauseAfterSeek: 200,
 })
 
 // Report playback state periodically
 setInterval(() => {
   handle.reportPlayback({
-    time: player.getCurrentTime(),
+    playing: player.isPlaying(),
+    currentTime: player.getCurrentTime(),
     duration: player.getDuration(),
-    paused: player.isPaused(),
-    rate: player.getPlaybackRate(),
+    playbackRate: player.getPlaybackRate(),
   })
 }, 1000)
 
@@ -254,15 +256,15 @@ video.addEventListener('playing', () => ctx.video.reportBuffering(false))
 setPageInfo(info: PageInfo): void
 ```
 
-Sets metadata about the current page that is displayed to other party members.
+Sets metadata about the current page. The title and subtitle are shown at the top of the Watch Party overlay on this tab.
 
 #### Parameters
 
-| Parameter        | Type     | Description                            |
-| ---------------- | -------- | -------------------------------------- |
-| `info.title`     | `string` | The title of the content being viewed. |
-| `info.subtitle`  | `string` | A subtitle or secondary description.   |
-| `info.thumbnail` | `string` | A URL to a thumbnail image.            |
+| Parameter        | Type     | Description                                    |
+| ---------------- | -------- | ---------------------------------------------- |
+| `info.title`     | `string` | The title of the content being viewed.         |
+| `info.subtitle`  | `string` | A subtitle or secondary description.           |
+| `info.thumbnail` | `string` | A URL to a thumbnail image. Not displayed yet. |
 
 #### Example
 
@@ -286,7 +288,7 @@ ctx.setPageInfo({
 reportBlocked(reason: string): void
 ```
 
-Reports that the user is blocked from viewing the content. Use this for login walls, geo-restrictions, or paywalls so other party members understand why synchronization has stopped.
+Reports that the user is blocked from viewing the content. Use this for login walls, geo-restrictions, or paywalls so other party members understand why synchronization has stopped. Reports from the controller are ignored.
 
 #### Parameters
 
@@ -334,7 +336,7 @@ onLogin(() => {
 sendCustomData(key: string, data: unknown): void
 ```
 
-Sends arbitrary data to other party members. Useful for syncing application-specific state that is not covered by the built-in APIs.
+Sends arbitrary data from the controller to the followers. Useful for syncing application-specific state that is not covered by the built-in APIs. Calls on a follower are ignored, as are payloads over 1 KB once serialized.
 
 #### Parameters
 
@@ -359,7 +361,7 @@ ctx.sendCustomData('subtitle-lang', { language: 'en', enabled: true })
 onCustomData(key: string, handler: (data: unknown) => void): () => void
 ```
 
-Subscribes to custom data sent by other party members for the given key.
+Subscribes to custom data sent by the controller for the given key. Only followers receive it.
 
 #### Parameters
 
@@ -388,132 +390,6 @@ const unsubscribe = ctx.onCustomData('subtitle-lang', (data) => {
 
 // Later, when cleaning up
 unsubscribe()
-```
-
-## Iframe Messaging
-
-The `iframe` namespace provides methods for communicating between the content script and iframes on the page.
-
-### iframe.send
-
-<!-- eslint-skip -->
-
-```typescript
-iframe.send(frameId: string, key: string, data?: unknown): void
-```
-
-Sends a one-way message to a specific iframe.
-
-#### Parameters
-
-| Parameter | Type      | Description                          |
-| --------- | --------- | ------------------------------------ |
-| `frameId` | `string`  | The identifier of the target iframe. |
-| `key`     | `string`  | The message key.                     |
-| `data`    | `unknown` | Optional data payload.               |
-
-#### Example
-
-<!-- eslint-skip -->
-
-```typescript
-ctx.iframe.send('player-frame', 'toggle-captions', { enabled: true })
-```
-
-### iframe.request
-
-<!-- eslint-skip -->
-
-```typescript
-iframe.request<T>(frameId: string, key: string, data?: unknown): Promise<T>
-```
-
-Sends a request to an iframe and waits for a response.
-
-#### Parameters
-
-| Parameter | Type      | Description                          |
-| --------- | --------- | ------------------------------------ |
-| `frameId` | `string`  | The identifier of the target iframe. |
-| `key`     | `string`  | The request key.                     |
-| `data`    | `unknown` | Optional request payload.            |
-
-#### Returns
-
-A `Promise` that resolves with the response data from the iframe.
-
-::: warning
-Requests have a 10-second timeout. If the iframe does not respond within that window, the promise will reject.
-:::
-
-#### Example
-
-<!-- eslint-skip -->
-
-```typescript
-const currentTime = await ctx.iframe.request<number>('player-frame', 'get-time')
-```
-
-### iframe.onMessage
-
-<!-- eslint-skip -->
-
-```typescript
-iframe.onMessage(key: string, handler: (data: unknown) => void): () => void
-```
-
-Listens for one-way messages from iframes.
-
-#### Parameters
-
-| Parameter | Type                      | Description                                           |
-| --------- | ------------------------- | ----------------------------------------------------- |
-| `key`     | `string`                  | The message key to listen for.                        |
-| `handler` | `(data: unknown) => void` | Called when a message with the given key is received. |
-
-#### Returns
-
-An unsubscribe function.
-
-#### Example
-
-<!-- eslint-skip -->
-
-```typescript
-const unsubscribe = ctx.iframe.onMessage('player-state', (data) => {
-  console.log('Player state:', data)
-})
-```
-
-### iframe.onRequest
-
-<!-- eslint-skip -->
-
-```typescript
-iframe.onRequest(key: string, handler: (data: unknown) => unknown): () => void
-```
-
-Listens for requests from iframes and provides a response.
-
-#### Parameters
-
-| Parameter | Type                         | Description                                                                       |
-| --------- | ---------------------------- | --------------------------------------------------------------------------------- |
-| `key`     | `string`                     | The request key to listen for.                                                    |
-| `handler` | `(data: unknown) => unknown` | Called when a request is received. The return value is sent back as the response. |
-
-#### Returns
-
-An unsubscribe function.
-
-#### Example
-
-<!-- eslint-skip -->
-
-```typescript
-const unsubscribe = ctx.iframe.onRequest('get-page-title', () => {
-  return document.title
-})
 ```
 
 ## Main World Messaging
@@ -629,10 +505,10 @@ The `party` property exposes read-only state about the current Watch Party sessi
 <!-- eslint-skip -->
 
 ```typescript
-party.role: string
+party.role: 'controller' | 'follower'
 ```
 
-The current user's role in the party (e.g., `"host"`, `"viewer"`). Read-only.
+The current user's role in the party, `"controller"` or `"follower"`. Read-only.
 
 ### party.paused
 
@@ -669,16 +545,16 @@ Whether the current user is the host of the party. Read-only.
 <!-- eslint-skip -->
 
 ```typescript
-party.onRoleChange(handler: (role: string) => void): () => void
+party.onRoleChange(handler: (role: 'controller' | 'follower') => void): () => void
 ```
 
 Subscribes to role changes.
 
 #### Parameters
 
-| Parameter | Type                     | Description                          |
-| --------- | ------------------------ | ------------------------------------ |
-| `handler` | `(role: string) => void` | Called when the user's role changes. |
+| Parameter | Type                                         | Description                          |
+| --------- | -------------------------------------------- | ------------------------------------ |
+| `handler` | `(role: 'controller' \| 'follower') => void` | Called when the user's role changes. |
 
 #### Returns
 

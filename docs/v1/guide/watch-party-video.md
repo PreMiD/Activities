@@ -25,7 +25,8 @@ Auto mode automatically:
 - Listens to `play`, `pause`, `seeked`, `ratechange` events
 - Reports playback status to the party
 - Applies sync commands (play/pause/seek) from the party controller
-- Runs drift correction to keep followers aligned
+- Reports the playback position periodically while the controller is playing, so followers can run drift correction
+- Runs drift correction on followers to keep them aligned
 
 ### AutoVideoHandle
 
@@ -48,26 +49,34 @@ In auto mode, `onSyncCommand` fires **after** the command has already been appli
 | `rate`                          | The controller changed playback rate                                        |
 | Heartbeat (`isHeartbeat: true`) | Periodic position update from the controller — drift correction was applied |
 
-### Re-attaching After SPA Navigation
+### Re-attaching After Navigation
 
-Many sites destroy and recreate their video player during navigation. Use `onNavigate` to re-attach:
+Many sites destroy and recreate their video player during navigation. `setup` runs again whenever the controller's page address changes, and on followers a full page load does the same, so attaching in `setup` covers navigation.
+
+If a site replaces its player without changing the address, watch for it and attach again:
 
 <!-- eslint-skip -->
 
 ```typescript
-SyncScriptV1.register({
+SyncScript.register({
   setup(ctx) {
     ctx.features({ video: true })
-    let handle = ctx.video.attach('video')
+    let handle: AutoVideoHandle | undefined
+    let current: HTMLVideoElement | null = null
 
-    return () => handle.detach()
-  },
+    const observer = new MutationObserver(() => {
+      const video = document.querySelector('video')
+      if (video === current)
+        return
+      handle?.detach()
+      current = video
+      handle = video ? ctx.video.attach(video) : undefined
+    })
+    observer.observe(document.body, { childList: true, subtree: true })
 
-  onNavigate(ctx, url) {
-    // Player was destroyed during navigation — find the new one
-    const video = document.querySelector('video')
-    if (video) {
-      const handle = ctx.video.attach(video)
+    return () => {
+      observer.disconnect()
+      handle?.detach()
     }
   },
 })
@@ -139,15 +148,22 @@ In manual mode, the `TakeControlOptions` callbacks fire **instead of** automatic
 
 These callbacks fire for **followers only**. The controller doesn't receive its own commands back.
 
-`reportPlayback()` should be called periodically (every ~1s) by the **controller** so followers can run drift correction. Followers can also call it, but it's primarily used by the controller.
+`reportPlayback()` should be called periodically (every ~1s) by **everyone**, controller and followers alike:
+
+- The controller's reports are sent to the party as heartbeats, so followers can run drift correction
+- On a follower, sync commands are ignored until the first report arrives, and the reported position is what drift correction compares against
+
+If PreMiD hears nothing from the script for 10 seconds, it stops treating the page as handled by the script and falls back to its own video detection.
 
 ### pauseAfterSeek
 
-The `pauseAfterSeek` option controls what happens after a seek command:
+The `pauseAfterSeek` option controls what happens after a paused follower is moved to the controller's position:
 
-- `true` — Pause immediately after seeking (useful for sites that auto-play on seek)
-- `number` — Pause after the specified milliseconds (e.g., `200` for a 200ms delay)
+- `true` — Pause 200ms after seeking (useful for sites that auto-play on seek)
+- `number` — Pause after the specified milliseconds (e.g., `500` for a 500ms delay)
 - `false` or omitted — Don't pause after seeking
+
+It applies when the controller is paused and a follower is moved to its position. It does not apply to seeks while the party is playing.
 
 ::: warning
 Only one video control mode can be active at a time. Calling `takeControl()` while `attach()` is active (or vice versa) will cause unexpected behavior. Always `detach()` or `release()` the current handle first.
@@ -167,7 +183,7 @@ ctx.setPageInfo({
 })
 ```
 
-This information is displayed in the Watch Party overlay for all participants.
+The title and subtitle are shown at the top of the Watch Party overlay on the tab running the script. The thumbnail is not displayed.
 
 ## Reporting Ads
 
@@ -216,4 +232,4 @@ if (loginWall) {
 }
 ```
 
-The blocked reason is shown to other participants so they understand why someone isn't syncing.
+The blocked reason is shown to other participants so they understand why someone isn't syncing. Only followers can be blocked; a report from the controller is ignored.

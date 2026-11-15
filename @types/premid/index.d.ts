@@ -1009,13 +1009,6 @@ declare global {
     onRequest: (key: string, handler: (data: unknown) => unknown | Promise<unknown>) => () => void
   }
 
-  interface IframeMessaging {
-    send: (frameId: number, key: string, data: unknown) => void
-    request: (frameId: number, key: string, data: unknown) => Promise<unknown>
-    onMessage: (key: string, handler: (data: unknown, frameId: number) => void) => () => void
-    onRequest: (key: string, handler: (data: unknown, frameId: number) => unknown | Promise<unknown>) => () => void
-  }
-
   interface PartyState {
     readonly role: 'controller' | 'follower'
     readonly paused: boolean
@@ -1033,10 +1026,12 @@ declare global {
 
     setPageInfo: (info: SyncScriptPageInfo) => void
 
+    reportBlocked: (reason: string) => void
+    reportUnblocked: () => void
+
     sendCustomData: (key: string, data: unknown) => void
     onCustomData: (key: string, handler: (data: unknown) => void) => () => void
 
-    iframe: IframeMessaging
     mainworld: MessagingNamespace
 
     party: PartyState
@@ -1051,24 +1046,6 @@ declare global {
     destroy: () => void
   }
 
-  interface SyncIframeVideoAPI {
-    attach: (element: HTMLMediaElement | string) => AutoVideoHandle
-    onSyncCommand: (handler: (cmd: SyncScriptSyncCommand) => void) => () => void
-  }
-
-  interface SyncIframeContext {
-    video: SyncIframeVideoAPI
-
-    sendCustomData: (key: string, data: unknown) => void
-    onCustomData: (key: string, handler: (data: unknown) => void) => () => void
-
-    content: MessagingNamespace
-  }
-
-  interface SyncIframeScriptDefinition {
-    setup: (ctx: SyncIframeContext) => (() => void) | void
-  }
-
   interface SyncMainworldContext {
     content: MessagingNamespace
   }
@@ -1079,10 +1056,6 @@ declare global {
 
   const SyncScript: {
     register: (definition: SyncScriptDefinition) => SyncScriptHandle
-  }
-
-  const SyncIframeScript: {
-    register: (definition: SyncIframeScriptDefinition) => SyncScriptHandle
   }
 
   const SyncMainworldScript: {

@@ -11,7 +11,7 @@ Every Watch Party has two roles:
 | **Controller** | The participant whose playback is the source of truth. When the controller plays, pauses, or seeks, all followers mirror the action. |
 | **Follower**   | Receives sync commands from the controller and applies them locally.                                                                 |
 
-The **host** (party creator) starts as the controller but can transfer control to another participant. The host can also reclaim control at any time.
+The **host** (party creator) starts as the controller but can transfer control to another participant. The host can also reclaim control at any time, and control returns to the host when the controller leaves.
 
 The sync script receives role information via `ctx.party.role` and can listen for changes with `ctx.party.onRoleChange()`.
 
@@ -27,24 +27,24 @@ Even with synchronized commands, network latency causes playback positions to dr
 
 The corrector compares the follower's local playback position against the controller's reported position (adjusted for latency) and applies one of three actions:
 
-| Drift          | Action     | What Happens                                                    |
-| -------------- | ---------- | --------------------------------------------------------------- |
-| < ~0.15s       | Ignore     | Within acceptable tolerance, no correction needed               |
-| ~0.15s - ~3.0s | Rate nudge | Slightly speeds up or slows down playback to gradually converge |
-| > ~3.0s        | Hard seek  | Jumps directly to the correct position                          |
+| Drift        | Action     | What Happens                                                    |
+| ------------ | ---------- | --------------------------------------------------------------- |
+| < 0.15s      | Ignore     | Within acceptable tolerance, no correction needed               |
+| 0.15s - 1.0s | Rate nudge | Slightly speeds up or slows down playback to gradually converge |
+| > 1.0s       | Hard seek  | Jumps directly to the correct position                          |
 
-Rate nudging adjusts the follower's playback rate by a small amount (up to ±0.03x) to catch up or slow down. Once the drift falls below the tolerance threshold, the original playback rate is restored.
+Rate nudging adjusts the follower's playback rate by a small amount (up to ±0.03x) to catch up or slow down. Once the drift falls below the tolerance threshold, the original playback rate is restored. After a hard seek, the corrector waits 2 seconds before it seeks again.
 
 ### Latency Estimation
 
 The extension estimates network latency using two methods:
 
-1. **Server timestamps + clock offset** — The WebSocket server attaches a timestamp, and periodic clock synchronization establishes the offset between client and server clocks.
-2. **Capture timestamps** — When the controller captures a playback event, it records the local timestamp. The follower uses the difference between now and that timestamp as a rough latency estimate.
+1. **Server timestamps + clock offset** — The server attaches a timestamp to the messages it relays, and the extension measures the offset between its clock and the server's with periodic pings.
+2. **Capture timestamps** — When the controller captures a playback event, it records the local timestamp. If there is no server timestamp, the follower uses the difference between now and that timestamp as a rough latency estimate.
 
 ### Gentle-Seek Mode
 
-When rate nudging isn't available (e.g., the site doesn't support playback rate changes), the corrector uses gentle-seek mode with a wider tolerance (~0.5s) to avoid excessive seeking.
+When rate nudging isn't available, the corrector uses gentle-seek mode: drift under 0.5s is ignored, anything larger is corrected with a seek, and seeks are at least 3 seconds apart. This is the mode used in [manual video mode](/v1/guide/watch-party-video#manual-video-mode) when `takeControl()` is called without an `onRate` callback.
 
 ### Buffering Suspension
 
@@ -64,11 +64,11 @@ When a participant encounters an ad, the party can coordinate to prevent desynch
 
 The party host configures how ads are handled:
 
-| Setting               | Behavior                                                         |
-| --------------------- | ---------------------------------------------------------------- |
-| **Wait for everyone** | All participants pause when anyone is in an ad                   |
-| **Wait for host**     | Participants only pause when the controller is in an ad          |
-| **Ignore**            | Ads don't affect synchronization — participants continue playing |
+| Setting      | Behavior                                                         |
+| ------------ | ---------------------------------------------------------------- |
+| **Everyone** | All participants pause when anyone is in an ad                   |
+| **Host**     | Participants only pause when the controller is in an ad          |
+| **No one**   | Ads don't affect synchronization — participants continue playing |
 
 ### Debouncing
 
@@ -82,7 +82,7 @@ Buffering coordination works identically to ad coordination:
 2. The party can pause and wait based on the **buffering behavior setting**
 3. Buffering exit has a 500ms debounce
 
-The same three settings apply: wait for everyone, wait for host, or ignore.
+The same three settings apply: wait for everyone, wait for the host, or wait for no one.
 
 ::: tip
 In auto video mode, buffering is detected automatically via the element's `waiting` and `playing` events. You only need to report buffering manually if the site's player doesn't fire standard media events.
@@ -104,16 +104,18 @@ The extension detects navigation from the controller's active tab, including bot
 
 When a follower receives a navigation command:
 
-1. The extension navigates the follower's tab to the new URL
-2. If the follower already has an active party tab, it updates that tab
-3. If no party tab exists yet (first navigation after joining), it creates a new tab
+1. If the new URL is on the same site as the follower's party tab, the extension navigates that tab to it
+2. If it is on a different site, the follower is asked whether to follow. Choosing to follow also follows the controller's next navigations for 5 minutes without asking again
+3. If no party tab exists yet (first navigation after joining), the extension uses the focused tab when it is already on that page, and opens a new tab otherwise
 4. If the tab update fails (e.g., browser error), it falls back to creating a new tab
 
 ::: tip
-If a follower closes their party tab, they **automatically leave the party**. The host's tab closure behaves differently — the party migrates to another open web tab instead.
+If a guest or member closes their party tab, they **automatically leave the party**. When the host closes it, the party stays open. A host who is the controller picks a new tab with the "Move party here" button, and followers wait until then.
 :::
 
-The sync script's `onNavigate` callback fires on SPA navigations so you can re-attach to new player elements.
+The sync script's `onNavigate` callback fires on followers when the controller's navigation arrives, at the same moment the extension starts moving the follower's tab. The new page may not have loaded yet, and a full page load runs `setup` again on the new page, so look for player elements in `setup` and use `onNavigate` only for work that has to happen when the controller moves on.
+
+On the controller, a change of the page address (including SPA navigation) restarts the sync script: the cleanup function runs and `setup` runs again. Repeats of the same address within 2 seconds are ignored.
 
 ### Navigation Settling Window
 
@@ -132,9 +134,10 @@ The extension monitors whether followers are actually on the same page as the co
 When a follower's URL changes outside of a sync-initiated navigation, the extension compares it against the expected URL using several normalization steps:
 
 1. **www-stripping** — `www.netflix.com` and `netflix.com` are treated as the same host
-2. **Locale prefix stripping** — `/nl/title/123` and `/en-us/title/123` are treated as the same path (strips prefixes matching `/xx/` or `/xx-xxxx/` patterns)
+2. **Locale prefix stripping** — `/nl/title/123` and `/en-us/title/123` are treated as the same path (strips a leading language segment such as `/nl`, `/en-us` or `/zh-hans`)
 3. **Sync script service matching** — If both URLs match the same sync script (by service name), they're considered the same site even with different hostnames. This is useful for regional domains like `anime-site.jp` and `anime-site.com`. Note that this only bypasses the hostname check — the pathname is still compared. If two regional domains use different URL structures for the same content (e.g., `/anime/123` on one domain vs `/watch/123` on another), desync will still be flagged. This is intentional: the system errs toward flagging desyncs rather than silently allowing mismatched content.
-4. **Canonical URL fallback** — If the path comparison fails, the extension asks the content script for the page's canonical URL (`<link rel="canonical">`) and retries the comparison
+4. **Content identity** — On sites that keep the video in the query string, such as YouTube's `v` parameter, a different video counts as a different page even when the path matches
+5. **Canonical URL fallback** — If the path comparison fails, the extension asks the content script for the page's canonical URL (`<link rel="canonical">`) and retries the comparison, except when the content identity differs
 
 ### What Triggers Desync
 
@@ -159,11 +162,10 @@ The extension tracks each participant's status:
 | Status          | Meaning                                                 |
 | --------------- | ------------------------------------------------------- |
 | `ready`         | Synchronized and watching normally                      |
-| `waiting`       | Waiting for initial sync or reconnection                |
 | `navigating`    | Currently navigating to a new page                      |
 | `in-ad`         | Watching an advertisement                               |
 | `buffering`     | Player is buffering content                             |
-| `not-buffering` | Buffering has ended (transient — resolves to `ready`)   |
+| `not-buffering` | Buffering has ended                                     |
 | `desynced`      | On a different page than the controller                 |
 | `blocked`       | Cannot access the content (login wall, geo-restriction) |
 
@@ -173,14 +175,16 @@ Status messages are deduplicated — sending the same status twice in a row is s
 
 ### Heartbeats
 
-The controller periodically sends heartbeat messages containing the current playback position, rate, and paused state. Followers use these to run drift correction even when no explicit play/pause/seek events occur.
+The controller periodically sends heartbeat messages containing the current playback position, rate, and paused state. Followers use these to run drift correction even when no explicit play/pause/seek events occur. Without a sync script, the interval adapts to the drift between participants, from every second when drift is large to every 3 seconds when everyone is in step.
 
-Identical consecutive heartbeats (same currentTime rounded to 0.1s, same playbackRate, same paused state) are deduplicated to reduce network traffic.
+Identical consecutive heartbeats (same currentTime rounded to 0.1s, same playbackRate, same paused state) are deduplicated to reduce network traffic, but are sent again after 5 seconds so a newcomer or a reloaded follower still gets one.
 
 ### Sync Throttling
 
-High-frequency sync messages (cursor position, scroll events, input events) are throttled to a 100ms flush interval. The extension buffers the latest event per sync type and flushes them all at once, preventing network saturation during rapid interaction.
+High-frequency sync messages (cursor position, scroll position and heartbeats) are throttled to a 100ms flush interval. The extension buffers the latest event per sync type and flushes them all at once, preventing network saturation during rapid interaction.
+
+Only the controller's cursor and scroll are sent. A sync script can turn them off for its site with `ctx.features({ cursor: false, scroll: false })`.
 
 ### Participant Count Optimization
 
-When only one person is in the party, high-frequency sync messages (cursor, scroll, clicks, input) are not sent at all. This avoids unnecessary WebSocket traffic when there's no one to receive the data.
+When only one person is in the party, high-frequency sync messages (cursor, scroll, playback heartbeats and custom data) are not sent at all. This avoids unnecessary WebSocket traffic when there's no one to receive the data.
