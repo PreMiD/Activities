@@ -1,0 +1,87 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "name": "Kaysuto",
+    "id": "418585879435673610"
+  },
+  "service": "Jelly",
+  "description": {
+    "en": "Jelly is a French streaming platform for movies, series and anime. Browse the catalog, watch in the built-in player and request missing titles: Jelly notifies you as soon as they arrive.",
+    "fr": "Jelly est une plateforme française de streaming de films, séries et animés. Parcours le catalogue, regarde dans le lecteur intégré et demande les titres manquants : Jelly te prévient dès qu'ils arrivent."
+  },
+  "url": "playjelly.fr",
+  "regExp": "^https?[:][/][/]playjelly[.]fr[/]",
+  "version": "1.0.0",
+  "logo": "https://playjelly.fr/logo.png",
+  "thumbnail": "https://playjelly.fr/banner.png",
+  "color": "#00716D",
+  "category": "videos",
+  "tags": [
+    "video",
+    "movie",
+    "series",
+    "streaming"
+  ],
+  "settings": [
+    {
+      "id": "privacy",
+      "title": "Mode confidentialité",
+      "icon": "fas fa-user-secret",
+      "value": false
+    },
+    {
+      "id": "usePresenceName",
+      "title": "Utiliser le titre comme nom d’activité",
+      "icon": "fas fa-user-edit",
+      "value": false,
+      "if": { "privacy": false }
+    },
+    {
+      "id": "showBrowsingStatus",
+      "title": "Afficher la navigation",
+      "icon": "fas fa-book-reader",
+      "value": true
+    },
+    {
+      "id": "showCover",
+      "title": "Afficher les affiches",
+      "icon": "fas fa-images",
+      "value": true,
+      "if": { "privacy": false }
+    },
+    {
+      "id": "showMovies",
+      "title": "Afficher les films",
+      "icon": "fas fa-video",
+      "value": true
+    },
+    {
+      "id": "showSeries",
+      "title": "Afficher les séries et animés",
+      "icon": "fas fa-film",
+      "value": true
+    },
+    {
+      "id": "showSmallImages",
+      "title": "Afficher les petites icônes",
+      "icon": "fas fa-pause",
+      "value": true
+    },
+    {
+      "id": "timestamp",
+      "title": "Afficher le temps de lecture",
+      "icon": "fas fa-stopwatch",
+      "value": true,
+      "if": { "privacy": false }
+    },
+    {
+      "id": "logoType",
+      "title": "Icône Jelly",
+      "icon": "fas fa-image",
+      "value": 2,
+      "values": ["Animée", "Fixe", "Fixe sans fond"]
+    }
+  ],
+  "allowURLOverrides": true
+}
