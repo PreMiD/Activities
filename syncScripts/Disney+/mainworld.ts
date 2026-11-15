@@ -25,6 +25,8 @@ SyncMainworldScript.register({
         ad: !!ui?.interstitials?.isInterstitialPlaying,
         currentTime: info.playheadPositionMs / 1000,
         duration: durationMs / 1000,
+        // mediaPlayer.playbackRate only takes presets, the <video> takes any rate (unverified on a live account).
+        playbackRate: mp.mediaElement?.playbackRate ?? 1,
         title: metadata?.title?.text,
         subtitle: metadata?.subtitle?.text,
       }
@@ -45,6 +47,20 @@ SyncMainworldScript.register({
 
     const interval = setInterval(() => post(readState()), 250)
 
+    let rateCheck: ReturnType<typeof setTimeout> | undefined
+    function setRate(mp: any, rate: number) {
+      const element = mp.mediaElement
+      if (!element)
+        return ctx.content.send('rateRejected', rate)
+      element.playbackRate = rate
+      clearTimeout(rateCheck)
+      // Drift is corrected by small rate changes; a player that resets them must be seeked instead.
+      rateCheck = setTimeout(() => {
+        if (Math.abs((getPlayer()?.mediaElement?.playbackRate ?? rate) - rate) > 0.001)
+          ctx.content.send('rateRejected', rate)
+      }, 500)
+    }
+
     ctx.content.onMessage('command', (data: any) => {
       const mp = getPlayer()
       if (!mp)
@@ -55,8 +71,13 @@ SyncMainworldScript.register({
         mp.pause()
       else if (data.action === 'seek')
         mp.seek(data.timeMs)
+      else if (data.action === 'rate')
+        setRate(mp, data.playbackRate)
     })
 
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+      clearTimeout(rateCheck)
+    }
   },
 })
