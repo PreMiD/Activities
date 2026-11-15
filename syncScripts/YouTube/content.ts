@@ -47,53 +47,21 @@ SyncScript.register({
       })
     }
 
-    let lastAdState: boolean | null = null
-
-    function detectAd() {
+    function reportAd() {
       // Hover previews are separate players that can show ads of their own.
       const inAd = !!document.querySelector('#movie_player.ad-showing, #movie_player.ad-interrupting, #movie_player .ytp-ad-player-overlay')
-      if (inAd === lastAdState)
-        return
-      lastAdState = inAd
+      // The runtime drops repeats, so the state is sent every tick and reaches the party from the start.
       ctx.video.reportAd(inAd)
     }
 
-    let debounceTimer: ReturnType<typeof setTimeout> | null = null
-
-    const observer = new MutationObserver(() => {
-      if (debounceTimer)
-        return
-      debounceTimer = setTimeout(() => {
-        debounceTimer = null
-        updatePageInfo()
-        detectAd()
-      }, 250)
-    })
-
-    function start(root: Node) {
+    function tick() {
       updatePageInfo()
-      detectAd()
-      observer.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] })
+      reportAd()
     }
 
-    if (document.body) {
-      start(document.body)
-    }
-    else {
-      const bodyObserver = new MutationObserver(() => {
-        if (document.body) {
-          bodyObserver.disconnect()
-          start(document.body)
-        }
-      })
-      bodyObserver.observe(document.documentElement, { childList: true })
-    }
+    tick()
+    const poll = setInterval(tick, 500)
 
-    const adPoll = setInterval(detectAd, 500)
-
-    return () => {
-      observer.disconnect()
-      clearInterval(adPoll)
-    }
+    return () => clearInterval(poll)
   },
 })
