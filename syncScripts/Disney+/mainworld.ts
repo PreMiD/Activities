@@ -7,19 +7,25 @@ SyncMainworldScript.register({
 
     const interval = setInterval(() => {
       const mp = getPlayer()
-      if (!mp)
+      if (!mp) {
+        ctx.content.send('state', null)
         return
+      }
 
       const status = mp.playbackStatus
       const info = mp.timeline?.info
       const metadata = mp.mediaPlaybackCriteria?.metadata
+      const ui = (document.querySelector('disney-web-player-ui') as any)?.latestUiState
+      const durationMs = info?.programDurationMs ?? info?.seekableEndMs ?? 0
 
       ctx.content.send('state', {
         playing: !!status?.playing,
         paused: !!status?.paused,
         buffering: (status?.currentState === 'SEEKING' && !status?.paused) || !!status?.buffering,
+        // Ads and promos alike keep the episode from playing.
+        ad: !!ui?.interstitials?.isInterstitialPlaying,
         currentTime: info ? info.playheadPositionMs / 1000 : 0,
-        duration: info ? info.seekableDurationMs / 1000 : 0,
+        duration: durationMs / 1000,
         title: metadata?.title?.text,
         subtitle: metadata?.subtitle?.text,
       })
