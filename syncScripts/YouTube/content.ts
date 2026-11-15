@@ -47,10 +47,15 @@ SyncScript.register({
       })
     }
 
+    let lastAdState: boolean | null = null
+
     function reportAd() {
       // Hover previews are separate players that can show ads of their own.
       const inAd = !!document.querySelector('#movie_player.ad-showing, #movie_player.ad-interrupting, #movie_player .ytp-ad-player-overlay')
-      // The runtime drops repeats, so the state is sent every tick and reaches the party from the start.
+      // Older runtimes restart the ad-end debounce on every report, so only changes are sent; the first tick sends the initial state.
+      if (inAd === lastAdState)
+        return
+      lastAdState = inAd
       ctx.video.reportAd(inAd)
     }
 

@@ -37,6 +37,40 @@ function createChannel() {
   }
 }
 
+/**
+ * The runtimes' ad and buffering reporting: a start is sent at once, an end after 500 ms.
+ * The stable runtime restarts that debounce on every repeated end report; the new one keeps it running.
+ */
+function debouncedState(flavour: RuntimeFlavour, send: (value: boolean) => void) {
+  let last: boolean | null = null
+  let timer: ReturnType<typeof setTimeout> | null = null
+  return (value: boolean) => {
+    if (flavour === 'new' && !value && timer)
+      return
+    if (flavour === 'new' && timer) {
+      clearTimeout(timer)
+      timer = null
+    }
+    if (value === last)
+      return
+    if (timer) {
+      clearTimeout(timer)
+      timer = null
+    }
+    if (value) {
+      last = value
+      send(value)
+    }
+    else {
+      timer = setTimeout(() => {
+        timer = null
+        last = value
+        send(value)
+      }, 500)
+    }
+  }
+}
+
 function compile(file: string) {
   return transformSync(readFileSync(file, 'utf8'), { loader: 'ts', format: 'cjs' }).code
 }
@@ -52,20 +86,8 @@ export function runSyncScript(folder: string, flavour: RuntimeFlavour, page: Pag
   const window = { ...page.window }
 
   const bridged = { ad: [] as boolean[], buffering: [] as boolean[], blocked: [] as string[], unblocked: 0 }
-  let lastAd: boolean | null = null
-  let lastBuffering: boolean | null = null
-  const reportAd = vi.fn((isInAd: boolean) => {
-    if (isInAd === lastAd)
-      return
-    lastAd = isInAd
-    bridged.ad.push(isInAd)
-  })
-  const reportBuffering = vi.fn((isBuffering: boolean) => {
-    if (isBuffering === lastBuffering)
-      return
-    lastBuffering = isBuffering
-    bridged.buffering.push(isBuffering)
-  })
+  const reportAd = vi.fn(debouncedState(flavour, value => bridged.ad.push(value)))
+  const reportBuffering = vi.fn(debouncedState(flavour, value => bridged.buffering.push(value)))
 
   const handles: { options: any, reportPlayback: ReturnType<typeof vi.fn>, release: ReturnType<typeof vi.fn> }[] = []
 

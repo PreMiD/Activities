@@ -37,13 +37,15 @@ describe.each<RuntimeFlavour>(['old', 'new'])('youTube sync script on the %s run
       hostname: 'www.youtube.com',
       querySelector: selector => inAd && selector.includes('#movie_player.ad-showing') ? {} : null,
     })
+    vi.advanceTimersByTime(500)
     expect(page.bridged.ad).toEqual([false])
 
     inAd = true
     vi.advanceTimersByTime(500)
-    inAd = false
-    vi.advanceTimersByTime(500)
+    expect(page.bridged.ad).toEqual([false, true])
 
+    inAd = false
+    vi.advanceTimersByTime(1500)
     expect(page.bridged.ad).toEqual([false, true, false])
     page.stop()
   })

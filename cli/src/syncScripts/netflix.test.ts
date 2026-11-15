@@ -73,6 +73,21 @@ describe.each<RuntimeFlavour>(['old', 'new'])('netflix sync script on the %s run
     page.stop()
   })
 
+  it('lets an ad end reach the party while the player keeps playing', () => {
+    let inAd = true
+    let time = 0
+    const { netflix } = fakeNetflix({ getAdManager: () => ({ adPresenting: { _value: inAd } }), getSegmentTime: () => (time += 250) })
+    const page = runSyncScript('Netflix', flavour, { pathname: '/watch/1', window: { netflix } })
+    vi.advanceTimersByTime(500)
+    expect(page.bridged.ad).toEqual([true])
+
+    inAd = false
+    vi.advanceTimersByTime(1000)
+
+    expect(page.bridged.ad).toEqual([true, false])
+    page.stop()
+  })
+
   it('throttles a paused player to one post a second', () => {
     const { netflix } = fakeNetflix({ isPaused: () => true })
     const page = runSyncScript('Netflix', flavour, { pathname: '/watch/1', window: { netflix } })

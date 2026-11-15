@@ -3,6 +3,7 @@ SyncScript.register({
     let handle: ManualVideoHandle | null = null
     let lastSeenAt = 0
     let lastBuffering = false
+    let lastAd: boolean | null = null
     let lastPageInfoKey = ''
     let blocked = false
 
@@ -75,6 +76,7 @@ SyncScript.register({
           handle.release()
           handle = null
           lastBuffering = false
+          lastAd = null
         }
         return
       }
@@ -92,7 +94,11 @@ SyncScript.register({
         duration: data.duration,
         playbackRate: data.playbackRate,
       })
-      handle.reportAd(data.ad)
+      // Older runtimes restart the ad-end debounce on every report, so repeats would keep an ad from ever ending.
+      if (data.ad !== lastAd) {
+        lastAd = data.ad
+        handle.reportAd(data.ad)
+      }
 
       if (data.buffering !== lastBuffering) {
         lastBuffering = data.buffering

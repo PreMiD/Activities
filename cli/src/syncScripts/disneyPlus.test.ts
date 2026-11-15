@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { runSyncScript } from './harness.js'
 
 function fakeDisney({ timeline = true, ad = false, paused = false } = {}) {
+  const ui = { latestUiState: { interstitials: { isInterstitialPlaying: ad } } }
   const mediaElement = { playbackRate: 1 }
   const mediaPlayer: Record<string, any> = {
     playbackStatus: { playing: !paused, paused, buffering: false, currentState: paused ? 'PAUSED' : 'PLAYING' },
@@ -15,9 +16,9 @@ function fakeDisney({ timeline = true, ad = false, paused = false } = {}) {
   }
   const elements: Record<string, unknown> = {
     'disney-web-player': { mediaPlayer },
-    'disney-web-player-ui': { latestUiState: { interstitials: { isInterstitialPlaying: ad } } },
+    'disney-web-player-ui': ui,
   }
-  return { mediaPlayer, mediaElement, querySelector: (selector: string) => elements[selector] ?? null }
+  return { mediaPlayer, mediaElement, ui, querySelector: (selector: string) => elements[selector] ?? null }
 }
 
 describe.each<RuntimeFlavour>(['old', 'new'])('disney+ sync script on the %s runtime', (flavour) => {
@@ -65,6 +66,22 @@ describe.each<RuntimeFlavour>(['old', 'new'])('disney+ sync script on the %s run
     vi.advanceTimersByTime(250)
 
     expect(page.bridged.ad).toEqual([true])
+    page.stop()
+  })
+
+  it('lets an ad end reach the party while the player keeps playing', () => {
+    const { querySelector, ui, mediaPlayer } = fakeDisney({ ad: true })
+    const page = runSyncScript('Disney+', flavour, { pathname: '/play/abc', querySelector })
+    vi.advanceTimersByTime(500)
+    expect(page.bridged.ad).toEqual([true])
+
+    ui.latestUiState.interstitials.isInterstitialPlaying = false
+    for (let i = 0; i < 4; i++) {
+      mediaPlayer.timeline.info.playheadPositionMs += 250
+      vi.advanceTimersByTime(250)
+    }
+
+    expect(page.bridged.ad).toEqual([true, false])
     page.stop()
   })
 
