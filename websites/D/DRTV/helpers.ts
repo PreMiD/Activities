@@ -28,9 +28,11 @@ export function getVideoDetails() {
     const metadata = episodeMetadata.textContent
 
     if (!metadata.includes('Film')) {
-      const match = metadata.match(EogSMetadataRegex)!
-      season = match[0]
-      episode = match[1]
+      const match = metadata.match(EogSMetadataRegex)
+      if (match) {
+        season = match[0]
+        episode = match[1]
+      }
     }
   }
 
