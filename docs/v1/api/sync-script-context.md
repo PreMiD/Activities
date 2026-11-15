@@ -21,9 +21,9 @@ Registers a sync script with the PreMiD extension. The `setup` function is calle
 
 #### Parameters
 
-| Parameter            | Type                                               | Description                                                                                            |
-| -------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `options.setup`      | `(ctx: SyncScriptContext) => (() => void) \| void` | Called on activation. Receives the context object. May return a cleanup function.                      |
+| Parameter            | Type                                               | Description                                                                                                                                                                                                                                  |
+| -------------------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `options.setup`      | `(ctx: SyncScriptContext) => (() => void) \| void` | Called on activation. Receives the context object. May return a cleanup function.                                                                                                                                                            |
 | `options.onNavigate` | `(ctx: SyncScriptContext, url: string) => void`    | Called when the page address changes during a party: a navigation from the controller, or a follower's own in-page navigation. Once per address. Extensions before 2.15 only call it on a follower when the controller's navigation arrives. |
 
 #### Returns
@@ -495,6 +495,8 @@ Listens for requests from the main world and provides a response.
 | `key`     | `string`                     | The request key to listen for.                                                    |
 | `handler` | `(data: unknown) => unknown` | Called when a request is received. The return value is sent back as the response. |
 
+If the handler throws or rejects, the caller's `request()` rejects with the error on both sides. Older extensions let the caller wait for the timeout instead, so always handle a rejected `request()`.
+
 #### Returns
 
 An unsubscribe function.
@@ -562,6 +564,24 @@ Subscribes to role changes.
 #### Returns
 
 An unsubscribe function.
+
+### party.onHostChange
+
+<!-- eslint-skip -->
+
+```typescript
+party.onHostChange?(handler: (isHost: boolean) => void): () => void
+```
+
+Subscribes to changes of whether the current user is the host, for example when the host role moves to someone else. Missing on extensions without the `hostChange` capability.
+
+<!-- eslint-skip -->
+
+```typescript
+const unsubHost = ctx.party.onHostChange?.((isHost) => {
+  controls.hidden = !isHost
+})
+```
 
 ### party.onPauseChange
 
@@ -647,14 +667,14 @@ readonly runtime?: { version: string, capabilities: string[] }
 
 The version of the sync script runtime and the capabilities it has. `undefined` on older extensions, and also available as `SyncScript.runtime` before registering. Check a capability instead of comparing versions:
 
-| Capability         | Meaning                                                                                       |
-| ------------------ | --------------------------------------------------------------------------------------------- |
-| `fallbackOptOut`   | `features({ fallback: false })` is honored.                                                   |
-| `derivedEvents`    | Ad and buffering reports are deduplicated and debounced by the runtime.                       |
-| `log`              | `ctx.log` exists.                                                                             |
-| `hostChange`       | `party.onHostChange` exists.                                                                  |
-| `localNavigate`    | `onNavigate` also fires on the controller and on a follower's own in-page navigation.         |
-| `pageInfoType`     | `setPageInfo` accepts `type` and `duration`.                                                  |
+| Capability         | Meaning                                                                                        |
+| ------------------ | ---------------------------------------------------------------------------------------------- |
+| `fallbackOptOut`   | `features({ fallback: false })` is honored.                                                    |
+| `derivedEvents`    | Ad and buffering reports are deduplicated and debounced by the runtime.                        |
+| `log`              | `ctx.log` exists.                                                                              |
+| `hostChange`       | `party.onHostChange` exists.                                                                   |
+| `localNavigate`    | `onNavigate` also fires on the controller and on a follower's own in-page navigation.          |
+| `pageInfoType`     | `setPageInfo` accepts `type` and `duration`.                                                   |
 | `errorContainment` | A throwing handler no longer stops the others, and a throwing `onRequest` rejects `request()`. |
 
 <!-- eslint-skip -->

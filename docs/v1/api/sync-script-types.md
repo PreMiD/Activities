@@ -10,9 +10,9 @@ For a detailed guide on using the `SyncScriptContext` object, see the [Sync Scri
 
 Defines the entry point for a sync script. The `setup` function receives a [SyncScriptContext](#syncscriptcontext) and may return a cleanup function.
 
-| Property     | Type                                               | Description                                                                 |
-| ------------ | -------------------------------------------------- | --------------------------------------------------------------------------- |
-| `setup`      | `(ctx: SyncScriptContext) => (() => void) \| void` | Called when the sync script is initialized; may return a teardown function. |
+| Property     | Type                                               | Description                                                                                                                                      |
+| ------------ | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `setup`      | `(ctx: SyncScriptContext) => (() => void) \| void` | Called when the sync script is initialized; may return a teardown function.                                                                      |
 | `onNavigate` | `(ctx: SyncScriptContext, url: string) => void`    | Called when the page address changes during a party: a navigation from the controller, or a follower's own in-page navigation. Once per address. |
 
 ## SyncScriptHandle
@@ -49,9 +49,9 @@ The main context object passed to sync script lifecycle hooks. See the [Sync Scr
 
 Also available as `SyncScript.runtime` before a script registers.
 
-| Property       | Type       | Description                                                                                                                                                                                     |
-| -------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `version`      | `string`   | The extension version.                                                                                                                                                                          |
+| Property       | Type       | Description                                                                                                                                                                              |
+| -------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `version`      | `string`   | The extension version.                                                                                                                                                                   |
 | `capabilities` | `string[]` | Any of `fallbackOptOut`, `derivedEvents`, `log`, `hostChange`, `localNavigate`, `pageInfoType` and `errorContainment`. See the [runtime reference](/v1/api/sync-script-context#runtime). |
 
 ## TakeControlOptions
@@ -118,27 +118,28 @@ A synchronization command received from the Watch Party server.
 
 Metadata about the current page, displayed to party members.
 
-| Property    | Type     | Description                                                          |
-| ----------- | -------- | -------------------------------------------------------------------- |
-| `title`     | `string` | The title of the current content (e.g., video title).                |
-| `subtitle`  | `string` | A subtitle or secondary label (e.g., channel name).                  |
-| `thumbnail` | `string` | URL of a thumbnail image for the current content. Not displayed yet. |
-| `type`      | `string` | The kind of content. Ignored before extension 2.15.                  |
-| `duration`  | `number` | The length in seconds. Ignored before extension 2.15.                |
+| Property    | Type                                        | Description                                                          |
+| ----------- | ------------------------------------------- | -------------------------------------------------------------------- |
+| `title`     | `string`                                    | The title of the current content (e.g., video title).                |
+| `subtitle`  | `string`                                    | A subtitle or secondary label (e.g., channel name).                  |
+| `thumbnail` | `string`                                    | URL of a thumbnail image for the current content. Not displayed yet. |
+| `type`      | `'video' \| 'music' \| 'live' \| 'podcast'` | The kind of content. Ignored before extension 2.15.                  |
+| `duration`  | `number`                                    | The length in seconds. Ignored before extension 2.15.                |
 
 ## PartyState
 
 Reactive state representing the current Watch Party session.
 
-| Property         | Type                                                                  | Description                                                                                |
-| ---------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `role`           | `'controller' \| 'follower'`                                          | The current user's role in the party.                                                      |
-| `paused`         | `boolean`                                                             | Whether the party playback is currently paused.                                            |
-| `active`         | `boolean`                                                             | Whether the Watch Party session is currently active.                                       |
-| `isHost`         | `boolean`                                                             | Whether the current user is the host of the party.                                         |
-| `onRoleChange`   | `(handler: (role: 'controller' \| 'follower') => void) => () => void` | Registers a handler called when the user's role changes; returns an unsubscribe function.  |
-| `onPauseChange`  | `(handler: (paused: boolean) => void) => () => void`                  | Registers a handler called when the pause state changes; returns an unsubscribe function.  |
-| `onActiveChange` | `(handler: (active: boolean) => void) => () => void`                  | Registers a handler called when the active state changes; returns an unsubscribe function. |
+| Property         | Type                                                                  | Description                                                                                                       |
+| ---------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `role`           | `'controller' \| 'follower'`                                          | The current user's role in the party.                                                                             |
+| `paused`         | `boolean`                                                             | Whether the party playback is currently paused.                                                                   |
+| `active`         | `boolean`                                                             | Whether the Watch Party session is currently active.                                                              |
+| `isHost`         | `boolean`                                                             | Whether the current user is the host of the party.                                                                |
+| `onRoleChange`   | `(handler: (role: 'controller' \| 'follower') => void) => () => void` | Registers a handler called when the user's role changes; returns an unsubscribe function.                         |
+| `onHostChange`   | `((handler: (isHost: boolean) => void) => () => void) \| undefined`   | Registers a handler called when the host changes; returns an unsubscribe function. Missing before extension 2.15. |
+| `onPauseChange`  | `(handler: (paused: boolean) => void) => () => void`                  | Registers a handler called when the pause state changes; returns an unsubscribe function.                         |
+| `onActiveChange` | `(handler: (active: boolean) => void) => () => void`                  | Registers a handler called when the active state changes; returns an unsubscribe function.                        |
 
 ## MessagingNamespace
 

@@ -122,6 +122,7 @@ All subscription methods return an unsubscribe function. Always call these in yo
 | Event            | Fires when                                                                                                                      |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | `onRoleChange`   | The host transfers control to this user, or reclaims it. Also fires when the controller leaves and control returns to the host. |
+| `onHostChange`   | The host role moves to someone else. Only with the `hostChange` capability, so call it as `ctx.party.onHostChange?.(...)`.      |
 | `onPauseChange`  | The host pauses or resumes the party (party-wide pause, not individual video pause).                                            |
 | `onActiveChange` | The Watch Party starts or ends. Note: when the party ends, the cleanup function also runs, so this is rarely needed.            |
 
@@ -132,3 +133,11 @@ All subscription methods return an unsubscribe function. Always call these in yo
 ### Messaging Timeout
 
 `ctx.mainworld.request()` has a 10-second timeout. If the mainworld script doesn't respond within that time, the promise rejects. Make sure the mainworld script is loaded and has a matching `onRequest` handler registered before making requests.
+
+A handler that throws or rejects rejects the caller's `request()` straight away, on both sides, so catch it:
+
+<!-- eslint-skip -->
+
+```typescript
+const state = await ctx.mainworld.request('get-player-state', null).catch(() => null)
+```
