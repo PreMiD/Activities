@@ -15,4 +15,16 @@ describe('syncScriptCompiler', () => {
 
     await expect(compiler.compile({ kill: false })).resolves.toBe(false)
   })
+
+  it('ships no source map unless asked to', async () => {
+    mocks.build.mockResolvedValue({})
+    const compiler = new SyncScriptCompiler(mkdtempSync(join(tmpdir(), 'sync-compile-')), { service: 'Test', regExp: 'test', version: '1.0.0' })
+    vi.spyOn(compiler as any, 'typecheck').mockResolvedValue(true)
+
+    await compiler.compile({ kill: false }).catch(() => {})
+    expect(mocks.build).toHaveBeenLastCalledWith(expect.objectContaining({ sourcemap: false }))
+
+    await compiler.compile({ kill: false, sourcemap: true }).catch(() => {})
+    expect(mocks.build).toHaveBeenLastCalledWith(expect.objectContaining({ sourcemap: 'inline' }))
+  })
 })

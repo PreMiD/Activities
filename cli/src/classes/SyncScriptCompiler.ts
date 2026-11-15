@@ -26,7 +26,7 @@ export class SyncScriptCompiler {
     public readonly metadata: SyncScriptMetadata,
   ) {}
 
-  async compile({ kill, zip = false }: { kill: boolean, zip?: boolean }): Promise<boolean> {
+  async compile({ kill, zip = false, sourcemap = false }: { kill: boolean, zip?: boolean, sourcemap?: boolean }): Promise<boolean> {
     const success = await this.typecheck(kill)
     if (!success)
       return false
@@ -48,7 +48,7 @@ export class SyncScriptCompiler {
         outdir: resolve(this.cwd, 'dist'),
         bundle: true,
         minify: true,
-        sourcemap: 'inline',
+        sourcemap: sourcemap ? 'inline' : false,
         tsconfig: resolve(this.cwd, 'tsconfig.json'),
         logLevel: 'silent',
       })
@@ -166,7 +166,7 @@ export class SyncScriptCompiler {
   }
 
   private async compileAndSend() {
-    await this.compile({ kill: false })
+    await this.compile({ kill: false, sourcemap: true })
     await this.ws?.send()
   }
 
