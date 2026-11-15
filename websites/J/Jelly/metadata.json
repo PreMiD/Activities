@@ -12,9 +12,9 @@
   },
   "url": "playjelly.fr",
   "regExp": "^https?[:][/][/]playjelly[.]fr[/]",
-  "version": "1.0.0",
-  "logo": "https://playjelly.fr/logo.png",
-  "thumbnail": "https://playjelly.fr/banner.png",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/J/Jelly/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/J/Jelly/assets/thumbnail.png",
   "color": "#00716D",
   "category": "videos",
   "tags": [
@@ -35,7 +35,9 @@
       "title": "Utiliser le titre comme nom d’activité",
       "icon": "fas fa-user-edit",
       "value": false,
-      "if": { "privacy": false }
+      "if": {
+        "privacy": false
+      }
     },
     {
       "id": "showBrowsingStatus",
@@ -48,7 +50,9 @@
       "title": "Afficher les affiches",
       "icon": "fas fa-images",
       "value": true,
-      "if": { "privacy": false }
+      "if": {
+        "privacy": false
+      }
     },
     {
       "id": "showMovies",
@@ -73,14 +77,20 @@
       "title": "Afficher le temps de lecture",
       "icon": "fas fa-stopwatch",
       "value": true,
-      "if": { "privacy": false }
+      "if": {
+        "privacy": false
+      }
     },
     {
       "id": "logoType",
       "title": "Icône Jelly",
       "icon": "fas fa-image",
       "value": 2,
-      "values": ["Animée", "Fixe", "Fixe sans fond"]
+      "values": [
+        "Animée",
+        "Fixe",
+        "Fixe sans fond"
+      ]
     }
   ],
   "allowURLOverrides": true
