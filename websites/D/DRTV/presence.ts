@@ -85,7 +85,7 @@ presence.on('UpdateData', async () => {
       }
     }
 
-    if (data.title.includes('TVA')) {
+    if (data.title?.includes('TVA')) {
       presenceData.name = 'TVA'
       presenceData.largeImageKey = ActivityAssets.TVA
     }
