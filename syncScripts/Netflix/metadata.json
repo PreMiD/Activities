@@ -1,4 +1,4 @@
 {
   "service": "Netflix",
-  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*netflix[.]com[/]"
+  "regExp": "^https?[:][/][/]([a-z0-9-]{1,63}[.])?netflix[.]com[/]"
 }
