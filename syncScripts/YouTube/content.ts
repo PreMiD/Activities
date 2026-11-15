@@ -31,7 +31,8 @@ SyncScript.register({
     let lastAdState: boolean | null = null
 
     function detectAd() {
-      const inAd = !!document.querySelector('.ad-showing, .ytp-ad-player-overlay')
+      // Hover previews are separate players that can show ads of their own.
+      const inAd = !!document.querySelector('#movie_player.ad-showing, #movie_player.ad-interrupting, #movie_player .ytp-ad-player-overlay')
       if (inAd === lastAdState)
         return
       lastAdState = inAd
