@@ -1,21 +1,21 @@
 SyncScript.register({
   setup(ctx) {
     let handle: ManualVideoHandle | null = null
-    let missed = 0
+    let lastSeenAt = 0
     let lastBuffering = false
     let lastPageInfoKey = ''
 
     const offState = ctx.mainworld.onMessage('state', (data: any) => {
       if (!data) {
         // The player is gone (home page, or between episodes) for about a second.
-        if (handle && ++missed > 10) {
+        if (handle && Date.now() - lastSeenAt > 1000) {
           handle.release()
           handle = null
           lastBuffering = false
         }
         return
       }
-      missed = 0
+      lastSeenAt = Date.now()
 
       if (!handle) {
         // A managed page that reports nothing is given up on, so it only becomes one once there is a player.
