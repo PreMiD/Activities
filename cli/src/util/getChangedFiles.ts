@@ -40,6 +40,9 @@ export async function getChangedFilesCi(): Promise<ChangedFile[]> {
     },
   })
 
+  if (!response.ok)
+    exit(`Could not get the changed files from ${base} to ${head}: ${response.status} ${response.statusText}`)
+
   const files = gitDiffParser.parse(await response.text())
   return files.map(file => ({
     path: file.type === 'delete' ? file.oldPath : file.newPath,
