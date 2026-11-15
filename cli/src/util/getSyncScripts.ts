@@ -1,12 +1,11 @@
 import type { SyncScriptMetadata } from '../classes/SyncScriptCompiler.js'
 import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
-import { dirname, resolve } from 'node:path'
+import { basename, dirname, relative, resolve, sep } from 'node:path'
 import process from 'node:process'
 import { search } from '@inquirer/prompts'
 import { globby } from 'globby'
 import isCI from 'is-ci'
-import multimatch from 'multimatch'
 import { decodeUtf8Escapes, getChangedFilesCi, getChangedFilesLocal } from './getChangedFiles.js'
 import { exit } from './log.js'
 import { searchChoices } from './searchChoices.js'
@@ -41,28 +40,20 @@ export async function getChangedSyncScripts(): Promise<{
 
   const syncScriptsDir = resolve(process.cwd(), 'syncScripts')
   const scriptPaths = new Set<string>()
+  const deletedFolders = new Set<string>()
 
-  for (const file of changedFiles.filter(f => !f.deleted)) {
-    if (!file.path.startsWith(syncScriptsDir))
+  for (const file of changedFiles) {
+    const [name, ...rest] = relative(syncScriptsDir, file.path).split(sep)
+    if (!name || name === '..' || !rest.length)
       continue
 
-    let path = file.path
-    while (!existsSync(resolve(path, 'metadata.json'))) {
-      const parent = dirname(path)
-      if (parent === path || parent === syncScriptsDir || parent === process.cwd())
-        break
-      path = parent
-    }
-
-    if (existsSync(resolve(path, 'metadata.json')))
-      scriptPaths.add(path)
+    const folder = resolve(syncScriptsDir, name)
+    // A script is only gone once its metadata is; deleting one of its other files is a change to rebuild.
+    if (existsSync(resolve(folder, 'metadata.json')))
+      scriptPaths.add(folder)
+    else if (file.deleted)
+      deletedFolders.add(folder)
   }
-
-  const deletedFolders = changedFiles
-    .filter(f => f.deleted && f.path.startsWith(syncScriptsDir))
-    .map(f => dirname(f.path))
-    .filter(folder => multimatch(folder, ['**/syncScripts/*']).length > 0)
-    .filter(folder => !Array.from(scriptPaths).some(p => p.startsWith(folder)))
 
   return {
     changed: await Promise.all(
@@ -71,10 +62,7 @@ export async function getChangedSyncScripts(): Promise<{
         folder,
       })),
     ),
-    deleted: deletedFolders.map((folder) => {
-      const service = folder.split('/').at(-1) ?? ''
-      return { metadata: { service }, folder }
-    }),
+    deleted: Array.from(deletedFolders, folder => ({ metadata: { service: basename(folder) }, folder })),
   }
 }
 

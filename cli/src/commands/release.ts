@@ -62,11 +62,6 @@ export async function release() {
 
   core.info(`Found ${changed.length} changed activities, ${deleted.length} deleted activities`)
 
-  //* If no activities changed, return success
-  if (changed.length === 0 && deleted.length === 0) {
-    return success(MESSAGES.noActivities)
-  }
-
   if (deleted.length) {
     for (const activity of deleted) {
       const folderName = sanitazeFolderName(activity.metadata.service)
