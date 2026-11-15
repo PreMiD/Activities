@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.premid.app/metadata/1.17",
+  "apiVersion": 1,
+  "author": {
+    "id": "608743140400300044",
+    "name": "mrlinxed"
+  },
+  "service": "Old Light",
+  "description": {
+    "en": "Old Light is a slow strategy game in a shared galaxy. Build a system, scout neighbours, send fleets, and return to see what changed while you were away."
+  },
+  "url": "oldlight.io",
+  "regExp": "^https?[:][/][/]([a-z0-9-]+[.])*oldlight[.]io[/]",
+  "version": "1.0.1",
+  "logo": "https://cdn.rcd.gg/PreMiD/websites/O/Old%20Light/assets/logo.png",
+  "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/O/Old%20Light/assets/thumbnail.png",
+  "color": "#05070d",
+  "category": "games",
+  "tags": [
+    "strategy",
+    "multiplayer",
+    "space",
+    "browser-game",
+    "4x"
+  ],
+  "settings": [
+    {
+      "id": "showEmpire",
+      "title": "Show Empire Name",
+      "icon": "fas fa-user",
+      "value": true
+    },
+    {
+      "id": "showSector",
+      "title": "Show Active Sector",
+      "icon": "fas fa-location-dot",
+      "value": true
+    },
+    {
+      "id": "showProfile",
+      "title": "Show Empire Profile Button",
+      "icon": "fas fa-id-card",
+      "value": true
+    }
+  ]
+}

@@ -5,6 +5,12 @@
     "name": "Eai",
     "id": "132779412771962880"
   },
+  "contributors": [
+    {
+      "name": "sino",
+      "id": "258380809172418570"
+    }
+  ],
   "service": "niconico",
   "description": {
     "de": "niconico ist der größte Unterhaltungsdienst in Japan. Genieße Videos mit Videokommentar oder niconico Live, mit dem du Live-Streaming-Programme in Echtzeit anschauen kannst, sowie andere Dienste mit Bildern, Illustrationen, E-Books, Manga, neuesten Nachrichten, Blogs und 3D-Inhalten kostenlos!",
@@ -18,10 +24,13 @@
   "url": [
     "www.nicovideo.jp",
     "live.nicovideo.jp",
-    "seiga.nicovideo.jp"
+    "live2.nicovideo.jp",
+    "seiga.nicovideo.jp",
+    "ch.nicovideo.jp",
+    "dic.nicovideo.jp"
   ],
-  "regExp": "^https?[:][/][/](www|live|seiga)[.]nicovideo[.]jp[/]",
-  "version": "1.6.3",
+  "regExp": "^https?[:][/][/](www|live2?|seiga|ch|dic)[.]nicovideo[.]jp[/]",
+  "version": "2.0.0",
   "logo": "https://cdn.rcd.gg/PreMiD/websites/N/niconico/assets/logo.png",
   "thumbnail": "https://cdn.rcd.gg/PreMiD/websites/N/niconico/assets/thumbnail.jpg",
   "color": "#272727",
@@ -32,6 +41,10 @@
     "manga"
   ],
   "settings": [
+    {
+      "id": "lang",
+      "multiLanguage": true
+    },
     {
       "id": "privacy",
       "title": "Privacy Mode",
