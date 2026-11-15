@@ -66,6 +66,13 @@ export class SyncScriptDevConsole {
     if (!message || typeof message !== 'object')
       return undefined
     const { type, service, tabId, level, args, kind, data } = message as Record<string, any>
+    if (type === 'disconnected') {
+      this.role = 'controller'
+      this.soloTabs.clear()
+      this.statuses.clear()
+      this.flags.clear()
+      return undefined
+    }
     const where = `[${service} tab ${tabId}]`
 
     if (type === 'syncScriptLog' && Array.isArray(args))

@@ -66,12 +66,7 @@ export class WebSocketServer implements TestRpc {
           }
         }
         else {
-          for (const listener of this.messageListeners) {
-            try {
-              listener(message)
-            }
-            catch {}
-          }
+          this.notify(message)
         }
       })
 
@@ -80,8 +75,10 @@ export class WebSocketServer implements TestRpc {
 
       socket.on('close', () => {
         info('Disconnected from the extension!')
-        if (!this.getOpenClient())
+        if (!this.getOpenClient()) {
           this.rejectPendingTests('Extension disconnected')
+          this.notify({ type: 'disconnected' })
+        }
       })
     })
   }
@@ -185,7 +182,16 @@ export class WebSocketServer implements TestRpc {
   private testListeners = new Set<(event: TestEvent) => void>()
   private messageListeners = new Set<(message: unknown) => void>()
 
-  /** Every other message the extension sends, such as a dev sync script's logs and reports. */
+  private notify(message: unknown) {
+    for (const listener of this.messageListeners) {
+      try {
+        listener(message)
+      }
+      catch {}
+    }
+  }
+
+  /** Every other message the extension sends, such as a dev sync script's logs and reports, and `{ type: 'disconnected' }` once no extension is connected. */
   onMessage(listener: (message: unknown) => void) {
     this.messageListeners.add(listener)
     return () => {

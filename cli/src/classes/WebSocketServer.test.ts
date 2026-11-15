@@ -112,6 +112,17 @@ describe('webSocketServer test RPC', () => {
     await rejection
   })
 
+  it('tells message listeners once the last extension disconnects', async () => {
+    const received: unknown[] = []
+    server.onMessage(message => received.push(message))
+    const client = await connectClient()
+    await vi.waitFor(() => expect(server.isConnected).toBe(true))
+
+    client.terminate()
+
+    await vi.waitFor(() => expect(received).toEqual([{ type: 'disconnected' }]))
+  })
+
   it('send recovers after a run without a dist folder', async () => {
     const cwd = await mkdtemp(join(tmpdir(), 'pmd-ws-'))
     await server.close()

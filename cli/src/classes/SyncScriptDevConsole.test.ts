@@ -58,6 +58,15 @@ describe('syncScriptDevConsole', () => {
     expect(devConsole.soloTabs.size).toBe(0)
   })
 
+  it('forgets every solo tab when the extension disconnects', () => {
+    const devConsole = new SyncScriptDevConsole()
+    devConsole.format(report('solo', { active: true, role: 'follower', url: 'https://youtube.com' }))
+
+    expect(devConsole.format({ type: 'disconnected' })).toBeUndefined()
+    expect(devConsole.soloTabs.size).toBe(0)
+    expect(devConsole.role).toBe('controller')
+  })
+
   it('prints playback events at once and an unchanged state at most every five seconds', () => {
     const devConsole = new SyncScriptDevConsole()
     const status = (data: object, now: number) => devConsole.format(report('status', { duration: 300, playbackRate: 1, ...data }), now)?.text
