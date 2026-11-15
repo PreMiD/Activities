@@ -4,13 +4,13 @@ This page covers the `pmd` commands for sync scripts, how to test a script with 
 
 ## CLI Commands
 
-| Command                                              | What it does                                                                                                                                                                                                    |
-| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npx pmd sync-new [service]`                         | Creates `syncScripts/<service>/` with a `metadata.json` (version `1.0.0`) and a starter `content.ts`.                                                                                                           |
-| `npx pmd sync-dev [service]`                         | Type checks and rebuilds on every change, with inline source maps, and sends the script to every browser with Activity Developer Mode on, the same way `pmd dev` sends activities.                              |
-| `npx pmd sync-build [service] [--all] [--validate]`  | Validates the metadata of every sync script, then type checks and builds `dist/` without source maps. `--validate` also checks that every changed script raised its version. `--zip` zips the build.            |
-| `npx pmd sync-release [service] [--changed] [--all]` | Builds and uploads scripts to the API. `--changed` uploads the scripts changed since the base commit and deletes the services that were removed or renamed; `--all` uploads every script. CI runs this for you. |
-| `npx pmd sync-keygen`                                | Prints a new Ed25519 key pair for signing releases. See [Signing](#signing).                                                                                                                                    |
+| Command                                                                 | What it does                                                                                                                                                                                                                                                                                                      |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npx pmd sync-new [service]`                                            | Creates `syncScripts/<service>/` with a `metadata.json` (version `1.0.0`) and a starter `content.ts`.                                                                                                                                                                                                             |
+| `npx pmd sync-dev [service]`                                            | Type checks and rebuilds on every change, with inline source maps, and sends the script to every browser with Activity Developer Mode on, the same way `pmd dev` sends activities.                                                                                                                                |
+| `npx pmd sync-build [service] [--all] [--validate] [--zip] [--no-kill]` | Validates the metadata of every sync script, then type checks and builds `dist/` without source maps. `--validate` also checks that every changed script raised its version. `--zip` zips the build. `--no-kill` keeps going after an error.                                                                      |
+| `npx pmd sync-release [service] [--changed] [--all]`                    | Builds and uploads scripts to the API. `--changed` uploads the scripts changed since the base commit and deletes the services that were removed or renamed; `--all` uploads every script and never deletes. Needs `ADMIN_API_KEY`, and `SYNC_SCRIPT_SIGNING_KEY` or the upload is unsigned. CI runs this for you. |
+| `npx pmd sync-keygen`                                                   | Prints a new Ed25519 key pair for signing releases. See [Signing](#signing).                                                                                                                                                                                                                                      |
 
 The Validate workflow runs `pmd sync-build --all --validate` and the pmd test suite on every pull request.
 
@@ -41,7 +41,7 @@ Solo mode is a quick check, not a replacement for testing with two browsers.
 
 ### Logs in the terminal
 
-Every `ctx.log` call of the dev script, and every error the runtime catches from it (a throwing `setup`, `onSyncCommand` handler and so on), shows in the `pmd sync-dev` terminal with the service and tab, in solo mode and in a party alike. The page's console still gets the logs, and the same limit of 50 per 10 seconds applies. Released scripts never send anything to pmd.
+Every `ctx.log` call of the dev script, and every error the runtime catches from it (a throwing `setup`, `onSyncCommand` handler and so on), shows in the `pmd sync-dev` terminal with the service and tab, in solo mode and in a party alike. The page's console still gets the logs, and the same limit of 50 per 10 seconds applies. Released scripts never send anything to pmd. Errors in `mainworld.ts` only show in the page's console.
 
 ## Testing with Two Browsers
 
@@ -56,7 +56,7 @@ Test on an extension older than 2.15 as well when you can. Those extensions don'
 
 ## Versioning
 
-Every script has a semver `version` in its `metadata.json`. Raise it in every pull request that changes anything in the script's folder, `metadata.json` included; `pmd sync-build --validate` fails otherwise. The API also refuses an upload whose version is not higher than the one it has, unless the content is identical, so re-running a release is safe.
+Every script has a semver `version` in its `metadata.json`. Raise it in every pull request that changes anything in the script's folder, `metadata.json` included; `pmd sync-build --validate` fails otherwise. The API also refuses an upload whose version is not higher than the one it has, unless the upload is identical (same files, regExp, version, minExtensionVersion and signature), so re-running a release is safe.
 
 Set `minExtensionVersion` only when the script cannot work on older extensions. Those extensions then skip it, and their users get PreMiD's own video detection instead. Prefer feature detection over a minimum version:
 
@@ -86,23 +86,23 @@ Merging to `main` releases the changed sync scripts. The Release workflow runs `
 
 To upload every script again, run the Release workflow by hand (workflow dispatch), which runs `pmd sync-release --all`.
 
-The API refuses an upload whose version is not higher than the released one, and the release fails asking to raise `version`. Uploading the same scripts and metadata again changes nothing, so re-running a release is safe.
+When the API refuses a version that is not higher than the released one, the release fails asking to raise `version`.
 
 A release deletes the services the base commit had and the current commit doesn't, so renaming a folder or a service removes the old entry. A service that is already gone counts as deleted.
 
 ### Signing
 
-When the `SYNC_SCRIPT_SIGNING_KEY` repository secret is set, every upload is signed with Ed25519 and the extension refuses scripts whose signature does not match. To set it up:
+When the `SYNC_SCRIPT_SIGNING_KEY` repository secret is set, every upload is signed with Ed25519. The API checks signatures when it has the public key, and an extension built with the public key refuses every script without a valid signature. To set it up:
 
 1. Run `npx pmd sync-keygen` on a trusted machine.
-2. Store `SYNC_SCRIPT_SIGNING_KEY` as an Activities repository secret, `SYNC_SCRIPT_SIGNING_PUBLIC_KEY` in the API environment and `VITE_SYNC_SCRIPT_PUBLIC_KEY` in the extension build.
-3. Never commit the private key or paste it anywhere else.
-
-A new key changes every signature, so each script needs a raised version before it can be released with it.
+2. Store `SYNC_SCRIPT_SIGNING_KEY` as an Activities repository secret and `SYNC_SCRIPT_SIGNING_PUBLIC_KEY` in the API environment.
+3. Release every script signed. The API treats a new signature as a change, so raise each script's `version` and merge.
+4. Only then build the extension with `VITE_SYNC_SCRIPT_PUBLIC_KEY`. An extension built with the key runs only signed scripts, and none at all on browsers whose WebCrypto lacks Ed25519 (Chrome before 137).
+5. Never commit the private key or paste it anywhere else.
 
 ## Rollback
 
 When a released script breaks parties:
 
-1. **Roll back on the API.** An admin calls `POST /v6/sync-scripts/v1/{service}/rollback` with the admin API key. Without a body it restores the previous version; with `{"sha256": "..."}` it restores that one. `GET /v6/sync-scripts/v1/{service}/versions` lists the stored versions. Extensions pick the restored script up on their next discovery refresh.
+1. **Roll back on the API.** An admin calls `POST https://api.premid.app/v6/sync-scripts/v1/{service}/rollback` with the raw admin API key in the `Authorization` header and the service URL-encoded (`Disney%2B`). Without a body it restores the release before the live one, and each further call steps back once more; with `{"sha256": "..."}` it restores that one. `GET /v6/sync-scripts/v1/{service}/versions` lists the last 20 stored releases. Extensions pick the restored script up on their next discovery refresh, within about an hour.
 2. **Fix forward in the repository.** Revert or fix the change in a pull request with a version higher than the broken one, and merge it. Releasing the old code again from a tag only works if its version is raised too, since the API refuses lower versions; use the rollback endpoint for that instead. Until the fix is merged, don't run the Release workflow by hand: `--all` would upload the broken version again, since it is higher than the restored one.
