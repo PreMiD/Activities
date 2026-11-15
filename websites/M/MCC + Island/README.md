@@ -19,8 +19,14 @@ or user-specific setup is required.
 - Conversations and account pages expose only their generic action. They never
   expose messages, people, email addresses, reactions, notifications, or bookmarks,
   and never include buttons, regardless of Privacy Mode.
-- MCC Live reads event/game selectors and the leaderboard view.
-  Live-marked views currently use a generic status.
+- MCC Live reads event/game selectors and visible live-phase countdowns.
+  Countdown timers use Discord's end time without the page-open elapsed timer;
+  paused phases do not run a timer. Active games show the game, multiplier,
+  round and the game's own icon (including the pre-game question mark). Dodgebolt
+  shows its finalists and only displays a winner when MCC Live marks one; the
+  winning team's icon is used as the small image. The confirmed live result is
+  held in memory until refresh or historical-game navigation. Privacy Mode stays
+  generic, and archive leaderboards remain separate from live tracking.
 - Wiki editing reads only the page identity and editor mode, never drafts,
   edit summaries, or form values. Preferences expose only the selected section.
 - Wiki Privacy Mode hides page titles and search terms. Personal special pages
