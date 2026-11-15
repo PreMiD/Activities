@@ -4,6 +4,22 @@ SyncScript.register({
     let lastSeenAt = 0
     let lastBuffering = false
     let lastPageInfoKey = ''
+    let blocked = false
+
+    // Claiming the page before the player exists keeps the generic path from writing the raw <video>, which breaks Netflix.
+    function claim() {
+      // The extension forgets the page info of a page that is claimed again.
+      lastPageInfoKey = ''
+      ctx.features({ cursor: false, scroll: false, video: true, fallback: false })
+    }
+    let claimedPath = ''
+    function claimWatchPage() {
+      if (location.pathname.startsWith('/watch/') && location.pathname !== claimedPath) {
+        claimedPath = location.pathname
+        claim()
+      }
+    }
+    claimWatchPage()
 
     function updatePageInfo() {
       const titleElement = document.querySelector('[data-uia="video-title"]')
@@ -19,8 +35,8 @@ SyncScript.register({
     let controlOptions: SyncScriptTakeControlOptions | null = null
     function takeControl() {
       controlOptions = {
-        onPlay: () => ctx.mainworld.send('command', { action: 'play' }),
-        onPause: () => ctx.mainworld.send('command', { action: 'pause' }),
+        onPlay: t => ctx.mainworld.send('command', { action: 'play', timeMs: t * 1000 }),
+        onPause: t => ctx.mainworld.send('command', { action: 'pause', timeMs: t * 1000 }),
         onSeek: t => ctx.mainworld.send('command', { action: 'seek', timeMs: t * 1000 }),
         pauseAfterSeek: true,
       }
@@ -36,8 +52,24 @@ SyncScript.register({
         delete controlOptions.onRate
     })
 
+    const offBroken = ctx.mainworld.onMessage('broken', (data: any) => {
+      if (typeof ctx.log === 'function')
+        ctx.log('Netflix player API failed', data?.reason)
+      if (typeof ctx.reportBlocked === 'function') {
+        blocked = true
+        ctx.reportBlocked('PreMiD cannot control the Netflix player')
+      }
+    })
+    function unblock() {
+      if (blocked && typeof ctx.reportUnblocked === 'function')
+        ctx.reportUnblocked()
+      blocked = false
+    }
+    const offRecovered = ctx.mainworld.onMessage('recovered', unblock)
+
     const offState = ctx.mainworld.onMessage('state', (data: any) => {
       if (!data) {
+        claimWatchPage()
         // The player is gone (browse page, or between episodes) for about two seconds.
         if (handle && Date.now() - lastSeenAt > 2000) {
           handle.release()
@@ -49,8 +81,8 @@ SyncScript.register({
       lastSeenAt = Date.now()
 
       if (!handle) {
-        // A managed page that reports nothing is given up on, so it only becomes one once there is a player.
-        ctx.features({ cursor: false, scroll: false, video: true })
+        // Older runtimes give up on a managed page that has reported nothing for 10 s, so the claim is renewed here.
+        claim()
         handle = takeControl()
       }
 
@@ -73,6 +105,9 @@ SyncScript.register({
     return () => {
       offState()
       offRateRejected()
+      offBroken()
+      offRecovered()
+      unblock()
       handle?.release()
     }
   },

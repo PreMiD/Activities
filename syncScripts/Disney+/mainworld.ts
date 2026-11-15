@@ -45,7 +45,49 @@ SyncMainworldScript.register({
       ctx.content.send('state', state)
     }
 
-    const interval = setInterval(() => post(readState()), 250)
+    let failures = 0
+    let broken = false
+    function succeeded() {
+      failures = 0
+      if (broken) {
+        broken = false
+        ctx.content.send('recovered', null)
+      }
+    }
+    function failed(error: unknown) {
+      if (++failures === 3) {
+        broken = true
+        ctx.content.send('broken', { reason: String(error) })
+      }
+    }
+
+    const interval = setInterval(() => {
+      try {
+        post(readState())
+        succeeded()
+      }
+      catch (error) {
+        post(null)
+        failed(error)
+      }
+    }, 250)
+
+    let lastAlignAt = 0
+    // A paused or loading follower gets play and pause with the party's position, which it has to be at first.
+    function alignTo(mp: any, timeMs: unknown) {
+      if (typeof timeMs !== 'number' || !Number.isFinite(timeMs))
+        return
+      const state = readState()
+      if (!state || state.ad || state.buffering || mp.playbackStatus?.currentState === 'SEEKING')
+        return
+      if (Math.abs(state.currentTime * 1000 - timeMs) <= 1000)
+        return
+      // Old runtimes repeat play with every heartbeat until the player plays, so one seek has to land first.
+      if (Date.now() - lastAlignAt < 3000)
+        return
+      lastAlignAt = Date.now()
+      mp.seek(timeMs)
+    }
 
     let rateCheck: ReturnType<typeof setTimeout> | undefined
     function setRate(mp: any, rate: number) {
@@ -56,23 +98,39 @@ SyncMainworldScript.register({
       clearTimeout(rateCheck)
       // Drift is corrected by small rate changes; a player that resets them must be seeked instead.
       rateCheck = setTimeout(() => {
-        if (Math.abs((getPlayer()?.mediaElement?.playbackRate ?? rate) - rate) > 0.001)
-          ctx.content.send('rateRejected', rate)
+        try {
+          if (Math.abs((getPlayer()?.mediaElement?.playbackRate ?? rate) - rate) > 0.001)
+            ctx.content.send('rateRejected', rate)
+        }
+        catch (error) {
+          failed(error)
+        }
       }, 500)
     }
 
     ctx.content.onMessage('command', (data: any) => {
-      const mp = getPlayer()
-      if (!mp)
-        return
-      if (data.action === 'play')
-        mp.play()
-      else if (data.action === 'pause')
-        mp.pause()
-      else if (data.action === 'seek')
-        mp.seek(data.timeMs)
-      else if (data.action === 'rate')
-        setRate(mp, data.playbackRate)
+      try {
+        const mp = getPlayer()
+        if (!mp)
+          return
+        if (data.action === 'play') {
+          alignTo(mp, data.timeMs)
+          mp.play()
+        }
+        else if (data.action === 'pause') {
+          alignTo(mp, data.timeMs)
+          mp.pause()
+        }
+        else if (data.action === 'seek') {
+          mp.seek(data.timeMs)
+        }
+        else if (data.action === 'rate') {
+          setRate(mp, data.playbackRate)
+        }
+      }
+      catch (error) {
+        failed(error)
+      }
     })
 
     return () => {
