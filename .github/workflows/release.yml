@@ -8,8 +8,6 @@ on:
       - '**.json'
   workflow_dispatch:
 
-concurrency: release
-
 jobs:
   update:
     if: github.repository_owner == 'PreMiD'
