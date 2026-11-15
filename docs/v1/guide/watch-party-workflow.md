@@ -14,6 +14,35 @@ This page covers the `pmd` commands for sync scripts, how to test a script with 
 
 The Validate workflow runs `pmd sync-build --all --validate` and the pmd test suite on every pull request.
 
+## Testing without a Party
+
+While `npx pmd sync-dev <service>` runs, you can try the script on a real page without starting a party:
+
+1. Turn on Activity Developer Mode and make sure no party is running in that browser.
+2. Run `npx pmd sync-dev <service>` and open a page that matches the script's `regExp`. The extension runs the dev script there as the controller and host, and the terminal prints `solo mode on as controller` with the tab.
+3. Use the player. The terminal prints what the script reports: play, pause, seek and rate events, the playback state when it changes (or every five seconds), ads, buffering, page info, blocks and errors. Nothing goes to a party server.
+4. Type commands into the same terminal to drive the script the way a party would:
+
+| Command           | What it does                                                                                 |
+| ----------------- | -------------------------------------------------------------------------------------------- |
+| `controller`      | The script plays the video itself and reports it. This is the default.                       |
+| `follower`        | The script becomes a follower and gets the commands below.                                   |
+| `play [seconds]`  | Plays. With a time it arrives like a playing host's heartbeat, so drift correction runs too. |
+| `pause [seconds]` | Pauses, and seeks there if a time is given and the video is elsewhere.                       |
+| `seek <seconds>`  | Seeks.                                                                                       |
+| `rate <rate>`     | Sets the playback rate.                                                                      |
+| `help`            | Lists the commands.                                                                          |
+
+Playback commands only go to a follower. A follower that uses `ctx.video.attach()` reports nothing back, so watch the page to see the result.
+
+Solo mode stops when `pmd sync-dev` stops, Developer Mode is turned off, the page stops matching, or you start or join a party; the party then runs the script as usual. Ending the party brings solo mode back, and the dev script stays loaded as long as `pmd sync-dev` runs. Solo mode needs a version of the extension that supports it; older ones ignore the commands.
+
+Solo mode is a quick check, not a replacement for testing with two browsers.
+
+### Logs in the terminal
+
+Every `ctx.log` call of the dev script, and every error the runtime catches from it (a throwing `setup`, `onSyncCommand` handler and so on), shows in the `pmd sync-dev` terminal with the service and tab, in solo mode and in a party alike. The page's console still gets the logs, and the same limit of 50 per 10 seconds applies. Released scripts never send anything to pmd.
+
 ## Testing with Two Browsers
 
 A sync script only shows its problems with a second person in the party, so always test with two clients:

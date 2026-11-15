@@ -691,7 +691,7 @@ const canLog = ctx.runtime?.capabilities.includes('log')
 log?: (...args: unknown[]) => void
 ```
 
-Writes to the page's console under a `[PreMiD sync]` prefix, so a script can explain what went wrong. Rate-limited to 50 calls per 10 seconds; the rest are dropped.
+Writes to the page's console under a `[PreMiD sync]` prefix, so a script can explain what went wrong. Rate-limited to 50 calls per 10 seconds; the rest are dropped. While the script runs from `pmd sync-dev`, each call also shows in that terminal, with every argument that isn't a string as JSON (cut at 2000 characters). See [Logs in the terminal](/v1/guide/watch-party-workflow#logs-in-the-terminal).
 
 #### Example
 
