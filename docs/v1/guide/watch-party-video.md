@@ -219,6 +219,14 @@ ctx.setPageInfo({
 })
 ```
 
+`type` (`'video'`, `'music'`, `'live'` or `'podcast'`) and `duration` (seconds) are optional. Extensions without the `pageInfoType` capability ignore them, so it is safe to always pass them:
+
+<!-- eslint-skip -->
+
+```typescript
+ctx.setPageInfo({ title: 'Breaking Bad', type: 'video', duration: 2940 })
+```
+
 The title and subtitle are shown at the top of the Watch Party overlay on the tab running the script. The thumbnail is not displayed.
 
 ## Reporting Ads
