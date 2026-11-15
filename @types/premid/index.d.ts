@@ -1064,7 +1064,7 @@ declare global {
 
     party: PartyState
 
-    /** Rate-limited; shows in the page's console. Missing on extensions that predate it, so check it before use. */
+    /** Rate-limited; shows in the page's console, and in the `pmd sync-dev` terminal while the script is under development. Missing on extensions that predate it, so check it before use. */
     log?: (...args: unknown[]) => void
   }
 
