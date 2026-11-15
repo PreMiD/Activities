@@ -963,6 +963,7 @@ declare global {
     currentTime?: number
     playbackRate?: number
     capturedAt?: number
+    capturedAtServer?: number
     serverTs?: number
     clockOffset?: number
     isHeartbeat?: boolean
