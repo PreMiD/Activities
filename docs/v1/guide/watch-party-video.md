@@ -49,6 +49,8 @@ In auto mode, `onSyncCommand` fires **after** the command has already been appli
 | `rate`                          | The controller changed playback rate                                        |
 | Heartbeat (`isHeartbeat: true`) | Periodic position update from the controller — drift correction was applied |
 
+A heartbeat arrives as `play` or `pause` with `isHeartbeat: true`, every second or two while the controller plays and about every 5 seconds while it is paused. When the party holds for an ad or buffering, a bare `{ action: 'pause' }` without a time arrives, and `{ action: 'play' }` when the hold ends. A `play` or `pause` handler should check `isHeartbeat` and `currentTime` before treating a command as a user action.
+
 ### Re-attaching After Navigation
 
 Many sites destroy and recreate their video player during navigation. `setup` runs again whenever the controller's page address changes, and on followers a full page load does the same, so attaching in `setup` covers navigation.
@@ -167,13 +169,13 @@ When the player lives in the page's JavaScript, read it from a [mainworld script
 
 ### ManualVideoHandle
 
-| Method                         | Description                                       |
-| ------------------------------ | ------------------------------------------------- |
-| `reportPlayback(status)`       | Report current playback state to the party        |
-| `onSyncCommand(handler)`       | Listen to raw sync commands (returns unsubscribe) |
-| `reportAd(isInAd)`             | Report ad playback state                          |
-| `reportBuffering(isBuffering)` | Report buffering state                            |
-| `release()`                    | Stop manual control                               |
+| Method                         | Description                                                                                       |
+| ------------------------------ | ------------------------------------------------------------------------------------------------- |
+| `reportPlayback(status)`       | Report current playback state to the party                                                        |
+| `onSyncCommand(handler)`       | Listen to raw sync commands (returns unsubscribe), including heartbeats and holds as in auto mode |
+| `reportAd(isInAd)`             | Report ad playback state                                                                          |
+| `reportBuffering(isBuffering)` | Report buffering state                                                                            |
+| `release()`                    | Stop manual control                                                                               |
 
 In manual mode, the `SyncScriptTakeControlOptions` callbacks fire **instead of** automatic element control:
 

@@ -339,14 +339,14 @@ onLogin(() => {
 sendCustomData(key: string, data: unknown): void
 ```
 
-Sends arbitrary data from the controller to the followers. Useful for syncing application-specific state that is not covered by the built-in APIs. Calls on a follower are ignored, as are payloads over 1 KB once serialized.
+Sends arbitrary data from the controller to the followers. Useful for syncing application-specific state that is not covered by the built-in APIs. Calls on a follower are ignored, as are payloads over 1 KB once serialized. It is delivered once to the followers in the party at that moment and not stored, so resend state that late joiners need.
 
 #### Parameters
 
-| Parameter | Type      | Description                                                                                                      |
-| --------- | --------- | ---------------------------------------------------------------------------------------------------------------- |
-| `key`     | `string`  | A unique key identifying the data type. Must be 1-32 characters, alphanumeric with hyphens and underscores only. |
-| `data`    | `unknown` | The data to send. Must be serializable.                                                                          |
+| Parameter | Type      | Description                             |
+| --------- | --------- | --------------------------------------- |
+| `key`     | `string`  | A unique key identifying the data type. |
+| `data`    | `unknown` | The data to send. Must be serializable. |
 
 #### Example
 
@@ -368,18 +368,14 @@ Subscribes to custom data sent by the controller for the given key. Only followe
 
 #### Parameters
 
-| Parameter | Type                      | Description                                                                                     |
-| --------- | ------------------------- | ----------------------------------------------------------------------------------------------- |
-| `key`     | `string`                  | The key to listen for. Must be 1-32 characters, alphanumeric with hyphens and underscores only. |
-| `handler` | `(data: unknown) => void` | Called when data is received for this key.                                                      |
+| Parameter | Type                      | Description                                |
+| --------- | ------------------------- | ------------------------------------------ |
+| `key`     | `string`                  | The key to listen for.                     |
+| `handler` | `(data: unknown) => void` | Called when data is received for this key. |
 
 #### Returns
 
 An unsubscribe function. Call it to stop receiving data.
-
-::: warning
-The `key` parameter must be 1-32 characters long and can only contain alphanumeric characters, hyphens (`-`), and underscores (`_`).
-:::
 
 #### Example
 
@@ -691,7 +687,7 @@ const canLog = ctx.runtime?.capabilities.includes('log')
 log?: (...args: unknown[]) => void
 ```
 
-Writes to the page's console under a `[PreMiD sync]` prefix, so a script can explain what went wrong. Rate-limited to 50 calls per 10 seconds; the rest are dropped. While the script runs from `pmd sync-dev`, each call also shows in that terminal, with every argument that isn't a string as JSON (cut at 2000 characters). See [Logs in the terminal](/v1/guide/watch-party-workflow#logs-in-the-terminal).
+Writes to the page's console under a `[PreMiD sync]` prefix, so a script can explain what went wrong. A released script logs with `console.debug`, which DevTools only shows with the Verbose level on; a script from `pmd sync-dev` logs with `console.log`. Rate-limited to 50 calls per 10 seconds, shared with the errors the runtime reports to `pmd sync-dev`; the rest are dropped. While the script runs from `pmd sync-dev`, each call also shows in that terminal, with every argument that isn't a string as JSON (cut at 2000 characters). See [Logs in the terminal](/v1/guide/watch-party-workflow#logs-in-the-terminal).
 
 #### Example
 
